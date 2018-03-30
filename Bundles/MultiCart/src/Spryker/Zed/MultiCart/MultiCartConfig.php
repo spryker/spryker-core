@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MultiCart;
 
-use Spryker\Client\Kernel\AbstractBundleConfig;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 /**
  * @method \Spryker\Shared\MultiCart\MultiCartConfig getSharedConfig()

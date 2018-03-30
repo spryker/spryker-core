@@ -33,18 +33,6 @@ interface SharedCartFacadeInterface
      *
      * @api
      *
-     * @param string $idCustomerReference
-     *
-     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
-     */
-    public function findPermissionsByCustomer(string $idCustomerReference): PermissionCollectionTransfer;
-
-    /**
-     * Specification:
-     * - TODO: add specification
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer

@@ -6,6 +6,7 @@
 
 namespace Spryker\Zed\PersistentCart\Business;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
@@ -137,6 +138,19 @@ interface PersistentCartFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function deleteQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Find customer quote
+     *
+     * @api
+     *
+     * @param int $idQuote
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function findQuote(int $idQuote, CustomerTransfer $customerTransfer): QuoteResponseTransfer;
 
     /**
      * Specification:

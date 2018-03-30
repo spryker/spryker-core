@@ -12,6 +12,7 @@
 
     <transfer name="QuotePermissionGroupCriteriaFilter">
         <property name="isDefault" type="bool"/>
+        <property name="name" type="string"/>
         <property name="filter" type="Filter"/>
     </transfer>
 

@@ -1,10 +1,14 @@
 <?php
+
 namespace SprykerTest\Zed\SharedCart;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShareDetailTransfer;
 
 /**
  * Inherited Methods
@@ -17,7 +21,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
  * @SuppressWarnings(PHPMD)
  */
@@ -32,9 +36,11 @@ class SharedCartBusinessTester extends Actor
      */
     public function createQuote(CustomerTransfer $customerTransfer)
     {
-        return $this->havePersistentQuote([
-            QuoteTransfer::CUSTOMER => $customerTransfer,
-        ]);
+        return $this->havePersistentQuote(
+            [
+                QuoteTransfer::CUSTOMER => $customerTransfer,
+            ]
+        );
     }
 
     /**
@@ -44,39 +50,63 @@ class SharedCartBusinessTester extends Actor
      */
     public function createCompanyUser(CustomerTransfer $customerTransfer)
     {
-        return $this->haveCompanyUser([
-            CompanyUserTransfer::CUSTOMER => $customerTransfer,
-        ]);
+        $companyTransfer = $this->createCompany();
+        $companyBusinessUnit = $this->createCompanyBusinessUnit($companyTransfer);
+
+        return $this->haveCompanyUser(
+            [
+                CompanyUserTransfer::CUSTOMER => $customerTransfer,
+                CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+                CompanyUserTransfer::FK_COMPANY_BUSINESS_UNIT => $companyBusinessUnit->getIdCompanyBusinessUnit(),
+                CompanyUserTransfer::FK_CUSTOMER => $customerTransfer->getIdCustomer(),
+            ]
+        );
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserQuotePermissionGroupTransfer
+     * @return \Generated\Shared\Transfer\CompanyTransfer
      */
-    public function createQuoteCompanyUserPermissionGroupTransfer(CompanyUserTransfer $companyUserTransfer)
+    public function createCompany()
     {
-        $companyUserQuotePermissionGroupTransfer = new CompanyUserQuotePermissionGroupTransfer();
-        $companyUserQuotePermissionGroupTransfer
-            ->setCompanyUser($companyUserTransfer) // or just ID
-            ->setPermissionGroup(''); // READER/MODIFIER
-
-        return $companyUserQuotePermissionGroupTransfer;
+        return $this->haveCompany(
+            [
+                CompanyTransfer::NAME => 'Test company',
+                CompanyTransfer::STATUS => 'approved',
+                CompanyTransfer::IS_ACTIVE => true,
+                CompanyTransfer::INITIAL_USER_TRANSFER => new CompanyUserTransfer(),
+            ]
+        );
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CompanyUserQuotePermissionGroupTransfer $companyUserQuotePermissionGroupTransfer
+     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteShareRequestTransfer
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
      */
-    public function createQuoteShareRequestTransfer(QuoteTransfer $quoteTransfer, CompanyUserQuotePermissionGroupTransfer $companyUserQuotePermissionGroupTransfer)
+    public function createCompanyBusinessUnit($companyTransfer)
     {
-        $quoteShareRequestTransfer = new QuoteShareRequestTransfer();
-        $quoteShareRequestTransfer
-            ->setQuote($quoteTransfer)
-            ->addCompanyUserQuotePermissionGroup($companyUserQuotePermissionGroupTransfer);
+        return $this->haveCompanyBusinessUnit(
+            [
+                CompanyBusinessUnitTransfer::NAME => 'test business unit',
+                CompanyBusinessUnitTransfer::EMAIL => 'test@spryker.com',
+                CompanyBusinessUnitTransfer::PHONE => '1234567890',
+                CompanyBusinessUnitTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+            ]
+        );
+    }
 
-        return $quoteShareRequestTransfer;
+    /**
+     * @param int $idCompanyUser
+     * @param \Generated\Shared\Transfer\QuotePermissionGroupTransfer $permissionQuoteGroup
+     *
+     * @return \Generated\Shared\Transfer\ShareDetailTransfer
+     */
+    public function createShareCartDetail(int $idCompanyUser, $permissionQuoteGroup): ShareDetailTransfer
+    {
+        $shareDetailTransfer = new ShareDetailTransfer();
+        $shareDetailTransfer->setIdCompanyUser($idCompanyUser);
+        $shareDetailTransfer->setQuotePermissionGroup($permissionQuoteGroup);
+
+        return $shareDetailTransfer;
     }
 }

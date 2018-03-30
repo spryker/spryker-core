@@ -7,38 +7,16 @@
 
 namespace Spryker\Zed\PersistentCart\Business\Model;
 
-use ArrayObject;
-use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Kernel\PermissionAwareTrait;
-use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToCartFacadeInterface;
-use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToMessengerFacadeInterface;
-use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface;
 use Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuoteItemFinderPluginInterface;
 
 class CartOperation implements CartOperationInterface
 {
-    use PermissionAwareTrait;
-
-    public const GLOSSARY_KEY_PERMISSION_FAILED = 'global.permission.failed';
-    public const GLOSSARY_KEY_QUOTE_NOT_AVAILABLE = 'persistent_cart.error.quote.not_available';
-
-    /**
-     * @var \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToCartFacadeInterface
-     */
-    protected $cartFacade;
-
-    /**
-     * @var \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface
-     */
-    protected $quoteFacade;
-
     /**
      * @var \Spryker\Zed\PersistentCart\Business\Model\QuoteResponseExpanderInterface
      */
@@ -50,37 +28,31 @@ class CartOperation implements CartOperationInterface
     protected $itemFinderPlugin;
 
     /**
-     * @var \Spryker\Zed\PersistentCart\Business\Model\CartChangeRequestExpanderInterface
+     * @var \Spryker\Zed\PersistentCart\Business\Model\QuoteResolverInterface
      */
-    protected $cartChangeRequestExpander;
+    protected $quoteResolver;
 
     /**
-     * @var \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToMessengerFacadeInterface
+     * @var \Spryker\Zed\PersistentCart\Business\Model\QuoteItemOperationsInterface
      */
-    protected $messengerFacade;
+    protected $quoteItemOperations;
 
     /**
-     * @param \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToCartFacadeInterface $cartFacade
-     * @param \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface $quoteFacade
      * @param \Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuoteItemFinderPluginInterface $itemFinderPlugin
-     * @param \Spryker\Zed\PersistentCart\Business\Model\CartChangeRequestExpanderInterface $cartChangeRequestExpander
      * @param \Spryker\Zed\PersistentCart\Business\Model\QuoteResponseExpanderInterface $quoteResponseExpander
-     * @param \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToMessengerFacadeInterface $messengerFacade
+     * @param \Spryker\Zed\PersistentCart\Business\Model\QuoteResolverInterface $quoteResolver
+     * @param \Spryker\Zed\PersistentCart\Business\Model\QuoteItemOperationsInterface $quoteItemOperations
      */
     public function __construct(
-        PersistentCartToCartFacadeInterface $cartFacade,
-        PersistentCartToQuoteFacadeInterface $quoteFacade,
         QuoteItemFinderPluginInterface $itemFinderPlugin,
-        CartChangeRequestExpanderInterface $cartChangeRequestExpander,
         QuoteResponseExpanderInterface $quoteResponseExpander,
-        PersistentCartToMessengerFacadeInterface $messengerFacade
+        QuoteResolverInterface $quoteResolver,
+        QuoteItemOperationsInterface $quoteItemOperations
     ) {
-        $this->cartFacade = $cartFacade;
-        $this->quoteFacade = $quoteFacade;
         $this->quoteResponseExpander = $quoteResponseExpander;
         $this->itemFinderPlugin = $itemFinderPlugin;
-        $this->cartChangeRequestExpander = $cartChangeRequestExpander;
-        $this->messengerFacade = $messengerFacade;
+        $this->quoteResolver = $quoteResolver;
+        $this->quoteItemOperations = $quoteItemOperations;
     }
 
     /**
@@ -91,15 +63,16 @@ class CartOperation implements CartOperationInterface
     public function add(PersistentCartChangeTransfer $persistentCartChangeTransfer): QuoteResponseTransfer
     {
         $persistentCartChangeTransfer->requireCustomer();
-        $quoteTransfer = $this->findCustomerQuoteById(
+        $quoteResponseTransfer = $this->quoteResolver->resolveCustomerQuote(
             $persistentCartChangeTransfer->getIdQuote(),
             $persistentCartChangeTransfer->getCustomer()
         );
-        if (!$quoteTransfer) {
-            return $this->createQuoteNotFoundResult($persistentCartChangeTransfer->getCustomer());
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return $quoteResponseTransfer;
         }
+        $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
 
-        return $this->addItems((array)$persistentCartChangeTransfer->getItems(), $quoteTransfer);
+        return $this->quoteItemOperations->addItems((array)$persistentCartChangeTransfer->getItems(), $quoteTransfer);
     }
 
     /**
@@ -110,45 +83,20 @@ class CartOperation implements CartOperationInterface
     public function remove(PersistentCartChangeTransfer $persistentCartChangeTransfer): QuoteResponseTransfer
     {
         $persistentCartChangeTransfer->requireCustomer();
-        $quoteTransfer = $this->findCustomerQuoteById(
+        $quoteResponseTransfer = $this->quoteResolver->resolveCustomerQuote(
             $persistentCartChangeTransfer->getIdQuote(),
             $persistentCartChangeTransfer->getCustomer()
         );
-        if (!$quoteTransfer) {
-            return $this->createQuoteNotFoundResult($persistentCartChangeTransfer->getCustomer());
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return $quoteResponseTransfer;
         }
+        $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
         $itemTransferList = [];
         foreach ($persistentCartChangeTransfer->getItems() as $itemTransfer) {
             $itemTransferList[] = $this->findItemInQuote($itemTransfer, $quoteTransfer);
         }
 
-        return $this->removeItems($itemTransferList, $quoteTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function reloadItems(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
-    {
-        $quoteResponseTransfer = new QuoteResponseTransfer();
-        $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
-        $quoteResponseTransfer->setIsSuccessful(false);
-        $quoteTransfer->requireCustomer();
-        $customerQuoteTransfer = $this->findCustomerQuoteById(
-            $quoteTransfer->getIdQuote(),
-            $quoteTransfer->getCustomer()
-        );
-        if (!$customerQuoteTransfer) {
-            return $this->createQuoteNotFoundResult($quoteTransfer->getCustomer());
-        }
-        $quoteTransfer->fromArray($customerQuoteTransfer->modifiedToArray(), true);
-        $quoteTransfer = $this->cartFacade->reloadItems($quoteTransfer);
-        $this->quoteFacade->updateQuote($quoteTransfer);
-
-        $quoteResponseTransfer->setIsSuccessful(true);
-        return $quoteResponseTransfer;
+        return $this->quoteItemOperations->removeItems($itemTransferList, $quoteTransfer);
     }
 
     /**
@@ -159,23 +107,25 @@ class CartOperation implements CartOperationInterface
     public function changeItemQuantity(PersistentCartChangeQuantityTransfer $persistentCartChangeQuantityTransfer): QuoteResponseTransfer
     {
         $persistentCartChangeQuantityTransfer->requireCustomer();
-        $itemTransfer = $persistentCartChangeQuantityTransfer->getItem();
-        $quoteTransfer = $this->findCustomerQuoteById(
+        $quoteResponseTransfer = $this->quoteResolver->resolveCustomerQuote(
             $persistentCartChangeQuantityTransfer->getIdQuote(),
             $persistentCartChangeQuantityTransfer->getCustomer()
         );
-        if (!$quoteTransfer) {
-            return $this->createQuoteNotFoundResult($persistentCartChangeQuantityTransfer->getCustomer());
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return $quoteResponseTransfer;
         }
+        $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
+        $itemTransfer = $persistentCartChangeQuantityTransfer->getItem();
         $quoteItemTransfer = $this->findItemInQuote($itemTransfer, $quoteTransfer);
         if (!$quoteItemTransfer) {
             $quoteResponseTransfer = new QuoteResponseTransfer();
             $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
             $quoteResponseTransfer->setIsSuccessful(false);
+
             return $quoteResponseTransfer;
         }
         if ($itemTransfer->getQuantity() === 0) {
-            return $this->removeItems([$quoteItemTransfer], $quoteTransfer);
+            return $this->quoteItemOperations->removeItems([$quoteItemTransfer], $quoteTransfer);
         }
 
         $delta = abs($quoteItemTransfer->getQuantity() - $itemTransfer->getQuantity());
@@ -183,16 +133,17 @@ class CartOperation implements CartOperationInterface
             $quoteResponseTransfer = new QuoteResponseTransfer();
             $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
             $quoteResponseTransfer->setIsSuccessful(false);
+
             return $quoteResponseTransfer;
         }
 
         $changeItemTransfer = clone $quoteItemTransfer;
         $changeItemTransfer->setQuantity($delta);
         if ($quoteItemTransfer->getQuantity() > $itemTransfer->getQuantity()) {
-            return $this->removeItems([$changeItemTransfer], $quoteTransfer);
+            return $this->quoteItemOperations->removeItems([$changeItemTransfer], $quoteTransfer);
         }
 
-        return $this->addItems([$changeItemTransfer], $quoteTransfer);
+        return $this->quoteItemOperations->addItems([$changeItemTransfer], $quoteTransfer);
     }
 
     /**
@@ -203,13 +154,18 @@ class CartOperation implements CartOperationInterface
     public function decreaseItemQuantity(PersistentCartChangeQuantityTransfer $persistentCartChangeQuantityTransfer): QuoteResponseTransfer
     {
         $persistentCartChangeQuantityTransfer->requireCustomer();
-        $quoteTransfer = $this->findCustomerQuoteById(
+        $quoteResponseTransfer = $this->quoteResolver->resolveCustomerQuote(
             $persistentCartChangeQuantityTransfer->getIdQuote(),
             $persistentCartChangeQuantityTransfer->getCustomer()
         );
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return $quoteResponseTransfer;
+        }
+        $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
+
         $decreaseItemTransfer = $this->findItemInQuote($persistentCartChangeQuantityTransfer->getItem(), $quoteTransfer);
         if (!$decreaseItemTransfer || !$persistentCartChangeQuantityTransfer->getItem()->getQuantity()) {
-            return $quoteTransfer;
+            return $quoteResponseTransfer;
         }
 
         $itemTransfer = clone $decreaseItemTransfer;
@@ -217,7 +173,7 @@ class CartOperation implements CartOperationInterface
             $persistentCartChangeQuantityTransfer->getItem()->getQuantity()
         );
 
-        return $this->removeItems([$itemTransfer], $quoteTransfer);
+        return $this->quoteItemOperations->removeItems([$itemTransfer], $quoteTransfer);
     }
 
     /**
@@ -228,16 +184,18 @@ class CartOperation implements CartOperationInterface
     public function increaseItemQuantity(PersistentCartChangeQuantityTransfer $persistentCartChangeQuantityTransfer): QuoteResponseTransfer
     {
         $persistentCartChangeQuantityTransfer->requireCustomer();
-        $quoteTransfer = $this->findCustomerQuoteById(
+        $quoteResponseTransfer = $this->quoteResolver->resolveCustomerQuote(
             $persistentCartChangeQuantityTransfer->getIdQuote(),
             $persistentCartChangeQuantityTransfer->getCustomer()
         );
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return $quoteResponseTransfer;
+        }
+
+        $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
         $decreaseItemTransfer = $this->findItemInQuote($persistentCartChangeQuantityTransfer->getItem(), $quoteTransfer);
         if (!$decreaseItemTransfer || !$persistentCartChangeQuantityTransfer->getItem()->getQuantity()) {
-            $quoteResponseTransfer = new QuoteResponseTransfer();
-            $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
-            $quoteResponseTransfer->setIsSuccessful(false);
-            return $quoteResponseTransfer;
+            return $this->createQuoteItemNotFoundResult($quoteTransfer, $persistentCartChangeQuantityTransfer->getCustomer());
         }
 
         $itemTransfer = clone $decreaseItemTransfer;
@@ -245,7 +203,28 @@ class CartOperation implements CartOperationInterface
             $persistentCartChangeQuantityTransfer->getItem()->getQuantity()
         );
 
-        return $this->addItems([$itemTransfer], $quoteTransfer);
+        return $this->quoteItemOperations->addItems([$itemTransfer], $quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function reloadItems(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        $quoteTransfer->requireCustomer();
+        $quoteResponseTransfer = $this->quoteResolver->resolveCustomerQuote(
+            $quoteTransfer->getIdQuote(),
+            $quoteTransfer->getCustomer()
+        );
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return $quoteResponseTransfer;
+        }
+        $customerQuoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
+        $quoteTransfer->fromArray($customerQuoteTransfer->modifiedToArray(), true);
+
+        return $this->quoteItemOperations->reloadItems($quoteTransfer);
     }
 
     /**
@@ -256,79 +235,17 @@ class CartOperation implements CartOperationInterface
     public function validate($quoteTransfer): QuoteResponseTransfer
     {
         $quoteTransfer->requireCustomer();
-        $customerQuoteTransfer = $this->findCustomerQuoteById(
+        $quoteResponseTransfer = $this->quoteResolver->resolveCustomerQuote(
             $quoteTransfer->getIdQuote(),
             $quoteTransfer->getCustomer()
         );
-        if (!$customerQuoteTransfer) {
-            return $this->createQuoteNotFoundResult($quoteTransfer->getCustomer());
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return $quoteResponseTransfer;
         }
-        if ($customerQuoteTransfer) {
-            $quoteTransfer->fromArray($customerQuoteTransfer->modifiedToArray(), true);
-        }
-        $quoteResponseTransfer = $this->cartFacade->validateQuote($quoteTransfer);
-        $this->quoteFacade->updateQuote($quoteResponseTransfer->getQuoteTransfer());
+        $customerQuoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
+        $quoteTransfer->fromArray($customerQuoteTransfer->modifiedToArray(), true);
 
-        return $this->quoteResponseExpander->expand($quoteResponseTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransferList
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    protected function addItems(array $itemTransferList, QuoteTransfer $quoteTransfer): QuoteResponseTransfer
-    {
-        $quoteResponseTransfer = new QuoteResponseTransfer();
-        $quoteResponseTransfer->setIsSuccessful(false);
-        $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
-        $quoteResponseTransfer->setCustomer($quoteTransfer->getCustomer());
-        if (!$this->isQuoteWriteAllowed($quoteTransfer, $quoteTransfer->getCustomer())) {
-            return $this->quoteResponseExpander->expand($quoteResponseTransfer);
-        }
-
-        $cartChangeTransfer = $this->createCartChangeTransfer($quoteTransfer);
-        foreach ($itemTransferList as $itemTransfer) {
-            $cartChangeTransfer->addItem($itemTransfer);
-        }
-
-        $quoteTransfer = $this->cartFacade->add($cartChangeTransfer);
-        $this->quoteFacade->updateQuote($quoteTransfer);
-        $quoteResponseTransfer->setIsSuccessful(true);
-        $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
-
-        return $this->quoteResponseExpander->expand($quoteResponseTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransferList
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    protected function removeItems(array $itemTransferList, QuoteTransfer $quoteTransfer): QuoteResponseTransfer
-    {
-        $quoteResponseTransfer = new QuoteResponseTransfer();
-        $quoteResponseTransfer->setIsSuccessful(false);
-        $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
-        $quoteResponseTransfer->setCustomer($quoteTransfer->getCustomer());
-        if (!$this->isQuoteWriteAllowed($quoteTransfer, $quoteTransfer->getCustomer())) {
-            return $this->quoteResponseExpander->expand($quoteResponseTransfer);
-        }
-
-        $cartChangeTransfer = $this->createCartChangeTransfer($quoteTransfer);
-        foreach ($itemTransferList as $itemTransfer) {
-            $cartChangeTransfer->addItem($itemTransfer);
-        }
-        $cartChangeTransfer = $this->cartChangeRequestExpander->removeItemRequestExpand($cartChangeTransfer);
-        $quoteTransfer = $this->cartFacade->remove($cartChangeTransfer);
-        $this->quoteFacade->updateQuote($quoteTransfer);
-
-        $quoteResponseTransfer->setIsSuccessful(true);
-        $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
-
-        return $this->quoteResponseExpander->expand($quoteResponseTransfer);
+        return $this->quoteItemOperations->validate($quoteTransfer);
     }
 
     /**
@@ -343,126 +260,18 @@ class CartOperation implements CartOperationInterface
     }
 
     /**
-     * @param int $idQuote
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return null|\Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected function findCustomerQuoteById($idQuote, CustomerTransfer $customerTransfer): ?QuoteTransfer
-    {
-        if (!$idQuote) {
-            $quoteTransfer = new QuoteTransfer();
-            $quoteTransfer->setCustomer($customerTransfer);
-
-            return $quoteTransfer;
-        }
-        $quoteResponseTransfer = $this->quoteFacade->findQuoteById($idQuote);
-        if (!$quoteResponseTransfer->getIsSuccessful() || !$this->isQuoteReadAllowed($quoteResponseTransfer->getQuoteTransfer(), $customerTransfer)
-        ) {
-            $messageTransfer = new MessageTransfer();
-            $messageTransfer->setValue(static::GLOSSARY_KEY_QUOTE_NOT_AVAILABLE);
-            $this->messengerFacade->addErrorMessage($messageTransfer);
-
-            return null;
-        }
-        $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
-        $quoteTransfer->setCustomer($customerTransfer);
-
-        return $quoteTransfer;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return bool
-     */
-    protected function isQuoteReadAllowed(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): bool
-    {
-        if (strcmp($customerTransfer->getCustomerReference(), $quoteTransfer->getCustomerReference()) === 0
-            || ($customerTransfer->getCompanyUserTransfer()
-                && $this->can('ReadSharedCartPermissionPlugin', $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser(), $quoteTransfer->getIdQuote())
-            )
-        ) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return bool
-     */
-    protected function isQuoteWriteAllowed(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): bool
-    {
-        if (strcmp($customerTransfer->getCustomerReference(), $quoteTransfer->getCustomerReference()) === 0
-            || ($customerTransfer->getCompanyUserTransfer()
-                && $this->can('WriteSharedCartPermissionPlugin', $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser(), $quoteTransfer->getIdQuote())
-            )
-        ) {
-            return true;
-        }
-        $messageTransfer = new MessageTransfer();
-        $messageTransfer->setValue(static::GLOSSARY_KEY_PERMISSION_FAILED);
-        $this->messengerFacade->addErrorMessage($messageTransfer);
-
-        return false;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
-     */
-    protected function createCartChangeTransfer(QuoteTransfer $quoteTransfer): CartChangeTransfer
-    {
-        $items = $quoteTransfer->getItems();
-
-        if (count($items) === 0) {
-            $quoteTransfer->setItems(new ArrayObject());
-        }
-
-        $cartChangeTransfer = new CartChangeTransfer();
-        $cartChangeTransfer->setQuote($quoteTransfer);
-
-        return $cartChangeTransfer;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    protected function createQuoteNotFoundResult(CustomerTransfer $customerTransfer): QuoteResponseTransfer
+    protected function createQuoteItemNotFoundResult(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): QuoteResponseTransfer
     {
         $quoteResponseTransfer = new QuoteResponseTransfer();
         $quoteResponseTransfer->setCustomer($customerTransfer);
-        $quoteResponseTransfer->setQuoteTransfer($this->resolveCustomerQuote($customerTransfer));
+        $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
         $quoteResponseTransfer->setIsSuccessful(false);
-        
+
         return $this->quoteResponseExpander->expand($quoteResponseTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected function resolveCustomerQuote(CustomerTransfer $customerTransfer): QuoteTransfer
-    {
-        $quoteTransfer = new QuoteTransfer();
-        $customerQuoteTransfer = $this->quoteFacade->findQuoteByCustomer($customerTransfer);
-        if ($customerQuoteTransfer->getIsSuccessful()) {
-            $quoteTransfer = $customerQuoteTransfer->getQuoteTransfer();
-        }
-        $quoteTransfer->setCustomer($customerTransfer);
-        if (!$quoteTransfer->getIdQuote()) {
-            $this->quoteFacade->createQuote($quoteTransfer);
-        }
-
-        return $quoteTransfer;
     }
 }

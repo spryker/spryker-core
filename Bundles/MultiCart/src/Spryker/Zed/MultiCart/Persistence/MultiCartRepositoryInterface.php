@@ -7,15 +7,14 @@
 
 namespace Spryker\Zed\MultiCart\Persistence;
 
-use Generated\Shared\Transfer\SpyQuoteEntityTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface MultiCartRepositoryInterface
 {
     /**
-     * @param string $quoteName
-     * @param string $customerReference
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return null|\Generated\Shared\Transfer\SpyQuoteEntityTransfer
      */
-    public function findCustomerQuoteByName(string $quoteName, string $customerReference): ?SpyQuoteEntityTransfer;
+    public function resolveCustomerQuoteName(QuoteTransfer $quoteTransfer): string;
 }

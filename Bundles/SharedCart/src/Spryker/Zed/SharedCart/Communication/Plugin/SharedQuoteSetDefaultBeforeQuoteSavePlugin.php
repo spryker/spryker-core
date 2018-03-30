@@ -29,22 +29,11 @@ class SharedQuoteSetDefaultBeforeQuoteSavePlugin extends AbstractPlugin implemen
     {
         if (!$quoteTransfer->getIsDefault()
             || !$quoteTransfer->getCustomer()->getCompanyUserTransfer()
-            || $this->isCustomerQuoteOwner($quoteTransfer)
+            || strcmp($quoteTransfer->getCustomer()->getCustomerReference(), $quoteTransfer->getCustomerReference()) === 0
         ) {
             return $quoteTransfer;
         }
 
         return $this->getFacade()->quoteSetDefault($quoteTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    protected function isCustomerQuoteOwner(QuoteTransfer $quoteTransfer): bool
-    {
-        $customer = $quoteTransfer->getCustomer();
-        return strcmp($customer->getCustomerReference(), $quoteTransfer->getCustomerReference()) === 0;
     }
 }

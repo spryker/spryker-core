@@ -14,8 +14,12 @@ use Spryker\Zed\PersistentCart\Business\Model\CartOperation;
 use Spryker\Zed\PersistentCart\Business\Model\CartOperationInterface;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteDeleter;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteDeleterInterface;
+use Spryker\Zed\PersistentCart\Business\Model\QuoteItemOperations;
+use Spryker\Zed\PersistentCart\Business\Model\QuoteItemOperationsInterface;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteMerger;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteMergerInterface;
+use Spryker\Zed\PersistentCart\Business\Model\QuoteResolver;
+use Spryker\Zed\PersistentCart\Business\Model\QuoteResolverInterface;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteResponseExpander;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteResponseExpanderInterface;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteStorageSynchronizer;
@@ -25,6 +29,9 @@ use Spryker\Zed\PersistentCart\Business\Model\QuoteWriterInterface;
 use Spryker\Zed\PersistentCart\PersistentCartDependencyProvider;
 use Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuoteItemFinderPluginInterface;
 
+/**
+ * @method \Spryker\Zed\PersistentCart\PersistentCartConfig getConfig()
+ */
 class PersistentCartBusinessFactory extends AbstractBusinessFactory
 {
     /**
@@ -33,10 +40,34 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
     public function createCartOperation(): CartOperationInterface
     {
         return new CartOperation(
+            $this->getQuoteItemFinderPlugin(),
+            $this->createQuoteResponseExpander(),
+            $this->createQuoteResolver(),
+            $this->createQuoteItemOperations()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PersistentCart\Business\Model\QuoteItemOperationsInterface
+     */
+    public function createQuoteItemOperations(): QuoteItemOperationsInterface
+    {
+        return new QuoteItemOperations(
             $this->getCartFacade(),
             $this->getQuoteFacade(),
-            $this->getQuoteItemFinderPlugin(),
             $this->createCartChangeRequestExpander(),
+            $this->createQuoteResponseExpander(),
+            $this->getMessengerFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PersistentCart\Business\Model\QuoteResolverInterface
+     */
+    public function createQuoteResolver(): QuoteResolverInterface
+    {
+        return new QuoteResolver(
+            $this->getQuoteFacade(),
             $this->createQuoteResponseExpander(),
             $this->getMessengerFacade()
         );

@@ -14,11 +14,6 @@ class CartChangeRequestExpander implements CartChangeRequestExpanderInterface
     /**
      * @var array|\Spryker\Client\Cart\Dependency\Plugin\CartChangeRequestExpanderPluginInterface[]
      */
-    protected $changeQuantityRequestExpanderPlugins;
-
-    /**
-     * @var array|\Spryker\Client\Cart\Dependency\Plugin\CartChangeRequestExpanderPluginInterface[]
-     */
     protected $addItemRequestExpanderPlugins;
 
     /**
@@ -29,16 +24,13 @@ class CartChangeRequestExpander implements CartChangeRequestExpanderInterface
     /**
      * @param \Spryker\Client\Cart\Dependency\Plugin\CartChangeRequestExpanderPluginInterface[] $addItemsRequestExpanderPlugins
      * @param \Spryker\Client\Cart\Dependency\Plugin\CartChangeRequestExpanderPluginInterface[] $removeItemRequestExpanderPlugins
-     * @param \Spryker\Client\Cart\Dependency\Plugin\CartChangeRequestExpanderPluginInterface[] $changeQuantityRequestExpanderPlugins
      */
     public function __construct(
         array $addItemsRequestExpanderPlugins,
-        array $removeItemRequestExpanderPlugins,
-        array $changeQuantityRequestExpanderPlugins
+        array $removeItemRequestExpanderPlugins
     ) {
         $this->addItemRequestExpanderPlugins = $addItemsRequestExpanderPlugins;
         $this->removeItemRequestExpanderPlugins = $removeItemRequestExpanderPlugins;
-        $this->changeQuantityRequestExpanderPlugins = $changeQuantityRequestExpanderPlugins;
     }
 
     /**
@@ -50,21 +42,6 @@ class CartChangeRequestExpander implements CartChangeRequestExpanderInterface
     public function addItemsRequestExpand(CartChangeTransfer $cartChangeTransfer, array $params = []): CartChangeTransfer
     {
         foreach ($this->addItemRequestExpanderPlugins as $changeRequestExpanderPlugin) {
-            $cartChangeTransfer = $changeRequestExpanderPlugin->expand($cartChangeTransfer, $params);
-        }
-
-        return $cartChangeTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     * @param array $params
-     *
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
-     */
-    public function changeQuantityRequestExpand(CartChangeTransfer $cartChangeTransfer, array $params = []): CartChangeTransfer
-    {
-        foreach ($this->changeQuantityRequestExpanderPlugins as $changeRequestExpanderPlugin) {
             $cartChangeTransfer = $changeRequestExpanderPlugin->expand($cartChangeTransfer, $params);
         }
 
