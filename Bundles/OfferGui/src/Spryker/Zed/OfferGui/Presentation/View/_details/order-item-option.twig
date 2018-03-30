@@ -14,7 +14,7 @@
         <td>
 
             <div>
-                {% embed '@OfferGui/View/_partials/discounted-price.twig' with {subtotal: productOption.unitPrice, priceToPay: productOption.unitPrice - productOption.unitDiscountAmountFullAggregation | default(0)} %} {% endembed %}
+                {% embed '@OfferGui/View/_details/discounted-price.twig' with {subtotal: productOption.unitPrice, priceToPay: productOption.unitPrice - productOption.unitDiscountAmountFullAggregation | default(0)} %} {% endembed %}
             </div>
             <div class="tax-info">incl. {{ productOption.taxRate|default(0) }} % tax </div>
         </td>

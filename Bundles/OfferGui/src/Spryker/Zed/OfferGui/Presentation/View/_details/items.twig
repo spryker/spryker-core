@@ -1,0 +1,20 @@
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Offer Items' } %}
+
+    {% set quote = offer.quote %}
+
+    {% block widget_content %}
+
+        <table class="footable table toggle-arrow-tiny" data-qa="order-item-list">
+            <thead>
+            <tr class="text-left">
+                <th colspan="2">{{ 'Product' | trans }}</th>
+                <th>{{ 'Unit Price' | trans }} <small>({{ quote.priceMode }})</small></th>
+                <th>{{ 'Item total' | trans }}</th>
+            </tr>
+            </thead>
+            {% embed '@OfferGui/View/_details/no-group-items.twig' with {items: quote.items} %}{% endembed %}
+        </table>
+
+    {% endblock %}
+
+{% endembed %}

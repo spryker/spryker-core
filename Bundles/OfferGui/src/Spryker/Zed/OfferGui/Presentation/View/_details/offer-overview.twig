@@ -1,11 +1,12 @@
 {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Offer Overview' } %}
+    {% set quote = offer.quote %}
 
     {% block widget_content %}
         <div class="row">
             <div class="col-xs-12 col-md-4">
                 <p><b>{{ 'Created' | trans }}:</b> {{ offer.createdAt | formatDateTime }}</p>
-                <p><b>{{ 'Grand total' | trans }}:</b> {{ offer.quote.totals.grandTotal | money(true, offer.quote.currency.code) }}</p>
-                <p><b>{{ 'Discount' | trans }}:</b> {{ offer.quote.totals.discountTotal | money(true, offer.quote.currency.code) }}</p>
+                <p><b>{{ 'Grand total' | trans }}:</b> {{ quote.totals.grandTotal | money(true, quote.currency.code) }}</p>
+                <p><b>{{ 'Discount' | trans }}:</b> {{ quote.totals.discountTotal | money(true, quote.currency.code) }}</p>
             </div>
             <div class="col-xs-12 col-md-4">
                 {% if offer.customerReference %}
@@ -15,9 +16,9 @@
                 {% endif %}
                 <p><b>{{ 'Customer name' | trans }}:</b>
                     {% if offer.customerReference %}
-                        <a href="{{ url('/customer/view', {'id-customer': offer.fkCustomer}) }}" target="_blank">{{ offer.salutation }} {{ offer.firstName }} {{ offer.lastName }}</a>
+                        <a href="{{ url('/customer/view', {'id-customer': offer.customer.idCustomer}) }}" target="_blank">{{ offer.customer.salutation }} {{ offer.customer.firstName }} {{ offer.customer.lastName }}</a>
                     {% else %}
-                        {{ offer.salutation }} {{ offer.firstName }} {{ offer.lastName }}
+                        {{ 'No customer reference' | trans }}
                     {% endif %}
                 </p>
               {% if offer.customer is not null and offer.customer.dateOfBirth %}
@@ -25,8 +26,7 @@
                     {{ offer.customer.dateOfBirth | formatDate }}
                   </p>
               {% endif %}
-                <p><b>{{ 'Email' | trans }}:</b> {{ offer.email }}</p>
-                <p><b>{{ 'All orders of the customer' | trans }}:</b> ({{ offer.totalOrderCount }})</p>
+                <p><b>{{ 'Email' | trans }}:</b> {{ offer.customer.email }}</p>
             </div>
         </div>
 

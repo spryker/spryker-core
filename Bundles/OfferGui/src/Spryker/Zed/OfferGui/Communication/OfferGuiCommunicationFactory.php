@@ -8,6 +8,10 @@
 namespace Spryker\Zed\OfferGui\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Generated\Shared\Transfer\OfferTransfer;
+use Spryker\Zed\Kernel\Locator;
+use Spryker\Zed\OfferGui\Communication\Form\Constraint\SkuExists;
+use Spryker\Zed\OfferGui\Communication\Form\OfferType;
 use Spryker\Zed\OfferGui\Communication\Table\OffersTable;
 use Spryker\Zed\OfferGui\Communication\Table\OffersTableQueryBuilder;
 use Spryker\Zed\OfferGui\Communication\Table\OffersTableQueryBuilderInterface;
@@ -104,5 +108,28 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getOfferFacade(): OfferGuiToOfferFacadeInterface
     {
         return $this->getProvidedDependency(OfferGuiDependencyProvider::FACADE_OFFER);
+    }
+
+    public function getOfferForm(OfferTransfer $offerTransfer)
+    {
+        $form = $this->getFormFactory()->create(
+            OfferType::class,
+                $offerTransfer,
+                    [
+                        'data_class' => OfferTransfer::class,
+                    ]
+        );
+
+        return $form;
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraint
+     */
+    public function createSkuExistsConstraint(): \Symfony\Component\Validator\Constraint
+    {
+        return new SkuExists([
+            SkuExists::OPTION_PRODUCT_FACADE => Locator::getInstance()->product()->facade(),
+        ]);
     }
 }

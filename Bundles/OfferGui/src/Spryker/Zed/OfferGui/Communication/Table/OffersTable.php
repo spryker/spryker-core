@@ -22,7 +22,7 @@ class OffersTable extends AbstractTable
 {
     const URL_OFFER_GUI_EDIT = '/offer-gui/edit/';
     const URL_OFFER_GUI_VIEW_DETAILS = '/offer-gui/view/details';
-    const URL_OFFER_GUI_PRINT_VERSION = '/offer-gui/offer';
+    const URL_OFFER_GUI_PRINT_VERSION = '/offer-gui/view/print-version';
     const URL_PARAM_ID_OFFER = 'id-offer';
 
     const COL_ID_OFFER = SpyOfferTableMap::COL_ID_OFFER;
