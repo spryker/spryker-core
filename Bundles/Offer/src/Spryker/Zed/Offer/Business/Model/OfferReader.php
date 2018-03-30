@@ -7,28 +7,25 @@
 
 namespace Spryker\Zed\Offer\Business\Model;
 
+use Generated\Shared\Transfer\OfferListTransfer;
 use Generated\Shared\Transfer\OfferTransfer;
-use Generated\Shared\Transfer\OrderListTransfer;
-use Spryker\Zed\Offer\Dependency\Facade\OfferToSalesFacadeInterface;
-use Spryker\Zed\Offer\OfferConfig;
 use Spryker\Zed\Offer\Persistence\OfferRepositoryInterface;
 
 class OfferReader implements OfferReaderInterface
 {
-
     /**
-     * @var OfferRepositoryInterface
+     * @var \Spryker\Zed\Offer\Persistence\OfferRepositoryInterface
      */
     protected $offerRepository;
 
     /**
-     * @var OfferPluginExecutorInterface
+     * @var \Spryker\Zed\Offer\Business\Model\OfferPluginExecutorInterface
      */
     protected $offerPluginExecutor;
 
     /**
-     * @param OfferRepositoryInterface $offerRepository
-     * @param OfferPluginExecutorInterface $offerPluginExecutor
+     * @param \Spryker\Zed\Offer\Persistence\OfferRepositoryInterface $offerRepository
+     * @param \Spryker\Zed\Offer\Business\Model\OfferPluginExecutorInterface $offerPluginExecutor
      */
     public function __construct(
         OfferRepositoryInterface $offerRepository,
@@ -39,24 +36,9 @@ class OfferReader implements OfferReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
      *
-     * @return \Generated\Shared\Transfer\OrderListTransfer
-     */
-    public function getOfferList(OrderListTransfer $orderListTransfer): OrderListTransfer
-    {
-//        $orderListTransfer->setType(
-//            $this->offerConfig->getOrderTypeOffer()
-//        );
-//
-//        return $this->salesFacade
-//            ->getCustomerOrders($orderListTransfer, $orderListTransfer->getIdCustomer());
-    }
-
-    /**
-     * @param OfferTransfer $offerTransfer
-     *
-     * @return OfferTransfer
+     * @return \Generated\Shared\Transfer\OfferTransfer
      */
     public function getOfferById(OfferTransfer $offerTransfer): OfferTransfer
     {
@@ -66,4 +48,13 @@ class OfferReader implements OfferReaderInterface
         return $offerTransfer;
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\OfferListTransfer $offerListTransfer
+     *
+     * @return \Generated\Shared\Transfer\OfferListTransfer
+     */
+    public function getOfferList(OfferListTransfer $offerListTransfer): OfferListTransfer
+    {
+        return $this->offerRepository->getOffers($offerListTransfer);
+    }
 }

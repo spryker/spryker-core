@@ -7,10 +7,7 @@
 
 namespace Spryker\Zed\OfferGui\Communication\Controller;
 
-use Generated\Shared\Transfer\OfferTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \Spryker\Zed\OfferGui\Communication\OfferGuiCommunicationFactory getFactory()
@@ -46,23 +43,21 @@ class ViewController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function detailsAction(Request $request)
-    {
-        $idOffer = $this->castId($request->query->getInt(static::PARAM_ID_OFFER));
-        $offerTransfer = new OfferTransfer();
-        $offerTransfer->setIdOffer($idOffer);
-
-        $offerTransfer = $this->getFactory()->getOfferFacade()->getOfferById($offerTransfer);
-
-        dump($offerTransfer);
-        exit;
-
-        return $this->viewResponse([
-            'offer' => $offerTransfer,
-        ]);
-    }
+//    public function detailsAction(Request $request)
+//    {
+//        $idOffer = $this->castId($request->query->getInt(static::PARAM_ID_OFFER));
+//        $offerTransfer = new OfferTransfer();
+//        $offerTransfer->setIdOffer($idOffer);
+//
+//        $offerTransfer = $this->getFactory()->getOfferFacade()->getOfferById($offerTransfer);
+//
+//        dump($offerTransfer);
+//        exit;
+//
+//        return $this->viewResponse([
+//            'offer' => $offerTransfer,
+//        ]);
+//    }
 }

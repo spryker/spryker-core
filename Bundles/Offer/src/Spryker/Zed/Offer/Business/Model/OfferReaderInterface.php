@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\Offer\Business\Model;
 
-use Generated\Shared\Transfer\OrderListTransfer;
+use Generated\Shared\Transfer\OfferListTransfer;
 
 interface OfferReaderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\OrderListTransfer $offerListTransfer
+     * @param \Generated\Shared\Transfer\OfferListTransfer $offerListTransfer
      *
-     * @return \Generated\Shared\Transfer\OrderListTransfer
+     * @return \Generated\Shared\Transfer\OfferListTransfer
      */
-    public function getOfferList(OrderListTransfer $offerListTransfer): OrderListTransfer;
+    public function getOfferList(OfferListTransfer $offerListTransfer): OfferListTransfer;
 }

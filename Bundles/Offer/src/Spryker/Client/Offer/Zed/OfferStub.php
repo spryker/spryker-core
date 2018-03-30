@@ -7,9 +7,8 @@
 
 namespace Spryker\Client\Offer\Zed;
 
+use Generated\Shared\Transfer\OfferListTransfer;
 use Generated\Shared\Transfer\OfferResponseTransfer;
-use Generated\Shared\Transfer\OfferToOrderConvertRequestTransfer;
-use Generated\Shared\Transfer\OfferToOrderConvertResponseTransfer;
 use Generated\Shared\Transfer\OfferTransfer;
 use Spryker\Client\Offer\Dependency\Client\OfferToZedRequestClientInterface;
 
@@ -29,19 +28,29 @@ class OfferStub implements OfferStubInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OfferToOrderConvertRequestTransfer $offerToOrderRequestTransfer
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
      *
-     * @return \Generated\Shared\Transfer\OfferToOrderConvertResponseTransfer
+     * @return \Generated\Shared\Transfer\OfferTransfer
      */
-    public function convertOfferToOrder(OfferToOrderConvertRequestTransfer $offerToOrderRequestTransfer): OfferToOrderConvertResponseTransfer
+    public function getOfferById(OfferTransfer $offerTransfer): OfferTransfer
     {
-        return $this->zedStub->call('/offer/gateway/convert-offer-to-order', $offerToOrderRequestTransfer);
+        return $this->zedStub->call('/offer/gateway/get-offer-by-id', $offerTransfer);
     }
 
     /**
-     * @param OfferTransfer $offerTransfer
+     * @param \Generated\Shared\Transfer\OfferListTransfer $offerListTransfer
      *
-     * @return OfferResponseTransfer
+     * @return \Generated\Shared\Transfer\OfferListTransfer
+     */
+    public function getOffers(OfferListTransfer $offerListTransfer): OfferListTransfer
+    {
+        return $this->zedStub->call('/offer/gateway/get-offers', $offerListTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
+     *
+     * @return \Generated\Shared\Transfer\OfferResponseTransfer
      */
     public function placeOffer(OfferTransfer $offerTransfer): OfferResponseTransfer
     {

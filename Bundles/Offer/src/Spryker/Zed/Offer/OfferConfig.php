@@ -17,16 +17,16 @@ class OfferConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getOrderTypeOffer(): string
+    public function getStatusInProgress(): string
     {
-        return $this->getSharedConfig()->getOrderTypeOffer();
+        return $this->getSharedConfig()->getStatusInProgress();
     }
 
     /**
-     * @return null|string
+     * @return string
      */
-    public function getOrderTypeDefault(): ?string
+    public function getStatusOrder(): string
     {
-        return $this->getSharedConfig()->getOrderTypeDefault();
+        return $this->getSharedConfig()->getStatusOrder();
     }
 }

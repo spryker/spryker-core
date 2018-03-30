@@ -8,10 +8,7 @@
 namespace Spryker\Zed\Offer\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Offer\Business\Model\OfferConverter;
-use Spryker\Zed\Offer\Business\Model\OfferConverterInterface;
 use Spryker\Zed\Offer\Business\Model\OfferPluginExecutor;
-use Spryker\Zed\Offer\Business\Model\OfferPluginExecutorInterface;
 use Spryker\Zed\Offer\Business\Model\OfferReader;
 use Spryker\Zed\Offer\Business\Model\OfferReaderInterface;
 use Spryker\Zed\Offer\Business\Model\OfferWriter;
@@ -22,6 +19,7 @@ use Spryker\Zed\Offer\OfferDependencyProvider;
 /**
  * @method \Spryker\Zed\Offer\OfferConfig getConfig()
  * @method \Spryker\Zed\Offer\Persistence\OfferRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Offer\Persistence\OfferEntityManagerInterface getEntityManager()
  */
 class OfferBusinessFactory extends AbstractBusinessFactory
 {
@@ -37,17 +35,6 @@ class OfferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Offer\Business\Model\OfferConverterInterface
-     */
-    public function createOfferConverter(): OfferConverterInterface
-    {
-        return new OfferConverter(
-            $this->getSalesFacade(),
-            $this->getConfig()
-        );
-    }
-
-    /**
      * @return \Spryker\Zed\Offer\Dependency\Facade\OfferToSalesFacadeInterface
      */
     public function getSalesFacade(): OfferToSalesFacadeInterface
@@ -56,15 +43,19 @@ class OfferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return OfferWriterInterface
+     * @return \Spryker\Zed\Offer\Business\Model\OfferWriterInterface
      */
     public function createOfferWriter(): OfferWriterInterface
     {
-        return new OfferWriter();
+        return new OfferWriter(
+            $this->getEntityManager(),
+            $this->getRepository(),
+            $this->getConfig()
+        );
     }
 
     /**
-     * @return OfferPluginExecutorInterface
+     * @return \Spryker\Zed\Offer\Business\Model\OfferPluginExecutorInterface
      */
     public function createOfferPluginExecutor()
     {

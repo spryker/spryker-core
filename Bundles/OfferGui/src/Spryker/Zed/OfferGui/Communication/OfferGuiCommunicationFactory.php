@@ -7,16 +7,14 @@
 
 namespace Spryker\Zed\OfferGui\Communication;
 
-use Orm\Zed\Offer\Persistence\SpyOfferQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Offer\Business\OfferFacadeInterface;
 use Spryker\Zed\OfferGui\Communication\Table\OffersTable;
 use Spryker\Zed\OfferGui\Communication\Table\OffersTableQueryBuilder;
 use Spryker\Zed\OfferGui\Communication\Table\OffersTableQueryBuilderInterface;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToCustomerFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToMoneyFacadeInterface;
-use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToOmsFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToOfferFacadeInterface;
+use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToOmsFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilDateTimeServiceInterface;
 use Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilSanitizeServiceInterface;
 use Spryker\Zed\OfferGui\OfferGuiDependencyProvider;
@@ -66,6 +64,7 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
 
     /**
      * todo: checl
+     *
      * @return \Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToOmsFacadeInterface
      */
     public function getOmsFacade(): OfferGuiToOmsFacadeInterface
@@ -92,7 +91,7 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return SpyOfferQuery
+     * @return \Orm\Zed\Offer\Persistence\SpyOfferQuery
      */
     public function getPropelQueryOffer()
     {
@@ -100,7 +99,7 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return OfferGuiToOfferFacadeInterface
+     * @return \Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToOfferFacadeInterface
      */
     public function getOfferFacade(): OfferGuiToOfferFacadeInterface
     {
