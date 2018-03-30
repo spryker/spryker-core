@@ -9,8 +9,10 @@ namespace Spryker\Zed\CompanyBusinessUnit\Business;
 
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitCreator\CompanyBusinessUnitCreator;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitCreator\CompanyBusinessUnitCreatorInterface;
+use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExecutor\CompanyBusinessUnitWriterPluginExecutor;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitWriter\CompanyBusinessUnitWriter;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitWriter\CompanyBusinessUnitWriterInterface;
+use Spryker\Zed\CompanyBusinessUnit\CompanyBusinessUnitDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -27,7 +29,8 @@ class CompanyBusinessUnitBusinessFactory extends AbstractBusinessFactory
     {
         return new CompanyBusinessUnitWriter(
             $this->getRepository(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
+            $this->createCompanyBusinessUnitWriterPluginExecutor()
         );
     }
 
@@ -40,5 +43,23 @@ class CompanyBusinessUnitBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getConfig()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExecutor\CompanyBusinessUnitWriterPluginExecutorInterface
+     */
+    protected function createCompanyBusinessUnitWriterPluginExecutor()
+    {
+        return new CompanyBusinessUnitWriterPluginExecutor(
+            $this->getCompanyBusinessUnitPostSavePlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitPostSavePluginInterface[]
+     */
+    protected function getCompanyBusinessUnitPostSavePlugins(): array
+    {
+        return $this->getProvidedDependency(CompanyBusinessUnitDependencyProvider::PLUGINS_COMPANY_BUSINESS_UNIT_POST_SAVE);
     }
 }
