@@ -7,21 +7,21 @@
 
 namespace Spryker\Zed\CompanySupplierGui;
 
+use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToCompanySupplierFacadeBridge;
 use Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToCurrencyFacadeBridge;
 use Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToMoneyFacadeBridge;
 use Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToStoreFacadeBridge;
-use Spryker\Zed\CompanySupplierGui\Dependency\QueryContainer\CompanySupplierGuiToCompanySupplierQueryContainerBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
 class CompanySupplierGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_COMPANY_SUPPLIER = 'FACADE_COMPANY_SUPPLIER';
-    public const QUERY_CONTAINER_COMPANY_SUPPLIER = 'QUERY_CONTAINER_COMPANY_SUPPLIER';
     public const FACADE_MONEY = 'FACADE_MONEY';
     public const FACADE_STORE = 'FACADE_STORE';
     public const FACADE_CURRENCY = 'FACADE_CURRENCY';
+    public const PROPEL_QUERY_PRODUCT = 'PROPEL_QUERY_PRODUCT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -31,10 +31,10 @@ class CompanySupplierGuiDependencyProvider extends AbstractBundleDependencyProvi
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = $this->addCompanySupplierFacade($container);
-        $container = $this->addCompanySupplierQueryContainer($container);
         $container = $this->addMoneyFacade($container);
         $container = $this->addStoreFacade($container);
         $container = $this->addCurrencyFacade($container);
+        $container = $this->addProductQuery($container);
 
         return $container;
     }
@@ -48,20 +48,6 @@ class CompanySupplierGuiDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container[static::FACADE_COMPANY_SUPPLIER] = function (Container $container) {
             return new CompanySupplierGuiToCompanySupplierFacadeBridge($container->getLocator()->companySupplier()->facade());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addCompanySupplierQueryContainer(Container $container): Container
-    {
-        $container[static::QUERY_CONTAINER_COMPANY_SUPPLIER] = function (Container $container) {
-            return new CompanySupplierGuiToCompanySupplierQueryContainerBridge($container->getLocator()->companySupplier()->queryContainer());
         };
 
         return $container;
@@ -104,6 +90,20 @@ class CompanySupplierGuiDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container[static::FACADE_CURRENCY] = function (Container $container) {
             return new CompanySupplierGuiToCurrencyFacadeBridge($container->getLocator()->currency()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductQuery(Container $container)
+    {
+        $container[static::PROPEL_QUERY_PRODUCT] = function (Container $container) {
+            return SpyProductQuery::create();
         };
 
         return $container;

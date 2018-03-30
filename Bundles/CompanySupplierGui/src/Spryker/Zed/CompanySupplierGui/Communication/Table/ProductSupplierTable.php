@@ -7,7 +7,6 @@
 namespace Spryker\Zed\CompanySupplierGui\Communication\Table;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Orm\Zed\CompanySupplier\Persistence\Map\SpyCompanySupplierToProductTableMap;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceTypeTableMap;
 use Orm\Zed\Product\Persistence\SpyProduct;
@@ -16,7 +15,6 @@ use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToCurrencyFacadeInterface;
 use Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToMoneyFacadeInterface;
 use Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToStoreFacadeInterface;
-use Spryker\Zed\CompanySupplierGui\Dependency\QueryContainer\CompanySupplierGuiToCompanySupplierQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
@@ -28,49 +26,60 @@ class ProductSupplierTable extends AbstractTable
     protected const COL_SUPPLIER_PRICE = 'supplier_price';
     protected const COL_DEFAULT_PRICE = 'default_price';
     protected const PRICE_FORMAT = '%s: %s%s';
+    protected const TABLE_URL_DEFAULT_FORMAT = 'table?%s=%d';
     protected const PRICE_SEPARATOR = '<br/>';
     protected const PRICE_TYPE_SUPPLIER = 'SUPPLIER';
     protected const PRICE_TYPE_DEFAULT = 'DEFAULT';
     protected const PARAM_ID_COMPANY = 'id-company';
 
-    /** @var int */
+    /**
+     * @var int
+     */
     protected $idCompany;
 
-    /** @var \Spryker\Zed\CompanySupplierGui\Dependency\QueryContainer\CompanySupplierGuiToCompanySupplierQueryContainerInterface */
-    protected $companySupplierQueryContainer;
+    /**
+     * @var \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    protected $productQuery;
 
-    /** @var \Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToMoneyFacadeInterface */
+    /**
+     * @var \Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToMoneyFacadeInterface
+     */
     protected $moneyFacade;
 
-    /** @var \Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToStoreFacadeInterface */
+    /**
+     * @var \Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToStoreFacadeInterface
+     */
     protected $storeFacade;
 
-    /** @var \Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToCurrencyFacadeInterface */
+    /**
+     * @var \Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToCurrencyFacadeInterface
+     */
     protected $currencyFacade;
 
     /**
      * @param int $idCompany
-     * @param \Spryker\Zed\CompanySupplierGui\Dependency\QueryContainer\CompanySupplierGuiToCompanySupplierQueryContainerInterface $companySupplierQueryContainer
+     * @param \Orm\Zed\Product\Persistence\SpyProductQuery $productQuery
      * @param \Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToMoneyFacadeInterface $moneyFacade
      * @param \Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToCurrencyFacadeInterface $currencyFacade
      */
     public function __construct(
         int $idCompany,
-        CompanySupplierGuiToCompanySupplierQueryContainerInterface $companySupplierQueryContainer,
+        SpyProductQuery $productQuery,
         CompanySupplierGuiToMoneyFacadeInterface $moneyFacade,
         CompanySupplierGuiToStoreFacadeInterface $storeFacade,
         CompanySupplierGuiToCurrencyFacadeInterface $currencyFacade
     ) {
         $this->setTableIdentifier(static::TABLE_IDENTIFIER);
         $this->idCompany = $idCompany;
-        $this->companySupplierQueryContainer = $companySupplierQueryContainer;
+        $this->productQuery = $productQuery;
         $this->moneyFacade = $moneyFacade;
         $this->storeFacade = $storeFacade;
         $this->currencyFacade = $currencyFacade;
 
         $this->defaultUrl = sprintf(
-            'table?%s=%d',
+            static::TABLE_URL_DEFAULT_FORMAT,
             static::PARAM_ID_COMPANY,
             $idCompany
         );
@@ -126,8 +135,11 @@ class ProductSupplierTable extends AbstractTable
      */
     protected function prepareQuery(): SpyProductQuery
     {
-        $query = $this->companySupplierQueryContainer->queryProductSuppliers();
-        $query->where(SpyCompanySupplierToProductTableMap::COL_FK_COMPANY . ' = ?', $this->idCompany);
+        $query = $this->productQuery
+            ->rightJoinSpyCompanySupplierToProduct()
+            ->useSpyCompanySupplierToProductQuery()
+                ->filterByFkCompany($this->idCompany)
+            ->endUse();
 
         return $query;
     }

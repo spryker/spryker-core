@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CompanySupplierGui\Communication;
 
+use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\CompanySupplierGui\Communication\Form\CompanySupplierForm;
 use Spryker\Zed\CompanySupplierGui\Communication\Form\DataProvider\CompanySupplierFormDataProvider;
 use Spryker\Zed\CompanySupplierGui\Communication\Table\ProductSupplierTable;
@@ -15,7 +16,6 @@ use Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToCompany
 use Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToCurrencyFacadeInterface;
 use Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToMoneyFacadeInterface;
 use Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToStoreFacadeInterface;
-use Spryker\Zed\CompanySupplierGui\Dependency\QueryContainer\CompanySupplierGuiToCompanySupplierQueryContainerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 class CompanySupplierGuiCommunicationFactory extends AbstractCommunicationFactory
@@ -29,11 +29,11 @@ class CompanySupplierGuiCommunicationFactory extends AbstractCommunicationFactor
     }
 
     /**
-     * @return \Spryker\Zed\CompanySupplierGui\Dependency\QueryContainer\CompanySupplierGuiToCompanySupplierQueryContainerInterface
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
-    protected function getCompanySupplierQueryContainer(): CompanySupplierGuiToCompanySupplierQueryContainerInterface
+    public function getProductQuery(): SpyProductQuery
     {
-        return $this->getProvidedDependency(CompanySupplierGuiDependencyProvider::QUERY_CONTAINER_COMPANY_SUPPLIER);
+        return $this->getProvidedDependency(CompanySupplierGuiDependencyProvider::PROPEL_QUERY_PRODUCT);
     }
 
     /**
@@ -63,7 +63,7 @@ class CompanySupplierGuiCommunicationFactory extends AbstractCommunicationFactor
     {
         return new ProductSupplierTable(
             $idCompany,
-            $this->getCompanySupplierQueryContainer(),
+            $this->getProductQuery(),
             $this->getMoneyFacade(),
             $this->getStoreFacade(),
             $this->getCurrencyFacade()
