@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\OfferGui\Communication\Form\Product;
+namespace Spryker\Zed\OfferGui\Communication\Form\Item;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Regex;
 
 /**
- * @method \Spryker\Zed\OfferGui\Communication\ManualOrderEntryGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\OfferGui\Communication\OfferGuiCommunicationFactory getFactory()
  */
 class ItemType extends AbstractType
 {

@@ -13,8 +13,6 @@ use Generated\Shared\Transfer\OfferTransfer;
 use Spryker\Zed\Cart\Business\CartFacadeInterface;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\Kernel\Locator;
-use Spryker\Zed\OfferGui\Communication\Form\Product\ProductCollectionType;
-use Spryker\Zed\OfferGui\Communication\Form\Voucher\OfferType;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -39,34 +37,26 @@ class EditController extends AbstractController
 
         $offerTransfer = $this->getFactory()->getOfferFacade()->getOfferById($offerTransfer);
 
-        $offerTransfer->getQuote()->addItem((new ItemTransfer()));
-        $offerTransfer->getQuote()->addItem((new ItemTransfer()));
-        $offerTransfer->getQuote()->addItem((new ItemTransfer()));
 
-        $form = $this->getFactory()->getOfferForm($offerTransfer);
+        $form = $this->createOfferForm($offerTransfer);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var OfferTransfer $offerTransfer */
             $offerTransfer = $form->getData();
+            $quoteTransfer = $offerTransfer->getQuote();
 
-            $items = new \ArrayObject();
-            foreach ($offerTransfer->getQuote()->getItems() as $itemTransfer) {
+            //prepare incoming items to be added
+            $incomingItems = new \ArrayObject();
+            foreach ($quoteTransfer->getIncomingItems() as $itemTransfer) {
                 if ($itemTransfer->getSku()) {
-                    $items->append($itemTransfer);
+                    $incomingItems->append($itemTransfer);
                 }
             }
 
-            $offerTransfer->getQuote()->setItems($items);
-
             $cartChangeTransfer = new CartChangeTransfer();
-            $cartChangeTransfer->setQuote($offerTransfer->getQuote());
-
-            foreach($offerTransfer->getQuote()->getItems() as $itemTransfer) {
-                if (!$itemTransfer->getSku()) {
-                    continue;
-                }
-
+            $cartChangeTransfer->setQuote($quoteTransfer);
+            foreach($incomingItems as $itemTransfer) {
                 $cartChangeTransfer->addItem($itemTransfer);
 
                 /** @var CartFacadeInterface $cartFacade */
@@ -74,15 +64,36 @@ class EditController extends AbstractController
                 $quoteTransfer = $cartFacade->add($cartChangeTransfer);
             }
 
-            //save quote
+            $offerTransfer->setQuote($quoteTransfer);
 
-            dump($offerTransfer);
-            exit;
+            $form = $this->createOfferForm($offerTransfer);
+            //save offer and a quote
+
+//            dump($offerTransfer);
+//            exit;
         }
 
         return $this->viewResponse([
             'offer' => $offerTransfer,
             'form' => $form->createView()
         ]);
+    }
+
+    /**
+     * @param OfferTransfer $offerTransfer
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    protected function createOfferForm(OfferTransfer $offerTransfer)
+    {
+        $offerTransfer
+            ->getQuote()
+            ->setIncomingItems(new \ArrayObject([
+                new ItemTransfer(),
+                new ItemTransfer(),
+                new ItemTransfer()
+            ]));
+
+        return $this->getFactory()->getOfferForm($offerTransfer);
     }
 }

@@ -18,7 +18,8 @@
         {% block widget_content %}
 
             {{ form_start(form) }}
-            <table class="manualOrderItems">
+            {{ form_label(form.items) }}
+            <table>
                 {% for item in form.items %}
                     <tr>
                         <td>{{ form_row(item.sku) }}</td>
@@ -27,6 +28,16 @@
                             {{ form_row(item.unitGrossPrice) }}
                             {{ form_row(item.forcedUnitGrossPrice) }}
                         </td>
+                    </tr>
+                {% endfor %}
+            </table>
+
+            {{ form_label(form.incomingItems) }}
+            <table>
+                {% for incomingItem in form.incomingItems %}
+                    <tr>
+                        <td>{{ form_row(incomingItem.sku) }}</td>
+                        <td>{{ form_row(incomingItem.quantity) }}</td>
                     </tr>
                 {% endfor %}
             </table>

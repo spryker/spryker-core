@@ -5,7 +5,8 @@ namespace Spryker\Zed\OfferGui\Communication\Form;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
-use Spryker\Zed\OfferGui\Communication\Form\Product\ItemType;
+use Spryker\Zed\OfferGui\Communication\Form\Item\IncomingItemType;
+use Spryker\Zed\OfferGui\Communication\Form\Item\ItemType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -13,9 +14,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 class OfferType extends AbstractType
 {
     public const FIELD_ID_OFFER = 'idOffer';
-
-    public const FIELD_ITEM_COLLECTION = 'items';
-    public const FIELD_PRODUCT_COLLECTION = 'product-collection';
+    public const FIELD_ITEMS = 'items';
+    public const FIELD_INCOMING_ITEMS = 'incomingItems';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -25,25 +25,32 @@ class OfferType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder = $this->addIdOfferField($builder);
-        $builder = $this->addItemCollection($builder);
-    }
-
-    protected function addIdOfferField(FormBuilderInterface $builder)
-    {
-        $builder->add(static::FIELD_ID_OFFER, HiddenType::class);
-
-        return $builder;
+        $this
+            ->addIdOfferField($builder)
+            ->addItemsField($builder)
+            ->addIncomingItemsField($builder);
     }
 
     /**
      * @param FormBuilderInterface $builder
      *
-     * @return FormBuilderInterface
+     * @return self
      */
-    protected function addItemCollection(FormBuilderInterface $builder)
+    protected function addIdOfferField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_ITEM_COLLECTION, CollectionType::class, [
+        $builder->add(static::FIELD_ID_OFFER, HiddenType::class);
+
+        return $this;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addItemsField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_ITEMS, CollectionType::class, [
             'entry_type' => ItemType::class,
             'property_path' => 'quote.items',
             'label' => 'Added Items',
@@ -56,13 +63,29 @@ class OfferType extends AbstractType
             ],
         ]);
 
-        return $builder;
+        return $this;
     }
 
-//    protected function addNewItemsFields(FormBuilderInterface $builder)
-//    {
-//        for ($i = 1; $i <= 3; $i++) {
-//            $builder->add(ItemType::class)
-//        }
-//    }
+    /**
+     * @param FormBuilderInterface $builder
+     *
+     * @return self
+     */
+    protected function addIncomingItemsField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_INCOMING_ITEMS, CollectionType::class, [
+            'entry_type' => IncomingItemType::class,
+            'property_path' => 'quote.incomingItems',
+            'label' => 'New items',
+            'required' => false,
+            'allow_add' => true,
+            'allow_delete' => true,
+            'entry_options' => [
+                'label' => false,
+                'data_class' => ItemTransfer::class,
+            ],
+        ]);
+
+        return $this;
+    }
 }

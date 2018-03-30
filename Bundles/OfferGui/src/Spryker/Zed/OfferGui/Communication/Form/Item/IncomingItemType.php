@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\OfferGui\Communication\Form\Product;
+namespace Spryker\Zed\OfferGui\Communication\Form\Item;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -15,12 +15,14 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Regex;
 
 /**
- * @method \Spryker\Zed\ManualOrderEntryGui\Communication\ManualOrderEntryGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\OfferGui\Communication\OfferGuiCommunicationFactory getFactory()
  */
-class ProductType extends AbstractType
+class IncomingItemType extends AbstractType
 {
     public const FIELD_SKU = 'sku';
     public const FIELD_QUANTITY = 'quantity';
+
+    protected const DEFAULT_QUANTITY = 1;
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -76,10 +78,10 @@ class ProductType extends AbstractType
         $builder->add(static::FIELD_QUANTITY, TextType::class, [
             'label' => 'Quantity',
             'required' => false,
+            'data' => static::DEFAULT_QUANTITY,
             'constraints' => [
                 $this->createNumberConstraint($options),
             ],
-            'data' => 1,
         ]);
 
         return $this;
@@ -113,13 +115,5 @@ class ProductType extends AbstractType
             $validationGroup = $options['validation_group'];
         }
         return $validationGroup;
-    }
-
-    /**
-     * @return string
-     */
-    public function getBlockPrefix()
-    {
-        return 'product';
     }
 }

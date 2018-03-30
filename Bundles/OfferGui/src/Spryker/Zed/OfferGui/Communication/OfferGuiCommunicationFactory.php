@@ -8,11 +8,9 @@
 namespace Spryker\Zed\OfferGui\Communication;
 
 use Generated\Shared\Transfer\OfferTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Offer\Persistence\SpyOfferQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Kernel\Locator;
-use Spryker\Zed\Offer\Business\OfferFacadeInterface;
 use Spryker\Zed\OfferGui\Communication\Form\Constraint\SkuExists;
 use Spryker\Zed\OfferGui\Communication\Form\OfferType;
 use Spryker\Zed\OfferGui\Communication\Table\OffersTable;
