@@ -1,6 +1,6 @@
 {
   "name": "spryker/company-business-unit-gui-extension",
-  "description": "CompanyUnitAddressGuiExtension module",
+  "description": "CompanyBusinessUnitGuiExtension module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1"

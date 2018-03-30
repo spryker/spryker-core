@@ -3,27 +3,23 @@
   "description": "CompanyUnitAddressLabelGui module",
   "license": "proprietary",
   "require": {
-    "spryker/kernel": "^3.0.0",
+    "php": ">=7.1",
+    "spryker/company-unit-address-gui-extension": "^1.0.0",
     "spryker/company-unit-address-label": "1.0.0",
-    "spryker/company-unit-address-gui-extension": "^1.0.0"
+    "spryker/kernel": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*",
-    "spryker/gui": "*"
+    "spryker/gui": "*",
+    "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/gui": "It's better to install it"
   },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
     }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/"
-    }
-  },
-  "suggest": {
-    "spryker/gui": "It's better to install it"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
