@@ -1,35 +1,57 @@
 <div class="callout">
     <h4>{{ 'Submit order' | trans }}</h4>
 
-        <div>
-            {{ 'Sub Total' | trans }}
-            <span>{{ quoteTransfer.totals.subtotal | money }}</span>
-        </div>
+    {% include '@ManualOrderEntryGui/create/partials/summary-items.twig' %}
 
-        {% include '@ManualOrderEntryGui/create/partials/summary-discounts.twig' %}
+    <div><br/></div>
+    <div><br/></div>
+    <div>
+        <strong>{{ 'Sub Total' | trans }}:</strong>
+        <span>
+            {% if quoteTransfer.totals %}
+            {{ quoteTransfer.totals.subtotal | money }}
+            {% endif %}
+        </span>
+    </div>
 
-        <div><strong>{{ 'Shipping' | trans }}</strong></div>
-        <div>
-            {{ quoteTransfer.shipment.method.name }}
-            <span>{{ quoteTransfer.shipment.method.storeCurrencyPrice | money }}</span>
-        </div>
+    {% include '@ManualOrderEntryGui/create/partials/summary-discounts.twig' %}
 
-        <div>
-            <strong>{{ 'Grand Total' | trans }}</strong>
-            <span>{{ quoteTransfer.totals.grandtotal | money }}</span>
-        </div>
+    {% if quoteTransfer.shipment %}
+    <div><strong>{{ 'Shipping' | trans }}:</strong></div>
+    <div>
+        {{ quoteTransfer.shipment.method.name }}:
+        <span>{{ quoteTransfer.shipment.method.storeCurrencyPrice | money }}</span>
+    </div>
+    {% endif %}
 
-        <div>
-            {{ 'Tax' | trans }}
-            <span>{{ quoteTransfer.totals.taxtotal.amount | money }}</span>
-        </div>
+    <div>
+        <strong>{{ 'Grand Total' | trans }}:</strong>
+        <span>
+            {% if quoteTransfer.totals %}
+            {{ quoteTransfer.totals.grandtotal | money }}
+            {% endif %}
+        </span>
+    </div>
 
-        {% include '@ManualOrderEntryGui/create/partials/summary-payment.twig' %}
+    <div>
+        <strong>{{ 'Tax' | trans }}:</strong>
+        <span>
+            {% if quoteTransfer.totals %}
+            {{ quoteTransfer.totals.taxtotal.amount | money }}
+            {% endif %}
+        </span>
+    </div>
 
-        <div>
-            {{ 'Price to pay' | trans }}
-            <span>{{ quoteTransfer.totals.priceToPay | money }}</span>
-        </div>
+    {% include '@ManualOrderEntryGui/create/partials/summary-payment.twig' %}
+
+    <div>
+        <strong>{{ 'Price to pay' | trans }}:</strong>
+        <span>
+            {% if quoteTransfer.totals %}
+            {{ quoteTransfer.totals.priceToPay | money }}
+            {% endif %}
+        </span>
+    </div>
 
 </div>
 

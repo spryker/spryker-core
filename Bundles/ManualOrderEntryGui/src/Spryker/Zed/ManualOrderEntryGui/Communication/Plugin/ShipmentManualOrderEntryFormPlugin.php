@@ -7,9 +7,14 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Plugin;
 
+use Generated\Shared\Transfer\ExpenseTransfer;
+use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Shipment\ShipmentType;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -41,7 +46,7 @@ class ShipmentManualOrderEntryFormPlugin extends AbstractPlugin implements Manua
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createForm(Request $request, $dataTransfer = null): \Symfony\Component\Form\FormInterface
+    public function createForm(Request $request, $dataTransfer = null): FormInterface
     {
         return $this->getFactory()->createShipmentForm($request, $dataTransfer);
     }
@@ -53,7 +58,7 @@ class ShipmentManualOrderEntryFormPlugin extends AbstractPlugin implements Manua
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function handleData($quoteTransfer, &$form, $request): \Spryker\Shared\Kernel\Transfer\AbstractTransfer
+    public function handleData($quoteTransfer, &$form, $request): AbstractTransfer
     {
         $idShipmentMethod = $quoteTransfer->getIdShipmentMethod();
         if ($idShipmentMethod) {
@@ -62,8 +67,39 @@ class ShipmentManualOrderEntryFormPlugin extends AbstractPlugin implements Manua
             $shipmentTransfer->setMethod($shipmentMethodTransfer);
 
             $quoteTransfer->setShipment($shipmentTransfer);
+
+            $expenseTransfer = $this->createShippingExpenseTransfer($shipmentMethodTransfer);
+            $quoteTransfer->addExpense($expenseTransfer);
         }
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
+     *
+     * @return \Generated\Shared\Transfer\ExpenseTransfer
+     */
+    protected function createShippingExpenseTransfer(ShipmentMethodTransfer $shipmentMethodTransfer): ExpenseTransfer
+    {
+        $shipmentExpenseTransfer = new ExpenseTransfer();
+        $shipmentExpenseTransfer->fromArray($shipmentMethodTransfer->toArray(), true);
+        $shipmentExpenseTransfer->setType(ShipmentConstants::SHIPMENT_EXPENSE_TYPE);
+        $this->setPrice($shipmentExpenseTransfer, $shipmentMethodTransfer->getStoreCurrencyPrice());
+        $shipmentExpenseTransfer->setQuantity(1);
+
+        return $shipmentExpenseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ExpenseTransfer $shipmentExpenseTransfer
+     * @param int $price
+     *
+     * @return void
+     */
+    protected function setPrice(ExpenseTransfer $shipmentExpenseTransfer, $price): void
+    {
+        $shipmentExpenseTransfer->setUnitNetPrice(0);
+        $shipmentExpenseTransfer->setUnitGrossPrice($price);
     }
 }

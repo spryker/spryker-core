@@ -20,9 +20,46 @@ interface ManualOrderEntryGuiToMoneyFacadeInterface
     public function fromInteger($amount, $isoCode = null);
 
     /**
+     * @param string $amount
+     * @param string|null $isoCode
+     *
+     * @return \Generated\Shared\Transfer\MoneyTransfer
+     */
+    public function fromString($amount, $isoCode = null);
+
+    /**
+     * @param float $amount
+     * @param string|null $isoCode
+     *
+     * @return \Generated\Shared\Transfer\MoneyTransfer
+     */
+    public function fromFloat($amount, $isoCode = null);
+
+    /**
      * @param \Generated\Shared\Transfer\MoneyTransfer $moneyTransfer
      *
      * @return string
      */
     public function formatWithSymbol(MoneyTransfer $moneyTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\MoneyTransfer $moneyTransfer
+     *
+     * @return string
+     */
+    public function formatWithoutSymbol(MoneyTransfer $moneyTransfer);
+
+    /**
+     * @param int $value
+     *
+     * @return float
+     */
+    public function convertIntegerToDecimal($value);
+
+    /**
+     * @param float $value
+     *
+     * @return int
+     */
+    public function convertDecimalToInteger($value);
 }

@@ -22,6 +22,7 @@ class ItemCollectionType extends AbstractType
     public const FIELD_ITEMS = 'manualOrderItems';
 
     public const OPTION_ITEM_CLASS_COLLECTION = 'item_class_collection';
+    public const OPTION_ISO_CODE = 'isoCode';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -31,6 +32,7 @@ class ItemCollectionType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setRequired(static::OPTION_ITEM_CLASS_COLLECTION);
+        $resolver->setDefined(static::OPTION_ISO_CODE);
     }
 
     /**
@@ -61,6 +63,7 @@ class ItemCollectionType extends AbstractType
             'allow_delete' => true,
             'entry_options' => [
                 'data_class' => $options[static::OPTION_ITEM_CLASS_COLLECTION],
+                ItemType::OPTION_ISO_CODE => $options[static::OPTION_ISO_CODE],
             ],
         ]);
 

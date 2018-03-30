@@ -10,8 +10,11 @@ namespace Spryker\Zed\ManualOrderEntryGui\Communication\Plugin;
 use ArrayObject;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Voucher\VoucherType;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Traits\UniqueFlashMessagesTrait;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -19,13 +22,15 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class VoucherManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOrderEntryFormPluginInterface
 {
+    use UniqueFlashMessagesTrait;
+
     protected const MESSAGE_ERROR = 'Voucher code \'%s\' has not been applied';
     protected const MESSAGE_SUCCESS = 'Voucher code \'%s\' has been applied';
 
     /**
-     * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToDiscountFacadeInterface
+     * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCartFacadeInterface
      */
-    protected $discountFacade;
+    protected $cartFacade;
 
     /**
      * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToMessengerFacadeInterface
@@ -34,7 +39,7 @@ class VoucherManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
 
     public function __construct()
     {
-        $this->discountFacade = $this->getFactory()->getDiscountFacade();
+        $this->cartFacade = $this->getFactory()->getCartFacade();
         $this->messengerFacade = $this->getFactory()->getMessengerFacade();
     }
 
@@ -52,7 +57,7 @@ class VoucherManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createForm(Request $request, $dataTransfer = null): \Symfony\Component\Form\FormInterface
+    public function createForm(Request $request, $dataTransfer = null): FormInterface
     {
         return $this->getFactory()->createVoucherForm($dataTransfer);
     }
@@ -64,7 +69,7 @@ class VoucherManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function handleData($quoteTransfer, &$form, $request): \Spryker\Shared\Kernel\Transfer\AbstractTransfer
+    public function handleData($quoteTransfer, &$form, $request): AbstractTransfer
     {
         if (strlen($quoteTransfer->getVoucherCode())) {
             $discountTransfer = new DiscountTransfer();
@@ -73,7 +78,9 @@ class VoucherManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
             $quoteTransfer->setVoucherDiscounts(new ArrayObject());
             $quoteTransfer->addVoucherDiscount($discountTransfer);
 
-            $quoteTransfer = $this->discountFacade->calculateDiscounts($quoteTransfer);
+            if (count($quoteTransfer->getItems())) {
+                $quoteTransfer = $this->cartFacade->reloadItems($quoteTransfer);
+            }
 
             if (!count($quoteTransfer->getVoucherDiscounts())) {
                 $this->addMessage(sprintf(static::MESSAGE_ERROR, $quoteTransfer->getVoucherCode()), false);
@@ -84,6 +91,8 @@ class VoucherManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
             } else {
                 $this->addMessage(sprintf(static::MESSAGE_SUCCESS, $quoteTransfer->getVoucherCode()));
             }
+
+            $this->uniqueFlashMessages();
         }
 
         return $quoteTransfer;

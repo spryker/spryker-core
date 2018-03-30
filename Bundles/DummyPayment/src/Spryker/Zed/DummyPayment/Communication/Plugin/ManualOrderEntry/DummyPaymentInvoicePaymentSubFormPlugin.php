@@ -5,24 +5,26 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\DummyPayment\Communication\Plugin\Checkout;
+namespace Spryker\Zed\DummyPayment\Communication\Plugin\ManualOrderEntry;
 
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\DummyPayment\DummyPaymentConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Payment\SubFormPluginInterface;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Spryker\Zed\ManualOrderEntryGuiExtension\Dependency\Plugin\PaymentSubFormPluginInterface;
 
 /**
  * @method \Spryker\Zed\DummyPayment\Business\DummyPaymentFacadeInterface getFacade()
  * @method \Spryker\Zed\DummyPayment\Communication\DummyPaymentCommunicationFactory getFactory()
  */
-class DummyPaymentInvoiceSubFormPlugin extends AbstractPlugin implements SubFormPluginInterface
+class DummyPaymentInvoicePaymentSubFormPlugin extends AbstractPlugin implements PaymentSubFormPluginInterface
 {
     const PAYMENT_PROVIDER = 'DummyPayment';
 
     /**
      * @return \Spryker\Zed\Kernel\Communication\Form\AbstractType
      */
-    public function createSubForm()
+    public function createSubForm(): AbstractType
     {
         return $this->getFactory()->createInvoiceForm();
     }
@@ -30,7 +32,7 @@ class DummyPaymentInvoiceSubFormPlugin extends AbstractPlugin implements SubForm
     /**
      * @return string
      */
-    public function getPropertyPath()
+    public function getPropertyPath(): string
     {
         return DummyPaymentConfig::PAYMENT_METHOD_INVOICE;
     }
@@ -38,7 +40,7 @@ class DummyPaymentInvoiceSubFormPlugin extends AbstractPlugin implements SubForm
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return DummyPaymentConfig::PAYMENT_METHOD_INVOICE;
     }
@@ -46,7 +48,7 @@ class DummyPaymentInvoiceSubFormPlugin extends AbstractPlugin implements SubForm
     /**
      * @return string
      */
-    public function getPaymentProvider()
+    public function getPaymentProvider(): string
     {
         return static::PAYMENT_PROVIDER;
     }
@@ -54,27 +56,27 @@ class DummyPaymentInvoiceSubFormPlugin extends AbstractPlugin implements SubForm
     /**
      * @return string
      */
-    public function getPaymentMethod()
+    public function getPaymentMethod(): string
     {
         return 'invoice';
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getData($dataTransfer)
+    public function getData($dataTransfer): QuoteTransfer
     {
         return $this->getFactory()->createInvoiceFormDataProvider()->getData($dataTransfer);
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
      *
      * @return array
      */
-    public function getOptions($dataTransfer)
+    public function getOptions($dataTransfer): array
     {
         return $this->getFactory()->createInvoiceFormDataProvider()->getOptions($dataTransfer);
     }

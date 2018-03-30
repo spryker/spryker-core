@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\PaymentTransfer;
 class DummyPaymentInvoiceFormDataProvider
 {
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return array
      */
@@ -25,7 +25,7 @@ class DummyPaymentInvoiceFormDataProvider
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function getData($quoteTransfer)
     {

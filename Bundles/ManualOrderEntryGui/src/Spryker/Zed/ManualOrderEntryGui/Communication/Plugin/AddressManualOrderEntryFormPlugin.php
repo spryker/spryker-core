@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Plugin;
 
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Address\AddressCollectionType;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -40,7 +42,7 @@ class AddressManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createForm(Request $request, $dataTransfer = null): \Symfony\Component\Form\FormInterface
+    public function createForm(Request $request, $dataTransfer = null): FormInterface
     {
         return $this->getFactory()->createAddressCollectionForm($dataTransfer);
     }
@@ -52,7 +54,7 @@ class AddressManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
      *
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    public function handleData($quoteTransfer, &$form, $request): \Spryker\Shared\Kernel\Transfer\AbstractTransfer
+    public function handleData($quoteTransfer, &$form, $request): AbstractTransfer
     {
         if ($quoteTransfer->getShippingAddress()->getIdCustomerAddress()) {
             $addressTransfer = $quoteTransfer->getShippingAddress();
@@ -62,7 +64,9 @@ class AddressManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
             $quoteTransfer->setShippingAddress($addressTransfer);
         }
 
-        if ($quoteTransfer->getBillingAddress()->getIdCustomerAddress()) {
+        if ($quoteTransfer->getBillingSameAsShipping()) {
+            $quoteTransfer->setBillingAddress($quoteTransfer->getShippingAddress());
+        } elseif ($quoteTransfer->getBillingAddress()->getIdCustomerAddress()) {
             $addressTransfer = $quoteTransfer->getBillingAddress();
             $addressTransfer->setFkCustomer($quoteTransfer->getCustomer()->getIdCustomer());
 

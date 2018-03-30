@@ -8,9 +8,24 @@
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCalculationFacadeInterface;
 
 class SummaryDataProvider implements FormDataProviderInterface
 {
+    /**
+     * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCalculationFacadeInterface
+     */
+    protected $calculationFacade;
+
+    /**
+     * @param \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCalculationFacadeInterface $calculationFacade
+     */
+    public function __construct(
+        ManualOrderEntryGuiToCalculationFacadeInterface $calculationFacade
+    ) {
+        $this->calculationFacade = $calculationFacade;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -18,6 +33,8 @@ class SummaryDataProvider implements FormDataProviderInterface
      */
     public function getData($quoteTransfer)
     {
+        $quoteTransfer = $this->calculationFacade->recalculateQuote($quoteTransfer);
+
         return $quoteTransfer;
     }
 

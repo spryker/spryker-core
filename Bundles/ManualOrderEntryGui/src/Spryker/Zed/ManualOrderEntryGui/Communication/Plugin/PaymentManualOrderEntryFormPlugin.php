@@ -8,8 +8,10 @@
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Plugin;
 
 use Generated\Shared\Transfer\CalculableObjectTransfer;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Payment\PaymentType;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -23,7 +25,7 @@ class PaymentManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
     protected $paymentFacade;
 
     /**
-     * @var \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Payment\SubFormPluginInterface[]
+     * @var \Spryker\Zed\ManualOrderEntryGuiExtension\Dependency\Plugin\PaymentSubFormPluginInterface[]
      */
     protected $subFormPlugins;
 
@@ -47,7 +49,7 @@ class PaymentManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createForm(Request $request, $dataTransfer = null): \Symfony\Component\Form\FormInterface
+    public function createForm(Request $request, $dataTransfer = null): FormInterface
     {
         return $this->getFactory()->createPaymentForm($request, $dataTransfer);
     }
@@ -59,7 +61,7 @@ class PaymentManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
      *
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    public function handleData($quoteTransfer, &$form, $request): \Spryker\Shared\Kernel\Transfer\AbstractTransfer
+    public function handleData($quoteTransfer, &$form, $request): AbstractTransfer
     {
         $paymentSelection = $quoteTransfer->getPayment()->getPaymentSelection();
 
@@ -88,7 +90,9 @@ class PaymentManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
             ->setPayments($quoteTransfer->getPayments())
             ->setPayment($quoteTransfer->getPayment());
 
-        $this->paymentFacade->recalculatePayments($calculableObjectTransfer);
+        if (count($calculableObjectTransfer->getItems())) {
+            $this->paymentFacade->recalculatePayments($calculableObjectTransfer);
+        }
 
         return $quoteTransfer;
     }

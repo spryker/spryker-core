@@ -31,4 +31,9 @@ interface ManualOrderEntryGuiToMessengerFacadeInterface
      * @return void
      */
     public function addInfoMessage(MessageTransfer $message);
+
+    /**
+     * @return \Generated\Shared\Transfer\FlashMessagesTransfer
+     */
+    public function getStoredMessages();
 }
