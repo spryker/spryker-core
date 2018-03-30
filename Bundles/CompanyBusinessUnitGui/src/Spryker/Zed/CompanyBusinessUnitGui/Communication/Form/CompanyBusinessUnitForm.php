@@ -57,7 +57,7 @@ class CompanyBusinessUnitForm extends AbstractType
     {
         $this
             ->addCompanyField($builder, $options[static::OPTION_COMPANY_CHOICES])
-            ->addIdCompanyField($builder)
+            ->addIdCompanyBusinessUnitField($builder)
             ->addNameField($builder)
             ->addIbanField($builder)
             ->addBicField($builder);
@@ -68,7 +68,7 @@ class CompanyBusinessUnitForm extends AbstractType
      *
      * @return \Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyBusinessUnitForm
      */
-    protected function addIdCompanyField(FormBuilderInterface $builder): CompanyBusinessUnitForm
+    protected function addIdCompanyBusinessUnitField(FormBuilderInterface $builder): CompanyBusinessUnitForm
     {
         $builder->add(static::FIELD_ID_COMPANY_BUSINESS_UNIT, HiddenType::class);
 

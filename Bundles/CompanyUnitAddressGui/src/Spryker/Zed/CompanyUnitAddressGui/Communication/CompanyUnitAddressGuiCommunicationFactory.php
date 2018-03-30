@@ -11,7 +11,9 @@ use Spryker\Zed\CompanyUnitAddressGui\Communication\Form\CompanyUnitAddressForm;
 use Spryker\Zed\CompanyUnitAddressGui\Communication\Form\DataProvider\CompanyUnitAddressFormDataProvider;
 use Spryker\Zed\CompanyUnitAddressGui\Communication\Table\CompanyUnitAddressTable;
 use Spryker\Zed\CompanyUnitAddressGui\CompanyUnitAddressGuiDependencyProvider;
+use Spryker\Zed\CompanyUnitAddressGui\Dependency\Facade\CompanyUnitAddressGuiToCompanyFacadeInterface;
 use Spryker\Zed\CompanyUnitAddressGui\Dependency\Facade\CompanyUnitAddressGuiToCompanyUnitAddressFacadeInterface;
+use Spryker\Zed\CompanyUnitAddressGui\Dependency\Facade\CompanyUnitAddressGuiToCountryFacadeInterface;
 use Spryker\Zed\CompanyUnitAddressGui\Dependency\QueryContainer\CompanyUnitAddressGuiToCompanyUnitAddressQueryContainerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
@@ -49,11 +51,31 @@ class CompanyUnitAddressGuiCommunicationFactory extends AbstractCommunicationFac
     }
 
     /**
-     * @param int $idCompanyUnitAddress
+     * @return \Spryker\Zed\CompanyUnitAddressGui\Dependency\Facade\CompanyUnitAddressGuiToCompanyFacadeInterface
+     */
+    public function getCompanyFacade(): CompanyUnitAddressGuiToCompanyFacadeInterface
+    {
+        return $this->getProvidedDependency(
+            CompanyUnitAddressGuiDependencyProvider::FACADE_COMPANY
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUnitAddressGui\Dependency\Facade\CompanyUnitAddressGuiToCountryFacadeInterface
+     */
+    public function getCountryFacade(): CompanyUnitAddressGuiToCountryFacadeInterface
+    {
+        return $this->getProvidedDependency(
+            CompanyUnitAddressGuiDependencyProvider::FACADE_COUNTRY
+        );
+    }
+
+    /**
+     * @param int|null $idCompanyUnitAddress
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createCompanyUnitAddressForm(int $idCompanyUnitAddress): FormInterface
+    public function createCompanyUnitAddressForm(?int $idCompanyUnitAddress = null): FormInterface
     {
         $companyUnitAddressDataProvider = $this->createCompanyUnitAddressDataProvider();
 
@@ -78,7 +100,9 @@ class CompanyUnitAddressGuiCommunicationFactory extends AbstractCommunicationFac
     public function createCompanyUnitAddressDataProvider(): CompanyUnitAddressFormDataProvider
     {
         return new CompanyUnitAddressFormDataProvider(
-            $this->getCompanyUnitAddressFacade()
+            $this->getCompanyUnitAddressFacade(),
+            $this->getCompanyFacade(),
+            $this->getCountryFacade()
         );
     }
 }

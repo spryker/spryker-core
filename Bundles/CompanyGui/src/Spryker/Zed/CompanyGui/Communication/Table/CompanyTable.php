@@ -21,7 +21,7 @@ class CompanyTable extends AbstractTable
     public const COL_IS_ACTIVE = SpyCompanyTableMap::COL_IS_ACTIVE;
     public const COL_STATUS = SpyCompanyTableMap::COL_STATUS;
     public const COL_TYPE = 'company_type';
-    public const COL_ACTIONS = 'Actions';
+    public const COL_ACTIONS = 'actions';
 
     public const REQUEST_ID_COMPANY = 'id-company';
 
@@ -65,7 +65,7 @@ class CompanyTable extends AbstractTable
             static::COL_TYPE => 'Type',
             static::COL_IS_ACTIVE => 'Active',
             static::COL_STATUS => 'Status',
-            static::COL_ACTIONS => static::COL_ACTIONS,
+            static::COL_ACTIONS => 'Actions',
         ]);
 
         $config->addRawColumn(static::COL_IS_ACTIVE);
