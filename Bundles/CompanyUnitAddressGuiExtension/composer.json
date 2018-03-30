@@ -7,7 +7,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/company-unit-address": "^2.0.0",
+    "spryker/company-unit-address": "^1.2.0",
     "spryker/gui": "^3.13.0",
     "spryker/symfony": "^3.0.0",
     "spryker/testify": "*"
