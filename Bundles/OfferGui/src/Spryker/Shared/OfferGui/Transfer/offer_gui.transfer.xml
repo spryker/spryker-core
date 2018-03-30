@@ -15,4 +15,11 @@
 
         <property name="incomingItems" type="Item[]" singular="incomingItem"/>
     </transfer>
+
+    <transfer name="Item">
+        <property name="purchasingUnitGrossPrice" type="int" />
+
+        <property name="offerDiscount" type="int" />
+        <property name="offerFee" type="int" />
+    </transfer>
 </transfers>

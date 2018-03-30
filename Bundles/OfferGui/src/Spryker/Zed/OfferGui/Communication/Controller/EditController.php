@@ -54,18 +54,20 @@ class EditController extends AbstractController
                 }
             }
 
+            //update cart
+            /** @var CartFacadeInterface $cartFacade */
+            $cartFacade = Locator::getInstance()->cart()->facade();
+
             $cartChangeTransfer = new CartChangeTransfer();
             $cartChangeTransfer->setQuote($quoteTransfer);
             foreach($incomingItems as $itemTransfer) {
                 $cartChangeTransfer->addItem($itemTransfer);
-
-                /** @var CartFacadeInterface $cartFacade */
-                $cartFacade = Locator::getInstance()->cart()->facade();
                 $quoteTransfer = $cartFacade->add($cartChangeTransfer);
             }
-
+            $quoteTransfer = $cartFacade->reloadItems($quoteTransfer);
             $offerTransfer->setQuote($quoteTransfer);
 
+            //refresh form after calculations
             $form = $this->createOfferForm($offerTransfer);
             //save offer and a quote
 

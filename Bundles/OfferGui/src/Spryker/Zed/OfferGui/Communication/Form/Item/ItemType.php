@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Constraints\Range;
 use Symfony\Component\Validator\Constraints\Regex;
 
 /**
@@ -23,6 +24,11 @@ class ItemType extends AbstractType
     public const FIELD_SKU = 'sku';
     public const FIELD_QUANTITY = 'quantity';
     public const FIELD_UNIT_GROSS_PRICE = 'unitGrossPrice';
+
+    public const FIELD_OFFER_DISCOUNT = 'offerDiscount';
+    public const FIELD_UNIT_SUBTOTAL_AGGREGATION = 'unitSubtotalAggregation';
+    public const FIELD_SUM_SUBTOTAL_AGGREGATION = 'sumSubtotalAggregation';
+
     public const FIELD_FORCED_UNIT_GROSS_PRICE = 'forcedUnitGrossPrice';
 
     /**
@@ -51,6 +57,9 @@ class ItemType extends AbstractType
             ->addSkuField($builder, $options)
             ->addQuantityField($builder, $options)
             ->addUnitGrossPriceField($builder, $options)
+            ->addOfferDiscountField($builder, $options)
+            ->addUnitSubtotalAggregationPriceField($builder, $options)
+            ->addSumSubtotalAggregationPriceField($builder, $options)
             ->addForcedUnitGrossPriceField($builder, $options);
     }
 
@@ -76,11 +85,133 @@ class ItemType extends AbstractType
      *
      * @return $this
      */
+    protected function addPurchasingUnitGrossPriceField(FormBuilderInterface $builder, array $options)
+    {
+//        $builder->add(static::FIELD_UNIT_GROSS_PRICE, TextType::class, [
+//            'label' => 'Unit Gross Price',
+//            'required' => false,
+//            'disabled' => true,
+//            'constraints' => [
+//                $this->createNumberConstraint($options),
+//            ],
+//        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
     protected function addUnitGrossPriceField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_UNIT_GROSS_PRICE, TextType::class, [
             'label' => 'Unit Gross Price',
             'required' => false,
+            'constraints' => [
+                $this->createNumberConstraint($options),
+            ],
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addOfferDiscountField(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(static::FIELD_OFFER_DISCOUNT, TextType::class, [
+            'label' => 'Offer discount %',
+            'required' => false,
+            'constraints' => [
+                new Range([
+                    'min' => 0,
+                    'max' => 100
+                ])
+            ],
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addWarehousesField(FormBuilderInterface $builder, array $options)
+    {
+//        $builder->add(static::FIELD_UNIT_GROSS_PRICE, TextType::class, [
+//            'label' => 'Unit Gross Price',
+//            'required' => false,
+//            'disabled' => true,
+//            'constraints' => [
+//                $this->createNumberConstraint($options),
+//            ],
+//        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addFeePriceField(FormBuilderInterface $builder, array $options)
+    {
+//        $builder->add(static::FIELD_UNIT_GROSS_PRICE, TextType::class, [
+//            'label' => 'Unit Gross Price',
+//            'required' => false,
+//            'disabled' => true,
+//            'constraints' => [
+//                $this->createNumberConstraint($options),
+//            ],
+//        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addUnitSubtotalAggregationPriceField(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(static::FIELD_UNIT_SUBTOTAL_AGGREGATION, TextType::class, [
+            'label' => 'Unit Subtotal Price',
+            'required' => false,
+            'disabled' => true,
+            'constraints' => [
+                $this->createNumberConstraint($options),
+            ],
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addSumSubtotalAggregationPriceField(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(static::FIELD_SUM_SUBTOTAL_AGGREGATION, TextType::class, [
+            'label' => 'Sum Subtotal Price',
+            'required' => false,
+            'disabled' => true,
             'constraints' => [
                 $this->createNumberConstraint($options),
             ],
