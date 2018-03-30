@@ -8,9 +8,11 @@
 namespace Spryker\Zed\CompanyBusinessUnitGui\Communication\Form;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
@@ -20,7 +22,9 @@ use Symfony\Component\Validator\Constraints\Required;
  */
 class CompanyBusinessUnitForm extends AbstractType
 {
+    public const OPTION_COMPANY_CHOICES = 'company_choices';
     protected const FIELD_ID_COMPANY_BUSINESS_UNIT = 'id_company_business_unit';
+    protected const FIELD_FK_COMPANY = 'fk_company';
     protected const FIELD_NAME = 'name';
     protected const FIELD_IBAN = 'iban';
     protected const FIELD_BIC = 'bic';
@@ -34,6 +38,16 @@ class CompanyBusinessUnitForm extends AbstractType
     }
 
     /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setRequired(static::OPTION_COMPANY_CHOICES);
+    }
+
+    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
@@ -42,7 +56,8 @@ class CompanyBusinessUnitForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this
-            ->addIdCompanyField($builder)
+            ->addCompanyField($builder, $options[static::OPTION_COMPANY_CHOICES])
+            ->addIdCompanyBusinessUnitField($builder)
             ->addNameField($builder)
             ->addIbanField($builder)
             ->addBicField($builder);
@@ -53,9 +68,9 @@ class CompanyBusinessUnitForm extends AbstractType
      *
      * @return \Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyBusinessUnitForm
      */
-    protected function addIdCompanyField(FormBuilderInterface $builder): CompanyBusinessUnitForm
+    protected function addIdCompanyBusinessUnitField(FormBuilderInterface $builder): CompanyBusinessUnitForm
     {
-        $builder->add(self::FIELD_ID_COMPANY_BUSINESS_UNIT, HiddenType::class);
+        $builder->add(static::FIELD_ID_COMPANY_BUSINESS_UNIT, HiddenType::class);
 
         return $this;
     }
@@ -67,7 +82,7 @@ class CompanyBusinessUnitForm extends AbstractType
      */
     protected function addNameField(FormBuilderInterface $builder): CompanyBusinessUnitForm
     {
-        $builder->add(self::FIELD_NAME, TextType::class, [
+        $builder->add(static::FIELD_NAME, TextType::class, [
             'label' => 'Name',
             'constraints' => $this->getTextFieldConstraints(),
         ]);
@@ -82,7 +97,7 @@ class CompanyBusinessUnitForm extends AbstractType
      */
     protected function addIbanField(FormBuilderInterface $builder): CompanyBusinessUnitForm
     {
-        $builder->add(self::FIELD_IBAN, TextType::class, [
+        $builder->add(static::FIELD_IBAN, TextType::class, [
             'label' => 'IBAN',
             'required' => false,
             'constraints' => [
@@ -101,13 +116,34 @@ class CompanyBusinessUnitForm extends AbstractType
      */
     protected function addBicField(FormBuilderInterface $builder): CompanyBusinessUnitForm
     {
-        $builder->add(self::FIELD_BIC, TextType::class, [
+        $builder->add(static::FIELD_BIC, TextType::class, [
             'label' => 'BIC',
             'required' => false,
             'constraints' => [
                 new Length(['max' => 100]),
             ],
             'empty_data' => '',
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $choices
+     *
+     * @return \Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyBusinessUnitForm
+     */
+    protected function addCompanyField(FormBuilderInterface $builder, array $choices): CompanyBusinessUnitForm
+    {
+        $builder->add(static::FIELD_FK_COMPANY, ChoiceType::class, [
+            'label' => 'Company',
+            'placeholder' => 'Select one',
+            'choices' => array_flip($choices),
+            'choices_as_values' => true,
+            'constraints' => [
+                new NotBlank(),
+            ],
         ]);
 
         return $this;

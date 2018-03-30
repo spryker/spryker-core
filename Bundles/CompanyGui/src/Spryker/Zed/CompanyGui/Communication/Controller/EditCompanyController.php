@@ -25,8 +25,8 @@ class EditCompanyController extends AbstractController
     public const MESSAGE_COMPANY_DEACTIVATE_SUCCESS = 'Company has been deactivated.';
     public const MESSAGE_COMPANY_APPROVE_SUCCESS = 'Company has been approved.';
     public const MESSAGE_COMPANY_DENY_SUCCESS = 'Company has been denied.';
-    public const MESSAGE_COMPANY_UPDATE_SUCCESS = 'Company has been updated.';
-    public const MESSAGE_COMPANY_UPDATE_ERROR = 'Company has not been updated.';
+    protected const MESSAGE_COMPANY_UPDATE_SUCCESS = 'Company has been updated.';
+    protected const MESSAGE_COMPANY_UPDATE_ERROR = 'Company has not been updated.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Company\Persistence;
 
+use Generated\Shared\Transfer\CompanyCollectionTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyTypeCollectionTransfer;
 
@@ -45,4 +46,14 @@ interface CompanyRepositoryInterface
      * @return \Generated\Shared\Transfer\CompanyTypeCollectionTransfer
      */
     public function getCompanyTypes(): CompanyTypeCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves collection of all companies
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\CompanyCollectionTransfer
+     */
+    public function getCompanies(): CompanyCollectionTransfer;
 }

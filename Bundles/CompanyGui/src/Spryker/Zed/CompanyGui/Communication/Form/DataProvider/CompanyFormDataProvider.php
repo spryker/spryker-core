@@ -27,24 +27,29 @@ class CompanyFormDataProvider
     }
 
     /**
-     * @param int $idCompany
+     * @param int|null $idCompany
      *
      * @return \Generated\Shared\Transfer\CompanyTransfer
      */
-    public function getData(int $idCompany)
+    public function getData(?int $idCompany = null): CompanyTransfer
     {
-        return $this->companyFacade->getCompanyById($this->createCompanyTransfer()->setIdCompany($idCompany));
+        $company = $this->createCompanyTransfer();
+        if (!$idCompany) {
+            return $company;
+        }
+
+        return $this->companyFacade->getCompanyById($company->setIdCompany($idCompany));
     }
 
     /**
-     * @param int $idCompany
+     * @param int|null $idCompany
      *
      * @return array
      */
-    public function getOptions(int $idCompany)
+    public function getOptions(?int $idCompany = null): array
     {
         return [
-            CompanyForm::OPTION_COMPANY_TYPE_CHOICES => $this->prepareOptions(),
+            CompanyForm::OPTION_COMPANY_TYPE_CHOICES => $this->prepareCompanyTypeChoices(),
             'data_class' => CompanyTransfer::class,
         ];
     }
@@ -52,7 +57,7 @@ class CompanyFormDataProvider
     /**
      * @return \Generated\Shared\Transfer\CompanyTransfer
      */
-    protected function createCompanyTransfer()
+    protected function createCompanyTransfer(): CompanyTransfer
     {
         return new CompanyTransfer();
     }
@@ -60,7 +65,7 @@ class CompanyFormDataProvider
     /**
      * @return array
      */
-    protected function prepareOptions(): array
+    protected function prepareCompanyTypeChoices(): array
     {
         $result = [];
 

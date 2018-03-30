@@ -56,7 +56,7 @@ class CompanyForm extends AbstractType
         $this
             ->addIdCompanyField($builder)
             ->addNameField($builder)
-            ->addCompanyTypeField($builder, $options[self::OPTION_COMPANY_TYPE_CHOICES]);
+            ->addCompanyTypeField($builder, $options[static::OPTION_COMPANY_TYPE_CHOICES]);
     }
 
     /**
@@ -66,7 +66,7 @@ class CompanyForm extends AbstractType
      */
     protected function addIdCompanyField(FormBuilderInterface $builder): CompanyForm
     {
-        $builder->add(self::FIELD_ID_COMPANY, HiddenType::class);
+        $builder->add(static::FIELD_ID_COMPANY, HiddenType::class);
 
         return $this;
     }
@@ -78,7 +78,7 @@ class CompanyForm extends AbstractType
      */
     protected function addNameField(FormBuilderInterface $builder): CompanyForm
     {
-        $builder->add(self::FIELD_NAME, TextType::class, [
+        $builder->add(static::FIELD_NAME, TextType::class, [
             'label' => 'Name',
             'constraints' => $this->getTextFieldConstraints(),
         ]);
@@ -94,7 +94,7 @@ class CompanyForm extends AbstractType
      */
     protected function addCompanyTypeField(FormBuilderInterface $builder, array $choices): CompanyForm
     {
-        $builder->add(self::FIELD_FK_COMPANY_TYPE, ChoiceType::class, [
+        $builder->add(static::FIELD_FK_COMPANY_TYPE, ChoiceType::class, [
             'label' => 'Company type',
             'placeholder' => 'Select one',
             'choices' => array_flip($choices),

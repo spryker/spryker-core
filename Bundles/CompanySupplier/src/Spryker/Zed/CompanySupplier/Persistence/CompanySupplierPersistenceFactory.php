@@ -9,7 +9,6 @@ namespace Spryker\Zed\CompanySupplier\Persistence;
 
 use Orm\Zed\Company\Persistence\SpyCompanyQuery;
 use Orm\Zed\CompanySupplier\Persistence\SpyCompanySupplierToProductQuery;
-use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\CompanySupplier\CompanySupplierDependencyProvider;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
@@ -31,14 +30,6 @@ class CompanySupplierPersistenceFactory extends AbstractPersistenceFactory
      */
     public function createCompanyQuery(): SpyCompanyQuery
     {
-        return $this->getProvidedDependency(CompanySupplierDependencyProvider::QUERY_COMPANY);
-    }
-
-    /**
-     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
-     */
-    public function createProductQueryContainer(): SpyProductQuery
-    {
-        return $this->getProvidedDependency(CompanySupplierDependencyProvider::QUERY_PRODUCT);
+        return $this->getProvidedDependency(CompanySupplierDependencyProvider::PROPEL_QUERY_COMPANY);
     }
 }

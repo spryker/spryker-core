@@ -17,10 +17,10 @@ class CompanyBusinessUnitTable extends AbstractTable
 {
     protected const COL_ID_COMPANY_BUSINESS_UNIT = SpyCompanyBusinessUnitTableMap::COL_ID_COMPANY_BUSINESS_UNIT;
     protected const COL_NAME = SpyCompanyBusinessUnitTableMap::COL_NAME;
-    protected const COL_ADDRESS = 'Address';
+    protected const COL_ADDRESS = 'address';
     protected const COL_IBAN = SpyCompanyBusinessUnitTableMap::COL_IBAN;
     protected const COL_BIC = SpyCompanyBusinessUnitTableMap::COL_BIC;
-    protected const COL_ACTIONS = 'Actions';
+    protected const COL_ACTIONS = 'actions';
     protected const REQUEST_ID_COMPANY_BUSINESS_UNIT = 'id-company-business-unit';
     protected const URL_COMPANY_BUSINESS_UNIT_EDIT = '/company-business-unit-gui/edit-company-business-unit/index?%s=%d';
     protected const FORMAT_ADDRESS = '%s, %s, %s';
@@ -48,10 +48,10 @@ class CompanyBusinessUnitTable extends AbstractTable
         $config->setHeader([
             static::COL_ID_COMPANY_BUSINESS_UNIT => 'Id',
             static::COL_NAME => 'Name',
-            static::COL_ADDRESS => static::COL_ADDRESS,
+            static::COL_ADDRESS => 'Address',
             static::COL_IBAN => 'IBAN',
             static::COL_BIC => 'BIC',
-            static::COL_ACTIONS => static::COL_ACTIONS,
+            static::COL_ACTIONS => 'Actions',
         ]);
 
         $config->addRawColumn(static::COL_ADDRESS);

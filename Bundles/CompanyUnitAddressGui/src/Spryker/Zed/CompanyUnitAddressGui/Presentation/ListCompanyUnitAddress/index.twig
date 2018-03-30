@@ -5,6 +5,10 @@
 {% block head_title widget_title %}
 {% block section_title widget_title %}
 
+{% block action %}
+    {{ createActionButton('/company-unit-address-gui/add-company-unit-address', 'Add Company Unit Address' | trans) }}
+{% endblock %}
+
 {% block content %}
     {% embed '@Gui/Partials/widget.twig' %}
         {% block widget_title -%}
