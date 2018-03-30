@@ -8,6 +8,7 @@
 namespace Spryker\Zed\OfferGui\Communication\Form\Item;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -31,6 +32,9 @@ class ItemType extends AbstractType
     public const FIELD_SUM_SUBTOTAL_AGGREGATION = 'sumSubtotalAggregation';
 
     public const FIELD_FORCED_UNIT_GROSS_PRICE = 'forcedUnitGrossPrice';
+
+    protected const ERROR_MESSAGE_PRICE = 'Invalid Price.';
+    protected const PATTERN_MONEY = '/^\d*\.?\d{0,2}$/';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -93,9 +97,13 @@ class ItemType extends AbstractType
             'label' => 'Unit Gross Price',
             'required' => false,
             'constraints' => [
-                $this->createNumberConstraint($options),
+                $this->createMoneyConstraint($options),
             ],
         ]);
+
+        $builder
+            ->get(static::FIELD_UNIT_GROSS_PRICE)
+            ->addModelTransformer($this->createMoneyModelTransformer());
 
         return $this;
     }
@@ -154,9 +162,13 @@ class ItemType extends AbstractType
             'label' => 'Fee',
             'required' => false,
             'constraints' => [
-                $this->createNumberConstraint($options),
+                $this->createMoneyConstraint($options),
             ],
         ]);
+
+        $builder
+            ->get(static::FIELD_OFFER_FEE)
+            ->addModelTransformer($this->createMoneyModelTransformer());
 
         return $this;
     }
@@ -174,9 +186,13 @@ class ItemType extends AbstractType
             'required' => false,
             'disabled' => true,
             'constraints' => [
-                $this->createNumberConstraint($options),
+                $this->createMoneyConstraint($options),
             ],
         ]);
+
+        $builder
+            ->get(static::FIELD_UNIT_SUBTOTAL_AGGREGATION)
+            ->addModelTransformer($this->createMoneyModelTransformer());
 
         return $this;
     }
@@ -194,9 +210,13 @@ class ItemType extends AbstractType
             'required' => false,
             'disabled' => true,
             'constraints' => [
-                $this->createNumberConstraint($options),
+                $this->createMoneyConstraint($options),
             ],
         ]);
+
+        $builder
+            ->get(static::FIELD_SUM_SUBTOTAL_AGGREGATION)
+            ->addModelTransformer($this->createMoneyModelTransformer());
 
         return $this;
     }
@@ -254,6 +274,22 @@ class ItemType extends AbstractType
     /**
      * @param array $options
      *
+     * @return \Symfony\Component\Validator\Constraints\Regex
+     */
+    protected function createMoneyConstraint(array $options)
+    {
+        $validationGroup = $this->getValidationGroup($options);
+
+        return new Regex([
+            'pattern' => static::PATTERN_MONEY,
+            'message' => static::ERROR_MESSAGE_PRICE,
+            'groups' => $validationGroup,
+        ]);
+    }
+
+    /**
+     * @param array $options
+     *
      * @return string
      */
     protected function getValidationGroup(array $options)
@@ -262,14 +298,24 @@ class ItemType extends AbstractType
         if (!empty($options['validation_group'])) {
             $validationGroup = $options['validation_group'];
         }
+
         return $validationGroup;
     }
 
     /**
-     * @return string
+     * @return \Symfony\Component\Form\CallbackTransformer
      */
-    public function getBlockPrefix()
+    protected function createMoneyModelTransformer()
     {
-        return 'product';
+        return new CallbackTransformer(
+            function ($value) {
+                if ($value !== null) {
+                    return $value / 100;
+                }
+            },
+            function ($value) {
+                return $value * 100;
+            }
+        );
     }
 }
