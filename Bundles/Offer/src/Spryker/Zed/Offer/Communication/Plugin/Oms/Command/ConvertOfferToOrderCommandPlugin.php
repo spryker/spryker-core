@@ -13,6 +13,7 @@ use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByOrderInterface;
 
 /**
+ * todo: remove
  * @method \Spryker\Zed\Offer\Business\OfferFacadeInterface getFacade()
  * @method \Spryker\Zed\Offer\Communication\OfferCommunicationFactory getFactory()
  */
