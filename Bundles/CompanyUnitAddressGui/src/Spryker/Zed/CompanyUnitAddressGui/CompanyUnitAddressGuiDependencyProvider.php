@@ -19,6 +19,7 @@ class CompanyUnitAddressGuiDependencyProvider extends AbstractBundleDependencyPr
     const QUERY_CONTAINER_COMPANY_UNIT_ADDRESS = 'QUERY_CONTAINER_COMPANY_UNIT_ADDRESS';
     const FACADE_COMPANY_UNIT_ADDRESS = 'FACADE_COMPANY_UNIT_ADDRESS';
     const PLUGINS_COMPANY_UNIT_ADDRESS_FORM = 'PLUGINS_COMPANY_UNIT_ADDRESS_FORM';
+    const PLUGINS_COMPANY_UNIT_ADDRESS_TABLE_EXPANDER = 'PLUGINS_COMPANY_UNIT_ADDRESS_TABLE_EXPANDER';
     public const FACADE_COMPANY = 'FACADE_COMPANY';
     public const FACADE_COUNTRY = 'FACADE_COUNTRY';
 
@@ -33,6 +34,7 @@ class CompanyUnitAddressGuiDependencyProvider extends AbstractBundleDependencyPr
         $container = $this->addCompanyUnitAddressQueryContainer($container);
         $container = $this->addCompanyUnitAddressFacade($container);
         $container = $this->addCompanyUnitAddressFormPlugins($container);
+        $container = $this->addCompanyUnitAddressTableExpanderPlugins($container);
         $container = $this->addCompanyFacade($container);
         $container = $this->addCountryFacade($container);
 
@@ -118,9 +120,31 @@ class CompanyUnitAddressGuiDependencyProvider extends AbstractBundleDependencyPr
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCompanyUnitAddressTableExpanderPlugins(Container $container)
+    {
+        $container[static::PLUGINS_COMPANY_UNIT_ADDRESS_TABLE_EXPANDER] = function (Container $container) {
+            return $this->getCompanyUnitAddressTableExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Zed\CompanyUnitAddressGuiExtension\Communication\Plugin\CompanyUnitAddressEditFormExpanderPluginInterface[]
      */
     protected function getCompanyUnitAddressFormPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getCompanyUnitAddressTableExpanderPlugins(): array
     {
         return [];
     }

@@ -38,12 +38,20 @@ class CompanyUnitAddressTable extends AbstractTable
     protected $companyUnitAddressQueryContainer;
 
     /**
+     * @var \Spryker\Zed\CompanyUnitAddressGuiExtension\Communication\Plugin\CompanyUnitAddressTableExpanderInterface[]
+     */
+    protected $companyUnitAddressTableExpanderPlugins;
+
+    /**
      * @param \Spryker\Zed\CompanyUnitAddressGui\Dependency\QueryContainer\CompanyUnitAddressGuiToCompanyUnitAddressQueryContainerInterface $companyUnitAddressQueryContainer
+     * @param \Spryker\Zed\CompanyUnitAddressGuiExtension\Communication\Plugin\CompanyUnitAddressTableExpanderInterface[] $companyUnitAddressTableExpanderPlugins
      */
     public function __construct(
-        CompanyUnitAddressGuiToCompanyUnitAddressQueryContainerInterface $companyUnitAddressQueryContainer
+        CompanyUnitAddressGuiToCompanyUnitAddressQueryContainerInterface $companyUnitAddressQueryContainer,
+        array $companyUnitAddressTableExpanderPlugins
     ) {
         $this->companyUnitAddressQueryContainer = $companyUnitAddressQueryContainer;
+        $this->companyUnitAddressTableExpanderPlugins = $companyUnitAddressTableExpanderPlugins;
     }
 
     /**
@@ -53,18 +61,8 @@ class CompanyUnitAddressTable extends AbstractTable
      */
     protected function configure(TableConfiguration $config)
     {
-        $config->setHeader([
-            static::COL_ID_COMPANY_UNIT_ADDRESS => 'Company Unit Address Id',
-            static::COL_COUNTRY_RELATION => 'Country',
-            static::COL_REGION_RELATION => 'Region',
-            static::COL_CITY => 'City',
-            static::COL_ZIPCODE => 'Zipcode',
-            static::COL_COMPANY_RELATION => 'Company',
-            static::COL_ADDRESS1 => 'Address 1',
-            static::COL_ADDRESS2 => 'Address 2',
-            static::COL_ADDRESS3 => 'Address 3',
-            static::COL_ACTIONS => static::COL_ACTIONS,
-        ]);
+        $config = $this->setHeader($config);
+        $config = $this->expandConfig($config);
 
         $config->addRawColumn(static::COL_ACTIONS);
         $config->addRawColumn(static::COL_COUNTRY_RELATION);
@@ -100,22 +98,95 @@ class CompanyUnitAddressTable extends AbstractTable
         $results = [];
 
         foreach ($queryResults as $item) {
-            $results[] = [
-                static::COL_ID_COMPANY_UNIT_ADDRESS => $item[static::COL_ID_COMPANY_UNIT_ADDRESS],
-                static::COL_COUNTRY_RELATION => $this->getCountryName((int)$item[static::COL_ID_COMPANY_UNIT_ADDRESS]),
-                static::COL_REGION_RELATION => $this->getRegionName((int)$item[static::COL_ID_COMPANY_UNIT_ADDRESS]),
-                static::COL_CITY => $item[static::COL_CITY],
-                static::COL_ZIPCODE => $item[static::COL_ZIPCODE],
-                static::COL_COMPANY_RELATION => $this->getCompanyName((int)$item[static::COL_ID_COMPANY_UNIT_ADDRESS]),
-                static::COL_ADDRESS1 => $item[static::COL_ADDRESS1],
-                static::COL_ADDRESS2 => $item[static::COL_ADDRESS2],
-                static::COL_ADDRESS3 => $item[static::COL_ADDRESS3],
-                static::COL_ACTIONS => $this->buildLinks($item),
-            ];
+            $results[] = $this->prepareRowData($item);
         }
         unset($queryResults);
 
         return $results;
+    }
+
+    /**
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
+     *
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
+     */
+    protected function setHeader(TableConfiguration $config): TableConfiguration
+    {
+        $baseData = [
+            static::COL_ID_COMPANY_UNIT_ADDRESS => 'Company Unit Address Id',
+            static::COL_COUNTRY_RELATION => 'Country',
+            static::COL_REGION_RELATION => 'Region',
+            static::COL_CITY => 'City',
+            static::COL_ZIPCODE => 'Zipcode',
+            static::COL_COMPANY_RELATION => 'Company',
+            static::COL_ADDRESS1 => 'Address',
+            static::COL_ADDRESS2 => 'Number',
+            static::COL_ADDRESS3 => 'Additional address',
+        ];
+
+        $externalData = $this->getProvidedHeaders();
+
+        $actions = [static::COL_ACTIONS => static::COL_ACTIONS];
+
+        $config->setHeader($baseData + $externalData + $actions);
+
+        return $config;
+    }
+
+    /**
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
+     *
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
+     */
+    protected function expandConfig(TableConfiguration $config)
+    {
+        foreach ($this->companyUnitAddressTableExpanderPlugins as $plugin) {
+            $plugin->expandConfig($config);
+        }
+
+        return $config;
+    }
+
+    /**
+     * @param array $item
+     *
+     * @return array
+     */
+    protected function prepareRowData(array $item): array
+    {
+        $baseData = [
+            static::COL_ID_COMPANY_UNIT_ADDRESS => $item[static::COL_ID_COMPANY_UNIT_ADDRESS],
+            static::COL_COUNTRY_RELATION => $this->getCountryName((int)$item[static::COL_ID_COMPANY_UNIT_ADDRESS]),
+            static::COL_REGION_RELATION => $this->getRegionName((int)$item[static::COL_ID_COMPANY_UNIT_ADDRESS]),
+            static::COL_CITY => $item[static::COL_CITY],
+            static::COL_ZIPCODE => $item[static::COL_ZIPCODE],
+            static::COL_COMPANY_RELATION => $this->getCompanyName((int)$item[static::COL_ID_COMPANY_UNIT_ADDRESS]),
+            static::COL_ADDRESS1 => $item[static::COL_ADDRESS1],
+            static::COL_ADDRESS2 => $item[static::COL_ADDRESS2],
+            static::COL_ADDRESS3 => $item[static::COL_ADDRESS3],
+        ];
+
+        $externalData = $this->prepareRowExternalData($item);
+
+        $actions = [static::COL_ACTIONS => $this->buildLinks($item)];
+
+        return $baseData + $externalData + $actions;
+    }
+
+    /**
+     * @param array $item
+     *
+     * @return array
+     */
+    protected function prepareRowExternalData(array $item): array
+    {
+        $result = [];
+
+        foreach ($this->companyUnitAddressTableExpanderPlugins as $plugin) {
+            $result += $plugin->expandData($item);
+        }
+
+        return $result;
     }
 
     /**
@@ -182,5 +253,19 @@ class CompanyUnitAddressTable extends AbstractTable
         if ($companyUnitAddress) {
             return $companyUnitAddress->getCompany()->getName();
         }
+    }
+
+    /**
+     * @return array
+     */
+    protected function getProvidedHeaders(): array
+    {
+        $headers = [];
+
+        foreach ($this->companyUnitAddressTableExpanderPlugins as $plugin) {
+            $headers += $plugin->expandHeader();
+        }
+
+        return $headers;
     }
 }

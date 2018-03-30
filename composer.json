@@ -82,6 +82,7 @@
     "spryker/company-unit-address-gui": "*",
     "spryker/company-unit-address-gui-extension": "*",
     "spryker/company-unit-address-label": "*",
+    "spryker/company-unit-address-label-gui": "*",
     "spryker/config": "*",
     "spryker/console": "*",
     "spryker/country": "*",
