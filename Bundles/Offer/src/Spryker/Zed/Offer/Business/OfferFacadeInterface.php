@@ -64,4 +64,19 @@ interface OfferFacadeInterface
      * @return OfferTransfer
      */
     public function getOfferById(OfferTransfer $offerTransfer): OfferTransfer;
+
+    /**
+     * Specification:
+     * - Updates quote_data with a quote transfer fields as json
+     * - Updates offer fields
+     * - A record must exist, otherwise throws an exception
+     *
+     * @api
+     *
+     * @param OfferTransfer $offerTransfer
+     * @return OfferResponseTransfer
+     *
+     * @throws \Exception
+     */
+    public function updateOffer(OfferTransfer $offerTransfer): OfferResponseTransfer;
 }

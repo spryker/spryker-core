@@ -71,6 +71,22 @@ class OfferFacade extends AbstractFacade implements OfferFacadeInterface
      *
      * @param OfferTransfer $offerTransfer
      *
+     * @return OfferResponseTransfer
+     */
+    public function updateOffer(OfferTransfer $offerTransfer): OfferResponseTransfer
+    {
+        return $this->getFactory()
+            ->createOfferWriter()
+            ->updateOffer($offerTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param OfferTransfer $offerTransfer
+     *
      * @return OfferTransfer
      */
     public function getOfferById(OfferTransfer $offerTransfer): OfferTransfer

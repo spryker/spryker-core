@@ -35,8 +35,9 @@ class EditController extends AbstractController
         $offerTransfer = new OfferTransfer();
         $offerTransfer->setIdOffer($idOffer);
 
-        $offerTransfer = $this->getFactory()->getOfferFacade()->getOfferById($offerTransfer);
-
+        $offerTransfer = $this->getFactory()
+            ->getOfferFacade()
+            ->getOfferById($offerTransfer);
 
         $form = $this->createOfferForm($offerTransfer);
         $form->handleRequest($request);
@@ -71,8 +72,9 @@ class EditController extends AbstractController
             $form = $this->createOfferForm($offerTransfer);
             //save offer and a quote
 
-//            dump($offerTransfer);
-//            exit;
+            $offerResponseTransfer = $this->getFactory()
+                ->getOfferFacade()
+                ->updateOffer($offerTransfer);
         }
 
         return $this->viewResponse([

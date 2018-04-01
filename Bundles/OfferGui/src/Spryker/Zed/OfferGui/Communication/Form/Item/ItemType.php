@@ -26,6 +26,7 @@ class ItemType extends AbstractType
     public const FIELD_QUANTITY = 'quantity';
 
     public const FIELD_OFFER_FEE = 'offerFee';
+    public const FIELD_STOCK = 'stock';
     public const FIELD_UNIT_GROSS_PRICE = 'unitGrossPrice';
     public const FIELD_OFFER_DISCOUNT = 'offerDiscount';
     public const FIELD_UNIT_SUBTOTAL_AGGREGATION = 'unitSubtotalAggregation';
@@ -64,6 +65,7 @@ class ItemType extends AbstractType
             ->addUnitGrossPriceField($builder, $options)
             ->addOfferDiscountField($builder, $options)
             ->addOfferFeeField($builder, $options)
+            ->addStockField($builder, $options)
             ->addUnitSubtotalAggregationPriceField($builder, $options)
             ->addSumSubtotalAggregationPriceField($builder, $options)
             ->addForcedUnitGrossPriceField($builder, $options);
@@ -136,16 +138,16 @@ class ItemType extends AbstractType
      *
      * @return $this
      */
-    protected function addWarehousesField(FormBuilderInterface $builder, array $options)
+    protected function addStockField(FormBuilderInterface $builder, array $options)
     {
-//        $builder->add(static::FIELD_UNIT_GROSS_PRICE, TextType::class, [
-//            'label' => 'Unit Gross Price',
-//            'required' => false,
-//            'disabled' => true,
-//            'constraints' => [
-//                $this->createNumberConstraint($options),
-//            ],
-//        ]);
+        $builder->add(static::FIELD_STOCK, TextType::class, [
+            'label' => 'Stock',
+            'required' => false,
+            'disabled' => true,
+            'constraints' => [
+                $this->createNumberConstraint($options),
+            ],
+        ]);
 
         return $this;
     }
@@ -159,7 +161,7 @@ class ItemType extends AbstractType
     protected function addOfferFeeField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_OFFER_FEE, TextType::class, [
-            'label' => 'Fee',
+            'label' => 'Offer fee',
             'required' => false,
             'constraints' => [
                 $this->createMoneyConstraint($options),

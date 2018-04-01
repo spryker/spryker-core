@@ -10,12 +10,14 @@ namespace Spryker\Zed\Offer;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Offer\Dependency\Facade\OfferToSalesFacadeBridge;
+use Spryker\Zed\Offer\Dependency\Plugin\OfferDoUpdatePluginInterface;
 use Spryker\Zed\OfferExtension\Dependency\Plugin\OfferHydratorPluginInterface;
 
 class OfferDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_SALES = 'FACADE_SALES';
     public const PLUGINS_OFFER_HYDRATOR = 'PLUGINS_OFFER_HYDRATOR';
+    public const PLUGINS_OFFER_DO_UPDATE = 'PLUGINS_OFFER_DO_UPDATE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -24,8 +26,10 @@ class OfferDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
-        $this->addSalesFacade($container);
-        $this->addOfferHydratorPlugins($container);
+        $container = parent::provideBusinessLayerDependencies($container);
+        $container = $this->addSalesFacade($container);
+        $container = $this->addOfferHydratorPlugins($container);
+        $container = $this->addOfferDoUpdatePlugins($container);
 
         return $container;
     }
@@ -64,6 +68,29 @@ class OfferDependencyProvider extends AbstractBundleDependencyProvider
      * @return OfferHydratorPluginInterface[]
      */
     protected function getOfferHydratorPlugins(): array
+    {
+        return [];
+    }
+
+
+    /**
+     * @param Container $container
+     *
+     * @return Container
+     */
+    protected function addOfferDoUpdatePlugins(Container $container)
+    {
+        $container[static::PLUGINS_OFFER_DO_UPDATE] = function (Container $container) {
+            return $this->getOfferDoUpdatePlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return OfferDoUpdatePluginInterface[]
+     */
+    protected function getOfferDoUpdatePlugins(): array
     {
         return [];
     }

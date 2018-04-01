@@ -17,7 +17,9 @@ use Spryker\Zed\Offer\Business\Model\OfferReaderInterface;
 use Spryker\Zed\Offer\Business\Model\OfferWriter;
 use Spryker\Zed\Offer\Business\Model\OfferWriterInterface;
 use Spryker\Zed\Offer\Dependency\Facade\OfferToSalesFacadeInterface;
+use Spryker\Zed\Offer\Dependency\Plugin\OfferDoUpdatePluginInterface;
 use Spryker\Zed\Offer\OfferDependencyProvider;
+use Spryker\Zed\OfferExtension\Dependency\Plugin\OfferHydratorPluginInterface;
 
 /**
  * @method \Spryker\Zed\Offer\OfferConfig getConfig()
@@ -60,7 +62,9 @@ class OfferBusinessFactory extends AbstractBusinessFactory
      */
     public function createOfferWriter(): OfferWriterInterface
     {
-        return new OfferWriter();
+        return new OfferWriter(
+            $this->createOfferPluginExecutor()
+        );
     }
 
     /**
@@ -69,15 +73,24 @@ class OfferBusinessFactory extends AbstractBusinessFactory
     public function createOfferPluginExecutor()
     {
         return new OfferPluginExecutor(
-            $this->getOfferHydratorPlugins()
+            $this->getOfferHydratorPlugins(),
+            $this->getOfferDoUpdatePlugins()
         );
     }
 
     /**
-     * @return array
+     * @return OfferHydratorPluginInterface[]
      */
     public function getOfferHydratorPlugins(): array
     {
         return $this->getProvidedDependency(OfferDependencyProvider::PLUGINS_OFFER_HYDRATOR);
+    }
+
+    /**
+     * @return OfferDoUpdatePluginInterface[]
+     */
+    public function getOfferDoUpdatePlugins(): array
+    {
+        return $this->getProvidedDependency(OfferDependencyProvider::PLUGINS_OFFER_DO_UPDATE);
     }
 }
