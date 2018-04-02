@@ -117,9 +117,32 @@ class OfferWriter implements OfferWriterInterface
 
         $offerEntity->fromArray($offerTransfer->toArray());
 
-        $offerEntity->setQuoteData(
-            json_encode($offerTransfer->getQuote()->toArray())
+        //todo: move to a mapper
+        $fieldsToPersist = [
+            'store',
+            'items',
+            'totals',
+            'expenses',
+            'price_mode',
+            'currency',
+            'billing_address',
+            'shipping_address',
+            'billing_same_as_shipping',
+            'voucher_discounts',
+            'cart_rule_discounts',
+            'gift_cards',
+            'payments',
+            'shipment',
+            'bundle_items',
+        ];
+
+        $quoteTransfer = $offerTransfer->getQuote();
+        $quoteArray = array_intersect_key(
+            $quoteTransfer->toArray(),
+            array_flip($fieldsToPersist)
         );
+
+        $offerEntity->setQuoteData(json_encode($quoteArray));
 
         $offerEntity->save();
 

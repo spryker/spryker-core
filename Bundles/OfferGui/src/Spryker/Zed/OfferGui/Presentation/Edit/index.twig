@@ -49,7 +49,8 @@
             </table>
             {{ form_widget(form) }}
 
-            <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}" />
+            <input type="submit" class="btn btn-primary safe-submit" name="submit-reload" value="{{ 'Reload' | trans }}" />
+            <input type="submit" class="btn btn-primary safe-submit" name="submit-persist" value="{{ 'Save' | trans }}" />
             {{ form_end(form) }}
 
         {% endblock %}

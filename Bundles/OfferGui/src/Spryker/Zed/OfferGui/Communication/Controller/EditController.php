@@ -23,7 +23,8 @@ use Symfony\Component\HttpFoundation\Response;
 class EditController extends AbstractController
 {
     public const PARAM_ID_OFFER = 'id-offer';
-    public const PARAM_SKU = 'sku';
+    public const PARAM_SUBMIT_RELOAD = 'submit-reload';
+    public const PARAM_SUBMIT_PERSIST = 'submit-persist';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -33,6 +34,7 @@ class EditController extends AbstractController
     public function indexAction(Request $request)
     {
         $idOffer = $request->get(static::PARAM_ID_OFFER);
+        $isSubmitPersist = $request->request->get(static::PARAM_SUBMIT_PERSIST);
 
         $offerTransfer = new OfferTransfer();
         $offerTransfer->setIdOffer($idOffer);
@@ -40,6 +42,9 @@ class EditController extends AbstractController
         $offerTransfer = $this->getFactory()
             ->getOfferFacade()
             ->getOfferById($offerTransfer);
+
+        /** @var CartFacadeInterface $cartFacade */
+        $cartFacade = Locator::getInstance()->cart()->facade();
 
         $form = $this->createOfferForm($offerTransfer);
         $form->handleRequest($request);
@@ -49,24 +54,32 @@ class EditController extends AbstractController
             $offerTransfer = $form->getData();
             $quoteTransfer = $offerTransfer->getQuote();
 
-            //prepare incoming items to be added
-            $incomingItems = new \ArrayObject();
-            foreach ($quoteTransfer->getIncomingItems() as $itemTransfer) {
+            //remove items
+            $itemTransfers = new \ArrayObject();
+            foreach ($quoteTransfer->getItems() as $itemTransfer) {
+                if ($itemTransfer->getQuantity() > 0) {
+                    $itemTransfers->append($itemTransfer);
+                }
+            }
+            $quoteTransfer->setItems($itemTransfers);
+
+            //add items
+            $incomingItems = new \ArrayObject;
+            foreach($quoteTransfer->getIncomingItems() as $itemTransfer) {
                 if ($itemTransfer->getSku()) {
                     $incomingItems->append($itemTransfer);
                 }
             }
 
-            //update cart
-            /** @var CartFacadeInterface $cartFacade */
-            $cartFacade = Locator::getInstance()->cart()->facade();
-
-            $cartChangeTransfer = new CartChangeTransfer();
-            $cartChangeTransfer->setQuote($quoteTransfer);
             foreach($incomingItems as $itemTransfer) {
+                $cartChangeTransfer = new CartChangeTransfer();
+                $cartChangeTransfer->setQuote($quoteTransfer);
                 $cartChangeTransfer->addItem($itemTransfer);
+
                 $quoteTransfer = $cartFacade->add($cartChangeTransfer);
             }
+
+            //update cart
             $quoteTransfer = $cartFacade->reloadItems($quoteTransfer);
             $offerTransfer->setQuote($quoteTransfer);
 
@@ -74,9 +87,11 @@ class EditController extends AbstractController
             $form = $this->createOfferForm($offerTransfer);
             //save offer and a quote
 
-            $offerResponseTransfer = $this->getFactory()
-                ->getOfferFacade()
-                ->updateOffer($offerTransfer);
+            if ($isSubmitPersist) {
+                $this->getFactory()
+                    ->getOfferFacade()
+                    ->updateOffer($offerTransfer);
+            }
         }
 
         return $this->viewResponse([
@@ -84,13 +99,6 @@ class EditController extends AbstractController
             'form' => $form->createView()
         ]);
     }
-
-    public function removeSkuAction(Response $response)
-    {
-        $sku = $response->get(static::PARAM_SKU);
-
-    }
-
 
     /**
      * @param OfferTransfer $offerTransfer
