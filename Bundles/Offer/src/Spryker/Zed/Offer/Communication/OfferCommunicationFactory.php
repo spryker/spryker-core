@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Offer\Communication;
 
-use Spryker\Zed\Cart\Business\CartFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\Offer\Dependency\Facade\OfferToCartFacadeInterface;
 use Spryker\Zed\Offer\OfferDependencyProvider;
 
 /**
@@ -17,9 +17,9 @@ use Spryker\Zed\Offer\OfferDependencyProvider;
 class OfferCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\Cart\Business\CartFacadeInterface
+     * @return \Spryker\Zed\Offer\Dependency\Facade\OfferToCartFacadeInterface
      */
-    public function getCartFacade(): CartFacadeInterface
+    public function getCartFacade(): OfferToCartFacadeInterface
     {
         return $this->getProvidedDependency(OfferDependencyProvider::FACADE_CART);
     }
