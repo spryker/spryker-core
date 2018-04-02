@@ -39,13 +39,13 @@ class AddController extends AbstractController
             $filePath = ($file instanceof UploadedFile) ? $file->getRealPath() : null;
             try {
                 $this->getFacade()->save($saveRequestTransfer, $filePath);
+
+                $redirectUrl = Url::generate(static::DATSET_LIST_URL)->build();
+
+                return $this->redirectResponse($redirectUrl);
             } catch (DatasetParseException $e) {
                 $this->addErrorMessage(static::MESSAGE_DATASET_PARSE_ERROR);
             }
-
-            $redirectUrl = Url::generate(static::DATSET_LIST_URL)->build();
-
-            return $this->redirectResponse($redirectUrl);
         }
 
         return $this->viewResponse([
