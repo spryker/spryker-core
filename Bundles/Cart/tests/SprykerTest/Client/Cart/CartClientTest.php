@@ -242,7 +242,7 @@ class CartClientTest extends Unit
         $factoryMock->expects($this->any())
             ->method('getQuoteItemFinderPlugin')
             ->will($this->returnValue(new SimpleProductQuoteItemFinderPlugin()));
-        
+
         return $factoryMock;
     }
 
