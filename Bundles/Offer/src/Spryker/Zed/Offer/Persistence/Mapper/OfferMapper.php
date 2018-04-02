@@ -10,8 +10,6 @@ namespace Spryker\Zed\Offer\Persistence\Mapper;
 use Generated\Shared\Transfer\OfferTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpyOfferEntityTransfer;
-use Orm\Zed\Offer\Persistence\SpyOffer;
-use Symfony\Component\Intl\Exception\NotImplementedException;
 
 class OfferMapper implements OfferMapperInterface
 {
@@ -30,8 +28,6 @@ class OfferMapper implements OfferMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
-     *
-     * @throws \Symfony\Component\Intl\Exception\NotImplementedException
      *
      * @return \Generated\Shared\Transfer\SpyOfferEntityTransfer
      */

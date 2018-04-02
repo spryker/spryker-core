@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Offer\Persistence;
 
-
 use Generated\Shared\Transfer\OfferTransfer;
 
 interface OfferEntityManagerInterface

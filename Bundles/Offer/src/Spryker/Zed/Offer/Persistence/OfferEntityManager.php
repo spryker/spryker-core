@@ -7,11 +7,7 @@
 
 namespace Spryker\Zed\Offer\Persistence;
 
-use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Generated\Shared\Transfer\OfferTransfer;
-use Generated\Shared\Transfer\SpyCompanyUnitAddressEntityTransfer;
-use Generated\Shared\Transfer\SpyCompanyUnitAddressToCompanyBusinessUnitEntityTransfer;
-use Generated\Shared\Transfer\SpyOfferEntityTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -19,7 +15,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
  */
 class OfferEntityManager extends AbstractEntityManager implements OfferEntityManagerInterface
 {
-
     /**
      * {@inheritdoc}
      *

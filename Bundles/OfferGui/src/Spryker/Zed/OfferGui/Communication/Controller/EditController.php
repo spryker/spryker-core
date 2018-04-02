@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\OfferGui\Communication\Controller;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OfferTransfer;
-use Spryker\Zed\Cart\Business\CartFacadeInterface;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\Kernel\Locator;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,17 +37,16 @@ class EditController extends AbstractController
 
         $offerTransfer = $this->getFactory()->getOfferFacade()->getOfferById($offerTransfer);
 
-
         $form = $this->createOfferForm($offerTransfer);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var OfferTransfer $offerTransfer */
+            /** @var \Generated\Shared\Transfer\OfferTransfer $offerTransfer */
             $offerTransfer = $form->getData();
             $quoteTransfer = $offerTransfer->getQuote();
 
             //prepare incoming items to be added
-            $incomingItems = new \ArrayObject();
+            $incomingItems = new ArrayObject();
             foreach ($quoteTransfer->getIncomingItems() as $itemTransfer) {
                 if ($itemTransfer->getSku()) {
                     $incomingItems->append($itemTransfer);
@@ -56,10 +55,10 @@ class EditController extends AbstractController
 
             $cartChangeTransfer = new CartChangeTransfer();
             $cartChangeTransfer->setQuote($quoteTransfer);
-            foreach($incomingItems as $itemTransfer) {
+            foreach ($incomingItems as $itemTransfer) {
                 $cartChangeTransfer->addItem($itemTransfer);
 
-                /** @var CartFacadeInterface $cartFacade */
+                /** @var \Spryker\Zed\Cart\Business\CartFacadeInterface $cartFacade */
                 $cartFacade = Locator::getInstance()->cart()->facade();
                 $quoteTransfer = $cartFacade->add($cartChangeTransfer);
             }
@@ -75,12 +74,12 @@ class EditController extends AbstractController
 
         return $this->viewResponse([
             'offer' => $offerTransfer,
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @param OfferTransfer $offerTransfer
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -88,10 +87,10 @@ class EditController extends AbstractController
     {
         $offerTransfer
             ->getQuote()
-            ->setIncomingItems(new \ArrayObject([
+            ->setIncomingItems(new ArrayObject([
                 new ItemTransfer(),
                 new ItemTransfer(),
-                new ItemTransfer()
+                new ItemTransfer(),
             ]));
 
         return $this->getFactory()->getOfferForm($offerTransfer);

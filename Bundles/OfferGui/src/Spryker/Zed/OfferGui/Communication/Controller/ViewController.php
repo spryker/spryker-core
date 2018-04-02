@@ -47,7 +47,6 @@ class ViewController extends AbstractController
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-
     public function detailsAction(Request $request)
     {
         $idOffer = $this->castId($request->query->getInt(static::PARAM_ID_OFFER));
@@ -64,7 +63,7 @@ class ViewController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */

@@ -1,7 +1,11 @@
 <?php
 
-namespace Spryker\Zed\OfferGui\Communication\Form;
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
+namespace Spryker\Zed\OfferGui\Communication\Form;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
@@ -32,9 +36,9 @@ class OfferType extends AbstractType
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addIdOfferField(FormBuilderInterface $builder)
     {
@@ -44,9 +48,9 @@ class OfferType extends AbstractType
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addItemsField(FormBuilderInterface $builder)
     {
@@ -67,9 +71,9 @@ class OfferType extends AbstractType
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return self
+     * @return $this
      */
     protected function addIncomingItemsField(FormBuilderInterface $builder)
     {

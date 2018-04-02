@@ -7,6 +7,7 @@
     "spryker/customer": "^7.0.0",
     "spryker/gui": "^3.0.0",
     "spryker/kernel": "^3.0.0",
+    "spryker/manual-order-entry-gui": "^1.0.0",
     "spryker/money": "^2.0.0",
     "spryker/offer": "1.0.0",
     "spryker/oms": "^8.0.0",

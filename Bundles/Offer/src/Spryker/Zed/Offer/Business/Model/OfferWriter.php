@@ -9,7 +9,6 @@ namespace Spryker\Zed\Offer\Business\Model;
 
 use Generated\Shared\Transfer\OfferResponseTransfer;
 use Generated\Shared\Transfer\OfferTransfer;
-use Orm\Zed\Offer\Persistence\SpyOffer;
 use Spryker\Zed\Offer\OfferConfig;
 use Spryker\Zed\Offer\Persistence\OfferEntityManagerInterface;
 use Spryker\Zed\Offer\Persistence\OfferRepositoryInterface;
@@ -33,6 +32,8 @@ class OfferWriter implements OfferWriterInterface
 
     /**
      * @param \Spryker\Zed\Offer\Persistence\OfferEntityManagerInterface $offerEntityManager
+     * @param \Spryker\Zed\Offer\Persistence\OfferRepositoryInterface $offerRepository
+     * @param \Spryker\Zed\Offer\OfferConfig $offerConfig
      */
     public function __construct(
         OfferEntityManagerInterface $offerEntityManager,

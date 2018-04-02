@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\OfferGui\Communication;
 
-use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Generated\Shared\Transfer\OfferTransfer;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\OfferGui\Communication\Form\Constraint\SkuExists;
 use Spryker\Zed\OfferGui\Communication\Form\OfferType;
@@ -22,6 +22,7 @@ use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToOmsFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilDateTimeServiceInterface;
 use Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilSanitizeServiceInterface;
 use Spryker\Zed\OfferGui\OfferGuiDependencyProvider;
+use Symfony\Component\Validator\Constraint;
 
 /**
  * @method \Spryker\Zed\OfferGui\OfferGuiConfig getConfig()
@@ -110,14 +111,19 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
         return $this->getProvidedDependency(OfferGuiDependencyProvider::FACADE_OFFER);
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
     public function getOfferForm(OfferTransfer $offerTransfer)
     {
         $form = $this->getFormFactory()->create(
             OfferType::class,
-                $offerTransfer,
-                    [
-                        'data_class' => OfferTransfer::class,
-                    ]
+            $offerTransfer,
+            [
+                'data_class' => OfferTransfer::class,
+            ]
         );
 
         return $form;
@@ -126,7 +132,7 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Symfony\Component\Validator\Constraint
      */
-    public function createSkuExistsConstraint(): \Symfony\Component\Validator\Constraint
+    public function createSkuExistsConstraint(): Constraint
     {
         return new SkuExists([
             SkuExists::OPTION_PRODUCT_FACADE => Locator::getInstance()->product()->facade(),

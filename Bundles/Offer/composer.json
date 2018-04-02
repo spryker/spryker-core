@@ -5,17 +5,22 @@
   "require": {
     "php": ">=7.1",
     "spryker/kernel": "^3.0.0",
+    "spryker/propel": "^3.0.0",
+    "spryker/propel-orm": "^1.0.0",
     "spryker/sales": "^8.0.0",
     "spryker/sales-extension": "^1.0.0",
+    "spryker/user": "^3.0.0",
     "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/checkout": "*",
     "spryker/oms": "^8.0.0",
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/oms": "If you use offer state in you state machine, with commands and conditions from offer"
+    "spryker/oms": "If you use offer state in you state machine, with commands and conditions from offer",
+    "spryker/checkout": "If you want to use checkout plugin from order module"
   },
   "autoload": {
     "psr-4": {
