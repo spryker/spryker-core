@@ -35,7 +35,7 @@ interface OfferFacadeInterface
      *
      * @return \Generated\Shared\Transfer\OfferResponseTransfer
      */
-    public function placeOffer(OfferTransfer $offerTransfer): OfferResponseTransfer;
+    public function saveOffer(OfferTransfer $offerTransfer): OfferResponseTransfer;
 
     /**
      * Specification:

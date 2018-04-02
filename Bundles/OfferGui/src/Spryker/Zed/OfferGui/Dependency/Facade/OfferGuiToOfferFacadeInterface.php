@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\OfferGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\OfferResponseTransfer;
 use Generated\Shared\Transfer\OfferTransfer;
 
 interface OfferGuiToOfferFacadeInterface
@@ -17,4 +18,11 @@ interface OfferGuiToOfferFacadeInterface
      * @return \Generated\Shared\Transfer\OfferTransfer
      */
     public function getOfferById(OfferTransfer $offerTransfer): OfferTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
+     *
+     * @return \Generated\Shared\Transfer\OfferResponseTransfer
+     */
+    public function saveOffer(OfferTransfer $offerTransfer): OfferResponseTransfer;
 }

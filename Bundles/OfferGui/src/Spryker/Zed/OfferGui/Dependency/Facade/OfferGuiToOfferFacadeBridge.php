@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\OfferGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\OfferResponseTransfer;
 use Generated\Shared\Transfer\OfferTransfer;
 
 class OfferGuiToOfferFacadeBridge implements OfferGuiToOfferFacadeInterface
@@ -32,5 +33,15 @@ class OfferGuiToOfferFacadeBridge implements OfferGuiToOfferFacadeInterface
     public function getOfferById(OfferTransfer $offerTransfer): OfferTransfer
     {
         return $this->offerFacade->getOfferById($offerTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
+     *
+     * @return \Generated\Shared\Transfer\OfferResponseTransfer
+     */
+    public function saveOffer(OfferTransfer $offerTransfer): OfferResponseTransfer
+    {
+        return $this->offerFacade->saveOffer($offerTransfer);
     }
 }

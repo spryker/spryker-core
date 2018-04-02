@@ -4,11 +4,12 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker/cart": "^4.2.0",
     "spryker/kernel": "^3.0.0",
+    "spryker/offer-extension": "^1.0.0",
     "spryker/propel": "^3.0.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/sales": "^8.0.0",
-    "spryker/sales-extension": "^1.0.0",
     "spryker/user": "^3.0.0",
     "spryker/zed-request": "^3.0.0"
   },

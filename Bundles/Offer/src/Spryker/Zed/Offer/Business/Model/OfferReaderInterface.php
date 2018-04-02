@@ -8,9 +8,17 @@
 namespace Spryker\Zed\Offer\Business\Model;
 
 use Generated\Shared\Transfer\OfferListTransfer;
+use Generated\Shared\Transfer\OfferTransfer;
 
 interface OfferReaderInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
+     *
+     * @return \Generated\Shared\Transfer\OfferTransfer
+     */
+    public function getOfferById(OfferTransfer $offerTransfer): OfferTransfer;
+
     /**
      * @param \Generated\Shared\Transfer\OfferListTransfer $offerListTransfer
      *

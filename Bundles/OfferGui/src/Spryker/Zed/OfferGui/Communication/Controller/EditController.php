@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OfferTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\Kernel\Locator;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -59,17 +58,17 @@ class EditController extends AbstractController
                 $cartChangeTransfer->addItem($itemTransfer);
 
                 /** @var \Spryker\Zed\Cart\Business\CartFacadeInterface $cartFacade */
-                $cartFacade = Locator::getInstance()->cart()->facade();
+                $cartFacade = $this->getFactory()->getCartFacade();
                 $quoteTransfer = $cartFacade->add($cartChangeTransfer);
             }
 
             $offerTransfer->setQuote($quoteTransfer);
+            //TODO: clarify what field should be edited? GrossUnitPrice only?
+            $offerResponseTransfer = $this->getFactory()->getOfferFacade()->saveOffer($offerTransfer);
 
-            $form = $this->createOfferForm($offerTransfer);
-            //save offer and a quote
+            //TODO: check isSuccessful
 
-//            dump($offerTransfer);
-//            exit;
+            $form = $this->createOfferForm($offerResponseTransfer->getOffer());
         }
 
         return $this->viewResponse([
