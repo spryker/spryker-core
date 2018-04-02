@@ -33,6 +33,7 @@
                         <td>{{ form_row(item.quantity) }}</td>
                         <td>{{ form_row(item.unitSubtotalAggregation) }}</td>
                         <td>{{ form_row(item.sumSubtotalAggregation) }}</td>
+                        <td><input href="/offer-gui/edit/?remove-sku={{ item.sku }}" class="btn btn-remove" value="X"/></td>
                     </tr>
                 {% endfor %}
             </table>

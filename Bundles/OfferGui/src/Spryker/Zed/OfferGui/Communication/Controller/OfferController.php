@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * todo: remove
  * @method \Spryker\Zed\OfferGui\Communication\OfferGuiCommunicationFactory getFactory()
  */
 class OfferController extends AbstractController

@@ -14,6 +14,7 @@ use Spryker\Zed\Cart\Business\CartFacadeInterface;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\Kernel\Locator;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  *
@@ -22,6 +23,7 @@ use Symfony\Component\HttpFoundation\Request;
 class EditController extends AbstractController
 {
     public const PARAM_ID_OFFER = 'id-offer';
+    public const PARAM_SKU = 'sku';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -82,6 +84,13 @@ class EditController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+    public function removeSkuAction(Response $response)
+    {
+        $sku = $response->get(static::PARAM_SKU);
+
+    }
+
 
     /**
      * @param OfferTransfer $offerTransfer
