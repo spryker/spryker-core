@@ -7,27 +7,25 @@
 
 namespace Spryker\Zed\OfferGui\Communication\Table;
 
-use Orm\Zed\Offer\Persistence\SpyOffer;
 use Orm\Zed\Offer\Persistence\SpyOfferQuery;
-use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
-use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 
 class OffersTableQueryBuilder implements OffersTableQueryBuilderInterface
 {
     /**
-     * @var SpyOfferQuery
+     * @var \Orm\Zed\Offer\Persistence\SpyOfferQuery
      */
     protected $offerQuery;
 
     /**
-     * @param SpyOfferQuery $offerQuery
+     * @param \Orm\Zed\Offer\Persistence\SpyOfferQuery $offerQuery
      */
-    public function __construct(SpyOfferQuery $offerQuery){
+    public function __construct(SpyOfferQuery $offerQuery)
+    {
         $this->offerQuery = $offerQuery;
     }
 
     /**
-     * @return SpyOfferQuery
+     * @return \Orm\Zed\Offer\Persistence\SpyOfferQuery
      */
     public function buildQuery()
     {

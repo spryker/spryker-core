@@ -24,6 +24,7 @@ use Spryker\Zed\OfferExtension\Dependency\Plugin\OfferHydratorPluginInterface;
 /**
  * @method \Spryker\Zed\Offer\OfferConfig getConfig()
  * @method \Spryker\Zed\Offer\Persistence\OfferRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Offer\Persistence\OfferEntityManagerInterface getEntityManager()
  */
 class OfferBusinessFactory extends AbstractBusinessFactory
 {
@@ -39,17 +40,6 @@ class OfferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Offer\Business\Model\OfferConverterInterface
-     */
-    public function createOfferConverter(): OfferConverterInterface
-    {
-        return new OfferConverter(
-            $this->getSalesFacade(),
-            $this->getConfig()
-        );
-    }
-
-    /**
      * @return \Spryker\Zed\Offer\Dependency\Facade\OfferToSalesFacadeInterface
      */
     public function getSalesFacade(): OfferToSalesFacadeInterface
@@ -58,17 +48,20 @@ class OfferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return OfferWriterInterface
+     * @return \Spryker\Zed\Offer\Business\Model\OfferWriterInterface
      */
     public function createOfferWriter(): OfferWriterInterface
     {
         return new OfferWriter(
+            $this->getEntityManager(),
+            $this->getRepository(),
+            $this->getConfig(),
             $this->createOfferPluginExecutor()
         );
     }
 
     /**
-     * @return OfferPluginExecutorInterface
+     * @return \Spryker\Zed\Offer\Business\Model\OfferPluginExecutorInterface
      */
     public function createOfferPluginExecutor()
     {

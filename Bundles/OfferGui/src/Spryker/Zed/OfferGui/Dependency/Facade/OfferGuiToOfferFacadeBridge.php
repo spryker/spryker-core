@@ -1,22 +1,25 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace Spryker\Zed\OfferGui\Dependency\Facade;
 
 
 use Generated\Shared\Transfer\OfferResponseTransfer;
 use Generated\Shared\Transfer\OfferTransfer;
-use Spryker\Zed\Offer\Business\OfferFacadeInterface;
 
 class OfferGuiToOfferFacadeBridge implements OfferGuiToOfferFacadeInterface
 {
     /**
-     * @var OfferFacadeInterface
+     * @var \Spryker\Zed\Offer\Business\OfferFacadeInterface
      */
     protected $offerFacade;
 
     /**
-     * @param OfferFacadeInterface $offerFacade
+     * @param \Spryker\Zed\Offer\Business\OfferFacadeInterface $offerFacade
      */
     public function __construct($offerFacade)
     {
@@ -24,9 +27,9 @@ class OfferGuiToOfferFacadeBridge implements OfferGuiToOfferFacadeInterface
     }
 
     /**
-     * @param OfferTransfer $offerTransfer
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
      *
-     * @return OfferTransfer
+     * @return \Generated\Shared\Transfer\OfferTransfer
      */
     public function getOfferById(OfferTransfer $offerTransfer): OfferTransfer
     {

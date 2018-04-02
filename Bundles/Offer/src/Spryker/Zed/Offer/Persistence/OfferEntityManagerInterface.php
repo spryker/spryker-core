@@ -5,15 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\OfferExtension\Dependency\Plugin;
+namespace Spryker\Zed\Offer\Persistence;
 
 use Generated\Shared\Transfer\OfferTransfer;
 
-interface OfferHydratorPluginInterface
+interface OfferEntityManagerInterface
 {
     /**
      * Specification:
-     * - Hydrates offer transfer fields with data
+     *  - Change status of offer.
      *
      * @api
      *
@@ -21,5 +21,5 @@ interface OfferHydratorPluginInterface
      *
      * @return \Generated\Shared\Transfer\OfferTransfer
      */
-    public function hydrateOffer(OfferTransfer $offerTransfer): OfferTransfer;
+    public function saveOffer(OfferTransfer $offerTransfer): OfferTransfer;
 }

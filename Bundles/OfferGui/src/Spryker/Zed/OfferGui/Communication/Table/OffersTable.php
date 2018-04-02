@@ -33,7 +33,6 @@ class OffersTable extends AbstractTable
     const COL_NUMBER_OF_ORDER_ITEMS = 'number_of_order_items';
     const COL_URL = 'url';
 
-
     /**
      * @var \Spryker\Zed\OfferGui\Communication\Table\OffersTableQueryBuilderInterface
      */
@@ -114,7 +113,7 @@ class OffersTable extends AbstractTable
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return string
      */
@@ -129,7 +128,7 @@ class OffersTable extends AbstractTable
     }
 
     /**
-     * @param CustomerTransfer|null $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
      *
      * @return string
      */
@@ -162,7 +161,7 @@ class OffersTable extends AbstractTable
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return string
      */
@@ -302,7 +301,7 @@ class OffersTable extends AbstractTable
                 static::COL_ID_OFFER => $item[SpyOfferTableMap::COL_ID_OFFER],
                 static::COL_CREATED_AT => $this->utilDateTimeService->formatDateTime($item[SpyOfferTableMap::COL_CREATED_AT]),
                 static::COL_CUSTOMER_REFERENCE => $this->formatCustomer($customerTransfer),
-                static::COL_EMAIL=> $this->formatEmailAddress($customerTransfer),
+                static::COL_EMAIL => $this->formatEmailAddress($customerTransfer),
                 static::COL_GRAND_TOTAL => $this->getGrandTotal($quoteTransfer),
                 static::COL_NUMBER_OF_ORDER_ITEMS => $quoteTransfer->getItems()->count(),
                 static::COL_URL => implode(' ', $this->createActionUrls($item)),
@@ -315,7 +314,7 @@ class OffersTable extends AbstractTable
     /**
      * @param array $item
      *
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function mapQuote(array $item)
     {

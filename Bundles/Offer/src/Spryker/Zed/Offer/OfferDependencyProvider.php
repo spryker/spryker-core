@@ -51,9 +51,9 @@ class OfferDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function addOfferHydratorPlugins(Container $container)
     {
@@ -65,7 +65,7 @@ class OfferDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return OfferHydratorPluginInterface[]
+     * @return \Spryker\Zed\OfferExtension\Dependency\Plugin\OfferHydratorPluginInterface[]
      */
     protected function getOfferHydratorPlugins(): array
     {

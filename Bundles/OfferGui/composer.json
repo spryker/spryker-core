@@ -3,17 +3,18 @@
   "description": "OfferGui module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
+    "spryker/customer": "^7.0.0",
     "spryker/gui": "^3.0.0",
     "spryker/kernel": "^3.0.0",
-    "spryker/sales": "^8.0.0",
-    "spryker/customer": "^7.0.0",
+    "spryker/manual-order-entry-gui": "^1.0.0",
     "spryker/money": "^2.0.0",
+    "spryker/offer": "1.0.0",
     "spryker/oms": "^8.0.0",
     "spryker/symfony": "^3.0.0",
     "spryker/util-date-time": "^1.0.0",
     "spryker/util-sanitize": "^2.0.0",
-    "spryker/util-text": "^1.1.0",
-    "php": ">=7.1"
+    "spryker/util-text": "^1.1.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
@@ -22,11 +23,6 @@
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",

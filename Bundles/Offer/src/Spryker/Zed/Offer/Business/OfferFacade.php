@@ -7,55 +7,38 @@
 
 namespace Spryker\Zed\Offer\Business;
 
+use Generated\Shared\Transfer\OfferListTransfer;
 use Generated\Shared\Transfer\OfferResponseTransfer;
-use Generated\Shared\Transfer\OfferToOrderConvertResponseTransfer;
-use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OfferTransfer;
+use Generated\Shared\Transfer\OrderListTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Offer\Business\OfferBusinessFactory getFactory()
- * @method \Spryker\Zed\Offer\Persistence\OfferRepository getRepository()
+ * @method \Spryker\Zed\Offer\Persistence\OfferRepositoryInterface getRepository()
  */
 class OfferFacade extends AbstractFacade implements OfferFacadeInterface
 {
-    //TODO: remove method?.
     /**
      * {@inheritdoc}
-     *
      * @api
      *
-     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     * @param \Generated\Shared\Transfer\OfferListTransfer $offerListTransfer
      *
-     * @return \Generated\Shared\Transfer\OrderListTransfer
+     * @return \Generated\Shared\Transfer\OfferListTransfer
      */
-    public function getOffers(OrderListTransfer $offerListTransfer): OrderListTransfer
+    public function getOffers(OfferListTransfer $offerListTransfer): OfferListTransfer
     {
-        return $this->getFactory()
-            ->createOfferReader()
-            ->getOfferList($offerListTransfer);
+        return $this->getRepository()
+            ->getOffers($offerListTransfer);
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @api
      *
-     * @param int $idSalesOrder
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
      *
-     * @return \Generated\Shared\Transfer\OfferToOrderConvertResponseTransfer
-     */
-    public function convertOfferToOrder(int $idSalesOrder): OfferToOrderConvertResponseTransfer
-    {
-        return $this->getFactory()
-            ->createOfferConverter()
-            ->convertToOrder($idSalesOrder);
-    }
-
-    /**
-     * @param OfferTransfer $offerTransfer
-     *
-     * @return OfferResponseTransfer
+     * @return \Generated\Shared\Transfer\OfferResponseTransfer
      */
     public function placeOffer(OfferTransfer $offerTransfer): OfferResponseTransfer
     {
@@ -85,14 +68,31 @@ class OfferFacade extends AbstractFacade implements OfferFacadeInterface
      *
      * @api
      *
-     * @param OfferTransfer $offerTransfer
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
      *
-     * @return OfferTransfer
+     * @return \Generated\Shared\Transfer\OfferTransfer
      */
     public function getOfferById(OfferTransfer $offerTransfer): OfferTransfer
     {
         return $this->getFactory()
             ->createOfferReader()
             ->getOfferById($offerTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idOffer
+     * @param string $status
+     *
+     * @return \Generated\Shared\Transfer\OfferResponseTransfer
+     */
+    public function updateOfferStatus(int $idOffer, string $status): OfferResponseTransfer
+    {
+        return $this->getFactory()
+            ->createOfferWriter()
+            ->updateOfferStatus($idOffer, $status);
     }
 }

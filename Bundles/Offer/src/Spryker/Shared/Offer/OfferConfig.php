@@ -11,26 +11,22 @@ use Spryker\Shared\Kernel\AbstractBundleConfig;
 
 class OfferConfig extends AbstractBundleConfig
 {
-    public const ORDER_TYPE_OFFER = 'offer';
-
-    /**
-     * @uses \Spryker\Shared\Sales\SalesConfig::ORDER_TYPE_DEFAULT
-     */
-    public const ORDER_TYPE_DEFAULT = null;
+    public const STATUS_IN_PROGRESS = 'in_progress';
+    public const STATUS_ORDER = 'order';
 
     /**
      * @return string
      */
-    public function getOrderTypeOffer(): string
+    public function getStatusInProgress(): string
     {
-        return static::ORDER_TYPE_OFFER;
+        return static::STATUS_IN_PROGRESS;
     }
 
     /**
-     * @return null|string
+     * @return string
      */
-    public function getOrderTypeDefault(): ?string
+    public function getStatusOrder(): ?string
     {
-        return static::ORDER_TYPE_DEFAULT;
+        return static::STATUS_ORDER;
     }
 }

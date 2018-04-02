@@ -8,7 +8,6 @@
 namespace Spryker\Zed\OfferGui\Communication;
 
 use Generated\Shared\Transfer\OfferTransfer;
-use Orm\Zed\Offer\Persistence\SpyOfferQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\OfferGui\Communication\Form\Constraint\SkuExists;
@@ -18,11 +17,12 @@ use Spryker\Zed\OfferGui\Communication\Table\OffersTableQueryBuilder;
 use Spryker\Zed\OfferGui\Communication\Table\OffersTableQueryBuilderInterface;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToCustomerFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToMoneyFacadeInterface;
-use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToOmsFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToOfferFacadeInterface;
+use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToOmsFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilDateTimeServiceInterface;
 use Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilSanitizeServiceInterface;
 use Spryker\Zed\OfferGui\OfferGuiDependencyProvider;
+use Symfony\Component\Validator\Constraint;
 
 /**
  * @method \Spryker\Zed\OfferGui\OfferGuiConfig getConfig()
@@ -69,6 +69,7 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
 
     /**
      * todo: checl
+     *
      * @return \Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToOmsFacadeInterface
      */
     public function getOmsFacade(): OfferGuiToOmsFacadeInterface
@@ -95,7 +96,7 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return SpyOfferQuery
+     * @return \Orm\Zed\Offer\Persistence\SpyOfferQuery
      */
     public function getPropelQueryOffer()
     {
@@ -103,21 +104,26 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return OfferGuiToOfferFacadeInterface
+     * @return \Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToOfferFacadeInterface
      */
     public function getOfferFacade(): OfferGuiToOfferFacadeInterface
     {
         return $this->getProvidedDependency(OfferGuiDependencyProvider::FACADE_OFFER);
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
     public function getOfferForm(OfferTransfer $offerTransfer)
     {
         $form = $this->getFormFactory()->create(
             OfferType::class,
-                $offerTransfer,
-                    [
-                        'data_class' => OfferTransfer::class,
-                    ]
+            $offerTransfer,
+            [
+                'data_class' => OfferTransfer::class,
+            ]
         );
 
         return $form;
@@ -126,7 +132,7 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Symfony\Component\Validator\Constraint
      */
-    public function createSkuExistsConstraint(): \Symfony\Component\Validator\Constraint
+    public function createSkuExistsConstraint(): Constraint
     {
         return new SkuExists([
             SkuExists::OPTION_PRODUCT_FACADE => Locator::getInstance()->product()->facade(),

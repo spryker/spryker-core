@@ -7,63 +7,60 @@
 
 namespace Spryker\Zed\Offer\Business;
 
+use Generated\Shared\Transfer\OfferListTransfer;
 use Generated\Shared\Transfer\OfferResponseTransfer;
-use Generated\Shared\Transfer\OfferToOrderConvertResponseTransfer;
-use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OfferTransfer;
 
 interface OfferFacadeInterface
 {
     /**
-     * todo: remove
-     * @deprecated make getOffersByCustomerReference
-     *
      * Specification:
      * - Return list of offers, using filter and pagination.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\OrderListTransfer $offerList
+     * @param \Generated\Shared\Transfer\OfferListTransfer $offerList
      *
-     * @return \Generated\Shared\Transfer\OrderListTransfer
+     * @return \Generated\Shared\Transfer\OfferListTransfer
      */
-    public function getOffers(OrderListTransfer $offerList): OrderListTransfer;
+    public function getOffers(OfferListTransfer $offerList): OfferListTransfer;
 
     /**
      * Specification:
-     *  - Set is_offer flag to false for offer to make it a usual order.
+     * - Save order to the database.
      *
      * @api
      *
-     * @param int $idSalesOrder
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
      *
-     * @return \Generated\Shared\Transfer\OfferToOrderConvertResponseTransfer
-     */
-    public function convertOfferToOrder(int $idSalesOrder): OfferToOrderConvertResponseTransfer;
-
-    /**
-     *todo:
-     * @api
-     *
-     * @param OfferTransfer $offerTransfer
-     *
-     * @return OfferResponseTransfer
+     * @return \Generated\Shared\Transfer\OfferResponseTransfer
      */
     public function placeOffer(OfferTransfer $offerTransfer): OfferResponseTransfer;
 
-
     /**
-     * todo:
      * Specification:
-     * -
+     * - Get offer transfer by offer id.
      *
      * @api
      *
-     * @param OfferTransfer $offerTransfer
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
      *
-     * @return OfferTransfer
+     * @return \Generated\Shared\Transfer\OfferTransfer
      */
     public function getOfferById(OfferTransfer $offerTransfer): OfferTransfer;
+
+    /**
+     * Specification:
+     * - Save status to offer.
+     *
+     * @api
+     *
+     * @param int $idOffer
+     * @param string $status
+     *
+     * @return \Generated\Shared\Transfer\OfferResponseTransfer
+     */
+    public function updateOfferStatus(int $idOffer, string $status): OfferResponseTransfer;
 
     /**
      * Specification:

@@ -7,9 +7,8 @@
 
 namespace Spryker\Client\Offer;
 
+use Generated\Shared\Transfer\OfferListTransfer;
 use Generated\Shared\Transfer\OfferResponseTransfer;
-use Generated\Shared\Transfer\OfferToOrderConvertRequestTransfer;
-use Generated\Shared\Transfer\OfferToOrderConvertResponseTransfer;
 use Generated\Shared\Transfer\OfferTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
@@ -19,19 +18,31 @@ use Spryker\Client\Kernel\AbstractClient;
 class OfferClient extends AbstractClient implements OfferClientInterface
 {
     /**
-     * {@inheritdoc}
-     *
      * @api
      *
-     * @param \Generated\Shared\Transfer\OfferToOrderConvertRequestTransfer $offerToOrderConvertRequestTransfer
+     * @param \Generated\Shared\Transfer\OfferListTransfer $offerListTransfer
      *
-     * @return \Generated\Shared\Transfer\OfferToOrderConvertResponseTransfer
+     * @return \Generated\Shared\Transfer\OfferListTransfer
      */
-    public function convertOfferToOrder(OfferToOrderConvertRequestTransfer $offerToOrderConvertRequestTransfer): OfferToOrderConvertResponseTransfer
+    public function getOffers(OfferListTransfer $offerListTransfer): OfferListTransfer
     {
         return $this->getFactory()
             ->createZedStub()
-            ->convertOfferToOrder($offerToOrderConvertRequestTransfer);
+            ->getOffers($offerListTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
+     *
+     * @return \Generated\Shared\Transfer\OfferTransfer
+     */
+    public function getOfferById(OfferTransfer $offerTransfer): OfferTransfer
+    {
+        return $this->getFactory()
+            ->createZedStub()
+            ->getOfferById($offerTransfer);
     }
 
     /**
@@ -39,8 +50,8 @@ class OfferClient extends AbstractClient implements OfferClientInterface
      *
      * @api
      *
-     * @param OfferTransfer $offerTransfer
-     * @return OfferResponseTransfer
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
+     * @return \Generated\Shared\Transfer\OfferResponseTransfer
      */
     public function placeOffer(OfferTransfer $offerTransfer): OfferResponseTransfer
     {
