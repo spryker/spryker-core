@@ -71,6 +71,7 @@ class QuoteShareDetailsQuoteResponseExpander implements QuoteResponseExpanderInt
             if (!empty($groupedCompanyUserTransferCollection[$quoteTransfer->getIdQuote()])) {
                 $quoteTransfer->setShareDetails(
                     $this->createShareDetails(
+                        $quoteTransfer->getIdQuote(),
                         $groupedCompanyUserTransferCollection[$quoteTransfer->getIdQuote()],
                         $quotePermissionGroupTransferList
                     )
@@ -80,6 +81,7 @@ class QuoteShareDetailsQuoteResponseExpander implements QuoteResponseExpanderInt
         if (!empty($groupedCompanyUserTransferCollection[$quoteResponseTransfer->getQuoteTransfer()->getIdQuote()])) {
             $quoteResponseTransfer->getQuoteTransfer()->setShareDetails(
                 $this->createShareDetails(
+                    $quoteResponseTransfer->getQuoteTransfer()->getIdQuote(),
                     $groupedCompanyUserTransferCollection[$quoteResponseTransfer->getQuoteTransfer()->getIdQuote()],
                     $quotePermissionGroupTransferList
                 )
@@ -134,16 +136,20 @@ class QuoteShareDetailsQuoteResponseExpander implements QuoteResponseExpanderInt
     }
 
     /**
+     * @param int $idQuote
      * @param \Generated\Shared\Transfer\SpyCompanyUserEntityTransfer[] $companyUserTransferCollection
      * @param \Generated\Shared\Transfer\QuotePermissionGroupTransfer[] $quotePermissionGroupTransferList
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ShareDetailTransfer[]
      */
-    protected function createShareDetails($companyUserTransferCollection, $quotePermissionGroupTransferList): ArrayObject
+    protected function createShareDetails(int $idQuote, array $companyUserTransferCollection, array $quotePermissionGroupTransferList): ArrayObject
     {
         $shareDetailsTransferList = new ArrayObject();
         foreach ($companyUserTransferCollection as $companyUserEntityTransfer) {
             foreach ($companyUserEntityTransfer->getSpyQuoteCompanyUsers() as $quoteCompanyUser) {
+                if ($idQuote !== $quoteCompanyUser->getFkQuote()) {
+                    continue;
+                }
                 $shareDetailTransfer = new ShareDetailTransfer();
                 $shareDetailTransfer
                     ->setIdQuoteCompanyUser($quoteCompanyUser->getIdQuoteCompanyUser())
