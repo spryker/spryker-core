@@ -68,6 +68,7 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
         $productQuantityEntityMap = $this->getProductQuantityEntityMap($cartChangeTransfer);
 
         foreach ($cartQuantityMap as $productSku => $productQuantity) {
+            /** @TODO Remove min quantity validation for removal */
             $this->validateItem($productSku, $productQuantity, $productQuantityEntityMap[$productSku], $responseTransfer);
         }
 
@@ -89,7 +90,7 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
         $interval = $productQuantityEntity->getQuantityInterval();
 
         if ($quantity < $min) {
-            $this->addViolationMessage(static::ERROR_QUANTITY_MIN_NOT_FULFILLED, $sku, $min, $responseTransfer);
+            //$this->addViolationMessage(static::ERROR_QUANTITY_MIN_NOT_FULFILLED, $sku, $min, $responseTransfer);
         }
 
         if ($max !== null && $quantity > $max) {
