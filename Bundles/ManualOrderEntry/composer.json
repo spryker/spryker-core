@@ -3,9 +3,16 @@
   "description": "ManualOrderEntry module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
+    "spryker/kernel": "^3.18.0",
+    "spryker/symfony": "^3.1.0"
+  },
+  "suggest": {
+    "spryker/sales": "^8.8.3"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/sales": "^8.8.3",
     "spryker/testify": "*"
   },
   "autoload": {
