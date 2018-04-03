@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ShoppingList\Dependency\Facade;
 
-
 interface ShoppingListToProductFacadeInterface
 {
     /**

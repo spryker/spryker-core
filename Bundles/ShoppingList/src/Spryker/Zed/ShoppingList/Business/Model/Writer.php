@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\ShoppingList\Business\Model;
 
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
@@ -84,14 +86,16 @@ class Writer implements WriterInterface
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
      */
-    public function removeShoppingList(ShoppingListTransfer $shoppingListTransfer): void
+    public function removeShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
     {
         $shoppingListEntityTransfer = $this->createShoppingListEntityTransfer($shoppingListTransfer);
-        $this->getTransactionHandler()->handleTransaction(function () use ($shoppingListEntityTransfer) {
+        return $this->getTransactionHandler()->handleTransaction(function () use ($shoppingListEntityTransfer) {
             $this->shoppingListEntityManager->deleteShoppingListItems($shoppingListEntityTransfer);
             $this->shoppingListEntityManager->deleteShoppingListByName($shoppingListEntityTransfer);
+
+            return (new ShoppingListResponseTransfer())->setIsSuccess(true);
         });
     }
 
@@ -110,46 +114,81 @@ class Writer implements WriterInterface
             return $shoppingListItemTransfer;
         }
 
-        $shoppingListTransfer = (new ShoppingListTransfer())
-            ->setName($shoppingListItemTransfer->getShoppingListName())
-            ->setCustomerReference($shoppingListItemTransfer->getCustomerReference());
+        $existingShoppingListTransfer = $this->createShoppingListIfNotExists(
+            $shoppingListItemTransfer->getCustomerReference(),
+            $shoppingListItemTransfer->getShoppingListName()
+        );
 
-        $shoppingListTransfer = $this->getShoppingListWithSameName($shoppingListTransfer);
-
-        if (!$shoppingListTransfer) {
-            $shoppingListTransfer->setName($this->shoppingListConfig->getDefaultShoppingListName());
-            $shoppingListTransfer = $this->saveShoppingList($shoppingListTransfer);
-        }
-
-        $shoppingListItemTransfer->setFkShoppingList($shoppingListTransfer->getIdShoppingList());
+        $shoppingListItemTransfer->setFkShoppingList($existingShoppingListTransfer->getIdShoppingList());
         return $this->saveShoppingListItem($shoppingListItemTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
-    public function removeItemById(ShoppingListItemTransfer $shoppingListItemTransfer): void
+    public function removeItemById(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemResponseTransfer
     {
         $shoppingListItemTransfer->requireIdShoppingListItem();
 
         $this->shoppingListEntityManager->deleteShoppingListItem($this->createShoppingListItemEntityTransfer($shoppingListItemTransfer));
+
+        return (new ShoppingListItemResponseTransfer())->setIsSuccess(true);
     }
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
-    public function removeItemCollection(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): void
+    public function removeItemCollection(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ShoppingListItemResponseTransfer
     {
-        $this->getTransactionHandler()->handleTransaction(function () use ($shoppingListItemCollectionTransfer) {
+        return $this->getTransactionHandler()->handleTransaction(function () use ($shoppingListItemCollectionTransfer) {
             foreach ($shoppingListItemCollectionTransfer->getItems() as $shoppingListItemTransfer) {
                 $this->shoppingListEntityManager->deleteShoppingListItem(
                     $this->createShoppingListItemEntityTransfer($shoppingListItemTransfer)
                 );
             }
+
+            return (new ShoppingListItemResponseTransfer())->setIsSuccess(true);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
+     */
+    public function saveShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
+    {
+        $shoppingListEntityTransfer = $this->shoppingListEntityManager->saveShoppingListItem(
+            $this->createShoppingListItemEntityTransfer($shoppingListItemTransfer)
+        );
+
+        return $shoppingListItemTransfer->fromArray($shoppingListEntityTransfer->toArray(), true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer
+     */
+    public function createShoppingListFromQuote(QuoteTransfer $quoteTransfer): ShoppingListTransfer
+    {
+        return $this->getTransactionHandler()->handleTransaction(function () use ($quoteTransfer) {
+            $shoppingListTransfer = $this->createShoppingListIfNotExists($quoteTransfer->getCustomerReference());
+
+            foreach ($quoteTransfer->getItems() as $item) {
+                $shoppingListItemTransfer = (new ShoppingListItemTransfer())
+                    ->setFkShoppingList($shoppingListTransfer->getIdShoppingList())
+                    ->setQuantity($item->getQuantity())
+                    ->setSku($item->getSku());
+
+                $this->saveShoppingListItem($shoppingListItemTransfer);
+            }
+
+            return $shoppingListTransfer;
         });
     }
 
@@ -165,20 +204,6 @@ class Writer implements WriterInterface
         );
 
         return $shoppingListTransfer->fromArray($shoppingListEntityTransfer->toArray(), true);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
-     */
-    protected function saveShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
-    {
-        $shoppingListEntityTransfer = $this->shoppingListEntityManager->saveShoppingListItem(
-            $this->createShoppingListItemEntityTransfer($shoppingListItemTransfer)
-        );
-
-        return $shoppingListItemTransfer->fromArray($shoppingListEntityTransfer->toArray(), true);
     }
 
     /**
@@ -222,5 +247,30 @@ class Writer implements WriterInterface
         $shoppingListTransfer->requireCustomerReference();
 
         return $this->shoppingListRepository->findCustomerShoppingListWithSameName($shoppingListTransfer);
+    }
+
+    /**
+     * @param string $customerReference
+     * @param string|null $shoppingListName
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer
+     */
+    protected function createShoppingListIfNotExists(string $customerReference, string $shoppingListName = null): ShoppingListTransfer
+    {
+        $shoppingListTransfer = (new ShoppingListTransfer())
+            ->setName($shoppingListName)
+            ->setCustomerReference($customerReference);
+
+        if (!$shoppingListTransfer->getName()) {
+            $shoppingListTransfer->setName($this->shoppingListConfig->getDefaultShoppingListName());
+        }
+
+        $existingShoppingListTransfer = $this->getShoppingListWithSameName($shoppingListTransfer);
+
+        if (!$existingShoppingListTransfer) {
+            $existingShoppingListTransfer = $this->saveShoppingList($shoppingListTransfer);
+        }
+
+        return $existingShoppingListTransfer;
     }
 }

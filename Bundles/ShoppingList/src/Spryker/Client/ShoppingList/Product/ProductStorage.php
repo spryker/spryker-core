@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\ShoppingList\Product;
 
-use ArrayObject;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
 use Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToPriceProductClientInterface;

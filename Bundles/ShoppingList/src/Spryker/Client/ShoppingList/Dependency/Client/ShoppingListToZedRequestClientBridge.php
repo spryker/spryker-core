@@ -25,7 +25,7 @@ class ShoppingListToZedRequestClientBridge implements ShoppingListToZedRequestCl
     }
 
     /**
-	 * @param string $url
+     * @param string $url
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $object
      * @param array|int|null $requestOptions
      *

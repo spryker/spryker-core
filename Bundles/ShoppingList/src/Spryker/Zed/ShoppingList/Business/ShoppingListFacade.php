@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ShoppingList\Business;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
@@ -66,11 +67,9 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
      */
     public function removeShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
     {
-        $this->getFactory()
+        return $this->getFactory()
             ->createWriter()
             ->removeShoppingList($shoppingListTransfer);
-
-        return (new ShoppingListResponseTransfer())->setIsSuccess(true);
     }
 
     /**
@@ -100,9 +99,7 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
      */
     public function removeItemById(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemResponseTransfer
     {
-        $this->getFactory()->createWriter()->removeItemById($shoppingListItemTransfer);
-
-        return (new ShoppingListItemResponseTransfer())->setIsSuccess(true);
+        return $this->getFactory()->createWriter()->removeItemById($shoppingListItemTransfer);
     }
 
     /**
@@ -116,11 +113,9 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
      */
     public function removeItemCollection(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ShoppingListItemResponseTransfer
     {
-        $this->getFactory()
+        return $this->getFactory()
             ->createWriter()
             ->removeItemCollection($shoppingListItemCollectionTransfer);
-
-        return (new ShoppingListItemResponseTransfer())->setIsSuccess(true);
     }
 
     /**
@@ -169,5 +164,61 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
         return $this->getFactory()
             ->createReader()
             ->getCustomerShoppingListCollection($customerTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListCollectionTransfer $shoppingListCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
+     */
+    public function getCustomerShoppingListsItemsCollection(ShoppingListCollectionTransfer $shoppingListCollectionTransfer): ShoppingListItemCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createReader()
+            ->getCustomerShoppingListsItemsCollection($shoppingListCollectionTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
+     */
+    public function getShoppingListItemCollectionTransfer(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ShoppingListItemCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createReader()
+            ->getShoppingListItemCollectionTransfer($shoppingListItemCollectionTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
+     */
+    public function updateShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
+    {
+        return $this->getFactory()->createWriter()->saveShoppingListItem($shoppingListItemTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer
+     */
+    public function createShoppingListFromQuote(QuoteTransfer $quoteTransfer): ShoppingListTransfer
+    {
+        return $this->getFactory()->createWriter()->createShoppingListFromQuote($quoteTransfer);
     }
 }

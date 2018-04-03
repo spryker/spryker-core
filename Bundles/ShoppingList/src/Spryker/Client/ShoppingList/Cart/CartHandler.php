@@ -41,43 +41,43 @@ class CartHandler implements CartHandlerInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListAddToCartRequestCollectionTransfer
      */
-    public function addCollectionToCart(ShoppingListAddToCartRequestCollectionTransfer $shoppingListAddToCartRequestCollectionTransfer): ShoppingListAddToCartRequestCollectionTransfer
+    public function addItemCollectionToCart(ShoppingListAddToCartRequestCollectionTransfer $shoppingListAddToCartRequestCollectionTransfer): ShoppingListAddToCartRequestCollectionTransfer
     {
         $itemTransfers = [];
 
-        foreach ($shoppingListAddToCartRequestCollectionTransfer->getRequests() as $shoppingListAddToCartRequestTransfer) {
-            $this->assertRequestTransfer($shoppingListAddToCartRequestTransfer);
-            $itemTransfers[] = $this->createItemTransfer($shoppingListAddToCartRequestTransfer->getSku(), $shoppingListAddToCartRequestTransfer->getQuantity());
+        foreach ($shoppingListAddToCartRequestCollectionTransfer->getRequests() as $ShoppingListAddToCartRequestTransfer) {
+            $this->assertRequestTransfer($ShoppingListAddToCartRequestTransfer);
+            $itemTransfers[] = $this->createItemTransfer($ShoppingListAddToCartRequestTransfer->getSku(), $ShoppingListAddToCartRequestTransfer->getQuantity());
         }
 
         $quoteTransfer = $this->cartClient->addItems($itemTransfers);
 
-        $failedToAddRequestCollectionTransfer = $this->getShoppingListRequestCollectionToCartDiff(
+        $failedToMoveRequestCollectionTransfer = $this->getShoppingListRequestCollectionToCartDiff(
             $shoppingListAddToCartRequestCollectionTransfer,
             $quoteTransfer
         );
 
-        return $failedToAddRequestCollectionTransfer;
+        return $failedToMoveRequestCollectionTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListAddToCartRequestCollectionTransfer $shoppingListAddToCartRequestCollectionTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListAddToCartRequestCollectionTransfer $ShoppingListAddToCartRequestCollectionTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListAddToCartRequestCollectionTransfer
      */
-    protected function getShoppingListRequestCollectionToCartDiff(ShoppingListAddToCartRequestCollectionTransfer $shoppingListAddToCartRequestCollectionTransfer, QuoteTransfer $quoteTransfer): ShoppingListAddToCartRequestCollectionTransfer
+    protected function getShoppingListRequestCollectionToCartDiff(ShoppingListAddToCartRequestCollectionTransfer $ShoppingListAddToCartRequestCollectionTransfer, QuoteTransfer $quoteTransfer): ShoppingListAddToCartRequestCollectionTransfer
     {
         $shoppingListRequestCollectionDiff = new ShoppingListAddToCartRequestCollectionTransfer();
 
         $existingSkuIndex = $this->createExistingSkuIndex($quoteTransfer);
 
-        foreach ($shoppingListAddToCartRequestCollectionTransfer->getRequests() as $shoppingListAddToCartRequestTransfer) {
-            if (isset($existingSkuIndex[$shoppingListAddToCartRequestTransfer->getSku()])) {
+        foreach ($ShoppingListAddToCartRequestCollectionTransfer->getRequests() as $ShoppingListAddToCartRequestTransfer) {
+            if (isset($existingSkuIndex[$ShoppingListAddToCartRequestTransfer->getSku()])) {
                 continue;
             }
 
-            $shoppingListRequestCollectionDiff->addRequest($shoppingListAddToCartRequestTransfer);
+            $shoppingListRequestCollectionDiff->addRequest($ShoppingListAddToCartRequestTransfer);
         }
 
         return $shoppingListRequestCollectionDiff;

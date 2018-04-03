@@ -12,7 +12,7 @@ use Spryker\Shared\Kernel\Transfer\TransferInterface;
 interface ShoppingListToZedRequestClientInterface
 {
     /**
-	 * @param string $url
+     * @param string $url
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $object
      * @param array|int|null $requestOptions Deprecated: Do not use "int" anymore, please use an array for requestOptions.
      *

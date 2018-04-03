@@ -9,6 +9,7 @@ namespace Spryker\Zed\ShoppingList\Business\Model;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListPaginationTransfer;
@@ -35,6 +36,7 @@ class Reader implements ReaderInterface
 
     /**
      * @param \Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface $shoppingListRepository
+     * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\ShoppingList\Dependency\Plugin\ItemExpanderPluginInterface[] $itemExpanderPlugins
      */
     public function __construct(ShoppingListRepositoryInterface $shoppingListRepository, ShoppingListToProductFacadeInterface $productFacade, array $itemExpanderPlugins)
@@ -90,6 +92,46 @@ class Reader implements ReaderInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
+     */
+    public function getCustomerShoppingListCollection(CustomerTransfer $customerTransfer): ShoppingListCollectionTransfer
+    {
+        $customerReference = $customerTransfer
+            ->requireIdCustomer()
+            ->getCustomerReference();
+
+        return $this->getCustomerShoppingListCollectionByReference($customerReference);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListCollectionTransfer $shoppingListCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
+     */
+    public function getCustomerShoppingListsItemsCollection(ShoppingListCollectionTransfer $shoppingListCollectionTransfer): ShoppingListItemCollectionTransfer
+    {
+        return $this->shoppingListRepository->findCustomerShoppingListsItemsByName($shoppingListCollectionTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
+     */
+    public function getShoppingListItemCollectionTransfer(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ShoppingListItemCollectionTransfer
+    {
+        $shoppingListItemIds = [];
+
+        foreach ($shoppingListItemCollectionTransfer->getItems() as $shoppingListItemTransfer) {
+            $shoppingListItemIds[] = $shoppingListItemTransfer->getIdShoppingListItem();
+        }
+
+        return $this->shoppingListRepository->findShoppingListItemsByIds($shoppingListItemIds);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListPaginationTransfer
@@ -112,20 +154,6 @@ class Reader implements ReaderInterface
         return (new ShoppingListOverviewResponseTransfer())
             ->setShoppingList($shoppingList)
             ->setPagination($shoppingListPaginationTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
-     */
-    public function getCustomerShoppingListCollection(CustomerTransfer $customerTransfer): ShoppingListCollectionTransfer
-    {
-        $customerReference = $customerTransfer
-            ->requireIdCustomer()
-            ->getCustomerReference();
-
-        return $this->getCustomerShoppingListCollectionByReference($customerReference);
     }
 
     /**
