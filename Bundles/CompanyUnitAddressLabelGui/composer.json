@@ -10,8 +10,8 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/gui": "*",
     "spryker/company-unit-address": "*",
+    "spryker/gui": "*",
     "spryker/testify": "*"
   },
   "suggest": {
