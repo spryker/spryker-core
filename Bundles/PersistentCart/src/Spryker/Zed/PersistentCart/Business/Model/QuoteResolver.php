@@ -83,10 +83,7 @@ class QuoteResolver implements QuoteResolverInterface
     protected function findCustomerQuoteById(int $idQuote, CustomerTransfer $customerTransfer): ?QuoteTransfer
     {
         if (!$idQuote) {
-            $quoteTransfer = new QuoteTransfer();
-            $quoteTransfer->setCustomer($customerTransfer);
-
-            return $quoteTransfer;
+            return $this->createNewQuote($customerTransfer);
         }
         $quoteResponseTransfer = $this->quoteFacade->findQuoteById($idQuote);
         if (!$quoteResponseTransfer->getIsSuccessful() || !$this->isQuoteReadAllowed($quoteResponseTransfer->getQuoteTransfer(), $customerTransfer)
@@ -136,6 +133,19 @@ class QuoteResolver implements QuoteResolverInterface
         }
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function createNewQuote(CustomerTransfer $customerTransfer): ?QuoteTransfer
+    {
+        $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer->setCustomer($customerTransfer);
+
+        return $this->quoteFacade->createQuote($quoteTransfer)->getQuoteTransfer();
     }
 
     /**

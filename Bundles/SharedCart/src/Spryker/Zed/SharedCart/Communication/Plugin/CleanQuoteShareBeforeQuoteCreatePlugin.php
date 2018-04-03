@@ -5,18 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MultiCart\Communication\Plugin;
+namespace Spryker\Zed\SharedCart\Communication\Plugin;
 
+use ArrayObject;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface;
 
 /**
- * @method \Spryker\Zed\MultiCart\Communication\MultiCartCommunicationFactory getFactory()
- * @method \Spryker\Zed\MultiCart\Business\MultiCartFacadeInterface getFacade()
- * @method \Spryker\Zed\MultiCart\MultiCartConfig getConfig()
+ * @method \Spryker\Zed\SharedCart\Communication\SharedCartCommunicationFactory getFactory()
+ * @method \Spryker\Zed\SharedCart\Business\SharedCartFacadeInterface getFacade()
+ * @method \Spryker\Zed\SharedCart\SharedCartConfig getConfig()
  */
-class DeactivateQuotesBeforeQuoteSavePlugin extends AbstractPlugin implements QuoteWritePluginInterface
+class CleanQuoteShareBeforeQuoteCreatePlugin extends AbstractPlugin implements QuoteWritePluginInterface
 {
     /**
      * @api
@@ -27,8 +28,7 @@ class DeactivateQuotesBeforeQuoteSavePlugin extends AbstractPlugin implements Qu
      */
     public function execute(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        $quoteTransfer->setIsDefault(true);
-        $this->getFacade()->resetQuoteDefaultFlagByCustomer($quoteTransfer->getCustomer()->getCustomerReference());
+        $quoteTransfer->setShareDetails(new ArrayObject());
 
         return $quoteTransfer;
     }

@@ -96,4 +96,16 @@ interface SharedCartFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function quoteSetDefault(QuoteTransfer $quoteTransfer): QuoteTransfer;
+
+    /**
+     * Specification:
+     * - TODO: add specification
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function deleteShareForQuote(QuoteTransfer $quoteTransfer): void;
 }

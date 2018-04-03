@@ -33,4 +33,14 @@ class MultiCartToMessengerFacadeBridge implements MultiCartToMessengerFacadeInte
     {
         $this->messengerFacade->addInfoMessage($message);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\MessageTransfer $message
+     *
+     * @return void
+     */
+    public function addSuccessMessage(MessageTransfer $message)
+    {
+        $this->messengerFacade->addSuccessMessage($message);
+    }
 }

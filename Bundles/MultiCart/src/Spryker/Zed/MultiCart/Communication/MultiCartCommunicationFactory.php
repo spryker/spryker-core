@@ -8,6 +8,8 @@
 namespace Spryker\Zed\MultiCart\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToMessengerFacadeInterface;
+use Spryker\Zed\MultiCart\MultiCartDependencyProvider;
 
 /**
  * @method \Spryker\Zed\MultiCart\Business\MultiCartFacadeInterface getFacade()
@@ -15,4 +17,11 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class MultiCartCommunicationFactory extends AbstractCommunicationFactory
 {
+    /**
+     * @return \Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToMessengerFacadeInterface
+     */
+    public function getMessengerFacade(): MultiCartToMessengerFacadeInterface
+    {
+        return $this->getProvidedDependency(MultiCartDependencyProvider::FACADE_MESSENGER);
+    }
 }

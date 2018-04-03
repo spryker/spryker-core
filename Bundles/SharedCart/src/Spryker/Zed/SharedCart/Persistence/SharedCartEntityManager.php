@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SharedCart\Persistence;
 
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpyPermissionEntityTransfer;
 use Generated\Shared\Transfer\SpyQuoteCompanyUserEntityTransfer;
 use Generated\Shared\Transfer\SpyQuotePermissionGroupEntityTransfer;
@@ -124,5 +125,18 @@ class SharedCartEntityManager extends AbstractEntityManager implements SharedCar
             ->createQuoteCompanyUserQuery()
             ->filterByFkCompanyUser($idCompanyUser)
             ->update(['IsDefault' => false]);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function deleteQuoteCompanyUserByQuote(QuoteTransfer $quoteTransfer): void
+    {
+        $this->getFactory()
+            ->createQuoteCompanyUserQuery()
+            ->filterByFkQuote($quoteTransfer->getIdQuote())
+            ->delete();
     }
 }

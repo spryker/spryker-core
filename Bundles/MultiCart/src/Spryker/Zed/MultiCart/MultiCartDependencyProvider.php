@@ -39,6 +39,18 @@ class MultiCartDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    public function provideCommunicationLayerDependencies(Container $container)
+    {
+        $container = $this->addMessengerFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addQuoteFacade(Container $container): Container
     {
         $container[static::FACADE_QUOTE] = function (Container $container) {
