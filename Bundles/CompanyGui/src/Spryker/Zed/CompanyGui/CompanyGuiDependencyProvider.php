@@ -16,8 +16,9 @@ class CompanyGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PROPEL_COMPANY_QUERY = 'PROPEL_COMPANY_QUERY';
     public const FACADE_COMPANY = 'FACADE_COMPANY';
-    public const COMPANY_TABLE_ACTION_EXTENSION_PLUGINS = 'COMPANY_TABLE_ACTION_EXTENSION_PLUGINS';
-    public const COMPANY_FORM_EXTENSION_PLUGINS = 'COMPANY_FORM_EXTENSION_PLUGINS';
+    public const PLUGINS_COMPANY_TABLE_EXPANDER = 'PLUGINS_COMPANY_TABLE_EXPANDER';
+    public const PLUGINS_COMPANY_TABLE_ACTION_EXPANDER = 'PLUGINS_COMPANY_TABLE_ACTION_EXPANDER';
+    public const PLUGINS_COMPANY_FORM_EXPANDER = 'PLUGINS_COMPANY_FORM_EXPANDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -29,7 +30,8 @@ class CompanyGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addPropelCompanyQuery($container);
         $container = $this->addCompanyFacade($container);
-        $container = $this->addCompanyTableActionExtensionPlugins($container);
+        $container = $this->addCompanyTableExpanderPlugins($container);
+        $container = $this->addCompanyTableActionExpanderPlugins($container);
         $container = $this->addCompanyFormPlugins($container);
 
         return $container;
@@ -68,19 +70,41 @@ class CompanyGuiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCompanyTableActionExtensionPlugins(Container $container): Container
+    protected function addCompanyTableExpanderPlugins(Container $container): Container
     {
-        $container[static::COMPANY_TABLE_ACTION_EXTENSION_PLUGINS] = function (Container $container) {
-            return $this->getCompanyTableActionExtensionPlugins();
+        $container[static::PLUGINS_COMPANY_TABLE_EXPANDER] = function (Container $container) {
+            return $this->getCompanyTableExpanderPlugins();
         };
 
         return $container;
     }
 
     /**
-     * @return \Spryker\Zed\CompanyGuiExtension\Dependency\Plugin\CompanyTableActionExtensionInterface[]
+     * @return \Spryker\Zed\CompanyGuiExtension\Dependency\Plugin\CompanyTableExpanderInterface[]
      */
-    protected function getCompanyTableActionExtensionPlugins(): array
+    protected function getCompanyTableExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCompanyTableActionExpanderPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_COMPANY_TABLE_ACTION_EXPANDER] = function (Container $container) {
+            return $this->getCompanyTableActionExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyGuiExtension\Dependency\Plugin\CompanyTableActionExpanderInterface[]
+     */
+    protected function getCompanyTableActionExpanderPlugins(): array
     {
         return [];
     }
@@ -92,7 +116,7 @@ class CompanyGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCompanyFormPlugins(Container $container): Container
     {
-        $container[static::COMPANY_FORM_EXTENSION_PLUGINS] = function (Container $container) {
+        $container[static::PLUGINS_COMPANY_FORM_EXPANDER] = function (Container $container) {
             return $this->getCompanyFormPlugins();
         };
 

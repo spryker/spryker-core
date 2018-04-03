@@ -134,7 +134,7 @@ class CompanyUnitAddressGuiDependencyProvider extends AbstractBundleDependencyPr
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUnitAddressGuiExtension\Communication\Plugin\CompanyUnitAddressEditFormExpanderPluginInterface[]
+     * @return \Spryker\Zed\CompanyUnitAddressGuiExtension\Dependency\Plugin\CompanyUnitAddressEditFormExpanderPluginInterface[]
      */
     protected function getCompanyUnitAddressFormPlugins(): array
     {
@@ -142,7 +142,7 @@ class CompanyUnitAddressGuiDependencyProvider extends AbstractBundleDependencyPr
     }
 
     /**
-     * @return array
+     * @return \Spryker\Zed\CompanyUnitAddressGuiExtension\Dependency\Plugin\CompanyUnitAddressTableExpanderInterface[]
      */
     protected function getCompanyUnitAddressTableExpanderPlugins(): array
     {

@@ -8,10 +8,12 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/symfony": "^3.0.0",
+    "spryker/gui": "^3.13.0",
     "spryker/testify": "*"
   },
   "suggest": {
     "spryker/symfony": "If you want to use CompanyGui plugins",
+    "spryker/gui": "If you want to use Gui module",
     "spryker/company-gui": "If you want to provide plugins to CompanyGui module"
   },
   "autoload": {

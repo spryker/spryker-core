@@ -9,6 +9,7 @@ namespace Spryker\Zed\CompanySupplier\Persistence;
 
 use Generated\Shared\Transfer\CompanySupplierCollectionTransfer;
 use Generated\Shared\Transfer\CompanyTypeCollectionTransfer;
+use Generated\Shared\Transfer\SpyCompanyTypeEntityTransfer;
 
 interface CompanySupplierRepositoryInterface
 {
@@ -43,4 +44,16 @@ interface CompanySupplierRepositoryInterface
      * @return \Generated\Shared\Transfer\CompanySupplierCollectionTransfer
      */
     public function getSuppliersByIdProduct(int $idProduct): CompanySupplierCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Gets company type by id
+     *
+     * @api
+     *
+     * @param int $idCompanyType
+     *
+     * @return \Generated\Shared\Transfer\SpyCompanyTypeEntityTransfer
+     */
+    public function getCompanyTypeByIdCompanyType(int $idCompanyType): SpyCompanyTypeEntityTransfer;
 }

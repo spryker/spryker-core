@@ -19,10 +19,13 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/company": "*",
     "spryker/company-gui": "*",
     "spryker/testify": "*"
   },
   "suggest": {
+    "spryker/gui": "It's better to install it",
+    "spryker/company": "If you want to use Company module",
     "spryker/company-gui": "If you want to provide plugins to CompanyGui module"
   },
   "autoload": {

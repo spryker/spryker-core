@@ -10,6 +10,7 @@ namespace Spryker\Zed\CompanySupplier\Persistence;
 use ArrayObject;
 use Generated\Shared\Transfer\CompanySupplierCollectionTransfer;
 use Generated\Shared\Transfer\CompanyTypeCollectionTransfer;
+use Generated\Shared\Transfer\SpyCompanyTypeEntityTransfer;
 use Orm\Zed\Company\Persistence\SpyCompanyQuery;
 use Spryker\Shared\CompanySupplier\CompanySupplierConstants;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -91,5 +92,23 @@ class CompanySupplierRepository extends AbstractRepository implements CompanySup
         $companySupplierCollection->setSuppliers($companySuppliers);
 
         return $companySupplierCollection;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idCompanyType
+     *
+     * @return \Generated\Shared\Transfer\SpyCompanyTypeEntityTransfer
+     */
+    public function getCompanyTypeByIdCompanyType(int $idCompanyType): SpyCompanyTypeEntityTransfer
+    {
+        $spyCompanyTypeEntityTransfer = $this->buildQueryFromCriteria(
+            $this->getFactory()->createCompanyTypeQuery()->filterByIdCompanyType($idCompanyType)
+        )->findOne();
+
+        return $spyCompanyTypeEntityTransfer;
     }
 }

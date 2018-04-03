@@ -8,7 +8,8 @@
 namespace Spryker\Zed\CompanyUnitAddressLabelGui\Communication\Plugin;
 
 use Generated\Shared\Transfer\SpyCompanyUnitAddressLabelEntityTransfer;
-use Spryker\Zed\CompanyUnitAddressGuiExtension\Communication\Plugin\CompanyUnitAddressTableExpanderInterface;
+use Orm\Zed\CompanyUnitAddress\Persistence\Map\SpyCompanyUnitAddressTableMap;
+use Spryker\Zed\CompanyUnitAddressGuiExtension\Dependency\Plugin\CompanyUnitAddressTableExpanderInterface;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -17,7 +18,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class CompanyUnitAddressTableExpanderPlugin extends AbstractPlugin implements CompanyUnitAddressTableExpanderInterface
 {
-    const COL_COMPANY_UNIT_ADDRESS_LABELS = 'Labels';
+    protected const ID_COMPANY_UNIT_ADDRESS = SpyCompanyUnitAddressTableMap::COL_ID_COMPANY_UNIT_ADDRESS;
+    protected const COL_COMPANY_UNIT_ADDRESS_LABELS = 'Labels';
 
     /**
      * @return array

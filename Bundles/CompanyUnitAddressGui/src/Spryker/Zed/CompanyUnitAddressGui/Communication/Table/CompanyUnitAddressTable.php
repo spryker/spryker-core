@@ -38,13 +38,13 @@ class CompanyUnitAddressTable extends AbstractTable
     protected $companyUnitAddressQueryContainer;
 
     /**
-     * @var \Spryker\Zed\CompanyUnitAddressGuiExtension\Communication\Plugin\CompanyUnitAddressTableExpanderInterface[]
+     * @var \Spryker\Zed\CompanyUnitAddressGuiExtension\Dependency\Plugin\CompanyUnitAddressTableExpanderInterface[]
      */
     protected $companyUnitAddressTableExpanderPlugins;
 
     /**
      * @param \Spryker\Zed\CompanyUnitAddressGui\Dependency\QueryContainer\CompanyUnitAddressGuiToCompanyUnitAddressQueryContainerInterface $companyUnitAddressQueryContainer
-     * @param \Spryker\Zed\CompanyUnitAddressGuiExtension\Communication\Plugin\CompanyUnitAddressTableExpanderInterface[] $companyUnitAddressTableExpanderPlugins
+     * @param \Spryker\Zed\CompanyUnitAddressGuiExtension\Dependency\Plugin\CompanyUnitAddressTableExpanderInterface[] $companyUnitAddressTableExpanderPlugins
      */
     public function __construct(
         CompanyUnitAddressGuiToCompanyUnitAddressQueryContainerInterface $companyUnitAddressQueryContainer,

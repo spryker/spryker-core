@@ -10,6 +10,7 @@ namespace Spryker\Zed\CompanySupplierGui\Dependency\Facade;
 use Generated\Shared\Transfer\CompanySupplierCollectionTransfer;
 use Generated\Shared\Transfer\CompanyTypeCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\SpyCompanyTypeEntityTransfer;
 
 class CompanySupplierGuiToCompanySupplierFacadeBridge implements CompanySupplierGuiToCompanySupplierFacadeInterface
 {
@@ -60,5 +61,15 @@ class CompanySupplierGuiToCompanySupplierFacadeBridge implements CompanySupplier
     public function getCompanyTypes(): CompanyTypeCollectionTransfer
     {
         return $this->companySupplierFacade->getCompanyTypes();
+    }
+
+    /**
+     * @param int $idCompanyType
+     *
+     * @return \Generated\Shared\Transfer\SpyCompanyTypeEntityTransfer
+     */
+    public function getCompanyTypeByIdCompanyType(int $idCompanyType): SpyCompanyTypeEntityTransfer
+    {
+        return $this->companySupplierFacade->getCompanyTypeByIdCompanyType($idCompanyType);
     }
 }

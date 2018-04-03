@@ -4,17 +4,19 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/company-unit-address-gui-extension": "^2.0.0",
-    "spryker/company-unit-address-label": "1.1.0",
+    "spryker/company-unit-address-gui-extension": "^1.0.0",
+    "spryker/company-unit-address-label": "^1.1.0",
     "spryker/kernel": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/gui": "*",
+    "spryker/company-unit-address": "*",
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/gui": "It's better to install it"
+    "spryker/gui": "It's better to install it",
+    "spryker/company-unit-address": "If you want to use CompanyUnitAddress module"
   },
   "autoload": {
     "psr-4": {

@@ -9,7 +9,7 @@ namespace Spryker\Zed\CompanyGuiExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\ButtonTransfer;
 
-interface CompanyTableActionExtensionInterface
+interface CompanyTableActionExpanderInterface
 {
     /**
      * Specification:

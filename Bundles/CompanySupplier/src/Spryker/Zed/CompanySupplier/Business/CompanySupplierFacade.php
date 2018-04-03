@@ -10,6 +10,7 @@ namespace Spryker\Zed\CompanySupplier\Business;
 use Generated\Shared\Transfer\CompanySupplierCollectionTransfer;
 use Generated\Shared\Transfer\CompanyTypeCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\SpyCompanyTypeEntityTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -19,6 +20,18 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class CompanySupplierFacade extends AbstractFacade implements CompanySupplierFacadeInterface
 {
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\CompanyTypeCollectionTransfer
+     */
+    public function getCompanyTypes(): CompanyTypeCollectionTransfer
+    {
+        return $this->getRepository()->getCompanyTypes();
+    }
+
     /**
      * {@inheritdoc}
      *
@@ -64,10 +77,12 @@ class CompanySupplierFacade extends AbstractFacade implements CompanySupplierFac
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\CompanyTypeCollectionTransfer
+     * @param int $idCompanyType
+     *
+     * @return \Generated\Shared\Transfer\SpyCompanyTypeEntityTransfer
      */
-    public function getCompanyTypes(): CompanyTypeCollectionTransfer
+    public function getCompanyTypeByIdCompanyType(int $idCompanyType): SpyCompanyTypeEntityTransfer
     {
-        return $this->getRepository()->getCompanyTypes();
+        return $this->getRepository()->getCompanyTypeByIdCompanyType($idCompanyType);
     }
 }

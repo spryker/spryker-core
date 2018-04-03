@@ -25,7 +25,8 @@ class CompanyGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new CompanyTable(
             $this->getPropelCompanyQuery(),
-            $this->getCompanyTableActionExtensionPlugins()
+            $this->getCompanyTableExpanderPlugins(),
+            $this->getCompanyTableActionExpanderPlugins()
         );
     }
 
@@ -67,11 +68,19 @@ class CompanyGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\CompanyGuiExtension\Dependency\Plugin\CompanyTableActionExtensionInterface[]
+     * @return \Spryker\Zed\CompanyUnitAddressGuiExtension\Dependency\Plugin\CompanyUnitAddressTableExpanderInterface[]
      */
-    protected function getCompanyTableActionExtensionPlugins(): array
+    protected function getCompanyTableExpanderPlugins(): array
     {
-        return $this->getProvidedDependency(CompanyGuiDependencyProvider::COMPANY_TABLE_ACTION_EXTENSION_PLUGINS);
+        return $this->getProvidedDependency(CompanyGuiDependencyProvider::PLUGINS_COMPANY_TABLE_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyGuiExtension\Dependency\Plugin\CompanyTableActionExpanderInterface[]
+     */
+    protected function getCompanyTableActionExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(CompanyGuiDependencyProvider::PLUGINS_COMPANY_TABLE_ACTION_EXPANDER);
     }
 
     /**
@@ -79,6 +88,6 @@ class CompanyGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function getCompanyFormPlugins(): array
     {
-        return $this->getProvidedDependency(CompanyGuiDependencyProvider::COMPANY_FORM_EXTENSION_PLUGINS);
+        return $this->getProvidedDependency(CompanyGuiDependencyProvider::PLUGINS_COMPANY_FORM_EXPANDER);
     }
 }

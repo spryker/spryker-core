@@ -5,21 +5,28 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanyUnitAddressGuiExtension\Communication\Plugin;
+namespace Spryker\Zed\CompanyGuiExtension\Dependency\Plugin;
 
-use Orm\Zed\CompanyUnitAddress\Persistence\Map\SpyCompanyUnitAddressTableMap;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
-interface CompanyUnitAddressTableExpanderInterface
+interface CompanyTableExpanderInterface
 {
-    public const ID_COMPANY_UNIT_ADDRESS = SpyCompanyUnitAddressTableMap::COL_ID_COMPANY_UNIT_ADDRESS;
-
     /**
+     * Specification:
+     * - Expands array of header columns
+     *
+     * @api
+     *
      * @return array
      */
     public function expandHeader(): array;
 
     /**
+     * Specification:
+     * - Expands table config
+     *
+     * @api
+     *
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
@@ -27,6 +34,11 @@ interface CompanyUnitAddressTableExpanderInterface
     public function expandConfig(TableConfiguration $config): TableConfiguration;
 
     /**
+     * Specification:
+     * - Expands table row data
+     *
+     * @api
+     *
      * @param array $item
      *
      * @return array

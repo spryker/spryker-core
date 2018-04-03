@@ -10,6 +10,7 @@ namespace Spryker\Zed\CompanySupplierGui\Dependency\Facade;
 use Generated\Shared\Transfer\CompanySupplierCollectionTransfer;
 use Generated\Shared\Transfer\CompanyTypeCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\SpyCompanyTypeEntityTransfer;
 
 interface CompanySupplierGuiToCompanySupplierFacadeInterface
 {
@@ -36,4 +37,11 @@ interface CompanySupplierGuiToCompanySupplierFacadeInterface
      * @return void
      */
     public function saveCompanySupplierRelationsForProductConcrete(ProductConcreteTransfer $productConcreteTransfer): void;
+
+    /**
+     * @param int $idCompanyType
+     *
+     * @return \Generated\Shared\Transfer\SpyCompanyTypeEntityTransfer
+     */
+    public function getCompanyTypeByIdCompanyType(int $idCompanyType): SpyCompanyTypeEntityTransfer;
 }
