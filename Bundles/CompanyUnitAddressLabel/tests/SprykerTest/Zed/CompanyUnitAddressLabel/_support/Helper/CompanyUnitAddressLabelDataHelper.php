@@ -4,6 +4,7 @@ namespace SprykerTest\Zed\CompanyUnitAddressLabel\Helper;
 use ArrayObject;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\CompanyUnitAddressBuilder;
+use Generated\Shared\DataBuilder\CompanyUnitAddressLabelBuilder;
 use Generated\Shared\DataBuilder\CountryBuilder;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
@@ -13,6 +14,7 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\SpyCompanyUnitAddressLabelEntityTransfer;
 use Generated\Shared\Transfer\SpyRegionEntityTransfer;
 use Orm\Zed\CompanyUnitAddressLabel\Persistence\SpyCompanyUnitAddressLabel;
+use Orm\Zed\CompanyUnitAddressLabel\Persistence\SpyCompanyUnitAddressLabelQuery;
 use Orm\Zed\CompanyUnitAddressLabel\Persistence\SpyCompanyUnitAddressLabelToCompanyUnitAddress;
 use Orm\Zed\Country\Persistence\SpyRegionQuery;
 use Spryker\Zed\CompanyUnitAddressLabel\Persistence\CompanyUnitAddressLabelRepository;
@@ -21,6 +23,28 @@ use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 class CompanyUnitAddressLabelDataHelper extends Module
 {
     use LocatorHelperTrait;
+
+    /**
+     * @param array $seed
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressLabelTransfer
+     */
+    public function haveCompanyUnitAddressLabel(array $seed = [])
+    {
+        $companyUnitAddressLabelBuilder = new CompanyUnitAddressLabelBuilder($seed);
+        $companyUnitAddressLabelTransfer = $companyUnitAddressLabelBuilder->build();
+
+        $companyUnitAddressLabelQuery = new SpyCompanyUnitAddressLabelQuery();
+        $companyUnitAddressLabelEntity = $companyUnitAddressLabelQuery
+            ->filterByName($companyUnitAddressLabelTransfer->getName())
+            ->findOneOrCreate();
+
+        $companyUnitAddressLabelEntity->save();
+
+        $companyUnitAddressLabelTransfer->fromArray($companyUnitAddressLabelEntity->toArray(), true);
+
+        return $companyUnitAddressLabelTransfer;
+    }
 
     /**
      * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer

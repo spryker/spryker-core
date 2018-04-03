@@ -28,4 +28,28 @@ class DataImportFacade extends AbstractFacade implements DataImportFacadeInterfa
     {
         return $this->getFactory()->getImporter()->import($dataImporterConfiguration);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return array
+     */
+    public function listImporters(): array
+    {
+        return $this->getFactory()->createImportDumper()->dump();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function publish(): void
+    {
+        $this->getFactory()->createDataImporterPublisher()->triggerEvents();
+    }
 }

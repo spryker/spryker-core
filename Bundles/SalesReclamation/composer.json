@@ -1,0 +1,39 @@
+{
+  "name": "spryker/sales-reclamation",
+  "description": "SalesReclamation module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1",
+    "spryker/gui": "^3.7.0",
+    "spryker/kernel": "^3.0.0",
+    "spryker/manual-order-entry-gui": "*",
+    "spryker/sales": "^7.0.0 || ^8.0.0",
+    "spryker/sales-extension": "^1.0.0",
+    "spryker/symfony": "^3.0.0",
+    "spryker/util-date-time": "^1.0.0",
+    "spryker/util-text": "^1.1.0"
+  },
+  "require-dev": {
+    "spryker/checkout": "^3.0.0 || ^4.0.0",
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/checkout": "Used interfase for SaveOrder plugin. Version from 3.0.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}
