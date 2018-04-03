@@ -48,8 +48,6 @@ abstract class AbstractTwigChartPlugin extends AbstractPlugin implements TwigCha
      * @param string $chartPluginName
      * @param string|null $dataIdentifier
      *
-     * @throws \Twig_Error
-     *
      * @return string
      */
     public function renderChart(Twig_Environment $twig, $chartPluginName, $dataIdentifier = null)
