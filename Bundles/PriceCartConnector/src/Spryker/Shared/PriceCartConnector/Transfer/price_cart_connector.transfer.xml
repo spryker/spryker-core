@@ -6,6 +6,7 @@
     <transfer name="Item">
         <property name="id" type="int" />
         <property name="unitGrossPrice" type="int" />
+        <property name="forcedUnitGrossPrice" type="bool" />
         <property name="sumGrossPrice" type="int" />
     </transfer>
 
