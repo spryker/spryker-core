@@ -29,7 +29,7 @@ class ProductQuantityDataHelper extends Module
     {
         $productQuantityEntity = (new SpyProductQuantityEntityBuilder())
             ->build()
-            ->fromArray($productQuantityOverride)
+            ->fromArray($productQuantityOverride, true)
             ->setFkProduct($idProduct);
 
         $productQuantityEntity = $this->storeProductQuantity($productQuantityEntity);
@@ -57,7 +57,7 @@ class ProductQuantityDataHelper extends Module
 
         $this->debug(sprintf('Inserted product quantity for product concrete: %d', $productQuantityEntity->getFkProduct()));
 
-        $productQuantityEntity->setIdProductQuantity($spyProductQuantityEntity->getIdProductQuantity());
+        $productQuantityEntity->fromArray($spyProductQuantityEntity->toArray(), true);
 
         return $productQuantityEntity;
     }

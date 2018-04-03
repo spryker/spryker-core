@@ -8,6 +8,9 @@
 namespace SprykerTest\Zed\ProductMeasurementUnit\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
+use Generated\Shared\Transfer\SpyProductMeasurementUnitEntityTransfer;
 
 /**
  * Auto-generated group annotations
@@ -44,84 +47,222 @@ class ProductMeasurementUnitFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetBaseUnitByIdProduct(): void
+    public function testExpandItemGroupKeyWithSalesUnitReturnsOriginalGroupKeyWhenNoSalesUnitIsDefined(): void
     {
         // Assign
-//        $product = $this->tester->haveProduct();
-//        $idProductMeasurementUnit = $this->tester->haveProductMeasurementUnit("METR");
-//        $idProductMeasurementBaseUnit = $this->tester->haveProductMeasurementBaseUnit($product->getFkProductAbstract(), $idProductMeasurementUnit);
-//        $expectedResult = (new SpyProductMeasurementBaseUnitEntityTransfer())
-//            ->setIdProductMeasurementBaseUnit($idProductMeasurementBaseUnit);
+        $dummyGroupKey = 'GROUP_KEY_DUMMY';
+        $expectedResult = $dummyGroupKey;
+
+        $itemTransfer = (new ItemTransfer())
+            ->setQuantitySalesUnit(null)
+            ->setGroupKey($dummyGroupKey);
 
         // Act
-//        $actualResult = $this->productMeasurementUnitFacade->getBaseUnitByIdProduct($product->getIdProductConcrete());
+        $actualResult = $this->productMeasurementUnitFacade->expandItemGroupKeyWithSalesUnit($itemTransfer);
 
         // Assert
-//        $this->assertSame($expectedResult->toArray(), $actualResult->toArray());
+        $this->assertSame($expectedResult, $actualResult);
     }
 
     /**
      * @return void
      */
-    public function testGetSalesUnitsByIdProduct(): void
+    public function testExpandItemGroupKeyWithSalesUnitReturnsExpandedGroupKeyWhenSalesUnitIsDefined(): void
     {
         // Assign
+        $dummyGroupKey = 'GROUP_KEY_DUMMY';
+        $dummySalesUnitId = 5;
+        $expectedPregMatch = sprintf('/%s.*%s/', $dummyGroupKey, $dummySalesUnitId);
+
+        $itemTransfer = (new ItemTransfer())
+            ->setQuantitySalesUnit((new ProductMeasurementSalesUnitTransfer())->setIdProductMeasurementSalesUnit($dummySalesUnitId))
+            ->setGroupKey($dummyGroupKey);
 
         // Act
-        //$this->productMeasurementUnitFacade->getSalesUnitsByIdProduct();
+        $actualResult = $this->productMeasurementUnitFacade->expandItemGroupKeyWithSalesUnit($itemTransfer);
 
         // Assert
+        $this->assertRegExp($expectedPregMatch, $actualResult);
+    }
+
+    /**
+     * @dataProvider calculateQuantityNormalizedSalesUnitValues
+     *
+     * @param int $quantity
+     * @param float $conversion
+     * @param int $precision
+     * @param int $expectedResult
+     *
+     * @return void
+     */
+    public function testCalculateQuantityNormalizedSalesUnitValueCalculatesCorrectValues($quantity, $conversion, $precision, $expectedResult)
+    {
+        // Assign
+        $itemTransfer = (new ItemTransfer())
+            ->setQuantity($quantity)
+            ->setQuantitySalesUnit(
+                (new ProductMeasurementSalesUnitTransfer())
+                    ->setConversion($conversion)
+                    ->setPrecision($precision)
+            );
+
+        // Act
+        $actualResult = $this->productMeasurementUnitFacade->calculateQuantityNormalizedSalesUnitValue($itemTransfer);
+
+        // Assert
+        $this->assertSame($expectedResult, $actualResult);
+    }
+
+    /**
+     * @return array
+     */
+    public function calculateQuantityNormalizedSalesUnitValues()
+    {
+        // round(1st / 2nd * 3rd) = 4th
+        return [
+            [ 7, 1.25, 1000, 5600],
+            [ 7, 1.25,  100,  560],
+            [ 7, 1.25,   10,   56],
+            [ 7, 1.25,    1,    6],
+            [10,    5,    1,    2],
+            [13,    7, 1000, 1857],
+            [13,    7,  100,  186],
+            [13,    7,   10,   19],
+            [13,    7,    1,    2],
+        ];
     }
 
     /**
      * @return void
      */
-    public function testValidateQuantitySalesUnitValues(): void
+    public function testGetBaseUnitByIdProductReturnsCorrespondingBaseUnit()
     {
         // Assign
+        $code = 'MYCODE' . rand(1, 100);
+        $productTransfer = $this->tester->haveProduct();
+        $productMeasurementUnitTransfer = $this->tester->haveProductMeasurementUnit([
+            SpyProductMeasurementUnitEntityTransfer::CODE => $code,
+        ]);
+        $productMeasurementBaseUnitTransfer = $this->tester->haveProductMeasurementBaseUnit(
+            $productTransfer->getFkProductAbstract(),
+            $productMeasurementUnitTransfer->getIdProductMeasurementUnit()
+        );
+        $expectedIdBaseUnit = $productMeasurementBaseUnitTransfer->getIdProductMeasurementBaseUnit();
 
         // Act
-       // $this->productMeasurementUnitFacade->validateQuantitySalesUnitValues();
+        $productMeasurementBaseUnitTransfer = $this->productMeasurementUnitFacade->getBaseUnitByIdProduct($productTransfer->getIdProductConcrete());
+        $actualIdBaseUnit = $productMeasurementBaseUnitTransfer->getIdProductMeasurementBaseUnit();
 
         // Assert
+        $this->assertSame($expectedIdBaseUnit, $actualIdBaseUnit);
     }
 
     /**
      * @return void
      */
-    public function testExpandItemGroupKeyWithSalesUnit(): void
+    public function testGetProductMeasurementUnitCodeMapReturnsCodes()
     {
         // Assign
+        $code = 'MYCODE' . rand(1, 100);
+        $productMeasurementUnitTransfer = $this->tester->haveProductMeasurementUnit([
+            SpyProductMeasurementUnitEntityTransfer::CODE => $code,
+        ]);
+        $expectedCode = $code;
+        $expectedId = $productMeasurementUnitTransfer->getIdProductMeasurementUnit();
 
         // Act
-       // $this->productMeasurementUnitFacade->expandItemGroupKeyWithSalesUnit();
+        $codeMap = $this->productMeasurementUnitFacade->getProductMeasurementUnitCodeMap();
 
         // Assert
+        $this->assertSame($expectedCode, $codeMap[$expectedId]);
     }
 
     /**
      * @return void
      */
-    public function testCalculateQuantityNormalizedSalesUnitValue(): void
+    public function testFindProductMeasurementUnitEntitiesReturnsProductMeasurementUnitEntities()
     {
         // Assign
+        $code = 'MYCODE' . rand(1, 100);
+        $productMeasurementUnitTransfer = $this->tester->haveProductMeasurementUnit([
+            SpyProductMeasurementUnitEntityTransfer::CODE => $code,
+        ]);
+        $expectedCode = $code;
 
         // Act
-    //    $this->productMeasurementUnitFacade->calculateQuantityNormalizedSalesUnitValue();
+        $productMeasurementUnitTransfer = $this->productMeasurementUnitFacade->findProductMeasurementUnitEntities([$productMeasurementUnitTransfer->getIdProductMeasurementUnit()]);
+        $actualCode = $productMeasurementUnitTransfer[0]->getCode();
 
         // Assert
+        $this->assertSame($expectedCode, $actualCode);
     }
 
     /**
      * @return void
      */
-    public function testGetSalesUnitEntity(): void
+    public function testGetSalesUnitEntityRetrievesSalesUnitEntity()
     {
         // Assign
+        $code = 'MYCODE' . rand(1, 100);
+        $productTransfer = $this->tester->haveProduct();
+        $productMeasurementUnitTransfer = $this->tester->haveProductMeasurementUnit([
+            SpyProductMeasurementUnitEntityTransfer::CODE => $code,
+        ]);
+        $productMeasurementBaseUnitTransfer = $this->tester->haveProductMeasurementBaseUnit(
+            $productTransfer->getFkProductAbstract(),
+            $productMeasurementUnitTransfer->getIdProductMeasurementUnit()
+        );
+        $productMeasurementSalesUnitTransfer = $this->tester->haveProductMeasurementSalesUnit(
+            $productTransfer->getIdProductConcrete(),
+            $productMeasurementUnitTransfer->getIdProductMeasurementUnit(),
+            $productMeasurementBaseUnitTransfer->getIdProductMeasurementBaseUnit()
+        );
+
+        $expectedIdSalesUnit = $productMeasurementSalesUnitTransfer->getIdProductMeasurementSalesUnit();
 
         // Act
-     //   $this->productMeasurementUnitFacade->getSalesUnitEntity();
+        $salesUnitTransfer = $this->productMeasurementUnitFacade->getSalesUnitEntity($expectedIdSalesUnit);
+        $actualIdSalesUnit = $salesUnitTransfer->getIdProductMeasurementSalesUnit();
 
         // Assert
+        $this->assertSame($expectedIdSalesUnit, $actualIdSalesUnit);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetSalesUnitsByIdProductRetrievesAllProductRelatedSalesUnits()
+    {
+        // Assign
+        $code = 'MYCODE' . rand(1, 100);
+        $productTransfer = $this->tester->haveProduct();
+        $productMeasurementUnitTransfer = $this->tester->haveProductMeasurementUnit([
+            SpyProductMeasurementUnitEntityTransfer::CODE => $code,
+        ]);
+        $productMeasurementBaseUnitTransfer = $this->tester->haveProductMeasurementBaseUnit(
+            $productTransfer->getFkProductAbstract(),
+            $productMeasurementUnitTransfer->getIdProductMeasurementUnit()
+        );
+
+        $expectedSalesUnitIds = [];
+        for ($i = 0; $i < 5; $i++) {
+            $productMeasurementSalesUnitTransfer = $this->tester->haveProductMeasurementSalesUnit(
+                $productTransfer->getIdProductConcrete(),
+                $productMeasurementUnitTransfer->getIdProductMeasurementUnit(),
+                $productMeasurementBaseUnitTransfer->getIdProductMeasurementBaseUnit()
+            );
+
+            $expectedSalesUnitIds[] = $productMeasurementSalesUnitTransfer->getIdProductMeasurementSalesUnit();
+        }
+
+        // Act
+        $salesUnitTransfers = $this->productMeasurementUnitFacade->getSalesUnitsByIdProduct($productTransfer->getIdProductConcrete());
+        $actualSalesUnitIds = [];
+        foreach ($salesUnitTransfers as $salesUnitTransfer) {
+            $actualSalesUnitIds[] = $salesUnitTransfer->getIdProductMeasurementSalesUnit();
+        }
+
+        // Assert
+        $this->assertEquals($expectedSalesUnitIds, $actualSalesUnitIds);
     }
 }

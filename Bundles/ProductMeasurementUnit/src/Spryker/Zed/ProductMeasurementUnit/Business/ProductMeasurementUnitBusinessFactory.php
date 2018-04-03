@@ -16,8 +16,6 @@ use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUni
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit\ProductMeasurementSalesUnitReaderInterface;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit\ProductMeasurementSalesUnitValue;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit\ProductMeasurementSalesUnitValueInterface;
-use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit\QuantityProductMeasurementSalesUnitValueValidator;
-use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit\QuantityProductMeasurementSalesUnitValueValidatorInterface;
 use Spryker\Zed\ProductMeasurementUnit\Dependency\Service\ProductMeasurementUnitToUtilUnitConversionServiceInterface;
 use Spryker\Zed\ProductMeasurementUnit\ProductMeasurementUnitDependencyProvider;
 
@@ -60,17 +58,6 @@ class ProductMeasurementUnitBusinessFactory extends AbstractBusinessFactory
     public function createProductMeasurementSalesUnitItemGroupKeyGenerator(): ProductMeasurementSalesUnitGroupKeyGeneratorInterface
     {
         return new ProductMeasurementSalesUnitGroupKeyGenerator();
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit\QuantityProductMeasurementSalesUnitValueValidatorInterface
-     */
-    public function createQuantityProductMeasurementSalesUnitValueValidator(): QuantityProductMeasurementSalesUnitValueValidatorInterface
-    {
-        return new QuantityProductMeasurementSalesUnitValueValidator(
-            $this->createProductMeasurementSalesUnitValue(),
-            $this->createProductMeasurementSalesUnitReader()
-        );
     }
 
     /**

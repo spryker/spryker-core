@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ProductMeasurementUnit\Business;
 
-use Generated\Shared\Transfer\CartChangeTransfer;
-use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\SpyProductMeasurementBaseUnitEntityTransfer;
 use Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer;
@@ -20,22 +18,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeasurementUnitFacadeInterface
 {
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
-     */
-    public function validateQuantitySalesUnitValues(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
-    {
-        return $this->getFactory()
-            ->createQuantityProductMeasurementSalesUnitValueValidator()
-            ->validate($cartChangeTransfer);
-    }
-
     /**
      * {@inheritdoc}
      *

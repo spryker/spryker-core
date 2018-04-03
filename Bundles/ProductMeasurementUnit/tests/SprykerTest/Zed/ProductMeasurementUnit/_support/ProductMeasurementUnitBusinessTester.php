@@ -2,8 +2,6 @@
 namespace SprykerTest\Zed\ProductMeasurementUnit;
 
 use Codeception\Actor;
-use Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementBaseUnit;
-use Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementUnitQuery;
 
 /**
  * Inherited Methods
@@ -27,37 +25,4 @@ class ProductMeasurementUnitBusinessTester extends Actor
    /**
     * Define custom actions here
     */
-
-    /**
-     * @param int $idProductAbstract
-     * @param int $idMeasurementUnit
-     *
-     * @return int
-     */
-    public function haveProductMeasurementBaseUnit($idProductAbstract, $idMeasurementUnit)
-    {
-        $spyProductMeasurementBaseUnitEntity = (new SpyProductMeasurementBaseUnit())
-           ->setFkProductAbstract($idProductAbstract)
-           ->setFkProductMeasurementUnit($idMeasurementUnit);
-
-        $spyProductMeasurementBaseUnitEntity->save();
-
-        return $spyProductMeasurementBaseUnitEntity->getIdProductMeasurementBaseUnit();
-    }
-
-    /**
-     * @param string $code
-     *
-     * @return int
-     */
-    public function haveProductMeasurementUnit($code)
-    {
-        $spyProductMeasurementUnitEntity = SpyProductMeasurementUnitQuery::create()
-           ->filterByCode($code)
-           ->findOneOrCreate();
-
-        $spyProductMeasurementUnitEntity->save();
-
-        return $spyProductMeasurementUnitEntity->getIdProductMeasurementUnit();
-    }
 }

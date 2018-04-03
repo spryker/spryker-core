@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ProductMeasurementUnit\Business;
 
-use Generated\Shared\Transfer\CartChangeTransfer;
-use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\SpyProductMeasurementBaseUnitEntityTransfer;
 use Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer;
@@ -38,18 +36,6 @@ interface ProductMeasurementUnitFacadeInterface
      * @return \Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer[]
      */
     public function getSalesUnitsByIdProduct(int $idProduct): array;
-
-    /**
-     * Specification:
-     * - Validates if the quantity's sales unit measurement values are valid numbers within the given precision.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
-     */
-    public function validateQuantitySalesUnitValues(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
 
     /**
      * Specification:

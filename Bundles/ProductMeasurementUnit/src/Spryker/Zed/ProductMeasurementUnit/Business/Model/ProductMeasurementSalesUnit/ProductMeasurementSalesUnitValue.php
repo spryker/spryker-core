@@ -11,8 +11,6 @@ use Generated\Shared\Transfer\ItemTransfer;
 
 class ProductMeasurementSalesUnitValue implements ProductMeasurementSalesUnitValueInterface
 {
-    const FLOAT_PRECISION = 0.000001;
-
     /**
      * @see ProductMeasurementSalesUnitValue::calculateNormalizedValue()
      *
@@ -34,30 +32,6 @@ class ProductMeasurementSalesUnitValue implements ProductMeasurementSalesUnitVal
             $itemTransfer->getQuantitySalesUnit()->getConversion(),
             $itemTransfer->getQuantitySalesUnit()->getPrecision()
         );
-    }
-
-    /**
-     * @TODO fix this
-     * Checks if the given availability value (example: quantity) can be converted to a unit value with
-     * a given unit precision without significant information loss.
-     *
-     * @see ProductMeasurementSalesUnitValue::calculateNormalizedValue()
-     *
-     * @param int $availabilityValue
-     * @param float $unitToAvailabilityConversion
-     * @param int $unitPrecision
-     *
-     * @return bool
-     */
-    public function isIntegerSalesUnitValue(int $availabilityValue, float $unitToAvailabilityConversion, int $unitPrecision): bool
-    {
-        return true;
-        $unitValue = $this->calculateFloatNormalizedValue($availabilityValue, $unitToAvailabilityConversion, $unitPrecision);
-        if (abs($unitValue - round($unitValue)) < static::FLOAT_PRECISION) {
-            return true;
-        }
-
-        return false;
     }
 
     /**
@@ -83,7 +57,6 @@ class ProductMeasurementSalesUnitValue implements ProductMeasurementSalesUnitVal
     }
 
     /**
-     * @TODO For removal?
      * @see ProductMeasurementSalesUnitValue::calculateNormalizedValue()
      *
      * @param int $availabilityValue
