@@ -17,4 +17,13 @@ interface PersistentCartToMessengerFacadeInterface
      * @return void
      */
     public function addErrorMessage(MessageTransfer $message);
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MessageTransfer $message
+     *
+     * @return void
+     */
+    public function addSuccessMessage(MessageTransfer $message);
 }

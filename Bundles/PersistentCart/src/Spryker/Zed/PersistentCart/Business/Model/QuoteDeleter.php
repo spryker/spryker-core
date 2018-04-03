@@ -20,6 +20,7 @@ class QuoteDeleter implements QuoteDeleterInterface
     use PermissionAwareTrait;
 
     public const GLOSSARY_KEY_PERMISSION_FAILED = 'global.permission.failed';
+    public const GLOSSARY_KEY_REMOVE_SUCCESS = 'persistent_cart.quote.remove.success';
 
     /**
      * @var \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface
@@ -65,8 +66,12 @@ class QuoteDeleter implements QuoteDeleterInterface
             $quoteResponseTransfer->setCustomer($quoteTransfer->getCustomer());
             return $this->quoteResponseExpander->expand($quoteResponseTransfer);
         }
+        $quoteResponseTransfer = $this->quoteResponseExpander->expand($this->quoteFacade->deleteQuote($quoteTransfer));
+        if ($quoteResponseTransfer->getIsSuccessful()) {
+            $this->addSuccessMessage();
+        }
 
-        return $this->quoteResponseExpander->expand($this->quoteFacade->deleteQuote($quoteTransfer));
+        return $quoteResponseTransfer;
     }
 
     /**
@@ -89,5 +94,15 @@ class QuoteDeleter implements QuoteDeleterInterface
         $this->messengerFacade->addErrorMessage($messageTransfer);
 
         return false;
+    }
+
+    /**
+     * @return void
+     */
+    protected function addSuccessMessage(): void
+    {
+        $messageTransfer = new MessageTransfer();
+        $messageTransfer->setValue(static::GLOSSARY_KEY_REMOVE_SUCCESS);
+        $this->messengerFacade->addSuccessMessage($messageTransfer);
     }
 }

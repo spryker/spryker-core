@@ -33,4 +33,16 @@ class PersistentCartToMessengerFacadeBridge implements PersistentCartToMessenger
     {
         $this->messengerFacade->addErrorMessage($message);
     }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MessageTransfer $message
+     *
+     * @return void
+     */
+    public function addSuccessMessage(MessageTransfer $message)
+    {
+        $this->messengerFacade->addSuccessMessage($message);
+    }
 }
