@@ -9,9 +9,6 @@
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
-  "suggest": {
-    "spryker/sales": "If you use interfaces from current module in you project"
-  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"

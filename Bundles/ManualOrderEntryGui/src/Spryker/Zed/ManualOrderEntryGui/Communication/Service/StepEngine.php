@@ -36,16 +36,10 @@ class StepEngine
         $filteredPlugins = [];
 
         foreach ($formPlugins as $formPlugin) {
-            if ($request->request->get($this->nextStepName) !== null) {
-                $filteredPlugins[] = $formPlugin;
-            }
+            $filteredPlugins[] = $formPlugin;
 
-            if (!$this->isFormSubmitted($formPlugin, $request)) {
+            if (!$this->showNext($formPlugin, $request, $quoteTransfer)) {
                 break;
-            }
-
-            if ($request->request->get($this->nextStepName) === null) {
-                $filteredPlugins[] = $formPlugin;
             }
         }
 
@@ -57,14 +51,35 @@ class StepEngine
     /**
      * @param \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface $formPlugin
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    protected function isFormSubmitted($formPlugin, $request)
+    protected function showNext($formPlugin, $request, $quoteTransfer): bool
     {
+        if ($this->isFormSubmitted($formPlugin, $request, $quoteTransfer)) {
+            return true;
+        }
+
+        return $request->request->get($formPlugin->getName()) !== null;
+    }
+
+    /**
+     * @param \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface $formPlugin
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function isFormSubmitted($formPlugin, $request, $quoteTransfer): bool
+    {
+        if ($formPlugin->isPreFilled($quoteTransfer)) {
+            return true;
+        }
+
         return ($request->request->get($formPlugin->getName()) !== null);
     }
-    
+
     /**
      * @param \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface[] $formPlugins
      * @param \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface[] $filteredPlugins

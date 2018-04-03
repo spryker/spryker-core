@@ -87,6 +87,7 @@ class CreateController extends AbstractController
             'forms' => $formsView,
             'nextStepName' => $this->getFactory()->getConfig()->getNextStepName(),
             'quoteTransfer' => $quoteTransfer,
+            'params' => $request->query->all(),
         ]);
     }
 
@@ -110,7 +111,10 @@ class CreateController extends AbstractController
 
                 if ($customerResponseTransfer->getIsSuccess()) {
                     $this->addSuccessMessage(static::SUCCESSFUL_MESSAGE_CUSTOMER_CREATED);
-                    $redirectUrl = $this->createRedirectUrlAfterUserCreation($customerResponseTransfer->getCustomerTransfer());
+                    $redirectUrl = $this->createRedirectUrlAfterUserCreation(
+                        $customerResponseTransfer->getCustomerTransfer(),
+                        $request
+                    );
 
                     return $this->redirectResponse($redirectUrl);
                 }
@@ -179,14 +183,18 @@ class CreateController extends AbstractController
 
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return string
      */
-    protected function createRedirectUrlAfterUserCreation(CustomerTransfer $customerTransfer)
+    protected function createRedirectUrlAfterUserCreation(CustomerTransfer $customerTransfer, Request $request)
     {
+        $params = $request->query->all();
+        $params[CustomersListType::FIELD_CUSTOMER] = $customerTransfer->getIdCustomer();
+
         return Url::generate(
             '/manual-order-entry-gui/create',
-            [CustomersListType::FIELD_CUSTOMER => $customerTransfer->getIdCustomer()]
+            $params
         )
             ->build();
     }

@@ -111,6 +111,16 @@ class ProductManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
     }
 
     /**
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
+     *
+     * @return bool
+     */
+    public function isPreFilled($dataTransfer = null): bool
+    {
+        return false;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
