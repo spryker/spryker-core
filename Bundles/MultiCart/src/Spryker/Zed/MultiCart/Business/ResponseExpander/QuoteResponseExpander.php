@@ -54,13 +54,16 @@ class QuoteResponseExpander implements QuoteResponseExpanderInterface
      */
     protected function findCustomerQuotes(CustomerTransfer $customerTransfer): QuoteCollectionTransfer
     {
-        $quoteCriteriaFilterTransfer = new QuoteCriteriaFilterTransfer();
-        $quoteCriteriaFilterTransfer->setCustomerReference($customerTransfer->getCustomerReference());
-        
         $filterTransfer = new FilterTransfer();
-        $filterTransfer->setOrderBy('name');
-        $filterTransfer->setOrderDirection('ASC');
-        $quoteCriteriaFilterTransfer->setFilter($filterTransfer);
+        $filterTransfer
+            ->setOrderBy('name')
+            ->setOrderDirection('ASC');
+
+        $quoteCriteriaFilterTransfer = new QuoteCriteriaFilterTransfer();
+        $quoteCriteriaFilterTransfer
+            ->setCustomerReference($customerTransfer->getCustomerReference())
+            ->setFilter($filterTransfer);
+
         $customerQuoteCollectionTransfer = $this->quoteFacade->getQuoteCollection($quoteCriteriaFilterTransfer);
         foreach ($customerQuoteCollectionTransfer->getQuotes() as $customerQuoteTransfer) {
             $customerQuoteTransfer->setCustomer($customerTransfer);

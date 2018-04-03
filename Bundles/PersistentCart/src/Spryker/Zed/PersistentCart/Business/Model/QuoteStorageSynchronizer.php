@@ -78,13 +78,8 @@ class QuoteStorageSynchronizer implements QuoteStorageSynchronizerInterface
         if (count($quoteTransfer->getItems())) {
             $quoteTransfer = $this->cartFacade->reloadItems($quoteTransfer);
         }
-        $this->quoteFacade->persistQuote($quoteTransfer);
 
-        $quoteResponseTransfer = new QuoteResponseTransfer();
-        $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
-        $quoteResponseTransfer->setIsSuccessful(true);
-
-        return $this->quoteResponseExpander->expand($quoteResponseTransfer);
+        return $this->quoteResponseExpander->expand($this->saveQuote($quoteTransfer));
     }
 
     /**
@@ -92,7 +87,7 @@ class QuoteStorageSynchronizer implements QuoteStorageSynchronizerInterface
      *
      * @return void
      */
-    protected function validateRequest(QuoteSyncRequestTransfer $quoteSyncRequestTransfer)
+    protected function validateRequest(QuoteSyncRequestTransfer $quoteSyncRequestTransfer): void
     {
         $quoteSyncRequestTransfer
             ->requireCustomerTransfer()
@@ -107,9 +102,10 @@ class QuoteStorageSynchronizer implements QuoteStorageSynchronizerInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function mergeQuotes(QuoteTransfer $targetQuoteTransfer, QuoteTransfer $sourceQuoteTransfer)
+    protected function mergeQuotes(QuoteTransfer $targetQuoteTransfer, QuoteTransfer $sourceQuoteTransfer): QuoteTransfer
     {
         if (!count($targetQuoteTransfer->getItems())) {
+            $sourceQuoteTransfer->fromArray($targetQuoteTransfer->modifiedToArray(), true);
             return $sourceQuoteTransfer;
         }
         $quoteMergeRequestTransfer = new QuoteMergeRequestTransfer();
@@ -121,6 +117,20 @@ class QuoteStorageSynchronizer implements QuoteStorageSynchronizerInterface
         $targetQuoteTransfer->setIdQuote($sourceQuoteTransfer->getIdQuote());
 
         return $targetQuoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    protected function saveQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        if ($quoteTransfer->getIdQuote()) {
+            return $this->quoteFacade->updateQuote($quoteTransfer);
+        }
+
+        return $this->quoteFacade->createQuote($quoteTransfer);
     }
 
     /**

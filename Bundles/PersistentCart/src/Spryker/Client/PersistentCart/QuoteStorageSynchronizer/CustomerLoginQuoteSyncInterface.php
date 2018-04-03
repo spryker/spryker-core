@@ -16,5 +16,5 @@ interface CustomerLoginQuoteSyncInterface
      *
      * @return void
      */
-    public function syncQuoteForCustomer(CustomerTransfer $customerTransfer);
+    public function syncQuoteForCustomer(CustomerTransfer $customerTransfer): void;
 }

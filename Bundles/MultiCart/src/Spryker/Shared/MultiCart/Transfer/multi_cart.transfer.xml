@@ -20,5 +20,9 @@
         <property name="idQuote" type="int"/>
     </transfer>
 
+    <transfer name="QuoteUpdateRequestAttributes">
+        <property name="name" type="string"/>
+    </transfer>
+
 </transfers>
 

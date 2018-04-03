@@ -28,7 +28,7 @@ class MultiCartConfig extends AbstractSharedConfig
      */
     public function getCustomerQuoteDefaultName()
     {
-        return static::QUOTE_NAME_DEFAULT_GUEST;
+        return static::QUOTE_NAME_DEFAULT_CUSTOMER;
     }
 
     /**

@@ -79,6 +79,7 @@ class QuoteWriter implements QuoteWriterInterface
     {
         if ($quoteTransfer->getIdQuote()) {
             $quoteResponseTransfer = new QuoteResponseTransfer();
+            $quoteResponseTransfer->setCustomer($quoteTransfer->getCustomer());
             $quoteResponseTransfer->setIsSuccessful(false);
             return $quoteResponseTransfer;
         }
@@ -97,6 +98,7 @@ class QuoteWriter implements QuoteWriterInterface
         $quoteByIdTransfer = $this->quoteRepository->findQuoteById($quoteTransfer->getIdQuote());
         if (!$quoteByIdTransfer) {
             $quoteResponseTransfer = new QuoteResponseTransfer();
+            $quoteResponseTransfer->setCustomer($quoteTransfer->getCustomer());
             $quoteResponseTransfer->setIsSuccessful(false);
             return $quoteResponseTransfer;
         }
@@ -114,6 +116,7 @@ class QuoteWriter implements QuoteWriterInterface
     {
         return $this->getTransactionHandler()->handleTransaction(function () use ($quoteTransfer) {
             $quoteResponseTransfer = new QuoteResponseTransfer();
+            $quoteResponseTransfer->setCustomer($quoteTransfer->getCustomer());
             $quoteResponseTransfer->setIsSuccessful(false);
             $quoteTransfer = $this->quoteWriterPluginExecutor->executeCreateBeforePlugins($quoteTransfer);
             $quoteTransfer = $this->quoteEntityManager->saveQuote($quoteTransfer);
@@ -134,6 +137,7 @@ class QuoteWriter implements QuoteWriterInterface
     {
         return $this->getTransactionHandler()->handleTransaction(function () use ($quoteTransfer) {
             $quoteResponseTransfer = new QuoteResponseTransfer();
+            $quoteResponseTransfer->setCustomer($quoteTransfer->getCustomer());
             $quoteResponseTransfer->setIsSuccessful(false);
             $quoteTransfer = $this->quoteWriterPluginExecutor->executeUpdateBeforePlugins($quoteTransfer);
             $quoteTransfer = $this->quoteEntityManager->saveQuote($quoteTransfer);

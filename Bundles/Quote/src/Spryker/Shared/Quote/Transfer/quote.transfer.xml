@@ -21,6 +21,7 @@
 
     <transfer name="QuoteResponse">
         <property name="quoteTransfer" type="Quote"/>
+        <property name="customer" type="Customer"/>
         <property name="isSuccessful" type="bool"/>
     </transfer>
 

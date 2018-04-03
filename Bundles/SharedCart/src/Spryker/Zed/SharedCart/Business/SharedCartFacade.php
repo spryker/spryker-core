@@ -40,20 +40,6 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
      *
      * @api
      *
-     * @param string $idCustomerReference
-     *
-     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
-     */
-    public function findPermissionsByCustomer(string $idCustomerReference): PermissionCollectionTransfer
-    {
-        return $this->getRepository()->findPermissionsByCustomer($idCustomerReference);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -105,5 +91,33 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
     public function updateQuoteShareDetails(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         return $this->getFactory()->createQuoteCompanyUserWriter()->updateQuoteCompanyUsers($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idCompanyUser
+     *
+     * @return void
+     */
+    public function resetQuoteDefaultFlagByCustomer(int $idCompanyUser): void
+    {
+        $this->getEntityManager()->resetQuoteDefaultFlagByCustomer($idCompanyUser);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function quoteSetDefault(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $this->getFactory()->createQuoteActivator()->setDefaultQuote($quoteTransfer);
     }
 }

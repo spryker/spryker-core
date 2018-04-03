@@ -52,9 +52,9 @@ class MultiCartToQuoteFacadeBridge implements MultiCartToQuoteFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function persistQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    public function updateQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        return $this->quoteFacade->persistQuote($quoteTransfer);
+        return $this->quoteFacade->updateQuote($quoteTransfer);
     }
 
     /**

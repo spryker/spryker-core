@@ -48,7 +48,7 @@ class UpdateQuoteTest extends Unit
         $quoteTransfer->setItems($itemCollection);
 
         // Act
-        $persistQuoteResponseTransfer = $this->tester->getFacade()->persistQuote($quoteTransfer);
+        $persistQuoteResponseTransfer = $this->tester->getFacade()->updateQuote($quoteTransfer);
 
         // Assert
         $this->assertTrue($persistQuoteResponseTransfer->getIsSuccessful(), 'Persist quote response transfer should have ben successful.');

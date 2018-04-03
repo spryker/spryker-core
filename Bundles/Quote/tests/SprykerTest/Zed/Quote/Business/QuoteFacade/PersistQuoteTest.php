@@ -80,7 +80,7 @@ class PersistQuoteTest extends Unit
             ->setStore($storeTransfer);
 
         // Act
-        $this->quoteFacade->persistQuote($quoteTransfer);
+        $this->quoteFacade->createQuote($quoteTransfer);
 
         // Assert
         $actualQuoteTransfer = $this->quoteFacade->findQuoteByCustomer($customerTransfer)->getQuoteTransfer();

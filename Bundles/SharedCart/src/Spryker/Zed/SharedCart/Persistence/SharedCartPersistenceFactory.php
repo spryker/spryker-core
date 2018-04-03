@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SharedCart\Persistence;
 
 use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
+use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Orm\Zed\Permission\Persistence\SpyPermissionQuery;
 use Orm\Zed\Quote\Persistence\SpyQuoteQuery;
 use Orm\Zed\SharedCart\Persistence\SpyQuoteCompanyUserQuery;
@@ -68,6 +69,14 @@ class SharedCartPersistenceFactory extends AbstractPersistenceFactory
     public function createCompanyUserQuery(): SpyCompanyUserQuery
     {
         return SpyCompanyUserQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
+     */
+    public function createSpyCustomerQuery(): SpyCustomerQuery
+    {
+        return SpyCustomerQuery::create();
     }
 
     /**

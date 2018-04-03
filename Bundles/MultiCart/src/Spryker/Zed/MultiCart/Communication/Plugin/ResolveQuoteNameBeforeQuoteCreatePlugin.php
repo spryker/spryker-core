@@ -27,16 +27,7 @@ class ResolveQuoteNameBeforeQuoteCreatePlugin extends AbstractPlugin implements 
     public function execute(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         if ($quoteTransfer->getName()) {
-            $quoteByNameTransfer = $this->getRepository()
-                ->findCustomerQuoteByName($quoteTransfer->getName(), $quoteTransfer->getCustomer()->getCustomerReference());
-            if ($quoteByNameTransfer) {
-                preg_match_all('/^.+ (\d+)$/', $quoteByNameTransfer->getName(), $matches, PREG_SET_ORDER);
-                $lastQuoteSuffix = 1;
-                if ($matches) {
-                    $lastQuoteSuffix += (int)$matches[0][1];
-                }
-                $quoteTransfer->setName($quoteTransfer->getName() . ' ' . $lastQuoteSuffix);
-            }
+            $quoteTransfer->setName($this->getRepository()->resolveCustomerQuoteName($quoteTransfer));
         }
 
         return $quoteTransfer;

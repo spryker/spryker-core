@@ -72,8 +72,7 @@ class CartFactory extends AbstractFactory
     {
         return new CartChangeRequestExpander(
             $this->getAddItemsRequestExpanderPlugins(),
-            $this->getRemoveItemsRequestExpanderPlugins(),
-            $this->getChangeQuantityRequestExpanderPlugins()
+            $this->getRemoveItemsRequestExpanderPlugins()
         );
     }
 
@@ -99,14 +98,6 @@ class CartFactory extends AbstractFactory
     protected function getAddItemsRequestExpanderPlugins()
     {
         return $this->getProvidedDependency(CartDependencyProvider::PLUGINS_ADD_ITEMS_REQUEST_EXPANDER);
-    }
-
-    /**
-     * @return \Spryker\Client\Cart\Dependency\Plugin\CartChangeRequestExpanderPluginInterface[]
-     */
-    protected function getChangeQuantityRequestExpanderPlugins()
-    {
-        return $this->getProvidedDependency(CartDependencyProvider::PLUGINS_CHANGE_QUANTITY_REQUEST_EXPANDER);
     }
 
     /**

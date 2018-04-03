@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\QuoteTransfer;
 interface QuoteWritePluginInterface
 {
     /**
+     * Specification:
+     * - Plugins which can be called before or after quote save
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

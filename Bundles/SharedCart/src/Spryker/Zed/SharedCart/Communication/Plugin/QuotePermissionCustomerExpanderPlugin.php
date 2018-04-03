@@ -36,13 +36,7 @@ class QuotePermissionCustomerExpanderPlugin extends AbstractPlugin implements Cu
             return $this->addCustomerPermissions($customerTransfer, $permissionCollectionTransfer);
         }
 
-        $permissionCollectionTransfer = $this->getFacade()
-            ->findPermissionsByCustomer(
-                $customerTransfer
-                    ->getCustomerReference()
-            );
-
-        return $this->addCustomerPermissions($customerTransfer, $permissionCollectionTransfer);
+        return $customerTransfer;
     }
 
     /**

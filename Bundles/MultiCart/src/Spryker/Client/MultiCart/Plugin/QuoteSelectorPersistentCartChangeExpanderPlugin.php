@@ -8,7 +8,7 @@
 namespace Spryker\Client\MultiCart\Plugin;
 
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
-use Spryker\Client\PersistentCart\Dependency\Plugin\PersistentCartChangeExpanderPluginInterface;
+use Spryker\Client\PersistentCartExtension\Dependency\Plugin\PersistentCartChangeExpanderPluginInterface;
 
 class QuoteSelectorPersistentCartChangeExpanderPlugin implements PersistentCartChangeExpanderPluginInterface
 {

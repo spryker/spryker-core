@@ -25,13 +25,5 @@ interface CartChangeRequestExpanderInterface
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function changeQuantityRequestExpand(CartChangeTransfer $cartChangeTransfer, array $params = []): CartChangeTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     * @param array $params
-     *
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
-     */
     public function removeItemRequestExpand(CartChangeTransfer $cartChangeTransfer, array $params = []): CartChangeTransfer;
 }

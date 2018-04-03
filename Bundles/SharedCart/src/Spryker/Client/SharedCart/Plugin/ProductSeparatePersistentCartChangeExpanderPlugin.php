@@ -7,10 +7,16 @@
 
 namespace Spryker\Client\SharedCart\Plugin;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
-use Spryker\Client\PersistentCart\Dependency\Plugin\PersistentCartChangeExpanderPluginInterface;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Client\Kernel\AbstractPlugin;
+use Spryker\Client\PersistentCartExtension\Dependency\Plugin\PersistentCartChangeExpanderPluginInterface;
 
-class ProductSeparatePersistentCartChangeExpanderPlugin implements PersistentCartChangeExpanderPluginInterface
+/**
+ * @method \Spryker\Client\SharedCart\SharedCartFactory getFactory()
+ */
+class ProductSeparatePersistentCartChangeExpanderPlugin extends AbstractPlugin implements PersistentCartChangeExpanderPluginInterface
 {
     public const PARAM_SEPARATE_PRODUCT = 'separate_product';
 
@@ -28,13 +34,46 @@ class ProductSeparatePersistentCartChangeExpanderPlugin implements PersistentCar
     public function extend(PersistentCartChangeTransfer $cartChangeTransfer, array $params = []): PersistentCartChangeTransfer
     {
         if (!empty($params[self::PARAM_SEPARATE_PRODUCT])) {
-            foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-                $itemTransfer->setGroupKey(
-                    $itemTransfer->getGroupKey() . time()
-                );
+            $quoteTransfer = $this->getFactory()->getMultiCartClient()->findQuoteById($cartChangeTransfer->getIdQuote());
+            if ($quoteTransfer) {
+                $this->addSeparatorToItems($cartChangeTransfer, $quoteTransfer);
             }
         }
 
         return $cartChangeTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $cartChangeTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    protected function addSeparatorToItems(PersistentCartChangeTransfer $cartChangeTransfer, QuoteTransfer $quoteTransfer): void
+    {
+        foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
+            if ($this->findQuoteItem($quoteTransfer, $itemTransfer->getSku(), $itemTransfer->getGroupKey())) {
+                $itemTransfer->setSeparator(time());
+            }
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $sku
+     * @param string|null $groupKey
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer|null
+     */
+    protected function findQuoteItem(QuoteTransfer $quoteTransfer, $sku, $groupKey = null): ?ItemTransfer
+    {
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if (($itemTransfer->getSku() === $sku && $groupKey === null) ||
+                $itemTransfer->getGroupKey() === $groupKey) {
+                return $itemTransfer;
+            }
+        }
+
+        return null;
     }
 }

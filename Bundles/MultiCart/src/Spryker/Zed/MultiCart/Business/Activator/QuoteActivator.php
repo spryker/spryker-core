@@ -7,22 +7,15 @@
 
 namespace Spryker\Zed\MultiCart\Business\Activator;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteActivationRequestTransfer;
-use Generated\Shared\Transfer\QuoteCollectionTransfer;
-use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToMessengerFacadeInterface;
 use Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToPersistentCartFacadeInterface;
 use Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToQuoteFacadeInterface;
 
 class QuoteActivator implements QuoteActivatorInterface
 {
-    use TransactionTrait;
-
     public const MULTI_CART_SET_DEFAULT_SUCCESS = 'multi_cart.cart.set_default.success';
 
     /**
@@ -62,9 +55,7 @@ class QuoteActivator implements QuoteActivatorInterface
      */
     public function setDefaultQuote(QuoteActivationRequestTransfer $quoteActivationRequestTransfer): QuoteResponseTransfer
     {
-        return $this->getTransactionHandler()->handleTransaction(function () use ($quoteActivationRequestTransfer) {
-            return $this->executeSetDefaultQuoteTransaction($quoteActivationRequestTransfer);
-        });
+        return $this->executeSetDefaultQuoteTransaction($quoteActivationRequestTransfer);
     }
 
     /**
@@ -74,85 +65,20 @@ class QuoteActivator implements QuoteActivatorInterface
      */
     protected function executeSetDefaultQuoteTransaction(QuoteActivationRequestTransfer $quoteActivationRequestTransfer): QuoteResponseTransfer
     {
-        $customerQuotesCollectionTransfer = $this->findCustomerQuotes($quoteActivationRequestTransfer->getCustomer());
-        $quoteToActivateTransfer = $this->findQuoteById($quoteActivationRequestTransfer->getIdQuote(), $customerQuotesCollectionTransfer);
+        $quoteResponseTransfer = $this->quoteFacade->findQuoteById($quoteActivationRequestTransfer->getIdQuote());
 
-        $quoteResponseTransfer = new QuoteResponseTransfer();
-        if (!$quoteToActivateTransfer) {
-            $quoteResponseTransfer->setIsSuccessful(false);
-
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer;
         }
+        $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
 
-        if ($quoteToActivateTransfer->getIsDefault()) {
-            $quoteResponseTransfer
-                ->setIsSuccessful(true)
-                ->setQuoteTransfer($quoteToActivateTransfer);
-
-            return $quoteResponseTransfer;
-        }
-
-        $this->resetQuoteDefaultFlag($customerQuotesCollectionTransfer);
-
-        $quoteToActivateTransfer
+        $quoteTransfer
             ->setCustomer($quoteActivationRequestTransfer->getCustomer())
             ->setIsDefault(true);
 
-        $this->addSuccessMessage($quoteToActivateTransfer->getName());
+        $this->addSuccessMessage($quoteTransfer->getName());
 
-        return $this->quoteFacade->persistQuote($quoteToActivateTransfer);
-    }
-
-    /**
-     * @param int $idQuote
-     * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer
-     *
-     * @return null|\Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected function findQuoteById($idQuote, QuoteCollectionTransfer $quoteCollectionTransfer): ?QuoteTransfer
-    {
-        foreach ($quoteCollectionTransfer->getQuotes() as $quoteTransfer) {
-            if ($quoteTransfer->getIdQuote() === $idQuote) {
-                return $quoteTransfer;
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
-     */
-    protected function findCustomerQuotes(CustomerTransfer $customerTransfer): QuoteCollectionTransfer
-    {
-        $quoteCriteriaFilterTransfer = new QuoteCriteriaFilterTransfer();
-        $quoteCriteriaFilterTransfer->setCustomerReference($customerTransfer->getCustomerReference());
-
-        $customerQuoteCollectionTransfer = $this->quoteFacade->getQuoteCollection($quoteCriteriaFilterTransfer);
-        foreach ($customerQuoteCollectionTransfer->getQuotes() as $customerQuoteTransfer) {
-            $customerQuoteTransfer->setCustomer($customerTransfer);
-        }
-
-        return $customerQuoteCollectionTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $quotesCollectionTransfer
-     *
-     * @return void
-     */
-    protected function resetQuoteDefaultFlag(QuoteCollectionTransfer $quotesCollectionTransfer): void
-    {
-        foreach ($quotesCollectionTransfer->getQuotes() as $quoteTransfer) {
-            if (!$quoteTransfer->getIsDefault()) {
-                continue;
-            }
-
-            $quoteTransfer->setIsDefault(false);
-            $this->quoteFacade->persistQuote($quoteTransfer);
-        }
+        return $this->quoteFacade->updateQuote($quoteTransfer);
     }
 
     /**

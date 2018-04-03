@@ -48,5 +48,5 @@ interface MultiCartFacadeInterface
      *
      * @return mixed
      */
-    public function unDefaultCustomerQuotes(string $customerReference);
+    public function resetQuoteDefaultFlagByCustomer(string $customerReference);
 }

@@ -12,6 +12,7 @@
 
     <transfer name="QuotePermissionGroupCriteriaFilter">
         <property name="isDefault" type="bool"/>
+        <property name="name" type="string"/>
         <property name="filter" type="Filter"/>
     </transfer>
 
@@ -34,7 +35,15 @@
         <property name="quotePermissionGroup" type="QuotePermissionGroup"/>
     </transfer>
 
+    <transfer name="Item">
+        <property name="separator" type="int"/>
+    </transfer>
+
     <transfer name="Quote">
+        <property name="shareDetails" type="ShareDetail[]" singular="shareDetail"/>
+    </transfer>
+
+    <transfer name="QuoteUpdateRequestAttributes">
         <property name="shareDetails" type="ShareDetail[]" singular="shareDetail"/>
     </transfer>
 

@@ -40,7 +40,7 @@ class CustomerShareCartQuoteResponseExpander implements QuoteResponseExpanderInt
         $sharedQuoteCollectionTransfer = $this->findSharedCustomerQuotes($customerTransfer);
         $quoteResponseTransfer->setSharedCustomerQuotes($sharedQuoteCollectionTransfer);
 
-        return $quoteResponseTransfer;
+        return $this->replaceCurrentQuoteFromList($quoteResponseTransfer, $sharedQuoteCollectionTransfer);
     }
 
     /**
@@ -51,9 +51,29 @@ class CustomerShareCartQuoteResponseExpander implements QuoteResponseExpanderInt
     protected function findSharedCustomerQuotes(CustomerTransfer $customerTransfer): QuoteCollectionTransfer
     {
         if ($customerTransfer->getCompanyUserTransfer()) {
-            return $this->quoteReader->findCustomerSharedQuotes($customerTransfer);
+            return $this->quoteReader->findCustomerSharedQuotes($customerTransfer->getCompanyUserTransfer());
         }
 
         return new QuoteCollectionTransfer();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
+     * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $sharedQuoteCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    protected function replaceCurrentQuoteFromList(QuoteResponseTransfer $quoteResponseTransfer, QuoteCollectionTransfer $sharedQuoteCollectionTransfer): QuoteResponseTransfer
+    {
+        $currentQuoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
+        foreach ($sharedQuoteCollectionTransfer->getQuotes() as $quoteTransfer) {
+            if ($quoteTransfer->getIdQuote() === $currentQuoteTransfer->getIdQuote()) {
+                $quoteResponseTransfer->setQuoteTransfer(
+                    $currentQuoteTransfer->fromArray($quoteTransfer->modifiedToArray(), true)
+                );
+            }
+        }
+
+        return $quoteResponseTransfer;
     }
 }

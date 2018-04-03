@@ -7,6 +7,7 @@
     "spryker/kernel": "^3.0.0",
     "spryker/messenger": "^3.0.0",
     "spryker/persistent-cart": "^0.0.1",
+    "spryker/persistent-cart-extension": "^0.0.1",
     "spryker/propel-orm": "^1.6.0",
     "spryker/quote": "^1.0.0",
     "spryker/quote-extension": "^0.1.0",

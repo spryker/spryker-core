@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\PersistentCart\Dependency\Plugin\QuoteUpdatePluginInterface;
+use Spryker\Client\PersistentCartExtension\Dependency\Plugin\QuoteUpdatePluginInterface;
 
 /**
  * @method \Spryker\Client\SharedCart\SharedCartFactory getFactory()
@@ -31,7 +31,7 @@ class SharedCartsUpdateQuoteUpdatePlugin extends AbstractPlugin implements Quote
      */
     public function processResponse(QuoteResponseTransfer $quoteResponseTransfer): QuoteResponseTransfer
     {
-        if (count($quoteResponseTransfer->getSharedCustomerQuotes()->getQuotes())) {
+        if ($quoteResponseTransfer->getSharedCustomerQuotes() && count($quoteResponseTransfer->getSharedCustomerQuotes()->getQuotes())) {
             $multiCartClient = $this->getFactory()->getMultiCartClient();
             $customerQuoteCollectionTransfer = $multiCartClient->getQuoteCollection();
             foreach ($quoteResponseTransfer->getSharedCustomerQuotes()->getQuotes() as $quoteTransfer) {

@@ -67,11 +67,12 @@ class QuoteMapper implements QuoteMapperInterface
     {
         $quoteEntity->fromArray($quoteTransfer->modifiedToArray());
 
-        $quoteEntity
-            ->setIdQuote($quoteTransfer->getIdQuote())
-            ->setCustomerReference($quoteTransfer->getCustomer()->getCustomerReference())
-            ->setFkStore($quoteTransfer->getStore()->getIdStore())
-            ->setQuoteData($this->encodeQuoteData($quoteTransfer));
+        if ($quoteEntity->isNew()) {
+            $quoteEntity
+                ->setCustomerReference($quoteTransfer->getCustomer()->getCustomerReference())
+                ->setFkStore($quoteTransfer->getStore()->getIdStore());
+        }
+        $quoteEntity->setQuoteData($this->encodeQuoteData($quoteTransfer));
 
         return $quoteEntity;
     }

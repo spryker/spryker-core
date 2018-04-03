@@ -8,6 +8,7 @@
 namespace Spryker\Client\SharedCart\Dependency\Client;
 
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 class SharedCartToMultiCartClientBridge implements SharedCartToMultiCartClientInterface
 {
@@ -27,7 +28,7 @@ class SharedCartToMultiCartClientBridge implements SharedCartToMultiCartClientIn
     /**
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
-    public function getQuoteCollection()
+    public function getQuoteCollection(): QuoteCollectionTransfer
     {
         return $this->multiCartClient->getQuoteCollection();
     }
@@ -37,8 +38,18 @@ class SharedCartToMultiCartClientBridge implements SharedCartToMultiCartClientIn
      *
      * @return void
      */
-    public function setQuoteCollection(QuoteCollectionTransfer $quoteCollectionTransfer)
+    public function setQuoteCollection(QuoteCollectionTransfer $quoteCollectionTransfer): void
     {
         $this->multiCartClient->setQuoteCollection($quoteCollectionTransfer);
+    }
+
+    /**
+     * @param int $idQuote
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer|null
+     */
+    public function findQuoteById(int $idQuote): ?QuoteTransfer
+    {
+        return $this->multiCartClient->findQuoteById($idQuote);
     }
 }

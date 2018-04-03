@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductBundle\Communication\Plugin\PersistentCart;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\PersistentCart\Dependency\Plugin\QuoteItemFinderPluginInterface;
+use Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuoteItemFinderPluginInterface;
 
 class BundleProductQuoteItemFinderPlugin implements QuoteItemFinderPluginInterface
 {
@@ -20,7 +20,7 @@ class BundleProductQuoteItemFinderPlugin implements QuoteItemFinderPluginInterfa
      *
      * @return \Generated\Shared\Transfer\ItemTransfer|null
      */
-    public function findItem(QuoteTransfer $quoteTransfer, $sku, $groupKey = null): ?ItemTransfer
+    public function findItem(QuoteTransfer $quoteTransfer, string $sku, string $groupKey = null): ?ItemTransfer
     {
         $itemTransfer = null;
         if ($groupKey) {
@@ -59,7 +59,7 @@ class BundleProductQuoteItemFinderPlugin implements QuoteItemFinderPluginInterfa
      *
      * @return int
      */
-    protected function getBundledProductTotalQuantity(QuoteTransfer $quoteTransfer, $groupKey)
+    protected function getBundledProductTotalQuantity(QuoteTransfer $quoteTransfer, string $groupKey): int
     {
         $bundleItemQuantity = 0;
         foreach ($quoteTransfer->getBundleItems() as $bundleItemTransfer) {
@@ -79,7 +79,7 @@ class BundleProductQuoteItemFinderPlugin implements QuoteItemFinderPluginInterfa
      *
      * @return \Generated\Shared\Transfer\ItemTransfer|null
      */
-    protected function findQuoteItem(QuoteTransfer $quoteTransfer, $sku, $groupKey = null): ?ItemTransfer
+    protected function findQuoteItem(QuoteTransfer $quoteTransfer, string $sku, string $groupKey = null): ?ItemTransfer
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             if (($itemTransfer->getSku() === $sku && $groupKey === null) ||

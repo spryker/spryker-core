@@ -48,6 +48,7 @@ class QuoteCompanyUserWriter implements QuoteCompanyUserWriterInterface
         $currentQuoteCompanyUserIdCollection = $this->sharedCartRepository->findQuoteCompanyUserIdCollection($quoteTransfer->getIdQuote());
         $this->addNewQuoteCompanyUsers($quoteTransfer);
         $this->removeQuoteCompanyUsers((array)$quoteTransfer->getShareDetails(), $currentQuoteCompanyUserIdCollection);
+
         return $quoteTransfer;
     }
 
@@ -63,9 +64,11 @@ class QuoteCompanyUserWriter implements QuoteCompanyUserWriterInterface
             if ($shareDetailTransfer->getIdQuoteCompanyUser()) {
                 continue;
             }
+
             if (!$shareDetailTransfer->getQuotePermissionGroup()) {
                 $shareDetailTransfer->setQuotePermissionGroup($defaultPermissionGroupTransfer);
             }
+
             $this->createNewQuoteCompanyUser($quoteTransfer->getIdQuote(), $shareDetailTransfer);
         }
     }
@@ -79,17 +82,18 @@ class QuoteCompanyUserWriter implements QuoteCompanyUserWriterInterface
     protected function createNewQuoteCompanyUser(int $idQuote, ShareDetailTransfer $shareDetailTransfer): void
     {
         $companyUserEntityTransfer = new SpyQuoteCompanyUserEntityTransfer();
-        $companyUserEntityTransfer->setFkCompanyUser($shareDetailTransfer->getIdCompanyUser());
-        $companyUserEntityTransfer->setFkQuote($idQuote);
-        $companyUserEntityTransfer->setFkQuotePermissionGroup(
-            $shareDetailTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup()
-        );
+        $companyUserEntityTransfer
+            ->setFkCompanyUser($shareDetailTransfer->getIdCompanyUser())
+            ->setFkQuote($idQuote)
+            ->setFkQuotePermissionGroup(
+                $shareDetailTransfer->getQuotePermissionGroup()->getIdQuotePermissionGroup()
+            );
 
         $this->sharedCartEntityManager->saveQuoteCompanyUser($companyUserEntityTransfer);
     }
 
     /**
-     * @return \Generated\Shared\Transfer\QuotePermissionGroupTransfer|mixed
+     * @return \Generated\Shared\Transfer\QuotePermissionGroupTransfer
      */
     protected function getDefaultPermissionGroup()
     {

@@ -9,7 +9,7 @@ namespace Spryker\Zed\MultiCart\Communication\Plugin;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\PersistentCart\Dependency\Plugin\QuoteResponseExpanderPluginInterface;
+use Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuoteResponseExpanderPluginInterface;
 
 /**
  * @method \Spryker\Zed\MultiCart\Communication\MultiCartCommunicationFactory getFactory()

@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShareDetailTransfer;
 use Spryker\Zed\SharedCart\Persistence\SharedCartRepositoryInterface;
 
@@ -48,6 +49,9 @@ class QuoteShareDetailsQuoteResponseExpander implements QuoteResponseExpanderInt
         if (count($companyUserTransferCollection)) {
             return $this->addShareInformation($quoteResponseTransfer, $companyUserTransferCollection);
         }
+        if ($this->isCustomerQuoteOwner($quoteResponseTransfer->getQuoteTransfer())) {
+            $quoteResponseTransfer->getQuoteTransfer()->setShareDetails(new ArrayObject());
+        }
 
         return $quoteResponseTransfer;
     }
@@ -67,6 +71,7 @@ class QuoteShareDetailsQuoteResponseExpander implements QuoteResponseExpanderInt
             if (!empty($groupedCompanyUserTransferCollection[$quoteTransfer->getIdQuote()])) {
                 $quoteTransfer->setShareDetails(
                     $this->createShareDetails(
+                        $quoteTransfer->getIdQuote(),
                         $groupedCompanyUserTransferCollection[$quoteTransfer->getIdQuote()],
                         $quotePermissionGroupTransferList
                     )
@@ -76,6 +81,7 @@ class QuoteShareDetailsQuoteResponseExpander implements QuoteResponseExpanderInt
         if (!empty($groupedCompanyUserTransferCollection[$quoteResponseTransfer->getQuoteTransfer()->getIdQuote()])) {
             $quoteResponseTransfer->getQuoteTransfer()->setShareDetails(
                 $this->createShareDetails(
+                    $quoteResponseTransfer->getQuoteTransfer()->getIdQuote(),
                     $groupedCompanyUserTransferCollection[$quoteResponseTransfer->getQuoteTransfer()->getIdQuote()],
                     $quotePermissionGroupTransferList
                 )
@@ -92,6 +98,7 @@ class QuoteShareDetailsQuoteResponseExpander implements QuoteResponseExpanderInt
     {
         $criteriaFilterTransfer = new QuotePermissionGroupCriteriaFilterTransfer();
         $criteriaFilterTransfer->setFilter(new FilterTransfer());
+
         return $this->sharedCartRepository->findQuotePermissionGroupList($criteriaFilterTransfer);
     }
 
@@ -124,34 +131,54 @@ class QuoteShareDetailsQuoteResponseExpander implements QuoteResponseExpanderInt
         foreach ($quotePermissionGroupTransferList as $quotePermissionGroupTransfer) {
             $indexedQuotePermissionTransferList[$quotePermissionGroupTransfer->getIdQuotePermissionGroup()] = $quotePermissionGroupTransfer;
         }
+
         return $indexedQuotePermissionTransferList;
     }
 
     /**
+     * @param int $idQuote
      * @param \Generated\Shared\Transfer\SpyCompanyUserEntityTransfer[] $companyUserTransferCollection
      * @param \Generated\Shared\Transfer\QuotePermissionGroupTransfer[] $quotePermissionGroupTransferList
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ShareDetailTransfer[]
      */
-    protected function createShareDetails($companyUserTransferCollection, $quotePermissionGroupTransferList): ArrayObject
+    protected function createShareDetails(int $idQuote, array $companyUserTransferCollection, array $quotePermissionGroupTransferList): ArrayObject
     {
         $shareDetailsTransferList = new ArrayObject();
         foreach ($companyUserTransferCollection as $companyUserEntityTransfer) {
             foreach ($companyUserEntityTransfer->getSpyQuoteCompanyUsers() as $quoteCompanyUser) {
+                if ($idQuote !== $quoteCompanyUser->getFkQuote()) {
+                    continue;
+                }
                 $shareDetailTransfer = new ShareDetailTransfer();
-                $shareDetailTransfer->setIdQuoteCompanyUser($quoteCompanyUser->getIdQuoteCompanyUser());
-                $shareDetailTransfer->setIdCompanyUser($companyUserEntityTransfer->getIdCompanyUser());
+                $shareDetailTransfer
+                    ->setIdQuoteCompanyUser($quoteCompanyUser->getIdQuoteCompanyUser())
+                    ->setIdCompanyUser($companyUserEntityTransfer->getIdCompanyUser());
+
                 $customerTransfer = $companyUserEntityTransfer->getCustomer();
                 $shareDetailTransfer->setCustomerName(
                     $customerTransfer->getLastName() . ' ' . $customerTransfer->getFirstName()
                 );
+
                 $shareDetailTransfer->setQuotePermissionGroup(
                     $quotePermissionGroupTransferList[$quoteCompanyUser->getFkQuotePermissionGroup()]
                 );
+
                 $shareDetailsTransferList->append($shareDetailTransfer);
             }
         }
 
         return $shareDetailsTransferList;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function isCustomerQuoteOwner(QuoteTransfer $quoteTransfer): bool
+    {
+        $customer = $quoteTransfer->getCustomer();
+        return strcmp($customer->getCustomerReference(), $quoteTransfer->getCustomerReference()) === 0;
     }
 }

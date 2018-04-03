@@ -46,7 +46,7 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
             $permissionTransfer = new PermissionTransfer();
             $permissionTransfer->fromArray($permissionEntity->toArray(), true);
             $permissionTransfer->setConfiguration([
-                SharedCartConfig::PERMISSION_CONFIG_ID_QUOTE_COLLECTION => $ownQuoteIdCollection + $sharedQuoteIdCollection,
+                SharedCartConfig::PERMISSION_CONFIG_ID_QUOTE_COLLECTION => array_merge($ownQuoteIdCollection, $sharedQuoteIdCollection),
             ]);
 
             $permissionCollectionTransfer->addPermission($permissionTransfer);
@@ -219,5 +219,20 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
             $quotePermissionGroupTransferList[] = $mapper->mapQuotePermissionGroup($quotePermissionGroupEntityTransfer);
         }
         return $quotePermissionGroupTransferList;
+    }
+
+    /**
+     * @param string $customerReference
+     *
+     * @return string
+     */
+    public function getCustomerIdByReference(string $customerReference): string
+    {
+        return $this->getFactory()
+            ->createSpyCustomerQuery()
+            ->filterByCustomerReference($customerReference)
+            ->select([SpyCustomerTableMap::COL_ID_CUSTOMER])
+            ->findOne()
+            ->getIdCustomer();
     }
 }

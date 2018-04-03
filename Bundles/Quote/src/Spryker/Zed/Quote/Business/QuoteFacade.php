@@ -30,29 +30,13 @@ class QuoteFacade extends AbstractFacade implements QuoteFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function persistQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
-    {
-        return $this->getFactory()->createQuoteWriter()->save($quoteTransfer);
-    }
-
-    /**
-     * Specification:
-     * - Create new quote entity if it does not exist.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
     public function createQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         return $this->getFactory()->createQuoteWriter()->create($quoteTransfer);
     }
 
     /**
-     * Specification:
-     * - Updates existing quote entity from QuoteTransfer.
+     * {@inheritdoc}
      *
      * @api
      *

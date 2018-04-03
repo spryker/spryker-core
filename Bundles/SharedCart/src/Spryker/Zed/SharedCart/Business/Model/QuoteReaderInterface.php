@@ -7,15 +7,15 @@
 
 namespace Spryker\Zed\SharedCart\Business\Model;
 
-use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 
 interface QuoteReaderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
-    public function findCustomerSharedQuotes(CustomerTransfer $customerTransfer): QuoteCollectionTransfer;
+    public function findCustomerSharedQuotes(CompanyUserTransfer $companyUserTransfer): QuoteCollectionTransfer;
 }

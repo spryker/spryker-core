@@ -22,7 +22,6 @@ class CartDependencyProvider extends AbstractDependencyProvider
     const PLUGINS_QUOTE_STORAGE_STRATEGY = 'PLUGINS_QUOTE_STORAGE_STRATEGY';
     const PLUGINS_ADD_ITEMS_REQUEST_EXPANDER = 'PLUGINS_ADD_ITEMS_REQUEST_EXPANDER';
     const PLUGINS_REMOVE_ITEMS_REQUEST_EXPANDER = 'PLUGINS_REMOVE_ITEMS_REQUEST_EXPANDER';
-    const PLUGINS_CHANGE_QUANTITY_REQUEST_EXPANDER = 'PLUGINS_CHANGE_QUANTITY_REQUEST_EXPANDER';
     const PLUGIN_QUOTE_ITEM_FINDER = 'PLUGIN_QUOTE_ITEMS_FINDER';
 
     /**
@@ -39,7 +38,6 @@ class CartDependencyProvider extends AbstractDependencyProvider
         $container = $this->addQuoteItemFinderPlugin($container);
         $container = $this->addAddItemsRequestExpanderPlugins($container);
         $container = $this->addRemoveItemsRequestExpanderPlugins($container);
-        $container = $this->addChangeQuantityRequestExpanderPlugins($container);
 
         return $container;
     }
@@ -133,20 +131,6 @@ class CartDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addChangeQuantityRequestExpanderPlugins(Container $container)
-    {
-        $container[static::PLUGINS_CHANGE_QUANTITY_REQUEST_EXPANDER] = function () {
-            return $this->getAddItemsRequestExpanderPlugins();
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Client\Kernel\Container $container
-     *
-     * @return \Spryker\Client\Kernel\Container
-     */
     protected function addRemoveItemsRequestExpanderPlugins(Container $container)
     {
         $container[static::PLUGINS_REMOVE_ITEMS_REQUEST_EXPANDER] = function () {
@@ -186,14 +170,6 @@ class CartDependencyProvider extends AbstractDependencyProvider
      * @return \Spryker\Client\Cart\Dependency\Plugin\CartChangeRequestExpanderPluginInterface[]
      */
     protected function getAddItemsRequestExpanderPlugins()
-    {
-        return [];
-    }
-
-    /**
-     * @return \Spryker\Client\Cart\Dependency\Plugin\CartChangeRequestExpanderPluginInterface[]
-     */
-    protected function getChangeQuantityRequestExpanderPlugins()
     {
         return [];
     }

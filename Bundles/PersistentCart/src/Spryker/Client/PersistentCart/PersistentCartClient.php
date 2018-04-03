@@ -9,6 +9,7 @@ namespace Spryker\Client\PersistentCart;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -43,11 +44,31 @@ class PersistentCartClient extends AbstractClient implements PersistentCartClien
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function persistQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    public function createQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         $persistentCartStub = $this->getFactory()->createZedPersistentCartStub();
-        $quoteResponseTransfer = $persistentCartStub->persistQuote($quoteTransfer);
+        $quoteResponseTransfer = $persistentCartStub->createQuote($quoteTransfer);
+        if ($quoteResponseTransfer->getIsSuccessful()) {
+            $this->getFactory()->getQuoteClient()->setQuote($quoteResponseTransfer->getQuoteTransfer());
+        }
         $quoteResponseTransfer = $this->executeUpdateQuotePlugins($quoteResponseTransfer);
+
+        return $quoteResponseTransfer;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function updateQuote(QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer): QuoteResponseTransfer
+    {
+        $persistentCartStub = $this->getFactory()->createZedPersistentCartStub();
+        $quoteResponseTransfer = $persistentCartStub->updateQuote($quoteUpdateRequestTransfer);
         if ($quoteResponseTransfer->getIsSuccessful()) {
             $this->getFactory()->getQuoteClient()->setQuote($quoteResponseTransfer->getQuoteTransfer());
         }
@@ -64,18 +85,5 @@ class PersistentCartClient extends AbstractClient implements PersistentCartClien
     protected function executeUpdateQuotePlugins(QuoteResponseTransfer $quoteResponseTransfer): QuoteResponseTransfer
     {
         return $this->getFactory()->createQuoteUpdatePluginExecutor()->executePlugins($quoteResponseTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
-    protected function updateCustomerQuote(QuoteTransfer $quoteTransfer)
-    {
-        $quoteClient = $this->getFactory()->getQuoteClient();
-        if ($quoteClient->getQuote()->getIdQuote() === $quoteTransfer->getIdQuote()) {
-            $quoteClient->setQuote($quoteTransfer);
-        }
     }
 }

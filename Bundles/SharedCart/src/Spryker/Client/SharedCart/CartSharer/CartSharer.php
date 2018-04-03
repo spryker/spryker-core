@@ -11,6 +11,8 @@ use ArrayObject;
 use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteUpdateRequestAttributesTransfer;
+use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
 use Generated\Shared\Transfer\ShareCartRequestTransfer;
 use Generated\Shared\Transfer\ShareDetailTransfer;
 use Spryker\Client\SharedCart\Dependency\Client\SharedCartToMessengerClientInterface;
@@ -21,6 +23,8 @@ use Spryker\Client\SharedCart\Zed\SharedCartStubInterface;
 
 class CartSharer implements CartSharerInterface
 {
+    public const GLOSSARY_KEY_SHARED_CART_SHARE_ERROR_ALREADY_EXIST = 'shared_cart.share.error.already_exist';
+
     /**
      * @var \Spryker\Client\SharedCart\Dependency\Client\SharedCartToMultiCartClientInterface
      */
@@ -68,15 +72,17 @@ class CartSharer implements CartSharerInterface
     {
         $quoteTransfer = $this->getQuote($shareCartRequestTransfer->getIdQuote());
         if (!$this->validateShareCartRequest($shareCartRequestTransfer, $quoteTransfer)) {
-            $this->messengerClient->addErrorMessage('shared_cart.share.error.already_exist');
+            $this->messengerClient->addErrorMessage(self::GLOSSARY_KEY_SHARED_CART_SHARE_ERROR_ALREADY_EXIST);
             $quoteResponseTransfer = new QuoteResponseTransfer();
             $quoteResponseTransfer->setIsSuccessful(false);
 
             return $quoteResponseTransfer;
         }
         $quoteTransfer->addShareDetail($this->createShareCartDetail($shareCartRequestTransfer));
+        $quoteUpdateRequestTransfer = $this->createQuoteUpdateRequest($quoteTransfer);
+        $quoteUpdateRequestTransfer->getQuoteUpdateRequestAttributes()->setShareDetails($quoteTransfer->getShareDetails());
 
-        return $this->persistentCartClient->persistQuote($quoteTransfer);
+        return $this->persistentCartClient->updateQuote($quoteUpdateRequestTransfer);
     }
 
     /**
@@ -87,11 +93,16 @@ class CartSharer implements CartSharerInterface
     public function removeShareCart(ShareCartRequestTransfer $shareCartRequestTransfer): QuoteResponseTransfer
     {
         $quoteTransfer = $this->getQuote($shareCartRequestTransfer->getIdQuote());
-        $quoteTransfer->setShareDetails(
-            $this->filterShareCartToRemove($quoteTransfer->getShareDetails(), $shareCartRequestTransfer)
-        );
+        $quoteUpdateRequestTransfer = $this->createQuoteUpdateRequest($quoteTransfer);
+        $quoteUpdateRequestTransfer->getQuoteUpdateRequestAttributes()
+            ->setShareDetails(
+                $this->filterShareCartToRemove(
+                    $quoteTransfer->getShareDetails(),
+                    $shareCartRequestTransfer
+                )
+            );
 
-        return $this->persistentCartClient->persistQuote($quoteTransfer);
+        return $this->persistentCartClient->updateQuote($quoteUpdateRequestTransfer);
     }
 
     /**
@@ -127,7 +138,9 @@ class CartSharer implements CartSharerInterface
             }
         }
 
-        throw new CartNotFoundException('Cart not found');
+        throw new CartNotFoundException(
+            sprintf('Cart with id %s was not found', $idQuote)
+        );
     }
 
     /**
@@ -147,7 +160,7 @@ class CartSharer implements CartSharerInterface
     /**
      * @param int $idQuotePermissionGroup
      *
-     * @return \Generated\Shared\Transfer\QuotePermissionGroupTransfer|mixed|null
+     * @return \Generated\Shared\Transfer\QuotePermissionGroupTransfer|null
      */
     protected function findQuotePermissionGroup(int $idQuotePermissionGroup)
     {
@@ -181,5 +194,21 @@ class CartSharer implements CartSharerInterface
         }
 
         return $filteredShareDetailTransferList;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteUpdateRequestTransfer
+     */
+    protected function createQuoteUpdateRequest(QuoteTransfer $quoteTransfer): QuoteUpdateRequestTransfer
+    {
+        $quoteUpdateRequestTransfer = new QuoteUpdateRequestTransfer();
+        $quoteUpdateRequestTransfer->setIdQuote($quoteTransfer->getIdQuote());
+        $quoteUpdateRequestTransfer->setCustomer($quoteTransfer->getCustomer());
+        $quoteUpdateRequestAttributesTransfer = new QuoteUpdateRequestAttributesTransfer();
+        $quoteUpdateRequestTransfer->setQuoteUpdateRequestAttributes($quoteUpdateRequestAttributesTransfer);
+
+        return $quoteUpdateRequestTransfer;
     }
 }

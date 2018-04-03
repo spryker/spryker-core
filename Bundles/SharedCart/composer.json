@@ -12,17 +12,20 @@
     "spryker/permission": "^1.0.0",
     "spryker/permission-extension": "^1.0.0",
     "spryker/persistent-cart": "^0.1.0",
+    "spryker/persistent-cart-extension": "^0.0.1",
     "spryker/propel-orm": "^1.6.0",
     "spryker/quote": "^1.0.0",
     "spryker/quote-extension": "^1.0.0",
     "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
+    "spryker/cart": "*",
     "spryker/code-sniffer": "*",
     "spryker/installer": "*",
     "spryker/testify": "*"
   },
   "suggest": {
+    "spryker/cart": "If you want to use cart plugins.",
     "spryker/installer": "If you want to use SharedCartPermissionInstallerPlugin. Minimum required version: 4.0.0."
   },
   "autoload": {

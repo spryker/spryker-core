@@ -30,7 +30,7 @@ class QuoteRepository extends AbstractRepository implements QuoteRepositoryInter
     public function findQuoteByCustomer($customerReference): ?QuoteTransfer
     {
         $quoteQuery = $this->getFactory()->createQuoteQuery()
-            ->joinWithSpyStore() // TODO: why do you need to join spy_store? why store is not filtered?
+            ->joinWithSpyStore()
             ->filterByCustomerReference($customerReference);
 
         $quoteEntityTransfer = $this->buildQueryFromCriteria($quoteQuery)->findOne();
@@ -53,7 +53,7 @@ class QuoteRepository extends AbstractRepository implements QuoteRepositoryInter
     public function findQuoteById($idQuote): ?QuoteTransfer
     {
         $quoteQuery = $this->getFactory()->createQuoteQuery()
-            ->joinWithSpyStore() // TODO: why do you need to join spy_store? why store is not filtered?
+            ->joinWithSpyStore()
             ->filterByIdQuote($idQuote);
 
         $quoteEntityTransfer = $this->buildQueryFromCriteria($quoteQuery)->findOne();
@@ -77,7 +77,7 @@ class QuoteRepository extends AbstractRepository implements QuoteRepositoryInter
     {
         $quoteQuery = $this->getFactory()
             ->createQuoteQuery()
-            ->joinWithSpyStore(); // TODO: why do you need to join spy_store? why store is not filtered?
+            ->joinWithSpyStore();
 
         if ($quoteCriteriaFilterTransfer->getCustomerReference()) {
             $quoteQuery->filterByCustomerReference($quoteCriteriaFilterTransfer->getCustomerReference());

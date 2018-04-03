@@ -54,8 +54,8 @@ class MultiCartFacade extends AbstractFacade implements MultiCartFacadeInterface
      *
      * @return void
      */
-    public function unDefaultCustomerQuotes(string $customerReference): void
+    public function resetQuoteDefaultFlagByCustomer(string $customerReference): void
     {
-        $this->getEntityManager()->unDefaultCustomerQuotes($customerReference);
+        $this->getEntityManager()->resetQuoteDefaultFlagByCustomer($customerReference);
     }
 }

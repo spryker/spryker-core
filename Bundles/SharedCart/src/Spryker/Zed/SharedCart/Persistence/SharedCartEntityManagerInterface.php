@@ -51,4 +51,19 @@ interface SharedCartEntityManagerInterface
      * @return void
      */
     public function deleteQuoteCompanyUser(int $idQuoteCompanyUser): void;
+
+    /**
+     * @param int $idCompanyUser
+     * @param int $idQuote
+     *
+     * @return void
+     */
+    public function setQuoteDefault(int $idCompanyUser, int $idQuote): void;
+
+    /**
+     * @param int $idCompanyUser
+     *
+     * @return void
+     */
+    public function resetQuoteDefaultFlagByCustomer(int $idCompanyUser): void;
 }

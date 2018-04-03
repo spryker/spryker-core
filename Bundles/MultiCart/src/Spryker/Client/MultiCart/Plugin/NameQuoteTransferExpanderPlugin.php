@@ -24,7 +24,7 @@ class NameQuoteTransferExpanderPlugin extends AbstractPlugin implements QuoteTra
      */
     public function expandQuote(QuoteTransfer $quoteTransfer)
     {
-        if ($quoteTransfer->getName() !== null) {
+        if ($quoteTransfer->getName() !== null || !count($quoteTransfer->getItems())) {
             return $quoteTransfer;
         }
 

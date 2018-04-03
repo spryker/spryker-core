@@ -49,13 +49,17 @@ class CustomerLoginQuoteSync implements CustomerLoginQuoteSyncInterface
 
         $quoteTransfer = $this->quoteClient->getQuote();
         if ($quoteTransfer->getCustomer() || !count($quoteTransfer->getItems())) {
+            $quoteTransfer->setIsDefault(true);
+            $this->quoteClient->setQuote($quoteTransfer);
+
             return;
         }
 
         $quoteTransfer
             ->setCustomer($customerTransfer)
+            ->setCustomerReference($customerTransfer->getCustomerReference())
             ->setIsDefault(true);
 
-        $this->persistentCartClient->persistQuote($quoteTransfer);
+        $this->persistentCartClient->createQuote($quoteTransfer);
     }
 }

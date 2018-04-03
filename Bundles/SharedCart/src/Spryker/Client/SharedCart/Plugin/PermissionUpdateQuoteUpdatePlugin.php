@@ -9,7 +9,7 @@ namespace Spryker\Client\SharedCart\Plugin;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\PersistentCart\Dependency\Plugin\QuoteUpdatePluginInterface;
+use Spryker\Client\PersistentCartExtension\Dependency\Plugin\QuoteUpdatePluginInterface;
 
 /**
  * @method \Spryker\Client\SharedCart\SharedCartFactory getFactory()

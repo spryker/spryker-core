@@ -6,11 +6,13 @@
 
 namespace Spryker\Zed\PersistentCart\Business;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteSyncRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
 
 /**
  * @method \Spryker\Zed\PersistentCart\Business\PersistentCartBusinessFactory getFactory()
@@ -139,6 +141,31 @@ interface PersistentCartFacadeInterface
 
     /**
      * Specification:
+     *  - Find customer quote
+     *
+     * @api
+     *
+     * @param int $idQuote
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function findQuote(int $idQuote, CustomerTransfer $customerTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Saves quote in database
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function updateQuote(QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
      *  - Saves quote in database
      *
      * @api
@@ -147,5 +174,5 @@ interface PersistentCartFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function persistQuote($quoteTransfer);
+    public function createQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 }

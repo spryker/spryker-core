@@ -14,5 +14,5 @@ interface MultiCartEntityManagerInterface
      *
      * @return void
      */
-    public function unDefaultCustomerQuotes(string $customerReference): void;
+    public function resetQuoteDefaultFlagByCustomer(string $customerReference): void;
 }

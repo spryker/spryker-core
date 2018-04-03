@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\PersistentCart\Dependency\Plugin;
+namespace Spryker\Client\PersistentCartExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 

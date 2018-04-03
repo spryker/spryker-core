@@ -10,13 +10,13 @@ namespace Spryker\Zed\ProductBundle\Communication\Plugin\PersistentCart;
 use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\PersistentCart\Dependency\Plugin\CartChangeRequestExpandPluginInterface;
+use Spryker\Zed\PersistentCartExtension\Dependency\Plugin\CartChangeRequestExpandPluginInterface;
 
 class RemoveBundleChangeRequestExpanderPlugin implements CartChangeRequestExpandPluginInterface
 {
     /**
      * Specification:
-     * - Replace items with bundle items is it exist
+     * - Replace items with bundle items if it exist
      *
      * @api
      *
@@ -30,7 +30,7 @@ class RemoveBundleChangeRequestExpanderPlugin implements CartChangeRequestExpand
         foreach ($cartChangeTransfer->getItems() as $quoteTransfer) {
             $bundledItemTransferList = $this->getBundledItems($cartChangeTransfer->getQuote(), $quoteTransfer->getGroupKey(), $quoteTransfer->getQuantity());
             if (count($bundledItemTransferList)) {
-                $itemTransferList += $bundledItemTransferList;
+                $itemTransferList = array_merge($itemTransferList, $bundledItemTransferList);
                 continue;
             }
             $itemTransferList[] = $quoteTransfer;
@@ -47,7 +47,7 @@ class RemoveBundleChangeRequestExpanderPlugin implements CartChangeRequestExpand
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    protected function getBundledItems(QuoteTransfer $quoteTransfer, $groupKey, $numberOfBundlesToRemove)
+    protected function getBundledItems(QuoteTransfer $quoteTransfer, string $groupKey, int $numberOfBundlesToRemove)
     {
         if (!$numberOfBundlesToRemove) {
             $numberOfBundlesToRemove = $this->getBundledProductTotalQuantity($quoteTransfer, $groupKey);
@@ -80,7 +80,7 @@ class RemoveBundleChangeRequestExpanderPlugin implements CartChangeRequestExpand
      *
      * @return int
      */
-    protected function getBundledProductTotalQuantity(QuoteTransfer $quoteTransfer, $groupKey)
+    protected function getBundledProductTotalQuantity(QuoteTransfer $quoteTransfer, string $groupKey): int
     {
         $bundleItemQuantity = 0;
         foreach ($quoteTransfer->getBundleItems() as $bundleItemTransfer) {

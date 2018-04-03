@@ -26,13 +26,14 @@ class PersistentQuoteHelper extends Module
     public function havePersistentQuote(array $seed = [])
     {
         $quoteTransfer = (new QuoteBuilder($seed))->build();
+        $quoteTransfer->setIdQuote(null);
 
         $quoteTransfer->requireCustomer();
 
         $this->assureCurrency($quoteTransfer);
         $this->assureStore($quoteTransfer);
 
-        $quoteResponseTransfer = $this->getFacade()->persistQuote($quoteTransfer);
+        $quoteResponseTransfer = $this->getFacade()->createQuote($quoteTransfer);
 
         return $quoteResponseTransfer->getQuoteTransfer();
     }
