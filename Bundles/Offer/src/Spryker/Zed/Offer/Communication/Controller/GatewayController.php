@@ -44,6 +44,6 @@ class GatewayController extends AbstractGatewayController
      */
     public function placeOfferAction(OfferTransfer $offerTransfer)
     {
-        return $this->getFacade()->saveOffer($offerTransfer);
+        return $this->getFacade()->create($offerTransfer);
     }
 }

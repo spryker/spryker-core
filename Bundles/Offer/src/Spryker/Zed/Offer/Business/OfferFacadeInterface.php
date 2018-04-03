@@ -27,18 +27,6 @@ interface OfferFacadeInterface
 
     /**
      * Specification:
-     * - Save order to the database.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
-     *
-     * @return \Generated\Shared\Transfer\OfferResponseTransfer
-     */
-    public function saveOffer(OfferTransfer $offerTransfer): OfferResponseTransfer;
-
-    /**
-     * Specification:
      * - Get offer transfer by offer id.
      *
      * @api
@@ -51,16 +39,15 @@ interface OfferFacadeInterface
 
     /**
      * Specification:
-     * - Save status to offer.
+     * - Creates a new order in the database.
      *
      * @api
      *
-     * @param int $idOffer
-     * @param string $status
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
      *
      * @return \Generated\Shared\Transfer\OfferResponseTransfer
      */
-    public function updateOfferStatus(int $idOffer, string $status): OfferResponseTransfer;
+    public function createOffer(OfferTransfer $offerTransfer): OfferResponseTransfer;
 
     /**
      * Specification:

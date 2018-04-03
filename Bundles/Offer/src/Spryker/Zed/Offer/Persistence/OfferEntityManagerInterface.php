@@ -21,5 +21,5 @@ interface OfferEntityManagerInterface
      *
      * @return \Generated\Shared\Transfer\OfferTransfer
      */
-    public function saveOffer(OfferTransfer $offerTransfer): OfferTransfer;
+    public function createOffer(OfferTransfer $offerTransfer): OfferTransfer;
 }

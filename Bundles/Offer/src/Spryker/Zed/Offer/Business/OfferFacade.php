@@ -42,13 +42,29 @@ class OfferFacade extends AbstractFacade implements OfferFacadeInterface
      *
      * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
      *
+     * @return \Generated\Shared\Transfer\OfferTransfer
+     */
+    public function getOfferById(OfferTransfer $offerTransfer): OfferTransfer
+    {
+        return $this->getFactory()
+            ->createOfferReader()
+            ->getOfferById($offerTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
+     *
      * @return \Generated\Shared\Transfer\OfferResponseTransfer
      */
-    public function saveOffer(OfferTransfer $offerTransfer): OfferResponseTransfer
+    public function createOffer(OfferTransfer $offerTransfer): OfferResponseTransfer
     {
         return $this->getFactory()
             ->createOfferWriter()
-            ->placeOffer($offerTransfer);
+            ->createOffer($offerTransfer);
     }
 
     /**
@@ -65,38 +81,5 @@ class OfferFacade extends AbstractFacade implements OfferFacadeInterface
         return $this->getFactory()
             ->createOfferWriter()
             ->updateOffer($offerTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
-     *
-     * @return \Generated\Shared\Transfer\OfferTransfer
-     */
-    public function getOfferById(OfferTransfer $offerTransfer): OfferTransfer
-    {
-        return $this->getFactory()
-            ->createOfferReader()
-            ->getOfferById($offerTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param int $idOffer
-     * @param string $status
-     *
-     * @return \Generated\Shared\Transfer\OfferResponseTransfer
-     */
-    public function updateOfferStatus(int $idOffer, string $status): OfferResponseTransfer
-    {
-        return $this->getFactory()
-            ->createOfferWriter()
-            ->updateOfferStatus($idOffer, $status);
     }
 }

@@ -59,7 +59,7 @@ class OfferWriter implements OfferWriterInterface
      *
      * @return \Generated\Shared\Transfer\OfferResponseTransfer
      */
-    public function placeOffer(OfferTransfer $offerTransfer): OfferResponseTransfer
+    public function createOffer(OfferTransfer $offerTransfer): OfferResponseTransfer
     {
         $offerTransfer->requireQuote();
         $offerTransfer->getQuote()->requireCustomer();
@@ -69,26 +69,9 @@ class OfferWriter implements OfferWriterInterface
         $offerTransfer->setStatus($this->offerConfig->getStatusInProgress());
         $offerTransfer->setCustomerReference($offerTransfer->getQuote()->getCustomer()->getCustomerReference());
 
-        $offerTransfer = $this->offerEntityManager->saveOffer($offerTransfer);
+        $offerTransfer = $this->offerEntityManager->createOffer($offerTransfer);
 
         $offerTransfer->getQuote()->setCheckoutConfirmed(true);
-
-        return (new OfferResponseTransfer())
-            ->setIsSuccessful(true)
-            ->setOffer($offerTransfer);
-    }
-
-    /**
-     * @param int $idOffer
-     * @param string $status
-     *
-     * @return \Generated\Shared\Transfer\OfferResponseTransfer
-     */
-    public function updateOfferStatus(int $idOffer, string $status): OfferResponseTransfer
-    {
-        $offerTransfer = $this->offerRepository->getOfferById($idOffer);
-        $offerTransfer->setStatus($status);
-        $offerTransfer = $this->offerEntityManager->saveOffer($offerTransfer);
 
         return (new OfferResponseTransfer())
             ->setIsSuccessful(true)

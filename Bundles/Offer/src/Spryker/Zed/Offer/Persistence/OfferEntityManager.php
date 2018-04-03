@@ -24,11 +24,13 @@ class OfferEntityManager extends AbstractEntityManager implements OfferEntityMan
      *
      * @return \Generated\Shared\Transfer\OfferTransfer
      */
-    public function saveOffer(OfferTransfer $offerTransfer): OfferTransfer
+    public function createOffer(OfferTransfer $offerTransfer): OfferTransfer
     {
         $offerEntityTransfer = $this->getFactory()
             ->createOffermapper()
             ->mapOfferToOfferEntity($offerTransfer);
+
+        $offerEntityTransfer->setIdOffer(null);
 
         $this->save($offerEntityTransfer);
 

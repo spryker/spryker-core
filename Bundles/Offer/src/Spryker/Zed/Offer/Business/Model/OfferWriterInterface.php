@@ -17,15 +17,7 @@ interface OfferWriterInterface
      *
      * @return \Generated\Shared\Transfer\OfferResponseTransfer
      */
-    public function placeOffer(OfferTransfer $offerTransfer): OfferResponseTransfer;
-
-    /**
-     * @param int $idOffer
-     * @param string $status
-     *
-     * @return \Generated\Shared\Transfer\OfferResponseTransfer
-     */
-    public function updateOfferStatus(int $idOffer, string $status): OfferResponseTransfer;
+    public function createOffer(OfferTransfer $offerTransfer): OfferResponseTransfer;
 
     /**
      * @param OfferTransfer $offerTransfer

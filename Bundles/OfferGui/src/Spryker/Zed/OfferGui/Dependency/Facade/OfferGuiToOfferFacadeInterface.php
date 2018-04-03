@@ -33,5 +33,5 @@ interface OfferGuiToOfferFacadeInterface
      *
      * @return \Generated\Shared\Transfer\OfferResponseTransfer
      */
-    public function saveOffer(OfferTransfer $offerTransfer): OfferResponseTransfer;
+    public function createOffer(OfferTransfer $offerTransfer): OfferResponseTransfer;
 }

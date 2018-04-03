@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Offer\Communication\Plugin\Checkout;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\OfferTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -33,9 +34,8 @@ class ConvertOfferToOrderPlugin extends AbstractPlugin implements CheckoutPostSa
     {
         $idOffer = $quoteTransfer->getIdOffer();
 
-        $this->getFacade()->updateOfferStatus(
-            $idOffer,
-            $this->getConfig()->getStatusOrder()
-        );
+        $offerTransfer = $this->getFacade()->getOfferById((new OfferTransfer())->setIdOffer($idOffer));
+        $offerTransfer->setStatus($this->getConfig()->getStatusOrder());
+        $this->getFacade()->updateOffer($offerTransfer);
     }
 }
