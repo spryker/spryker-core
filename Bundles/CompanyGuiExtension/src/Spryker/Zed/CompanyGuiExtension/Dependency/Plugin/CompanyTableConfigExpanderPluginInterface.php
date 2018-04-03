@@ -9,18 +9,8 @@ namespace Spryker\Zed\CompanyGuiExtension\Dependency\Plugin;
 
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
-interface CompanyTableExpanderInterface
+interface CompanyTableConfigExpanderPluginInterface
 {
-    /**
-     * Specification:
-     * - Expands array of header columns
-     *
-     * @api
-     *
-     * @return array
-     */
-    public function expandHeader(): array;
-
     /**
      * Specification:
      * - Expands table config
@@ -32,16 +22,4 @@ interface CompanyTableExpanderInterface
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
     public function expandConfig(TableConfiguration $config): TableConfiguration;
-
-    /**
-     * Specification:
-     * - Expands table row data
-     *
-     * @api
-     *
-     * @param array $item
-     *
-     * @return array
-     */
-    public function expandData(array $item): array;
 }

@@ -8,14 +8,16 @@
 namespace Spryker\Zed\CompanySupplierGui\Communication\Plugin;
 
 use Orm\Zed\Company\Persistence\Map\SpyCompanyTableMap;
-use Spryker\Zed\CompanyGuiExtension\Dependency\Plugin\CompanyTableExpanderInterface;
+use Spryker\Zed\CompanyGuiExtension\Dependency\Plugin\CompanyTableConfigExpanderPluginInterface;
+use Spryker\Zed\CompanyGuiExtension\Dependency\Plugin\CompanyTableDataExpanderPluginInterface;
+use Spryker\Zed\CompanyGuiExtension\Dependency\Plugin\CompanyTableHeaderExpanderPluginInterface;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\CompanySupplierGui\Communication\CompanySupplierGuiCommunicationFactory getFactory()
  */
-class CompanyTableCompanyTypePlugin extends AbstractPlugin implements CompanyTableExpanderInterface
+class CompanyTableCompanyTypePlugin extends AbstractPlugin implements CompanyTableConfigExpanderPluginInterface, CompanyTableHeaderExpanderPluginInterface, CompanyTableDataExpanderPluginInterface
 {
     protected const COL_COMPANY_TYPE = 'company_type';
     protected const COL_COMPANY_TYPE_LABEL = 'Company Type';

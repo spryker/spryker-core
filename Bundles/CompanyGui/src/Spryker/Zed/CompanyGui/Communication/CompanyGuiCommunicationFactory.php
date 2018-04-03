@@ -11,6 +11,8 @@ use Orm\Zed\Company\Persistence\SpyCompanyQuery;
 use Spryker\Zed\CompanyGui\Communication\Form\CompanyForm;
 use Spryker\Zed\CompanyGui\Communication\Form\DataProvider\CompanyFormDataProvider;
 use Spryker\Zed\CompanyGui\Communication\Table\CompanyTable;
+use Spryker\Zed\CompanyGui\Communication\Table\PluginExecutor\CompanyTablePluginExecutor;
+use Spryker\Zed\CompanyGui\Communication\Table\PluginExecutor\CompanyTablePluginExecutorInterface;
 use Spryker\Zed\CompanyGui\CompanyGuiDependencyProvider;
 use Spryker\Zed\CompanyGui\Dependency\Facade\CompanyGuiToCompanyFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
@@ -25,7 +27,19 @@ class CompanyGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new CompanyTable(
             $this->getPropelCompanyQuery(),
-            $this->getCompanyTableExpanderPlugins(),
+            $this->createCompanyPluginExecutor()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyGui\Communication\Table\PluginExecutor\CompanyTablePluginExecutorInterface
+     */
+    protected function createCompanyPluginExecutor(): CompanyTablePluginExecutorInterface
+    {
+        return new CompanyTablePluginExecutor(
+            $this->getCompanyTableConfigExpanderPlugins(),
+            $this->getCompanyTableHeaderExpanderPlugins(),
+            $this->getCompanyTableDataExpanderPlugins(),
             $this->getCompanyTableActionExpanderPlugins()
         );
     }
@@ -68,11 +82,27 @@ class CompanyGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUnitAddressGuiExtension\Dependency\Plugin\CompanyUnitAddressTableExpanderInterface[]
+     * @return \Spryker\Zed\CompanyGuiExtension\Dependency\Plugin\CompanyTableConfigExpanderPluginInterface[]
      */
-    protected function getCompanyTableExpanderPlugins(): array
+    protected function getCompanyTableConfigExpanderPlugins(): array
     {
-        return $this->getProvidedDependency(CompanyGuiDependencyProvider::PLUGINS_COMPANY_TABLE_EXPANDER);
+        return $this->getProvidedDependency(CompanyGuiDependencyProvider::PLUGINS_COMPANY_TABLE_CONFIG_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyGuiExtension\Dependency\Plugin\CompanyTableHeaderExpanderPluginInterface[]
+     */
+    protected function getCompanyTableHeaderExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(CompanyGuiDependencyProvider::PLUGINS_COMPANY_TABLE_HEADER_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyGuiExtension\Dependency\Plugin\CompanyTableDataExpanderPluginInterface[]
+     */
+    protected function getCompanyTableDataExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(CompanyGuiDependencyProvider::PLUGINS_COMPANY_TABLE_DATA_EXPANDER);
     }
 
     /**

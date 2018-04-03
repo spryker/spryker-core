@@ -27,8 +27,6 @@ class CompanyTypeChoiceFormDataProvider
     }
 
     /**
-     * @param int|null $idCompany
-     *
      * @return array
      */
     public function getOptions(): array
@@ -39,8 +37,6 @@ class CompanyTypeChoiceFormDataProvider
     }
 
     /**
-     * @param int|null $idCompany
-     *
      * @return array
      */
     protected function getCompanyTypes(): array
@@ -49,7 +45,7 @@ class CompanyTypeChoiceFormDataProvider
 
         $result = [];
         foreach ($companyTypeCollection->getCompanyTypes() as $companyType) {
-            $result[$companyType->getIdCompanyType()] = $companyType->getName();
+            $result[$companyType->getName()] = $companyType->getIdCompanyType();
         }
 
         return $result;

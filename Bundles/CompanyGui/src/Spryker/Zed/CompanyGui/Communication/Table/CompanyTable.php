@@ -10,6 +10,7 @@ namespace Spryker\Zed\CompanyGui\Communication\Table;
 use Orm\Zed\Company\Persistence\Map\SpyCompanyTableMap;
 use Orm\Zed\Company\Persistence\SpyCompanyQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Zed\CompanyGui\Communication\Table\PluginExecutor\CompanyTablePluginExecutorInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -35,28 +36,20 @@ class CompanyTable extends AbstractTable
     protected $companyQuery;
 
     /**
-     * @var \Spryker\Zed\CompanyGuiExtension\Dependency\Plugin\CompanyTableExpanderInterface[]
+     * @var \Spryker\Zed\CompanyGui\Communication\Table\PluginExecutor\CompanyTablePluginExecutorInterface
      */
-    protected $companyTableExpanderPlugins;
-
-    /**
-     * @var \Spryker\Zed\CompanyGuiExtension\Dependency\Plugin\CompanyTableActionExpanderInterface[]
-     */
-    protected $companyTableActionExpanderPlugins;
+    protected $companyTablePluginsExecutor;
 
     /**
      * @param \Orm\Zed\Company\Persistence\SpyCompanyQuery $companyQuery
-     * @param \Spryker\Zed\CompanyGuiExtension\Dependency\Plugin\CompanyTableExpanderInterface[] $companyTableExpanderPlugins
-     * @param \Spryker\Zed\CompanyGuiExtension\Dependency\Plugin\CompanyTableActionExpanderInterface[] $companyTableActionExpanderPlugins
+     * @param \Spryker\Zed\CompanyGui\Communication\Table\PluginExecutor\CompanyTablePluginExecutorInterface $companyTablePluginsExecutor
      */
     public function __construct(
         SpyCompanyQuery $companyQuery,
-        array $companyTableExpanderPlugins,
-        array $companyTableActionExpanderPlugins
+        CompanyTablePluginExecutorInterface $companyTablePluginsExecutor
     ) {
         $this->companyQuery = $companyQuery;
-        $this->companyTableExpanderPlugins = $companyTableExpanderPlugins;
-        $this->companyTableActionExpanderPlugins = $companyTableActionExpanderPlugins;
+        $this->companyTablePluginsExecutor = $companyTablePluginsExecutor;
     }
 
     /**
@@ -67,10 +60,6 @@ class CompanyTable extends AbstractTable
     protected function configure(TableConfiguration $config)
     {
         $config = $this->setHeader($config);
-
-        foreach ($this->companyTableExpanderPlugins as $plugin) {
-            $plugin->expandConfig($config);
-        }
 
         $config->addRawColumn(static::COL_IS_ACTIVE);
         $config->addRawColumn(static::COL_STATUS);
@@ -89,6 +78,7 @@ class CompanyTable extends AbstractTable
             static::COL_ID_COMPANY,
             static::COL_NAME,
         ]);
+        $config = $this->companyTablePluginsExecutor->executeTableConfigExpanderPlugins($config);
 
         return $config;
     }
@@ -107,10 +97,7 @@ class CompanyTable extends AbstractTable
             static::COL_STATUS => 'Status',
         ];
 
-        $externalData = [];
-        foreach ($this->companyTableExpanderPlugins as $plugin) {
-            $externalData += $plugin->expandHeader();
-        }
+        $externalData = $this->companyTablePluginsExecutor->executeTableHeaderExpanderPlugins();
 
         $actions = [static::COL_ACTIONS => 'Actions'];
 
@@ -135,14 +122,9 @@ class CompanyTable extends AbstractTable
                 static::COL_NAME => $item[SpyCompanyTableMap::COL_NAME],
                 static::COL_IS_ACTIVE => $this->generateStatusLabels($item),
                 static::COL_STATUS => $this->generateCompanyStatusLabels($item),
+                static::COL_ACTIONS => $this->buildLinks($item),
             ];
-
-            foreach ($this->companyTableExpanderPlugins as $plugin) {
-                $rowData += $plugin->expandData($item);
-            }
-
-            $rowData[static::COL_ACTIONS] = $this->buildLinks($item);
-
+            $rowData += $this->companyTablePluginsExecutor->executeTableDataExpanderPlugins($item);
             $results[] = $rowData;
         }
         unset($queryResults);
@@ -166,8 +148,8 @@ class CompanyTable extends AbstractTable
         $buttons[] = $this->generateStatusChangeButton($item);
         $buttons = array_merge($buttons, $this->generateCompanyStatusChangeButton($item));
 
-        foreach ($this->companyTableActionExpanderPlugins as $companyTableActionExtensionPlugin) {
-            $button = $companyTableActionExtensionPlugin->prepareButton($item);
+        $expandedButtons = $this->companyTablePluginsExecutor->executeTableActionExpanderPlugins($item);
+        foreach ($expandedButtons as $button) {
             if (!$button->getUrl()) {
                 continue;
             }

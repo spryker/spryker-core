@@ -54,8 +54,7 @@ class CompanyTypeChoiceFormType extends AbstractType
             'label' => 'Company type',
             'placeholder' => 'Select one',
             'required' => true,
-            'choices' => array_flip($options[static::OPTION_VALUES_COMPANY_TYPE_CHOICES]),
-            'choices_as_values' => true,
+            'choices' => $options[static::OPTION_VALUES_COMPANY_TYPE_CHOICES],
             'constraints' => [
                 new NotBlank(),
             ],

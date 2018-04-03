@@ -1,13 +1,11 @@
-# CompanyExtension Module
-[![Build Status](https://travis-ci.org/spryker/company-extension.svg)](https://travis-ci.org/spryker/company-extension)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/company-extension/badge.svg)](https://coveralls.io/github/spryker/company-extension)
+# CompanyBusinessUnitExtension Module
 
-{{ADD DESCRIPTION HERE}}
+CompanyBusinessUnitExtension module provides interfaces for extension of the CompanyBusinessUnit module.
 
 ## Installation
 
 ```
-composer require spryker/company-extension
+composer require spryker/company-business-unit-extension
 ```
 
 ## Documentation
