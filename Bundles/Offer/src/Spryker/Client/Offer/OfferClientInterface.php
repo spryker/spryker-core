@@ -17,6 +17,9 @@ use Generated\Shared\Transfer\OfferTransfer;
 interface OfferClientInterface
 {
     /**
+     * Specification:
+     *  - Get all offers.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OfferListTransfer $offerListTransfer
@@ -26,6 +29,9 @@ interface OfferClientInterface
     public function getOffers(OfferListTransfer $offerListTransfer): OfferListTransfer;
 
     /**
+     * Specification:
+     *  - Load offer from zed by id.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
@@ -33,18 +39,6 @@ interface OfferClientInterface
      * @return \Generated\Shared\Transfer\OfferTransfer
      */
     public function getOfferById(OfferTransfer $offerTransfer): OfferTransfer;
-
-//    /**
-//     * Specification:
-//     * - Requests order to offer conversion.
-//     *
-//     * @api
-//     *
-//     * @param \Generated\Shared\Transfer\OfferToOrderConvertRequestTransfer $offerToOrderConvertRequestTransfer
-//     *
-//     * @return \Generated\Shared\Transfer\OfferToOrderConvertResponseTransfer $offerToOrderRequestTransfer
-//     */
-//    public function convertOfferToOrder(OfferToOrderConvertRequestTransfer $offerToOrderConvertRequestTransfer): OfferToOrderConvertResponseTransfer;
 
     /**
      * todo:
@@ -58,5 +52,5 @@ interface OfferClientInterface
      *
      * @return \Generated\Shared\Transfer\OfferResponseTransfer
      */
-    public function placeOffer(OfferTransfer $offerTransfer): OfferResponseTransfer;
+    public function createOffer(OfferTransfer $offerTransfer): OfferResponseTransfer;
 }

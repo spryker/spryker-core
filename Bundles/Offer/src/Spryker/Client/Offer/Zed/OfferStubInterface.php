@@ -32,5 +32,5 @@ interface OfferStubInterface
      *
      * @return \Generated\Shared\Transfer\OfferResponseTransfer
      */
-    public function placeOffer(OfferTransfer $offerTransfer): OfferResponseTransfer;
+    public function createOffer(OfferTransfer $offerTransfer): OfferResponseTransfer;
 }

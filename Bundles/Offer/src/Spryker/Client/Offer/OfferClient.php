@@ -53,10 +53,10 @@ class OfferClient extends AbstractClient implements OfferClientInterface
      * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
      * @return \Generated\Shared\Transfer\OfferResponseTransfer
      */
-    public function placeOffer(OfferTransfer $offerTransfer): OfferResponseTransfer
+    public function createOffer(OfferTransfer $offerTransfer): OfferResponseTransfer
     {
         return $this->getFactory()
             ->createZedStub()
-            ->placeOffer($offerTransfer);
+            ->createOffer($offerTransfer);
     }
 }
