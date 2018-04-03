@@ -8,6 +8,7 @@
 namespace Spryker\Zed\OfferGui\Communication\Form\Voucher;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -17,18 +18,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class VoucherType extends AbstractType
 {
-    public const TYPE_NAME = 'voucher';
-
-    public const FIELD_VOUCHER_CODE = 'voucher_code';
-
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-    }
+    public const FIELD_VOUCHER_CODE = 'voucherCode';
+    public const FIELD_AMOUNT = 'amount';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -39,19 +30,19 @@ class VoucherType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this
-            ->addVoucherCodeField($builder, $options);
+            ->addVoucherCodeField($builder)
+            ->addAmountField($builder);
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
      *
      * @return $this
      */
-    protected function addVoucherCodeField(FormBuilderInterface $builder, array $options)
+    protected function addVoucherCodeField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_VOUCHER_CODE, TextType::class, [
-            'label' => 'Add Voucher',
+            'label' => false,
             'required' => false,
         ]);
 
@@ -59,10 +50,18 @@ class VoucherType extends AbstractType
     }
 
     /**
-     * @return string
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
      */
-    public function getBlockPrefix()
+    protected function addAmountField(FormBuilderInterface $builder)
     {
-        return static::TYPE_NAME;
+        $builder->add(static::FIELD_AMOUNT, TextType::class, [
+            'label' => 'Amount',
+            'required' => false,
+            'disabled' => true,
+        ]);
+
+        return $this;
     }
 }

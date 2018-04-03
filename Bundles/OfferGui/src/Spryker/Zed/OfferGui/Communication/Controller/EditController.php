@@ -54,6 +54,15 @@ class EditController extends AbstractController
             $offerTransfer = $form->getData();
             $quoteTransfer = $offerTransfer->getQuote();
 
+            //remove vouchers
+            $voucherDiscounts = $quoteTransfer->getVoucherDiscounts();
+            foreach ($quoteTransfer->getVoucherDiscounts() as $key => $discountTransfer) {
+                if (!$discountTransfer->getVoucherCode()) {
+                    $voucherDiscounts->offsetUnset($key);
+                }
+            }
+            $quoteTransfer->setVoucherDiscounts($voucherDiscounts);
+
             //remove items
             $itemTransfers = new \ArrayObject();
             foreach ($quoteTransfer->getItems() as $itemTransfer) {

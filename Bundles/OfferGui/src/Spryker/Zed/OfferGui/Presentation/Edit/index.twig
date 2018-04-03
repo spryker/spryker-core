@@ -47,7 +47,19 @@
                     </tr>
                 {% endfor %}
             </table>
+
+            {{ form_label(form.voucherDiscounts) }}
+            <table>
+                {% for voucherDiscount in form.voucherDiscounts %}
+                    <tr>
+                        <td>{{ form_row(voucherDiscount.voucherCode) }}</td>
+                        <td>{{ form_row(voucherDiscount.amount) }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
             {{ form_widget(form) }}
+
+            {% include '@OfferGui/Edit/_partials/totals.twig' %}
 
             <input type="submit" class="btn btn-primary safe-submit" name="submit-reload" value="{{ 'Reload' | trans }}" />
             <input type="submit" class="btn btn-primary safe-submit" name="submit-persist" value="{{ 'Save' | trans }}" />
