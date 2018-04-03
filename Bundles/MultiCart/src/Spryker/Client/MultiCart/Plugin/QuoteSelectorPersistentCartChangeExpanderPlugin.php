@@ -27,7 +27,7 @@ class QuoteSelectorPersistentCartChangeExpanderPlugin implements PersistentCartC
      */
     public function extend(PersistentCartChangeTransfer $cartChangeTransfer, array $params = []): PersistentCartChangeTransfer
     {
-        if (!empty($params[self::PARAM_ID_QUOTE])) {
+        if (isset($params[self::PARAM_ID_QUOTE])) {
             $cartChangeTransfer->setIdQuote($params[self::PARAM_ID_QUOTE]);
         }
 

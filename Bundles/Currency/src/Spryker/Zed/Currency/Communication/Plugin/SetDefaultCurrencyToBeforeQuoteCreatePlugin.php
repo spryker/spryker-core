@@ -5,20 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MultiCart\Communication\Plugin;
+namespace Spryker\Zed\Currency\Communication\Plugin;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface;
 
 /**
- * @method \Spryker\Zed\MultiCart\Communication\MultiCartCommunicationFactory getFactory()
- * @method \Spryker\Zed\MultiCart\Business\MultiCartFacadeInterface getFacade()
- * @method \Spryker\Zed\MultiCart\MultiCartConfig getConfig()
+ * @method \Spryker\Zed\Currency\Business\CurrencyFacadeInterface getFacade()
  */
-class DeactivateQuotesBeforeQuoteSavePlugin extends AbstractPlugin implements QuoteWritePluginInterface
+class SetDefaultCurrencyToBeforeQuoteCreatePlugin extends AbstractPlugin implements QuoteWritePluginInterface
 {
     /**
+     * Specification:
+     * - Set default currency to quote if it does not have
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -27,8 +28,9 @@ class DeactivateQuotesBeforeQuoteSavePlugin extends AbstractPlugin implements Qu
      */
     public function execute(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        $quoteTransfer->setIsDefault(true);
-        $this->getFacade()->resetQuoteDefaultFlagByCustomer($quoteTransfer->getCustomer()->getCustomerReference());
+        if (!$quoteTransfer->getCurrency()) {
+            $quoteTransfer->setCurrency($this->getFacade()->getCurrent());
+        }
 
         return $quoteTransfer;
     }

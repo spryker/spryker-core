@@ -17,4 +17,11 @@ interface MultiCartToMessengerFacadeInterface
      * @return void
      */
     public function addInfoMessage(MessageTransfer $message);
+
+    /**
+     * @param \Generated\Shared\Transfer\MessageTransfer $message
+     *
+     * @return void
+     */
+    public function addSuccessMessage(MessageTransfer $message);
 }

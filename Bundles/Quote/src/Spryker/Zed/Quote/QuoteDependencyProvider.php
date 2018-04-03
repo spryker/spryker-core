@@ -20,6 +20,7 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_QUOTE_UPDATE_AFTER = 'PLUGINS_QUOTE_UPDATE_AFTER';
     public const PLUGINS_QUOTE_UPDATE_BEFORE = 'PLUGINS_QUOTE_UPDATE_BEFORE';
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    public const PLUGINS_QUOTE_DELETE_BEFORE = 'PLUGINS_QUOTE_DELETE_BEFORE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -33,6 +34,7 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addQuoteCreateBeforePlugins($container);
         $container = $this->addQuoteUpdateAfterPlugins($container);
         $container = $this->addQuoteUpdateBeforePlugins($container);
+        $container = $this->addQuoteDeleteBeforePlugins($container);
 
         return $container;
     }
@@ -134,6 +136,20 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addQuoteDeleteBeforePlugins(Container $container): Container
+    {
+        $container[self::PLUGINS_QUOTE_DELETE_BEFORE] = function (Container $container) {
+            return $this->getQuoteDeleteBeforePlugins();
+        };
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface[]
      */
     protected function getQuoteCreateAfterPlugins(): array
@@ -161,6 +177,14 @@ class QuoteDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface[]
      */
     protected function getQuoteUpdateBeforePlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface[]
+     */
+    protected function getQuoteDeleteBeforePlugins(): array
     {
         return [];
     }

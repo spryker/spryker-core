@@ -9,11 +9,16 @@ namespace Spryker\Zed\Quote\Business\Model;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\Kernel\PermissionAwareTrait;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Quote\Persistence\QuoteEntityManagerInterface;
 use Spryker\Zed\Quote\Persistence\QuoteRepositoryInterface;
 
 class QuoteDeleter implements QuoteDeleterInterface
 {
+    use PermissionAwareTrait;
+    use TransactionTrait;
+
     /**
      * @var \Spryker\Zed\Quote\Persistence\QuoteEntityManagerInterface
      */
@@ -25,15 +30,23 @@ class QuoteDeleter implements QuoteDeleterInterface
     protected $quoteRepository;
 
     /**
+     * @var array|\Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface[]
+     */
+    protected $quoteDeleteBeforePlugins;
+
+    /**
      * @param \Spryker\Zed\Quote\Persistence\QuoteRepositoryInterface $quoteRepository
      * @param \Spryker\Zed\Quote\Persistence\QuoteEntityManagerInterface $quoteEntityManager
+     * @param \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface[] $quoteDeleteBeforePlugins
      */
     public function __construct(
         QuoteRepositoryInterface $quoteRepository,
-        QuoteEntityManagerInterface $quoteEntityManager
+        QuoteEntityManagerInterface $quoteEntityManager,
+        array $quoteDeleteBeforePlugins
     ) {
         $this->quoteEntityManager = $quoteEntityManager;
         $this->quoteRepository = $quoteRepository;
+        $this->quoteDeleteBeforePlugins = $quoteDeleteBeforePlugins;
     }
 
     /**
@@ -46,10 +59,7 @@ class QuoteDeleter implements QuoteDeleterInterface
         $quoteResponseTransfer = new QuoteResponseTransfer();
         $quoteResponseTransfer->setIsSuccessful(false);
         if ($this->validateQuote($quoteTransfer)) {
-            $this->quoteEntityManager->deleteQuoteById($quoteTransfer->getIdQuote());
-            $quoteResponseTransfer->setCustomer($quoteTransfer->getCustomer());
-            $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
-            $quoteResponseTransfer->setIsSuccessful(true);
+            return $this->executeDeleteTransaction($quoteTransfer);
         }
 
         return $quoteResponseTransfer;
@@ -69,7 +79,44 @@ class QuoteDeleter implements QuoteDeleterInterface
         if (!$loadedQuoteTransfer) {
             return false;
         }
+        $customerTransfer = $quoteTransfer->getCustomer();
 
-        return strcmp($loadedQuoteTransfer->getCustomerReference(), $quoteTransfer->getCustomer()->getCustomerReference()) === 0;
+        return strcmp($loadedQuoteTransfer->getCustomerReference(), $customerTransfer->getCustomerReference()) === 0
+            || ($customerTransfer->getCompanyUserTransfer()
+                && $this->can('WriteSharedCartPermissionPlugin', $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser(), $quoteTransfer->getIdQuote())
+            );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    protected function executeDeleteTransaction(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        return $this->getTransactionHandler()->handleTransaction(function () use ($quoteTransfer) {
+            $quoteResponseTransfer = new QuoteResponseTransfer();
+            $quoteTransfer = $this->executeDeleteBeforePlugins($quoteTransfer);
+            $this->quoteEntityManager->deleteQuoteById($quoteTransfer->getIdQuote());
+            $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
+            $quoteResponseTransfer->setCustomer($quoteTransfer->getCustomer());
+            $quoteResponseTransfer->setIsSuccessful(true);
+
+            return $quoteResponseTransfer;
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function executeDeleteBeforePlugins(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        foreach ($this->quoteDeleteBeforePlugins as $quoteWritePlugin) {
+            $quoteTransfer = $quoteWritePlugin->execute($quoteTransfer);
+        }
+
+        return $quoteTransfer;
     }
 }

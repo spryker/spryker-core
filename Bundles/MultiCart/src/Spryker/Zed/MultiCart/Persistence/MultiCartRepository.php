@@ -30,6 +30,9 @@ class MultiCartRepository extends AbstractRepository implements MultiCartReposit
             ->createQuoteQuery()
             ->filterByName($quoteTransfer->getName() . '%', Criteria::LIKE)
             ->filterByCustomerReference($customerReference);
+        if ($quoteTransfer->getIdQuote()) {
+            $quoteQuery->filterByIdQuote($quoteTransfer->getIdQuote(), Criteria::NOT_EQUAL);
+        }
 
         $filterTransfer = new FilterTransfer();
         $filterTransfer->setOrderBy(SpyQuoteTableMap::COL_NAME);

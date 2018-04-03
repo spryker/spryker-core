@@ -120,4 +120,18 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
     {
         return $this->getFactory()->createQuoteActivator()->setDefaultQuote($quoteTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function deleteShareForQuote(QuoteTransfer $quoteTransfer): void
+    {
+        $this->getEntityManager()->deleteQuoteCompanyUserByQuote($quoteTransfer);
+    }
 }

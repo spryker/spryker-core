@@ -69,7 +69,8 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
     {
         return new QuoteDeleter(
             $this->getRepository(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
+            $this->getQuoteDeleteBeforePlugins()
         );
     }
 
@@ -119,5 +120,13 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
     protected function getQuoteUpdateBeforePlugins(): array
     {
         return $this->getProvidedDependency(QuoteDependencyProvider::PLUGINS_QUOTE_UPDATE_BEFORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface[]
+     */
+    protected function getQuoteDeleteBeforePlugins(): array
+    {
+        return $this->getProvidedDependency(QuoteDependencyProvider::PLUGINS_QUOTE_DELETE_BEFORE);
     }
 }
