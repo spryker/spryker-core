@@ -124,8 +124,8 @@ class ItemType extends AbstractType
             'constraints' => [
                 new Range([
                     'min' => 0,
-                    'max' => 100
-                ])
+                    'max' => 100,
+                ]),
             ],
         ]);
 

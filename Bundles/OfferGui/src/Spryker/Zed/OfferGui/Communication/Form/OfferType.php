@@ -98,7 +98,7 @@ class OfferType extends AbstractType
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return $this
      */
@@ -113,8 +113,8 @@ class OfferType extends AbstractType
             'allow_delete' => true,
             'entry_options' => [
                 'label' => false,
-                'data_class' => DiscountTransfer::class
-            ]
+                'data_class' => DiscountTransfer::class,
+            ],
         ]);
 
         return $this;

@@ -1,16 +1,24 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\OfferGui\Communication\Plugin;
 
-
 use Generated\Shared\Transfer\CalculableObjectTransfer;
+use Spryker\Zed\Calculation\Dependency\Plugin\CalculationPluginInterface;
 
-class OfferItemSubtotalAggregationPlugin implements \Spryker\Zed\Calculation\Dependency\Plugin\CalculationPluginInterface
+class OfferItemSubtotalAggregationPlugin implements CalculationPluginInterface
 {
     //todo: move to BL
     //todo: move to Offer module
     //Guide: This calculator plugin must be placed under ItemSubtotalAggregatorPlugin
     //after the generic logic is executed
+    /**
+     * @return void
+     */
     public function recalculate(CalculableObjectTransfer $calculableObjectTransfer)
     {
         $itemTransfers = $calculableObjectTransfer->getItems();
@@ -31,7 +39,6 @@ class OfferItemSubtotalAggregationPlugin implements \Spryker\Zed\Calculation\Dep
                 $itemTransfer->setSumSubtotalAggregation($calculatedUnitSubtotal);
             }
 
-
             //apply fee
             $originUnitSubtotal = $itemTransfer->getUnitSubtotalAggregation();
             $calculatedUnitSubtotal = $originUnitSubtotal + $itemTransfer->getOfferFee();
@@ -44,5 +51,4 @@ class OfferItemSubtotalAggregationPlugin implements \Spryker\Zed\Calculation\Dep
             $itemTransfer->setSumSubtotalAggregation($calculatedSumSubtotal);
         }
     }
-
 }
