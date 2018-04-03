@@ -65,4 +65,14 @@ class CustomersListManualOrderEntryFormPlugin extends AbstractPlugin implements 
 
         return $quoteTransfer;
     }
+
+    /**
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
+     *
+     * @return bool
+     */
+    public function isPreFilled($dataTransfer = null): bool
+    {
+        return false;
+    }
 }

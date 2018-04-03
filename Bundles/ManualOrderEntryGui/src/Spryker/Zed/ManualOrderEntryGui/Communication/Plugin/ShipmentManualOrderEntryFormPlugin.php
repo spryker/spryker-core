@@ -76,6 +76,16 @@ class ShipmentManualOrderEntryFormPlugin extends AbstractPlugin implements Manua
     }
 
     /**
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
+     *
+     * @return bool
+     */
+    public function isPreFilled($dataTransfer = null): bool
+    {
+        return false;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
      *
      * @return \Generated\Shared\Transfer\ExpenseTransfer

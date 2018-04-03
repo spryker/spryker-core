@@ -22,6 +22,7 @@ class CustomersListType extends AbstractType
     public const FIELD_CUSTOMER = 'id_customer';
 
     public const OPTION_CUSTOMER_ARRAY = 'option-category-array';
+    public const OPTION_VALUE = 'option-value';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -33,7 +34,8 @@ class CustomersListType extends AbstractType
     {
         $this->addCustomerField(
             $builder,
-            $options[static::OPTION_CUSTOMER_ARRAY]
+            $options[static::OPTION_CUSTOMER_ARRAY],
+            $options[static::OPTION_VALUE]
         );
     }
 
@@ -45,16 +47,18 @@ class CustomersListType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
-            ->setRequired(static::OPTION_CUSTOMER_ARRAY);
+            ->setRequired(static::OPTION_CUSTOMER_ARRAY)
+            ->setDefault(static::OPTION_VALUE, null);
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $customerList
+     * @param string|null $value
      *
      * @return $this
      */
-    protected function addCustomerField(FormBuilderInterface $builder, array $customerList)
+    protected function addCustomerField(FormBuilderInterface $builder, array $customerList, string $value = null)
     {
         $builder->add(static::FIELD_CUSTOMER, Select2ComboBoxType::class, [
             'property_path' => static::FIELD_CUSTOMER,
@@ -63,6 +67,7 @@ class CustomersListType extends AbstractType
             'choices_as_values' => true,
             'multiple' => false,
             'required' => true,
+            'data' => $value,
         ]);
 
         return $this;

@@ -107,4 +107,14 @@ class PaymentManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
 
         return $quoteTransfer;
     }
+
+    /**
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
+     *
+     * @return bool
+     */
+    public function isPreFilled($dataTransfer = null): bool
+    {
+        return false;
+    }
 }

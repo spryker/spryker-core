@@ -34,6 +34,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
 
     const PRE_SAVE_ORDER_HYDRATE_PLUGINS = 'pre save order hydrate plugins';
     const HYDRATE_ORDER_PLUGINS = 'hydrate order plugins';
+    const UI_SALES_TABLE_PLUGINS = 'UI sales table plugins';
 
     /**
      * @deprecated Will be removed in the next major version.
@@ -75,6 +76,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addMoneyPlugin($container);
         $container = $this->addUtilSanitizeService($container);
         $container = $this->addCustomerFacade($container);
+        $container = $this->addSalesTablePlugins($container);
 
         return $container;
     }
@@ -102,6 +104,20 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::HYDRATE_ORDER_PLUGINS] = function (Container $container) {
             return $this->getOrderHydrationPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSalesTablePlugins(Container $container)
+    {
+        $container[static::UI_SALES_TABLE_PLUGINS] = function (Container $container) {
+            return $this->getSalesTablePlugins();
         };
 
         return $container;
@@ -273,6 +289,14 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface[]
      */
     protected function getOrderHydrationPlugins()
+    {
+         return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\SalesTablePluginInterface[]
+     */
+    protected function getSalesTablePlugins()
     {
          return [];
     }
