@@ -89,15 +89,15 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
         $interval = $productQuantityEntity->getQuantityInterval();
 
         if ($quantity < $min) {
-            $this->addViolationMessage(static::ERROR_QUANTITY_MIN_NOT_FULFILLED, $sku, $min, $responseTransfer);
+            $this->addViolationMessage(static::ERROR_QUANTITY_MIN_NOT_FULFILLED, $sku, $min, $quantity, $responseTransfer);
         }
 
         if ($max !== null && $quantity > $max) {
-            $this->addViolationMessage(static::ERROR_QUANTITY_MAX_NOT_FULFILLED, $sku, $max, $responseTransfer);
+            $this->addViolationMessage(static::ERROR_QUANTITY_MAX_NOT_FULFILLED, $sku, $max, $quantity, $responseTransfer);
         }
 
         if (($quantity - $min) % $interval !== 0) {
-            $this->addViolationMessage(static::ERROR_QUANTITY_INTERVAL_NOT_FULFILLED, $sku, $interval, $responseTransfer);
+            $this->addViolationMessage(static::ERROR_QUANTITY_INTERVAL_NOT_FULFILLED, $sku, $interval, $quantity, $responseTransfer);
         }
     }
 
@@ -241,16 +241,17 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
      * @param string $message
      * @param string $sku
      * @param int $restrictionValue
+     * @param int $actualValue
      * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $responseTransfer
      *
      * @return void
      */
-    protected function addViolationMessage(string $message, string $sku, int $restrictionValue, CartPreCheckResponseTransfer $responseTransfer): void
+    protected function addViolationMessage(string $message, string $sku, int $restrictionValue, int $actualValue, CartPreCheckResponseTransfer $responseTransfer): void
     {
         $responseTransfer->addMessage(
             (new MessageTransfer())
                 ->setValue($message)
-                ->setParameters(['sku' => $sku, 'restrictionValue' => $restrictionValue])
+                ->setParameters(['sku' => $sku, 'restrictionValue' => $restrictionValue, 'actualValue' => $actualValue])
         );
     }
 

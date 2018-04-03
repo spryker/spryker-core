@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\ProductQuantity\Communication\Plugin;
 
 use Codeception\Test\Unit;
-use Spryker\Zed\ProductQuantity\Communication\Plugin\ProductQuantityRestrictionCartPreCheckPlugin;
+use Spryker\Zed\ProductQuantity\Communication\Plugin\ProductQuantityRestrictionCartRemovalPreCheckPlugin;
 
 /**
  * Auto-generated group annotations
@@ -17,10 +17,10 @@ use Spryker\Zed\ProductQuantity\Communication\Plugin\ProductQuantityRestrictionC
  * @group ProductQuantity
  * @group Communication
  * @group Plugin
- * @group ProductQuantityRestrictionCartPreCheckPluginTest
+ * @group ProductQuantityRestrictionCartRemovalPreCheckPluginTest
  * Add your own group annotations below this line
  */
-class ProductQuantityRestrictionCartPreCheckPluginTest extends Unit
+class ProductQuantityRestrictionCartRemovalPreCheckPluginTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\ProductQuantity\ProductQuantityCommunicationTester
@@ -28,9 +28,9 @@ class ProductQuantityRestrictionCartPreCheckPluginTest extends Unit
     protected $tester;
 
     /**
-     * @var \Spryker\Zed\ProductQuantity\Communication\Plugin\ProductQuantityRestrictionCartPreCheckPlugin
+     * @var \Spryker\Zed\ProductQuantity\Communication\Plugin\ProductQuantityRestrictionCartRemovalPreCheckPlugin
      */
-    protected $productQuantityRestrictionCartPreCheckPlugin;
+    protected $productQuantityRestrictionCartRemovalPreCheckPlugin;
 
     /**
      * @return void
@@ -39,7 +39,7 @@ class ProductQuantityRestrictionCartPreCheckPluginTest extends Unit
     {
         parent::setUp();
 
-        $this->productQuantityRestrictionCartPreCheckPlugin = new ProductQuantityRestrictionCartPreCheckPlugin();
+        $this->productQuantityRestrictionCartRemovalPreCheckPlugin = new ProductQuantityRestrictionCartRemovalPreCheckPlugin();
     }
 
     /**
@@ -51,7 +51,7 @@ class ProductQuantityRestrictionCartPreCheckPluginTest extends Unit
         $cartChangeTransfer = $this->tester->createEmptyCartChangeTransfer();
 
         // Act
-        $this->productQuantityRestrictionCartPreCheckPlugin->check($cartChangeTransfer);
+        $this->productQuantityRestrictionCartRemovalPreCheckPlugin->check($cartChangeTransfer);
 
         // Assert
         $this->assertTrue(true);

@@ -1,7 +1,10 @@
 <?php
 namespace SprykerTest\Zed\ProductQuantity;
 
+use ArrayObject;
 use Codeception\Actor;
+use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
  * Inherited Methods
@@ -25,4 +28,17 @@ class ProductQuantityCommunicationTester extends Actor
    /**
     * Define custom actions here
     */
+
+    /**
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function createEmptyCartChangeTransfer()
+    {
+        return (new CartChangeTransfer())
+           ->setQuote(
+               (new QuoteTransfer())
+                   ->setItems(new ArrayObject([]))
+           )
+           ->setItems(new ArrayObject([]));
+    }
 }
