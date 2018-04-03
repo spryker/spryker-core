@@ -137,6 +137,6 @@ class SharedCartEntityManager extends AbstractEntityManager implements SharedCar
         $this->getFactory()
             ->createQuoteCompanyUserQuery()
             ->filterByFkQuote($quoteTransfer->getIdQuote())
-            ->deleteAll();
+            ->delete();
     }
 }
