@@ -34,7 +34,6 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
 
     const PLUGINS_HYDRATE_ORDER = 'plugins hydrate order';
     const PLUGINS_PRE_SAVE_ORDER = 'plugins pre save hydrate order';
-    const HYDRATE_ORDER_PLUGINS = 'hydrate order plugins';
     const UI_SALES_TABLE_PLUGINS = 'UI sales table plugins';
 
     /**
