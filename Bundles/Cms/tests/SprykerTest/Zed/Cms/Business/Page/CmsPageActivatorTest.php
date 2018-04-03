@@ -89,7 +89,7 @@ class CmsPageActivatorTest extends CmsMocks
 
         $cmsPageActivatorMock = $this->getMockBuilder(CmsPageActivator::class)
             ->setMethods(['getCmsPageEntity', 'countNumberOfGlossaryKeysForIdCmsPage'])
-            ->setConstructorArgs([$cmsQueryContainerMock, $touchFacadeMock])
+            ->setConstructorArgs([$cmsQueryContainerMock, $touchFacadeMock, []])
             ->getMock();
 
         $cmsPageActivatorMock->method('getCmsPageEntity')
