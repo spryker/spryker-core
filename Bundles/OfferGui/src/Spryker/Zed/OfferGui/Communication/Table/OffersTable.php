@@ -32,6 +32,7 @@ class OffersTable extends AbstractTable
     const COL_GRAND_TOTAL = 'grand_total';
     const COL_NUMBER_OF_ORDER_ITEMS = 'number_of_order_items';
     const COL_URL = 'url';
+    const COL_STATUS = 'status';
 
     /**
      * @var \Spryker\Zed\OfferGui\Communication\Table\OffersTableQueryBuilderInterface
@@ -219,12 +220,15 @@ class OffersTable extends AbstractTable
     {
         $urls = [];
 
-        $urls[] = $this->generateEditButton(
-            Url::generate(static::URL_OFFER_GUI_EDIT, [
-                static::URL_PARAM_ID_OFFER => $item[SpyOfferTableMap::COL_ID_OFFER],
-            ]),
-            'Edit'
-        );
+        //TODO: Inject config and use it.
+        if ($item[SpyOfferTableMap::COL_STATUS] !== 'order') {
+            $urls[] = $this->generateEditButton(
+                Url::generate(static::URL_OFFER_GUI_EDIT, [
+                    static::URL_PARAM_ID_OFFER => $item[SpyOfferTableMap::COL_ID_OFFER],
+                ]),
+                'Edit'
+            );
+        }
 
         $urls[] = $this->generateViewButton(
             Url::generate(static::URL_OFFER_GUI_VIEW_DETAILS, [
@@ -256,6 +260,7 @@ class OffersTable extends AbstractTable
             static::COL_EMAIL => 'Email',
             static::COL_GRAND_TOTAL => 'GrandTotal',
             static::COL_NUMBER_OF_ORDER_ITEMS => 'Number of Items',
+            static::COL_STATUS => 'Status',
             static::COL_URL => 'Actions',
         ];
     }
@@ -304,6 +309,7 @@ class OffersTable extends AbstractTable
                 static::COL_EMAIL => $this->formatEmailAddress($customerTransfer),
                 static::COL_GRAND_TOTAL => $this->getGrandTotal($quoteTransfer),
                 static::COL_NUMBER_OF_ORDER_ITEMS => $quoteTransfer->getItems()->count(),
+                static::COL_STATUS => $item[SpyOfferTableMap::COL_STATUS],
                 static::COL_URL => implode(' ', $this->createActionUrls($item)),
             ];
         }
