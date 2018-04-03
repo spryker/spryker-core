@@ -7,16 +7,12 @@
 
 namespace Spryker\Shared\Chart\Dependency\Plugin;
 
-use Silex\Application;
-
-interface TwigFunctionPluginInterface
+interface TwigChartFunctionPluginInterface
 {
     /**
      * @api
      *
-     * @param \Silex\Application $application
-     *
      * @return \Twig_SimpleFunction[]
      */
-    public function getFunctions(Application $application);
+    public function getChartFunctions();
 }

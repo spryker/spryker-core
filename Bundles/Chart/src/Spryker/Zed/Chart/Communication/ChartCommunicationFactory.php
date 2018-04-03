@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Chart\Communication;
 
-use Spryker\Zed\Chart\Business\Provider\ChartPluginCollection;
+use Spryker\Shared\Chart\ChartPluginCollection\ChartPluginCollection;
 use Spryker\Zed\Chart\ChartDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
@@ -17,15 +17,15 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 class ChartCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Shared\Chart\Dependency\Plugin\TwigFunctionPluginInterface[]
+     * @return \Spryker\Shared\Chart\Dependency\Plugin\TwigChartFunctionPluginInterface[]
      */
-    public function getTwigFunctions()
+    public function getTwigChartFunctionPlugins()
     {
-        return $this->getProvidedDependency(ChartDependencyProvider::CHART_TWIG_FUNCTIONS);
+        return $this->getProvidedDependency(ChartDependencyProvider::TWIG_CHART_FUNCTION_PLUGINS);
     }
 
     /**
-     * @return \Spryker\Zed\Chart\Business\Provider\ChartPluginCollectionInterface
+     * @return \Spryker\Shared\Chart\ChartPluginCollection\ChartPluginCollectionInterface
      */
     public function createChartPluginCollection()
     {

@@ -7,21 +7,21 @@
 
 namespace Spryker\Yves\Chart;
 
-use Spryker\Yves\Chart\Plugin\Provider\ChartPluginCollection;
+use Spryker\Shared\Chart\ChartPluginCollection\ChartPluginCollection;
 use Spryker\Yves\Kernel\AbstractFactory;
 
 class ChartFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Yves\Twig\Plugin\TwigFunctionPluginInterface[]
+     * @return \Spryker\Shared\Chart\Dependency\Plugin\TwigChartFunctionPluginInterface[]
      */
-    public function getTwigFunctionPlugins()
+    public function getTwigChartFunctionPlugins()
     {
-        return $this->getProvidedDependency(ChartDependencyProvider::TWIG_FUNCTION_PLUGINS);
+        return $this->getProvidedDependency(ChartDependencyProvider::TWIG_CHART_FUNCTION_PLUGINS);
     }
 
     /**
-     * @return \Spryker\Yves\Chart\Plugin\Provider\ChartPluginCollectionInterface
+     * @return \Spryker\Shared\Chart\ChartPluginCollection\ChartPluginCollectionInterface
      */
     public function createChartPluginCollection()
     {

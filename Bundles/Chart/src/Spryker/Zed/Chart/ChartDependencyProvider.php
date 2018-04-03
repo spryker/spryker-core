@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Container;
 
 class ChartDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const CHART_TWIG_FUNCTIONS = 'CHART_TWIG_FUNCTIONS';
+    const TWIG_CHART_FUNCTION_PLUGINS = 'TWIG_CHART_FUNCTION_PLUGINS';
     const CHART_PLUGINS = 'CHART_PLUGINS';
 
     /**
@@ -26,7 +26,7 @@ class ChartDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container = $this->addTwigFunctions($container);
+        $container = $this->addTwigChartFunctionPlugins($container);
         $container = $this->addChartPlugins($container);
 
         return $container;
@@ -37,10 +37,10 @@ class ChartDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addTwigFunctions(Container $container)
+    protected function addTwigChartFunctionPlugins(Container $container)
     {
-        $container[static::CHART_TWIG_FUNCTIONS] = function () {
-            return $this->getTwigFunctions();
+        $container[static::TWIG_CHART_FUNCTION_PLUGINS] = function () {
+            return $this->getTwigChartFunctionPlugins();
         };
 
         return $container;
@@ -61,9 +61,9 @@ class ChartDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Shared\Chart\Dependency\Plugin\TwigFunctionPluginInterface[]
+     * @return \Spryker\Shared\Chart\Dependency\Plugin\TwigChartFunctionPluginInterface[]
      */
-    protected function getTwigFunctions()
+    protected function getTwigChartFunctionPlugins()
     {
         return [
             new TwigPieChartPlugin(),

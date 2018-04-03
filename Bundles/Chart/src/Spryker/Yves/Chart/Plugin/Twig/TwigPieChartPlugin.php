@@ -7,17 +7,15 @@
 
 namespace Spryker\Yves\Chart\Plugin\Twig;
 
-use Spryker\Yves\Twig\Plugin\TwigFunctionPluginInterface;
-
-class TwigLineChart extends AbstractTwigChart implements TwigFunctionPluginInterface
+class TwigPieChartPlugin extends AbstractTwigChartPlugin
 {
-    const TWIG_FUNCTION_NAME = 'spyLineChart';
+    const TWIG_FUNCTION_NAME = 'spyPieChart';
 
     /**
      * @return string
      */
     protected function getTemplateName(): string
     {
-        return '@Chart/_template/line-chart.twig';
+        return '@Chart/_template/pie-chart.twig';
     }
 }

@@ -7,25 +7,32 @@
 
 namespace Spryker\Yves\Chart\Plugin\Twig;
 
-use Silex\Application;
+use Spryker\Shared\Chart\Dependency\Plugin\ChartLayoutablePluginInterface;
+use Spryker\Shared\Chart\Dependency\Plugin\TwigChartFunctionPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use Spryker\Yves\Twig\Plugin\TwigFunctionPluginInterface;
 use Twig_Environment;
 use Twig_SimpleFunction;
 
 /**
  * @method \Spryker\Yves\Chart\ChartFactory getFactory()
+ * @method \Spryker\Yves\Chart\ChartConfig getConfig()
  */
-abstract class AbstractTwigChart extends AbstractPlugin implements TwigFunctionPluginInterface
+abstract class AbstractTwigChartPlugin extends AbstractPlugin implements TwigChartFunctionPluginInterface
 {
     const TWIG_FUNCTION_NAME = 'spyChart';
 
     /**
-     * @param \Silex\Application $application
-     *
+     * @return string
+     */
+    public function getName()
+    {
+        return static::TWIG_FUNCTION_NAME;
+    }
+
+    /**
      * @return \Twig_SimpleFunction[]
      */
-    public function getFunctions(Application $application)
+    public function getChartFunctions()
     {
         return [
             new Twig_SimpleFunction(
@@ -41,15 +48,14 @@ abstract class AbstractTwigChart extends AbstractPlugin implements TwigFunctionP
      * @param string $chartPluginName
      * @param string|null $dataIdentifier
      *
+     * @throws \Twig_Error
+     *
      * @return string
      */
     public function renderChart(Twig_Environment $twig, $chartPluginName, $dataIdentifier = null)
     {
-        $chartPlugin = $this->getChartPluginByName($chartPluginName);
-        $rendered = $twig->render($this->getTemplateName(), [
-            'data' => $chartPlugin->getChartData($dataIdentifier),
-            'layout' => $chartPlugin->getChartLayout(),
-        ]);
+        $context = $this->getChartContext($chartPluginName, $dataIdentifier);
+        $rendered = $twig->render($this->getTemplateName(), $context);
 
         return $rendered;
     }
@@ -58,6 +64,27 @@ abstract class AbstractTwigChart extends AbstractPlugin implements TwigFunctionP
      * @return string
      */
     abstract protected function getTemplateName();
+
+    /**
+     * @param string $chartPluginName
+     * @param string|null $dataIdentifier
+     *
+     * @return array
+     */
+    protected function getChartContext($chartPluginName, $dataIdentifier)
+    {
+        $chartPlugin = $this->getChartPluginByName($chartPluginName);
+
+        $context = [
+            'data' => $chartPlugin->getChartData($dataIdentifier),
+            'layout' => $this->getConfig()->getDefaultChartLayout(),
+        ];
+        if ($chartPlugin instanceof ChartLayoutablePluginInterface) {
+            $context['layout'] = $chartPlugin->getChartLayout();
+        }
+
+        return $context;
+    }
 
     /**
      * @return array

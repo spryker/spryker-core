@@ -7,6 +7,7 @@
 
 namespace Spryker\Shared\Chart;
 
+use Generated\Shared\Transfer\ChartLayoutTransfer;
 use Spryker\Shared\Kernel\AbstractSharedConfig;
 
 class ChartConfig extends AbstractSharedConfig
@@ -33,5 +34,13 @@ class ChartConfig extends AbstractSharedConfig
     public function getDefaultChartType()
     {
         return static::CHART_TYPE_BAR;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ChartLayoutTransfer
+     */
+    public function getDefaultChartLayout()
+    {
+        return new ChartLayoutTransfer();
     }
 }

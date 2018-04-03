@@ -29,4 +29,12 @@ class ChartConfig extends AbstractBundleConfig
     {
         return $this->getSharedConfig()->getDefaultChartType();
     }
+
+    /**
+     * @return \Generated\Shared\Transfer\ChartLayoutTransfer
+     */
+    public function getDefaultChartLayout()
+    {
+        return $this->getSharedConfig()->getDefaultChartLayout();
+    }
 }

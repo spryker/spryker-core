@@ -30,14 +30,4 @@ interface ChartPluginInterface
      * @return \Generated\Shared\Transfer\ChartDataTransfer
      */
     public function getChartData($dataIdentifier = null);
-
-    /**
-     * Specification:
-     * - Returns a ChartLayoutTransfer object with layout for charts.
-     *
-     * @api
-     *
-     * @return \Generated\Shared\Transfer\ChartLayoutTransfer
-     */
-    public function getChartLayout();
 }

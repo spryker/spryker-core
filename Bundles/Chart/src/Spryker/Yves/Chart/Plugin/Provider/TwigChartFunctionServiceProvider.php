@@ -15,7 +15,7 @@ use Twig_Environment;
 /**
  * @method \Spryker\Yves\Chart\ChartFactory getFactory()
  */
-class ChartTwigFunctionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
+class TwigChartFunctionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
     /**
      * @param \Silex\Application $app
@@ -25,40 +25,10 @@ class ChartTwigFunctionServiceProvider extends AbstractPlugin implements Service
     public function register(Application $app)
     {
         $app['twig'] = $app->share(
-            $app->extend('twig', function (\Twig_Environment $twig) use ($app) {
-                return $this->registerChartTwigFunctions($twig, $app);
+            $app->extend('twig', function (\Twig_Environment $twig) {
+                return $this->registerChartTwigFunctions($twig);
             })
         );
-    }
-
-    /**
-     * @param \Twig_Environment $twig
-     * @param \Silex\Application $app
-     *
-     * @return \Twig_Environment
-     */
-    protected function registerChartTwigFunctions(Twig_Environment $twig, Application $app)
-    {
-        foreach ($this->getChartTwigFunctions($app) as $function) {
-            $twig->addFunction($function->getName(), $function);
-        }
-
-        return $twig;
-    }
-
-    /**
-     * @param \Silex\Application $app
-     *
-     * @return array
-     */
-    protected function getChartTwigFunctions(Application $app)
-    {
-        $functions = [];
-        foreach ($this->getFactory()->getTwigFunctionPlugins() as $twigFunction) {
-            $functions = array_merge($functions, $twigFunction->getFunctions($app));
-        }
-
-        return $functions;
     }
 
     /**
@@ -68,5 +38,32 @@ class ChartTwigFunctionServiceProvider extends AbstractPlugin implements Service
      */
     public function boot(Application $app)
     {
+    }
+
+    /**
+     * @param \Twig_Environment $twig
+     *
+     * @return \Twig_Environment
+     */
+    protected function registerChartTwigFunctions(Twig_Environment $twig)
+    {
+        foreach ($this->getChartTwigFunctions() as $function) {
+            $twig->addFunction($function->getName(), $function);
+        }
+
+        return $twig;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getChartTwigFunctions()
+    {
+        $functions = [];
+        foreach ($this->getFactory()->getTwigChartFunctionPlugins() as $twigFunctionPlugin) {
+            $functions = array_merge($functions, $twigFunctionPlugin->getChartFunctions());
+        }
+
+        return $functions;
     }
 }

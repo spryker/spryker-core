@@ -7,16 +7,16 @@
 
 namespace Spryker\Yves\Chart;
 
-use Spryker\Yves\Chart\Plugin\Twig\TwigBarChart;
-use Spryker\Yves\Chart\Plugin\Twig\TwigChart;
-use Spryker\Yves\Chart\Plugin\Twig\TwigLineChart;
-use Spryker\Yves\Chart\Plugin\Twig\TwigPieChart;
+use Spryker\Yves\Chart\Plugin\Twig\TwigBarChartPlugin;
+use Spryker\Yves\Chart\Plugin\Twig\TwigChartPlugin;
+use Spryker\Yves\Chart\Plugin\Twig\TwigLineChartPlugin;
+use Spryker\Yves\Chart\Plugin\Twig\TwigPieChartPlugin;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 
 class ChartDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const TWIG_FUNCTION_PLUGINS = 'TWIG_FUNCTION_PLUGINS';
+    const TWIG_CHART_FUNCTION_PLUGINS = 'TWIG_CHART_FUNCTION_PLUGINS';
     const CHART_PLUGINS = 'CHART_PLUGINS';
 
     /**
@@ -26,7 +26,7 @@ class ChartDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideDependencies(Container $container)
     {
-        $container = $this->addTwigFunctionPlugins($container);
+        $container = $this->addTwigChartFunctionPlugins($container);
         $container = $this->addChartPlugins($container);
 
         return $container;
@@ -37,10 +37,10 @@ class ChartDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addTwigFunctionPlugins(Container $container)
+    protected function addTwigChartFunctionPlugins(Container $container)
     {
-        $container[static::TWIG_FUNCTION_PLUGINS] = function () {
-            return $this->getTwigFunctionPlugins();
+        $container[static::TWIG_CHART_FUNCTION_PLUGINS] = function () {
+            return $this->getTwigChartFunctionPlugins();
         };
 
         return $container;
@@ -61,15 +61,15 @@ class ChartDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Yves\Twig\Plugin\TwigFunctionPluginInterface[]
+     * @return \Spryker\Shared\Chart\Dependency\Plugin\TwigChartFunctionPluginInterface[]
      */
-    protected function getTwigFunctionPlugins()
+    protected function getTwigChartFunctionPlugins()
     {
         return [
-            new TwigPieChart(),
-            new TwigBarChart(),
-            new TwigLineChart(),
-            new TwigChart(),
+            new TwigPieChartPlugin(),
+            new TwigBarChartPlugin(),
+            new TwigLineChartPlugin(),
+            new TwigChartPlugin(),
         ];
     }
 
