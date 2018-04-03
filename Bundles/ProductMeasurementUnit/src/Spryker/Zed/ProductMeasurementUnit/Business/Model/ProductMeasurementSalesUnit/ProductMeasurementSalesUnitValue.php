@@ -37,6 +37,7 @@ class ProductMeasurementSalesUnitValue implements ProductMeasurementSalesUnitVal
     }
 
     /**
+     * @TODO fix this
      * Checks if the given availability value (example: quantity) can be converted to a unit value with
      * a given unit precision without significant information loss.
      *
@@ -50,6 +51,7 @@ class ProductMeasurementSalesUnitValue implements ProductMeasurementSalesUnitVal
      */
     public function isIntegerSalesUnitValue(int $availabilityValue, float $unitToAvailabilityConversion, int $unitPrecision): bool
     {
+        return true;
         $unitValue = $this->calculateFloatNormalizedValue($availabilityValue, $unitToAvailabilityConversion, $unitPrecision);
         if (abs($unitValue - round($unitValue)) < static::FLOAT_PRECISION) {
             return true;
@@ -81,6 +83,7 @@ class ProductMeasurementSalesUnitValue implements ProductMeasurementSalesUnitVal
     }
 
     /**
+     * @TODO For removal?
      * @see ProductMeasurementSalesUnitValue::calculateNormalizedValue()
      *
      * @param int $availabilityValue
