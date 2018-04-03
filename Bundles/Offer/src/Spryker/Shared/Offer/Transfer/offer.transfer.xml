@@ -7,6 +7,10 @@
         <property name="idOffer" type="int" />
     </transfer>
 
+    <transfer name="Item">
+        <property name="saving" type="int" />
+    </transfer>
+
     <transfer name="OfferList">
         <property name="customerReference" type="string" />
         <property name="filter" type="Filter" />

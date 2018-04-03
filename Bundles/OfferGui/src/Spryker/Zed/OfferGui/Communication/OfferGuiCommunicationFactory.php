@@ -15,6 +15,7 @@ use Spryker\Zed\OfferGui\Communication\Form\OfferType;
 use Spryker\Zed\OfferGui\Communication\Table\OffersTable;
 use Spryker\Zed\OfferGui\Communication\Table\OffersTableQueryBuilder;
 use Spryker\Zed\OfferGui\Communication\Table\OffersTableQueryBuilderInterface;
+use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToCartFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToCustomerFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToMoneyFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToOfferFacadeInterface;
@@ -137,5 +138,13 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
         return new SkuExists([
             SkuExists::OPTION_PRODUCT_FACADE => Locator::getInstance()->product()->facade(),
         ]);
+    }
+
+    /**
+     * @return \Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToCartFacadeInterface
+     */
+    public function getCartFacade(): OfferGuiToCartFacadeInterface
+    {
+        return $this->getProvidedDependency(OfferGuiDependencyProvider::FACADE_CART);
     }
 }

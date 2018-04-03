@@ -57,7 +57,7 @@ class VoucherType extends AbstractType
     protected function addAmountField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_AMOUNT, TextType::class, [
-            'label' => 'Amount',
+            'label' => false,
             'required' => false,
             'disabled' => true,
         ]);

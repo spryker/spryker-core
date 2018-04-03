@@ -21,6 +21,7 @@ class OfferFacade extends AbstractFacade implements OfferFacadeInterface
 {
     /**
      * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OfferListTransfer $offerListTransfer
@@ -29,18 +30,21 @@ class OfferFacade extends AbstractFacade implements OfferFacadeInterface
      */
     public function getOffers(OfferListTransfer $offerListTransfer): OfferListTransfer
     {
-        return $this->getRepository()
-            ->getOffers($offerListTransfer);
+        return $this->getFactory()
+            ->createOfferReader()
+            ->getOfferList($offerListTransfer);
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
      *
      * @return \Generated\Shared\Transfer\OfferResponseTransfer
      */
-    public function placeOffer(OfferTransfer $offerTransfer): OfferResponseTransfer
+    public function saveOffer(OfferTransfer $offerTransfer): OfferResponseTransfer
     {
         return $this->getFactory()
             ->createOfferWriter()

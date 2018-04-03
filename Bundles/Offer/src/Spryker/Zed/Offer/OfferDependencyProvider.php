@@ -9,6 +9,8 @@ namespace Spryker\Zed\Offer;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Offer\Communication\Plugin\OfferSavingHydratorPlugin;
+use Spryker\Zed\Offer\Dependency\Facade\OfferToCartFacadeBridge;
 use Spryker\Zed\Offer\Dependency\Facade\OfferToSalesFacadeBridge;
 use Spryker\Zed\Offer\Dependency\Plugin\OfferDoUpdatePluginInterface;
 use Spryker\Zed\OfferExtension\Dependency\Plugin\OfferHydratorPluginInterface;
@@ -16,6 +18,7 @@ use Spryker\Zed\OfferExtension\Dependency\Plugin\OfferHydratorPluginInterface;
 class OfferDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_SALES = 'FACADE_SALES';
+    public const FACADE_CART = 'FACADE_CART';
     public const PLUGINS_OFFER_HYDRATOR = 'PLUGINS_OFFER_HYDRATOR';
     public const PLUGINS_OFFER_DO_UPDATE = 'PLUGINS_OFFER_DO_UPDATE';
 
@@ -30,6 +33,18 @@ class OfferDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addSalesFacade($container);
         $container = $this->addOfferHydratorPlugins($container);
         $container = $this->addOfferDoUpdatePlugins($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideCommunicationLayerDependencies(Container $container)
+    {
+        $this->addCartFacade($container);
 
         return $container;
     }
@@ -55,6 +70,20 @@ class OfferDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    protected function addCartFacade(Container $container): Container
+    {
+        $container[static::FACADE_CART] = function (Container $container) {
+            return new OfferToCartFacadeBridge($container->getLocator()->cart()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addOfferHydratorPlugins(Container $container)
     {
         $container[static::PLUGINS_OFFER_HYDRATOR] = function (Container $container) {
@@ -69,7 +98,9 @@ class OfferDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function getOfferHydratorPlugins(): array
     {
-        return [];
+        return [
+            new OfferSavingHydratorPlugin(),
+        ];
     }
 
 

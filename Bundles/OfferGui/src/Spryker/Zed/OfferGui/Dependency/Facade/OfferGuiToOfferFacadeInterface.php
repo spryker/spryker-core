@@ -28,4 +28,11 @@ interface OfferGuiToOfferFacadeInterface
      * @throws \Exception
      */
     public function updateOffer(OfferTransfer $offerTransfer): OfferResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
+     *
+     * @return \Generated\Shared\Transfer\OfferResponseTransfer
+     */
+    public function saveOffer(OfferTransfer $offerTransfer): OfferResponseTransfer;
 }

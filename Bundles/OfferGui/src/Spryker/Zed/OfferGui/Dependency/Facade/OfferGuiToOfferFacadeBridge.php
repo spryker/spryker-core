@@ -47,4 +47,14 @@ class OfferGuiToOfferFacadeBridge implements OfferGuiToOfferFacadeInterface
     {
         return $this->offerFacade->updateOffer($offerTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
+     *
+     * @return \Generated\Shared\Transfer\OfferResponseTransfer
+     */
+    public function saveOffer(OfferTransfer $offerTransfer): OfferResponseTransfer
+    {
+        return $this->offerFacade->saveOffer($offerTransfer);
+    }
 }
