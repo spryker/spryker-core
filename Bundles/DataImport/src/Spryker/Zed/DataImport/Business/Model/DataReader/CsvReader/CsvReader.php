@@ -40,12 +40,12 @@ class CsvReader implements DataReaderInterface, ConfigurableDataReaderInterface,
     protected $dataSet;
 
     /**
-     * @var int
+     * @var int|null
      */
     protected $offset;
 
     /**
-     * @var int
+     * @var int|null
      */
     protected $limit;
 
@@ -203,7 +203,7 @@ class CsvReader implements DataReaderInterface, ConfigurableDataReaderInterface,
     public function valid()
     {
         if ($this->limit !== null && $this->limit !== 0) {
-            if ($this->offset) {
+            if ($this->offset !== null) {
                 return ($this->key() < $this->offset + $this->limit);
             }
         }
