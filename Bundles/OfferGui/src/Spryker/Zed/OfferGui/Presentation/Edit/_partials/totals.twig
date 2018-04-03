@@ -1,5 +1,3 @@
-{% set quote = offer.quote %}
-
 <div class="row">
     <div class="col-md-12">
 
@@ -7,48 +5,38 @@
 
             {% block widget_content %}
 
-                <table class="footable table toggle-arrow-tiny" data-qa="totals-list">
+                <table class="table" data-qa="totals-list">
                     <tbody>
                     <tr class="subtotal-row">
-                        <td><strong>{{ 'Sub total' | trans }}</strong></td>
-                        <td></td>
-                        <td class="text-right"><strong>{{ quote.totals.subtotal | money(true, quote.currency.code) }}</strong></td>
-                        <td></td>
+                        <td class="col-sm-6"><strong>{{ 'Sub total' | trans }}</strong></td>
+                        <td><strong>{{ quote.totals.subtotal | money(true, quote.currency.code) }}</strong></td>
                     </tr>
                     {% for expense in quote.expenses %}
                         <tr>
-                            <td>{{ 'Shipment' | trans }} -  {{ expense.name }}</td>
-                            <td></td>
-                            <td class="text-right">{{ expense.unitPrice | money(true, quote.currency.code)  }}</td>
-                            <td></td>
+                            <td class="col-sm-6">{{ 'Shipment' | trans }} -  {{ expense.name }}</td>
+                            <td>{{ expense.unitPrice | money(true, quote.currency.code)  }}</td>
                         </tr>
                     {% endfor %}
 
                     <tr>
-                        <td>{{ 'Discount' | trans }}</td>
-                        <td></td>
-                        <td class="text-right">-{{ offer.totals.discountTotal | default(0) | money(true, quote.currency.code) }}</td>
-                        <td></td>
+                        <td class="col-sm-6">{{ 'Discount' | trans }}</td>
+                        <td>-{{ quote.totals.discountTotal | default(0) | money(true, quote.currency.code) }}</td>
                     </tr>
 
                     <tr>
-                        <td>{{ 'Canceled amount' | trans }}</td>
-                        <td></td>
-                        <td class="text-right" data-qa="grand-total" data-qa-grand-total-raw="{{ quote.totals.canceledTotal }}">-{{ quote.totals.canceledTotal | default(0) | money(true, quote.currency.code) }}</td>
-                        <td></td>
+                        <td class="col-sm-6">{{ 'Canceled amount' | trans }}</td>
+                        <td data-qa="grand-total" data-qa-grand-total-raw="{{ quote.totals.canceledTotal }}">-{{ quote.totals.canceledTotal | default(0) | money(true, quote.currency.code) }}</td>
                     </tr>
 
                     <tr class="grandTotal-row">
-                        <td>
+                        <td class="col-sm-6">
                             <strong>{{ 'GRAND TOTAL' | trans }}</strong> <br />
                             {{ 'Included tax amount' | trans }}
                         </td>
-                        <td></td>
-                        <td class="text-right" data-qa="grand-total" data-qa-grand-total-raw="{{ quote.totals.grandTotal }}">
+                        <td data-qa="grand-total" data-qa-grand-total-raw="{{ quote.totals.grandTotal }}">
                             <strong>{{ quote.totals.grandTotal | money(true, quote.currency.code) }}</strong> <br />
                             {{ quote.totals.taxTotal.amount | money(true, quote.currency.code) }}
                         </td>
-                        <td></td>
                     </tr>
                     </tbody>
                 </table>

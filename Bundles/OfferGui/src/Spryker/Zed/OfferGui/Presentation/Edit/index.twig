@@ -48,7 +48,8 @@
                 {% endfor %}
             </table>
 
-            {{ form_label(form.voucherDiscounts) }}
+            <label>{{ 'Voucher discounts' | trans }}</label>
+            {% if form.voucherDiscounts.count > 0 %}
             <table>
                 {% for voucherDiscount in form.voucherDiscounts %}
                     <tr>
@@ -57,9 +58,14 @@
                     </tr>
                 {% endfor %}
             </table>
+            {% else %}
+                <p>No vouchers</p>
+            {% endif %}
+
             {{ form_widget(form) }}
 
-            {% include '@OfferGui/Edit/_partials/totals.twig' %}
+            {% include '@OfferGui/Edit/_partials/cart-rule-discounts.twig' with {'quote': offer.quote} %}
+            {% include '@OfferGui/Edit/_partials/totals.twig' with {'quote': offer.quote} %}
 
             <input type="submit" class="btn btn-primary safe-submit" name="submit-reload" value="{{ 'Reload' | trans }}" />
             <input type="submit" class="btn btn-primary safe-submit" name="submit-persist" value="{{ 'Save' | trans }}" />

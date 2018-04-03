@@ -10,6 +10,7 @@ namespace Spryker\Zed\OfferGui\Communication\Form\Item;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -95,7 +96,7 @@ class ItemType extends AbstractType
      */
     protected function addUnitGrossPriceField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_UNIT_GROSS_PRICE, TextType::class, [
+        $builder->add(static::FIELD_UNIT_GROSS_PRICE, NumberType::class, [
             'label' => 'Unit Gross Price',
             'required' => false,
             'constraints' => [
@@ -118,7 +119,7 @@ class ItemType extends AbstractType
      */
     protected function addOfferDiscountField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_OFFER_DISCOUNT, TextType::class, [
+        $builder->add(static::FIELD_OFFER_DISCOUNT, NumberType::class, [
             'label' => 'Offer discount %',
             'required' => false,
             'constraints' => [
@@ -160,7 +161,7 @@ class ItemType extends AbstractType
      */
     protected function addOfferFeeField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_OFFER_FEE, TextType::class, [
+        $builder->add(static::FIELD_OFFER_FEE, NumberType::class, [
             'label' => 'Offer fee',
             'required' => false,
             'constraints' => [
@@ -183,7 +184,7 @@ class ItemType extends AbstractType
      */
     protected function addUnitSubtotalAggregationPriceField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_UNIT_SUBTOTAL_AGGREGATION, TextType::class, [
+        $builder->add(static::FIELD_UNIT_SUBTOTAL_AGGREGATION, NumberType::class, [
             'label' => 'Unit Subtotal Price',
             'required' => false,
             'disabled' => true,
@@ -207,7 +208,7 @@ class ItemType extends AbstractType
      */
     protected function addSumSubtotalAggregationPriceField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_SUM_SUBTOTAL_AGGREGATION, TextType::class, [
+        $builder->add(static::FIELD_SUM_SUBTOTAL_AGGREGATION, NumberType::class, [
             'label' => 'Sum Subtotal Price',
             'required' => false,
             'disabled' => true,

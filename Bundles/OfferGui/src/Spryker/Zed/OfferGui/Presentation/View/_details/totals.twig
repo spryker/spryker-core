@@ -71,7 +71,7 @@
                     <tr>
                         <td>{{ 'Discount' | trans }}</td>
                         <td></td>
-                        <td class="text-right">-{{ offer.totals.discountTotal | default(0) | money(true, quote.currency.code) }}</td>
+                        <td class="text-right">-{{ quote.totals.discountTotal | default(0) | money(true, quote.currency.code) }}</td>
                         <td></td>
                     </tr>
 

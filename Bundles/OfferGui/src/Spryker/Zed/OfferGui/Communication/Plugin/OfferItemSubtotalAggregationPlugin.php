@@ -48,6 +48,7 @@ class OfferItemSubtotalAggregationPlugin implements CalculationPluginInterface
             $originSumSubtotal = $itemTransfer->getSumSubtotalAggregation();
             $calculatedFeeSumSubtotal = $itemTransfer->getQuantity() * $itemTransfer->getOfferFee();
             $calculatedSumSubtotal = $originSumSubtotal + $calculatedFeeSumSubtotal;
+            $calculatedSumSubtotal = (int)$calculatedSumSubtotal;
             $itemTransfer->setSumSubtotalAggregation($calculatedSumSubtotal);
         }
     }

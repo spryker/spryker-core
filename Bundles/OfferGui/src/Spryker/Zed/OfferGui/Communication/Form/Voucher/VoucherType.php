@@ -8,6 +8,8 @@
 namespace Spryker\Zed\OfferGui\Communication\Form\Voucher;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -54,12 +56,34 @@ class VoucherType extends AbstractType
      */
     protected function addAmountField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_AMOUNT, TextType::class, [
+        $builder->add(static::FIELD_AMOUNT, NumberType::class, [
             'label' => false,
             'required' => false,
             'disabled' => true,
         ]);
 
+        $builder->get(static::FIELD_AMOUNT)
+            ->addModelTransformer(
+                $this->createMoneyModelTransformer()
+            );
+
         return $this;
+    }
+
+    /**
+     * @return \Symfony\Component\Form\CallbackTransformer
+     */
+    protected function createMoneyModelTransformer()
+    {
+        return new CallbackTransformer(
+            function ($value) {
+                if ($value !== null) {
+                    return $value / 100;
+                }
+            },
+            function ($value) {
+                return $value * 100;
+            }
+        );
     }
 }

@@ -105,7 +105,7 @@ class OfferType extends AbstractType
     protected function addVoucherDiscountsField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_VOUCHER_DISCOUNTS, CollectionType::class, [
-            'label' => 'Voucher discounts',
+            'label' => false,
             'entry_type' => VoucherType::class,
             'property_path' => 'quote.voucherDiscounts',
             'required' => false,
