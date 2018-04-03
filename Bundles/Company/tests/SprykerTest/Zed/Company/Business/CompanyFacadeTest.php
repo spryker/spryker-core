@@ -112,6 +112,26 @@ class CompanyFacadeTest extends Test
     }
 
     /**
+     * @return void
+     */
+    public function testGetCompanyTypesReturnsNotEmptyCollection(): void
+    {
+        $this->createCompanyTransfer();
+        $companyTypesCollection = $this->getFacade()->getCompanyTypes();
+        $this->assertGreaterThan(0, $companyTypesCollection->getCompanyTypes()->count());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCompaniesReturnsNotEmptyCollection(): void
+    {
+        $this->createCompanyTransfer();
+        $companyTypesCollection = $this->getFacade()->getCompanies();
+        $this->assertGreaterThan(0, $companyTypesCollection->getCompanies()->count());
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
     protected function getCurrentStore()

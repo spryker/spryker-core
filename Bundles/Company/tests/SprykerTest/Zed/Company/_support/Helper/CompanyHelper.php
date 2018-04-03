@@ -49,12 +49,15 @@ class CompanyHelper extends Module
     }
 
     /**
+     * @param string $companyTypeName
+     *
      * @return \Generated\Shared\Transfer\SpyCompanyTypeEntityTransfer
      */
-    public function getCompanyTypeTransfer(): SpyCompanyTypeEntityTransfer
+    public function getCompanyTypeTransfer($companyTypeName = ''): SpyCompanyTypeEntityTransfer
     {
+        $companyTypeName = $companyTypeName ?: static::COMPANY_TYPE_CUSTOMER;
         $companyTypeQuery = new SpyCompanyTypeQuery();
-        $companyTypeQuery->filterByName(static::COMPANY_TYPE_CUSTOMER);
+        $companyTypeQuery->filterByName($companyTypeName);
         $companyType = $companyTypeQuery->findOneOrCreate();
         $companyType->save();
 
