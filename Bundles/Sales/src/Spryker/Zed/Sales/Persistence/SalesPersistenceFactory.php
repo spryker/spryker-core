@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Sales\Persistence;
 
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateHistoryQuery;
-use Orm\Zed\Sales\Persistence\SpyOrderSourceQuery;
 use Orm\Zed\Sales\Persistence\SpySalesExpenseQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderCommentQuery;
@@ -28,14 +27,6 @@ class SalesPersistenceFactory extends AbstractPersistenceFactory
     public function createSalesOrderQuery()
     {
         return SpySalesOrderQuery::create();
-    }
-
-    /**
-     * @return \Orm\Zed\Sales\Persistence\SpyOrderSourceQuery
-     */
-    public function createOrderSourceQuery()
-    {
-        return SpyOrderSourceQuery::create();
     }
 
     /**

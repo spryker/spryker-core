@@ -5,11 +5,10 @@
 
     <transfer name="OrderSource">
         <property name="idOrderSource" type="int" />
-        <property name="orderSourceName" type="string" />
+        <property name="name" type="string" />
     </transfer>
 
     <transfer name="Quote">
-        <property name="idOrderSource" type="int" />
         <property name="orderSource" type="OrderSource" />
     </transfer>
 

@@ -10,31 +10,22 @@ namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider;
 use Generated\Shared\Transfer\OrderSourceTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\OrderSource\OrderSourceListType;
-use Spryker\Zed\ManualOrderEntryGui\Dependency\QueryContainer\ManualOrderEntryGuiToSalesQueryContainerInterface;
-use Symfony\Component\HttpFoundation\Request;
+use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToManualOrderEntryFacadeInterface;
 
 class OrderSourceListDataProvider implements FormDataProviderInterface
 {
     /**
-     * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\QueryContainer\ManualOrderEntryGuiToSalesQueryContainerInterface
+     * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToManualOrderEntryFacadeInterface
      */
-    protected $salesQueryContainer;
+    protected $manualOrderEntryFacade;
 
     /**
-     * @var \Symfony\Component\HttpFoundation\Request
-     */
-    protected $request;
-
-    /**
-     * @param \Spryker\Zed\ManualOrderEntryGui\Dependency\QueryContainer\ManualOrderEntryGuiToSalesQueryContainerInterface $customerQueryContainer
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToManualOrderEntryFacadeInterface $manualOrderEntryFacade
      */
     public function __construct(
-        ManualOrderEntryGuiToSalesQueryContainerInterface $customerQueryContainer,
-        Request $request
+        ManualOrderEntryGuiToManualOrderEntryFacadeInterface $manualOrderEntryFacade
     ) {
-        $this->salesQueryContainer = $customerQueryContainer;
-        $this->request = $request;
+        $this->manualOrderEntryFacade = $manualOrderEntryFacade;
     }
 
     /**
@@ -59,12 +50,6 @@ class OrderSourceListDataProvider implements FormDataProviderInterface
      */
     public function getData($quoteTransfer)
     {
-        if ($this->request->getMethod() === $this->request::METHOD_GET
-            && $this->request->query->get(OrderSourceListType::FIELD_ORDER_SOURCE)
-        ) {
-            $quoteTransfer->setIdOrderSource($this->request->query->get(OrderSourceListType::FIELD_ORDER_SOURCE));
-        }
-
         if ($quoteTransfer->getOrderSource() === null) {
             $quoteTransfer->setOrderSource(new OrderSourceTransfer());
         }
@@ -77,15 +62,13 @@ class OrderSourceListDataProvider implements FormDataProviderInterface
      */
     protected function getOrderSourceList()
     {
-        $orderSources = $this->salesQueryContainer
-            ->queryOrderSource()
-            ->find();
+        $orderSourceTransfers = $this->manualOrderEntryFacade
+            ->findAllOrderSources();
 
         $orderSourceList = [];
 
-        /** @var \Orm\Zed\Sales\Persistence\SpyOrderSource $orderSource */
-        foreach ($orderSources as $orderSource) {
-            $orderSourceList[$orderSource->getIdOrderSource()] = $orderSource->getOrderSourceName();
+        foreach ($orderSourceTransfers as $orderSourceTransfer) {
+            $orderSourceList[$orderSourceTransfer->getIdOrderSource()] = $orderSourceTransfer->getName();
         }
 
         return $orderSourceList;

@@ -26,22 +26,6 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @param int $idOrderSource
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpyOrderSourceQuery
-     */
-    public function queryOrderSourceById($idOrderSource);
-
-    /**
-     * @api
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpyOrderSourceQuery
-     */
-    public function queryOrderSource();
-
-    /**
-     * @api
-     *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
     public function querySalesOrder();

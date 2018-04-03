@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
+use Generated\Shared\Transfer\SpySalesOrderEntityTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
@@ -58,12 +59,18 @@ class SalesOrderSaver implements SalesOrderSaverInterface
     protected $store;
 
     /**
+     * @var \Spryker\Zed\Sales\Dependency\Plugin\PreSaveOrderHydratePluginInterface[]
+     */
+    protected $preSaveHydrateOrderPlugins;
+
+    /**
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface $countryFacade
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface $omsFacade
      * @param \Spryker\Zed\Sales\Business\Model\Order\OrderReferenceGeneratorInterface $orderReferenceGenerator
      * @param \Spryker\Zed\Sales\SalesConfig $salesConfiguration
      * @param \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface $localeQueryContainer
      * @param \Spryker\Shared\Kernel\Store $store
+     * @param \Spryker\Zed\Sales\Dependency\Plugin\PreSaveOrderHydratePluginInterface[] $preSaveHydrateOrderPlugins
      */
     public function __construct(
         SalesToCountryInterface $countryFacade,
@@ -71,7 +78,8 @@ class SalesOrderSaver implements SalesOrderSaverInterface
         OrderReferenceGeneratorInterface $orderReferenceGenerator,
         SalesConfig $salesConfiguration,
         LocaleQueryContainerInterface $localeQueryContainer,
-        Store $store
+        Store $store,
+        $preSaveHydrateOrderPlugins
     ) {
         $this->countryFacade = $countryFacade;
         $this->omsFacade = $omsFacade;
@@ -79,6 +87,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
         $this->salesConfiguration = $salesConfiguration;
         $this->localeQueryContainer = $localeQueryContainer;
         $this->store = $store;
+        $this->preSaveHydrateOrderPlugins = $preSaveHydrateOrderPlugins;
     }
 
     /**
@@ -225,7 +234,26 @@ class SalesOrderSaver implements SalesOrderSaverInterface
         $salesOrderEntity->setCurrencyIsoCode($quoteTransfer->getCurrency()->getCode());
         $salesOrderEntity->setOrderReference($this->orderReferenceGenerator->generateOrderReference($quoteTransfer));
         $salesOrderEntity->setIsTest($this->salesConfiguration->isTestOrder($quoteTransfer));
-        $salesOrderEntity->setFkOrderSource($quoteTransfer->getIdOrderSource() ?? null);
+
+        $this->hydrateSalesOrderEntityFromPlugins($quoteTransfer, $salesOrderEntity);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
+     *
+     * @return void
+     */
+    protected function hydrateSalesOrderEntityFromPlugins(QuoteTransfer $quoteTransfer, SpySalesOrder $salesOrderEntity): void
+    {
+        $salesOrderEntityTransfer = new SpySalesOrderEntityTransfer();
+        $salesOrderEntityTransfer->fromArray($salesOrderEntity->toArray(), true);
+
+        foreach ($this->preSaveHydrateOrderPlugins as $preSaveHydrateOrderPlugin) {
+            $salesOrderEntityTransfer = $preSaveHydrateOrderPlugin->hydrate($salesOrderEntityTransfer, $quoteTransfer);
+        }
+
+        $salesOrderEntity->fromArray($salesOrderEntityTransfer->modifiedToArray());
     }
 
     /**

@@ -38,8 +38,8 @@ class OrderSourceListFormPlugin extends AbstractPlugin implements ManualOrderEnt
      */
     public function handleData($quoteTransfer, &$form, $request): AbstractTransfer
     {
-        $orderSourceTransfer = $this->getFactory()->getSalesFacade()->findOrderSourceByIdOrderSource(
-            $quoteTransfer->getIdOrderSource()
+        $orderSourceTransfer = $this->getFactory()->getManualOrderEntryFacade()->findOrderSourceByIdOrderSource(
+            $quoteTransfer->getOrderSource()->getIdOrderSource()
         );
         $quoteTransfer->setOrderSource($orderSourceTransfer);
 

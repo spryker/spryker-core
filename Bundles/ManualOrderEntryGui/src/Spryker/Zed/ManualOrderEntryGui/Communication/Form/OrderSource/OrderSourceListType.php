@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\OrderSource;
 
+use Generated\Shared\Transfer\OrderSourceTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -57,7 +59,8 @@ class OrderSourceListType extends AbstractType
     protected function addOrderSourceField(FormBuilderInterface $builder, array $orderSourceList)
     {
         $builder->add(static::FIELD_ORDER_SOURCE, Select2ComboBoxType::class, [
-            'property_path' => static::FIELD_ORDER_SOURCE,
+//            'property_path' => static::FIELD_ORDER_SOURCE,
+            'property_path' => QuoteTransfer::ORDER_SOURCE . '.' . OrderSourceTransfer::ID_ORDER_SOURCE,
             'label' => 'Order Source',
             'choices' => array_flip($orderSourceList),
             'choices_as_values' => true,

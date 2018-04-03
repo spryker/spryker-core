@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Dependency\Facade;
 
-interface ManualOrderEntryGuiToSalesFacadeInterface
+interface ManualOrderEntryGuiToManualOrderEntryFacadeInterface
 {
     /**
      * @param int $idOrderSource
@@ -15,4 +15,9 @@ interface ManualOrderEntryGuiToSalesFacadeInterface
      * @return \Generated\Shared\Transfer\OrderSourceTransfer|null
      */
     public function findOrderSourceByIdOrderSource($idOrderSource);
+
+    /**
+     * @return \Generated\Shared\Transfer\OrderSourceTransfer[]
+     */
+    public function findAllOrderSources();
 }

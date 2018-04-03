@@ -32,6 +32,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     const SERVICE_UTIL_SANITIZE = 'util sanitize service';
     const STORE = 'store';
 
+    const PRE_SAVE_ORDER_HYDRATE_PLUGINS = 'pre save order hydrate plugins';
     const HYDRATE_ORDER_PLUGINS = 'hydrate order plugins';
 
     /**
@@ -52,6 +53,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addOmsFacade($container);
         $container = $this->addStore($container);
         $container = $this->addLocaleQueryContainer($container);
+        $container = $this->addPreSaveOrderHydratePlugins($container);
         $container = $this->addHydrateOrderPlugins($container);
         $container = $this->addCalculationFacade($container);
         $container = $this->addCustomerFacade($container);
@@ -73,6 +75,20 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addMoneyPlugin($container);
         $container = $this->addUtilSanitizeService($container);
         $container = $this->addCustomerFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPreSaveOrderHydratePlugins(Container $container)
+    {
+        $container[static::PRE_SAVE_ORDER_HYDRATE_PLUGINS] = function (Container $container) {
+            return $this->getPreSaveOrderHydrationPlugins();
+        };
 
         return $container;
     }
@@ -243,6 +259,14 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Dependency\Plugin\PreSaveOrderHydratePluginInterface[]
+     */
+    protected function getPreSaveOrderHydrationPlugins()
+    {
+         return [];
     }
 
     /**

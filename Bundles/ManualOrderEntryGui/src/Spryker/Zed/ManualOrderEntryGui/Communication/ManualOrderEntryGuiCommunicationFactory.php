@@ -39,6 +39,7 @@ use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCheck
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCurrencyFacadeInterface;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCustomerFacadeInterface;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToDiscountFacadeInterface;
+use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToManualOrderEntryFacadeInterface;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToMessengerFacadeInterface;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToMoneyFacadeInterface;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToPaymentFacadeInterface;
@@ -62,14 +63,6 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     public function getCustomerFacade(): ManualOrderEntryGuiToCustomerFacadeInterface
     {
         return $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::FACADE_CUSTOMER);
-    }
-
-    /**
-     * @return \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToSalesFacadeInterface
-     */
-    public function getSalesFacade()
-    {
-        return $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::FACADE_SALES);
     }
 
     /**
@@ -153,19 +146,19 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
+     * @return \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToManualOrderEntryFacadeInterface
+     */
+    public function getManualOrderEntryFacade(): ManualOrderEntryGuiToManualOrderEntryFacadeInterface
+    {
+        return $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::FACADE_MANUAL_ORDER_ENTRY);
+    }
+
+    /**
      * @return \Spryker\Zed\ManualOrderEntryGui\Dependency\QueryContainer\ManualOrderEntryGuiToCustomerQueryContainerInterface
      */
     public function getCustomerQueryContainer(): ManualOrderEntryGuiToCustomerQueryContainerInterface
     {
         return $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::QUERY_CONTAINER_CUSTOMER);
-    }
-
-    /**
-     * @return \Spryker\Zed\ManualOrderEntryGui\Dependency\QueryContainer\ManualOrderEntryGuiToSalesQueryContainerInterface
-     */
-    public function getSalesQueryContainer()
-    {
-        return $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::QUERY_CONTAINER_SALES);
     }
 
     /**
@@ -220,19 +213,6 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\OrderSourceListDataProvider
-     */
-    public function createOrderSourceListDataProvider(Request $request)
-    {
-        return new OrderSourceListDataProvider(
-            $this->getSalesQueryContainer(),
-            $request
-        );
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $quoteTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
@@ -249,6 +229,16 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
+     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\OrderSourceListDataProvider
+     */
+    public function createOrderSourceListDataProvider()
+    {
+        return new OrderSourceListDataProvider(
+            $this->getManualOrderEntryFacade()
+        );
+    }
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $quoteTransfer
      *
@@ -256,7 +246,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
      */
     public function createOrderSourceListForm(Request $request, $quoteTransfer)
     {
-        $formDataProvider = $this->createOrderSourceListDataProvider($request);
+        $formDataProvider = $this->createOrderSourceListDataProvider();
 
         return $this->getFormFactory()->create(
             OrderSourceListType::class,
@@ -490,7 +480,10 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
      */
     public function createSummaryDataProvider(): SummaryDataProvider
     {
-        return new SummaryDataProvider($this->getCalculationFacade());
+        return new SummaryDataProvider(
+            $this->getCalculationFacade(),
+            $this->getMessengerFacade()
+        );
     }
 
     /**
