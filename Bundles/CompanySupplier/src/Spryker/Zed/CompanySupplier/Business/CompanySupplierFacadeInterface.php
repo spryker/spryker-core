@@ -8,10 +8,21 @@
 namespace Spryker\Zed\CompanySupplier\Business;
 
 use Generated\Shared\Transfer\CompanySupplierCollectionTransfer;
+use Generated\Shared\Transfer\CompanyTypeCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface CompanySupplierFacadeInterface
 {
+    /**
+     * Specification:
+     * - Retrieves collection of company types
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\CompanyTypeCollectionTransfer
+     */
+    public function getCompanyTypes(): CompanyTypeCollectionTransfer;
+
     /**
      * Specification:
      * - Get all companies with 'supplier' type

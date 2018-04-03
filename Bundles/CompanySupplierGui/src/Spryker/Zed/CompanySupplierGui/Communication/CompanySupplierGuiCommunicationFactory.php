@@ -9,7 +9,9 @@ namespace Spryker\Zed\CompanySupplierGui\Communication;
 
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\CompanySupplierGui\Communication\Form\CompanySupplierForm;
+use Spryker\Zed\CompanySupplierGui\Communication\Form\CompanyTypeChoiceFormType;
 use Spryker\Zed\CompanySupplierGui\Communication\Form\DataProvider\CompanySupplierFormDataProvider;
+use Spryker\Zed\CompanySupplierGui\Communication\Form\DataProvider\CompanyTypeChoiceFormDataProvider;
 use Spryker\Zed\CompanySupplierGui\Communication\Table\ProductSupplierTable;
 use Spryker\Zed\CompanySupplierGui\CompanySupplierGuiDependencyProvider;
 use Spryker\Zed\CompanySupplierGui\Dependency\Facade\CompanySupplierGuiToCompanySupplierFacadeInterface;
@@ -92,5 +94,23 @@ class CompanySupplierGuiCommunicationFactory extends AbstractCommunicationFactor
     protected function getCurrencyFacade(): CompanySupplierGuiToCurrencyFacadeInterface
     {
         return $this->getProvidedDependency(CompanySupplierGuiDependencyProvider::FACADE_CURRENCY);
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanySupplierGui\Communication\Form\DataProvider\CompanyTypeChoiceFormDataProvider
+     */
+    public function createCompanyTypeChoiceFormDataProvider(): CompanyTypeChoiceFormDataProvider
+    {
+        return new CompanyTypeChoiceFormDataProvider(
+            $this->getCompanySupplierFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanySupplierGui\Communication\Form\CompanyTypeChoiceFormType
+     */
+    public function createCompanyTypeChoiceFormType(): CompanyTypeChoiceFormType
+    {
+        return new CompanyTypeChoiceFormType();
     }
 }

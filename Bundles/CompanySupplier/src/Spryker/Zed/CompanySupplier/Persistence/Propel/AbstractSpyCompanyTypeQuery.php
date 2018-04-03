@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Company\Persistence\Propel;
+namespace Spryker\Zed\CompanySupplier\Persistence\Propel;
 
-use Orm\Zed\Company\Persistence\Base\SpyCompanyType as BaseSpyCompanyType;
+use Orm\Zed\CompanySupplier\Persistence\Base\SpyCompanyTypeQuery as BaseSpyCompanyTypeQuery;
 
 /**
- * Skeleton subclass for representing a row from the 'spy_company' table.
+ * Skeleton subclass for performing query and update operations on the 'spy_company' table.
  *
  *
  *
@@ -19,6 +19,6 @@ use Orm\Zed\Company\Persistence\Base\SpyCompanyType as BaseSpyCompanyType;
  * long as it does not already exist in the output directory.
  *
  */
-abstract class AbstractSpyCompanyType extends BaseSpyCompanyType
+abstract class AbstractSpyCompanyTypeQuery extends BaseSpyCompanyTypeQuery
 {
 }

@@ -1,21 +1,12 @@
 <?xml version="1.0"?>
 <database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Company\Persistence" package="src.Orm.Zed.Company.Persistence">
 
-    <table name="spy_company_type" idMethod="native" phpName="SpyCompanyType" allowPkInsert="true">
-        <column name="id_company_type" type="INTEGER" autoIncrement="true" required="true" primaryKey="true"/>
-        <column name="name" required="true" type="VARCHAR" size="255"/>
-        <id-method-parameter value="spy_company_type_pk_seq"/>
-    </table>
-
-    <table name="spy_company" phpName="SpyCompany" idMethod="native" allowPkInsert="true">
+    <table name="spy_company" phpName="SpyCompany">
         <column name="id_company" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="name" type="VARCHAR" size="255" required="true"/>
         <column name="is_active" type="BOOLEAN" default="false"/>
         <column name="status" required="true" size="8" type="ENUM" valueSet="pending,approved,denied" defaultValue="pending"/>
-        <column name="fk_company_type" required="true" type="INTEGER"/>
-        <foreign-key name="spy_company-fk_company_type" foreignTable="spy_company_type" phpName="CompanyType" refPhpName="CompanyType">
-            <reference local="fk_company_type" foreign="id_company_type"/>
-        </foreign-key>
+
         <id-method-parameter value="spy_company_pk_seq"/>
     </table>
 

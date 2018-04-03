@@ -4,9 +4,17 @@ namespace SprykerTest\Zed\CompanySupplier\Business;
 
 use ArrayObject;
 use Codeception\TestCase\Test;
-use Generated\Shared\Transfer\CompanyTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 
+/**
+ * Auto-generated group annotations
+ * @group SprykerTest
+ * @group Zed
+ * @group CompanySupplier
+ * @group Business
+ * @group Facade
+ * @group CompanySupplierFacadeTest
+ * Add your own group annotations below this line
+ */
 class CompanySupplierFacadeTest extends Test
 {
     protected const COMPANY_TYPE_SUPPLIER = 'supplier';
@@ -17,12 +25,12 @@ class CompanySupplierFacadeTest extends Test
     protected $tester;
 
     /**
-     * @var CompanyTransfer
+     * @var \Generated\Shared\Transfer\CompanyTransfer
      */
     protected $companySupplier;
 
     /**
-     * @var ProductConcreteTransfer
+     * @var \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     protected $productConcrete;
 
@@ -66,7 +74,7 @@ class CompanySupplierFacadeTest extends Test
     {
         $companyType = $this->tester->getCompanyTypeTransfer(static::COMPANY_TYPE_SUPPLIER);
         $this->companySupplier = $this->tester->haveCompany([
-            'fk_company_type' => $companyType->getIdCompanyType()
+            'fk_company_type' => $companyType->getIdCompanyType(),
         ]);
     }
 
@@ -77,7 +85,7 @@ class CompanySupplierFacadeTest extends Test
     {
         $productConcrete = $this->tester->haveProduct();
         $companySuppliers = new ArrayObject([
-            $this->companySupplier
+            $this->companySupplier,
         ]);
         $productConcrete->setCompanySuppliers($companySuppliers);
         $this->productConcrete = $productConcrete;

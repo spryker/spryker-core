@@ -8,10 +8,16 @@
 namespace Spryker\Zed\CompanySupplierGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\CompanySupplierCollectionTransfer;
+use Generated\Shared\Transfer\CompanyTypeCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface CompanySupplierGuiToCompanySupplierFacadeInterface
 {
+    /**
+     * @return \Generated\Shared\Transfer\CompanyTypeCollectionTransfer
+     */
+    public function getCompanyTypes(): CompanyTypeCollectionTransfer;
+
     /**
      * @return \Generated\Shared\Transfer\CompanySupplierCollectionTransfer
      */

@@ -5,7 +5,6 @@ namespace SprykerTest\Zed\Company\Business;
 use Codeception\TestCase\Test;
 use Generated\Shared\DataBuilder\CompanyBuilder;
 use Generated\Shared\DataBuilder\StoreRelationBuilder;
-use Generated\Shared\Transfer\CompanyTransfer;
 use Orm\Zed\Company\Persistence\Map\SpyCompanyTableMap;
 use Spryker\Zed\Company\Persistence\CompanyRepository;
 
@@ -32,7 +31,7 @@ class CompanyFacadeTest extends Test
      */
     public function testGetCompanyByIdShouldReturnTransfer()
     {
-        $companyTransfer = $this->createCompanyTransfer();
+        $companyTransfer = $this->tester->haveCompany(['is_active' => false]);
         $foundCompanyTransfer = $this->getFacade()->getCompanyById($companyTransfer);
         $this->assertNotNull($foundCompanyTransfer->getIdCompany());
     }
@@ -42,9 +41,7 @@ class CompanyFacadeTest extends Test
      */
     public function testCreateShouldPersistCompany()
     {
-        $companyTransfer = (new CompanyBuilder([
-            'fk_company_type' => $this->tester->getCompanyTypeTransfer()->getIdCompanyType(),
-        ]))->build();
+        $companyTransfer = (new CompanyBuilder())->build();
         $createdCompanyTransfer = $this->getFacade()->create($companyTransfer)->getCompanyTransfer();
 
         $this->assertNotNull($createdCompanyTransfer->getIdCompany());
@@ -91,10 +88,7 @@ class CompanyFacadeTest extends Test
         ];
 
         $storeRelation = (new StoreRelationBuilder($seed))->build();
-        $companyTransfer = (new CompanyBuilder([
-            'is_active' => false,
-            'fk_company_type' => $this->tester->getCompanyTypeTransfer()->getIdCompanyType(),
-        ]))->build();
+        $companyTransfer = (new CompanyBuilder(['is_active' => false]))->build();
         $companyTransfer->setStoreRelation($storeRelation);
         $companyTransfer = $this->getFacade()->create($companyTransfer)->getCompanyTransfer();
         $relatesStores = (new CompanyRepository())->getRelatedStoresByCompanyId($companyTransfer->getIdCompany());
@@ -114,12 +108,12 @@ class CompanyFacadeTest extends Test
     /**
      * @return void
      */
-    public function testGetCompanyTypesReturnsNotEmptyCollection(): void
-    {
-        $this->createCompanyTransfer();
-        $companyTypesCollection = $this->getFacade()->getCompanyTypes();
-        $this->assertGreaterThan(0, $companyTypesCollection->getCompanyTypes()->count());
-    }
+//    public function testGetCompanyTypesReturnsNotEmptyCollection(): void
+//    {
+//        $this->createCompanyTransfer();
+//        $companyTypesCollection = $this->getFacade()->getCompanyTypes();
+//        $this->assertGreaterThan(0, $companyTypesCollection->getCompanyTypes()->count());
+//    }
 
     /**
      * @return void
@@ -153,15 +147,5 @@ class CompanyFacadeTest extends Test
     protected function getFacade()
     {
         return $this->tester->getFacade();
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\CompanyTransfer
-     */
-    protected function createCompanyTransfer(): CompanyTransfer
-    {
-        return $this->tester->haveCompany([
-            'is_active' => false,
-        ]);
     }
 }

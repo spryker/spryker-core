@@ -5,16 +5,12 @@ namespace SprykerTest\Zed\Company\Helper;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\CompanyBuilder;
 use Generated\Shared\Transfer\CompanyTransfer;
-use Generated\Shared\Transfer\SpyCompanyTypeEntityTransfer;
 use Orm\Zed\Company\Persistence\SpyCompanyQuery;
-use Orm\Zed\Company\Persistence\SpyCompanyTypeQuery;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class CompanyHelper extends Module
 {
     use LocatorHelperTrait;
-
-    protected const COMPANY_TYPE_CUSTOMER = 'customer';
 
     /**
      * @param int $idCompany
@@ -41,7 +37,6 @@ class CompanyHelper extends Module
      */
     public function haveCompany(array $seedData = [])
     {
-        $seedData = ['fk_company_type' => $this->getCompanyTypeTransfer()->getIdCompanyType()] + $seedData;
         $companyTransfer = (new CompanyBuilder($seedData))->build();
         $companyTransfer->setIdCompany(null);
 

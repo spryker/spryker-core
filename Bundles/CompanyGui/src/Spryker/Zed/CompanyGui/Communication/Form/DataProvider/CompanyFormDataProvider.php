@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CompanyGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\CompanyTransfer;
-use Spryker\Zed\CompanyGui\Communication\Form\CompanyForm;
 use Spryker\Zed\CompanyGui\Dependency\Facade\CompanyGuiToCompanyFacadeInterface;
 
 class CompanyFormDataProvider
@@ -49,7 +48,6 @@ class CompanyFormDataProvider
     public function getOptions(?int $idCompany = null): array
     {
         return [
-            CompanyForm::OPTION_COMPANY_TYPE_CHOICES => $this->prepareCompanyTypeChoices(),
             'data_class' => CompanyTransfer::class,
         ];
     }
@@ -60,19 +58,5 @@ class CompanyFormDataProvider
     protected function createCompanyTransfer(): CompanyTransfer
     {
         return new CompanyTransfer();
-    }
-
-    /**
-     * @return array
-     */
-    protected function prepareCompanyTypeChoices(): array
-    {
-        $result = [];
-
-        foreach ($this->companyFacade->getCompanyTypes()->getCompanyTypes() as $companyType) {
-            $result[$companyType->getIdCompanyType()] = $companyType->getName();
-        }
-
-        return $result;
     }
 }

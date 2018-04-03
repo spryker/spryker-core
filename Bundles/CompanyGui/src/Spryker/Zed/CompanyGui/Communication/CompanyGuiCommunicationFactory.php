@@ -73,4 +73,12 @@ class CompanyGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(CompanyGuiDependencyProvider::COMPANY_TABLE_ACTION_EXTENSION_PLUGINS);
     }
+
+    /**
+     * @return \Spryker\Zed\CompanyGuiExtension\Dependency\Plugin\CompanyFormExpanderPluginInterface[]
+     */
+    public function getCompanyFormPlugins(): array
+    {
+        return $this->getProvidedDependency(CompanyGuiDependencyProvider::COMPANY_FORM_EXTENSION_PLUGINS);
+    }
 }

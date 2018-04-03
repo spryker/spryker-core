@@ -11,6 +11,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
+    "spryker/symfony": "If you want to use CompanyGui plugins",
     "spryker/company-gui": "If you want to provide plugins to CompanyGui module"
   },
   "autoload": {

@@ -9,7 +9,6 @@ namespace Spryker\Zed\Company\Persistence;
 
 use Orm\Zed\Company\Persistence\SpyCompanyQuery;
 use Orm\Zed\Company\Persistence\SpyCompanyStoreQuery;
-use Orm\Zed\Company\Persistence\SpyCompanyTypeQuery;
 use Spryker\Zed\Company\Persistence\Mapper\CompanyMapper;
 use Spryker\Zed\Company\Persistence\Mapper\CompanyMapperInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
@@ -41,13 +40,5 @@ class CompanyPersistenceFactory extends AbstractPersistenceFactory
     public function createCompanyMapper(): CompanyMapperInterface
     {
         return new CompanyMapper();
-    }
-
-    /**
-     * @return \Orm\Zed\Company\Persistence\SpyCompanyTypeQuery
-     */
-    public function createCompanyTypeQuery(): SpyCompanyTypeQuery
-    {
-        return SpyCompanyTypeQuery::create();
     }
 }

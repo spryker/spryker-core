@@ -8,11 +8,9 @@
 namespace Spryker\Zed\CompanyGui\Communication\Form;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
@@ -22,10 +20,8 @@ use Symfony\Component\Validator\Constraints\Required;
  */
 class CompanyForm extends AbstractType
 {
-    public const OPTION_COMPANY_TYPE_CHOICES = 'company_type_choices';
     protected const FIELD_ID_COMPANY = 'id_company';
     protected const FIELD_NAME = 'name';
-    protected const FIELD_FK_COMPANY_TYPE = 'fk_company_type';
 
     /**
      * @return string
@@ -33,16 +29,6 @@ class CompanyForm extends AbstractType
     public function getBlockPrefix(): string
     {
         return 'company';
-    }
-
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        $resolver->setRequired(static::OPTION_COMPANY_TYPE_CHOICES);
     }
 
     /**
@@ -56,7 +42,7 @@ class CompanyForm extends AbstractType
         $this
             ->addIdCompanyField($builder)
             ->addNameField($builder)
-            ->addCompanyTypeField($builder, $options[static::OPTION_COMPANY_TYPE_CHOICES]);
+            ->addPluginForms($builder);
     }
 
     /**
@@ -87,27 +73,6 @@ class CompanyForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $choices
-     *
-     * @return \Spryker\Zed\CompanyGui\Communication\Form\CompanyForm
-     */
-    protected function addCompanyTypeField(FormBuilderInterface $builder, array $choices): CompanyForm
-    {
-        $builder->add(static::FIELD_FK_COMPANY_TYPE, ChoiceType::class, [
-            'label' => 'Company type',
-            'placeholder' => 'Select one',
-            'choices' => array_flip($choices),
-            'choices_as_values' => true,
-            'constraints' => [
-                new NotBlank(),
-            ],
-        ]);
-
-        return $this;
-    }
-
-    /**
      * @return \Symfony\Component\Validator\Constraint[]
      */
     protected function getTextFieldConstraints(): array
@@ -117,5 +82,19 @@ class CompanyForm extends AbstractType
             new NotBlank(),
             new Length(['max' => 100]),
         ];
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addPluginForms(FormBuilderInterface $builder)
+    {
+        foreach ($this->getFactory()->getCompanyFormPlugins() as $formPlugin) {
+            $formPlugin->buildForm($builder);
+        }
+
+        return $this;
     }
 }

@@ -8,10 +8,12 @@
 namespace Spryker\Zed\CompanySupplier\Business;
 
 use Generated\Shared\Transfer\CompanySupplierCollectionTransfer;
+use Generated\Shared\Transfer\CompanyTypeCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
+ * @method \Spryker\Zed\CompanySupplier\Business\CompanySupplierBusinessFactory getFactory()
  * @method \Spryker\Zed\CompanySupplier\Persistence\CompanySupplierRepositoryInterface getRepository()
  * @method \Spryker\Zed\CompanySupplier\Persistence\CompanySupplierEntityManagerInterface getEntityManager()
  */
@@ -55,5 +57,17 @@ class CompanySupplierFacade extends AbstractFacade implements CompanySupplierFac
     public function saveCompanySupplierRelationsForProductConcrete(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
         return $this->getEntityManager()->saveCompanySupplierRelationsForProductConcrete($productConcreteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\CompanyTypeCollectionTransfer
+     */
+    public function getCompanyTypes(): CompanyTypeCollectionTransfer
+    {
+        return $this->getRepository()->getCompanyTypes();
     }
 }

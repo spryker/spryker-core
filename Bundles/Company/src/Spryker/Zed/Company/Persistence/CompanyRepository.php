@@ -10,7 +10,6 @@ namespace Spryker\Zed\Company\Persistence;
 use ArrayObject;
 use Generated\Shared\Transfer\CompanyCollectionTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
-use Generated\Shared\Transfer\CompanyTypeCollectionTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -65,26 +64,6 @@ class CompanyRepository extends AbstractRepository implements CompanyRepositoryI
         return $this->getFactory()
             ->createCompanyMapper()
             ->mapEntityToCompanyTransfer($spyCompany, new CompanyTransfer());
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @return \Generated\Shared\Transfer\CompanyTypeCollectionTransfer
-     */
-    public function getCompanyTypes(): CompanyTypeCollectionTransfer
-    {
-        $spyCompanyTypes = $this->buildQueryFromCriteria(
-            $this->getFactory()->createCompanyTypeQuery()
-        )->find();
-
-        $spyCompanyTypes = new ArrayObject($spyCompanyTypes);
-        $companyTypeCollection = new CompanyTypeCollectionTransfer();
-        $companyTypeCollection->setCompanyTypes($spyCompanyTypes);
-
-        return $companyTypeCollection;
     }
 
     /**
