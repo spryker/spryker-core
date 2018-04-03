@@ -99,6 +99,16 @@ class VoucherManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
     }
 
     /**
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
+     *
+     * @return bool
+     */
+    public function isPreFilled($dataTransfer = null): bool
+    {
+        return false;
+    }
+
+    /**
      * @param string $message
      * @param bool $isSuccess
      *
