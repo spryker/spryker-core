@@ -34,4 +34,11 @@ interface ManualOrderEntryFormPluginInterface
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
     public function handleData($dataTransfer, &$form, $request): AbstractTransfer;
+
+    /**
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
+     *
+     * @return bool
+     */
+    public function isPreFilled($dataTransfer = null): bool;
 }

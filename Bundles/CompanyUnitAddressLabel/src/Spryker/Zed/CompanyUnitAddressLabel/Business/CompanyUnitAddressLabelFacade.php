@@ -49,7 +49,6 @@ class CompanyUnitAddressLabelFacade extends AbstractFacade implements CompanyUni
     }
 
     /**
-     *
      * {@inheritdoc}
      *
      * @api
