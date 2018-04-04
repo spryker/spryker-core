@@ -9,6 +9,7 @@ namespace Spryker\Zed\CompanyUnitAddressGui\Communication\Table;
 
 use Orm\Zed\CompanyUnitAddress\Persistence\Map\SpyCompanyUnitAddressTableMap;
 use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Zed\CompanyUnitAddressGui\Communication\Table\PluginExecutor\CompanyUnitAddressTablePluginExecutorInterface;
 use Spryker\Zed\CompanyUnitAddressGui\Dependency\QueryContainer\CompanyUnitAddressGuiToCompanyUnitAddressQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -38,20 +39,20 @@ class CompanyUnitAddressTable extends AbstractTable
     protected $companyUnitAddressQueryContainer;
 
     /**
-     * @var \Spryker\Zed\CompanyUnitAddressGuiExtension\Dependency\Plugin\CompanyUnitAddressTableExpanderInterface[]
+     * @var \Spryker\Zed\CompanyUnitAddressGui\Communication\Table\PluginExecutor\CompanyUnitAddressTablePluginExecutorInterface
      */
-    protected $companyUnitAddressTableExpanderPlugins;
+    protected $companyUnitAddressTablePluginsExecutor;
 
     /**
      * @param \Spryker\Zed\CompanyUnitAddressGui\Dependency\QueryContainer\CompanyUnitAddressGuiToCompanyUnitAddressQueryContainerInterface $companyUnitAddressQueryContainer
-     * @param \Spryker\Zed\CompanyUnitAddressGuiExtension\Dependency\Plugin\CompanyUnitAddressTableExpanderInterface[] $companyUnitAddressTableExpanderPlugins
+     * @param \Spryker\Zed\CompanyUnitAddressGui\Communication\Table\PluginExecutor\CompanyUnitAddressTablePluginExecutorInterface $companyUnitAddressTablePluginsExecutor
      */
     public function __construct(
         CompanyUnitAddressGuiToCompanyUnitAddressQueryContainerInterface $companyUnitAddressQueryContainer,
-        array $companyUnitAddressTableExpanderPlugins
+        CompanyUnitAddressTablePluginExecutorInterface $companyUnitAddressTablePluginsExecutor
     ) {
         $this->companyUnitAddressQueryContainer = $companyUnitAddressQueryContainer;
-        $this->companyUnitAddressTableExpanderPlugins = $companyUnitAddressTableExpanderPlugins;
+        $this->companyUnitAddressTablePluginsExecutor = $companyUnitAddressTablePluginsExecutor;
     }
 
     /**
@@ -62,7 +63,6 @@ class CompanyUnitAddressTable extends AbstractTable
     protected function configure(TableConfiguration $config)
     {
         $config = $this->setHeader($config);
-        $config = $this->expandConfig($config);
 
         $config->addRawColumn(static::COL_ACTIONS);
         $config->addRawColumn(static::COL_COUNTRY_RELATION);
@@ -82,6 +82,7 @@ class CompanyUnitAddressTable extends AbstractTable
             static::COL_CITY,
             static::COL_ZIPCODE,
         ]);
+        $config = $this->companyUnitAddressTablePluginsExecutor->executeTableConfigExpanderPlugins($config);
 
         return $config;
     }
@@ -124,25 +125,11 @@ class CompanyUnitAddressTable extends AbstractTable
             static::COL_ADDRESS3 => 'Additional address',
         ];
 
-        $externalData = $this->getProvidedHeaders();
+        $externalData = $this->companyUnitAddressTablePluginsExecutor->executeTableHeaderExpanderPlugins();
 
         $actions = [static::COL_ACTIONS => static::COL_ACTIONS];
 
         $config->setHeader($baseData + $externalData + $actions);
-
-        return $config;
-    }
-
-    /**
-     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
-     *
-     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
-     */
-    protected function expandConfig(TableConfiguration $config)
-    {
-        foreach ($this->companyUnitAddressTableExpanderPlugins as $plugin) {
-            $plugin->expandConfig($config);
-        }
 
         return $config;
     }
@@ -166,27 +153,11 @@ class CompanyUnitAddressTable extends AbstractTable
             static::COL_ADDRESS3 => $item[static::COL_ADDRESS3],
         ];
 
-        $externalData = $this->prepareRowExternalData($item);
+        $externalData = $this->companyUnitAddressTablePluginsExecutor->executeTableDataExpanderPlugins($item);
 
         $actions = [static::COL_ACTIONS => $this->buildLinks($item)];
 
         return $baseData + $externalData + $actions;
-    }
-
-    /**
-     * @param array $item
-     *
-     * @return array
-     */
-    protected function prepareRowExternalData(array $item): array
-    {
-        $result = [];
-
-        foreach ($this->companyUnitAddressTableExpanderPlugins as $plugin) {
-            $result += $plugin->expandData($item);
-        }
-
-        return $result;
     }
 
     /**
@@ -253,19 +224,5 @@ class CompanyUnitAddressTable extends AbstractTable
         if ($companyUnitAddress) {
             return $companyUnitAddress->getCompany()->getName();
         }
-    }
-
-    /**
-     * @return array
-     */
-    protected function getProvidedHeaders(): array
-    {
-        $headers = [];
-
-        foreach ($this->companyUnitAddressTableExpanderPlugins as $plugin) {
-            $headers += $plugin->expandHeader();
-        }
-
-        return $headers;
     }
 }

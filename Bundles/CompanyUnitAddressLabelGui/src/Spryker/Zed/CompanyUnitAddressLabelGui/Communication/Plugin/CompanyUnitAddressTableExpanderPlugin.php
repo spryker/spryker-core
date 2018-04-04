@@ -9,14 +9,19 @@ namespace Spryker\Zed\CompanyUnitAddressLabelGui\Communication\Plugin;
 
 use Generated\Shared\Transfer\SpyCompanyUnitAddressLabelEntityTransfer;
 use Orm\Zed\CompanyUnitAddress\Persistence\Map\SpyCompanyUnitAddressTableMap;
-use Spryker\Zed\CompanyUnitAddressGuiExtension\Dependency\Plugin\CompanyUnitAddressTableExpanderInterface;
+use Spryker\Zed\CompanyUnitAddressGuiExtension\Dependency\Plugin\CompanyUnitAddressTableConfigExpanderPluginInterface;
+use Spryker\Zed\CompanyUnitAddressGuiExtension\Dependency\Plugin\CompanyUnitAddressTableDataExpanderPluginInterface;
+use Spryker\Zed\CompanyUnitAddressGuiExtension\Dependency\Plugin\CompanyUnitAddressTableHeaderExpanderPluginInterface;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\CompanyUnitAddressLabelGui\Communication\CompanyUnitAddressLabelGuiCommunicationFactory getFactory()
  */
-class CompanyUnitAddressTableExpanderPlugin extends AbstractPlugin implements CompanyUnitAddressTableExpanderInterface
+class CompanyUnitAddressTableExpanderPlugin extends AbstractPlugin implements
+    CompanyUnitAddressTableConfigExpanderPluginInterface,
+    CompanyUnitAddressTableHeaderExpanderPluginInterface,
+    CompanyUnitAddressTableDataExpanderPluginInterface
 {
     protected const ID_COMPANY_UNIT_ADDRESS = SpyCompanyUnitAddressTableMap::COL_ID_COMPANY_UNIT_ADDRESS;
     protected const COL_COMPANY_UNIT_ADDRESS_LABELS = 'Labels';
@@ -67,7 +72,7 @@ class CompanyUnitAddressTableExpanderPlugin extends AbstractPlugin implements Co
         return implode(
             array_map(
                 function (SpyCompanyUnitAddressLabelEntityTransfer $item) {
-                        return $this->beautifyLabel($item->getName());
+                    return $this->beautifyLabel($item->getName());
                 },
                 $labels
             )

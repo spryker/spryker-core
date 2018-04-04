@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace SprykerTest\Zed\Company\Helper;
 
 use Codeception\Module;
@@ -41,21 +46,5 @@ class CompanyHelper extends Module
         $companyTransfer->setIdCompany(null);
 
         return $this->getLocator()->company()->facade()->create($companyTransfer)->getCompanyTransfer();
-    }
-
-    /**
-     * @param string $companyTypeName
-     *
-     * @return \Generated\Shared\Transfer\SpyCompanyTypeEntityTransfer
-     */
-    public function getCompanyTypeTransfer($companyTypeName = ''): SpyCompanyTypeEntityTransfer
-    {
-        $companyTypeName = $companyTypeName ?: static::COMPANY_TYPE_CUSTOMER;
-        $companyTypeQuery = new SpyCompanyTypeQuery();
-        $companyTypeQuery->filterByName($companyTypeName);
-        $companyType = $companyTypeQuery->findOneOrCreate();
-        $companyType->save();
-
-        return (new SpyCompanyTypeEntityTransfer())->fromArray($companyType->toArray(), true);
     }
 }

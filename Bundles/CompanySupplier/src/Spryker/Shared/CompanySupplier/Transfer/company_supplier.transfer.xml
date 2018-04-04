@@ -7,6 +7,11 @@
         <property name="fkCompanyType" type="int"/>
     </transfer>
 
+    <transfer name="CompanyType">
+        <property name="idCompanyType" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
+
     <transfer name="CompanyTypeCollection">
         <property name="companyTypes" type="SpyCompanyTypeEntity[]" singular="companyType"/>
     </transfer>

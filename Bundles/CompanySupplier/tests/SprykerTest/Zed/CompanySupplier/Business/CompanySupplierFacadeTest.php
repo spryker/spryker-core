@@ -37,7 +37,7 @@ class CompanySupplierFacadeTest extends Test
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->setupCompanySupplier();
@@ -47,7 +47,16 @@ class CompanySupplierFacadeTest extends Test
     /**
      * @return void
      */
-    public function testGetAllSuppliersReturnsCompanySuppliers()
+    public function testGetCompanyTypesReturnsNotEmptyCollection(): void
+    {
+        $companyTypesCollection = $this->tester->getFacade()->getCompanyTypes();
+        $this->assertGreaterThan(0, $companyTypesCollection->getCompanyTypes()->count());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetAllSuppliersReturnsCompanySuppliers(): void
     {
         $supplierCompanies = $this->tester->getFacade()->getAllSuppliers();
         $this->assertSame(static::COMPANY_TYPE_SUPPLIER, $supplierCompanies->getSuppliers()[0]->getCompanyType()->getName());
@@ -56,7 +65,7 @@ class CompanySupplierFacadeTest extends Test
     /**
      * @return void
      */
-    public function testSaveCompanySupplierStoreRelations()
+    public function testSaveCompanySupplierStoreRelations(): void
     {
         $this->tester->getFacade()->saveCompanySupplierRelationsForProductConcrete(
             $this->productConcrete
@@ -70,9 +79,9 @@ class CompanySupplierFacadeTest extends Test
     /**
      * @return void
      */
-    protected function setupCompanySupplier()
+    protected function setupCompanySupplier(): void
     {
-        $companyType = $this->tester->getCompanyTypeTransfer(static::COMPANY_TYPE_SUPPLIER);
+        $companyType = $this->tester->haveCompanyType(['name' => static::COMPANY_TYPE_SUPPLIER]);
         $this->companySupplier = $this->tester->haveCompany([
             'fk_company_type' => $companyType->getIdCompanyType(),
         ]);
@@ -81,7 +90,7 @@ class CompanySupplierFacadeTest extends Test
     /**
      * @return void
      */
-    protected function prepareProductConcreteWithSupplierCompanies()
+    protected function prepareProductConcreteWithSupplierCompanies(): void
     {
         $productConcrete = $this->tester->haveProduct();
         $companySuppliers = new ArrayObject([

@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace SprykerTest\Zed\Company\Business;
 
 use Codeception\TestCase\Test;
@@ -104,16 +109,6 @@ class CompanyFacadeTest extends Test
         $relatesStores = (new CompanyRepository())->getRelatedStoresByCompanyId($companyTransfer->getIdCompany());
         $this->assertCount(1, $relatesStores);
     }
-
-    /**
-     * @return void
-     */
-//    public function testGetCompanyTypesReturnsNotEmptyCollection(): void
-//    {
-//        $this->createCompanyTransfer();
-//        $companyTypesCollection = $this->getFacade()->getCompanyTypes();
-//        $this->assertGreaterThan(0, $companyTypesCollection->getCompanyTypes()->count());
-//    }
 
     /**
      * @return void

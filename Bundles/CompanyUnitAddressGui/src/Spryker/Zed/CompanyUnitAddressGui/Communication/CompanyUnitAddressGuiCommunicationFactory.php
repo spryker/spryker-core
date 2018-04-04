@@ -12,6 +12,8 @@ use Spryker\Zed\CompanyUnitAddressGui\Communication\Form\CompanyUnitAddressForm;
 use Spryker\Zed\CompanyUnitAddressGui\Communication\Form\DataProvider\CompanyBusinessUnitAddressFormDataProvider;
 use Spryker\Zed\CompanyUnitAddressGui\Communication\Form\DataProvider\CompanyUnitAddressFormDataProvider;
 use Spryker\Zed\CompanyUnitAddressGui\Communication\Table\CompanyUnitAddressTable;
+use Spryker\Zed\CompanyUnitAddressGui\Communication\Table\PluginExecutor\CompanyUnitAddressTablePluginExecutor;
+use Spryker\Zed\CompanyUnitAddressGui\Communication\Table\PluginExecutor\CompanyUnitAddressTablePluginExecutorInterface;
 use Spryker\Zed\CompanyUnitAddressGui\CompanyUnitAddressGuiDependencyProvider;
 use Spryker\Zed\CompanyUnitAddressGui\Dependency\Facade\CompanyUnitAddressGuiToCompanyFacadeInterface;
 use Spryker\Zed\CompanyUnitAddressGui\Dependency\Facade\CompanyUnitAddressGuiToCompanyUnitAddressFacadeInterface;
@@ -29,7 +31,19 @@ class CompanyUnitAddressGuiCommunicationFactory extends AbstractCommunicationFac
     {
         return new CompanyUnitAddressTable(
             $this->getCompanyUnitAddressQueryContainer(),
-            $this->getCompanyUnitAddressTableExpanderPlugins()
+            $this->createCompanyUnitAddressTablePluginExecutor()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUnitAddressGui\Communication\Table\PluginExecutor\CompanyUnitAddressTablePluginExecutorInterface
+     */
+    protected function createCompanyUnitAddressTablePluginExecutor(): CompanyUnitAddressTablePluginExecutorInterface
+    {
+        return new CompanyUnitAddressTablePluginExecutor(
+            $this->getCompanyUnitAddressTableConfigExpanderPlugins(),
+            $this->getCompanyUnitAddressTableHeaderExpanderPlugins(),
+            $this->getCompanyUnitAddressTableDataExpanderPlugins()
         );
     }
 
@@ -100,9 +114,25 @@ class CompanyUnitAddressGuiCommunicationFactory extends AbstractCommunicationFac
     /**
      * @return \Spryker\Zed\CompanyUnitAddressGuiExtension\Dependency\Plugin\CompanyUnitAddressTableExpanderInterface[]
      */
-    public function getCompanyUnitAddressTableExpanderPlugins(): array
+    public function getCompanyUnitAddressTableConfigExpanderPlugins(): array
     {
-        return $this->getProvidedDependency(CompanyUnitAddressGuiDependencyProvider::PLUGINS_COMPANY_UNIT_ADDRESS_TABLE_EXPANDER);
+        return $this->getProvidedDependency(CompanyUnitAddressGuiDependencyProvider::PLUGINS_COMPANY_UNIT_ADDRESS_TABLE_CONFIG_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUnitAddressGuiExtension\Dependency\Plugin\CompanyUnitAddressTableExpanderInterface[]
+     */
+    public function getCompanyUnitAddressTableHeaderExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(CompanyUnitAddressGuiDependencyProvider::PLUGINS_COMPANY_UNIT_ADDRESS_TABLE_HEADER_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUnitAddressGuiExtension\Dependency\Plugin\CompanyUnitAddressTableExpanderInterface[]
+     */
+    public function getCompanyUnitAddressTableDataExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(CompanyUnitAddressGuiDependencyProvider::PLUGINS_COMPANY_UNIT_ADDRESS_TABLE_DATA_EXPANDER);
     }
 
     /**
