@@ -18,6 +18,10 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartPostS
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleImageCartExpander;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundlePreReloadUpdater;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Checkout\ProductBundleOrderSaver;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\ChangeRequestExpander;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\ChangeRequestExpanderInterface;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\QuoteItemFinder;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\QuoteItemFinderInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReader;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleWriter;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Sales\ProductBundleIdHydrator;
@@ -212,6 +216,22 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     public function createProductBundlesIdHydrator()
     {
         return new ProductBundleIdHydrator($this->getProductQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\ChangeRequestExpanderInterface
+     */
+    public function createChangeRequestExpander(): ChangeRequestExpanderInterface
+    {
+        return new ChangeRequestExpander();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\QuoteItemFinderInterface
+     */
+    public function createQuoteItemFinder(): QuoteItemFinderInterface
+    {
+        return new QuoteItemFinder();
     }
 
     /**

@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductBundle\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -313,5 +314,39 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
         return $this->getFactory()
             ->createProductBundlePreReloadUpdater()
             ->preReloadItems($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function replaceItemsWithBundleItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
+    {
+        return $this->getFactory()
+            ->createChangeRequestExpander()
+            ->expand($cartChangeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $sku
+     * @param string|null $groupKey
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer|null
+     */
+    public function findItemInQuote(QuoteTransfer $quoteTransfer, $sku, $groupKey): ?ItemTransfer
+    {
+        return $this->getFactory()
+            ->createQuoteItemFinder()
+            ->findItem($quoteTransfer, $sku, $groupKey);
     }
 }

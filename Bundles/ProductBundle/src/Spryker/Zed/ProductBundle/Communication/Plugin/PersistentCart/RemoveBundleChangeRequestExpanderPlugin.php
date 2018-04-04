@@ -7,12 +7,15 @@
 
 namespace Spryker\Zed\ProductBundle\Communication\Plugin\PersistentCart;
 
-use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PersistentCartExtension\Dependency\Plugin\CartChangeRequestExpandPluginInterface;
 
-class RemoveBundleChangeRequestExpanderPlugin implements CartChangeRequestExpandPluginInterface
+/**
+ * @method \Spryker\Zed\ProductBundle\Business\ProductBundleFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductBundle\Communication\ProductBundleCommunicationFactory getFactory()
+ */
+class RemoveBundleChangeRequestExpanderPlugin extends AbstractPlugin implements CartChangeRequestExpandPluginInterface
 {
     /**
      * Specification:
@@ -26,70 +29,6 @@ class RemoveBundleChangeRequestExpanderPlugin implements CartChangeRequestExpand
      */
     public function expand(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
-        $itemTransferList = [];
-        foreach ($cartChangeTransfer->getItems() as $quoteTransfer) {
-            $bundledItemTransferList = $this->getBundledItems($cartChangeTransfer->getQuote(), $quoteTransfer->getGroupKey(), $quoteTransfer->getQuantity());
-            if (count($bundledItemTransferList)) {
-                $itemTransferList = array_merge($itemTransferList, $bundledItemTransferList);
-                continue;
-            }
-            $itemTransferList[] = $quoteTransfer;
-        }
-        $cartChangeTransfer->setItems(new ArrayObject($itemTransferList));
-
-        return $cartChangeTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $groupKey
-     * @param int $numberOfBundlesToRemove
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
-     */
-    protected function getBundledItems(QuoteTransfer $quoteTransfer, string $groupKey, int $numberOfBundlesToRemove)
-    {
-        if (!$numberOfBundlesToRemove) {
-            $numberOfBundlesToRemove = $this->getBundledProductTotalQuantity($quoteTransfer, $groupKey);
-        }
-        $bundledItems = [];
-        foreach ($quoteTransfer->getBundleItems() as $bundleItemTransfer) {
-            if ($numberOfBundlesToRemove === 0) {
-                return $bundledItems;
-            }
-
-            if ($bundleItemTransfer->getGroupKey() !== $groupKey) {
-                continue;
-            }
-
-            foreach ($quoteTransfer->getItems() as $itemTransfer) {
-                if ($itemTransfer->getRelatedBundleItemIdentifier() !== $bundleItemTransfer->getBundleItemIdentifier()) {
-                    continue;
-                }
-                $bundledItems[] = $itemTransfer;
-            }
-            $numberOfBundlesToRemove--;
-        }
-
-        return $bundledItems;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $groupKey
-     *
-     * @return int
-     */
-    protected function getBundledProductTotalQuantity(QuoteTransfer $quoteTransfer, string $groupKey): int
-    {
-        $bundleItemQuantity = 0;
-        foreach ($quoteTransfer->getBundleItems() as $bundleItemTransfer) {
-            if ($bundleItemTransfer->getGroupKey() !== $groupKey) {
-                continue;
-            }
-            $bundleItemQuantity += $bundleItemTransfer->getQuantity();
-        }
-
-        return $bundleItemQuantity;
+        return $this->getFacade()->replaceItemsWithBundleItems($cartChangeTransfer);
     }
 }
