@@ -17,5 +17,5 @@ interface QuoteChangeObserverInterface
      *
      * @return void
      */
-    public function checkChanges(QuoteTransfer $resultQuoteTransfer, QuoteTransfer $sourceQuoteTransfer);
+    public function checkChanges(QuoteTransfer $resultQuoteTransfer, QuoteTransfer $sourceQuoteTransfer): void;
 }
