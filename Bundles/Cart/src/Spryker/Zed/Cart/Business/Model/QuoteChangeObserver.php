@@ -23,11 +23,18 @@ class QuoteChangeObserver implements QuoteChangeObserverInterface
     protected $messengerFacade;
 
     /**
-     * @param \Spryker\Zed\Cart\Dependency\Facade\CartToMessengerInterface $messengerFacade
+     * @var array|\Spryker\Zed\CartExtension\Dependency\Plugin\QuoteChangeObserverPluginInterface[]
      */
-    public function __construct(CartToMessengerInterface $messengerFacade)
+    protected $quoteChangeObserverPlugins;
+
+    /**
+     * @param \Spryker\Zed\Cart\Dependency\Facade\CartToMessengerInterface $messengerFacade
+     * @param \Spryker\Zed\CartExtension\Dependency\Plugin\QuoteChangeObserverPluginInterface[] $quoteChangeObserverPlugins
+     */
+    public function __construct(CartToMessengerInterface $messengerFacade, array $quoteChangeObserverPlugins)
     {
         $this->messengerFacade = $messengerFacade;
+        $this->quoteChangeObserverPlugins = $quoteChangeObserverPlugins;
     }
 
     /**
@@ -135,5 +142,18 @@ class QuoteChangeObserver implements QuoteChangeObserverInterface
             ->setParameters($parameters);
 
         return $messageTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $resultQuoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $sourceQuoteTransfer
+     *
+     * @return void
+     */
+    protected function runQuoteChangeObserverPlugins(QuoteTransfer $resultQuoteTransfer, QuoteTransfer $sourceQuoteTransfer): void
+    {
+        foreach ($this->quoteChangeObserverPlugins as $quoteChangeObserverPlugin) {
+            $quoteChangeObserverPlugin->checkChanges($resultQuoteTransfer, $sourceQuoteTransfer);
+        }
     }
 }
