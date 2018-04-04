@@ -8,6 +8,10 @@
 namespace Spryker\Zed\CartNote\Business;
 
 use Spryker\Zed\CartNote\Business\Model\CartNoteSaver;
+use Spryker\Zed\CartNote\Business\Model\CartNoteSaverInterface;
+use Spryker\Zed\CartNote\Business\Model\QuoteCartNoteSetter;
+use Spryker\Zed\CartNote\Business\Model\QuoteCartNoteSetterInterface;
+use Spryker\Zed\CartNote\CartNoteDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -18,8 +22,24 @@ class CartNoteBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\CartNote\Business\Model\CartNoteSaverInterface
      */
-    public function createCartNoteSaver()
+    public function createCartNoteSaver(): CartNoteSaverInterface
     {
         return new CartNoteSaver($this->getEntityManager());
+    }
+
+    /**
+     * @return \Spryker\Zed\CartNote\Business\Model\QuoteCartNoteSetterInterface
+     */
+    public function createQuoteCartNoteSetter(): QuoteCartNoteSetterInterface
+    {
+        return new QuoteCartNoteSetter($this->getQuoteFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\CartNote\Dependency\Facade\CartNoteToQuoteFacadeInterface
+     */
+    public function getQuoteFacade()
+    {
+        return $this->getProvidedDependency(CartNoteDependencyProvider::FACADE_QUOTE);
     }
 }

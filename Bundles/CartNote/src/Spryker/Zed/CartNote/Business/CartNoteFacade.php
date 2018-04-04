@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\CartNote\Business;
 
+use Generated\Shared\Transfer\QuoteCartNoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteItemCartNoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -26,10 +29,44 @@ class CartNoteFacade extends AbstractFacade implements CartNoteFacadeInterface
      *
      * @return void
      */
-    public function saveOrderCartNote(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
+    public function saveOrderCartNote(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void
     {
         $this->getFactory()
             ->createCartNoteSaver()
             ->saveCartNoteToOrder($quoteTransfer, $saveOrderTransfer);
+    }
+
+    /**
+     * Specification:
+     *  - Saves cart note to order
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteCartNoteRequestTransfer $quoteCartNoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function setQuoteNote(QuoteCartNoteRequestTransfer $quoteCartNoteRequestTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()
+            ->createQuoteCartNoteSetter()
+            ->setQuoteNote($quoteCartNoteRequestTransfer);
+    }
+
+    /**
+     * Specification:
+     *  - Saves cart note to order
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteItemCartNoteRequestTransfer $quoteItemCartNoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function setQuoteItemNote(QuoteItemCartNoteRequestTransfer $quoteItemCartNoteRequestTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()
+            ->createQuoteCartNoteSetter()
+            ->setQuoteItemNote($quoteItemCartNoteRequestTransfer);
     }
 }
