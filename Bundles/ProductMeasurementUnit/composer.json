@@ -16,6 +16,9 @@
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
+  "suggest": {
+    "spryker/cart": "If you want to use cart plugins: ^4.0.0"
+  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
@@ -25,9 +28,6 @@
     "psr-4": {
       "SprykerTest\\": "tests/SprykerTest/"
     }
-  },
-  "suggest": {
-    "spryker/cart": "If you want to use cart plugins: ^4.0.0"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
