@@ -63,8 +63,7 @@ class ManualOrderEntryFacade extends AbstractFacade implements ManualOrderEntryF
     public function hydrateOrderSource(
         SpySalesOrderEntityTransfer $salesOrderEntityTransfer,
         QuoteTransfer $quoteTransfer
-    ): SpySalesOrderEntityTransfer
-    {
+    ): SpySalesOrderEntityTransfer {
         return $this->getFactory()
             ->createOrderSourceManager()
             ->hydrateOrderSource($salesOrderEntityTransfer, $quoteTransfer);
