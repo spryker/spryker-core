@@ -19,6 +19,11 @@ class CompanyDataImportHelper extends Module
     {
         $companyQuery = $this->getCompanyQuery();
         foreach ($companyQuery->find() as $companyEntity) {
+            $companyEntity->getSpyCompanySupplierToProducts()->delete();
+            foreach ($companyEntity->getPriceProducts() as $priceProduct) {
+                $priceProduct->setFkCompany(null);
+                $priceProduct->save();
+            }
             $companyEntity->getCompanyBusinessUnits()->delete();
             $companyEntity->getCompanyUnitAddresses()->delete();
             $companyEntity->delete();
