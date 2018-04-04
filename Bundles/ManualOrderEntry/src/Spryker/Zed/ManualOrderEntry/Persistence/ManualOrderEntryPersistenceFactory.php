@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\ManualOrderEntry\ManualOrderEntryConfig getConfig()
- * @method \Spryker\Zed\ManualOrderEntry\Persistence\ManualOrderEntryQueryContainerInterface getQueryContainer()
  */
 class ManualOrderEntryPersistenceFactory extends AbstractPersistenceFactory
 {

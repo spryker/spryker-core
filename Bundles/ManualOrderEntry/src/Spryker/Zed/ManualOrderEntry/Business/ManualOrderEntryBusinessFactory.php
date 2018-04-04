@@ -12,7 +12,7 @@ use Spryker\Zed\ManualOrderEntry\Business\Model\OrderSource\OrderSourceManager;
 
 /**
  * @method \Spryker\Zed\ManualOrderEntry\ManualOrderEntryConfig getConfig()
- * @method \Spryker\Zed\ManualOrderEntry\Persistence\ManualOrderEntryQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ManualOrderEntry\Persistence\ManualOrderEntryRepositoryInterface getRepository()
  */
 class ManualOrderEntryBusinessFactory extends AbstractBusinessFactory
 {
@@ -22,7 +22,7 @@ class ManualOrderEntryBusinessFactory extends AbstractBusinessFactory
     public function createOrderSourceManager()
     {
         return new OrderSourceManager(
-            $this->getQueryContainer()
+            $this->getRepository()
         );
     }
 }

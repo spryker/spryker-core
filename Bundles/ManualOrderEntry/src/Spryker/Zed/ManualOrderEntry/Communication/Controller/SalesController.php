@@ -11,7 +11,7 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Spryker\Zed\ManualOrderEntry\Persistence\ManualOrderEntryQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ManualOrderEntry\Persistence\ManualOrderEntryRepositoryInterface getRepository()
  * @method \Spryker\Zed\ManualOrderEntry\Business\ManualOrderEntryFacadeInterface getFacade()
  */
 class SalesController extends AbstractController
@@ -25,11 +25,10 @@ class SalesController extends AbstractController
     {
         $orderTransfer = $this->getOrderTransfer($request);
 
-        $spyOrderSource = $this->getQueryContainer()
-            ->queryOrderSourceById($orderTransfer->getFkOrderSource())
-            ->findOne();
+        $orderSourceTransfer = $this->getRepository()
+            ->getOrderSourceById($orderTransfer->getFkOrderSource());
 
-        $orderSourceName = $spyOrderSource ? $spyOrderSource->getName() : '-';
+        $orderSourceName = $orderSourceTransfer->getName() !== null ? $orderSourceTransfer->getName() : '-';
 
         return $this->viewResponse([
             'orderSourceName' => $orderSourceName,

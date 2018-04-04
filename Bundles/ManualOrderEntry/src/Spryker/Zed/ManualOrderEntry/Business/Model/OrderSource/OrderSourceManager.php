@@ -10,22 +10,22 @@ namespace Spryker\Zed\ManualOrderEntry\Business\Model\OrderSource;
 use Generated\Shared\Transfer\OrderSourceTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpySalesOrderEntityTransfer;
-use Spryker\Zed\ManualOrderEntry\Persistence\ManualOrderEntryQueryContainerInterface;
+use Spryker\Zed\ManualOrderEntry\Persistence\ManualOrderEntryRepositoryInterface;
 
 class OrderSourceManager implements OrderSourceManagerInterface
 {
     /**
-     * @var \Spryker\Zed\ManualOrderEntry\Persistence\ManualOrderEntryQueryContainerInterface
+     * @var \Spryker\Zed\ManualOrderEntry\Persistence\ManualOrderEntryRepositoryInterface
      */
-    protected $queryContainer;
+    protected $manualOrderEntryRepository;
 
     /**
-     * @param \Spryker\Zed\ManualOrderEntry\Persistence\ManualOrderEntryQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\ManualOrderEntry\Persistence\ManualOrderEntryRepositoryInterface $manualOrderEntryRepository
      */
     public function __construct(
-        ManualOrderEntryQueryContainerInterface $queryContainer
+        ManualOrderEntryRepositoryInterface $manualOrderEntryRepository
     ) {
-        $this->queryContainer = $queryContainer;
+        $this->manualOrderEntryRepository = $manualOrderEntryRepository;
     }
 
     /**
@@ -35,12 +35,8 @@ class OrderSourceManager implements OrderSourceManagerInterface
      */
     public function findOrderSourceByIdOrderSource($idOrderSource)
     {
-        $orderSource = $this->queryContainer
-            ->queryOrderSourceById($idOrderSource)
-            ->findOne();
-        $orderSourceTransfer = new OrderSourceTransfer();
-        $orderSourceTransfer->setIdOrderSource($orderSource->getIdOrderSource());
-        $orderSourceTransfer->setName($orderSource->getName());
+        $orderSourceTransfer = $this->manualOrderEntryRepository
+            ->getOrderSourceById($idOrderSource);
 
         return $orderSourceTransfer;
     }
@@ -48,23 +44,9 @@ class OrderSourceManager implements OrderSourceManagerInterface
     /**
      * @return \Generated\Shared\Transfer\OrderSourceTransfer[]
      */
-    public function findAllOrderSources()
+    public function getAllOrderSources()
     {
-        $orderSources = $this->queryContainer
-            ->queryOrderSource()
-            ->find();
-
-        $orderSourceTransfers = [];
-
-        /** @var \Orm\Zed\ManualOrderEntry\Persistence\SpyOrderSource $orderSource */
-        foreach ($orderSources as $orderSource) {
-            $orderSourceTransfer = new OrderSourceTransfer();
-            $orderSourceTransfer->fromArray($orderSource->toArray(), true);
-
-            $orderSourceTransfers[] = $orderSourceTransfer;
-        }
-
-        return $orderSourceTransfers;
+        return $this->manualOrderEntryRepository->getAllOrderSources();
     }
 
     /**

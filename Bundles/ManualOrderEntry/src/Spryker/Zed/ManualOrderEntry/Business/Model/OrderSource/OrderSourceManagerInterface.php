@@ -22,7 +22,7 @@ interface OrderSourceManagerInterface
     /**
      * @return \Generated\Shared\Transfer\OrderSourceTransfer[]
      */
-    public function findAllOrderSources();
+    public function getAllOrderSources();
 
     /**
      * @param \Generated\Shared\Transfer\SpySalesOrderEntityTransfer $spySalesOrderEntityTransfer
