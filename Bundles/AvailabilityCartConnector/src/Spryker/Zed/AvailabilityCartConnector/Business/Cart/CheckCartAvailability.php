@@ -46,14 +46,15 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
         $cartPreCheckResponseTransfer->setIsSuccess(true);
 
         $storeTransfer = $this->getStoreTransfer($cartChangeTransfer);
+        $itemsInCart = $cartChangeTransfer->getQuote()->getItems();
 
         $messages = new ArrayObject();
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             $currentItemQuantity = $this->calculateCurrentCartQuantityForGivenSku(
-                $cartChangeTransfer,
+                $itemsInCart,
                 $itemTransfer->getSku()
             );
-             $currentItemQuantity += $itemTransfer->getQuantity();
+            $currentItemQuantity += $itemTransfer->getQuantity();
 
             $isSellable = $this->isProductSellable($itemTransfer, $currentItemQuantity, $storeTransfer);
 
@@ -62,6 +63,7 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
                 $cartPreCheckResponseTransfer->setIsSuccess(false);
                 $messages[] = $this->createItemIsNotAvailableMessageTransfer($stock, $itemTransfer->getSku());
             }
+            $itemsInCart->append($itemTransfer);
         }
 
         $cartPreCheckResponseTransfer->setMessages($messages);
@@ -70,15 +72,15 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
      * @param string $sku
      *
      * @return int
      */
-    protected function calculateCurrentCartQuantityForGivenSku(CartChangeTransfer $cartChangeTransfer, $sku)
+    protected function calculateCurrentCartQuantityForGivenSku(ArrayObject $items, $sku)
     {
         $quantity = 0;
-        foreach ($cartChangeTransfer->getQuote()->getItems() as $itemTransfer) {
+        foreach ($items as $itemTransfer) {
             if ($itemTransfer->getSku() !== $sku) {
                 continue;
             }

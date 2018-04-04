@@ -65,6 +65,7 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
             $itemTransfer->requireSku()->requireQuantity();
 
             $messageTransfer = $this->checkItemAvailability($itemsInCart, $itemTransfer, $storeTransfer);
+            $itemsInCart->append($itemTransfer);
 
             if ($messageTransfer !== null) {
                 $cartPreCheckFailedItems[] = $messageTransfer;
