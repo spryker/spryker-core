@@ -62,7 +62,7 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
      */
     public function validateItemRemoval(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
     {
-        $responseTransfer = new CartPreCheckResponseTransfer();
+        $responseTransfer = (new CartPreCheckResponseTransfer())->setIsSuccess(true);
 
         $cartQuantityMap = $this->getItemRemoveCartQuantityMap($cartChangeTransfer);
         $productQuantityEntityMap = $this->getProductQuantityEntityMap($cartChangeTransfer);
@@ -92,12 +92,12 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
             $this->addViolation(static::ERROR_QUANTITY_MIN_NOT_FULFILLED, $sku, $min, $quantity, $responseTransfer);
         }
 
-        if ($max !== null && $quantity > $max) {
-            $this->addViolation(static::ERROR_QUANTITY_MAX_NOT_FULFILLED, $sku, $max, $quantity, $responseTransfer);
+        if ($quantity !== 0 && ($quantity - $min) % $interval !== 0) {
+            $this->addViolation(static::ERROR_QUANTITY_INTERVAL_NOT_FULFILLED, $sku, $interval, $quantity, $responseTransfer);
         }
 
-        if (($quantity - $min) % $interval !== 0) {
-            $this->addViolation(static::ERROR_QUANTITY_INTERVAL_NOT_FULFILLED, $sku, $interval, $quantity, $responseTransfer);
+        if ($max !== null && $quantity > $max) {
+            $this->addViolation(static::ERROR_QUANTITY_MAX_NOT_FULFILLED, $sku, $max, $quantity, $responseTransfer);
         }
     }
 
