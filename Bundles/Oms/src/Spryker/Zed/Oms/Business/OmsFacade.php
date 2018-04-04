@@ -621,7 +621,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @return string[]
      */
-    public function getStateFlags($processName, $stateName)
+    public function getStateFlags(string $processName, string $stateName): array
     {
         return $this->getFactory()->createOrderStateMachineFlagReader()->getStateFlags($processName, $stateName);
     }

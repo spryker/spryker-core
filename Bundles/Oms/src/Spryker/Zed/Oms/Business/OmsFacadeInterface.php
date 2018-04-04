@@ -556,8 +556,8 @@ interface OmsFacadeInterface
 
     /**
      * Specification:
-     *  - Reads state flags from xml definition
-     *  - Returns list of stateFlags
+     *  - Reads state flags from XML definition
+     *  - Returns a list of state flags
      *
      * @api
      *
@@ -566,5 +566,5 @@ interface OmsFacadeInterface
      *
      * @return string[]
      */
-    public function getStateFlags($processName, $stateName);
+    public function getStateFlags(string $processName, string $stateName): array;
 }

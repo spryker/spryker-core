@@ -29,7 +29,6 @@ class FlagReader implements FlagReaderInterface
      * @param string $stateName
      *
      * @throws \Spryker\Zed\Oms\Business\Exception\StateNotFoundException
-     * s
      *
      * @return string[]
      */
@@ -41,7 +40,7 @@ class FlagReader implements FlagReaderInterface
         if (!isset($allStates[$stateName])) {
             throw new StateNotFoundException(sprintf(
                 sprintf(
-                    'State with name "%s" not found in %s StateMachine process',
+                    'State with name "%s" not found in %s Order state machine process',
                     $stateName,
                     $processName
                 )
