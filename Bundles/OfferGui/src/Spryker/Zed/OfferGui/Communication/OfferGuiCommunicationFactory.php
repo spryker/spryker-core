@@ -8,10 +8,12 @@
 namespace Spryker\Zed\OfferGui\Communication;
 
 use Generated\Shared\Transfer\OfferTransfer;
+use Generated\Zed\Ide\Offer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\OfferGui\Communication\Form\Constraint\SkuExists;
-use Spryker\Zed\OfferGui\Communication\Form\OfferType;
+use Spryker\Zed\OfferGui\Communication\Form\DataProvider\OfferDataProvider;
+use Spryker\Zed\OfferGui\Communication\Form\Offer\OfferType;
 use Spryker\Zed\OfferGui\Communication\Table\OffersTable;
 use Spryker\Zed\OfferGui\Communication\Table\OffersTableQueryBuilder;
 use Spryker\Zed\OfferGui\Communication\Table\OffersTableQueryBuilderInterface;
@@ -113,21 +115,39 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
+     * @param int|null $idOffer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
     public function getOfferForm(OfferTransfer $offerTransfer)
     {
+        $offerDataProvider = $this->createOfferDataProvider();
+
         $form = $this->getFormFactory()->create(
-            OfferType::class,
-            $offerTransfer,
-            [
-                'data_class' => OfferTransfer::class,
-            ]
+            $this->getOfferType(),
+            $offerDataProvider->getData($offerTransfer),
+            $offerDataProvider->getOptions()
         );
 
         return $form;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOfferType(): string
+    {
+        return OfferType::class;
+    }
+
+    /**
+     * @return OfferDataProvider
+     */
+    public function createOfferDataProvider()
+    {
+        return new OfferDataProvider(
+            $this->getOfferFacade()
+        );
     }
 
     /**

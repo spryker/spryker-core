@@ -18,6 +18,9 @@
         {% block widget_content %}
 
             {{ form_start(form) }}
+
+            {{ form_row(form.customerReference) }}
+
             {{ form_label(form.items) }}
             <table>
                 {% for item in form.items %}
@@ -33,7 +36,6 @@
                         <td>{{ form_row(item.quantity) }}</td>
                         <td>{{ form_row(item.unitSubtotalAggregation) }}</td>
                         <td>{{ form_row(item.sumSubtotalAggregation) }}</td>
-                        {#<td><input href="/offer-gui/edit/?remove-sku={{ item.sku.data }}" class="btn btn-remove" value="X"/></td>#}
                     </tr>
                 {% endfor %}
             </table>
@@ -62,6 +64,13 @@
                 <p>No vouchers</p>
             {% endif %}
 
+            <table>
+                <tr>
+                    <td class="col-sm-4">{{ form_row(form.shippingAddress) }}</td>
+                    <td class="col-sm-4">{{ form_row(form.billingAddress) }}</td>
+                </tr>
+            </table>
+            
             {{ form_widget(form) }}
 
             {% include '@OfferGui/Edit/_partials/cart-rule-discounts.twig' with {'quote': offer.quote} %}

@@ -40,6 +40,7 @@ class OfferClient extends AbstractClient implements OfferClientInterface
      */
     public function getOfferById(OfferTransfer $offerTransfer): OfferTransfer
     {
+        //todo: populate Customer form session to quote
         return $this->getFactory()
             ->createZedStub()
             ->getOfferById($offerTransfer);

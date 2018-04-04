@@ -33,6 +33,8 @@ class OfferMapper implements OfferMapperInterface
      */
     public function mapOfferToOfferEntity(OfferTransfer $offerTransfer): SpyOfferEntityTransfer
     {
+        //todo: remove customer from quote (save only selected fields)
+        //todo: replace json_encode with util
         $offerEntityTransfer = (new SpyOfferEntityTransfer())->fromArray($offerTransfer->toArray(), true);
         $offerEntityTransfer->setQuoteData(json_encode(
             $offerTransfer->getQuote()->toArray()

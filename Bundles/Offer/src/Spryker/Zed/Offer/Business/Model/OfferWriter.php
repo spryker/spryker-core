@@ -9,8 +9,11 @@ namespace Spryker\Zed\Offer\Business\Model;
 
 use Generated\Shared\Transfer\OfferResponseTransfer;
 use Generated\Shared\Transfer\OfferTransfer;
+use Generated\Zed\Ide\Offer;
 use Orm\Zed\Offer\Persistence\SpyOffer;
 use Orm\Zed\Offer\Persistence\SpyOfferQuery;
+use Spryker\Zed\Customer\Business\CustomerFacadeInterface;
+use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\Offer\OfferConfig;
 use Spryker\Zed\Offer\Persistence\OfferEntityManagerInterface;
 use Spryker\Zed\Offer\Persistence\OfferRepositoryInterface;
