@@ -32,7 +32,7 @@ class OrderSourceManager implements OrderSourceManagerInterface
      *
      * @return \Generated\Shared\Transfer\OrderSourceTransfer
      */
-    public function findOrderSourceByIdOrderSource($idOrderSource)
+    public function getOrderSourceById($idOrderSource)
     {
         $orderSourceTransfer = $this->manualOrderEntryRepository
             ->getOrderSourceById($idOrderSource);
@@ -57,7 +57,7 @@ class OrderSourceManager implements OrderSourceManagerInterface
     public function hydrateOrderSource(SpySalesOrderEntityTransfer $salesOrderEntityTransfer, QuoteTransfer $quoteTransfer)
     {
         if ($quoteTransfer->getOrderSource()) {
-            $salesOrderEntityTransfer->setFkOrderSource($quoteTransfer->getOrderSource()->getIdOrderSource() ?? null);
+            $salesOrderEntityTransfer->setFkOrderSource($quoteTransfer->getOrderSource()->getIdOrderSource());
         }
 
         return $salesOrderEntityTransfer;

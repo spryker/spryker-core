@@ -17,7 +17,7 @@ interface OrderSourceManagerInterface
      *
      * @return \Generated\Shared\Transfer\OrderSourceTransfer
      */
-    public function findOrderSourceByIdOrderSource($idOrderSource);
+    public function getOrderSourceById($idOrderSource);
 
     /**
      * @return \Generated\Shared\Transfer\OrderSourceTransfer[]

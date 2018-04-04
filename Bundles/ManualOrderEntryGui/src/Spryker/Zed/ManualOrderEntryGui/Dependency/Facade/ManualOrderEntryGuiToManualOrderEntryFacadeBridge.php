@@ -27,16 +27,16 @@ class ManualOrderEntryGuiToManualOrderEntryFacadeBridge implements ManualOrderEn
      *
      * @return \Generated\Shared\Transfer\OrderSourceTransfer|null
      */
-    public function findOrderSourceByIdOrderSource($idOrderSource)
+    public function getOrderSourceById($idOrderSource)
     {
-        return $this->manualOrderEntryFacade->findOrderSourceByIdOrderSource($idOrderSource);
+        return $this->manualOrderEntryFacade->getOrderSourceById($idOrderSource);
     }
 
     /**
      * @return \Generated\Shared\Transfer\OrderSourceTransfer[]
      */
-    public function findAllOrderSources()
+    public function getAllOrderSources()
     {
-        return $this->manualOrderEntryFacade->findAllOrderSources();
+        return $this->manualOrderEntryFacade->getAllOrderSources();
     }
 }

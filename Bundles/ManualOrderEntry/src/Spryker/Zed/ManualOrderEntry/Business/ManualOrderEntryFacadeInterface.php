@@ -26,7 +26,7 @@ interface ManualOrderEntryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\OrderSourceTransfer
      */
-    public function findOrderSourceByIdOrderSource($idOrderSource): OrderSourceTransfer;
+    public function getOrderSourceById($idOrderSource): OrderSourceTransfer;
 
     /**
      * Specification:
@@ -36,7 +36,7 @@ interface ManualOrderEntryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\OrderSourceTransfer[]
      */
-    public function findAllOrderSources(): array;
+    public function getAllOrderSources(): array;
 
     /**
      * Specification:

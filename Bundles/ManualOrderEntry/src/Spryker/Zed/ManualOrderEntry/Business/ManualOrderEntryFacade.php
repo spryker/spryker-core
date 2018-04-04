@@ -27,11 +27,11 @@ class ManualOrderEntryFacade extends AbstractFacade implements ManualOrderEntryF
      *
      * @return \Generated\Shared\Transfer\OrderSourceTransfer
      */
-    public function findOrderSourceByIdOrderSource($idOrderSource): OrderSourceTransfer
+    public function getOrderSourceById($idOrderSource): OrderSourceTransfer
     {
         return $this->getFactory()
             ->createOrderSourceManager()
-            ->findOrderSourceByIdOrderSource($idOrderSource);
+            ->getOrderSourceById($idOrderSource);
     }
 
     /**
@@ -42,7 +42,7 @@ class ManualOrderEntryFacade extends AbstractFacade implements ManualOrderEntryF
      *
      * @return \Generated\Shared\Transfer\OrderSourceTransfer[]
      */
-    public function findAllOrderSources(): array
+    public function getAllOrderSources(): array
     {
         return $this->getFactory()
             ->createOrderSourceManager()

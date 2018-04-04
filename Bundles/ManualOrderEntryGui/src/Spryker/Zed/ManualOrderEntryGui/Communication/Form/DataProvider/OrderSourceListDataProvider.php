@@ -63,7 +63,7 @@ class OrderSourceListDataProvider implements FormDataProviderInterface
     protected function getOrderSourceList()
     {
         $orderSourceTransfers = $this->manualOrderEntryFacade
-            ->findAllOrderSources();
+            ->getAllOrderSources();
 
         $orderSourceList = [];
 

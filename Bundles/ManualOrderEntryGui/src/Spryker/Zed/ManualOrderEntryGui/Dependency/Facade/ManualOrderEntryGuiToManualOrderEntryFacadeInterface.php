@@ -14,10 +14,10 @@ interface ManualOrderEntryGuiToManualOrderEntryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\OrderSourceTransfer|null
      */
-    public function findOrderSourceByIdOrderSource($idOrderSource);
+    public function getOrderSourceById($idOrderSource);
 
     /**
      * @return \Generated\Shared\Transfer\OrderSourceTransfer[]
      */
-    public function findAllOrderSources();
+    public function getAllOrderSources();
 }
