@@ -15,10 +15,11 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToMoneyInterface;
 use Spryker\Zed\Sales\Dependency\Service\SalesToUtilSanitizeInterface;
+use Spryker\Zed\SalesExtension\Dependency\Plugin\SalesTablePluginInterface;
 
 class OrdersTable extends AbstractTable
 {
-    const URL = 'URL';
+    const URL = SalesTablePluginInterface::ROW_ACTIONS;
     const ID_ORDER_ITEM_PROCESS = 'id-order-item-process';
     const ID_ORDER_ITEM_STATE = 'id-order-item-state';
     const FILTER = 'filter';
@@ -54,24 +55,32 @@ class OrdersTable extends AbstractTable
     protected $customerFacade;
 
     /**
+     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\SalesTablePluginInterface[]
+     */
+    protected $salesTablePlugins;
+
+    /**
      * @param \Spryker\Zed\Sales\Communication\Table\OrdersTableQueryBuilderInterface $queryBuilder
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToMoneyInterface $moneyFacade
      * @param \Spryker\Zed\Sales\Dependency\Service\SalesToUtilSanitizeInterface $sanitizeService
      * @param \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface $utilDateTimeService
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerInterface $customerFacade
+     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\SalesTablePluginInterface[] $salesTablePlugins
      */
     public function __construct(
         OrdersTableQueryBuilderInterface $queryBuilder,
         SalesToMoneyInterface $moneyFacade,
         SalesToUtilSanitizeInterface $sanitizeService,
         UtilDateTimeServiceInterface $utilDateTimeService,
-        SalesToCustomerInterface $customerFacade
+        SalesToCustomerInterface $customerFacade,
+        array $salesTablePlugins = []
     ) {
         $this->queryBuilder = $queryBuilder;
         $this->moneyFacade = $moneyFacade;
         $this->sanitizeService = $sanitizeService;
         $this->utilDateTimeService = $utilDateTimeService;
         $this->customerFacade = $customerFacade;
+        $this->salesTablePlugins = $salesTablePlugins;
     }
 
     /**
@@ -314,7 +323,7 @@ class OrdersTable extends AbstractTable
     {
         $results = [];
         foreach ($queryResults as $item) {
-            $results[] = [
+            $itemLine = [
                 SpySalesOrderTableMap::COL_ID_SALES_ORDER => $item[SpySalesOrderTableMap::COL_ID_SALES_ORDER],
                 SpySalesOrderTableMap::COL_ORDER_REFERENCE => $item[SpySalesOrderTableMap::COL_ORDER_REFERENCE],
                 SpySalesOrderTableMap::COL_CREATED_AT => $this->utilDateTimeService->formatDateTime($item[SpySalesOrderTableMap::COL_CREATED_AT]),
@@ -325,8 +334,36 @@ class OrdersTable extends AbstractTable
                 static::NUMBER_OF_ORDER_ITEMS => $item[OrdersTableQueryBuilder::FIELD_NUMBER_OF_ORDER_ITEMS],
                 static::URL => implode(' ', $this->createActionUrls($item)),
             ];
+            $itemLine = $this->applyUIPlugins($itemLine);
+            $results[] = $itemLine;
         }
 
         return $results;
+    }
+
+    /**
+     * @param array $itemLine
+     *
+     * @return array
+     */
+    protected function applyUIPlugins(array $itemLine): array
+    {
+        foreach ($this->salesTablePlugins as $uiPlugin) {
+            $itemLine = $uiPlugin->formatTableRow([$this, 'buttonGeneratorCallable'], $itemLine);
+        }
+
+        return $itemLine;
+    }
+
+    /**
+     * @param string|\Spryker\Service\UtilText\Model\Url\Url $url
+     * @param string $title
+     * @param array $options
+     *
+     * @return string
+     */
+    public function buttonGeneratorCallable($url, $title, array $options)
+    {
+        return $this->generateButton($url, $title, $options);
     }
 }

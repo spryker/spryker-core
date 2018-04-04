@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\DataImport;
 
+use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
+use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Spryker\Shared\DataImport\DataImportConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
@@ -35,5 +37,26 @@ class DataImportConfig extends AbstractBundleConfig
         ];
 
         return implode(DIRECTORY_SEPARATOR, $pathParts) . DIRECTORY_SEPARATOR;
+    }
+
+    /**
+     * @param string $file
+     * @param string $importType
+     *
+     * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
+     */
+    protected function buildImporterConfiguration($file, $importType)
+    {
+        $dataImportReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
+        $dataImportReaderConfigurationTransfer
+            ->setFileName($file)
+            ->addDirectory($this->getDataImportRootPath());
+
+        $dataImporterConfigurationTransfer = new DataImporterConfigurationTransfer();
+        $dataImporterConfigurationTransfer
+            ->setImportType($importType)
+            ->setReaderConfiguration($dataImportReaderConfigurationTransfer);
+
+        return $dataImporterConfigurationTransfer;
     }
 }
