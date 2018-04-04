@@ -553,4 +553,18 @@ interface OmsFacadeInterface
      * @return int
      */
     public function getLastExportedReservationVersion();
+
+    /**
+     * Specification:
+     *  - Reads state flags from xml definition
+     *  - Returns list of stateFlags
+     *
+     * @api
+     *
+     * @param string $processName
+     * @param string $stateName
+     *
+     * @return string[]
+     */
+    public function getStateFlags($processName, $stateName);
 }

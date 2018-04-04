@@ -12,6 +12,7 @@ use Spryker\Zed\Oms\Business\Lock\TriggerLocker;
 use Spryker\Zed\Oms\Business\Mail\MailHandler;
 use Spryker\Zed\Oms\Business\OrderStateMachine\Builder;
 use Spryker\Zed\Oms\Business\OrderStateMachine\Finder;
+use Spryker\Zed\Oms\Business\OrderStateMachine\FlagReader;
 use Spryker\Zed\Oms\Business\OrderStateMachine\LockedOrderStateMachine;
 use Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachine;
 use Spryker\Zed\Oms\Business\OrderStateMachine\PersistenceManager;
@@ -326,5 +327,15 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     protected function getReservationExportPlugins()
     {
         return $this->getProvidedDependency(OmsDependencyProvider::PLUGINS_RESERVATION_EXPORT);
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Business\OrderStateMachine\FlagReaderInterface
+     */
+    public function createOrderStateMachineFlagReader()
+    {
+        return new FlagReader(
+            $this->createOrderStateMachineBuilder()
+        );
     }
 }
