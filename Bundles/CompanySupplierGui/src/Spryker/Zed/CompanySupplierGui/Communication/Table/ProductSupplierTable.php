@@ -187,15 +187,11 @@ class ProductSupplierTable extends AbstractTable
         $criteria->add(SpyPriceProductTableMap::COL_FK_COMPANY, $this->idCompany);
 
         $prices = $spyProductEntity->getPriceProductsJoinPriceType($criteria);
-        if ($prices->count() > 0) {
-            return $this->formatPrices($prices[0]->getPriceProductStoresJoinCurrency());
-        }
-        $abstractPrices = $spyProductEntity->getSpyProductAbstract()->getPriceProductsJoinPriceType($criteria);
-        if ($abstractPrices->count() > 0) {
-            return $this->formatPrices($abstractPrices[0]->getPriceProductStoresJoinCurrency());
+        if ($prices->count() < 1) {
+            return '';
         }
 
-        return '';
+        return $this->formatPrices($prices[0]->getPriceProductStoresJoinCurrency());
     }
 
     /**

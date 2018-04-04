@@ -24,8 +24,8 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/gui": "It's better to install it",
-    "spryker/company": "If you want to use Company module",
+    "spryker/gui": "If you want to use CompanySupplierGui module plugins which used Gui transfer object.",
+    "spryker/company": "If you want to use CompanyTableCompanyTypePlugin which used Company module entity map.",
     "spryker/company-gui": "If you want to provide plugins to CompanyGui module"
   },
   "autoload": {

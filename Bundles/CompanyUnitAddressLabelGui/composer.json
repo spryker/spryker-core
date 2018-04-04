@@ -15,8 +15,8 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/gui": "It's better to install it",
-    "spryker/company-unit-address": "If you want to use CompanyUnitAddress module"
+    "spryker/gui": "If you want to use CompanyUnitAddressTableExpanderPlugin which used Gui transfer object.",
+    "spryker/company-unit-address": "If you want to use CompanyUnitAddressTableExpanderPlugin which used CompanyUnitAddress module entity map."
   },
   "autoload": {
     "psr-4": {

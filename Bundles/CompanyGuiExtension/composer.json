@@ -13,7 +13,7 @@
   },
   "suggest": {
     "spryker/symfony": "If you want to use CompanyGui plugins",
-    "spryker/gui": "If you want to use Gui module",
+    "spryker/gui": "If you want to use CompanyGuiExtension module plugin interfaces which used Gui transfer object.",
     "spryker/company-gui": "If you want to provide plugins to CompanyGui module"
   },
   "autoload": {
