@@ -556,7 +556,7 @@ interface OmsFacadeInterface
 
     /**
      * Specification:
-     *  - Reads state flags from xml definition
+     *  - Reads state flags from XML definition
      *  - Returns list of stateFlags
      *
      * @api
