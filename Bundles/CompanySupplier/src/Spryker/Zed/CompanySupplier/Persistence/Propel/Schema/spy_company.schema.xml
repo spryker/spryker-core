@@ -3,7 +3,7 @@
 
     <table name="spy_company" phpName="SpyCompany">
         <column name="fk_company_type" required="false" type="INTEGER"/>
-        <foreign-key skipSql="true" name="spy_company-fk_company_type" foreignTable="spy_company_type" phpName="CompanyType" refPhpName="CompanyType">
+        <foreign-key name="spy_company-fk_company_type" foreignTable="spy_company_type" phpName="CompanyType" refPhpName="CompanyType">
             <reference local="fk_company_type" foreign="id_company_type"/>
         </foreign-key>
     </table>

@@ -57,7 +57,7 @@ class CompanyFacadeTest extends Test
      */
     public function testUpdateShouldPersistCompanyChanges()
     {
-        $companyTransfer = $this->createCompanyTransfer();
+        $companyTransfer = (new CompanyBuilder(['is_active' => false]))->build();
 
         $companyTransfer->setIsActive(true);
         $companyTransfer->setStatus(SpyCompanyTableMap::COL_STATUS_APPROVED);
@@ -74,7 +74,7 @@ class CompanyFacadeTest extends Test
      */
     public function testDeleteShouldRemoveCompanyFromStorage()
     {
-        $companyTransfer = $this->createCompanyTransfer();
+        $companyTransfer = $this->tester->haveCompany();
         $this->getFacade()->delete($companyTransfer);
         $this->assertNull($this->tester->findCompanyById($companyTransfer->getIdCompany()));
     }
@@ -115,7 +115,7 @@ class CompanyFacadeTest extends Test
      */
     public function testGetCompaniesReturnsNotEmptyCollection(): void
     {
-        $this->createCompanyTransfer();
+        $this->tester->haveCompany();
         $companyTypesCollection = $this->getFacade()->getCompanies();
         $this->assertGreaterThan(0, $companyTypesCollection->getCompanies()->count());
     }
