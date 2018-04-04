@@ -9,6 +9,7 @@ namespace Spryker\Zed\ManualOrderEntry\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ManualOrderEntry\Business\Model\OrderSource\OrderSourceManager;
+use Spryker\Zed\ManualOrderEntry\Business\Model\OrderSource\OrderSourceManagerInterface;
 
 /**
  * @method \Spryker\Zed\ManualOrderEntry\ManualOrderEntryConfig getConfig()
@@ -19,7 +20,7 @@ class ManualOrderEntryBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ManualOrderEntry\Business\Model\OrderSource\OrderSourceManagerInterface
      */
-    public function createOrderSourceManager()
+    public function createOrderSourceManager(): OrderSourceManagerInterface
     {
         return new OrderSourceManager(
             $this->getRepository()

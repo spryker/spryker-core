@@ -59,11 +59,9 @@ class OrderSourceListType extends AbstractType
     protected function addOrderSourceField(FormBuilderInterface $builder, array $orderSourceList)
     {
         $builder->add(static::FIELD_ORDER_SOURCE, Select2ComboBoxType::class, [
-//            'property_path' => static::FIELD_ORDER_SOURCE,
             'property_path' => QuoteTransfer::ORDER_SOURCE . '.' . OrderSourceTransfer::ID_ORDER_SOURCE,
             'label' => 'Order Source',
             'choices' => array_flip($orderSourceList),
-            'choices_as_values' => true,
             'multiple' => false,
             'required' => true,
         ]);

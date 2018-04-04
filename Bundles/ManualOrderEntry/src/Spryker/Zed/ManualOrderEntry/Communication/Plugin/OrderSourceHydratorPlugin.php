@@ -23,13 +23,13 @@ class OrderSourceHydratorPlugin extends AbstractPlugin implements PreSaveOrderHy
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SpySalesOrderEntityTransfer $spySalesOrderEntityTransfer
+     * @param \Generated\Shared\Transfer\SpySalesOrderEntityTransfer $salesOrderEntityTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\SpySalesOrderEntityTransfer
      */
-    public function hydrate(SpySalesOrderEntityTransfer $spySalesOrderEntityTransfer, QuoteTransfer $quoteTransfer): SpySalesOrderEntityTransfer
+    public function hydrate(SpySalesOrderEntityTransfer $salesOrderEntityTransfer, QuoteTransfer $quoteTransfer): SpySalesOrderEntityTransfer
     {
-        return $this->getFacade()->hydrateOrderSource($spySalesOrderEntityTransfer, $quoteTransfer);
+        return $this->getFacade()->hydrateOrderSource($salesOrderEntityTransfer, $quoteTransfer);
     }
 }

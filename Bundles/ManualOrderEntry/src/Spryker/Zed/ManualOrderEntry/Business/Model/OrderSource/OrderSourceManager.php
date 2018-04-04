@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ManualOrderEntry\Business\Model\OrderSource;
 
-use Generated\Shared\Transfer\OrderSourceTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpySalesOrderEntityTransfer;
 use Spryker\Zed\ManualOrderEntry\Persistence\ManualOrderEntryRepositoryInterface;
@@ -50,17 +49,17 @@ class OrderSourceManager implements OrderSourceManagerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpySalesOrderEntityTransfer $spySalesOrderEntityTransfer
+     * @param \Generated\Shared\Transfer\SpySalesOrderEntityTransfer $salesOrderEntityTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\SpySalesOrderEntityTransfer
      */
-    public function hydrateOrderSource(SpySalesOrderEntityTransfer $spySalesOrderEntityTransfer, QuoteTransfer $quoteTransfer)
+    public function hydrateOrderSource(SpySalesOrderEntityTransfer $salesOrderEntityTransfer, QuoteTransfer $quoteTransfer)
     {
         if ($quoteTransfer->getOrderSource()) {
-            $spySalesOrderEntityTransfer->setFkOrderSource($quoteTransfer->getOrderSource()->getIdOrderSource() ?? null);
+            $salesOrderEntityTransfer->setFkOrderSource($quoteTransfer->getOrderSource()->getIdOrderSource() ?? null);
         }
 
-        return $spySalesOrderEntityTransfer;
+        return $salesOrderEntityTransfer;
     }
 }
