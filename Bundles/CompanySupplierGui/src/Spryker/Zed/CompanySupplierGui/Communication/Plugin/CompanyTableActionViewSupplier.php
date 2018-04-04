@@ -57,6 +57,9 @@ class CompanyTableActionViewSupplier extends AbstractPlugin implements CompanyTa
      */
     protected function getCompanyType(array $company): string
     {
+        if (!$company[static::FK_COMPANY_TYPE]) {
+            return '';
+        }
         $companyTypeTransfer = $this->getFactory()
             ->getCompanySupplierFacade()
             ->getCompanyTypeByIdCompanyType($company[static::FK_COMPANY_TYPE]);

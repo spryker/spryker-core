@@ -70,6 +70,10 @@ class CompanyTableCompanyTypePlugin extends AbstractPlugin implements CompanyTab
      */
     protected function getCompanyType(array $item): string
     {
+        if (!$item[static::FK_COMPANY_TYPE]) {
+            return '';
+        }
+
         $companyTypeTransfer = $this->getFactory()
             ->getCompanySupplierFacade()
             ->getCompanyTypeByIdCompanyType($item[static::FK_COMPANY_TYPE]);
