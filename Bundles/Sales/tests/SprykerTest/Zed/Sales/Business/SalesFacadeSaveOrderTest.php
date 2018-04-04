@@ -110,6 +110,7 @@ class SalesFacadeSaveOrderTest extends Unit
         $container[SalesDependencyProvider::FACADE_SEQUENCE_NUMBER] = new SalesToSequenceNumberBridge($sequenceNumberFacade);
         $container[SalesDependencyProvider::QUERY_CONTAINER_LOCALE] = new LocaleQueryContainer();
         $container[SalesDependencyProvider::STORE] = Store::getInstance();
+        $container[SalesDependencyProvider::PRE_SAVE_ORDER_HYDRATE_PLUGINS] = [];
 
         $this->salesFacade = new SalesFacade();
         $businessFactory = new SalesBusinessFactory();
