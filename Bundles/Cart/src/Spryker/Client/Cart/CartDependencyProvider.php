@@ -8,7 +8,7 @@
 namespace Spryker\Client\Cart;
 
 use Spryker\Client\Cart\Dependency\Client\CartToQuoteBridge;
-use Spryker\Client\Cart\Plugin\ItemCounterPlugin;
+use Spryker\Client\Cart\Plugin\ItemCountPlugin;
 use Spryker\Client\Cart\Plugin\SessionQuoteStorageStrategyPlugin;
 use Spryker\Client\Cart\Plugin\SimpleProductQuoteItemFinderPlugin;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
@@ -141,11 +141,11 @@ class CartDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\Cart\Dependency\Plugin\ItemCounterPluginInterface
+     * @return \Spryker\Client\Cart\Dependency\Plugin\ItemCountPluginInterface
      */
     protected function getItemCountPlugin()
     {
-        return new ItemCounterPlugin();
+        return new ItemCountPlugin();
     }
 
     /**

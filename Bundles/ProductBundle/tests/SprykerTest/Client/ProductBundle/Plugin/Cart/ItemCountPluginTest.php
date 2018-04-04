@@ -10,7 +10,7 @@ namespace SprykerTest\Client\ProductBundle\Plugin\Cart;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Client\ProductBundle\Plugin\Cart\BundledItemCounterPlugin;
+use Spryker\Client\ProductBundle\Plugin\Cart\BundledItemCountPlugin;
 
 /**
  * Auto-generated group annotations
@@ -30,7 +30,7 @@ class ItemCountPluginTest extends Unit
     public function testGetItemCountReturns0WhenNoItemAndNoBundleProductInCart()
     {
         $quoteTransfer = new QuoteTransfer();
-        $itemCountPlugin = new BundledItemCounterPlugin();
+        $itemCountPlugin = new BundledItemCountPlugin();
 
         $this->assertSame(0, $itemCountPlugin->getItemCount($quoteTransfer));
     }
@@ -42,7 +42,7 @@ class ItemCountPluginTest extends Unit
     {
         $quoteTransfer = new QuoteTransfer();
         $quoteTransfer->addItem(new ItemTransfer());
-        $itemCountPlugin = new BundledItemCounterPlugin();
+        $itemCountPlugin = new BundledItemCountPlugin();
 
         $this->assertSame(1, $itemCountPlugin->getItemCount($quoteTransfer));
     }
@@ -54,7 +54,7 @@ class ItemCountPluginTest extends Unit
     {
         $quoteTransfer = new QuoteTransfer();
         $quoteTransfer->addBundleItem(new ItemTransfer());
-        $itemCountPlugin = new BundledItemCounterPlugin();
+        $itemCountPlugin = new BundledItemCountPlugin();
 
         $this->assertSame(1, $itemCountPlugin->getItemCount($quoteTransfer));
     }
@@ -67,7 +67,7 @@ class ItemCountPluginTest extends Unit
         $quoteTransfer = new QuoteTransfer();
         $quoteTransfer->addBundleItem(new ItemTransfer());
         $quoteTransfer->addItem(new ItemTransfer());
-        $itemCountPlugin = new BundledItemCounterPlugin();
+        $itemCountPlugin = new BundledItemCountPlugin();
 
         $this->assertSame(2, $itemCountPlugin->getItemCount($quoteTransfer));
     }
