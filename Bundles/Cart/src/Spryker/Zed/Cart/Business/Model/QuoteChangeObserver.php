@@ -46,6 +46,7 @@ class QuoteChangeObserver implements QuoteChangeObserverInterface
     public function checkChanges(QuoteTransfer $resultQuoteTransfer, QuoteTransfer $sourceQuoteTransfer): void
     {
         $this->checkItemsChanges($resultQuoteTransfer, $sourceQuoteTransfer);
+        $this->runQuoteChangeObserverPlugins($resultQuoteTransfer, $sourceQuoteTransfer);
     }
 
     /**
