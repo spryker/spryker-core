@@ -8,7 +8,7 @@
 namespace Spryker\Client\ProductMeasurementUnitStorage;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\ProductMeasurementUnitStorage\Dependency\Client\ProductMeasurementUnitStorageToStorageInterface;
+use Spryker\Client\ProductMeasurementUnitStorage\Dependency\Client\ProductMeasurementUnitStorageToStorageClientInterface;
 use Spryker\Client\ProductMeasurementUnitStorage\Dependency\Service\ProductMeasurementUnitStorageToSynchronizationServiceInterface;
 use Spryker\Client\ProductMeasurementUnitStorage\Storage\ProductConcreteMeasurementUnitStorageReader;
 use Spryker\Client\ProductMeasurementUnitStorage\Storage\ProductConcreteMeasurementUnitStorageReaderInterface;
@@ -40,9 +40,9 @@ class ProductMeasurementUnitStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ProductMeasurementUnitStorage\Dependency\Client\ProductMeasurementUnitStorageToStorageInterface
+     * @return \Spryker\Client\ProductMeasurementUnitStorage\Dependency\Client\ProductMeasurementUnitStorageToStorageClientInterface
      */
-    public function getStorageClient(): ProductMeasurementUnitStorageToStorageInterface
+    public function getStorageClient(): ProductMeasurementUnitStorageToStorageClientInterface
     {
         return $this->getProvidedDependency(ProductMeasurementUnitStorageDependencyProvider::CLIENT_STORAGE);
     }

@@ -88,7 +88,6 @@ class PermissionDependencyProvider extends AbstractDependencyProvider
      */
     protected function getPermissionStoragePlugins(): array
     {
-        // TODO: CORE-2345 Restore before release
         return [];
     }
 }

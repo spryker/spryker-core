@@ -17,5 +17,5 @@ class ProductQuantityStorageConfig extends AbstractBundleConfig
      *
      * @api
      */
-    const PRODUCT_QUANTITY_RESOURCE_NAME = 'product_quantity';
+    public const PRODUCT_QUANTITY_RESOURCE_NAME = 'product_quantity';
 }

@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit;
 
 use Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer;
-use Spryker\Zed\ProductMeasurementUnit\Dependency\Service\ProductMeasurementUnitToUtilUnitConversionServiceInterface;
+use Spryker\Zed\ProductMeasurementUnit\Dependency\Service\ProductMeasurementUnitToUtilMeasurementUnitConversionServiceInterface;
 use Spryker\Zed\ProductMeasurementUnit\Persistence\ProductMeasurementUnitRepositoryInterface;
 
 class ProductMeasurementSalesUnitReader implements ProductMeasurementSalesUnitReaderInterface
@@ -19,20 +19,20 @@ class ProductMeasurementSalesUnitReader implements ProductMeasurementSalesUnitRe
     protected $productMeasurementUnitRepository;
 
     /**
-     * @var \Spryker\Zed\ProductMeasurementUnit\Dependency\Service\ProductMeasurementUnitToUtilUnitConversionServiceInterface
+     * @var \Spryker\Zed\ProductMeasurementUnit\Dependency\Service\ProductMeasurementUnitToUtilMeasurementUnitConversionServiceInterface
      */
-    protected $utilUnitConversionService;
+    protected $utilMeasurementUnitConversionService;
 
     /**
      * @param \Spryker\Zed\ProductMeasurementUnit\Persistence\ProductMeasurementUnitRepositoryInterface $productMeasurementUnitRepository
-     * @param \Spryker\Zed\ProductMeasurementUnit\Dependency\Service\ProductMeasurementUnitToUtilUnitConversionServiceInterface $utilUnitConversionService
+     * @param \Spryker\Zed\ProductMeasurementUnit\Dependency\Service\ProductMeasurementUnitToUtilMeasurementUnitConversionServiceInterface $utilMeasurementUnitConversionService
      */
     public function __construct(
         ProductMeasurementUnitRepositoryInterface $productMeasurementUnitRepository,
-        ProductMeasurementUnitToUtilUnitConversionServiceInterface $utilUnitConversionService
+        ProductMeasurementUnitToUtilMeasurementUnitConversionServiceInterface $utilMeasurementUnitConversionService
     ) {
         $this->productMeasurementUnitRepository = $productMeasurementUnitRepository;
-        $this->utilUnitConversionService = $utilUnitConversionService;
+        $this->utilMeasurementUnitConversionService = $utilMeasurementUnitConversionService;
     }
 
     /**
@@ -109,7 +109,7 @@ class ProductMeasurementSalesUnitReader implements ProductMeasurementSalesUnitRe
         $salesUnitMeasurementUnitCode = $productMeasurementSalesUnitEntity->getProductMeasurementUnit()->getCode();
         $baseUnitMeasurementUnitCode = $productMeasurementBaseUnitEntity->getProductMeasurementUnit()->getCode();
 
-        $exchangeRatio = $this->utilUnitConversionService->getMeasurementUnitExchangeRatio(
+        $exchangeRatio = $this->utilMeasurementUnitConversionService->getMeasurementUnitExchangeRatio(
             $salesUnitMeasurementUnitCode,
             $baseUnitMeasurementUnitCode
         );

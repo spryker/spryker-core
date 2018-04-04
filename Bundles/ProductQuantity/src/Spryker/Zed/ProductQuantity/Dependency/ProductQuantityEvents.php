@@ -10,12 +10,12 @@ namespace Spryker\Zed\ProductQuantity\Dependency;
 interface ProductQuantityEvents
 {
    /**
-     * Specification
-     * - This event is used for product_quantity publishing.
-     *
-     * @api
-     */
-    const PRODUCT_QUANTITY_PUBLISH = 'ProductQuantity.product_quantity.publish';
+    * Specification
+    * - This event is used for product_quantity publishing.
+    *
+    * @api
+    */
+    public const PRODUCT_QUANTITY_PUBLISH = 'ProductQuantity.product_quantity.publish';
 
     /**
      * Specification
@@ -23,7 +23,7 @@ interface ProductQuantityEvents
      *
      * @api
      */
-    const PRODUCT_QUANTITY_UNPUBLISH = 'ProductQuantity.product_quantity.unpublish';
+    public const PRODUCT_QUANTITY_UNPUBLISH = 'ProductQuantity.product_quantity.unpublish';
 
     /**
      * Specification
@@ -31,7 +31,7 @@ interface ProductQuantityEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_QUANTITY_CREATE = 'Entity.spy_product_quantity.create';
+    public const ENTITY_SPY_PRODUCT_QUANTITY_CREATE = 'Entity.spy_product_quantity.create';
 
     /**
      * Specification
@@ -39,7 +39,7 @@ interface ProductQuantityEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_QUANTITY_UPDATE = 'Entity.spy_product_quantity.update';
+    public const ENTITY_SPY_PRODUCT_QUANTITY_UPDATE = 'Entity.spy_product_quantity.update';
 
     /**
      * Specification
@@ -47,5 +47,5 @@ interface ProductQuantityEvents
      *
      * @api
      */
-    const ENTITY_SPY_PRODUCT_QUANTITY_DELETE = 'Entity.spy_product_quantity.delete';
+    public const ENTITY_SPY_PRODUCT_QUANTITY_DELETE = 'Entity.spy_product_quantity.delete';
 }

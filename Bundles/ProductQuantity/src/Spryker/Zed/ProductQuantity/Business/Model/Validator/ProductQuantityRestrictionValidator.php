@@ -15,13 +15,13 @@ use Spryker\Zed\ProductQuantity\Business\Model\ProductQuantityReaderInterface;
 
 class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionValidatorInterface
 {
-    const ERROR_QUANTITY_MIN_NOT_FULFILLED = 'cart.pre.check.quantity.min.failed';
-    const ERROR_QUANTITY_MAX_NOT_FULFILLED = 'cart.pre.check.quantity.max.failed';
-    const ERROR_QUANTITY_INTERVAL_NOT_FULFILLED = 'cart.pre.check.quantity.interval.failed';
+    protected const ERROR_QUANTITY_MIN_NOT_FULFILLED = 'cart.pre.check.quantity.min.failed';
+    protected const ERROR_QUANTITY_MAX_NOT_FULFILLED = 'cart.pre.check.quantity.max.failed';
+    protected const ERROR_QUANTITY_INTERVAL_NOT_FULFILLED = 'cart.pre.check.quantity.interval.failed';
 
-    const RESTRICTION_MIN = 'min';
-    const RESTRICTION_MAX = 'max';
-    const RESTRICTION_INTERVAL = 'interval';
+    protected const RESTRICTION_MIN = 'min';
+    protected const RESTRICTION_MAX = 'max';
+    protected const RESTRICTION_INTERVAL = 'interval';
 
     /**
      * @var \Spryker\Zed\ProductQuantity\Business\Model\ProductQuantityReaderInterface
@@ -43,7 +43,7 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
      */
     public function validateItemAddition(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
     {
-        $responseTransfer = new CartPreCheckResponseTransfer();
+        $responseTransfer = (new CartPreCheckResponseTransfer())->setIsSuccess(true);
 
         $cartQuantityMap = $this->getItemAddCartQuantityMap($cartChangeTransfer);
         $productQuantityEntityMap = $this->getProductQuantityEntityMap($cartChangeTransfer);
@@ -52,7 +52,7 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
             $this->validateItem($productSku, $productQuantity, $productQuantityEntityMap[$productSku], $responseTransfer);
         }
 
-        return $this->setResponseIsSuccess($responseTransfer);
+        return $responseTransfer;
     }
 
     /**
@@ -71,7 +71,7 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
             $this->validateItem($productSku, $productQuantity, $productQuantityEntityMap[$productSku], $responseTransfer);
         }
 
-        return $this->setResponseIsSuccess($responseTransfer);
+        return $responseTransfer;
     }
 
     /**
@@ -89,15 +89,15 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
         $interval = $productQuantityEntity->getQuantityInterval();
 
         if ($quantity !== 0 && $quantity < $min) {
-            $this->addViolationMessage(static::ERROR_QUANTITY_MIN_NOT_FULFILLED, $sku, $min, $quantity, $responseTransfer);
+            $this->addViolation(static::ERROR_QUANTITY_MIN_NOT_FULFILLED, $sku, $min, $quantity, $responseTransfer);
         }
 
         if ($max !== null && $quantity > $max) {
-            $this->addViolationMessage(static::ERROR_QUANTITY_MAX_NOT_FULFILLED, $sku, $max, $quantity, $responseTransfer);
+            $this->addViolation(static::ERROR_QUANTITY_MAX_NOT_FULFILLED, $sku, $max, $quantity, $responseTransfer);
         }
 
         if (($quantity - $min) % $interval !== 0) {
-            $this->addViolationMessage(static::ERROR_QUANTITY_INTERVAL_NOT_FULFILLED, $sku, $interval, $quantity, $responseTransfer);
+            $this->addViolation(static::ERROR_QUANTITY_INTERVAL_NOT_FULFILLED, $sku, $interval, $quantity, $responseTransfer);
         }
     }
 
@@ -246,25 +246,13 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
      *
      * @return void
      */
-    protected function addViolationMessage(string $message, string $sku, int $restrictionValue, int $actualValue, CartPreCheckResponseTransfer $responseTransfer): void
+    protected function addViolation(string $message, string $sku, int $restrictionValue, int $actualValue, CartPreCheckResponseTransfer $responseTransfer): void
     {
+        $responseTransfer->setIsSuccess(false);
         $responseTransfer->addMessage(
             (new MessageTransfer())
                 ->setValue($message)
                 ->setParameters(['%sku%' => $sku, '%restrictionValue%' => $restrictionValue, '%actualValue%' => $actualValue])
         );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $responseTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
-     */
-    protected function setResponseIsSuccess(CartPreCheckResponseTransfer $responseTransfer): CartPreCheckResponseTransfer
-    {
-        $isSuccessful = count($responseTransfer->getMessages()) === 0;
-        $responseTransfer->setIsSuccess($isSuccessful);
-
-        return $responseTransfer;
     }
 }

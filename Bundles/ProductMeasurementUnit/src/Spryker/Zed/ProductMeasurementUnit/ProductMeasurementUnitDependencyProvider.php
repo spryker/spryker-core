@@ -9,11 +9,11 @@ namespace Spryker\Zed\ProductMeasurementUnit;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\ProductMeasurementUnit\Dependency\Service\ProductMeasurementUnitToUtilUnitConversionServiceBridge;
+use Spryker\Zed\ProductMeasurementUnit\Dependency\Service\ProductMeasurementUnitToUtilMeasurementUnitConversionServiceBridge;
 
 class ProductMeasurementUnitDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const SERVICE_UTIL_UNIT_CONVERSION = 'SERVICE_UTIL_UNIT_CONVERSION';
+    public const SERVICE_UTIL_MEASUREMENT_UNIT_CONVERSION = 'SERVICE_UTIL_MEASUREMENT_UNIT_CONVERSION';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -24,7 +24,7 @@ class ProductMeasurementUnitDependencyProvider extends AbstractBundleDependencyP
     {
         $container = parent::provideBusinessLayerDependencies($container);
 
-        $container = $this->addUtilUnitConversionService($container);
+        $container = $this->addUtilMeasurementUnitConversionService($container);
 
         return $container;
     }
@@ -46,10 +46,10 @@ class ProductMeasurementUnitDependencyProvider extends AbstractBundleDependencyP
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addUtilUnitConversionService(Container $container): Container
+    protected function addUtilMeasurementUnitConversionService(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_UNIT_CONVERSION] = function (Container $container) {
-            return new ProductMeasurementUnitToUtilUnitConversionServiceBridge($container->getLocator()->utilUnitConversion()->service());
+        $container[static::SERVICE_UTIL_MEASUREMENT_UNIT_CONVERSION] = function (Container $container) {
+            return new ProductMeasurementUnitToUtilMeasurementUnitConversionServiceBridge($container->getLocator()->utilMeasurementUnitConversion()->service());
         };
 
         return $container;

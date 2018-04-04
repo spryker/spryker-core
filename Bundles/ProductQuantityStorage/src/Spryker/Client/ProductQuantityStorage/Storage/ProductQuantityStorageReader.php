@@ -9,14 +9,14 @@ namespace Spryker\Client\ProductQuantityStorage\Storage;
 
 use Generated\Shared\Transfer\ProductQuantityStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
-use Spryker\Client\ProductQuantityStorage\Dependency\Client\ProductQuantityStorageToStorageInterface;
+use Spryker\Client\ProductQuantityStorage\Dependency\Client\ProductQuantityStorageToStorageClientInterface;
 use Spryker\Client\ProductQuantityStorage\Dependency\Service\ProductQuantityStorageToSynchronizationServiceInterface;
 use Spryker\Shared\ProductQuantityStorage\ProductQuantityStorageConfig;
 
 class ProductQuantityStorageReader implements ProductQuantityStorageReaderInterface
 {
     /**
-     * @var \Spryker\Client\ProductQuantityStorage\Dependency\Client\ProductQuantityStorageToStorageInterface
+     * @var \Spryker\Client\ProductQuantityStorage\Dependency\Client\ProductQuantityStorageToStorageClientInterface
      */
     protected $storageClient;
 
@@ -26,11 +26,11 @@ class ProductQuantityStorageReader implements ProductQuantityStorageReaderInterf
     protected $synchronizationService;
 
     /**
-     * @param \Spryker\Client\ProductQuantityStorage\Dependency\Client\ProductQuantityStorageToStorageInterface $storageClient
+     * @param \Spryker\Client\ProductQuantityStorage\Dependency\Client\ProductQuantityStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\ProductQuantityStorage\Dependency\Service\ProductQuantityStorageToSynchronizationServiceInterface $synchronizationService
      */
     public function __construct(
-        ProductQuantityStorageToStorageInterface $storageClient,
+        ProductQuantityStorageToStorageClientInterface $storageClient,
         ProductQuantityStorageToSynchronizationServiceInterface $synchronizationService
     ) {
         $this->storageClient = $storageClient;

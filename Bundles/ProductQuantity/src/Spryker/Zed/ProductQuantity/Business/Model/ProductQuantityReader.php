@@ -12,7 +12,7 @@ use Spryker\Zed\ProductQuantity\Persistence\ProductQuantityRepositoryInterface;
 
 class ProductQuantityReader implements ProductQuantityReaderInterface
 {
-    const DEFAULT_INTERVAL = 1;
+    protected const DEFAULT_INTERVAL = 1;
 
     /**
      * @var \Spryker\Zed\ProductQuantity\Persistence\ProductQuantityRepositoryInterface

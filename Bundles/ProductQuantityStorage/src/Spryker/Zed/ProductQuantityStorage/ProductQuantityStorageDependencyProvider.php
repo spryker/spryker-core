@@ -14,8 +14,8 @@ use Spryker\Zed\ProductQuantityStorage\Dependency\Facade\ProductQuantityStorageT
 
 class ProductQuantityStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
-    const FACADE_PRODUCT_QUANTITY = 'FACADE_PRODUCT_QUANTITY';
+    public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+    public const FACADE_PRODUCT_QUANTITY = 'FACADE_PRODUCT_QUANTITY';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

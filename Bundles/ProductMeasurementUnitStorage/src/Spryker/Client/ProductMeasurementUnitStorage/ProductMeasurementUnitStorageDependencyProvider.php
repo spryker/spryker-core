@@ -9,14 +9,14 @@ namespace Spryker\Client\ProductMeasurementUnitStorage;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
-use Spryker\Client\ProductMeasurementUnitStorage\Dependency\Client\ProductMeasurementUnitStorageToStorageBridge;
+use Spryker\Client\ProductMeasurementUnitStorage\Dependency\Client\ProductMeasurementUnitStorageToStorageClientBridge;
 use Spryker\Client\ProductMeasurementUnitStorage\Dependency\Service\ProductMeasurementUnitStorageToSynchronizationServiceBridge;
 
 class ProductMeasurementUnitStorageDependencyProvider extends AbstractDependencyProvider
 {
-    const CLIENT_STORAGE = 'CLIENT_STORAGE';
+    public const CLIENT_STORAGE = 'CLIENT_STORAGE';
 
-    const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
+    public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -39,7 +39,7 @@ class ProductMeasurementUnitStorageDependencyProvider extends AbstractDependency
     protected function addStorageClient(Container $container): Container
     {
         $container[static::CLIENT_STORAGE] = function (Container $container) {
-            return new ProductMeasurementUnitStorageToStorageBridge($container->getLocator()->storage()->client());
+            return new ProductMeasurementUnitStorageToStorageClientBridge($container->getLocator()->storage()->client());
         };
 
         return $container;

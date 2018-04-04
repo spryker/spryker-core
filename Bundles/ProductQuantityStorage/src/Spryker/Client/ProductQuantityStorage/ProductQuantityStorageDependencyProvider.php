@@ -9,13 +9,13 @@ namespace Spryker\Client\ProductQuantityStorage;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
-use Spryker\Client\ProductQuantityStorage\Dependency\Client\ProductQuantityStorageToStorageBridge;
+use Spryker\Client\ProductQuantityStorage\Dependency\Client\ProductQuantityStorageToStorageClientBridge;
 use Spryker\Client\ProductQuantityStorage\Dependency\Service\ProductQuantityStorageToSynchronizationServiceBridge;
 
 class ProductQuantityStorageDependencyProvider extends AbstractDependencyProvider
 {
-    const CLIENT_STORAGE = 'CLIENT_STORAGE';
-    const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
+    public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+    public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -37,8 +37,8 @@ class ProductQuantityStorageDependencyProvider extends AbstractDependencyProvide
      */
     protected function addStorageClient(Container $container): Container
     {
-        $container[self::CLIENT_STORAGE] = function (Container $container) {
-            return new ProductQuantityStorageToStorageBridge($container->getLocator()->storage()->client());
+        $container[static::CLIENT_STORAGE] = function (Container $container) {
+            return new ProductQuantityStorageToStorageClientBridge($container->getLocator()->storage()->client());
         };
 
         return $container;
@@ -51,7 +51,7 @@ class ProductQuantityStorageDependencyProvider extends AbstractDependencyProvide
      */
     protected function addSynchronizationService(Container $container): Container
     {
-        $container[self::SERVICE_SYNCHRONIZATION] = function (Container $container) {
+        $container[static::SERVICE_SYNCHRONIZATION] = function (Container $container) {
             return new ProductQuantityStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());
         };
 

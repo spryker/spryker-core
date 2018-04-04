@@ -16,7 +16,7 @@ use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUni
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit\ProductMeasurementSalesUnitReaderInterface;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit\ProductMeasurementSalesUnitValue;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit\ProductMeasurementSalesUnitValueInterface;
-use Spryker\Zed\ProductMeasurementUnit\Dependency\Service\ProductMeasurementUnitToUtilUnitConversionServiceInterface;
+use Spryker\Zed\ProductMeasurementUnit\Dependency\Service\ProductMeasurementUnitToUtilMeasurementUnitConversionServiceInterface;
 use Spryker\Zed\ProductMeasurementUnit\ProductMeasurementUnitDependencyProvider;
 
 /**
@@ -48,7 +48,7 @@ class ProductMeasurementUnitBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductMeasurementSalesUnitReader(
             $this->getRepository(),
-            $this->getUtilUnitConversionService()
+            $this->getUtilMeasurementUnitConversionService()
         );
     }
 
@@ -61,10 +61,10 @@ class ProductMeasurementUnitBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductMeasurementUnit\Dependency\Service\ProductMeasurementUnitToUtilUnitConversionServiceInterface
+     * @return \Spryker\Zed\ProductMeasurementUnit\Dependency\Service\ProductMeasurementUnitToUtilMeasurementUnitConversionServiceInterface
      */
-    public function getUtilUnitConversionService(): ProductMeasurementUnitToUtilUnitConversionServiceInterface
+    public function getUtilMeasurementUnitConversionService(): ProductMeasurementUnitToUtilMeasurementUnitConversionServiceInterface
     {
-        return $this->getProvidedDependency(ProductMeasurementUnitDependencyProvider::SERVICE_UTIL_UNIT_CONVERSION);
+        return $this->getProvidedDependency(ProductMeasurementUnitDependencyProvider::SERVICE_UTIL_MEASUREMENT_UNIT_CONVERSION);
     }
 }

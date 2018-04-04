@@ -14,8 +14,8 @@ use Spryker\Zed\ProductMeasurementUnitStorage\Dependency\Facade\ProductMeasureme
 
 class ProductMeasurementUnitStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
-    const FACADE_PRODUCT_MEASUREMENT_UNIT = 'FACADE_PRODUCT_MEASUREMENT_UNIT';
+    public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+    public const FACADE_PRODUCT_MEASUREMENT_UNIT = 'FACADE_PRODUCT_MEASUREMENT_UNIT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

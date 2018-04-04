@@ -17,7 +17,7 @@ class ProductMeasurementUnitStorageConfig extends AbstractBundleConfig
      *
      * @api
      */
-    const PRODUCT_MEASUREMENT_UNIT_RESOURCE_NAME = 'product_measurement_unit';
+    public const PRODUCT_MEASUREMENT_UNIT_RESOURCE_NAME = 'product_measurement_unit';
 
     /**
      * Specification:
@@ -25,5 +25,5 @@ class ProductMeasurementUnitStorageConfig extends AbstractBundleConfig
      *
      * @api
      */
-    const PRODUCT_CONCRETE_MEASUREMENT_UNIT_RESOURCE_NAME = 'product_concrete_measurement_unit';
+    public const PRODUCT_CONCRETE_MEASUREMENT_UNIT_RESOURCE_NAME = 'product_concrete_measurement_unit';
 }
