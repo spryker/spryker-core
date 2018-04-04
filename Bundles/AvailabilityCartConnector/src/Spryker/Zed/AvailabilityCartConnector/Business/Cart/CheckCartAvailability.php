@@ -46,7 +46,7 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
         $cartPreCheckResponseTransfer->setIsSuccess(true);
 
         $storeTransfer = $this->getStoreTransfer($cartChangeTransfer);
-        $itemsInCart = $cartChangeTransfer->getQuote()->getItems();
+        $itemsInCart = clone $cartChangeTransfer->getQuote()->getItems();
 
         $messages = new ArrayObject();
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
