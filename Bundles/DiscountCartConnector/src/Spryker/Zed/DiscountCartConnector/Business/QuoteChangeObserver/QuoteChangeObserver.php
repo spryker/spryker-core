@@ -52,7 +52,7 @@ class QuoteChangeObserver implements QuoteChangeObserverInterface
         }
 
         $itemSkuCollection = array_merge(
-            $this->checkCurrentDiscountsDiffItemsSku($indexResultCartRuleTransferCollection, $indexSourceDiscountTransferCollection, $resultQuoteTransfer),
+            $this->checkCurrentDiscountsDiffItemsSku($indexResultDiscountTransferCollection, $indexSourceDiscountTransferCollection, $resultQuoteTransfer),
             $this->checkCurrentDiscountsDiffItemsSku($indexResultCartRuleTransferCollection, $indexSourceCartRuleTransferCollection, $resultQuoteTransfer)
         );
         if (!empty($itemSkuCollection)) {
