@@ -6,10 +6,6 @@
 >
 
     <transfer name="CompanyUnitAddress">
-        <property name="fkCompanyBusinessUnit" dataBuilderRule="="/>
-        <property name="fkCompany" dataBuilderRule="="/>
-        <property name="fkCountry" dataBuilderRule="="/>
-        <property name="fkRegion" dataBuilderRule="="/>
         <property name="address1" dataBuilderRule="unique()->sentence(2)"/>
         <property name="address2" dataBuilderRule="unique()->sentence(2)"/>
         <property name="address3" dataBuilderRule="unique()->sentence(2)"/>
