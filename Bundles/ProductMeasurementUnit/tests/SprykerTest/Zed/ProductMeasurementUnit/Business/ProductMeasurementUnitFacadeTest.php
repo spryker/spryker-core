@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 use Generated\Shared\Transfer\SpyProductMeasurementUnitEntityTransfer;
+use PHPUnit\Framework\SkippedTestError;
 
 /**
  * Auto-generated group annotations
@@ -202,6 +203,8 @@ class ProductMeasurementUnitFacadeTest extends Unit
      */
     public function testGetSalesUnitEntityRetrievesSalesUnitEntity()
     {
+        $this->assertDbPgSql();
+
         // Assign
         $code = 'MYCODE' . rand(1, 100);
         $productTransfer = $this->tester->haveProduct();
@@ -233,6 +236,8 @@ class ProductMeasurementUnitFacadeTest extends Unit
      */
     public function testGetSalesUnitsByIdProductRetrievesAllProductRelatedSalesUnits()
     {
+        $this->assertDbPgSql();
+
         // Assign
         $code = 'MYCODE' . rand(1, 100);
         $productTransfer = $this->tester->haveProduct();
@@ -266,5 +271,17 @@ class ProductMeasurementUnitFacadeTest extends Unit
 
         // Assert
         $this->assertEquals($expectedSalesUnitIds, $actualSalesUnitIds);
+    }
+
+    /**
+     * @throws \PHPUnit\Framework\SkippedTestError
+     *
+     * @return void
+     */
+    protected function assertDbPgSql()
+    {
+        if (!$this->tester->isDbPgSql()) {
+            throw new SkippedTestError('Warning: no PostgreSQL is detected');
+        }
     }
 }

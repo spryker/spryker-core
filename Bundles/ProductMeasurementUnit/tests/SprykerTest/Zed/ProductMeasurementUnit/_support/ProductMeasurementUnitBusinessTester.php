@@ -2,6 +2,8 @@
 namespace SprykerTest\Zed\ProductMeasurementUnit;
 
 use Codeception\Actor;
+use Spryker\Shared\Config\Config;
+use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
 
 /**
  * Inherited Methods
@@ -25,4 +27,16 @@ class ProductMeasurementUnitBusinessTester extends Actor
    /**
     * Define custom actions here
     */
+
+    const DB_TYPE_PGSQL = 'pgsql';
+
+    /**
+     * @return bool
+     */
+    public function isDbPgSql()
+    {
+        $dbType = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
+
+        return $dbType === static::DB_TYPE_PGSQL;
+    }
 }
