@@ -93,7 +93,7 @@ class CartFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Cart\Dependency\Plugin\CartChangeRequestExpanderPluginInterface[]
+     * @return \Spryker\Client\CartExtension\Dependency\Plugin\CartChangeRequestExpanderPluginInterface[]
      */
     protected function getAddItemsRequestExpanderPlugins()
     {
@@ -101,7 +101,7 @@ class CartFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Cart\Dependency\Plugin\CartChangeRequestExpanderPluginInterface[]
+     * @return \Spryker\Client\CartExtension\Dependency\Plugin\CartChangeRequestExpanderPluginInterface[]
      */
     protected function getRemoveItemsRequestExpanderPlugins()
     {

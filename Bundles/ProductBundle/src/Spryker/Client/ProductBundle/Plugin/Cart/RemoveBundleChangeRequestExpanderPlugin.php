@@ -8,7 +8,7 @@
 namespace Spryker\Client\ProductBundle\Plugin\Cart;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
-use Spryker\Client\Cart\Dependency\Plugin\CartChangeRequestExpanderPluginInterface;
+use Spryker\Client\CartExtension\Dependency\Plugin\CartChangeRequestExpanderPluginInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
 
 /**

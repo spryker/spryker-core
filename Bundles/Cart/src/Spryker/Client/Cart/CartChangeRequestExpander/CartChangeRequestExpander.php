@@ -12,18 +12,18 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 class CartChangeRequestExpander implements CartChangeRequestExpanderInterface
 {
     /**
-     * @var array|\Spryker\Client\Cart\Dependency\Plugin\CartChangeRequestExpanderPluginInterface[]
+     * @var array|\Spryker\Client\CartExtension\Dependency\Plugin\CartChangeRequestExpanderPluginInterface[]
      */
     protected $addItemRequestExpanderPlugins;
 
     /**
-     * @var array|\Spryker\Client\Cart\Dependency\Plugin\CartChangeRequestExpanderPluginInterface[]
+     * @var array|\Spryker\Client\CartExtension\Dependency\Plugin\CartChangeRequestExpanderPluginInterface[]
      */
     protected $removeItemRequestExpanderPlugins;
 
     /**
-     * @param \Spryker\Client\Cart\Dependency\Plugin\CartChangeRequestExpanderPluginInterface[] $addItemsRequestExpanderPlugins
-     * @param \Spryker\Client\Cart\Dependency\Plugin\CartChangeRequestExpanderPluginInterface[] $removeItemRequestExpanderPlugins
+     * @param \Spryker\Client\CartExtension\Dependency\Plugin\CartChangeRequestExpanderPluginInterface[] $addItemsRequestExpanderPlugins
+     * @param \Spryker\Client\CartExtension\Dependency\Plugin\CartChangeRequestExpanderPluginInterface[] $removeItemRequestExpanderPlugins
      */
     public function __construct(
         array $addItemsRequestExpanderPlugins,

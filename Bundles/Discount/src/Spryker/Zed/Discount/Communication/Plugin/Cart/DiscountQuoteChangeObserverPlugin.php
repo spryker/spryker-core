@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\Discount\DiscountConfig getConfig()
  * @method \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory getFactory()
  */
-class DiscountChangesQuoteChangeObserverPlugin extends AbstractPlugin implements QuoteChangeObserverPluginInterface
+class DiscountQuoteChangeObserverPlugin extends AbstractPlugin implements QuoteChangeObserverPluginInterface
 {
     /**
      * Specification:

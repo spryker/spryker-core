@@ -14,7 +14,7 @@ use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface;
 /**
  * @method \Spryker\Zed\Currency\Business\CurrencyFacadeInterface getFacade()
  */
-class SetDefaultCurrencyToBeforeQuoteCreatePlugin extends AbstractPlugin implements QuoteWritePluginInterface
+class SetDefaultCurrencyBeforeQuoteCreatePlugin extends AbstractPlugin implements QuoteWritePluginInterface
 {
     /**
      * Specification:
