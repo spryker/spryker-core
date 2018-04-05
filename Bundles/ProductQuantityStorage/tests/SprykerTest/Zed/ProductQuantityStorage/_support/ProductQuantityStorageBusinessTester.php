@@ -25,4 +25,20 @@ class ProductQuantityStorageBusinessTester extends Actor
    /**
     * Define custom actions here
     */
+
+    const PARAM_PROJECT = 'PROJECT';
+
+    const PROJECT_SUITE = 'suite';
+
+    /**
+     * @return bool
+     */
+    public function isSuiteProject()
+    {
+        if (getenv(static::PARAM_PROJECT) === static::PROJECT_SUITE) {
+            return true;
+        }
+
+        return false;
+    }
 }
