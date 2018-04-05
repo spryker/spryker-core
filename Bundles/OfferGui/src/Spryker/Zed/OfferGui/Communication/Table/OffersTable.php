@@ -17,6 +17,7 @@ use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToCustomerFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToMoneyFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilDateTimeServiceInterface;
 use Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilSanitizeServiceInterface;
+use Spryker\Zed\OfferGui\OfferGuiConfig;
 
 class OffersTable extends AbstractTable
 {
@@ -60,6 +61,11 @@ class OffersTable extends AbstractTable
     protected $customerFacade;
 
     /**
+     * @var \Spryker\Zed\OfferGui\OfferGuiConfig
+     */
+    protected $config;
+
+    /**
      * @param \Spryker\Zed\OfferGui\Communication\Table\OffersTableQueryBuilderInterface $queryBuilder
      * @param \Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToMoneyFacadeInterface $moneyFacade
      * @param \Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToCustomerFacadeInterface $customerFacade
@@ -71,13 +77,15 @@ class OffersTable extends AbstractTable
         OfferGuiToMoneyFacadeInterface $moneyFacade,
         OfferGuiToCustomerFacadeInterface $customerFacade,
         OfferGuiToUtilSanitizeServiceInterface $sanitizeService,
-        OfferGuiToUtilDateTimeServiceInterface $utilDateTimeService
+        OfferGuiToUtilDateTimeServiceInterface $utilDateTimeService,
+        OfferGuiConfig $config
     ) {
         $this->queryBuilder = $queryBuilder;
         $this->moneyFacade = $moneyFacade;
         $this->sanitizeService = $sanitizeService;
         $this->utilDateTimeService = $utilDateTimeService;
         $this->customerFacade = $customerFacade;
+        $this->config = $config;
     }
 
     /**

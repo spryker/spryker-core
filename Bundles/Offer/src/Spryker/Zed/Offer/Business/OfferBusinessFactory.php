@@ -10,6 +10,8 @@ namespace Spryker\Zed\Offer\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Offer\Business\Model\OfferConverter;
 use Spryker\Zed\Offer\Business\Model\OfferConverterInterface;
+use Spryker\Zed\Offer\Business\Model\OfferItemSubtotalAggregator;
+use Spryker\Zed\Offer\Business\Model\OfferItemSubtotalAggregatorInterface;
 use Spryker\Zed\Offer\Business\Model\OfferPluginExecutor;
 use Spryker\Zed\Offer\Business\Model\OfferPluginExecutorInterface;
 use Spryker\Zed\Offer\Business\Model\OfferReader;
@@ -69,6 +71,14 @@ class OfferBusinessFactory extends AbstractBusinessFactory
             $this->getOfferHydratorPlugins(),
             $this->getOfferDoUpdatePlugins()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Offer\Business\Model\OfferItemSubtotalAggregatorInterface
+     */
+    public function createOfferItemSubtotalAggregator(): OfferItemSubtotalAggregatorInterface
+    {
+        return new OfferItemSubtotalAggregator();
     }
 
     /**

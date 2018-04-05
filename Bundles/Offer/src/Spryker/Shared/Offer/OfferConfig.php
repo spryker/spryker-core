@@ -25,7 +25,7 @@ class OfferConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getStatusOrder(): ?string
+    public function getStatusOrder(): string
     {
         return static::STATUS_ORDER;
     }

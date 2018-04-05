@@ -15,6 +15,7 @@ use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToCustomerFacadeBridge;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToMoneyFacadeBridge;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToOfferFacadeBridge;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToOmsFacadeBridge;
+use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToStoreFacadeBridge;
 use Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilDateTimeServiceBridge;
 use Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilSanitizeServiceBridge;
 
@@ -25,6 +26,7 @@ class OfferGuiDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_MONEY = 'FACADE_MONEY';
     public const FACADE_OMS = 'FACADE_OMS';
     public const FACADE_CART = 'FACADE_CART';
+    public const FACADE_STORE = 'FACADE_STORE';
     public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     public const PROPEL_QUERY_OFFER = 'PROPEL_QUERY_OFFER';
@@ -39,6 +41,7 @@ class OfferGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = parent::provideCommunicationLayerDependencies($container);
 
         $container = $this->addOfferFacade($container);
+        $container = $this->addStoreFacade($container);
         $container = $this->addCustomerFacade($container);
         $container = $this->addMoneyFacade($container);
         $container = $this->addOmsFacade($container);
@@ -59,6 +62,20 @@ class OfferGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_CUSTOMER] = function (Container $container) {
             return new OfferGuiToCustomerFacadeBridge($container->getLocator()->customer()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreFacade(Container $container)
+    {
+        $container[static::FACADE_STORE] = function (Container $container) {
+            return new OfferGuiToStoreFacadeBridge($container->getLocator()->store()->facade());
         };
 
         return $container;

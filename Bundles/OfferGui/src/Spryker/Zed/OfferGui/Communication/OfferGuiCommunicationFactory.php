@@ -23,6 +23,7 @@ use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToCustomerFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToMoneyFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToOfferFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToOmsFacadeInterface;
+use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToStoreFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilDateTimeServiceInterface;
 use Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilSanitizeServiceInterface;
 use Spryker\Zed\OfferGui\OfferGuiDependencyProvider;
@@ -43,7 +44,8 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->getMoneyFacade(),
             $this->getCustomerFacade(),
             $this->getUtilSanitize(),
-            $this->getUtilDateTimeService()
+            $this->getUtilDateTimeService(),
+            $this->getConfig()
         );
     }
 
@@ -71,14 +73,9 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
         return $this->getProvidedDependency(OfferGuiDependencyProvider::FACADE_MONEY);
     }
 
-    /**
-     * todo: checl
-     *
-     * @return \Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToOmsFacadeInterface
-     */
-    public function getOmsFacade(): OfferGuiToOmsFacadeInterface
+    public function getStoreFacade(): OfferGuiToStoreFacadeInterface
     {
-        return $this->getProvidedDependency(OfferGuiDependencyProvider::FACADE_OMS);
+        return $this->getProvidedDependency(OfferGuiDependencyProvider::FACADE_STORE);
     }
 
     /**

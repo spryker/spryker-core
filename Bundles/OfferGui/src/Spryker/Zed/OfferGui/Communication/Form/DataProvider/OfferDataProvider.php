@@ -4,30 +4,39 @@ namespace Spryker\Zed\OfferGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\CustomerCollectionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OfferTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Spryker\Zed\Currency\Business\CurrencyFacadeInterface;
 use Spryker\Zed\Kernel\Locator;
-use Spryker\Zed\Offer\Business\OfferFacadeInterface;
 use Spryker\Zed\OfferGui\Communication\Form\Offer\EditOfferType;
+use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToCustomerFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToOfferFacadeInterface;
 
 class OfferDataProvider
 {
     /**
-     * @var OfferFacadeInterface
+     * @var \Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToOfferFacadeInterface
      */
     protected $offerFacade;
 
     /**
-     * @param OfferGuiToOfferFacadeInterface $offerFacade
+     * @var \Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToCustomerFacadeInterface
      */
-    public function __construct(OfferGuiToOfferFacadeInterface $offerFacade)
-    {
+    protected $customerFacade;
+
+    /**
+     * @param \Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToOfferFacadeInterface $offerFacade
+     * @param \Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToCustomerFacadeInterface $customerFacade
+     */
+    public function __construct(
+        OfferGuiToOfferFacadeInterface $offerFacade,
+        OfferGuiToCustomerFacadeInterface $customerFacade
+    ) {
         $this->offerFacade = $offerFacade;
+        $this->customerFacade = $customerFacade;
     }
 
     /**
@@ -78,18 +87,16 @@ class OfferDataProvider
      */
     protected function getCustomerList()
     {
-        //todo: move to DP
-        $customerCollection = SpyCustomerQuery::create()->find();
+        $customerCollection = $this->customerFacade->getCustomerCollection($this->createCustomerCollectionTransfer());
         $customerList = [];
 
-        /** @var \Orm\Zed\Customer\Persistence\SpyCustomer $customerEntity */
-        foreach ($customerCollection as $customerEntity) {
-            $customerName = $customerEntity->getLastName()
+        foreach ($customerCollection->getCustomers() as $customerTransfer) {
+            $customerName = $customerTransfer->getLastName()
                 . ' '
-                . $customerEntity->getFirstName()
-                . ' [' . $customerEntity->getEmail() . ']';
+                . $customerTransfer->getFirstName()
+                . ' [' . $customerTransfer->getEmail() . ']';
 
-            $customerList[$customerEntity->getCustomerReference()] = $customerName;
+            $customerList[$customerTransfer->getCustomerReference()] = $customerName;
         }
 
         return $customerList;
@@ -119,5 +126,15 @@ class OfferDataProvider
         }
 
         return array_flip($storeList);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
+     */
+    protected function createCustomerCollectionTransfer(): CustomerCollectionTransfer
+    {
+        $customerCollectionTransfer = new CustomerCollectionTransfer();
+
+        return $customerCollectionTransfer;
     }
 }

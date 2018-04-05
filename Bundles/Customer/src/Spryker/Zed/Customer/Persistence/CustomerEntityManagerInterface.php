@@ -5,10 +5,8 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\OfferGui;
+namespace Spryker\Zed\Customer\Persistence;
 
-use Spryker\Zed\Kernel\AbstractBundleConfig;
-
-class OfferGuiConfig extends AbstractBundleConfig
+interface CustomerEntityManagerInterface
 {
 }

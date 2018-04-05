@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Offer\Business;
 
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\OfferListTransfer;
 use Generated\Shared\Transfer\OfferResponseTransfer;
 use Generated\Shared\Transfer\OfferTransfer;
@@ -76,4 +77,16 @@ interface OfferFacadeInterface
      * @throws \Exception
      */
     public function updateOffer(OfferTransfer $offerTransfer): OfferResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Recalculate offer items subtotal
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function aggregateOfferItemSubtotal(CalculableObjectTransfer $calculableObjectTransfer): void;
 }

@@ -5,20 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\OfferGui\Dependency\Facade;
+namespace Spryker\Zed\Customer\Persistence;
 
 use Generated\Shared\Transfer\CustomerCollectionTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
 
-interface OfferGuiToCustomerFacadeInterface
+interface CustomerRepositoryInterface
 {
-    /**
-     * @param string $customerReference
-     *
-     * @return \Generated\Shared\Transfer\CustomerTransfer|null
-     */
-    public function findCustomerByReference($customerReference): ?CustomerTransfer;
-
     /**
      * @param \Generated\Shared\Transfer\CustomerCollectionTransfer $customerCollectionTransfer
      *
