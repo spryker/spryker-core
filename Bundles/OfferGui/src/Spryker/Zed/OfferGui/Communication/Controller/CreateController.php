@@ -6,6 +6,7 @@ namespace Spryker\Zed\OfferGui\Communication\Controller;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\OfferResponseTransfer;
 use Generated\Shared\Transfer\OfferTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -13,6 +14,7 @@ use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Cart\Business\CartFacadeInterface;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\Kernel\Locator;
+use Spryker\Zed\Messenger\Business\MessengerFacadeInterface;
 use Spryker\Zed\OfferGui\Communication\Form\Offer\CreateOfferType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -90,12 +92,7 @@ class CreateController extends AbstractController
                     ->createOffer($offerTransfer);
 
             if ($offerResponseTransfer->getIsSuccessful()) {
-                $redirectUrl = Url::generate(
-                    '/offer-gui/edit',
-                    [EditController::PARAM_ID_OFFER => $offerResponseTransfer->getOffer()->getIdOffer()]
-                )->build();
-
-                return $this->redirectResponse($redirectUrl);
+                return $this->getSuccessfulRedirect($offerResponseTransfer);
             }
         }
 
@@ -103,5 +100,24 @@ class CreateController extends AbstractController
             'offer' => $offerTransfer,
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @param OfferResponseTransfer $offerResponseTransfer
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function getSuccessfulRedirect(OfferResponseTransfer $offerResponseTransfer)
+    {
+        /** @var MessengerFacadeInterface $messengerFacade */
+        $messengerFacade = Locator::getInstance()->messenger()->facade();
+        $messengerFacade->getStoredMessages();
+
+        $redirectUrl = Url::generate(
+            '/offer-gui/edit',
+            [EditController::PARAM_ID_OFFER => $offerResponseTransfer->getOffer()->getIdOffer()]
+        )->build();
+
+        return $this->redirectResponse($redirectUrl);
     }
 }
