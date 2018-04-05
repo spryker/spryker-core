@@ -278,4 +278,43 @@ interface ProductBundleFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function filterBundleItemsOnCartReload(QuoteTransfer $quoteTransfer);
+
+    /**
+     * Specification:
+     *  - Replace quote items with bundle if it is possible.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function replaceItemsWithBundleItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
+
+    /**
+     * Specification:
+     *  - Find item in quote.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $sku
+     * @param string|null $groupKey
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer|null
+     */
+    public function findItemInQuote(QuoteTransfer $quoteTransfer, $sku, $groupKey);
+
+    /**
+     * Specification:
+     *  - Checks price difference between quotes bundle items.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $resultQuoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $sourceQuoteTransfer
+     *
+     * @return void
+     */
+    public function checkBundleItemsPriceChanges(QuoteTransfer $resultQuoteTransfer, QuoteTransfer $sourceQuoteTransfer): void;
 }

@@ -14,7 +14,7 @@ use Spryker\Client\Cart\CartChangeRequestExpander\CartChangeRequestExpander;
 use Spryker\Client\Cart\CartClient;
 use Spryker\Client\Cart\Dependency\Client\CartToQuoteInterface;
 use Spryker\Client\Cart\Dependency\Plugin\QuoteStorageStrategyPluginInterface;
-use Spryker\Client\Cart\Plugin\ItemCounterPlugin;
+use Spryker\Client\Cart\Plugin\ItemCountPlugin;
 use Spryker\Client\Cart\Plugin\SessionQuoteStorageStrategyPlugin;
 use Spryker\Client\Cart\Plugin\SimpleProductQuoteItemFinderPlugin;
 use Spryker\Client\Cart\Zed\CartStubInterface;
@@ -195,7 +195,7 @@ class CartClientTest extends Unit
         $mockBuilder->setMethods(['getQuote', 'getItemCounter']);
         $cartClientMock = $mockBuilder->getMock();
         $cartClientMock->method('getQuote')->willReturn($quoteTransfer);
-        $cartClientMock->method('getItemCounter')->willReturn(new ItemCounterPlugin());
+        $cartClientMock->method('getItemCounter')->willReturn(new ItemCountPlugin());
 
         $this->assertSame(1, $cartClientMock->getItemCount());
     }

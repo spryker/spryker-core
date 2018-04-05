@@ -27,4 +27,24 @@ interface DataImportFacadeInterface
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
     public function import(DataImporterConfigurationTransfer $dataImporterConfiguration = null);
+
+    /**
+     * Specification:
+     * - Returns a list of all applied `DataImportPluginInterfaces` and `DataImportInterfaces`.
+     *
+     * @api
+     *
+     * @return array
+     */
+    public function listImporters(): array;
+
+    /**
+     * Specification:
+     * - Triggers publish event for all imported entities.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function publish(): void;
 }

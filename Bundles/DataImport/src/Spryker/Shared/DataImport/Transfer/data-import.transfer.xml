@@ -12,6 +12,7 @@
     <transfer name="DataImporterReaderConfiguration">
         <property name="fileName" type="string" />
         <property name="fileEncoding" type="string" />
+        <property name="directories" type="array" singular="directory" />
         <property name="offset" type="int" />
         <property name="limit" type="int" />
         <property name="csvDelimiter" type="string" />

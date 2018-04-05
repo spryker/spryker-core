@@ -15,7 +15,7 @@ use Spryker\Zed\Cart\Dependency\Facade\CartToMessengerInterface;
 
 class QuoteChangeObserver implements QuoteChangeObserverInterface
 {
-    const CART_SYNCHRONIZE_ITEMS_PRICE_CHANGED = 'cart.validate.items.price.changed';
+    public const CART_SYNCHRONIZE_ITEMS_PRICE_CHANGED = 'cart.validate.items.price.changed';
 
     /**
      * @var \Spryker\Zed\Cart\Dependency\Facade\CartToMessengerInterface
@@ -23,11 +23,18 @@ class QuoteChangeObserver implements QuoteChangeObserverInterface
     protected $messengerFacade;
 
     /**
-     * @param \Spryker\Zed\Cart\Dependency\Facade\CartToMessengerInterface $messengerFacade
+     * @var array|\Spryker\Zed\CartExtension\Dependency\Plugin\QuoteChangeObserverPluginInterface[]
      */
-    public function __construct(CartToMessengerInterface $messengerFacade)
+    protected $quoteChangeObserverPlugins;
+
+    /**
+     * @param \Spryker\Zed\Cart\Dependency\Facade\CartToMessengerInterface $messengerFacade
+     * @param \Spryker\Zed\CartExtension\Dependency\Plugin\QuoteChangeObserverPluginInterface[] $quoteChangeObserverPlugins
+     */
+    public function __construct(CartToMessengerInterface $messengerFacade, array $quoteChangeObserverPlugins)
     {
         $this->messengerFacade = $messengerFacade;
+        $this->quoteChangeObserverPlugins = $quoteChangeObserverPlugins;
     }
 
     /**
@@ -36,9 +43,10 @@ class QuoteChangeObserver implements QuoteChangeObserverInterface
      *
      * @return void
      */
-    public function checkChanges(QuoteTransfer $resultQuoteTransfer, QuoteTransfer $sourceQuoteTransfer)
+    public function checkChanges(QuoteTransfer $resultQuoteTransfer, QuoteTransfer $sourceQuoteTransfer): void
     {
         $this->checkItemsChanges($resultQuoteTransfer, $sourceQuoteTransfer);
+        $this->runQuoteChangeObserverPlugins($resultQuoteTransfer, $sourceQuoteTransfer);
     }
 
     /**
@@ -47,7 +55,7 @@ class QuoteChangeObserver implements QuoteChangeObserverInterface
      *
      * @return void
      */
-    protected function checkItemsChanges(QuoteTransfer $resultQuoteTransfer, QuoteTransfer $sourceQuoteTransfer)
+    protected function checkItemsChanges(QuoteTransfer $resultQuoteTransfer, QuoteTransfer $sourceQuoteTransfer): void
     {
         $resultQuoteItemIndex = $this->createQuoteItemIndex($resultQuoteTransfer->getItems());
         $sourceQuoteItemIndex = $this->createQuoteItemIndex($sourceQuoteTransfer->getItems());
@@ -60,7 +68,7 @@ class QuoteChangeObserver implements QuoteChangeObserverInterface
      *
      * @return array
      */
-    protected function createQuoteItemIndex(ArrayObject $cartItems)
+    protected function createQuoteItemIndex(ArrayObject $cartItems): array
     {
         $cartIndex = [];
         foreach ($cartItems as $itemTransfer) {
@@ -80,7 +88,7 @@ class QuoteChangeObserver implements QuoteChangeObserverInterface
      *
      * @return void
      */
-    protected function checkQuoteItemPriceChanges(array $resultQuoteItemIndex, array $sourceQuoteItemIndex)
+    protected function checkQuoteItemPriceChanges(array $resultQuoteItemIndex, array $sourceQuoteItemIndex): void
     {
         $quoteItemDiff = $this->getQuoteItemsPriceDiff($resultQuoteItemIndex, $sourceQuoteItemIndex);
         if (!empty($quoteItemDiff)) {
@@ -98,12 +106,12 @@ class QuoteChangeObserver implements QuoteChangeObserverInterface
      *
      * @return array
      */
-    protected function getQuoteItemsPriceDiff(array $resultQuoteItemIndex, array $sourceQuoteItemIndex)
+    protected function getQuoteItemsPriceDiff(array $resultQuoteItemIndex, array $sourceQuoteItemIndex): array
     {
         $quoteItemDiff = [];
         foreach ($resultQuoteItemIndex as $key => $value) {
             $oldPrice = $sourceQuoteItemIndex[$key]['price'] ?? 0;
-            if ($value['price'] != $oldPrice) {
+            if (isset($sourceQuoteItemIndex[$key]) && $value['price'] != $oldPrice) {
                 $quoteItemDiff[] = $value['sku'];
             }
         }
@@ -116,7 +124,7 @@ class QuoteChangeObserver implements QuoteChangeObserverInterface
      *
      * @return string
      */
-    protected function getItemIdentifier(ItemTransfer $itemTransfer)
+    protected function getItemIdentifier(ItemTransfer $itemTransfer): string
     {
         return $itemTransfer->getGroupKey() ?: $itemTransfer->getSku();
     }
@@ -127,7 +135,7 @@ class QuoteChangeObserver implements QuoteChangeObserverInterface
      *
      * @return \Generated\Shared\Transfer\MessageTransfer
      */
-    protected function createMessengerMessageTransfer($message, array $parameters = [])
+    protected function createMessengerMessageTransfer($message, array $parameters = []): MessageTransfer
     {
         $messageTransfer = new MessageTransfer();
         $messageTransfer
@@ -135,5 +143,18 @@ class QuoteChangeObserver implements QuoteChangeObserverInterface
             ->setParameters($parameters);
 
         return $messageTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $resultQuoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $sourceQuoteTransfer
+     *
+     * @return void
+     */
+    protected function runQuoteChangeObserverPlugins(QuoteTransfer $resultQuoteTransfer, QuoteTransfer $sourceQuoteTransfer): void
+    {
+        foreach ($this->quoteChangeObserverPlugins as $quoteChangeObserverPlugin) {
+            $quoteChangeObserverPlugin->checkChanges($resultQuoteTransfer, $sourceQuoteTransfer);
+        }
     }
 }

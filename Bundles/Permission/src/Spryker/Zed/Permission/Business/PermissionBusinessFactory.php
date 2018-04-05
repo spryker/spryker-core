@@ -16,6 +16,7 @@ use Spryker\Zed\Permission\PermissionDependencyProvider;
 /**
  * @method \Spryker\Zed\Permission\Persistence\PermissionRepositoryInterface getRepository()
  * @method \Spryker\Zed\Permission\Persistence\PermissionEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\Permission\PermissionConfig getConfig()
  */
 class PermissionBusinessFactory extends AbstractBusinessFactory
 {

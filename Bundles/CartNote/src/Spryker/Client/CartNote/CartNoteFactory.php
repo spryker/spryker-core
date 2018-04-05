@@ -12,7 +12,10 @@ use Spryker\Client\CartNote\QuoteStorageStrategy\QuoteStorageStrategyInterface;
 use Spryker\Client\CartNote\QuoteStorageStrategy\QuoteStorageStrategyProvider;
 use Spryker\Client\CartNote\QuoteStorageStrategy\QuoteStorageStrategyProviderInterface;
 use Spryker\Client\CartNote\QuoteStorageStrategy\SessionQuoteStorageStrategy;
+use Spryker\Client\CartNote\Zed\CartNoteStub;
+use Spryker\Client\CartNote\Zed\CartNoteStubInterface;
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\ZedRequest\ZedRequestClientInterface;
 
 class CartNoteFactory extends AbstractFactory
 {
@@ -61,8 +64,16 @@ class CartNoteFactory extends AbstractFactory
     {
         return new DatabaseQuoteStorageStrategy(
             $this->getQuoteClient(),
-            $this->getPersistentCartClient()
+            $this->createZedCartNoteStub()
         );
+    }
+
+    /**
+     * @return \Spryker\Client\CartNote\Zed\CartNoteStubInterface
+     */
+    public function createZedCartNoteStub(): CartNoteStubInterface
+    {
+        return new CartNoteStub($this->getZedRequestClient());
     }
 
     /**
@@ -74,10 +85,10 @@ class CartNoteFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\CartNote\Dependency\Client\CartNoteToPersistentCartClientInterface
+     * @return \Spryker\Client\ZedRequest\ZedRequestClientInterface
      */
-    public function getPersistentCartClient()
+    public function getZedRequestClient(): ZedRequestClientInterface
     {
-        return $this->getProvidedDependency(CartNoteDependencyProvider::CLIENT_PERSISTENT_CART);
+        return $this->getProvidedDependency(CartNoteDependencyProvider::CLIENT_ZED_REQUEST);
     }
 }

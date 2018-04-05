@@ -10,7 +10,7 @@ namespace SprykerTest\Client\Cart\Plugin;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Client\Cart\Plugin\ItemCounterPlugin;
+use Spryker\Client\Cart\Plugin\ItemCountPlugin;
 
 /**
  * Auto-generated group annotations
@@ -30,7 +30,7 @@ class ItemCountPluginTest extends Unit
     {
         $quoteTransfer = new QuoteTransfer();
 
-        $itemCountPlugin = new ItemCounterPlugin();
+        $itemCountPlugin = new ItemCountPlugin();
         $this->assertSame(0, $itemCountPlugin->getItemCount($quoteTransfer));
     }
 
@@ -43,7 +43,7 @@ class ItemCountPluginTest extends Unit
         $itemTransfer = new ItemTransfer();
         $quoteTransfer->addItem($itemTransfer);
 
-        $itemCountPlugin = new ItemCounterPlugin();
+        $itemCountPlugin = new ItemCountPlugin();
         $this->assertSame(1, $itemCountPlugin->getItemCount($quoteTransfer));
     }
 }

@@ -9,6 +9,7 @@ namespace Spryker\Zed\Cart\Business;
 
 use Spryker\Zed\Cart\Business\Model\Operation;
 use Spryker\Zed\Cart\Business\Model\QuoteChangeObserver;
+use Spryker\Zed\Cart\Business\Model\QuoteChangeObserverInterface;
 use Spryker\Zed\Cart\Business\Model\QuoteValidator;
 use Spryker\Zed\Cart\Business\StorageProvider\NonPersistentProvider;
 use Spryker\Zed\Cart\CartDependencyProvider;
@@ -62,9 +63,9 @@ class CartBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Cart\Business\Model\QuoteChangeObserverInterface
      */
-    public function createQuoteChangeObserver()
+    public function createQuoteChangeObserver(): QuoteChangeObserverInterface
     {
-        return new QuoteChangeObserver($this->getMessengerFacade());
+        return new QuoteChangeObserver($this->getMessengerFacade(), $this->getQuoteChangeObserverPlugins());
     }
 
     /**
@@ -121,5 +122,13 @@ class CartBusinessFactory extends AbstractBusinessFactory
     protected function getTerminationPlugins()
     {
         return $this->getProvidedDependency(CartDependencyProvider::CART_TERMINATION_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\QuoteChangeObserverPluginInterface[]
+     */
+    protected function getQuoteChangeObserverPlugins(): array
+    {
+        return $this->getProvidedDependency(CartDependencyProvider::PLUGINS_QUOTE_CHANGE_OBSERVER);
     }
 }

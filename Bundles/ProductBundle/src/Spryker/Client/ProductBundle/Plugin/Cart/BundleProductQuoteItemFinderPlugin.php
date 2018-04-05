@@ -11,9 +11,17 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Cart\Dependency\Plugin\QuoteItemFinderPluginInterface;
 
+/**
+ * @method \Spryker\Client\ProductBundle\ProductBundleFactory getFactory()
+ */
 class BundleProductQuoteItemFinderPlugin implements QuoteItemFinderPluginInterface
 {
     /**
+     * Specification:
+     * - Find item in quote
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $sku
      * @param string|null $groupKey
@@ -22,72 +30,6 @@ class BundleProductQuoteItemFinderPlugin implements QuoteItemFinderPluginInterfa
      */
     public function findItem(QuoteTransfer $quoteTransfer, $sku, $groupKey = null): ?ItemTransfer
     {
-        $itemTransfer = null;
-        if ($groupKey) {
-            $itemTransfer = $this->findBundleItem($quoteTransfer, $groupKey);
-        }
-        if (!$itemTransfer) {
-            $itemTransfer = $this->findQuoteItem($quoteTransfer, $sku, $groupKey);
-        }
-
-        return $itemTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $groupKey
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer|null
-     */
-    protected function findBundleItem(QuoteTransfer $quoteTransfer, $groupKey): ?ItemTransfer
-    {
-        foreach ($quoteTransfer->getBundleItems() as $itemTransfer) {
-            if ($itemTransfer->getGroupKey() === $groupKey) {
-                $itemTransfer = clone $itemTransfer;
-                $itemTransfer->setQuantity($this->getBundledProductTotalQuantity($quoteTransfer, $groupKey));
-
-                return $itemTransfer;
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $groupKey
-     *
-     * @return int
-     */
-    protected function getBundledProductTotalQuantity(QuoteTransfer $quoteTransfer, $groupKey)
-    {
-        $bundleItemQuantity = 0;
-        foreach ($quoteTransfer->getBundleItems() as $bundleItemTransfer) {
-            if ($bundleItemTransfer->getGroupKey() !== $groupKey) {
-                continue;
-            }
-            $bundleItemQuantity += $bundleItemTransfer->getQuantity();
-        }
-
-        return $bundleItemQuantity;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $sku
-     * @param string|null $groupKey
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer|null
-     */
-    protected function findQuoteItem(QuoteTransfer $quoteTransfer, $sku, $groupKey = null): ?ItemTransfer
-    {
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if (($itemTransfer->getSku() === $sku && $groupKey === null) ||
-                $itemTransfer->getGroupKey() === $groupKey) {
-                return $itemTransfer;
-            }
-        }
-
-        return null;
+        return $this->getFactory()->createBundleProductQuoteItemFinder()->findItem($quoteTransfer, $sku, $groupKey);
     }
 }

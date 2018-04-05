@@ -8,11 +8,11 @@
 namespace Spryker\Client\DiscountPromotion\Plugin;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
-use Spryker\Client\Cart\Dependency\Plugin\CartChangeRequestExpanderPluginInterface;
+use Spryker\Client\CartExtension\Dependency\Plugin\CartChangeRequestExpanderPluginInterface;
 
 class AddDiscountPromotionCartRequestExpandPlugin implements CartChangeRequestExpanderPluginInterface
 {
-    const URL_PARAM_ID_DISCOUNT_PROMOTION = 'idDiscountPromotion';
+    public const URL_PARAM_ID_DISCOUNT_PROMOTION = 'idDiscountPromotion';
 
     /**
      * Specification:

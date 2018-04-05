@@ -1,0 +1,2 @@
+company_key,business_unit_key,name,email,phone,external_url
+test-company,test-business-unit,Test business unit,test@spryker.com,1234567890,""

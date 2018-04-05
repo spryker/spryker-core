@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\CartNote;
 
-use Spryker\Client\CartNote\Dependency\Client\CartNoteToPersistentCartClientBridge;
 use Spryker\Client\CartNote\Dependency\Client\CartNoteToQuoteClientBridge;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
@@ -16,7 +15,6 @@ class CartNoteDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
-    public const CLIENT_PERSISTENT_CART = 'CLIENT_PERSISTENT_CART';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -26,7 +24,7 @@ class CartNoteDependencyProvider extends AbstractDependencyProvider
     public function provideServiceLayerDependencies(Container $container)
     {
         $container = $this->addQuoteClient($container);
-        $container = $this->addPersistentCartClient($container);
+        $container = $this->addZedRequestClient($container);
 
         return $container;
     }
@@ -36,7 +34,7 @@ class CartNoteDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addQuoteClient(Container $container)
+    protected function addQuoteClient(Container $container): Container
     {
         $container[static::CLIENT_QUOTE] = function (Container $container) {
             return new CartNoteToQuoteClientBridge($container->getLocator()->quote()->client());
@@ -50,10 +48,10 @@ class CartNoteDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addPersistentCartClient(Container $container)
+    protected function addZedRequestClient(Container $container): Container
     {
-        $container[static::CLIENT_PERSISTENT_CART] = function (Container $container) {
-            return new CartNoteToPersistentCartClientBridge($container->getLocator()->persistentCart()->client());
+        $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
+            return $container->getLocator()->zedRequest()->client();
         };
 
         return $container;
