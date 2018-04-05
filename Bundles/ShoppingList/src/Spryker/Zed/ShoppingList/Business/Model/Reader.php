@@ -7,13 +7,18 @@
 
 namespace Spryker\Zed\ShoppingList\Business\Model;
 
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\PermissionCollectionTransfer;
+use Generated\Shared\Transfer\PermissionTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListPaginationTransfer;
+use Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
+use Spryker\Shared\ShoppingList\ShoppingListConfig;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterface;
 use Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface;
 
@@ -99,7 +104,7 @@ class Reader implements ReaderInterface
     public function getCustomerShoppingListCollection(CustomerTransfer $customerTransfer): ShoppingListCollectionTransfer
     {
         $customerReference = $customerTransfer
-            ->requireIdCustomer()
+            ->requireCustomerReference()
             ->getCustomerReference();
 
         return $this->getCustomerShoppingListCollectionByReference($customerReference);
@@ -129,6 +134,82 @@ class Reader implements ReaderInterface
         }
 
         return $this->shoppingListRepository->findShoppingListItemsByIds($shoppingListItemIds);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer
+     */
+    public function getShoppingListPermissionGroup(): ShoppingListPermissionGroupTransfer
+    {
+        return $this->shoppingListRepository->getShoppingListPermissionGroup();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     * @param string $customerReference
+     *
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    public function findCompanyUserPermissions(CompanyUserTransfer $companyUserTransfer, string $customerReference): PermissionCollectionTransfer
+    {
+        $companyUserPermissionCollectionTransfer = new PermissionCollectionTransfer();
+        $companyUserOwnShoppingLists = $this->shoppingListRepository->findCustomerShoppingLists($customerReference);
+        $companyUserOwnShoppingListIds = [];
+
+        foreach ($companyUserOwnShoppingLists->getShoppingLists() as $shoppingList) {
+            $companyUserOwnShoppingListIds[] = $shoppingList->getIdShoppingList();
+        }
+
+        $companyUserPermissionCollectionTransfer = $this->addReadPermissionToPermissionCollectionTransfer(
+            $companyUserPermissionCollectionTransfer,
+            array_merge(
+                $this->shoppingListRepository->findCompanyUserSharedShoppingLists($companyUserTransfer->getIdCompanyUser()),
+                $this->shoppingListRepository->findCompanyBusinessUnitSharedShoppingLists($companyUserTransfer->getFkCompanyBusinessUnit()),
+                $companyUserOwnShoppingListIds
+            )
+        );
+
+        $companyUserPermissionCollectionTransfer = $this->addWritePermissionToPermissionCollectionTransfer($companyUserPermissionCollectionTransfer, $companyUserOwnShoppingListIds);
+
+        return $companyUserPermissionCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PermissionCollectionTransfer $permissionCollectionTransfer
+     * @param array $shoppingListIds
+     *
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    protected function addReadPermissionToPermissionCollectionTransfer(PermissionCollectionTransfer $permissionCollectionTransfer, array $shoppingListIds): PermissionCollectionTransfer
+    {
+        $permissionTransfer = (new PermissionTransfer())
+            ->setKey(ShoppingListConfig::READ_SHOPPING_LIST_PERMISSION_PLUGIN_KEY)
+            ->setConfiguration([
+                ShoppingListConfig::PERMISSION_CONFIG_ID_SHOPPING_LIST_COLLECTION => $shoppingListIds,
+            ]);
+
+        $permissionCollectionTransfer = $permissionCollectionTransfer->addPermission($permissionTransfer);
+
+        return $permissionCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PermissionCollectionTransfer $permissionCollectionTransfer
+     * @param array $shoppingListIds
+     *
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    protected function addWritePermissionToPermissionCollectionTransfer(PermissionCollectionTransfer $permissionCollectionTransfer, array $shoppingListIds): PermissionCollectionTransfer
+    {
+        $permissionTransfer = (new PermissionTransfer())
+            ->setKey(ShoppingListConfig::WRITE_SHOPPING_LIST_PERMISSION_PLUGIN_KEY)
+            ->setConfiguration([
+                ShoppingListConfig::PERMISSION_CONFIG_ID_SHOPPING_LIST_COLLECTION => $shoppingListIds,
+            ]);
+
+        $permissionCollectionTransfer = $permissionCollectionTransfer->addPermission($permissionTransfer);
+
+        return $permissionCollectionTransfer;
     }
 
     /**

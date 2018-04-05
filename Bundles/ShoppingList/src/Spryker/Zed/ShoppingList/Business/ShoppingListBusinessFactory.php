@@ -8,10 +8,13 @@
 namespace Spryker\Zed\ShoppingList\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ShoppingList\Business\Installer\ShoppingListPermissionInstaller;
+use Spryker\Zed\ShoppingList\Business\Installer\ShoppingListPermissionInstallerInterface;
 use Spryker\Zed\ShoppingList\Business\Model\Reader;
 use Spryker\Zed\ShoppingList\Business\Model\ReaderInterface;
 use Spryker\Zed\ShoppingList\Business\Model\Writer;
 use Spryker\Zed\ShoppingList\Business\Model\WriterInterface;
+use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToPermissionFacadeInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterface;
 use Spryker\Zed\ShoppingList\ShoppingListDependencyProvider;
 
@@ -57,5 +60,21 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
     public function getProductFacade(): ShoppingListToProductFacadeInterface
     {
         return $this->getProvidedDependency(ShoppingListDependencyProvider::FACADE_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingList\Business\Installer\ShoppingListPermissionInstallerInterface
+     */
+    public function createShoppingListPermissionInstaller(): ShoppingListPermissionInstallerInterface
+    {
+        return new ShoppingListPermissionInstaller($this->getConfig(), $this->getEntityManager(), $this->getPermissionFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToPermissionFacadeInterface
+     */
+    public function getPermissionFacade(): ShoppingListToPermissionFacadeInterface
+    {
+        return $this->getProvidedDependency(ShoppingListDependencyProvider::FACADE_PERMISSION);
     }
 }

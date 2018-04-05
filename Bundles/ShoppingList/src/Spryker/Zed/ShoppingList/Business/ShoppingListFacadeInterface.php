@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\ShoppingList\Business;
 
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
@@ -15,7 +17,10 @@ use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
+use Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
+use Generated\Shared\Transfer\ShoppingListShareRequestTransfer;
+use Generated\Shared\Transfer\ShoppingListShareResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 
 interface ShoppingListFacadeInterface
@@ -166,7 +171,7 @@ interface ShoppingListFacadeInterface
 
     /**
      * Specification:
-     * TODO:Specs
+     * TODO: Specs
      *
      * @api
      *
@@ -175,4 +180,61 @@ interface ShoppingListFacadeInterface
      * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */
     public function createShoppingListFromQuote(QuoteTransfer $quoteTransfer): ShoppingListTransfer;
+
+    /**
+     * Specification:
+     * TODO: Specs
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function installShoppingListPermissions(): void;
+
+    /**
+     * Specification:
+     * TODO: Specs
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer
+     */
+    public function getShoppingListPermissionGroup(): ShoppingListPermissionGroupTransfer;
+
+    /**
+     * Specification:
+     * TODO: Specs
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
+     */
+    public function shareShoppingListWithCompanyBusinessUnit(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ShoppingListShareResponseTransfer;
+
+    /**
+     * Specification:
+     * TODO: Specs
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
+     */
+    public function shareShoppingListWithCompanyUser(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ShoppingListShareResponseTransfer;
+
+    /**
+     * Specification:
+     * TODO: Specs
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     * @param string $customerReference
+     *
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    public function findCompanyUserPermissions(CompanyUserTransfer $companyUserTransfer, string $customerReference): PermissionCollectionTransfer;
 }

@@ -11,7 +11,10 @@ use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
+use Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
+use Generated\Shared\Transfer\SpyShoppingListCompanyBusinessUnitEntityTransfer;
+use Generated\Shared\Transfer\SpyShoppingListCompanyUserEntityTransfer;
 
 /**
  * @method \Spryker\Zed\ShoppingList\Persistence\ShoppingListPersistenceFactory getFactory()
@@ -66,4 +69,39 @@ interface ShoppingListRepositoryInterface
      * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
     public function findShoppingListItemsByIds(array $shoppingListItemIds): ShoppingListItemCollectionTransfer;
+
+    /**
+     * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer
+     */
+    public function getShoppingListPermissionGroup(): ShoppingListPermissionGroupTransfer;
+
+    /**
+     * @param int $idShoppingList
+     * @param int $idCompanyBusinessUnit
+     *
+     * @return \Generated\Shared\Transfer\SpyShoppingListCompanyBusinessUnitEntityTransfer|null
+     */
+    public function getShoppingListCompanyBusinessUnit(int $idShoppingList, int $idCompanyBusinessUnit): ?SpyShoppingListCompanyBusinessUnitEntityTransfer;
+
+    /**
+     * @param int $idShoppingList
+     * @param int $idCompanyUser
+     *
+     * @return \Generated\Shared\Transfer\SpyShoppingListCompanyUserEntityTransfer|null
+     */
+    public function getShoppingListCompanyUser(int $idShoppingList, int $idCompanyUser): SpyShoppingListCompanyUserEntityTransfer;
+
+    /**
+     * @param int $idCompanyBusinessUnit
+     *
+     * @return \Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyBusinessUnit[]|\Propel\Runtime\Collection\ObjectCollection
+     */
+    public function findCompanyBusinessUnitSharedShoppingLists(int $idCompanyBusinessUnit);
+
+    /**
+     * @param int $idCompanyUser
+     *
+     * @return mixed|\Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyUser[]|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection
+     */
+    public function findCompanyUserSharedShoppingLists(int $idCompanyUser);
 }

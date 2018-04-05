@@ -80,4 +80,22 @@
         <property name="idShoppingListItem" type="int" />
     </transfer>
 
+    <transfer name="ShoppingListShareRequest">
+        <property name="shoppingListName" type="string" />
+        <property name="idCompanyUser" type="int" />
+        <property name="idCompanyBusinessUnit" type="int" />
+        <property name="idShoppingListPermissionGroup" type="int" />
+        <property name="customerReference" type="string" />
+    </transfer>
+
+    <transfer name="ShoppingListShareResponse">
+        <property name="isSuccess" type="bool" />
+    </transfer>
+
+    <transfer name="ShoppingListPermissionGroup">
+        <property name="idShoppingListPermissionGroup" type="int" />
+        <property name="name" type="string" />
+        <property name="permissions" singular="permission" type="Permission[]" />
+    </transfer>
+
 </transfers>

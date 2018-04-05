@@ -14,7 +14,10 @@ use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
+use Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
+use Generated\Shared\Transfer\ShoppingListShareRequestTransfer;
+use Generated\Shared\Transfer\ShoppingListShareResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToZedRequestClientInterface;
 
@@ -161,5 +164,33 @@ class ShoppingListStub implements ShoppingListStubInterface
     public function createShoppingListFromQuote(QuoteTransfer $quoteTransfer): ShoppingListTransfer
     {
         return $this->zedRequestClient->call('/shopping-list/gateway/create-shopping-list-from-quote', $quoteTransfer);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     */
+    public function getShoppingListPermissionGroup(): ShoppingListPermissionGroupTransfer
+    {
+        return $this->zedRequestClient->call('/shopping-list/gateway/get-shopping-list-permission-group', new ShoppingListPermissionGroupTransfer());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     */
+    public function shareShoppingListWithCompanyBusinessUnit(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ShoppingListShareResponseTransfer
+    {
+        return $this->zedRequestClient->call('/shopping-list/gateway/share-shopping-list-with-company-business-unit', $shoppingListShareRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     */
+    public function shareShoppingListWithCompanyUser(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ShoppingListShareResponseTransfer
+    {
+        return $this->zedRequestClient->call('/shopping-list/gateway/share-shopping-list-with-company-user', $shoppingListShareRequestTransfer);
     }
 }

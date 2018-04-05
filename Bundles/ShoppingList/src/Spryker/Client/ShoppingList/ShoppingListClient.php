@@ -14,7 +14,10 @@ use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
+use Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
+use Generated\Shared\Transfer\ShoppingListShareRequestTransfer;
+use Generated\Shared\Transfer\ShoppingListShareResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Client\ShoppingList\Zed\ShoppingListStubInterface;
@@ -236,6 +239,36 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
     public function createShoppingListFromQuote(QuoteTransfer $quoteTransfer): ShoppingListTransfer
     {
         return $this->getZedStub()->createShoppingListFromQuote($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer
+     */
+    public function getShoppingListPermissionGroup(): ShoppingListPermissionGroupTransfer
+    {
+        return $this->getZedStub()->getShoppingListPermissionGroup();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
+     */
+    public function shareShoppingList(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ShoppingListShareResponseTransfer
+    {
+        if ($shoppingListShareRequestTransfer->getIdCompanyBusinessUnit()) {
+            return $this->getZedStub()->shareShoppingListWithCompanyBusinessUnit($shoppingListShareRequestTransfer);
+        }
+
+        return $this->getZedStub()->shareShoppingListWithCompanyUser($shoppingListShareRequestTransfer);
     }
 
     /**

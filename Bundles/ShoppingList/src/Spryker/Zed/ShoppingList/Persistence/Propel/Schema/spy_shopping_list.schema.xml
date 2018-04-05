@@ -41,12 +41,36 @@
         <foreign-key name="spy_shopping_list_company_user-fk_shopping_list_permission_group" foreignTable="spy_shopping_list_permission_group">
             <reference local="fk_shopping_list_permission_group" foreign="id_shopping_list_permission_group"/>
         </foreign-key>
-    <id-method-parameter value="spy_shopping_list_company_user_pk_seq"/></table>
+
+        <id-method-parameter value="spy_shopping_list_company_user_pk_seq"/>
+    </table>
+
+    <table name="spy_shopping_list_company_business_unit">
+        <column name="id_shopping_list_company_business_unit" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_company_business_unit" required="true" type="INTEGER"/>
+        <column name="fk_shopping_list" requird="true" type="INTEGER"/>
+        <column name="fk_shopping_list_permission_group" required="true" type="INTEGER"/>
+
+        <foreign-key name="spy_shopping_list_company_business_unit-fk_company_business_unit" foreignTable="spy_company_business_unit">
+            <reference local="fk_company_business_unit" foreign="id_company_business_unit"/>
+        </foreign-key>
+
+        <foreign-key name="spy_shopping_list_company_business_unit-fk_shopping_list" foreignTable="spy_shopping_list">
+            <reference local="fk_shopping_list" foreign="id_shopping_list"/>
+        </foreign-key>
+
+        <foreign-key name="spy_shopping_list_company_business_unit-fk_shopping_list_permission_group" foreignTable="spy_shopping_list_permission_group">
+            <reference local="fk_shopping_list_permission_group" foreign="id_shopping_list_permission_group"/>
+        </foreign-key>
+
+        <id-method-parameter value="spy_shopping_list_company_business_unit_pk_seq"/>
+    </table>
 
     <table name="spy_shopping_list_permission_group">
         <column name="id_shopping_list_permission_group" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="name" required="true" type="VARCHAR" size="255"/>
-    <id-method-parameter value="spy_shopping_list_permission_group_pk_seq"/></table>
+        <id-method-parameter value="spy_shopping_list_permission_group_pk_seq"/>
+    </table>
 
     <table name="spy_shopping_list_permission_group_to_permission">
         <column name="id_shopping_list_permission_group_to_permission" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
@@ -60,5 +84,6 @@
         <foreign-key name="spy_shopping_list_permission_group_to_permission-fk_permission" foreignTable="spy_permission">
             <reference local="fk_permission" foreign="id_permission"/>
         </foreign-key>
-    <id-method-parameter value="spy_shopping_list_permission_group_to_permission_pk_seq"/></table>
+        <id-method-parameter value="spy_shopping_list_permission_group_to_permission_pk_seq"/>
+    </table>
 </database>

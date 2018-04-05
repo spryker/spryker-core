@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
+use Generated\Shared\Transfer\ShoppingListShareRequestTransfer;
+use Generated\Shared\Transfer\ShoppingListShareResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Generated\Shared\Transfer\SpyShoppingListEntityTransfer;
 use Generated\Shared\Transfer\SpyShoppingListItemEntityTransfer;
@@ -190,6 +192,80 @@ class Writer implements WriterInterface
 
             return $shoppingListTransfer;
         });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
+     */
+    public function shareShoppingListWithCompanyBusinessUnit(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ShoppingListShareResponseTransfer
+    {
+        $shoppingListShareRequestTransfer->requireIdShoppingListPermissionGroup()
+            ->requireIdCompanyBusinessUnit()
+            ->requireCustomerReference()
+            ->requireShoppingListName();
+
+        $shoppingListTransfer = (new ShoppingListTransfer())
+            ->setCustomerReference($shoppingListShareRequestTransfer->getCustomerReference())
+            ->setName($shoppingListShareRequestTransfer->getShoppingListName());
+
+        $shoppingListTransfer = $this->getShoppingListWithSameName($shoppingListTransfer);
+
+        $shoppingListCompanyBusinessUnitEntityTransfer = $this->shoppingListRepository->getShoppingListCompanyBusinessUnit(
+            $shoppingListTransfer->getIdShoppingList(),
+            $shoppingListShareRequestTransfer->getIdCompanyBusinessUnit()
+        );
+
+        $shoppingListShareResponseTransfer = new ShoppingListShareResponseTransfer();
+
+        if ($shoppingListCompanyBusinessUnitEntityTransfer) {
+            $shoppingListShareResponseTransfer->setIsSuccess(false);
+
+            return $shoppingListShareResponseTransfer;
+        }
+
+        $this->shoppingListEntityManager->saveShoppingListCompanyBusinessUnitEntity($shoppingListCompanyBusinessUnitEntityTransfer);
+        $shoppingListShareResponseTransfer = $shoppingListShareResponseTransfer->setIsSuccess(true);
+
+        return $shoppingListShareResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
+     */
+    public function shareShoppingListWithCompanyUser(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ShoppingListShareResponseTransfer
+    {
+        $shoppingListShareRequestTransfer->requireIdShoppingListPermissionGroup()
+            ->requireIdCompanyUser()
+            ->requireCustomerReference()
+            ->requireShoppingListName();
+
+        $shoppingListTransfer = (new ShoppingListTransfer())
+            ->setCustomerReference($shoppingListShareRequestTransfer->getCustomerReference())
+            ->setName($shoppingListShareRequestTransfer->getShoppingListName());
+
+        $shoppingListTransfer = $this->getShoppingListWithSameName($shoppingListTransfer);
+
+        $shoppingListCompanyUserEntityTransfer = $this->shoppingListRepository->getShoppingListCompanyUser(
+            $shoppingListTransfer->getIdShoppingList(),
+            $shoppingListShareRequestTransfer->getIdCompanyUser()
+        );
+
+        $shoppingListShareResponseTransfer = new ShoppingListShareResponseTransfer();
+
+        if ($shoppingListCompanyUserEntityTransfer) {
+            $shoppingListShareResponseTransfer->setIsSuccess(false);
+
+            return $shoppingListShareResponseTransfer;
+        }
+
+        $this->shoppingListEntityManager->saveShoppingListCompanyUserEntity($shoppingListCompanyUserEntityTransfer);
+        $shoppingListShareResponseTransfer = $shoppingListShareResponseTransfer->setIsSuccess(true);
+
+        return $shoppingListShareResponseTransfer;
     }
 
     /**

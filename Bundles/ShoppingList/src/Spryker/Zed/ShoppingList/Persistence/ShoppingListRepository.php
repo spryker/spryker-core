@@ -13,8 +13,14 @@ use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListPaginationTransfer;
+use Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
+use Generated\Shared\Transfer\SpyShoppingListCompanyBusinessUnitEntityTransfer;
+use Generated\Shared\Transfer\SpyShoppingListCompanyUserEntityTransfer;
+use Orm\Zed\ShoppingList\Persistence\Map\SpyShoppingListCompanyBusinessUnitTableMap;
+use Orm\Zed\ShoppingList\Persistence\Map\SpyShoppingListCompanyUserTableMap;
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingList;
+use Orm\Zed\ShoppingList\Persistence\SpyShoppingListPermissionGroup;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -147,6 +153,90 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     }
 
     /**
+     * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer
+     */
+    public function getShoppingListPermissionGroup(): ShoppingListPermissionGroupTransfer
+    {
+        $shoppingListPermissionGroupEntity = $this->getFactory()->createShoppingListPermissionGroupQuery()->findOne();
+
+        return $this->mapShoppingListPermissionGroupEntityToTransfer($shoppingListPermissionGroupEntity);
+    }
+
+    /**
+     * @param int $idShoppingList
+     * @param int $idCompanyBusinessUnit
+     *
+     * @return \Generated\Shared\Transfer\SpyShoppingListCompanyBusinessUnitEntityTransfer|null
+     */
+    public function getShoppingListCompanyBusinessUnit(int $idShoppingList, int $idCompanyBusinessUnit): ?SpyShoppingListCompanyBusinessUnitEntityTransfer
+    {
+        $shoppingListCompanyBusinessUnitEntity = $this->getFactory()
+            ->createShoppingListCompanyBusinessUnitQuery()
+            ->filterByFkShoppingList($idShoppingList)
+            ->filterByFkCompanyBusinessUnit($idCompanyBusinessUnit)
+            ->findOne();
+
+        if (!$shoppingListCompanyBusinessUnitEntity) {
+            return null;
+        }
+
+        return (new SpyShoppingListCompanyBusinessUnitEntityTransfer())
+            ->fromArray($shoppingListCompanyBusinessUnitEntity->toArray(), true);
+    }
+
+    /**
+     * @param int $idShoppingList
+     * @param int $idCompanyUser
+     *
+     * @return \Generated\Shared\Transfer\SpyShoppingListCompanyUserEntityTransfer|null
+     */
+    public function getShoppingListCompanyUser(int $idShoppingList, int $idCompanyUser): SpyShoppingListCompanyUserEntityTransfer
+    {
+        $shoppingListCompanyUserEntity = $this->getFactory()
+            ->createShoppingListCompanyUserQuery()
+            ->filterByFkShoppingList($idShoppingList)
+            ->filterByFkCompanyUser($idCompanyUser)
+            ->findOne();
+
+        if (!$shoppingListCompanyUserEntity) {
+            return null;
+        }
+
+        return (new SpyShoppingListCompanyUserEntityTransfer())
+            ->fromArray($shoppingListCompanyUserEntity->toArray(), true);
+    }
+
+    /**
+     * @param int $idCompanyBusinessUnit
+     *
+     * @return mixed|\Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyBusinessUnit[]|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection
+     */
+    public function findCompanyBusinessUnitSharedShoppingLists(int $idCompanyBusinessUnit): array
+    {
+        return $this->getFactory()
+            ->createShoppingListCompanyBusinessUnitQuery()
+            ->filterByFkCompanyBusinessUnit($idCompanyBusinessUnit)
+            ->select(SpyShoppingListCompanyBusinessUnitTableMap::COL_FK_SHOPPING_LIST)
+            ->find()
+            ->toArray();
+    }
+
+    /**
+     * @param int $idCompanyUser
+     *
+     * @return mixed|\Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyUser[]|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection
+     */
+    public function findCompanyUserSharedShoppingLists(int $idCompanyUser): array
+    {
+        return $this->getFactory()
+            ->createShoppingListCompanyUserQuery()
+            ->filterByFkCompanyUser($idCompanyUser)
+            ->select(SpyShoppingListCompanyUserTableMap::COL_FK_SHOPPING_LIST)
+            ->find()
+            ->toArray();
+    }
+
+    /**
      * @param string $customerReference
      *
      * @return $this|\Orm\Zed\ShoppingList\Persistence\SpyShoppingListQuery
@@ -190,5 +280,15 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
 
         $shoppingListTransfer->setNumberOfItems($numberOfItems);
         return $shoppingListTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\ShoppingList\Persistence\SpyShoppingListPermissionGroup $shoppingListPermissionGroupEntity
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer
+     */
+    protected function mapShoppingListPermissionGroupEntityToTransfer(SpyShoppingListPermissionGroup $shoppingListPermissionGroupEntity): ShoppingListPermissionGroupTransfer
+    {
+        return (new ShoppingListPermissionGroupTransfer())->fromArray($shoppingListPermissionGroupEntity->toArray(), true);
     }
 }
