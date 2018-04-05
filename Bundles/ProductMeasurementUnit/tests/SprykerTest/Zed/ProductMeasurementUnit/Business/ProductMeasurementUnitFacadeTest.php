@@ -254,6 +254,7 @@ class ProductMeasurementUnitFacadeTest extends Unit
 
             $expectedSalesUnitIds[] = $productMeasurementSalesUnitTransfer->getIdProductMeasurementSalesUnit();
         }
+        sort($expectedSalesUnitIds);
 
         // Act
         $salesUnitTransfers = $this->productMeasurementUnitFacade->getSalesUnitsByIdProduct($productTransfer->getIdProductConcrete());
@@ -261,6 +262,7 @@ class ProductMeasurementUnitFacadeTest extends Unit
         foreach ($salesUnitTransfers as $salesUnitTransfer) {
             $actualSalesUnitIds[] = $salesUnitTransfer->getIdProductMeasurementSalesUnit();
         }
+        sort($actualSalesUnitIds);
 
         // Assert
         $this->assertEquals($expectedSalesUnitIds, $actualSalesUnitIds);

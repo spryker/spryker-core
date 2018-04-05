@@ -52,7 +52,7 @@ class ProductQuantityDataHelper extends Module
             ->filterByFkProduct($productQuantityEntity->getFkProduct())
             ->findOneOrCreate();
 
-        $spyProductQuantityEntity->fromArray($productQuantityEntity->toArray());
+        $spyProductQuantityEntity->fromArray($productQuantityEntity->modifiedToArray());
         $spyProductQuantityEntity->save();
 
         $this->debug(sprintf('Inserted product quantity for product concrete: %d', $productQuantityEntity->getFkProduct()));

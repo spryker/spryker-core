@@ -99,7 +99,7 @@ class ProductMeasurementUnitDataHelper extends Module
     protected function storeSalesUnit(SpyProductMeasurementSalesUnitEntityTransfer $salesUnitEntity)
     {
         $spySalesUnitEntity = new SpyProductMeasurementSalesUnit();
-        $spySalesUnitEntity->fromArray($salesUnitEntity->toArray());
+        $spySalesUnitEntity->fromArray($salesUnitEntity->modifiedToArray());
         $spySalesUnitEntity->save();
 
         $this->debug(sprintf('Inserted sales unit for product: %d', $salesUnitEntity->getFkProduct()));
@@ -120,7 +120,7 @@ class ProductMeasurementUnitDataHelper extends Module
             ->filterByFkProductAbstract($baseUnitEntity->getFkProductAbstract())
             ->findOneOrCreate();
 
-        $spyBaseUnitEntity->fromArray($baseUnitEntity->toArray());
+        $spyBaseUnitEntity->fromArray($baseUnitEntity->modifiedToArray());
         $spyBaseUnitEntity->save();
 
         $this->debug(sprintf('Inserted base unit for product abstract: %d', $baseUnitEntity->getFkProductAbstract()));
@@ -141,7 +141,7 @@ class ProductMeasurementUnitDataHelper extends Module
             ->filterByCode($productMeasurementUnitEntity->getCode())
             ->findOneOrCreate();
 
-        $spyProductMeasurementUnitEntity->fromArray($productMeasurementUnitEntity->toArray());
+        $spyProductMeasurementUnitEntity->fromArray($productMeasurementUnitEntity->modifiedToArray());
         $spyProductMeasurementUnitEntity->save();
 
         $this->debug(sprintf('Inserted product measurement unit with code: %s', $productMeasurementUnitEntity->getCode()));
