@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace SprykerTest\Zed\Company\Business;
 
 use Codeception\TestCase\Test;
@@ -52,7 +57,7 @@ class CompanyFacadeTest extends Test
      */
     public function testUpdateShouldPersistCompanyChanges()
     {
-        $companyTransfer = $this->tester->haveCompany(['is_active' => false]);
+        $companyTransfer = (new CompanyBuilder(['is_active' => false]))->build();
 
         $companyTransfer->setIsActive(true);
         $companyTransfer->setStatus(SpyCompanyTableMap::COL_STATUS_APPROVED);
@@ -69,7 +74,7 @@ class CompanyFacadeTest extends Test
      */
     public function testDeleteShouldRemoveCompanyFromStorage()
     {
-        $companyTransfer = $this->tester->haveCompany(['is_active' => false]);
+        $companyTransfer = $this->tester->haveCompany();
         $this->getFacade()->delete($companyTransfer);
         $this->assertNull($this->tester->findCompanyById($companyTransfer->getIdCompany()));
     }
@@ -103,6 +108,16 @@ class CompanyFacadeTest extends Test
         $companyTransfer = $this->getFacade()->update($companyTransfer)->getCompanyTransfer();
         $relatesStores = (new CompanyRepository())->getRelatedStoresByCompanyId($companyTransfer->getIdCompany());
         $this->assertCount(1, $relatesStores);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCompaniesReturnsNotEmptyCollection(): void
+    {
+        $this->tester->haveCompany();
+        $companyTypesCollection = $this->getFacade()->getCompanies();
+        $this->assertGreaterThan(0, $companyTypesCollection->getCompanies()->count());
     }
 
     /**

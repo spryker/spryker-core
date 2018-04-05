@@ -10,6 +10,7 @@ namespace Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitWriter;
 use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\ResponseMessageTransfer;
+use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExecutor\CompanyBusinessUnitWriterPluginExecutorInterface;
 use Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitEntityManagerInterface;
 use Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitRepositoryInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
@@ -31,15 +32,23 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
     protected $entityManager;
 
     /**
+     * @var \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExecutor\CompanyBusinessUnitWriterPluginExecutorInterface
+     */
+    protected $pluginExecutor;
+
+    /**
      * @param \Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitRepositoryInterface $companyBusinessUnitRepository
      * @param \Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitEntityManagerInterface $companyBusinessUnitEntityManager
+     * @param \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExecutor\CompanyBusinessUnitWriterPluginExecutorInterface $pluginExecutor
      */
     public function __construct(
         CompanyBusinessUnitRepositoryInterface $companyBusinessUnitRepository,
-        CompanyBusinessUnitEntityManagerInterface $companyBusinessUnitEntityManager
+        CompanyBusinessUnitEntityManagerInterface $companyBusinessUnitEntityManager,
+        CompanyBusinessUnitWriterPluginExecutorInterface $pluginExecutor
     ) {
         $this->repository = $companyBusinessUnitRepository;
         $this->entityManager = $companyBusinessUnitEntityManager;
+        $this->pluginExecutor = $pluginExecutor;
     }
 
     /**
@@ -136,6 +145,7 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
     {
         $companyBusinessUnitTransfer = $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer();
         $companyBusinessUnitTransfer = $this->entityManager->saveCompanyBusinessUnit($companyBusinessUnitTransfer);
+        $companyBusinessUnitTransfer = $this->pluginExecutor->executePostSavePlugins($companyBusinessUnitTransfer);
         $companyBusinessUnitResponseTransfer->setCompanyBusinessUnitTransfer($companyBusinessUnitTransfer);
 
         return $companyBusinessUnitResponseTransfer;
