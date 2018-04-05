@@ -8,6 +8,7 @@
 namespace Spryker\Client\ProductBundle;
 
 use ArrayObject;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -30,5 +31,20 @@ class ProductBundleClient extends AbstractClient implements ProductBundleClientI
         return $this->getFactory()
             ->createProductBundleGrouper()
             ->getGroupedBundleItems($items, $bundleItems);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @return array|\Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function getItemsWithBundlesItems(QuoteTransfer $quoteTransfer): array
+    {
+        return $this->getFactory()
+            ->createProductBundleGrouper()
+            ->getItemsWithBundlesItems($quoteTransfer);
     }
 }

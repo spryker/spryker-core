@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductOption\Business\OptionGroup;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
+use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionValueTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemOption;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 
@@ -93,6 +94,11 @@ class ProductOptionOrderHydrate implements ProductOptionOrderHydrateInterface
 
         $productOptionsTransfer->fromArray($orderItemOptionEntity->toArray(), true);
 
+        $idProductOptionsValue = $this->getIdProductOptionValue($orderItemOptionEntity);
+        if ($idProductOptionsValue) {
+            $productOptionsTransfer->setIdProductOptionValue($idProductOptionsValue);
+        }
+
         return $productOptionsTransfer;
     }
 
@@ -107,5 +113,18 @@ class ProductOptionOrderHydrate implements ProductOptionOrderHydrateInterface
             ->querySalesOrder()
             ->filterByFkSalesOrder($idSalesOrder)
             ->find();
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItemOption $orderItemOptionEntity
+     *
+     * @return int|null
+     */
+    protected function getIdProductOptionValue(SpySalesOrderItemOption $orderItemOptionEntity): ?int
+    {
+        return $this->productOptionQueryContainer
+            ->queryProductOptionValueBySku($orderItemOptionEntity->getSku())
+            ->select(SpyProductOptionValueTableMap::COL_ID_PRODUCT_OPTION_VALUE)
+            ->findOne();
     }
 }

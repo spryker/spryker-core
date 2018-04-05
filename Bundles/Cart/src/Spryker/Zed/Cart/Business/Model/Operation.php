@@ -106,8 +106,34 @@ class Operation implements OperationInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
+    public function addValid(CartChangeTransfer $cartChangeTransfer): QuoteTransfer
+    {
+        $cartChangeTransfer->requireQuote();
+
+        $quoteTransfer = $cartChangeTransfer->getQuote();
+        $itemsTransfer = $cartChangeTransfer->getItems();
+
+        foreach ($itemsTransfer as $currentItemTransfer) {
+            $itemsCollection = new ArrayObject([$currentItemTransfer]);
+            $currentCartChangeTransfer = new CartChangeTransfer();
+            $currentCartChangeTransfer->setQuote($quoteTransfer);
+            $currentCartChangeTransfer->setItems($itemsCollection);
+
+            $quoteTransfer = $this->add($currentCartChangeTransfer);
+        }
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
     public function add(CartChangeTransfer $cartChangeTransfer)
     {
+        $cartChangeTransfer->requireQuote();
+
         $originalQuoteTransfer = (new QuoteTransfer())->fromArray($cartChangeTransfer->getQuote()->toArray(), true);
 
         if (!$this->preCheckCart($cartChangeTransfer)) {
@@ -135,6 +161,8 @@ class Operation implements OperationInterface
      */
     public function remove(CartChangeTransfer $cartChangeTransfer)
     {
+        $cartChangeTransfer->requireQuote();
+
         $originalQuoteTransfer = (new QuoteTransfer())->fromArray($cartChangeTransfer->getQuote()->toArray(), true);
 
         if (!$this->executeCartRemovalPreCheckPlugins($cartChangeTransfer)) {
