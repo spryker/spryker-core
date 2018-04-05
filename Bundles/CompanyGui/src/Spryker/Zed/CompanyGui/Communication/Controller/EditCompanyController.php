@@ -25,6 +25,52 @@ class EditCompanyController extends AbstractController
     public const MESSAGE_COMPANY_DEACTIVATE_SUCCESS = 'Company has been deactivated.';
     public const MESSAGE_COMPANY_APPROVE_SUCCESS = 'Company has been approved.';
     public const MESSAGE_COMPANY_DENY_SUCCESS = 'Company has been denied.';
+    protected const MESSAGE_COMPANY_UPDATE_SUCCESS = 'Company has been updated.';
+    protected const MESSAGE_COMPANY_UPDATE_ERROR = 'Company has not been updated.';
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function indexAction(Request $request)
+    {
+        $idCompany = $this->castId($request->get(static::URL_PARAM_ID_COMPANY));
+        $redirectUrl = $request->get(static::URL_PARAM_REDIRECT_URL, static::REDIRECT_URL_DEFAULT);
+
+        $dataProvider = $this->getFactory()->createCompanyFormDataProvider();
+        $form = $this->getFactory()
+            ->getCompanyForm(
+                $dataProvider->getData($idCompany),
+                $dataProvider->getOptions($idCompany)
+            )
+            ->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $companyTransfer = $form->getData();
+            $companyResponseTransfer = $this->getFactory()
+                ->getCompanyFacade()
+                ->update($companyTransfer);
+
+            if (!$companyResponseTransfer->getIsSuccessful()) {
+                $this->addErrorMessage(static::MESSAGE_COMPANY_UPDATE_ERROR);
+
+                return $this->viewResponse([
+                    'form' => $form->createView(),
+                    'idCompany' => $idCompany,
+                ]);
+            }
+
+            $this->addSuccessMessage(static::MESSAGE_COMPANY_UPDATE_SUCCESS);
+
+            return $this->redirectResponse($redirectUrl);
+        }
+
+        return $this->viewResponse([
+            'form' => $form->createView(),
+            'idCompany' => $idCompany,
+        ]);
+    }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

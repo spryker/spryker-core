@@ -9,6 +9,7 @@ namespace Spryker\Zed\CompanyUnitAddressGui\Communication\Table;
 
 use Orm\Zed\CompanyUnitAddress\Persistence\Map\SpyCompanyUnitAddressTableMap;
 use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Zed\CompanyUnitAddressGui\Communication\Table\PluginExecutor\CompanyUnitAddressTablePluginExecutorInterface;
 use Spryker\Zed\CompanyUnitAddressGui\Dependency\QueryContainer\CompanyUnitAddressGuiToCompanyUnitAddressQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -38,12 +39,20 @@ class CompanyUnitAddressTable extends AbstractTable
     protected $companyUnitAddressQueryContainer;
 
     /**
+     * @var \Spryker\Zed\CompanyUnitAddressGui\Communication\Table\PluginExecutor\CompanyUnitAddressTablePluginExecutorInterface
+     */
+    protected $companyUnitAddressTablePluginsExecutor;
+
+    /**
      * @param \Spryker\Zed\CompanyUnitAddressGui\Dependency\QueryContainer\CompanyUnitAddressGuiToCompanyUnitAddressQueryContainerInterface $companyUnitAddressQueryContainer
+     * @param \Spryker\Zed\CompanyUnitAddressGui\Communication\Table\PluginExecutor\CompanyUnitAddressTablePluginExecutorInterface $companyUnitAddressTablePluginsExecutor
      */
     public function __construct(
-        CompanyUnitAddressGuiToCompanyUnitAddressQueryContainerInterface $companyUnitAddressQueryContainer
+        CompanyUnitAddressGuiToCompanyUnitAddressQueryContainerInterface $companyUnitAddressQueryContainer,
+        CompanyUnitAddressTablePluginExecutorInterface $companyUnitAddressTablePluginsExecutor
     ) {
         $this->companyUnitAddressQueryContainer = $companyUnitAddressQueryContainer;
+        $this->companyUnitAddressTablePluginsExecutor = $companyUnitAddressTablePluginsExecutor;
     }
 
     /**
@@ -53,18 +62,7 @@ class CompanyUnitAddressTable extends AbstractTable
      */
     protected function configure(TableConfiguration $config)
     {
-        $config->setHeader([
-            static::COL_ID_COMPANY_UNIT_ADDRESS => 'Company Unit Address Id',
-            static::COL_COUNTRY_RELATION => 'Country',
-            static::COL_REGION_RELATION => 'Region',
-            static::COL_CITY => 'City',
-            static::COL_ZIPCODE => 'Zipcode',
-            static::COL_COMPANY_RELATION => 'Company',
-            static::COL_ADDRESS1 => 'Address 1',
-            static::COL_ADDRESS2 => 'Address 2',
-            static::COL_ADDRESS3 => 'Address 3',
-            static::COL_ACTIONS => static::COL_ACTIONS,
-        ]);
+        $config = $this->setHeader($config);
 
         $config->addRawColumn(static::COL_ACTIONS);
         $config->addRawColumn(static::COL_COUNTRY_RELATION);
@@ -84,6 +82,7 @@ class CompanyUnitAddressTable extends AbstractTable
             static::COL_CITY,
             static::COL_ZIPCODE,
         ]);
+        $config = $this->companyUnitAddressTablePluginsExecutor->executeTableConfigExpanderPlugins($config);
 
         return $config;
     }
@@ -100,22 +99,65 @@ class CompanyUnitAddressTable extends AbstractTable
         $results = [];
 
         foreach ($queryResults as $item) {
-            $results[] = [
-                static::COL_ID_COMPANY_UNIT_ADDRESS => $item[static::COL_ID_COMPANY_UNIT_ADDRESS],
-                static::COL_COUNTRY_RELATION => $this->getCountryName((int)$item[static::COL_ID_COMPANY_UNIT_ADDRESS]),
-                static::COL_REGION_RELATION => $this->getRegionName((int)$item[static::COL_ID_COMPANY_UNIT_ADDRESS]),
-                static::COL_CITY => $item[static::COL_CITY],
-                static::COL_ZIPCODE => $item[static::COL_ZIPCODE],
-                static::COL_COMPANY_RELATION => $this->getCompanyName((int)$item[static::COL_ID_COMPANY_UNIT_ADDRESS]),
-                static::COL_ADDRESS1 => $item[static::COL_ADDRESS1],
-                static::COL_ADDRESS2 => $item[static::COL_ADDRESS2],
-                static::COL_ADDRESS3 => $item[static::COL_ADDRESS3],
-                static::COL_ACTIONS => $this->buildLinks($item),
-            ];
+            $results[] = $this->prepareRowData($item);
         }
         unset($queryResults);
 
         return $results;
+    }
+
+    /**
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
+     *
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
+     */
+    protected function setHeader(TableConfiguration $config): TableConfiguration
+    {
+        $baseData = [
+            static::COL_ID_COMPANY_UNIT_ADDRESS => 'Company Unit Address Id',
+            static::COL_COUNTRY_RELATION => 'Country',
+            static::COL_REGION_RELATION => 'Region',
+            static::COL_CITY => 'City',
+            static::COL_ZIPCODE => 'Zipcode',
+            static::COL_COMPANY_RELATION => 'Company',
+            static::COL_ADDRESS1 => 'Address',
+            static::COL_ADDRESS2 => 'Number',
+            static::COL_ADDRESS3 => 'Additional address',
+        ];
+
+        $externalData = $this->companyUnitAddressTablePluginsExecutor->executeTableHeaderExpanderPlugins();
+
+        $actions = [static::COL_ACTIONS => static::COL_ACTIONS];
+
+        $config->setHeader($baseData + $externalData + $actions);
+
+        return $config;
+    }
+
+    /**
+     * @param array $item
+     *
+     * @return array
+     */
+    protected function prepareRowData(array $item): array
+    {
+        $baseData = [
+            static::COL_ID_COMPANY_UNIT_ADDRESS => $item[static::COL_ID_COMPANY_UNIT_ADDRESS],
+            static::COL_COUNTRY_RELATION => $this->getCountryName((int)$item[static::COL_ID_COMPANY_UNIT_ADDRESS]),
+            static::COL_REGION_RELATION => $this->getRegionName((int)$item[static::COL_ID_COMPANY_UNIT_ADDRESS]),
+            static::COL_CITY => $item[static::COL_CITY],
+            static::COL_ZIPCODE => $item[static::COL_ZIPCODE],
+            static::COL_COMPANY_RELATION => $this->getCompanyName((int)$item[static::COL_ID_COMPANY_UNIT_ADDRESS]),
+            static::COL_ADDRESS1 => $item[static::COL_ADDRESS1],
+            static::COL_ADDRESS2 => $item[static::COL_ADDRESS2],
+            static::COL_ADDRESS3 => $item[static::COL_ADDRESS3],
+        ];
+
+        $externalData = $this->companyUnitAddressTablePluginsExecutor->executeTableDataExpanderPlugins($item);
+
+        $actions = [static::COL_ACTIONS => $this->buildLinks($item)];
+
+        return $baseData + $externalData + $actions;
     }
 
     /**

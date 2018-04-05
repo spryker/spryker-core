@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\CompanyGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
+use Generated\Shared\Transfer\CompanyTypeCollectionTransfer;
 
 class CompanyGuiToCompanyFacadeBridge implements CompanyGuiToCompanyFacadeInterface
 {
@@ -27,10 +29,37 @@ class CompanyGuiToCompanyFacadeBridge implements CompanyGuiToCompanyFacadeInterf
     /**
      * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\CompanyResponseTransfer
      */
-    public function update(CompanyTransfer $companyTransfer): void
+    public function update(CompanyTransfer $companyTransfer): CompanyResponseTransfer
     {
-        $this->companyFacade->update($companyTransfer);
+        return $this->companyFacade->update($companyTransfer);
+    }
+
+    /** @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyTransfer
+     */
+    public function getCompanyById(CompanyTransfer $companyTransfer): CompanyTransfer
+    {
+        return $this->companyFacade->getCompanyById($companyTransfer);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CompanyTypeCollectionTransfer
+     */
+    public function getCompanyTypes(): CompanyTypeCollectionTransfer
+    {
+        return $this->companyFacade->getCompanyTypes();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyResponseTransfer
+     */
+    public function create(CompanyTransfer $companyTransfer): CompanyResponseTransfer
+    {
+        return $this->companyFacade->create($companyTransfer);
     }
 }

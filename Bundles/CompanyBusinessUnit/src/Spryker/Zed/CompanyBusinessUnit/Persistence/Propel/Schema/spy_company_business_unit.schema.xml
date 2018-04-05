@@ -7,6 +7,8 @@
         <column name="email" type="VARCHAR" size="255" required="false"/>
         <column name="phone" type="VARCHAR" size="255" required="false"/>
         <column name="external_url" type="VARCHAR" size="255" required="false"/>
+        <column name="iban" type="VARCHAR" size="255" required="false"/>
+        <column name="bic" type="VARCHAR" size="255" required="false"/>
 
         <column name="fk_company" type="INTEGER" required="true"/>
 
