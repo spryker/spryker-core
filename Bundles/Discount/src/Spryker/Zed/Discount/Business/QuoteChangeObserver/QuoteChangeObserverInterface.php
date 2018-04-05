@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\DiscountCartConnector\Business\QuoteChangeObserver;
+namespace Spryker\Zed\Discount\Business\QuoteChangeObserver;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 

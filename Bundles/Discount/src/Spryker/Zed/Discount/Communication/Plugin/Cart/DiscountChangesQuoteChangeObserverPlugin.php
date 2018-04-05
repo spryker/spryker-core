@@ -5,22 +5,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\DiscountCartConnector\Communication\Plugin;
+namespace Spryker\Zed\Discount\Communication\Plugin\Cart;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\CartExtension\Dependency\Plugin\QuoteChangeObserverPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\DiscountCartConnector\Business\DiscountCartConnectorFacadeInterface getFacade()
- * @method \Spryker\Zed\DiscountCartConnector\DiscountCartConnectorConfig getConfig()
- * @method \Spryker\Zed\DiscountCartConnector\Communication\DiscountCartConnectorCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Discount\Business\DiscountFacadeInterface getFacade()
+ * @method \Spryker\Zed\Discount\DiscountConfig getConfig()
+ * @method \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory getFactory()
  */
 class DiscountChangesQuoteChangeObserverPlugin extends AbstractPlugin implements QuoteChangeObserverPluginInterface
 {
     /**
      * Specification:
-     * - Checks cart changes on cart validate
+     * - Checks cart changes on cart validate.
      *
      * @api
      *

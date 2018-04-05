@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\DiscountCartConnector\Business\QuoteChangeObserver;
+namespace Spryker\Zed\Discount\Business\QuoteChangeObserver;
 
 use ArrayObject;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\DiscountCartConnector\Dependency\Facade\DiscountCartConnectorToMessengerFacadeInterface;
+use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
 
 class QuoteChangeObserver implements QuoteChangeObserverInterface
 {
@@ -18,14 +18,14 @@ class QuoteChangeObserver implements QuoteChangeObserverInterface
     public const GLOSSARY_KEY_DISCOUNT_QUOTE_CHANGE_DISCOUNT_AMOUNT_CHANGED = 'discount.quote_change.discount.amount_changed';
 
     /**
-     * @var \Spryker\Zed\DiscountCartConnector\Dependency\Facade\DiscountCartConnectorToMessengerFacadeInterface
+     * @var \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface
      */
     protected $messengerFacade;
 
     /**
-     * @param \Spryker\Zed\DiscountCartConnector\Dependency\Facade\DiscountCartConnectorToMessengerFacadeInterface $messengerFacade
+     * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface $messengerFacade
      */
-    public function __construct(DiscountCartConnectorToMessengerFacadeInterface $messengerFacade)
+    public function __construct(DiscountToMessengerInterface $messengerFacade)
     {
         $this->messengerFacade = $messengerFacade;
     }
