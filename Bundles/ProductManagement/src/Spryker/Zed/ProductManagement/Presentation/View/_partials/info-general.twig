@@ -15,11 +15,11 @@
 
         {% set productType = 'Product' %}
 
-        {% if isGiftCard == true %}
+        {% if isGiftCard is defined and isGiftCard == true %}
             {% set productType = 'Gift Card' %}
         {% endif %}
 
-        {% if isProductBundle == true %}
+        {% if isProductBundle is defined and isProductBundle == true %}
             {% set productType = 'Product Bundle' %}
         {% endif %}
 
