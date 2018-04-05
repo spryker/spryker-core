@@ -51,7 +51,7 @@ class CartToMessengerBridge implements CartToMessengerInterface
      */
     public function addInfoMessage(MessageTransfer $messageTransfer)
     {
-        $this->messengerFacade->addErrorMessage($messageTransfer);
+        $this->messengerFacade->addInfoMessage($messageTransfer);
     }
 
     /**

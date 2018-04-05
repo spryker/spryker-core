@@ -111,7 +111,7 @@ class QuoteChangeObserver implements QuoteChangeObserverInterface
         $quoteItemDiff = [];
         foreach ($resultQuoteItemIndex as $key => $value) {
             $oldPrice = $sourceQuoteItemIndex[$key]['price'] ?? 0;
-            if ($value['price'] != $oldPrice) {
+            if (isset($sourceQuoteItemIndex[$key]) && $value['price'] != $oldPrice) {
                 $quoteItemDiff[] = $value['sku'];
             }
         }
