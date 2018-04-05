@@ -366,4 +366,22 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
             ->createProductBundleCartChangeObserver()
             ->checkBundleItemsChanges($resultQuoteTransfer, $sourceQuoteTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $sku
+     * @param string|null $groupKey
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function findBundleItemsInQuote(QuoteTransfer $quoteTransfer, $sku, $groupKey): array
+    {
+        return $this->getFactory()
+            ->createQuoteBundleItemsFinder()
+            ->findItems($quoteTransfer, $sku, $groupKey);
+    }
 }

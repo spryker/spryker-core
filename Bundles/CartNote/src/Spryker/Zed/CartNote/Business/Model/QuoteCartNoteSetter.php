@@ -7,12 +7,12 @@
 
 namespace Spryker\Zed\CartNote\Business\Model;
 
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteCartNoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteItemCartNoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\CartNote\Dependency\Facade\CartNoteToQuoteFacadeInterface;
+use Spryker\Zed\CartNoteExtension\Dependency\Plugin\QuoteItemFinderPluginInterface;
 
 class QuoteCartNoteSetter implements QuoteCartNoteSetterInterface
 {
@@ -22,11 +22,18 @@ class QuoteCartNoteSetter implements QuoteCartNoteSetterInterface
     protected $quoteFacade;
 
     /**
-     * @param \Spryker\Zed\CartNote\Dependency\Facade\CartNoteToQuoteFacadeInterface $quoteFacade
+     * @var \Spryker\Zed\CartNoteExtension\Dependency\Plugin\QuoteItemFinderPluginInterface
      */
-    public function __construct(CartNoteToQuoteFacadeInterface $quoteFacade)
+    protected $quoteItemFinderPlugin;
+
+    /**
+     * @param \Spryker\Zed\CartNote\Dependency\Facade\CartNoteToQuoteFacadeInterface $quoteFacade
+     * @param \Spryker\Zed\CartNoteExtension\Dependency\Plugin\QuoteItemFinderPluginInterface $quoteItemFinderPlugin
+     */
+    public function __construct(CartNoteToQuoteFacadeInterface $quoteFacade, QuoteItemFinderPluginInterface $quoteItemFinderPlugin)
     {
         $this->quoteFacade = $quoteFacade;
+        $this->quoteItemFinderPlugin = $quoteItemFinderPlugin;
     }
 
     /**
@@ -60,20 +67,33 @@ class QuoteCartNoteSetter implements QuoteCartNoteSetterInterface
         }
         $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
         $quoteTransfer->setCustomer($quoteItemCartNoteRequestTransfer->getCustomer());
-        $itemTransfer = $this->findQuoteItem(
+        $itemTransferCollection = $this->findQuoteItems(
             $quoteTransfer,
             $quoteItemCartNoteRequestTransfer->getSku(),
             $quoteItemCartNoteRequestTransfer->getGroupKey()
         );
-        if (!$itemTransfer) {
+        if (!count($itemTransferCollection)) {
             $quoteResponseTransfer = new QuoteResponseTransfer();
             $quoteResponseTransfer->setIsSuccessful(false);
 
             return $quoteResponseTransfer;
         }
-        $itemTransfer->setCartNote($quoteItemCartNoteRequestTransfer->getCartNote());
+        $this->updateItemsCartNote($itemTransferCollection, $quoteItemCartNoteRequestTransfer->getCartNote());
 
         return $this->quoteFacade->updateQuote($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransferCollection
+     * @param string $note
+     *
+     * @return void
+     */
+    protected function updateItemsCartNote(array $itemTransferCollection, string $note): void
+    {
+        foreach ($itemTransferCollection as $itemTransfer) {
+            $itemTransfer->setCartNote($note);
+        }
     }
 
     /**
@@ -81,17 +101,10 @@ class QuoteCartNoteSetter implements QuoteCartNoteSetterInterface
      * @param string $sku
      * @param string|null $groupKey
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer|null
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    protected function findQuoteItem(QuoteTransfer $quoteTransfer, $sku, $groupKey = null): ?ItemTransfer
+    protected function findQuoteItems(QuoteTransfer $quoteTransfer, $sku, $groupKey = null): array
     {
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if (($itemTransfer->getSku() === $sku && $groupKey === null) ||
-                $itemTransfer->getGroupKey() === $groupKey) {
-                return $itemTransfer;
-            }
-        }
-
-        return null;
+        return $this->quoteItemFinderPlugin->findItem($quoteTransfer, $sku, $groupKey);
     }
 }

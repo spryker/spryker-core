@@ -144,6 +144,7 @@ class QuoteResolver implements QuoteResolverInterface
     {
         $quoteTransfer = new QuoteTransfer();
         $quoteTransfer->setCustomer($customerTransfer);
+        $quoteTransfer->setCustomerReference($customerTransfer->getCustomerReference());
 
         return $this->quoteFacade->createQuote($quoteTransfer)->getQuoteTransfer();
     }
