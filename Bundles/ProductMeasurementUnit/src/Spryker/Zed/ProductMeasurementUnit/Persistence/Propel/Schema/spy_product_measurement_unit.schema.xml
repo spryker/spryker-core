@@ -76,7 +76,7 @@
         <foreign-key name="spy_product_measurement_sales_unit_store-fk_store" foreignTable="spy_store">
             <reference local="fk_store" foreign="id_store"/>
         </foreign-key>
-        <foreign-key name="spy_product_measurement_sales_unit_store-fk_product_measurement_sales_unit" foreignTable="spy_product_measurement_sales_unit">
+        <foreign-key name="spy_product_measurement_sales_unit_store-fk_sales_unit" foreignTable="spy_product_measurement_sales_unit">
             <reference local="fk_product_measurement_sales_unit" foreign="id_product_measurement_sales_unit"/>
         </foreign-key>
     </table>
