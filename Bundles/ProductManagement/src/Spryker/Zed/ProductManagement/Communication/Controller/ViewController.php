@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductManagement\Communication\Controller;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
@@ -142,8 +143,8 @@ class ViewController extends AddController
 
         $imageSets = $this->getProductImageSetCollection($imageSetCollection);
 
-        $productAbstractTransfer = $this->getFactory()
-            ->getProductFacade()->findProductAbstractById($idProductAbstract);
+        $productAbstractTransfer = new ProductAbstractTransfer();
+        $productAbstractTransfer->setSku($productTransfer->getAbstractSku());
 
         $isProductBundle = $this->getFactory()
             ->createProductTypeHelper()
