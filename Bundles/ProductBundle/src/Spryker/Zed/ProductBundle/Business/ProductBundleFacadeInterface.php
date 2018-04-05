@@ -304,4 +304,17 @@ interface ProductBundleFacadeInterface
      * @return \Generated\Shared\Transfer\ItemTransfer|null
      */
     public function findItemInQuote(QuoteTransfer $quoteTransfer, $sku, $groupKey);
+
+    /**
+     * Specification:
+     *  - Checks price difference between quotes bundle items.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $resultQuoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $sourceQuoteTransfer
+     *
+     * @return void
+     */
+    public function checkBundleItemsPriceChanges(QuoteTransfer $resultQuoteTransfer, QuoteTransfer $sourceQuoteTransfer): void;
 }

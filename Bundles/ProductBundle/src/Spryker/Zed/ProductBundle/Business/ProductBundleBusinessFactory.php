@@ -12,6 +12,8 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\PreCheck\Produ
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\PreCheck\ProductBundleCheckoutAvailabilityCheck;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandler;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Calculation\ProductBundlePriceCalculation;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartChangeObserver;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartChangeObserverInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartExpander;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartItemGroupKeyExpander;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartPostSaveUpdate;
@@ -235,6 +237,14 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartChangeObserverInterface
+     */
+    public function createProductBundleCartChangeObserver(): ProductBundleCartChangeObserverInterface
+    {
+        return new ProductBundleCartChangeObserver($this->getMessengerFacade());
+    }
+
+    /**
      * @return \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductInterface
      */
     protected function getProductFacade()
@@ -320,5 +330,13 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     protected function getStoreFacade()
     {
         return $this->getProvidedDependency(ProductBundleDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToMessengerFacadeInterface
+     */
+    protected function getMessengerFacade()
+    {
+        return $this->getProvidedDependency(ProductBundleDependencyProvider::FACADE_MESSENGER);
     }
 }
