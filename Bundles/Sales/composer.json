@@ -14,7 +14,7 @@
     "spryker/oms": "^7.3.0 || ^8.0.0",
     "spryker/propel": "^3.0.0",
     "spryker/propel-orm": "^1.0.0",
-    "spryker/sales-extension": "^1.0.0",
+    "spryker/sales-extension": "^1.1.0",
     "spryker/sales-split": "^3.0.0",
     "spryker/sequence-number": "^3.0.0",
     "spryker/symfony": "^3.0.0",
