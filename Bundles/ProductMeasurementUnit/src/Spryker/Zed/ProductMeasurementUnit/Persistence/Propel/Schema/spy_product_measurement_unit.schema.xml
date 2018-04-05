@@ -56,10 +56,10 @@
         <foreign-key name="spy_product_measurement_sales_unit-fk_product" foreignTable="spy_product" phpName="Product">
             <reference local="fk_product" foreign="id_product"/>
         </foreign-key>
-        <foreign-key name="spy_product_measurement_sales_unit-fk_product_measurement_unit" foreignTable="spy_product_measurement_unit" phpName="ProductMeasurementUnit">
+        <foreign-key name="spy_product_measurement_sales_unit-fk_measurement_unit" foreignTable="spy_product_measurement_unit" phpName="ProductMeasurementUnit">
             <reference local="fk_product_measurement_unit" foreign="id_product_measurement_unit"/>
         </foreign-key>
-        <foreign-key name="spy_product_measurement_sales_unit-fk_product_measurement_base_unit" foreignTable="spy_product_measurement_base_unit" phpName="ProductMeasurementBaseUnit">
+        <foreign-key name="spy_product_measurement_sales_unit-fk_base_unit" foreignTable="spy_product_measurement_base_unit" phpName="ProductMeasurementBaseUnit">
             <reference local="fk_product_measurement_base_unit" foreign="id_product_measurement_base_unit"/>
         </foreign-key>
     </table>
