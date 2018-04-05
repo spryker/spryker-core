@@ -39,7 +39,7 @@ interface OfferFacadeInterface
 
     /**
      * Specification:
-     * - Creates a new order in the database.
+     * - Creates am offer in DB.
      *
      * @api
      *
@@ -48,6 +48,19 @@ interface OfferFacadeInterface
      * @return \Generated\Shared\Transfer\OfferResponseTransfer
      */
     public function createOffer(OfferTransfer $offerTransfer): OfferResponseTransfer;
+
+    /**
+     * Specification:
+     * - Places an offer to a DB
+     * - Takes a customer relation from Quote (filled as a part of checkout process from customer session)
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
+     *
+     * @return \Generated\Shared\Transfer\OfferResponseTransfer
+     */
+    public function placeOffer(OfferTransfer $offerTransfer): OfferResponseTransfer;
 
     /**
      * Specification:

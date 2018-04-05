@@ -13,7 +13,8 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\OfferGui\Communication\Form\Constraint\SkuExists;
 use Spryker\Zed\OfferGui\Communication\Form\DataProvider\OfferDataProvider;
-use Spryker\Zed\OfferGui\Communication\Form\Offer\OfferType;
+use Spryker\Zed\OfferGui\Communication\Form\Offer\CreateOfferType;
+use Spryker\Zed\OfferGui\Communication\Form\Offer\EditOfferType;
 use Spryker\Zed\OfferGui\Communication\Table\OffersTable;
 use Spryker\Zed\OfferGui\Communication\Table\OffersTableQueryBuilder;
 use Spryker\Zed\OfferGui\Communication\Table\OffersTableQueryBuilderInterface;
@@ -115,7 +116,7 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param int|null $idOffer
+     * @param OfferTransfer $offerTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -132,12 +133,25 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
         return $form;
     }
 
+    public function getCreateOfferForm(OfferTransfer $offerTransfer)
+    {
+        $form = $this->getFormFactory()->create(
+            CreateOfferType::class,
+                $offerTransfer,
+            [
+                'data_class' => OfferTransfer::class
+            ]
+        );
+
+        return $form;
+    }
+
     /**
      * @return string
      */
     public function getOfferType(): string
     {
-        return OfferType::class;
+        return EditOfferType::class;
     }
 
     /**

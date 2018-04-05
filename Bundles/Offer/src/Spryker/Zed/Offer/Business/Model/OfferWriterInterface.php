@@ -20,6 +20,13 @@ interface OfferWriterInterface
     public function createOffer(OfferTransfer $offerTransfer): OfferResponseTransfer;
 
     /**
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
+     *
+     * @return \Generated\Shared\Transfer\OfferResponseTransfer
+     */
+    public function placeOffer(OfferTransfer $offerTransfer): OfferResponseTransfer;
+
+    /**
      * @param OfferTransfer $offerTransfer
      *
      * @return OfferResponseTransfer

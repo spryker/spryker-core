@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Offer\Persistence;
 
 use Generated\Shared\Transfer\OfferTransfer;
+use Generated\Shared\Transfer\SpyOfferEntityTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -32,7 +33,12 @@ class OfferEntityManager extends AbstractEntityManager implements OfferEntityMan
 
         $offerEntityTransfer->setIdOffer(null);
 
-        $this->save($offerEntityTransfer);
+        /** @var SpyOfferEntityTransfer $offerEntityTransfer */
+        $offerEntityTransfer = $this->save($offerEntityTransfer);
+
+        $offerTransfer->setIdOffer(
+            $offerEntityTransfer->getIdOffer()
+        );
 
         return $offerTransfer;
     }

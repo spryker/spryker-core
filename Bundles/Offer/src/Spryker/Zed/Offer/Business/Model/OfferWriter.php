@@ -65,20 +65,52 @@ class OfferWriter implements OfferWriterInterface
     public function createOffer(OfferTransfer $offerTransfer): OfferResponseTransfer
     {
         $offerTransfer->requireQuote();
-        $offerTransfer->getQuote()->requireCustomer();
 
-        //TODO: drop Customer object here and fill it from session on order creation
-
-        $offerTransfer->setStatus($this->offerConfig->getStatusInProgress());
-        $offerTransfer->setCustomerReference($offerTransfer->getQuote()->getCustomer()->getCustomerReference());
-
-        $offerTransfer = $this->offerEntityManager->createOffer($offerTransfer);
-
-        $offerTransfer->getQuote()->setCheckoutConfirmed(true);
+        $offerTransfer = $this->executeCreateOffer($offerTransfer);
 
         return (new OfferResponseTransfer())
             ->setIsSuccessful(true)
             ->setOffer($offerTransfer);
+    }
+
+    /**
+     * @param OfferTransfer $offerTransfer
+     *
+     * @return OfferResponseTransfer
+     */
+    public function placeOffer(OfferTransfer $offerTransfer): OfferResponseTransfer
+    {
+        $offerTransfer->requireQuote();
+        $offerTransfer->getQuote()->requireCustomer();
+
+        //TODO: drop Customer object here and fill it from session on order creation
+        $offerTransfer->setCustomerReference(
+            $offerTransfer
+                ->getQuote()
+                ->getCustomer()
+                ->getCustomerReference()
+        );
+
+        $offerTransfer = $this->executeCreateOffer($offerTransfer);
+
+
+        return (new OfferResponseTransfer())
+            ->setIsSuccessful(true)
+            ->setOffer($offerTransfer);
+    }
+
+    /**
+     * @param OfferTransfer $offerTransfer
+     *
+     * @return OfferTransfer
+     */
+    protected function executeCreateOffer(OfferTransfer $offerTransfer)
+    {
+        $offerTransfer->setStatus($this->offerConfig->getStatusInProgress());
+        $offerTransfer = $this->offerEntityManager->createOffer($offerTransfer);
+        $offerTransfer->getQuote()->setCheckoutConfirmed(true);
+
+        return $offerTransfer;
     }
 
     /**

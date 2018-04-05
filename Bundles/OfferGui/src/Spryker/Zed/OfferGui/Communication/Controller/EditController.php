@@ -8,9 +8,13 @@
 namespace Spryker\Zed\OfferGui\Communication\Controller;
 
 use ArrayObject;
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OfferTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\Kernel\Locator;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,16 +40,18 @@ class EditController extends AbstractController
         $isSubmitPersist = $request->request->get(static::PARAM_SUBMIT_PERSIST);
 
         $offerTransfer = new OfferTransfer();
-        $offerTransfer->setIdOffer($idOffer);
 
-        $offerTransfer = $this->getFactory()
-            ->getOfferFacade()
-            ->getOfferById($offerTransfer);
+        if ($idOffer) {
+            $offerTransfer->setIdOffer($idOffer);
+            $offerTransfer = $this->getFactory()
+                ->getOfferFacade()
+                ->getOfferById($offerTransfer);
+        }
 
         /** @var \Spryker\Zed\Cart\Business\CartFacadeInterface $cartFacade */
         $cartFacade = Locator::getInstance()->cart()->facade();
 
-        $form = $this->createOfferForm($offerTransfer);
+        $form = $this->getFactory()->getOfferForm($offerTransfer);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -92,7 +98,7 @@ class EditController extends AbstractController
             $offerTransfer->setQuote($quoteTransfer);
 
             //refresh form after calculations
-            $form = $this->createOfferForm($offerTransfer);
+            $form = $this->getFactory()->getOfferForm($offerTransfer);
             //save offer and a quote
 
             if ($isSubmitPersist) {
@@ -106,23 +112,5 @@ class EditController extends AbstractController
             'offer' => $offerTransfer,
             'form' => $form->createView(),
         ]);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    protected function createOfferForm(OfferTransfer $offerTransfer)
-    {
-        $offerTransfer
-            ->getQuote()
-            ->setIncomingItems(new ArrayObject([
-                new ItemTransfer(),
-                new ItemTransfer(),
-                new ItemTransfer(),
-            ]));
-
-        return $this->getFactory()->getOfferForm($offerTransfer);
     }
 }
