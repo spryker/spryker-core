@@ -13,6 +13,7 @@ use Spryker\Zed\ManualOrderEntry\Business\Model\OrderSource\OrderSourceManagerIn
 
 /**
  * @method \Spryker\Zed\ManualOrderEntry\Persistence\ManualOrderEntryRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ManualOrderEntry\ManualOrderEntryConfig getConfig()
  */
 class ManualOrderEntryBusinessFactory extends AbstractBusinessFactory
 {
