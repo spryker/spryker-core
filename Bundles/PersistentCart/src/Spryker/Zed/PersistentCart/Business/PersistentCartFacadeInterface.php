@@ -40,6 +40,28 @@ interface PersistentCartFacadeInterface
     public function add(PersistentCartChangeTransfer $persistentCartChangeTransfer): QuoteResponseTransfer;
 
     /**
+     *  Adds only valid item(s) to the quote. Each item gets additional information (e.g. price).
+     *
+     * Specification:
+     *  - Run cart pre check plugins, per every item.
+     *  - Add to cart only valid items.
+     *  - If some items relay on one stock - items will be added by same order, until stock allow it.
+     *  - For each new item run the item expander plugins (requires a SKU for each new item)
+     *  - Add new item(s) to quote (requires, but not limited, a quantity > 0 for each new item)
+     *  - Group items in quote (-> ItemGrouper)
+     *  - Recalculate quote (-> Calculation)
+     *  - Add success message to messenger (-> Messenger)
+     *  - Return updated quote
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function addValid(PersistentCartChangeTransfer $persistentCartChangeTransfer): QuoteResponseTransfer;
+
+    /**
      * Specification:
      *  - For each new item run the item expander plugins (requires a SKU for each new item)
      *  - Decreases the given quantity for the given item(s) from the quote

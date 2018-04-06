@@ -14,8 +14,8 @@ use Spryker\Zed\PersistentCart\Business\Model\CartOperation;
 use Spryker\Zed\PersistentCart\Business\Model\CartOperationInterface;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteDeleter;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteDeleterInterface;
-use Spryker\Zed\PersistentCart\Business\Model\QuoteItemOperations;
-use Spryker\Zed\PersistentCart\Business\Model\QuoteItemOperationsInterface;
+use Spryker\Zed\PersistentCart\Business\Model\QuoteItemOperation;
+use Spryker\Zed\PersistentCart\Business\Model\QuoteItemOperationInterface;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteMerger;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteMergerInterface;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteResolver;
@@ -43,16 +43,16 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
             $this->getQuoteItemFinderPlugin(),
             $this->createQuoteResponseExpander(),
             $this->createQuoteResolver(),
-            $this->createQuoteItemOperations()
+            $this->createQuoteItemOperation()
         );
     }
 
     /**
-     * @return \Spryker\Zed\PersistentCart\Business\Model\QuoteItemOperationsInterface
+     * @return \Spryker\Zed\PersistentCart\Business\Model\QuoteItemOperationInterface
      */
-    public function createQuoteItemOperations(): QuoteItemOperationsInterface
+    public function createQuoteItemOperation(): QuoteItemOperationInterface
     {
-        return new QuoteItemOperations(
+        return new QuoteItemOperation(
             $this->getCartFacade(),
             $this->getQuoteFacade(),
             $this->createCartChangeRequestExpander(),

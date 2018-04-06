@@ -32,6 +32,16 @@ class PersistentCartStub extends ZedRequestStub implements PersistentCartStubInt
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
+    public function addValidItems(PersistentCartChangeTransfer $persistentCartChangeTransfer): QuoteResponseTransfer
+    {
+        return $this->zedStub->call('/persistent-cart/gateway/add-valid-items', $persistentCartChangeTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     */
     public function removeItem(PersistentCartChangeTransfer $persistentCartChangeTransfer): QuoteResponseTransfer
     {
         return $this->zedStub->call('/persistent-cart/gateway/remove-item', $persistentCartChangeTransfer);

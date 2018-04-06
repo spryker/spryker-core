@@ -72,6 +72,24 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param array $params
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function addValidItems(CartChangeTransfer $cartChangeTransfer, array $params = []): QuoteTransfer
+    {
+        $cartChangeTransfer = $this->getFactory()
+            ->createCartChangeRequestExpander()
+            ->addItemsRequestExpand($cartChangeTransfer);
+
+        $quoteTransfer = $this->getCartZedStub()->addValidItems($cartChangeTransfer);
+        $this->getQuoteClient()->setQuote($quoteTransfer);
+
+        return $quoteTransfer;
+    }
+
+    /**
      * @param string $sku
      * @param string|null $groupKey
      *

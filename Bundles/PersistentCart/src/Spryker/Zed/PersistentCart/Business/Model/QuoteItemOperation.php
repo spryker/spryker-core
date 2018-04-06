@@ -18,7 +18,7 @@ use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToCartFacadeInter
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToMessengerFacadeInterface;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface;
 
-class QuoteItemOperations implements QuoteItemOperationsInterface
+class QuoteItemOperation implements QuoteItemOperationInterface
 {
     use PermissionAwareTrait;
 
@@ -91,6 +91,31 @@ class QuoteItemOperations implements QuoteItemOperationsInterface
             $cartChangeTransfer->addItem($itemTransfer);
         }
         $quoteTransfer = $this->cartFacade->add($cartChangeTransfer);
+
+        return $this->quoteResponseExpander->expand($this->quoteFacade->updateQuote($quoteTransfer));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransferList
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function addValidItems(array $itemTransferList, QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        $quoteResponseTransfer = new QuoteResponseTransfer();
+        $quoteResponseTransfer->setIsSuccessful(false);
+        $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
+        $quoteResponseTransfer->setCustomer($quoteTransfer->getCustomer());
+        if (!$this->isQuoteWriteAllowed($quoteTransfer, $quoteTransfer->getCustomer())) {
+            return $this->quoteResponseExpander->expand($quoteResponseTransfer);
+        }
+
+        $cartChangeTransfer = $this->createCartChangeTransfer($quoteTransfer);
+        foreach ($itemTransferList as $itemTransfer) {
+            $cartChangeTransfer->addItem($itemTransfer);
+        }
+        $quoteTransfer = $this->cartFacade->addValid($cartChangeTransfer);
 
         return $this->quoteResponseExpander->expand($this->quoteFacade->updateQuote($quoteTransfer));
     }

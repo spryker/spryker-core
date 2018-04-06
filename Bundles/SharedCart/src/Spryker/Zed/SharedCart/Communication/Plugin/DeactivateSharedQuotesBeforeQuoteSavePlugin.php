@@ -19,6 +19,9 @@ use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface;
 class DeactivateSharedQuotesBeforeQuoteSavePlugin extends AbstractPlugin implements QuoteWritePluginInterface
 {
     /**
+     * Specification:
+     * - Deactivates shared quote for current customer/
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -27,7 +30,7 @@ class DeactivateSharedQuotesBeforeQuoteSavePlugin extends AbstractPlugin impleme
      */
     public function execute(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        if (!$quoteTransfer->getIsDefault() && $quoteTransfer->getCustomer()->getCompanyUserTransfer()) {
+        if (!$quoteTransfer->getIsDefault() || !$quoteTransfer->getCustomer()->getCompanyUserTransfer()) {
             return $quoteTransfer;
         }
 
