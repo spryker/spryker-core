@@ -13,6 +13,7 @@ use Spryker\Zed\Offer\Communication\Plugin\OfferSavingHydratorPlugin;
 use Spryker\Zed\Offer\Dependency\Facade\OfferToCartFacadeBridge;
 use Spryker\Zed\Offer\Dependency\Facade\OfferToSalesFacadeBridge;
 use Spryker\Zed\Offer\Dependency\Plugin\OfferDoUpdatePluginInterface;
+use Spryker\Zed\Offer\Dependency\Service\OfferToUtilEncodingServiceBridge;
 use Spryker\Zed\OfferExtension\Dependency\Plugin\OfferHydratorPluginInterface;
 
 class OfferDependencyProvider extends AbstractBundleDependencyProvider
@@ -114,7 +115,7 @@ class OfferDependencyProvider extends AbstractBundleDependencyProvider
     protected function addServiceUtilEncoding(Container $container)
     {
         $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
-            return $container->getLocator()->utilEncoding()->service();
+            return new OfferToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
         };
 
         return $container;
