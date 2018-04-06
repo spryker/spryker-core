@@ -51,7 +51,7 @@ class CustomerRepository extends AbstractRepository implements CustomerRepositor
      *
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
      */
-    protected function applyFilterToQuery(SpyCustomerQuery $spyCustomerQuery, FilterTransfer $filterTransfer): SpyCustomerQuery
+    protected function applyFilterToQuery(SpyCustomerQuery $spyCustomerQuery, ?FilterTransfer $filterTransfer): SpyCustomerQuery
     {
         $criteria = new Criteria();
         if ($filterTransfer !== null) {

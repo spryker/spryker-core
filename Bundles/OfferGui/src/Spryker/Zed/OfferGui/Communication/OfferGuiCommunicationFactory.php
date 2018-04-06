@@ -157,7 +157,8 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createOfferDataProvider()
     {
         return new OfferDataProvider(
-            $this->getOfferFacade()
+            $this->getOfferFacade(),
+            $this->getCustomerFacade()
         );
     }
 

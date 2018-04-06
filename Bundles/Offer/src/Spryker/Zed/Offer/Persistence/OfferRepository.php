@@ -78,9 +78,6 @@ class OfferRepository extends AbstractRepository implements OfferRepositoryInter
 
         $spyOfferQuery->mergeWith($criteria);
 
-        //TODO: make it more flexible.
-        $spyOfferQuery->filterByStatus($this->getFactory()->getConfig()->getStatusInProgress());
-
         return $spyOfferQuery;
     }
 
