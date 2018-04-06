@@ -23,4 +23,16 @@ interface CompanySupplierDataImportFacadeInterface
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
     public function importCompanyType(DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer;
+
+    /**
+     * Specification:
+     * - Imports Company supplier per product data.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\DataImporterReportTransfer
+     */
+    public function importCompanySupplier(DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer;
 }

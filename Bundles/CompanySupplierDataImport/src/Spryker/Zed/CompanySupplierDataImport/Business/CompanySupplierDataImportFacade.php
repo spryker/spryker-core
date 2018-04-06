@@ -29,4 +29,18 @@ class CompanySupplierDataImportFacade extends AbstractFacade implements CompanyS
     {
         return $this->getFactory()->createCompanyTypeDataImport()->import($dataImporterConfigurationTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\DataImporterReportTransfer
+     */
+    public function importCompanySupplier(DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
+    {
+        return $this->getFactory()->createCompanySupplierDataImport()->import($dataImporterConfigurationTransfer);
+    }
 }
