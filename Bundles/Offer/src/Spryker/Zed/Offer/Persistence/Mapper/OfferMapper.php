@@ -11,17 +11,17 @@ use Generated\Shared\Transfer\OfferTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpyOfferEntityTransfer;
 use Spryker\Service\UtilEncoding\UtilEncodingServiceInterface;
-use Spryker\Zed\Offer\Dependency\Facade\OfferToUtilEncodingServiceInterface;
+use Spryker\Zed\Offer\Dependency\Service\OfferToUtilEncodingServiceInterface;
 
 class OfferMapper implements OfferMapperInterface
 {
     /**
-     * @var \Spryker\Zed\Offer\Dependency\Facade\OfferToUtilEncodingServiceInterface
+     * @var \Spryker\Zed\Offer\Dependency\Service\OfferToUtilEncodingServiceInterface
      */
     protected $utilEncodingService;
 
     /**
-     * @param \Spryker\Zed\Offer\Dependency\Facade\OfferToUtilEncodingServiceInterface $utilEncodingService
+     * @param \Spryker\Zed\Offer\Dependency\Service\OfferToUtilEncodingServiceInterface $utilEncodingService
      */
     public function __construct(OfferToUtilEncodingServiceInterface $utilEncodingService)
     {

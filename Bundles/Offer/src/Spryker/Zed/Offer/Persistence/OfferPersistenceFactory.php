@@ -9,6 +9,7 @@ namespace Spryker\Zed\Offer\Persistence;
 
 use Orm\Zed\Offer\Persistence\SpyOfferQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\Offer\Dependency\Service\OfferToUtilEncodingServiceInterface;
 use Spryker\Zed\Offer\OfferDependencyProvider;
 use Spryker\Zed\Offer\Persistence\Mapper\OfferMapper;
 use Spryker\Zed\Offer\Persistence\Mapper\OfferMapperInterface;
@@ -32,7 +33,15 @@ class OfferPersistenceFactory extends AbstractPersistenceFactory
     public function createOfferMapper(): OfferMapperInterface
     {
         return new OfferMapper(
-            $this->getProvidedDependency(OfferDependencyProvider::SERVICE_UTIL_ENCODING)
+            $this->getUtilEncodingService()
         );
+    }
+
+    /**
+     * @return OfferToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): OfferToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(OfferDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }
