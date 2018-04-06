@@ -37,6 +37,11 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
     protected $productStockHelper;
 
     /**
+     * @var \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteFormEditDataProviderExpanderPluginInterface[]
+     */
+    protected $formEditDataProviderExpanderPlugins;
+
+    /**
      * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $categoryQueryContainer
      * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface $productManagementQueryContainer
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
@@ -50,6 +55,7 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
      * @param string $imageUrlPrefix
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreInterface|null $store
      * @param \Spryker\Zed\ProductManagement\Communication\Helper\ProductStockHelperInterface $productStockHelper
+     * @param \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteFormEditDataProviderExpanderPluginInterface[] $formEditDataProviderExpanderPlugins
      */
     public function __construct(
         CategoryQueryContainerInterface $categoryQueryContainer,
@@ -64,7 +70,8 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
         array $taxCollection,
         $imageUrlPrefix,
         ProductManagementToStoreInterface $store,
-        ProductStockHelperInterface $productStockHelper
+        ProductStockHelperInterface $productStockHelper,
+        array $formEditDataProviderExpanderPlugins
     ) {
         parent::__construct(
             $categoryQueryContainer,
@@ -83,6 +90,7 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
 
         $this->attributeTransferCollection = new Collection($attributeCollection);
         $this->productStockHelper = $productStockHelper;
+        $this->formEditDataProviderExpanderPlugins = $formEditDataProviderExpanderPlugins;
     }
 
     /**
@@ -155,6 +163,10 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
             $formData = $this->appendVariantPriceAndStock($productAbstractTransfer, $productTransfer, $formData);
             $formData = $this->appendConcreteProductImages($productAbstractTransfer, $productTransfer, $formData);
             $formData = $this->appendBundledProducts($productTransfer, $formData);
+        }
+
+        foreach ($this->formEditDataProviderExpanderPlugins as $expanderPlugin) {
+            $expanderPlugin->expand($productTransfer, $formData);
         }
 
         return $formData;

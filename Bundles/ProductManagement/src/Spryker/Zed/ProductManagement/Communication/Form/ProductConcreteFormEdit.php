@@ -61,7 +61,8 @@ class ProductConcreteFormEdit extends ProductFormAdd
             ->addStockForm($builder, $options)
             ->addImageLocalizedForms($builder)
             ->addAssignBundledProductForm($builder, $options)
-            ->addBundledProductsToBeRemoved($builder);
+            ->addBundledProductsToBeRemoved($builder)
+            ->addFormBuildPlugins($builder, $options);
     }
 
     /**
@@ -351,5 +352,21 @@ class ProductConcreteFormEdit extends ProductFormAdd
         parent::configureOptions($resolver);
 
         $resolver->setRequired(self::OPTION_IS_BUNDLE_ITEM);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return \Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormEdit
+     */
+    protected function addFormBuildPlugins(FormBuilderInterface $builder, array $options): ProductConcreteFormEdit
+    {
+        /** @var \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteEditFormExpanderPluginInterface $plugin */
+        foreach ($this->getFactory()->getProductConcreteEditFormExpanderPlugins() as $plugin) {
+            $plugin->buildForm($builder, $options);
+        }
+
+        return $this;
     }
 }

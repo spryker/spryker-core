@@ -56,8 +56,6 @@ class CreateController extends AbstractController
                 $quoteTransfer = $formPlugin->handleData($quoteTransfer, $form, $request);
             } else {
                 $validForms = false;
-                $forms[] = $form;
-                break;
             }
 
             $forms[] = $form;

@@ -20,6 +20,8 @@ use Spryker\Zed\Sales\Business\Model\Order\OrderReferenceGenerator;
 use Spryker\Zed\Sales\Business\Model\Order\OrderSaver;
 use Spryker\Zed\Sales\Business\Model\Order\OrderUpdater;
 use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaver;
+use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverPluginExecutor;
+use Spryker\Zed\Sales\Business\Model\OrderItem\SalesOrderItemMapper;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 
 /**
@@ -66,7 +68,9 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getConfig(),
             $this->getLocaleQueryContainer(),
             $this->getStore(),
-            $this->getPreSaveHydrateOrderPlugins()
+            $this->getPreSaveHydrateOrderPlugins(),
+            $this->createSalesOrderSaverPluginExecutor(),
+            $this->createOrderItemMapper()
         );
     }
 
@@ -82,7 +86,9 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getConfig(),
             $this->getLocaleQueryContainer(),
             $this->getStore(),
-            $this->getPreSaveHydrateOrderPlugins()
+            $this->getPreSaveHydrateOrderPlugins(),
+            $this->createSalesOrderSaverPluginExecutor(),
+            $this->createOrderItemMapper()
         );
     }
 
@@ -224,5 +230,31 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function getPreSaveHydrateOrderPlugins()
     {
         return $this->getProvidedDependency(SalesDependencyProvider::PRE_SAVE_ORDER_HYDRATE_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverPluginExecutorInterface
+     */
+    public function createSalesOrderSaverPluginExecutor()
+    {
+        return new SalesOrderSaverPluginExecutor(
+            $this->getOrderItemExpanderPreSavePlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPreSavePluginInterface[]
+     */
+    public function getOrderItemExpanderPreSavePlugins()
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::ORDER_ITEM_EXPANDER_PRE_SAVE_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Model\OrderItem\SalesOrderItemMapperInterface
+     */
+    public function createOrderItemMapper()
+    {
+        return new SalesOrderItemMapper();
     }
 }

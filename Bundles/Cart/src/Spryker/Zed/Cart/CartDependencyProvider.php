@@ -19,6 +19,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
 
     const CART_EXPANDER_PLUGINS = 'cart expander plugins';
     const CART_PRE_CHECK_PLUGINS = 'pre check plugins';
+    const CART_REMOVAL_PRE_CHECK_PLUGINS = 'CART_REMOVAL_PRE_CHECK_PLUGINS';
     const CART_POST_SAVE_PLUGINS = 'cart post save plugins';
     const CART_PRE_RELOAD_PLUGINS = 'cart pre reload plugins';
     const CART_TERMINATION_PLUGINS = 'CART_TERMINATION_PLUGINS';
@@ -35,6 +36,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addExpanderPlugins($container);
         $container = $this->addPostSavePlugins($container);
         $container = $this->addPreCheckPlugins($container);
+        $container = $this->addCartRemovalPreCheckPlugins($container);
         $container = $this->addPreReloadPlugins($container);
         $container = $this->addTerminationPlugins($container);
 
@@ -111,6 +113,20 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    protected function addCartRemovalPreCheckPlugins(Container $container)
+    {
+        $container[static::CART_REMOVAL_PRE_CHECK_PLUGINS] = function (Container $container) {
+            return $this->getCartRemovalPreCheckPlugins($container);
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addPreReloadPlugins(Container $container)
     {
         $container[static::CART_PRE_RELOAD_PLUGINS] = function (Container $container) {
@@ -159,6 +175,16 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\Cart\Dependency\CartPreCheckPluginInterface[]
      */
     protected function getCartPreCheckPlugins(Container $container)
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\CartRemovalPreCheckPluginInterface[]
+     */
+    protected function getCartRemovalPreCheckPlugins(Container $container)
     {
         return [];
     }

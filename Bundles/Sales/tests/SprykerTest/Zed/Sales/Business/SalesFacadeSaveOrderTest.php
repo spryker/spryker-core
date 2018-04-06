@@ -111,6 +111,9 @@ class SalesFacadeSaveOrderTest extends Unit
         $container[SalesDependencyProvider::QUERY_CONTAINER_LOCALE] = new LocaleQueryContainer();
         $container[SalesDependencyProvider::STORE] = Store::getInstance();
         $container[SalesDependencyProvider::PRE_SAVE_ORDER_HYDRATE_PLUGINS] = [];
+        $container[SalesDependencyProvider::ORDER_ITEM_EXPANDER_PRE_SAVE_PLUGINS] = function (Container $container) {
+            return [];
+        };
 
         $this->salesFacade = new SalesFacade();
         $businessFactory = new SalesBusinessFactory();

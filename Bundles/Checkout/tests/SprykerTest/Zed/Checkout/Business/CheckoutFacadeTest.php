@@ -542,6 +542,10 @@ class CheckoutFacadeTest extends Unit
         $container[SalesDependencyProvider::STORE] = Store::getInstance();
         $container[SalesDependencyProvider::PRE_SAVE_ORDER_HYDRATE_PLUGINS] = [];
 
+        $container[SalesDependencyProvider::ORDER_ITEM_EXPANDER_PRE_SAVE_PLUGINS] = function (Container $container) {
+            return [];
+        };
+
         $salesBusinessFactoryMock->setContainer($container);
 
         return $salesBusinessFactoryMock;

@@ -20,6 +20,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderTotals;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
+use Spryker\Zed\Sales\Business\Model\OrderItem\SalesOrderItemMapperInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Spryker\Zed\Sales\SalesConfig;
@@ -64,6 +65,16 @@ class SalesOrderSaver implements SalesOrderSaverInterface
     protected $preSaveHydrateOrderPlugins;
 
     /**
+     * @var \Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverPluginExecutorInterface
+     */
+    protected $salesOrderSaverPluginExecutor;
+
+    /**
+     * @var \Spryker\Zed\Sales\Business\Model\OrderItem\SalesOrderItemMapperInterface
+     */
+    protected $salesOrderItemMapper;
+
+    /**
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface $countryFacade
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface $omsFacade
      * @param \Spryker\Zed\Sales\Business\Model\Order\OrderReferenceGeneratorInterface $orderReferenceGenerator
@@ -71,6 +82,8 @@ class SalesOrderSaver implements SalesOrderSaverInterface
      * @param \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface $localeQueryContainer
      * @param \Spryker\Shared\Kernel\Store $store
      * @param \Spryker\Zed\Sales\Dependency\Plugin\PreSaveOrderHydratePluginInterface[] $preSaveHydrateOrderPlugins
+     * @param \Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverPluginExecutorInterface $salesOrderSaverPluginExecutor
+     * @param \Spryker\Zed\Sales\Business\Model\OrderItem\SalesOrderItemMapperInterface $salesOrderItemMapper
      */
     public function __construct(
         SalesToCountryInterface $countryFacade,
@@ -79,7 +92,9 @@ class SalesOrderSaver implements SalesOrderSaverInterface
         SalesConfig $salesConfiguration,
         LocaleQueryContainerInterface $localeQueryContainer,
         Store $store,
-        $preSaveHydrateOrderPlugins
+        $preSaveHydrateOrderPlugins,
+        SalesOrderSaverPluginExecutorInterface $salesOrderSaverPluginExecutor,
+        SalesOrderItemMapperInterface $salesOrderItemMapper
     ) {
         $this->countryFacade = $countryFacade;
         $this->omsFacade = $omsFacade;
@@ -88,6 +103,8 @@ class SalesOrderSaver implements SalesOrderSaverInterface
         $this->localeQueryContainer = $localeQueryContainer;
         $this->store = $store;
         $this->preSaveHydrateOrderPlugins = $preSaveHydrateOrderPlugins;
+        $this->salesOrderSaverPluginExecutor = $salesOrderSaverPluginExecutor;
+        $this->salesOrderItemMapper = $salesOrderItemMapper;
     }
 
     /**
@@ -287,6 +304,8 @@ class SalesOrderSaver implements SalesOrderSaverInterface
 
             $salesOrderItemEntity = $this->createSalesOrderItemEntity();
             $this->hydrateSalesOrderItemEntity($salesOrderEntity, $quoteTransfer, $salesOrderItemEntity, $itemTransfer);
+            $salesOrderItemEntity = $this->executeOrderItemExpanderPreSavePlugins($quoteTransfer, $itemTransfer, $salesOrderItemEntity);
+
             $salesOrderItemEntity->save();
             $itemTransfer->setIdSalesOrderItem($salesOrderItemEntity->getIdSalesOrderItem());
         }
@@ -325,7 +344,6 @@ class SalesOrderSaver implements SalesOrderSaverInterface
         $salesOrderItemEntity->setDiscountAmountAggregation($itemTransfer->getUnitDiscountAmountAggregation());
         $salesOrderItemEntity->setDiscountAmountFullAggregation($itemTransfer->getUnitDiscountAmountFullAggregation());
         $salesOrderItemEntity->setRefundableAmount($itemTransfer->getRefundableAmount());
-
         $salesOrderItemEntity->setProcess($processEntity);
     }
 
@@ -446,5 +464,21 @@ class SalesOrderSaver implements SalesOrderSaverInterface
         $quoteTransfer
             ->requireItems()
             ->requireTotals();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $spySalesOrderItemEntity
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
+     */
+    protected function executeOrderItemExpanderPreSavePlugins(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, SpySalesOrderItem $spySalesOrderItemEntity): SpySalesOrderItem
+    {
+        $salesOrderItemEntity = $this->salesOrderItemMapper->mapSpySalesOrderItemEntityToSalesOrderItemEntity($spySalesOrderItemEntity);
+        $salesOrderItemEntity = $this->salesOrderSaverPluginExecutor->executeOrderItemExpanderPreSavePlugins($quoteTransfer, $itemTransfer, $salesOrderItemEntity);
+        $spySalesOrderItemEntity = $this->salesOrderItemMapper->mapSalesOrderItemEntityToSpySalesOrderItemEntity($salesOrderItemEntity);
+
+        return $spySalesOrderItemEntity;
     }
 }
