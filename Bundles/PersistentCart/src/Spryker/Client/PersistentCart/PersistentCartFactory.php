@@ -26,7 +26,7 @@ class PersistentCartFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ZedRequest\ZedRequestClientInterface
      */
-    protected function getZedRequestClient()
+    public function getZedRequestClient()
     {
         return $this->getProvidedDependency(PersistentCartDependencyProvider::CLIENT_ZED_REQUEST);
     }

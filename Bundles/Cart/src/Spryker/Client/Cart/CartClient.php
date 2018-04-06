@@ -235,7 +235,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function addFlashMessagesFromLastZedRequest()
     {
-        $this->getFactory()->createZedStub()->addFlashMessagesFromLastZedRequest();
+        $this->getFactory()->getZedRequestClient()->addFlashMessagesFromLastZedRequest();
     }
 
     /**

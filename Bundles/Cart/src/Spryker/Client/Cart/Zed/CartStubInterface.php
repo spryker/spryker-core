@@ -55,11 +55,4 @@ interface CartStubInterface
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function validateQuote(QuoteTransfer $quoteTransfer);
-
-    /**
-     * TODO: this must go away once we have the new ZedRequestClient method for the same thing
-     *
-     * @return void
-     */
-    public function addFlashMessagesFromLastZedRequest();
 }

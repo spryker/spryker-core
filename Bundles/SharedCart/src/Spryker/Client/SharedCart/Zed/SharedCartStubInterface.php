@@ -18,9 +18,4 @@ interface SharedCartStubInterface
      * @return \Generated\Shared\Transfer\QuotePermissionGroupResponseTransfer
      */
     public function getQuotePermissionGroupList(QuotePermissionGroupCriteriaFilterTransfer $criteriaFilterTransfer): QuotePermissionGroupResponseTransfer;
-
-    /**
-     * @return void
-     */
-    public function addFlashMessagesFromLastZedRequest();
 }

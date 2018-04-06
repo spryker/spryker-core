@@ -33,7 +33,7 @@ class CartFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ZedRequest\ZedRequestClientInterface
      */
-    protected function getZedRequestClient()
+    public function getZedRequestClient()
     {
         return $this->getProvidedDependency(CartDependencyProvider::CLIENT_ZED_REQUEST);
     }

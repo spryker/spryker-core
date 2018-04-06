@@ -10,11 +10,12 @@ namespace Spryker\Client\ProductBundle\Plugin\Cart;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Cart\Dependency\Plugin\QuoteItemFinderPluginInterface;
+use Spryker\Client\Kernel\AbstractPlugin;
 
 /**
  * @method \Spryker\Client\ProductBundle\ProductBundleFactory getFactory()
  */
-class BundleProductQuoteItemFinderPlugin implements QuoteItemFinderPluginInterface
+class BundleProductQuoteItemFinderPlugin extends AbstractPlugin implements QuoteItemFinderPluginInterface
 {
     /**
      * Specification:
