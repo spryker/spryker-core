@@ -102,6 +102,7 @@ class ItemManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOrd
         }
 
         $quoteTransfer->setItems($items);
+
         if (count($items)) {
             $quoteTransfer = $this->cartFacade->reloadItems($quoteTransfer);
         }
@@ -123,6 +124,10 @@ class ItemManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOrd
      */
     public function isPreFilled($dataTransfer = null): bool
     {
+        if ($dataTransfer instanceof QuoteTransfer) {
+            return $dataTransfer->getItems()->count() > 0;
+        }
+
         return false;
     }
 

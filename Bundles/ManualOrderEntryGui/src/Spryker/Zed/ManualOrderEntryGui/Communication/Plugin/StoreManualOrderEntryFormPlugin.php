@@ -57,7 +57,7 @@ class StoreManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOr
      */
     public function handleData($quoteTransfer, &$form, $request): QuoteTransfer
     {
-        $storeCurrencyString = $quoteTransfer->getIdStoreCurrency();
+        $storeCurrencyString = $quoteTransfer->getStoreCurrency();
         if (!$this->isValidStoreCurrencyString($storeCurrencyString)) {
             return $quoteTransfer;
         }
@@ -81,6 +81,10 @@ class StoreManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOr
      */
     public function isPreFilled($dataTransfer = null): bool
     {
+        if ($dataTransfer instanceof QuoteTransfer) {
+            return $dataTransfer->getStore()->getName() && $dataTransfer->getCurrency()->getCode();
+        }
+
         return false;
     }
 

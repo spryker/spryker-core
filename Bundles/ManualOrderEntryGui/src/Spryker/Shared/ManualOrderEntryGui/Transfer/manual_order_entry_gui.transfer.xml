@@ -12,7 +12,6 @@
 
     <transfer name="Quote">
         <property name="idCustomer" type="int" />
-        <property name="idStoreCurrency" type="string" />
         <property name="store" type="Store" />
         <property name="currency" type="Currency" />
         <property name="customer" type="Customer" />
@@ -26,6 +25,7 @@
         <property name="payment" type="Payment" />
         <property name="payments" type="Payment[]" />
 
+        <property name="storeCurrency" type="string" />
         <property name="manualOrderProducts" type="ManualOrderProduct[]" />
         <property name="manualOrderItems" type="ManualOrderProduct[]" />
         <property name="isProductPosted" type="bool" />

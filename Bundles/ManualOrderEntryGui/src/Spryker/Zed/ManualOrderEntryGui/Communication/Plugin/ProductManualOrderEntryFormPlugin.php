@@ -117,6 +117,10 @@ class ProductManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
      */
     public function isPreFilled($dataTransfer = null): bool
     {
+        if ($dataTransfer instanceof QuoteTransfer) {
+            return $dataTransfer->getItems()->count() > 0;
+        }
+
         return false;
     }
 
