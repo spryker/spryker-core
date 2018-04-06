@@ -10,7 +10,7 @@ namespace Spryker\Zed\ManualOrderEntry\Business\Model\OrderSource;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpySalesOrderEntityTransfer;
 
-interface OrderSourceManagerInterface
+interface OrderSourceReaderInterface
 {
     /**
      * @param int $idOrderSource
@@ -23,12 +23,4 @@ interface OrderSourceManagerInterface
      * @return \Generated\Shared\Transfer\OrderSourceTransfer[]
      */
     public function getAllOrderSources();
-
-    /**
-     * @param \Generated\Shared\Transfer\SpySalesOrderEntityTransfer $salesOrderEntityTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\SpySalesOrderEntityTransfer
-     */
-    public function hydrateOrderSource(SpySalesOrderEntityTransfer $salesOrderEntityTransfer, QuoteTransfer $quoteTransfer);
 }

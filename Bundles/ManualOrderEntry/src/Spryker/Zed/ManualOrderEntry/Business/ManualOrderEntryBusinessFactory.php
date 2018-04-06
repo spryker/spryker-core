@@ -8,8 +8,10 @@
 namespace Spryker\Zed\ManualOrderEntry\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ManualOrderEntry\Business\Model\OrderSource\OrderSourceManager;
-use Spryker\Zed\ManualOrderEntry\Business\Model\OrderSource\OrderSourceManagerInterface;
+use Spryker\Zed\ManualOrderEntry\Business\Model\OrderSource\OrderSourceHydrator;
+use Spryker\Zed\ManualOrderEntry\Business\Model\OrderSource\OrderSourceHydratorInterface;
+use Spryker\Zed\ManualOrderEntry\Business\Model\OrderSource\OrderSourceReader;
+use Spryker\Zed\ManualOrderEntry\Business\Model\OrderSource\OrderSourceReaderInterface;
 
 /**
  * @method \Spryker\Zed\ManualOrderEntry\Persistence\ManualOrderEntryRepositoryInterface getRepository()
@@ -18,12 +20,20 @@ use Spryker\Zed\ManualOrderEntry\Business\Model\OrderSource\OrderSourceManagerIn
 class ManualOrderEntryBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\ManualOrderEntry\Business\Model\OrderSource\OrderSourceManagerInterface
+     * @return \Spryker\Zed\ManualOrderEntry\Business\Model\OrderSource\OrderSourceReaderInterface
      */
-    public function createOrderSourceManager(): OrderSourceManagerInterface
+    public function createOrderSourceReader(): OrderSourceReaderInterface
     {
-        return new OrderSourceManager(
+        return new OrderSourceReader(
             $this->getRepository()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ManualOrderEntry\Business\Model\OrderSource\OrderSourceHydratorInterface
+     */
+    public function createOrderSourceHydrator(): OrderSourceHydratorInterface
+    {
+        return new OrderSourceHydrator();
     }
 }
