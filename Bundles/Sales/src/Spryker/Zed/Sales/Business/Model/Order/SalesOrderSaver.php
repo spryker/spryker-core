@@ -473,7 +473,6 @@ class SalesOrderSaver implements SalesOrderSaverInterface
     }
 
     /**
-     * todo: apply merge with sales order saver plugin executor
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
      *
@@ -482,7 +481,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
     protected function executeSalesOrderPreSavePlugins(QuoteTransfer $quoteTransfer, SpySalesOrder $salesOrderEntity): SpySalesOrder
     {
         $salesOrderEntityTransfer = $this->orderMapper->mapOrderToEntityTransfer($salesOrderEntity);
-        $salesOrderEntityTransfer = $this->salesOrderPluginExecutor->executePreSaveOrderPlugins($quoteTransfer, $salesOrderEntityTransfer);
+        $salesOrderEntityTransfer = $this->salesOrderSaverPluginExecutor->executeOrderPreSavePlugins($quoteTransfer, $salesOrderEntityTransfer);
         $salesOrderEntity = $this->orderMapper->mapEntityTransferToOrder($salesOrderEntityTransfer);
 
         return $salesOrderEntity;

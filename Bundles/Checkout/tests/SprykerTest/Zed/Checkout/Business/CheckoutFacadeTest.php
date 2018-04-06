@@ -541,7 +541,7 @@ class CheckoutFacadeTest extends Unit
         $container[SalesDependencyProvider::QUERY_CONTAINER_LOCALE] = new LocaleQueryContainer();
         $container[SalesDependencyProvider::STORE] = Store::getInstance();
 
-        $container[SalesDependencyProvider::PLUGINS_PRE_SAVE_ORDER] = function (Container $container) {
+        $container[SalesDependencyProvider::PLUGINS_ORDER_PRE_SAVE] = function (Container $container) {
             return [];
         };
 

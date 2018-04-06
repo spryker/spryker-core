@@ -34,9 +34,8 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
 
     const HYDRATE_ORDER_PLUGINS = 'hydrate order plugins';
     const ORDER_ITEM_EXPANDER_PRE_SAVE_PLUGINS = 'ORDER_ITEM_EXPANDER_PRE_SAVE_PLUGINS';
-    //todo: finish renaming
-    const PLUGINS_HYDRATE_ORDER = 'plugins hydrate order';
-    const PLUGINS_PRE_SAVE_ORDER = 'plugins pre save hydrate order';
+    const HYDRATE_ORDER_PLUGIN = 'plugins hydrate order';
+    const PLUGINS_ORDER_PRE_SAVE = 'PLUGINS_ORDER_PRE_SAVE';
     const UI_SALES_TABLE_PLUGINS = 'UI sales table plugins';
 
     /**
@@ -58,7 +57,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addStore($container);
         $container = $this->addLocaleQueryContainer($container);
         $container = $this->addHydrateOrderPlugins($container);
-        $container = $this->addPreSaveOrderPlugins($container);
+        $container = $this->addOrderPreSavePlugins($container);
         $container = $this->addCalculationFacade($container);
         $container = $this->addCustomerFacade($container);
         $container = $this->addOrderItemExpanderPreSavePlugins($container);
@@ -92,7 +91,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addHydrateOrderPlugins(Container $container)
     {
-        $container[static::PLUGINS_HYDRATE_ORDER] = function (Container $container) {
+        $container[static::HYDRATE_ORDER_PLUGIN] = function (Container $container) {
             return $this->getOrderHydrationPlugins();
         };
 
@@ -132,10 +131,10 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addPreSaveOrderPlugins(Container $container)
+    protected function addOrderPreSavePlugins(Container $container)
     {
-        $container[static::PLUGINS_PRE_SAVE_ORDER] = function () {
-            return $this->getPreSaveOrderPlugins();
+        $container[static::PLUGINS_ORDER_PRE_SAVE] = function () {
+            return $this->getOrderPreSavePlugins();
         };
 
         return $container;
@@ -312,9 +311,9 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\PreSaveOrderPluginInterface[]
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPreSavePluginInterface[]
      */
-    protected function getPreSaveOrderPlugins(): array
+    protected function getOrderPreSavePlugins(): array
     {
         return [];
     }

@@ -13,12 +13,12 @@ use Generated\Shared\Transfer\SpySalesOrderEntityTransfer;
 class SalesOrderPluginExecutor implements SalesOrderPluginExecutorInterface
 {
     /**
-     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\PreSaveOrderPluginInterface[]
+     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPreSavePluginInterface[]
      */
     protected $preSaveOrderPlugins;
 
     /**
-     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\PreSaveOrderPluginInterface[] $preSaveOrderPlugins
+     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPreSavePluginInterface[] $preSaveOrderPlugins
      */
     public function __construct(array $preSaveOrderPlugins)
     {

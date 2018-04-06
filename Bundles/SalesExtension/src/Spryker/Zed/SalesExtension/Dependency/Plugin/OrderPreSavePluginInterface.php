@@ -10,10 +10,9 @@ namespace Spryker\Zed\SalesExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpySalesOrderEntityTransfer;
 
-interface PreSaveOrderPluginInterface
+interface OrderPreSavePluginInterface
 {
     /**
-     * todo: Drop it
      * Specification:
      *  - Allows to do operations over SalesOrder data before saving it to db.
      *
