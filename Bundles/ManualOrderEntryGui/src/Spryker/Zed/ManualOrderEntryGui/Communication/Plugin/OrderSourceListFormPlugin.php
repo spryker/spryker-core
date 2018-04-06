@@ -34,9 +34,9 @@ class OrderSourceListFormPlugin extends AbstractPlugin implements ManualOrderEnt
      * @param \Symfony\Component\Form\FormInterface $form
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function handleData($quoteTransfer, &$form, $request): AbstractTransfer
+    public function handleData($quoteTransfer, &$form, Request $request): AbstractTransfer
     {
         $orderSourceTransfer = $this->getFactory()->getManualOrderEntryFacade()->getOrderSourceById(
             $quoteTransfer->getOrderSource()->getIdOrderSource()

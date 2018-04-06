@@ -57,7 +57,7 @@ class SummaryManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
      *
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    public function handleData($dataTransfer, &$form, $request): AbstractTransfer
+    public function handleData($dataTransfer, &$form, Request $request): AbstractTransfer
     {
         $this->uniqueFlashMessages();
 

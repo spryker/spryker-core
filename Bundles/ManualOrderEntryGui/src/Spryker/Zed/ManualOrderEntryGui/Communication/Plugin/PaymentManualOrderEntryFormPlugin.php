@@ -70,7 +70,7 @@ class PaymentManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
      *
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    public function handleData($quoteTransfer, &$form, $request): AbstractTransfer
+    public function handleData($quoteTransfer, &$form, Request $request): AbstractTransfer
     {
         $paymentSelection = $quoteTransfer->getPayment()->getPaymentSelection();
 

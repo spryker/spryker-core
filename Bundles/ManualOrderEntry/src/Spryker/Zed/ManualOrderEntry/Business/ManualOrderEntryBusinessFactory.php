@@ -12,7 +12,6 @@ use Spryker\Zed\ManualOrderEntry\Business\Model\OrderSource\OrderSourceManager;
 use Spryker\Zed\ManualOrderEntry\Business\Model\OrderSource\OrderSourceManagerInterface;
 
 /**
- * @method \Spryker\Zed\ManualOrderEntry\ManualOrderEntryConfig getConfig()
  * @method \Spryker\Zed\ManualOrderEntry\Persistence\ManualOrderEntryRepositoryInterface getRepository()
  */
 class ManualOrderEntryBusinessFactory extends AbstractBusinessFactory
