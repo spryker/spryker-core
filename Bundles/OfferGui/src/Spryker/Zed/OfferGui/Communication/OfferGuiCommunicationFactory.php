@@ -39,6 +39,8 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createOffersTable(): OffersTable
     {
+        $config = $this->getConfig();
+
         return new OffersTable(
             $this->createOffersTableQueryBuilder(),
             $this->getMoneyFacade(),

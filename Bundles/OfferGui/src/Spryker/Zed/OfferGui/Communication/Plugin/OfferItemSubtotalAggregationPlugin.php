@@ -16,10 +16,12 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class OfferItemSubtotalAggregationPlugin extends AbstractPlugin implements CalculationPluginInterface
 {
-    //TODO: deal with guide
-    //Guide: This calculator plugin must be placed under ItemSubtotalAggregatorPlugin
-    //after the generic logic is executed
     /**
+     * Guide: This calculator plugin must be placed under ItemSubtotalAggregatorPlugin
+     * after the generic logic is executed.
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
      * @return void
      */
     public function recalculate(CalculableObjectTransfer $calculableObjectTransfer)

@@ -73,6 +73,7 @@ class OffersTable extends AbstractTable
      * @param \Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToCustomerFacadeInterface $customerFacade
      * @param \Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilSanitizeServiceInterface $sanitizeService
      * @param \Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilDateTimeServiceInterface $utilDateTimeService
+     * @param \Spryker\Zed\OfferGui\OfferGuiConfig $config
      */
     public function __construct(
         OffersTableQueryBuilderInterface $queryBuilder,
@@ -230,7 +231,6 @@ class OffersTable extends AbstractTable
     {
         $urls = [];
 
-        //TODO: Inject config and use it.
         if ($item[SpyOfferTableMap::COL_STATUS] !== 'order') {
             $urls[] = $this->generateEditButton(
                 Url::generate(static::URL_OFFER_GUI_EDIT, [

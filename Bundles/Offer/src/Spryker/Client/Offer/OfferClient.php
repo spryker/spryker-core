@@ -68,6 +68,7 @@ class OfferClient extends AbstractClient implements OfferClientInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
+     *
      * @return \Generated\Shared\Transfer\OfferResponseTransfer
      */
     public function placeOffer(OfferTransfer $offerTransfer): OfferResponseTransfer
@@ -82,6 +83,8 @@ class OfferClient extends AbstractClient implements OfferClientInterface
                 new ArrayObject([$offerResponseTransfer->getOffer()])
             );
 
-        return $offerTransfers[0];
+        $offerResponseTransfer->setOffer($offerTransfers[0]);
+
+        return $offerResponseTransfer;
     }
 }
