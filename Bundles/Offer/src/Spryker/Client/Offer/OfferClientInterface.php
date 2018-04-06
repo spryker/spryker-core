@@ -41,7 +41,6 @@ interface OfferClientInterface
     public function getOfferById(OfferTransfer $offerTransfer): OfferTransfer;
 
     /**
-     * todo: Rename it to place order
      * - place - from a customer
      * - create - from a sales manager
      *
@@ -54,5 +53,5 @@ interface OfferClientInterface
      *
      * @return \Generated\Shared\Transfer\OfferResponseTransfer
      */
-    public function createOffer(OfferTransfer $offerTransfer): OfferResponseTransfer;
+    public function placeOffer(OfferTransfer $offerTransfer): OfferResponseTransfer;
 }

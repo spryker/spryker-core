@@ -52,7 +52,7 @@ class OfferStub implements OfferStubInterface
      *
      * @return \Generated\Shared\Transfer\OfferResponseTransfer
      */
-    public function createOffer(OfferTransfer $offerTransfer): OfferResponseTransfer
+    public function placeOffer(OfferTransfer $offerTransfer): OfferResponseTransfer
     {
         return $this->zedStub->call('/offer/gateway/place-offer', $offerTransfer);
     }
