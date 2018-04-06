@@ -1,6 +1,6 @@
 <?php
 
-namespace Bundles\Offer\src\Spryker\Client\Offer\Model\Hydrator;
+namespace Spryker\Client\Offer\Model\Hydrator;
 
 use ArrayObject;
 use Spryker\Client\Offer\Dependency\Client\OfferToCustomerClientInterface;
