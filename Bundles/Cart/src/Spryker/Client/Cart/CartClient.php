@@ -92,7 +92,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function addValidItems(CartChangeTransfer $cartChangeTransfer): QuoteTransfer
     {
-        return $this->getFactory()->createZedStub()->addValidItems($cartChangeTransfer);
+        return $this->getFactory()->getQuoteStorageStrategy()->addValidItems($cartChangeTransfer);
     }
 
     /**

@@ -44,6 +44,20 @@ class PersistentCartFacade extends AbstractFacade implements PersistentCartFacad
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
+    public function addValid(PersistentCartChangeTransfer $persistentCartChangeTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()->createCartOperation()->addValid($persistentCartChangeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
     public function remove(PersistentCartChangeTransfer $persistentCartChangeTransfer): QuoteResponseTransfer
     {
         return $this->getFactory()->createCartOperation()->remove($persistentCartChangeTransfer);

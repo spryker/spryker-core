@@ -10,7 +10,7 @@ namespace Spryker\Client\ProductBundle\Plugin\Cart;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Cart\Dependency\Plugin\ItemCountPluginInterface;
 
-class BundledItemCountPlugin implements ItemCountPluginInterface
+class ItemCountPlugin implements ItemCountPluginInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

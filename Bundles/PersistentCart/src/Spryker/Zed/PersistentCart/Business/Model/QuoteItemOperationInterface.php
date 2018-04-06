@@ -10,7 +10,7 @@ namespace Spryker\Zed\PersistentCart\Business\Model;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface QuoteItemOperationsInterface
+interface QuoteItemOperationInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransferList
@@ -19,6 +19,14 @@ interface QuoteItemOperationsInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function addItems(array $itemTransferList, QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransferList
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function addValidItems(array $itemTransferList, QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransferList
