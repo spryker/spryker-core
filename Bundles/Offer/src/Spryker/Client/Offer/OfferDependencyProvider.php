@@ -9,11 +9,13 @@ namespace Spryker\Client\Offer;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
+use Spryker\Client\Offer\Dependency\Client\OfferToCustomerClientBridge;
 use Spryker\Client\Offer\Dependency\Client\OfferToZedRequestClientBridge;
 
 class OfferDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+    public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -23,6 +25,7 @@ class OfferDependencyProvider extends AbstractDependencyProvider
     public function provideServiceLayerDependencies(Container $container): Container
     {
         $this->addZedRequestClient($container);
+        $this->addSessionClient($container);
 
         return $container;
     }
@@ -37,6 +40,22 @@ class OfferDependencyProvider extends AbstractDependencyProvider
         $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
             return new OfferToZedRequestClientBridge(
                 $container->getLocator()->zedRequest()->client()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addSessionClient(Container $container): Container
+    {
+        $container[static::CLIENT_CUSTOMER] = function (Container $container) {
+            return new OfferToCustomerClientBridge(
+                $container->getLocator()->customer()->client()
             );
         };
 

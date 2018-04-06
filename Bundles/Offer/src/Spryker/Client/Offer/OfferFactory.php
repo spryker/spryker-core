@@ -7,7 +7,10 @@
 
 namespace Spryker\Client\Offer;
 
+use Bundles\Offer\src\Spryker\Client\Offer\Model\Hydrator\OfferHydrator;
+use Bundles\Offer\src\Spryker\Client\Offer\Model\Hydrator\OfferHydratorInterface;
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\Offer\Dependency\Client\OfferToCustomerClientInterface;
 use Spryker\Client\Offer\Zed\OfferStub;
 
 class OfferFactory extends AbstractFactory
@@ -20,6 +23,24 @@ class OfferFactory extends AbstractFactory
         return new OfferStub(
             $this->getZedRequestClient()
         );
+    }
+
+    /**
+     * @return \Bundles\Offer\src\Spryker\Client\Offer\Model\Hydrator\OfferHydratorInterface
+     */
+    public function createOfferHydrator(): OfferHydratorInterface
+    {
+        return new OfferHydrator(
+            $this->getCustomerClient()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\Offer\Dependency\Client\OfferToCustomerClientInterface
+     */
+    public function getCustomerClient(): OfferToCustomerClientInterface
+    {
+        return $this->getProvidedDependency(OfferDependencyProvider::CLIENT_CUSTOMER);
     }
 
     /**
