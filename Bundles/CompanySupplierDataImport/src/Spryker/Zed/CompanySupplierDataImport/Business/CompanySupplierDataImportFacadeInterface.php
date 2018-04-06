@@ -35,4 +35,16 @@ interface CompanySupplierDataImportFacadeInterface
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
     public function importCompanySupplier(DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer;
+
+    /**
+     * Specification:
+     * - Imports Company supplier product price.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\DataImporterReportTransfer
+     */
+    public function importProductPrice(DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer;
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CompanySupplierDataImport\Business;
 
+use Spryker\Zed\CompanySupplierDataImport\Business\Model\CompanySupplierProductPriceWriterStep;
 use Spryker\Zed\CompanySupplierDataImport\Business\Model\CompanySupplierWriterStep;
 use Spryker\Zed\CompanySupplierDataImport\Business\Model\CompanyTypeWriterStep;
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
@@ -40,6 +41,21 @@ class CompanySupplierDataImportBusinessFactory extends DataImportBusinessFactory
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
         $dataSetStepBroker->addStep(new CompanySupplierWriterStep());
+
+        $dataImporter->addDataSetStepBroker($dataSetStepBroker);
+
+        return $dataImporter;
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
+     */
+    public function createCompanySupplierProductPriceDataImport()
+    {
+        $dataImporter = $this->getCsvDataImporterFromConfig($this->getConfig()->getCompanySupplierProductPriceDataImporterConfiguration());
+
+        $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
+        $dataSetStepBroker->addStep(new CompanySupplierProductPriceWriterStep());
 
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
 
