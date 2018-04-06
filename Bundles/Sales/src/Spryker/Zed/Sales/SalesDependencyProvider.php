@@ -32,6 +32,9 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     const SERVICE_UTIL_SANITIZE = 'util sanitize service';
     const STORE = 'store';
 
+    const HYDRATE_ORDER_PLUGINS = 'hydrate order plugins';
+    const ORDER_ITEM_EXPANDER_PRE_SAVE_PLUGINS = 'ORDER_ITEM_EXPANDER_PRE_SAVE_PLUGINS';
+    //todo: finish renaming
     const PLUGINS_HYDRATE_ORDER = 'plugins hydrate order';
     const PLUGINS_PRE_SAVE_ORDER = 'plugins pre save hydrate order';
     const UI_SALES_TABLE_PLUGINS = 'UI sales table plugins';
@@ -58,6 +61,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addPreSaveOrderPlugins($container);
         $container = $this->addCalculationFacade($container);
         $container = $this->addCustomerFacade($container);
+        $container = $this->addOrderItemExpanderPreSavePlugins($container);
 
         return $container;
     }
@@ -90,6 +94,20 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::PLUGINS_HYDRATE_ORDER] = function (Container $container) {
             return $this->getOrderHydrationPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addOrderItemExpanderPreSavePlugins(Container $container)
+    {
+        $container[static::ORDER_ITEM_EXPANDER_PRE_SAVE_PLUGINS] = function (Container $container) {
+            return $this->getOrderItemExpanderPreSavePlugins();
         };
 
         return $container;
@@ -281,6 +299,14 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface[]
      */
     protected function getOrderHydrationPlugins()
+    {
+         return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPreSavePluginInterface[]
+     */
+    protected function getOrderItemExpanderPreSavePlugins()
     {
          return [];
     }

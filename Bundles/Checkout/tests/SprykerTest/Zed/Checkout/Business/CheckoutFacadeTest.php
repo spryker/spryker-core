@@ -545,6 +545,10 @@ class CheckoutFacadeTest extends Unit
             return [];
         };
 
+        $container[SalesDependencyProvider::ORDER_ITEM_EXPANDER_PRE_SAVE_PLUGINS] = function (Container $container) {
+            return [];
+        };
+
         $salesBusinessFactoryMock->setContainer($container);
 
         return $salesBusinessFactoryMock;

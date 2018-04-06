@@ -1,0 +1,46 @@
+{
+  "name": "spryker/company-supplier-gui",
+  "description": "CompanySupplierGui module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1",
+    "spryker/company-gui-extension": "^1.0.0",
+    "spryker/company-supplier": "^1.0.0",
+    "spryker/currency": "^3.0.0",
+    "spryker/gui": "^3.13.0",
+    "spryker/kernel": "^3.0.0",
+    "spryker/money": "^2.0.0",
+    "spryker/price-product": "^1.0.0",
+    "spryker/product": "^5.0.0 || ^6.0.0",
+    "spryker/product-management-extension": "^1.0.0",
+    "spryker/propel-orm": "^1.0.0",
+    "spryker/store": "^1.5.0",
+    "spryker/symfony": "^3.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/company": "*",
+    "spryker/company-gui": "*",
+    "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/gui": "If you want to use CompanySupplierGui module plugins which used Gui transfer object.",
+    "spryker/company": "If you want to use CompanyTableCompanyTypePlugin which used Company module entity map.",
+    "spryker/company-gui": "If you want to provide plugins to CompanyGui module"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

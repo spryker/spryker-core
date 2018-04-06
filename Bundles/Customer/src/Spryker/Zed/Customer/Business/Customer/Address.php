@@ -570,7 +570,10 @@ class Address implements AddressInterface
      */
     protected function updateCustomerAddress(AddressTransfer $addressTransfer, SpyCustomer $customer)
     {
-        $addressEntity = $this->queryContainer->queryAddressForCustomer($addressTransfer->getIdCustomerAddress(), $customer->getEmail())
+        $addressTransfer->requireIdCustomerAddress();
+
+        $addressEntity = $this->queryContainer
+            ->queryAddressForCustomer($addressTransfer->getIdCustomerAddress(), $customer->getEmail())
             ->findOne();
 
         if (!$addressEntity) {

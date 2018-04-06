@@ -1,0 +1,35 @@
+{
+  "name": "spryker/company-business-unit-gui-extension",
+  "description": "CompanyBusinessUnitGuiExtension module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/company-business-unit": "^1.1.0",
+    "spryker/gui": "^3.13.0",
+    "spryker/symfony": "^3.0.0",
+    "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/symfony": "If you want to provide plugins to CompanyBusinessUnitGui module",
+    "spryker/company-business-unit": "To get full functionality of the current module",
+    "spryker/gui": "If you need gui"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

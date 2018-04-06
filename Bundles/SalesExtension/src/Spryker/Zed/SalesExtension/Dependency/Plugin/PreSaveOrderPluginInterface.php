@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\SpySalesOrderEntityTransfer;
 interface PreSaveOrderPluginInterface
 {
     /**
+     * todo: Drop it
      * Specification:
      *  - Allows to do operations over SalesOrder data before saving it to db.
      *

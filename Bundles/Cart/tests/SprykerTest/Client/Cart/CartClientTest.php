@@ -257,6 +257,7 @@ class CartClientTest extends Unit
     private function getStubMock()
     {
         return $this->getMockBuilder(CartStubInterface::class)->setMethods([
+            'addValidItems',
             'addItem',
             'removeItem',
             'reloadItems',
