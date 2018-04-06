@@ -60,7 +60,10 @@ interface ZedRequestClientInterface
 
     /**
      * Specification:
-     * - Takes array of MessageTransfers for the last response and push them to flash messages.
+     *  - Get messages from zed request and put them to session in next order:
+     *  - Writes error message to flash bag.
+     *  - Writes success message to flash bag.
+     *  - Writes informational message to flash bag.
      *
      * @api
      *

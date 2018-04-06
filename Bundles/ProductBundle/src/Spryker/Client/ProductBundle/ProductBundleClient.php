@@ -39,6 +39,21 @@ class ProductBundleClient extends AbstractClient implements ProductBundleClientI
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @return array|\Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function getItemsWithBundlesItems(QuoteTransfer $quoteTransfer): array
+    {
+        return $this->getFactory()
+            ->createProductBundleGrouper()
+            ->getItemsWithBundlesItems($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $sku
      * @param string|null $groupKey
      *

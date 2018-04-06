@@ -20,6 +20,16 @@ class CartStub extends ZedRequestStub implements CartStubInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
+    public function addValidItems(CartChangeTransfer $cartChangeTransfer): QuoteTransfer
+    {
+        return $this->zedStub->call('/cart/gateway/add-valid-items', $cartChangeTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     */
     public function addItem(CartChangeTransfer $cartChangeTransfer)
     {
         return $this->zedStub->call('/cart/gateway/add-item', $cartChangeTransfer);
