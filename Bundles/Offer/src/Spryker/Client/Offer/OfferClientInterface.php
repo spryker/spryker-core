@@ -41,7 +41,9 @@ interface OfferClientInterface
     public function getOfferById(OfferTransfer $offerTransfer): OfferTransfer;
 
     /**
-     * todo:
+     * todo: Rename it to place order
+     * - place - from a customer
+     * - create - from a sales manager
      *
      * Specification:
      * - Places an offer

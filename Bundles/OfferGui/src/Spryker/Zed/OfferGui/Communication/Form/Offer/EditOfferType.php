@@ -110,9 +110,6 @@ class EditOfferType extends AbstractType
      */
     protected function addStoreCurrencyField(FormBuilderInterface $builder, array $options)
     {
-
-
-
         $builder->add(static::FIELD_STORE_CURRENCY, Select2ComboBoxType::class, [
             'label' => 'Store',
             'required' => true,

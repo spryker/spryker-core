@@ -84,6 +84,7 @@ class OfferWriter implements OfferWriterInterface
         $offerTransfer->getQuote()->requireCustomer();
 
         //TODO: drop Customer object here and fill it from session on order creation
+
         $offerTransfer->setCustomerReference(
             $offerTransfer
                 ->getQuote()

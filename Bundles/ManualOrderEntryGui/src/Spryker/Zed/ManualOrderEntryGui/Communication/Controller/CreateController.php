@@ -9,10 +9,12 @@ namespace Spryker\Zed\ManualOrderEntryGui\Communication\Controller;
 
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\OfferTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Customer\CustomersListType;
 use Spryker\Zed\Sales\SalesConfig;
 use Symfony\Component\Form\FormInterface;
@@ -37,7 +39,7 @@ class CreateController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer = $this->getInitialQuote($request);
 
         $forms = [];
         $validForms = true;
@@ -243,5 +245,23 @@ class CreateController extends AbstractController
         $quoteTransfer->setType($quoteType);
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return QuoteTransfer
+     */
+    protected function getInitialQuote(Request $request): QuoteTransfer
+    {
+        foreach ($this->getFactory()->getQuoteInitializerPlugins() as $quoteInitializerPlugin) {
+            $quoteTransfer = $quoteInitializerPlugin->initializeQuote($request);
+
+            if ($quoteTransfer !== null) {
+                return $quoteTransfer;
+            }
+        }
+
+        return new QuoteTransfer();
     }
 }
