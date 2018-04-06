@@ -13,7 +13,7 @@ interface OfferEntityManagerInterface
 {
     /**
      * Specification:
-     *  - Change status of offer.
+     *  - Store new offer to db.
      *
      * @api
      *
@@ -22,4 +22,16 @@ interface OfferEntityManagerInterface
      * @return \Generated\Shared\Transfer\OfferTransfer
      */
     public function createOffer(OfferTransfer $offerTransfer): OfferTransfer;
+
+    /**
+     * Specification:
+     *  - Update existing offer in db.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
+     *
+     * @return \Generated\Shared\Transfer\OfferTransfer
+     */
+    public function updateOffer(OfferTransfer $offerTransfer): OfferTransfer;
 }

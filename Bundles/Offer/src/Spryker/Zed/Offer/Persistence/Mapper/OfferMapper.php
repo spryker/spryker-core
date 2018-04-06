@@ -10,9 +10,24 @@ namespace Spryker\Zed\Offer\Persistence\Mapper;
 use Generated\Shared\Transfer\OfferTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpyOfferEntityTransfer;
+use Spryker\Service\UtilEncoding\UtilEncodingServiceInterface;
+use Spryker\Zed\Offer\Dependency\Facade\OfferToUtilEncodingServiceInterface;
 
 class OfferMapper implements OfferMapperInterface
 {
+    /**
+     * @var \Spryker\Zed\Offer\Dependency\Facade\OfferToUtilEncodingServiceInterface
+     */
+    protected $utilEncodingService;
+
+    /**
+     * @param \Spryker\Zed\Offer\Dependency\Facade\OfferToUtilEncodingServiceInterface $utilEncodingService
+     */
+    public function __construct(OfferToUtilEncodingServiceInterface $utilEncodingService)
+    {
+        $this->utilEncodingService = $utilEncodingService;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\SpyOfferEntityTransfer $offerEntityTransfer
      *
@@ -33,12 +48,8 @@ class OfferMapper implements OfferMapperInterface
      */
     public function mapOfferToOfferEntity(OfferTransfer $offerTransfer): SpyOfferEntityTransfer
     {
-        //todo: remove customer from quote (save only selected fields)
-        //todo: replace json_encode with util
         $offerEntityTransfer = (new SpyOfferEntityTransfer())->fromArray($offerTransfer->toArray(), true);
-        $offerEntityTransfer->setQuoteData(json_encode(
-            $offerTransfer->getQuote()->toArray()
-        ));
+        $offerEntityTransfer = $this->encodeQuote($offerTransfer, $offerEntityTransfer);
 
         return $offerEntityTransfer;
     }
@@ -54,14 +65,73 @@ class OfferMapper implements OfferMapperInterface
         $offerTransfer->setQuote(
             (new QuoteTransfer())
                 ->fromArray(
-                    json_decode($offerEntityTransfer->getQuoteData(), true),
+                    $this->utilEncodingService->decodeJson($offerEntityTransfer->getQuoteData()),
                     true
                 )
         );
 
-        //TODO: suggest a better way to understand in post order save plugin, whether we shuld disable an offer.
+        //TODO: suggest a better way to understand in post order save plugin, whether we should disable an offer.
         $offerTransfer->getQuote()->setIdOffer($offerTransfer->getIdOffer());
 
         return $offerTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
+     * @param \Generated\Shared\Transfer\SpyOfferEntityTransfer $offerEntityTransfer
+     *
+     * @return \Generated\Shared\Transfer\SpyOfferEntityTransfer
+     */
+    protected function encodeQuote(OfferTransfer $offerTransfer, SpyOfferEntityTransfer $offerEntityTransfer)
+    {
+        $offerEntityTransfer->setQuoteData(
+            $this->utilEncodingService->encodeJson(
+                $this->getQuoteArray($offerTransfer->getQuote())
+            )
+        );
+
+        return $offerEntityTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return array
+     */
+    public function getQuoteArray(QuoteTransfer $quoteTransfer): array
+    {
+        $quoteArray = array_intersect_key(
+            $quoteTransfer->toArray(),
+            array_flip($this->getFieldsToPersist())
+        );
+
+        return $quoteArray;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getFieldsToPersist()
+    {
+        $fieldsToPersist = [
+            'store',
+            'items',
+            'totals',
+            'expenses',
+            'price_mode',
+            'currency',
+            'billing_address',
+            'shipping_address',
+            'billing_same_as_shipping',
+            'voucher_discounts',
+            'cart_rule_discounts',
+            'gift_cards',
+            'payments',
+            'shipment',
+            'bundle_items',
+            'checkout_confirmed'
+        ];
+
+        return $fieldsToPersist;
     }
 }
