@@ -5,31 +5,31 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\MultiCart\Dependency\Client;
+namespace Spryker\Client\MultiCart\CartOperation;
 
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
 
-interface MultiCartToPersistentCartClientInterface
+interface CartUpdaterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function createQuote(QuoteTransfer $quoteTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function updateQuote(QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer);
+    public function updateQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function deleteQuote(QuoteTransfer $quoteTransfer);
+    public function setDefaultQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function clearQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 }

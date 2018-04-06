@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\MultiCart;
 
-use Generated\Shared\Transfer\QuoteActivationRequestTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -31,11 +30,11 @@ interface MultiCartClientInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteActivationRequestTransfer $quoteActivationRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setDefaultQuote(QuoteActivationRequestTransfer $quoteActivationRequestTransfer): QuoteResponseTransfer;
+    public function setDefaultQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 
     /**
      * Specification:
@@ -79,15 +78,70 @@ interface MultiCartClientInterface
      *
      * @return bool
      */
-    public function isMultiCartAllowed();
+    public function isMultiCartAllowed(): bool;
 
     /**
      * Specification:
-     * - Get suffix for duplicated quote name.
+     * - Create new quote.
+     * - Save quote in database.
      *
      * @api
      *
-     * @return string
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function getDuplicatedQuoteNameSuffix();
+    public function createQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Update quote name.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function updateQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Remove quote.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function deleteQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Create copy of quote with.
+     * - Mark new quote as active.
+     * - Add duplicate suffix new quote name.
+     * - Save quote in database.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function duplicateQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Remove all items from quote.
+     * - Save quote in database.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function clearQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 }

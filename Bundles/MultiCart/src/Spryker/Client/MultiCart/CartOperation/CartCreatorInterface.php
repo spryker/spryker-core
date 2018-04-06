@@ -5,24 +5,24 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Quote\Communication\Controller;
+namespace Spryker\Client\MultiCart\CartOperation;
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
-/**
- * @method \Spryker\Zed\Quote\Business\QuoteFacadeInterface getFacade()
- */
-class GatewayController extends AbstractGatewayController
+interface CartCreatorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function deleteQuoteAction(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
-    {
-        return $this->getFacade()->deleteQuote($quoteTransfer);
-    }
+    public function createQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function duplicateQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 }

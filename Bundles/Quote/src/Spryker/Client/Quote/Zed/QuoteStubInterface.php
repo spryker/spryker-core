@@ -7,26 +7,11 @@
 
 namespace Spryker\Client\Quote\Zed;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface QuoteStubInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function persistQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function findQuoteByCustomer(CustomerTransfer $customerTransfer): QuoteResponseTransfer;
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *

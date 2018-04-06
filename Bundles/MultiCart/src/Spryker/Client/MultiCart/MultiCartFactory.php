@@ -8,6 +8,11 @@
 namespace Spryker\Client\MultiCart;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\MultiCart\CartOperation\CartCreator;
+use Spryker\Client\MultiCart\CartOperation\CartCreatorInterface;
+use Spryker\Client\MultiCart\CartOperation\CartUpdater;
+use Spryker\Client\MultiCart\CartOperation\CartUpdaterInterface;
+use Spryker\Client\MultiCart\Dependency\Client\MultiCartToCustomerClientInterface;
 use Spryker\Client\MultiCart\Dependency\Client\MultiCartToMessengerClientInterface;
 use Spryker\Client\MultiCart\Dependency\Client\MultiCartToPersistentCartClientInterface;
 use Spryker\Client\MultiCart\Dependency\Client\MultiCartToQuoteClientInterface;
@@ -61,11 +66,45 @@ class MultiCartFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\MultiCart\CartOperation\CartUpdaterInterface
+     */
+    public function createCartUpdater(): CartUpdaterInterface
+    {
+        return new CartUpdater(
+            $this->createMultiCartZedStub(),
+            $this->getPersistentCartClient(),
+            $this->getQuoteClient(),
+            $this->getCustomerClient()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\MultiCart\CartOperation\CartCreatorInterface
+     */
+    public function createCartCreator(): CartCreatorInterface
+    {
+        return new CartCreator(
+            $this->getPersistentCartClient(),
+            $this->getQuoteClient(),
+            $this->getCustomerClient(),
+            $this->getConfig()
+        );
+    }
+
+    /**
      * @return \Spryker\Client\MultiCart\Dependency\Client\MultiCartToQuoteClientInterface
      */
     public function getQuoteClient(): MultiCartToQuoteClientInterface
     {
         return $this->getProvidedDependency(MultiCartDependencyProvider::CLIENT_QUOTE);
+    }
+
+    /**
+     * @return \Spryker\Client\MultiCart\Dependency\Client\MultiCartToCustomerClientInterface
+     */
+    public function getCustomerClient(): MultiCartToCustomerClientInterface
+    {
+        return $this->getProvidedDependency(MultiCartDependencyProvider::CLIENT_CUSTOMER);
     }
 
     /**
