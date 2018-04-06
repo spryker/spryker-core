@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Plugin;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Customer\CustomersListType;
@@ -55,7 +56,7 @@ class CustomersListManualOrderEntryFormPlugin extends AbstractPlugin implements 
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function handleData($quoteTransfer, &$form, $request): AbstractTransfer
+    public function handleData($quoteTransfer, &$form, $request): QuoteTransfer
     {
         $customerTransfer = new CustomerTransfer();
         $customerTransfer->setIdCustomer($quoteTransfer->getIdCustomer());
@@ -73,6 +74,12 @@ class CustomersListManualOrderEntryFormPlugin extends AbstractPlugin implements 
      */
     public function isPreFilled($dataTransfer = null): bool
     {
+        if ($dataTransfer instanceof QuoteTransfer) {
+            if ($dataTransfer->getIdCustomer()) {
+                return true;
+            }
+        }
+
         return false;
     }
 }

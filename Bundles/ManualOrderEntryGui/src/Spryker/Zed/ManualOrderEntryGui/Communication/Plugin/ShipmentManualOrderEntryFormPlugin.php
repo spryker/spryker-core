@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Plugin;
 
 use Generated\Shared\Transfer\ExpenseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
@@ -58,7 +59,7 @@ class ShipmentManualOrderEntryFormPlugin extends AbstractPlugin implements Manua
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function handleData($quoteTransfer, &$form, $request): AbstractTransfer
+    public function handleData($quoteTransfer, &$form, $request): QuoteTransfer
     {
         $idShipmentMethod = $quoteTransfer->getIdShipmentMethod();
         if ($idShipmentMethod) {

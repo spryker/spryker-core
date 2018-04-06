@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Plugin;
 
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -27,13 +27,13 @@ interface ManualOrderEntryFormPluginInterface
     public function createForm(Request $request, $dataTransfer = null): FormInterface;
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
+     * @param QuoteTransfer $quoteTransfer
      * @param \Symfony\Component\Form\FormInterface $form
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     * @return QuoteTransfer
      */
-    public function handleData($dataTransfer, &$form, $request): AbstractTransfer;
+    public function handleData($quoteTransfer, &$form, $request): QuoteTransfer;
 
     /**
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SalesReclamation\Communication\Plugin;
 
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface;
@@ -46,7 +47,7 @@ class ReclamationOrderEntryFormPlugin extends AbstractPlugin implements ManualOr
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function handleData($quoteTransfer, &$form, $request): AbstractTransfer
+    public function handleData($quoteTransfer, &$form, $request): QuoteTransfer
     {
         return $quoteTransfer;
     }

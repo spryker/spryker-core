@@ -10,6 +10,7 @@ namespace Spryker\Zed\ManualOrderEntryGui\Communication\Plugin;
 use ArrayObject;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Voucher\VoucherType;
@@ -69,7 +70,7 @@ class VoucherManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function handleData($quoteTransfer, &$form, $request): AbstractTransfer
+    public function handleData($quoteTransfer, &$form, $request): QuoteTransfer
     {
         if (strlen($quoteTransfer->getVoucherCode())) {
             $discountTransfer = new DiscountTransfer();

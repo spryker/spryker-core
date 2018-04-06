@@ -44,18 +44,11 @@ class CustomersListDataProvider implements FormDataProviderInterface
      */
     public function getOptions($quoteTransfer)
     {
-        $value = $quoteTransfer->getIdCustomer();
-
-        if (!$value && $this->request->query->has(CustomersListType::FIELD_CUSTOMER)) {
-            $value = $this->request->query->get(CustomersListType::FIELD_CUSTOMER);
-        }
-
         return [
             'data_class' => QuoteTransfer::class,
             'allow_extra_fields' => true,
             'csrf_protection' => false,
             CustomersListType::OPTION_CUSTOMER_ARRAY => $this->getCustomerList(),
-            CustomersListType::OPTION_VALUE => $value,
         ];
     }
 
@@ -66,6 +59,14 @@ class CustomersListDataProvider implements FormDataProviderInterface
      */
     public function getData($quoteTransfer)
     {
+        $value = $quoteTransfer->getIdCustomer();
+
+        if (!$value && $this->request->query->has(CustomersListType::FIELD_CUSTOMER)) {
+            $value = $this->request->query->get(CustomersListType::FIELD_CUSTOMER);
+        }
+
+        $quoteTransfer->setIdCustomer($value);
+
         if ($quoteTransfer->getCustomer() === null) {
             $quoteTransfer->setCustomer(new CustomerTransfer());
         }

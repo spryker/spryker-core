@@ -10,6 +10,7 @@ namespace Spryker\Zed\ManualOrderEntryGui\Communication\Plugin;
 use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ManualOrderProductTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Product\ItemCollectionType;
@@ -64,9 +65,9 @@ class ItemManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOrd
      * @param \Symfony\Component\Form\FormInterface $form
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return QuoteTransfer
      */
-    public function handleData($quoteTransfer, &$form, $request): AbstractTransfer
+    public function handleData($quoteTransfer, &$form, $request): QuoteTransfer
     {
         $items = new ArrayObject();
         $addedSkus = [];

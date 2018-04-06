@@ -69,7 +69,7 @@ class StoreDataProvider implements FormDataProviderInterface
                     . $currencyTransfer->getName()
                     . ' [' . $currencyTransfer->getCode() . ']';
 
-                $storeList[$storeTransfer->getIdStore() . ';' . $currencyTransfer->getIdCurrency()] = $row;
+                $storeList[$storeTransfer->getName() . ';' . $currencyTransfer->getCode()] = $row;
             }
         }
 
