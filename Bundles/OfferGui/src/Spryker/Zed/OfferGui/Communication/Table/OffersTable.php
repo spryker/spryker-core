@@ -230,8 +230,7 @@ class OffersTable extends AbstractTable
     {
         $urls = [];
 
-        //TODO: Inject config and use it.
-        if ($item[SpyOfferTableMap::COL_STATUS] !== 'order') {
+        if ($item[SpyOfferTableMap::COL_STATUS] !== $this->config->getStatusOrder()) {
             $urls[] = $this->generateEditButton(
                 Url::generate(static::URL_OFFER_GUI_EDIT, [
                     static::URL_PARAM_ID_OFFER => $item[SpyOfferTableMap::COL_ID_OFFER],
