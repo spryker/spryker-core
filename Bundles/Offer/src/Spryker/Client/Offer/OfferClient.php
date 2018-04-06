@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Offer;
 
+use ArrayObject;
 use Generated\Shared\Transfer\OfferListTransfer;
 use Generated\Shared\Transfer\OfferResponseTransfer;
 use Generated\Shared\Transfer\OfferTransfer;
@@ -26,9 +27,17 @@ class OfferClient extends AbstractClient implements OfferClientInterface
      */
     public function getOffers(OfferListTransfer $offerListTransfer): OfferListTransfer
     {
-        return $this->getFactory()
+        $offerListTransfer = $this->getFactory()
             ->createZedStub()
             ->getOffers($offerListTransfer);
+
+        $this->getFactory()
+            ->createOfferHydrator()
+            ->hydrateQuoteWithCustomer(
+                $offerListTransfer->getOffers()
+            );
+
+        return $offerListTransfer;
     }
 
     /**
@@ -40,10 +49,17 @@ class OfferClient extends AbstractClient implements OfferClientInterface
      */
     public function getOfferById(OfferTransfer $offerTransfer): OfferTransfer
     {
-        //todo: populate Customer form session to quote
-        return $this->getFactory()
+        $offerTransfer = $this->getFactory()
             ->createZedStub()
             ->getOfferById($offerTransfer);
+
+        $offerTransfers = $this->getFactory()
+            ->createOfferHydrator()
+            ->hydrateQuoteWithCustomer(
+                new ArrayObject([$offerTransfer])
+            );
+
+        return $offerTransfers[0];
     }
 
     /**
@@ -54,10 +70,18 @@ class OfferClient extends AbstractClient implements OfferClientInterface
      * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
      * @return \Generated\Shared\Transfer\OfferResponseTransfer
      */
-    public function createOffer(OfferTransfer $offerTransfer): OfferResponseTransfer
+    public function placeOffer(OfferTransfer $offerTransfer): OfferResponseTransfer
     {
-        return $this->getFactory()
+        $offerResponseTransfer = $this->getFactory()
             ->createZedStub()
-            ->createOffer($offerTransfer);
+            ->placeOffer($offerTransfer);
+
+        $offerTransfers = $this->getFactory()
+            ->createOfferHydrator()
+            ->hydrateQuoteWithCustomer(
+                new ArrayObject([$offerResponseTransfer->getOffer()])
+            );
+
+        return $offerTransfers[0];
     }
 }

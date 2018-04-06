@@ -78,22 +78,26 @@ class OfferWriter implements OfferWriterInterface
      *
      * @return OfferResponseTransfer
      */
+    public function updateOffer(OfferTransfer $offerTransfer): OfferResponseTransfer
+    {
+        $offerTransfer->requireIdOffer();
+        $offerTransfer = $this->offerEntityManager->updateOffer($offerTransfer);
+        $offerResponseTransfer = $this->offerPluginExecutor->updateOffer($offerTransfer);
+
+        return $offerResponseTransfer;
+    }
+
+    /**
+     * @param OfferTransfer $offerTransfer
+     *
+     * @return OfferResponseTransfer
+     */
     public function placeOffer(OfferTransfer $offerTransfer): OfferResponseTransfer
     {
         $offerTransfer->requireQuote();
-        $offerTransfer->getQuote()->requireCustomer();
-
-        //TODO: drop Customer object here and fill it from session on order creation
-
-        $offerTransfer->setCustomerReference(
-            $offerTransfer
-                ->getQuote()
-                ->getCustomer()
-                ->getCustomerReference()
-        );
+        $offerTransfer->requireCustomerReference();
 
         $offerTransfer = $this->executeCreateOffer($offerTransfer);
-
 
         return (new OfferResponseTransfer())
             ->setIsSuccessful(true)
@@ -112,61 +116,5 @@ class OfferWriter implements OfferWriterInterface
         $offerTransfer->getQuote()->setCheckoutConfirmed(true);
 
         return $offerTransfer;
-    }
-
-    /**
-     * @throws \Exception
-     *
-     * @param OfferTransfer $offerTransfer
-     *
-     * @return OfferResponseTransfer
-     */
-    public function updateOffer(OfferTransfer $offerTransfer): OfferResponseTransfer
-    {
-        $offerTransfer->requireIdOffer();
-
-        /** @var SpyOffer $offerEntity */
-        $offerEntity = SpyOfferQuery::create()
-            ->filterByIdOffer($offerTransfer->getIdOffer())
-            ->findOne();
-
-        if (!$offerEntity) {
-            throw new \Exception();
-        }
-
-        $offerEntity->fromArray($offerTransfer->toArray());
-
-        //todo: move to a mapper
-        $fieldsToPersist = [
-            'store',
-            'items',
-            'totals',
-            'expenses',
-            'price_mode',
-            'currency',
-            'billing_address',
-            'shipping_address',
-            'billing_same_as_shipping',
-            'voucher_discounts',
-            'cart_rule_discounts',
-            'gift_cards',
-            'payments',
-            'shipment',
-            'bundle_items',
-        ];
-
-        $quoteTransfer = $offerTransfer->getQuote();
-        $quoteArray = array_intersect_key(
-            $quoteTransfer->toArray(),
-            array_flip($fieldsToPersist)
-        );
-
-        $offerEntity->setQuoteData(json_encode($quoteArray));
-
-        $offerEntity->save();
-
-        $offerResponseTransfer = $this->offerPluginExecutor->updateOffer($offerTransfer);
-
-        return $offerResponseTransfer;
     }
 }
