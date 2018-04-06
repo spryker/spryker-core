@@ -65,7 +65,7 @@ class OfferMapper implements OfferMapperInterface
         $offerTransfer->setQuote(
             (new QuoteTransfer())
                 ->fromArray(
-                    $this->utilEncodingService->decodeJson($offerEntityTransfer->getQuoteData()),
+                    $this->utilEncodingService->decodeJson($offerEntityTransfer->getQuoteData(), true),
                     true
                 )
         );
