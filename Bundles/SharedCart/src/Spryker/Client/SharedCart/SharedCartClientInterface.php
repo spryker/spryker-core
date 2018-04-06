@@ -16,7 +16,7 @@ interface SharedCartClientInterface
 {
     /**
      * Specification:
-     * todo: add Specification
+     * - Get quote permission group list.
      *
      * @api
      *
@@ -28,7 +28,8 @@ interface SharedCartClientInterface
 
     /**
      * Specification:
-     * todo: add Specification
+     * - Adds share information to quote.
+     * - Updates quote in database.
      *
      * @api
      *
@@ -40,7 +41,8 @@ interface SharedCartClientInterface
 
     /**
      * Specification:
-     * todo: add Specification
+     * - Remove share information from quote.
+     * - Updates quote in database.
      *
      * @api
      *

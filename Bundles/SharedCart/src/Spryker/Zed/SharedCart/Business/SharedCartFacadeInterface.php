@@ -17,7 +17,7 @@ interface SharedCartFacadeInterface
 {
     /**
      * Specification:
-     * - TODO: add specification
+     * - Get permissions for customer company user.
      *
      * @api
      *
@@ -29,7 +29,7 @@ interface SharedCartFacadeInterface
 
     /**
      * Specification:
-     * - TODO: add specification
+     * - Adds customer shared cart to QuoteResponseTransfer.
      *
      * @api
      *
@@ -41,7 +41,7 @@ interface SharedCartFacadeInterface
 
     /**
      * Specification:
-     * - TODO: add specification
+     * - Add base shared quote permission group list to database.
      *
      * @api
      *
@@ -51,7 +51,7 @@ interface SharedCartFacadeInterface
 
     /**
      * Specification:
-     * - TODO: add specification
+     * - Get filtered quote permission groups list.
      *
      * @api
      *
@@ -63,7 +63,7 @@ interface SharedCartFacadeInterface
 
     /**
      * Specification:
-     * - TODO: add specification
+     * - Update quote share details for quote.
      *
      * @api
      *
@@ -75,7 +75,7 @@ interface SharedCartFacadeInterface
 
     /**
      * Specification:
-     * - TODO: add specification
+     * - Reset is_default flag for all quotes shared with customer.
      *
      * @api
      *
@@ -87,7 +87,7 @@ interface SharedCartFacadeInterface
 
     /**
      * Specification:
-     * - TODO: add specification
+     * - Mark share connection for quote and customer as default.
      *
      * @api
      *
@@ -99,7 +99,7 @@ interface SharedCartFacadeInterface
 
     /**
      * Specification:
-     * - TODO: add specification
+     * - Remove all share connection for quote.
      *
      * @api
      *
