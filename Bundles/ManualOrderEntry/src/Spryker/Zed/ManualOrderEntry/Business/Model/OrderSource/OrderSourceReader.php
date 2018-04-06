@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ManualOrderEntry\Business\Model\OrderSource;
 
-use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\SpySalesOrderEntityTransfer;
 use Spryker\Zed\ManualOrderEntry\Persistence\ManualOrderEntryRepositoryInterface;
 
 class OrderSourceReader implements OrderSourceReaderInterface
