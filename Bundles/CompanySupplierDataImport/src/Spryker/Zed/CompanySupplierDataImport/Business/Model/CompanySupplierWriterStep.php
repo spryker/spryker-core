@@ -7,9 +7,7 @@
 
 namespace Spryker\Zed\CompanySupplierDataImport\Business\Model;
 
-use Orm\Zed\Company\Persistence\SpyCompanyQuery;
 use Orm\Zed\CompanySupplier\Persistence\SpyCompanySupplierToProductQuery;
-use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\CompanySupplierDataImport\Business\Model\DataSet\CompanySupplierDataSet;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
@@ -21,19 +19,11 @@ class CompanySupplierWriterStep implements DataImportStepInterface
      *
      * @return void
      */
-    public function execute(DataSetInterface $dataSet)
+    public function execute(DataSetInterface $dataSet): void
     {
-        $companyEntity = SpyCompanyQuery::create()
-            ->filterByName($dataSet[CompanySupplierDataSet::COMPANY_NAME])
-            ->findOne();
-
-        $productEntity = SpyProductQuery::create()
-            ->filterBySku($dataSet[CompanySupplierDataSet::CONCRETE_SKU])
-            ->findOne();
-
         $companySupplierToProductEntity = SpyCompanySupplierToProductQuery::create()
-            ->filterByFkCompany($companyEntity->getIdCompany())
-            ->filterByFkProduct($productEntity->getIdProduct())
+            ->filterByFkCompany($dataSet[CompanySupplierDataSet::COMPANY_ID])
+            ->filterByFkProduct($dataSet[CompanySupplierDataSet::PRODUCT_ID])
             ->findOneOrCreate();
         $companySupplierToProductEntity->save();
     }
