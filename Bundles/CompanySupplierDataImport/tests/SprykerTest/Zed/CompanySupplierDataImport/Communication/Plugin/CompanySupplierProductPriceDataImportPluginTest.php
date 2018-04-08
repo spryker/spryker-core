@@ -11,7 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
-use Spryker\Zed\CompanySupplierDataImport\Communication\Plugin\CompanySupplierDataImportPlugin;
+use Spryker\Zed\CompanySupplierDataImport\Communication\Plugin\CompanySupplierProductPriceDataImportPlugin;
 use Spryker\Zed\CompanySupplierDataImport\CompanySupplierDataImportConfig;
 
 /**
@@ -21,10 +21,10 @@ use Spryker\Zed\CompanySupplierDataImport\CompanySupplierDataImportConfig;
  * @group CompanySupplier
  * @group Communication
  * @group Plugin
- * @group CompanySupplierDataImportPluginTest
+ * @group CompanySupplierProductPriceDataImportPluginTest
  * Add your own group annotations below this line
  */
-class CompanySupplierDataImportPluginTest extends Unit
+class CompanySupplierProductPriceDataImportPluginTest extends Unit
 {
     protected const COMPANY_KEY = 'spryker';
     protected const PRODUCT_SKU = 'spryker_product';
@@ -37,27 +37,27 @@ class CompanySupplierDataImportPluginTest extends Unit
     /**
      * @return void
      */
-    public function testImportImportsCompany(): void
+    public function testImportImportsCompanySupplierProductPrice(): void
     {
-        $this->tester->ensureDatabaseTableCompanySupplierToProductIsEmpty();
+        $this->tester->ensureDatabaseTablePriceProductIsEmpty();
         $this->tester->haveCompany(['key' => static::COMPANY_KEY]);
         if (!$this->tester->isProductCreated(static::PRODUCT_SKU)) {
             $this->tester->haveProduct(['sku' => static::PRODUCT_SKU]);
         }
 
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
-        $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/company_supplier.csv');
+        $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/company_supplier_product_price.csv');
 
         $dataImportConfigurationTransfer = new DataImporterConfigurationTransfer();
         $dataImportConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfigurationTransfer);
 
-        $companyDataImportPlugin = new CompanySupplierDataImportPlugin();
+        $companyDataImportPlugin = new CompanySupplierProductPriceDataImportPlugin();
 
         $dataImporterReportTransfer = $companyDataImportPlugin->import($dataImportConfigurationTransfer);
 
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
 
-        $this->tester->assertDatabaseTableCompanySupplierToProductContainsData();
+        $this->tester->assertCompanySupplierProductPriceImported();
     }
 
     /**
@@ -65,7 +65,7 @@ class CompanySupplierDataImportPluginTest extends Unit
      */
     public function testGetImportTypeReturnsTypeOfImporter(): void
     {
-        $companyDataImportPlugin = new CompanySupplierDataImportPlugin();
-        $this->assertSame(CompanySupplierDataImportConfig::IMPORT_TYPE_COMPANY_SUPPLIER, $companyDataImportPlugin->getImportType());
+        $companyDataImportPlugin = new CompanySupplierProductPriceDataImportPlugin();
+        $this->assertSame(CompanySupplierDataImportConfig::IMPORT_TYPE_PRODUCT_PRICE, $companyDataImportPlugin->getImportType());
     }
 }
