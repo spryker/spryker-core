@@ -55,14 +55,4 @@ class OfferGuiToOfferFacadeBridge implements OfferGuiToOfferFacadeInterface
     {
         return $this->offerFacade->createOffer($offerTransfer);
     }
-
-    /**
-     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
-     *
-     * @return void
-     */
-    public function aggregateOfferItemSubtotal(CalculableObjectTransfer $calculableObjectTransfer): void
-    {
-        $this->offerFacade->aggregateOfferItemSubtotal($calculableObjectTransfer);
-    }
 }

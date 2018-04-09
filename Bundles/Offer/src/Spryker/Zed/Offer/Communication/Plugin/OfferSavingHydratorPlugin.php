@@ -31,24 +31,36 @@ class OfferSavingHydratorPlugin extends AbstractPlugin implements OfferHydratorP
         /** @var MessengerFacadeInterface $messengerFacade */
         $messengerFacade = Locator::getInstance()->messenger()->facade();
 
-        $quoteTransferClone = clone $offerTransfer->getQuote();
-        $quoteTransferClone->setItems(new ArrayObject());
+        $quoteTransfer = $offerTransfer->getQuote();
 
-        foreach ($offerTransfer->getQuote()->getItems() as $itemTransfer) {
-            $itemTransfer->setForcedUnitGrossPrice(false);
-            $quoteTransferClone->getItems()->append(clone $itemTransfer);
+        $originalPriceQuoteTransfer = clone $quoteTransfer;
+        $originalPriceQuoteTransfer->setItems(new ArrayObject());
+
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $originalPriceItemTransfer = clone $itemTransfer;
+            $originalPriceItemTransfer->setForcedUnitGrossPrice(false);
+
+            $originalPriceQuoteTransfer
+                ->getItems()
+                ->append($originalPriceItemTransfer);
         }
 
-        $quoteTransfer = $cartFacade->reloadItems($quoteTransferClone);
+        $originalPriceQuoteTransfer = $cartFacade->reloadItems($originalPriceQuoteTransfer);
 
-        $originalItems = (array)$offerTransfer->getQuote()->getItems();
-        $reloadedItems = (array)$quoteTransfer->getItems();
+        $skuOriginalPrice = [];
+        foreach ($originalPriceQuoteTransfer->getItems() as $originalPriceItemTransfer) {
+            $skuOriginalPrice[$originalPriceItemTransfer->getSku()] = $originalPriceItemTransfer->getSumGrossPrice();
+        }
 
-        $amount = count($originalItems);
-        //todo: if an item is has not been added, will be a mistake
-        for ($i = 0; $i < $amount; $i++) {
-            //TODO: change to unitPrice probably, fix item price editing
-            $originalItems[$i]->setSaving($reloadedItems[$i]->getUnitGrossPrice() - $originalItems[$i]->getUnitGrossPrice());
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+
+            if (!isset($skuOriginalPrice[$itemTransfer->getSku()])) {
+                $itemTransfer->setSaving(0);
+                continue;
+            }
+
+            $savingAmount = $skuOriginalPrice[$itemTransfer->getSku()] - $itemTransfer->getSumSubtotalAggregation();
+            $itemTransfer->setSaving($savingAmount);
         }
 
         $messengerFacade->getStoredMessages();

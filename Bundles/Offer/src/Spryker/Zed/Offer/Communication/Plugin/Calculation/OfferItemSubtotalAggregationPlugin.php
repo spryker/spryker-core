@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\OfferGui\Communication\Plugin;
+namespace Spryker\Zed\Offer\Communication\Plugin\Calculation;
 
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Spryker\Zed\Calculation\Dependency\Plugin\CalculationPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\OfferGui\Communication\OfferGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Offer\Business\OfferFacadeInterface getFacade()
  */
 class OfferItemSubtotalAggregationPlugin extends AbstractPlugin implements CalculationPluginInterface
 {
@@ -26,6 +26,6 @@ class OfferItemSubtotalAggregationPlugin extends AbstractPlugin implements Calcu
      */
     public function recalculate(CalculableObjectTransfer $calculableObjectTransfer)
     {
-         $this->getFactory()->getOfferFacade()->aggregateOfferItemSubtotal($calculableObjectTransfer);
+         $this->getFacade()->aggregateOfferItemSubtotal($calculableObjectTransfer);
     }
 }

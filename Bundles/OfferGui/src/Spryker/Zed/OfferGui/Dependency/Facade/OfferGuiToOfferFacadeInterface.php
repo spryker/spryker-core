@@ -35,11 +35,4 @@ interface OfferGuiToOfferFacadeInterface
      * @return \Generated\Shared\Transfer\OfferResponseTransfer
      */
     public function createOffer(OfferTransfer $offerTransfer): OfferResponseTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
-     *
-     * @return void
-     */
-    public function aggregateOfferItemSubtotal(CalculableObjectTransfer $calculableObjectTransfer): void;
 }
