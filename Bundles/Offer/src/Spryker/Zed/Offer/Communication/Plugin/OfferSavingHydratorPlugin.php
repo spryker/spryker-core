@@ -28,8 +28,6 @@ class OfferSavingHydratorPlugin extends AbstractPlugin implements OfferHydratorP
     public function hydrateOffer(OfferTransfer $offerTransfer): OfferTransfer
     {
         $cartFacade = $this->getFactory()->getCartFacade();
-        /** @var MessengerFacadeInterface $messengerFacade */
-        $messengerFacade = Locator::getInstance()->messenger()->facade();
 
         $quoteTransfer = $offerTransfer->getQuote();
 
@@ -63,7 +61,7 @@ class OfferSavingHydratorPlugin extends AbstractPlugin implements OfferHydratorP
             $itemTransfer->setSaving($savingAmount);
         }
 
-        $messengerFacade->getStoredMessages();
+        $this->getFactory()->getMessengerFacade()->getStoredMessages();
 
         return $offerTransfer;
     }

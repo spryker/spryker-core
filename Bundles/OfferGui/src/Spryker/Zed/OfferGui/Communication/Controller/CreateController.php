@@ -14,7 +14,6 @@ use Spryker\Client\Session\SessionClientInterface;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Cart\Business\CartFacadeInterface;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\Messenger\Business\MessengerFacadeInterface;
 use Spryker\Zed\OfferGui\Communication\Form\Offer\CreateOfferType;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,6 +27,8 @@ class CreateController extends AbstractController
     public const PARAM_KEY_INITIAL_OFFER = 'key-offer';
     public const PARAM_SUBMIT_PERSIST = 'submit-persist';
 
+    protected const ERROR_MESSAGE_ITEMS_NOT_AVAILABLE = 'Please fill offer with available items';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -37,10 +38,6 @@ class CreateController extends AbstractController
     {
         $isSubmitPersist = $request->request->get(static::PARAM_SUBMIT_PERSIST);
         $offerTransfer = $this->getOfferTransfer($request);
-
-
-        /** @var \Spryker\Zed\Cart\Business\CartFacadeInterface $cartFacade */
-        $cartFacade = Locator::getInstance()->cart()->facade();
 
         $form = $this->getFactory()->getOfferForm($offerTransfer);
         $form->handleRequest($request);
@@ -68,16 +65,17 @@ class CreateController extends AbstractController
             }
 
             foreach ($incomingItems as $itemTransfer) {
-                $cartChangeTransfer = new CartChangeTransfer();
-                $cartChangeTransfer->setQuote($quoteTransfer);
-                $cartChangeTransfer->addItem($itemTransfer);
+                $cartChangeTransfer = (new CartChangeTransfer())
+                    ->setQuote($quoteTransfer)
+                    ->addItem($itemTransfer);
 
-                $quoteTransfer = $cartFacade->add($cartChangeTransfer);
+                $quoteTransfer = $this->getFactory()
+                    ->getCartFacade()
+                    ->add($cartChangeTransfer);
             }
 
             if ($quoteTransfer->getItems()->count() <= 0) {
-
-                $this->addErrorMessage('Please fill offer with available items');
+                $this->addErrorMessage(static::ERROR_MESSAGE_ITEMS_NOT_AVAILABLE);
 
                 return $this->viewResponse([
                     'offer' => $offerTransfer,
@@ -86,7 +84,9 @@ class CreateController extends AbstractController
             }
 
             //update cart
-            $quoteTransfer = $cartFacade->reloadItems($quoteTransfer);
+            $quoteTransfer = $this->getFactory()
+                ->getCartFacade()
+                ->reloadItems($quoteTransfer);
             $offerTransfer->setQuote($quoteTransfer);
 
             //refresh form after calculations
@@ -119,9 +119,9 @@ class CreateController extends AbstractController
     {
         $keyOffer = $request->get(static::PARAM_KEY_INITIAL_OFFER);
 
-        /** @var SessionClientInterface $sessionClient */
-        $sessionClient = Locator::getInstance()->session()->client();
-        $offerJson = $sessionClient->get($keyOffer);
+        $offerJson = $this->getFactory()
+            ->getSessionClient()
+            ->get($keyOffer);
 
         $offerTransfer = new OfferTransfer();
 
@@ -139,9 +139,7 @@ class CreateController extends AbstractController
      */
     protected function getSuccessfulRedirect(OfferResponseTransfer $offerResponseTransfer)
     {
-        /** @var MessengerFacadeInterface $messengerFacade */
-        $messengerFacade = Locator::getInstance()->messenger()->facade();
-        $messengerFacade->getStoredMessages();
+        $this->getFactory()->getMessengerFacade()->getStoredMessages();
 
         $redirectUrl = Url::generate(
             '/offer-gui/edit',

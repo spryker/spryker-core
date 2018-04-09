@@ -8,26 +8,23 @@
 namespace Spryker\Zed\OfferGui\Communication;
 
 use Generated\Shared\Transfer\OfferTransfer;
-use Generated\Zed\Ide\Offer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Kernel\Locator;
-use Spryker\Zed\OfferGui\Communication\Form\Constraint\SkuExists;
 use Spryker\Zed\OfferGui\Communication\Form\DataProvider\OfferDataProvider;
-use Spryker\Zed\OfferGui\Communication\Form\Offer\CreateOfferType;
 use Spryker\Zed\OfferGui\Communication\Form\Offer\EditOfferType;
 use Spryker\Zed\OfferGui\Communication\Table\OffersTable;
 use Spryker\Zed\OfferGui\Communication\Table\OffersTableQueryBuilder;
 use Spryker\Zed\OfferGui\Communication\Table\OffersTableQueryBuilderInterface;
+use Spryker\Zed\OfferGui\Dependency\Client\OfferGuiToSessionClientInterface;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToCartFacadeInterface;
+use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToCurrencyFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToCustomerFacadeInterface;
+use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToMessengerFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToMoneyFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToOfferFacadeInterface;
-use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToOmsFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToStoreFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilDateTimeServiceInterface;
 use Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilSanitizeServiceInterface;
 use Spryker\Zed\OfferGui\OfferGuiDependencyProvider;
-use Symfony\Component\Validator\Constraint;
 
 /**
  * @method \Spryker\Zed\OfferGui\OfferGuiConfig getConfig()
@@ -132,19 +129,6 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
         return $form;
     }
 
-    public function getCreateOfferForm(OfferTransfer $offerTransfer)
-    {
-        $form = $this->getFormFactory()->create(
-            CreateOfferType::class,
-                $offerTransfer,
-            [
-                'data_class' => OfferTransfer::class
-            ]
-        );
-
-        return $form;
-    }
-
     /**
      * @return string
      */
@@ -159,19 +143,17 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createOfferDataProvider()
     {
         return new OfferDataProvider(
-            $this->getOfferFacade(),
+            $this->getCurrencyFacade(),
             $this->getCustomerFacade()
         );
     }
 
     /**
-     * @return \Symfony\Component\Validator\Constraint
+     * @return OfferGuiToCurrencyFacadeInterface
      */
-    public function createSkuExistsConstraint(): Constraint
+    public function getCurrencyFacade(): OfferGuiToCurrencyFacadeInterface
     {
-        return new SkuExists([
-            SkuExists::OPTION_PRODUCT_FACADE => Locator::getInstance()->product()->facade(),
-        ]);
+        return $this->getProvidedDependency(OfferGuiDependencyProvider::FACADE_CURRENCY);
     }
 
     /**
@@ -180,5 +162,21 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getCartFacade(): OfferGuiToCartFacadeInterface
     {
         return $this->getProvidedDependency(OfferGuiDependencyProvider::FACADE_CART);
+    }
+
+    /**
+     * @return OfferGuiToSessionClientInterface
+     */
+    public function getSessionClient(): OfferGuiToSessionClientInterface
+    {
+        return $this->getProvidedDependency(OfferGuiDependencyProvider::CLIENT_SESSION);
+    }
+
+    /**
+     * @return OfferGuiToMessengerFacadeInterface
+     */
+    public function getMessengerFacade(): OfferGuiToMessengerFacadeInterface
+    {
+        return $this->getProvidedDependency(OfferGuiDependencyProvider::FACADE_MESSENGER);
     }
 }

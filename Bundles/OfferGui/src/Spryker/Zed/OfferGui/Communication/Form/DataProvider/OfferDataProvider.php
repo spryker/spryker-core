@@ -12,15 +12,17 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Currency\Business\CurrencyFacadeInterface;
 use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\OfferGui\Communication\Form\Offer\EditOfferType;
+use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToCurrencyFacadeBridge;
+use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToCurrencyFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToCustomerFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToOfferFacadeInterface;
 
 class OfferDataProvider
 {
     /**
-     * @var \Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToOfferFacadeInterface
+     * @var OfferGuiToCurrencyFacadeInterface
      */
-    protected $offerFacade;
+    protected $currencyFacade;
 
     /**
      * @var \Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToCustomerFacadeInterface
@@ -28,14 +30,14 @@ class OfferDataProvider
     protected $customerFacade;
 
     /**
-     * @param \Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToOfferFacadeInterface $offerFacade
+     * @param OfferGuiToCurrencyFacadeInterface $currencyFacade
      * @param \Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToCustomerFacadeInterface $customerFacade
      */
     public function __construct(
-        OfferGuiToOfferFacadeInterface $offerFacade,
+        OfferGuiToCurrencyFacadeInterface $currencyFacade,
         OfferGuiToCustomerFacadeInterface $customerFacade
     ) {
-        $this->offerFacade = $offerFacade;
+        $this->currencyFacade = $currencyFacade;
         $this->customerFacade = $customerFacade;
     }
 
@@ -107,10 +109,7 @@ class OfferDataProvider
      */
     protected function getStoreCurrencyChoiceList()
     {
-        /** @var CurrencyFacadeInterface $currencyFacade */
-        $currencyFacade = Locator::getInstance()->currency()->facade();
-
-        $storeWithCurrencyTransfers = $currencyFacade->getAllStoresWithCurrencies();
+        $storeWithCurrencyTransfers = $this->currencyFacade->getAllStoresWithCurrencies();
         $storeList = [];
 
         foreach ($storeWithCurrencyTransfers as $storeWithCurrencyTransfer) {

@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Offer\Communication\Plugin\OfferSavingHydratorPlugin;
 use Spryker\Zed\Offer\Dependency\Facade\OfferToCartFacadeBridge;
+use Spryker\Zed\Offer\Dependency\Facade\OfferToMessengerFacadeBridge;
 use Spryker\Zed\Offer\Dependency\Facade\OfferToSalesFacadeBridge;
 use Spryker\Zed\Offer\Dependency\Plugin\OfferDoUpdatePluginInterface;
 use Spryker\Zed\Offer\Dependency\Service\OfferToUtilEncodingServiceBridge;
@@ -20,6 +21,7 @@ class OfferDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_SALES = 'FACADE_SALES';
     public const FACADE_CART = 'FACADE_CART';
+    public const FACADE_MESSENGER= 'FACADE_MESSENGER';
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
     public const PLUGINS_OFFER_HYDRATOR = 'PLUGINS_OFFER_HYDRATOR';
     public const PLUGINS_OFFER_DO_UPDATE = 'PLUGINS_OFFER_DO_UPDATE';
@@ -46,7 +48,9 @@ class OfferDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $this->addCartFacade($container);
+        $container = parent::provideCommunicationLayerDependencies($container);
+        $container = $this->addCartFacade($container);
+        $container = $this->addMessengerFacade($container);
 
         return $container;
     }
@@ -74,6 +78,20 @@ class OfferDependencyProvider extends AbstractBundleDependencyProvider
             return new OfferToSalesFacadeBridge(
                 $container->getLocator()->sales()->facade()
             );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param Container $container
+     *
+     * @return Container
+     */
+    protected function addMessengerFacade(Container $container): Container
+    {
+        $container[static::FACADE_MESSENGER] = function (Container $container) {
+            return new OfferToMessengerFacadeBridge($container->getLocator()->messenger()->facade());
         };
 
         return $container;

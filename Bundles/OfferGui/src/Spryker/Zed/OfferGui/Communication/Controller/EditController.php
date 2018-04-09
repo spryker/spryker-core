@@ -17,7 +17,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Client\Session\SessionClientInterface;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\Kernel\Locator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -41,9 +40,6 @@ class EditController extends AbstractController
         $isSubmitPersist = $request->request->get(static::PARAM_SUBMIT_PERSIST);
 
         $offerTransfer = $this->getOfferTransfer($request);
-
-        /** @var \Spryker\Zed\Cart\Business\CartFacadeInterface $cartFacade */
-        $cartFacade = Locator::getInstance()->cart()->facade();
 
         $form = $this->getFactory()->getOfferForm($offerTransfer);
         $form->handleRequest($request);
@@ -84,11 +80,16 @@ class EditController extends AbstractController
                 $cartChangeTransfer->setQuote($quoteTransfer);
                 $cartChangeTransfer->addItem($itemTransfer);
 
-                $quoteTransfer = $cartFacade->add($cartChangeTransfer);
+                $quoteTransfer = $this->getFactory()
+                    ->getCartFacade()
+                    ->add($cartChangeTransfer);
             }
 
             //update cart
-            $quoteTransfer = $cartFacade->reloadItems($quoteTransfer);
+            $quoteTransfer = $this->getFactory()
+                ->getCartFacade()
+                ->reloadItems($quoteTransfer);
+
             $offerTransfer->setQuote($quoteTransfer);
 
             //refresh form after calculations

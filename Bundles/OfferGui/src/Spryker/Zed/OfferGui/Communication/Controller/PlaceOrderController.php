@@ -7,7 +7,6 @@ namespace Spryker\Zed\OfferGui\Communication\Controller;
 use Generated\Shared\Transfer\OfferTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\OfferGui\Communication\Plugin\ManualOrderEntryGui\OfferQuoteInitializerPlugin;
 use Symfony\Component\HttpFoundation\Request;
 

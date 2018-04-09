@@ -5,12 +5,13 @@
 
     <transfer name="Quote">
         <property name="idOffer" type="int" description="Indicates an offer id, when it's a source of an order" />
-        <property name="offerDiscount" type="int" />
         <property name="offerFee" type="int" />
-        <property name="stock" type="int" />
     </transfer>
 
     <transfer name="Item">
+        <property name="offerDiscount" type="int" />
+        <property name="offerFee" type="int" />
+        <property name="stock" type="int" />
         <property name="saving" type="int" />
     </transfer>
 

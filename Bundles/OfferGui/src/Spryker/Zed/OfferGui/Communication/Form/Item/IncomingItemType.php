@@ -25,20 +25,6 @@ class IncomingItemType extends AbstractType
     protected const DEFAULT_QUANTITY = 1;
 
     /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults([
-            'constraints' => [
-                $this->getFactory()->createSkuExistsConstraint(),
-            ],
-        ]);
-    }
-
-    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *

@@ -15,7 +15,6 @@ use Spryker\Client\Session\SessionClientInterface;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Cart\Business\CartFacadeInterface;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\Messenger\Business\MessengerFacadeInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -49,9 +48,7 @@ class CopyController extends AbstractController
         $offerJson = \json_encode($offerTransfer->toArray());
         $offerKey = md5($offerJson);
 
-        /** @var SessionClientInterface $sessionClient */
-        $sessionClient = Locator::getInstance()->session()->client();
-        $sessionClient->set($offerKey, $offerJson);
+        $this->getFactory()->getSessionClient()->set($offerKey, $offerJson);
 
         $redirectUrl = Url::generate(
             '/offer-gui/create',
