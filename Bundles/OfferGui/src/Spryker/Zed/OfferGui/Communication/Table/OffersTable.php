@@ -21,21 +21,26 @@ use Spryker\Zed\OfferGui\OfferGuiConfig;
 
 class OffersTable extends AbstractTable
 {
-    const URL_OFFER_GUI_EDIT = '/offer-gui/edit/';
-    const URL_OFFER_GUI_VIEW_DETAILS = '/offer-gui/view/details';
-    const URL_OFFER_GUI_PRINT_VERSION = '/offer-gui/view/print-version';
-    const URL_OFFER_GUI_SUGGEST = '/offer-gui/copy';
-    const URL_OFFER_GUI_PLACE_ORDER = '/offer-gui/place-order/';
-    const URL_PARAM_ID_OFFER = 'id-offer';
+    protected const URL_OFFER_GUI_EDIT = '/offer-gui/edit/';
+    protected const URL_OFFER_GUI_VIEW_DETAILS = '/offer-gui/view/details';
+    protected const URL_OFFER_GUI_PRINT_VERSION = '/offer-gui/view/print-version';
+    protected const URL_OFFER_GUI_SUGGEST = '/offer-gui/copy';
+    protected const URL_OFFER_GUI_PLACE_ORDER = '/offer-gui/place-order/';
+    protected const URL_PARAM_ID_OFFER = 'id-offer';
 
-    const COL_ID_OFFER = SpyOfferTableMap::COL_ID_OFFER;
-    const COL_CREATED_AT = SpyOfferTableMap::COL_CREATED_AT;
-    const COL_CUSTOMER_REFERENCE = SpyOfferTableMap::COL_CUSTOMER_REFERENCE;
-    const COL_EMAIL = 'email';
-    const COL_GRAND_TOTAL = 'grand_total';
-    const COL_NUMBER_OF_ORDER_ITEMS = 'number_of_order_items';
-    const COL_URL = 'url';
-    const COL_STATUS = 'status';
+    protected const COL_ID_OFFER = SpyOfferTableMap::COL_ID_OFFER;
+    protected const COL_CREATED_AT = SpyOfferTableMap::COL_CREATED_AT;
+    protected const COL_CUSTOMER_REFERENCE = SpyOfferTableMap::COL_CUSTOMER_REFERENCE;
+    protected const COL_EMAIL = 'email';
+    protected const COL_GRAND_TOTAL = 'grand_total';
+    protected const COL_NUMBER_OF_ORDER_ITEMS = 'number_of_order_items';
+    protected const COL_URL = 'url';
+    protected const COL_STATUS = 'status';
+
+    /**
+     * @uses \Spryker\Shared\Offer\OfferConfig::STATUS_ORDER
+     */
+    protected const OFFER_STATUS_ORDER = 'order';
 
     /**
      * @var \Spryker\Zed\OfferGui\Communication\Table\OffersTableQueryBuilderInterface
@@ -231,7 +236,7 @@ class OffersTable extends AbstractTable
     {
         $urls = [];
 
-        if ($item[SpyOfferTableMap::COL_STATUS] !== 'order') {
+        if ($this->isOrdered($item)) {
             $urls[] = $this->generateEditButton(
                 Url::generate(static::URL_OFFER_GUI_EDIT, [
                     static::URL_PARAM_ID_OFFER => $item[SpyOfferTableMap::COL_ID_OFFER],
@@ -262,14 +267,26 @@ class OffersTable extends AbstractTable
             'Suggest to'
         );
 
-        $urls[] = $this->generateCreateButton(
-            Url::generate(static::URL_OFFER_GUI_PLACE_ORDER, [
-                static::URL_PARAM_ID_OFFER => $item[SpyOfferTableMap::COL_ID_OFFER],
-            ]),
-            'Place order'
-        );
+        if ($this->isOrdered($item)) {
+            $urls[] = $this->generateCreateButton(
+                Url::generate(static::URL_OFFER_GUI_PLACE_ORDER, [
+                    static::URL_PARAM_ID_OFFER => $item[SpyOfferTableMap::COL_ID_OFFER],
+                ]),
+                'Place order'
+            );
+        }
 
         return $urls;
+    }
+
+    /**
+     * @param array $item
+     *
+     * @return bool
+     */
+    protected function isOrdered(array $item)
+    {
+        return $item[SpyOfferTableMap::COL_STATUS] !== static::OFFER_STATUS_ORDER;
     }
 
     /**
