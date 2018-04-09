@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OfferTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Client\Session\SessionClientInterface;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\Kernel\Locator;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,6 +27,7 @@ use Symfony\Component\HttpFoundation\Request;
 class EditController extends AbstractController
 {
     public const PARAM_ID_OFFER = 'id-offer';
+    public const PARAM_KEY_INITIAL_OFFER = 'key-offer';
     public const PARAM_SUBMIT_RELOAD = 'submit-reload';
     public const PARAM_SUBMIT_PERSIST = 'submit-persist';
 
@@ -36,17 +38,9 @@ class EditController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idOffer = $request->get(static::PARAM_ID_OFFER);
         $isSubmitPersist = $request->request->get(static::PARAM_SUBMIT_PERSIST);
 
-        $offerTransfer = new OfferTransfer();
-
-        if ($idOffer) {
-            $offerTransfer->setIdOffer($idOffer);
-            $offerTransfer = $this->getFactory()
-                ->getOfferFacade()
-                ->getOfferById($offerTransfer);
-        }
+        $offerTransfer = $this->getOfferTransfer($request);
 
         /** @var \Spryker\Zed\Cart\Business\CartFacadeInterface $cartFacade */
         $cartFacade = Locator::getInstance()->cart()->facade();
@@ -112,5 +106,60 @@ class EditController extends AbstractController
             'offer' => $offerTransfer,
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return OfferTransfer
+     */
+    protected function getOfferTransferForCreation(Request $request)
+    {
+        $keyOffer = $request->get(static::PARAM_KEY_INITIAL_OFFER);
+
+        /** @var SessionClientInterface $sessionClient */
+        $sessionClient = Locator::getInstance()->session()->client();
+        $offerJson = $sessionClient->get($keyOffer);
+
+        $offerTransfer = new OfferTransfer();
+
+        if ($offerJson !== null) {
+            $offerTransfer->fromArray(\json_decode($offerJson, true));
+        }
+
+        return $offerTransfer;
+    }
+
+    /**
+     * @param int $idOffer
+     *
+     * @return OfferTransfer
+     */
+    protected function getOfferTransferForEdit(int $idOffer)
+    {
+        $offerTransfer = new OfferTransfer();
+
+        $offerTransfer->setIdOffer($idOffer);
+        $offerTransfer = $this->getFactory()
+            ->getOfferFacade()
+            ->getOfferById($offerTransfer);
+
+        return $offerTransfer;
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return OfferTransfer
+     */
+    protected function getOfferTransfer(Request $request)
+    {
+        $idOffer = $request->get(static::PARAM_ID_OFFER);
+
+        if ($idOffer !== null) {
+           return $this->getOfferTransferForEdit((int)$idOffer);
+        }
+
+        return $this->getOfferTransferForCreation($request);
     }
 }
