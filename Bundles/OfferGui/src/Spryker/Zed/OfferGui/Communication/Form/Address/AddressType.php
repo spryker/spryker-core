@@ -283,10 +283,10 @@ class AddressType extends AbstractType
      */
     protected function getCountryChoiceList()
     {
-        $storeTransfer = $this->getFactory()->getStoreFacade()->getCurrentStore();
+        $sourceCountries = $this->getFactory()->getStoreFacade()->getCountries();
         $countries = [];
 
-        foreach ($storeTransfer->getAvailableCurrencyIsoCodes() as $iso2Code) {
+        foreach ($sourceCountries as $iso2Code) {
             $countries[$iso2Code] = $iso2Code;
         }
 

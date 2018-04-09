@@ -31,4 +31,12 @@ class OfferGuiToStoreFacadeBridge implements OfferGuiToStoreFacadeInterface
     {
         return $this->storeFacade->getCurrentStore();
     }
+
+    /**
+     * @return array
+     */
+    public function getCountries()
+    {
+        return $this->storeFacade->getCountries();
+    }
 }
