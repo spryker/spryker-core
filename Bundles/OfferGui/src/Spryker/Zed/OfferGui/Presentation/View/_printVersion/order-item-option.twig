@@ -11,11 +11,10 @@
             </div>
         </td>
 
-        <td><div>[Purchase Price]</div></td>
-        <td><div>[Customer Price]</div></td>
-        <td><div>[Discount]</div></td>
+        <td><div>{{ item.unitGrossPrice | money(true, quote.currency.code) }}</div></td>
+        <td><div>{{ item.offerDiscount }}</div></td>
         <td><div>{{ item.quantity }}</div></td>
-        <td><div>[Fee]</div></td>
+        <td><div>{{ item.offerFee }}</div></td>
         <td><div>{{ item.unitGrossPrice | money(true, quote.currency.code) }}</div></td>
         <td><div>{{ item.unitSubtotalAggregation | money(true, quote.currency.code) }}</div></td>
     </tr>
