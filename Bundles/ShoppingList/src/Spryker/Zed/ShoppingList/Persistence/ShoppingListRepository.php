@@ -17,10 +17,13 @@ use Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Generated\Shared\Transfer\SpyShoppingListCompanyBusinessUnitEntityTransfer;
 use Generated\Shared\Transfer\SpyShoppingListCompanyUserEntityTransfer;
+use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\ShoppingList\Persistence\Map\SpyShoppingListCompanyBusinessUnitTableMap;
 use Orm\Zed\ShoppingList\Persistence\Map\SpyShoppingListCompanyUserTableMap;
+use Orm\Zed\ShoppingList\Persistence\Map\SpyShoppingListTableMap;
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingList;
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingListPermissionGroup;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -29,6 +32,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class ShoppingListRepository extends AbstractRepository implements ShoppingListRepositoryInterface
 {
+    protected const FIELD_FIRST_NAME = 'first_name';
+    protected const FIELD_LAST_NAME = 'last_name';
+
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
@@ -72,7 +78,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
             ->filterByName($shoppingListTransfer->getName())
             ->findOne();
 
-        return $this->mapShoppingListEntityToTransfer($shoppingListEntity);
+        return $this->mapShoppingListEntityToTransfer($shoppingListEntity, $shoppingListTransfer);
     }
 
     /**
@@ -102,13 +108,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     public function findCustomerShoppingLists(string $customerReference): ShoppingListCollectionTransfer
     {
         $shoppingLists = $this->createCustomerShoppingListQuery($customerReference)->find();
-        $shoppingListCollectionTransfer = new ShoppingListCollectionTransfer();
-
-        foreach ($shoppingLists as $shoppingList) {
-            $shoppingListCollectionTransfer->addShoppingList($this->mapShoppingListEntityToTransfer($shoppingList));
-        }
-
-        return $shoppingListCollectionTransfer;
+        return $this->mapShoppingListEntitiesToCollectionTransfer($shoppingLists);
     }
 
     /**
@@ -116,21 +116,18 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
-    public function findCustomerShoppingListsItemsByName(ShoppingListCollectionTransfer $shoppingListCollectionTransfer): ShoppingListItemCollectionTransfer
+    public function findCustomerShoppingListsItemsByIds(ShoppingListCollectionTransfer $shoppingListCollectionTransfer): ShoppingListItemCollectionTransfer
     {
-        $shoppingListsNames = [];
-        $customerReferences = [];
+        $shoppingListIds = [];
 
         foreach ($shoppingListCollectionTransfer->getShoppingLists() as $shoppingList) {
-            $shoppingListsNames[] = $shoppingList->getName();
-            $customerReferences[] = $shoppingList->getCustomerReference();
+            $shoppingListIds[] = $shoppingList->getIdShoppingList();
         }
 
         $shoppingListsItems = $this->getFactory()
             ->createShoppingListItemQuery()
             ->useSpyShoppingListQuery()
-                ->filterByCustomerReference_In($customerReferences)
-                ->filterByName_In($shoppingListsNames)
+                ->filterByIdShoppingList_In($shoppingListIds)
             ->endUse()
             ->find();
 
@@ -190,7 +187,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
      *
      * @return \Generated\Shared\Transfer\SpyShoppingListCompanyUserEntityTransfer|null
      */
-    public function getShoppingListCompanyUser(int $idShoppingList, int $idCompanyUser): SpyShoppingListCompanyUserEntityTransfer
+    public function getShoppingListCompanyUser(int $idShoppingList, int $idCompanyUser): ?SpyShoppingListCompanyUserEntityTransfer
     {
         $shoppingListCompanyUserEntity = $this->getFactory()
             ->createShoppingListCompanyUserQuery()
@@ -211,7 +208,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
      *
      * @return mixed|\Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyBusinessUnit[]|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection
      */
-    public function findCompanyBusinessUnitSharedShoppingLists(int $idCompanyBusinessUnit): array
+    public function findCompanyBusinessUnitSharedShoppingListsIds(int $idCompanyBusinessUnit): array
     {
         return $this->getFactory()
             ->createShoppingListCompanyBusinessUnitQuery()
@@ -226,7 +223,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
      *
      * @return mixed|\Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyUser[]|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection
      */
-    public function findCompanyUserSharedShoppingLists(int $idCompanyUser): array
+    public function findCompanyUserSharedShoppingListsIds(int $idCompanyUser): array
     {
         return $this->getFactory()
             ->createShoppingListCompanyUserQuery()
@@ -234,6 +231,46 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
             ->select(SpyShoppingListCompanyUserTableMap::COL_FK_SHOPPING_LIST)
             ->find()
             ->toArray();
+    }
+
+    /**
+     * @param int $idCompanyUser
+     *
+     * @return ShoppingListCollectionTransfer
+     */
+    public function findCompanyUserSharedShoppingLists(int $idCompanyUser): ShoppingListCollectionTransfer
+    {
+        $shoppingLists = $this->getFactory()
+            ->createShoppingListQuery()
+            ->addJoin(SpyShoppingListTableMap::COL_CUSTOMER_REFERENCE, SpyCustomerTableMap::COL_CUSTOMER_REFERENCE, Criteria::LEFT_JOIN)
+            ->withColumn(SpyCustomerTableMap::COL_FIRST_NAME, static::FIELD_FIRST_NAME)
+            ->withColumn(SpyCustomerTableMap::COL_LAST_NAME, static::FIELD_LAST_NAME)
+            ->useSpyShoppingListCompanyUserQuery()
+                ->filterByFkCompanyUser($idCompanyUser)
+            ->endUse()
+            ->find();
+
+        return $this->mapShoppingListEntitiesToCollectionTransfer($shoppingLists);
+    }
+
+    /**
+     * @param int $idCompanyBusinessUnit
+     *
+     * @return ShoppingListCollectionTransfer
+     */
+    public function findCompanyBusinessUnitSharedShoppingLists(int $idCompanyBusinessUnit): ShoppingListCollectionTransfer
+    {
+        $shoppingLists = $this->getFactory()
+            ->createShoppingListQuery()
+            ->addJoin(SpyShoppingListTableMap::COL_CUSTOMER_REFERENCE, SpyCustomerTableMap::COL_CUSTOMER_REFERENCE, Criteria::LEFT_JOIN)
+            ->withColumn(SpyCustomerTableMap::COL_FIRST_NAME, static::FIELD_FIRST_NAME)
+            ->withColumn(SpyCustomerTableMap::COL_LAST_NAME, static::FIELD_LAST_NAME)
+            ->useSpyShoppingListCompanyBusinessUnitQuery()
+                ->filterByFkCompanyBusinessUnit($idCompanyBusinessUnit)
+            ->endUse()
+            ->find();
+
+        return $this->mapShoppingListEntitiesToCollectionTransfer($shoppingLists);
     }
 
     /**
@@ -245,12 +282,15 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     {
         return $this->getFactory()
             ->createShoppingListQuery()
+            ->addJoin(SpyShoppingListTableMap::COL_CUSTOMER_REFERENCE, SpyCustomerTableMap::COL_CUSTOMER_REFERENCE, Criteria::LEFT_JOIN)
+            ->withColumn(SpyCustomerTableMap::COL_FIRST_NAME, static::FIELD_FIRST_NAME)
+            ->withColumn(SpyCustomerTableMap::COL_LAST_NAME, static::FIELD_LAST_NAME)
             ->filterByCustomerReference($customerReference)
             ->orderByIdShoppingList();
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ShoppingList\Persistence\SpyShoppingListItem[] $itemEntities
+     * @param \Propel\Runtime\Collection\Collection|\Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ShoppingList\Persistence\SpyShoppingListItem[] $itemEntities
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
@@ -270,9 +310,17 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
      *
      * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */
-    protected function mapShoppingListEntityToTransfer(SpyShoppingList $shoppingListEntity): ShoppingListTransfer
+    protected function mapShoppingListEntityToTransfer(SpyShoppingList $shoppingListEntity, ShoppingListTransfer $shoppingListTransfer = null): ShoppingListTransfer
     {
-        $shoppingListTransfer = (new ShoppingListTransfer())->fromArray($shoppingListEntity->toArray(), true);
+        if(!$shoppingListTransfer) {
+            $shoppingListTransfer = new ShoppingListTransfer();
+        }
+
+        $shoppingListTransfer = $shoppingListTransfer->fromArray($shoppingListEntity->toArray(), true);
+        if($shoppingListEntity->hasVirtualColumn(static::FIELD_FIRST_NAME) && $shoppingListEntity->hasVirtualColumn(static::FIELD_LAST_NAME)) {
+            $shoppingListTransfer->setOwner($shoppingListEntity->getVirtualColumn(static::FIELD_FIRST_NAME) . ' ' . $shoppingListEntity->getVirtualColumn(static::FIELD_LAST_NAME));
+        }
+
         $numberOfItems = 0;
         foreach ($shoppingListEntity->getSpyShoppingListItems() as $shoppingListItem) {
             $numberOfItems += $shoppingListItem->getQuantity();
@@ -290,5 +338,21 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     protected function mapShoppingListPermissionGroupEntityToTransfer(SpyShoppingListPermissionGroup $shoppingListPermissionGroupEntity): ShoppingListPermissionGroupTransfer
     {
         return (new ShoppingListPermissionGroupTransfer())->fromArray($shoppingListPermissionGroupEntity->toArray(), true);
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ShoppingList\Persistence\SpyShoppingList[] $shoppingLists
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
+     */
+    protected function mapShoppingListEntitiesToCollectionTransfer(ObjectCollection $shoppingLists): ShoppingListCollectionTransfer
+    {
+        $shoppingListCollectionTransfer = new ShoppingListCollectionTransfer();
+
+        foreach ($shoppingLists as $shoppingList) {
+            $shoppingListCollectionTransfer->addShoppingList($this->mapShoppingListEntityToTransfer($shoppingList));
+        }
+
+        return $shoppingListCollectionTransfer;
     }
 }

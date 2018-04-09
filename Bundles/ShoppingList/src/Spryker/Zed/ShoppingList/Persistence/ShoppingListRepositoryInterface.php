@@ -61,7 +61,7 @@ interface ShoppingListRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
-    public function findCustomerShoppingListsItemsByName(ShoppingListCollectionTransfer $shoppingListCollectionTransfer): ShoppingListItemCollectionTransfer;
+    public function findCustomerShoppingListsItemsByIds(ShoppingListCollectionTransfer $shoppingListCollectionTransfer): ShoppingListItemCollectionTransfer;
 
     /**
      * @param int[] $shoppingListItemIds
@@ -89,19 +89,33 @@ interface ShoppingListRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\SpyShoppingListCompanyUserEntityTransfer|null
      */
-    public function getShoppingListCompanyUser(int $idShoppingList, int $idCompanyUser): SpyShoppingListCompanyUserEntityTransfer;
+    public function getShoppingListCompanyUser(int $idShoppingList, int $idCompanyUser): ?SpyShoppingListCompanyUserEntityTransfer;
 
     /**
      * @param int $idCompanyBusinessUnit
      *
      * @return \Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyBusinessUnit[]|\Propel\Runtime\Collection\ObjectCollection
      */
-    public function findCompanyBusinessUnitSharedShoppingLists(int $idCompanyBusinessUnit);
+    public function findCompanyBusinessUnitSharedShoppingListsIds(int $idCompanyBusinessUnit);
 
     /**
      * @param int $idCompanyUser
      *
      * @return mixed|\Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyUser[]|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection
      */
-    public function findCompanyUserSharedShoppingLists(int $idCompanyUser);
+    public function findCompanyUserSharedShoppingListsIds(int $idCompanyUser);
+
+    /**
+     * @param int $idCompanyUser
+     *
+     * @return ShoppingListCollectionTransfer
+     */
+    public function findCompanyUserSharedShoppingLists(int $idCompanyUser): ShoppingListCollectionTransfer;
+
+    /**
+     * @param int $idCompanyBusinessUnit
+     *
+     * @return ShoppingListCollectionTransfer
+     */
+    public function findCompanyBusinessUnitSharedShoppingLists(int $idCompanyBusinessUnit): ShoppingListCollectionTransfer;
 }

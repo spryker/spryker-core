@@ -14,6 +14,7 @@ use Spryker\Zed\ShoppingList\Business\Model\Reader;
 use Spryker\Zed\ShoppingList\Business\Model\ReaderInterface;
 use Spryker\Zed\ShoppingList\Business\Model\Writer;
 use Spryker\Zed\ShoppingList\Business\Model\WriterInterface;
+use Spryker\Zed\ShoppingList\Dependency\Client\ShoppingListToCustomerClientInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToPermissionFacadeInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterface;
 use Spryker\Zed\ShoppingList\ShoppingListDependencyProvider;
@@ -30,7 +31,11 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
      */
     public function createReader(): ReaderInterface
     {
-        return new Reader($this->getRepository(), $this->getProductFacade(), $this->getItemExpanderPlugins());
+        return new Reader(
+            $this->getRepository(),
+            $this->getProductFacade(),
+            $this->getItemExpanderPlugins()
+        );
     }
 
     /**

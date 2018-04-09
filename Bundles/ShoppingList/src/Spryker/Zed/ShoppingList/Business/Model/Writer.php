@@ -15,6 +15,8 @@ use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListShareRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListShareResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
+use Generated\Shared\Transfer\SpyShoppingListCompanyBusinessUnitEntityTransfer;
+use Generated\Shared\Transfer\SpyShoppingListCompanyUserEntityTransfer;
 use Generated\Shared\Transfer\SpyShoppingListEntityTransfer;
 use Generated\Shared\Transfer\SpyShoppingListItemEntityTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
@@ -225,6 +227,11 @@ class Writer implements WriterInterface
             return $shoppingListShareResponseTransfer;
         }
 
+        $shoppingListCompanyBusinessUnitEntityTransfer = (new SpyShoppingListCompanyBusinessUnitEntityTransfer())
+            ->setFkCompanyBusinessUnit($shoppingListShareRequestTransfer->getIdCompanyBusinessUnit())
+            ->setFkShoppingList($shoppingListTransfer->getIdShoppingList())
+            ->setFkShoppingListPermissionGroup($shoppingListShareRequestTransfer->getIdShoppingListPermissionGroup());
+
         $this->shoppingListEntityManager->saveShoppingListCompanyBusinessUnitEntity($shoppingListCompanyBusinessUnitEntityTransfer);
         $shoppingListShareResponseTransfer = $shoppingListShareResponseTransfer->setIsSuccess(true);
 
@@ -261,6 +268,11 @@ class Writer implements WriterInterface
 
             return $shoppingListShareResponseTransfer;
         }
+
+        $shoppingListCompanyUserEntityTransfer = (new SpyShoppingListCompanyUserEntityTransfer())
+            ->setFkCompanyUser($shoppingListShareRequestTransfer->getIdCompanyUser())
+            ->setFkShoppingList($shoppingListTransfer->getIdShoppingList())
+            ->setFkShoppingListPermissionGroup($shoppingListShareRequestTransfer->getIdShoppingListPermissionGroup());
 
         $this->shoppingListEntityManager->saveShoppingListCompanyUserEntity($shoppingListCompanyUserEntityTransfer);
         $shoppingListShareResponseTransfer = $shoppingListShareResponseTransfer->setIsSuccess(true);

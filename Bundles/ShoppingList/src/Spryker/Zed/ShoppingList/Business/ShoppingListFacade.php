@@ -180,11 +180,11 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
-    public function getCustomerShoppingListsItemsCollection(ShoppingListCollectionTransfer $shoppingListCollectionTransfer): ShoppingListItemCollectionTransfer
+    public function getShoppingListItemCollection(ShoppingListCollectionTransfer $shoppingListCollectionTransfer): ShoppingListItemCollectionTransfer
     {
         return $this->getFactory()
             ->createReader()
-            ->getCustomerShoppingListsItemsCollection($shoppingListCollectionTransfer);
+            ->getShoppingListItemCollection($shoppingListCollectionTransfer);
     }
 
     /**

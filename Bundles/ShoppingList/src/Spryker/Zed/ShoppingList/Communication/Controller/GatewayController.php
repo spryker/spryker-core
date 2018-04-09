@@ -124,7 +124,7 @@ class GatewayController extends AbstractGatewayController
      */
     public function getShoppingListItemCollectionAction(ShoppingListCollectionTransfer $shoppingListCollectionTransfer): ShoppingListItemCollectionTransfer
     {
-        return $this->getFacade()->getCustomerShoppingListsItemsCollection($shoppingListCollectionTransfer);
+        return $this->getFacade()->getShoppingListItemCollection($shoppingListCollectionTransfer);
     }
 
     /**
