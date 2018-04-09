@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\OfferResponseTransfer;
 use Generated\Shared\Transfer\OfferTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Client\Session\SessionClientInterface;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Cart\Business\CartFacadeInterface;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
@@ -24,6 +25,9 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class CreateController extends AbstractController
 {
+    public const PARAM_KEY_INITIAL_OFFER = 'key-offer';
+    public const PARAM_SUBMIT_PERSIST = 'submit-persist';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -31,7 +35,9 @@ class CreateController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $offerTransfer = new OfferTransfer();
+        $isSubmitPersist = $request->request->get(static::PARAM_SUBMIT_PERSIST);
+        $offerTransfer = $this->getOfferTransfer($request);
+
 
         /** @var \Spryker\Zed\Cart\Business\CartFacadeInterface $cartFacade */
         $cartFacade = Locator::getInstance()->cart()->facade();
@@ -87,12 +93,14 @@ class CreateController extends AbstractController
             $form = $this->getFactory()->getOfferForm($offerTransfer);
             //save offer and a quote
 
-            $offerResponseTransfer = $this->getFactory()
+            if ($isSubmitPersist) {
+                $offerResponseTransfer = $this->getFactory()
                     ->getOfferFacade()
                     ->createOffer($offerTransfer);
 
-            if ($offerResponseTransfer->getIsSuccessful()) {
-                return $this->getSuccessfulRedirect($offerResponseTransfer);
+                if ($offerResponseTransfer->getIsSuccessful()) {
+                    return $this->getSuccessfulRedirect($offerResponseTransfer);
+                }
             }
         }
 
@@ -100,6 +108,28 @@ class CreateController extends AbstractController
             'offer' => $offerTransfer,
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return OfferTransfer
+     */
+    protected function getOfferTransfer(Request $request)
+    {
+        $keyOffer = $request->get(static::PARAM_KEY_INITIAL_OFFER);
+
+        /** @var SessionClientInterface $sessionClient */
+        $sessionClient = Locator::getInstance()->session()->client();
+        $offerJson = $sessionClient->get($keyOffer);
+
+        $offerTransfer = new OfferTransfer();
+
+        if ($offerJson !== null) {
+            $offerTransfer->fromArray(\json_decode($offerJson, true));
+        }
+
+        return $offerTransfer;
     }
 
     /**

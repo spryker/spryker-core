@@ -57,6 +57,15 @@
 
             {{ form_widget(form) }}
 
+            {% if offer.quote.cartRuleDiscounts is defined %}
+                {% include '@OfferGui/Create/_partials/cart-rule-discounts.twig' with {'quote': offer.quote} %}
+            {% endif %}
+
+            {% if offer.quote.totals is defined %}
+                {% include '@OfferGui/Create/_partials/totals.twig' with {'quote': offer.quote} %}
+            {% endif %}
+
+            <input type="submit" class="btn btn-primary safe-submit" name="submit-reload" value="{{ 'Reload' | trans }}" />
             <input type="submit" class="btn btn-primary safe-submit" name="submit-persist" value="{{ 'Create' | trans }}" />
             {{ form_end(form) }}
 

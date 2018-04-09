@@ -84,11 +84,10 @@ class OfferMapper implements OfferMapperInterface
      */
     protected function encodeQuote(OfferTransfer $offerTransfer, SpyOfferEntityTransfer $offerEntityTransfer)
     {
-        $offerEntityTransfer->setQuoteData(
-            $this->utilEncodingService->encodeJson(
-                $this->getQuoteArray($offerTransfer->getQuote())
-            )
-        );
+        $quoteArray = $this->getQuoteArray($offerTransfer->getQuote());
+        $quoteJson = $this->utilEncodingService->encodeJson($quoteArray);
+
+        $offerEntityTransfer->setQuoteData($quoteJson);
 
         return $offerEntityTransfer;
     }
@@ -98,12 +97,10 @@ class OfferMapper implements OfferMapperInterface
      *
      * @return array
      */
-    public function getQuoteArray(QuoteTransfer $quoteTransfer): array
+    protected function getQuoteArray(QuoteTransfer $quoteTransfer): array
     {
-        $quoteArray = array_intersect_key(
-            $quoteTransfer->toArray(),
-            array_flip($this->getFieldsToPersist())
-        );
+        $quoteArray = $quoteTransfer->toArray();
+        $quoteArray = array_intersect_key($quoteArray, array_flip($this->getQuoteFieldsToPersist()));
 
         return $quoteArray;
     }
@@ -111,7 +108,7 @@ class OfferMapper implements OfferMapperInterface
     /**
      * @return array
      */
-    protected function getFieldsToPersist()
+    protected function getQuoteFieldsToPersist()
     {
         $fieldsToPersist = [
             'store',

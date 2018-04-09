@@ -17,7 +17,6 @@ use Spryker\Zed\Cart\Business\CartFacadeInterface;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\Messenger\Business\MessengerFacadeInterface;
-use Spryker\Zed\OfferGui\Communication\Form\Offer\CreateOfferType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -43,6 +42,7 @@ class CopyController extends AbstractController
             ->getOfferFacade()
             ->getOfferById($offerTransfer);
 
+        $offerTransfer->setIdOffer(null);
         $offerTransfer->setCustomerReference(null);
         $offerTransfer->setCustomer(new CustomerTransfer());
 
@@ -54,8 +54,8 @@ class CopyController extends AbstractController
         $sessionClient->set($offerKey, $offerJson);
 
         $redirectUrl = Url::generate(
-            '/offer-gui/edit',
-            [EditController::PARAM_KEY_INITIAL_OFFER => $offerKey]
+            '/offer-gui/create',
+            [CreateController::PARAM_KEY_INITIAL_OFFER => $offerKey]
         )->build();
 
         return $this->redirectResponse($redirectUrl);

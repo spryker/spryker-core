@@ -10,6 +10,8 @@ namespace Spryker\Zed\Offer\Communication\Plugin;
 use ArrayObject;
 use Generated\Shared\Transfer\OfferTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\Kernel\Locator;
+use Spryker\Zed\Messenger\Business\MessengerFacadeInterface;
 use Spryker\Zed\OfferExtension\Dependency\Plugin\OfferHydratorPluginInterface;
 
 /**
@@ -26,6 +28,8 @@ class OfferSavingHydratorPlugin extends AbstractPlugin implements OfferHydratorP
     public function hydrateOffer(OfferTransfer $offerTransfer): OfferTransfer
     {
         $cartFacade = $this->getFactory()->getCartFacade();
+        /** @var MessengerFacadeInterface $messengerFacade */
+        $messengerFacade = Locator::getInstance()->messenger()->facade();
 
         $quoteTransferClone = clone $offerTransfer->getQuote();
         $quoteTransferClone->setItems(new ArrayObject());
@@ -41,10 +45,13 @@ class OfferSavingHydratorPlugin extends AbstractPlugin implements OfferHydratorP
         $reloadedItems = (array)$quoteTransfer->getItems();
 
         $amount = count($originalItems);
+        //todo: if an item is has not been added, will be a mistake
         for ($i = 0; $i < $amount; $i++) {
             //TODO: change to unitPrice probably, fix item price editing
             $originalItems[$i]->setSaving($reloadedItems[$i]->getUnitGrossPrice() - $originalItems[$i]->getUnitGrossPrice());
         }
+
+        $messengerFacade->getStoredMessages();
 
         return $offerTransfer;
     }

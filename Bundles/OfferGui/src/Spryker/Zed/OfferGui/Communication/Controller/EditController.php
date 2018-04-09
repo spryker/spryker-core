@@ -19,6 +19,7 @@ use Spryker\Client\Session\SessionClientInterface;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\Kernel\Locator;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  *
@@ -27,7 +28,6 @@ use Symfony\Component\HttpFoundation\Request;
 class EditController extends AbstractController
 {
     public const PARAM_ID_OFFER = 'id-offer';
-    public const PARAM_KEY_INITIAL_OFFER = 'key-offer';
     public const PARAM_SUBMIT_RELOAD = 'submit-reload';
     public const PARAM_SUBMIT_PERSIST = 'submit-persist';
 
@@ -113,30 +113,10 @@ class EditController extends AbstractController
      *
      * @return OfferTransfer
      */
-    protected function getOfferTransferForCreation(Request $request)
+    protected function getOfferTransfer(Request $request)
     {
-        $keyOffer = $request->get(static::PARAM_KEY_INITIAL_OFFER);
+        $idOffer = $request->get(static::PARAM_ID_OFFER);
 
-        /** @var SessionClientInterface $sessionClient */
-        $sessionClient = Locator::getInstance()->session()->client();
-        $offerJson = $sessionClient->get($keyOffer);
-
-        $offerTransfer = new OfferTransfer();
-
-        if ($offerJson !== null) {
-            $offerTransfer->fromArray(\json_decode($offerJson, true));
-        }
-
-        return $offerTransfer;
-    }
-
-    /**
-     * @param int $idOffer
-     *
-     * @return OfferTransfer
-     */
-    protected function getOfferTransferForEdit(int $idOffer)
-    {
         $offerTransfer = new OfferTransfer();
 
         $offerTransfer->setIdOffer($idOffer);
@@ -145,21 +125,5 @@ class EditController extends AbstractController
             ->getOfferById($offerTransfer);
 
         return $offerTransfer;
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return OfferTransfer
-     */
-    protected function getOfferTransfer(Request $request)
-    {
-        $idOffer = $request->get(static::PARAM_ID_OFFER);
-
-        if ($idOffer !== null) {
-           return $this->getOfferTransferForEdit((int)$idOffer);
-        }
-
-        return $this->getOfferTransferForCreation($request);
     }
 }

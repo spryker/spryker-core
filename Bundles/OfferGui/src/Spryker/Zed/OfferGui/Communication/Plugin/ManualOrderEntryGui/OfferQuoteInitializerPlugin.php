@@ -25,6 +25,11 @@ class OfferQuoteInitializerPlugin implements QuoteInitializerPluginInterface
         $offerFacade = Locator::getInstance()->offer()->facade();
 
         $idOffer = $request->get(static::PARAM_ID_OFFER);
+
+        if (!$idOffer) {
+            return null;
+        }
+
         $offerTransfer = new OfferTransfer();
         $offerTransfer->setIdOffer($idOffer);
         $offerTransfer = $offerFacade->getOfferById($offerTransfer);
