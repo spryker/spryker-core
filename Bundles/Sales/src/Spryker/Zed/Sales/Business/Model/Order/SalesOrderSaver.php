@@ -20,8 +20,6 @@ use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 use Spryker\Zed\Sales\Business\Model\OrderItem\SalesOrderItemMapperInterface;
-use Spryker\Zed\Sales\Business\Model\Order\Mapper\OrderMapperInterface;
-use Spryker\Zed\Sales\Business\Model\Order\Plugin\SalesOrderPluginExecutorInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Spryker\Zed\Sales\SalesConfig;
@@ -71,17 +69,6 @@ class SalesOrderSaver implements SalesOrderSaverInterface
     protected $salesOrderItemMapper;
 
     /**
-     * @var \Spryker\Zed\Sales\Business\Model\Order\Mapper\OrderMapperInterface
-     */
-    protected $orderMapper;
-
-    /**
-     * todo: moved as salesOrderSaverPluginExecutor
-     * @var \Spryker\Zed\Sales\Business\Model\Order\Plugin\SalesOrderPluginExecutorInterface
-     */
-    protected $salesOrderPluginExecutor;
-
-    /**
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface $countryFacade
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface $omsFacade
      * @param \Spryker\Zed\Sales\Business\Model\Order\OrderReferenceGeneratorInterface $orderReferenceGenerator
@@ -90,7 +77,6 @@ class SalesOrderSaver implements SalesOrderSaverInterface
      * @param \Spryker\Shared\Kernel\Store $store
      * @param \Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverPluginExecutorInterface $salesOrderSaverPluginExecutor
      * @param \Spryker\Zed\Sales\Business\Model\OrderItem\SalesOrderItemMapperInterface $salesOrderItemMapper
-     * @param \Spryker\Zed\Sales\Business\Model\Order\Mapper\OrderMapperInterface $orderConverter
      */
     public function __construct(
         SalesToCountryInterface $countryFacade,
@@ -100,8 +86,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
         LocaleQueryContainerInterface $localeQueryContainer,
         Store $store,
         SalesOrderSaverPluginExecutorInterface $salesOrderSaverPluginExecutor,
-        SalesOrderItemMapperInterface $salesOrderItemMapper,
-        OrderMapperInterface $orderConverter
+        SalesOrderItemMapperInterface $salesOrderItemMapper
     ) {
         $this->countryFacade = $countryFacade;
         $this->omsFacade = $omsFacade;
@@ -111,7 +96,6 @@ class SalesOrderSaver implements SalesOrderSaverInterface
         $this->store = $store;
         $this->salesOrderSaverPluginExecutor = $salesOrderSaverPluginExecutor;
         $this->salesOrderItemMapper = $salesOrderItemMapper;
-        $this->orderMapper = $orderConverter;
     }
 
     /**
@@ -178,9 +162,6 @@ class SalesOrderSaver implements SalesOrderSaverInterface
         $this->hydrateSalesOrderEntity($quoteTransfer, $salesOrderEntity);
         $this->hydrateAddresses($quoteTransfer, $salesOrderEntity);
         $this->addLocale($salesOrderEntity);
-
-        $salesOrderEntity = $this->executeSalesOrderPreSavePlugins($quoteTransfer, $salesOrderEntity);
-
         $salesOrderEntity->save();
 
         return $salesOrderEntity;
@@ -470,20 +451,5 @@ class SalesOrderSaver implements SalesOrderSaverInterface
         $spySalesOrderItemEntity = $this->salesOrderItemMapper->mapSalesOrderItemEntityToSpySalesOrderItemEntity($salesOrderItemEntity);
 
         return $spySalesOrderItemEntity;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
-     */
-    protected function executeSalesOrderPreSavePlugins(QuoteTransfer $quoteTransfer, SpySalesOrder $salesOrderEntity): SpySalesOrder
-    {
-        $salesOrderEntityTransfer = $this->orderMapper->mapOrderToEntityTransfer($salesOrderEntity);
-        $salesOrderEntityTransfer = $this->salesOrderSaverPluginExecutor->executeOrderPreSavePlugins($quoteTransfer, $salesOrderEntityTransfer);
-        $salesOrderEntity = $this->orderMapper->mapEntityTransferToOrder($salesOrderEntityTransfer);
-
-        return $salesOrderEntity;
     }
 }
