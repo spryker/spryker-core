@@ -72,10 +72,10 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
      *
      * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */
-    public function findCustomerShoppingListByName(ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer
+    public function findShoppingListById(ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer
     {
-        $shoppingListEntity = $this->createCustomerShoppingListQuery($shoppingListTransfer->getCustomerReference())
-            ->filterByName($shoppingListTransfer->getName())
+        $shoppingListEntity = $this->getFactory()->createShoppingListQuery()
+            ->filterByIdShoppingList($shoppingListTransfer->getIdShoppingList())
             ->findOne();
 
         return $this->mapShoppingListEntityToTransfer($shoppingListEntity, $shoppingListTransfer);
@@ -112,18 +112,12 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListCollectionTransfer $shoppingListCollectionTransfer
+     * @param int[] $shoppingListIds
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
-    public function findCustomerShoppingListsItemsByIds(ShoppingListCollectionTransfer $shoppingListCollectionTransfer): ShoppingListItemCollectionTransfer
+    public function findCustomerShoppingListsItemsByIds(array $shoppingListIds): ShoppingListItemCollectionTransfer
     {
-        $shoppingListIds = [];
-
-        foreach ($shoppingListCollectionTransfer->getShoppingLists() as $shoppingList) {
-            $shoppingListIds[] = $shoppingList->getIdShoppingList();
-        }
-
         $shoppingListsItems = $this->getFactory()
             ->createShoppingListItemQuery()
             ->useSpyShoppingListQuery()
@@ -236,7 +230,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     /**
      * @param int $idCompanyUser
      *
-     * @return ShoppingListCollectionTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
      */
     public function findCompanyUserSharedShoppingLists(int $idCompanyUser): ShoppingListCollectionTransfer
     {
@@ -256,7 +250,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     /**
      * @param int $idCompanyBusinessUnit
      *
-     * @return ShoppingListCollectionTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
      */
     public function findCompanyBusinessUnitSharedShoppingLists(int $idCompanyBusinessUnit): ShoppingListCollectionTransfer
     {
@@ -307,17 +301,18 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
 
     /**
      * @param \Orm\Zed\ShoppingList\Persistence\SpyShoppingList $shoppingListEntity
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer|null $shoppingListTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */
     protected function mapShoppingListEntityToTransfer(SpyShoppingList $shoppingListEntity, ShoppingListTransfer $shoppingListTransfer = null): ShoppingListTransfer
     {
-        if(!$shoppingListTransfer) {
+        if (!$shoppingListTransfer) {
             $shoppingListTransfer = new ShoppingListTransfer();
         }
 
         $shoppingListTransfer = $shoppingListTransfer->fromArray($shoppingListEntity->toArray(), true);
-        if($shoppingListEntity->hasVirtualColumn(static::FIELD_FIRST_NAME) && $shoppingListEntity->hasVirtualColumn(static::FIELD_LAST_NAME)) {
+        if ($shoppingListEntity->hasVirtualColumn(static::FIELD_FIRST_NAME) && $shoppingListEntity->hasVirtualColumn(static::FIELD_LAST_NAME)) {
             $shoppingListTransfer->setOwner($shoppingListEntity->getVirtualColumn(static::FIELD_FIRST_NAME) . ' ' . $shoppingListEntity->getVirtualColumn(static::FIELD_LAST_NAME));
         }
 

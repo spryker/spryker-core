@@ -15,6 +15,8 @@ use Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToCustomerClientIn
 use Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToPriceProductClientInterface;
 use Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToProductClientInterface;
 use Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToZedRequestClientInterface;
+use Spryker\Client\ShoppingList\PermissionUpdater\PermissionUpdater;
+use Spryker\Client\ShoppingList\PermissionUpdater\PermissionUpdaterInterface;
 use Spryker\Client\ShoppingList\Product\ProductStorage;
 use Spryker\Client\ShoppingList\Product\ProductStorageInterface;
 use Spryker\Client\ShoppingList\Zed\ShoppingListStub;
@@ -36,7 +38,7 @@ class ShoppingListFactory extends AbstractFactory
     public function createProductStorage(): ProductStorageInterface
     {
         return new ProductStorage(
-            $this->createProductClient(),
+            $this->getProductClient(),
             $this->getPriceProductClient()
         );
     }
@@ -44,17 +46,9 @@ class ShoppingListFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToProductClientInterface
      */
-    public function createProductClient(): ShoppingListToProductClientInterface
+    public function getProductClient(): ShoppingListToProductClientInterface
     {
         return $this->getProvidedDependency(ShoppingListDependencyProvider::CLIENT_PRODUCT);
-    }
-
-    /**
-     * @return \Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToCartClientInterface
-     */
-    public function createCartClient(): ShoppingListToCartClientInterface
-    {
-        return $this->getProvidedDependency(ShoppingListDependencyProvider::CLIENT_CART);
     }
 
     /**
@@ -98,5 +92,13 @@ class ShoppingListFactory extends AbstractFactory
     public function getCartClient(): ShoppingListToCartClientInterface
     {
         return $this->getProvidedDependency(ShoppingListDependencyProvider::CLIENT_CART);
+    }
+
+    /**
+     * @return \Spryker\Client\ShoppingList\PermissionUpdater\PermissionUpdaterInterface
+     */
+    public function createPermissionUpdater(): PermissionUpdaterInterface
+    {
+        return new PermissionUpdater($this->getCustomerClient());
     }
 }

@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ShoppingList\Business\Model;
 
-use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
@@ -60,10 +59,9 @@ interface ReaderInterface
     public function getShoppingListPermissionGroup(): ShoppingListPermissionGroupTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
-     * @param string $customerReference
+     * @param int $idCompanyUser
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
-    public function findCompanyUserPermissions(CompanyUserTransfer $companyUserTransfer, string $customerReference): PermissionCollectionTransfer;
+    public function findCompanyUserPermissions(int $idCompanyUser): PermissionCollectionTransfer;
 }

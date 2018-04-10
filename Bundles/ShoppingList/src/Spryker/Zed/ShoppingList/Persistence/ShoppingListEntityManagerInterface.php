@@ -87,4 +87,18 @@ interface ShoppingListEntityManagerInterface
      * @return \Generated\Shared\Transfer\SpyShoppingListCompanyUserEntityTransfer
      */
     public function saveShoppingListCompanyUserEntity(SpyShoppingListCompanyUserEntityTransfer $shoppingListCompanyUserEntityTransfer): SpyShoppingListCompanyUserEntityTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyShoppingListEntityTransfer $shoppingListEntityTransfer
+     *
+     * @return void
+     */
+    public function deleteShoppingListCompanyUsers(SpyShoppingListEntityTransfer $shoppingListEntityTransfer): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyShoppingListEntityTransfer $shoppingListEntityTransfer
+     *
+     * @return void
+     */
+    public function deleteShoppingListCompanyBusinessUnits(SpyShoppingListEntityTransfer $shoppingListEntityTransfer): void;
 }

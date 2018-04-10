@@ -161,4 +161,30 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
     {
         return $this->save($shoppingListCompanyUserEntityTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyShoppingListEntityTransfer $shoppingListEntityTransfer
+     *
+     * @return void
+     */
+    public function deleteShoppingListCompanyUsers(SpyShoppingListEntityTransfer $shoppingListEntityTransfer): void
+    {
+        $this->getFactory()
+            ->createShoppingListCompanyUserQuery()
+            ->filterByFkShoppingList($shoppingListEntityTransfer->getIdShoppingList())
+            ->delete();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyShoppingListEntityTransfer $shoppingListEntityTransfer
+     *
+     * @return void
+     */
+    public function deleteShoppingListCompanyBusinessUnits(SpyShoppingListEntityTransfer $shoppingListEntityTransfer): void
+    {
+        $this->getFactory()
+            ->createShoppingListCompanyBusinessUnitQuery()
+            ->filterByFkShoppingList($shoppingListEntityTransfer->getIdShoppingList())
+            ->delete();
+    }
 }

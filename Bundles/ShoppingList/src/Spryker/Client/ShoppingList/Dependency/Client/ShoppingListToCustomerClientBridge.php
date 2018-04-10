@@ -25,6 +25,26 @@ class ShoppingListToCustomerClientBridge implements ShoppingListToCustomerClient
     }
 
     /**
+     * @param int $idCustomer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function getCustomerById($idCustomer): CustomerTransfer
+    {
+        return $this->customerClient->getCustomerById($idCustomer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function setCustomer(CustomerTransfer $customerTransfer): CustomerTransfer
+    {
+        return $this->customerClient->setCustomer($customerTransfer);
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
     public function getCustomer(): ?CustomerTransfer

@@ -7,10 +7,11 @@
 
 namespace Spryker\Client\ShoppingList;
 
-use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShoppingListAddToCartRequestCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
@@ -38,7 +39,11 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
      */
     public function createShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
     {
-        return $this->getZedStub()->createShoppingList($shoppingListTransfer);
+        $shoppingListResponseTransfer = $this->getZedStub()->createShoppingList($shoppingListTransfer);
+
+        $this->updatePermissions();
+
+        return $shoppingListResponseTransfer;
     }
 
     /**
@@ -62,11 +67,15 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
      *
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
      */
-    public function removeShoppingList(ShoppingListTransfer $shoppingListTransfer): void
+    public function removeShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
     {
-        $this->getZedStub()->removeShoppingList($shoppingListTransfer);
+        $shoppingListResponseTransfer = $this->getZedStub()->removeShoppingList($shoppingListTransfer);
+
+        $this->updatePermissions();
+
+        return $shoppingListResponseTransfer;
     }
 
     /**
@@ -90,25 +99,11 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
-    public function removeItemById(ShoppingListItemTransfer $shoppingListItemTransfer): void
+    public function removeItemById(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemResponseTransfer
     {
-        $this->getZedStub()->removeItemById($shoppingListItemTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
-     *
-     * @return void
-     */
-    public function removeItemCollection(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): void
-    {
-        $this->getZedStub()->removeItemCollection($shoppingListItemCollectionTransfer);
+        return $this->getZedStub()->removeItemById($shoppingListItemTransfer);
     }
 
     /**
@@ -232,13 +227,13 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer $shoppingListFromCartRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */
-    public function createShoppingListFromQuote(QuoteTransfer $quoteTransfer): ShoppingListTransfer
+    public function createShoppingListFromQuote(ShoppingListFromCartRequestTransfer $shoppingListFromCartRequestTransfer): ShoppingListTransfer
     {
-        return $this->getZedStub()->createShoppingListFromQuote($quoteTransfer);
+        return $this->getZedStub()->createShoppingListFromQuote($shoppingListFromCartRequestTransfer);
     }
 
     /**
@@ -277,5 +272,13 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
     protected function getZedStub(): ShoppingListStubInterface
     {
         return $this->getFactory()->createShoppingListStub();
+    }
+
+    /**
+     * @return void
+     */
+    protected function updatePermissions(): void
+    {
+        $this->getFactory()->createPermissionUpdater()->updateCompanyUserPermissions();
     }
 }

@@ -8,9 +8,10 @@
 namespace Spryker\Client\ShoppingList\Zed;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
@@ -59,11 +60,11 @@ class ShoppingListStub implements ShoppingListStubInterface
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
-    public function removeShoppingList(ShoppingListTransfer $shoppingListTransfer): void
+    public function removeShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
     {
-        $this->zedRequestClient->call('/shopping-list/gateway/remove-shopping-list', $shoppingListTransfer);
+        return $this->zedRequestClient->call('/shopping-list/gateway/remove-shopping-list', $shoppingListTransfer);
     }
 
     /**
@@ -79,21 +80,11 @@ class ShoppingListStub implements ShoppingListStubInterface
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
-    public function removeItemById(ShoppingListItemTransfer $shoppingListItemTransfer): void
+    public function removeItemById(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemResponseTransfer
     {
-        $this->zedRequestClient->call('/shopping-list/gateway/remove-item-by-id', $shoppingListItemTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
-     *
-     * @return void
-     */
-    public function removeItemCollection(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): void
-    {
-        $this->zedRequestClient->call('/shopping-list/gateway/remove-item-collection', $shoppingListItemCollectionTransfer);
+        return $this->zedRequestClient->call('/shopping-list/gateway/remove-item-by-id', $shoppingListItemTransfer);
     }
 
     /**
@@ -157,13 +148,13 @@ class ShoppingListStub implements ShoppingListStubInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer $shoppingListFromCartRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
-    public function createShoppingListFromQuote(QuoteTransfer $quoteTransfer): ShoppingListTransfer
+    public function createShoppingListFromQuote(ShoppingListFromCartRequestTransfer $shoppingListFromCartRequestTransfer): ShoppingListTransfer
     {
-        return $this->zedRequestClient->call('/shopping-list/gateway/create-shopping-list-from-quote', $quoteTransfer);
+        return $this->zedRequestClient->call('/shopping-list/gateway/create-shopping-list-from-quote', $shoppingListFromCartRequestTransfer);
     }
 
     /**

@@ -7,11 +7,10 @@
 
 namespace Spryker\Zed\ShoppingList\Business;
 
-use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
@@ -105,22 +104,6 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
     public function removeItemById(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemResponseTransfer
     {
         return $this->getFactory()->createWriter()->removeItemById($shoppingListItemTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
-     */
-    public function removeItemCollection(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ShoppingListItemResponseTransfer
-    {
-        return $this->getFactory()
-            ->createWriter()
-            ->removeItemCollection($shoppingListItemCollectionTransfer);
     }
 
     /**
@@ -222,13 +205,13 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer $shoppingListFromCartRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */
-    public function createShoppingListFromQuote(QuoteTransfer $quoteTransfer): ShoppingListTransfer
+    public function createShoppingListFromQuote(ShoppingListFromCartRequestTransfer $shoppingListFromCartRequestTransfer): ShoppingListTransfer
     {
-        return $this->getFactory()->createWriter()->createShoppingListFromQuote($quoteTransfer);
+        return $this->getFactory()->createWriter()->createShoppingListFromQuote($shoppingListFromCartRequestTransfer);
     }
 
     /**
@@ -286,13 +269,12 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
-     * @param string $customerReference
+     * @param int $idCompanyUser
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
-    public function findCompanyUserPermissions(CompanyUserTransfer $companyUserTransfer, string $customerReference): PermissionCollectionTransfer
+    public function findCompanyUserPermissions(int $idCompanyUser): PermissionCollectionTransfer
     {
-        return $this->getFactory()->createReader()->findCompanyUserPermissions($companyUserTransfer, $customerReference);
+        return $this->getFactory()->createReader()->findCompanyUserPermissions($idCompanyUser);
     }
 }

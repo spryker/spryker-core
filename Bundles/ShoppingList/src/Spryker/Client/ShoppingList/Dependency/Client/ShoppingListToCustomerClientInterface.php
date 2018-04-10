@@ -12,6 +12,20 @@ use Generated\Shared\Transfer\CustomerTransfer;
 interface ShoppingListToCustomerClientInterface
 {
     /**
+     * @param int $idCustomer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function getCustomerById($idCustomer): CustomerTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function setCustomer(CustomerTransfer $customerTransfer): CustomerTransfer;
+
+    /**
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
     public function getCustomer(): ?CustomerTransfer;

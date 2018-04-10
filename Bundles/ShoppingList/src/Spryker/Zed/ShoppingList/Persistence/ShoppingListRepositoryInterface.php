@@ -54,14 +54,14 @@ interface ShoppingListRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */
-    public function findCustomerShoppingListByName(ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer;
+    public function findShoppingListById(ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListCollectionTransfer $shoppingListCollectionTransfer
+     * @param int[] $shoppingListIds
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
-    public function findCustomerShoppingListsItemsByIds(ShoppingListCollectionTransfer $shoppingListCollectionTransfer): ShoppingListItemCollectionTransfer;
+    public function findCustomerShoppingListsItemsByIds(array $shoppingListIds): ShoppingListItemCollectionTransfer;
 
     /**
      * @param int[] $shoppingListItemIds
@@ -108,14 +108,14 @@ interface ShoppingListRepositoryInterface
     /**
      * @param int $idCompanyUser
      *
-     * @return ShoppingListCollectionTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
      */
     public function findCompanyUserSharedShoppingLists(int $idCompanyUser): ShoppingListCollectionTransfer;
 
     /**
      * @param int $idCompanyBusinessUnit
      *
-     * @return ShoppingListCollectionTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
      */
     public function findCompanyBusinessUnitSharedShoppingLists(int $idCompanyBusinessUnit): ShoppingListCollectionTransfer;
 }

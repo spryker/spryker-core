@@ -27,6 +27,7 @@
         <property name="idProduct" type="int" />
         <property name="shoppingListName" type="string" />
         <property name="product" type="StorageProduct" />
+        <property name="requesterId" type="int" />
     </transfer>
 
     <transfer name="ShoppingListItemCollection">
@@ -84,21 +85,28 @@
     </transfer>
 
     <transfer name="ShoppingListShareRequest">
-        <property name="shoppingListName" type="string" />
+        <property name="idShoppingList" type="int" />
         <property name="idCompanyUser" type="int" />
         <property name="idCompanyBusinessUnit" type="int" />
         <property name="idShoppingListPermissionGroup" type="int" />
-        <property name="customerReference" type="string" />
+        <property name="requesterId" type="string" />
     </transfer>
 
     <transfer name="ShoppingListShareResponse">
         <property name="isSuccess" type="bool" />
+        <property name="error" type="string" />
     </transfer>
 
     <transfer name="ShoppingListPermissionGroup">
         <property name="idShoppingListPermissionGroup" type="int" />
         <property name="name" type="string" />
         <property name="permissions" singular="permission" type="Permission[]" />
+    </transfer>
+
+    <transfer name="ShoppingListFromCartRequest">
+        <property name="shoppingListName" type="string" />
+        <property name="idQuote" type="int" />
+        <property name="customer" type="Customer" />
     </transfer>
 
 </transfers>

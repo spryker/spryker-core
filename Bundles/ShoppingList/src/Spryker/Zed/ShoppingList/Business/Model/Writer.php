@@ -7,8 +7,7 @@
 
 namespace Spryker\Zed\ShoppingList\Business\Model;
 
-use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
@@ -19,7 +18,9 @@ use Generated\Shared\Transfer\SpyShoppingListCompanyBusinessUnitEntityTransfer;
 use Generated\Shared\Transfer\SpyShoppingListCompanyUserEntityTransfer;
 use Generated\Shared\Transfer\SpyShoppingListEntityTransfer;
 use Generated\Shared\Transfer\SpyShoppingListItemEntityTransfer;
+use Spryker\Zed\Kernel\PermissionAwareTrait;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
+use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToPersistentCartFacadeInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterface;
 use Spryker\Zed\ShoppingList\Persistence\ShoppingListEntityManagerInterface;
 use Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface;
@@ -29,7 +30,13 @@ class Writer implements WriterInterface
 {
     use TransactionTrait;
 
-    protected const DUPLICATE_NAME_SHOPPING_LIST = 'A shopping list with the same name already exists.';
+    use PermissionAwareTrait;
+
+    protected const DUPLICATE_NAME_SHOPPING_LIST = 'customer.account.shopping_list.error.duplicate_name';
+
+    protected const CANNOT_UPDATE_SHOPPING_LIST = 'customer.account.shopping_list.error.cannot_update';
+
+    protected const CANNOT_RESHARE_SHOPPING_LIST = 'customer.account.shopping_list.share.share_shopping_list_fail';
 
     /**
      * @var \Spryker\Zed\ShoppingList\Persistence\ShoppingListEntityManagerInterface
@@ -52,17 +59,24 @@ class Writer implements WriterInterface
     protected $shoppingListConfig;
 
     /**
+     * @var \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToPersistentCartFacadeInterface
+     */
+    protected $persistentCartFacade;
+
+    /**
      * @param \Spryker\Zed\ShoppingList\Persistence\ShoppingListEntityManagerInterface $shoppingListEntityManager
+     * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface $shoppingListRepository
      * @param \Spryker\Zed\ShoppingList\ShoppingListConfig $shoppingListConfig
-     * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterface $productFacade
+     * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToPersistentCartFacadeInterface $persistentCartFacade
      */
-    public function __construct(ShoppingListEntityManagerInterface $shoppingListEntityManager, ShoppingListRepositoryInterface $shoppingListRepository, ShoppingListConfig $shoppingListConfig, ShoppingListToProductFacadeInterface $productFacade)
+    public function __construct(ShoppingListEntityManagerInterface $shoppingListEntityManager, ShoppingListToProductFacadeInterface $productFacade, ShoppingListRepositoryInterface $shoppingListRepository, ShoppingListConfig $shoppingListConfig, ShoppingListToPersistentCartFacadeInterface $persistentCartFacade)
     {
         $this->shoppingListEntityManager = $shoppingListEntityManager;
         $this->productFacade = $productFacade;
         $this->shoppingListRepository = $shoppingListRepository;
         $this->shoppingListConfig = $shoppingListConfig;
+        $this->persistentCartFacade = $persistentCartFacade;
     }
 
     /**
@@ -73,17 +87,21 @@ class Writer implements WriterInterface
     public function validateAndSaveShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
     {
         $shoppingListResponseTransfer = new ShoppingListResponseTransfer();
+        $shoppingListResponseTransfer->setIsSuccess(false);
 
-        if ($this->checkShoppingListWithSameName($shoppingListTransfer)) {
-            $shoppingListResponseTransfer
-                ->setShoppingList($this->saveShoppingList($shoppingListTransfer))
-                ->setIsSuccess(true);
-        } else {
-            $shoppingListResponseTransfer
-                ->setIsSuccess(false)
-                ->addError(static::DUPLICATE_NAME_SHOPPING_LIST);
+        if (!$this->checkShoppingListWithSameName($shoppingListTransfer)) {
+            $shoppingListResponseTransfer->addError(static::DUPLICATE_NAME_SHOPPING_LIST);
+
+            return $shoppingListResponseTransfer;
         }
 
+        if (!$this->checkWritePermission($shoppingListTransfer)) {
+            $shoppingListResponseTransfer->addError(static::CANNOT_UPDATE_SHOPPING_LIST);
+
+            return $shoppingListResponseTransfer;
+        }
+
+        $shoppingListResponseTransfer->setShoppingList($this->saveShoppingList($shoppingListTransfer));
         return $shoppingListResponseTransfer;
     }
 
@@ -94,9 +112,17 @@ class Writer implements WriterInterface
      */
     public function removeShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
     {
+        $shoppingList = $this->shoppingListRepository->findShoppingListById($shoppingListTransfer);
+
+        if (!$this->checkWritePermission($shoppingList)) {
+            return (new ShoppingListResponseTransfer())->setIsSuccess(false);
+        }
+
         $shoppingListEntityTransfer = $this->createShoppingListEntityTransfer($shoppingListTransfer);
         return $this->getTransactionHandler()->handleTransaction(function () use ($shoppingListEntityTransfer) {
             $this->shoppingListEntityManager->deleteShoppingListItems($shoppingListEntityTransfer);
+            $this->shoppingListEntityManager->deleteShoppingListCompanyUsers($shoppingListEntityTransfer);
+            $this->shoppingListEntityManager->deleteShoppingListCompanyBusinessUnits($shoppingListEntityTransfer);
             $this->shoppingListEntityManager->deleteShoppingListByName($shoppingListEntityTransfer);
 
             return (new ShoppingListResponseTransfer())->setIsSuccess(true);
@@ -111,19 +137,21 @@ class Writer implements WriterInterface
     public function addItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
     {
         $shoppingListItemTransfer->requireSku();
-        $shoppingListItemTransfer->requireCustomerReference();
         $shoppingListItemTransfer->requireQuantity();
 
         if ($this->productFacade && !$this->productFacade->hasProductConcrete($shoppingListItemTransfer->getSku())) {
             return $shoppingListItemTransfer;
         }
 
-        $existingShoppingListTransfer = $this->createShoppingListIfNotExists(
-            $shoppingListItemTransfer->getCustomerReference(),
-            $shoppingListItemTransfer->getShoppingListName()
-        );
+        $shoppingListTransfer = (new ShoppingListTransfer())->setIdShoppingList($shoppingListItemTransfer->getFkShoppingList());
 
-        $shoppingListItemTransfer->setFkShoppingList($existingShoppingListTransfer->getIdShoppingList());
+        if (!$shoppingListItemTransfer->getFkShoppingList()) {
+            $shoppingListTransfer = $this->createDefaultShoppingListIfNotExists(
+                $shoppingListItemTransfer->getCustomerReference()
+            );
+        }
+
+        $shoppingListItemTransfer->setFkShoppingList($shoppingListTransfer->getIdShoppingList());
         return $this->saveShoppingListItem($shoppingListItemTransfer);
     }
 
@@ -134,29 +162,20 @@ class Writer implements WriterInterface
      */
     public function removeItemById(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemResponseTransfer
     {
-        $shoppingListItemTransfer->requireIdShoppingListItem();
+        $shoppingListItemTransfer->requireIdShoppingListItem()->requireFkShoppingList();
+
+        $shoppingListTransfer = $this->shoppingListRepository->findShoppingListById(
+            (new ShoppingListTransfer())->setIdShoppingList($shoppingListItemTransfer->getFkShoppingList())
+        );
+        $shoppingListTransfer->setRequesterId($shoppingListItemTransfer->getRequesterId());
+
+        if (!$this->checkWritePermission($shoppingListTransfer)) {
+            return (new ShoppingListItemResponseTransfer())->setIsSuccess(false);
+        }
 
         $this->shoppingListEntityManager->deleteShoppingListItem($this->createShoppingListItemEntityTransfer($shoppingListItemTransfer));
 
         return (new ShoppingListItemResponseTransfer())->setIsSuccess(true);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
-     */
-    public function removeItemCollection(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ShoppingListItemResponseTransfer
-    {
-        return $this->getTransactionHandler()->handleTransaction(function () use ($shoppingListItemCollectionTransfer) {
-            foreach ($shoppingListItemCollectionTransfer->getItems() as $shoppingListItemTransfer) {
-                $this->shoppingListEntityManager->deleteShoppingListItem(
-                    $this->createShoppingListItemEntityTransfer($shoppingListItemTransfer)
-                );
-            }
-
-            return (new ShoppingListItemResponseTransfer())->setIsSuccess(true);
-        });
     }
 
     /**
@@ -174,16 +193,26 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer $shoppingListFromCartRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */
-    public function createShoppingListFromQuote(QuoteTransfer $quoteTransfer): ShoppingListTransfer
+    public function createShoppingListFromQuote(ShoppingListFromCartRequestTransfer $shoppingListFromCartRequestTransfer): ShoppingListTransfer
     {
-        return $this->getTransactionHandler()->handleTransaction(function () use ($quoteTransfer) {
-            $shoppingListTransfer = $this->createShoppingListIfNotExists($quoteTransfer->getCustomerReference());
+        $shoppingListFromCartRequestTransfer->requireShoppingListName()->requireIdQuote();
 
-            foreach ($quoteTransfer->getItems() as $item) {
+        return $this->getTransactionHandler()->handleTransaction(function () use ($shoppingListFromCartRequestTransfer) {
+            $quoteTransfer = $this->persistentCartFacade->findQuote(
+                $shoppingListFromCartRequestTransfer->getIdQuote(),
+                $shoppingListFromCartRequestTransfer->getCustomer()
+            );
+
+            $shoppingListTransfer = $this->createShoppingListIfNotExists(
+                $shoppingListFromCartRequestTransfer->getCustomer()->getCustomerReference(),
+                $shoppingListFromCartRequestTransfer->getShoppingListName()
+            );
+
+            foreach ($quoteTransfer->getQuoteTransfer()->getItems() as $item) {
                 $shoppingListItemTransfer = (new ShoppingListItemTransfer())
                     ->setFkShoppingList($shoppingListTransfer->getIdShoppingList())
                     ->setQuantity($item->getQuantity())
@@ -205,14 +234,22 @@ class Writer implements WriterInterface
     {
         $shoppingListShareRequestTransfer->requireIdShoppingListPermissionGroup()
             ->requireIdCompanyBusinessUnit()
-            ->requireCustomerReference()
-            ->requireShoppingListName();
+            ->requireIdShoppingList();
+
+        $shoppingListShareResponseTransfer = new ShoppingListShareResponseTransfer();
 
         $shoppingListTransfer = (new ShoppingListTransfer())
-            ->setCustomerReference($shoppingListShareRequestTransfer->getCustomerReference())
-            ->setName($shoppingListShareRequestTransfer->getShoppingListName());
+            ->setIdShoppingList($shoppingListShareRequestTransfer->getIdShoppingList());
 
-        $shoppingListTransfer = $this->getShoppingListWithSameName($shoppingListTransfer);
+        $shoppingListTransfer = $this->getShoppingListById($shoppingListTransfer);
+        $shoppingListTransfer->setRequesterId($shoppingListShareRequestTransfer->getRequesterId());
+
+        if (!$this->checkWritePermission($shoppingListTransfer)) {
+            $shoppingListShareResponseTransfer->setIsSuccess(false);
+            $shoppingListShareResponseTransfer->setError(static::CANNOT_UPDATE_SHOPPING_LIST);
+
+            return $shoppingListShareResponseTransfer;
+        }
 
         $shoppingListCompanyBusinessUnitEntityTransfer = $this->shoppingListRepository->getShoppingListCompanyBusinessUnit(
             $shoppingListTransfer->getIdShoppingList(),
@@ -223,6 +260,7 @@ class Writer implements WriterInterface
 
         if ($shoppingListCompanyBusinessUnitEntityTransfer) {
             $shoppingListShareResponseTransfer->setIsSuccess(false);
+            $shoppingListShareResponseTransfer->setError(static::CANNOT_RESHARE_SHOPPING_LIST);
 
             return $shoppingListShareResponseTransfer;
         }
@@ -247,24 +285,31 @@ class Writer implements WriterInterface
     {
         $shoppingListShareRequestTransfer->requireIdShoppingListPermissionGroup()
             ->requireIdCompanyUser()
-            ->requireCustomerReference()
-            ->requireShoppingListName();
+            ->requireIdShoppingList();
+
+        $shoppingListShareResponseTransfer = new ShoppingListShareResponseTransfer();
 
         $shoppingListTransfer = (new ShoppingListTransfer())
-            ->setCustomerReference($shoppingListShareRequestTransfer->getCustomerReference())
-            ->setName($shoppingListShareRequestTransfer->getShoppingListName());
+            ->setIdShoppingList($shoppingListShareRequestTransfer->getIdShoppingList());
 
-        $shoppingListTransfer = $this->getShoppingListWithSameName($shoppingListTransfer);
+        $shoppingListTransfer = $this->getShoppingListById($shoppingListTransfer);
+        $shoppingListTransfer->setRequesterId($shoppingListShareRequestTransfer->getRequesterId());
+
+        if (!$this->checkWritePermission($shoppingListTransfer)) {
+            $shoppingListShareResponseTransfer->setIsSuccess(false);
+            $shoppingListShareResponseTransfer->setError(static::CANNOT_UPDATE_SHOPPING_LIST);
+
+            return $shoppingListShareResponseTransfer;
+        }
 
         $shoppingListCompanyUserEntityTransfer = $this->shoppingListRepository->getShoppingListCompanyUser(
             $shoppingListTransfer->getIdShoppingList(),
             $shoppingListShareRequestTransfer->getIdCompanyUser()
         );
 
-        $shoppingListShareResponseTransfer = new ShoppingListShareResponseTransfer();
-
         if ($shoppingListCompanyUserEntityTransfer) {
             $shoppingListShareResponseTransfer->setIsSuccess(false);
+            $shoppingListShareResponseTransfer->setError(static::CANNOT_RESHARE_SHOPPING_LIST);
 
             return $shoppingListShareResponseTransfer;
         }
@@ -338,6 +383,18 @@ class Writer implements WriterInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer|null
+     */
+    protected function getShoppingListById(ShoppingListTransfer $shoppingListTransfer): ?ShoppingListTransfer
+    {
+        $shoppingListTransfer->requireIdShoppingList();
+
+        return $this->shoppingListRepository->findShoppingListById($shoppingListTransfer);
+    }
+
+    /**
      * @param string $customerReference
      * @param string|null $shoppingListName
      *
@@ -345,13 +402,13 @@ class Writer implements WriterInterface
      */
     protected function createShoppingListIfNotExists(string $customerReference, string $shoppingListName = null): ShoppingListTransfer
     {
+        if (!$shoppingListName) {
+            return $this->createDefaultShoppingListIfNotExists($customerReference);
+        }
+
         $shoppingListTransfer = (new ShoppingListTransfer())
             ->setName($shoppingListName)
             ->setCustomerReference($customerReference);
-
-        if (!$shoppingListTransfer->getName()) {
-            $shoppingListTransfer->setName($this->shoppingListConfig->getDefaultShoppingListName());
-        }
 
         $existingShoppingListTransfer = $this->getShoppingListWithSameName($shoppingListTransfer);
 
@@ -360,5 +417,47 @@ class Writer implements WriterInterface
         }
 
         return $existingShoppingListTransfer;
+    }
+
+    /**
+     * @param string $customerReference
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer
+     */
+    protected function createDefaultShoppingListIfNotExists(string $customerReference): ShoppingListTransfer
+    {
+        $shoppingListTransfer = (new ShoppingListTransfer())
+            ->setName($this->shoppingListConfig->getDefaultShoppingListName())
+            ->setCustomerReference($customerReference);
+
+        $existingShoppingListTransfer = $this->getShoppingListWithSameName($shoppingListTransfer);
+
+        if (!$existingShoppingListTransfer) {
+            $existingShoppingListTransfer = $this->saveShoppingList($shoppingListTransfer);
+        }
+
+        return $existingShoppingListTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return bool
+     */
+    protected function checkWritePermission(ShoppingListTransfer $shoppingListTransfer): bool
+    {
+        if (!$shoppingListTransfer->getRequesterId()) {
+            return false;
+        }
+
+        if (!$shoppingListTransfer->getIdShoppingList()) {
+            return true;
+        }
+
+        return $this->can(
+            'WriteShoppingListPermissionPlugin',
+            $shoppingListTransfer->getRequesterId(),
+            $shoppingListTransfer->getIdShoppingList()
+        );
     }
 }

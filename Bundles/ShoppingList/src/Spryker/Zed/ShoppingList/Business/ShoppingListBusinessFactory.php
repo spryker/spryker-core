@@ -14,8 +14,9 @@ use Spryker\Zed\ShoppingList\Business\Model\Reader;
 use Spryker\Zed\ShoppingList\Business\Model\ReaderInterface;
 use Spryker\Zed\ShoppingList\Business\Model\Writer;
 use Spryker\Zed\ShoppingList\Business\Model\WriterInterface;
-use Spryker\Zed\ShoppingList\Dependency\Client\ShoppingListToCustomerClientInterface;
+use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToCompanyUserFacadeInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToPermissionFacadeInterface;
+use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToPersistentCartFacadeInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterface;
 use Spryker\Zed\ShoppingList\ShoppingListDependencyProvider;
 
@@ -34,6 +35,7 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
         return new Reader(
             $this->getRepository(),
             $this->getProductFacade(),
+            $this->getCompanyUserFacade(),
             $this->getItemExpanderPlugins()
         );
     }
@@ -45,9 +47,10 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
     {
         return new Writer(
             $this->getEntityManager(),
+            $this->getProductFacade(),
             $this->getRepository(),
             $this->getConfig(),
-            $this->getProductFacade()
+            $this->getPersistentCartFacade()
         );
     }
 
@@ -81,5 +84,21 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
     public function getPermissionFacade(): ShoppingListToPermissionFacadeInterface
     {
         return $this->getProvidedDependency(ShoppingListDependencyProvider::FACADE_PERMISSION);
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToCompanyUserFacadeInterface
+     */
+    public function getCompanyUserFacade(): ShoppingListToCompanyUserFacadeInterface
+    {
+        return $this->getProvidedDependency(ShoppingListDependencyProvider::FACADE_COMPANY_USER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToPersistentCartFacadeInterface
+     */
+    public function getPersistentCartFacade(): ShoppingListToPersistentCartFacadeInterface
+    {
+        return $this->getProvidedDependency(ShoppingListDependencyProvider::FACADE_PERSISTENT_CART);
     }
 }
