@@ -10,6 +10,8 @@ namespace Spryker\Zed\Offer\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Offer\Business\Model\OfferConverter;
 use Spryker\Zed\Offer\Business\Model\OfferConverterInterface;
+use Spryker\Zed\Offer\Business\Model\OfferGrandTotalCalculator;
+use Spryker\Zed\Offer\Business\Model\OfferGrandTotalCalculatorInterface;
 use Spryker\Zed\Offer\Business\Model\OfferItemSubtotalAggregator;
 use Spryker\Zed\Offer\Business\Model\OfferItemSubtotalAggregatorInterface;
 use Spryker\Zed\Offer\Business\Model\OfferPluginExecutor;
@@ -95,5 +97,13 @@ class OfferBusinessFactory extends AbstractBusinessFactory
     public function getOfferDoUpdatePlugins(): array
     {
         return $this->getProvidedDependency(OfferDependencyProvider::PLUGINS_OFFER_DO_UPDATE);
+    }
+
+    /**
+     * @return OfferGrandTotalCalculatorInterface
+     */
+    public function createOfferGrandTotalCalculator(): OfferGrandTotalCalculatorInterface
+    {
+        return new OfferGrandTotalCalculator();
     }
 }

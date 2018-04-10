@@ -99,8 +99,7 @@ class OfferFacade extends AbstractFacade implements OfferFacadeInterface
     }
 
     /**
-     * Specification:
-     *  - Recalculate offer items subtotal
+     * {@inheritdoc}
      *
      * @api
      *
@@ -113,5 +112,21 @@ class OfferFacade extends AbstractFacade implements OfferFacadeInterface
         $this->getFactory()
             ->createOfferItemSubtotalAggregator()
             ->recalculate($calculableObjectTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function recalculateGrandTotal(CalculableObjectTransfer $calculableObjectTransfer): void
+    {
+        $this->getFactory()
+            ->createOfferGrandTotalCalculator()
+            ->recalculateGrandTotal($calculableObjectTransfer);
     }
 }
