@@ -89,7 +89,11 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
      */
     public function addItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
     {
-        return $this->getZedStub()->addItem($shoppingListItemTransfer);
+        $shoppingListItemTransfer = $this->getZedStub()->addItem($shoppingListItemTransfer);
+
+        $this->updatePermissions();
+
+        return $shoppingListItemTransfer;
     }
 
     /**

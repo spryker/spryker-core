@@ -267,6 +267,8 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param int $idCompanyUser

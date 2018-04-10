@@ -108,8 +108,15 @@ class Reader implements ReaderInterface
         $shoppingListOverviewRequestTransfer->setShoppingList($shoppingListTransfer);
         $shoppingListOverviewResponseTransfer = $this->shoppingListRepository->findShoppingListPaginatedItems($shoppingListOverviewRequestTransfer);
         $shoppingListOverviewResponseTransfer = $this->expandProducts($shoppingListOverviewResponseTransfer);
+
+        $customerTransfer = new CustomerTransfer();
+        $requestCompanyUserTransfer = $this->companyUserFacade->getCompanyUserById($shoppingListOverviewRequestTransfer->getShoppingList()->getRequesterId());
+
+        $customerTransfer->setCustomerReference($requestCompanyUserTransfer->getCustomer()->getCustomerReference());
+        $customerTransfer->setCompanyUserTransfer($requestCompanyUserTransfer);
+
         $shoppingListOverviewResponseTransfer->setShoppingList($shoppingListTransfer);
-        $shoppingListOverviewResponseTransfer->setShoppingLists($this->getCustomerShoppingListCollectionByReference($shoppingListTransfer->getCustomerReference()));
+        $shoppingListOverviewResponseTransfer->setShoppingLists($this->getCustomerShoppingListCollection($customerTransfer));
 
         return $shoppingListOverviewResponseTransfer;
     }
@@ -127,13 +134,18 @@ class Reader implements ReaderInterface
 
         $customerOwnShoppingLists = $this->getCustomerShoppingListCollectionByReference($customerReference);
 
-        $customerSharedShoppingLists = $this->shoppingListRepository->findCompanyUserSharedShoppingLists(
-            $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser()
-        );
+        $customerSharedShoppingLists = new ShoppingListCollectionTransfer();
+        $businessUnitSharedShoppingLists = new ShoppingListCollectionTransfer();
 
-        $businessUnitSharedShoppingLists = $this->shoppingListRepository->findCompanyBusinessUnitSharedShoppingLists(
-            $customerTransfer->getCompanyUserTransfer()->getFkCompanyBusinessUnit()
-        );
+        if ($customerTransfer->getCompanyUserTransfer() && $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser()) {
+            $customerSharedShoppingLists = $this->shoppingListRepository->findCompanyUserSharedShoppingLists(
+                $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser()
+            );
+
+            $businessUnitSharedShoppingLists = $this->shoppingListRepository->findCompanyBusinessUnitSharedShoppingLists(
+                $customerTransfer->getCompanyUserTransfer()->getFkCompanyBusinessUnit()
+            );
+        }
 
         return $this->mergeShoppingListCollections($customerOwnShoppingLists, $customerSharedShoppingLists, $businessUnitSharedShoppingLists);
     }

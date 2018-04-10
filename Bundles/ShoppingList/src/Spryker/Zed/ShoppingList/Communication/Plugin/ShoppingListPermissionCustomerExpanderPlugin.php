@@ -38,16 +38,16 @@ class ShoppingListPermissionCustomerExpanderPlugin extends AbstractPlugin implem
 
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     * @param \Generated\Shared\Transfer\PermissionCollectionTransfer $companyUserPermissionCollection
+     * @param \Generated\Shared\Transfer\PermissionCollectionTransfer $permissionCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    protected function addPermissionsToCustomerTransfer(CustomerTransfer $customerTransfer, PermissionCollectionTransfer $companyUserPermissionCollection): CustomerTransfer
+    protected function addPermissionsToCustomerTransfer(CustomerTransfer $customerTransfer, PermissionCollectionTransfer $permissionCollectionTransfer): CustomerTransfer
     {
         $customerPermissionCollection = $customerTransfer->getPermissions();
 
-        foreach ($companyUserPermissionCollection->getPermissions() as $companyUserPermissionTransfer) {
-            $customerPermissionCollection->addPermission($companyUserPermissionTransfer);
+        foreach ($permissionCollectionTransfer->getPermissions() as $permissionTransfer) {
+            $customerPermissionCollection->addPermission($permissionTransfer);
         }
 
         $customerTransfer = $customerTransfer->setPermissions($customerPermissionCollection);

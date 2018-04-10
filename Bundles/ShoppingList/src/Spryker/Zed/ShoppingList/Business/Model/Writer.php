@@ -101,6 +101,7 @@ class Writer implements WriterInterface
             return $shoppingListResponseTransfer;
         }
 
+        $shoppingListResponseTransfer->setIsSuccess(true);
         $shoppingListResponseTransfer->setShoppingList($this->saveShoppingList($shoppingListTransfer));
         return $shoppingListResponseTransfer;
     }
@@ -446,12 +447,12 @@ class Writer implements WriterInterface
      */
     protected function checkWritePermission(ShoppingListTransfer $shoppingListTransfer): bool
     {
-        if (!$shoppingListTransfer->getRequesterId()) {
-            return false;
-        }
-
         if (!$shoppingListTransfer->getIdShoppingList()) {
             return true;
+        }
+
+        if (!$shoppingListTransfer->getRequesterId()) {
+            return false;
         }
 
         return $this->can(
