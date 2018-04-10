@@ -24,8 +24,8 @@ class OfferCustomerHydratorPlugin extends AbstractPlugin implements OfferHydrato
      */
     public function hydrateOffer(OfferTransfer $offerTransfer): OfferTransfer
     {
-        $customerTransfer = $this->getFacade()->findByReference($offerTransfer->getCustomerReference());
-        $offerTransfer->setCustomer($customerTransfer);
+        $offerTransfer = $this->getFacade()
+            ->hydrateOfferWithCustomer($offerTransfer);
 
         return $offerTransfer;
     }
