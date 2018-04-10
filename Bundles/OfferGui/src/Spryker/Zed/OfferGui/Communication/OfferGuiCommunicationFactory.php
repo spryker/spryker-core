@@ -70,6 +70,9 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
         return $this->getProvidedDependency(OfferGuiDependencyProvider::FACADE_MONEY);
     }
 
+    /**
+     * @return \Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToStoreFacadeInterface
+     */
     public function getStoreFacade(): OfferGuiToStoreFacadeInterface
     {
         return $this->getProvidedDependency(OfferGuiDependencyProvider::FACADE_STORE);
