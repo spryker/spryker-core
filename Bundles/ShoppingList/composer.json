@@ -19,8 +19,8 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*",
-    "spryker/installer": "*"
+    "spryker/installer": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/installer": "If ShoppingListPermissionsInstallerPlugin is to be used, minimum version is 4.0.04"
