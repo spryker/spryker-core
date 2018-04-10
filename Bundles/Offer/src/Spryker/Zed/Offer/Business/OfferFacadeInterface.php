@@ -72,6 +72,7 @@ interface OfferFacadeInterface
      * @api
      *
      * @param OfferTransfer $offerTransfer
+     *
      * @return OfferResponseTransfer
      *
      * @throws \Exception
@@ -89,4 +90,16 @@ interface OfferFacadeInterface
      * @return void
      */
     public function aggregateOfferItemSubtotal(CalculableObjectTransfer $calculableObjectTransfer): void;
+
+    /**
+     * Specification:
+     *  - Calculates saving amount for each offer item and hydrates one to the item.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
+     *
+     * @return \Generated\Shared\Transfer\OfferTransfer
+     */
+    public function hydrateOfferWithSavingAmount(OfferTransfer $offerTransfer): OfferTransfer;
 }

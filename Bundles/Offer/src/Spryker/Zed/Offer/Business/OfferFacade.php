@@ -114,4 +114,20 @@ class OfferFacade extends AbstractFacade implements OfferFacadeInterface
             ->createOfferItemSubtotalAggregator()
             ->recalculate($calculableObjectTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
+     *
+     * @return \Generated\Shared\Transfer\OfferTransfer
+     */
+    public function hydrateOfferWithSavingAmount(OfferTransfer $offerTransfer): OfferTransfer
+    {
+        return $this->getFactory()
+            ->createOfferSavingAmountHydrator()
+            ->hydrate($offerTransfer);
+    }
 }

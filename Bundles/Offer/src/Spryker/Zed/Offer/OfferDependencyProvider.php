@@ -21,7 +21,7 @@ class OfferDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_SALES = 'FACADE_SALES';
     public const FACADE_CART = 'FACADE_CART';
-    public const FACADE_MESSENGER= 'FACADE_MESSENGER';
+    public const FACADE_MESSENGER = 'FACADE_MESSENGER';
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
     public const PLUGINS_OFFER_HYDRATOR = 'PLUGINS_OFFER_HYDRATOR';
     public const PLUGINS_OFFER_DO_UPDATE = 'PLUGINS_OFFER_DO_UPDATE';
@@ -35,6 +35,8 @@ class OfferDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addSalesFacade($container);
+        $container = $this->addCartFacade($container);
+        $container = $this->addMessengerFacade($container);
         $container = $this->addOfferHydratorPlugins($container);
         $container = $this->addOfferDoUpdatePlugins($container);
 

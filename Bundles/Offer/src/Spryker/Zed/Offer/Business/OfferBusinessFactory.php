@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Offer\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Offer\Business\Model\Hydrator\OfferSavingAmountHydrator;
+use Spryker\Zed\Offer\Business\Model\Hydrator\OfferSavingAmountHydratorInterface;
 use Spryker\Zed\Offer\Business\Model\OfferConverter;
 use Spryker\Zed\Offer\Business\Model\OfferConverterInterface;
 use Spryker\Zed\Offer\Business\Model\OfferItemSubtotalAggregator;
@@ -18,6 +20,8 @@ use Spryker\Zed\Offer\Business\Model\OfferReader;
 use Spryker\Zed\Offer\Business\Model\OfferReaderInterface;
 use Spryker\Zed\Offer\Business\Model\OfferWriter;
 use Spryker\Zed\Offer\Business\Model\OfferWriterInterface;
+use Spryker\Zed\Offer\Dependency\Facade\OfferToCartFacadeInterface;
+use Spryker\Zed\Offer\Dependency\Facade\OfferToMessengerFacadeInterface;
 use Spryker\Zed\Offer\Dependency\Facade\OfferToSalesFacadeInterface;
 use Spryker\Zed\Offer\Dependency\Plugin\OfferDoUpdatePluginInterface;
 use Spryker\Zed\Offer\OfferDependencyProvider;
@@ -74,6 +78,17 @@ class OfferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Offer\Business\Model\Hydrator\OfferSavingAmountHydratorInterface
+     */
+    public function createOfferSavingAmountHydrator(): OfferSavingAmountHydratorInterface
+    {
+        return new OfferSavingAmountHydrator(
+            $this->getCartFacade(),
+            $this->getMessengerFacade()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\Offer\Business\Model\OfferItemSubtotalAggregatorInterface
      */
     public function createOfferItemSubtotalAggregator(): OfferItemSubtotalAggregatorInterface
@@ -95,5 +110,21 @@ class OfferBusinessFactory extends AbstractBusinessFactory
     public function getOfferDoUpdatePlugins(): array
     {
         return $this->getProvidedDependency(OfferDependencyProvider::PLUGINS_OFFER_DO_UPDATE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Offer\Dependency\Facade\OfferToCartFacadeInterface
+     */
+    public function getCartFacade(): OfferToCartFacadeInterface
+    {
+        return $this->getProvidedDependency(OfferDependencyProvider::FACADE_CART);
+    }
+
+    /**
+     * @return \Spryker\Zed\Offer\Dependency\Facade\OfferToMessengerFacadeInterface
+     */
+    public function getMessengerFacade(): OfferToMessengerFacadeInterface
+    {
+        return $this->getProvidedDependency(OfferDependencyProvider::FACADE_MESSENGER);
     }
 }

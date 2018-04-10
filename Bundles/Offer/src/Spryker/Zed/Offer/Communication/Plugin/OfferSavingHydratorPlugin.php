@@ -20,49 +20,13 @@ use Spryker\Zed\OfferExtension\Dependency\Plugin\OfferHydratorPluginInterface;
  */
 class OfferSavingHydratorPlugin extends AbstractPlugin implements OfferHydratorPluginInterface
 {
-    /**
+    /**OfferToMessengerFacadeBridge.php
      * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
      *
      * @return \Generated\Shared\Transfer\OfferTransfer
      */
     public function hydrateOffer(OfferTransfer $offerTransfer): OfferTransfer
     {
-        $cartFacade = $this->getFactory()->getCartFacade();
-
-        $quoteTransfer = $offerTransfer->getQuote();
-
-        $originalPriceQuoteTransfer = clone $quoteTransfer;
-        $originalPriceQuoteTransfer->setItems(new ArrayObject());
-
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $originalPriceItemTransfer = clone $itemTransfer;
-            $originalPriceItemTransfer->setForcedUnitGrossPrice(false);
-
-            $originalPriceQuoteTransfer
-                ->getItems()
-                ->append($originalPriceItemTransfer);
-        }
-
-        $originalPriceQuoteTransfer = $cartFacade->reloadItems($originalPriceQuoteTransfer);
-
-        $skuOriginalPrice = [];
-        foreach ($originalPriceQuoteTransfer->getItems() as $originalPriceItemTransfer) {
-            $skuOriginalPrice[$originalPriceItemTransfer->getSku()] = $originalPriceItemTransfer->getSumGrossPrice();
-        }
-
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-
-            if (!isset($skuOriginalPrice[$itemTransfer->getSku()])) {
-                $itemTransfer->setSaving(0);
-                continue;
-            }
-
-            $savingAmount = $skuOriginalPrice[$itemTransfer->getSku()] - $itemTransfer->getSumSubtotalAggregation();
-            $itemTransfer->setSaving($savingAmount);
-        }
-
-        $this->getFactory()->getMessengerFacade()->getStoredMessages();
-
-        return $offerTransfer;
+        return $this->getFacade()->hydrateOfferWithSavingAmount($offerTransfer);
     }
 }
