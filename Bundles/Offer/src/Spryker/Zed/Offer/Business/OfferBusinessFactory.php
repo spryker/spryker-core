@@ -12,6 +12,8 @@ use Spryker\Zed\Offer\Business\Model\Hydrator\OfferSavingAmountHydrator;
 use Spryker\Zed\Offer\Business\Model\Hydrator\OfferSavingAmountHydratorInterface;
 use Spryker\Zed\Offer\Business\Model\OfferConverter;
 use Spryker\Zed\Offer\Business\Model\OfferConverterInterface;
+use Spryker\Zed\Offer\Business\Model\OfferGrandTotalCalculator;
+use Spryker\Zed\Offer\Business\Model\OfferGrandTotalCalculatorInterface;
 use Spryker\Zed\Offer\Business\Model\OfferItemSubtotalAggregator;
 use Spryker\Zed\Offer\Business\Model\OfferItemSubtotalAggregatorInterface;
 use Spryker\Zed\Offer\Business\Model\OfferPluginExecutor;
@@ -126,5 +128,13 @@ class OfferBusinessFactory extends AbstractBusinessFactory
     public function getMessengerFacade(): OfferToMessengerFacadeInterface
     {
         return $this->getProvidedDependency(OfferDependencyProvider::FACADE_MESSENGER);
+    }
+
+    /**
+      * @return OfferGrandTotalCalculatorInterface
+      */
+    public function createOfferGrandTotalCalculator(): OfferGrandTotalCalculatorInterface
+    {
+        return new OfferGrandTotalCalculator();
     }
 }

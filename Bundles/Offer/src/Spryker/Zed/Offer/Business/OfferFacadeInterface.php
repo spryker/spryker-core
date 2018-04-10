@@ -81,7 +81,7 @@ interface OfferFacadeInterface
 
     /**
      * Specification:
-     *  - Recalculate offer items subtotal
+     *  - Recalculates offer items subtotal
      *
      * @api
      *
@@ -102,4 +102,16 @@ interface OfferFacadeInterface
      * @return \Generated\Shared\Transfer\OfferTransfer
      */
     public function hydrateOfferWithSavingAmount(OfferTransfer $offerTransfer): OfferTransfer;
+
+    /**
+     * - Uses quote offer fee to recalculate a quote grant total
+     * - The offer fee is added to a current quote grand total
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function recalculateGrandTotal(CalculableObjectTransfer $calculableObjectTransfer): void;
 }

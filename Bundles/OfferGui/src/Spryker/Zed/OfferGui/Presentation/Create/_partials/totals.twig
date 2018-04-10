@@ -24,8 +24,8 @@
                     </tr>
 
                     <tr>
-                        <td class="col-sm-6">{{ 'Canceled amount' | trans }}</td>
-                        <td data-qa="grand-total" data-qa-grand-total-raw="{{ quote.totals.canceledTotal }}">-{{ quote.totals.canceledTotal | default(0) | money(true, quote.currency.code) }}</td>
+                        <td class="col-sm-6">{{ 'Offer fee' | trans }}</td>
+                        <td data-qa="grand-total" data-qa-grand-total-raw="{{ quote.offerFee }}">{{ quote.offerFee | default(0) | money(true, quote.currency.code) }}</td>
                     </tr>
 
                     <tr class="grandTotal-row">

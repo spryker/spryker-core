@@ -371,7 +371,7 @@ class EditOfferType extends AbstractType
                 }
             },
             function ($value) {
-                return $value * 100;
+                return (int)($value * 100);
             }
         );
     }
