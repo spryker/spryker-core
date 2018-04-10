@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\ManualOrderEntryGui\Dependency\Plugin;
 
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -14,9 +19,11 @@ interface QuoteInitializerPluginInterface
      * - Uses request to define an initial state of a quote
      * - If a plugin is not able to init a quote it must return NULL
      *
-     * @param Request $request
+     * @api
      *
-     * @return QuoteTransfer|null
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer|null
      */
     public function initializeQuote(Request $request): ?QuoteTransfer;
 }

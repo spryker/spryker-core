@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Shared\Sales\SalesConfig as SalesSalesConfig;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Customer\CustomersListType;
 use Spryker\Zed\Sales\SalesConfig;
@@ -201,6 +202,7 @@ class CreateController extends AbstractController
 
     /**
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return string
      */
@@ -231,14 +233,14 @@ class CreateController extends AbstractController
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
-     * @param Request $request
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function setTypeToQuote(QuoteTransfer $quoteTransfer, Request $request): QuoteTransfer
     {
-        $quoteType = $request->get(static::PARAM_TYPE, \Spryker\Shared\Sales\SalesConfig::ORDER_TYPE_DEFAULT);
+        $quoteType = $request->get(static::PARAM_TYPE, SalesSalesConfig::ORDER_TYPE_DEFAULT);
 
         $quoteTransfer->setType($quoteType);
 
@@ -246,17 +248,20 @@ class CreateController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function getInitialQuote(Request $request): QuoteTransfer
     {
-        foreach ($this->getFactory()->getQuoteInitializerPlugins() as $quoteInitializerPlugin) {
-            $quoteTransfer = $quoteInitializerPlugin->initializeQuote($request);
+        // @todo @Artem
+        if (0) {
+            foreach ($this->getFactory()->getQuoteInitializerPlugins() as $quoteInitializerPlugin) {
+                $quoteTransfer = $quoteInitializerPlugin->initializeQuote($request);
 
-            if ($quoteTransfer !== null) {
-                return $quoteTransfer;
+                if ($quoteTransfer !== null) {
+                    return $quoteTransfer;
+                }
             }
         }
 
