@@ -70,7 +70,7 @@ class OfferMapper implements OfferMapperInterface
                 )
         );
 
-        //TODO: suggest a better way to understand in post order save plugin, whether we should disable an offer.
+        //It is needed to understand whether its an offer or not and convert offer to order(set appropriate status).
         $offerTransfer->getQuote()->setIdOffer($offerTransfer->getIdOffer());
 
         return $offerTransfer;
