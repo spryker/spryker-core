@@ -26,7 +26,7 @@ class OfferGuiToCartFacadeBridge implements OfferGuiToCartFacadeInterface
     }
 
     /**
-	 * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
@@ -35,8 +35,8 @@ class OfferGuiToCartFacadeBridge implements OfferGuiToCartFacadeInterface
         return $this->cartFacade->add($cartChangeTransfer);
     }
 
-	/**
-	 * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
@@ -45,8 +45,8 @@ class OfferGuiToCartFacadeBridge implements OfferGuiToCartFacadeInterface
         return $this->cartFacade->remove($cartChangeTransfer);
     }
 
-	/**
-	 * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */

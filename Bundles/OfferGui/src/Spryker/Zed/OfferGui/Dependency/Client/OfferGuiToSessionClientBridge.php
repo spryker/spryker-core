@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\OfferGui\Dependency\Client;
 
-
 class OfferGuiToSessionClientBridge implements OfferGuiToSessionClientInterface
 {
     /**
@@ -24,7 +23,7 @@ class OfferGuiToSessionClientBridge implements OfferGuiToSessionClientInterface
     }
 
     /**
-	 * @param string $name
+     * @param string $name
      * @param mixed $value
      *
      * @return void
@@ -34,8 +33,8 @@ class OfferGuiToSessionClientBridge implements OfferGuiToSessionClientInterface
         $this->sessionClient->set($name, $value);
     }
 
-	/**
-	 * @param string $name The attribute name
+    /**
+     * @param string $name The attribute name
      * @param mixed $default The default value if not found.
      *
      * @return mixed

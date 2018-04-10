@@ -7,9 +7,7 @@
 
 namespace Spryker\Zed\OfferGui\Communication\Form\Address;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
-use Spryker\Zed\Store\Business\StoreFacadeInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;

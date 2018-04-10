@@ -26,7 +26,7 @@ class OfferCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return OfferToMessengerFacadeInterface
+     * @return \Spryker\Zed\Offer\Dependency\Facade\OfferToMessengerFacadeInterface
      */
     public function getMessengerFacade(): OfferToMessengerFacadeInterface
     {

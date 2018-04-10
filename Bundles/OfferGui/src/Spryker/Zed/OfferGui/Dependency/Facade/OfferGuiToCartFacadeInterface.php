@@ -13,21 +13,21 @@ use Generated\Shared\Transfer\QuoteTransfer;
 interface OfferGuiToCartFacadeInterface
 {
     /**
-	 * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function add(CartChangeTransfer $cartChangeTransfer);
 
-	/**
-	 * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function remove(CartChangeTransfer $cartChangeTransfer);
 
-	/**
-	 * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */

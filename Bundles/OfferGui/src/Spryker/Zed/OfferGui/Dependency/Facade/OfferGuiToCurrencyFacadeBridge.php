@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\OfferGui\Dependency\Facade;
 
-
 class OfferGuiToCurrencyFacadeBridge implements OfferGuiToCurrencyFacadeInterface
 {
     /**
@@ -24,8 +23,6 @@ class OfferGuiToCurrencyFacadeBridge implements OfferGuiToCurrencyFacadeInterfac
     }
 
     /**
-     * @throws \Spryker\Zed\Currency\Business\Model\Exception\CurrencyNotFoundException
-     *
      * @return \Generated\Shared\Transfer\StoreWithCurrencyTransfer[]
      */
     public function getAllStoresWithCurrencies()

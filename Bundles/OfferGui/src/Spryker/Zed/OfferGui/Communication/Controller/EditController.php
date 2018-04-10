@@ -8,17 +8,10 @@
 namespace Spryker\Zed\OfferGui\Communication\Controller;
 
 use ArrayObject;
-use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CartChangeTransfer;
-use Generated\Shared\Transfer\CurrencyTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OfferTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
-use Spryker\Client\Session\SessionClientInterface;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  *
@@ -110,9 +103,9 @@ class EditController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return OfferTransfer
+     * @return \Generated\Shared\Transfer\OfferTransfer
      */
     protected function getOfferTransfer(Request $request)
     {
