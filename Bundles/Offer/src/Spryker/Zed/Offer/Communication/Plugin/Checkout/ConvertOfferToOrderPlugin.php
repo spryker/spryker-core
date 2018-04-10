@@ -34,6 +34,10 @@ class ConvertOfferToOrderPlugin extends AbstractPlugin implements CheckoutPostSa
     {
         $idOffer = $quoteTransfer->getIdOffer();
 
+        if (!$idOffer) {
+            return;
+        }
+
         $offerTransfer = $this->getFacade()->getOfferById((new OfferTransfer())->setIdOffer($idOffer));
         $offerTransfer->setStatus($this->getConfig()->getStatusOrder());
         $this->getFacade()->updateOffer($offerTransfer);
