@@ -44,8 +44,6 @@ class CreateController extends AbstractController
         $allFormPlugins = $this->getFactory()->getManualOrderEntryFormPlugins();
         $filteredFormPlugins = $this->getFactory()->getManualOrderEntryFilteredFormPlugins($request, $quoteTransfer);
 
-        $quoteTransfer = $this->setTypeToQuote($quoteTransfer, $request);
-
         foreach ($filteredFormPlugins as $formPlugin) {
             $form = $formPlugin->createForm($request, $quoteTransfer);
             $form->setData($quoteTransfer->toArray());
@@ -228,21 +226,6 @@ class CreateController extends AbstractController
         foreach ($customerResponseTransfer->getErrors() as $errorTransfer) {
             $this->addErrorMessage($errorTransfer->getMessage());
         }
-    }
-
-    /**
-     * @param QuoteTransfer $quoteTransfer
-     * @param Request $request
-     *
-     * @return QuoteTransfer
-     */
-    protected function setTypeToQuote(QuoteTransfer $quoteTransfer, Request $request): QuoteTransfer
-    {
-        $quoteType = $request->get(static::PARAM_TYPE, \Spryker\Shared\Sales\SalesConfig::ORDER_TYPE_DEFAULT);
-
-        $quoteTransfer->setType($quoteType);
-
-        return $quoteTransfer;
     }
 
     /**
