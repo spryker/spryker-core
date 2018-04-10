@@ -254,14 +254,11 @@ class CreateController extends AbstractController
      */
     protected function getInitialQuote(Request $request): QuoteTransfer
     {
-        // @todo @Artem
-        if (0) {
-            foreach ($this->getFactory()->getQuoteInitializerPlugins() as $quoteInitializerPlugin) {
-                $quoteTransfer = $quoteInitializerPlugin->initializeQuote($request);
+        foreach ($this->getFactory()->getQuoteInitializerPlugins() as $quoteInitializerPlugin) {
+            $quoteTransfer = $quoteInitializerPlugin->initializeQuote($request);
 
-                if ($quoteTransfer !== null) {
-                    return $quoteTransfer;
-                }
+            if ($quoteTransfer !== null) {
+                return $quoteTransfer;
             }
         }
 
