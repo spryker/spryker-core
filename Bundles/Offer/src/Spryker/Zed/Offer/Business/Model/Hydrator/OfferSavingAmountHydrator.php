@@ -1,7 +1,13 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\Offer\Business\Model\Hydrator;
 
+use ArrayObject;
 use Generated\Shared\Transfer\OfferTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Offer\Dependency\Facade\OfferToCartFacadeInterface;
@@ -20,6 +26,7 @@ class OfferSavingAmountHydrator implements OfferSavingAmountHydratorInterface
     protected $messengerFacade;
 
     /**a
+     *
      * @param \Spryker\Zed\Offer\Dependency\Facade\OfferToCartFacadeInterface $cartFacade
      * @param \Spryker\Zed\Offer\Dependency\Facade\OfferToMessengerFacadeInterface $messengerFacade
      */
@@ -58,7 +65,7 @@ class OfferSavingAmountHydrator implements OfferSavingAmountHydratorInterface
     protected function getQuoteWithReloadedItemPrices(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         $originalPriceQuoteTransfer = clone $quoteTransfer;
-        $originalPriceQuoteTransfer->setItems(new \ArrayObject());
+        $originalPriceQuoteTransfer->setItems(new ArrayObject());
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $originalPriceItemTransfer = clone $itemTransfer;
@@ -97,7 +104,6 @@ class OfferSavingAmountHydrator implements OfferSavingAmountHydratorInterface
     protected function hydrateItemsWithSavingAmount(QuoteTransfer $quoteTransfer, array $skuOriginalPrice): QuoteTransfer
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-
             if (!isset($skuOriginalPrice[$itemTransfer->getSku()])) {
                 $itemTransfer->setSaving(0);
                 continue;

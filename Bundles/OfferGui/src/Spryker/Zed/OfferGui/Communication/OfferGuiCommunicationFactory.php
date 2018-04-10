@@ -110,7 +110,7 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param OfferTransfer $offerTransfer
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -136,7 +136,7 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return OfferDataProvider
+     * @return \Spryker\Zed\OfferGui\Communication\Form\DataProvider\OfferDataProvider
      */
     public function createOfferDataProvider()
     {
@@ -147,7 +147,7 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return OfferGuiToCurrencyFacadeInterface
+     * @return \Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToCurrencyFacadeInterface
      */
     public function getCurrencyFacade(): OfferGuiToCurrencyFacadeInterface
     {
@@ -163,7 +163,7 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return OfferGuiToSessionClientInterface
+     * @return \Spryker\Zed\OfferGui\Dependency\Client\OfferGuiToSessionClientInterface
      */
     public function getSessionClient(): OfferGuiToSessionClientInterface
     {
@@ -171,7 +171,7 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return OfferGuiToMessengerFacadeInterface
+     * @return \Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToMessengerFacadeInterface
      */
     public function getMessengerFacade(): OfferGuiToMessengerFacadeInterface
     {

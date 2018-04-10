@@ -9,11 +9,9 @@ namespace Spryker\Zed\OfferGui\Communication\Form\Offer;
 
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\OfferTransfer;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\OfferGui\Communication\Form\Address\AddressType;
-use Spryker\Zed\OfferGui\Communication\Form\Customer\CustomerChoiceType;
 use Spryker\Zed\OfferGui\Communication\Form\Item\IncomingItemType;
 use Spryker\Zed\OfferGui\Communication\Form\Item\ItemType;
 use Spryker\Zed\OfferGui\Communication\Form\Voucher\VoucherType;
@@ -21,7 +19,6 @@ use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -84,7 +81,7 @@ class EditOfferType extends AbstractType
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return $this
      */
@@ -92,14 +89,14 @@ class EditOfferType extends AbstractType
     {
         $builder->add(static::FIELD_STORE_NAME, HiddenType::class, [
             'property_path' => 'quote.store.name',
-            'required' => true
+            'required' => true,
         ]);
 
         return $this;
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return $this
      */
@@ -107,14 +104,14 @@ class EditOfferType extends AbstractType
     {
         $builder->add(static::FIELD_CURRENCY_CODE, HiddenType::class, [
             'property_path' => 'quote.currency.code',
-            'required' => true
+            'required' => true,
         ]);
 
         return $this;
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return $this
      */
@@ -126,19 +123,19 @@ class EditOfferType extends AbstractType
             'choices' => $options[static::OPTION_STORE_CURRENCY_LIST],
             'multiple' => false,
             'mapped' => false,
-            'data' => $this->getSelectedStoreCurrency($builder)
+            'data' => $this->getSelectedStoreCurrency($builder),
         ]);
 
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function (FormEvent $event)  {
+            function (FormEvent $event) {
                 $data = $event->getData();
 
                 $storeCurrency = $data[static::FIELD_STORE_CURRENCY];
                 list($storeName, $currencyCode) = $this->getStoreAndCurrency($storeCurrency);
 
                 $data[static::FIELD_STORE_NAME] = $storeName;
-                $data[static::FIELD_CURRENCY_CODE]= $currencyCode;
+                $data[static::FIELD_CURRENCY_CODE] = $currencyCode;
                 $event->setData($data);
             }
         );
@@ -147,13 +144,13 @@ class EditOfferType extends AbstractType
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return string
      */
     private function getSelectedStoreCurrency(FormBuilderInterface $builder)
     {
-        /** @var OfferTransfer $offerTransfer */
+        /** @var \Generated\Shared\Transfer\OfferTransfer $offerTransfer */
         $offerTransfer = $builder->getData();
         $quoteTransfer = $offerTransfer->getQuote();
         $storeName = $quoteTransfer->getStore()->getName();
@@ -184,7 +181,7 @@ class EditOfferType extends AbstractType
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
      * @return $this
@@ -202,7 +199,7 @@ class EditOfferType extends AbstractType
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
      * @return $this
@@ -219,7 +216,7 @@ class EditOfferType extends AbstractType
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
      * @return $this

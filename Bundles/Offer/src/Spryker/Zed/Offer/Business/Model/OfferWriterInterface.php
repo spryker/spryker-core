@@ -27,11 +27,11 @@ interface OfferWriterInterface
     public function placeOffer(OfferTransfer $offerTransfer): OfferResponseTransfer;
 
     /**
-     * @param OfferTransfer $offerTransfer
-     *
-     * @return OfferResponseTransfer
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
      *
      * @throws \Exception
+     *
+     * @return \Generated\Shared\Transfer\OfferResponseTransfer
      */
     public function updateOffer(OfferTransfer $offerTransfer): OfferResponseTransfer;
 }

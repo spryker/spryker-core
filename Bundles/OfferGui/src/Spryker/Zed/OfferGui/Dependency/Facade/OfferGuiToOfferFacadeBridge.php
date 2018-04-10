@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\OfferGui\Dependency\Facade;
 
-use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\OfferResponseTransfer;
 use Generated\Shared\Transfer\OfferTransfer;
 

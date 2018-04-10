@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\Offer\Business\OfferFacadeInterface getFacade()
+ * @method \Spryker\Zed\Offer\Communication\OfferCommunicationFactory getFactory()
  */
 class OfferGrandTotalCalculationPlugin extends AbstractPlugin implements CalculationPluginInterface
 {

@@ -13,9 +13,7 @@ use Spryker\Zed\Offer\Communication\Plugin\OfferSavingHydratorPlugin;
 use Spryker\Zed\Offer\Dependency\Facade\OfferToCartFacadeBridge;
 use Spryker\Zed\Offer\Dependency\Facade\OfferToMessengerFacadeBridge;
 use Spryker\Zed\Offer\Dependency\Facade\OfferToSalesFacadeBridge;
-use Spryker\Zed\Offer\Dependency\Plugin\OfferDoUpdatePluginInterface;
 use Spryker\Zed\Offer\Dependency\Service\OfferToUtilEncodingServiceBridge;
-use Spryker\Zed\OfferExtension\Dependency\Plugin\OfferHydratorPluginInterface;
 
 class OfferDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -86,9 +84,9 @@ class OfferDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function addMessengerFacade(Container $container): Container
     {
@@ -151,11 +149,10 @@ class OfferDependencyProvider extends AbstractBundleDependencyProvider
         ];
     }
 
-
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function addOfferDoUpdatePlugins(Container $container)
     {
@@ -167,7 +164,7 @@ class OfferDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return OfferDoUpdatePluginInterface[]
+     * @return \Spryker\Zed\Offer\Dependency\Plugin\OfferDoUpdatePluginInterface[]
      */
     protected function getOfferDoUpdatePlugins(): array
     {

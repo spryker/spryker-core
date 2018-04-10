@@ -7,18 +7,17 @@
 
 namespace Spryker\Zed\OfferGui\Dependency\Client;
 
-
 interface OfferGuiToSessionClientInterface
 {
     /**
-	 * @param string $name
-     * @param mixed  $value
+     * @param string $name
+     * @param mixed $value
      */
     public function set($name, $value);
 
-	/**
-	 * @param string $name    The attribute name
-     * @param mixed  $default The default value if not found
+    /**
+     * @param string $name The attribute name
+     * @param mixed $default The default value if not found
      *
      * @return mixed
      */

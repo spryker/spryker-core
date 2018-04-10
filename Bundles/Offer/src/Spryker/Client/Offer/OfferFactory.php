@@ -7,10 +7,10 @@
 
 namespace Spryker\Client\Offer;
 
-use Spryker\Client\Offer\Model\Hydrator\OfferHydrator;
-use Spryker\Client\Offer\Model\Hydrator\OfferHydratorInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Offer\Dependency\Client\OfferToCustomerClientInterface;
+use Spryker\Client\Offer\Model\Hydrator\OfferHydrator;
+use Spryker\Client\Offer\Model\Hydrator\OfferHydratorInterface;
 use Spryker\Client\Offer\Zed\OfferStub;
 
 class OfferFactory extends AbstractFactory

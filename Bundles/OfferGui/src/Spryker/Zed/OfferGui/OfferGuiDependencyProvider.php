@@ -8,7 +8,6 @@
 namespace Spryker\Zed\OfferGui;
 
 use Orm\Zed\Offer\Persistence\SpyOfferQuery;
-use Spryker\Zed\Customer\Communication\Plugin\Sales\CustomerOrderHydratePlugin;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\OfferGui\Dependency\Client\OfferGuiToSessionClientBridge;
@@ -78,9 +77,9 @@ class OfferGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function addCurrencyFacade(Container $container): Container
     {
@@ -92,9 +91,9 @@ class OfferGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function addSessionClient(Container $container): Container
     {
@@ -106,9 +105,9 @@ class OfferGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function addMessengerFacade(Container $container): Container
     {

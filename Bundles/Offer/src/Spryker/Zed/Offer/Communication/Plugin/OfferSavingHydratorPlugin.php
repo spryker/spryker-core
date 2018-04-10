@@ -7,11 +7,8 @@
 
 namespace Spryker\Zed\Offer\Communication\Plugin;
 
-use ArrayObject;
 use Generated\Shared\Transfer\OfferTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Kernel\Locator;
-use Spryker\Zed\Messenger\Business\MessengerFacadeInterface;
 use Spryker\Zed\OfferExtension\Dependency\Plugin\OfferHydratorPluginInterface;
 
 /**
@@ -21,6 +18,7 @@ use Spryker\Zed\OfferExtension\Dependency\Plugin\OfferHydratorPluginInterface;
 class OfferSavingHydratorPlugin extends AbstractPlugin implements OfferHydratorPluginInterface
 {
     /**OfferToMessengerFacadeBridge.php
+     *
      * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
      *
      * @return \Generated\Shared\Transfer\OfferTransfer

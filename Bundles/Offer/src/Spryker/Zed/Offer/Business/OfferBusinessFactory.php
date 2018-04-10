@@ -10,14 +10,11 @@ namespace Spryker\Zed\Offer\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Offer\Business\Model\Hydrator\OfferSavingAmountHydrator;
 use Spryker\Zed\Offer\Business\Model\Hydrator\OfferSavingAmountHydratorInterface;
-use Spryker\Zed\Offer\Business\Model\OfferConverter;
-use Spryker\Zed\Offer\Business\Model\OfferConverterInterface;
 use Spryker\Zed\Offer\Business\Model\OfferGrandTotalCalculator;
 use Spryker\Zed\Offer\Business\Model\OfferGrandTotalCalculatorInterface;
 use Spryker\Zed\Offer\Business\Model\OfferItemSubtotalAggregator;
 use Spryker\Zed\Offer\Business\Model\OfferItemSubtotalAggregatorInterface;
 use Spryker\Zed\Offer\Business\Model\OfferPluginExecutor;
-use Spryker\Zed\Offer\Business\Model\OfferPluginExecutorInterface;
 use Spryker\Zed\Offer\Business\Model\OfferReader;
 use Spryker\Zed\Offer\Business\Model\OfferReaderInterface;
 use Spryker\Zed\Offer\Business\Model\OfferWriter;
@@ -25,9 +22,7 @@ use Spryker\Zed\Offer\Business\Model\OfferWriterInterface;
 use Spryker\Zed\Offer\Dependency\Facade\OfferToCartFacadeInterface;
 use Spryker\Zed\Offer\Dependency\Facade\OfferToMessengerFacadeInterface;
 use Spryker\Zed\Offer\Dependency\Facade\OfferToSalesFacadeInterface;
-use Spryker\Zed\Offer\Dependency\Plugin\OfferDoUpdatePluginInterface;
 use Spryker\Zed\Offer\OfferDependencyProvider;
-use Spryker\Zed\OfferExtension\Dependency\Plugin\OfferHydratorPluginInterface;
 
 /**
  * @method \Spryker\Zed\Offer\OfferConfig getConfig()
@@ -99,7 +94,7 @@ class OfferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return OfferHydratorPluginInterface[]
+     * @return \Spryker\Zed\OfferExtension\Dependency\Plugin\OfferHydratorPluginInterface[]
      */
     public function getOfferHydratorPlugins(): array
     {
@@ -107,7 +102,7 @@ class OfferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return OfferDoUpdatePluginInterface[]
+     * @return \Spryker\Zed\Offer\Dependency\Plugin\OfferDoUpdatePluginInterface[]
      */
     public function getOfferDoUpdatePlugins(): array
     {
@@ -131,8 +126,8 @@ class OfferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-      * @return OfferGrandTotalCalculatorInterface
-      */
+     * @return \Spryker\Zed\Offer\Business\Model\OfferGrandTotalCalculatorInterface
+     */
     public function createOfferGrandTotalCalculator(): OfferGrandTotalCalculatorInterface
     {
         return new OfferGrandTotalCalculator();

@@ -10,7 +10,6 @@ namespace Spryker\Zed\Offer\Persistence\Mapper;
 use Generated\Shared\Transfer\OfferTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpyOfferEntityTransfer;
-use Spryker\Service\UtilEncoding\UtilEncodingServiceInterface;
 use Spryker\Zed\Offer\Dependency\Service\OfferToUtilEncodingServiceInterface;
 
 class OfferMapper implements OfferMapperInterface
@@ -125,7 +124,7 @@ class OfferMapper implements OfferMapperInterface
             'payments',
             'shipment',
             'bundle_items',
-            'checkout_confirmed'
+            'checkout_confirmed',
         ];
 
         return $fieldsToPersist;

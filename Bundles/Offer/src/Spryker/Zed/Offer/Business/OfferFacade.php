@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\OfferListTransfer;
 use Generated\Shared\Transfer\OfferResponseTransfer;
 use Generated\Shared\Transfer\OfferTransfer;
-use Generated\Shared\Transfer\OrderListTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -71,9 +70,11 @@ class OfferFacade extends AbstractFacade implements OfferFacadeInterface
     /**
      * {@inheritdoc}
      *
-     * @param OfferTransfer $offerTransfer
+     * @api
      *
-     * @return OfferResponseTransfer
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
+     *
+     * @return \Generated\Shared\Transfer\OfferResponseTransfer
      */
     public function placeOffer(OfferTransfer $offerTransfer): OfferResponseTransfer
     {
@@ -87,9 +88,9 @@ class OfferFacade extends AbstractFacade implements OfferFacadeInterface
      *
      * @api
      *
-     * @param OfferTransfer $offerTransfer
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
      *
-     * @return OfferResponseTransfer
+     * @return \Generated\Shared\Transfer\OfferResponseTransfer
      */
     public function updateOffer(OfferTransfer $offerTransfer): OfferResponseTransfer
     {
@@ -135,7 +136,7 @@ class OfferFacade extends AbstractFacade implements OfferFacadeInterface
      *
      * @api
      *
-     * @param CalculableObjectTransfer $calculableObjectTransfer
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
      * @return void
      */

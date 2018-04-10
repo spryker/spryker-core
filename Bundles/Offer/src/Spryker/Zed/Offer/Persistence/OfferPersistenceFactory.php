@@ -38,7 +38,7 @@ class OfferPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return OfferToUtilEncodingServiceInterface
+     * @return \Spryker\Zed\Offer\Dependency\Service\OfferToUtilEncodingServiceInterface
      */
     public function getUtilEncodingService(): OfferToUtilEncodingServiceInterface
     {
