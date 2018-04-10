@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\Offer\Business;
 
+use Bundles\Offer\src\Spryker\Zed\Offer\Business\Model\Hydrator\OfferQuoteExpander;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Offer\Business\Model\Hydrator\OfferQuoteExpanderInterface;
 use Spryker\Zed\Offer\Business\Model\Hydrator\OfferSavingAmountHydrator;
 use Spryker\Zed\Offer\Business\Model\Hydrator\OfferSavingAmountHydratorInterface;
 use Spryker\Zed\Offer\Business\Model\OfferGrandTotalCalculator;
@@ -20,6 +22,7 @@ use Spryker\Zed\Offer\Business\Model\OfferReaderInterface;
 use Spryker\Zed\Offer\Business\Model\OfferWriter;
 use Spryker\Zed\Offer\Business\Model\OfferWriterInterface;
 use Spryker\Zed\Offer\Dependency\Facade\OfferToCartFacadeInterface;
+use Spryker\Zed\Offer\Dependency\Facade\OfferToCustomerFacadeInterface;
 use Spryker\Zed\Offer\Dependency\Facade\OfferToMessengerFacadeInterface;
 use Spryker\Zed\Offer\Dependency\Facade\OfferToSalesFacadeInterface;
 use Spryker\Zed\Offer\OfferDependencyProvider;
@@ -74,6 +77,14 @@ class OfferBusinessFactory extends AbstractBusinessFactory
         );
     }
 
+    public function createOfferQuoteExpander(): OfferQuoteExpanderInterface
+    {
+        return new OfferQuoteExpander(
+            $this->getCustomerFacade(),
+            $this->createOfferReader()
+        );
+    }
+
     /**
      * @return \Spryker\Zed\Offer\Business\Model\Hydrator\OfferSavingAmountHydratorInterface
      */
@@ -99,6 +110,14 @@ class OfferBusinessFactory extends AbstractBusinessFactory
     public function getOfferHydratorPlugins(): array
     {
         return $this->getProvidedDependency(OfferDependencyProvider::PLUGINS_OFFER_HYDRATOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\Offer\Dependency\Facade\OfferToCustomerFacadeInterface
+     */
+    public function getCustomerFacade(): OfferToCustomerFacadeInterface
+    {
+        return $this->getProvidedDependency(OfferDependencyProvider::FACADE_CUSTOMER);
     }
 
     /**

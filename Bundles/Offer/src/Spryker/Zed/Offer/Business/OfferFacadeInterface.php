@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\OfferListTransfer;
 use Generated\Shared\Transfer\OfferResponseTransfer;
 use Generated\Shared\Transfer\OfferTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface OfferFacadeInterface
 {
@@ -114,4 +115,12 @@ interface OfferFacadeInterface
      * @return void
      */
     public function recalculateGrandTotal(CalculableObjectTransfer $calculableObjectTransfer): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param int $idOffer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function expandQuoteUsingOffer(QuoteTransfer $quoteTransfer, int $idOffer): QuoteTransfer;
 }

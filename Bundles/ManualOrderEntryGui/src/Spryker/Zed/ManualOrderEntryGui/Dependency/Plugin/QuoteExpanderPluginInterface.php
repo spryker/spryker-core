@@ -5,7 +5,7 @@ namespace Spryker\Zed\ManualOrderEntryGui\Dependency\Plugin;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Symfony\Component\HttpFoundation\Request;
 
-interface QuoteInitializerPluginInterface
+interface QuoteExpanderPluginInterface
 {
     /**
      * Communication layer plugins which allow to start manual order entry with an existing quote
@@ -18,5 +18,5 @@ interface QuoteInitializerPluginInterface
      *
      * @return QuoteTransfer|null
      */
-    public function initializeQuote(Request $request): ?QuoteTransfer;
+    public function expand(QuoteTransfer $quoteTransfer, Request $request): ?QuoteTransfer;
 }

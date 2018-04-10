@@ -21,7 +21,7 @@ use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToMoney
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToPaymentFacadeBridge;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToProductFacadeBridge;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToShipmentFacadeBridge;
-use Spryker\Zed\ManualOrderEntryGui\Dependency\Plugin\QuoteInitializerPluginInterface;
+use Spryker\Zed\ManualOrderEntryGui\Dependency\Plugin\QuoteExpanderPluginInterface;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\QueryContainer\ManualOrderEntryGuiToCustomerQueryContainerBridge;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Service\ManualOrderEntryGuiToStoreBridge;
 
@@ -46,7 +46,7 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
     public const STORE = 'STORE';
 
     public const PLUGINS_MANUAL_ORDER_ENTRY_FORM = 'PLUGINS_MANUAL_ORDER_ENTRY_FORM';
-    public const PLUGINS_QUOTE_INITIALIZER = 'PLUGINS_QUOTE_INITIALIZER';
+    public const PLUGINS_QUOTE_EXPANDER = 'PLUGINS_QUOTE_EXPANDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -73,7 +73,7 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
         $container = $this->addCustomerQueryContainer($container);
         $container = $this->addStore($container);
         $container = $this->addManualOrderEntryFormPlugins($container);
-        $container = $this->addQuoteInitializerPlugins($container);
+        $container = $this->addQuoteExpanderPlugins($container);
 
         return $container;
     }
@@ -309,19 +309,19 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
      *
      * @return Container
      */
-    protected function addQuoteInitializerPlugins(Container $container)
+    protected function addQuoteExpanderPlugins(Container $container)
     {
-        $container[static::PLUGINS_QUOTE_INITIALIZER] = function (Container $container) {
-            return $this->getQuoteInitializerPlugins();
+        $container[static::PLUGINS_QUOTE_EXPANDER] = function (Container $container) {
+            return $this->getQuoteExpanderPlugins();
         };
 
         return $container;
     }
 
     /**
-     * @return QuoteInitializerPluginInterface[]
+     * @return QuoteExpanderPluginInterface[]
      */
-    protected function getQuoteInitializerPlugins()
+    protected function getQuoteExpanderPlugins()
     {
         return [];
     }

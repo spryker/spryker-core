@@ -9,7 +9,7 @@ namespace Spryker\Zed\OfferGui\Communication\Controller;
 
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\OfferGui\Communication\Plugin\ManualOrderEntryGui\OfferQuoteInitializerPlugin;
+use Spryker\Zed\OfferGui\Communication\Plugin\ManualOrderEntryGui\OfferQuoteExpanderPlugin;
 use Symfony\Component\HttpFoundation\Request;
 
 class PlaceOrderController extends AbstractController
@@ -28,7 +28,7 @@ class PlaceOrderController extends AbstractController
 
         $redirectUrl = Url::generate(
             static::URL_ORDER_ENTRY,
-            [OfferQuoteInitializerPlugin::PARAM_ID_OFFER => $idOffer]
+            [OfferQuoteExpanderPlugin::PARAM_ID_OFFER => $idOffer]
         )->build();
 
         return $this->redirectResponse($redirectUrl);

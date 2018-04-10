@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\OfferListTransfer;
 use Generated\Shared\Transfer\OfferResponseTransfer;
 use Generated\Shared\Transfer\OfferTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -145,5 +146,16 @@ class OfferFacade extends AbstractFacade implements OfferFacadeInterface
         $this->getFactory()
             ->createOfferGrandTotalCalculator()
             ->recalculateGrandTotal($calculableObjectTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param int $idOffer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function expandQuoteUsingOffer(QuoteTransfer $quoteTransfer, int $idOffer): QuoteTransfer
+    {
+        return $this->getFactory()->createOfferQuoteExpander()->expand($quoteTransfer, $idOffer);
     }
 }
