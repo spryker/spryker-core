@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\Customer;
 
+use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -55,7 +57,7 @@ class CustomersListType extends AbstractType
     protected function addCustomerField(FormBuilderInterface $builder, array $customerList, string $value = null)
     {
         $builder->add(static::FIELD_CUSTOMER, Select2ComboBoxType::class, [
-            'property_path' => static::FIELD_CUSTOMER,
+            'property_path' => QuoteTransfer::CUSTOMER . '.' . CustomerTransfer::ID_CUSTOMER,
             'label' => 'Select Customer',
             'choices' => array_flip($customerList),
             'choices_as_values' => true,

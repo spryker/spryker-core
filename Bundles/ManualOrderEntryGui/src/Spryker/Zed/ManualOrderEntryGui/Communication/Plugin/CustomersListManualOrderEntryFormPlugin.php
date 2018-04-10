@@ -57,8 +57,7 @@ class CustomersListManualOrderEntryFormPlugin extends AbstractPlugin implements 
      */
     public function handleData(QuoteTransfer $quoteTransfer, &$form, Request $request): QuoteTransfer
     {
-        $customerTransfer = new CustomerTransfer();
-        $customerTransfer->setIdCustomer($quoteTransfer->getIdCustomer());
+        $customerTransfer = $quoteTransfer->getCustomer();
 
         $customerTransfer = $this->customerFacade->findCustomerById($customerTransfer);
         $quoteTransfer->setCustomer($customerTransfer);
@@ -73,8 +72,8 @@ class CustomersListManualOrderEntryFormPlugin extends AbstractPlugin implements 
      */
     public function isFormPreFilled(QuoteTransfer $quoteTransfer): bool
     {
-        if ($quoteTransfer->getIdCustomer()) {
-                return true;
+        if ($quoteTransfer->getCustomer() && $quoteTransfer->getCustomer()->getIdCustomer()) {
+            return true;
         }
 
         return false;

@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\Shipment;
 
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,7 +22,7 @@ class ShipmentType extends AbstractType
 {
     public const TYPE_NAME = 'shipments';
 
-    public const FIELD_SHIPMENT_METHOD = 'id_shipment_method';
+    public const FIELD_SHIPMENT_METHOD = 'idShipmentMethod';
 
     public const OPTION_SHIPMENT_METHODS_ARRAY = 'option-shipment-methods-array';
 
@@ -57,7 +60,7 @@ class ShipmentType extends AbstractType
     protected function addStoreField(FormBuilderInterface $builder, array $shipmentMethods)
     {
         $builder->add(static::FIELD_SHIPMENT_METHOD, Select2ComboBoxType::class, [
-            'property_path' => static::FIELD_SHIPMENT_METHOD,
+            'property_path' => QuoteTransfer::SHIPMENT . '.' . ShipmentTransfer::METHOD . '.' . ShipmentMethodTransfer::ID_SHIPMENT_METHOD,
             'label' => 'Selecting a shipment method',
             'choices' => array_flip($shipmentMethods),
             'choices_as_values' => true,

@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Shipment\ShipmentType;
 
 class ShipmentDataProvider implements FormDataProviderInterface
@@ -54,6 +56,13 @@ class ShipmentDataProvider implements FormDataProviderInterface
      */
     public function getData($quoteTransfer)
     {
+        if ($quoteTransfer->getShipment() === null) {
+            $quoteTransfer->setShipment(new ShipmentTransfer());
+        }
+        if ($quoteTransfer->getShipment()->getMethod() === null) {
+            $quoteTransfer->getShipment()->setMethod(new ShipmentMethodTransfer());
+        }
+
         return $quoteTransfer;
     }
 

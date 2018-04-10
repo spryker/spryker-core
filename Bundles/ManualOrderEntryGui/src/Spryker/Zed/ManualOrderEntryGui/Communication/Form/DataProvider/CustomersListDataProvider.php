@@ -59,17 +59,20 @@ class CustomersListDataProvider implements FormDataProviderInterface
      */
     public function getData($quoteTransfer)
     {
-        $value = $quoteTransfer->getIdCustomer();
+        // @todo @artem checkIt with
+        // https://spryker.atlassian.net/browse/CORE-3784
+        // Offer management in Zed
+        if ($quoteTransfer->getCustomer() === null) {
+            $quoteTransfer->setCustomer(new CustomerTransfer());
+        }
+
+        $value = $quoteTransfer->getCustomer()->getIdCustomer();
 
         if (!$value && $this->request->query->has(CustomersListType::FIELD_CUSTOMER)) {
             $value = $this->request->query->get(CustomersListType::FIELD_CUSTOMER);
         }
 
-        $quoteTransfer->setIdCustomer($value);
-
-        if ($quoteTransfer->getCustomer() === null) {
-            $quoteTransfer->setCustomer(new CustomerTransfer());
-        }
+        $quoteTransfer->getCustomer()->setIdCustomer($value);
 
         return $quoteTransfer;
     }
