@@ -39,4 +39,18 @@ interface ProductBundleClientInterface
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
     public function getItemsWithBundlesItems(QuoteTransfer $quoteTransfer): array;
+
+    /**
+     * Specification:
+     *  - Find bundled items in quote.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $sku
+     * @param string|null $groupKey
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function findBundleItemsInQuote(QuoteTransfer $quoteTransfer, $sku, $groupKey): array;
 }
