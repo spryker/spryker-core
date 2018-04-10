@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ManualOrderEntry\Communication\Controller;
 
+use Generated\Shared\Transfer\OrderSourceTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -28,7 +29,7 @@ class SalesController extends AbstractController
         $orderSourceTransfer = $this->getRepository()
             ->getOrderSourceById($orderTransfer->getFkOrderSource());
 
-        $orderSourceName = $orderSourceTransfer->getName() !== null ? $orderSourceTransfer->getName() : '-';
+        $orderSourceName = $this->getOrderSourceName($orderSourceTransfer);
 
         return $this->viewResponse([
             'orderSourceName' => $orderSourceName,
@@ -43,5 +44,16 @@ class SalesController extends AbstractController
     protected function getOrderTransfer(Request $request)
     {
         return $request->request->get('orderTransfer');
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderSourceTransfer $orderSourceTransfer
+     *
+     * @return string
+     */
+    protected function getOrderSourceName(OrderSourceTransfer $orderSourceTransfer): string
+    {
+        return $orderSourceTransfer->getName() !== null ?
+            $orderSourceTransfer->getName() : '-';
     }
 }

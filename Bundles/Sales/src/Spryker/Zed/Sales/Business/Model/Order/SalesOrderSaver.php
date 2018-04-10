@@ -60,9 +60,9 @@ class SalesOrderSaver implements SalesOrderSaverInterface
     protected $store;
 
     /**
-     * @var \Spryker\Zed\Sales\Dependency\Plugin\PreSaveOrderHydratePluginInterface[]
+     * @var \Spryker\Zed\Sales\Dependency\Plugin\OrderExpanderPreSavePluginInterface[]
      */
-    protected $preSaveHydrateOrderPlugins;
+    protected $orderExpanderPreSavePlugins;
 
     /**
      * @var \Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverPluginExecutorInterface
@@ -81,7 +81,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
      * @param \Spryker\Zed\Sales\SalesConfig $salesConfiguration
      * @param \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface $localeQueryContainer
      * @param \Spryker\Shared\Kernel\Store $store
-     * @param \Spryker\Zed\Sales\Dependency\Plugin\PreSaveOrderHydratePluginInterface[] $preSaveHydrateOrderPlugins
+     * @param \Spryker\Zed\Sales\Dependency\Plugin\OrderExpanderPreSavePluginInterface[] $orderExpanderPreSavePlugins
      * @param \Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverPluginExecutorInterface $salesOrderSaverPluginExecutor
      * @param \Spryker\Zed\Sales\Business\Model\OrderItem\SalesOrderItemMapperInterface $salesOrderItemMapper
      */
@@ -92,7 +92,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
         SalesConfig $salesConfiguration,
         LocaleQueryContainerInterface $localeQueryContainer,
         Store $store,
-        $preSaveHydrateOrderPlugins,
+        $orderExpanderPreSavePlugins,
         SalesOrderSaverPluginExecutorInterface $salesOrderSaverPluginExecutor,
         SalesOrderItemMapperInterface $salesOrderItemMapper
     ) {
@@ -102,7 +102,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
         $this->salesConfiguration = $salesConfiguration;
         $this->localeQueryContainer = $localeQueryContainer;
         $this->store = $store;
-        $this->preSaveHydrateOrderPlugins = $preSaveHydrateOrderPlugins;
+        $this->orderExpanderPreSavePlugins = $orderExpanderPreSavePlugins;
         $this->salesOrderSaverPluginExecutor = $salesOrderSaverPluginExecutor;
         $this->salesOrderItemMapper = $salesOrderItemMapper;
     }
@@ -266,8 +266,8 @@ class SalesOrderSaver implements SalesOrderSaverInterface
         $salesOrderEntityTransfer = new SpySalesOrderEntityTransfer();
         $salesOrderEntityTransfer->fromArray($salesOrderEntity->toArray(), true);
 
-        foreach ($this->preSaveHydrateOrderPlugins as $preSaveHydrateOrderPlugin) {
-            $salesOrderEntityTransfer = $preSaveHydrateOrderPlugin->hydrate($salesOrderEntityTransfer, $quoteTransfer);
+        foreach ($this->orderExpanderPreSavePlugins as $preSaveHydrateOrderPlugin) {
+            $salesOrderEntityTransfer = $preSaveHydrateOrderPlugin->expand($salesOrderEntityTransfer, $quoteTransfer);
         }
 
         $salesOrderEntity->fromArray($salesOrderEntityTransfer->modifiedToArray());

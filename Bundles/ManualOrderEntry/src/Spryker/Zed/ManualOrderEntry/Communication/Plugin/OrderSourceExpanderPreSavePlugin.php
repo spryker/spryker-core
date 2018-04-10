@@ -10,12 +10,12 @@ namespace Spryker\Zed\ManualOrderEntry\Communication\Plugin;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpySalesOrderEntityTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Sales\Dependency\Plugin\PreSaveOrderHydratePluginInterface;
+use Spryker\Zed\Sales\Dependency\Plugin\OrderExpanderPreSavePluginInterface;
 
 /**
  * @method \Spryker\Zed\ManualOrderEntry\Business\ManualOrderEntryFacadeInterface getFacade()
  */
-class OrderSourceHydratorPlugin extends AbstractPlugin implements PreSaveOrderHydratePluginInterface
+class OrderSourceExpanderPreSavePlugin extends AbstractPlugin implements OrderExpanderPreSavePluginInterface
 {
     /**
      * Specification:
@@ -28,7 +28,7 @@ class OrderSourceHydratorPlugin extends AbstractPlugin implements PreSaveOrderHy
      *
      * @return \Generated\Shared\Transfer\SpySalesOrderEntityTransfer
      */
-    public function hydrate(SpySalesOrderEntityTransfer $salesOrderEntityTransfer, QuoteTransfer $quoteTransfer): SpySalesOrderEntityTransfer
+    public function expand(SpySalesOrderEntityTransfer $salesOrderEntityTransfer, QuoteTransfer $quoteTransfer): SpySalesOrderEntityTransfer
     {
         return $this->getFacade()->hydrateOrderSource($salesOrderEntityTransfer, $quoteTransfer);
     }

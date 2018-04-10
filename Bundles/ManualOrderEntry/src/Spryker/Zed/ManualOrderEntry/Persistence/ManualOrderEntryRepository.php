@@ -25,13 +25,13 @@ class ManualOrderEntryRepository extends AbstractRepository implements ManualOrd
     public function getOrderSourceById($idOrderSource): OrderSourceTransfer
     {
         $query = $this->getFactory()->createOrderSourceQuery();
-        $orderSource = $query->filterByIdOrderSource($idOrderSource)
+        $orderSourceEntity = $query->filterByIdOrderSource($idOrderSource)
             ->findOne();
 
         $orderSourceTransfer = new OrderSourceTransfer();
-        if ($orderSource) {
-            $orderSourceTransfer->setIdOrderSource($orderSource->getIdOrderSource());
-            $orderSourceTransfer->setName($orderSource->getName());
+        if ($orderSourceEntity) {
+            $orderSourceTransfer->setIdOrderSource($orderSourceEntity->getIdOrderSource());
+            $orderSourceTransfer->setName($orderSourceEntity->getName());
         }
 
         return $orderSourceTransfer;
@@ -45,12 +45,12 @@ class ManualOrderEntryRepository extends AbstractRepository implements ManualOrd
     public function getAllOrderSources(): array
     {
         $query = $this->getFactory()->createOrderSourceQuery();
-        $orderSources = $query->find();
+        $orderSourceEntities = $query->find();
         $orderSourceTransfers = [];
 
-        foreach ($orderSources as $orderSource) {
+        foreach ($orderSourceEntities as $orderSourceEntity) {
             $orderSourceTransfer = new OrderSourceTransfer();
-            $orderSourceTransfer->fromArray($orderSource->toArray(), true);
+            $orderSourceTransfer->fromArray($orderSourceEntity->toArray(), true);
 
             $orderSourceTransfers[] = $orderSourceTransfer;
         }

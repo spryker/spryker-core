@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ManualOrderEntry\Business\Model\OrderSource;
 
+use Generated\Shared\Transfer\OrderSourceTransfer;
+
 interface OrderSourceReaderInterface
 {
     /**
@@ -14,10 +16,10 @@ interface OrderSourceReaderInterface
      *
      * @return \Generated\Shared\Transfer\OrderSourceTransfer
      */
-    public function getOrderSourceById($idOrderSource);
+    public function getOrderSourceById($idOrderSource): OrderSourceTransfer;
 
     /**
      * @return \Generated\Shared\Transfer\OrderSourceTransfer[]
      */
-    public function getAllOrderSources();
+    public function getAllOrderSources(): array;
 }

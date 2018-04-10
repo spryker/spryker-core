@@ -25,7 +25,7 @@ class ManualOrderEntryGuiToManualOrderEntryFacadeBridge implements ManualOrderEn
     /**
      * @param int $idOrderSource
      *
-     * @return \Generated\Shared\Transfer\OrderSourceTransfer|null
+     * @return \Generated\Shared\Transfer\OrderSourceTransfer
      */
     public function getOrderSourceById($idOrderSource)
     {

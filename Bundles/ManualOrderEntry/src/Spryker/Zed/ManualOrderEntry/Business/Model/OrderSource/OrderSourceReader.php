@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ManualOrderEntry\Business\Model\OrderSource;
 
+use Generated\Shared\Transfer\OrderSourceTransfer;
 use Spryker\Zed\ManualOrderEntry\Persistence\ManualOrderEntryRepositoryInterface;
 
 class OrderSourceReader implements OrderSourceReaderInterface
@@ -30,7 +31,7 @@ class OrderSourceReader implements OrderSourceReaderInterface
      *
      * @return \Generated\Shared\Transfer\OrderSourceTransfer
      */
-    public function getOrderSourceById($idOrderSource)
+    public function getOrderSourceById($idOrderSource): OrderSourceTransfer
     {
         $orderSourceTransfer = $this->manualOrderEntryRepository
             ->getOrderSourceById($idOrderSource);
@@ -41,7 +42,7 @@ class OrderSourceReader implements OrderSourceReaderInterface
     /**
      * @return \Generated\Shared\Transfer\OrderSourceTransfer[]
      */
-    public function getAllOrderSources()
+    public function getAllOrderSources(): array
     {
         return $this->manualOrderEntryRepository->getAllOrderSources();
     }

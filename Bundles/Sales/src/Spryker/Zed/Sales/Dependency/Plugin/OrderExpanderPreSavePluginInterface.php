@@ -10,7 +10,7 @@ namespace Spryker\Zed\Sales\Dependency\Plugin;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpySalesOrderEntityTransfer;
 
-interface PreSaveOrderHydratePluginInterface
+interface OrderExpanderPreSavePluginInterface
 {
     /**
      * Specification:
@@ -23,5 +23,5 @@ interface PreSaveOrderHydratePluginInterface
      *
      * @return \Generated\Shared\Transfer\SpySalesOrderEntityTransfer
      */
-    public function hydrate(SpySalesOrderEntityTransfer $spySalesOrderEntityTransfer, QuoteTransfer $quoteTransfer): SpySalesOrderEntityTransfer;
+    public function expand(SpySalesOrderEntityTransfer $spySalesOrderEntityTransfer, QuoteTransfer $quoteTransfer): SpySalesOrderEntityTransfer;
 }
