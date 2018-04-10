@@ -26,25 +26,6 @@ class OfferQuoteItemStockHydratorPlugin extends AbstractPlugin implements OfferH
      */
     public function hydrateOffer(OfferTransfer $offerTransfer): OfferTransfer
     {
-        $offerTransfer->requireQuote();
-
-        $quoteTransfer = $offerTransfer->getQuote();
-        $storeTransfer = $quoteTransfer->getStore();
-
-        $storeTransfer = $this->getFactory()
-            ->getStoreFacade()
-            ->getStoreByName($storeTransfer->getName());
-
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $stock = $this->getFacade()
-                ->calculateStockForProductWithStore(
-                    $itemTransfer->getSku(),
-                    $storeTransfer
-                );
-
-            $itemTransfer->setStock($stock);
-        }
-
-        return $offerTransfer;
+        return $this->getFacade()->hydrateOfferWithQuoteItemStock($offerTransfer);
     }
 }
