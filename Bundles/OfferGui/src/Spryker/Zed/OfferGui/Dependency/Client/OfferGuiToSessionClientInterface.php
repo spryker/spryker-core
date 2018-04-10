@@ -12,6 +12,8 @@ interface OfferGuiToSessionClientInterface
     /**
      * @param string $name
      * @param mixed $value
+     *
+     * @return void
      */
     public function set($name, $value);
 
@@ -19,7 +21,7 @@ interface OfferGuiToSessionClientInterface
      * @param string $name The attribute name
      * @param mixed $default The default value if not found
      *
-     * @return mixed
+     * @return string
      */
     public function get($name, $default = null);
 }
