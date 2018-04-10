@@ -8,13 +8,13 @@
 namespace Spryker\Client\Cart\QuoteStorageStrategy;
 
 use Spryker\Client\Cart\Dependency\Client\CartToQuoteInterface;
-use Spryker\Client\Cart\Dependency\Plugin\QuoteStorageStrategyPluginInterface;
 use Spryker\Client\Cart\Exception\QuoteStorageStrategyPluginNotFound;
+use Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface;
 
 class QuoteStorageStrategyProvider implements QuoteStorageStrategyProviderInterface
 {
     /**
-     * @var \Spryker\Client\Cart\Dependency\Plugin\QuoteStorageStrategyPluginInterface[]
+     * @var \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface[]
      */
     protected $quoteStorageStrategyPlugins;
 
@@ -25,7 +25,7 @@ class QuoteStorageStrategyProvider implements QuoteStorageStrategyProviderInterf
 
     /**
      * @param \Spryker\Client\Cart\Dependency\Client\CartToQuoteInterface $quoteClient
-     * @param \Spryker\Client\Cart\Dependency\Plugin\QuoteStorageStrategyPluginInterface[] $quoteStorageStrategyPlugins
+     * @param \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface[] $quoteStorageStrategyPlugins
      */
     public function __construct(CartToQuoteInterface $quoteClient, array $quoteStorageStrategyPlugins)
     {
@@ -36,7 +36,7 @@ class QuoteStorageStrategyProvider implements QuoteStorageStrategyProviderInterf
     /**
      * @throws \Spryker\Client\Cart\Exception\QuoteStorageStrategyPluginNotFound
      *
-     * @return \Spryker\Client\Cart\Dependency\Plugin\QuoteStorageStrategyPluginInterface
+     * @return \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface
      */
     public function provideStorage(): QuoteStorageStrategyPluginInterface
     {

@@ -7,12 +7,12 @@
 
 namespace Spryker\Client\Cart\QuoteStorageStrategy;
 
-use Spryker\Client\Cart\Dependency\Plugin\QuoteStorageStrategyPluginInterface;
+use Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface;
 
 interface QuoteStorageStrategyProviderInterface
 {
     /**
-     * @return \Spryker\Client\Cart\Dependency\Plugin\QuoteStorageStrategyPluginInterface
+     * @return \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface
      */
     public function provideStorage(): QuoteStorageStrategyPluginInterface;
 }

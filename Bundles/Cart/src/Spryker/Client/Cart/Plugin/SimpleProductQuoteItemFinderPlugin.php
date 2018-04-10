@@ -9,7 +9,7 @@ namespace Spryker\Client\Cart\Plugin;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Client\Cart\Dependency\Plugin\QuoteItemFinderPluginInterface;
+use Spryker\Client\CartExtension\Dependency\Plugin\QuoteItemFinderPluginInterface;
 
 class SimpleProductQuoteItemFinderPlugin implements QuoteItemFinderPluginInterface
 {

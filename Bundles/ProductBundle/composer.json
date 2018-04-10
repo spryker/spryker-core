@@ -25,7 +25,6 @@
     "spryker/checkout": "*",
     "spryker/code-sniffer": "*",
     "spryker/oms": "*",
-    "spryker/persistent-cart": "*",
     "spryker/propel": "*",
     "spryker/sales-aggregator": "*",
     "spryker/silex": "*",
@@ -35,7 +34,6 @@
     "spryker/calculation": "If you want to use Calculation plugins.",
     "spryker/cart": "If you want to use Cart plugins.",
     "spryker/checkout": "If you want to use Checkout plugins.",
-    "spryker/persistent-cart": "If you want to use PersistentCart plugins.",
     "spryker/oms": "If you want to use Oms plugins.",
     "spryker/sales-aggregator": "If you want to use SalesAggregator plugins."
   },

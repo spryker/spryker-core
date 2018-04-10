@@ -13,11 +13,11 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Cart\CartChangeRequestExpander\CartChangeRequestExpander;
 use Spryker\Client\Cart\CartClient;
 use Spryker\Client\Cart\Dependency\Client\CartToQuoteInterface;
-use Spryker\Client\Cart\Dependency\Plugin\QuoteStorageStrategyPluginInterface;
 use Spryker\Client\Cart\Plugin\ItemCountPlugin;
 use Spryker\Client\Cart\Plugin\SessionQuoteStorageStrategyPlugin;
 use Spryker\Client\Cart\Plugin\SimpleProductQuoteItemFinderPlugin;
 use Spryker\Client\Cart\Zed\CartStubInterface;
+use Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 
 /**
@@ -203,7 +203,7 @@ class CartClientTest extends Unit
     /**
      * @param \Spryker\Client\Cart\Dependency\Client\CartToQuoteInterface|null $quote
      * @param \Spryker\Client\Cart\Zed\CartStubInterface|null $cartStub
-     * @param \Spryker\Client\Cart\Dependency\Plugin\QuoteStorageStrategyPluginInterface|null $quoteStorageStrategyPlugin
+     * @param \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface|null $quoteStorageStrategyPlugin
      *
      * @return \PHPUnit_Framework_MockObject_MockObject
      */
@@ -249,7 +249,7 @@ class CartClientTest extends Unit
     /**
      * @param \PHPUnit_Framework_MockObject_MockObject $factoryMock
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Client\Cart\Dependency\Plugin\QuoteStorageStrategyPluginInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface
      */
     private function getSessionQuoteStorageStrategyPluginMock()
     {
