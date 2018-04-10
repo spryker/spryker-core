@@ -20,6 +20,11 @@ class OfferQuoteInitializerPlugin extends AbstractPlugin implements QuoteInitial
 {
     public const PARAM_ID_OFFER = 'id-offer';
 
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer|null
+     */
     public function initializeQuote(Request $request): ?QuoteTransfer
     {
         $idOffer = $request->get(static::PARAM_ID_OFFER);
