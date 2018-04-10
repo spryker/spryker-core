@@ -40,6 +40,16 @@ class PersistentCartToCartFacadeBridge implements PersistentCartToCartFacadeInte
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
+    public function addValid(CartChangeTransfer $cartChangeTransfer): QuoteTransfer
+    {
+        return $this->cartFacade->addValid($cartChangeTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
     public function remove(CartChangeTransfer $cartChangeTransfer)
     {
         return $this->cartFacade->remove($cartChangeTransfer);

@@ -66,6 +66,8 @@ class QuoteShareTest extends Unit
         $this->tester->setDependency(QuoteDependencyProvider::PLUGINS_QUOTE_UPDATE_AFTER, [
             new UpdateShareDetailsQuoteAfterSavePlugin(),
         ]);
+
+        $this->tester->getFacade()->installSharedCartPermissions();
     }
 
     /**
@@ -157,9 +159,9 @@ class QuoteShareTest extends Unit
     {
         $criteriaFilterTransfer = new QuotePermissionGroupCriteriaFilterTransfer();
         $criteriaFilterTransfer->setName($permissionQuoteGroupName);
+
         $quotePermissionGroupTransferList = $this->tester->getFacade()->getQuotePermissionGroupList($criteriaFilterTransfer);
-        foreach ($quotePermissionGroupTransferList->getQuotePermissionGroups() as $quotePermissionGroupTransfer) {
-            return $quotePermissionGroupTransfer;
-        }
+
+        return $quotePermissionGroupTransferList->getQuotePermissionGroups()->offsetGet(0);
     }
 }

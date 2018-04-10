@@ -8,6 +8,8 @@
 namespace Spryker\Client\CartNote;
 
 use Spryker\Client\CartNote\Dependency\Client\CartNoteToQuoteClientBridge;
+use Spryker\Client\CartNote\Plugin\QuoteItemFinderPlugin;
+use Spryker\Client\CartNoteExtension\Dependency\Plugin\QuoteItemFinderPluginInterface;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 
@@ -15,6 +17,7 @@ class CartNoteDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+    public const PLUGIN_QUOTE_ITEMS_FINDER = 'PLUGIN_QUOTE_ITEMS_FINDER';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -24,6 +27,7 @@ class CartNoteDependencyProvider extends AbstractDependencyProvider
     public function provideServiceLayerDependencies(Container $container)
     {
         $container = $this->addQuoteClient($container);
+        $container = $this->addQuoteItemsFinderPlugin($container);
         $container = $this->addZedRequestClient($container);
 
         return $container;
@@ -55,5 +59,27 @@ class CartNoteDependencyProvider extends AbstractDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addQuoteItemsFinderPlugin(Container $container): Container
+    {
+        $container[static::PLUGIN_QUOTE_ITEMS_FINDER] = function (Container $container) {
+            return $this->getQuoteItemsFinderPlugin();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Client\CartNoteExtension\Dependency\Plugin\QuoteItemFinderPluginInterface
+     */
+    protected function getQuoteItemsFinderPlugin(): QuoteItemFinderPluginInterface
+    {
+        return new QuoteItemFinderPlugin();
     }
 }

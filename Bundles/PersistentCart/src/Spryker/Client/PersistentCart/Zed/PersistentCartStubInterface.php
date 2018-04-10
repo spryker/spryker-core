@@ -28,6 +28,13 @@ interface PersistentCartStubInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
+    public function addValidItems(PersistentCartChangeTransfer $persistentCartChangeTransfer): QuoteResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     */
     public function removeItem(PersistentCartChangeTransfer $persistentCartChangeTransfer): QuoteResponseTransfer;
 
     /**
@@ -99,9 +106,4 @@ interface PersistentCartStubInterface
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function updateQuote(QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer): QuoteResponseTransfer;
-
-    /**
-     * @return void
-     */
-    public function addFlashMessagesFromLastZedRequest();
 }

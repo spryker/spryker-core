@@ -22,6 +22,7 @@ use Generated\Shared\Transfer\ShareDetailTransfer;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
+ * @method \Spryker\Zed\SharedCart\Business\SharedCartFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
  */

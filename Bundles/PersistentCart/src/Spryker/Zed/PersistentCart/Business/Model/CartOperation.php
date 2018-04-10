@@ -33,26 +33,26 @@ class CartOperation implements CartOperationInterface
     protected $quoteResolver;
 
     /**
-     * @var \Spryker\Zed\PersistentCart\Business\Model\QuoteItemOperationsInterface
+     * @var \Spryker\Zed\PersistentCart\Business\Model\QuoteItemOperationInterface
      */
-    protected $quoteItemOperations;
+    protected $quoteItemOperation;
 
     /**
      * @param \Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuoteItemFinderPluginInterface $itemFinderPlugin
      * @param \Spryker\Zed\PersistentCart\Business\Model\QuoteResponseExpanderInterface $quoteResponseExpander
      * @param \Spryker\Zed\PersistentCart\Business\Model\QuoteResolverInterface $quoteResolver
-     * @param \Spryker\Zed\PersistentCart\Business\Model\QuoteItemOperationsInterface $quoteItemOperations
+     * @param \Spryker\Zed\PersistentCart\Business\Model\QuoteItemOperationInterface $quoteItemOperations
      */
     public function __construct(
         QuoteItemFinderPluginInterface $itemFinderPlugin,
         QuoteResponseExpanderInterface $quoteResponseExpander,
         QuoteResolverInterface $quoteResolver,
-        QuoteItemOperationsInterface $quoteItemOperations
+        QuoteItemOperationInterface $quoteItemOperations
     ) {
         $this->quoteResponseExpander = $quoteResponseExpander;
         $this->itemFinderPlugin = $itemFinderPlugin;
         $this->quoteResolver = $quoteResolver;
-        $this->quoteItemOperations = $quoteItemOperations;
+        $this->quoteItemOperation = $quoteItemOperations;
     }
 
     /**
@@ -64,7 +64,7 @@ class CartOperation implements CartOperationInterface
     {
         $persistentCartChangeTransfer->requireCustomer();
         $quoteResponseTransfer = $this->quoteResolver->resolveCustomerQuote(
-            $persistentCartChangeTransfer->getIdQuote(),
+            (int)$persistentCartChangeTransfer->getIdQuote(),
             $persistentCartChangeTransfer->getCustomer()
         );
         if (!$quoteResponseTransfer->getIsSuccessful()) {
@@ -72,7 +72,27 @@ class CartOperation implements CartOperationInterface
         }
         $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
 
-        return $this->quoteItemOperations->addItems((array)$persistentCartChangeTransfer->getItems(), $quoteTransfer);
+        return $this->quoteItemOperation->addItems((array)$persistentCartChangeTransfer->getItems(), $quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function addValid(PersistentCartChangeTransfer $persistentCartChangeTransfer): QuoteResponseTransfer
+    {
+        $persistentCartChangeTransfer->requireCustomer();
+        $quoteResponseTransfer = $this->quoteResolver->resolveCustomerQuote(
+            (int)$persistentCartChangeTransfer->getIdQuote(),
+            $persistentCartChangeTransfer->getCustomer()
+        );
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return $quoteResponseTransfer;
+        }
+        $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
+
+        return $this->quoteItemOperation->addValidItems((array)$persistentCartChangeTransfer->getItems(), $quoteTransfer);
     }
 
     /**
@@ -96,7 +116,7 @@ class CartOperation implements CartOperationInterface
             $itemTransferList[] = $this->findItemInQuote($itemTransfer, $quoteTransfer);
         }
 
-        return $this->quoteItemOperations->removeItems($itemTransferList, $quoteTransfer);
+        return $this->quoteItemOperation->removeItems($itemTransferList, $quoteTransfer);
     }
 
     /**
@@ -125,7 +145,7 @@ class CartOperation implements CartOperationInterface
             return $quoteResponseTransfer;
         }
         if ($itemTransfer->getQuantity() === 0) {
-            return $this->quoteItemOperations->removeItems([$quoteItemTransfer], $quoteTransfer);
+            return $this->quoteItemOperation->removeItems([$quoteItemTransfer], $quoteTransfer);
         }
 
         $delta = abs($quoteItemTransfer->getQuantity() - $itemTransfer->getQuantity());
@@ -140,10 +160,10 @@ class CartOperation implements CartOperationInterface
         $changeItemTransfer = clone $quoteItemTransfer;
         $changeItemTransfer->setQuantity($delta);
         if ($quoteItemTransfer->getQuantity() > $itemTransfer->getQuantity()) {
-            return $this->quoteItemOperations->removeItems([$changeItemTransfer], $quoteTransfer);
+            return $this->quoteItemOperation->removeItems([$changeItemTransfer], $quoteTransfer);
         }
 
-        return $this->quoteItemOperations->addItems([$changeItemTransfer], $quoteTransfer);
+        return $this->quoteItemOperation->addItems([$changeItemTransfer], $quoteTransfer);
     }
 
     /**
@@ -173,7 +193,7 @@ class CartOperation implements CartOperationInterface
             $persistentCartChangeQuantityTransfer->getItem()->getQuantity()
         );
 
-        return $this->quoteItemOperations->removeItems([$itemTransfer], $quoteTransfer);
+        return $this->quoteItemOperation->removeItems([$itemTransfer], $quoteTransfer);
     }
 
     /**
@@ -203,7 +223,7 @@ class CartOperation implements CartOperationInterface
             $persistentCartChangeQuantityTransfer->getItem()->getQuantity()
         );
 
-        return $this->quoteItemOperations->addItems([$itemTransfer], $quoteTransfer);
+        return $this->quoteItemOperation->addItems([$itemTransfer], $quoteTransfer);
     }
 
     /**
@@ -224,7 +244,7 @@ class CartOperation implements CartOperationInterface
         $customerQuoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
         $quoteTransfer->fromArray($customerQuoteTransfer->modifiedToArray(), true);
 
-        return $this->quoteItemOperations->reloadItems($quoteTransfer);
+        return $this->quoteItemOperation->reloadItems($quoteTransfer);
     }
 
     /**
@@ -245,7 +265,7 @@ class CartOperation implements CartOperationInterface
         $customerQuoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
         $quoteTransfer->fromArray($customerQuoteTransfer->modifiedToArray(), true);
 
-        return $this->quoteItemOperations->validate($quoteTransfer);
+        return $this->quoteItemOperation->validate($quoteTransfer);
     }
 
     /**

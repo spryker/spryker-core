@@ -35,6 +35,16 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
+    public function addValidItemsAction(PersistentCartChangeTransfer $persistentCartChangeTransfer): QuoteResponseTransfer
+    {
+        return $this->getFacade()->addValid($persistentCartChangeTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
     public function removeItemAction(PersistentCartChangeTransfer $persistentCartChangeTransfer): QuoteResponseTransfer
     {
         return $this->getFacade()->remove($persistentCartChangeTransfer);

@@ -8,6 +8,7 @@
 namespace Spryker\Client\Cart;
 
 use ArrayObject;
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\AbstractClient;
@@ -78,6 +79,20 @@ class CartClient extends AbstractClient implements CartClientInterface
     public function storeQuote(QuoteTransfer $quoteTransfer)
     {
         $this->getQuoteClient()->setQuote($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function addValidItems(CartChangeTransfer $cartChangeTransfer): QuoteTransfer
+    {
+        return $this->getFactory()->getQuoteStorageStrategy()->addValidItems($cartChangeTransfer);
     }
 
     /**
@@ -220,7 +235,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function addFlashMessagesFromLastZedRequest()
     {
-        $this->getFactory()->createZedStub()->addFlashMessagesFromLastZedRequest();
+        $this->getFactory()->getZedRequestClient()->addFlashMessagesFromLastZedRequest();
     }
 
     /**

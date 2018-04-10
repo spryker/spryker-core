@@ -19,8 +19,6 @@ class CartNoteSaver implements CartNoteSaverInterface
     protected $cartNoteEntityManager;
 
     /**
-     * CartNotesSaver constructor.
-     *
      * @param \Spryker\Zed\CartNote\Persistence\CartNoteEntityManagerInterface $cartNoteEntityManager
      */
     public function __construct(CartNoteEntityManagerInterface $cartNoteEntityManager)

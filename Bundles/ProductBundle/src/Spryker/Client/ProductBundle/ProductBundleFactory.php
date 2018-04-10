@@ -13,6 +13,8 @@ use Spryker\Client\ProductBundle\QuoteChangeRequestExpander\QuoteChangeRequestEx
 use Spryker\Client\ProductBundle\QuoteChangeRequestExpander\QuoteChangeRequestExpanderInterface;
 use Spryker\Client\ProductBundle\QuoteItemFinder\BundleProductQuoteItemFinder;
 use Spryker\Client\ProductBundle\QuoteItemFinder\BundleProductQuoteItemFinderInterface;
+use Spryker\Client\ProductBundle\QuoteItemFinder\QuoteBundleItemsFinder;
+use Spryker\Client\ProductBundle\QuoteItemFinder\QuoteBundleItemsFinderInterface;
 
 class ProductBundleFactory extends AbstractFactory
 {
@@ -38,5 +40,13 @@ class ProductBundleFactory extends AbstractFactory
     public function createBundleProductQuoteItemFinder(): BundleProductQuoteItemFinderInterface
     {
         return new BundleProductQuoteItemFinder();
+    }
+
+    /**
+     * @return \Spryker\Client\ProductBundle\QuoteItemFinder\QuoteBundleItemsFinderInterface
+     */
+    public function createQuoteBundleItemsFinder(): QuoteBundleItemsFinderInterface
+    {
+        return new QuoteBundleItemsFinder();
     }
 }

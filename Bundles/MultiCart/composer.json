@@ -4,6 +4,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker/customer": "^7.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/messenger": "^3.0.0",
     "spryker/persistent-cart": "^0.0.1",
@@ -16,11 +17,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/customer": "*",
     "spryker/testify": "*"
-  },
-  "suggest": {
-    "spryker/customer": "If you want to save guest quote when customer logs in."
   },
   "autoload": {
     "psr-4": {

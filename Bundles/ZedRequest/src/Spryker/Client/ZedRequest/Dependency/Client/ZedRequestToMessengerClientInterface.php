@@ -14,19 +14,19 @@ interface ZedRequestToMessengerClientInterface
      *
      * @return void
      */
-    public function addInfoMessage($message);
-
-    /**
-     * @param string $message
-     *
-     * @return $this
-     */
-    public function addSuccessMessage($message);
+    public function addErrorMessage(string $message);
 
     /**
      * @param string $message
      *
      * @return void
      */
-    public function addErrorMessage($message);
+    public function addInfoMessage(string $message);
+
+    /**
+     * @param string $message
+     *
+     * @return void
+     */
+    public function addSuccessMessage(string $message);
 }

@@ -8,10 +8,12 @@
 namespace Spryker\Client\PersistentCart\Plugin;
 
 use ArrayObject;
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Cart\Dependency\Plugin\QuoteStorageStrategyPluginInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Shared\Quote\QuoteConfig;
@@ -59,6 +61,32 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
         $persistentCartChangeTransfer = $this->createPersistentCartChangeTransfer();
         
         foreach ($itemTransfers as $itemTransfer) {
+            $persistentCartChangeTransfer->addItem($itemTransfer);
+        }
+
+        $persistentCartChangeTransfer = $this->getFactory()
+            ->createChangeRequestExtendPluginExecutor()
+            ->executePlugins($persistentCartChangeTransfer, $params);
+
+        $quoteResponseTransfer = $this->getZedStub()->addItem($persistentCartChangeTransfer);
+
+        return $this->updateQuote($quoteResponseTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function addValidItems(CartChangeTransfer $cartChangeTransfer, array $params = []): QuoteTransfer
+    {
+        $persistentCartChangeTransfer = $this->createPersistentCartChangeTransfer();
+
+        foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             $persistentCartChangeTransfer->addItem($itemTransfer);
         }
 

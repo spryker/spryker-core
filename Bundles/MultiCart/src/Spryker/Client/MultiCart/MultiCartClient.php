@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\MultiCart;
 
-use Generated\Shared\Transfer\QuoteActivationRequestTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -38,21 +37,15 @@ class MultiCartClient extends AbstractClient implements MultiCartClientInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteActivationRequestTransfer $quoteActivationRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setDefaultQuote(QuoteActivationRequestTransfer $quoteActivationRequestTransfer): QuoteResponseTransfer
+    public function setDefaultQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        $quoteResponseTransfer = $this->getFactory()
-            ->createMultiCartZedStub()
-            ->setDefaultQuote($quoteActivationRequestTransfer);
-
-        $this->getFactory()
-            ->getZedRequestClient()
-            ->addFlashMessagesFromLastZedRequest();
-
-        return $quoteResponseTransfer;
+        return $this->getFactory()
+            ->createCartUpdater()
+            ->setDefaultQuote($quoteTransfer);
     }
 
     /**
@@ -120,12 +113,82 @@ class MultiCartClient extends AbstractClient implements MultiCartClientInterface
      *
      * @api
      *
-     * @return string
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function getDuplicatedQuoteNameSuffix(): string
+    public function createQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         return $this->getFactory()
-            ->getMultiCartConfig()
-            ->getDuplicatedQuoteNameSuffix();
+            ->createCartCreator()
+            ->createQuote($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function updateQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()
+            ->createCartUpdater()
+            ->updateQuote($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function deleteQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        $quoteTransfer->setCustomer(
+            $this->getFactory()->getCustomerClient()->getCustomer()
+        );
+
+        return $this->getFactory()
+            ->getPersistentCartClient()
+            ->deleteQuote($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function duplicateQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()
+            ->createCartCreator()
+            ->duplicateQuote($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function clearQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()
+            ->createCartUpdater()
+            ->clearQuote($quoteTransfer);
     }
 }

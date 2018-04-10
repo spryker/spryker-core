@@ -19,6 +19,8 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartItemG
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartPostSaveUpdate;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleImageCartExpander;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundlePreReloadUpdater;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\CartNote\QuoteBundleItemsFinder;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\CartNote\QuoteBundleItemsFinderInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Checkout\ProductBundleOrderSaver;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\ChangeRequestExpander;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\ChangeRequestExpanderInterface;
@@ -234,6 +236,14 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     public function createQuoteItemFinder(): QuoteItemFinderInterface
     {
         return new QuoteItemFinder();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\CartNote\QuoteBundleItemsFinderInterface
+     */
+    public function createQuoteBundleItemsFinder(): QuoteBundleItemsFinderInterface
+    {
+        return new QuoteBundleItemsFinder();
     }
 
     /**

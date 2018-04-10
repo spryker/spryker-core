@@ -19,6 +19,13 @@ interface CartStubInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
+    public function addValidItems(CartChangeTransfer $cartChangeTransfer): QuoteTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     */
     public function addItem(CartChangeTransfer $cartChangeTransfer);
 
     /**
@@ -48,11 +55,4 @@ interface CartStubInterface
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function validateQuote(QuoteTransfer $quoteTransfer);
-
-    /**
-     * TODO: this must go away once we have the new ZedRequestClient method for the same thing
-     *
-     * @return void
-     */
-    public function addFlashMessagesFromLastZedRequest();
 }

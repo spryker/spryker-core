@@ -83,7 +83,9 @@ class ZedRequestDependencyProvider extends AbstractDependencyProvider
     protected function addMessengerClient(Container $container)
     {
         $container[static::CLIENT_MESSENGER] = function (Container $container) {
-            return new ZedRequestToMessengerClientBridge($container->getLocator()->messenger()->client());
+            return new ZedRequestToMessengerClientBridge(
+                $container->getLocator()->messenger()->client()
+            );
         };
 
         return $container;

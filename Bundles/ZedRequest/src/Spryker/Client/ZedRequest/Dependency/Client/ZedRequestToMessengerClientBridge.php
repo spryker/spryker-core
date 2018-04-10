@@ -27,7 +27,17 @@ class ZedRequestToMessengerClientBridge implements ZedRequestToMessengerClientIn
      *
      * @return void
      */
-    public function addInfoMessage($message)
+    public function addErrorMessage(string $message)
+    {
+        $this->messengerClient->addErrorMessage($message);
+    }
+
+    /**
+     * @param string $message
+     *
+     * @return void
+     */
+    public function addInfoMessage(string $message)
     {
         $this->messengerClient->addInfoMessage($message);
     }
@@ -37,18 +47,8 @@ class ZedRequestToMessengerClientBridge implements ZedRequestToMessengerClientIn
      *
      * @return void
      */
-    public function addSuccessMessage($message)
+    public function addSuccessMessage(string $message)
     {
         $this->messengerClient->addSuccessMessage($message);
-    }
-
-    /**
-     * @param string $message
-     *
-     * @return void
-     */
-    public function addErrorMessage($message)
-    {
-        $this->messengerClient->addErrorMessage($message);
     }
 }

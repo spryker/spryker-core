@@ -43,6 +43,7 @@ class QuoteWriter implements QuoteWriterInterface
      */
     public function createQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
+        $quoteTransfer->setCustomerReference($quoteTransfer->getCustomer()->getCustomerReference());
         return $this->quoteResponseExpander->expand($this->quoteFacade->createQuote($quoteTransfer));
     }
 

@@ -79,13 +79,18 @@ class QuoteWriter implements QuoteWriterInterface
     {
         if ($quoteTransfer->getIdQuote()) {
             $quoteResponseTransfer = new QuoteResponseTransfer();
-            $quoteResponseTransfer->setCustomer($quoteTransfer->getCustomer());
-            $quoteResponseTransfer->setIsSuccessful(false);
+            $quoteResponseTransfer
+                ->setCustomer($quoteTransfer->getCustomer())
+                ->setIsSuccessful(false);
+
             return $quoteResponseTransfer;
         }
-        $this->addStoreToQuote($quoteTransfer);
 
-        return $this->executeCreateTransaction($quoteTransfer);
+        $quoteTransfer = $this->addStoreToQuote($quoteTransfer);
+
+        return $this->getTransactionHandler()->handleTransaction(function () use ($quoteTransfer) {
+            return $this->executeCreateTransaction($quoteTransfer);
+        });
     }
 
     /**
@@ -98,13 +103,18 @@ class QuoteWriter implements QuoteWriterInterface
         $quoteByIdTransfer = $this->quoteRepository->findQuoteById($quoteTransfer->getIdQuote());
         if (!$quoteByIdTransfer) {
             $quoteResponseTransfer = new QuoteResponseTransfer();
-            $quoteResponseTransfer->setCustomer($quoteTransfer->getCustomer());
-            $quoteResponseTransfer->setIsSuccessful(false);
+            $quoteResponseTransfer
+                ->setCustomer($quoteTransfer->getCustomer())
+                ->setIsSuccessful(false);
+
             return $quoteResponseTransfer;
         }
-        $this->addStoreToQuote($quoteTransfer);
 
-        return $this->executeUpdateTransaction($quoteTransfer);
+        $quoteTransfer = $this->addStoreToQuote($quoteTransfer);
+
+        return $this->getTransactionHandler()->handleTransaction(function () use ($quoteTransfer) {
+            return $this->executeUpdateTransaction($quoteTransfer);
+        });
     }
 
     /**
@@ -114,18 +124,17 @@ class QuoteWriter implements QuoteWriterInterface
      */
     protected function executeCreateTransaction(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        return $this->getTransactionHandler()->handleTransaction(function () use ($quoteTransfer) {
-            $quoteResponseTransfer = new QuoteResponseTransfer();
-            $quoteResponseTransfer->setCustomer($quoteTransfer->getCustomer());
-            $quoteResponseTransfer->setIsSuccessful(false);
-            $quoteTransfer = $this->quoteWriterPluginExecutor->executeCreateBeforePlugins($quoteTransfer);
-            $quoteTransfer = $this->quoteEntityManager->saveQuote($quoteTransfer);
-            $quoteTransfer = $this->quoteWriterPluginExecutor->executeCreateAfterPlugins($quoteTransfer);
-            $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
-            $quoteResponseTransfer->setIsSuccessful(true);
+        $quoteTransfer = $this->quoteWriterPluginExecutor->executeCreateBeforePlugins($quoteTransfer);
+        $quoteTransfer = $this->quoteEntityManager->saveQuote($quoteTransfer);
+        $quoteTransfer = $this->quoteWriterPluginExecutor->executeCreateAfterPlugins($quoteTransfer);
 
-            return $quoteResponseTransfer;
-        });
+        $quoteResponseTransfer = new QuoteResponseTransfer();
+        $quoteResponseTransfer
+            ->setCustomer($quoteTransfer->getCustomer())
+            ->setQuoteTransfer($quoteTransfer)
+            ->setIsSuccessful(true);
+
+        return $quoteResponseTransfer;
     }
 
     /**
@@ -135,36 +144,38 @@ class QuoteWriter implements QuoteWriterInterface
      */
     protected function executeUpdateTransaction(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        return $this->getTransactionHandler()->handleTransaction(function () use ($quoteTransfer) {
-            $quoteResponseTransfer = new QuoteResponseTransfer();
-            $quoteResponseTransfer->setCustomer($quoteTransfer->getCustomer());
-            $quoteResponseTransfer->setIsSuccessful(false);
-            $quoteTransfer = $this->quoteWriterPluginExecutor->executeUpdateBeforePlugins($quoteTransfer);
-            $quoteTransfer = $this->quoteEntityManager->saveQuote($quoteTransfer);
-            $quoteTransfer = $this->quoteWriterPluginExecutor->executeUpdateAfterPlugins($quoteTransfer);
-            $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
-            $quoteResponseTransfer->setIsSuccessful(true);
+        $quoteTransfer = $this->quoteWriterPluginExecutor->executeUpdateBeforePlugins($quoteTransfer);
+        $quoteTransfer = $this->quoteEntityManager->saveQuote($quoteTransfer);
+        $quoteTransfer = $this->quoteWriterPluginExecutor->executeUpdateAfterPlugins($quoteTransfer);
 
-            return $quoteResponseTransfer;
-        });
+        $quoteResponseTransfer = new QuoteResponseTransfer();
+        $quoteResponseTransfer->setCustomer($quoteTransfer->getCustomer())
+            ->setQuoteTransfer($quoteTransfer)
+            ->setIsSuccessful(true);
+
+        return $quoteResponseTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function addStoreToQuote(QuoteTransfer $quoteTransfer)
+    protected function addStoreToQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         if (!$quoteTransfer->getStore()) {
             $quoteTransfer->setStore($this->storeFacade->getCurrentStore());
 
-            return;
+            return $quoteTransfer;
         }
+
         if ($quoteTransfer->getStore()->getIdStore()) {
-            return;
+            return $quoteTransfer;
         }
+
         $store = $this->storeFacade->getStoreByName($quoteTransfer->getStore()->getName());
         $quoteTransfer->setStore($store);
+
+        return $quoteTransfer;
     }
 }

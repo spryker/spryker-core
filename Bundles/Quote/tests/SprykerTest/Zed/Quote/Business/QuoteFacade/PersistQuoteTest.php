@@ -14,6 +14,7 @@ use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\TotalsBuilder;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\Quote\Business\QuoteFacade;
 
@@ -75,9 +76,15 @@ class PersistQuoteTest extends Unit
             ->setCurrency($currencyTransfer)
             ->setStore($storeTransfer);
 
+        $expectedStoreTransfer = new StoreTransfer();
+        $expectedStoreTransfer
+            ->setIdStore($storeTransfer->getIdStore())
+            ->setName($storeTransfer->getName());
+
         $expectedQuoteTransfer
             ->setCurrency($currencyTransfer)
-            ->setStore($storeTransfer);
+            ->setStore($expectedStoreTransfer)
+            ->setCustomerReference($customerTransfer->getCustomerReference());
 
         // Act
         $this->quoteFacade->createQuote($quoteTransfer);
@@ -87,7 +94,7 @@ class PersistQuoteTest extends Unit
         $actualQuoteData = $actualQuoteTransfer->modifiedToArray();
         unset($actualQuoteData['id_quote']);
 
-        $this->assertEquals($expectedQuoteTransfer->modifiedToArray(), $actualQuoteData, 'Quote from database should have returned expected data.');
+        $this->assertArraySubset($expectedQuoteTransfer->modifiedToArray(), $actualQuoteData, 'Quote from database should have returned expected data.');
     }
 
     /**

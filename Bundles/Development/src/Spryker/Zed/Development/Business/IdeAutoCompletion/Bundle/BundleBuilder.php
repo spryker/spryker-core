@@ -45,7 +45,8 @@ class BundleBuilder implements BundleBuilderInterface
         $bundleTransfer->setName($bundleDirectory->getBasename());
         $bundleTransfer->setNamespaceName($this->getNamespace());
         $bundleTransfer->setMethodName(lcfirst($bundleDirectory->getBasename()));
-        $bundleTransfer->setDirectory($bundleDirectory->getPath());
+        $path = rtrim($bundleDirectory->getPath(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        $bundleTransfer->setDirectory($path);
         $bundleTransfer->setBaseDirectory($baseDirectory);
 
         $this->hydrateMethods($bundleTransfer);

@@ -36,6 +36,9 @@ class QuoteActivator implements QuoteActivatorInterface
             $quoteTransfer->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser(),
             $quoteTransfer->getIdQuote()
         );
+        if (strcmp($quoteTransfer->getCustomer()->getCustomerReference(), $quoteTransfer->getCustomerReference()) === 0) {
+            return $quoteTransfer;
+        }
         $quoteData = $quoteTransfer->modifiedToArray(true, true);
         unset($quoteData[QuoteTransfer::IS_DEFAULT]);
         $quoteTransfer = new QuoteTransfer();

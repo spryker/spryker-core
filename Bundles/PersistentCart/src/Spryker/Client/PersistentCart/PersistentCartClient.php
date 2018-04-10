@@ -31,7 +31,7 @@ class PersistentCartClient extends AbstractClient implements PersistentCartClien
         $persistentCartStub = $this->getFactory()->createZedPersistentCartStub();
         $quoteResponseTransfer = $persistentCartStub->deleteQuote($quoteTransfer);
         $quoteResponseTransfer = $this->executeUpdateQuotePlugins($quoteResponseTransfer);
-        $persistentCartStub->addFlashMessagesFromLastZedRequest();
+        $this->getFactory()->getZedRequestClient()->addFlashMessagesFromLastZedRequest();
 
         return $quoteResponseTransfer;
     }
@@ -53,7 +53,7 @@ class PersistentCartClient extends AbstractClient implements PersistentCartClien
             $this->getFactory()->getQuoteClient()->setQuote($quoteResponseTransfer->getQuoteTransfer());
         }
         $quoteResponseTransfer = $this->executeUpdateQuotePlugins($quoteResponseTransfer);
-        $persistentCartStub->addFlashMessagesFromLastZedRequest();
+        $this->getFactory()->getZedRequestClient()->addFlashMessagesFromLastZedRequest();
 
         return $quoteResponseTransfer;
     }

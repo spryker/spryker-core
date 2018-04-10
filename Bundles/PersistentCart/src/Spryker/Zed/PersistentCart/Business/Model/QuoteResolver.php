@@ -75,7 +75,7 @@ class QuoteResolver implements QuoteResolverInterface
     }
 
     /**
-     * @param int $idQuote
+     * @param null|int $idQuote
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return null|\Generated\Shared\Transfer\QuoteTransfer
@@ -144,6 +144,7 @@ class QuoteResolver implements QuoteResolverInterface
     {
         $quoteTransfer = new QuoteTransfer();
         $quoteTransfer->setCustomer($customerTransfer);
+        $quoteTransfer->setCustomerReference($customerTransfer->getCustomerReference());
 
         return $this->quoteFacade->createQuote($quoteTransfer)->getQuoteTransfer();
     }

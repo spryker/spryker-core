@@ -60,11 +60,11 @@
         <foreign-key name="spy_quote_permission_group_to_permission-fk_permission" foreignTable="spy_permission" phpName="Permission" onDelete="CASCADE">
             <reference local="fk_permission" foreign="id_permission"/>
         </foreign-key>
-        <foreign-key name="spy_quote_permission_group_to_permission-fk_quote_permission_group" foreignTable="spy_quote_permission_group" phpName="QuotePermissionGroup" onDelete="CASCADE">
+        <foreign-key name="spy_quote_permission_group_to_permission-fk_quote_permission_gr" foreignTable="spy_quote_permission_group" phpName="QuotePermissionGroup" onDelete="CASCADE">
             <reference local="fk_quote_permission_group" foreign="id_quote_permission_group"/>
         </foreign-key>
 
-        <index name="spy_quote_permission_group_to_permission-fk_quote_permission_group">
+        <index name="spy_quote_permission_group_to_permission-fk_quote_permission_gr">
             <index-column name="fk_quote_permission_group"/>
         </index>
         <index name="spy_quote_permission_group_to_permission-fk_permission">

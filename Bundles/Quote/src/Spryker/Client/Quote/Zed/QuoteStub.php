@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\Quote\Zed;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\ZedRequest\ZedRequestClientInterface;
@@ -25,26 +24,6 @@ class QuoteStub implements QuoteStubInterface
     public function __construct(ZedRequestClientInterface $zedStub)
     {
         $this->zedStub = $zedStub;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function persistQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
-    {
-        return $this->zedStub->call('/quote/gateway/persist-quote', $quoteTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function findQuoteByCustomer(CustomerTransfer $customerTransfer): QuoteResponseTransfer
-    {
-        return $this->zedStub->call('/quote/gateway/find-quote-by-customer', $customerTransfer);
     }
 
     /**

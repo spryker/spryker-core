@@ -22,6 +22,16 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
+    public function addValidItemsAction(CartChangeTransfer $cartChangeTransfer)
+    {
+        return $this->getFacade()->addValid($cartChangeTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
     public function addItemAction(CartChangeTransfer $cartChangeTransfer)
     {
         return $this->getFacade()->add($cartChangeTransfer);

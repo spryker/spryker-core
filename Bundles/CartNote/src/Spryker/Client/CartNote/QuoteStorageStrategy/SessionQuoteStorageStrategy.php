@@ -7,9 +7,9 @@
 
 namespace Spryker\Client\CartNote\QuoteStorageStrategy;
 
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Spryker\Client\CartNote\Dependency\Client\CartNoteToQuoteClientInterface;
+use Spryker\Client\CartNoteExtension\Dependency\Plugin\QuoteItemFinderPluginInterface;
 use Spryker\Shared\Quote\QuoteConfig;
 
 class SessionQuoteStorageStrategy implements QuoteStorageStrategyInterface
@@ -20,11 +20,18 @@ class SessionQuoteStorageStrategy implements QuoteStorageStrategyInterface
     protected $quoteClient;
 
     /**
-     * @param \Spryker\Client\CartNote\Dependency\Client\CartNoteToQuoteClientInterface $quoteClient
+     * @var \Spryker\Client\CartNoteExtension\Dependency\Plugin\QuoteItemFinderPluginInterface
      */
-    public function __construct(CartNoteToQuoteClientInterface $quoteClient)
+    protected $quoteItemFinderPlugin;
+
+    /**
+     * @param \Spryker\Client\CartNote\Dependency\Client\CartNoteToQuoteClientInterface $quoteClient
+     * @param \Spryker\Client\CartNoteExtension\Dependency\Plugin\QuoteItemFinderPluginInterface $quoteItemFinderPlugin
+     */
+    public function __construct(CartNoteToQuoteClientInterface $quoteClient, QuoteItemFinderPluginInterface $quoteItemFinderPlugin)
     {
         $this->quoteClient = $quoteClient;
+        $this->quoteItemFinderPlugin = $quoteItemFinderPlugin;
     }
 
     /**
@@ -48,6 +55,7 @@ class SessionQuoteStorageStrategy implements QuoteStorageStrategyInterface
 
         $quoteNoteResponseTransfer = new QuoteResponseTransfer();
         $quoteNoteResponseTransfer->setIsSuccessful(true);
+
         return $quoteNoteResponseTransfer;
     }
 
@@ -61,12 +69,14 @@ class SessionQuoteStorageStrategy implements QuoteStorageStrategyInterface
     public function setNoteToQuoteItem(string $note, string $sku, string $groupKey = null): QuoteResponseTransfer
     {
         $quoteTransfer = $this->quoteClient->getQuote();
-        $quoteItemTransfer = $this->findItem($quoteTransfer, $sku, $groupKey);
+        $quoteItemTransferCollection = $this->findItem($quoteTransfer, $sku, $groupKey);
 
         $quoteNoteResponseTransfer = new QuoteResponseTransfer();
         $quoteNoteResponseTransfer->setIsSuccessful(false);
-        if ($quoteItemTransfer) {
-            $quoteItemTransfer->setCartNote($note);
+        if (count($quoteItemTransferCollection)) {
+            foreach ($quoteItemTransferCollection as $quoteItemTransfer) {
+                $quoteItemTransfer->setCartNote($note);
+            }
             $this->quoteClient->setQuote($quoteTransfer);
             $quoteNoteResponseTransfer->setIsSuccessful(true);
         }
@@ -79,17 +89,10 @@ class SessionQuoteStorageStrategy implements QuoteStorageStrategyInterface
      * @param string $sku
      * @param string|null $groupKey
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer|null
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    protected function findItem($quoteTransfer, $sku, $groupKey = null): ?ItemTransfer
+    protected function findItem($quoteTransfer, $sku, $groupKey = null): array
     {
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if (($itemTransfer->getSku() === $sku && $groupKey === null) ||
-                $itemTransfer->getGroupKey() === $groupKey) {
-                return $itemTransfer;
-            }
-        }
-
-        return null;
+        return $this->quoteItemFinderPlugin->findItem($quoteTransfer, $sku, $groupKey);
     }
 }

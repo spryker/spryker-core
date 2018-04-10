@@ -26,4 +26,9 @@
     <transfer name="ResponseMessage">
         <property name="text" type="string"/>
     </transfer>
+
+    <transfer name="CompanyCollection">
+        <property name="companies" type="Company[]" singular="company" />
+    </transfer>
+
 </transfers>
