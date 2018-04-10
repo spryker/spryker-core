@@ -20,6 +20,11 @@ class OfferItemSubtotalAggregationPlugin extends AbstractPlugin implements Calcu
      * Guide: This calculator plugin must be placed under ItemSubtotalAggregatorPlugin
      * after the generic logic is executed.
      *
+     *
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
      * @return void
