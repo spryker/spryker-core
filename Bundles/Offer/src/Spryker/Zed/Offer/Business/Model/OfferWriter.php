@@ -39,6 +39,7 @@ class OfferWriter implements OfferWriterInterface
      * @param \Spryker\Zed\Offer\Persistence\OfferEntityManagerInterface $offerEntityManager
      * @param \Spryker\Zed\Offer\Persistence\OfferRepositoryInterface $offerRepository
      * @param \Spryker\Zed\Offer\OfferConfig $offerConfig
+     * @param \Spryker\Zed\Offer\Business\Model\OfferPluginExecutorInterface $offerPluginExecutor
      */
     public function __construct(
         OfferEntityManagerInterface $offerEntityManager,
