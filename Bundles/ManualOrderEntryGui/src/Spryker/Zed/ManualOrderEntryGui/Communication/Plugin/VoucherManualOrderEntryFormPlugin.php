@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Plugin;
 
-use ArrayObject;
-use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -28,18 +26,12 @@ class VoucherManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
     protected const MESSAGE_SUCCESS = 'Voucher code \'%s\' has been applied';
 
     /**
-     * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCartFacadeInterface
-     */
-    protected $cartFacade;
-
-    /**
      * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToMessengerFacadeInterface
      */
     protected $messengerFacade;
 
     public function __construct()
     {
-        $this->cartFacade = $this->getFactory()->getCartFacade();
         $this->messengerFacade = $this->getFactory()->getMessengerFacade();
     }
 
@@ -74,15 +66,9 @@ class VoucherManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
         $voucherCode = $quoteTransfer->getManualOrderEntry()->getVoucherCode();
 
         if (strlen($voucherCode)) {
-            $discountTransfer = new DiscountTransfer();
-            $discountTransfer->setVoucherCode($voucherCode);
-
-            $quoteTransfer->setVoucherDiscounts(new ArrayObject());
-            $quoteTransfer->addVoucherDiscount($discountTransfer);
-
-            if (count($quoteTransfer->getItems())) {
-                $quoteTransfer = $this->cartFacade->reloadItems($quoteTransfer);
-            }
+            $quoteTransfer = $this->getFactory()
+                ->createVoucherFormHandler()
+                ->handle($quoteTransfer, $form, $request);
 
             if (!count($quoteTransfer->getVoucherDiscounts())) {
                 $this->addMessage(sprintf(static::MESSAGE_ERROR, $voucherCode), false);

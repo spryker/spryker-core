@@ -19,16 +19,6 @@ use Symfony\Component\HttpFoundation\Request;
 class CustomersListManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOrderEntryFormPluginInterface
 {
     /**
-     * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCustomerFacadeInterface
-     */
-    protected $customerFacade;
-
-    public function __construct()
-    {
-        $this->customerFacade = $this->getFactory()->getCustomerFacade();
-    }
-
-    /**
      * @return string
      */
     public function getName(): string
@@ -56,10 +46,9 @@ class CustomersListManualOrderEntryFormPlugin extends AbstractPlugin implements 
      */
     public function handleData(QuoteTransfer $quoteTransfer, &$form, Request $request): QuoteTransfer
     {
-        $customerTransfer = $quoteTransfer->getCustomer();
-
-        $customerTransfer = $this->customerFacade->findCustomerById($customerTransfer);
-        $quoteTransfer->setCustomer($customerTransfer);
+        $quoteTransfer = $this->getFactory()
+            ->createCustomerFormHandler()
+            ->handle($quoteTransfer, $form, $request);
 
         return $quoteTransfer;
     }

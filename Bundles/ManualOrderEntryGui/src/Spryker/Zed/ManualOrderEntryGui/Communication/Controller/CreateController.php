@@ -238,7 +238,7 @@ class CreateController extends AbstractController
     {
         $quoteTransfer = new QuoteTransfer();
 
-        foreach ($this->getFactory()->getQuoteExpanderPlugins() as $quoteExpanderPlugin) {
+        foreach ($this->getFactory()->createQuoteExpanderPlugins() as $quoteExpanderPlugin) {
             $quoteTransfer = $quoteExpanderPlugin->expand($quoteTransfer, $request);
         }
 

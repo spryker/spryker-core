@@ -30,6 +30,14 @@ use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Shipment\ShipmentType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Store\StoreType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Summary\SummaryType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Voucher\VoucherType;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Handler\AddressFormHandler;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Handler\CustomerFormHandler;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Handler\ItemFormHandler;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Handler\PaymentFormHandler;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Handler\ProductFormHandler;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Handler\ShipmentFormHandler;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Handler\StoreFormHandler;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Handler\VoucherFormHandler;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Service\StepEngine;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCalculationFacadeInterface;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCartFacadeInterface;
@@ -464,8 +472,91 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     /**
      * @return \Spryker\Zed\ManualOrderEntryGui\Dependency\Plugin\QuoteExpanderPluginInterface[]
      */
-    public function getQuoteExpanderPlugins()
+    public function createQuoteExpanderPlugins(): array
     {
         return $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::PLUGINS_QUOTE_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Handler\AddressFormHandler
+     */
+    public function createAddressFormHandler(): AddressFormHandler
+    {
+        return new AddressFormHandler(
+            $this->getCustomerFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Handler\CustomerFormHandler
+     */
+    public function createCustomerFormHandler(): CustomerFormHandler
+    {
+        return new CustomerFormHandler(
+            $this->getCustomerFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Handler\PaymentFormHandler
+     */
+    public function createPaymentFormHandler(): PaymentFormHandler
+    {
+        return new PaymentFormHandler(
+            $this->getPaymentFacade(),
+            $this->getPaymentMethodSubFormPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Handler\ProductFormHandler
+     */
+    public function createProductFormHandler(): ProductFormHandler
+    {
+        return new ProductFormHandler(
+            $this->getCartFacade(),
+            $this->getProductFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Handler\ItemFormHandler
+     */
+    public function createItemFormHandler(): ItemFormHandler
+    {
+        return new ItemFormHandler(
+            $this->getCartFacade(),
+            $this->getMessengerFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Handler\ShipmentFormHandler
+     */
+    public function createShipmentFormHandler(): ShipmentFormHandler
+    {
+        return new ShipmentFormHandler(
+            $this->getShipmentFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Handler\StoreFormHandler
+     */
+    public function createStoreFormHandler(): StoreFormHandler
+    {
+        return new StoreFormHandler(
+            $this->getCurrencyFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Handler\VoucherFormHandler
+     */
+    public function createVoucherFormHandler(): VoucherFormHandler
+    {
+        return new VoucherFormHandler(
+            $this->getCartFacade()
+        );
     }
 }
