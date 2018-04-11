@@ -78,7 +78,7 @@ class PersistentCartFacade extends AbstractFacade implements PersistentCartFacad
     }
 
     /**
-     * Specification:
+     * {@inheritdoc}
      *
      * @api
      *
@@ -92,7 +92,7 @@ class PersistentCartFacade extends AbstractFacade implements PersistentCartFacad
     }
 
     /**
-     * Specification:
+     * {@inheritdoc}
      *
      * @api
      *
@@ -106,7 +106,7 @@ class PersistentCartFacade extends AbstractFacade implements PersistentCartFacad
     }
 
     /**
-     * Specification:
+     * {@inheritdoc}
      *
      * @api
      *

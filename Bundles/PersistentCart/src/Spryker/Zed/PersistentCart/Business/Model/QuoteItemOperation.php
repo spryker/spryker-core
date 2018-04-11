@@ -162,6 +162,7 @@ class QuoteItemOperation implements QuoteItemOperationInterface
 
         $quoteResponseTransfer = new QuoteResponseTransfer();
         $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
+        $quoteResponseTransfer->setCustomer($quoteTransfer->getCustomer());
         $quoteResponseTransfer->setIsSuccessful(true);
 
         return $quoteResponseTransfer;
@@ -175,6 +176,7 @@ class QuoteItemOperation implements QuoteItemOperationInterface
     public function validate($quoteTransfer): QuoteResponseTransfer
     {
         $quoteResponseTransfer = $this->cartFacade->validateQuote($quoteTransfer);
+        $quoteResponseTransfer->setCustomer($quoteTransfer->getCustomer());
         $this->quoteFacade->updateQuote($quoteResponseTransfer->getQuoteTransfer());
 
         return $this->quoteResponseExpander->expand($quoteResponseTransfer);
