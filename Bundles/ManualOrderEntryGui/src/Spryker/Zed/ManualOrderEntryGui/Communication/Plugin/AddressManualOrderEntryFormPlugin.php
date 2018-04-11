@@ -38,13 +38,13 @@ class AddressManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createForm(Request $request, $dataTransfer = null): FormInterface
+    public function createForm(Request $request, QuoteTransfer $quoteTransfer): FormInterface
     {
-        return $this->getFactory()->createAddressCollectionForm($dataTransfer);
+        return $this->getFactory()->createAddressCollectionForm($quoteTransfer);
     }
 
     /**
@@ -54,7 +54,7 @@ class AddressManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function handleData($quoteTransfer, &$form, $request): QuoteTransfer
+    public function handleData(QuoteTransfer $quoteTransfer, &$form, Request $request): QuoteTransfer
     {
         if ($quoteTransfer->getShippingAddress()->getIdCustomerAddress()) {
             $addressTransfer = $quoteTransfer->getShippingAddress();
@@ -78,11 +78,11 @@ class AddressManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer|null $quoteTransfer
      *
      * @return bool
      */
-    public function isPreFilled($dataTransfer = null): bool
+    public function isFormPreFilled(QuoteTransfer $quoteTransfer = null): bool
     {
         return false;
     }

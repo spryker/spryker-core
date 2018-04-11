@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Plugin;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreWithCurrencyTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Store\StoreType;
 use Symfony\Component\Form\FormInterface;
@@ -38,13 +40,13 @@ class StoreManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOr
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createForm(Request $request, $dataTransfer = null): FormInterface
+    public function createForm(Request $request, QuoteTransfer $quoteTransfer): FormInterface
     {
-        return $this->getFactory()->createStoreForm($request, $dataTransfer);
+        return $this->getFactory()->createStoreForm($request, $quoteTransfer);
     }
 
     /**
@@ -54,7 +56,7 @@ class StoreManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOr
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function handleData($quoteTransfer, &$form, $request): QuoteTransfer
+    public function handleData(QuoteTransfer $quoteTransfer, &$form, Request $request): QuoteTransfer
     {
         $storeCurrencyString = $quoteTransfer->getStoreCurrency();
         if (!$this->isValidStoreCurrencyString($storeCurrencyString)) {
@@ -74,15 +76,16 @@ class StoreManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOr
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    public function isPreFilled($dataTransfer = null): bool
+    public function isFormPreFilled(QuoteTransfer $quoteTransfer): bool
     {
-        if ($dataTransfer instanceof QuoteTransfer) {
-            return $dataTransfer->getStore() && $dataTransfer->getStore()->getName() &&
-                $dataTransfer->getCurrency() && $dataTransfer->getCurrency()->getCode();
+        if ($quoteTransfer->getStore() !== null
+            && $quoteTransfer->getCurrency() !== null
+        ) {
+            return $quoteTransfer->getStore()->getName() && $quoteTransfer->getCurrency()->getCode();
         }
 
         return false;
@@ -106,8 +109,12 @@ class StoreManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOr
      *
      * @return bool
      */
-    protected function setStoreToQuote($quoteTransfer, $storeWithCurrencyTransfer, $storeName, $currencyCode)
-    {
+    protected function setStoreToQuote(
+        QuoteTransfer $quoteTransfer,
+        StoreWithCurrencyTransfer $storeWithCurrencyTransfer,
+        $storeName,
+        $currencyCode
+    ) {
         $storeTransfer = $storeWithCurrencyTransfer->getStore();
         if ($storeName == $storeTransfer->getName()) {
             $quoteTransfer->setStore($storeTransfer);
@@ -131,7 +138,7 @@ class StoreManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOr
      *
      * @return bool
      */
-    protected function setCurrencyToQuote($quoteTransfer, $currencyCode, $currencyTransfer)
+    protected function setCurrencyToQuote(QuoteTransfer $quoteTransfer, $currencyCode, CurrencyTransfer $currencyTransfer)
     {
         if ($currencyCode == $currencyTransfer->getCode()) {
             $quoteTransfer->setCurrency($currencyTransfer);

@@ -49,7 +49,9 @@ class StoreDataProvider implements FormDataProviderInterface
      */
     public function getData($quoteTransfer)
     {
-        if ($quoteTransfer->getStore() && $quoteTransfer->getCurrency()) {
+        if ($quoteTransfer->getStore() !== null
+            && $quoteTransfer->getCurrency() !== null
+        ) {
             $storeName = $quoteTransfer->getStore()->getName();
             $currencyCode = $quoteTransfer->getCurrency()->getCode();
 
