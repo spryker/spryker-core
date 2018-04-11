@@ -38,7 +38,7 @@
             <reference local="fk_shopping_list" foreign="id_shopping_list"/>
         </foreign-key>
 
-        <foreign-key name="spy_shopping_list_company_user-fk_shopping_list_permission_group" foreignTable="spy_shopping_list_permission_group">
+        <foreign-key name="spy_shopping_list_company_user-fk_shopping_list_perm_grp" foreignTable="spy_shopping_list_permission_group">
             <reference local="fk_shopping_list_permission_group" foreign="id_shopping_list_permission_group"/>
         </foreign-key>
 
@@ -51,7 +51,7 @@
         <column name="fk_shopping_list" requird="true" type="INTEGER"/>
         <column name="fk_shopping_list_permission_group" required="true" type="INTEGER"/>
 
-        <foreign-key name="spy_shopping_list_company_business_unit-fk_company_business_unit" foreignTable="spy_company_business_unit">
+        <foreign-key name="spy_shopping_list_business_unit-fk_company_business_unit" foreignTable="spy_company_business_unit">
             <reference local="fk_company_business_unit" foreign="id_company_business_unit"/>
         </foreign-key>
 
@@ -59,7 +59,7 @@
             <reference local="fk_shopping_list" foreign="id_shopping_list"/>
         </foreign-key>
 
-        <foreign-key name="spy_shopping_list_company_business_unit-fk_shopping_list_permission_group" foreignTable="spy_shopping_list_permission_group">
+        <foreign-key name="spy_shopping_list_business_unit-fk_shopping_list_perm_group" foreignTable="spy_shopping_list_permission_group">
             <reference local="fk_shopping_list_permission_group" foreign="id_shopping_list_permission_group"/>
         </foreign-key>
 
@@ -77,7 +77,7 @@
         <column name="fk_shopping_list_permission_group" required="true" type="INTEGER"/>
         <column name="fk_permission" requird="true" type="INTEGER"/>
 
-        <foreign-key name="spy_shopping_list_permission_group_to_permission-fk_shopping_list_permission_group" foreignTable="spy_shopping_list_permission_group">
+        <foreign-key name="spy_shopping_list_perm_grp_to_perm-fk_shopping_list_perm_grp" foreignTable="spy_shopping_list_permission_group">
             <reference local="fk_shopping_list_permission_group" foreign="id_shopping_list_permission_group"/>
         </foreign-key>
 
