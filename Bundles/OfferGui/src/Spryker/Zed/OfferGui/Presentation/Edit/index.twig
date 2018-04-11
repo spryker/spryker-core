@@ -1,6 +1,6 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Edit Offer: ' | trans ~ offer.idOffer %}
+{% set widget_title = 'Edit Offer ' | trans ~ offer.idOffer %}
 
 {% block head_title widget_title %}
 {% block section_title widget_title %}
@@ -68,6 +68,8 @@
                     <td class="col-sm-4">{{ form_row(form.billingAddress) }}</td>
                 </tr>
             </table>
+
+            {{ form_row(form.offerFee) }}
             
             {{ form_widget(form) }}
 

@@ -13,7 +13,6 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Range;
 use Symfony\Component\Validator\Constraints\Regex;
@@ -37,20 +36,6 @@ class ItemType extends AbstractType
 
     protected const ERROR_MESSAGE_PRICE = 'Invalid Price.';
     protected const PATTERN_MONEY = '/^\d*\.?\d{0,2}$/';
-
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults([
-            'constraints' => [
-                $this->getFactory()->createSkuExistsConstraint(),
-            ],
-        ]);
-    }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

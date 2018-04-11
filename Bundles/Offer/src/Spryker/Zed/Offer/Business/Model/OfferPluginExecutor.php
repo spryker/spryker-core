@@ -7,11 +7,8 @@
 
 namespace Spryker\Zed\Offer\Business\Model;
 
-
 use Generated\Shared\Transfer\OfferResponseTransfer;
 use Generated\Shared\Transfer\OfferTransfer;
-use Spryker\Zed\Offer\Dependency\Plugin\OfferDoUpdatePluginInterface;
-use Spryker\Zed\OfferExtension\Dependency\Plugin\OfferHydratorPluginInterface;
 
 class OfferPluginExecutor implements OfferPluginExecutorInterface
 {
@@ -21,13 +18,13 @@ class OfferPluginExecutor implements OfferPluginExecutorInterface
     protected $hydratorPlugins;
 
     /**
-     * @var OfferDoUpdatePluginInterface[]
+     * @var \Spryker\Zed\Offer\Dependency\Plugin\OfferDoUpdatePluginInterface[]
      */
     protected $doUpdatePlugins;
 
     /**
-     * @param OfferHydratorPluginInterface[] $hydratorPlugins
-     * @param OfferDoUpdatePluginInterface[] $doUpdatePlugins
+     * @param \Spryker\Zed\OfferExtension\Dependency\Plugin\OfferHydratorPluginInterface[] $hydratorPlugins
+     * @param \Spryker\Zed\Offer\Dependency\Plugin\OfferDoUpdatePluginInterface[] $doUpdatePlugins
      */
     public function __construct(
         array $hydratorPlugins,
@@ -52,9 +49,9 @@ class OfferPluginExecutor implements OfferPluginExecutorInterface
     }
 
     /**
-     * @param OfferTransfer $offerTransfer
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
      *
-     * @return OfferResponseTransfer
+     * @return \Generated\Shared\Transfer\OfferResponseTransfer
      */
     public function updateOffer(OfferTransfer $offerTransfer): OfferResponseTransfer
     {
@@ -72,10 +69,10 @@ class OfferPluginExecutor implements OfferPluginExecutorInterface
     }
 
     /**
-     * @param OfferResponseTransfer $offerResponseTransfer
-     * @param OfferResponseTransfer $pluginOfferResponseTransfer
+     * @param \Generated\Shared\Transfer\OfferResponseTransfer $offerResponseTransfer
+     * @param \Generated\Shared\Transfer\OfferResponseTransfer $pluginOfferResponseTransfer
      *
-     * @return OfferResponseTransfer
+     * @return \Generated\Shared\Transfer\OfferResponseTransfer
      */
     protected function mergeOfferResponses(OfferResponseTransfer $offerResponseTransfer, OfferResponseTransfer $pluginOfferResponseTransfer)
     {

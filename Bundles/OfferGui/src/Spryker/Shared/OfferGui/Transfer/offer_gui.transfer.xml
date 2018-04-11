@@ -3,7 +3,6 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
-    <!-- todo: move to Offer module -->
     <transfer name="Quote">
         <property name="idCustomer" type="int" />
         <property name="currency" type="Currency" />
@@ -13,27 +12,7 @@
         <property name="voucherCode" type="string" />
         <property name="voucherDiscounts" type="Discount[]" />
         <property name="items" type="Item[]" />
-
         <property name="incomingItems" type="Item[]" singular="incomingItem"/>
-    </transfer>
-
-    <transfer name="PriceProduct">
-        <property name="idPriceProduct" type="int" />
-        <property name="isActive" type="string" />
-        <property name="priceTypeName" type="string" />
-        <property name="idProduct" type="int" />
-        <property name="skuProduct" type="string" />
-        <property name="fkPriceType" type="int" />
-        <property name="priceType"  type="PriceType" />
-        <property name="moneyValue" type="MoneyValue" />
-    </transfer>
-
-    <transfer name="Item">
-        <property name="purchasingUnitGrossPrice" type="int" />
-
-        <property name="offerDiscount" type="int" />
-        <property name="offerFee" type="int" />
-        <property name="stock" type="int" />
     </transfer>
 
 </transfers>

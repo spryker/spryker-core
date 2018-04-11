@@ -22,6 +22,7 @@ class ItemCollectionDataProvider implements FormDataProviderInterface
     public function getData($quoteTransfer)
     {
         $manualOrderProducts = new ArrayObject();
+
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $manualOrderProductTransfer = new ManualOrderProductTransfer();
             $manualOrderProductTransfer->fromArray($itemTransfer->toArray(), true);

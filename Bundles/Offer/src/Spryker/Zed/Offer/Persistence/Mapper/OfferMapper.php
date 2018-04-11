@@ -10,7 +10,6 @@ namespace Spryker\Zed\Offer\Persistence\Mapper;
 use Generated\Shared\Transfer\OfferTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpyOfferEntityTransfer;
-use Spryker\Service\UtilEncoding\UtilEncodingServiceInterface;
 use Spryker\Zed\Offer\Dependency\Service\OfferToUtilEncodingServiceInterface;
 
 class OfferMapper implements OfferMapperInterface
@@ -70,7 +69,6 @@ class OfferMapper implements OfferMapperInterface
                 )
         );
 
-        //It is needed to understand whether its an offer or not and convert offer to order(set appropriate status).
         $offerTransfer->getQuote()->setIdOffer($offerTransfer->getIdOffer());
 
         return $offerTransfer;
@@ -84,11 +82,10 @@ class OfferMapper implements OfferMapperInterface
      */
     protected function encodeQuote(OfferTransfer $offerTransfer, SpyOfferEntityTransfer $offerEntityTransfer)
     {
-        $offerEntityTransfer->setQuoteData(
-            $this->utilEncodingService->encodeJson(
-                $this->getQuoteArray($offerTransfer->getQuote())
-            )
-        );
+        $quoteArray = $this->getQuoteArray($offerTransfer->getQuote());
+        $quoteJson = $this->utilEncodingService->encodeJson($quoteArray);
+
+        $offerEntityTransfer->setQuoteData($quoteJson);
 
         return $offerEntityTransfer;
     }
@@ -98,12 +95,10 @@ class OfferMapper implements OfferMapperInterface
      *
      * @return array
      */
-    public function getQuoteArray(QuoteTransfer $quoteTransfer): array
+    protected function getQuoteArray(QuoteTransfer $quoteTransfer): array
     {
-        $quoteArray = array_intersect_key(
-            $quoteTransfer->toArray(),
-            array_flip($this->getFieldsToPersist())
-        );
+        $quoteArray = $quoteTransfer->toArray();
+        $quoteArray = array_intersect_key($quoteArray, array_flip($this->getQuoteFieldsToPersist()));
 
         return $quoteArray;
     }
@@ -111,7 +106,7 @@ class OfferMapper implements OfferMapperInterface
     /**
      * @return array
      */
-    protected function getFieldsToPersist()
+    protected function getQuoteFieldsToPersist()
     {
         $fieldsToPersist = [
             'store',
@@ -129,7 +124,7 @@ class OfferMapper implements OfferMapperInterface
             'payments',
             'shipment',
             'bundle_items',
-            'checkout_confirmed'
+            'checkout_confirmed',
         ];
 
         return $fieldsToPersist;

@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\OfferListTransfer;
 use Generated\Shared\Transfer\OfferResponseTransfer;
 use Generated\Shared\Transfer\OfferTransfer;
-use Generated\Shared\Transfer\OrderListTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -71,9 +71,11 @@ class OfferFacade extends AbstractFacade implements OfferFacadeInterface
     /**
      * {@inheritdoc}
      *
-     * @param OfferTransfer $offerTransfer
+     * @api
      *
-     * @return OfferResponseTransfer
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
+     *
+     * @return \Generated\Shared\Transfer\OfferResponseTransfer
      */
     public function placeOffer(OfferTransfer $offerTransfer): OfferResponseTransfer
     {
@@ -87,9 +89,9 @@ class OfferFacade extends AbstractFacade implements OfferFacadeInterface
      *
      * @api
      *
-     * @param OfferTransfer $offerTransfer
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
      *
-     * @return OfferResponseTransfer
+     * @return \Generated\Shared\Transfer\OfferResponseTransfer
      */
     public function updateOffer(OfferTransfer $offerTransfer): OfferResponseTransfer
     {
@@ -99,8 +101,7 @@ class OfferFacade extends AbstractFacade implements OfferFacadeInterface
     }
 
     /**
-     * Specification:
-     *  - Recalculate offer items subtotal
+     * {@inheritdoc}
      *
      * @api
      *
@@ -113,5 +114,50 @@ class OfferFacade extends AbstractFacade implements OfferFacadeInterface
         $this->getFactory()
             ->createOfferItemSubtotalAggregator()
             ->recalculate($calculableObjectTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
+     *
+     * @return \Generated\Shared\Transfer\OfferTransfer
+     */
+    public function hydrateOfferWithSavingAmount(OfferTransfer $offerTransfer): OfferTransfer
+    {
+        return $this->getFactory()
+            ->createOfferSavingAmountHydrator()
+            ->hydrate($offerTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function recalculateGrandTotal(CalculableObjectTransfer $calculableObjectTransfer): void
+    {
+        $this->getFactory()
+            ->createOfferGrandTotalCalculator()
+            ->recalculateGrandTotal($calculableObjectTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param int $idOffer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function expandQuoteUsingOffer(QuoteTransfer $quoteTransfer, int $idOffer): QuoteTransfer
+    {
+        return $this->getFactory()->createOfferQuoteExpander()->expand($quoteTransfer, $idOffer);
     }
 }

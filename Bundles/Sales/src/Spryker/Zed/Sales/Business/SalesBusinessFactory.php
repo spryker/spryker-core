@@ -13,16 +13,12 @@ use Spryker\Zed\Sales\Business\Model\Comment\OrderCommentReader;
 use Spryker\Zed\Sales\Business\Model\Comment\OrderCommentSaver;
 use Spryker\Zed\Sales\Business\Model\Customer\CustomerOrderReader;
 use Spryker\Zed\Sales\Business\Model\Customer\PaginatedCustomerOrderReader;
-use Spryker\Zed\Sales\Business\Model\Order\Mapper\OrderMapper;
-use Spryker\Zed\Sales\Business\Model\Order\Mapper\OrderMapperInterface;
 use Spryker\Zed\Sales\Business\Model\Order\OrderExpander;
 use Spryker\Zed\Sales\Business\Model\Order\OrderHydrator;
 use Spryker\Zed\Sales\Business\Model\Order\OrderReader;
 use Spryker\Zed\Sales\Business\Model\Order\OrderReferenceGenerator;
 use Spryker\Zed\Sales\Business\Model\Order\OrderSaver;
 use Spryker\Zed\Sales\Business\Model\Order\OrderUpdater;
-use Spryker\Zed\Sales\Business\Model\Order\Plugin\SalesOrderPluginExecutor;
-use Spryker\Zed\Sales\Business\Model\Order\Plugin\SalesOrderPluginExecutorInterface;
 use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaver;
 use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverPluginExecutor;
 use Spryker\Zed\Sales\Business\Model\OrderItem\SalesOrderItemMapper;
@@ -73,8 +69,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getLocaleQueryContainer(),
             $this->getStore(),
             $this->createSalesOrderSaverPluginExecutor(),
-            $this->createOrderItemMapper(),
-            $this->createOrderMapper()
+            $this->createOrderItemMapper()
         );
     }
 
@@ -91,8 +86,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getLocaleQueryContainer(),
             $this->getStore(),
             $this->createSalesOrderSaverPluginExecutor(),
-            $this->createOrderItemMapper(),
-            $this->createOrderMapper()
+            $this->createOrderItemMapper()
         );
     }
 
@@ -154,24 +148,6 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getSequenceNumberFacade(),
             $sequenceNumberSettings
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\Sales\Business\Model\Order\Plugin\SalesOrderPluginExecutorInterface
-     */
-    public function createSalesOrderPluginExecutor(): SalesOrderPluginExecutorInterface
-    {
-        return new SalesOrderPluginExecutor(
-            $this->getOrderPreSavePlugins()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Sales\Business\Model\Order\Mapper\OrderMapperInterface
-     */
-    public function createOrderMapper(): OrderMapperInterface
-    {
-        return new OrderMapper();
     }
 
     /**
@@ -243,15 +219,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
      */
     public function getHydrateOrderPlugins()
     {
-        return $this->getProvidedDependency(SalesDependencyProvider::HYDRATE_ORDER_PLUGIN);
-    }
-
-    /**
-     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPreSavePluginInterface[]
-     */
-    protected function getOrderPreSavePlugins()
-    {
-        return $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_ORDER_PRE_SAVE);
+        return $this->getProvidedDependency(SalesDependencyProvider::HYDRATE_ORDER_PLUGINS);
     }
 
     /**
@@ -260,8 +228,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function createSalesOrderSaverPluginExecutor()
     {
         return new SalesOrderSaverPluginExecutor(
-            $this->getOrderItemExpanderPreSavePlugins(),
-            $this->getOrderPreSavePlugins()
+            $this->getOrderItemExpanderPreSavePlugins()
         );
     }
 

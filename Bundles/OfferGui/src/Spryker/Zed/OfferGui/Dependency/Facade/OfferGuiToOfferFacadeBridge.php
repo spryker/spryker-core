@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\OfferGui\Dependency\Facade;
 
-use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\OfferResponseTransfer;
 use Generated\Shared\Transfer\OfferTransfer;
 
@@ -54,15 +53,5 @@ class OfferGuiToOfferFacadeBridge implements OfferGuiToOfferFacadeInterface
     public function createOffer(OfferTransfer $offerTransfer): OfferResponseTransfer
     {
         return $this->offerFacade->createOffer($offerTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
-     *
-     * @return void
-     */
-    public function aggregateOfferItemSubtotal(CalculableObjectTransfer $calculableObjectTransfer): void
-    {
-        $this->offerFacade->aggregateOfferItemSubtotal($calculableObjectTransfer);
     }
 }

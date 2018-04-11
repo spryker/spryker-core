@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\OfferListTransfer;
 use Generated\Shared\Transfer\OfferResponseTransfer;
 use Generated\Shared\Transfer\OfferTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface OfferFacadeInterface
 {
@@ -71,16 +72,17 @@ interface OfferFacadeInterface
      *
      * @api
      *
-     * @param OfferTransfer $offerTransfer
-     * @return OfferResponseTransfer
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
      *
      * @throws \Exception
+     *
+     * @return \Generated\Shared\Transfer\OfferResponseTransfer
      */
     public function updateOffer(OfferTransfer $offerTransfer): OfferResponseTransfer;
 
     /**
      * Specification:
-     *  - Recalculate offer items subtotal
+     *  - Recalculates offer items subtotal
      *
      * @api
      *
@@ -89,4 +91,38 @@ interface OfferFacadeInterface
      * @return void
      */
     public function aggregateOfferItemSubtotal(CalculableObjectTransfer $calculableObjectTransfer): void;
+
+    /**
+     * Specification:
+     *  - Calculates saving amount for each offer item and hydrates one to the item.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
+     *
+     * @return \Generated\Shared\Transfer\OfferTransfer
+     */
+    public function hydrateOfferWithSavingAmount(OfferTransfer $offerTransfer): OfferTransfer;
+
+    /**
+     * - Uses quote offer fee to recalculate a quote grant total
+     * - The offer fee is added to a current quote grand total
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function recalculateGrandTotal(CalculableObjectTransfer $calculableObjectTransfer): void;
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param int $idOffer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function expandQuoteUsingOffer(QuoteTransfer $quoteTransfer, int $idOffer): QuoteTransfer;
 }

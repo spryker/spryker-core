@@ -45,8 +45,6 @@ class CreateController extends AbstractController
         $allFormPlugins = $this->getFactory()->getManualOrderEntryFormPlugins();
         $filteredFormPlugins = $this->getFactory()->getManualOrderEntryFilteredFormPlugins($request, $quoteTransfer);
 
-        $quoteTransfer = $this->setTypeToQuote($quoteTransfer, $request);
-
         foreach ($filteredFormPlugins as $formPlugin) {
             $form = $formPlugin->createForm($request, $quoteTransfer);
             $form->setData($quoteTransfer->toArray());
@@ -204,7 +202,7 @@ class CreateController extends AbstractController
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return string
+     * @return mixed|string
      */
     protected function createRedirectUrlAfterOrderCreation(SaveOrderTransfer $saveOrderTransfer, Request $request)
     {
@@ -233,35 +231,18 @@ class CreateController extends AbstractController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected function setTypeToQuote(QuoteTransfer $quoteTransfer, Request $request): QuoteTransfer
-    {
-        $quoteType = $request->get(static::PARAM_TYPE, SalesSalesConfig::ORDER_TYPE_DEFAULT);
-
-        $quoteTransfer->setType($quoteType);
-
-        return $quoteTransfer;
-    }
-
-    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function getInitialQuote(Request $request): QuoteTransfer
     {
-        foreach ($this->getFactory()->getQuoteInitializerPlugins() as $quoteInitializerPlugin) {
-            $quoteTransfer = $quoteInitializerPlugin->initializeQuote($request);
+        $quoteTransfer = new QuoteTransfer();
 
-            if ($quoteTransfer !== null) {
-                return $quoteTransfer;
-            }
+        foreach ($this->getFactory()->getQuoteExpanderPlugins() as $quoteExpanderPlugin) {
+            $quoteTransfer = $quoteExpanderPlugin->expand($quoteTransfer, $request);
         }
 
-        return new QuoteTransfer();
+        return $quoteTransfer;
     }
 }

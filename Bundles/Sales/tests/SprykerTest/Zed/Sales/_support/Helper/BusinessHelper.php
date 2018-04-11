@@ -37,7 +37,7 @@ class BusinessHelper extends Module
         $omsProcessEntity = $this->createOmsProcess();
         $salesOrderEntity = $this->createSpySalesOrderEntity($salesOrderAddressEntity);
         $salesExpenseEntity = $this->createSalesExpense($salesOrderEntity);
-        
+
         $this->createOrderItem(
             $omsStateEntity,
             $salesOrderEntity,
@@ -57,7 +57,6 @@ class BusinessHelper extends Module
         );
 
         $this->createSpySalesShipment($salesOrderEntity->getIdSalesOrder(), $salesExpenseEntity->getIdSalesExpense());
-
         $this->createOrderTotals($salesOrderEntity->getIdSalesOrder());
 
         return $salesOrderEntity;

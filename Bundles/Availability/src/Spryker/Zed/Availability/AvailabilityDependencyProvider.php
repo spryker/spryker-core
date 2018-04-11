@@ -43,9 +43,9 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {

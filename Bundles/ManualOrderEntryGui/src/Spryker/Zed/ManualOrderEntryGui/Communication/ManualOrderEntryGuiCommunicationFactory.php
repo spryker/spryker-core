@@ -462,10 +462,10 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
-     * @return \Spryker\Zed\ManualOrderEntryGui\Dependency\Plugin\QuoteInitializerPluginInterface[]
+     * @return \Spryker\Zed\ManualOrderEntryGui\Dependency\Plugin\QuoteExpanderPluginInterface[]
      */
-    public function getQuoteInitializerPlugins()
+    public function getQuoteExpanderPlugins()
     {
-        return $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::PLUGINS_QUOTE_INITIALIZER);
+        return $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::PLUGINS_QUOTE_EXPANDER);
     }
 }

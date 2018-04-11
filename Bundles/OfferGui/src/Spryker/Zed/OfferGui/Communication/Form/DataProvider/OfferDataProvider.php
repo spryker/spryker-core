@@ -1,7 +1,13 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\OfferGui\Communication\Form\DataProvider;
 
+use ArrayObject;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\CustomerCollectionTransfer;
@@ -9,18 +15,16 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OfferTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Spryker\Zed\Currency\Business\CurrencyFacadeInterface;
-use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\OfferGui\Communication\Form\Offer\EditOfferType;
+use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToCurrencyFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToCustomerFacadeInterface;
-use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToOfferFacadeInterface;
 
 class OfferDataProvider
 {
     /**
-     * @var \Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToOfferFacadeInterface
+     * @var \Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToCurrencyFacadeInterface
      */
-    protected $offerFacade;
+    protected $currencyFacade;
 
     /**
      * @var \Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToCustomerFacadeInterface
@@ -28,14 +32,14 @@ class OfferDataProvider
     protected $customerFacade;
 
     /**
-     * @param \Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToOfferFacadeInterface $offerFacade
+     * @param \Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToCurrencyFacadeInterface $currencyFacade
      * @param \Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToCustomerFacadeInterface $customerFacade
      */
     public function __construct(
-        OfferGuiToOfferFacadeInterface $offerFacade,
+        OfferGuiToCurrencyFacadeInterface $currencyFacade,
         OfferGuiToCustomerFacadeInterface $customerFacade
     ) {
-        $this->offerFacade = $offerFacade;
+        $this->currencyFacade = $currencyFacade;
         $this->customerFacade = $customerFacade;
     }
 
@@ -47,12 +51,12 @@ class OfferDataProvider
         return [
             'data_class' => OfferTransfer::class,
             EditOfferType::OPTION_CUSTOMER_LIST => $this->getCustomerList(),
-            EditOfferType::OPTION_STORE_CURRENCY_LIST => $this->getStoreCurrencyChoiceList()
+            EditOfferType::OPTION_STORE_CURRENCY_LIST => $this->getStoreCurrencyChoiceList(),
         ];
     }
 
     /**
-     * @param OfferTransfer $offerTransfer
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
      *
      * @return \Generated\Shared\Transfer\OfferTransfer
      */
@@ -64,16 +68,16 @@ class OfferDataProvider
                     (new QuoteTransfer())
                         ->setStore(new StoreTransfer())
                         ->setCurrency(new CurrencyTransfer())
-                        ->setItems(new \ArrayObject())
+                        ->setItems(new ArrayObject())
                         ->setShippingAddress(new AddressTransfer())
                         ->setBillingAddress(new AddressTransfer())
-                        ->setCartRuleDiscounts(new \ArrayObject())
-                        ->setVoucherDiscounts(new \ArrayObject())
+                        ->setCartRuleDiscounts(new ArrayObject())
+                        ->setVoucherDiscounts(new ArrayObject())
                 );
         }
 
         $offerTransfer->getQuote()
-            ->setIncomingItems(new \ArrayObject([
+            ->setIncomingItems(new ArrayObject([
                 new ItemTransfer(),
                 new ItemTransfer(),
                 new ItemTransfer(),
@@ -107,10 +111,7 @@ class OfferDataProvider
      */
     protected function getStoreCurrencyChoiceList()
     {
-        /** @var CurrencyFacadeInterface $currencyFacade */
-        $currencyFacade = Locator::getInstance()->currency()->facade();
-
-        $storeWithCurrencyTransfers = $currencyFacade->getAllStoresWithCurrencies();
+        $storeWithCurrencyTransfers = $this->currencyFacade->getAllStoresWithCurrencies();
         $storeList = [];
 
         foreach ($storeWithCurrencyTransfers as $storeWithCurrencyTransfer) {

@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Offer\Business\Model;
 
-
 use Generated\Shared\Transfer\OfferResponseTransfer;
 use Generated\Shared\Transfer\OfferTransfer;
 
@@ -21,9 +20,9 @@ interface OfferPluginExecutorInterface
     public function hydrateOffer(OfferTransfer $offerTransfer): OfferTransfer;
 
     /**
-     * @param OfferTransfer $offerTransfer
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
      *
-     * @return OfferResponseTransfer
+     * @return \Generated\Shared\Transfer\OfferResponseTransfer
      */
     public function updateOffer(OfferTransfer $offerTransfer): OfferResponseTransfer;
 }

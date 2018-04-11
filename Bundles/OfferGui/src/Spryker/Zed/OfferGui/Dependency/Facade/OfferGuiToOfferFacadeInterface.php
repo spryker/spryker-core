@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\OfferGui\Dependency\Facade;
 
-use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\OfferResponseTransfer;
 use Generated\Shared\Transfer\OfferTransfer;
 
@@ -35,11 +34,4 @@ interface OfferGuiToOfferFacadeInterface
      * @return \Generated\Shared\Transfer\OfferResponseTransfer
      */
     public function createOffer(OfferTransfer $offerTransfer): OfferResponseTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
-     *
-     * @return void
-     */
-    public function aggregateOfferItemSubtotal(CalculableObjectTransfer $calculableObjectTransfer): void;
 }
