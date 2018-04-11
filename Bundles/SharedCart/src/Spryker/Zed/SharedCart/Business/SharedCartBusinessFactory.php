@@ -46,7 +46,7 @@ class SharedCartBusinessFactory extends AbstractBusinessFactory
      */
     public function createCustomerPermissionQuoteResponseExpander(): QuoteResponseExpanderInterface
     {
-        return new CustomerPermissionQuoteResponseExpander($this->getCustomerFacade());
+        return new CustomerPermissionQuoteResponseExpander($this->getCustomerFacade(), $this->getRepository());
     }
 
     /**
