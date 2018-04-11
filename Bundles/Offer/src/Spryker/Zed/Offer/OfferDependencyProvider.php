@@ -36,6 +36,7 @@ class OfferDependencyProvider extends AbstractBundleDependencyProvider
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addSalesFacade($container);
         $container = $this->addCartFacade($container);
+        $container = $this->addCustomerFacade($container);
         $container = $this->addMessengerFacade($container);
         $container = $this->addOfferHydratorPlugins($container);
         $container = $this->addOfferDoUpdatePlugins($container);
