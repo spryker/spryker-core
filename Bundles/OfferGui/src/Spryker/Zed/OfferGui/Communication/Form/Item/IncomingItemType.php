@@ -10,7 +10,6 @@ namespace Spryker\Zed\OfferGui\Communication\Form\Item;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Regex;
 
@@ -23,20 +22,6 @@ class IncomingItemType extends AbstractType
     public const FIELD_QUANTITY = 'quantity';
 
     protected const DEFAULT_QUANTITY = 1;
-
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults([
-            'constraints' => [
-                $this->getFactory()->createSkuExistsConstraint(),
-            ],
-        ]);
-    }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

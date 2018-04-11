@@ -9,7 +9,6 @@ namespace Spryker\Zed\Sales\Business\Model\Order;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\SpySalesOrderEntityTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 
 interface SalesOrderSaverPluginExecutorInterface
@@ -22,12 +21,4 @@ interface SalesOrderSaverPluginExecutorInterface
      * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer
      */
     public function executeOrderItemExpanderPreSavePlugins(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, SpySalesOrderItemEntityTransfer $salesOrderItemEntity): SpySalesOrderItemEntityTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\SpySalesOrderEntityTransfer $salesOrderEntityTransfer
-     *
-     * @return \Generated\Shared\Transfer\SpySalesOrderEntityTransfer
-     */
-    public function executeOrderPreSavePlugins(QuoteTransfer $quoteTransfer, SpySalesOrderEntityTransfer $salesOrderEntityTransfer): SpySalesOrderEntityTransfer;
 }

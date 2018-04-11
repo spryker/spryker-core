@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\OfferGui\Dependency\Facade;
 
-
 use Generated\Shared\Transfer\StoreTransfer;
 
 interface OfferGuiToStoreFacadeInterface

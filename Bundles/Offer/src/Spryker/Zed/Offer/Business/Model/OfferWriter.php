@@ -9,11 +9,6 @@ namespace Spryker\Zed\Offer\Business\Model;
 
 use Generated\Shared\Transfer\OfferResponseTransfer;
 use Generated\Shared\Transfer\OfferTransfer;
-use Generated\Zed\Ide\Offer;
-use Orm\Zed\Offer\Persistence\SpyOffer;
-use Orm\Zed\Offer\Persistence\SpyOfferQuery;
-use Spryker\Zed\Customer\Business\CustomerFacadeInterface;
-use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\Offer\OfferConfig;
 use Spryker\Zed\Offer\Persistence\OfferEntityManagerInterface;
 use Spryker\Zed\Offer\Persistence\OfferRepositoryInterface;
@@ -36,7 +31,7 @@ class OfferWriter implements OfferWriterInterface
     protected $offerConfig;
 
     /**
-     * @var OfferPluginExecutorInterface
+     * @var \Spryker\Zed\Offer\Business\Model\OfferPluginExecutorInterface
      */
     protected $offerPluginExecutor;
 
@@ -74,9 +69,9 @@ class OfferWriter implements OfferWriterInterface
     }
 
     /**
-     * @param OfferTransfer $offerTransfer
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
      *
-     * @return OfferResponseTransfer
+     * @return \Generated\Shared\Transfer\OfferResponseTransfer
      */
     public function updateOffer(OfferTransfer $offerTransfer): OfferResponseTransfer
     {
@@ -88,9 +83,9 @@ class OfferWriter implements OfferWriterInterface
     }
 
     /**
-     * @param OfferTransfer $offerTransfer
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
      *
-     * @return OfferResponseTransfer
+     * @return \Generated\Shared\Transfer\OfferResponseTransfer
      */
     public function placeOffer(OfferTransfer $offerTransfer): OfferResponseTransfer
     {
@@ -105,9 +100,9 @@ class OfferWriter implements OfferWriterInterface
     }
 
     /**
-     * @param OfferTransfer $offerTransfer
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
      *
-     * @return OfferTransfer
+     * @return \Generated\Shared\Transfer\OfferTransfer
      */
     protected function executeCreateOffer(OfferTransfer $offerTransfer)
     {

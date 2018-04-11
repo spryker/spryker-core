@@ -17,7 +17,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 class AvailabilityCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return AvailabilityToStoreFacadeInterface
+     * @return \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface
      */
     public function getStoreFacade(): AvailabilityToStoreFacadeInterface
     {

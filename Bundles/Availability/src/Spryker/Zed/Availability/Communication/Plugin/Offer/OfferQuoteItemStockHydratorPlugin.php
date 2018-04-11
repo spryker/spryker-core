@@ -1,7 +1,11 @@
 <?php
 
-namespace Spryker\Zed\Availability\Communication\Plugin\Offer;
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
+namespace Spryker\Zed\Availability\Communication\Plugin\Offer;
 
 use Generated\Shared\Transfer\OfferTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -20,31 +24,12 @@ class OfferQuoteItemStockHydratorPlugin extends AbstractPlugin implements OfferH
      *
      * @api
      *
-     * @param OfferTransfer $offerTransfer
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
      *
-     * @return OfferTransfer
+     * @return \Generated\Shared\Transfer\OfferTransfer
      */
     public function hydrateOffer(OfferTransfer $offerTransfer): OfferTransfer
     {
-        $offerTransfer->requireQuote();
-
-        $quoteTransfer = $offerTransfer->getQuote();
-        $storeTransfer = $quoteTransfer->getStore();
-
-        $storeTransfer = $this->getFactory()
-            ->getStoreFacade()
-            ->getStoreByName($storeTransfer->getName());
-
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $stock = $this->getFacade()
-                ->calculateStockForProductWithStore(
-                    $itemTransfer->getSku(),
-                    $storeTransfer
-                );
-
-            $itemTransfer->setStock($stock);
-        }
-
-        return $offerTransfer;
+        return $this->getFacade()->hydrateOfferWithQuoteItemStock($offerTransfer);
     }
 }

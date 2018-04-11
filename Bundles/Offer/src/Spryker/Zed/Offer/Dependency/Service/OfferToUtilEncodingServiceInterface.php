@@ -7,9 +7,6 @@
 
 namespace Spryker\Zed\Offer\Dependency\Service;
 
-use Generated\Shared\Transfer\CartChangeTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
-
 interface OfferToUtilEncodingServiceInterface
 {
     /**

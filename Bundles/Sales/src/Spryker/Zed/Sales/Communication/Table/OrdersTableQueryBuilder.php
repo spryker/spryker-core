@@ -21,11 +21,6 @@ class OrdersTableQueryBuilder implements OrdersTableQueryBuilderInterface
     const FIELD_ORDER_GRAND_TOTAL = 'order_grand_total';
 
     /**
-     * @deprecated Please use \Spryker\Zed\Sales\SalesConfig::getOrderTypeDefault() instead
-     */
-    public const ORDER_TYPE_DEFAULT = null;
-
-    /**
      * @var \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
     protected $salesOrderQuery;
@@ -52,38 +47,8 @@ class OrdersTableQueryBuilder implements OrdersTableQueryBuilderInterface
         $query = $this->addItemStates($query);
         $query = $this->addItemCount($query);
         $query = $this->filter($query, $idOrderItemProcess, $idOrderItemState, $dateFilter);
-        $query = $this->filterOrderType($query);
 
         return $query;
-    }
-
-    /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $query
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
-     */
-    protected function filterOrderType($query)
-    {
-        if (!$this->hasOrderType($query)) {
-            return $query;
-        }
-
-        $query->filterByType(static::ORDER_TYPE_DEFAULT);
-
-        return $query;
-    }
-
-    /**
-     * @deprecated Will be removed with a major release,
-     * and <column name="type" type="VARCHAR" required="false"/> will be added to spy_sales_order table.
-     *
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $query
-     *
-     * @return bool
-     */
-    protected function hasOrderType($query)
-    {
-        return method_exists($query, 'filterByType');
     }
 
     /**

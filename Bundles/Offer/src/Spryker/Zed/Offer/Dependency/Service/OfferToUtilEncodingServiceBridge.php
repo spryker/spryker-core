@@ -7,10 +7,6 @@
 
 namespace Spryker\Zed\Offer\Dependency\Service;
 
-use Generated\Shared\Transfer\CartChangeTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Service\UtilEncoding\UtilEncodingServiceInterface;
-
 class OfferToUtilEncodingServiceBridge implements OfferToUtilEncodingServiceInterface
 {
     /**
@@ -21,7 +17,7 @@ class OfferToUtilEncodingServiceBridge implements OfferToUtilEncodingServiceInte
     /**
      * @param \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface $utilEncodingService
      */
-    public function __construct(UtilEncodingServiceInterface $utilEncodingService)
+    public function __construct($utilEncodingService)
     {
         $this->utilEncodingService = $utilEncodingService;
     }
