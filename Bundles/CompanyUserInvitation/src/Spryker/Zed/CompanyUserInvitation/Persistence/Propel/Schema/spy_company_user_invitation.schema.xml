@@ -3,7 +3,7 @@
 
     <table name="spy_company_user_invitation_status" phpName="SpyCompanyUserInvitationStatus">
         <column name="id_company_user_invitation_status" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="name" required="true" size="100" type="VARCHAR"/>
+        <column name="status_key" required="true" size="255" type="VARCHAR"/>
         <id-method-parameter value="spy_company_user_invitation_status_pk_seq"/>
     </table>
 
@@ -17,13 +17,13 @@
         <column name="fk_company_user_invitation_status" type="INTEGER" required="true"/>
         <column name="fk_company_user" type="INTEGER" required="true"/>
 
-        <foreign-key name="spy_company_user_invitation-fk_company_business_unit" foreignTable="spy_company_business_unit" onDelete="SETNULL">
+        <foreign-key name="spy_company_user_invitation-fk_company_business_unit" foreignTable="spy_company_business_unit">
             <reference local="fk_company_business_unit" foreign="id_company_business_unit"/>
         </foreign-key>
-        <foreign-key name="spy_company_user_invitation-fk_company_user_invitation_status" foreignTable="spy_company_user_invitation_status"onDelete="SETNULL">
+        <foreign-key name="spy_company_user_invitation-fk_company_user_invitation_status" foreignTable="spy_company_user_invitation_status">
             <reference local="fk_company_user_invitation_status" foreign="id_company_user_invitation_status"/>
         </foreign-key>
-        <foreign-key name="spy_company_user_invitation-fk_company_user" foreignTable="spy_company_user" onDelete="SETNULL">
+        <foreign-key name="spy_company_user_invitation-fk_company_user" foreignTable="spy_company_user">
             <reference local="fk_company_user" foreign="id_company_user"/>
         </foreign-key>
 

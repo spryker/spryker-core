@@ -20,12 +20,12 @@ class CompanyUserInvitationEntityManager extends AbstractEntityManager implement
      *
      * @return \Generated\Shared\Transfer\CompanyUserInvitationTransfer
      */
-    public function saveCompanyUserInvitation(
-        CompanyUserInvitationTransfer $companyUserInvitationTransfer
-    ): CompanyUserInvitationTransfer {
+    public function saveCompanyUserInvitation(CompanyUserInvitationTransfer $companyUserInvitationTransfer): CompanyUserInvitationTransfer
+    {
         $entityTransfer = $this->getFactory()
             ->createCompanyUserInvitationMapper()
             ->mapCompanyUserInvitationTransferToEntityTransfer($companyUserInvitationTransfer);
+
         $entityTransfer = $this->save($entityTransfer);
 
         return $this->getFactory()

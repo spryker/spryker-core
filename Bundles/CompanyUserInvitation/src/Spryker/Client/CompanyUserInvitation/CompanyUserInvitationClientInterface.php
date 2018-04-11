@@ -7,7 +7,9 @@
 
 namespace Spryker\Client\CompanyUserInvitation;
 
-use Generated\Shared\Transfer\CompanyUserInvitationImportResultTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationImportReportTransfer;
 
 interface CompanyUserInvitationClientInterface
 {
@@ -17,9 +19,25 @@ interface CompanyUserInvitationClientInterface
      *
      * @api
      *
-     * @param string $filePath
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer $companyUserInvitationCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserInvitationImportResultTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationImportReportTransfer
      */
-    public function importInvitations(string $filePath): CompanyUserInvitationImportResultTransfer;
+    public function importInvitations(
+        CompanyUserInvitationCollectionTransfer $companyUserInvitationCollectionTransfer
+    ): CompanyUserInvitationImportReportTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves company users invitation collection by company user id.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer
+     */
+    public function getCompanyUserInvitationCollection(
+        CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
+    ): CompanyUserInvitationCollectionTransfer;
 }

@@ -16,7 +16,5 @@ interface CompanyUserInvitationEntityManagerInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserInvitationTransfer
      */
-    public function saveCompanyUserInvitation(
-        CompanyUserInvitationTransfer $companyUserInvitationTransfer
-    ): CompanyUserInvitationTransfer;
+    public function saveCompanyUserInvitation(CompanyUserInvitationTransfer $companyUserInvitationTransfer): CompanyUserInvitationTransfer;
 }

@@ -7,8 +7,9 @@
 
 namespace Spryker\Zed\CompanyUserInvitation\Business;
 
-use Generated\Shared\Transfer\CompanyUserInvitationImportRequestTransfer;
-use Generated\Shared\Transfer\CompanyUserInvitationImportResultTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationImportReportTransfer;
 
 interface CompanyUserInvitationFacadeInterface
 {
@@ -18,9 +19,25 @@ interface CompanyUserInvitationFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CompanyUserInvitationImportRequestTransfer $companyUserInvitationImportRequestTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer $companyUserInvitationCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserInvitationImportResultTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationImportReportTransfer
      */
-    public function importInvitations(CompanyUserInvitationImportRequestTransfer $companyUserInvitationImportRequestTransfer): CompanyUserInvitationImportResultTransfer;
+    public function importInvitations(
+        CompanyUserInvitationCollectionTransfer $companyUserInvitationCollectionTransfer
+    ): CompanyUserInvitationImportReportTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves company users invitation collection by company user id.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer
+     */
+    public function getCompanyUserInvitationCollection(
+        CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
+    ): CompanyUserInvitationCollectionTransfer;
 }

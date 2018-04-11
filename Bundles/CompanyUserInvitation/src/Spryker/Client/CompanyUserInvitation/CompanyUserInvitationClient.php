@@ -7,7 +7,9 @@
 
 namespace Spryker\Client\CompanyUserInvitation;
 
-use Generated\Shared\Transfer\CompanyUserInvitationImportResultTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationImportReportTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -16,16 +18,36 @@ use Spryker\Client\Kernel\AbstractClient;
 class CompanyUserInvitationClient extends AbstractClient implements CompanyUserInvitationClientInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
-     * @param string $filePath
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer $companyUserInvitationCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserInvitationImportResultTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationImportReportTransfer
      */
-    public function importInvitations(string $filePath): CompanyUserInvitationImportResultTransfer
-    {
+    public function importInvitations(
+        CompanyUserInvitationCollectionTransfer $companyUserInvitationCollectionTransfer
+    ): CompanyUserInvitationImportReportTransfer {
         return $this->getFactory()
-            ->createZedCompanyUserInvitationStub($filePath)
-            ->importInvitations();
+            ->createZedCompanyUserInvitationStub()
+            ->importInvitations($companyUserInvitationCollectionTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer
+     */
+    public function getCompanyUserInvitationCollection(
+        CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
+    ): CompanyUserInvitationCollectionTransfer {
+        return $this->getFactory()
+            ->createZedCompanyUserInvitationStub()
+            ->getCompanyUserInvitationCollection($criteriaFilterTransfer);
     }
 }

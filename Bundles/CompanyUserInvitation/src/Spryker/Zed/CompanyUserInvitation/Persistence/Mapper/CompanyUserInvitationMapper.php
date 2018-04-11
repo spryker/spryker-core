@@ -23,8 +23,6 @@ class CompanyUserInvitationMapper implements CompanyUserInvitationMapperInterfac
         CompanyUserInvitationTransfer $companyUserInvitationTransfer
     ): SpyCompanyUserInvitationEntityTransfer {
         $companyUserInvitationEntityTransfer = new SpyCompanyUserInvitationEntityTransfer();
-        $data = $companyUserInvitationTransfer->toArray();
-        unset($data['company_user'], $data['company_business_unit'], $data['company_user_invitation_status']);
         $companyUserInvitationEntityTransfer->fromArray($companyUserInvitationTransfer->toArray(), true);
 
         return $companyUserInvitationEntityTransfer;
@@ -38,10 +36,24 @@ class CompanyUserInvitationMapper implements CompanyUserInvitationMapperInterfac
     public function mapEntityTransferToCompanyUserInvitationTransfer(
         SpyCompanyUserInvitationEntityTransfer $companyUserInvitationEntityTransfer
     ): CompanyUserInvitationTransfer {
-        $companyUserTransfer = new CompanyUserInvitationTransfer();
-        $companyUserTransfer->fromArray($companyUserInvitationEntityTransfer->toArray(), true);
+        $companyUserInvitationEntityTransferData = $companyUserInvitationEntityTransfer->modifiedToArray();
 
-        return $companyUserTransfer;
+        $companyUserInvitationTransfer = new CompanyUserInvitationTransfer();
+        $companyUserInvitationTransfer->fromArray($companyUserInvitationEntityTransferData, true);
+
+        if (isset($companyUserInvitationEntityTransferData['spy_company_business_unit'])) {
+            $companyUserInvitationTransfer->setCompanyBusinessUnitName(
+                $companyUserInvitationEntityTransferData['spy_company_business_unit']['name']
+            );
+        }
+
+        if (isset($companyUserInvitationEntityTransferData['spy_company_user_invitation_status'])) {
+            $companyUserInvitationTransfer->setCompanyUserInvitationStatusKey(
+                $companyUserInvitationEntityTransferData['spy_company_user_invitation_status']['status_key']
+            );
+        }
+
+        return $companyUserInvitationTransfer;
     }
 
     /**

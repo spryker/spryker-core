@@ -7,8 +7,9 @@
 
 namespace Spryker\Zed\CompanyUserInvitation\Communication\Controller;
 
-use Generated\Shared\Transfer\CompanyUserInvitationImportRequestTransfer;
-use Generated\Shared\Transfer\CompanyUserInvitationImportResultTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationImportReportTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
@@ -17,13 +18,24 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 class GatewayController extends AbstractGatewayController
 {
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserInvitationImportRequestTransfer $companyUserInvitationImportRequestTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer $companyUserInvitationCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserInvitationImportResultTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationImportReportTransfer
      */
     public function importInvitationsAction(
-        CompanyUserInvitationImportRequestTransfer $companyUserInvitationImportRequestTransfer
-    ): CompanyUserInvitationImportResultTransfer {
-        return $this->getFacade()->importInvitations($companyUserInvitationImportRequestTransfer);
+        CompanyUserInvitationCollectionTransfer $companyUserInvitationCollectionTransfer
+    ): CompanyUserInvitationImportReportTransfer {
+        return $this->getFacade()->importInvitations($companyUserInvitationCollectionTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer
+     */
+    public function getInvitationCollectionAction(
+        CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
+    ): CompanyUserInvitationCollectionTransfer {
+        return $this->getFacade()->getCompanyUserInvitationCollection($criteriaFilterTransfer);
     }
 }

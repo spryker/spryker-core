@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\CompanyUserInvitation\Dependency\Facade;
 
-use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 
 interface CompanyUserInvitationToCompanyUserFacadeInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param int $idCompanyUser
      *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer
      */
-    public function findCompanyUserByCustomerId(CustomerTransfer $customerTransfer);
+    public function getCompanyUserById(int $idCompanyUser): CompanyUserTransfer;
 }

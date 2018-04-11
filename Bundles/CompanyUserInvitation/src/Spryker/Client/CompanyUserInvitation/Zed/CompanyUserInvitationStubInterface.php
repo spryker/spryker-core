@@ -7,12 +7,27 @@
 
 namespace Spryker\Client\CompanyUserInvitation\Zed;
 
-use Generated\Shared\Transfer\CompanyUserInvitationImportResultTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationImportReportTransfer;
 
 interface CompanyUserInvitationStubInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\CompanyUserInvitationImportResultTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer $companyUserInvitationCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationImportReportTransfer
      */
-    public function importInvitations(): CompanyUserInvitationImportResultTransfer;
+    public function importInvitations(
+        CompanyUserInvitationCollectionTransfer $companyUserInvitationCollectionTransfer
+    ): CompanyUserInvitationImportReportTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer
+     */
+    public function getCompanyUserInvitationCollection(
+        CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
+    ): CompanyUserInvitationCollectionTransfer;
 }

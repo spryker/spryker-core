@@ -4,12 +4,7 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="CompanyUserInvitationImportRequest">
-        <property name="customer" type="Customer"/>
         <property name="invitationCollection" type="CompanyUserInvitationCollection"/>
-    </transfer>
-
-    <transfer name="Customer">
-        <property name="idCustomer" type="int" />
     </transfer>
 
     <transfer name="CompanyUserInvitationCollection">
@@ -25,31 +20,19 @@
         <property name="hash" type="string"/>
         <property name="fkCompanyUser" type="int"/>
         <property name="fkCompanyBusinessUnit" type="int"/>
+        <property name="companyBusinessUnitName" type="string"/>
         <property name="fkCompanyUserInvitationStatus" type="int"/>
-        <property name="companyUser" type="CompanyUser"/>
-        <property name="companyBusinessUnit" type="CompanyBusinessUnit"/>
-        <property name="companyUserInvitationStatus" type="CompanyUserInvitationStatus"/>
+        <property name="companyUserInvitationStatusKey" type="string"/>
         <property name="importError" type="string"/>
     </transfer>
 
-    <transfer name="CompanyUser">
-        <property name="idCompanyUser" type="int"/>
-        <property name="fkCompany" type="int"/>
-        <property name="fkCustomer" type="int"/>
-    </transfer>
-
-    <transfer name="CompanyBusinessUnit">
-        <property name="idCompanyBusinessUnit" type="int"/>
-        <property name="name" type="string"/>
+    <transfer name="CompanyUserInvitationImportReport">
+        <property name="notImportedInvitations" type="CompanyUserInvitation[]" singular="notImportedInvitation"/>
     </transfer>
 
     <transfer name="CompanyUserInvitationStatus">
-        <property name="idCompanyUserInvitationStatus" type="string"/>
-        <property name="name" type="string"/>
-    </transfer>
-
-    <transfer name="CompanyUserInvitationImportResult">
-        <property name="failedInvitations" type="CompanyUserInvitation[]" singular="failedInvitation"/>
+        <property name="idCompanyUserInvitationStatus" type="int"/>
+        <property name="statusKey" type="string"/>
     </transfer>
 
     <transfer name="CompanyBusinessUnitCriteriaFilter">

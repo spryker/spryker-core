@@ -7,9 +7,10 @@
 
 namespace Spryker\Zed\CompanyUserInvitation\Business;
 
-use Spryker\Zed\CompanyUserInvitation\Business\Model\InvitationHydrator;
-use Spryker\Zed\CompanyUserInvitation\Business\Model\InvitationImporter;
-use Spryker\Zed\CompanyUserInvitation\Business\Model\InvitationValidator;
+use Spryker\Zed\CompanyUserInvitation\Business\Model\Hydrator\InvitationHydrator;
+use Spryker\Zed\CompanyUserInvitation\Business\Model\Importer\InvitationImporter;
+use Spryker\Zed\CompanyUserInvitation\Business\Model\Reader\InvitationReader;
+use Spryker\Zed\CompanyUserInvitation\Business\Model\Validator\InvitationValidator;
 use Spryker\Zed\CompanyUserInvitation\CompanyUserInvitationDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -20,36 +21,47 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 class CompanyUserInvitationBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\CompanyUserInvitation\Business\Model\InvitationImporterInterface
+     * @return \Spryker\Zed\CompanyUserInvitation\Business\Model\Importer\InvitationImporterInterface
      */
     public function createInvitationImporter()
     {
         return new InvitationImporter(
             $this->getEntityManager(),
-            $this->getCompanyUserFacade(),
             $this->createInvitationValidator(),
             $this->createInvitationHydrator()
         );
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUserInvitation\Business\Model\InvitationValidatorInterface
+     * @return \Spryker\Zed\CompanyUserInvitation\Business\Model\Reader\InvitationReaderInterface
+     */
+    public function createInvitationReader()
+    {
+        return new InvitationReader(
+            $this->getRepository()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUserInvitation\Business\Model\Validator\InvitationValidatorInterface
      */
     protected function createInvitationValidator()
     {
         return new InvitationValidator(
             $this->getRepository(),
+            $this->getCompanyUserFacade(),
             $this->getCompanyBusinessUnitFacade()
         );
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUserInvitation\Business\Model\InvitationHydratorInterface
+     * @return \Spryker\Zed\CompanyUserInvitation\Business\Model\Hydrator\InvitationHydratorInterface
      */
     protected function createInvitationHydrator()
     {
         return new InvitationHydrator(
             $this->getRepository(),
+            $this->getCompanyUserFacade(),
             $this->getCompanyBusinessUnitFacade(),
             $this->getUtilTextService()
         );

@@ -9,6 +9,7 @@ namespace Spryker\Zed\CompanyUserInvitation\Persistence;
 
 use Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationStatusTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -19,28 +20,54 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class CompanyUserInvitationRepository extends AbstractRepository implements CompanyUserInvitationRepositoryInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $criteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer
      */
     public function getCompanyUserInvitationCollection(CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer): CompanyUserInvitationCollectionTransfer
     {
-        $queryCompanyUserInvitation = $this->getFactory()->createCompanyUserInvitationQuery();
+        $queryCompanyUserInvitation = $this->getFactory()
+            ->createCompanyUserInvitationQuery()
+            ->joinWithSpyCompanyBusinessUnit()
+            ->joinWithSpyCompanyUser()
+            ->innerJoinWithSpyCompanyUserInvitationStatus();
 
         if ($criteriaFilterTransfer->getFkCompanyUser() !== null) {
             $queryCompanyUserInvitation->filterByFkCompanyUser($criteriaFilterTransfer->getFkCompanyUser());
         }
 
-        $collection = $this->buildQueryFromCriteria($queryCompanyUserInvitation, $criteriaFilterTransfer->getFilter());
-        $collection = $this->getPaginatedCollection($collection, $criteriaFilterTransfer->getPagination());
+        $companyUserInvitationCollection = $this->buildQueryFromCriteria($queryCompanyUserInvitation, $criteriaFilterTransfer->getFilter());
+        $companyUserInvitationCollection = $this->getPaginatedCollection($companyUserInvitationCollection, $criteriaFilterTransfer->getPagination());
 
-        $collectionTransfer = $this->getFactory()
+        $companyUserInvitationCollectionTransfer = $this->getFactory()
             ->createCompanyUserInvitationMapper()
-            ->mapCompanyUserInvitationCollection($collection);
+            ->mapCompanyUserInvitationCollection($companyUserInvitationCollection);
 
-        $collectionTransfer->setPagination($criteriaFilterTransfer->getPagination());
+        $companyUserInvitationCollectionTransfer->setPagination($criteriaFilterTransfer->getPagination());
 
-        return $collectionTransfer;
+        return $companyUserInvitationCollectionTransfer;
+    }
+
+    /**
+     * @param string $statusKey
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationStatusTransfer|null
+     */
+    public function findCompanyUserInvitationStatusByStatusKey(string $statusKey): ?CompanyUserInvitationStatusTransfer
+    {
+        $queryCompanyUserInvitationStatus = $this->getFactory()
+            ->createCompanyUserInvitationStatusQuery()
+            ->filterByStatusKey($statusKey);
+
+        $entityTransfer = $this->buildQueryFromCriteria($queryCompanyUserInvitationStatus)->findOne();
+
+        if ($entityTransfer !== null) {
+            return $this->getFactory()
+                ->createCompanyUserInvitationStatusMapper()
+                ->mapEntityTransferToCompanyUserInvitationStatusTransfer($entityTransfer);
+        }
+
+        return null;
     }
 
     /**
