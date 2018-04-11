@@ -58,7 +58,7 @@ class StoreManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOr
      */
     public function handleData(QuoteTransfer $quoteTransfer, &$form, Request $request): QuoteTransfer
     {
-        $storeCurrencyString = $quoteTransfer->getStoreCurrency();
+        $storeCurrencyString = $quoteTransfer->getManualOrderEntry()->getStoreCurrency();
         if (!$this->isValidStoreCurrencyString($storeCurrencyString)) {
             return $quoteTransfer;
         }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\ManualOrderEntryGui\Communication\Plugin;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ManualOrderProductTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Product\ItemCollectionType;
@@ -71,16 +70,16 @@ class ItemManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOrd
         $items = new ArrayObject();
         $addedSkus = [];
 
-        foreach ($quoteTransfer->getManualOrderItems() as $manualOrderProductTransfer) {
-            if ($manualOrderProductTransfer->getQuantity() <= 0
-                || in_array($manualOrderProductTransfer->getSku(), $addedSkus)
+        foreach ($quoteTransfer->getManualOrderEntry()->getItems() as $newItemTransfer) {
+            if ($newItemTransfer->getQuantity() <= 0
+                || in_array($newItemTransfer->getSku(), $addedSkus)
             ) {
                 continue;
             }
 
-            $addedSkus[] = $manualOrderProductTransfer->getSku();
+            $addedSkus[] = $newItemTransfer->getSku();
             $itemTransfer = new ItemTransfer();
-            $itemTransfer->fromArray($manualOrderProductTransfer->toArray());
+            $itemTransfer->fromArray($newItemTransfer->toArray());
 
             $items->append($itemTransfer);
         }
@@ -106,7 +105,7 @@ class ItemManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOrd
             $quoteTransfer = $this->cartFacade->reloadItems($quoteTransfer);
         }
 
-        $this->updateManualOrderItems($quoteTransfer);
+        $this->updateItems($quoteTransfer);
 
         $form = $this->createForm($request, $quoteTransfer);
         $form->setData($quoteTransfer->toArray());
@@ -131,17 +130,17 @@ class ItemManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOrd
      *
      * @return void
      */
-    protected function updateManualOrderItems(QuoteTransfer $quoteTransfer)
+    protected function updateItems(QuoteTransfer $quoteTransfer)
     {
-        $quoteTransfer->setManualOrderItems(new ArrayObject());
+        $quoteTransfer->getManualOrderEntry()->setItems(new ArrayObject());
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $manualOrderProductTransfer = new ManualOrderProductTransfer();
-            $manualOrderProductTransfer->setSku($itemTransfer->getSku())
+            $newItemTransfer = new ItemTransfer();
+            $newItemTransfer->setSku($itemTransfer->getSku())
                 ->setQuantity($itemTransfer->getQuantity())
                 ->setUnitGrossPrice($itemTransfer->getUnitGrossPrice());
 
-            $quoteTransfer->addManualOrderItems($manualOrderProductTransfer);
+            $quoteTransfer->getManualOrderEntry()->addItems($newItemTransfer);
         }
     }
 }

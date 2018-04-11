@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider;
 
+use Generated\Shared\Transfer\ManualOrderEntryTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Store\StoreType;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCurrencyFacadeInterface;
@@ -49,13 +50,17 @@ class StoreDataProvider implements FormDataProviderInterface
      */
     public function getData($quoteTransfer)
     {
+        if ($quoteTransfer->getManualOrderEntry() === null) {
+            $quoteTransfer->setManualOrderEntry(new ManualOrderEntryTransfer());
+        }
+
         if ($quoteTransfer->getStore() !== null
             && $quoteTransfer->getCurrency() !== null
         ) {
             $storeName = $quoteTransfer->getStore()->getName();
             $currencyCode = $quoteTransfer->getCurrency()->getCode();
 
-            $quoteTransfer->setStoreCurrency($storeName . ';' . $currencyCode);
+            $quoteTransfer->getManualOrderEntry()->setStoreCurrency($storeName . ';' . $currencyCode);
         }
 
         return $quoteTransfer;

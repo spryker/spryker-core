@@ -77,18 +77,18 @@ class ProductManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
         $cartChangeTransfer = new CartChangeTransfer();
         $addedSkus = [];
 
-        foreach ($quoteTransfer->getManualOrderProducts() as $manualOrderProduct) {
-            if (!strlen($manualOrderProduct->getSku())
-                || $manualOrderProduct->getQuantity() <= 0
-                || in_array($manualOrderProduct->getSku(), $addedSkus)
-                || !$this->productFacade->hasProductConcrete($manualOrderProduct->getSku())
+        foreach ($quoteTransfer->getManualOrderEntry()->getProducts() as $newProduct) {
+            if (!strlen($newProduct->getSku())
+                || $newProduct->getQuantity() <= 0
+                || in_array($newProduct->getSku(), $addedSkus)
+                || !$this->productFacade->hasProductConcrete($newProduct->getSku())
             ) {
                 continue;
             }
 
-            $addedSkus[] = $manualOrderProduct->getSku();
+            $addedSkus[] = $newProduct->getSku();
             $itemTransfer = new ItemTransfer();
-            $itemTransfer->fromArray($manualOrderProduct->toArray());
+            $itemTransfer->fromArray($newProduct->toArray());
 
             $cartChangeTransfer->addItem($itemTransfer);
         }

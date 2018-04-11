@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\Product;
 
-use Generated\Shared\Transfer\ManualOrderProductTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -205,7 +205,7 @@ class ItemType extends AbstractType
         $moneyFacade = $this->getFactory()->getMoneyFacade();
         $data = $event->getData();
 
-        if ($data instanceof ManualOrderProductTransfer) {
+        if ($data instanceof ItemTransfer) {
             $moneyFloat = $moneyFacade->convertIntegerToDecimal((int)$data->getUnitGrossPrice());
             $data->setUnitGrossPrice($moneyFloat);
 
@@ -224,7 +224,7 @@ class ItemType extends AbstractType
         $moneyFacade = $this->getFactory()->getMoneyFacade();
         $data = $event->getData();
 
-        if ($data instanceof ManualOrderProductTransfer) {
+        if ($data instanceof ItemTransfer) {
             $moneyFloat = $moneyFacade->convertDecimalToInteger((float)$data->getUnitGrossPrice());
             $data->setUnitGrossPrice($moneyFloat);
 

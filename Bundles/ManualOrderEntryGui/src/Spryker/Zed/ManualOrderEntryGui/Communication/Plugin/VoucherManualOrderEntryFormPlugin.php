@@ -71,9 +71,11 @@ class VoucherManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
      */
     public function handleData(QuoteTransfer $quoteTransfer, &$form, Request $request): QuoteTransfer
     {
-        if (strlen($quoteTransfer->getVoucherCode())) {
+        $voucherCode = $quoteTransfer->getManualOrderEntry()->getVoucherCode();
+
+        if (strlen($voucherCode)) {
             $discountTransfer = new DiscountTransfer();
-            $discountTransfer->setVoucherCode($quoteTransfer->getVoucherCode());
+            $discountTransfer->setVoucherCode($voucherCode);
 
             $quoteTransfer->setVoucherDiscounts(new ArrayObject());
             $quoteTransfer->addVoucherDiscount($discountTransfer);
@@ -83,13 +85,13 @@ class VoucherManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
             }
 
             if (!count($quoteTransfer->getVoucherDiscounts())) {
-                $this->addMessage(sprintf(static::MESSAGE_ERROR, $quoteTransfer->getVoucherCode()), false);
+                $this->addMessage(sprintf(static::MESSAGE_ERROR, $voucherCode), false);
                 $quoteTransfer->setVoucherCode('');
 
                 $form = $this->createForm($request, $quoteTransfer);
                 $form->setData($quoteTransfer->toArray());
             } else {
-                $this->addMessage(sprintf(static::MESSAGE_SUCCESS, $quoteTransfer->getVoucherCode()));
+                $this->addMessage(sprintf(static::MESSAGE_SUCCESS, $voucherCode));
             }
 
             $this->uniqueFlashMessages();

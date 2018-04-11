@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\Store;
 
+use Generated\Shared\Transfer\ManualOrderEntryTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -56,7 +58,7 @@ class StoreType extends AbstractType
     protected function addStoreField(FormBuilderInterface $builder, array $storesList)
     {
         $builder->add(static::FIELD_STORE, Select2ComboBoxType::class, [
-            'property_path' => static::FIELD_STORE,
+            'property_path' => QuoteTransfer::MANUAL_ORDER_ENTRY . '.' . ManualOrderEntryTransfer::STORE_CURRENCY,
             'label' => 'Store and Currency',
             'choices' => array_flip($storesList),
             'choices_as_values' => true,

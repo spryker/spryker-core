@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider;
 
+use Generated\Shared\Transfer\ManualOrderEntryTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCalculationFacadeInterface;
 
@@ -33,6 +34,10 @@ class SummaryDataProvider implements FormDataProviderInterface
      */
     public function getData($quoteTransfer)
     {
+        if ($quoteTransfer->getManualOrderEntry() === null) {
+            $quoteTransfer->setManualOrderEntry(new ManualOrderEntryTransfer());
+        }
+
         $quoteTransfer = $this->calculationFacade->recalculateQuote($quoteTransfer);
 
         return $quoteTransfer;

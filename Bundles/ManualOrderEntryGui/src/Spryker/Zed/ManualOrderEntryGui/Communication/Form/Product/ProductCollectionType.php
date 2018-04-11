@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\Product;
 
+use Generated\Shared\Transfer\ManualOrderEntryTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -20,10 +22,10 @@ class ProductCollectionType extends AbstractType
 {
     public const TYPE_NAME = 'products';
 
-    public const FIELD_PRODUCTS = 'manualOrderProducts';
+    public const FIELD_PRODUCTS = 'products';
     public const FIELD_IS_PRODUCT_POSTED = 'isProductPosted';
 
-    public const OPTION_MANUAL_ORDER_PRODUCT_CLASS_COLLECTION = 'manual_order_product_class_collection';
+    public const OPTION_PRODUCT_CLASS_COLLECTION = 'OPTION_PRODUCT_CLASS_COLLECTION';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -32,7 +34,7 @@ class ProductCollectionType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired(static::OPTION_MANUAL_ORDER_PRODUCT_CLASS_COLLECTION);
+        $resolver->setRequired(static::OPTION_PRODUCT_CLASS_COLLECTION);
     }
 
     /**
@@ -57,13 +59,14 @@ class ProductCollectionType extends AbstractType
     protected function addProductsEmptyField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_PRODUCTS, CollectionType::class, [
+            'property_path' => QuoteTransfer::MANUAL_ORDER_ENTRY . '.' . ManualOrderEntryTransfer::PRODUCTS,
             'entry_type' => ProductType::class,
             'label' => 'Products',
             'required' => false,
             'allow_add' => true,
             'allow_delete' => true,
             'entry_options' => [
-                'data_class' => $options[static::OPTION_MANUAL_ORDER_PRODUCT_CLASS_COLLECTION],
+                'data_class' => $options[static::OPTION_PRODUCT_CLASS_COLLECTION],
             ],
         ]);
 
@@ -79,6 +82,7 @@ class ProductCollectionType extends AbstractType
     protected function addIsProductPostedField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_IS_PRODUCT_POSTED, HiddenType::class, [
+            'property_path' => QuoteTransfer::MANUAL_ORDER_ENTRY . '.' . ManualOrderEntryTransfer::IS_PRODUCT_POSTED,
             'data' => 1,
         ]);
 
