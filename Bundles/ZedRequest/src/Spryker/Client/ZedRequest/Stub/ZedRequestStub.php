@@ -47,12 +47,4 @@ class ZedRequestStub
     {
         return $this->zedStub->getLastResponseErrorMessages();
     }
-
-    /**
-     * @return void
-     */
-    public function addFlashMessagesFromLastZedRequest()
-    {
-        $this->zedStub->addFlashMessagesFromLastZedRequest();
-    }
 }

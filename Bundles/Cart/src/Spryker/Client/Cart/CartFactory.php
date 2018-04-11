@@ -47,7 +47,7 @@ class CartFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Cart\Dependency\Plugin\QuoteStorageStrategyPluginInterface
+     * @return \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface
      */
     public function getQuoteStorageStrategy()
     {
@@ -77,7 +77,7 @@ class CartFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Cart\Dependency\Plugin\QuoteStorageStrategyPluginInterface[]
+     * @return \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface[]
      */
     protected function getQuoteStorageStrategyPlugins()
     {
@@ -85,7 +85,7 @@ class CartFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Cart\Dependency\Plugin\QuoteItemFinderPluginInterface
+     * @return \Spryker\Client\CartExtension\Dependency\Plugin\QuoteItemFinderPluginInterface
      */
     public function getQuoteItemFinderPlugin()
     {

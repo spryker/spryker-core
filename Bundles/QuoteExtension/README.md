@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/QuoteExtensionExtension.svg)](https://travis-ci.org/spryker/QuoteExtensionExtension)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/QuoteExtensionExtension/badge.svg)](https://coveralls.io/github/spryker/QuoteExtension)
 
-QuoteExtension contains the quote-extension transfer object's definition and a client to access the quote-extension from the session.
+This module provides module provides plugin interfaces used by Quote module.
 
 ## Installation
 

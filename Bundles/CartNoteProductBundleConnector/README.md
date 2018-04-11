@@ -2,6 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/cart-note-product-bundle-connector.svg)](https://travis-ci.org/spryker/cart-note-product-bundle-connector)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/cart-note-product-bundle-connector/badge.svg)](https://coveralls.io/github/spryker/cart-note-product-bundle-connector)
 
+This module provides functionality which bundle products with cart note. 
 
 ## Installation
 
