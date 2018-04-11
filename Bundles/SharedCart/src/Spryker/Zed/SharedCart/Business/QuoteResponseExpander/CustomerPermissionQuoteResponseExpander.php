@@ -42,7 +42,7 @@ class CustomerPermissionQuoteResponseExpander implements QuoteResponseExpanderIn
      */
     public function expand(QuoteResponseTransfer $quoteResponseTransfer): QuoteResponseTransfer
     {
-        $customerTransfer = $quoteResponseTransfer->getQuoteTransfer()->requireCustomer()->getCustomer();
+        $customerTransfer = $quoteResponseTransfer->requireCustomer()->getCustomer();
         $quoteResponseTransfer->setCustomerPermissions($this->getPermissionCollection($customerTransfer));
 
         return $quoteResponseTransfer;

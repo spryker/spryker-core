@@ -98,7 +98,6 @@ class QuoteDeleter implements QuoteDeleterInterface
             $quoteResponseTransfer = new QuoteResponseTransfer();
             $quoteTransfer = $this->executeDeleteBeforePlugins($quoteTransfer);
             $this->quoteEntityManager->deleteQuoteById($quoteTransfer->getIdQuote());
-            $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
             $quoteResponseTransfer->setCustomer($quoteTransfer->getCustomer());
             $quoteResponseTransfer->setIsSuccessful(true);
 
