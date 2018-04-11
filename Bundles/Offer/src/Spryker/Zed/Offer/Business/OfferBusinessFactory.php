@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Offer\Business;
 
-use Bundles\Offer\src\Spryker\Zed\Offer\Business\Model\Hydrator\OfferQuoteExpander;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Offer\Business\Model\Hydrator\OfferQuoteExpander;
 use Spryker\Zed\Offer\Business\Model\Hydrator\OfferQuoteExpanderInterface;
 use Spryker\Zed\Offer\Business\Model\Hydrator\OfferSavingAmountHydrator;
 use Spryker\Zed\Offer\Business\Model\Hydrator\OfferSavingAmountHydratorInterface;

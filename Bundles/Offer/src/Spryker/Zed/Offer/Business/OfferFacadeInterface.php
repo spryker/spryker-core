@@ -117,6 +117,8 @@ interface OfferFacadeInterface
     public function recalculateGrandTotal(CalculableObjectTransfer $calculableObjectTransfer): void;
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param int $idOffer
      *

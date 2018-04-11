@@ -10,11 +10,8 @@ namespace Spryker\Zed\Customer\Persistence;
 use ArrayObject;
 use Generated\Shared\Transfer\CustomerCollectionTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
-use Generated\Shared\Transfer\OfferListTransfer;
-use Generated\Shared\Transfer\OfferTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
-use Orm\Zed\Offer\Persistence\SpyOfferQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\Propel\PropelFilterCriteria;
@@ -63,7 +60,6 @@ class CustomerRepository extends AbstractRepository implements CustomerRepositor
 
         return $spyCustomerQuery;
     }
-
 
     /**
      * @param \Orm\Zed\Customer\Persistence\SpyCustomerQuery $spyCustomerQuery

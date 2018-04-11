@@ -149,6 +149,8 @@ class OfferFacade extends AbstractFacade implements OfferFacadeInterface
     }
 
     /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param int $idOffer
      *

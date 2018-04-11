@@ -8,7 +8,6 @@
 namespace Spryker\Zed\SalesReclamation\Communication\Plugin;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface;
 use Spryker\Zed\SalesReclamation\Communication\Form\ReclamationType;

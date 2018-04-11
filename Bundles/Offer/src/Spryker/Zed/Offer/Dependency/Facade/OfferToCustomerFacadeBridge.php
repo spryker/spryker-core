@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Offer\Dependency\Facade;
 
-
 class OfferToCustomerFacadeBridge implements OfferToCustomerFacadeInterface
 {
     /**

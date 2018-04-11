@@ -27,11 +27,11 @@ interface ManualOrderEntryFormPluginInterface
     public function createForm(Request $request, $dataTransfer = null): FormInterface;
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Symfony\Component\Form\FormInterface $form
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function handleData($quoteTransfer, &$form, $request): QuoteTransfer;
 

@@ -20,7 +20,7 @@ class ItemCollectionDataProvider implements FormDataProviderInterface
      */
     public function getData($quoteTransfer)
     {
-        foreach($quoteTransfer->getItems() as $itemTransfer) {
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $manualOrderProductTransfer = new ManualOrderProductTransfer();
             $manualOrderProductTransfer->fromArray($itemTransfer->toArray(), true);
 

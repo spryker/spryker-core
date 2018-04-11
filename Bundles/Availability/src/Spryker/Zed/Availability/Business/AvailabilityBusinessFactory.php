@@ -64,7 +64,7 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Availability\Business\Model\Hydrator\OfferQuoteItemStockHydratorInterface
      */
-    public function createOfferQuoteItemStockHydrator():OfferQuoteItemStockHydratorInterface
+    public function createOfferQuoteItemStockHydrator(): OfferQuoteItemStockHydratorInterface
     {
         return new OfferQuoteItemStockHydrator(
             $this->getStoreFacade(),

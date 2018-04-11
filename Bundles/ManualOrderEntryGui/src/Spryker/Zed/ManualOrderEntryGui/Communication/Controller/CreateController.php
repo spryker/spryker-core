@@ -199,8 +199,9 @@ class CreateController extends AbstractController
 
     /**
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return string
+     * @return mixed|string
      */
     protected function createRedirectUrlAfterOrderCreation(SaveOrderTransfer $saveOrderTransfer, Request $request)
     {
@@ -229,9 +230,9 @@ class CreateController extends AbstractController
     }
 
     /**
-     * @param Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function getInitialQuote(Request $request): QuoteTransfer
     {

@@ -9,12 +9,12 @@ namespace Spryker\Zed\Customer\Business;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\CustomerCollectionTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\OfferTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
-use \Generated\Shared\Transfer\CustomerCollectionTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**

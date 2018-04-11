@@ -1,7 +1,11 @@
 <?php
 
-namespace Spryker\Zed\Availability\Communication\Plugin\Offer;
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
+namespace Spryker\Zed\Availability\Communication\Plugin\Offer;
 
 use Generated\Shared\Transfer\OfferTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -20,9 +24,9 @@ class OfferQuoteItemStockHydratorPlugin extends AbstractPlugin implements OfferH
      *
      * @api
      *
-     * @param OfferTransfer $offerTransfer
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
      *
-     * @return OfferTransfer
+     * @return \Generated\Shared\Transfer\OfferTransfer
      */
     public function hydrateOffer(OfferTransfer $offerTransfer): OfferTransfer
     {
