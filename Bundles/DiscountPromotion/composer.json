@@ -17,6 +17,7 @@
     "spryker/calculation": "*",
     "spryker/cart": "*",
     "spryker/code-sniffer": "*",
+    "spryker/persistent-cart": "*",
     "spryker/propel": "*",
     "spryker/silex": "*",
     "spryker/testify": "*",
@@ -24,7 +25,8 @@
   },
   "suggest": {
     "spryker/calculation": "Used by plugin to reset promotional items.",
-    "spryker/cart": "Used by plugin to add promotional item identifier to group key."
+    "spryker/cart": "Used by plugin to add promotional item identifier to group key.",
+    "spryker/persistent-cart": "Used by plugin to add promotional item identifier to group key."
   },
   "autoload": {
     "psr-4": {

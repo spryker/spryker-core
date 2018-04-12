@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteUpdateRequestAttributesTransfer;
 use Spryker\Zed\Kernel\PermissionAwareTrait;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToMessengerFacadeInterface;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface;
@@ -18,7 +19,6 @@ use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInte
 class QuoteResolver implements QuoteResolverInterface
 {
     use PermissionAwareTrait;
-
     public const GLOSSARY_KEY_QUOTE_NOT_AVAILABLE = 'persistent_cart.error.quote.not_available';
 
     /**
@@ -54,37 +54,47 @@ class QuoteResolver implements QuoteResolverInterface
     /**
      * @param int $idQuote
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\QuoteUpdateRequestAttributesTransfer|null $quoteUpdateRequestAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function resolveCustomerQuote(int $idQuote, CustomerTransfer $customerTransfer): QuoteResponseTransfer
-    {
+    public function resolveCustomerQuote(
+        int $idQuote,
+        CustomerTransfer $customerTransfer,
+        QuoteUpdateRequestAttributesTransfer $quoteUpdateRequestAttributesTransfer = null
+    ): QuoteResponseTransfer {
+        if (!$idQuote) {
+            return $this->createNewQuote($customerTransfer, $quoteUpdateRequestAttributesTransfer);
+        }
         $customerQuoteTransfer = $this->findCustomerQuoteById(
             $idQuote,
             $customerTransfer
         );
+
         if (!$customerQuoteTransfer) {
             return $this->createQuoteNotFoundResult($customerTransfer);
+        }
+
+        if ($quoteUpdateRequestAttributesTransfer) {
+            $customerQuoteTransfer->fromArray($quoteUpdateRequestAttributesTransfer->modifiedToArray(), true);
         }
 
         $quoteResponseTransfer = new QuoteResponseTransfer();
         $quoteResponseTransfer->setIsSuccessful(true);
         $quoteResponseTransfer->setCustomer($customerTransfer);
         $quoteResponseTransfer->setQuoteTransfer($customerQuoteTransfer);
+
         return $quoteResponseTransfer;
     }
 
     /**
-     * @param null|int $idQuote
+     * @param int $idQuote
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return null|\Generated\Shared\Transfer\QuoteTransfer
      */
     protected function findCustomerQuoteById(int $idQuote, CustomerTransfer $customerTransfer): ?QuoteTransfer
     {
-        if (!$idQuote) {
-            return $this->createNewQuote($customerTransfer);
-        }
         $quoteResponseTransfer = $this->quoteFacade->findQuoteById($idQuote);
         if (!$quoteResponseTransfer->getIsSuccessful() || !$this->isQuoteReadAllowed($quoteResponseTransfer->getQuoteTransfer(), $customerTransfer)
         ) {
@@ -137,16 +147,20 @@ class QuoteResolver implements QuoteResolverInterface
 
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\QuoteUpdateRequestAttributesTransfer|null $quoteUpdateRequestAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    protected function createNewQuote(CustomerTransfer $customerTransfer): ?QuoteTransfer
+    protected function createNewQuote(CustomerTransfer $customerTransfer, QuoteUpdateRequestAttributesTransfer $quoteUpdateRequestAttributesTransfer = null): QuoteResponseTransfer
     {
         $quoteTransfer = new QuoteTransfer();
         $quoteTransfer->setCustomer($customerTransfer);
         $quoteTransfer->setCustomerReference($customerTransfer->getCustomerReference());
+        if ($quoteUpdateRequestAttributesTransfer) {
+            $quoteTransfer->fromArray($quoteUpdateRequestAttributesTransfer->modifiedToArray(), true);
+        }
 
-        return $this->quoteFacade->createQuote($quoteTransfer)->getQuoteTransfer();
+        return $this->quoteFacade->createQuote($quoteTransfer);
     }
 
     /**

@@ -85,6 +85,7 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
     public function addValidItems(CartChangeTransfer $cartChangeTransfer, array $params = []): QuoteTransfer
     {
         $persistentCartChangeTransfer = $this->createPersistentCartChangeTransfer();
+        $persistentCartChangeTransfer->setIdQuote($cartChangeTransfer->getQuote()->getIdQuote());
 
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             $persistentCartChangeTransfer->addItem($itemTransfer);

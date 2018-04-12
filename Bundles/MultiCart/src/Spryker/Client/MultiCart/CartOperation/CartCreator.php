@@ -80,7 +80,7 @@ class CartCreator implements CartCreatorInterface
     {
         $quoteTransfer = clone $quoteTransfer;
         $quoteTransfer->setName(
-            $quoteTransfer->getName() . $this->multiCartConfig->getDuplicatedQuoteNameSuffix() . ' ' . date('Y-m-d H:i:s')
+            sprintf($this->multiCartConfig->getDuplicatedQuoteName(), $quoteTransfer->getName(), date('Y-m-d H:i:s'))
         );
         $quoteTransfer->setIdQuote(null);
         $quoteTransfer->setIsDefault(true);

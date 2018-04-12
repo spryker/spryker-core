@@ -87,12 +87,13 @@ class CartClient extends AbstractClient implements CartClientInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param array $params
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addValidItems(CartChangeTransfer $cartChangeTransfer): QuoteTransfer
+    public function addValidItems(CartChangeTransfer $cartChangeTransfer, array $params = []): QuoteTransfer
     {
-        return $this->getFactory()->getQuoteStorageStrategy()->addValidItems($cartChangeTransfer);
+        return $this->getFactory()->getQuoteStorageStrategy()->addValidItems($cartChangeTransfer, $params);
     }
 
     /**
