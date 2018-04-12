@@ -32,6 +32,11 @@ class OfferRepository extends AbstractRepository implements OfferRepositoryInter
         $offerQuery = $this->getFactory()->createPropelOfferQuery();
         $offerQuery = $this->applyFilterToQuery($offerQuery, $offerListTransfer->getFilter());
         $offerQuery->filterByCustomerReference($offerListTransfer->getCustomerReference());
+        $offerQuery->filterByStatus_In(
+            $this->getFactory()
+                ->getConfig()
+                ->getUnconvertedOfferStatuses()
+        );
         $offerQuery = $this->applyPagination($offerQuery, $offerListTransfer->getPagination());
 
         $offerQuery = $this->buildQueryFromCriteria($offerQuery);

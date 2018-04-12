@@ -29,4 +29,14 @@ class OfferConfig extends AbstractBundleConfig
     {
         return $this->getSharedConfig()->getStatusOrder();
     }
+
+    /**
+     * @return array
+     */
+    public function getUnconvertedOfferStatuses(): array
+    {
+        return [
+            $this->getStatusInProgress(),
+        ];
+    }
 }
