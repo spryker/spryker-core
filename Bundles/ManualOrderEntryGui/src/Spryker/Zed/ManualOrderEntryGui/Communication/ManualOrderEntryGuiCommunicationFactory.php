@@ -175,16 +175,27 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
+     * @param \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface[] $formPlugins
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface[]
      */
-    public function getManualOrderEntryFilteredFormPlugins(Request $request, $quoteTransfer)
+    public function getManualOrderEntryFilteredFormPlugins($formPlugins, Request $request, $quoteTransfer)
     {
-        $formPlugins = $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::PLUGINS_MANUAL_ORDER_ENTRY_FORM);
+        return $this->createStepEngine()->getFilteredFormPlugins($formPlugins, $request, $quoteTransfer);
+    }
 
-        return $this->createStepEngine()->filterFormPlugins($formPlugins, $request, $quoteTransfer);
+    /**
+     * @param \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface[] $formPlugins
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface[]
+     */
+    public function getManualOrderEntrySkippedFormPlugins($formPlugins, Request $request, $quoteTransfer)
+    {
+        return $this->createStepEngine()->getSkippedFormPlugins($formPlugins, $request, $quoteTransfer);
     }
 
     /**

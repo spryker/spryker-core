@@ -31,20 +31,27 @@ class StepEngine
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array
+     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface[]
      */
-    public function filterFormPlugins($formPlugins, Request $request, QuoteTransfer $quoteTransfer)
+    public function getFilteredFormPlugins($formPlugins, Request $request, QuoteTransfer $quoteTransfer)
     {
         $filteredPlugins = [];
-        $isFormPreFilledLast = false;
+        $skippedPlugins = [];
+        $isPrevFormPreFilled = false;
 
         foreach ($formPlugins as $formPlugin) {
             $pluginAdded = false;
+
+            if ($this->isFormSkipped($formPlugin, $request, $quoteTransfer)) {
+                $skippedPlugins[] = $formPlugin;
+                continue;
+            }
+
             $isFormSubmitted = $this->isFormSubmitted($formPlugin, $request);
             $isShowNext = $this->isShowNext($request);
             $isFormPreFilled = $this->isFormPreFilled($formPlugin, $quoteTransfer);
 
-            if ($isShowNext || $isFormPreFilledLast) {
+            if ($isShowNext || $isPrevFormPreFilled) {
                 $filteredPlugins[] = $formPlugin;
                 $pluginAdded = true;
             }
@@ -56,12 +63,40 @@ class StepEngine
             if (!$pluginAdded) {
                 $filteredPlugins[] = $formPlugin;
             }
-            $isFormPreFilledLast = $isFormPreFilled;
+            $isPrevFormPreFilled = $isFormPreFilled;
         }
 
-        $filteredPlugins = $this->augmentFilteredPlugins($formPlugins, $filteredPlugins);
+        $filteredPlugins = $this->augmentFilteredPlugins($formPlugins, $filteredPlugins, $skippedPlugins);
 
         return $filteredPlugins;
+    }
+
+    /**
+     * @param \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface[] $formPlugins
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface[]
+     */
+    public function getSkippedFormPlugins($formPlugins, Request $request, QuoteTransfer $quoteTransfer)
+    {
+        $skippedPlugins = [];
+
+        foreach ($formPlugins as $formPlugin) {
+            if ($this->isFormSkipped($formPlugin, $request, $quoteTransfer)) {
+                $skippedPlugins[] = $formPlugin;
+                continue;
+            }
+
+            $isFormSubmitted = $this->isFormSubmitted($formPlugin, $request);
+            $isFormPreFilled = $this->isFormPreFilled($formPlugin, $quoteTransfer);
+
+            if (!$isFormSubmitted && !$isFormPreFilled) {
+                break;
+            }
+        }
+
+        return $skippedPlugins;
     }
 
     /**
@@ -97,15 +132,42 @@ class StepEngine
     }
 
     /**
+     * @param \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface $formPlugin
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function isFormSkipped(ManualOrderEntryFormPluginInterface $formPlugin, Request $request, QuoteTransfer $quoteTransfer): bool
+    {
+        return $formPlugin->isFormSkipped($request, $quoteTransfer);
+    }
+
+    /**
      * @param \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface[] $formPlugins
      * @param \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface[] $filteredPlugins
+     * @param \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface[] $skippedPlugins
      *
      * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface[]
      */
-    protected function augmentFilteredPlugins($formPlugins, $filteredPlugins): array
+    protected function augmentFilteredPlugins($formPlugins, $filteredPlugins, $skippedPlugins): array
     {
-        if (count($formPlugins) && !count($filteredPlugins)) {
-            $filteredPlugins[] = array_shift($formPlugins);
+        if (!count($filteredPlugins)) {
+            foreach ($formPlugins as $formPlugin) {
+                $isSkipped = false;
+
+                foreach($skippedPlugins as $skippedPlugin) {
+                    if ($formPlugin->getName() == $skippedPlugin->getName()) {
+                        $isSkipped = true;
+                        break;
+                    }
+                }
+
+                if (!$isSkipped) {
+                    $filteredPlugins[] = $formPlugin;
+                    break;
+                }
+            }
         }
 
         return $filteredPlugins;

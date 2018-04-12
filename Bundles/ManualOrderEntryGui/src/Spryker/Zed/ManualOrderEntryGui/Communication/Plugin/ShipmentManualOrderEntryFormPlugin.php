@@ -72,4 +72,15 @@ class ShipmentManualOrderEntryFormPlugin extends AbstractPlugin implements Manua
     {
         return false;
     }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isFormSkipped(Request $request, QuoteTransfer $quoteTransfer): bool
+    {
+        return false;
+    }
 }

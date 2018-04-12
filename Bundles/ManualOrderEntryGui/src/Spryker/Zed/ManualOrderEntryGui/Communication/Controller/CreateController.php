@@ -42,7 +42,8 @@ class CreateController extends AbstractController
         $forms = [];
         $validForms = true;
         $allFormPlugins = $this->getFactory()->getManualOrderEntryFormPlugins();
-        $filteredFormPlugins = $this->getFactory()->getManualOrderEntryFilteredFormPlugins($request, $quoteTransfer);
+        $filteredFormPlugins = $this->getFactory()->getManualOrderEntryFilteredFormPlugins($allFormPlugins, $request, $quoteTransfer);
+        $skippedFormPlugins = $this->getFactory()->getManualOrderEntrySkippedFormPlugins($allFormPlugins, $request, $quoteTransfer);
 
         foreach ($filteredFormPlugins as $formPlugin) {
             $form = $formPlugin->createForm($request, $quoteTransfer);
@@ -65,7 +66,7 @@ class CreateController extends AbstractController
 
         if ($validForms
             && count($allFormPlugins)
-            && count($allFormPlugins) == count($filteredFormPlugins)
+            && count($allFormPlugins) == count($filteredFormPlugins) + count($skippedFormPlugins)
         ) {
             $checkoutResponseTransfer = $this->createOrder($quoteTransfer);
 

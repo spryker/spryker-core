@@ -6,6 +6,31 @@
 'use strict';
 
 require('ZedGui');
+require('../../scss/main.scss');
+
+var shippingAddressToggle = function() {
+    if ($('input[name="addresses[shippingAddress][id_customer_address]"]:last').is(':checked')) {
+        $('#manualOrderShippingAddress .__toggler-target').show();
+    } else {
+        $('#manualOrderShippingAddress .__toggler-target').hide();
+    }
+};
+
+var billingAddressToggle = function() {
+    if ($('input[name="addresses[billingAddress][id_customer_address]"]:last').is(':checked')) {
+        $('#manualOrderBillingAddress .__toggler-target').show();
+    } else {
+        $('#manualOrderBillingAddress .__toggler-target').hide();
+    }
+};
+
+var billingAddressSelectionToggle = function() {
+    if ($('#addresses_billingSameAsShipping').is(':checked')) {
+        $('#manualOrderBillingAddress .__toggler-target-selection').hide();
+    } else {
+        $('#manualOrderBillingAddress .__toggler-target-selection').show();
+    }
+};
 
 $(document).ready( function () {
     var productCount = 3;
@@ -31,4 +56,12 @@ $(document).ready( function () {
         return false;
     });
 
+    shippingAddressToggle();
+    $('input[name="addresses[shippingAddress][id_customer_address]"]').click(shippingAddressToggle);
+
+    billingAddressToggle();
+    $('input[name="addresses[billingAddress][id_customer_address]"]').click(billingAddressToggle);
+
+    billingAddressSelectionToggle();
+    $('#addresses_billingSameAsShipping').click(billingAddressSelectionToggle);
 });
