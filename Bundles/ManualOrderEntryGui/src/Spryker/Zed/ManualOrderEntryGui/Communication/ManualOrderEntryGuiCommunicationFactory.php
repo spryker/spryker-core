@@ -35,6 +35,7 @@ use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Voucher\VoucherType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Handler\AddressFormHandler;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Handler\CustomerFormHandler;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Handler\ItemFormHandler;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Handler\OrderSourceFormHandler;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Handler\PaymentFormHandler;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Handler\ProductFormHandler;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Handler\ShipmentFormHandler;
@@ -609,6 +610,16 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     {
         return new VoucherFormHandler(
             $this->getCartFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Handler\OrderSourceFormHandler
+     */
+    public function createOrderSourceFormHandler(): OrderSourceFormHandler
+    {
+        return new OrderSourceFormHandler(
+            $this->getManualOrderEntryFacade()
         );
     }
 }
