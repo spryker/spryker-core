@@ -69,7 +69,7 @@ class VoucherManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function handleData($quoteTransfer, &$form, $request): AbstractTransfer
+    public function handleData($quoteTransfer, &$form, Request $request): AbstractTransfer
     {
         if (strlen($quoteTransfer->getVoucherCode())) {
             $discountTransfer = new DiscountTransfer();

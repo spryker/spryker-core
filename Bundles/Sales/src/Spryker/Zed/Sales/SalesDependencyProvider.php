@@ -25,16 +25,17 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_OMS = 'FACADE_OMS';
     const FACADE_SEQUENCE_NUMBER = 'FACADE_SEQUENCE_NUMBER';
     const FACADE_USER = 'FACADE_USER';
-    const SERVICE_DATE_FORMATTER = 'date formatter service';
-    const FACADE_MONEY = 'money facade';
+    const SERVICE_DATE_FORMATTER = 'SERVICE_DATE_FORMATTER';
+    const FACADE_MONEY = 'FACADE_MONEY';
     const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
-    const QUERY_CONTAINER_LOCALE = 'locale query container';
-    const SERVICE_UTIL_SANITIZE = 'util sanitize service';
-    const STORE = 'store';
+    const QUERY_CONTAINER_LOCALE = 'QUERY_CONTAINER_LOCALE';
+    const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
+    const STORE = 'STORE';
 
-    const HYDRATE_ORDER_PLUGINS = 'hydrate order plugins';
+    const ORDER_EXPANDER_PRE_SAVE_PLUGINS = 'ORDER_EXPANDER_PRE_SAVE_PLUGINS';
+    const HYDRATE_ORDER_PLUGINS = 'HYDRATE_ORDER_PLUGINS';
     const ORDER_ITEM_EXPANDER_PRE_SAVE_PLUGINS = 'ORDER_ITEM_EXPANDER_PRE_SAVE_PLUGINS';
-    const UI_SALES_TABLE_PLUGINS = 'UI sales table plugins';
+    const UI_SALES_TABLE_PLUGINS = 'UI_SALES_TABLE_PLUGINS';
 
     /**
      * @deprecated Will be removed in the next major version.
@@ -54,6 +55,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addOmsFacade($container);
         $container = $this->addStore($container);
         $container = $this->addLocaleQueryContainer($container);
+        $container = $this->addOrderExpanderPreSavePlugins($container);
         $container = $this->addHydrateOrderPlugins($container);
         $container = $this->addCalculationFacade($container);
         $container = $this->addCustomerFacade($container);
@@ -77,6 +79,20 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addUtilSanitizeService($container);
         $container = $this->addCustomerFacade($container);
         $container = $this->addSalesTablePlugins($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addOrderExpanderPreSavePlugins(Container $container)
+    {
+        $container[static::ORDER_EXPANDER_PRE_SAVE_PLUGINS] = function (Container $container) {
+            return $this->getOrderExpanderPreSavePlugins();
+        };
 
         return $container;
     }
@@ -275,6 +291,14 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Dependency\Plugin\OrderExpanderPreSavePluginInterface[]
+     */
+    protected function getOrderExpanderPreSavePlugins()
+    {
+         return [];
     }
 
     /**

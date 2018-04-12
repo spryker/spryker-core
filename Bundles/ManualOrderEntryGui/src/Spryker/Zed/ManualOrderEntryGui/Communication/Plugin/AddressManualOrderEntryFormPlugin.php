@@ -54,7 +54,7 @@ class AddressManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
      *
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    public function handleData($quoteTransfer, &$form, $request): AbstractTransfer
+    public function handleData($quoteTransfer, &$form, Request $request): AbstractTransfer
     {
         if ($quoteTransfer->getShippingAddress()->getIdCustomerAddress()) {
             $addressTransfer = $quoteTransfer->getShippingAddress();

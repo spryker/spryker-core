@@ -58,7 +58,7 @@ class ShipmentManualOrderEntryFormPlugin extends AbstractPlugin implements Manua
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function handleData($quoteTransfer, &$form, $request): AbstractTransfer
+    public function handleData($quoteTransfer, &$form, Request $request): AbstractTransfer
     {
         $idShipmentMethod = $quoteTransfer->getIdShipmentMethod();
         if ($idShipmentMethod) {

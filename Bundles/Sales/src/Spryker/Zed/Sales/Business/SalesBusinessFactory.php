@@ -68,6 +68,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getConfig(),
             $this->getLocaleQueryContainer(),
             $this->getStore(),
+            $this->getOrderExpanderPreSavePlugins(),
             $this->createSalesOrderSaverPluginExecutor(),
             $this->createOrderItemMapper()
         );
@@ -85,6 +86,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getConfig(),
             $this->getLocaleQueryContainer(),
             $this->getStore(),
+            $this->getOrderExpanderPreSavePlugins(),
             $this->createSalesOrderSaverPluginExecutor(),
             $this->createOrderItemMapper()
         );
@@ -220,6 +222,14 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function getHydrateOrderPlugins()
     {
         return $this->getProvidedDependency(SalesDependencyProvider::HYDRATE_ORDER_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Dependency\Plugin\OrderExpanderPreSavePluginInterface[]
+     */
+    public function getOrderExpanderPreSavePlugins()
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::ORDER_EXPANDER_PRE_SAVE_PLUGINS);
     }
 
     /**
