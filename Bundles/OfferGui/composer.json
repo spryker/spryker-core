@@ -23,7 +23,7 @@
   "require-dev": {
     "spryker/calculation": "*",
     "spryker/code-sniffer": "*",
-    "spryker/manual-order-entry-gui": "^0.1.0",
+    "spryker/manual-order-entry-gui": "^1.0.0",
     "spryker/testify": "*"
   },
   "suggest": {
