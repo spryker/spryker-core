@@ -5,22 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Permission\Persistence;
+namespace Spryker\Zed\ShoppingList\Dependency\Facade;
 
-use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
 
-interface PermissionRepositoryInterface
+interface ShoppingListToPermissionFacadeInterface
 {
-    /**
-     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
-     */
-    public function findAll(): PermissionCollectionTransfer;
-
     /**
      * @param string $key
      *
      * @return \Generated\Shared\Transfer\PermissionTransfer|null
      */
     public function findPermissionByKey(string $key): ?PermissionTransfer;
+
+    /**
+     * @return void
+     */
+    public function syncPermissionPlugins(): void;
 }
