@@ -39,8 +39,6 @@ class FileReader implements FileReaderInterface
     /**
      * @param int $idFileInfo
      *
-     * @throws \Spryker\Zed\FileManager\Exception\FileInfoNotFoundException
-     *
      * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
      */
     public function read($idFileInfo)
@@ -48,7 +46,7 @@ class FileReader implements FileReaderInterface
         $fileInfo = $this->fileFinder->getFileInfo($idFileInfo);
 
         if ($fileInfo === null) {
-            throw new FileInfoNotFoundException(sprintf('File info with id %d not found', $idFileInfo));
+            return new FileManagerReadResponseTransfer();
         }
 
         return $this->createResponseTransfer($fileInfo);
@@ -66,7 +64,7 @@ class FileReader implements FileReaderInterface
         $fileInfo = $this->fileFinder->getLatestFileInfoByFkFile($idFile);
 
         if ($fileInfo === null) {
-            throw new FileInfoNotFoundException(sprintf('File info for file with id %d not found', $idFile));
+            return new FileManagerReadResponseTransfer();
         }
 
         return $this->createResponseTransfer($fileInfo);
