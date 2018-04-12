@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\FileManagerGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\FileDirectoryTreeTransfer;
 use Generated\Shared\Transfer\FileManagerSaveRequestTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 
 class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileManagerFacadeInterface
 {
@@ -98,5 +100,29 @@ class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileMan
     public function read($idFileInfo)
     {
         return $this->fileManagerFacade->read($idFileInfo);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
+     */
+    public function findFileDirectoryTree(LocaleTransfer $localeTransfer = null)
+    {
+        return $this->fileManagerFacade->findFileDirectoryTree($localeTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FileDirectoryTreeTransfer $fileDirectoryTreeTransfer
+     *
+     * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
+     */
+    public function updateFileDirectoryTreeHierarchy(FileDirectoryTreeTransfer $fileDirectoryTreeTransfer)
+    {
+        return $this->fileManagerFacade->findFileDirectoryTree($fileDirectoryTreeTransfer);
     }
 }

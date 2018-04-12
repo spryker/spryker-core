@@ -1,0 +1,58 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Directory element details' %}
+{% block section_title 'Create Directory Element' %}
+
+{% block head_title widget_title %}
+
+{% block action %}
+    {{ backActionButton('/file-manager-gui', 'Back to File Directory Elements' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' %}
+
+        {% block widget_content %}
+            {{ form_start(form) }}
+
+            {{ form_row(form.name) }}
+
+            {% embed '@FileManagerGui/_partials/localized-attributes.twig' with {
+                currentLocale: currentLocale,
+                localizedAttributes: form.fileDirectoryLocalizedAttributes
+            } %}
+            {% endembed %}
+
+            <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
+
+            {{ form_end(form) }}
+
+
+            {#{{ form_start(form) }}#}
+                {#{{ form_widget(form) }}#}
+
+                {#<input id="file-directory-save-btn" type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}" />#}
+            {#{{ form_end(form) }}#}
+
+        {% endblock %}
+
+    {% endembed %}
+
+    <div class="row">
+        <div class="col-lg-6">
+            {#{% include '@FileManagerGui/AddDirectory/_partials/file-directory-tree.twig' %}#}
+        </div>
+
+        <div class="col-lg-6">
+            {#{% include '@FileManagerGui/AddDirectory/_partials/file-directory-tree-form-container.twig' %}#}
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/assets/css/spryker-zed-file-directory.css" />
+{% endblock %}

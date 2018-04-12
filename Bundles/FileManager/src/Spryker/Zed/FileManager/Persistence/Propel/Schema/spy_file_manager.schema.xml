@@ -48,4 +48,42 @@
             <parameter name="spy_file_localized_attributes_all" column="*" />
         </behavior>
     </table>
+
+    <table name="spy_file_directory" idMethod="native">
+        <column name="id_file_directory" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_parent_file_directory" required="false" type="INTEGER" default="NULL"/>
+        <column name="name" type="VARCHAR" size="255" required="true"/>
+        <column name="position" type="INTEGER" required="false" default="NULL"/>
+        <column name="is_active" type="BOOLEAN" default="true" required="true"/>
+
+        <foreign-key foreignTable="spy_file_directory" phpName="ParentFileDirectory" refPhpName="ChildrenFileDirectory" onDelete="CASCADE">
+            <reference foreign="id_file_directory" local="fk_parent_file_directory"/>
+        </foreign-key>
+
+        <index>
+            <index-column name="position"/>
+        </index>
+
+        <id-method-parameter value="spy_file_directory_pk_seq"/>
+    </table>
+
+    <table name="spy_file_directory_localized_attributes" idMethod="native">
+        <column name="id_file_directory_localized_attributes" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_file_directory" required="true" type="INTEGER"/>
+        <column name="fk_locale" required="true" type="INTEGER"/>
+        <column name="title" type="VARCHAR" size="255" required="true"/>
+
+        <foreign-key foreignTable="spy_file_directory" onDelete="CASCADE">
+            <reference foreign="id_file_directory" local="fk_file_directory"/>
+        </foreign-key>
+
+        <foreign-key foreignTable="spy_locale">
+            <reference foreign="id_locale" local="fk_locale"/>
+        </foreign-key>
+
+        <behavior name="timestampable"/>
+
+        <id-method-parameter value="spy_file_directory_localized_attributes_pk_seq"/>
+    </table>
+
 </database>

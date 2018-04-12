@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\FileManager\Persistence;
 
+use Orm\Zed\FileManager\Persistence\SpyFileDirectoryLocalizedAttributesQuery;
+use Orm\Zed\FileManager\Persistence\SpyFileDirectoryQuery;
 use Orm\Zed\FileManager\Persistence\SpyFileInfoQuery;
 use Orm\Zed\FileManager\Persistence\SpyFileLocalizedAttributesQuery;
 use Orm\Zed\FileManager\Persistence\SpyFileQuery;
@@ -40,5 +42,21 @@ class FileManagerPersistenceFactory extends AbstractPersistenceFactory
     public function createFileInfoLocalizedAttributesQuery()
     {
         return SpyFileLocalizedAttributesQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\FileManager\Persistence\SpyFileDirectoryQuery
+     */
+    public function createFileDirectoryQuery()
+    {
+        return SpyFileDirectoryQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\FileManager\Persistence\SpyFileDirectoryLocalizedAttributesQuery
+     */
+    public function createFileDirectoryLocalizedAttributesQuery()
+    {
+        return SpyFileDirectoryLocalizedAttributesQuery::create();
     }
 }

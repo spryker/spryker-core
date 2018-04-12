@@ -19,11 +19,20 @@ class IndexController extends AbstractController
      */
     public function indexAction()
     {
+        $localeTransfer = $this->getFactory()
+            ->getLocaleFacade()
+            ->getCurrentLocale();
+
+        $fileDirectoryTreeTransfer = $this->getFactory()
+            ->getFileManagerFacade()
+            ->findFileDirectoryTree($localeTransfer);
+
         $fileTable = $this->getFactory()
             ->createFileTable();
 
         return [
             'files' => $fileTable->render(),
+            'fileDirectoryTree' => $fileDirectoryTreeTransfer,
         ];
     }
 

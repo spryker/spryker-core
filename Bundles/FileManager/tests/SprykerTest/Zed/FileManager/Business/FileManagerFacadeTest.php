@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Service\FileManager\Business;
+namespace SprykerTest\Zed\FileManager\Business;
 
 use Codeception\Configuration;
 use Codeception\Test\Unit;
@@ -38,7 +38,7 @@ use SprykerTest\Zed\FileManager\Stub\FlysystemConfigStub;
 /**
  * Auto-generated group annotations
  * @group SprykerTest
- * @group Service
+ * @group Zed
  * @group FileManager
  * @group Business
  * @group Facade

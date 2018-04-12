@@ -49,4 +49,31 @@
         <property name="title" type="string" />
         <property name="locale" type="Locale" />
     </transfer>
+
+    <transfer name="FileDirectory">
+        <property name="idFileDirectory" type="int" />
+        <property name="fkParentFileDirectory" type="int" />
+        <property name="name" type="string" />
+        <property name="position" type="int" />
+        <property name="isActive" type="bool" />
+        <property name="fileDirectoryLocalizedAttributes" type="FileDirectoryLocalizedAttributes[]" singular="fileDirectoryLocalizedAttribute" />
+    </transfer>
+
+    <transfer name="FileDirectoryLocalizedAttributes">
+        <property name="idFileDirectoryLocalizedAttributes" type="int" />
+        <property name="fkFileDirectory" type="int" />
+        <property name="fkLocale" type="int" />
+        <property name="title" type="string" />
+        <property name="locale" type="Locale" />
+    </transfer>
+
+    <transfer name="FileDirectoryTree">
+        <property name="nodes" type="FileDirectoryTreeNode[]" singular="node" />
+    </transfer>
+
+    <transfer name="FileDirectoryTreeNode">
+        <property name="fileDirectory" type="FileDirectory" />
+        <property name="children" type="FileDirectoryTreeNode[]" singular="child" />
+    </transfer>
+
 </transfers>

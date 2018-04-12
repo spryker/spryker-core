@@ -96,4 +96,86 @@ class FileManagerQueryContainer extends AbstractQueryContainer implements FileMa
 
         return $query;
     }
+
+    /**
+     * @api
+     *
+     * @param int $idFileDirectory
+     *
+     * @return \Orm\Zed\FileManager\Persistence\SpyFileDirectoryQuery
+     */
+    public function queryFileDirectoryById($idFileDirectory)
+    {
+        return $this->getFactory()
+            ->createFileDirectoryQuery()
+            ->filterByIdFileDirectory($idFileDirectory);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idFileDirectory
+     *
+     * @return \Orm\Zed\FileManager\Persistence\SpyFileDirectoryQuery
+     */
+    public function queryFileDirectoryNodeById($idFileDirectory)
+    {
+        return $this->getFactory()
+            ->createFileDirectoryQuery()
+            ->filterByIdFileDirectory($idFileDirectory);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idFileDirectoryNodeLocalizedAttributes
+     *
+     * @return \Orm\Zed\FileManager\Persistence\SpyFileDirectoryLocalizedAttributesQuery
+     */
+    public function queryFileDirectoryLocalizedAttributesById($idFileDirectoryNodeLocalizedAttributes)
+    {
+        return $this->getFactory()
+            ->createFileDirectoryLocalizedAttributesQuery()
+            ->filterByIdFileDirectoryLocalizedAttributes($idFileDirectoryNodeLocalizedAttributes);
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\FileManager\Persistence\SpyFileDirectoryQuery
+     */
+    public function queryRootFileDirectories()
+    {
+        return $this->getFactory()
+            ->createFileDirectoryQuery()
+            ->filterByFkParentFileDirectory(null, Criteria::ISNULL)
+            ->orderByPosition(Criteria::ASC)
+            ->orderByIdFileDirectory(Criteria::ASC);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $fkParentFileDirectoryNode
+     *
+     * @return \Orm\Zed\FileManager\Persistence\SpyFileDirectoryQuery
+     */
+    public function queryFileDirectoriesByFkParentFileDirectory($fkParentFileDirectoryNode)
+    {
+        return $this->getFactory()
+            ->createFileDirectoryQuery()
+            ->filterByFkParentFileDirectory($fkParentFileDirectoryNode)
+            ->orderByPosition(Criteria::ASC)
+            ->orderByIdFileDirectory(Criteria::ASC);
+    }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\FileManager\Persistence\SpyFileDirectoryQuery
+     */
+    public function queryFileDirectory()
+    {
+        return $this->getFactory()->createFileDirectoryQuery();
+    }
 }

@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\FileManager\Business;
 
+use Generated\Shared\Transfer\FileDirectoryTransfer;
+use Generated\Shared\Transfer\FileDirectoryTreeTransfer;
 use Generated\Shared\Transfer\FileManagerSaveRequestTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -23,6 +26,16 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
     public function save(FileManagerSaveRequestTransfer $fileManagerSaveRequestTransfer)
     {
         return $this->getFactory()->createFileSaver()->save($fileManagerSaveRequestTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * {@inheritdoc}
+     */
+    public function saveDirectory(FileDirectoryTransfer $fileDirectoryTransfer)
+    {
+        return $this->getFactory()->createFileSaver()->save($fileDirectoryTransfer);
     }
 
     /**
@@ -73,5 +86,37 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
     public function read($idFileInfo)
     {
         return $this->getFactory()->createFileReader()->read($idFileInfo);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\FileDirectoryTreeTransfer|null
+     */
+    public function findFileDirectoryTree(LocaleTransfer $localeTransfer = null)
+    {
+        return $this->getFactory()
+            ->createFileDirectoryTreeReader()
+            ->findFileDirectoryTree($localeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FileDirectoryTreeTransfer $fileDirectoryTreeTransfer
+     *
+     * @return void
+     */
+    public function updateFileDirectoryTreeHierarchy(FileDirectoryTreeTransfer $fileDirectoryTreeTransfer)
+    {
+        $this->getFactory()
+            ->createFileDirectoryTreeHierarchyUpdater()
+            ->updateFileDirectoryTreeHierarchy($fileDirectoryTreeTransfer);
     }
 }

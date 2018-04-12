@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\FileManagerGui\Communication;
 
+use Spryker\Zed\FileManagerGui\Communication\Form\DataProvider\FileDirectoryFormDataProvider;
 use Spryker\Zed\FileManagerGui\Communication\Form\DataProvider\FileFormDataProvider;
+use Spryker\Zed\FileManagerGui\Communication\Form\FileDirectoryForm;
 use Spryker\Zed\FileManagerGui\Communication\Form\FileForm;
 use Spryker\Zed\FileManagerGui\Communication\Form\FileLocalizedAttributesForm;
 use Spryker\Zed\FileManagerGui\Communication\Form\Tabs\FileFormTabs;
@@ -19,6 +21,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\FileManagerGui\FileManagerGuiConfig getConfig()
+ * @method \Spryker\Zed\FileManagerGui\Persistence\FileManagerGuiQueryContainerInterface getQueryContainer()
  */
 class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -107,7 +110,7 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\FileManagerGui\Dependency\Facade\FileManagerGuiToFileManagerFacadeBridgeInterface
+     * @return \Spryker\Zed\FileManagerGui\Dependency\Facade\FileManagerGuiToFileManagerFacadeInterface
      */
     public function getFileManagerFacade()
     {
@@ -115,7 +118,7 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerBridgeInterface
+     * @return \Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerInterface
      */
     public function getFileManagerQueryContainer()
     {
@@ -123,10 +126,33 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\FileManagerGui\Dependency\Facade\FileManagerGuiToLocaleFacadeBridgeInterface
+     * @return \Spryker\Zed\FileManagerGui\Dependency\Facade\FileManagerGuiToLocaleFacadeInterface
      */
     public function getLocaleFacade()
     {
         return $this->getProvidedDependency(FileManagerGuiDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Zed\FileManagerGui\Communication\Form\DataProvider\FileDirectoryFormDataProvider
+     */
+    public function createFileDirectoryFormDataProvider()
+    {
+        return new FileDirectoryFormDataProvider(
+            $this->getLocaleFacade()
+        );
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getFileDirectoryForm()
+    {
+        $dataProvider = $this->createFileDirectoryFormDataProvider();
+
+        return $this->getFormFactory()->create(
+            FileDirectoryForm::class,
+            $dataProvider->getData()
+        );
     }
 }
