@@ -16,7 +16,7 @@ class InvitationReader implements InvitationReaderInterface
     /**
      * @var \Spryker\Zed\CompanyUserInvitation\Persistence\CompanyUserInvitationRepositoryInterface
      */
-    private $repository;
+    protected $repository;
 
     /**
      * InvitationReader constructor.

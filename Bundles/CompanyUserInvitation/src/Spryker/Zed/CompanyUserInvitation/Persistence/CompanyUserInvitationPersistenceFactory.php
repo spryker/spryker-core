@@ -16,6 +16,9 @@ use Spryker\Zed\CompanyUserInvitation\Persistence\Mapper\CompanyUserInvitationSt
 use Spryker\Zed\CompanyUserInvitation\Persistence\Mapper\CompanyUserInvitationStatusMapperInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
+/**
+ * @method \Spryker\Zed\CompanyUserInvitation\CompanyUserInvitationConfig getConfig()
+ */
 class CompanyUserInvitationPersistenceFactory extends AbstractPersistenceFactory
 {
     /**

@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\CompanyUserInvitationStatusTransfer;
 interface CompanyUserInvitationRepositoryInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $criteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer
      */
@@ -27,5 +27,7 @@ interface CompanyUserInvitationRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserInvitationStatusTransfer|null
      */
-    public function findCompanyUserInvitationStatusByStatusKey(string $statusKey): ?CompanyUserInvitationStatusTransfer;
+    public function findCompanyUserInvitationStatusByStatusKey(
+        string $statusKey
+    ): ?CompanyUserInvitationStatusTransfer;
 }

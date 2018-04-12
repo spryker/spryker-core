@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\CompanyUserInvitation\Zed;
 
+use Generated\Shared\Transfer\CompanyUserInvitationAffectedReportTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationImportReportTransfer;
@@ -38,6 +39,34 @@ class CompanyUserInvitationStub implements CompanyUserInvitationStubInterface
         return $this->zedRequestClient->call(
             '/company-user-invitation/gateway/import-invitations',
             $companyUserInvitationCollectionTransfer
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationAffectedReportTransfer
+     */
+    public function sendInvitations(
+        CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
+    ): CompanyUserInvitationAffectedReportTransfer {
+        return $this->zedRequestClient->call(
+            '/company-user-invitation/gateway/send-invitations',
+            $criteriaFilterTransfer
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationAffectedReportTransfer
+     */
+    public function deleteInvitations(
+        CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
+    ): CompanyUserInvitationAffectedReportTransfer {
+        return $this->zedRequestClient->call(
+            '/company-user-invitation/gateway/delete-invitations',
+            $criteriaFilterTransfer
         );
     }
 

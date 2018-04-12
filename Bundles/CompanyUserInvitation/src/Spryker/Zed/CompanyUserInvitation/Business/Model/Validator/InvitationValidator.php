@@ -34,17 +34,17 @@ class InvitationValidator implements InvitationValidatorInterface
     /**
      * @var \Spryker\Zed\CompanyUserInvitation\Persistence\CompanyUserInvitationRepositoryInterface
      */
-    private $repository;
+    protected $repository;
 
     /**
      * @var \Spryker\Zed\CompanyUserInvitation\Dependency\Facade\CompanyUserInvitationToCompanyUserFacadeInterface
      */
-    private $companyUserFacade;
+    protected $companyUserFacade;
 
     /**
      * @var \Spryker\Zed\CompanyUserInvitation\Dependency\Facade\CompanyUserInvitationToCompanyBusinessUnitFacadeInterface
      */
-    private $companyBusinessUnitFacade;
+    protected $companyBusinessUnitFacade;
 
     /**
      * @param \Spryker\Zed\CompanyUserInvitation\Persistence\CompanyUserInvitationRepositoryInterface $repository

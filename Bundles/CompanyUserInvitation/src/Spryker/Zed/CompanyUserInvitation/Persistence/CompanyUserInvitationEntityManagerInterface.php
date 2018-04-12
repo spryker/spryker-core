@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CompanyUserInvitation\Persistence;
 
+use Generated\Shared\Transfer\CompanyUserInvitationStatusTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationTransfer;
 
 interface CompanyUserInvitationEntityManagerInterface
@@ -16,5 +17,16 @@ interface CompanyUserInvitationEntityManagerInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserInvitationTransfer
      */
-    public function saveCompanyUserInvitation(CompanyUserInvitationTransfer $companyUserInvitationTransfer): CompanyUserInvitationTransfer;
+    public function saveCompanyUserInvitation(
+        CompanyUserInvitationTransfer $companyUserInvitationTransfer
+    ): CompanyUserInvitationTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationStatusTransfer $companyUserInvitationStatusTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationStatusTransfer
+     */
+    public function saveCompanyUserInvitationStatus(
+        CompanyUserInvitationStatusTransfer $companyUserInvitationStatusTransfer
+    ): CompanyUserInvitationStatusTransfer;
 }

@@ -36,7 +36,7 @@ class InvitationHydrator implements InvitationHydratorInterface
     /**
      * @var \Spryker\Zed\CompanyUserInvitation\Dependency\Facade\CompanyUserInvitationToCompanyUserFacadeInterface
      */
-    private $companyUserFacade;
+    protected $companyUserFacade;
 
     /**
      * @var \Spryker\Zed\CompanyUserInvitation\Dependency\Facade\CompanyUserInvitationToCompanyBusinessUnitFacadeInterface

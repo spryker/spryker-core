@@ -45,6 +45,9 @@ class CompanyUserInvitationMapper implements CompanyUserInvitationMapperInterfac
             $companyUserInvitationTransfer->setCompanyBusinessUnitName(
                 $companyUserInvitationEntityTransferData['spy_company_business_unit']['name']
             );
+            $companyUserInvitationTransfer->setFkCompany(
+                $companyUserInvitationEntityTransferData['spy_company_business_unit']['fk_company']
+            );
         }
 
         if (isset($companyUserInvitationEntityTransferData['spy_company_user_invitation_status'])) {

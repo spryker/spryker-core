@@ -12,7 +12,9 @@ use Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationStatusTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Spryker\Shared\CompanyUserInvitation\CompanyUserInvitationConstants;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
  * @method \Spryker\Zed\CompanyUserInvitation\Persistence\CompanyUserInvitationPersistenceFactory getFactory()
@@ -30,10 +32,28 @@ class CompanyUserInvitationRepository extends AbstractRepository implements Comp
             ->createCompanyUserInvitationQuery()
             ->joinWithSpyCompanyBusinessUnit()
             ->joinWithSpyCompanyUser()
-            ->innerJoinWithSpyCompanyUserInvitationStatus();
+            ->innerJoinWithSpyCompanyUserInvitationStatus()
+            ->useSpyCompanyUserInvitationStatusQuery()
+                ->filterByStatusKey(CompanyUserInvitationConstants::INVITATION_STATUS_DELETED, Criteria::NOT_EQUAL)
+            ->endUse();
+
+        if ($criteriaFilterTransfer->getIdCompanyUserInvitation() !== null) {
+            $queryCompanyUserInvitation->filterByIdCompanyUserInvitation($criteriaFilterTransfer->getIdCompanyUserInvitation());
+        }
 
         if ($criteriaFilterTransfer->getFkCompanyUser() !== null) {
             $queryCompanyUserInvitation->filterByFkCompanyUser($criteriaFilterTransfer->getFkCompanyUser());
+        }
+
+        if ($criteriaFilterTransfer->getHash() !== null) {
+            $queryCompanyUserInvitation->filterByHash($criteriaFilterTransfer->getHash());
+        }
+
+        if ($criteriaFilterTransfer->getFkCompanyUserInvitationStatus() !== null) {
+            $queryCompanyUserInvitation
+                ->useSpyCompanyUserInvitationStatusQuery()
+                    ->filterByStatusKey($criteriaFilterTransfer->getFkCompanyUserInvitationStatus())
+                ->endUse();
         }
 
         $companyUserInvitationCollection = $this->buildQueryFromCriteria($queryCompanyUserInvitation, $criteriaFilterTransfer->getFilter());

@@ -18,17 +18,17 @@ class InvitationImporter implements InvitationImporterInterface
     /**
      * @var \Spryker\Zed\CompanyUserInvitation\Persistence\CompanyUserInvitationEntityManagerInterface
      */
-    private $entityManager;
+    protected $entityManager;
 
     /**
      * @var \Spryker\Zed\CompanyUserInvitation\Business\Model\Validator\InvitationValidatorInterface
      */
-    private $invitationValidator;
+    protected $invitationValidator;
 
     /**
      * @var \Spryker\Zed\CompanyUserInvitation\Business\Model\Hydrator\InvitationHydratorInterface
      */
-    private $invitationHydrator;
+    protected $invitationHydrator;
 
     /**
      * @param \Spryker\Zed\CompanyUserInvitation\Persistence\CompanyUserInvitationEntityManagerInterface $entityManager

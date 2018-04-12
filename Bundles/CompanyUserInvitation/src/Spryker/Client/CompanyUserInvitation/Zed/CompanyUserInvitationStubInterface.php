@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\CompanyUserInvitation\Zed;
 
+use Generated\Shared\Transfer\CompanyUserInvitationAffectedReportTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationImportReportTransfer;
@@ -21,6 +22,24 @@ interface CompanyUserInvitationStubInterface
     public function importInvitations(
         CompanyUserInvitationCollectionTransfer $companyUserInvitationCollectionTransfer
     ): CompanyUserInvitationImportReportTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationAffectedReportTransfer
+     */
+    public function sendInvitations(
+        CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
+    ): CompanyUserInvitationAffectedReportTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationAffectedReportTransfer
+     */
+    public function deleteInvitations(
+        CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
+    ): CompanyUserInvitationAffectedReportTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer

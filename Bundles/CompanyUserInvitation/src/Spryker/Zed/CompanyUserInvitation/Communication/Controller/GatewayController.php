@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CompanyUserInvitation\Communication\Controller;
 
+use Generated\Shared\Transfer\CompanyUserInvitationAffectedReportTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationImportReportTransfer;
@@ -14,6 +15,7 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
  * @method \Spryker\Zed\CompanyUserInvitation\Business\CompanyUserInvitationFacadeInterface getFacade()
+ * @method \Spryker\Zed\CompanyUserInvitation\Business\CompanyUserInvitationBusinessFactory getFactory()
  */
 class GatewayController extends AbstractGatewayController
 {
@@ -26,6 +28,28 @@ class GatewayController extends AbstractGatewayController
         CompanyUserInvitationCollectionTransfer $companyUserInvitationCollectionTransfer
     ): CompanyUserInvitationImportReportTransfer {
         return $this->getFacade()->importInvitations($companyUserInvitationCollectionTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationAffectedReportTransfer
+     */
+    public function sendInvitationsAction(
+        CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
+    ): CompanyUserInvitationAffectedReportTransfer {
+        return $this->getFacade()->sendInvitations($criteriaFilterTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationAffectedReportTransfer
+     */
+    public function deleteInvitationsAction(
+        CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
+    ): CompanyUserInvitationAffectedReportTransfer {
+        return $this->getFacade()->deleteInvitations($criteriaFilterTransfer);
     }
 
     /**

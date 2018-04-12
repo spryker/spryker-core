@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\CompanyUserInvitation;
 
+use Generated\Shared\Transfer\CompanyUserInvitationAffectedReportTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationImportReportTransfer;
@@ -26,6 +27,34 @@ interface CompanyUserInvitationClientInterface
     public function importInvitations(
         CompanyUserInvitationCollectionTransfer $companyUserInvitationCollectionTransfer
     ): CompanyUserInvitationImportReportTransfer;
+
+    /**
+     * Specification:
+     * - Sends all invitations that match the defined criteria
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationAffectedReportTransfer
+     */
+    public function sendInvitations(
+        CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
+    ): CompanyUserInvitationAffectedReportTransfer;
+
+    /**
+     * Specification:
+     * - Deletes all invitations that match the defined criteria
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationAffectedReportTransfer
+     */
+    public function deleteInvitations(
+        CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
+    ): CompanyUserInvitationAffectedReportTransfer;
 
     /**
      * Specification:

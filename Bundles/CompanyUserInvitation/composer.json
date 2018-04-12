@@ -5,20 +5,25 @@
   "require": {
     "php": ">=7.1",
     "league/csv": "^8.1.0",
+    "spryker/application": "^3.9.0",
     "spryker/company-business-unit": "^1.1.0",
     "spryker/company-user": "^1.0.0",
+    "spryker/company-user-invitation-page": "dev-master",
     "spryker/kernel": "^3.8.0",
+    "spryker/mail": "^4.0.2",
     "spryker/propel-orm": "^1.6.1",
     "spryker/util-text": "^1.2.1",
     "spryker/zed-request": "^3.4.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/installer": "*",
     "spryker/silex": "*",
     "spryker/testify": "*",
     "spryker/twig": "*"
   },
   "suggest": {
+    "spryker/installer": "You need to have Installer to set up values for invitation statuses",
     "spryker/silex": "You need to have Silex installed to use the Config Profiler",
     "spryker/twig": "You need to have Twig installed to use the Config Profiler"
   },

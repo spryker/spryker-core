@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\CompanyUserInvitation;
 
+use Generated\Shared\Transfer\CompanyUserInvitationAffectedReportTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationImportReportTransfer;
@@ -32,6 +33,40 @@ class CompanyUserInvitationClient extends AbstractClient implements CompanyUserI
         return $this->getFactory()
             ->createZedCompanyUserInvitationStub()
             ->importInvitations($companyUserInvitationCollectionTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationAffectedReportTransfer
+     */
+    public function sendInvitations(
+        CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
+    ): CompanyUserInvitationAffectedReportTransfer {
+        return $this->getFactory()
+            ->createZedCompanyUserInvitationStub()
+            ->sendInvitations($criteriaFilterTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationAffectedReportTransfer
+     */
+    public function deleteInvitations(
+        CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
+    ): CompanyUserInvitationAffectedReportTransfer {
+        return $this->getFactory()
+            ->createZedCompanyUserInvitationStub()
+            ->deleteInvitations($criteriaFilterTransfer);
     }
 
     /**

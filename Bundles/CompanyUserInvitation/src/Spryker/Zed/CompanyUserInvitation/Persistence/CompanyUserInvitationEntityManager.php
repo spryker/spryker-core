@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CompanyUserInvitation\Persistence;
 
+use Generated\Shared\Transfer\CompanyUserInvitationStatusTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
@@ -31,5 +32,24 @@ class CompanyUserInvitationEntityManager extends AbstractEntityManager implement
         return $this->getFactory()
             ->createCompanyUserInvitationMapper()
             ->mapEntityTransferToCompanyUserInvitationTransfer($entityTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationStatusTransfer $companyUserInvitationStatusTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationStatusTransfer
+     */
+    public function saveCompanyUserInvitationStatus(
+        CompanyUserInvitationStatusTransfer $companyUserInvitationStatusTransfer
+    ): CompanyUserInvitationStatusTransfer {
+        $entityTransfer = $this->getFactory()
+            ->createCompanyUserInvitationStatusMapper()
+            ->mapCompanyUserInvitationStatusTransferToEntityTransfer($companyUserInvitationStatusTransfer);
+
+        $entityTransfer = $this->save($entityTransfer);
+
+        return $this->getFactory()
+            ->createCompanyUserInvitationStatusMapper()
+            ->mapEntityTransferToCompanyUserInvitationStatusTransfer($entityTransfer);
     }
 }

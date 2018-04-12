@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CompanyUserInvitation\Business;
 
+use Generated\Shared\Transfer\CompanyUserInvitationAffectedReportTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationImportReportTransfer;
@@ -41,6 +42,40 @@ class CompanyUserInvitationFacade extends AbstractFacade implements CompanyUserI
      *
      * @param \Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
      *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationAffectedReportTransfer
+     */
+    public function sendInvitations(
+        CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
+    ): CompanyUserInvitationAffectedReportTransfer {
+        return $this->getFactory()
+            ->createInvitationSender()
+            ->sendInvitations($criteriaFilterTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationAffectedReportTransfer
+     */
+    public function deleteInvitations(
+        CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
+    ): CompanyUserInvitationAffectedReportTransfer {
+        return $this->getFactory()
+            ->createInvitationDeleter()
+            ->deleteInvitations($criteriaFilterTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
+     *
      * @return \Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer
      */
     public function getCompanyUserInvitationCollection(
@@ -49,5 +84,15 @@ class CompanyUserInvitationFacade extends AbstractFacade implements CompanyUserI
         return $this->getFactory()
             ->createInvitationReader()
             ->getCompanyUserInvitationCollection($criteriaFilterTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @return void
+     */
+    public function install(): void
+    {
+        $this->getFactory()->createInstaller()->install();
     }
 }
