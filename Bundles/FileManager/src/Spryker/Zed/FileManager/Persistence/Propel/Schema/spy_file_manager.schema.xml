@@ -83,6 +83,10 @@
 
         <behavior name="timestampable"/>
 
+        <behavior name="event">
+            <parameter name="spy_file_directory_localized_attributes_all" column="*" />
+        </behavior>
+
         <id-method-parameter value="spy_file_directory_localized_attributes_pk_seq"/>
     </table>
 

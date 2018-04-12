@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\FileManagerGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\FileDirectoryTransfer;
 use Generated\Shared\Transfer\FileDirectoryTreeTransfer;
 use Generated\Shared\Transfer\FileManagerSaveRequestTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
@@ -34,6 +35,16 @@ class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileMan
     public function save(FileManagerSaveRequestTransfer $saveRequestTransfer)
     {
         return $this->fileManagerFacade->save($saveRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FileDirectoryTransfer $fileDirectoryTransfer
+     *
+     * @return int
+     */
+    public function saveDirectory(FileDirectoryTransfer $fileDirectoryTransfer)
+    {
+        return $this->fileManagerFacade->saveDirectory($fileDirectoryTransfer);
     }
 
     /**

@@ -29,4 +29,11 @@ interface FileFinderInterface
      * @return \Orm\Zed\FileManager\Persistence\SpyFileInfo
      */
     public function getFileInfo($idFileInfo);
+
+    /**
+     * @param int $idFileDirectory
+     *
+     * @return \Orm\Zed\FileManager\Persistence\SpyFileDirectory
+     */
+    public function getFileDirectory($idFileDirectory);
 }
