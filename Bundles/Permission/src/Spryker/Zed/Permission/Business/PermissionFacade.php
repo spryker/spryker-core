@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Permission\Business;
 
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
+use Generated\Shared\Transfer\PermissionTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -56,5 +57,19 @@ class PermissionFacade extends AbstractFacade implements PermissionFacadeInterfa
         $this->getFactory()
             ->createPermissionSynchronizer()
             ->sync();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $key
+     *
+     * @return \Generated\Shared\Transfer\PermissionTransfer|null
+     */
+    public function findPermissionByKey(string $key): ?PermissionTransfer
+    {
+        return $this->getRepository()->findPermissionByKey($key);
     }
 }
