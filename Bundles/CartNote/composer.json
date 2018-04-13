@@ -1,0 +1,37 @@
+{
+  "name": "spryker/cart-note",
+  "description": "CartNote module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1",
+    "spryker/cart-note-extension": "^1.0.0",
+    "spryker/kernel": "^3.0.0",
+    "spryker/quote": "^2.0.0",
+    "spryker/sales": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0",
+    "spryker/symfony": "^3.0.0",
+    "spryker/zed-request": "^3.0.0"
+  },
+  "require-dev": {
+    "spryker/checkout": "*",
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/checkout": "If you want to use Checkout plugins."
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

@@ -13,6 +13,7 @@ use Spryker\Client\Kernel\AbstractPlugin;
 
 /**
  * @method \Spryker\Client\Cart\CartClientInterface getClient()
+ * @method \Spryker\Client\Cart\CartFactory getFactory()
  */
 class CustomerChangeCartUpdatePlugin extends AbstractPlugin implements CustomerSessionSetPluginInterface
 {
@@ -26,6 +27,6 @@ class CustomerChangeCartUpdatePlugin extends AbstractPlugin implements CustomerS
         $quoteTransfer = $this->getClient()->getQuote();
         $quoteTransfer->setCustomer($customerTransfer);
 
-        $this->getClient()->storeQuote($quoteTransfer);
+        $this->getFactory()->getQuoteClient()->setQuote($quoteTransfer);
     }
 }

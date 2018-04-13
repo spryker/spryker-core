@@ -49,4 +49,12 @@ class CartToQuoteBridge implements CartToQuoteInterface
     {
         $this->quoteClient->clearQuote();
     }
+
+    /**
+     * @return string
+     */
+    public function getStorageStrategy()
+    {
+        return $this->quoteClient->getStorageStrategy();
+    }
 }

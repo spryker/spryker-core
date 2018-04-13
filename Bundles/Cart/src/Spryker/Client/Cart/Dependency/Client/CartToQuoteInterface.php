@@ -27,4 +27,9 @@ interface CartToQuoteInterface
      * @return void
      */
     public function clearQuote();
+
+    /**
+     * @return string
+     */
+    public function getStorageStrategy();
 }
