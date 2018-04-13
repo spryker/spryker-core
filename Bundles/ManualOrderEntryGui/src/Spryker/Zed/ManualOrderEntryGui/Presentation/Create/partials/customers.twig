@@ -1,7 +1,9 @@
 <div>
-{{ form_widget(form) }}
-{{ createActionButton(
-    url('/manual-order-entry-gui/create/customer', params),
-    'Create Customer' | trans)
-}}
+    {{ form_widget(form) }}
+    {{ createActionButton(
+        url('/customer/add',
+            {'redirectUrl': url('/manual-order-entry-gui/create')}
+        ),
+        'Create Customer' | trans)
+    }}
 </div>

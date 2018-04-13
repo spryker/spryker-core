@@ -18,6 +18,7 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\OfferGui\Communication\Form\Offer\EditOfferType;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToCurrencyFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToCustomerFacadeInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class OfferDataProvider
 {
@@ -32,15 +33,23 @@ class OfferDataProvider
     protected $customerFacade;
 
     /**
+     * @var \Symfony\Component\HttpFoundation\Request
+     */
+    protected $request;
+
+    /**
      * @param \Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToCurrencyFacadeInterface $currencyFacade
      * @param \Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToCustomerFacadeInterface $customerFacade
+     * @param \Symfony\Component\HttpFoundation\Request $request
      */
     public function __construct(
         OfferGuiToCurrencyFacadeInterface $currencyFacade,
-        OfferGuiToCustomerFacadeInterface $customerFacade
+        OfferGuiToCustomerFacadeInterface $customerFacade,
+        Request $request
     ) {
         $this->currencyFacade = $currencyFacade;
         $this->customerFacade = $customerFacade;
+        $this->request = $request;
     }
 
     /**
@@ -74,6 +83,18 @@ class OfferDataProvider
                         ->setCartRuleDiscounts(new ArrayObject())
                         ->setVoucherDiscounts(new ArrayObject())
                 );
+        }
+
+        if (!$offerTransfer->getQuote()->getCustomer()) {
+            $offerTransfer->getQuote()->setCustomer($offerTransfer->getCustomer());
+        }
+
+        if ($this->request->query->has(EditOfferType::FIELD_CUSTOMER_REFERENCE)) {
+            $offerTransfer->getQuote()->getCustomer()->setCustomerReference(
+                $this->request->query->get(EditOfferType::FIELD_CUSTOMER_REFERENCE)
+            );
+
+            $offerTransfer->setCustomerReference($this->request->query->get(EditOfferType::FIELD_CUSTOMER_REFERENCE));
         }
 
         $offerTransfer->getQuote()

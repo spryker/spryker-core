@@ -59,16 +59,14 @@ class CustomersListDataProvider implements FormDataProviderInterface
      */
     public function getData($quoteTransfer)
     {
-        $value = $quoteTransfer->getIdCustomer();
+        $customerTransfer = $quoteTransfer->getCustomer() ?: new CustomerTransfer();
 
-        if (!$value && $this->request->query->has(CustomersListType::FIELD_CUSTOMER)) {
-            $value = $this->request->query->get(CustomersListType::FIELD_CUSTOMER);
+        if ($this->request->query->has(CustomersListType::FIELD_CUSTOMER)) {
+            $customerTransfer->setCustomerReference($this->request->query->get(CustomersListType::FIELD_CUSTOMER));
         }
 
-        $quoteTransfer->setIdCustomer($value);
-
         if ($quoteTransfer->getCustomer() === null) {
-            $quoteTransfer->setCustomer(new CustomerTransfer());
+            $quoteTransfer->setCustomer($customerTransfer);
         }
 
         return $quoteTransfer;
@@ -92,7 +90,7 @@ class CustomersListDataProvider implements FormDataProviderInterface
                 . $customerEntity->getFirstName()
                 . ' [' . $customerEntity->getEmail() . ']';
 
-            $customerList[$customerEntity->getIdCustomer()] = $customerFieldData;
+            $customerList[$customerEntity->getCustomerReference()] = $customerFieldData;
         }
 
         return $customerList;

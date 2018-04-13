@@ -35,7 +35,7 @@ class CreateController extends AbstractController
         $isSubmitPersist = $request->request->get(static::PARAM_SUBMIT_PERSIST);
         $offerTransfer = $this->getOfferTransfer($request);
 
-        $form = $this->getFactory()->getOfferForm($offerTransfer);
+        $form = $this->getFactory()->getOfferForm($offerTransfer, $request);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -86,7 +86,7 @@ class CreateController extends AbstractController
             $offerTransfer->setQuote($quoteTransfer);
 
             //refresh form after calculations
-            $form = $this->getFactory()->getOfferForm($offerTransfer);
+            $form = $this->getFactory()->getOfferForm($offerTransfer, $request);
             //save offer and a quote
 
             if ($isSubmitPersist) {

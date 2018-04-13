@@ -25,6 +25,7 @@ use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToStoreFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilDateTimeServiceInterface;
 use Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilSanitizeServiceInterface;
 use Spryker\Zed\OfferGui\OfferGuiDependencyProvider;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\OfferGui\OfferGuiConfig getConfig()
@@ -114,12 +115,13 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
 
     /**
      * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getOfferForm(OfferTransfer $offerTransfer)
+    public function getOfferForm(OfferTransfer $offerTransfer, Request $request)
     {
-        $offerDataProvider = $this->createOfferDataProvider();
+        $offerDataProvider = $this->createOfferDataProvider($request);
 
         $form = $this->getFormFactory()->create(
             $this->getOfferType(),
@@ -139,13 +141,16 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return \Spryker\Zed\OfferGui\Communication\Form\DataProvider\OfferDataProvider
      */
-    public function createOfferDataProvider()
+    public function createOfferDataProvider(Request $request)
     {
         return new OfferDataProvider(
             $this->getCurrencyFacade(),
-            $this->getCustomerFacade()
+            $this->getCustomerFacade(),
+            $request
         );
     }
 

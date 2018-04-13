@@ -34,7 +34,7 @@ class EditController extends AbstractController
 
         $offerTransfer = $this->getOfferTransfer($request);
 
-        $form = $this->getFactory()->getOfferForm($offerTransfer);
+        $form = $this->getFactory()->getOfferForm($offerTransfer, $request);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

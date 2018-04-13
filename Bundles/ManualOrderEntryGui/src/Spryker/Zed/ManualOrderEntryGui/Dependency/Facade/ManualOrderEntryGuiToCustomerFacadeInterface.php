@@ -27,6 +27,13 @@ interface ManualOrderEntryGuiToCustomerFacadeInterface
     public function findCustomerById(CustomerTransfer $customerTransfer);
 
     /**
+     * @param string $customerReference
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    public function findByReference(string $customerReference): ?CustomerTransfer;
+
+    /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer

@@ -191,6 +191,7 @@ class EditOfferType extends AbstractType
     {
         $builder->add(static::FIELD_CUSTOMER_REFERENCE, Select2ComboBoxType::class, [
             'label' => 'Select Customer',
+            'property_path' => 'quote.customer.customerReference',
             'choices' => array_flip($options[static::OPTION_CUSTOMER_LIST]),
             'multiple' => false,
             'required' => true,
