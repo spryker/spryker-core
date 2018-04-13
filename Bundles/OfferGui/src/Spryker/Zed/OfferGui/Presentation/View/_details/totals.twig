@@ -20,7 +20,8 @@
                             <tr>
                                 <td> + <span class="label">{{ 'Option' | trans }}</span> {{ orderItemOption.value }}</td>
                                 <td></td>
-                                <td class="text-right">{{ orderItemOption.unitPrice | money(true, quote.currency.code) }}</td>
+                                {# TODO: originally here was displayed orderItemOption.unitPrice, but it seems it is not recalculated properly. Probably need to fix. #}
+                                <td class="text-right">{{ orderItemOption.unitGrossPrice | money(true, quote.currency.code) }}</td>
                                 <td></td>
                             </tr>
                         {% endfor %}
