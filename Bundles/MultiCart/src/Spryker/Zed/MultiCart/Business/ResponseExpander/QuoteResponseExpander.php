@@ -38,8 +38,7 @@ class QuoteResponseExpander implements QuoteResponseExpanderInterface
      */
     public function expand(QuoteResponseTransfer $quoteResponseTransfer): QuoteResponseTransfer
     {
-        $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
-        $customerTransfer = $quoteTransfer->requireCustomer()->getCustomer();
+        $customerTransfer = $quoteResponseTransfer->getCustomer();
 
         $customerQuoteCollectionTransfer = $this->findCustomerQuotes($customerTransfer);
         $quoteResponseTransfer->setCustomerQuotes($customerQuoteCollectionTransfer);

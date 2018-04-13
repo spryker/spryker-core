@@ -29,7 +29,7 @@ class DefaultQuoteUpdatePlugin extends AbstractPlugin implements QuoteUpdatePlug
      */
     public function processResponse(QuoteResponseTransfer $quoteResponseTransfer): QuoteResponseTransfer
     {
-        if ($quoteResponseTransfer->getCustomerQuotes() && !$quoteResponseTransfer->getQuoteTransfer()->getIsDefault()) {
+        if ($quoteResponseTransfer->getCustomerQuotes() && (!$quoteResponseTransfer->getQuoteTransfer() || !$quoteResponseTransfer->getQuoteTransfer()->getIsDefault())) {
             $defaultQuoteTransfer = $this->findDefaultQuote($quoteResponseTransfer->getCustomerQuotes());
             if ($defaultQuoteTransfer) {
                 $defaultQuoteTransfer = $this->updateSessionQuote($defaultQuoteTransfer);

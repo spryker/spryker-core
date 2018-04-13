@@ -78,7 +78,7 @@ class QuoteShareDetailsQuoteResponseExpander implements QuoteResponseExpanderInt
                 );
             }
         }
-        if (!empty($groupedCompanyUserTransferCollection[$quoteResponseTransfer->getQuoteTransfer()->getIdQuote()])) {
+        if ($quoteResponseTransfer->getQuoteTransfer() && !empty($groupedCompanyUserTransferCollection[$quoteResponseTransfer->getQuoteTransfer()->getIdQuote()])) {
             $quoteResponseTransfer->getQuoteTransfer()->setShareDetails(
                 $this->createShareDetails(
                     $quoteResponseTransfer->getQuoteTransfer()->getIdQuote(),
