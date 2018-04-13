@@ -11,15 +11,15 @@ use Spryker\Shared\Kernel\AbstractBundleConfig;
 
 class OfferConfig extends AbstractBundleConfig
 {
-    public const STATUS_IN_PROGRESS = 'in_progress';
+    public const STATUS_PENDING = 'Pending';
     public const STATUS_ORDER = 'order';
 
     /**
      * @return string
      */
-    public function getStatusInProgress(): string
+    public function getStatusPending(): string
     {
-        return static::STATUS_IN_PROGRESS;
+        return static::STATUS_PENDING;
     }
 
     /**

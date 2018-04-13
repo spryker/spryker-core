@@ -17,9 +17,9 @@ class OfferConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getStatusInProgress(): string
+    public function getStatusPending(): string
     {
-        return $this->getSharedConfig()->getStatusInProgress();
+        return $this->getSharedConfig()->getStatusPending();
     }
 
     /**
@@ -36,7 +36,7 @@ class OfferConfig extends AbstractBundleConfig
     public function getUnconvertedOfferStatuses(): array
     {
         return [
-            $this->getStatusInProgress(),
+            $this->getStatusPending(),
         ];
     }
 }
