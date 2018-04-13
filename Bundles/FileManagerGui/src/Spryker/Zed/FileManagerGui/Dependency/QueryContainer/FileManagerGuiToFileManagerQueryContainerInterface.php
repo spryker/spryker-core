@@ -28,6 +28,15 @@ interface FileManagerGuiToFileManagerQueryContainerInterface
     public function queryFileById(int $idFile);
 
     /**
+     * @param int $idFileDirectory
+     *
+     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
+     *
+     * @return \Orm\Zed\FileManager\Persistence\SpyFileDirectoryQuery
+     */
+    public function queryFileDirectoryId(int $idFileDirectory);
+
+    /**
      * @param int|null $idFile
      *
      * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException

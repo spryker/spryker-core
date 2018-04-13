@@ -139,6 +139,7 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createFileDirectoryFormDataProvider()
     {
         return new FileDirectoryFormDataProvider(
+            $this->getFileManagerQueryContainer(),
             $this->getLocaleFacade()
         );
     }
@@ -152,7 +153,8 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
 
         return $this->getFormFactory()->create(
             FileDirectoryForm::class,
-            $dataProvider->getData()
+            $dataProvider->getData(),
+            $dataProvider->getOptions()
         );
     }
 }

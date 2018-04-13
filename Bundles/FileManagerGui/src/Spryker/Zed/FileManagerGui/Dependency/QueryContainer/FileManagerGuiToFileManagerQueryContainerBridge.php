@@ -43,6 +43,16 @@ class FileManagerGuiToFileManagerQueryContainerBridge implements FileManagerGuiT
     }
 
     /**
+     * @param int $idFileDirectory
+     *
+     * @return \Orm\Zed\FileManager\Persistence\SpyFileDirectoryQuery
+     */
+    public function queryFileDirectoryId(int $idFileDirectory)
+    {
+        return $this->queryContainer->queryFileDirectoryById($idFileDirectory);
+    }
+
+    /**
      * @param int|null $idFile
      *
      * @return \Orm\Zed\FileManager\Persistence\SpyFileInfoQuery

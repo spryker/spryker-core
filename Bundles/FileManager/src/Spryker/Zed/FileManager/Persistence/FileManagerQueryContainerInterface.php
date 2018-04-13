@@ -37,6 +37,17 @@ interface FileManagerQueryContainerInterface
     /**
      * @api
      *
+     * @param int $idFileDirectory
+     *
+     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
+     *
+     * @return \Orm\Zed\FileManager\Persistence\SpyFileDirectoryQuery
+     */
+    public function queryFileDirectoryById($idFileDirectory);
+
+    /**
+     * @api
+     *
      * @param int|null $idFile
      *
      * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException

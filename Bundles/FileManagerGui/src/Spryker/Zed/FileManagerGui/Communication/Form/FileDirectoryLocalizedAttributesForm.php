@@ -23,6 +23,9 @@ class FileDirectoryLocalizedAttributesForm extends AbstractType
 {
     const FIELD_TITLE = 'title';
     const FIELD_FK_LOCALE = 'fk_locale';
+    const FIELD_LOCALE_NAME = 'localeName';
+
+    const OPTION_DATA_CLASS = 'data_class';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -31,11 +34,10 @@ class FileDirectoryLocalizedAttributesForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        parent::configureOptions($resolver);
+        $resolver->setRequired(FileDirectoryForm::OPTION_AVAILABLE_LOCALES);
 
         $resolver->setDefaults([
-            'data_class' => FileDirectoryLocalizedAttributesTransfer::class,
-            'required' => false,
+            static::OPTION_DATA_CLASS => FileDirectoryLocalizedAttributesTransfer::class,
         ]);
     }
 
@@ -49,7 +51,8 @@ class FileDirectoryLocalizedAttributesForm extends AbstractType
     {
         $this
             ->addTitleField($builder)
-            ->addFkLocaleField($builder);
+            ->addFkLocaleField($builder)
+            ->addFileLocaleNameField($builder);
     }
 
     /**
@@ -79,6 +82,23 @@ class FileDirectoryLocalizedAttributesForm extends AbstractType
     protected function addFkLocaleField(FormBuilderInterface $builder)
     {
         $builder->add(self::FIELD_FK_LOCALE, HiddenType::class);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addFileLocaleNameField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_LOCALE_NAME, HiddenType::class, [
+            'constraints' => [
+                new NotBlank(),
+            ],
+            'property_path' => 'locale.localeName',
+        ]);
 
         return $this;
     }

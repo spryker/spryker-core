@@ -35,7 +35,7 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
      */
     public function saveDirectory(FileDirectoryTransfer $fileDirectoryTransfer)
     {
-        return $this->getFactory()->createFileSaver()->save($fileDirectoryTransfer);
+        return $this->getFactory()->createFileDirectorySaver()->save($fileDirectoryTransfer);
     }
 
     /**

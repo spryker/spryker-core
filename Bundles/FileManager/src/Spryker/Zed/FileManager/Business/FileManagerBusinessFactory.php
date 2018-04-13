@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\FileManager\Business;
 
+use Spryker\Zed\FileManager\Business\Model\FileDirectorySaver;
 use Spryker\Zed\FileManager\Business\Model\FileContent;
 use Spryker\Zed\FileManager\Business\Model\FileFinder;
 use Spryker\Zed\FileManager\Business\Model\FileLocalizedAttributesSaver;
@@ -15,10 +16,12 @@ use Spryker\Zed\FileManager\Business\Model\FileRemover;
 use Spryker\Zed\FileManager\Business\Model\FileRollback;
 use Spryker\Zed\FileManager\Business\Model\FileSaver;
 use Spryker\Zed\FileManager\Business\Model\FileVersion;
+use Spryker\Zed\FileManager\Business\Model\FileDirectoryLocalizedAttributesSaver;
 use Spryker\Zed\FileManager\Business\Tree\FileDirectoryTreeHierarchyUpdater;
 use Spryker\Zed\FileManager\Business\Tree\FileDirectoryTreeReader;
 use Spryker\Zed\FileManager\FileManagerDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+
 
 /**
  * @method \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface getQueryContainer()
@@ -38,6 +41,18 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
             $this->createFileContent(),
             $this->createFileLocalizedAttributesSaver(),
             $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\FileManager\Business\Model\FileDirectorySaverInterface
+     */
+    public function createFileDirectorySaver()
+    {
+        return new FileDirectorySaver(
+            $this->getQueryContainer(),
+            $this->createFileFinder(),
+            $this->createFileDirectoryLocalizedAttributesSaver()
         );
     }
 
@@ -70,6 +85,14 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
     public function createFileLocalizedAttributesSaver()
     {
         return new FileLocalizedAttributesSaver();
+    }
+
+    /**
+     * @return \Spryker\Zed\FileManager\Business\Model\FileDirectoryLocalizedAttributesSaverInterface
+     */
+    public function createFileDirectoryLocalizedAttributesSaver()
+    {
+        return new FileDirectoryLocalizedAttributesSaver();
     }
 
     /**

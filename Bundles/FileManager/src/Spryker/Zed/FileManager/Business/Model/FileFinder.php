@@ -37,6 +37,16 @@ class FileFinder implements FileFinderInterface
     }
 
     /**
+     * @param int $idFileDirectory
+     *
+     * @return \Orm\Zed\FileManager\Persistence\SpyFileDirectory
+     */
+    public function getFileDirectory($idFileDirectory)
+    {
+        return $this->queryContainer->queryFileDirectoryById($idFileDirectory)->findOne();
+    }
+
+    /**
      * @param int $idFile
      *
      * @return \Orm\Zed\FileManager\Persistence\SpyFileInfo

@@ -35,11 +35,10 @@ class FileDirectoryForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        parent::configureOptions($resolver);
+        $resolver->setRequired(static::OPTION_AVAILABLE_LOCALES);
 
         $resolver->setDefaults([
-            'data_class' => FileDirectoryTransfer::class,
-            'required' => false,
+            static::OPTION_DATA_CLASS => FileDirectoryTransfer::class,
         ]);
     }
 
@@ -53,7 +52,7 @@ class FileDirectoryForm extends AbstractType
     {
         $this
             ->addNameField($builder)
-            ->addFileDirectoryLocalizedAttributesForms($builder);
+            ->addFileDirectoryLocalizedAttributesForms($builder, $options);
     }
 
     /**

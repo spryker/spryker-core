@@ -28,14 +28,11 @@ class AddDirectoryController extends AbstractController
 
         if ($form->isValid()) {
             try {
-                $data = $form->getData();
-//                $saveRequestTransfer = $this->createFileManagerSaveRequestTransfer($data);
-//
-//                $this->getFactory()->getFileManagerFacade()->save($saveRequestTransfer);
-//
-//                $this->addSuccessMessage(
-//                    'The file directory was added successfully.'
-//                );
+                $this->getFactory()->getFileManagerFacade()->saveDirectory($form->getData());
+
+                $this->addSuccessMessage(
+                    'The file directory was added successfully.'
+                );
                 $redirectUrl = Url::generate('/file-manager-gui')->build();
 
                 return $this->redirectResponse($redirectUrl);
