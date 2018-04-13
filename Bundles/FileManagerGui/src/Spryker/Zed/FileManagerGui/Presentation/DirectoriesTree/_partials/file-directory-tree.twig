@@ -1,4 +1,12 @@
-{% include '@FileManagerGui/_partials/progressbar.twig' with {idProgressbar: 'file-directory-tree-loader'} %}
+{#{% include '@FileManagerGui/_partials/progressbar.twig' with {idProgressbar: 'file-directory-tree-loader'} %}#}
+
+<div class="clearfix">
+    <input type="button" id="file-directory-tree-save-btn" class="btn btn-primary pull-left m-r-sm" value="{{ 'Save order' | trans }}" disabled="disabled" />
+    {% include '@FileManagerGui/_partials/progressbar.twig' with {
+    idProgressbar: 'file-directory-tree-update-loader',
+    fileDirectoryProgressbarClass: 'progress-inline'
+    } %}
+</div>
 
 <div id="file-directory-tree-container" class="ibox hidden">
 

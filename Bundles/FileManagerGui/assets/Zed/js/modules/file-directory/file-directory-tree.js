@@ -20,27 +20,12 @@ var ajaxRequest;
 var treeSearchTimeout = false;
 
 var config = {
-    fileDirectoryTreeUrl: '/file-directory-gui/tree',
-    fileDirectoryNodeFormUrlPrefix: '/file-directory-gui/node/',
-    fileDirectoryTreeHierarchyUpdateUrl: '/navigation-gui/tree/update-hierarchy',
+    fileDirectoryTreeUrl: '/file-manager-gui/directories-tree/load',
+    fileDirectoryNodeFormUrlPrefix: '/file-manager-gui/node/',
+    fileDirectoryTreeHierarchyUpdateUrl: '/file-manager-gui/directories-tree/update-hierarchy',
     fileDirectoryTreeNodeTypes: {
         'default': {
             'icon': 'fa fa-folder'
-        },
-        'navigation': {
-            'icon': 'fa fa-list'
-        },
-        'cms_page': {
-            'icon': 'fa fa-file-o'
-        },
-        'category': {
-            'icon': 'fa fa-sitemap'
-        },
-        'link': {
-            'icon': 'fa fa-link'
-        },
-        'external_url': {
-            'icon': 'fa fa-external-link'
         }
     }
 };
@@ -51,6 +36,8 @@ var config = {
 function initialize() {
     $treeOrderSaveBtn.on('click', onTreeSaveOrderClick);
     $treeSearchField.keyup(onTreeSearchKeyup);
+
+    initJsTree();
 
     // Enable save order button on tree change
     $(document).bind('dnd_stop.vakata', function() {
@@ -73,10 +60,11 @@ function loadTree(idFileDirectory, selected, skipFormLoad)  {
         ajaxRequest.abort();
     }
 
-    ajaxRequest = $.get(config.fileDirectoryTreeUrl, {'id-file-directory': idFileDirectory}, createTreeLoadHandler(idFileDirectory, selected, skipFormLoad))
+    ajaxRequest = $.get(config.fileDirectoryTreeUrl, {}, createTreeLoadHandler())
         .always(function() {
             $treeProgressBar.addClass('hidden');
         });
+
 }
 
 /**
@@ -92,27 +80,15 @@ function resetTree()  {
 }
 
 /**
- * @param {int} idFileDirectory
- * @param {int|null} selected
- * @param {boolean} skipFormLoad
- *
  * @returns {Function}
  */
-function createTreeLoadHandler(idFileDirectory, selected, skipFormLoad) {
+function createTreeLoadHandler() {
     return function(response) {
         $treeContent.html(response);
 
         initJsTree();
 
         $treeContainer.removeClass('hidden');
-
-        if (skipFormLoad) {
-            selectNode(selected);
-            setNodeSelectListener(idFileDirectory);
-        } else {
-            setNodeSelectListener(idFileDirectory);
-            selectNode(selected);
-        }
     }
 }
 
@@ -125,13 +101,13 @@ function initJsTree() {
             'check_callback': function (op, node, par, pos, more) {
                 // disable drop on root level
                 if (more && more.dnd && (op === 'move_node' || op === 'copy_node')) {
-                    return !!more.ref.data.idNavigationNode;
+                    return !!more.ref.data.idFileDirectoryNode;
                 }
 
                 return true;
             }
         },
-        'plugins': ['types', 'wholerow', 'dnd', 'search'],
+        'plugins': ['wholerow', 'dnd', 'search'],
         'types': config.fileDirectoryTreeNodeTypes,
         'dnd': {
             'is_draggable': function(items) {
@@ -139,29 +115,6 @@ function initJsTree() {
                 return !!idFileDirectoryNode;
             }
         }
-    });
-}
-
-/**
- * @param {int} idFileDirectoryNode
- *
- * @return {void}
- */
-function selectNode(idFileDirectoryNode) {
-    var nodeToSelect = 'file-directory-node-' + (idFileDirectoryNode ? idFileDirectoryNode : 0);
-    $('#file-directory-tree').jstree(true).select_node(nodeToSelect);
-}
-
-/**
- * @param {int} idFileDirectory
- *
- * @return {void}
- */
-function setNodeSelectListener(idFileDirectory) {
-    $('#file-directory-tree').on('select_node.jstree', function(e, data){
-        var idFileDirectoryNode = data.node.data.idFileDirectoryNode;
-
-        loadForm(idFileDirectory, idFileDirectoryNode);
     });
 }
 
@@ -251,6 +204,17 @@ function onTreeSaveOrderClick(){
         }
     };
 
+    $.post(config.fileDirectoryTreeHierarchyUpdateUrl, params, function(response) {
+        window.sweetAlert({
+            title: response.success ? "Success" : "Error",
+            text: response.message,
+            type: response.success ? "success" : "error"
+        });
+
+        $treeOrderSaveBtn.attr('disabled', 'disabled');
+    }).always(function() {
+        $treeUpdateProgressBar.addClass('hidden');
+    });
 }
 
 /**
@@ -263,8 +227,8 @@ function getFileDirectoryNodesRecursively(jstreeNode) {
 
     $.each(jstreeNode.children, function(i, childNode) {
         var fileDirectoryNode = {
-            'file_directory_node': {
-                'id_file_directory_node': childNode.data.idFileDirectoryNode,
+            'file_directory': {
+                'id_file_directory': childNode.data.idFileDirectoryNode,
                 'position': (i + 1)
             },
             'children': getFileDirectoryNodesRecursively(childNode)
