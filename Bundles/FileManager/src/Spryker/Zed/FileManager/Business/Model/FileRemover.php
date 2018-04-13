@@ -15,9 +15,9 @@ class FileRemover implements FileRemoverInterface
     use DatabaseTransactionHandlerTrait;
     
     /**
-     * @var \Spryker\Zed\FileManager\Business\Model\FileFinderInterface
+     * @var \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface
      */
-    protected $fileFinder;
+    protected $fileLoader;
 
     /**
      * @var \Spryker\Zed\FileManager\Business\Model\FileContentInterface
@@ -32,13 +32,13 @@ class FileRemover implements FileRemoverInterface
     /**
      * FileSaver constructor.
      *
-     * @param \Spryker\Zed\FileManager\Business\Model\FileFinderInterface $fileFinder
+     * @param \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface $fileLoader
      * @param \Spryker\Zed\FileManager\Business\Model\FileContentInterface $fileContent
      * @param \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface $fileManagerQueryContainer
      */
-    public function __construct(FileFinderInterface $fileFinder, FileContentInterface $fileContent, FileManagerQueryContainerInterface $fileManagerQueryContainer)
+    public function __construct(FileLoaderInterface $fileLoader, FileContentInterface $fileContent, FileManagerQueryContainerInterface $fileManagerQueryContainer)
     {
-        $this->fileFinder = $fileFinder;
+        $this->fileLoader = $fileLoader;
         $this->fileContent = $fileContent;
         $this->fileManagerQueryContainer = $fileManagerQueryContainer;
     }
@@ -50,7 +50,7 @@ class FileRemover implements FileRemoverInterface
      */
     public function deleteFileInfo($idFileInfo)
     {
-        $fileInfo = $this->fileFinder->getFileInfo($idFileInfo);
+        $fileInfo = $this->fileLoader->getFileInfo($idFileInfo);
 
         if ($fileInfo == null) {
             return false;
@@ -74,7 +74,7 @@ class FileRemover implements FileRemoverInterface
      */
     public function delete($idFile)
     {
-        $file = $this->fileFinder->getFile($idFile);
+        $file = $this->fileLoader->getFile($idFile);
 
         if ($file == null) {
             return false;

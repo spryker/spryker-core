@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\FileManagerStorage\Dependency\Facade;
 
-interface FileManagerStorageToEventBehaviorFacadeBridgeInterface
+interface FileManagerStorageToEventBehaviorFacadeInterface
 {
     /**
      * @return void

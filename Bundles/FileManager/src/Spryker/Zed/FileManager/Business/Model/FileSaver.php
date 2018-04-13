@@ -31,9 +31,9 @@ class FileSaver implements FileSaverInterface
     protected $fileVersion;
 
     /**
-     * @var \Spryker\Zed\FileManager\Business\Model\FileFinderInterface
+     * @var \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface
      */
-    protected $fileFinder;
+    protected $fileLoader;
 
     /**
      * @var \Spryker\Zed\FileManager\Business\Model\FileContentInterface
@@ -48,14 +48,14 @@ class FileSaver implements FileSaverInterface
     /**
      * @var \Spryker\Zed\FileManager\Business\Model\FileLocalizedAttributesSaverInterface
      */
-    private $attributesSaver;
+    protected $attributesSaver;
 
     /**
      * FileSaver constructor.
      *
      * @param \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\FileManager\Business\Model\FileVersionInterface $fileVersion
-     * @param \Spryker\Zed\FileManager\Business\Model\FileFinderInterface $fileFinder
+     * @param \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface $fileLoader
      * @param \Spryker\Zed\FileManager\Business\Model\FileContentInterface $fileContent
      * @param \Spryker\Zed\FileManager\Business\Model\FileLocalizedAttributesSaverInterface $attributesSaver
      * @param \Spryker\Zed\FileManager\FileManagerConfig $config
@@ -63,14 +63,14 @@ class FileSaver implements FileSaverInterface
     public function __construct(
         FileManagerQueryContainerInterface $queryContainer,
         FileVersionInterface $fileVersion,
-        FileFinderInterface $fileFinder,
+        FileLoaderInterface $fileLoader,
         FileContentInterface $fileContent,
         FileLocalizedAttributesSaverInterface $attributesSaver,
         FileManagerConfig $config
     ) {
         $this->queryContainer = $queryContainer;
         $this->fileVersion = $fileVersion;
-        $this->fileFinder = $fileFinder;
+        $this->fileLoader = $fileLoader;
         $this->fileContent = $fileContent;
         $this->config = $config;
         $this->attributesSaver = $attributesSaver;
@@ -97,7 +97,7 @@ class FileSaver implements FileSaverInterface
      */
     protected function update(FileManagerSaveRequestTransfer $saveRequestTransfer)
     {
-        $file = $this->fileFinder->getFile($saveRequestTransfer->getFile()->getIdFile());
+        $file = $this->fileLoader->getFile($saveRequestTransfer->getFile()->getIdFile());
 
         return $this->saveFile($file, $saveRequestTransfer);
     }
@@ -129,7 +129,7 @@ class FileSaver implements FileSaverInterface
             $this->addFileInfoToFile($file, $fileInfo);
 
             $savedRowsCount = $file->save();
-            $this->attributesSaver->saveFileLocalizedAttributes($file, $saveRequestTransfer);
+            $this->attributesSaver->saveLocalizedFileAttributes($file, $saveRequestTransfer);
             $this->saveContent($saveRequestTransfer, $file, $fileInfo);
 
             return $savedRowsCount;
@@ -242,7 +242,7 @@ class FileSaver implements FileSaverInterface
             return false;
         }
 
-        $file = $this->fileFinder->getFile($fileId);
+        $file = $this->fileLoader->getFile($fileId);
 
         return $file !== null;
     }

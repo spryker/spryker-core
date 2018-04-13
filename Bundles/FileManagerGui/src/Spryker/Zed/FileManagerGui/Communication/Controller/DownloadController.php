@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \Spryker\Zed\FileManagerGui\Communication\FileManagerGuiCommunicationFactory getFactory()
@@ -34,6 +35,10 @@ class DownloadController extends AbstractController
         $file = $this->getFactory()
             ->getFileManagerFacade()
             ->read($idFileInfo);
+
+        if ($file->getContent() === null) {
+            throw new NotFoundHttpException();
+        }
 
         return $this->createResponse($file);
     }

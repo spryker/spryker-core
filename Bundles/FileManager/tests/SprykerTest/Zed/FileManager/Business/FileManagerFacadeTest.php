@@ -28,7 +28,7 @@ use Spryker\Service\FlysystemLocalFileSystem\Plugin\Flysystem\LocalFilesystemBui
 use Spryker\Service\Kernel\Container as ServiceContainer;
 use Spryker\Zed\FileManager\Business\FileManagerBusinessFactory;
 use Spryker\Zed\FileManager\Business\FileManagerFacade;
-use Spryker\Zed\FileManager\Dependency\Service\FileManagerToFileSystemBridge;
+use Spryker\Zed\FileManager\Dependency\Service\FileManagerToFileSystemServiceBridge;
 use Spryker\Zed\FileManager\FileManagerDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use SprykerTest\Zed\FileManager\Stub\FileManagerConfigStub;
@@ -84,7 +84,7 @@ class FileManagerFacadeTest extends Unit
         $container = new Container();
 
         $container[FileManagerDependencyProvider::SERVICE_FILE_SYSTEM] = function (Container $container) use ($fileSystemService) {
-            return new FileManagerToFileSystemBridge($fileSystemService);
+            return new FileManagerToFileSystemServiceBridge($fileSystemService);
         };
 
         $config = new FileManagerConfigStub();

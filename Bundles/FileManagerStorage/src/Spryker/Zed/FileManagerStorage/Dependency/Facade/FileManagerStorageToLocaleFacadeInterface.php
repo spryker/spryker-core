@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\FileManagerStorage\Dependency\Facade;
 
-interface FileManagerStorageToLocaleFacadeBridgeInterface
+interface FileManagerStorageToLocaleFacadeInterface
 {
     /**
      * @param string $localeName

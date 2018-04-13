@@ -36,7 +36,9 @@ interface FileManagerFacadeInterface
      *
      * @api
      *
-     * {@inheritdoc}
+     * @param \Generated\Shared\Transfer\FileDirectoryTransfer $fileDirectoryTransfer
+     *
+     * @return int
      */
     public function saveDirectory(FileDirectoryTransfer $fileDirectoryTransfer);
 
@@ -101,9 +103,6 @@ interface FileManagerFacadeInterface
      * @api
      *
      * @param int $idFileInfo
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
      *
      * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
      */

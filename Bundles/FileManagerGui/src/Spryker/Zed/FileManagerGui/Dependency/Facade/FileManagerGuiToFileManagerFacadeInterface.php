@@ -72,9 +72,6 @@ interface FileManagerGuiToFileManagerFacadeInterface
      *
      * @param int $idFileInfo
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
-     *
      * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
      */
     public function read($idFileInfo);

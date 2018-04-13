@@ -12,7 +12,6 @@ use Orm\Zed\FileManager\Persistence\SpyFileDirectory;
 
 interface FileDirectoryLocalizedAttributesSaverInterface
 {
-
     /**
      * @param \Orm\Zed\FileManager\Persistence\SpyFileDirectory $fileDirectory
      * @param \Generated\Shared\Transfer\FileDirectoryTransfer $fileDirectoryTransfer
@@ -20,5 +19,4 @@ interface FileDirectoryLocalizedAttributesSaverInterface
      * @return void
      */
     public function saveFileLocalizedAttributes(SpyFileDirectory $fileDirectory, FileDirectoryTransfer $fileDirectoryTransfer);
-
 }

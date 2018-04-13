@@ -12,7 +12,7 @@ use Orm\Zed\FileManager\Persistence\SpyFile;
 use Orm\Zed\FileManager\Persistence\SpyFileInfo;
 use Propel\Runtime\Propel;
 use Spryker\Zed\FileManager\Business\Model\FileContentInterface;
-use Spryker\Zed\FileManager\Business\Model\FileFinderInterface;
+use Spryker\Zed\FileManager\Business\Model\FileLoaderInterface;
 use Spryker\Zed\FileManager\Business\Model\FileRemover;
 use Spryker\Zed\FileManager\Persistence\FileManagerQueryContainer;
 
@@ -37,11 +37,11 @@ class FileRemoverTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\FileManager\Business\Model\FileFinderInterface
+     * @return \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface
      */
     protected function createFileFinderMock()
     {
-        return $this->getMockBuilder(FileFinderInterface::class)->getMock();
+        return $this->getMockBuilder(FileLoaderInterface::class)->getMock();
     }
 
     /**

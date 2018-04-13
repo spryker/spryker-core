@@ -52,8 +52,6 @@ class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileMan
      *
      * @param int $idFile
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
-     *
      * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
      */
     public function readLatestFileVersion($idFile)
@@ -102,9 +100,6 @@ class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileMan
      * @api
      *
      * @param int $idFileInfo
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
      *
      * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
      */

@@ -13,16 +13,16 @@ class FileVersion implements FileVersionInterface
     const VERSION_FORMAT = 'v.%d';
 
     /**
-     * @var \Spryker\Zed\FileManager\Business\Model\FileFinderInterface
+     * @var \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface
      */
-    private $fileFinder;
+    protected $fileLoader;
 
     /**
-     * @param \Spryker\Zed\FileManager\Business\Model\FileFinderInterface $fileFinder
+     * @param \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface $fileLoader
      */
-    public function __construct(FileFinderInterface $fileFinder)
+    public function __construct(FileLoaderInterface $fileLoader)
     {
-        $this->fileFinder = $fileFinder;
+        $this->fileLoader = $fileLoader;
     }
 
     /**
@@ -35,7 +35,7 @@ class FileVersion implements FileVersionInterface
         if ($idFile === null) {
             return static::DEFAULT_VERSION_NUMBER;
         }
-        $fileInfo = $this->fileFinder->getLatestFileInfoByFkFile($idFile);
+        $fileInfo = $this->fileLoader->getLatestFileInfoByFkFile($idFile);
 
         if ($fileInfo === null) {
             return static::DEFAULT_VERSION_NUMBER;
