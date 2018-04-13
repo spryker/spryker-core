@@ -31,4 +31,9 @@ interface CartToMessengerInterface
      * @return void
      */
     public function addInfoMessage(MessageTransfer $messageTransfer);
+
+    /**
+     * @return \Generated\Shared\Transfer\FlashMessagesTransfer
+     */
+    public function getStoredMessages();
 }

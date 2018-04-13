@@ -9,6 +9,12 @@ namespace Spryker\Client\ProductBundle;
 
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\ProductBundle\Grouper\ProductBundleGrouper;
+use Spryker\Client\ProductBundle\QuoteChangeRequestExpander\QuoteChangeRequestExpander;
+use Spryker\Client\ProductBundle\QuoteChangeRequestExpander\QuoteChangeRequestExpanderInterface;
+use Spryker\Client\ProductBundle\QuoteItemFinder\BundleProductQuoteItemFinder;
+use Spryker\Client\ProductBundle\QuoteItemFinder\BundleProductQuoteItemFinderInterface;
+use Spryker\Client\ProductBundle\QuoteItemFinder\QuoteBundleItemsFinder;
+use Spryker\Client\ProductBundle\QuoteItemFinder\QuoteBundleItemsFinderInterface;
 
 class ProductBundleFactory extends AbstractFactory
 {
@@ -18,5 +24,29 @@ class ProductBundleFactory extends AbstractFactory
     public function createProductBundleGrouper()
     {
         return new ProductBundleGrouper();
+    }
+
+    /**
+     * @return \Spryker\Client\ProductBundle\QuoteChangeRequestExpander\QuoteChangeRequestExpanderInterface
+     */
+    public function createQuoteChangeRequestExpander(): QuoteChangeRequestExpanderInterface
+    {
+        return new QuoteChangeRequestExpander();
+    }
+
+    /**
+     * @return \Spryker\Client\ProductBundle\QuoteItemFinder\BundleProductQuoteItemFinderInterface
+     */
+    public function createBundleProductQuoteItemFinder(): BundleProductQuoteItemFinderInterface
+    {
+        return new BundleProductQuoteItemFinder();
+    }
+
+    /**
+     * @return \Spryker\Client\ProductBundle\QuoteItemFinder\QuoteBundleItemsFinderInterface
+     */
+    public function createQuoteBundleItemsFinder(): QuoteBundleItemsFinderInterface
+    {
+        return new QuoteBundleItemsFinder();
     }
 }

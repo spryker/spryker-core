@@ -31,6 +31,11 @@ class QuoteSession implements QuoteSessionInterface
     protected $quoteTransferExpanderPlugins;
 
     /**
+     * @var \Spryker\Client\Quote\StorageStrategy\StorageStrategyInterface
+     */
+    protected $storageStrategy;
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
      * @param \Spryker\Client\Quote\Dependency\Plugin\QuoteToCurrencyInterface|null $currencyPlugin
      * @param \Spryker\Client\Quote\Dependency\Plugin\QuoteTransferExpanderPluginInterface[] $quoteTransferExpanderPlugins
