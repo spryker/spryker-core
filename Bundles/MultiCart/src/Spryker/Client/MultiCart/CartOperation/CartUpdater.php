@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
 use Spryker\Client\MultiCart\Dependency\Client\MultiCartToCustomerClientInterface;
 use Spryker\Client\MultiCart\Dependency\Client\MultiCartToPersistentCartClientInterface;
 use Spryker\Client\MultiCart\Dependency\Client\MultiCartToQuoteClientInterface;
+use Spryker\Client\MultiCart\Dependency\Client\MultiCartToZedRequestClientInterface;
 use Spryker\Client\MultiCart\Zed\MultiCartZedStubInterface;
 
 class CartUpdater implements CartUpdaterInterface
@@ -41,21 +42,29 @@ class CartUpdater implements CartUpdaterInterface
     protected $multiCartZedStub;
 
     /**
+     * @var \Spryker\Client\MultiCart\Dependency\Client\MultiCartToZedRequestClientInterface
+     */
+    protected $zedRequestClient;
+
+    /**
      * @param \Spryker\Client\MultiCart\Zed\MultiCartZedStubInterface $multiCartZedStub
      * @param \Spryker\Client\MultiCart\Dependency\Client\MultiCartToPersistentCartClientInterface $persistentCartClient
      * @param \Spryker\Client\MultiCart\Dependency\Client\MultiCartToQuoteClientInterface $quoteClient
      * @param \Spryker\Client\MultiCart\Dependency\Client\MultiCartToCustomerClientInterface $customerClient
+     * @param \Spryker\Client\MultiCart\Dependency\Client\MultiCartToZedRequestClientInterface $zedRequestClient
      */
     public function __construct(
         MultiCartZedStubInterface $multiCartZedStub,
         MultiCartToPersistentCartClientInterface $persistentCartClient,
         MultiCartToQuoteClientInterface $quoteClient,
-        MultiCartToCustomerClientInterface $customerClient
+        MultiCartToCustomerClientInterface $customerClient,
+        MultiCartToZedRequestClientInterface $zedRequestClient
     ) {
         $this->multiCartZedStub = $multiCartZedStub;
         $this->persistentCartClient = $persistentCartClient;
         $this->quoteClient = $quoteClient;
         $this->customerClient = $customerClient;
+        $this->zedRequestClient = $zedRequestClient;
     }
 
     /**
@@ -94,6 +103,7 @@ class CartUpdater implements CartUpdaterInterface
         if ($quoteResponseTransfer->getIsSuccessful()) {
             $this->quoteClient->setQuote($quoteResponseTransfer->getQuoteTransfer());
         }
+        $this->zedRequestClient->addFlashMessagesFromLastZedRequest();
 
         return $quoteResponseTransfer;
     }

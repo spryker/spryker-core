@@ -74,7 +74,8 @@ class MultiCartFactory extends AbstractFactory
             $this->createMultiCartZedStub(),
             $this->getPersistentCartClient(),
             $this->getQuoteClient(),
-            $this->getCustomerClient()
+            $this->getCustomerClient(),
+            $this->getZedRequestClient()
         );
     }
 
