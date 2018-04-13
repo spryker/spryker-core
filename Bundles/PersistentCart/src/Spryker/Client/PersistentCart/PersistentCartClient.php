@@ -29,6 +29,7 @@ class PersistentCartClient extends AbstractClient implements PersistentCartClien
     public function deleteQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         $persistentCartStub = $this->getFactory()->createZedPersistentCartStub();
+        $quoteTransfer->setCustomer($this->getFactory()->getCustomerClient()->getCustomer());
         $quoteResponseTransfer = $persistentCartStub->deleteQuote($quoteTransfer);
         $quoteResponseTransfer = $this->executeUpdateQuotePlugins($quoteResponseTransfer);
         $this->getFactory()->getZedRequestClient()->addFlashMessagesFromLastZedRequest();

@@ -84,20 +84,19 @@ class QuoteDeleter implements QuoteDeleterInterface
      */
     protected function isQuoteDeleteAllowed(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): bool
     {
-        $messageTransfer = new MessageTransfer();
         if (strcmp($customerTransfer->getCustomerReference(), $quoteTransfer->getCustomerReference()) !== 0
-            && ($customerTransfer->getCompanyUserTransfer()
-                && $this->can('WriteSharedCartPermissionPlugin', $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser(), $quoteTransfer->getIdQuote())
+            && (!$customerTransfer->getCompanyUserTransfer()
+                || !$this->can('WriteSharedCartPermissionPlugin', $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser(), $quoteTransfer->getIdQuote())
             )
         ) {
+            $messageTransfer = new MessageTransfer();
             $messageTransfer->setValue(static::GLOSSARY_KEY_PERMISSION_FAILED);
             $this->messengerFacade->addErrorMessage($messageTransfer);
 
             return false;
         }
-        if (strcmp($customerTransfer->getCustomerReference(), $quoteTransfer->getCustomerReference()) === 0
-            && !$this->isCustomerHasMoreThanOneQuote($quoteTransfer->getCustomer())
-        ) {
+        if ($this->isLastCustomerQuote($quoteTransfer, $customerTransfer)) {
+            $messageTransfer = new MessageTransfer();
             $messageTransfer->setValue(static::GLOSSARY_KEY_CAN_NOT_REMOVE_LAST_CART);
             $this->messengerFacade->addErrorMessage($messageTransfer);
 
@@ -118,17 +117,25 @@ class QuoteDeleter implements QuoteDeleterInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return bool
      */
-    protected function isCustomerHasMoreThanOneQuote(CustomerTransfer $customerTransfer): bool
+    protected function isLastCustomerQuote(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): bool
     {
         $quoteCriteriaFilterTransfer = new QuoteCriteriaFilterTransfer();
         $quoteCriteriaFilterTransfer
             ->setCustomerReference($customerTransfer->getCustomerReference());
         $customerQuoteCollectionTransfer = $this->quoteFacade->getQuoteCollection($quoteCriteriaFilterTransfer);
 
-        return count($customerQuoteCollectionTransfer->getQuotes()) > 1;
+        $customerQuoteQuantity = 0;
+        foreach ($customerQuoteCollectionTransfer->getQuotes() as $customerQuoteTransfer) {
+            if ($customerQuoteTransfer->getIdQuote() !== $quoteTransfer->getIdQuote()) {
+                $customerQuoteQuantity++;
+            }
+        }
+
+        return $customerQuoteQuantity === 0;
     }
 }

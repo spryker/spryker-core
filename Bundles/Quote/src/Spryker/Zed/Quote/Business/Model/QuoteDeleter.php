@@ -70,7 +70,7 @@ class QuoteDeleter implements QuoteDeleterInterface
      *
      * @return bool
      */
-    protected function validateQuote(QuoteTransfer $quoteTransfer)
+    protected function validateQuote(QuoteTransfer $quoteTransfer): bool
     {
         if (!$quoteTransfer->getCustomer()) {
             return false;

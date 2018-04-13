@@ -39,6 +39,10 @@ class CustomerShareCartQuoteResponseExpander implements QuoteResponseExpanderInt
         $sharedQuoteCollectionTransfer = $this->findSharedCustomerQuotes($customerTransfer);
         $quoteResponseTransfer->setSharedCustomerQuotes($sharedQuoteCollectionTransfer);
 
+        if (!$quoteResponseTransfer->getQuoteTransfer()) {
+            return $quoteResponseTransfer;
+        }
+
         return $this->replaceCurrentQuoteFromList($quoteResponseTransfer, $sharedQuoteCollectionTransfer);
     }
 
