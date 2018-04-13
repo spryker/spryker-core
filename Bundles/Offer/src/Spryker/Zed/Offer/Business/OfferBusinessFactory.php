@@ -77,6 +77,9 @@ class OfferBusinessFactory extends AbstractBusinessFactory
         );
     }
 
+    /**
+     * @return \Spryker\Zed\Offer\Business\Model\Hydrator\OfferQuoteExpanderInterface
+     */
     public function createOfferQuoteExpander(): OfferQuoteExpanderInterface
     {
         return new OfferQuoteExpander(

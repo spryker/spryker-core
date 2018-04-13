@@ -80,11 +80,11 @@ class OfferSavingAmountHydrator implements OfferSavingAmountHydratorInterface
     }
 
     /**
-     * @param $originalPriceQuoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $originalPriceQuoteTransfer
      *
      * @return array
      */
-    protected function getOriginalPriceBySku($originalPriceQuoteTransfer): array
+    protected function getOriginalPriceBySku(QuoteTransfer $originalPriceQuoteTransfer): array
     {
         $skuOriginalPrice = [];
 

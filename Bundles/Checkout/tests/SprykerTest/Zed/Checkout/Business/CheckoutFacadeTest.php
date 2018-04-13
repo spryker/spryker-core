@@ -542,10 +542,6 @@ class CheckoutFacadeTest extends Unit
         $container[SalesDependencyProvider::STORE] = Store::getInstance();
         $container[SalesDependencyProvider::ORDER_EXPANDER_PRE_SAVE_PLUGINS] = [];
 
-        $container[SalesDependencyProvider::PLUGINS_ORDER_PRE_SAVE] = function (Container $container) {
-            return [];
-        };
-
         $container[SalesDependencyProvider::ORDER_ITEM_EXPANDER_PRE_SAVE_PLUGINS] = function (Container $container) {
             return [];
         };

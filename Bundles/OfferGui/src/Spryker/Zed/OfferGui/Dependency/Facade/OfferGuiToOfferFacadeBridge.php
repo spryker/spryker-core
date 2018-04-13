@@ -9,6 +9,7 @@ namespace Spryker\Zed\OfferGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\OfferResponseTransfer;
 use Generated\Shared\Transfer\OfferTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 class OfferGuiToOfferFacadeBridge implements OfferGuiToOfferFacadeInterface
 {
@@ -53,5 +54,16 @@ class OfferGuiToOfferFacadeBridge implements OfferGuiToOfferFacadeInterface
     public function createOffer(OfferTransfer $offerTransfer): OfferResponseTransfer
     {
         return $this->offerFacade->createOffer($offerTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param int $idOffer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function expandQuoteUsingOffer(QuoteTransfer $quoteTransfer, int $idOffer): QuoteTransfer
+    {
+        return $this->offerFacade->expandQuoteUsingOffer($quoteTransfer, $idOffer);
     }
 }
