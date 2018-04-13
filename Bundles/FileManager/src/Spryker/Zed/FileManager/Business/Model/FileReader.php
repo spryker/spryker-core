@@ -12,14 +12,13 @@ use Generated\Shared\Transfer\FileManagerReadResponseTransfer;
 use Generated\Shared\Transfer\FileTransfer;
 use Orm\Zed\FileManager\Persistence\Base\SpyFile;
 use Orm\Zed\FileManager\Persistence\SpyFileInfo;
-use Spryker\Zed\FileManager\Exception\FileInfoNotFoundException;
 
 class FileReader implements FileReaderInterface
 {
     /**
-     * @var \Spryker\Zed\FileManager\Business\Model\FileFinderInterface
+     * @var \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface
      */
-    protected $fileFinder;
+    protected $fileLoader;
 
     /**
      * @var \Spryker\Zed\FileManager\Business\Model\FileContentInterface
@@ -27,12 +26,12 @@ class FileReader implements FileReaderInterface
     protected $fileContent;
 
     /**
-     * @param \Spryker\Zed\FileManager\Business\Model\FileFinderInterface $fileFinder
+     * @param \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface $fileLoader
      * @param \Spryker\Zed\FileManager\Business\Model\FileContentInterface $fileContent
      */
-    public function __construct(FileFinderInterface $fileFinder, FileContentInterface $fileContent)
+    public function __construct(FileLoaderInterface $fileLoader, FileContentInterface $fileContent)
     {
-        $this->fileFinder = $fileFinder;
+        $this->fileLoader = $fileLoader;
         $this->fileContent = $fileContent;
     }
 
@@ -43,7 +42,7 @@ class FileReader implements FileReaderInterface
      */
     public function read($idFileInfo)
     {
-        $fileInfo = $this->fileFinder->getFileInfo($idFileInfo);
+        $fileInfo = $this->fileLoader->getFileInfo($idFileInfo);
 
         if ($fileInfo === null) {
             return new FileManagerReadResponseTransfer();
@@ -55,13 +54,11 @@ class FileReader implements FileReaderInterface
     /**
      * @param int $idFile
      *
-     * @throws \Spryker\Zed\FileManager\Exception\FileInfoNotFoundException
-     *
      * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
      */
     public function readLatestByFileId($idFile)
     {
-        $fileInfo = $this->fileFinder->getLatestFileInfoByFkFile($idFile);
+        $fileInfo = $this->fileLoader->getLatestFileInfoByFkFile($idFile);
 
         if ($fileInfo === null) {
             return new FileManagerReadResponseTransfer();

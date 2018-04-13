@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\FileManager\Business\Model;
 
-interface FileFinderInterface
+interface FileLoaderInterface
 {
     /**
      * @param int $idFile

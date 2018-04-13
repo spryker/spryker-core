@@ -19,7 +19,7 @@ class FileFormDataProvider
     const FK_LOCALE_KEY = 'fkLocale';
 
     /**
-     * @var \Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerBridgeInterface
+     * @var \Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerInterface
      */
     protected $queryContainer;
 
@@ -29,8 +29,8 @@ class FileFormDataProvider
     protected $localeFacade;
 
     /**
-     * @param \Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerBridgeInterface $queryContainer
-     * @param \Spryker\Zed\FileManagerGui\Dependency\Facade\FileManagerGuiToLocaleFacadeBridgeInterface $localeFacade
+     * @param \Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\FileManagerGui\Dependency\Facade\FileManagerGuiToLocaleFacadeInterface $localeFacade
      */
     public function __construct(
         FileManagerGuiToFileManagerQueryContainerInterface $queryContainer,

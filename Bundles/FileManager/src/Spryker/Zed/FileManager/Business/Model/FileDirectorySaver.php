@@ -22,9 +22,9 @@ class FileDirectorySaver implements FileDirectorySaverInterface
     protected $queryContainer;
 
     /**
-     * @var \Spryker\Zed\FileManager\Business\Model\FileFinderInterface
+     * @var \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface
      */
-    protected $fileFinder;
+    protected $fileLoader;
 
     /**
      * @var \Spryker\Zed\FileManager\Business\Model\FileDirectoryLocalizedAttributesSaverInterface
@@ -33,16 +33,16 @@ class FileDirectorySaver implements FileDirectorySaverInterface
 
     /**
      * @param \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\FileManager\Business\Model\FileFinderInterface $fileFinder
+     * @param \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface $fileLoader
      * @param \Spryker\Zed\FileManager\Business\Model\FileDirectoryLocalizedAttributesSaverInterface $attributesSaver
      */
     public function __construct(
         FileManagerQueryContainerInterface $queryContainer,
-        FileFinderInterface $fileFinder,
+        FileLoaderInterface $fileLoader,
         FileDirectoryLocalizedAttributesSaverInterface $attributesSaver
     ) {
         $this->queryContainer = $queryContainer;
-        $this->fileFinder = $fileFinder;
+        $this->fileLoader = $fileLoader;
         $this->attributesSaver = $attributesSaver;
     }
 
@@ -73,7 +73,7 @@ class FileDirectorySaver implements FileDirectorySaverInterface
             return false;
         }
 
-        $file = $this->fileFinder->getFileDirectory($fileDirectoryId);
+        $file = $this->fileLoader->getFileDirectory($fileDirectoryId);
 
         return $file !== null;
     }
@@ -85,7 +85,7 @@ class FileDirectorySaver implements FileDirectorySaverInterface
      */
     protected function update(FileDirectoryTransfer $fileDirectoryTransfer)
     {
-        $fileDirectory = $this->fileFinder->getFileDirectory($fileDirectoryTransfer->getIdFileDirectory());
+        $fileDirectory = $this->fileLoader->getFileDirectory($fileDirectoryTransfer->getIdFileDirectory());
 
         return $this->saveFileDirectory($fileDirectory, $fileDirectoryTransfer);
     }
@@ -119,5 +119,4 @@ class FileDirectorySaver implements FileDirectorySaverInterface
             return $savedRowsCount;
         }, $this->queryContainer->getConnection());
     }
-
 }

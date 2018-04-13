@@ -49,7 +49,7 @@
         </behavior>
     </table>
 
-    <table name="spy_file_directory" idMethod="native">
+    <table name="spy_file_directory" idMethod="native" phpName="SpyFileDirectory">
         <column name="id_file_directory" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_parent_file_directory" required="false" type="INTEGER" default="NULL"/>
         <column name="name" type="VARCHAR" size="255" required="true"/>

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\FileManagerStorage\Dependency\Facade;
 
-class FileManagerStorageToLocaleFacadeBridge implements FileManagerStorageToLocaleFacadeBridgeInterface
+class FileManagerStorageToLocaleFacadeBridge implements FileManagerStorageToLocaleFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Locale\Business\LocaleFacadeInterface

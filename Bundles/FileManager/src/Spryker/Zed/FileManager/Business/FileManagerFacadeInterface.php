@@ -36,7 +36,9 @@ interface FileManagerFacadeInterface
      *
      * @api
      *
-     * {@inheritdoc}
+     * @param \Generated\Shared\Transfer\FileDirectoryTransfer $fileDirectoryTransfer
+     *
+     * @return int
      */
     public function saveDirectory(FileDirectoryTransfer $fileDirectoryTransfer);
 

@@ -9,7 +9,7 @@ namespace Spryker\Zed\FileManager\Business\Model;
 
 use Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface;
 
-class FileFinder implements FileFinderInterface
+class FileLoader implements FileLoaderInterface
 {
     /**
      * @var \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface

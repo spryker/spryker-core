@@ -12,7 +12,7 @@ use Orm\Zed\FileManager\Persistence\SpyFile;
 use Orm\Zed\FileManager\Persistence\SpyFileInfo;
 use Orm\Zed\FileManager\Persistence\SpyFileInfoQuery;
 use Orm\Zed\FileManager\Persistence\SpyFileQuery;
-use Spryker\Zed\FileManager\Business\Model\FileFinder;
+use Spryker\Zed\FileManager\Business\Model\FileLoader;
 use Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface;
 
 /**
@@ -93,7 +93,7 @@ class FileFinderTest extends Unit
             ->method('queryFileById')
             ->willReturn($spyFileQueryMock);
 
-        $fileFinder = new FileFinder($queryContainerMock);
+        $fileFinder = new FileLoader($queryContainerMock);
         $file = $fileFinder->getFile(1);
         $this->assertEquals('test.txt', $file->getFileName());
         $this->assertEquals(1, $file->getIdFile());
@@ -115,7 +115,7 @@ class FileFinderTest extends Unit
             ->method('queryFileInfoByFkFile')
             ->willReturn($spyFileInfoQueryMock);
 
-        $fileFinder = new FileFinder($queryContainerMock);
+        $fileFinder = new FileLoader($queryContainerMock);
         $fileInfo = $fileFinder->getLatestFileInfoByFkFile(1);
         $this->assertEquals('txt', $fileInfo->getFileExtension());
         $this->assertEquals('v. 1', $fileInfo->getVersionName());
@@ -139,7 +139,7 @@ class FileFinderTest extends Unit
             ->method('queryFileInfo')
             ->willReturn($spyFileInfoQueryMock);
 
-        $fileFinder = new FileFinder($queryContainerMock);
+        $fileFinder = new FileLoader($queryContainerMock);
         $fileInfo = $fileFinder->getFileInfo(1);
         $this->assertEquals('txt', $fileInfo->getFileExtension());
         $this->assertEquals('v. 1', $fileInfo->getVersionName());

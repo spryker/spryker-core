@@ -19,20 +19,20 @@ class FileRollback implements FileRollbackInterface
     protected $fileVersion;
 
     /**
-     * @var \Spryker\Zed\FileManager\Business\Model\FileFinderInterface
+     * @var \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface
      */
-    protected $fileFinder;
+    protected $fileLoader;
 
     /**
      * FileSaver constructor.
      *
-     * @param \Spryker\Zed\FileManager\Business\Model\FileFinderInterface $fileFinder
+     * @param \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface $fileLoader
      * @param \Spryker\Zed\FileManager\Business\Model\FileVersionInterface $fileVersion
      */
-    public function __construct(FileFinderInterface $fileFinder, FileVersionInterface $fileVersion)
+    public function __construct(FileLoaderInterface $fileLoader, FileVersionInterface $fileVersion)
     {
         $this->fileVersion = $fileVersion;
-        $this->fileFinder = $fileFinder;
+        $this->fileLoader = $fileLoader;
     }
 
     /**
@@ -89,7 +89,7 @@ class FileRollback implements FileRollbackInterface
      */
     protected function getFile($idFile)
     {
-        $file = $this->fileFinder->getFile($idFile);
+        $file = $this->fileLoader->getFile($idFile);
 
         if ($file == null) {
             throw new FileNotFoundException(sprintf('File with id %s not found', $idFile));
@@ -107,7 +107,7 @@ class FileRollback implements FileRollbackInterface
      */
     protected function getFileInfo($idFileInfo)
     {
-        $fileInfo = $this->fileFinder->getFileInfo($idFileInfo);
+        $fileInfo = $this->fileLoader->getFileInfo($idFileInfo);
 
         if ($fileInfo == null) {
             throw new FileInfoNotFoundException(sprintf('Target file info with id %s not found', $idFileInfo));

@@ -18,7 +18,7 @@ abstract class FileInfoTable extends AbstractTable
     const REQUEST_ID_FILE_INFO = 'id-file-info';
 
     /**
-     * @var \Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerBridgeInterface
+     * @var \Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerInterface
      */
     protected $queryContainer;
 
@@ -28,7 +28,7 @@ abstract class FileInfoTable extends AbstractTable
     protected $idFile;
 
     /**
-     * @param \Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerBridgeInterface $queryContainer
+     * @param \Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerInterface $queryContainer
      * @param int $idFile
      */
     public function __construct(FileManagerGuiToFileManagerQueryContainerInterface $queryContainer, int $idFile)
