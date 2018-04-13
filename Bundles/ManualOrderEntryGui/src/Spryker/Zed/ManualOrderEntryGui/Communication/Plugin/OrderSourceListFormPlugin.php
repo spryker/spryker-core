@@ -42,7 +42,6 @@ class OrderSourceListFormPlugin extends AbstractPlugin implements ManualOrderEnt
             ->createOrderSourceFormHandler()
             ->handle($quoteTransfer, $form, $request);
 
-
         return $quoteTransfer;
     }
 

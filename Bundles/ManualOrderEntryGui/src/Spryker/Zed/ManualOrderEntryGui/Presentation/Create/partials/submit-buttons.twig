@@ -1,23 +1,27 @@
 
-{% if form.vars.id == 'voucher' %}
+{% if lastForm.vars.id == 'voucher' %}
     {% set submitBtnValue = 'Redeem' | trans %}
 {% else %}
     {% set submitBtnValue = 'Submit' | trans %}
 {% endif %}
 
-{% if form.vars.id == 'summary' %}
+{% if lastForm.vars.id == 'summary' %}
     {% set nextStepBtnValue = 'Submit Order' | trans ~ quoteType %}
 {% else %}
-    {% set nextStepBtnValue = 'Next Step' | trans %}
+    {% set nextStepBtnValue = 'Next Step ->' | trans %}
 {% endif %}
 
 {%
-    if form.vars.id != 'products'
-      and form.vars.id != 'summary'
+    if lastForm.vars.id != firstForm.vars.id
+%}
+    <input type="submit" class="btn btn-info safe-submit" value="{{ '<- Prev Strep' | trans }}" name="{{ prevStepName }}" />
+{% endif %}
+
+{%
+    if lastForm.vars.id != 'products'
+      and lastForm.vars.id != 'summary'
 %}
     <input type="submit" class="btn btn-primary safe-submit" value="{{ submitBtnValue }}" />
 {% endif %}
 
-<input type="submit" class="btn btn-primary safe-submit" value="{{ nextStepBtnValue }}" name="{{ nextStepName }}" />
-
-
+<input type="submit" class="btn btn-info safe-submit" value="{{ nextStepBtnValue }}" name="{{ nextStepName }}" />

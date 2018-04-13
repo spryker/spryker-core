@@ -84,6 +84,7 @@ class CreateController extends AbstractController
 
         return $this->viewResponse([
             'forms' => $formsView,
+            'prevStepName' => $this->getFactory()->getConfig()->getPrevStepName(),
             'nextStepName' => $this->getFactory()->getConfig()->getNextStepName(),
             'quoteTransfer' => $quoteTransfer,
             'params' => $request->query->all(),
@@ -239,7 +240,7 @@ class CreateController extends AbstractController
     {
         $quoteTransfer = new QuoteTransfer();
 
-        foreach ($this->getFactory()->createQuoteExpanderPlugins() as $quoteExpanderPlugin) {
+        foreach ($this->getFactory()->getQuoteExpanderPlugins() as $quoteExpanderPlugin) {
             $quoteTransfer = $quoteExpanderPlugin->expand($quoteTransfer, $request);
         }
 

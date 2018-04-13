@@ -39,7 +39,7 @@
 
                 {% endfor %}
 
-                {% include '@ManualOrderEntryGui/create/partials/submit-buttons.twig' with {'form': forms|last, 'nextStepName': nextStepName, 'quoteType': quoteType} %}
+                {% include '@ManualOrderEntryGui/create/partials/submit-buttons.twig' with {'firstForm': forms|first, 'lastForm': forms|last} %}
 
             {{ form_end(forms[0]) }}
             {% endif %}

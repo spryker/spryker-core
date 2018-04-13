@@ -16,13 +16,20 @@ class StepEngine
     /**
      * @var string
      */
+    protected $prevStepName;
+
+    /**
+     * @var string
+     */
     protected $nextStepName;
 
     /**
+     * @param string $prevStepName
      * @param string $nextStepName
      */
-    public function __construct($nextStepName)
+    public function __construct($prevStepName, $nextStepName)
     {
+        $this->prevStepName = $prevStepName;
         $this->nextStepName = $nextStepName;
     }
 
@@ -68,6 +75,10 @@ class StepEngine
 
         $filteredPlugins = $this->augmentFilteredPlugins($formPlugins, $filteredPlugins, $skippedPlugins);
 
+        if ($this->isShowPrev($request) && count($filteredPlugins) > 1) {
+            array_pop($filteredPlugins);
+        }
+
         return $filteredPlugins;
     }
 
@@ -107,6 +118,16 @@ class StepEngine
     protected function isShowNext(Request $request): bool
     {
         return $request->request->get($this->nextStepName) !== null;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return bool
+     */
+    protected function isShowPrev(Request $request): bool
+    {
+        return $request->request->get($this->prevStepName) !== null;
     }
 
     /**
@@ -156,7 +177,7 @@ class StepEngine
             foreach ($formPlugins as $formPlugin) {
                 $isSkipped = false;
 
-                foreach($skippedPlugins as $skippedPlugin) {
+                foreach ($skippedPlugins as $skippedPlugin) {
                     if ($formPlugin->getName() == $skippedPlugin->getName()) {
                         $isSkipped = true;
                         break;

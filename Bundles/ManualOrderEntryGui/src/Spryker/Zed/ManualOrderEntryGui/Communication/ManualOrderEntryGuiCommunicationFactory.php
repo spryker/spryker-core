@@ -215,7 +215,10 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
      */
     public function createStepEngine(): StepEngine
     {
-        return new StepEngine($this->getConfig()->getNextStepName());
+        return new StepEngine(
+            $this->getConfig()->getPrevStepName(),
+            $this->getConfig()->getNextStepName()
+        );
     }
 
     /**
@@ -525,7 +528,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     /**
      * @return \Spryker\Zed\ManualOrderEntryGui\Dependency\Plugin\QuoteExpanderPluginInterface[]
      */
-    public function createQuoteExpanderPlugins(): array
+    public function getQuoteExpanderPlugins(): array
     {
         return $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::PLUGINS_QUOTE_EXPANDER);
     }
