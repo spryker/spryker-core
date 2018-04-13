@@ -39,6 +39,7 @@ class CopyController extends AbstractController
         $offerTransfer->setCustomerReference(null);
         $offerTransfer->setCustomer(new CustomerTransfer());
 
+        //TODO: Use UtilEncoding
         $offerJson = \json_encode($offerTransfer->toArray());
         $offerKey = md5($offerJson);
 

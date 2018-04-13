@@ -41,6 +41,7 @@ class CreateController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var \Generated\Shared\Transfer\OfferTransfer $offerTransfer */
             $offerTransfer = $form->getData();
+            //TODO: move to business model
             $quoteTransfer = $offerTransfer->getQuote();
 
             //remove items

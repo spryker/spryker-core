@@ -86,7 +86,7 @@ class EditController extends AbstractController
             $offerTransfer->setQuote($quoteTransfer);
 
             //refresh form after calculations
-            $form = $this->getFactory()->getOfferForm($offerTransfer);
+            $form = $this->getFactory()->getOfferForm($offerTransfer, $request);
             //save offer and a quote
 
             if ($isSubmitPersist) {

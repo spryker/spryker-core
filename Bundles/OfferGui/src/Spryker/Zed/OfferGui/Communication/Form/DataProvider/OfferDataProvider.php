@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\CustomerCollectionTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OfferTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -86,7 +87,7 @@ class OfferDataProvider
         }
 
         if (!$offerTransfer->getQuote()->getCustomer()) {
-            $offerTransfer->getQuote()->setCustomer($offerTransfer->getCustomer());
+            $offerTransfer->getQuote()->setCustomer($offerTransfer->getCustomer() ?? new CustomerTransfer());
         }
 
         if ($this->request->query->has(EditOfferType::FIELD_CUSTOMER_REFERENCE)) {
