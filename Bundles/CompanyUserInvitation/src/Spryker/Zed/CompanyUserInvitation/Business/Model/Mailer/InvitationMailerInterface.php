@@ -7,16 +7,16 @@
 
 namespace Spryker\Zed\CompanyUserInvitation\Business\Model\Mailer;
 
-use Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationTransfer;
 
 interface InvitationMailerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer $companyUserInvitationCollectionTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $companyUserInvitationTransfer
      *
      * @return void
      */
-    public function mailInvitations(
-        CompanyUserInvitationCollectionTransfer $companyUserInvitationCollectionTransfer
+    public function mailInvitation(
+        CompanyUserInvitationTransfer $companyUserInvitationTransfer
     ): void;
 }

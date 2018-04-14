@@ -51,8 +51,8 @@ class CompanyUserInvitationStatusInstaller implements CompanyUserInvitationStatu
     {
         foreach ($this->config->getCompanyUserInvitationStatusKeys() as $statusKey) {
             if (!$this->repository->findCompanyUserInvitationStatusByStatusKey($statusKey)) {
-                $companyUserInvitationStatusTransfer = new CompanyUserInvitationStatusTransfer();
-                $companyUserInvitationStatusTransfer->setStatusKey($statusKey);
+                $companyUserInvitationStatusTransfer = (new CompanyUserInvitationStatusTransfer())
+                    ->setStatusKey($statusKey);
                 $this->entityManager->saveCompanyUserInvitationStatus($companyUserInvitationStatusTransfer);
             }
         }

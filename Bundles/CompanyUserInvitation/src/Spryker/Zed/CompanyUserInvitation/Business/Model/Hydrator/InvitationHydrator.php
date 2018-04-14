@@ -115,8 +115,10 @@ class InvitationHydrator implements InvitationHydratorInterface
     protected function populateBusinessUnitCache(CompanyUserInvitationTransfer $invitationTransfer)
     {
         $companyUserTransfer = $this->companyUserFacade->getCompanyUserById($invitationTransfer->getFkCompanyUser());
-        $companyBusinessUnitCriteriaFilter = new CompanyBusinessUnitCriteriaFilterTransfer();
-        $companyBusinessUnitCriteriaFilter->setIdCompany($companyUserTransfer->getFkCompany());
+
+        $companyBusinessUnitCriteriaFilter = (new CompanyBusinessUnitCriteriaFilterTransfer())
+            ->setIdCompany($companyUserTransfer->getFkCompany());
+
         $companyBusinessUnitCollectionTransfer = $this->companyBusinessUnitFacade->getCompanyBusinessUnitCollection(
             $companyBusinessUnitCriteriaFilter
         );

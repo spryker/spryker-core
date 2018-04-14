@@ -10,9 +10,9 @@ namespace Spryker\Zed\CompanyUserInvitation\Persistence;
 use Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationStatusTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
-use Spryker\Shared\CompanyUserInvitation\CompanyUserInvitationConstants;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
@@ -26,38 +26,46 @@ class CompanyUserInvitationRepository extends AbstractRepository implements Comp
      *
      * @return \Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer
      */
-    public function getCompanyUserInvitationCollection(CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer): CompanyUserInvitationCollectionTransfer
-    {
+    public function getCompanyUserInvitationCollection(
+        CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
+    ): CompanyUserInvitationCollectionTransfer {
         $queryCompanyUserInvitation = $this->getFactory()
             ->createCompanyUserInvitationQuery()
             ->joinWithSpyCompanyBusinessUnit()
-            ->joinWithSpyCompanyUser()
-            ->innerJoinWithSpyCompanyUserInvitationStatus()
-            ->useSpyCompanyUserInvitationStatusQuery()
-                ->filterByStatusKey(CompanyUserInvitationConstants::INVITATION_STATUS_DELETED, Criteria::NOT_EQUAL)
-            ->endUse();
+            ->joinWithSpyCompanyUserInvitationStatus();
 
-        if ($criteriaFilterTransfer->getIdCompanyUserInvitation() !== null) {
-            $queryCompanyUserInvitation->filterByIdCompanyUserInvitation($criteriaFilterTransfer->getIdCompanyUserInvitation());
-        }
-
-        if ($criteriaFilterTransfer->getFkCompanyUser() !== null) {
+        if ($criteriaFilterTransfer->getFkCompanyUser()) {
             $queryCompanyUserInvitation->filterByFkCompanyUser($criteriaFilterTransfer->getFkCompanyUser());
         }
 
-        if ($criteriaFilterTransfer->getHash() !== null) {
-            $queryCompanyUserInvitation->filterByHash($criteriaFilterTransfer->getHash());
-        }
-
-        if ($criteriaFilterTransfer->getFkCompanyUserInvitationStatus() !== null) {
+        if ($criteriaFilterTransfer->getCompanyUserInvitationStatusKeyIn()) {
             $queryCompanyUserInvitation
                 ->useSpyCompanyUserInvitationStatusQuery()
-                    ->filterByStatusKey($criteriaFilterTransfer->getFkCompanyUserInvitationStatus())
+                ->filterByStatusKey(
+                    $criteriaFilterTransfer->getCompanyUserInvitationStatusKeyIn(),
+                    Criteria::IN
+                )
                 ->endUse();
         }
 
-        $companyUserInvitationCollection = $this->buildQueryFromCriteria($queryCompanyUserInvitation, $criteriaFilterTransfer->getFilter());
-        $companyUserInvitationCollection = $this->getPaginatedCollection($companyUserInvitationCollection, $criteriaFilterTransfer->getPagination());
+        if ($criteriaFilterTransfer->getCompanyUserInvitationStatusKeyNotIn()) {
+            $queryCompanyUserInvitation
+                ->useSpyCompanyUserInvitationStatusQuery()
+                ->filterByStatusKey(
+                    $criteriaFilterTransfer->getCompanyUserInvitationStatusKeyNotIn(),
+                    Criteria::NOT_IN
+                )
+                ->endUse();
+        }
+
+        $companyUserInvitationCollection = $this->buildQueryFromCriteria(
+            $queryCompanyUserInvitation,
+            $criteriaFilterTransfer->getFilter()
+        );
+        $companyUserInvitationCollection = $this->getPaginatedCollection(
+            $companyUserInvitationCollection,
+            $criteriaFilterTransfer->getPagination()
+        );
 
         $companyUserInvitationCollectionTransfer = $this->getFactory()
             ->createCompanyUserInvitationMapper()
@@ -85,6 +93,54 @@ class CompanyUserInvitationRepository extends AbstractRepository implements Comp
             return $this->getFactory()
                 ->createCompanyUserInvitationStatusMapper()
                 ->mapEntityTransferToCompanyUserInvitationStatusTransfer($entityTransfer);
+        }
+
+        return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $companyUserInvitationTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationTransfer|null
+     */
+    public function findCompanyUserInvitationById(
+        CompanyUserInvitationTransfer $companyUserInvitationTransfer
+    ): ?CompanyUserInvitationTransfer {
+        $queryCompanyUserInvitation = $this->getFactory()
+            ->createCompanyUserInvitationQuery()
+            ->filterByIdCompanyUserInvitation($companyUserInvitationTransfer->getIdCompanyUserInvitation());
+
+        $entityTransfer = $this->buildQueryFromCriteria($queryCompanyUserInvitation)->findOne();
+
+        if ($entityTransfer !== null) {
+            return $this->getFactory()
+                ->createCompanyUserInvitationMapper()
+                ->mapEntityTransferToCompanyUserInvitationTransfer($entityTransfer);
+        }
+
+        return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $companyUserInvitationTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationTransfer|null
+     */
+    public function findCompanyUserInvitationByHash(
+        CompanyUserInvitationTransfer $companyUserInvitationTransfer
+    ): ?CompanyUserInvitationTransfer {
+        $queryCompanyUserInvitation = $this->getFactory()
+            ->createCompanyUserInvitationQuery()
+            ->joinWithSpyCompanyBusinessUnit()
+            ->joinWithSpyCompanyUserInvitationStatus()
+            ->filterByHash($companyUserInvitationTransfer->getHash());
+
+        $entityTransfer = $this->buildQueryFromCriteria($queryCompanyUserInvitation)->findOne();
+
+        if ($entityTransfer !== null) {
+            return $this->getFactory()
+                ->createCompanyUserInvitationMapper()
+                ->mapEntityTransferToCompanyUserInvitationTransfer($entityTransfer);
         }
 
         return null;

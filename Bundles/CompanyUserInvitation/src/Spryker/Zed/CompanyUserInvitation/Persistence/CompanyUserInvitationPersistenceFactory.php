@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CompanyUserInvitation\Persistence;
 
-use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
 use Orm\Zed\CompanyUserInvitation\Persistence\SpyCompanyUserInvitationQuery;
 use Orm\Zed\CompanyUserInvitation\Persistence\SpyCompanyUserInvitationStatusQuery;
 use Spryker\Zed\CompanyUserInvitation\Persistence\Mapper\CompanyUserInvitationMapper;
@@ -35,14 +34,6 @@ class CompanyUserInvitationPersistenceFactory extends AbstractPersistenceFactory
     public function createCompanyUserInvitationStatusQuery()
     {
         return SpyCompanyUserInvitationStatusQuery::create();
-    }
-
-    /**
-     * @return \Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery
-     */
-    public function createCompanyBusinessUnitQuery()
-    {
-        return SpyCompanyBusinessUnitQuery::create();
     }
 
     /**

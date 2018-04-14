@@ -8,16 +8,16 @@
 namespace Spryker\Zed\CompanyUserInvitation\Business\Model\Importer;
 
 use Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer;
-use Generated\Shared\Transfer\CompanyUserInvitationImportReportTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationImportResultTransfer;
 
 interface InvitationImporterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer $companyUserInvitationCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserInvitationImportReportTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationImportResultTransfer
      */
-    public function importInvitations(
+    public function importCompanyUserInvitations(
         CompanyUserInvitationCollectionTransfer $companyUserInvitationCollectionTransfer
-    ): CompanyUserInvitationImportReportTransfer;
+    ): CompanyUserInvitationImportResultTransfer;
 }

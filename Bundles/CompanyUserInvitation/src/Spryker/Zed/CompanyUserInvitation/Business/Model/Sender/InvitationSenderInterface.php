@@ -7,17 +7,28 @@
 
 namespace Spryker\Zed\CompanyUserInvitation\Business\Model\Sender;
 
-use Generated\Shared\Transfer\CompanyUserInvitationAffectedReportTransfer;
-use Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationSendBatchResultTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationSendResultTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 
 interface InvitationSenderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $companyUserInvitationTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserInvitationAffectedReportTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationSendResultTransfer
      */
-    public function sendInvitations(
-        CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
-    ): CompanyUserInvitationAffectedReportTransfer;
+    public function sendCompanyUserInvitation(
+        CompanyUserInvitationTransfer $companyUserInvitationTransfer
+    ): CompanyUserInvitationSendResultTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationSendBatchResultTransfer
+     */
+    public function sendCompanyUserInvitations(
+        CompanyUserTransfer $companyUserTransfer
+    ): CompanyUserInvitationSendBatchResultTransfer;
 }

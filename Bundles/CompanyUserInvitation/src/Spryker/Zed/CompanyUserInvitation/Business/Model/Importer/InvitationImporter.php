@@ -8,7 +8,7 @@
 namespace Spryker\Zed\CompanyUserInvitation\Business\Model\Importer;
 
 use Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer;
-use Generated\Shared\Transfer\CompanyUserInvitationImportReportTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationImportResultTransfer;
 use Spryker\Zed\CompanyUserInvitation\Business\Model\Hydrator\InvitationHydratorInterface;
 use Spryker\Zed\CompanyUserInvitation\Business\Model\Validator\InvitationValidatorInterface;
 use Spryker\Zed\CompanyUserInvitation\Persistence\CompanyUserInvitationEntityManagerInterface;
@@ -48,22 +48,21 @@ class InvitationImporter implements InvitationImporterInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer $companyUserInvitationCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserInvitationImportReportTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationImportResultTransfer
      */
-    public function importInvitations(
+    public function importCompanyUserInvitations(
         CompanyUserInvitationCollectionTransfer $companyUserInvitationCollectionTransfer
-    ): CompanyUserInvitationImportReportTransfer {
-        $importReportTransfer = new CompanyUserInvitationImportReportTransfer();
+    ): CompanyUserInvitationImportResultTransfer {
+        $companyUserInvitationImportResultTransfer = new CompanyUserInvitationImportResultTransfer();
         foreach ($companyUserInvitationCollectionTransfer->getInvitations() as $invitationTransfer) {
             if ($this->invitationValidator->isValidInvitation($invitationTransfer)) {
                 $invitationTransfer = $this->invitationHydrator->hydrate($invitationTransfer);
                 $this->entityManager->saveCompanyUserInvitation($invitationTransfer);
                 continue;
             }
-            $invitationTransfer->setImportError($this->invitationValidator->getLastErrorMessage());
-            $importReportTransfer->addNotImportedInvitation($invitationTransfer);
+            $companyUserInvitationImportResultTransfer->addError($this->invitationValidator->getLastErrorMessage());
         }
 
-        return $importReportTransfer;
+        return $companyUserInvitationImportResultTransfer;
     }
 }

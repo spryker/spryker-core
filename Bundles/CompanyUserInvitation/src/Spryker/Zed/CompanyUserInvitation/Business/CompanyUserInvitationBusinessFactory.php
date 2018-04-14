@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CompanyUserInvitation\Business;
 
-use Spryker\Zed\CompanyUserInvitation\Business\Model\Deleter\InvitationDeleter;
 use Spryker\Zed\CompanyUserInvitation\Business\Model\Hydrator\InvitationHydrator;
 use Spryker\Zed\CompanyUserInvitation\Business\Model\Importer\InvitationImporter;
 use Spryker\Zed\CompanyUserInvitation\Business\Model\Installer\CompanyUserInvitationStatusInstaller;
@@ -27,6 +26,16 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 class CompanyUserInvitationBusinessFactory extends AbstractBusinessFactory
 {
     /**
+     * @return \Spryker\Zed\CompanyUserInvitation\Business\Model\Reader\InvitationReaderInterface
+     */
+    public function createInvitationReader()
+    {
+        return new InvitationReader(
+            $this->getRepository()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\CompanyUserInvitation\Business\Model\Importer\InvitationImporterInterface
      */
     public function createInvitationImporter()
@@ -35,61 +44,6 @@ class CompanyUserInvitationBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->createInvitationValidator(),
             $this->createInvitationHydrator()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\CompanyUserInvitation\Business\Model\Sender\InvitationSenderInterface
-     */
-    public function createInvitationSender()
-    {
-        return new InvitationSender(
-            $this->createInvitationReader(),
-            $this->createInvitationUpdater(),
-            $this->createInvitationMailer()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\CompanyUserInvitation\Business\Model\Mailer\InvitationMailerInterface
-     */
-    public function createInvitationMailer()
-    {
-        return new InvitationMailer(
-            $this->getConfig(),
-            $this->getMailFacade()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\CompanyUserInvitation\Business\Model\Updater\InvitationUpdaterInterface
-     */
-    public function createInvitationUpdater()
-    {
-        return new InvitationUpdater(
-            $this->getRepository(),
-            $this->getEntityManager()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\CompanyUserInvitation\Business\Model\Deleter\InvitationDeleterInterface
-     */
-    public function createInvitationDeleter()
-    {
-        return new InvitationDeleter(
-            $this->createInvitationReader(),
-            $this->createInvitationUpdater()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\CompanyUserInvitation\Business\Model\Reader\InvitationReaderInterface
-     */
-    public function createInvitationReader()
-    {
-        return new InvitationReader(
-            $this->getRepository()
         );
     }
 
@@ -115,6 +69,40 @@ class CompanyUserInvitationBusinessFactory extends AbstractBusinessFactory
             $this->getCompanyUserFacade(),
             $this->getCompanyBusinessUnitFacade(),
             $this->getUtilTextService()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUserInvitation\Business\Model\Sender\InvitationSenderInterface
+     */
+    public function createInvitationSender()
+    {
+        return new InvitationSender(
+            $this->createInvitationReader(),
+            $this->createInvitationUpdater(),
+            $this->createInvitationMailer()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUserInvitation\Business\Model\Updater\InvitationUpdaterInterface
+     */
+    public function createInvitationUpdater()
+    {
+        return new InvitationUpdater(
+            $this->getRepository(),
+            $this->getEntityManager()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUserInvitation\Business\Model\Mailer\InvitationMailerInterface
+     */
+    public function createInvitationMailer()
+    {
+        return new InvitationMailer(
+            $this->getConfig(),
+            $this->getMailFacade()
         );
     }
 

@@ -9,6 +9,7 @@ namespace Spryker\Zed\CompanyUserInvitation\Business\Model\Reader;
 
 use Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationTransfer;
 
 interface InvitationReaderInterface
 {
@@ -20,4 +21,22 @@ interface InvitationReaderInterface
     public function getCompanyUserInvitationCollection(
         CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
     ): CompanyUserInvitationCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $companyUserInvitationTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationTransfer|null
+     */
+    public function findCompanyUserInvitationById(
+        CompanyUserInvitationTransfer $companyUserInvitationTransfer
+    ): ?CompanyUserInvitationTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $companyUserInvitationTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationTransfer|null
+     */
+    public function findCompanyUserInvitationByHash(
+        CompanyUserInvitationTransfer $companyUserInvitationTransfer
+    ): ?CompanyUserInvitationTransfer;
 }

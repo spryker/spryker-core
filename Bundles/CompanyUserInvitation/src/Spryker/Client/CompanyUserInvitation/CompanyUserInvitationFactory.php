@@ -14,8 +14,6 @@ use Spryker\Client\Kernel\AbstractFactory;
 class CompanyUserInvitationFactory extends AbstractFactory
 {
     /**
-     * @param string $filePath
-     *
      * @return \Spryker\Client\CompanyUserInvitation\Zed\CompanyUserInvitationStubInterface
      */
     public function createZedCompanyUserInvitationStub(): CompanyUserInvitationStubInterface

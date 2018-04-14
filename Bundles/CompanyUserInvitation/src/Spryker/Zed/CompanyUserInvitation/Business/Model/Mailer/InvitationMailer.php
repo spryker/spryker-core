@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CompanyUserInvitation\Business\Model\Mailer;
 
-use Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationTransfer;
 use Generated\Shared\Transfer\MailTransfer;
 use Spryker\Zed\CompanyUserInvitation\Communication\Plugin\Mail\CompanyUserInvitationMailTypePlugin;
@@ -40,32 +39,19 @@ class InvitationMailer implements InvitationMailerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer $companyUserInvitationCollectionTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $companyUserInvitationTransfer
      *
      * @return void
      */
-    public function mailInvitations(
-        CompanyUserInvitationCollectionTransfer $companyUserInvitationCollectionTransfer
+    public function mailInvitation(
+        CompanyUserInvitationTransfer $companyUserInvitationTransfer
     ): void {
-        foreach ($companyUserInvitationCollectionTransfer->getInvitations() as $companyUserInvitationTransfer) {
-            $mailTransfer = $this->getMailTransfer($companyUserInvitationTransfer);
-            $this->mailFacade->handleMail($mailTransfer);
-        }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $companyUserInvitationTransfer
-     *
-     * @return \Generated\Shared\Transfer\MailTransfer
-     */
-    protected function getMailTransfer(CompanyUserInvitationTransfer $companyUserInvitationTransfer): MailTransfer
-    {
-        $mailTransfer = new MailTransfer();
-        $mailTransfer->setType(CompanyUserInvitationMailTypePlugin::MAIL_TYPE);
-        $mailTransfer->setInvitationLink($this->getInvitationLink($companyUserInvitationTransfer));
-        $mailTransfer->setCompanyUserInvitation($companyUserInvitationTransfer);
-
-        return $mailTransfer;
+        $mailTransfer = (new MailTransfer())
+            ->setType(CompanyUserInvitationMailTypePlugin::MAIL_TYPE)
+            ->setInvitationLink($this->getInvitationLink($companyUserInvitationTransfer))
+            ->setCompanyUserInvitation($companyUserInvitationTransfer);
+        
+        $this->mailFacade->handleMail($mailTransfer);
     }
 
     /**

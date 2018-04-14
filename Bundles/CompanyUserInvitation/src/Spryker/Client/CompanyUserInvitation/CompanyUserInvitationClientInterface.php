@@ -7,58 +7,36 @@
 
 namespace Spryker\Client\CompanyUserInvitation;
 
-use Generated\Shared\Transfer\CompanyUserInvitationAffectedReportTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer;
-use Generated\Shared\Transfer\CompanyUserInvitationImportReportTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationImportResultTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationSendBatchResultTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationSendResultTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusRequestTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusResultTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 
 interface CompanyUserInvitationClientInterface
 {
     /**
      * Specification:
-     * - Imports company user invitations to the persistence
+     * - Imports company user invitations to the persistence.
+     * - Result transfer contains all error messages for not imported invitations.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer $companyUserInvitationCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserInvitationImportReportTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationImportResultTransfer
      */
-    public function importInvitations(
+    public function importCompanyUserInvitations(
         CompanyUserInvitationCollectionTransfer $companyUserInvitationCollectionTransfer
-    ): CompanyUserInvitationImportReportTransfer;
+    ): CompanyUserInvitationImportResultTransfer;
 
     /**
      * Specification:
-     * - Sends all invitations that match the defined criteria
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserInvitationAffectedReportTransfer
-     */
-    public function sendInvitations(
-        CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
-    ): CompanyUserInvitationAffectedReportTransfer;
-
-    /**
-     * Specification:
-     * - Deletes all invitations that match the defined criteria
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserInvitationAffectedReportTransfer
-     */
-    public function deleteInvitations(
-        CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
-    ): CompanyUserInvitationAffectedReportTransfer;
-
-    /**
-     * Specification:
-     * - Retrieves company users invitation collection by company user id.
+     * - Retrieves a company user invitation collection by company user ID and/or company user invitation status key.
      *
      * @api
      *
@@ -69,4 +47,61 @@ interface CompanyUserInvitationClientInterface
     public function getCompanyUserInvitationCollection(
         CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
     ): CompanyUserInvitationCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Sends and invitation
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $companyUserInvitationTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationSendResultTransfer
+     */
+    public function sendCompanyUserInvitation(
+        CompanyUserInvitationTransfer $companyUserInvitationTransfer
+    ): CompanyUserInvitationSendResultTransfer;
+
+    /**
+     * Specification:
+     * - Sends all company user invitations that have not been sent.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationSendBatchResultTransfer
+     */
+    public function sendCompanyUserInvitations(
+        CompanyUserTransfer $companyUserTransfer
+    ): CompanyUserInvitationSendBatchResultTransfer;
+
+    /**
+     * Specification:
+     * - Updates the status of a company user invitation.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusRequestTransfer $companyUserInvitationUpdateStatusRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusResultTransfer|null
+     */
+    public function updateCompanyUserInvitationStatus(
+        CompanyUserInvitationUpdateStatusRequestTransfer $companyUserInvitationUpdateStatusRequestTransfer
+    ): CompanyUserInvitationUpdateStatusResultTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves a company user invitation by hash.
+     * - Returns NULL if hash is not found.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $companyUserInvitationTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationTransfer|null
+     */
+    public function findCompanyUserInvitationByHash(
+        CompanyUserInvitationTransfer $companyUserInvitationTransfer
+    ): ?CompanyUserInvitationTransfer;
 }

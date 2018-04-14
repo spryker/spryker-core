@@ -7,39 +7,26 @@
 
 namespace Spryker\Client\CompanyUserInvitation\Zed;
 
-use Generated\Shared\Transfer\CompanyUserInvitationAffectedReportTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer;
-use Generated\Shared\Transfer\CompanyUserInvitationImportReportTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationImportResultTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationSendBatchResultTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationSendResultTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusRequestTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusResultTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 
 interface CompanyUserInvitationStubInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer $companyUserInvitationCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserInvitationImportReportTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationImportResultTransfer
      */
-    public function importInvitations(
+    public function importCompanyUserInvitations(
         CompanyUserInvitationCollectionTransfer $companyUserInvitationCollectionTransfer
-    ): CompanyUserInvitationImportReportTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserInvitationAffectedReportTransfer
-     */
-    public function sendInvitations(
-        CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
-    ): CompanyUserInvitationAffectedReportTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserInvitationAffectedReportTransfer
-     */
-    public function deleteInvitations(
-        CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
-    ): CompanyUserInvitationAffectedReportTransfer;
+    ): CompanyUserInvitationImportResultTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
@@ -49,4 +36,40 @@ interface CompanyUserInvitationStubInterface
     public function getCompanyUserInvitationCollection(
         CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
     ): CompanyUserInvitationCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $companyUserInvitationTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationSendResultTransfer
+     */
+    public function sendCompanyUserInvitation(
+        CompanyUserInvitationTransfer $companyUserInvitationTransfer
+    ): CompanyUserInvitationSendResultTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationSendBatchResultTransfer
+     */
+    public function sendCompanyUserInvitations(
+        CompanyUserTransfer $companyUserTransfer
+    ): CompanyUserInvitationSendBatchResultTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusRequestTransfer $companyUserInvitationUpdateStatusRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusResultTransfer
+     */
+    public function updateCompanyUserInvitationStatus(
+        CompanyUserInvitationUpdateStatusRequestTransfer $companyUserInvitationUpdateStatusRequestTransfer
+    ): CompanyUserInvitationUpdateStatusResultTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $companyUserInvitationTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationTransfer|null
+     */
+    public function findCompanyUserInvitationByHash(
+        CompanyUserInvitationTransfer $companyUserInvitationTransfer
+    ): ?CompanyUserInvitationTransfer;
 }

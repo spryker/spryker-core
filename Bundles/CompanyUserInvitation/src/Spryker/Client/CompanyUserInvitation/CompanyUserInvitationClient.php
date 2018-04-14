@@ -7,10 +7,15 @@
 
 namespace Spryker\Client\CompanyUserInvitation;
 
-use Generated\Shared\Transfer\CompanyUserInvitationAffectedReportTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer;
-use Generated\Shared\Transfer\CompanyUserInvitationImportReportTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationImportResultTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationSendBatchResultTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationSendResultTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusRequestTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusResultTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -25,48 +30,14 @@ class CompanyUserInvitationClient extends AbstractClient implements CompanyUserI
      *
      * @param \Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer $companyUserInvitationCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserInvitationImportReportTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationImportResultTransfer
      */
-    public function importInvitations(
+    public function importCompanyUserInvitations(
         CompanyUserInvitationCollectionTransfer $companyUserInvitationCollectionTransfer
-    ): CompanyUserInvitationImportReportTransfer {
+    ): CompanyUserInvitationImportResultTransfer {
         return $this->getFactory()
             ->createZedCompanyUserInvitationStub()
-            ->importInvitations($companyUserInvitationCollectionTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserInvitationAffectedReportTransfer
-     */
-    public function sendInvitations(
-        CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
-    ): CompanyUserInvitationAffectedReportTransfer {
-        return $this->getFactory()
-            ->createZedCompanyUserInvitationStub()
-            ->sendInvitations($criteriaFilterTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserInvitationAffectedReportTransfer
-     */
-    public function deleteInvitations(
-        CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
-    ): CompanyUserInvitationAffectedReportTransfer {
-        return $this->getFactory()
-            ->createZedCompanyUserInvitationStub()
-            ->deleteInvitations($criteriaFilterTransfer);
+            ->importCompanyUserInvitations($companyUserInvitationCollectionTransfer);
     }
 
     /**
@@ -84,5 +55,74 @@ class CompanyUserInvitationClient extends AbstractClient implements CompanyUserI
         return $this->getFactory()
             ->createZedCompanyUserInvitationStub()
             ->getCompanyUserInvitationCollection($criteriaFilterTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $companyUserInvitationTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationSendResultTransfer
+     */
+    public function sendCompanyUserInvitation(
+        CompanyUserInvitationTransfer $companyUserInvitationTransfer
+    ): CompanyUserInvitationSendResultTransfer {
+        return $this->getFactory()
+            ->createZedCompanyUserInvitationStub()
+            ->sendCompanyUserInvitation($companyUserInvitationTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationSendBatchResultTransfer
+     */
+    public function sendCompanyUserInvitations(
+        CompanyUserTransfer $companyUserTransfer
+    ): CompanyUserInvitationSendBatchResultTransfer {
+        return $this->getFactory()
+            ->createZedCompanyUserInvitationStub()
+            ->sendCompanyUserInvitations($companyUserTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusRequestTransfer $companyUserInvitationUpdateStatusRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusResultTransfer|null
+     */
+    public function updateCompanyUserInvitationStatus(
+        CompanyUserInvitationUpdateStatusRequestTransfer $companyUserInvitationUpdateStatusRequestTransfer
+    ): CompanyUserInvitationUpdateStatusResultTransfer {
+        return $this->getFactory()
+            ->createZedCompanyUserInvitationStub()
+            ->updateCompanyUserInvitationStatus($companyUserInvitationUpdateStatusRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $companyUserInvitationTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationTransfer|null
+     */
+    public function findCompanyUserInvitationByHash(
+        CompanyUserInvitationTransfer $companyUserInvitationTransfer
+    ): ?CompanyUserInvitationTransfer {
+        return $this->getFactory()
+            ->createZedCompanyUserInvitationStub()
+            ->findCompanyUserInvitationByHash($companyUserInvitationTransfer);
     }
 }

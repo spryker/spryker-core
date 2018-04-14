@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\CompanyUserInvitation\Business\Model\Updater;
 
-use Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer;
+use Exception;
+use Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusRequestTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusResultTransfer;
 use Spryker\Zed\CompanyUserInvitation\Persistence\CompanyUserInvitationEntityManagerInterface;
 use Spryker\Zed\CompanyUserInvitation\Persistence\CompanyUserInvitationRepositoryInterface;
 
@@ -41,21 +43,28 @@ class InvitationUpdater implements InvitationUpdaterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer $companyUserInvitationCollectionTransfer
-     * @param string $status
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusRequestTransfer $companyUserInvitationUpdateStatusRequestTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusResultTransfer
      */
     public function updateStatus(
-        CompanyUserInvitationCollectionTransfer $companyUserInvitationCollectionTransfer,
-        string $status
-    ): void {
-        foreach ($companyUserInvitationCollectionTransfer->getInvitations() as $companyUserInvitationTransfer) {
-            $companyUserInvitationTransfer->setFkCompanyUserInvitationStatus(
-                $this->getIdCompanyUserInvitationStatus($status)
+        CompanyUserInvitationUpdateStatusRequestTransfer $companyUserInvitationUpdateStatusRequestTransfer
+    ): CompanyUserInvitationUpdateStatusResultTransfer {
+        $companyUserInvitationUpdateStatusResultTransfer = new CompanyUserInvitationUpdateStatusResultTransfer();
+        try {
+            $idCompanyUserInvitationStatus = $this->getIdCompanyUserInvitationStatus(
+                $companyUserInvitationUpdateStatusRequestTransfer->getStatusKey()
             );
+            $companyUserInvitationTransfer = $companyUserInvitationUpdateStatusRequestTransfer->getInvitation();
+            $companyUserInvitationTransfer->setFkCompanyUserInvitationStatus($idCompanyUserInvitationStatus);
+
             $this->entityManager->saveCompanyUserInvitation($companyUserInvitationTransfer);
+            $companyUserInvitationUpdateStatusResultTransfer->setSuccess(true);
+        } catch (Exception $e) {
+            $companyUserInvitationUpdateStatusResultTransfer->setSuccess(false);
         }
+
+        return $companyUserInvitationUpdateStatusResultTransfer;
     }
 
     /**

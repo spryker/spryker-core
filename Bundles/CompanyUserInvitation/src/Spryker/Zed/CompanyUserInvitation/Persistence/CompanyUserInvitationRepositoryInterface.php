@@ -10,6 +10,7 @@ namespace Spryker\Zed\CompanyUserInvitation\Persistence;
 use Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationStatusTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationTransfer;
 
 interface CompanyUserInvitationRepositoryInterface
 {
@@ -30,4 +31,22 @@ interface CompanyUserInvitationRepositoryInterface
     public function findCompanyUserInvitationStatusByStatusKey(
         string $statusKey
     ): ?CompanyUserInvitationStatusTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $companyUserInvitationTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationTransfer|null
+     */
+    public function findCompanyUserInvitationById(
+        CompanyUserInvitationTransfer $companyUserInvitationTransfer
+    ): ?CompanyUserInvitationTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $companyUserInvitationTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationTransfer|null
+     */
+    public function findCompanyUserInvitationByHash(
+        CompanyUserInvitationTransfer $companyUserInvitationTransfer
+    ): ?CompanyUserInvitationTransfer;
 }

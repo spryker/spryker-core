@@ -7,10 +7,15 @@
 
 namespace Spryker\Zed\CompanyUserInvitation\Business;
 
-use Generated\Shared\Transfer\CompanyUserInvitationAffectedReportTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer;
-use Generated\Shared\Transfer\CompanyUserInvitationImportReportTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationImportResultTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationSendBatchResultTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationSendResultTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusRequestTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusResultTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -25,48 +30,14 @@ class CompanyUserInvitationFacade extends AbstractFacade implements CompanyUserI
      *
      * @param \Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer $companyUserInvitationCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserInvitationImportReportTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationImportResultTransfer
      */
-    public function importInvitations(
+    public function importCompanyUserInvitations(
         CompanyUserInvitationCollectionTransfer $companyUserInvitationCollectionTransfer
-    ): CompanyUserInvitationImportReportTransfer {
+    ): CompanyUserInvitationImportResultTransfer {
         return $this->getFactory()
             ->createInvitationImporter()
-            ->importInvitations($companyUserInvitationCollectionTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserInvitationAffectedReportTransfer
-     */
-    public function sendInvitations(
-        CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
-    ): CompanyUserInvitationAffectedReportTransfer {
-        return $this->getFactory()
-            ->createInvitationSender()
-            ->sendInvitations($criteriaFilterTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserInvitationAffectedReportTransfer
-     */
-    public function deleteInvitations(
-        CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
-    ): CompanyUserInvitationAffectedReportTransfer {
-        return $this->getFactory()
-            ->createInvitationDeleter()
-            ->deleteInvitations($criteriaFilterTransfer);
+            ->importCompanyUserInvitations($companyUserInvitationCollectionTransfer);
     }
 
     /**
@@ -87,6 +58,76 @@ class CompanyUserInvitationFacade extends AbstractFacade implements CompanyUserI
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $companyUserInvitationTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationSendResultTransfer
+     */
+    public function sendCompanyUserInvitation(
+        CompanyUserInvitationTransfer $companyUserInvitationTransfer
+    ): CompanyUserInvitationSendResultTransfer {
+        return $this->getFactory()
+            ->createInvitationSender()
+            ->sendCompanyUserInvitation($companyUserInvitationTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationSendBatchResultTransfer
+     */
+    public function sendCompanyUserInvitations(
+        CompanyUserTransfer $companyUserTransfer
+    ): CompanyUserInvitationSendBatchResultTransfer {
+        return $this->getFactory()
+            ->createInvitationSender()
+            ->sendCompanyUserInvitations($companyUserTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusRequestTransfer $companyUserInvitationUpdateStatusRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusResultTransfer|null
+     */
+    public function updateCompanyUserInvitationStatus(
+        CompanyUserInvitationUpdateStatusRequestTransfer $companyUserInvitationUpdateStatusRequestTransfer
+    ): CompanyUserInvitationUpdateStatusResultTransfer {
+        return $this->getFactory()
+            ->createInvitationUpdater()
+            ->updateStatus($companyUserInvitationUpdateStatusRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $companyUserInvitationTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationTransfer|null
+     */
+    public function findCompanyUserInvitationByHash(
+        CompanyUserInvitationTransfer $companyUserInvitationTransfer
+    ): ?CompanyUserInvitationTransfer {
+        return $this->getFactory()
+            ->createInvitationReader()
+            ->findCompanyUserInvitationByHash($companyUserInvitationTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return void

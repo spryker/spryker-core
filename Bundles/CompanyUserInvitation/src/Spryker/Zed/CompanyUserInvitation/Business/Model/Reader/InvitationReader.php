@@ -9,6 +9,7 @@ namespace Spryker\Zed\CompanyUserInvitation\Business\Model\Reader;
 
 use Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationTransfer;
 use Spryker\Zed\CompanyUserInvitation\Persistence\CompanyUserInvitationRepositoryInterface;
 
 class InvitationReader implements InvitationReaderInterface
@@ -19,8 +20,6 @@ class InvitationReader implements InvitationReaderInterface
     protected $repository;
 
     /**
-     * InvitationReader constructor.
-     *
      * @param \Spryker\Zed\CompanyUserInvitation\Persistence\CompanyUserInvitationRepositoryInterface $repository
      */
     public function __construct(
@@ -38,5 +37,27 @@ class InvitationReader implements InvitationReaderInterface
         CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
     ): CompanyUserInvitationCollectionTransfer {
         return $this->repository->getCompanyUserInvitationCollection($criteriaFilterTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $companyUserInvitationTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationTransfer|null
+     */
+    public function findCompanyUserInvitationById(
+        CompanyUserInvitationTransfer $companyUserInvitationTransfer
+    ): ?CompanyUserInvitationTransfer {
+        return $this->repository->findCompanyUserInvitationById($companyUserInvitationTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $companyUserInvitationTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationTransfer|null
+     */
+    public function findCompanyUserInvitationByHash(
+        CompanyUserInvitationTransfer $companyUserInvitationTransfer
+    ): ?CompanyUserInvitationTransfer {
+        return $this->repository->findCompanyUserInvitationByHash($companyUserInvitationTransfer);
     }
 }

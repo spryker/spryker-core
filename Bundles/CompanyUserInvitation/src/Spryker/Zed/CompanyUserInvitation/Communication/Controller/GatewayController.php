@@ -7,10 +7,15 @@
 
 namespace Spryker\Zed\CompanyUserInvitation\Communication\Controller;
 
-use Generated\Shared\Transfer\CompanyUserInvitationAffectedReportTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer;
-use Generated\Shared\Transfer\CompanyUserInvitationImportReportTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationImportResultTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationSendBatchResultTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationSendResultTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusRequestTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusResultTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
@@ -22,34 +27,12 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param \Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer $companyUserInvitationCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserInvitationImportReportTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationImportResultTransfer
      */
-    public function importInvitationsAction(
+    public function importCompanyUserInvitationsAction(
         CompanyUserInvitationCollectionTransfer $companyUserInvitationCollectionTransfer
-    ): CompanyUserInvitationImportReportTransfer {
-        return $this->getFacade()->importInvitations($companyUserInvitationCollectionTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserInvitationAffectedReportTransfer
-     */
-    public function sendInvitationsAction(
-        CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
-    ): CompanyUserInvitationAffectedReportTransfer {
-        return $this->getFacade()->sendInvitations($criteriaFilterTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserInvitationAffectedReportTransfer
-     */
-    public function deleteInvitationsAction(
-        CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
-    ): CompanyUserInvitationAffectedReportTransfer {
-        return $this->getFacade()->deleteInvitations($criteriaFilterTransfer);
+    ): CompanyUserInvitationImportResultTransfer {
+        return $this->getFacade()->importCompanyUserInvitations($companyUserInvitationCollectionTransfer);
     }
 
     /**
@@ -61,5 +44,49 @@ class GatewayController extends AbstractGatewayController
         CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
     ): CompanyUserInvitationCollectionTransfer {
         return $this->getFacade()->getCompanyUserInvitationCollection($criteriaFilterTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $companyUserInvitationTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationSendResultTransfer
+     */
+    public function sendCompanyUserInvitationAction(
+        CompanyUserInvitationTransfer $companyUserInvitationTransfer
+    ): CompanyUserInvitationSendResultTransfer {
+        return $this->getFacade()->sendCompanyUserInvitation($companyUserInvitationTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationSendBatchResultTransfer
+     */
+    public function sendCompanyUserInvitationsAction(
+        CompanyUserTransfer $companyUserTransfer
+    ): CompanyUserInvitationSendBatchResultTransfer {
+        return $this->getFacade()->sendCompanyUserInvitations($companyUserTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusRequestTransfer $companyUserInvitationUpdateStatusRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusResultTransfer
+     */
+    public function updateCompanyUserInvitationStatusAction(
+        CompanyUserInvitationUpdateStatusRequestTransfer $companyUserInvitationUpdateStatusRequestTransfer
+    ): CompanyUserInvitationUpdateStatusResultTransfer {
+        return $this->getFacade()->updateCompanyUserInvitationStatus($companyUserInvitationUpdateStatusRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $companyUserInvitationTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationTransfer|null
+     */
+    public function findCompanyUserInvitationByHashAction(
+        CompanyUserInvitationTransfer $companyUserInvitationTransfer
+    ): ?CompanyUserInvitationTransfer {
+        return $this->getFacade()->findCompanyUserInvitationByHash($companyUserInvitationTransfer);
     }
 }

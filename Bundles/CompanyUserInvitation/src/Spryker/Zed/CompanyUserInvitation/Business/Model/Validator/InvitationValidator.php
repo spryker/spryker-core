@@ -127,8 +127,10 @@ class InvitationValidator implements InvitationValidatorInterface
     protected function populateBusinessUnitCache(CompanyUserInvitationTransfer $invitationTransfer)
     {
         $companyUserTransfer = $this->companyUserFacade->getCompanyUserById($invitationTransfer->getFkCompanyUser());
-        $companyBusinessUnitCriteriaFilter = new CompanyBusinessUnitCriteriaFilterTransfer();
-        $companyBusinessUnitCriteriaFilter->setIdCompany($companyUserTransfer->getFkCompany());
+
+        $companyBusinessUnitCriteriaFilter = (new CompanyBusinessUnitCriteriaFilterTransfer())
+            ->setIdCompany($companyUserTransfer->getFkCompany());
+
         $companyBusinessUnitCollectionTransfer = $this->companyBusinessUnitFacade->getCompanyBusinessUnitCollection(
             $companyBusinessUnitCriteriaFilter
         );
@@ -145,8 +147,9 @@ class InvitationValidator implements InvitationValidatorInterface
      */
     protected function populateEmailCache(CompanyUserInvitationTransfer $invitationTransfer)
     {
-        $companyUserInvitationCriteriaFilterTransfer = new CompanyUserInvitationCriteriaFilterTransfer();
-        $companyUserInvitationCriteriaFilterTransfer->setFkCompanyUser($invitationTransfer->getFkCompanyUser());
+        $companyUserInvitationCriteriaFilterTransfer = (new CompanyUserInvitationCriteriaFilterTransfer())
+            ->setFkCompanyUser($invitationTransfer->getFkCompanyUser());
+
         $companyUserInvitationCollection = $this->repository->getCompanyUserInvitationCollection(
             $companyUserInvitationCriteriaFilterTransfer
         );
