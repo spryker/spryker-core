@@ -7,11 +7,15 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Controller;
 
+use Generated\Shared\Transfer\CustomerResponseTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Customer\CustomersListType;
 use Spryker\Zed\Sales\SalesConfig;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -90,7 +94,7 @@ class CreateController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
-    /**public function customerAction(Request $request)
+    public function customerAction(Request $request)
     {
         $customerFormDataProvider = $this->getFactory()
             ->createCustomerDataProvider();
@@ -122,7 +126,7 @@ class CreateController extends AbstractController
         return $this->viewResponse([
             'customerForm' => $customerForm->createView(),
         ]);
-    }*/
+    }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -149,7 +153,7 @@ class CreateController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
-    /**protected function registerCustomer(FormInterface $customerForm)
+    protected function registerCustomer(FormInterface $customerForm)
     {
         $customerTransfer = $this->getCustomerTransferFromForm($customerForm);
 
@@ -158,22 +162,22 @@ class CreateController extends AbstractController
             ->registerCustomer($customerTransfer);
 
         return $customerResponseTransfer;
-    }*/
+    }
 
     /**
      * @param \Symfony\Component\Form\FormInterface $customerForm
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    /**protected function getCustomerTransferFromForm(FormInterface $customerForm)
+    protected function getCustomerTransferFromForm(FormInterface $customerForm)
     {
         /** @var \Generated\Shared\Transfer\CustomerTransfer $customerTransfer */
-        /*$customerTransfer = $customerForm->getData();
+        $customerTransfer = $customerForm->getData();
         $customerTransfer->setPassword(uniqid());
         $customerTransfer->setSendPasswordToken(true);
 
         return $customerTransfer;
-    }*/
+    }
 
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -181,7 +185,7 @@ class CreateController extends AbstractController
      *
      * @return string
      */
-    /**protected function createRedirectUrlAfterUserCreation(CustomerTransfer $customerTransfer, Request $request)
+    protected function createRedirectUrlAfterUserCreation(CustomerTransfer $customerTransfer, Request $request)
     {
         $params = $request->query->all();
         $params[CustomersListType::FIELD_CUSTOMER] = $customerTransfer->getIdCustomer();
@@ -191,7 +195,7 @@ class CreateController extends AbstractController
             $params
         )
             ->build();
-    }*/
+    }
 
     /**
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
@@ -218,12 +222,12 @@ class CreateController extends AbstractController
      *
      * @return void
      */
-    /*protected function processResponseErrors(CustomerResponseTransfer $customerResponseTransfer)
+    protected function processResponseErrors(CustomerResponseTransfer $customerResponseTransfer)
     {
         foreach ($customerResponseTransfer->getErrors() as $errorTransfer) {
             $this->addErrorMessage($errorTransfer->getMessage());
         }
-    }*/
+    }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

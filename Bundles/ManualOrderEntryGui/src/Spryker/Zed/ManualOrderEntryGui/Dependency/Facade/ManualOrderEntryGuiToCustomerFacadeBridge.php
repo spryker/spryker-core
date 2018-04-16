@@ -46,16 +46,6 @@ class ManualOrderEntryGuiToCustomerFacadeBridge implements ManualOrderEntryGuiTo
     }
 
     /**
-     * @param string $customerReference
-     *
-     * @return \Generated\Shared\Transfer\CustomerTransfer|null
-     */
-    public function findByReference(string $customerReference): ?CustomerTransfer
-    {
-        return $this->customerFacade->findByReference($customerReference);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
