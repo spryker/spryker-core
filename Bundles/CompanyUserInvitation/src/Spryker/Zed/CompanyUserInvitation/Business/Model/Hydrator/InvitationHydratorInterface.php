@@ -12,9 +12,9 @@ use Generated\Shared\Transfer\CompanyUserInvitationTransfer;
 interface InvitationHydratorInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $invitationTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $companyUserInvitationTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserInvitationTransfer
      */
-    public function hydrate(CompanyUserInvitationTransfer $invitationTransfer): CompanyUserInvitationTransfer;
+    public function hydrate(CompanyUserInvitationTransfer $companyUserInvitationTransfer): CompanyUserInvitationTransfer;
 }

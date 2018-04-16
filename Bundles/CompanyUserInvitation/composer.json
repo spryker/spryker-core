@@ -3,8 +3,8 @@
   "description": "CompanyUserInvitation module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
     "league/csv": "^8.1.0",
+    "php": ">=7.1",
     "spryker/application": "^3.9.0",
     "spryker/company-business-unit": "^1.1.0",
     "spryker/company-user": "^1.0.0",
@@ -30,7 +30,7 @@
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Shared\\Config\\Helper\\": "tests/SprykerTest/Shared/Config/_support/Helper/"
+      "SprykerTest\\Zed\\CompanyUserInvitation\\Helper\\": "tests/SprykerTest/Zed/CompanyUserInvitation/_support/Helper/"
     }
   },
   "autoload-dev": {

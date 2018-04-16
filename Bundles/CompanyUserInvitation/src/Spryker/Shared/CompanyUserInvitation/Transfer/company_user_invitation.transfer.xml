@@ -84,11 +84,23 @@
 
     <transfer name="CompanyUserInvitationUpdateStatusRequest">
         <property name="statusKey" type="string"/>
-        <property name="invitation" type="companyUserInvitation"/>
+        <property name="companyUserInvitation" type="companyUserInvitation"/>
+    </transfer>
+
+    <transfer name="CompanyUserInvitationCreateResult">
+        <property name="success" type="bool"/>
+        <property name="errorMessage" type="string"/>
+        <property name="companyUserInvitation" type="CompanyUserInvitation"/>
     </transfer>
 
     <transfer name="CompanyUserInvitationUpdateStatusResult">
         <property name="success" type="bool"/>
+        <property name="companyUserInvitation" type="companyUserInvitation"/>
+    </transfer>
+
+    <transfer name="CompanyUserInvitationDeleteResult">
+        <property name="success" type="bool"/>
+        <property name="companyUserInvitation" type="CompanyUserInvitation"/>
     </transfer>
 
     <transfer name="Mail">

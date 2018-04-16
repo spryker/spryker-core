@@ -109,7 +109,7 @@ class InvitationSender implements InvitationSenderInterface
     ): bool {
         $this->invitationMailer->mailInvitation($companyUserInvitationTransfer);
         $companyUserInvitationUpdateStatusRequestTransfer = (new CompanyUserInvitationUpdateStatusRequestTransfer())
-            ->setInvitation($companyUserInvitationTransfer)
+            ->setCompanyUserInvitation($companyUserInvitationTransfer)
             ->setStatusKey(CompanyUserInvitationConstants::INVITATION_STATUS_PENDING);
 
         return $this->invitationUpdater->updateStatus($companyUserInvitationUpdateStatusRequestTransfer)->getSuccess();

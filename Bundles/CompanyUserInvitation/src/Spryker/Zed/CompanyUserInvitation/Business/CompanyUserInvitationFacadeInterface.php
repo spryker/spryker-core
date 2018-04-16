@@ -8,7 +8,9 @@
 namespace Spryker\Zed\CompanyUserInvitation\Business;
 
 use Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationCreateResultTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationDeleteResultTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationImportResultTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationSendBatchResultTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationSendResultTransfer;
@@ -104,6 +106,34 @@ interface CompanyUserInvitationFacadeInterface
     public function findCompanyUserInvitationByHash(
         CompanyUserInvitationTransfer $companyUserInvitationTransfer
     ): ?CompanyUserInvitationTransfer;
+
+    /**
+     * Specification:
+     * - Creates a company user invitation.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $companyUserInvitationTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationCreateResultTransfer
+     */
+    public function createCompanyUserInvitation(
+        CompanyUserInvitationTransfer $companyUserInvitationTransfer
+    ): CompanyUserInvitationCreateResultTransfer;
+
+    /**
+     * Specification:
+     * - Deleter a company user invitation.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $companyUserInvitationTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationDeleteResultTransfer
+     */
+    public function deleteCompanyUserInvitation(
+        CompanyUserInvitationTransfer $companyUserInvitationTransfer
+    ): CompanyUserInvitationDeleteResultTransfer;
 
     /**
      * Specification:

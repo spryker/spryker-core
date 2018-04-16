@@ -52,4 +52,17 @@ class CompanyUserInvitationEntityManager extends AbstractEntityManager implement
             ->createCompanyUserInvitationStatusMapper()
             ->mapEntityTransferToCompanyUserInvitationStatusTransfer($entityTransfer);
     }
+
+    /**
+     * @param int $idCompanyUserInvitation
+     *
+     * @return void
+     */
+    public function deleteCompanyUserInvitationById(int $idCompanyUserInvitation): void
+    {
+        $this->getFactory()
+            ->createCompanyUserInvitationQuery()
+            ->filterByIdCompanyUserInvitation($idCompanyUserInvitation)
+            ->delete();
+    }
 }

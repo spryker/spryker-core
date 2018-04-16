@@ -29,4 +29,11 @@ interface CompanyUserInvitationEntityManagerInterface
     public function saveCompanyUserInvitationStatus(
         CompanyUserInvitationStatusTransfer $companyUserInvitationStatusTransfer
     ): CompanyUserInvitationStatusTransfer;
+
+    /**
+     * @param int $idCompanyUserInvitation
+     *
+     * @return void
+     */
+    public function deleteCompanyUserInvitationById(int $idCompanyUserInvitation): void;
 }

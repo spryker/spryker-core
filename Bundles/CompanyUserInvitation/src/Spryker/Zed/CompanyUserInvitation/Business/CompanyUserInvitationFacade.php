@@ -8,7 +8,9 @@
 namespace Spryker\Zed\CompanyUserInvitation\Business;
 
 use Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationCreateResultTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationDeleteResultTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationImportResultTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationSendBatchResultTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationSendResultTransfer;
@@ -123,6 +125,40 @@ class CompanyUserInvitationFacade extends AbstractFacade implements CompanyUserI
         return $this->getFactory()
             ->createInvitationReader()
             ->findCompanyUserInvitationByHash($companyUserInvitationTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $companyUserInvitationTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationCreateResultTransfer
+     */
+    public function createCompanyUserInvitation(
+        CompanyUserInvitationTransfer $companyUserInvitationTransfer
+    ): CompanyUserInvitationCreateResultTransfer {
+        return $this->getFactory()
+            ->createInvitationWriter()
+            ->create($companyUserInvitationTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $companyUserInvitationTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationDeleteResultTransfer
+     */
+    public function deleteCompanyUserInvitation(
+        CompanyUserInvitationTransfer $companyUserInvitationTransfer
+    ): CompanyUserInvitationDeleteResultTransfer {
+        return $this->getFactory()
+            ->createInvitationWriter()
+            ->delete($companyUserInvitationTransfer);
     }
 
     /**

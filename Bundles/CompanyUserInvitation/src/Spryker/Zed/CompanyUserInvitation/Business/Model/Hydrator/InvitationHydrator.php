@@ -67,17 +67,17 @@ class InvitationHydrator implements InvitationHydratorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $invitationTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $companyUserInvitationTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserInvitationTransfer
      */
-    public function hydrate(CompanyUserInvitationTransfer $invitationTransfer): CompanyUserInvitationTransfer
+    public function hydrate(CompanyUserInvitationTransfer $companyUserInvitationTransfer): CompanyUserInvitationTransfer
     {
-        $invitationTransfer->setHash($this->generateHash($invitationTransfer));
-        $invitationTransfer->setFkCompanyBusinessUnit($this->getIdCompanyBusinessUnit($invitationTransfer));
-        $invitationTransfer->setFkCompanyUserInvitationStatus($this->getIdCompanyUserInvitationStatus());
+        $companyUserInvitationTransfer->setHash($this->generateHash($companyUserInvitationTransfer));
+        $companyUserInvitationTransfer->setFkCompanyBusinessUnit($this->getIdCompanyBusinessUnit($companyUserInvitationTransfer));
+        $companyUserInvitationTransfer->setFkCompanyUserInvitationStatus($this->getIdCompanyUserInvitationStatus());
 
-        return $invitationTransfer;
+        return $companyUserInvitationTransfer;
     }
 
     /**
@@ -129,8 +129,6 @@ class InvitationHydrator implements InvitationHydratorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $invitationTransfer
-     *
      * @return int
      */
     protected function getIdCompanyUserInvitationStatus(): int

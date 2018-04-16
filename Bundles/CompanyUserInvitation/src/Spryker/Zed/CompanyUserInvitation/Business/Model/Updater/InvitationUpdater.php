@@ -55,7 +55,7 @@ class InvitationUpdater implements InvitationUpdaterInterface
             $idCompanyUserInvitationStatus = $this->getIdCompanyUserInvitationStatus(
                 $companyUserInvitationUpdateStatusRequestTransfer->getStatusKey()
             );
-            $companyUserInvitationTransfer = $companyUserInvitationUpdateStatusRequestTransfer->getInvitation();
+            $companyUserInvitationTransfer = $companyUserInvitationUpdateStatusRequestTransfer->getCompanyUserInvitation();
             $companyUserInvitationTransfer->setFkCompanyUserInvitationStatus($idCompanyUserInvitationStatus);
 
             $this->entityManager->saveCompanyUserInvitation($companyUserInvitationTransfer);

@@ -18,7 +18,7 @@ class CompanyUserInvitationDependencyProvider extends AbstractBundleDependencyPr
 {
     public const FACADE_COMPANY_USER = 'FACADE_COMPANY_USER';
     public const FACADE_COMPANY_BUSINESS_UNIT = 'FACADE_COMPANY_BUSINESS_UNIT';
-    public const FACADE_MAIL = 'FACADE_MAIL';
+    public const FACADE_MAIL = 'FACADE_COMPANY_USER_INVITATION_TO_MAIL_FACADE_BRIDGE';
     public const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
 
     /**

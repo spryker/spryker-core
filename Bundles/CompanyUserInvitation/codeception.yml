@@ -1,8 +1,8 @@
-namespace: CompanyUser
+namespace: CompanyUserInvitation
 actor: Tester
 
 include:
-    - tests/SprykerTest/Zed/CompanyUser
+    - tests/SprykerTest/Zed/CompanyUserInvitation
 
 paths:
     tests: tests
