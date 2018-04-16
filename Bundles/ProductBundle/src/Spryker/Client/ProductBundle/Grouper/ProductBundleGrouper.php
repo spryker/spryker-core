@@ -16,6 +16,7 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
 {
     const BUNDLE_ITEMS = 'bundleItems';
     const BUNDLE_PRODUCT = 'bundleProduct';
+    const GROUP_KEY_DELIMITER = '_';
 
     /**
      * @var array
@@ -106,15 +107,29 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
 
         $bundleOptions = $this->getBundleOptions($bundleItemTransfer, $items);
         if (count($bundleOptions) == 0) {
-            return $bundleItemTransfer->getSku();
+            return $this->buildGroupKey($bundleItemTransfer);
         }
 
         $bundleOptions = $this->sortOptions($bundleOptions);
         $bundleItemTransfer->setProductOptions(new ArrayObject($bundleOptions));
 
-        $this->bundleGroupKeys[$bundleItemTransfer->getBundleItemIdentifier()] = $bundleItemTransfer->getSku() . '_' . $this->combineOptionParts($bundleOptions);
+        $this->bundleGroupKeys[$bundleItemTransfer->getBundleItemIdentifier()] = $this->buildGroupKey($bundleItemTransfer) . '_' . $this->combineOptionParts($bundleOptions);
 
         return $this->bundleGroupKeys[$bundleItemTransfer->getBundleItemIdentifier()];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return string
+     */
+    protected function buildGroupKey(ItemTransfer $itemTransfer): string
+    {
+        if ($itemTransfer->getGroupKeyPrefix()) {
+            return $itemTransfer->getGroupKeyPrefix() . static::GROUP_KEY_DELIMITER . $itemTransfer->getSku();
+        }
+
+        return $itemTransfer->getSku();
     }
 
     /**

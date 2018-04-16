@@ -10,6 +10,7 @@ namespace Spryker\Client\SharedCart;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\SharedCart\CartSharer\CartSharer;
 use Spryker\Client\SharedCart\CartSharer\CartSharerInterface;
+use Spryker\Client\SharedCart\Dependency\Client\SharedCartToCartClientInterface;
 use Spryker\Client\SharedCart\Zed\SharedCartStub;
 use Spryker\Client\SharedCart\Zed\SharedCartStubInterface;
 use Spryker\Client\ZedRequest\ZedRequestClientInterface;
@@ -37,6 +38,14 @@ class SharedCartFactory extends AbstractFactory
         return new SharedCartStub($this->getZedRequestClient());
     }
     
+    /**
+     * @return \Spryker\Client\SharedCart\Dependency\Client\SharedCartToCartClientInterface
+     */
+    public function getCartClient(): SharedCartToCartClientInterface
+    {
+        return $this->getProvidedDependency(SharedCartDependencyProvider::CLIENT_CART);
+    }
+
     /**
      * @return \Spryker\Client\SharedCart\Dependency\Client\SharedCartToCustomerClientInterface
      */

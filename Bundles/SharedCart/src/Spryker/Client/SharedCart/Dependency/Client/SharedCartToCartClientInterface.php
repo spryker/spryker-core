@@ -5,24 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\CartExtension\Dependency\Plugin;
+namespace Spryker\Client\SharedCart\Dependency\Client;
 
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface QuoteItemFinderPluginInterface
+interface SharedCartToCartClientInterface
 {
     /**
-     * Specification:
-     * - Finds item in quote.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $sku
      * @param string|null $groupKey
      *
      * @return \Generated\Shared\Transfer\ItemTransfer|null
      */
-    public function findItem(QuoteTransfer $quoteTransfer, $sku, $groupKey = null): ?ItemTransfer;
+    public function findQuoteItem(QuoteTransfer $quoteTransfer, string $sku, string $groupKey = null);
 }

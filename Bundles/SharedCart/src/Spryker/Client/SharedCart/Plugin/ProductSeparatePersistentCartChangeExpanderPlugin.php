@@ -52,8 +52,8 @@ class ProductSeparatePersistentCartChangeExpanderPlugin extends AbstractPlugin i
     protected function addSeparatorToItems(PersistentCartChangeTransfer $cartChangeTransfer, QuoteTransfer $quoteTransfer): void
     {
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            if ($this->findQuoteItem($quoteTransfer, $itemTransfer->getSku(), $itemTransfer->getGroupKey())) {
-                $itemTransfer->setSeparator(time());
+            if ($this->findQuoteItem($quoteTransfer, $itemTransfer->getSku())) {
+                $itemTransfer->setGroupKeyPrefix(time());
             }
         }
     }
@@ -61,19 +61,11 @@ class ProductSeparatePersistentCartChangeExpanderPlugin extends AbstractPlugin i
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $sku
-     * @param string|null $groupKey
      *
      * @return \Generated\Shared\Transfer\ItemTransfer|null
      */
-    protected function findQuoteItem(QuoteTransfer $quoteTransfer, $sku, $groupKey = null): ?ItemTransfer
+    protected function findQuoteItem(QuoteTransfer $quoteTransfer, $sku): ?ItemTransfer
     {
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if (($itemTransfer->getSku() === $sku && $groupKey === null) ||
-                $itemTransfer->getGroupKey() === $groupKey) {
-                return $itemTransfer;
-            }
-        }
-
-        return null;
+        return $this->getFactory()->getCartClient()->findQuoteItem($quoteTransfer, $sku);
     }
 }

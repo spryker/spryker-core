@@ -4,6 +4,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker/cart": "^5.0.0",
     "spryker/company-user": "^1.0.0",
     "spryker/customer": "^7.0.0",
     "spryker/kernel": "^3.19.0",
@@ -19,13 +20,11 @@
     "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
-    "spryker/cart": "*",
     "spryker/code-sniffer": "*",
     "spryker/installer": "*",
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/cart": "If you want to use cart plugins.",
     "spryker/installer": "If you want to use SharedCartPermissionInstallerPlugin. Minimum required version: 4.0.0."
   },
   "autoload": {

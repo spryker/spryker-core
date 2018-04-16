@@ -21,10 +21,7 @@ class BundleProductQuoteItemFinder implements BundleProductQuoteItemFinderInterf
      */
     public function findItem(QuoteTransfer $quoteTransfer, $sku, $groupKey = null): ?ItemTransfer
     {
-        $itemTransfer = null;
-        if ($groupKey) {
-            $itemTransfer = $this->findBundleItem($quoteTransfer, $groupKey);
-        }
+        $itemTransfer = $this->findBundleItem($quoteTransfer, $sku, $groupKey);
         if (!$itemTransfer) {
             $itemTransfer = $this->findQuoteItem($quoteTransfer, $sku, $groupKey);
         }
@@ -34,14 +31,16 @@ class BundleProductQuoteItemFinder implements BundleProductQuoteItemFinderInterf
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $groupKey
+     * @param string $sku
+     * @param null|string $groupKey
      *
      * @return \Generated\Shared\Transfer\ItemTransfer|null
      */
-    protected function findBundleItem(QuoteTransfer $quoteTransfer, $groupKey): ?ItemTransfer
+    protected function findBundleItem(QuoteTransfer $quoteTransfer, $sku, $groupKey = null): ?ItemTransfer
     {
         foreach ($quoteTransfer->getBundleItems() as $itemTransfer) {
-            if ($itemTransfer->getGroupKey() === $groupKey) {
+            if (($itemTransfer->getSku() === $sku && $groupKey === null) ||
+                $itemTransfer->getGroupKey() === $groupKey) {
                 $itemTransfer = clone $itemTransfer;
                 $itemTransfer->setQuantity($this->getBundledProductTotalQuantity($quoteTransfer, $groupKey));
 
