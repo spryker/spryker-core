@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Payment\PaymentType;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Traits\UniqueFlashMessagesTrait;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -19,6 +20,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class PaymentManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOrderEntryFormPluginInterface
 {
+    use UniqueFlashMessagesTrait;
+
     /**
      * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToPaymentFacadeInterface
      */
@@ -29,10 +32,16 @@ class PaymentManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
      */
     protected $subFormPlugins;
 
+    /**
+     * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToMessengerFacadeInterface
+     */
+    protected $messengerFacade;
+
     public function __construct()
     {
         $this->paymentFacade = $this->getFactory()->getPaymentFacade();
         $this->subFormPlugins = $this->getFactory()->getPaymentMethodSubFormPlugins();
+        $this->messengerFacade = $this->getFactory()->getMessengerFacade();
     }
 
     /**
@@ -61,7 +70,7 @@ class PaymentManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
      *
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    public function handleData($quoteTransfer, &$form, $request): AbstractTransfer
+    public function handleData($quoteTransfer, &$form, Request $request): AbstractTransfer
     {
         $paymentSelection = $quoteTransfer->getPayment()->getPaymentSelection();
 
@@ -93,6 +102,8 @@ class PaymentManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
         if (count($calculableObjectTransfer->getItems())) {
             $this->paymentFacade->recalculatePayments($calculableObjectTransfer);
         }
+
+        $this->uniqueFlashMessages();
 
         return $quoteTransfer;
     }

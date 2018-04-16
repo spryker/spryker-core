@@ -13,7 +13,7 @@ interface QuoteClientInterface
 {
     /**
      * Specification:
-     * - Returns the stored quote.
+     * - Returns the stored quote from session.
      *
      * @api
      *
@@ -23,7 +23,7 @@ interface QuoteClientInterface
 
     /**
      * Specification:
-     * - Stores the quote.
+     * - Set quote in session.
      *
      * @api
      *
@@ -35,11 +35,22 @@ interface QuoteClientInterface
 
     /**
      * Specification:
-     * - Resets all data which is stored in the quote.
+     * - Empty existing quote and store to session.
+     * - In case of persistent strategy the quote is also deleted from database.
      *
      * @api
      *
      * @return void
      */
     public function clearQuote();
+
+    /**
+     * Specification:
+     * - Get quote storage strategy type.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getStorageStrategy();
 }

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Cart\Communication\Controller;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
@@ -54,5 +55,15 @@ class GatewayController extends AbstractGatewayController
     public function reloadItemsAction(QuoteTransfer $quoteTransfer)
     {
         return $this->getFacade()->reloadItems($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function validateQuoteAction(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        return $this->getFacade()->validateQuote($quoteTransfer);
     }
 }

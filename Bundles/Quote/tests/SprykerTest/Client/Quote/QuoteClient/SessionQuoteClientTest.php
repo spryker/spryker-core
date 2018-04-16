@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Client\Quote;
+namespace SprykerTest\Client\Quote\QuoteClient;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -20,10 +20,11 @@ use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
  * @group SprykerTest
  * @group Client
  * @group Quote
- * @group QuoteClientTest
+ * @group QuoteClient
+ * @group SessionQuoteClientTest
  * Add your own group annotations below this line
  */
-class QuoteClientTest extends Unit
+class SessionQuoteClientTest extends Unit
 {
     /**
      * @return void
