@@ -103,7 +103,6 @@ class CartHandler implements CartHandlerInterface
         }
 
         $quoteTransfer = $this->cartClient->addItems($itemTransfers);
-        $this->cartClient->storeQuote($quoteTransfer);
 
         $failedToMoveRequestCollectionTransfer = $this->getWishlistRequestCollectionToCartDiff(
             $wishlistMoveToCartRequestCollectionTransfer,
@@ -140,7 +139,6 @@ class CartHandler implements CartHandlerInterface
     {
         $cartItem = $this->createItemTransfer($sku);
         $quoteTransfer = $this->cartClient->addItem($cartItem);
-        $this->cartClient->storeQuote($quoteTransfer);
 
         return $quoteTransfer;
     }

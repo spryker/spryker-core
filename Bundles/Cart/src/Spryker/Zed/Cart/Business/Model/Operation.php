@@ -52,6 +52,11 @@ class Operation implements OperationInterface
     protected $preCheckPlugins;
 
     /**
+     * @var \Spryker\Zed\CartExtension\Dependency\Plugin\CartRemovalPreCheckPluginInterface[]
+     */
+    protected $cartRemovalPreCheckPlugins;
+
+    /**
      * @var \Spryker\Zed\Cart\Dependency\PostSavePluginInterface[]
      */
     protected $postSavePlugins = [];
@@ -74,6 +79,7 @@ class Operation implements OperationInterface
      * @param \Spryker\Zed\Cart\Dependency\CartPreCheckPluginInterface[] $preCheckPlugins
      * @param \Spryker\Zed\Cart\Dependency\PostSavePluginInterface[] $postSavePlugins
      * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartTerminationPluginInterface[] $terminationPlugins
+     * @param \Spryker\Zed\Cart\Dependency\CartPreCheckPluginInterface[] $cartRemovalPreCheckPlugins
      */
     public function __construct(
         StorageProviderInterface $cartStorageProvider,
@@ -82,7 +88,8 @@ class Operation implements OperationInterface
         array $itemExpanderPlugins,
         array $preCheckPlugins,
         array $postSavePlugins,
-        array $terminationPlugins
+        array $terminationPlugins,
+        array $cartRemovalPreCheckPlugins
     ) {
         $this->cartStorageProvider = $cartStorageProvider;
         $this->calculationFacade = $calculationFacade;
@@ -91,6 +98,31 @@ class Operation implements OperationInterface
         $this->preCheckPlugins = $preCheckPlugins;
         $this->postSavePlugins = $postSavePlugins;
         $this->terminationPlugins = $terminationPlugins;
+        $this->cartRemovalPreCheckPlugins = $cartRemovalPreCheckPlugins;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function addValid(CartChangeTransfer $cartChangeTransfer): QuoteTransfer
+    {
+        $cartChangeTransfer->requireQuote();
+
+        $quoteTransfer = $cartChangeTransfer->getQuote();
+        $itemsTransfer = $cartChangeTransfer->getItems();
+
+        foreach ($itemsTransfer as $currentItemTransfer) {
+            $itemsCollection = new ArrayObject([$currentItemTransfer]);
+            $currentCartChangeTransfer = new CartChangeTransfer();
+            $currentCartChangeTransfer->setQuote($quoteTransfer);
+            $currentCartChangeTransfer->setItems($itemsCollection);
+
+            $quoteTransfer = $this->add($currentCartChangeTransfer);
+        }
+
+        return $quoteTransfer;
     }
 
     /**
@@ -100,7 +132,9 @@ class Operation implements OperationInterface
      */
     public function add(CartChangeTransfer $cartChangeTransfer)
     {
-        $originalQuoteTransfer = (new QuoteTransfer())->fromArray($cartChangeTransfer->getQuote()->toArray(), true);
+        $cartChangeTransfer->requireQuote();
+
+        $originalQuoteTransfer = (new QuoteTransfer())->fromArray($cartChangeTransfer->getQuote()->modifiedToArray(), true);
 
         if (!$this->preCheckCart($cartChangeTransfer)) {
             return $cartChangeTransfer->getQuote();
@@ -127,7 +161,13 @@ class Operation implements OperationInterface
      */
     public function remove(CartChangeTransfer $cartChangeTransfer)
     {
-        $originalQuoteTransfer = (new QuoteTransfer())->fromArray($cartChangeTransfer->getQuote()->toArray(), true);
+        $cartChangeTransfer->requireQuote();
+
+        $originalQuoteTransfer = (new QuoteTransfer())->fromArray($cartChangeTransfer->getQuote()->modifiedToArray(), true);
+
+        if (!$this->executeCartRemovalPreCheckPlugins($cartChangeTransfer)) {
+            return $cartChangeTransfer->getQuote();
+        }
 
         $expandedCartChangeTransfer = $this->expandChangedItems($cartChangeTransfer);
         $quoteTransfer = $this->cartStorageProvider->removeItems($expandedCartChangeTransfer);
@@ -150,7 +190,7 @@ class Operation implements OperationInterface
      */
     public function reloadItems(QuoteTransfer $quoteTransfer)
     {
-        $originalQuoteTransfer = (new QuoteTransfer())->fromArray($quoteTransfer->toArray(), true);
+        $originalQuoteTransfer = (new QuoteTransfer())->fromArray($quoteTransfer->modifiedToArray(), true);
 
         $quoteTransfer = $this->executePreReloadPlugins($quoteTransfer);
 
@@ -212,6 +252,32 @@ class Operation implements OperationInterface
             $this->collectErrorsFromPreCheckResponse($cartPreCheckResponseTransfer);
 
             if ($preCheck instanceof TerminationAwareCartPreCheckPluginInterface && $preCheck->terminateOnFailure()) {
+                return false;
+            }
+
+            $isCartValid = false;
+        }
+
+        return $isCartValid;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return bool
+     */
+    protected function executeCartRemovalPreCheckPlugins(CartChangeTransfer $cartChangeTransfer)
+    {
+        $isCartValid = true;
+        foreach ($this->cartRemovalPreCheckPlugins as $cartRemovalPreCheckPlugin) {
+            $cartPreCheckResponseTransfer = $cartRemovalPreCheckPlugin->check($cartChangeTransfer);
+            if ($cartPreCheckResponseTransfer->getIsSuccess()) {
+                continue;
+            }
+
+            $this->collectErrorsFromPreCheckResponse($cartPreCheckResponseTransfer);
+            
+            if ($cartRemovalPreCheckPlugin instanceof TerminationAwareCartPreCheckPluginInterface && $cartRemovalPreCheckPlugin->terminateOnFailure()) {
                 return false;
             }
 

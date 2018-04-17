@@ -10,6 +10,7 @@ namespace Spryker\Zed\Shipment\Business\Model;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Orm\Zed\Shipment\Persistence\Map\SpyShipmentMethodTableMap;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
 use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformerInterface;
@@ -172,6 +173,10 @@ class Method implements MethodInterface
      */
     protected function transformShipmentMethod(SpyShipmentMethod $shipmentMethodEntity, QuoteTransfer $quoteTransfer, $storeCurrencyPrice)
     {
+        $quoteTransfer->requireCurrency()
+            ->getCurrency()
+            ->requireCode();
+
         $shipmentMethodTransfer = $this->methodTransformer->transformEntityToTransfer($shipmentMethodEntity);
         $shipmentMethodTransfer
             ->setStoreCurrencyPrice($storeCurrencyPrice)
@@ -290,6 +295,21 @@ class Method implements MethodInterface
         }
 
         return false;
+    }
+
+    /**
+     * @param int $idShipmentMethod
+     *
+     * @return bool
+     */
+    public function isShipmentMethodActive($idShipmentMethod)
+    {
+        $idShipmentMethod = $this->queryContainer
+            ->queryActiveShipmentMethodByIdShipmentMethod($idShipmentMethod)
+            ->select(SpyShipmentMethodTableMap::COL_ID_SHIPMENT_METHOD)
+            ->findOne();
+
+        return $idShipmentMethod !== null;
     }
 
     /**

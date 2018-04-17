@@ -1,0 +1,24 @@
+
+{% if form.manualOrderItems|length > 0 %}
+    <div class="form-group">
+        <label class="control-label required">Added Items</label>
+
+        <table class="manualOrderItems">
+            {% for item in form.manualOrderItems %}
+                <tr>
+                    <td>{{ form_row(item.sku) }}</td>
+                    <td>{{ form_row(item.quantity) }}</td>
+                    <td>
+                        {{ form_row(item.unitGrossPrice) }}
+                        {{ form_row(item.forcedUnitGrossPrice) }}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% else %}
+    <div style="display:none;">
+        {{ form_widget(form) }}
+    </div>
+{% endif %}
+

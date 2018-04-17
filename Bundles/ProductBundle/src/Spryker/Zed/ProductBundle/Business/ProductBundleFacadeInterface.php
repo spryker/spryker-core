@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductBundle\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -278,4 +279,59 @@ interface ProductBundleFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function filterBundleItemsOnCartReload(QuoteTransfer $quoteTransfer);
+
+    /**
+     * Specification:
+     *  - Replace quote items with bundle if it is possible.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function replaceItemsWithBundleItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
+
+    /**
+     * Specification:
+     * - Find bundle item in quote.
+     * - Clone item.
+     * - Take sum of all bundle items of the same group.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $sku
+     * @param string|null $groupKey
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer|null
+     */
+    public function findItemInQuote(QuoteTransfer $quoteTransfer, $sku, $groupKey): ?ItemTransfer;
+
+    /**
+     * Specification:
+     *  - Checks price difference between quotes bundle items.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $resultQuoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $sourceQuoteTransfer
+     *
+     * @return void
+     */
+    public function checkBundleItemsPriceChanges(QuoteTransfer $resultQuoteTransfer, QuoteTransfer $sourceQuoteTransfer): void;
+
+    /**
+     * Specification:
+     *  - Find bundled items in quote.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $sku
+     * @param string|null $groupKey
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function findBundleItemsInQuote(QuoteTransfer $quoteTransfer, $sku, $groupKey): array;
 }

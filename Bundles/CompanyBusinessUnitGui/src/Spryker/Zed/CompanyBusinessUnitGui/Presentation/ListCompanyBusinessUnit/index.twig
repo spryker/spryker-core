@@ -1,0 +1,21 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Overview of Company Business Units' | trans %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
+
+{% block action %}
+    {{ createActionButton('/company-business-unit-gui/add-company-business-unit', 'Add Company Business Unit' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' %}
+        {% block widget_title -%}
+            <h5>{{ 'List of Company Business Units' | trans}}</h5>
+        {%- endblock %}
+        {% block widget_content %}
+            {{ companyBusinessUnitTable | raw }}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

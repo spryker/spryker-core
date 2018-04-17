@@ -8,6 +8,9 @@
 namespace Spryker\Zed\Cart\Business;
 
 use Spryker\Zed\Cart\Business\Model\Operation;
+use Spryker\Zed\Cart\Business\Model\QuoteChangeObserver;
+use Spryker\Zed\Cart\Business\Model\QuoteChangeObserverInterface;
+use Spryker\Zed\Cart\Business\Model\QuoteValidator;
 use Spryker\Zed\Cart\Business\StorageProvider\NonPersistentProvider;
 use Spryker\Zed\Cart\CartDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -29,7 +32,8 @@ class CartBusinessFactory extends AbstractBusinessFactory
             $this->getItemExpanderPlugins(),
             $this->getCartPreCheckPlugins(),
             $this->getPostSavePlugins(),
-            $this->getTerminationPlugins()
+            $this->getTerminationPlugins(),
+            $this->getCartRemovalPreCheckPlugins()
         );
 
         $operation->setPreReloadLoadPlugins($this->getPreReloadItemsPlugins());
@@ -38,11 +42,31 @@ class CartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Cart\Business\Model\QuoteValidatorInterface
+     */
+    public function createQuoteValidator()
+    {
+        return new QuoteValidator(
+            $this->createCartOperation(),
+            $this->createQuoteChangeObserver(),
+            $this->getMessengerFacade()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface
      */
-    protected function createStorageProvider()
+    public function createStorageProvider()
     {
         return new NonPersistentProvider();
+    }
+
+    /**
+     * @return \Spryker\Zed\Cart\Business\Model\QuoteChangeObserverInterface
+     */
+    public function createQuoteChangeObserver(): QuoteChangeObserverInterface
+    {
+        return new QuoteChangeObserver($this->getMessengerFacade(), $this->getQuoteChangeObserverPlugins());
     }
 
     /**
@@ -78,6 +102,14 @@ class CartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\CartRemovalPreCheckPluginInterface[]
+     */
+    public function getCartRemovalPreCheckPlugins()
+    {
+        return $this->getProvidedDependency(CartDependencyProvider::CART_REMOVAL_PRE_CHECK_PLUGINS);
+    }
+
+    /**
      * @return \Spryker\Zed\Cart\Dependency\PostSavePluginInterface[]
      */
     protected function getPostSavePlugins()
@@ -99,5 +131,13 @@ class CartBusinessFactory extends AbstractBusinessFactory
     protected function getTerminationPlugins()
     {
         return $this->getProvidedDependency(CartDependencyProvider::CART_TERMINATION_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\QuoteChangeObserverPluginInterface[]
+     */
+    protected function getQuoteChangeObserverPlugins(): array
+    {
+        return $this->getProvidedDependency(CartDependencyProvider::PLUGINS_QUOTE_CHANGE_OBSERVER);
     }
 }

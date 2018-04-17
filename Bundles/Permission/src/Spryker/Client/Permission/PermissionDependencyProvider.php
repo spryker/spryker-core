@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\Permission;
 
-use Exception;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Permission\Dependency\Client\PermissionToZedRequestClientBridge;
@@ -85,13 +84,10 @@ class PermissionDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @throws \Exception
-     *
      * @return \Spryker\Client\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface[]
      */
     protected function getPermissionStoragePlugins(): array
     {
-        throw new Exception('Please set an array of permission storage plugins, 
-        all implementing the interface \Spryker\Zed\Permission\Communication\Plugin\PermissionStoragePluginInterface');
+        return [];
     }
 }
