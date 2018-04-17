@@ -122,4 +122,15 @@ interface DatasetFacadeInterface
      * @return \Generated\Shared\Transfer\SpyDatasetEntityTransfer
      */
     public function hasDatasetName($datasetName);
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $datasetName
+     *
+     * @return \Generated\Shared\Transfer\DatasetFilenameTransfer
+     */
+    public function getFilenameByDatasetName($datasetName);
 }
