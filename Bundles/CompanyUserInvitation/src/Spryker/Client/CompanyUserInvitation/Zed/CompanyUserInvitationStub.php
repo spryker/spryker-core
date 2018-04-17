@@ -106,13 +106,13 @@ class CompanyUserInvitationStub implements CompanyUserInvitationStubInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $companyUserInvitationTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserInvitationTransfer|null
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationTransfer
      */
-    public function findCompanyUserInvitationByHash(
+    public function getCompanyUserInvitationByHash(
         CompanyUserInvitationTransfer $companyUserInvitationTransfer
-    ): ?CompanyUserInvitationTransfer {
+    ): CompanyUserInvitationTransfer {
         return $this->zedRequestClient->call(
-            '/company-user-invitation/gateway/find-company-user-invitation-by-hash',
+            '/company-user-invitation/gateway/get-company-user-invitation-by-hash',
             $companyUserInvitationTransfer
         );
     }

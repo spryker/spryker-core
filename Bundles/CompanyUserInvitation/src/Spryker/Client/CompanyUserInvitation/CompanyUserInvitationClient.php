@@ -110,19 +110,18 @@ class CompanyUserInvitationClient extends AbstractClient implements CompanyUserI
 
     /**
      * {@inheritdoc}
-
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $companyUserInvitationTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserInvitationTransfer|null
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationTransfer
      */
-    public function findCompanyUserInvitationByHash(
+    public function getCompanyUserInvitationByHash(
         CompanyUserInvitationTransfer $companyUserInvitationTransfer
-    ): ?CompanyUserInvitationTransfer {
+    ): CompanyUserInvitationTransfer {
         return $this->getFactory()
             ->createZedCompanyUserInvitationStub()
-            ->findCompanyUserInvitationByHash($companyUserInvitationTransfer);
+            ->getCompanyUserInvitationByHash($companyUserInvitationTransfer);
     }
 }

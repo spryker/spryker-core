@@ -7,6 +7,7 @@
     "spryker/kernel": "^3.15.0",
     "spryker/messenger": "^3.1.0",
     "spryker/propel-orm": "^1.0.0",
+    "spryker/quote-extension": "^1.0.0",
     "spryker/session": "^3.0.0",
     "spryker/store": "^1.1.0",
     "spryker/symfony": "^3.0.0",

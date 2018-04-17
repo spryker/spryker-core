@@ -124,11 +124,11 @@ class CompanyUserInvitationRepository extends AbstractRepository implements Comp
     /**
      * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $companyUserInvitationTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserInvitationTransfer|null
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationTransfer
      */
-    public function findCompanyUserInvitationByHash(
+    public function getCompanyUserInvitationByHash(
         CompanyUserInvitationTransfer $companyUserInvitationTransfer
-    ): ?CompanyUserInvitationTransfer {
+    ): CompanyUserInvitationTransfer {
         $queryCompanyUserInvitation = $this->getFactory()
             ->createCompanyUserInvitationQuery()
             ->joinWithSpyCompanyBusinessUnit()
@@ -137,13 +137,13 @@ class CompanyUserInvitationRepository extends AbstractRepository implements Comp
 
         $entityTransfer = $this->buildQueryFromCriteria($queryCompanyUserInvitation)->findOne();
 
-        if ($entityTransfer !== null) {
-            return $this->getFactory()
-                ->createCompanyUserInvitationMapper()
-                ->mapEntityTransferToCompanyUserInvitationTransfer($entityTransfer);
+        if ($entityTransfer == null) {
+            return $companyUserInvitationTransfer;
         }
 
-        return null;
+        return $this->getFactory()
+            ->createCompanyUserInvitationMapper()
+            ->mapEntityTransferToCompanyUserInvitationTransfer($entityTransfer);
     }
 
     /**

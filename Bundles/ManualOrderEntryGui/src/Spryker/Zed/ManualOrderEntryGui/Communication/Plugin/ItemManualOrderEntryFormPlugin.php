@@ -66,7 +66,7 @@ class ItemManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOrd
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function handleData($quoteTransfer, &$form, $request): AbstractTransfer
+    public function handleData($quoteTransfer, &$form, Request $request): AbstractTransfer
     {
         $items = new ArrayObject();
         $addedSkus = [];

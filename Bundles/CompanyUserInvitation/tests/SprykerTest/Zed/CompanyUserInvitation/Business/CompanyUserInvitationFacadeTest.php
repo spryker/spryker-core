@@ -116,12 +116,12 @@ class CompanyUserInvitationFacadeTest extends Test
     /**
      * @return void
      */
-    public function testFindCompanyUserInvitationByHashShouldReturnCorrectData()
+    public function testGetCompanyUserInvitationByHashShouldReturnCorrectData()
     {
         $this->haveRequiredData();
         $companyUserInvitationTransfer = $this->haveCompanyUserInvitation();
 
-        $queryResultCompanyUserInvitationTransfer = $this->getFacade()->findCompanyUserInvitationByHash($companyUserInvitationTransfer);
+        $queryResultCompanyUserInvitationTransfer = $this->getFacade()->getCompanyUserInvitationByHash($companyUserInvitationTransfer);
 
         $this->assertEquals(
             $companyUserInvitationTransfer->getIdCompanyUserInvitation(),

@@ -82,11 +82,11 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $companyUserInvitationTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserInvitationTransfer|null
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationTransfer
      */
-    public function findCompanyUserInvitationByHashAction(
+    public function getCompanyUserInvitationByHashAction(
         CompanyUserInvitationTransfer $companyUserInvitationTransfer
-    ): ?CompanyUserInvitationTransfer {
-        return $this->getFacade()->findCompanyUserInvitationByHash($companyUserInvitationTransfer);
+    ): CompanyUserInvitationTransfer {
+        return $this->getFacade()->getCompanyUserInvitationByHash($companyUserInvitationTransfer);
     }
 }

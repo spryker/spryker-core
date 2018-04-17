@@ -10,6 +10,7 @@ namespace Spryker\Client\ProductBundle\Grouper;
 use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 class ProductBundleGrouper implements ProductBundleGrouperInterface
 {
@@ -20,6 +21,25 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
      * @var array
      */
     protected $bundleGroupKeys = [];
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function getItemsWithBundlesItems(QuoteTransfer $quoteTransfer): array
+    {
+        $items = $this->getGroupedBundleItems($quoteTransfer->getItems(), $quoteTransfer->getBundleItems());
+        $items = array_map(function ($groupedItem) {
+            if ($groupedItem instanceof ItemTransfer) {
+                return $groupedItem;
+            }
+
+            return $groupedItem[static::BUNDLE_PRODUCT];
+        }, $items);
+
+        return $items;
+    }
 
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items

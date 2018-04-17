@@ -93,15 +93,14 @@ interface CompanyUserInvitationClientInterface
     /**
      * Specification:
      * - Retrieves a company user invitation by hash.
-     * - Returns NULL if hash is not found.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $companyUserInvitationTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserInvitationTransfer|null
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationTransfer
      */
-    public function findCompanyUserInvitationByHash(
+    public function getCompanyUserInvitationByHash(
         CompanyUserInvitationTransfer $companyUserInvitationTransfer
-    ): ?CompanyUserInvitationTransfer;
+    ): CompanyUserInvitationTransfer;
 }

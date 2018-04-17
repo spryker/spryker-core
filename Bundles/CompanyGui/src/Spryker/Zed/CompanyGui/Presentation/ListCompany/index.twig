@@ -5,6 +5,10 @@
 {% block head_title widget_title %}
 {% block section_title widget_title %}
 
+{% block action %}
+    {{ createActionButton('/company-gui/add-company', 'Add Company' | trans) }}
+{% endblock %}
+
 {% block content %}
     {% embed '@Gui/Partials/widget.twig' %}
         {% block widget_title -%}
