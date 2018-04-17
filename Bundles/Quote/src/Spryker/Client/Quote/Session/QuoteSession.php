@@ -8,7 +8,7 @@
 namespace Spryker\Client\Quote\Session;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Client\Quote\Dependency\Plugin\QuoteToCurrencyInterface;
+use Spryker\Client\Quote\Dependency\Client\QuoteToCurrencyClientInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class QuoteSession implements QuoteSessionInterface
@@ -21,33 +21,28 @@ class QuoteSession implements QuoteSessionInterface
     protected $session;
 
     /**
-     * @var \Spryker\Client\Currency\Plugin\CurrencyPluginInterface
-     */
-    protected $currencyPlugin;
-
-    /**
      * @var \Spryker\Client\Quote\Dependency\Plugin\QuoteTransferExpanderPluginInterface[]
      */
     protected $quoteTransferExpanderPlugins;
 
     /**
-     * @var \Spryker\Client\Quote\StorageStrategy\StorageStrategyInterface
+     * @var \Spryker\Client\Quote\Dependency\Client\QuoteToCurrencyClientInterface
      */
-    protected $storageStrategy;
+    protected $currencyClient;
 
     /**
      * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
-     * @param \Spryker\Client\Quote\Dependency\Plugin\QuoteToCurrencyInterface|null $currencyPlugin
+     * @param \Spryker\Client\Quote\Dependency\Client\QuoteToCurrencyClientInterface $currencyClient
      * @param \Spryker\Client\Quote\Dependency\Plugin\QuoteTransferExpanderPluginInterface[] $quoteTransferExpanderPlugins
      */
     public function __construct(
         SessionInterface $session,
-        QuoteToCurrencyInterface $currencyPlugin = null,
+        QuoteToCurrencyClientInterface $currencyClient,
         array $quoteTransferExpanderPlugins = []
     ) {
         $this->session = $session;
-        $this->currencyPlugin = $currencyPlugin;
         $this->quoteTransferExpanderPlugins = $quoteTransferExpanderPlugins;
+        $this->currencyClient = $currencyClient;
     }
 
     /**
@@ -76,6 +71,7 @@ class QuoteSession implements QuoteSessionInterface
         $quoteTransfer = $this->expandQuoteTransfer($quoteTransfer);
 
         $this->session->set(static::QUOTE_SESSION_IDENTIFIER, $quoteTransfer);
+        $this->updateCurrency($quoteTransfer);
     }
 
     /**
@@ -109,10 +105,23 @@ class QuoteSession implements QuoteSessionInterface
      */
     protected function setCurrency(QuoteTransfer $quoteTransfer)
     {
-        if (!$this->currencyPlugin) {
+        if ($quoteTransfer->getCurrency()) {
             return;
         }
 
-        $quoteTransfer->setCurrency($this->currencyPlugin->getCurrent());
+        $quoteTransfer->setCurrency($this->currencyClient->getCurrent());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    protected function updateCurrency(QuoteTransfer $quoteTransfer): void
+    {
+        $currencyTransfer = $this->currencyClient->getCurrent();
+        if ($quoteTransfer->getCurrency()->getCode() !== $currencyTransfer->getCode()) {
+            $this->currencyClient->setCurrentCurrencyIsoCode($quoteTransfer->getCurrency()->getCode());
+        }
     }
 }

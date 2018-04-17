@@ -9,17 +9,21 @@ namespace Spryker\Client\PersistentCart\Plugin;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteUpdateRequestAttributesTransfer;
+use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
 use Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Shared\Quote\QuoteConfig;
 
 /**
  * @method \Spryker\Client\PersistentCart\PersistentCartFactory getFactory()
+ * @method \Spryker\Client\PersistentCart\PersistentCartClientInterface getClient()()
  */
 class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorageStrategyPluginInterface
 {
@@ -320,5 +324,22 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
     protected function getQuoteClient()
     {
         return $this->getFactory()->getQuoteClient();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function setQuoteCurrency(CurrencyTransfer $currencyTransfer): QuoteResponseTransfer
+    {
+        $quoteUpdateRequestTransfer = new QuoteUpdateRequestTransfer();
+        $quoteUpdateRequestTransfer->setIdQuote($this->getQuoteClient()->getQuote()->getIdQuote());
+        $quoteUpdateRequestTransfer->setCustomer($this->getFactory()->getCustomerClient()->getCustomer());
+        $quoteUpdateRequestAttributesTransfer = new QuoteUpdateRequestAttributesTransfer();
+        $quoteUpdateRequestAttributesTransfer->setCurrency($currencyTransfer);
+        $quoteUpdateRequestTransfer->setQuoteUpdateRequestAttributes($quoteUpdateRequestAttributesTransfer);
+
+        return $this->getZedStub()->updateAndReloadQuote($quoteUpdateRequestTransfer);
     }
 }

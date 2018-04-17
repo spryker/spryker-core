@@ -9,7 +9,9 @@ namespace Spryker\Client\Cart;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CartClientInterface
@@ -306,7 +308,32 @@ interface CartClientInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function validateQuote();
+    public function validateQuote(): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Session strategy:
+     *   - Set currency to quote.
+     *   - Makes zed request.
+     *   - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles.
+     *   - Stores quote in session internally after zed request.
+     *   - Returns update quote.
+     *
+     * - Persistent strategy:
+     *   - Makes zed request.
+     *   - Reloads all items in cart anew, it recreates all items transfer, reads new prices, options, bundles.
+     *   - Recalculates quote totals.
+     *   - Save updated quote to database.
+     *   - Stores quote in session internally after zed request.
+     *   - Returns update quote.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function setQuoteCurrency(CurrencyTransfer $currencyTransfer): QuoteResponseTransfer;
 
     /**
      * Specification:

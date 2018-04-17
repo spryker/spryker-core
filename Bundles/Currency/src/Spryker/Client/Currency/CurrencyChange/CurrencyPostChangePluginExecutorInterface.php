@@ -5,18 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Yves\Currency\CurrencyChange;
+namespace Spryker\Client\Currency\CurrencyChange;
 
-/**
- * @deprecated use client instead
- */
+use Generated\Shared\Transfer\CurrencyTransfer;
+
 interface CurrencyPostChangePluginExecutorInterface
 {
     /**
-     * @param string $currencyIsoCode
-     * @param string $previousCurrencyIsoCode
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currency
      *
      * @return bool
      */
-    public function execute($currencyIsoCode, $previousCurrencyIsoCode);
+    public function execute(CurrencyTransfer $currency): bool;
 }

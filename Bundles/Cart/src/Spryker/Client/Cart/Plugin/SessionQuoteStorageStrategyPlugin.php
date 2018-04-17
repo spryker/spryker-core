@@ -9,7 +9,9 @@ namespace Spryker\Client\Cart\Plugin;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
@@ -315,6 +317,27 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
     {
         $quoteResponseTransfer = $this->getCartZedStub()->validateQuote($this->getQuote());
         $this->getQuoteClient()->setQuote($quoteResponseTransfer->getQuoteTransfer());
+
+        return $quoteResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function setQuoteCurrency(CurrencyTransfer $currencyTransfer): QuoteResponseTransfer
+    {
+        $quoteTransfer = $this->getQuote();
+        $quoteTransfer->setCurrency($currencyTransfer);
+        $quoteTransfer = $this->getCartZedStub()->reloadItems($quoteTransfer);
+        $quoteResponseTransfer = new QuoteResponseTransfer();
+        $quoteResponseTransfer->setIsSuccessful(false);
+        $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
+        if (count($this->getFactory()->getZedRequestClient()->getLastResponseErrorMessages()) === 0) {
+            $quoteResponseTransfer->setIsSuccessful(true);
+            $this->getQuoteClient()->setQuote($quoteTransfer);
+        }
 
         return $quoteResponseTransfer;
     }

@@ -11,6 +11,9 @@ use Spryker\Shared\Currency\Persistence\CurrencyPersistenceInterface;
 use Spryker\Yves\Currency\Dependency\Client\CurrencyToMessengerClientInterface;
 use Spryker\Yves\Currency\Dependency\Client\CurrencyToZedRequestClientInterface;
 
+/**
+ * @deprecated use client instead
+ */
 class CurrencyPostChangePluginExecutor implements CurrencyPostChangePluginExecutorInterface
 {
     /**

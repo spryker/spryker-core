@@ -6,6 +6,7 @@
     "php": ">=7.1",
     "spryker/cart": "^4.2.0 || ^5.0.0",
     "spryker/currency": "^3.1.0",
+    "spryker/currency-extension": "^0.1.0",
     "spryker/kernel": "^3.0.0",
     "spryker/zed-request": "^3.0.0"
   },

@@ -25,15 +25,31 @@ class QuoteWriter implements QuoteWriterInterface
     protected $quoteResponseExpander;
 
     /**
+     * @var \Spryker\Zed\PersistentCart\Business\Model\QuoteItemOperationInterface
+     */
+    protected $quoteItemOperation;
+
+    /**
+     * @var \Spryker\Zed\PersistentCart\Business\Model\QuoteResolverInterface
+     */
+    protected $quoteResolver;
+
+    /**
      * @param \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface $quoteFacade
      * @param \Spryker\Zed\PersistentCart\Business\Model\QuoteResponseExpanderInterface $quoteResponseExpander
+     * @param \Spryker\Zed\PersistentCart\Business\Model\QuoteResolverInterface $quoteResolver
+     * @param \Spryker\Zed\PersistentCart\Business\Model\QuoteItemOperationInterface $quoteItemOperation
      */
     public function __construct(
         PersistentCartToQuoteFacadeInterface $quoteFacade,
-        QuoteResponseExpanderInterface $quoteResponseExpander
+        QuoteResponseExpanderInterface $quoteResponseExpander,
+        QuoteResolverInterface $quoteResolver,
+        QuoteItemOperationInterface $quoteItemOperation
     ) {
         $this->quoteFacade = $quoteFacade;
         $this->quoteResponseExpander = $quoteResponseExpander;
+        $this->quoteItemOperation = $quoteItemOperation;
+        $this->quoteResolver = $quoteResolver;
     }
 
     /**
@@ -54,7 +70,10 @@ class QuoteWriter implements QuoteWriterInterface
      */
     public function updateQuote(QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer): QuoteResponseTransfer
     {
-        $quoteResponseTransfer = $this->quoteFacade->findQuoteById($quoteUpdateRequestTransfer->getIdQuote());
+        $quoteResponseTransfer = $this->quoteResolver->resolveCustomerQuote(
+            $quoteUpdateRequestTransfer->getIdQuote(),
+            $quoteUpdateRequestTransfer->getCustomer()
+        );
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             $quoteResponseTransfer->setCustomer($quoteUpdateRequestTransfer->getCustomer());
             return $this->quoteResponseExpander->expand($quoteResponseTransfer);
@@ -64,5 +83,27 @@ class QuoteWriter implements QuoteWriterInterface
         $quoteTransfer->fromArray($quoteUpdateRequestTransfer->getQuoteUpdateRequestAttributes()->modifiedToArray(), true);
 
         return $this->quoteResponseExpander->expand($this->quoteFacade->updateQuote($quoteTransfer));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function updateAndReloadQuote(QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer): QuoteResponseTransfer
+    {
+        $quoteResponseTransfer = $this->quoteResolver->resolveCustomerQuote(
+            $quoteUpdateRequestTransfer->getIdQuote(),
+            $quoteUpdateRequestTransfer->getCustomer()
+        );
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            $quoteResponseTransfer->setCustomer($quoteUpdateRequestTransfer->getCustomer());
+            return $this->quoteResponseExpander->expand($quoteResponseTransfer);
+        }
+        $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
+        $quoteTransfer->setCustomer($quoteUpdateRequestTransfer->getCustomer());
+        $quoteTransfer->fromArray($quoteUpdateRequestTransfer->getQuoteUpdateRequestAttributes()->modifiedToArray(), true);
+
+        return $this->quoteItemOperation->reloadItems($quoteTransfer);
     }
 }

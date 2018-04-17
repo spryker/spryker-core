@@ -9,7 +9,9 @@ namespace Spryker\Client\Cart;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Client\Kernel\PermissionAwareTrait;
@@ -222,9 +224,23 @@ class CartClient extends AbstractClient implements CartClientInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function validateQuote()
+    public function validateQuote(): QuoteResponseTransfer
     {
         return $this->getFactory()->getQuoteStorageStrategy()->validateQuote();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function setQuoteCurrency(CurrencyTransfer $currencyTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()->getQuoteStorageStrategy()->setQuoteCurrency($currencyTransfer);
     }
 
     /**
