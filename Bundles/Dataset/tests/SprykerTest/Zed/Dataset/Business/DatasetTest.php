@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\Dataset\Business;
 
 use Codeception\Configuration;
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\DatasetFilenameTransfer;
 use Generated\Shared\Transfer\SpyDatasetEntityTransfer;
 use Generated\Shared\Transfer\SpyDatasetLocalizedAttributesEntityTransfer;
 use Generated\Shared\Transfer\SpyLocaleEntityTransfer;
@@ -179,6 +180,17 @@ class DatasetTest extends Unit
         $datasetTransfer = $this->facade->getDatasetTransferById($datasetTransfer->getIdDataset());
 
         $this->assertFalse($datasetTransfer->getIsActive());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetFilenameByDatasetNameReturnsValidTransfer()
+    {
+        $datasetFilenameTransfer = $this->facade->getFilenameByDatasetName('some name');
+
+        $this->assertInstanceOf(DatasetFilenameTransfer::class, $datasetFilenameTransfer);
+        $this->assertNotEmpty($datasetFilenameTransfer->getFilename());
     }
 
     /**

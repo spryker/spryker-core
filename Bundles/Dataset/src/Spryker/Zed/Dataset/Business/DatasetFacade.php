@@ -141,4 +141,18 @@ class DatasetFacade extends AbstractFacade implements DatasetFacadeInterface
     {
         return $this->getFactory()->createDatasetFinder()->hasDatasetName($datasetName);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $datasetName
+     *
+     * @return \Generated\Shared\Transfer\DatasetFilenameTransfer
+     */
+    public function getFilenameByDatasetName($datasetName)
+    {
+        return $this->getFactory()->createDownloaderManager()->getFilenameByDatasetName($datasetName);
+    }
 }

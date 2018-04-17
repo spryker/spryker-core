@@ -14,11 +14,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 /**
- * @method \Spryker\Zed\Dataset\Business\DatasetFacade getFacade()
+ * @method \Spryker\Zed\Dataset\Business\DatasetFacadeInterface getFacade()
  * @method \Spryker\Zed\Dataset\Communication\DatasetCommunicationFactory getFactory()
- * @method \Spryker\Zed\Dataset\Persistence\DatasetQueryContainer getQueryContainer()
+ * @method \Spryker\Zed\Dataset\Persistence\DatasetQueryContainerInterface getQueryContainer()
  */
-
 class DownloadController extends AbstractController
 {
     const URL_PARAM_ID_DATASET = 'id-dataset';
@@ -26,6 +25,7 @@ class DownloadController extends AbstractController
     const CONTENT_TYPE = 'Content-Type';
     const CONTENT_TYPE_CSV = 'text/plain';
     const FILE_EXTENTION = 'csv';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -50,7 +50,7 @@ class DownloadController extends AbstractController
         $response = new Response($content);
         $disposition = $response->headers->makeDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-            sprintf('%s.%s', $datasetTransfer->getName(), static::FILE_EXTENTION)
+            sprintf('%s.%s', $this->getFacade()->getFilenameByDatasetName($datasetTransfer->getName())->getFilename(), static::FILE_EXTENTION)
         );
         $response->headers->set(static::CONTENT_DISPOSITION, $disposition);
         $response->headers->set(static::CONTENT_TYPE, static::CONTENT_TYPE_CSV);

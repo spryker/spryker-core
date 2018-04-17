@@ -13,6 +13,7 @@ use Spryker\Zed\Dataset\Business\Model\DatasetLocalizedAttributesSaver;
 use Spryker\Zed\Dataset\Business\Model\DatasetRowColumnValueSaver;
 use Spryker\Zed\Dataset\Business\Model\DatasetRowSaver;
 use Spryker\Zed\Dataset\Business\Model\DatasetSaver;
+use Spryker\Zed\Dataset\Business\Model\DownloaderManager;
 use Spryker\Zed\Dataset\Business\Model\ReaderManager;
 use Spryker\Zed\Dataset\Business\Model\WriterManager;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -90,5 +91,13 @@ class DatasetBusinessFactory extends AbstractBusinessFactory
     public function createWriterManager()
     {
         return new WriterManager($this->createDatasetFinder());
+    }
+
+    /**
+     * @return \Spryker\Zed\Dataset\Business\Model\DownloaderManagerInterface
+     */
+    public function createDownloaderManager()
+    {
+        return new DownloaderManager();
     }
 }
