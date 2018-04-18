@@ -108,15 +108,21 @@ class EditOfferType extends AbstractType
      */
     protected function addStatusOfferList(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_OFFER_STATUS, Select2ComboBoxType::class, [
-            'label' => 'Select State',
-            'choices' => array_combine($options[static::OPTION_OFFER_STATUS_LIST], $options[static::OPTION_OFFER_STATUS_LIST]),
-            'multiple' => false,
-            'constraints' => [
-                new NotBlank(),
-            ],
-            'required' => true,
-        ]);
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($options) {
+            if ($event->getData()->getIdOffer() === null) {
+                return;
+            }
+            $form = $event->getForm();
+            $form->add(static::FIELD_OFFER_STATUS, Select2ComboBoxType::class, [
+                'label' => 'Select State',
+                'choices' => array_combine($options[static::OPTION_OFFER_STATUS_LIST], $options[static::OPTION_OFFER_STATUS_LIST]),
+                'multiple' => false,
+                'constraints' => [
+                    new NotBlank(),
+                ],
+                'required' => true,
+            ]);
+        });
 
         return $this;
     }
