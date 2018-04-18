@@ -340,6 +340,8 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
         $quoteUpdateRequestAttributesTransfer->setCurrency($currencyTransfer);
         $quoteUpdateRequestTransfer->setQuoteUpdateRequestAttributes($quoteUpdateRequestAttributesTransfer);
 
-        return $this->getZedStub()->updateAndReloadQuote($quoteUpdateRequestTransfer);
+        $quoteResponseTransfer = $this->getZedStub()->updateAndReloadQuote($quoteUpdateRequestTransfer);
+        $this->updateQuote($quoteResponseTransfer);
+        return $quoteResponseTransfer;
     }
 }

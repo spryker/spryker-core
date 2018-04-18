@@ -157,7 +157,9 @@ class QuoteItemOperation implements QuoteItemOperationInterface
      */
     public function reloadItems(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        $quoteTransfer = $this->cartFacade->reloadItems($quoteTransfer);
+        if (count($quoteTransfer->getItems())) {
+            $quoteTransfer = $this->cartFacade->reloadItems($quoteTransfer);
+        }
         $this->quoteFacade->updateQuote($quoteTransfer);
 
         $quoteResponseTransfer = new QuoteResponseTransfer();
