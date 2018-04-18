@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Quote\Business\Model;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\PermissionAwareTrait;
@@ -81,10 +82,7 @@ class QuoteDeleter implements QuoteDeleterInterface
         }
         $customerTransfer = $quoteTransfer->getCustomer();
 
-        return strcmp($loadedQuoteTransfer->getCustomerReference(), $customerTransfer->getCustomerReference()) === 0
-            || ($customerTransfer->getCompanyUserTransfer()
-                && $this->can('WriteSharedCartPermissionPlugin', $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser(), $quoteTransfer->getIdQuote())
-            );
+        return $this->isDeleteAllowed($loadedQuoteTransfer, $customerTransfer);
     }
 
     /**
@@ -117,5 +115,19 @@ class QuoteDeleter implements QuoteDeleterInterface
         }
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $loadedQuoteTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return bool
+     */
+    protected function isDeleteAllowed(QuoteTransfer $loadedQuoteTransfer, CustomerTransfer $customerTransfer): bool
+    {
+        return strcmp($loadedQuoteTransfer->getCustomerReference(), $customerTransfer->getCustomerReference()) === 0
+            || ($customerTransfer->getCompanyUserTransfer()
+                && $this->can('WriteSharedCartPermissionPlugin', $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser(), $loadedQuoteTransfer->getIdQuote())
+            );
     }
 }

@@ -75,11 +75,9 @@ class QuoteWriter implements QuoteWriterInterface
             $quoteUpdateRequestTransfer->getCustomer()
         );
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            $quoteResponseTransfer->setCustomer($quoteUpdateRequestTransfer->getCustomer());
             return $this->quoteResponseExpander->expand($quoteResponseTransfer);
         }
         $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
-        $quoteTransfer->setCustomer($quoteUpdateRequestTransfer->getCustomer());
         $quoteTransfer->fromArray($quoteUpdateRequestTransfer->getQuoteUpdateRequestAttributes()->modifiedToArray(), true);
 
         return $this->quoteResponseExpander->expand($this->quoteFacade->updateQuote($quoteTransfer));
@@ -97,11 +95,9 @@ class QuoteWriter implements QuoteWriterInterface
             $quoteUpdateRequestTransfer->getCustomer()
         );
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            $quoteResponseTransfer->setCustomer($quoteUpdateRequestTransfer->getCustomer());
             return $this->quoteResponseExpander->expand($quoteResponseTransfer);
         }
         $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
-        $quoteTransfer->setCustomer($quoteUpdateRequestTransfer->getCustomer());
         $quoteTransfer->fromArray($quoteUpdateRequestTransfer->getQuoteUpdateRequestAttributes()->modifiedToArray(), true);
 
         return $this->quoteItemOperation->reloadItems($quoteTransfer);

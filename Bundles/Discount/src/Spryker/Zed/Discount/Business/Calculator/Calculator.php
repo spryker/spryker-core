@@ -86,7 +86,7 @@ class Calculator implements CalculatorInterface
         $collectedDiscounts = $this->calculateDiscountAmount($discounts, $quoteTransfer);
         $collectedDiscounts = $this->filterExclusiveDiscounts($collectedDiscounts);
         $this->distributeDiscountAmount($collectedDiscounts);
-        $this->addNewCartRuleDiscountsApliedMessage($collectedDiscounts, $quoteTransfer->getCartRuleDiscounts());
+        $this->addNewCartRuleDiscountsAppliedMessage($collectedDiscounts, $quoteTransfer->getCartRuleDiscounts());
 
         return $collectedDiscounts;
     }
@@ -300,7 +300,7 @@ class Calculator implements CalculatorInterface
      *
      * @return void
      */
-    protected function addNewCartRuleDiscountsApliedMessage(array $collectedDiscountTransferCollection, ArrayObject $oldCartRuleDiscountTransferCollection)
+    protected function addNewCartRuleDiscountsAppliedMessage(array $collectedDiscountTransferCollection, ArrayObject $oldCartRuleDiscountTransferCollection)
     {
         $oldCartRulesIds = $this->getCartRulesDiscountIds($oldCartRuleDiscountTransferCollection);
         foreach ($collectedDiscountTransferCollection as $discountTransfer) {

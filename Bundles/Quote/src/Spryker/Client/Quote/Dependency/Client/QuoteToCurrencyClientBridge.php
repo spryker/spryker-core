@@ -23,10 +23,6 @@ class QuoteToCurrencyClientBridge implements QuoteToCurrencyClientInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
     public function getCurrent()

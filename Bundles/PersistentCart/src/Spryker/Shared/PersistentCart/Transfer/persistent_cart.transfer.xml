@@ -37,5 +37,13 @@
         <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
+    <transfer name="Customer">
+        <property name="companyUserTransfer" type="CompanyUser"/>
+    </transfer>
+
+    <transfer name="CompanyUser">
+        <property name="idCompanyUser" type="int"/>
+    </transfer>
+
 </transfers>
 

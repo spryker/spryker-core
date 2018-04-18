@@ -10,11 +10,6 @@ namespace Spryker\Client\Quote\Dependency\Client;
 interface QuoteToCurrencyClientInterface
 {
     /**
-     * Specification:
-     *  - Returns current customer session selected currency.
-     *
-     * @api
-     *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
     public function getCurrent();

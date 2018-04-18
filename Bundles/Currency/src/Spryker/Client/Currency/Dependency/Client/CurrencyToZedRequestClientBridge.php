@@ -23,10 +23,6 @@ class CurrencyToZedRequestClientBridge implements CurrencyToZedRequestClientInte
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return void
      */
     public function addFlashMessagesFromLastZedRequest()

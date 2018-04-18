@@ -23,10 +23,6 @@ class QuoteToCustomerClientBridge implements QuoteToCustomerClientInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return bool
      */
     public function isLoggedIn()
@@ -35,10 +31,6 @@ class QuoteToCustomerClientBridge implements QuoteToCustomerClientInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
     public function getCustomer()
