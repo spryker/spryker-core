@@ -34,6 +34,7 @@
 
     <transfer name="QuoteUpdateRequestAttributes">
         <property name="currency" type="Currency"/>
+        <property name="priceMode" type="string"/>
         <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
