@@ -22,7 +22,19 @@ class ProductMeasurementUnitStorageBusinessTester extends Actor
 {
     use _generated\ProductMeasurementUnitStorageBusinessTesterActions;
 
-   /**
-    * Define custom actions here
-    */
+    /**
+     * Define custom actions here
+     */
+
+    const PARAM_PROJECT = 'PROJECT';
+
+    const PROJECT_SUITE = 'suite';
+
+    /**
+     * @return bool
+     */
+    public function isSuiteProject(): bool
+    {
+        return getenv(static::PARAM_PROJECT) === static::PROJECT_SUITE;
+    }
 }

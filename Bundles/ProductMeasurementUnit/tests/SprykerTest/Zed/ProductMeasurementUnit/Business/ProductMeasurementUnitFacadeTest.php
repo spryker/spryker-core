@@ -139,7 +139,7 @@ class ProductMeasurementUnitFacadeTest extends Unit
     public function testGetBaseUnitByIdProductReturnsCorrespondingBaseUnit()
     {
         // Assign
-        $code = 'MYCODE' . rand(1, 100);
+        $code = 'MYCODE' . random_int(1, 100);
         $productTransfer = $this->tester->haveProduct();
         $productMeasurementUnitTransfer = $this->tester->haveProductMeasurementUnit([
             SpyProductMeasurementUnitEntityTransfer::CODE => $code,
@@ -164,7 +164,7 @@ class ProductMeasurementUnitFacadeTest extends Unit
     public function testGetProductMeasurementUnitCodeMapReturnsCodes()
     {
         // Assign
-        $code = 'MYCODE' . rand(1, 100);
+        $code = 'MYCODE' . random_int(1, 100);
         $productMeasurementUnitTransfer = $this->tester->haveProductMeasurementUnit([
             SpyProductMeasurementUnitEntityTransfer::CODE => $code,
         ]);
@@ -184,7 +184,7 @@ class ProductMeasurementUnitFacadeTest extends Unit
     public function testFindProductMeasurementUnitEntitiesReturnsProductMeasurementUnitEntities()
     {
         // Assign
-        $code = 'MYCODE' . rand(1, 100);
+        $code = 'MYCODE' . random_int(1, 100);
         $productMeasurementUnitTransfer = $this->tester->haveProductMeasurementUnit([
             SpyProductMeasurementUnitEntityTransfer::CODE => $code,
         ]);
@@ -206,7 +206,7 @@ class ProductMeasurementUnitFacadeTest extends Unit
         $this->assertDbPgSql();
 
         // Assign
-        $code = 'MYCODE' . rand(1, 100);
+        $code = 'MYCODE' . random_int(1, 100);
         $productTransfer = $this->tester->haveProduct();
         $productMeasurementUnitTransfer = $this->tester->haveProductMeasurementUnit([
             SpyProductMeasurementUnitEntityTransfer::CODE => $code,
@@ -239,7 +239,7 @@ class ProductMeasurementUnitFacadeTest extends Unit
         $this->assertDbPgSql();
 
         // Assign
-        $code = 'MYCODE' . rand(1, 100);
+        $code = 'MYCODE' . random_int(1, 100);
         $productTransfer = $this->tester->haveProduct();
         $productMeasurementUnitTransfer = $this->tester->haveProductMeasurementUnit([
             SpyProductMeasurementUnitEntityTransfer::CODE => $code,
