@@ -1,4 +1,4 @@
-{% extends '@Gui/Layout/layout.twig' %}
+{% extends '@OfferGui/_layout/layout.twig' %}
 
 {% block action %}
     {{ backActionButton('/offer-gui/view/list', 'Back to Offers' | trans) }}
@@ -11,7 +11,7 @@
 
 {% block content %}
 
-    {#<div id="order-overview">{% include '@OfferGui/View/_details/offer-overview.twig' %}</div>#}
+    <div id="order-overview">{% include '@OfferGui/View/_details/offer-overview.twig' %}</div>
     <div id="items">{% include '@OfferGui/View/_details/items.twig' %}</div>
 
     {% include '@OfferGui/View/_details/totals.twig' %}

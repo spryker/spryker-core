@@ -30,6 +30,9 @@
         <property name="customerReference"  type="string" />
         <property name="customer" type="Customer" />
         <property name="createdAt" type="string" />
+        <property name="contactPerson" type="string" />
+        <property name="contactDate" type="string" />
+        <property name="note" type="string" />
     </transfer>
 
     <transfer name="ResponseMessage">

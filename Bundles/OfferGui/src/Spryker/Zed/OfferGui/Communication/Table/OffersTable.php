@@ -33,7 +33,9 @@ class OffersTable extends AbstractTable
     protected const COL_CUSTOMER_REFERENCE = SpyOfferTableMap::COL_CUSTOMER_REFERENCE;
     protected const COL_EMAIL = 'email';
     protected const COL_GRAND_TOTAL = 'grand_total';
-    protected const COL_NUMBER_OF_ORDER_ITEMS = 'number_of_order_items';
+    protected const COL_CONTACT_DATE = SpyOfferTableMap::COL_CONTACT_DATE;
+    protected const COL_CONTACT_PERSON = SpyOfferTableMap::COL_CONTACT_PERSON;
+    protected const COL_NOTE = SpyOfferTableMap::COL_NOTE;
     protected const COL_URL = 'url';
     protected const COL_STATUS = 'status';
 
@@ -300,8 +302,10 @@ class OffersTable extends AbstractTable
             static::COL_CUSTOMER_REFERENCE => 'Customer Full Name',
             static::COL_EMAIL => 'Email',
             static::COL_GRAND_TOTAL => 'GrandTotal',
-            static::COL_NUMBER_OF_ORDER_ITEMS => 'Number of Items',
-            static::COL_STATUS => 'Status',
+            static::COL_CONTACT_DATE => 'Next contact date',
+            static::COL_CONTACT_PERSON => 'Person in charge',
+            static::COL_STATUS => 'Offer state',
+            static::COL_NOTE => 'Comment',
             static::COL_URL => 'Actions',
         ];
     }
@@ -327,7 +331,6 @@ class OffersTable extends AbstractTable
             static::COL_ID_OFFER,
             static::COL_CREATED_AT,
             static::COL_EMAIL,
-            static::COL_NUMBER_OF_ORDER_ITEMS,
         ];
     }
 
@@ -349,8 +352,10 @@ class OffersTable extends AbstractTable
                 static::COL_CUSTOMER_REFERENCE => $this->formatCustomer($customerTransfer),
                 static::COL_EMAIL => $this->formatEmailAddress($customerTransfer),
                 static::COL_GRAND_TOTAL => $this->getGrandTotal($quoteTransfer),
-                static::COL_NUMBER_OF_ORDER_ITEMS => $quoteTransfer->getItems()->count(),
+                static::COL_CONTACT_DATE => $this->utilDateTimeService->formatDate($item[SpyOfferTableMap::COL_CONTACT_DATE]),
+                static::COL_CONTACT_PERSON => $item[SpyOfferTableMap::COL_CONTACT_PERSON],
                 static::COL_STATUS => $item[SpyOfferTableMap::COL_STATUS],
+                static::COL_NOTE => $item[SpyOfferTableMap::COL_NOTE],
                 static::COL_URL => implode(' ', $this->createActionUrls($item)),
             ];
         }

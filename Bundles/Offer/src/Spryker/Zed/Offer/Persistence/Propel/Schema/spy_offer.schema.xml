@@ -8,6 +8,9 @@
         <column name="status" type="VARCHAR" size="20"/>
         <column name="fk_user" type="INTEGER" required="false"/>
         <column name="customer_reference" type="VARCHAR" size="255" required="false"/>
+        <column name="contact_person" type="VARCHAR" size="255" required="false"/>
+        <column name="contact_date" type="TIMESTAMP" required="false"/>
+        <column name="note" type="LONGVARCHAR" required="false"/>
 
         <foreign-key name="spy_offer-fk_user" foreignTable="spy_user" phpName="User">
             <reference local="fk_user" foreign="id_user" />
