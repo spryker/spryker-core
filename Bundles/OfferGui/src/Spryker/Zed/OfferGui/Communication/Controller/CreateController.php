@@ -7,12 +7,11 @@
 
 namespace Spryker\Zed\OfferGui\Communication\Controller;
 
-use ArrayObject;
-use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\OfferResponseTransfer;
 use Generated\Shared\Transfer\OfferTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -22,89 +21,175 @@ class CreateController extends AbstractController
 {
     public const PARAM_KEY_INITIAL_OFFER = 'key-offer';
     public const PARAM_SUBMIT_PERSIST = 'submit-persist';
+    public const PARAM_SUBMIT_CUSTOMER_CREATE = 'submit-customer-create';
+    public const PARAM_SUBMIT_RELOAD = 'submit-reload';
+    public const PARAM_CUSTOMER_REFERENCE = 'customerReference';
+
+    protected const SESSION_KEY_OFFER_DATA = 'key-offer-data';
 
     protected const ERROR_MESSAGE_ITEMS_NOT_AVAILABLE = 'Please fill offer with available items';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\Response
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function indexAction(Request $request)
     {
-        $isSubmitPersist = $request->request->get(static::PARAM_SUBMIT_PERSIST);
+        if ($request->request->has(static::PARAM_SUBMIT_CUSTOMER_CREATE)) {
+            return $this->processCustomerCreateCall($request);
+        }
+        if ($request->request->has(static::PARAM_SUBMIT_PERSIST)) {
+            return $this->processPersistCall($request);
+        }
+
+        if ($request->request->has(static::PARAM_SUBMIT_RELOAD)) {
+            return $this->processReloadCall($request);
+        }
+
+        return $this->createDefaultViewResponse($request);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function processCustomerCreateCall(Request $request)
+    {
+        $offerTransfer = $this->getOfferTransfer($request);
+        $form = $this->getFactory()->getOfferForm($offerTransfer, $request);
+        $form->handleRequest($request);
+
+        $this->getFactory()
+            ->createCreateRequestHandler()
+            ->addItems($offerTransfer);
+
+        $form = $this->getFactory()->getOfferForm($offerTransfer, $request);
+
+        $this->storeFormDataIntoSession($form->getData());
+
+        return $this->redirectResponse('/customer/add?redirectUrl=' . urlencode('/offer-gui/create'));
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|null|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function processPersistCall(Request $request)
+    {
         $offerTransfer = $this->getOfferTransfer($request);
 
         $form = $this->getFactory()->getOfferForm($offerTransfer, $request);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            /** @var \Generated\Shared\Transfer\OfferTransfer $offerTransfer */
-            $offerTransfer = $form->getData();
-            //TODO: move to business model
-            $quoteTransfer = $offerTransfer->getQuote();
+        if (($result = $this->processSubmittedForm($request, $form)) !== null) {
+            return $result;
+        }
 
-            //remove items
-            $itemTransfers = new ArrayObject();
-            foreach ($quoteTransfer->getItems() as $itemTransfer) {
-                if ($itemTransfer->getQuantity() > 0) {
-                    $itemTransfers->append($itemTransfer);
-                }
-            }
-            $quoteTransfer->setItems($itemTransfers);
+        //refresh form after calculations
+        $form = $this->getFactory()->getOfferForm($offerTransfer, $request);
 
-            //add items
-            $incomingItems = new ArrayObject();
-            foreach ($quoteTransfer->getIncomingItems() as $itemTransfer) {
-                if ($itemTransfer->getSku()) {
-                    $incomingItems->append($itemTransfer);
-                }
-            }
-
-            foreach ($incomingItems as $itemTransfer) {
-                $cartChangeTransfer = (new CartChangeTransfer())
-                    ->setQuote($quoteTransfer)
-                    ->addItem($itemTransfer);
-
-                $quoteTransfer = $this->getFactory()
-                    ->getCartFacade()
-                    ->add($cartChangeTransfer);
-            }
-
-            if ($quoteTransfer->getItems()->count() <= 0) {
-                $this->addErrorMessage(static::ERROR_MESSAGE_ITEMS_NOT_AVAILABLE);
-
-                return $this->viewResponse([
-                    'offer' => $offerTransfer,
-                    'form' => $form->createView(),
-                ]);
-            }
-
-            //update cart
-            $quoteTransfer = $this->getFactory()
-                ->getCartFacade()
-                ->reloadItems($quoteTransfer);
-            $offerTransfer->setQuote($quoteTransfer);
-
-            //refresh form after calculations
-            $form = $this->getFactory()->getOfferForm($offerTransfer, $request);
-            //save offer and a quote
-
-            if ($isSubmitPersist) {
-                $offerResponseTransfer = $this->getFactory()
-                    ->getOfferFacade()
-                    ->createOffer($offerTransfer);
-
-                if ($offerResponseTransfer->getIsSuccessful()) {
-                    return $this->getSuccessfulRedirect($offerResponseTransfer);
-                }
-            }
+        if (($result = $this->persistOffer($request, $offerTransfer)) !== null) {
+            return $result;
         }
 
         return $this->viewResponse([
             'offer' => $offerTransfer,
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|null|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function processReloadCall(Request $request)
+    {
+        return $this->processPersistCall($request);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array
+     */
+    protected function createDefaultViewResponse(Request $request)
+    {
+        $offerTransfer = $this->getOfferTransfer($request);
+
+        $offerTransfer = $this->processCustomerRedirect($request, $offerTransfer);
+
+        $form = $this->getFactory()->getOfferForm($offerTransfer, $request);
+        $form->handleRequest($request);
+
+        return $this->viewResponse([
+            'offer' => $offerTransfer,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
+     *
+     * @return void
+     */
+    protected function storeFormDataIntoSession(OfferTransfer $offerTransfer)
+    {
+        $jsonData = $this->getFactory()->getUtilEncoding()->encodeJson($offerTransfer->toArray());
+
+        $this->getFactory()
+            ->getSessionClient()
+            ->set(static::SESSION_KEY_OFFER_DATA, $jsonData);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\OfferTransfer
+     */
+    protected function retrieveFormDataFromSession(): OfferTransfer
+    {
+        $jsonData = $this->getFactory()
+            ->getSessionClient()
+            ->get(static::SESSION_KEY_OFFER_DATA);
+
+        return $this->getFactory()
+            ->getUtilEncoding()
+            ->decodeJson($jsonData);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Symfony\Component\Form\FormInterface $form
+     *
+     * @return array|null
+     */
+    protected function processSubmittedForm(Request $request, FormInterface $form)
+    {
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            return null;
+        }
+
+        /** @var \Generated\Shared\Transfer\OfferTransfer $offerTransfer */
+        $offerTransfer = $form->getData();
+
+        $this->getFactory()
+            ->createCreateRequestHandler()
+            ->addItems($offerTransfer);
+
+        if ($offerTransfer->getQuote()->getItems()->count() <= 0) {
+            $this->addErrorMessage(static::ERROR_MESSAGE_ITEMS_NOT_AVAILABLE);
+
+            return $this->viewResponse([
+                'offer' => $offerTransfer,
+                'form' => $form->createView(),
+            ]);
+        }
+
+        $this->getFactory()
+            ->createCreateRequestHandler()
+            ->updateCart($offerTransfer);
     }
 
     /**
@@ -123,7 +208,11 @@ class CreateController extends AbstractController
         $offerTransfer = new OfferTransfer();
 
         if ($offerJson !== null) {
-            $offerTransfer->fromArray(\json_decode($offerJson, true));
+            $offerTransfer->fromArray(
+                $this->getFactory()
+                    ->getUtilEncoding()
+                    ->decodeJson($offerJson, true)
+            );
         }
 
         return $offerTransfer;
@@ -144,5 +233,39 @@ class CreateController extends AbstractController
         )->build();
 
         return $this->redirectResponse($redirectUrl);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
+     *
+     * @return \Generated\Shared\Transfer\OfferTransfer
+     */
+    protected function processCustomerRedirect(Request $request, OfferTransfer $offerTransfer): OfferTransfer
+    {
+        if (!$request->query->has(static::PARAM_CUSTOMER_REFERENCE)) {
+            return $offerTransfer;
+        }
+
+        return (new OfferTransfer())->fromArray(json_decode($this->getFactory()->getSessionClient()->get(static::SESSION_KEY_OFFER_DATA), true));
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function persistOffer(Request $request, OfferTransfer $offerTransfer)
+    {
+        if ($request->request->get(static::PARAM_SUBMIT_PERSIST)) {
+            $offerResponseTransfer = $this->getFactory()
+                ->getOfferFacade()
+                ->createOffer($offerTransfer);
+
+            if ($offerResponseTransfer->getIsSuccessful()) {
+                return $this->getSuccessfulRedirect($offerResponseTransfer);
+            }
+        }
     }
 }

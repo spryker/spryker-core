@@ -24,6 +24,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 
 class EditOfferType extends AbstractType
@@ -147,31 +148,6 @@ class EditOfferType extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return string
-     */
-    private function getSelectedStoreCurrency(FormBuilderInterface $builder)
-    {
-        /** @var \Generated\Shared\Transfer\OfferTransfer $offerTransfer */
-        $offerTransfer = $builder->getData();
-        $quoteTransfer = $offerTransfer->getQuote();
-        $storeName = $quoteTransfer->getStore()->getName();
-        $currencyCode = $quoteTransfer->getCurrency()->getCode();
-        return implode(';', [$storeName, $currencyCode]);
-    }
-
-    /**
-     * @param string $storeCurrency
-     *
-     * @return array
-     */
-    private function getStoreAndCurrency(string $storeCurrency)
-    {
-        return explode(';', $storeCurrency);
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
      * @return $this
      */
     protected function addIdOfferField(FormBuilderInterface $builder)
@@ -191,10 +167,12 @@ class EditOfferType extends AbstractType
     {
         $builder->add(static::FIELD_CUSTOMER_REFERENCE, Select2ComboBoxType::class, [
             'label' => 'Select Customer',
-            'property_path' => 'quote.customer.customerReference',
             'choices' => array_flip($options[static::OPTION_CUSTOMER_LIST]),
             'multiple' => false,
-            'required' => true,
+            'constraints' => [
+                new NotBlank(),
+            ],
+            'required' => false,
         ]);
 
         return $this;
@@ -325,6 +303,31 @@ class EditOfferType extends AbstractType
             ->addModelTransformer($this->createMoneyModelTransformer());
 
         return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return string
+     */
+    private function getSelectedStoreCurrency(FormBuilderInterface $builder)
+    {
+        /** @var \Generated\Shared\Transfer\OfferTransfer $offerTransfer */
+        $offerTransfer = $builder->getData();
+        $quoteTransfer = $offerTransfer->getQuote();
+        $storeName = $quoteTransfer->getStore()->getName();
+        $currencyCode = $quoteTransfer->getCurrency()->getCode();
+        return implode(';', [$storeName, $currencyCode]);
+    }
+
+    /**
+     * @param string $storeCurrency
+     *
+     * @return array
+     */
+    private function getStoreAndCurrency(string $storeCurrency)
+    {
+        return explode(';', $storeCurrency);
     }
 
     /**

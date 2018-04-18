@@ -19,6 +19,8 @@
             {{ form_row(form.storeCurrency) }}
             {{ form_row(form.customerReference) }}
 
+            <input type="submit" class="btn btn-primary safe-submit" name="submit-customer-create" value="{{ 'Create Customer' | trans }}" /> <br />
+
             {{ form_label(form.items) }}
             <table>
                 {% for item in form.items %}

@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\OfferTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\OfferGui\Communication\Form\DataProvider\OfferDataProvider;
 use Spryker\Zed\OfferGui\Communication\Form\Offer\EditOfferType;
+use Spryker\Zed\OfferGui\Communication\Handler\CreateRequestHandler;
 use Spryker\Zed\OfferGui\Communication\Table\OffersTable;
 use Spryker\Zed\OfferGui\Communication\Table\OffersTableQueryBuilder;
 use Spryker\Zed\OfferGui\Communication\Table\OffersTableQueryBuilderInterface;
@@ -23,6 +24,7 @@ use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToMoneyFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToOfferFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToStoreFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilDateTimeServiceInterface;
+use Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilEncodingServiceInterface;
 use Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilSanitizeServiceInterface;
 use Spryker\Zed\OfferGui\OfferGuiDependencyProvider;
 use Symfony\Component\HttpFoundation\Request;
@@ -61,6 +63,14 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getUtilDateTimeService(): OfferGuiToUtilDateTimeServiceInterface
     {
         return $this->getProvidedDependency(OfferGuiDependencyProvider::SERVICE_UTIL_DATE_TIME);
+    }
+
+    /**
+     * @return \Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilEncodingServiceInterface
+     */
+    public function getUtilEncoding(): OfferGuiToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(OfferGuiDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 
     /**
@@ -184,5 +194,15 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getMessengerFacade(): OfferGuiToMessengerFacadeInterface
     {
         return $this->getProvidedDependency(OfferGuiDependencyProvider::FACADE_MESSENGER);
+    }
+
+    /**
+     * @return \Spryker\Zed\OfferGui\Communication\Handler\CreateRequestHandlerInterface
+     */
+    public function createCreateRequestHandler()
+    {
+        return new CreateRequestHandler(
+            $this->getCartFacade()
+        );
     }
 }

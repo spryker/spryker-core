@@ -73,9 +73,8 @@ class OfferDataProvider
     public function getData(OfferTransfer $offerTransfer)
     {
         if (!$offerTransfer->getQuote()) {
-            $offerTransfer = (new OfferTransfer())
-                ->setQuote(
-                    (new QuoteTransfer())
+            $offerTransfer->setQuote(
+                (new QuoteTransfer())
                         ->setStore(new StoreTransfer())
                         ->setCurrency(new CurrencyTransfer())
                         ->setItems(new ArrayObject())
@@ -83,7 +82,7 @@ class OfferDataProvider
                         ->setBillingAddress(new AddressTransfer())
                         ->setCartRuleDiscounts(new ArrayObject())
                         ->setVoucherDiscounts(new ArrayObject())
-                );
+            );
         }
 
         if (!$offerTransfer->getQuote()->getCustomer()) {

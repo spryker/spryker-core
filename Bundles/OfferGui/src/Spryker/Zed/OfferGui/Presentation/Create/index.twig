@@ -18,10 +18,8 @@
 
             {{ form_row(form.storeCurrency) }}
             {{ form_row(form.customerReference) }}
-            {{ createActionButton(
-                url('/customer/add', {'redirectUrl': url('/offer-gui/create')}),
-                'Create Customer' | trans)
-            }} <br />
+
+            <input type="submit" class="btn btn-primary safe-submit" name="submit-customer-create" value="{{ 'Create Customer' | trans }}" /> <br />
 
             {{ form_label(form.items) }}
             <table>
@@ -65,7 +63,7 @@
                 {% include '@OfferGui/Create/_partials/cart-rule-discounts.twig' with {'quote': offer.quote} %}
             {% endif %}
 
-            {% if offer.quote.totals is defined %}
+            {% if offer.quote.totals is defined and offer.quote.totals is not null %}
                 {% include '@OfferGui/Create/_partials/totals.twig' with {'quote': offer.quote} %}
             {% endif %}
 
