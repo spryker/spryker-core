@@ -1,7 +1,5 @@
 # PersistentCartExtension Module
 
-PersistentCartExtension module provides plugin interfaces used by PersistentCart module.
-
 ## Installation
 
 ```
