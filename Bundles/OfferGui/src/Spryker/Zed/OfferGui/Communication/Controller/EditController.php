@@ -22,6 +22,7 @@ class EditController extends AbstractController
     public const PARAM_ID_OFFER = 'id-offer';
     public const PARAM_SUBMIT_RELOAD = 'submit-reload';
     public const PARAM_SUBMIT_PERSIST = 'submit-persist';
+    protected const MESSAGE_OFFER_UPDATE_SUCCESS = 'Offer was updated successfully.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -94,6 +95,8 @@ class EditController extends AbstractController
                     ->getOfferFacade()
                     ->updateOffer($offerTransfer);
             }
+
+            $this->addSuccessMessage(static::MESSAGE_OFFER_UPDATE_SUCCESS);
         }
 
         return $this->viewResponse([
