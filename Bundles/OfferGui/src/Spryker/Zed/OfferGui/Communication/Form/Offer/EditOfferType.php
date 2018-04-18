@@ -50,6 +50,7 @@ class EditOfferType extends AbstractType
 
     public const OPTION_CUSTOMER_LIST = 'option-customer-list';
     public const OPTION_STORE_CURRENCY_LIST = 'option-store-currency-list';
+    public const OPTION_OFFER_STATUS_LIST = 'option-offer-status-list';
 
     protected const ERROR_MESSAGE_PRICE = 'Invalid Price.';
     protected const PATTERN_MONEY = '/^\d*\.?\d{0,2}$/';
@@ -63,6 +64,7 @@ class EditOfferType extends AbstractType
     {
         $resolver
             ->setRequired(static::OPTION_CUSTOMER_LIST)
+            ->setRequired(static::OPTION_OFFER_STATUS_LIST)
             ->setRequired(static::OPTION_STORE_CURRENCY_LIST);
     }
 
@@ -232,14 +234,10 @@ class EditOfferType extends AbstractType
         $builder->add(static::FIELD_ITEMS, CollectionType::class, [
             'entry_type' => ItemType::class,
             'property_path' => 'quote.items',
-            'label' => 'Added Items',
+            'label' => 'Selected products',
             'required' => true,
             'allow_add' => true,
             'allow_delete' => true,
-            'entry_options' => [
-                'label' => false,
-                'data_class' => ItemTransfer::class,
-            ],
         ]);
 
         return $this;
@@ -255,7 +253,7 @@ class EditOfferType extends AbstractType
         $builder->add(static::FIELD_INCOMING_ITEMS, CollectionType::class, [
             'entry_type' => IncomingItemType::class,
             'property_path' => 'quote.incomingItems',
-            'label' => 'New items',
+            'label' => 'Select products',
             'required' => false,
             'allow_add' => true,
             'allow_delete' => true,

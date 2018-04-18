@@ -62,6 +62,7 @@ class OfferDataProvider
             'data_class' => OfferTransfer::class,
             EditOfferType::OPTION_CUSTOMER_LIST => $this->getCustomerList(),
             EditOfferType::OPTION_STORE_CURRENCY_LIST => $this->getStoreCurrencyChoiceList(),
+            EditOfferType::OPTION_OFFER_STATUS_LIST => $this->getStatusList(),
         ];
     }
 
@@ -158,5 +159,19 @@ class OfferDataProvider
         $customerCollectionTransfer = new CustomerCollectionTransfer();
 
         return $customerCollectionTransfer;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getStatusList()
+    {
+        return [
+            "Pending",
+            "On overview",
+            "Sent to customer",
+            "Confirmed by customer",
+            "Close",
+        ];
     }
 }
