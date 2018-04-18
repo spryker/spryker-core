@@ -330,7 +330,9 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
     {
         $quoteTransfer = $this->getQuote();
         $quoteTransfer->setCurrency($currencyTransfer);
-        $quoteTransfer = $this->getCartZedStub()->reloadItems($quoteTransfer);
+        if (count($quoteTransfer->getItems())) {
+            $quoteTransfer = $this->getCartZedStub()->reloadItems($quoteTransfer);
+        }
         $quoteResponseTransfer = new QuoteResponseTransfer();
         $quoteResponseTransfer->setIsSuccessful(false);
         $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
