@@ -18,13 +18,13 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Shared\\ProductQuantity\\Helper\\": "tests/SprykerTest/Shared/ProductQuantity/_support/Helper/"
+      "Spryker\\": "src/Spryker/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/"
+      "SprykerTest\\": "tests/SprykerTest/",
+      "SprykerTest\\Shared\\ProductQuantity\\Helper\\": "tests/SprykerTest/Shared/ProductQuantity/_support/Helper/"
     }
   },
   "minimum-stability": "dev",

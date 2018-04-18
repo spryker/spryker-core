@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductQuantity\Persistence;
 
+use Generated\Shared\Transfer\ProductQuantityTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -19,9 +20,9 @@ class ProductQuantityRepository extends AbstractRepository implements ProductQua
      *
      * @param string[] $productSkus
      *
-     * @return \Generated\Shared\Transfer\SpyProductQuantityEntityTransfer[]
+     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
      */
-    public function findProductQuantityEntitiesByProductSku(array $productSkus): array
+    public function findProductQuantityTransfersByProductSku(array $productSkus): array
     {
         if (!$productSkus) {
             return [];
@@ -34,15 +35,23 @@ class ProductQuantityRepository extends AbstractRepository implements ProductQua
                 ->filterBySku_In($productSkus)
             ->endUse();
 
-        return $this->buildQueryFromCriteria($query)->find();
+        $result = $this->buildQueryFromCriteria($query)->find();
+
+        $mapper = $this->getFactory()->createProductQuantityMapper();
+        $productQuantityCollection = [];
+        foreach ($result as $item) {
+            $productQuantityCollection[] = $mapper->mapProductQuantityTransfer($item, new ProductQuantityTransfer());
+        }
+
+        return $productQuantityCollection;
     }
 
     /**
      * @param int[] $productIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductQuantityEntityTransfer[]
+     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
      */
-    public function findProductQuantityEntitiesByProductIds(array $productIds): array
+    public function findProductQuantityTransfersByProductIds(array $productIds): array
     {
         if (!$productIds) {
             return [];
@@ -52,6 +61,14 @@ class ProductQuantityRepository extends AbstractRepository implements ProductQua
             ->createProductQuantityQuery()
             ->filterByFkProduct_In($productIds);
 
-        return $this->buildQueryFromCriteria($query)->find();
+        $result = $this->buildQueryFromCriteria($query)->find();
+
+        $mapper = $this->getFactory()->createProductQuantityMapper();
+        $productQuantityCollection = [];
+        foreach ($result as $item) {
+            $productQuantityCollection[] = $mapper->mapProductQuantityTransfer($item, new ProductQuantityTransfer());
+        }
+
+        return $productQuantityCollection;
     }
 }
