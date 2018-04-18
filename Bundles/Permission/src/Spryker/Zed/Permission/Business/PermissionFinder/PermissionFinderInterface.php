@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Permission\Business\PermissionFinder;
 
+use Generated\Shared\Transfer\PermissionCollectionTransfer;
+
 interface PermissionFinderInterface
 {
     /**
@@ -17,7 +19,12 @@ interface PermissionFinderInterface
      *
      * @param string $permissionKey
      *
-     * @return \Spryker\Zed\Permission\Communication\Plugin\ExecutablePermissionPluginInterface
+     * @return \Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface
      */
     public function findPermissionPlugin($permissionKey);
+
+    /**
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    public function getRegisteredPermissions(): PermissionCollectionTransfer;
 }

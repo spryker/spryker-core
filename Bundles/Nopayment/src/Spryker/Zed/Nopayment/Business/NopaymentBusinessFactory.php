@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Nopayment\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Nopayment\Business\Nopayment\NopaymentMethodFilter;
 use Spryker\Zed\Nopayment\Business\Nopayment\Paid;
 
 /**
@@ -16,6 +17,14 @@ use Spryker\Zed\Nopayment\Business\Nopayment\Paid;
  */
 class NopaymentBusinessFactory extends AbstractBusinessFactory
 {
+    /**
+     * @return \Spryker\Zed\Nopayment\Business\Nopayment\NopaymentMethodFilter
+     */
+    public function createNopaymentMethodFilter()
+    {
+        return new NopaymentMethodFilter($this->getConfig());
+    }
+
     /**
      * @return \Spryker\Zed\Nopayment\Business\Nopayment\Paid
      */

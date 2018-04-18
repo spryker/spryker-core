@@ -170,6 +170,18 @@ interface SalesFacadeInterface
     public function getOrderByIdSalesOrder($idSalesOrder);
 
     /**
+     * Specification:
+     * - Returns the order for the given sales order item id.
+     *
+     * @api
+     *
+     * @param int $idSalesOrderItem
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer|null
+     */
+    public function findOrderByIdSalesOrderItem($idSalesOrderItem);
+
+    /**
      *
      * Specification:
      *  - Expands order by quantity 1 recalculates order transfer with new values

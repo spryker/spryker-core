@@ -1,0 +1,20 @@
+<table class="manualOrderSummaryItems" style="width:80%;">
+    <tr>
+        <th>{{ 'Name' | trans }}</th>
+        <th>{{ 'Sku' | trans }}</th>
+        <th>{{ 'Unit Gross Price' | trans }}</th>
+        <th>{{ 'Quantity' | trans }}</th>
+        <th>{{ 'Sum Gross Price' | trans }}</th>
+    </tr>
+
+
+{% for item in quoteTransfer.items %}
+    <tr>
+        <td>{{ item.name }}</td>
+        <td>{{ item.sku }}</td>
+        <td>{{ item.unitGrossPrice | money }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.sumGrossPrice | money }}</td>
+    </tr>
+{% endfor %}
+</table>

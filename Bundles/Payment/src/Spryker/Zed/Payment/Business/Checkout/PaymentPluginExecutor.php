@@ -27,6 +27,20 @@ class PaymentPluginExecutor implements PaymentPluginExecutorInterface
     protected $salesPaymentSaver;
 
     /**
+     * @see \Spryker\Zed\Payment\PaymentDependencyProvider for plugin types
+     *
+     * @example
+     * [
+     *  'pluginType1' => [
+     *      'paymentMethod1' => true
+     *  ]
+     * ]
+     *
+     * @var array
+     */
+    protected $executedProviderPlugins = [];
+
+    /**
      * @param \Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollectionInterface $checkoutPlugins
      * @param \Spryker\Zed\Payment\Business\Order\SalesPaymentSaverInterface $salesPaymentSaver
      */
@@ -98,7 +112,7 @@ class PaymentPluginExecutor implements PaymentPluginExecutorInterface
     ) {
         $paymentProvider = $quoteTransfer->getPayment()->getPaymentProvider();
 
-        if ($this->hasPlugin($pluginType, $paymentProvider)) {
+        if ($this->hasPlugin($pluginType, $paymentProvider) && !$this->isAlreadyExecuted($pluginType, $paymentProvider)) {
             $plugin = $this->findPlugin($pluginType, $paymentProvider);
             $plugin->execute($quoteTransfer, $checkoutResponseTransfer);
         }
@@ -120,11 +134,12 @@ class PaymentPluginExecutor implements PaymentPluginExecutorInterface
     ) {
 
         foreach ($quoteTransfer->getPayments() as $paymentTransfer) {
-            if (!$this->hasPlugin($pluginType, $paymentTransfer->getPaymentProvider())) {
-                 continue;
+            if (!$this->hasPlugin($pluginType, $paymentTransfer->getPaymentProvider()) || $this->isAlreadyExecuted($pluginType, $paymentTransfer->getPaymentProvider())) {
+                continue;
             }
             $plugin = $this->findPlugin($pluginType, $paymentTransfer->getPaymentProvider());
             $plugin->execute($quoteTransfer, $checkoutResponseTransfer);
+            $this->executedProviderPlugins[$pluginType][$paymentTransfer->getPaymentProvider()] = true;
         }
     }
 
@@ -230,6 +245,21 @@ class PaymentPluginExecutor implements PaymentPluginExecutorInterface
     protected function findPlugin($pluginType, $provider)
     {
         return $this->checkoutPlugins->get($provider, $pluginType);
+    }
+
+    /**
+     * @param string $pluginType
+     * @param string $paymentProvider
+     *
+     * @return bool
+     */
+    protected function isAlreadyExecuted($pluginType, $paymentProvider)
+    {
+        if (isset($this->executedProviderPlugins[$pluginType]) && isset($this->executedProviderPlugins[$pluginType][$paymentProvider])) {
+            return true;
+        }
+
+        return false;
     }
 
     /**

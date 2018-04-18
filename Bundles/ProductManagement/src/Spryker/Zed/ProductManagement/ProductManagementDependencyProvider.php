@@ -62,6 +62,10 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
 
     const PLUGIN_MONEY_FORM_TYPE = 'MONEY_FORM_TYPE_PLUGIN';
 
+    public const PRODUCT_CONCRETE_EDIT_FORM_EXPANDER_PLUGINS = 'PRODUCT_CONCRETE_EDIT_FORM_EXPANDER_PLUGINS';
+    public const PRODUCT_CONCRETE_FORM_EDIT_DATA_PROVIDER_EXPANDER_PLUGINS = 'PRODUCT_CONCRETE_FORM_EDIT_DATA_PROVIDER_EXPANDER_PLUGINS';
+    public const PRODUCT_FORM_TRANSFER_MAPPER_EXPANDER_PLUGINS = 'PRODUCT_FORM_TRANSFER_MAPPER_EXPANDER_PLUGINS';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -101,9 +105,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
             return new ProductManagementToPriceProductBridge($container->getLocator()->priceProduct()->facade());
         };
 
-        $container[static::FACADE_STOCK] = function (Container $container) {
-            return new ProductManagementToStockBridge($container->getLocator()->stock()->facade());
-        };
+        $container = $this->addStockFacade($container);
 
         $container[static::QUERY_CONTAINER_CATEGORY] = function (Container $container) {
             return $container->getLocator()->category()->queryContainer();
@@ -171,9 +173,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
             return new ProductManagementToProductImageBridge($container->getLocator()->productImage()->facade());
         };
 
-        $container[static::FACADE_STOCK] = function (Container $container) {
-            return new ProductManagementToStockBridge($container->getLocator()->stock()->facade());
-        };
+        $container = $this->addStockFacade($container);
 
         $container[static::FACADE_MONEY] = function (Container $container) {
             return new ProductManagementToMoneyBridge($container->getLocator()->money()->facade());
@@ -219,10 +219,14 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
             return new ProductManagementToPriceBridge($container->getLocator()->price()->facade());
         };
 
+        $container = $this->addStockFacade($container);
         $container = $this->addStore($container);
         $container = $this->addProductAbstractViewPlugins($container);
         $container = $this->addStoreRelationFormTypePlugin($container);
         $container = $this->addMoneyFormTypePlugin($container);
+        $container = $this->addProductConcreteEditFormExpanderPlugins($container);
+        $container = $this->addProductConcreteFormEditDataProviderExpanderPlugins($container);
+        $container = $this->addProductFormTransferMapperExpanderPlugins($container);
 
         return $container;
     }
@@ -325,5 +329,84 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
                 FormTypeInterface::class
             )
         );
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStockFacade(Container $container)
+    {
+        $container[static::FACADE_STOCK] = function (Container $container) {
+            return new ProductManagementToStockBridge($container->getLocator()->stock()->facade());
+        };
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductConcreteEditFormExpanderPlugins(Container $container): Container
+    {
+        $container[static::PRODUCT_CONCRETE_EDIT_FORM_EXPANDER_PLUGINS] = function (Container $container) {
+            return $this->getProductConcreteEditFormExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteEditFormExpanderPluginInterface[]
+     */
+    protected function getProductConcreteEditFormExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductConcreteFormEditDataProviderExpanderPlugins(Container $container): Container
+    {
+        $container[static::PRODUCT_CONCRETE_FORM_EDIT_DATA_PROVIDER_EXPANDER_PLUGINS] = function (Container $container) {
+            return $this->getProductConcreteFormEditDataProviderExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteFormEditDataProviderExpanderPluginInterface[]
+     */
+    protected function getProductConcreteFormEditDataProviderExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductFormTransferMapperExpanderPlugins(Container $container): Container
+    {
+        $container[static::PRODUCT_FORM_TRANSFER_MAPPER_EXPANDER_PLUGINS] = function (Container $container) {
+            return $this->getProductFormTransferMapperExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteFormEditDataProviderExpanderPluginInterface[]
+     */
+    protected function getProductFormTransferMapperExpanderPlugins(): array
+    {
+        return [];
     }
 }

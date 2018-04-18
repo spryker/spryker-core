@@ -34,7 +34,7 @@ class CsvReaderTest extends Unit
     const EXPECTED_NUMBER_OF_COLUMNS_IN_DATA_SET = 3;
 
     /**
-     * @var \SprykerTest\Zed\DataImport\BusinessTester
+     * @var \SprykerTest\Zed\DataImport\DataImportBusinessTester
      */
     protected $tester;
 
@@ -137,6 +137,20 @@ class CsvReaderTest extends Unit
         $csvReader->rewind();
 
         $this->tester->assertDataSetWithKeys(2, $csvReader->current());
+        $csvReader->next();
+        $this->assertFalse($csvReader->valid(), 'Expected that DataReaderInterface::valid() returns false because we limited the data set to one.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testDataReaderReturnSubsetOfTheDataSetsWhenLimitIsSet()
+    {
+        $csvReader = $this->getCsvReader(Configuration::dataDir() . 'import-standard.csv', true, null, 1);
+
+        $csvReader->rewind();
+
+        $this->tester->assertDataSetWithKeys(1, $csvReader->current());
         $csvReader->next();
         $this->assertFalse($csvReader->valid(), 'Expected that DataReaderInterface::valid() returns false because we limited the data set to one.');
     }

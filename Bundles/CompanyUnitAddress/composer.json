@@ -4,12 +4,12 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/company": "^0.0.2",
-    "spryker/company-business-unit": "^0.0.2",
+    "spryker/company": "^1.0.0",
+    "spryker/company-business-unit": "^1.0.0",
+    "spryker/company-business-unit-extension": "^1.0.0",
     "spryker/country": "^3.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/locale": "^3.0.0",
-    "spryker/propel": "^3.0.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/zed-request": "^3.0.0"
   },
@@ -19,7 +19,13 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Zed\\CompanyUnitAddress\\Helper\\": "tests/SprykerTest/Zed/CompanyUnitAddress/_support/Helper/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",

@@ -14,7 +14,7 @@
     <transfer name="CompanyResponse">
         <property name="companyTransfer" type="Company"/>
         <property name="isSuccessful" type="bool"/>
-        <property name="errors" type="ResponseError[]" singular="error"/>
+        <property name="messages" type="ResponseMessage[]" singular="message"/>
     </transfer>
 
     <transfer name="StoreRelation">
@@ -23,7 +23,12 @@
         <property name="stores" type="Store[]"/>
     </transfer>
 
-    <transfer name="ResponseError">
-        <property name="message" type="string"/>
+    <transfer name="ResponseMessage">
+        <property name="text" type="string"/>
     </transfer>
+
+    <transfer name="CompanyCollection">
+        <property name="companies" type="Company[]" singular="company" />
+    </transfer>
+
 </transfers>

@@ -7,70 +7,45 @@
 
 namespace Spryker\Zed\CompanyUser\Business;
 
+use Spryker\Zed\CompanyUser\Business\Model\CompanyUser;
+use Spryker\Zed\CompanyUser\Business\Model\CompanyUserInterface;
 use Spryker\Zed\CompanyUser\Business\Model\CompanyUserPluginExecutor;
 use Spryker\Zed\CompanyUser\Business\Model\CompanyUserPluginExecutorInterface;
-use Spryker\Zed\CompanyUser\Business\Model\CompanyUserReader;
-use Spryker\Zed\CompanyUser\Business\Model\CompanyUserReaderInterface;
-use Spryker\Zed\CompanyUser\Business\Model\CompanyUserWriter;
-use Spryker\Zed\CompanyUser\Business\Model\CompanyUserWriterInterface;
 use Spryker\Zed\CompanyUser\CompanyUserDependencyProvider;
 use Spryker\Zed\CompanyUser\Dependency\Facade\CompanyUserToCustomerFacadeInterface;
-use Spryker\Zed\CompanyUser\Persistence\CompanyUserRepositoryInterface;
-use Spryker\Zed\CompanyUser\Persistence\CompanyUserWriterRepositoryInterface;
-use Spryker\Zed\CompanyUser\Persistence\Propel\CompanyUserPropelRepository;
-use Spryker\Zed\CompanyUser\Persistence\Propel\CompanyUserWriterPropelRepository;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
- * @method \Spryker\Zed\CompanyUser\Persistence\CompanyUserQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\CompanyUser\CompanyUserConfig getConfig()
+ * @method \Spryker\Zed\CompanyUser\Persistence\CompanyUserRepositoryInterface getRepository()
+ * @method \Spryker\Zed\CompanyUser\Persistence\CompanyUserEntityManagerInterface getEntityManager()
  */
 class CompanyUserBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\CompanyUser\Business\Model\CompanyUserWriterInterface
+     * @return \Spryker\Zed\CompanyUser\Business\Model\CompanyUserInterface
      */
-    public function createCompanyUserWriter(): CompanyUserWriterInterface
+    public function createCompanyUser(): CompanyUserInterface
     {
-        return new CompanyUserWriter(
-            $this->createCompanyUserWriterRepository(),
+        return new CompanyUser(
+            $this->getRepository(),
+            $this->getEntityManager(),
             $this->getCustomerFacade(),
             $this->createCompanyUserPluginExecutor()
         );
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUser\Business\Model\CompanyUserReaderInterface
-     */
-    public function createCompanyUserReader(): CompanyUserReaderInterface
-    {
-        return new CompanyUserReader($this->createCompanyUserRepository());
-    }
-
-    /**
      * @return \Spryker\Zed\CompanyUser\Business\Model\CompanyUserPluginExecutorInterface
      */
-    public function createCompanyUserPluginExecutor(): CompanyUserPluginExecutorInterface
+    protected function createCompanyUserPluginExecutor(): CompanyUserPluginExecutorInterface
     {
         return new CompanyUserPluginExecutor(
-            $this->getCompanyUserSavePlugins(),
+            $this->getCompanyUserPreSavePlugins(),
+            $this->getCompanyUserPostSavePlugins(),
+            $this->getCompanyUserPostCreatePlugins(),
             $this->getCompanyUserHydrationPlugins()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\CompanyUser\Persistence\CompanyUserWriterRepositoryInterface
-     */
-    protected function createCompanyUserWriterRepository(): CompanyUserWriterRepositoryInterface
-    {
-        return new CompanyUserWriterPropelRepository();
-    }
-
-    /**
-     * @return \Spryker\Zed\CompanyUser\Persistence\CompanyUserRepositoryInterface
-     */
-    public function createCompanyUserRepository(): CompanyUserRepositoryInterface
-    {
-        return new CompanyUserPropelRepository();
     }
 
     /**
@@ -82,18 +57,34 @@ class CompanyUserBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUser\Dependency\Plugin\CompanyUserSavePluginInterface[]
+     * @return \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPostSavePluginInterface[]
      */
-    protected function getCompanyUserSavePlugins(): array
+    protected function getCompanyUserPreSavePlugins(): array
     {
-        return $this->getProvidedDependency(CompanyUserDependencyProvider::PLUGINS_CUSTOMER_SAVE);
+        return $this->getProvidedDependency(CompanyUserDependencyProvider::PLUGINS_COMPANY_USER_PRE_SAVE);
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUser\Dependency\Plugin\CompanyUserHydrationPluginInterface[]
+     * @return \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPostSavePluginInterface[]
+     */
+    protected function getCompanyUserPostSavePlugins(): array
+    {
+        return $this->getProvidedDependency(CompanyUserDependencyProvider::PLUGINS_COMPANY_USER_POST_SAVE);
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPostCreatePluginInterface[]
+     */
+    protected function getCompanyUserPostCreatePlugins(): array
+    {
+        return $this->getProvidedDependency(CompanyUserDependencyProvider::PLUGINS_COMPANY_USER_POST_CREATE);
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserHydrationPluginInterface[]
      */
     protected function getCompanyUserHydrationPlugins(): array
     {
-        return $this->getProvidedDependency(CompanyUserDependencyProvider::PLUGINS_CUSTOMER_HYDRATE);
+        return $this->getProvidedDependency(CompanyUserDependencyProvider::PLUGINS_COMPANY_USER_HYDRATE);
     }
 }

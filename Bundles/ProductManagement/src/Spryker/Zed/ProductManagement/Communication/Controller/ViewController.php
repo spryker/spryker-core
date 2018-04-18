@@ -73,6 +73,14 @@ class ViewController extends AddController
 
         $relatedStoreNames = $this->getStoreNames($productAbstractTransfer->getStoreRelation()->getStores());
 
+        $isProductBundle = $this->getFactory()
+            ->createProductTypeHelper()
+            ->isProductBundleByProductAbstract($productAbstractTransfer);
+
+        $isGiftCard = $this->getFactory()
+            ->createProductTypeHelper()
+            ->isGiftCardByProductAbstractTransfer($productAbstractTransfer);
+
         return $this->viewResponse([
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
             'currentProduct' => $productAbstractTransfer->toArray(),
@@ -89,6 +97,8 @@ class ViewController extends AddController
             'taxSet' => $this->getFactory()->getTaxFacade()->getTaxSet($productAbstractTransfer->getIdTaxSet()),
             'renderedPlugins' => $this->getRenderedProductAbstractViewPlugins($idProductAbstract),
             'relatedStoreNames' => $relatedStoreNames,
+            'isProductBundle' => $isProductBundle,
+            'isGiftCard' => $isGiftCard,
         ]);
     }
 

@@ -173,6 +173,10 @@ class Calculator implements CalculatorInterface
      */
     protected function setSuccessfulDiscountAddMessage(DiscountTransfer $discountTransfer)
     {
+        if (!empty($discountTransfer->getVoucherCode())) {
+            return;
+        }
+
         $messageTransfer = new MessageTransfer();
         $messageTransfer->setValue(self::DISCOUNT_SUCCESSFULLY_APPLIED_KEY);
         $messageTransfer->setParameters([

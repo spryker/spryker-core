@@ -171,7 +171,7 @@ class OrderItemMatrix
     protected function getActiveProcesses()
     {
         return $this->queryContainer
-            ->getActiveProcesses($this->config->getActiveProcesses())
+            ->queryActiveProcesses($this->config->getActiveProcesses())
             ->find();
     }
 
@@ -182,7 +182,7 @@ class OrderItemMatrix
      */
     protected function getOrderItemStateNames(array $orderItemStates)
     {
-        $results = $this->queryContainer->getOrderItemStates($orderItemStates)->find();
+        $results = $this->queryContainer->queryOrderItemStates($orderItemStates)->find();
 
         $orderItemStates = [];
         foreach ($results as $result) {
@@ -208,7 +208,7 @@ class OrderItemMatrix
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]|\Propel\Runtime\Collection\ObjectCollection|mixed[] $orderItems
      *
      * @return array
      */

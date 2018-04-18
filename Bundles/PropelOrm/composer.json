@@ -4,9 +4,10 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "propel/propel": "dev-master#1f6557d1a6f436b6bb08099238878246362028ca",
+    "propel/propel": "2.0.0-alpha8",
     "spryker/config": "^3.0.0",
-    "spryker/error-handler": "^2.0.0"
+    "spryker/error-handler": "^2.0.0",
+    "spryker/kernel": "^3.17.0"
   },
   "autoload": {
     "psr-4": {

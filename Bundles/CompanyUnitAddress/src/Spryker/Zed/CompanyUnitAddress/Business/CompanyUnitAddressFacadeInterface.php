@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\CompanyUnitAddress\Business;
 
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
+use Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 
@@ -21,9 +23,9 @@ interface CompanyUnitAddressFacadeInterface
      *
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
      */
-    public function getCompanyUnitAddressById(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressResponseTransfer;
+    public function getCompanyUnitAddressById(CompanyUnitAddressTransfer $companyUnitAddressTransfer): CompanyUnitAddressTransfer;
 
     /**
      * Specification:
@@ -69,46 +71,25 @@ interface CompanyUnitAddressFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer
+     * @param \Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer
      */
     public function getCompanyUnitAddressCollection(
-        CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer
+        CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
     ): CompanyUnitAddressCollectionTransfer;
 
     /**
      * Specification:
-     * - Creates a company unit address
-     * - Updates default business unit addresses
+     * - Saves Company Business Unit address collection
      *
      * @api
      *
-     * @deprecated
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
+     * @return void
      */
-    public function createCompanyUnitAddressAndUpdateBusinessUnitDefaultAddresses(
-        CompanyUnitAddressTransfer $companyUnitAddressTransfer
-    ): CompanyUnitAddressResponseTransfer;
-
-    /**
-     * Specification:
-     * - Finds a company unit address by CompanyUnitAddressTransfer::idCompanyUnitAddress in the transfer
-     * - Updates fields in a company unit address entity
-     * - Updates default business unit addresses
-     *
-     * @api
-     *
-     * @deprecated
-     *
-     * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
-     */
-    public function updateCompanyUnitAddressAndBusinessUnitDefaultAddresses(
-        CompanyUnitAddressTransfer $companyUnitAddressTransfer
-    ): CompanyUnitAddressResponseTransfer;
+    public function saveCompanyBusinessUnitAddresses(
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+    ): void;
 }

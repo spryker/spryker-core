@@ -5,14 +5,16 @@
   "require": {
     "php": ">=7.1",
     "spryker/calculation": "^4.0.0",
-    "spryker/kernel": "^3.0.0",
+    "spryker/cart-extension": "^1.1.0",
+    "spryker/kernel": "^3.19.0",
     "spryker/messenger": "^3.0.0",
-    "spryker/quote": "^1.0.0",
+    "spryker/quote": "^2.0.0",
     "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/customer": "*",
+    "spryker/persistent-cart": "*",
     "spryker/price-product": "*",
     "spryker/product": "*",
     "spryker/propel": "*",
@@ -21,7 +23,8 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/customer": "If you want to use Customer plugins, minimum required version: 7.4.0."
+    "spryker/customer": "If you want to use Customer plugins, minimum required version: 7.4.0.",
+    "spryker/persistent-cart": "If you want to use persistent cart"
   },
   "autoload": {
     "psr-4": {

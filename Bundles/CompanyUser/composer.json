@@ -4,18 +4,32 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/company": "^0.0.2",
+    "spryker/company": "^1.0.0",
+    "spryker/company-extension": "^1.0.0",
+    "spryker/company-user-extension": "^1.0.0",
     "spryker/customer": "^7.0.0",
     "spryker/kernel": "^3.0.0",
+    "spryker/permission-extension": "^1.0.0",
+    "spryker/propel-orm": "^1.0.0",
     "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/permission": "^1.0.0",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/permission": "Permission ^1.0.0 to have possibility use user permissions."
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Shared\\CompanyUser\\Helper\\": "tests/SprykerTest/Shared/CompanyUser/_support/Helper/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",

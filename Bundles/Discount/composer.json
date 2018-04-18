@@ -4,6 +4,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker/cart-extension": "^1.0.0",
     "spryker/currency": "^3.1.0",
     "spryker/gui": "^3.7.0",
     "spryker/kernel": "^3.11.0",

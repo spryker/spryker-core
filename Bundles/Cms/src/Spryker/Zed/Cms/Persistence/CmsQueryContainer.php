@@ -697,4 +697,19 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
         return $this->queryGlossaryKeyMappings()
             ->filterByFkGlossaryKey($idGlossaryKeys, Criteria::IN);
     }
+
+    /**
+     * @api
+     *
+     * @param int $idCmsPage
+     *
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
+     */
+    public function queryResourceUrlByCmsPageId($idCmsPage)
+    {
+        $query = $this->getFactory()->createUrlQuery();
+        $query->filterByFkResourcePage($idCmsPage);
+
+        return $query;
+    }
 }

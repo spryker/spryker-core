@@ -9,7 +9,10 @@ namespace Spryker\Zed\Oms\Persistence;
 
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery;
+use Orm\Zed\Oms\Persistence\SpyOmsProductReservationChangeVersionQuery;
+use Orm\Zed\Oms\Persistence\SpyOmsProductReservationLastExportedVersionQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsProductReservationQuery;
+use Orm\Zed\Oms\Persistence\SpyOmsProductReservationStoreQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsTransitionLogQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
@@ -59,6 +62,30 @@ class OmsPersistenceFactory extends AbstractPersistenceFactory
     public function createOmsProductReservationQuery()
     {
         return SpyOmsProductReservationQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationStoreQuery
+     */
+    public function createOmsProductReservationStoreQuery()
+    {
+        return SpyOmsProductReservationStoreQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationChangeVersionQuery
+     */
+    public function createOmsProductReservationChangeVersionQuery()
+    {
+        return SpyOmsProductReservationChangeVersionQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationLastExportedVersionQuery
+     */
+    public function createOmsProductReservationExportedVersionQuery()
+    {
+        return SpyOmsProductReservationLastExportedVersionQuery::create();
     }
 
     /**

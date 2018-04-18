@@ -11,10 +11,12 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityBridge;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleBridge;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToMessengerFacadeBridge;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceBridge;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceProductFacadeBridge;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductBridge;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductImageBridge;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeBridge;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerBridge;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToProductQueryContainerBridge;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToSalesQueryContainerBridge;
@@ -27,12 +29,14 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_LOCALE = 'locale facade';
     const FACADE_AVAILABILITY = 'facade availability';
     const FACADE_PRODUCT_IMAGE = 'product image facade';
+    const FACADE_STORE = 'store facade';
     const FACADE_PRICE = 'price facade';
 
     const QUERY_CONTAINER_AVAILABILITY = 'availability query container';
     const QUERY_CONTAINER_SALES = 'sales query container';
     const QUERY_CONTAINER_STOCK = 'stock query container';
     const QUERY_CONTAINER_PRODUCT = 'product query container';
+    const FACADE_MESSENGER = 'FACADE_MESSENGER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -47,6 +51,8 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addFacadeAvailability($container);
         $container = $this->addFacadeProductImage($container);
         $container = $this->addFacadePrice($container);
+        $container = $this->addStoreFacade($container);
+        $container = $this->addMessengerFacade($container);
 
         $container = $this->addQueryContainerAvailability($container);
         $container = $this->addQueryContainerSales($container);
@@ -202,6 +208,32 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_PRICE] = function (Container $container) {
             return new ProductBundleToPriceBridge($container->getLocator()->price()->facade());
+        };
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreFacade(Container $container)
+    {
+        $container[static::FACADE_STORE] = function (Container $container) {
+            return new ProductBundleToStoreFacadeBridge($container->getLocator()->store()->facade());
+        };
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMessengerFacade(Container $container)
+    {
+        $container[static::FACADE_MESSENGER] = function (Container $container) {
+            return new ProductBundleToMessengerFacadeBridge($container->getLocator()->messenger()->facade());
         };
         return $container;
     }

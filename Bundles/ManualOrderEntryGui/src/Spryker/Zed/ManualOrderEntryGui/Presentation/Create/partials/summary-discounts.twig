@@ -1,0 +1,23 @@
+{% if quoteTransfer.voucherDiscounts|length %}
+    <div><strong>{{ 'Vouchers' | trans }}:</strong></div>
+    <div>
+        {% for voucherDiscount in quoteTransfer.voucherDiscounts %}
+            <div>
+                <div class="small-8 columns">{{ voucherDiscount.displayName }}</div>
+                <div class="small-4 columns">- {{ voucherDiscount.amount | money }}</div>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+{% if quoteTransfer.cartRuleDiscounts|length %}
+    <div><strong>{{ 'Discounts' | trans }}:</strong></div>
+    <div>
+        {% for ruleDiscount in quoteTransfer.cartRuleDiscounts %}
+            <div>
+                <div class="small-8 columns">{{ ruleDiscount.displayName }}</div>
+                <div class="small-4 columns">- {{ ruleDiscount.amount | money }}</div>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}

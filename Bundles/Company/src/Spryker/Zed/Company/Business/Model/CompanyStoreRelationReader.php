@@ -35,25 +35,28 @@ class CompanyStoreRelationReader implements CompanyStoreRelationReaderInterface
     public function getStoreRelation(StoreRelationTransfer $storeRelationTransfer): StoreRelationTransfer
     {
         $storeRelationTransfer->requireIdEntity();
-        $storeTransferCollection = $this->companyRepository->getRelatedStoresByCompanyId($storeRelationTransfer->getIdEntity());
-        $idStores = $this->getIdStores($storeTransferCollection);
+        $relatedStores = $this->companyRepository->getRelatedStoresByCompanyId(
+            $storeRelationTransfer->getIdEntity()
+        );
+
+        $idStores = $this->getIdStores($relatedStores);
 
         $storeRelationTransfer
-            ->setStores($storeTransferCollection)
+            ->setStores($relatedStores)
             ->setIdStores($idStores);
 
         return $storeRelationTransfer;
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[] $storeTransferCollection
+     * @param \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[] $relatedStores
      *
      * @return int[]
      */
-    protected function getIdStores(ArrayObject $storeTransferCollection): array
+    protected function getIdStores(ArrayObject $relatedStores): array
     {
         return array_map(function (StoreTransfer $storeTransfer) {
             return $storeTransfer->getIdStore();
-        }, $storeTransferCollection->getArrayCopy());
+        }, $relatedStores->getArrayCopy());
     }
 }

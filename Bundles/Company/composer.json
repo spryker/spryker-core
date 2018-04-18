@@ -4,6 +4,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker/company-extension": "^1.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/store": "^1.0.0",
     "spryker/zed-request": "^3.0.0"
@@ -18,7 +19,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Zed\\Company\\Helper\\": "tests/SprykerTest/Zed/Company/_support/Helper/"
     }
   },
   "autoload-dev": {
