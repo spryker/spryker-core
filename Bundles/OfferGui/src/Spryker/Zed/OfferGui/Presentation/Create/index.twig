@@ -1,20 +1,22 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Create Offer: ' | trans %}
+{% set widget_title = 'Create Offer' | trans %}
 
 {% block head_title widget_title %}
 {% block section_title widget_title %}
 
 {% block action %}
-    {{ backActionButton('/offer-gui/view/list', 'Back list' | trans) }}
+    {{ backActionButton('/offer-gui/view/list', 'Back to list' | trans) }}
 {% endblock %}
 
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Offer' | trans } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Create Offer' | trans } %}
         {% block widget_content %}
 
             {{ form_start(form) }}
+
+            {{ form_row(form.status) }}
 
             {{ form_row(form.storeCurrency) }}
             {{ form_row(form.customerReference) }}
@@ -68,7 +70,7 @@
             {% endif %}
 
             <input type="submit" class="btn btn-primary safe-submit" name="submit-reload" value="{{ 'Reload' | trans }}" />
-            <input type="submit" class="btn btn-primary safe-submit" name="submit-persist" value="{{ 'Create' | trans }}" />
+            <input type="submit" class="btn btn-primary safe-submit" name="submit-persist" value="{{ 'Submit an Offer' | trans }}" />
             {{ form_end(form) }}
 
         {% endblock %}

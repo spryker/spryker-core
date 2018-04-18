@@ -6,15 +6,17 @@
 {% block section_title widget_title %}
 
 {% block action %}
-    {{ backActionButton('/offer-gui/view/list', 'Back list' | trans) }}
+    {{ backActionButton('/offer-gui/view/list', 'Back to list' | trans) }}
 {% endblock %}
 
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Offer' | trans } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Edit Offer' | trans } %}
         {% block widget_content %}
 
             {{ form_start(form) }}
+
+            {{ form_row(form.status) }}
 
             {{ form_row(form.storeCurrency) }}
             {{ form_row(form.customerReference) }}

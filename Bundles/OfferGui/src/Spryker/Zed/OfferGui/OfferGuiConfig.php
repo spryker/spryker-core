@@ -14,26 +14,25 @@ class OfferGuiConfig extends AbstractBundleConfig
     /**
      * @uses \Spryker\Shared\Offer\OfferConfig
      */
-    public const STATUS_IN_PROGRESS = 'in_progress';
+    public const STATUS_PENDING = 'Pending';
 
     /**
-     * @uses \Spryker\Zed\Offer\OfferConfig
+     * @uses \Spryker\Shared\Offer\OfferConfig
      */
-    public const STATUS_ORDER = 'order';
+    public const STATUS_ON_OVERVIEW = 'On overview';
 
     /**
-     * @return string
+     * @uses \Spryker\Shared\Offer\OfferConfig
      */
-    public function getStatusInProgress(): string
-    {
-        return static::STATUS_IN_PROGRESS;
-    }
+    public const STATUS_SENT_TO_CUSTOMER = 'Sent to customer';
 
     /**
-     * @return string
+     * @uses \Spryker\Shared\Offer\OfferConfig
      */
-    public function getStatusOrder(): string
-    {
-        return static::STATUS_ORDER;
-    }
+    public const STATUS_CONFIRMED_BY_CUSTOMER = 'Confirmed by customer';
+
+    /**
+     * @uses \Spryker\Shared\Offer\OfferConfig
+     */
+    public const STATUS_CLOSE = 'Close';
 }

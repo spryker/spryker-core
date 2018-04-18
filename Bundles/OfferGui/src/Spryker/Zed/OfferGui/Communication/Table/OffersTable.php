@@ -38,11 +38,6 @@ class OffersTable extends AbstractTable
     protected const COL_STATUS = 'status';
 
     /**
-     * @uses \Spryker\Shared\Offer\OfferConfig::STATUS_ORDER
-     */
-    protected const OFFER_STATUS_ORDER = 'order';
-
-    /**
      * @var \Spryker\Zed\OfferGui\Communication\Table\OffersTableQueryBuilderInterface
      */
     protected $queryBuilder;
@@ -110,6 +105,7 @@ class OffersTable extends AbstractTable
         $config->addRawColumn(static::COL_URL);
         $config->addRawColumn(static::COL_CUSTOMER_REFERENCE);
         $config->addRawColumn(static::COL_EMAIL);
+        $config->addRawColumn(static::COL_STATUS);
 
         $config->setDefaultSortField(static::COL_ID_OFFER, TableConfiguration::SORT_DESC);
 
@@ -236,7 +232,7 @@ class OffersTable extends AbstractTable
     {
         $urls = [];
 
-        if ($this->isOrdered($item)) {
+        if ($this->isClosed($item)) {
             $urls[] = $this->generateEditButton(
                 Url::generate(static::URL_OFFER_GUI_EDIT, [
                     static::URL_PARAM_ID_OFFER => $item[SpyOfferTableMap::COL_ID_OFFER],
@@ -267,7 +263,7 @@ class OffersTable extends AbstractTable
             'Suggest to'
         );
 
-        if ($this->isOrdered($item)) {
+        if ($this->isClosed($item)) {
             $urls[] = $this->generateCreateButton(
                 Url::generate(static::URL_OFFER_GUI_PLACE_ORDER, [
                     static::URL_PARAM_ID_OFFER => $item[SpyOfferTableMap::COL_ID_OFFER],
@@ -284,9 +280,9 @@ class OffersTable extends AbstractTable
      *
      * @return bool
      */
-    protected function isOrdered(array $item)
+    protected function isClosed(array $item)
     {
-        return $item[SpyOfferTableMap::COL_STATUS] !== static::OFFER_STATUS_ORDER;
+        return $item[SpyOfferTableMap::COL_STATUS] !== OfferGuiConfig::STATUS_CLOSE;
     }
 
     /**

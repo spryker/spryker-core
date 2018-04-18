@@ -5,7 +5,7 @@
         <column name="id_offer" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
 
         <column name="quote_data" type="LONGVARCHAR" required="true"/>
-        <column name="status" type="VARCHAR" size="20"/>
+        <column name="status" type="enum" valueSet="Pending, On overview, Sent to customer, Confirmed by customer, Close" defaultValue="Pending"/>
         <column name="fk_user" type="INTEGER" required="false"/>
         <column name="customer_reference" type="VARCHAR" size="255" required="false"/>
 

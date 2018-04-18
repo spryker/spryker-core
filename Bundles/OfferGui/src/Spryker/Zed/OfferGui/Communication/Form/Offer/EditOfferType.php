@@ -40,9 +40,11 @@ class EditOfferType extends AbstractType
     public const FIELD_QUOTE_SHIPPING_ADDRESS = 'shippingAddress';
     public const FIELD_QUOTE_BILLING_ADDRESS = 'billingAddress';
     public const FIELD_OFFER_FEE = 'offerFee';
+    public const FIELD_OFFER_STATUS = 'status';
 
     public const OPTION_CUSTOMER_LIST = 'option-customer-list';
     public const OPTION_STORE_CURRENCY_LIST = 'option-store-currency-list';
+    public const OPTION_OFFER_STATUS_LIST = 'option-offer-status-list';
 
     protected const ERROR_MESSAGE_PRICE = 'Invalid Price.';
     protected const PATTERN_MONEY = '/^\d*\.?\d{0,2}$/';
@@ -56,6 +58,7 @@ class EditOfferType extends AbstractType
     {
         $resolver
             ->setRequired(static::OPTION_CUSTOMER_LIST)
+            ->setRequired(static::OPTION_OFFER_STATUS_LIST)
             ->setRequired(static::OPTION_STORE_CURRENCY_LIST);
     }
 
@@ -69,6 +72,7 @@ class EditOfferType extends AbstractType
     {
         $this
             ->addIdOfferField($builder)
+            ->addStatusOfferList($builder, $options)
             ->addStoreNameField($builder)
             ->addCurrencyCodeField($builder)
             ->addStoreCurrencyField($builder, $options)
@@ -90,6 +94,27 @@ class EditOfferType extends AbstractType
     {
         $builder->add(static::FIELD_STORE_NAME, HiddenType::class, [
             'property_path' => 'quote.store.name',
+            'required' => true,
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addStatusOfferList(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(static::FIELD_OFFER_STATUS, Select2ComboBoxType::class, [
+            'label' => 'Select State',
+            'choices' => array_combine($options[static::OPTION_OFFER_STATUS_LIST], $options[static::OPTION_OFFER_STATUS_LIST]),
+            'multiple' => false,
+            'constraints' => [
+                new NotBlank(),
+            ],
             'required' => true,
         ]);
 
@@ -222,14 +247,10 @@ class EditOfferType extends AbstractType
         $builder->add(static::FIELD_ITEMS, CollectionType::class, [
             'entry_type' => ItemType::class,
             'property_path' => 'quote.items',
-            'label' => 'Added Items',
+            'label' => 'Selected products',
             'required' => true,
             'allow_add' => true,
             'allow_delete' => true,
-            'entry_options' => [
-                'label' => false,
-                'data_class' => ItemTransfer::class,
-            ],
         ]);
 
         return $this;
@@ -245,7 +266,7 @@ class EditOfferType extends AbstractType
         $builder->add(static::FIELD_INCOMING_ITEMS, CollectionType::class, [
             'entry_type' => IncomingItemType::class,
             'property_path' => 'quote.incomingItems',
-            'label' => 'New items',
+            'label' => 'Select products',
             'required' => false,
             'allow_add' => true,
             'allow_delete' => true,

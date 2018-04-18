@@ -11,22 +11,9 @@ use Spryker\Shared\Kernel\AbstractBundleConfig;
 
 class OfferConfig extends AbstractBundleConfig
 {
-    public const STATUS_IN_PROGRESS = 'in_progress';
-    public const STATUS_ORDER = 'order';
-
-    /**
-     * @return string
-     */
-    public function getStatusInProgress(): string
-    {
-        return static::STATUS_IN_PROGRESS;
-    }
-
-    /**
-     * @return string
-     */
-    public function getStatusOrder(): string
-    {
-        return static::STATUS_ORDER;
-    }
+    public const STATUS_PENDING = 'Pending';
+    public const STATUS_ON_OVERVIEW = 'On overview';
+    public const STATUS_SENT_TO_CUSTOMER = 'Sent to customer';
+    public const STATUS_CONFIRMED_BY_CUSTOMER = 'Confirmed by customer';
+    public const STATUS_CLOSE = 'Close';
 }

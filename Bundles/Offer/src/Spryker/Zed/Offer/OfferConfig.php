@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Offer;
 
+use Spryker\Shared\Offer\OfferConfig as SharedOfferConfig;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 /**
@@ -17,26 +18,21 @@ class OfferConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getStatusInProgress(): string
+    public function getInitialStatus(): string
     {
-        return $this->getSharedConfig()->getStatusInProgress();
-    }
-
-    /**
-     * @return string
-     */
-    public function getStatusOrder(): string
-    {
-        return $this->getSharedConfig()->getStatusOrder();
+        return SharedOfferConfig::STATUS_PENDING;
     }
 
     /**
      * @return array
      */
-    public function getUnconvertedOfferStatuses(): array
+    public function getIncompleteOfferStatuses(): array
     {
         return [
-            $this->getStatusInProgress(),
+            SharedOfferConfig::STATUS_PENDING,
+            SharedOfferConfig::STATUS_ON_OVERVIEW,
+            SharedOfferConfig::STATUS_CONFIRMED_BY_CUSTOMER,
+            SharedOfferConfig::STATUS_SENT_TO_CUSTOMER,
         ];
     }
 }
