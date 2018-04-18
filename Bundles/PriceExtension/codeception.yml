@@ -1,8 +1,8 @@
 namespace: SprykerTest
 
 include:
-    - tests/SprykerTest/Client/PersistentCartExtension
-    - tests/SprykerTest/Zed/PersistentCartExtension
+    - tests/SprykerTest/Client/PriceExtension
+    - tests/SprykerTest/Zed/PriceExtension
 
 paths:
     tests: tests

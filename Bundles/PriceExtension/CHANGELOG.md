@@ -1,3 +1,3 @@
-# PersistentCartExtension Changelog
+# PriceExtension Changelog
 
-[Release Changelog](https://github.com/spryker/persistent-cart-extension/releases)
+[Release Changelog](https://github.com/spryker/price-extension/releases)

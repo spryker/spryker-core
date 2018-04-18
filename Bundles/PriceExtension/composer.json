@@ -1,6 +1,6 @@
 {
-  "name": "spryker/persistent-cart-extension",
-  "description": "PersistentCartExtension module",
+  "name": "spryker/price-extension",
+  "description": "PriceExtension module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1"
