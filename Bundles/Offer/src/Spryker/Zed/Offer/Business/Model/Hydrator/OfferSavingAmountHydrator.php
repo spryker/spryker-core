@@ -71,9 +71,13 @@ class OfferSavingAmountHydrator implements OfferSavingAmountHydratorInterface
             $originalPriceItemTransfer = clone $itemTransfer;
             $originalPriceItemTransfer->setForcedUnitGrossPrice(false);
 
-            $originalPriceQuoteTransfer
-                ->getItems()
-                ->append($originalPriceItemTransfer);
+            $originalPriceItemTransfer->setProductOptions(new ArrayObject());
+            foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
+                $originalProductOptionTransfer = clone $productOptionTransfer;
+                $originalPriceItemTransfer->addProductOption($originalProductOptionTransfer);
+            }
+
+            $originalPriceQuoteTransfer->addItem($originalPriceItemTransfer);
         }
 
         return $this->cartFacade->reloadItems($originalPriceQuoteTransfer);
