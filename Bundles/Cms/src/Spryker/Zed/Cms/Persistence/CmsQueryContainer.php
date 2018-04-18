@@ -129,7 +129,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
                 ->filterByFkLocale($idLocale)
             ->endUse()
             ->withColumn(SpyCmsTemplateTableMap::COL_TEMPLATE_NAME, static::TEMPLATE_NAME)
-            ->withColumn(SpyCmsPageLocalizedAttributesTableMap::COL_NAME, self::CMS_NAME)
+            ->withColumn(SpyCmsPageLocalizedAttributesTableMap::COL_NAME, static::CMS_NAME)
             ->addJoin(
                 SpyCmsPageTableMap::COL_ID_CMS_PAGE,
                 SpyUrlTableMap::COL_FK_RESOURCE_PAGE,
@@ -139,7 +139,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->innerJoinCmsTemplate()
             ->groupBy(SpyCmsPageTableMap::COL_ID_CMS_PAGE)
             ->groupBy(static::TEMPLATE_NAME)
-            ->groupBy(self::CMS_NAME);
+            ->groupBy(static::CMS_NAME);
     }
 
     /**
@@ -195,7 +195,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     {
         return $this->queryPages()
             ->leftJoinSpyCmsPageLocalizedAttributes()
-            ->withColumn(sprintf('GROUP_CONCAT(DISTINCT %s)', SpyCmsPageLocalizedAttributesTableMap::COL_NAME), self::CMS_NAME)
+            ->withColumn(sprintf('GROUP_CONCAT(DISTINCT %s)', SpyCmsPageLocalizedAttributesTableMap::COL_NAME), static::CMS_NAME)
             ->addJoin(
                 SpyCmsPageTableMap::COL_ID_CMS_PAGE,
                 SpyUrlTableMap::COL_FK_RESOURCE_PAGE,

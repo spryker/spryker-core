@@ -58,9 +58,20 @@ class CmsPageReader implements CmsPageReaderInterface
         if ($cmsPageEntity === null) {
             return null;
         }
-
-        $availableLocales = $this->localeFacade->getAvailableLocales();
         $cmsPageTransfer = $this->mapCmsPageTransfer($cmsPageEntity);
+
+        return $this->hydrateCmsPageWithLocalizedAttributes($cmsPageTransfer, $cmsPageEntity);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
+     *
+     * @return \Generated\Shared\Transfer\CmsPageTransfer
+     */
+    protected function hydrateCmsPageWithLocalizedAttributes(CmsPageTransfer $cmsPageTransfer, SpyCmsPage $cmsPageEntity): CmsPageTransfer
+    {
+        $availableLocales = $this->localeFacade->getAvailableLocales();
         $urlLocaleMap = $this->createUrlLocaleMap($cmsPageEntity);
         $localizedAttributesIdEntityMap = $this->createKeyMappingByLocalizedAttributes($cmsPageEntity);
         foreach ($availableLocales as $idLocale => $localeName) {
