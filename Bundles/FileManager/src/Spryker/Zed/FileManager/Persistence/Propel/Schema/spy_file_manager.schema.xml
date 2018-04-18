@@ -3,7 +3,11 @@
 
     <table name="spy_file" phpName="SpyFile">
         <column name="id_file" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_file_directory" type="INTEGER" required="false"/>
         <column name="file_name" type="VARCHAR" size="500" required="true"/>
+        <foreign-key name="spy_file-fk_file_directory" foreignTable="spy_file_directory" phpName="FileDirectory">
+            <reference foreign="id_file_directory" local="fk_file_directory"/>
+        </foreign-key>
         <id-method-parameter value="spy_file_pk_seq"/>
     </table>
 

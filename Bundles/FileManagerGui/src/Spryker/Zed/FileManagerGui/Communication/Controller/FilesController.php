@@ -8,32 +8,40 @@
 namespace Spryker\Zed\FileManagerGui\Communication\Controller;
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\FileManagerGui\Communication\FileManagerGuiCommunicationFactory getFactory()
  */
-class IndexController extends AbstractController
+class FilesController extends AbstractController
 {
+    const FILE_DIRECTORY_ID = 'file-directory-id';
+
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return array
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $fileTable = $this->getFactory()
-            ->createFileTable();
+            ->createFileTable($request->request->get(self::FILE_DIRECTORY_ID));
 
         return [
             'files' => $fileTable->render(),
+            'fileDirectoryId' => $request->request->get(self::FILE_DIRECTORY_ID),
         ];
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function tableAction()
+    public function tableAction(Request $request)
     {
         $table = $this->getFactory()
-            ->createFileTable();
+            ->createFileTable($request->get(self::FILE_DIRECTORY_ID));
 
         return $this->jsonResponse($table->fetchData());
     }

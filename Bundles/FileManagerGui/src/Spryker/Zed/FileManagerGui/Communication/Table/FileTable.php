@@ -27,11 +27,23 @@ class FileTable extends AbstractTable
     protected $queryContainer;
 
     /**
-     * @param \Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerInterface $queryContainer
+     * @var int
      */
-    public function __construct(FileManagerGuiToFileManagerQueryContainerInterface $queryContainer)
-    {
+    protected $fileDirectoryId;
+
+    /**
+     * @param \Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerInterface $queryContainer
+     * @param int|null $fileDirectoryId
+     */
+    public function __construct(
+        FileManagerGuiToFileManagerQueryContainerInterface $queryContainer,
+        $fileDirectoryId = null
+    ) {
         $this->queryContainer = $queryContainer;
+
+        if ($fileDirectoryId) {
+            $this->fileDirectoryId = $fileDirectoryId;
+        }
     }
 
     /**
@@ -58,6 +70,11 @@ class FileTable extends AbstractTable
     protected function prepareData(TableConfiguration $config)
     {
         $query = $this->queryContainer->queryFiles()->orderByIdFile(Criteria::DESC);
+
+        if ($this->fileDirectoryId) {
+            $query->filterByFkFileDirectory($this->fileDirectoryId);
+        }
+
         $queryResults = $this->runQuery($query, $config);
 
         $results = [];

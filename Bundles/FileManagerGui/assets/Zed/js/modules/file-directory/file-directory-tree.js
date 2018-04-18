@@ -87,8 +87,8 @@ function createTreeLoadHandler() {
         $treeContent.html(response);
 
         initJsTree();
-
         $treeContainer.removeClass('hidden');
+        setNodeSelectListener();
     }
 }
 
@@ -96,6 +96,8 @@ function createTreeLoadHandler() {
  * @return {void}
  */
 function initJsTree() {
+    $('#file-directory-files-list').load('/file-manager-gui/files');
+
     $('#file-directory-tree').jstree({
         'core': {
             'check_callback': function (op, node, par, pos, more) {
@@ -115,33 +117,22 @@ function initJsTree() {
                 return !!idFileDirectoryNode;
             }
         }
+    }).on("changed.jstree", function (e, data) {
+        var filesTable = $('#file-directory-files-list').find('table').first();
+        filesTable.DataTable().ajax.url( '/file-manager-gui/files/table?file-directory-id=' + data.node.data.idFileDirectoryNode ).load();
+        $('#add-file-link').attr('href', '/file-manager-gui/add?file-directory-id=' + data.node.data.idFileDirectoryNode);
     });
 }
 
 /**
- * @param {int} idFileDirectory
- * @param {int} idFileDirectoryNode
- *
  * @return {void}
  */
-function loadForm(idFileDirectory, idFileDirectoryNode)  {
-    var data = {
-        'id-file-directory': idFileDirectory,
-        'id-file-directory-node': idFileDirectoryNode
-    };
-    var uri = config.fileDirectoryNodeFormUrlPrefix;
-    if (idFileDirectory) {
-        uri += 'update';
-    } else {
-        uri += 'create';
-    }
-    var url = uri + '?' + $.param(data);
+function setNodeSelectListener() {
+    $('#file-directory-tree').on('select_node.jstree', function(e, data){
+        // var idFileDirectory = data.node.data.idFileDirectory;
 
-    $iframe.addClass('hidden');
-    $formProgressBar.removeClass('hidden');
-
-    $iframe.off('load').on('load', onIframeLoad);
-    $iframe[0].contentWindow.location.replace(url);
+        // loadForm(idFileDirectory, idFileDirectoryNode);
+    });
 }
 
 /**
@@ -149,31 +140,6 @@ function loadForm(idFileDirectory, idFileDirectoryNode)  {
  */
 function resetForm()  {
     $iframe.addClass('hidden');
-}
-
-/**
- * @return {void}
- */
-function onIframeLoad() {
-    changeIframeHeight();
-    $formProgressBar.addClass('hidden');
-    $iframe.removeClass('hidden');
-
-    $($iframe[0].contentWindow).on('resize', changeIframeHeight);
-
-    // tree reloading
-    var treeReloader = $iframe.contents().find('#file-directory-tree-reloader');
-    if (treeReloader.length) {
-        loadTree($(treeReloader[0]).data('idFileDirectory'), $(treeReloader[0]).data('idSelectedTreeNode'), true);
-    }
-}
-
-/**
- * @return {void}
- */
-function changeIframeHeight() {
-    var iframeContentHeight = $iframe[0].contentWindow.document.body.scrollHeight;
-    $iframe.height(iframeContentHeight);
 }
 
 /**

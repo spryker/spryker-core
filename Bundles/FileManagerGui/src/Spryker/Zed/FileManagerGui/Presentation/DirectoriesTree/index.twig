@@ -10,25 +10,26 @@
 {% block content %}
 
     <div class="row">
-        <div id="file-directory-tree">
-            <ul>
-                <li id="file-directory-tree-node-0"
-                    class="jstree-open"
-                    data-jstree='{"type":"navigation"}'
-                >
-                    File Directories Tree
-                    {% include '@FileManagerGui/DirectoriesTree/_partials/nodes.twig' with {nodes: fileDirectoryTree.nodes} %}
-                </li>
-            </ul>
+        <div class="col-lg-6">
+            <div id="file-directory-tree">
+                <ul>
+                    <li id="file-directory-tree-node-0"
+                        class="jstree-open"
+                        data-jstree='{"type":"navigation"}'
+                    >
+                        File Directories Tree
+                        {% include '@FileManagerGui/DirectoriesTree/_partials/nodes.twig' with {nodes: fileDirectoryTree.nodes} %}
+                    </li>
+                </ul>
+            </div>
         </div>
 
         <div class="col-lg-6">
-            {% include '@FileManagerGui/DirectoriesTree/_partials/file-directory-tree.twig' %}
-        </div>
-
-        {#<div class="col-lg-6">#}
+            <div id="file-directory-files-list">
+            </div>
+            {#{% include '@FileManagerGui/DirectoriesTree/_partials/file-directory-tree.twig' %}#}
             {#{% include '@FileManagerGui/DirectoriesTree/_partials/file-directory-tree-form-container.twig' %}#}
-        {#</div>#}
+        </div>
     </div>
 
 {% endblock %}
