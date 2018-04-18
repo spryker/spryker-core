@@ -118,16 +118,16 @@ class QuoteDeleter implements QuoteDeleterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $loadedQuoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return bool
      */
-    protected function isDeleteAllowed(QuoteTransfer $loadedQuoteTransfer, CustomerTransfer $customerTransfer): bool
+    protected function isDeleteAllowed(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): bool
     {
-        return strcmp($loadedQuoteTransfer->getCustomerReference(), $customerTransfer->getCustomerReference()) === 0
+        return strcmp($quoteTransfer->getCustomerReference(), $customerTransfer->getCustomerReference()) === 0
             || ($customerTransfer->getCompanyUserTransfer()
-                && $this->can('WriteSharedCartPermissionPlugin', $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser(), $loadedQuoteTransfer->getIdQuote())
+                && $this->can('WriteSharedCartPermissionPlugin', $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser(), $quoteTransfer->getIdQuote())
             );
     }
 }
