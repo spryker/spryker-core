@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\QuoteUpdateRequestAttributesTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\PriceExtension\Dependency\Plugin\PriceModePostUpdatePluginInterface;
+use Spryker\Shared\Quote\QuoteConfig;
 
 /**
  * @method \Spryker\Client\PersistentCart\PersistentCartClientInterface getClient()
@@ -30,6 +31,9 @@ class UpdatePersistentCartPriceModePlugin extends AbstractPlugin implements Pric
      */
     public function execute(string $priceMode): void
     {
+        if ($this->getFactory()->getQuoteClient()->getStorageStrategy() !== QuoteConfig::STORAGE_STRATEGY_DATABASE) {
+            return;
+        }
         $quoteUpdateRequestTransfer = new QuoteUpdateRequestTransfer();
         $quoteUpdateRequestTransfer->setIdQuote($this->getFactory()->getQuoteClient()->getQuote()->getIdQuote());
         $quoteUpdateRequestTransfer->setCustomer($this->getFactory()->getCustomerClient()->getCustomer());
