@@ -37,6 +37,8 @@ class CreateController extends AbstractController
      */
     public function indexAction(Request $request)
     {
+        //TODO: think about getting rid of CreateOfferHandler
+        //TODO: reduce code duplications in methods of this controller
         if ($request->request->has(static::PARAM_SUBMIT_CUSTOMER_CREATE)) {
             return $this->processCustomerCreateCall($request);
         }
@@ -70,6 +72,7 @@ class CreateController extends AbstractController
 
         $this->storeFormDataIntoSession($form->getData());
 
+        //TODO: use generateUrl for appending get parameters
         return $this->redirectResponse('/customer/add?redirectUrl=' . urlencode('/offer-gui/create'));
     }
 
