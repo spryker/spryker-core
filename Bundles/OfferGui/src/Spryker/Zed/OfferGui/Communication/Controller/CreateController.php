@@ -24,6 +24,7 @@ class CreateController extends AbstractController
     public const PARAM_SUBMIT_CUSTOMER_CREATE = 'submit-customer-create';
     public const PARAM_SUBMIT_RELOAD = 'submit-reload';
     public const PARAM_CUSTOMER_REFERENCE = 'customerReference';
+    public const REDIRECT_URL_OFFER_VIEW = '/offer-gui/view/details';
 
     protected const SESSION_KEY_OFFER_DATA = 'key-offer-data';
 
@@ -228,7 +229,7 @@ class CreateController extends AbstractController
         $this->getFactory()->getMessengerFacade()->getStoredMessages();
 
         $redirectUrl = Url::generate(
-            '/offer-gui/edit',
+            static::REDIRECT_URL_OFFER_VIEW,
             [EditController::PARAM_ID_OFFER => $offerResponseTransfer->getOffer()->getIdOffer()]
         )->build();
 
