@@ -29,7 +29,7 @@
     </transfer>
 
     <transfer name="CompanyUserInvitationCollection">
-        <property name="invitations" type="CompanyUserInvitation[]" singular="invitation"/>
+        <property name="companyUserInvitations" type="CompanyUserInvitation[]" singular="companyUserInvitation"/>
         <property name="pagination" type="Pagination"/>
     </transfer>
 
@@ -69,37 +69,65 @@
         <property name="orderDirection" type="string"/>
     </transfer>
 
-    <transfer name="CompanyUserInvitationImportResult">
+    <transfer name="CompanyUserInvitationImportRequest">
+        <property name="idCompanyUser" type="int"/>
+        <property name="companyUserInvitationCollection" type="companyUserInvitationCollection"/>
+    </transfer>
+
+    <transfer name="CompanyUserInvitationImportResponse">
+        <property name="isSuccess" type="bool"/>
         <property name="errors" type="array" singular="error"/>
     </transfer>
 
-    <transfer name="CompanyUserInvitationSendResult">
-        <property name="success" type="bool"/>
+    <transfer name="CompanyUserInvitationSendRequest">
+        <property name="idCompanyUser" type="int"/>
+        <property name="companyUserInvitation" type="CompanyUserInvitation"/>
     </transfer>
 
-    <transfer name="CompanyUserInvitationSendBatchResult">
+    <transfer name="CompanyUserInvitationSendResponse">
+        <property name="isSuccess" type="bool"/>
+    </transfer>
+
+    <transfer name="CompanyUserInvitationSendBatchResponse">
+        <property name="isSuccess" type="bool"/>
         <property name="invitationsTotal" type="int"/>
         <property name="invitationsFailed" type="int"/>
     </transfer>
 
     <transfer name="CompanyUserInvitationUpdateStatusRequest">
+        <property name="idCompanyUser" type="int"/>
         <property name="statusKey" type="string"/>
-        <property name="companyUserInvitation" type="companyUserInvitation"/>
-    </transfer>
-
-    <transfer name="CompanyUserInvitationCreateResult">
-        <property name="success" type="bool"/>
-        <property name="errorMessage" type="string"/>
         <property name="companyUserInvitation" type="CompanyUserInvitation"/>
     </transfer>
 
-    <transfer name="CompanyUserInvitationUpdateStatusResult">
-        <property name="success" type="bool"/>
-        <property name="companyUserInvitation" type="companyUserInvitation"/>
+    <transfer name="CompanyUserInvitationUpdateStatusResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="companyUserInvitation" type="CompanyUserInvitation"/>
     </transfer>
 
-    <transfer name="CompanyUserInvitationDeleteResult">
-        <property name="success" type="bool"/>
+    <transfer name="CompanyUserInvitationGetCollectionRequest">
+        <property name="idCompanyUser" type="int"/>
+        <property name="criteriaFilter" type="CompanyUserInvitationCriteriaFilter"/>
+    </transfer>
+
+    <transfer name="CompanyUserInvitationCreateRequest">
+        <property name="idCompanyUser" type="int"/>
+        <property name="companyUserInvitation" type="CompanyUserInvitation"/>
+    </transfer>
+
+    <transfer name="CompanyUserInvitationCreateResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="error" type="string"/>
+        <property name="companyUserInvitation" type="CompanyUserInvitation"/>
+    </transfer>
+
+    <transfer name="CompanyUserInvitationDeleteRequest">
+        <property name="idCompanyUser" type="int"/>
+        <property name="companyUserInvitation" type="CompanyUserInvitation"/>
+    </transfer>
+
+    <transfer name="CompanyUserInvitationDeleteResponse">
+        <property name="isSuccess" type="bool"/>
         <property name="companyUserInvitation" type="CompanyUserInvitation"/>
     </transfer>
 

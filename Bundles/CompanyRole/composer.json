@@ -21,7 +21,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Zed\\CompanyRole\\Helper\\": "tests/SprykerTest/Zed/CompanyRole/_support/Helper/"
     }
   },
   "minimum-stability": "dev",

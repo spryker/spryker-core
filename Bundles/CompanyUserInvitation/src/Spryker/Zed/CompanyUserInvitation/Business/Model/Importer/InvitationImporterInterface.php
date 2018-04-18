@@ -7,17 +7,17 @@
 
 namespace Spryker\Zed\CompanyUserInvitation\Business\Model\Importer;
 
-use Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer;
-use Generated\Shared\Transfer\CompanyUserInvitationImportResultTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationImportRequestTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationImportResponseTransfer;
 
 interface InvitationImporterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer $companyUserInvitationCollectionTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationImportRequestTransfer $companyUserInvitationImportRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserInvitationImportResultTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationImportResponseTransfer
      */
     public function importCompanyUserInvitations(
-        CompanyUserInvitationCollectionTransfer $companyUserInvitationCollectionTransfer
-    ): CompanyUserInvitationImportResultTransfer;
+        CompanyUserInvitationImportRequestTransfer $companyUserInvitationImportRequestTransfer
+    ): CompanyUserInvitationImportResponseTransfer;
 }

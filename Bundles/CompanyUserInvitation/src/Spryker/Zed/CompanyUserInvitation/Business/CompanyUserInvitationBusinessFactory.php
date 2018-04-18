@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CompanyUserInvitation\Business;
 
+use Spryker\Zed\CompanyUserInvitation\Business\Model\Deleter\InvitationDeleter;
 use Spryker\Zed\CompanyUserInvitation\Business\Model\Hydrator\InvitationHydrator;
 use Spryker\Zed\CompanyUserInvitation\Business\Model\Importer\InvitationImporter;
 use Spryker\Zed\CompanyUserInvitation\Business\Model\Installer\CompanyUserInvitationStatusInstaller;
@@ -55,6 +56,17 @@ class CompanyUserInvitationBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->createInvitationValidator(),
             $this->createInvitationHydrator()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUserInvitation\Business\Model\Deleter\InvitationDeleterInterface
+     */
+    public function createInvitationDeleter()
+    {
+        return new InvitationDeleter(
+            $this->getEntityManager(),
+            $this->getRepository()
         );
     }
 

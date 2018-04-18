@@ -8,12 +8,17 @@
 namespace Spryker\Zed\CompanyUserInvitation\Business\Model\Reader;
 
 use Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer;
-use Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationGetCollectionRequestTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
+use Spryker\Zed\CompanyUserInvitation\Communication\Plugin\Permission\ManageCompanyUserInvitationPermissionPlugin;
 use Spryker\Zed\CompanyUserInvitation\Persistence\CompanyUserInvitationRepositoryInterface;
+use Spryker\Zed\Kernel\PermissionAwareTrait;
 
 class InvitationReader implements InvitationReaderInterface
 {
+    use PermissionAwareTrait;
+
     /**
      * @var \Spryker\Zed\CompanyUserInvitation\Persistence\CompanyUserInvitationRepositoryInterface
      */
@@ -22,32 +27,26 @@ class InvitationReader implements InvitationReaderInterface
     /**
      * @param \Spryker\Zed\CompanyUserInvitation\Persistence\CompanyUserInvitationRepositoryInterface $repository
      */
-    public function __construct(
-        CompanyUserInvitationRepositoryInterface $repository
-    ) {
+    public function __construct(CompanyUserInvitationRepositoryInterface $repository)
+    {
         $this->repository = $repository;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationGetCollectionRequestTransfer $companyUserInvitationGetCollectionRequestTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer
      */
     public function getCompanyUserInvitationCollection(
-        CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
+        CompanyUserInvitationGetCollectionRequestTransfer $companyUserInvitationGetCollectionRequestTransfer
     ): CompanyUserInvitationCollectionTransfer {
-        return $this->repository->getCompanyUserInvitationCollection($criteriaFilterTransfer);
-    }
+        if (!$this->can(ManageCompanyUserInvitationPermissionPlugin::KEY, $companyUserInvitationGetCollectionRequestTransfer->getIdCompanyUser())) {
+            return (new CompanyUserInvitationCollectionTransfer())->setPagination(new PaginationTransfer());
+        }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $companyUserInvitationTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserInvitationTransfer|null
-     */
-    public function findCompanyUserInvitationById(
-        CompanyUserInvitationTransfer $companyUserInvitationTransfer
-    ): ?CompanyUserInvitationTransfer {
-        return $this->repository->findCompanyUserInvitationById($companyUserInvitationTransfer);
+        return $this->repository->getCompanyUserInvitationCollection(
+            $companyUserInvitationGetCollectionRequestTransfer->getCriteriaFilter()
+        );
     }
 
     /**
@@ -59,5 +58,16 @@ class InvitationReader implements InvitationReaderInterface
         CompanyUserInvitationTransfer $companyUserInvitationTransfer
     ): CompanyUserInvitationTransfer {
         return $this->repository->getCompanyUserInvitationByHash($companyUserInvitationTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $companyUserInvitationTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationTransfer|null
+     */
+    public function findCompanyUserInvitationById(
+        CompanyUserInvitationTransfer $companyUserInvitationTransfer
+    ): ?CompanyUserInvitationTransfer {
+        return $this->repository->findCompanyUserInvitationById($companyUserInvitationTransfer);
     }
 }

@@ -9,6 +9,8 @@ namespace SprykerTest\Zed\CompanyUserInvitation\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\CompanyUserInvitationBuilder;
+use Generated\Shared\Transfer\CompanyUserInvitationCreateRequestTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationDeleteRequestTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationTransfer;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
@@ -27,14 +29,20 @@ class CompanyUserInvitationHelper extends Module
     {
         $companyUserInvitationTransfer = (new CompanyUserInvitationBuilder($seedData))->build();
         $companyUserInvitationTransfer->setIdCompanyUserInvitation(null);
+        $companyUserInvitationCreateRequestTransfer = (new CompanyUserInvitationCreateRequestTransfer())
+            ->setIdCompanyUser($companyUserInvitationTransfer->getFkCompanyUser())
+            ->setCompanyUserInvitation($companyUserInvitationTransfer);
 
         $companyUserInvitationTransfer = $this->getCompanyUserInvitationFacade()
-            ->createCompanyUserInvitation($companyUserInvitationTransfer)
+            ->createCompanyUserInvitation($companyUserInvitationCreateRequestTransfer)
             ->getCompanyUserInvitation();
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($companyUserInvitationTransfer) {
+            $companyUserInvitationDeleteRequestTransfer = (new CompanyUserInvitationDeleteRequestTransfer())
+                ->setIdCompanyUser($companyUserInvitationTransfer->getFkCompanyUser())
+                ->setCompanyUserInvitation($companyUserInvitationTransfer);
             $this->getCompanyUserInvitationFacade()
-                ->deleteCompanyUserInvitation($companyUserInvitationTransfer);
+                ->deleteCompanyUserInvitation($companyUserInvitationDeleteRequestTransfer);
         });
 
         return $companyUserInvitationTransfer;

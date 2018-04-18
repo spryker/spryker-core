@@ -8,16 +8,16 @@
 namespace Spryker\Zed\CompanyUserInvitation\Business\Model\Updater;
 
 use Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusRequestTransfer;
-use Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusResultTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusResponseTransfer;
 
 interface InvitationUpdaterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusRequestTransfer $companyUserInvitationUpdateStatusRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusResultTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusResponseTransfer
      */
     public function updateStatus(
         CompanyUserInvitationUpdateStatusRequestTransfer $companyUserInvitationUpdateStatusRequestTransfer
-    ): CompanyUserInvitationUpdateStatusResultTransfer;
+    ): CompanyUserInvitationUpdateStatusResponseTransfer;
 }

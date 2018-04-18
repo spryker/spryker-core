@@ -18,11 +18,15 @@ suites:
         modules:
             enabled:
                 - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
                 - \SprykerTest\Shared\Customer\Helper\CustomerDataHelper
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Zed\Company\Helper\CompanyHelper
                 - \SprykerTest\Zed\CompanyBusinessUnit\Helper\CompanyBusinessUnitHelper
-                - \SprykerTest\Zed\CompanyUser\Helper\CompanyUserHelper
+                - \SprykerTest\Zed\CompanyRole\Helper\CompanyRoleHelper
+                - \SprykerTest\Shared\CompanyUser\Helper\CompanyUserHelper
                 - \SprykerTest\Zed\CompanyUserInvitation\Helper\CompanyUserInvitationHelper
+                - \SprykerTest\Zed\Permission\Helper\PermissionHelper
+

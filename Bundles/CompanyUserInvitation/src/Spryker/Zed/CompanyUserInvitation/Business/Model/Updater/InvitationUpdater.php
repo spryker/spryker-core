@@ -7,14 +7,17 @@
 
 namespace Spryker\Zed\CompanyUserInvitation\Business\Model\Updater;
 
-use Exception;
 use Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusRequestTransfer;
-use Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusResultTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusResponseTransfer;
+use Spryker\Zed\CompanyUserInvitation\Communication\Plugin\Permission\ManageCompanyUserInvitationPermissionPlugin;
 use Spryker\Zed\CompanyUserInvitation\Persistence\CompanyUserInvitationEntityManagerInterface;
 use Spryker\Zed\CompanyUserInvitation\Persistence\CompanyUserInvitationRepositoryInterface;
+use Spryker\Zed\Kernel\PermissionAwareTrait;
 
 class InvitationUpdater implements InvitationUpdaterInterface
 {
+    use PermissionAwareTrait;
+
     /**
      * @var array
      */
@@ -45,26 +48,32 @@ class InvitationUpdater implements InvitationUpdaterInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusRequestTransfer $companyUserInvitationUpdateStatusRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusResultTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusResponseTransfer
      */
     public function updateStatus(
         CompanyUserInvitationUpdateStatusRequestTransfer $companyUserInvitationUpdateStatusRequestTransfer
-    ): CompanyUserInvitationUpdateStatusResultTransfer {
-        $companyUserInvitationUpdateStatusResultTransfer = new CompanyUserInvitationUpdateStatusResultTransfer();
-        try {
-            $idCompanyUserInvitationStatus = $this->getIdCompanyUserInvitationStatus(
-                $companyUserInvitationUpdateStatusRequestTransfer->getStatusKey()
-            );
-            $companyUserInvitationTransfer = $companyUserInvitationUpdateStatusRequestTransfer->getCompanyUserInvitation();
-            $companyUserInvitationTransfer->setFkCompanyUserInvitationStatus($idCompanyUserInvitationStatus);
+    ): CompanyUserInvitationUpdateStatusResponseTransfer {
+        $companyUserInvitationTransfer = $companyUserInvitationUpdateStatusRequestTransfer->getCompanyUserInvitation();
+        $companyUserInvitationUpdateStatusResponseTransfer = (new CompanyUserInvitationUpdateStatusResponseTransfer())
+            ->setCompanyUserInvitation($companyUserInvitationTransfer)
+            ->setIsSuccess(false);
 
-            $this->entityManager->saveCompanyUserInvitation($companyUserInvitationTransfer);
-            $companyUserInvitationUpdateStatusResultTransfer->setSuccess(true);
-        } catch (Exception $e) {
-            $companyUserInvitationUpdateStatusResultTransfer->setSuccess(false);
+        if (!$this->can(ManageCompanyUserInvitationPermissionPlugin::KEY, $companyUserInvitationUpdateStatusRequestTransfer->getIdCompanyUser())
+            || !$this->repository->findCompanyUserInvitationById($companyUserInvitationTransfer)) {
+            return $companyUserInvitationUpdateStatusResponseTransfer;
         }
 
-        return $companyUserInvitationUpdateStatusResultTransfer;
+        $idCompanyUserInvitationStatus = $this->getIdCompanyUserInvitationStatus(
+            $companyUserInvitationUpdateStatusRequestTransfer->getStatusKey()
+        );
+        $companyUserInvitationTransfer->setFkCompanyUserInvitationStatus($idCompanyUserInvitationStatus);
+
+        $companyUserInvitationTransfer = $this->entityManager->saveCompanyUserInvitation($companyUserInvitationTransfer);
+        $companyUserInvitationUpdateStatusResponseTransfer
+            ->setCompanyUserInvitation($companyUserInvitationTransfer)
+            ->setIsSuccess(true);
+
+        return $companyUserInvitationUpdateStatusResponseTransfer;
     }
 
     /**

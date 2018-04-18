@@ -1,5 +1,9 @@
 namespace: Permission
 actor: Tester
+
+include:
+    - tests/SprykerTest/Zed/Permission
+
 paths:
     tests: tests
     log: tests/_output

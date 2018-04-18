@@ -7,12 +7,17 @@
 
 namespace Spryker\Zed\CompanyUserInvitation\Business\Model\Importer;
 
-use Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer;
-use Generated\Shared\Transfer\CompanyUserInvitationImportResultTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationCreateRequestTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationImportRequestTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationImportResponseTransfer;
 use Spryker\Zed\CompanyUserInvitation\Business\Model\Writer\InvitationWriterInterface;
+use Spryker\Zed\CompanyUserInvitation\Communication\Plugin\Permission\ManageCompanyUserInvitationPermissionPlugin;
+use Spryker\Zed\Kernel\PermissionAwareTrait;
 
 class InvitationImporter implements InvitationImporterInterface
 {
+    use PermissionAwareTrait;
+
     /**
      * @var \Spryker\Zed\CompanyUserInvitation\Business\Model\Writer\InvitationWriterInterface
      */
@@ -27,23 +32,34 @@ class InvitationImporter implements InvitationImporterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer $companyUserInvitationCollectionTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationImportRequestTransfer $companyUserInvitationImportRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserInvitationImportResultTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationImportResponseTransfer
      */
     public function importCompanyUserInvitations(
-        CompanyUserInvitationCollectionTransfer $companyUserInvitationCollectionTransfer
-    ): CompanyUserInvitationImportResultTransfer {
-        $companyUserInvitationImportResultTransfer = new CompanyUserInvitationImportResultTransfer();
-        foreach ($companyUserInvitationCollectionTransfer->getInvitations() as $companyUserInvitationTransfer) {
-            $companyUserInvitationCreateResultTransfer = $this->invitationWriter->create($companyUserInvitationTransfer);
-            if (!$companyUserInvitationCreateResultTransfer->getSuccess()) {
-                $companyUserInvitationImportResultTransfer->addError(
-                    $companyUserInvitationCreateResultTransfer->getErrorMessage()
+        CompanyUserInvitationImportRequestTransfer $companyUserInvitationImportRequestTransfer
+    ): CompanyUserInvitationImportResponseTransfer {
+        $companyUserInvitationImportResponseTransfer = (new CompanyUserInvitationImportResponseTransfer())->setIsSuccess(false);
+
+        if (!$this->can(ManageCompanyUserInvitationPermissionPlugin::KEY, $companyUserInvitationImportRequestTransfer->getIdCompanyUser())) {
+            return $companyUserInvitationImportResponseTransfer;
+        }
+
+        $companyUserInvitationCollection = $companyUserInvitationImportRequestTransfer->getCompanyUserInvitationCollection();
+        foreach ($companyUserInvitationCollection->getCompanyUserInvitations() as $companyUserInvitationTransfer) {
+            $companyUserInvitationCreateRequestTransfer = (new CompanyUserInvitationCreateRequestTransfer())
+                ->setIdCompanyUser($companyUserInvitationImportRequestTransfer->getIdCompanyUser())
+                ->setCompanyUserInvitation($companyUserInvitationTransfer);
+
+            $companyUserInvitationCreateResponseTransfer = $this->invitationWriter->create($companyUserInvitationCreateRequestTransfer);
+            if (!$companyUserInvitationCreateResponseTransfer->getIsSuccess()) {
+                $companyUserInvitationImportResponseTransfer->addError(
+                    $companyUserInvitationCreateResponseTransfer->getError()
                 );
             }
         }
+        $companyUserInvitationImportResponseTransfer->setIsSuccess(true);
 
-        return $companyUserInvitationImportResultTransfer;
+        return $companyUserInvitationImportResponseTransfer;
     }
 }

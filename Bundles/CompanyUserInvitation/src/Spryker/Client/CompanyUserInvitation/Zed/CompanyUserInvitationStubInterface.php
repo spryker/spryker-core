@@ -8,61 +8,63 @@
 namespace Spryker\Client\CompanyUserInvitation\Zed;
 
 use Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer;
-use Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer;
-use Generated\Shared\Transfer\CompanyUserInvitationImportResultTransfer;
-use Generated\Shared\Transfer\CompanyUserInvitationSendBatchResultTransfer;
-use Generated\Shared\Transfer\CompanyUserInvitationSendResultTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationGetCollectionRequestTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationImportRequestTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationImportResponseTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationSendBatchResponseTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationSendRequestTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationSendResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusRequestTransfer;
-use Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusResultTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 
 interface CompanyUserInvitationStubInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer $companyUserInvitationCollectionTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationImportRequestTransfer $companyUserInvitationImportRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserInvitationImportResultTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationImportResponseTransfer
      */
     public function importCompanyUserInvitations(
-        CompanyUserInvitationCollectionTransfer $companyUserInvitationCollectionTransfer
-    ): CompanyUserInvitationImportResultTransfer;
+        CompanyUserInvitationImportRequestTransfer $companyUserInvitationImportRequestTransfer
+    ): CompanyUserInvitationImportResponseTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationGetCollectionRequestTransfer $companyUserInvitationGetCollectionRequestTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer
      */
     public function getCompanyUserInvitationCollection(
-        CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
+        CompanyUserInvitationGetCollectionRequestTransfer $companyUserInvitationGetCollectionRequestTransfer
     ): CompanyUserInvitationCollectionTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $companyUserInvitationTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationSendRequestTransfer $companyUserInvitationSendRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserInvitationSendResultTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationSendResponseTransfer
      */
     public function sendCompanyUserInvitation(
-        CompanyUserInvitationTransfer $companyUserInvitationTransfer
-    ): CompanyUserInvitationSendResultTransfer;
+        CompanyUserInvitationSendRequestTransfer $companyUserInvitationSendRequestTransfer
+    ): CompanyUserInvitationSendResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserInvitationSendBatchResultTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationSendBatchResponseTransfer
      */
     public function sendCompanyUserInvitations(
         CompanyUserTransfer $companyUserTransfer
-    ): CompanyUserInvitationSendBatchResultTransfer;
+    ): CompanyUserInvitationSendBatchResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusRequestTransfer $companyUserInvitationUpdateStatusRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusResultTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusResponseTransfer
      */
     public function updateCompanyUserInvitationStatus(
         CompanyUserInvitationUpdateStatusRequestTransfer $companyUserInvitationUpdateStatusRequestTransfer
-    ): CompanyUserInvitationUpdateStatusResultTransfer;
+    ): CompanyUserInvitationUpdateStatusResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $companyUserInvitationTransfer

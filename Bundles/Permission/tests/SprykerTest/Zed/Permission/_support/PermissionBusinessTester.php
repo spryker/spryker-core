@@ -1,5 +1,5 @@
 <?php
-namespace SprykerTest\Zed\CompanyUser;
+namespace SprykerTest\Zed\Permission;
 
 use Codeception\Actor;
 
@@ -18,9 +18,9 @@ use Codeception\Actor;
  *
  * @SuppressWarnings(PHPMD)
  */
-class CompanyUserBusinessTester extends Actor
+class PermissionBusinessTester extends Actor
 {
-    use _generated\CompanyUserBusinessTesterActions;
+    use _generated\PermissionBusinessTesterActions;
 
    /**
     * Define custom actions here

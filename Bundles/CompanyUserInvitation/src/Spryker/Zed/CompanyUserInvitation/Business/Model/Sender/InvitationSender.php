@@ -7,11 +7,12 @@
 
 namespace Spryker\Zed\CompanyUserInvitation\Business\Model\Sender;
 
-use Exception;
 use Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer;
-use Generated\Shared\Transfer\CompanyUserInvitationSendBatchResultTransfer;
-use Generated\Shared\Transfer\CompanyUserInvitationSendResultTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationGetCollectionRequestTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationSendBatchResponseTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationSendRequestTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationSendResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusRequestTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
@@ -19,9 +20,13 @@ use Spryker\Shared\CompanyUserInvitation\CompanyUserInvitationConstants;
 use Spryker\Zed\CompanyUserInvitation\Business\Model\Mailer\InvitationMailerInterface;
 use Spryker\Zed\CompanyUserInvitation\Business\Model\Reader\InvitationReaderInterface;
 use Spryker\Zed\CompanyUserInvitation\Business\Model\Updater\InvitationUpdaterInterface;
+use Spryker\Zed\CompanyUserInvitation\Communication\Plugin\Permission\ManageCompanyUserInvitationPermissionPlugin;
+use Spryker\Zed\Kernel\PermissionAwareTrait;
 
 class InvitationSender implements InvitationSenderInterface
 {
+    use PermissionAwareTrait;
+
     /**
      * @var \Spryker\Zed\CompanyUserInvitation\Business\Model\Reader\InvitationReaderInterface
      */
@@ -53,66 +58,86 @@ class InvitationSender implements InvitationSenderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $companyUserInvitationTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationSendRequestTransfer $companyUserInvitationSendRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserInvitationSendResultTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationSendResponseTransfer
      */
     public function sendCompanyUserInvitation(
-        CompanyUserInvitationTransfer $companyUserInvitationTransfer
-    ): CompanyUserInvitationSendResultTransfer {
-        $companyUserInvitationSendResultTransfer = new CompanyUserInvitationSendResultTransfer();
-        try {
-            $companyUserInvitationTransfer->requireIdCompanyUserInvitation();
-            $companyUserInvitationTransfer = $this->invitationReader->findCompanyUserInvitationById($companyUserInvitationTransfer);
-            $companyUserInvitationSendResultTransfer->setSuccess($this->send($companyUserInvitationTransfer));
-        } catch (Exception $e) {
-            $companyUserInvitationSendResultTransfer->setSuccess(false);
+        CompanyUserInvitationSendRequestTransfer $companyUserInvitationSendRequestTransfer
+    ): CompanyUserInvitationSendResponseTransfer {
+        $companyUserInvitationSendResponseTransfer = (new CompanyUserInvitationSendResponseTransfer())->setIsSuccess(false);
+
+        if (!$this->can(ManageCompanyUserInvitationPermissionPlugin::KEY, $companyUserInvitationSendRequestTransfer->getIdCompanyUser())) {
+            return $companyUserInvitationSendResponseTransfer;
         }
 
-        return $companyUserInvitationSendResultTransfer;
+        $companyUserInvitationTransfer = $this->invitationReader->findCompanyUserInvitationById(
+            $companyUserInvitationSendRequestTransfer->getCompanyUserInvitation()
+        );
+
+        if (!$companyUserInvitationTransfer) {
+            return $companyUserInvitationSendResponseTransfer;
+        }
+
+        $companyUserInvitationSendResponseTransfer->setIsSuccess(
+            $this->send($companyUserInvitationSendRequestTransfer->getIdCompanyUser(), $companyUserInvitationTransfer)
+        );
+
+        return $companyUserInvitationSendResponseTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserInvitationSendBatchResultTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationSendBatchResponseTransfer
      */
     public function sendCompanyUserInvitations(
         CompanyUserTransfer $companyUserTransfer
-    ): CompanyUserInvitationSendBatchResultTransfer {
+    ): CompanyUserInvitationSendBatchResponseTransfer {
+        $companyUserRequestSendBatchResponseTransfer = (new CompanyUserInvitationSendBatchResponseTransfer())
+            ->setIsSuccess(false);
+
+        if (!$this->can(ManageCompanyUserInvitationPermissionPlugin::KEY, $companyUserTransfer->getIdCompanyUser())) {
+            return $companyUserRequestSendBatchResponseTransfer;
+        }
+
         $companyUserInvitationCollection = $this->createCompanyUserInvitationCollection(
             $companyUserTransfer,
             CompanyUserInvitationConstants::INVITATION_STATUS_NEW
         );
 
         $invitationsTotal = $invitationsFailed = 0;
-        $companyUserRequestSendBatchResultTransfer = new CompanyUserInvitationSendBatchResultTransfer();
-        foreach ($companyUserInvitationCollection->getInvitations() as $companyUserInvitationTransfer) {
+        foreach ($companyUserInvitationCollection->getCompanyUserInvitations() as $companyUserInvitationTransfer) {
             $invitationsTotal++;
-            if (!$this->send($companyUserInvitationTransfer)) {
+            if (!$this->send($companyUserTransfer->getIdCompanyUser(), $companyUserInvitationTransfer)) {
                 $invitationsFailed++;
             }
         }
-        $companyUserRequestSendBatchResultTransfer->setInvitationsTotal($invitationsTotal);
-        $companyUserRequestSendBatchResultTransfer->setInvitationsFailed($invitationsFailed);
 
-        return $companyUserRequestSendBatchResultTransfer;
+        $companyUserRequestSendBatchResponseTransfer->setInvitationsTotal($invitationsTotal);
+        $companyUserRequestSendBatchResponseTransfer->setInvitationsFailed($invitationsFailed);
+        $companyUserRequestSendBatchResponseTransfer->setIsSuccess(true);
+
+        return $companyUserRequestSendBatchResponseTransfer;
     }
 
     /**
+     * @param int $idCompanyUser
      * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $companyUserInvitationTransfer
      *
      * @return bool
      */
     protected function send(
+        int $idCompanyUser,
         CompanyUserInvitationTransfer $companyUserInvitationTransfer
     ): bool {
         $this->invitationMailer->mailInvitation($companyUserInvitationTransfer);
         $companyUserInvitationUpdateStatusRequestTransfer = (new CompanyUserInvitationUpdateStatusRequestTransfer())
             ->setCompanyUserInvitation($companyUserInvitationTransfer)
+            ->setIdCompanyUser($idCompanyUser)
             ->setStatusKey(CompanyUserInvitationConstants::INVITATION_STATUS_PENDING);
 
-        return $this->invitationUpdater->updateStatus($companyUserInvitationUpdateStatusRequestTransfer)->getSuccess();
+        return $this->invitationUpdater->updateStatus($companyUserInvitationUpdateStatusRequestTransfer)->getIsSuccess();
     }
 
     /**
@@ -129,6 +154,10 @@ class InvitationSender implements InvitationSenderInterface
             ->setFkCompanyUser($companyUserTransfer->getIdCompanyUser())
             ->setCompanyUserInvitationStatusKeyIn([$statusKey]);
 
-        return $this->invitationReader->getCompanyUserInvitationCollection($criteriaFilterTransfer);
+        $companyUserInvitationGetCollectionRequestTransfer = (new CompanyUserInvitationGetCollectionRequestTransfer())
+            ->setIdCompanyUser($companyUserTransfer->getIdCompanyUser())
+            ->setCriteriaFilter($criteriaFilterTransfer);
+
+        return $this->invitationReader->getCompanyUserInvitationCollection($companyUserInvitationGetCollectionRequestTransfer);
     }
 }

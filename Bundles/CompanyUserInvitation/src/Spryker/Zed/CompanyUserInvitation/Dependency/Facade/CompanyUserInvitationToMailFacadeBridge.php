@@ -31,6 +31,6 @@ class CompanyUserInvitationToMailFacadeBridge implements CompanyUserInvitationTo
      */
     public function handleMail(MailTransfer $mailTransfer)
     {
-        return $this->mailFacade->handleMail($mailTransfer);
+        $this->mailFacade->handleMail($mailTransfer);
     }
 }

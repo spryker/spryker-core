@@ -1,4 +1,4 @@
-namespace: SprykerTest\Zed\CompanyUser
+namespace: SprykerTest\Zed\CompanyRole
 
 paths:
     tests: .
@@ -14,10 +14,10 @@ coverage:
 suites:
     Business:
         path: Business
-        class_name: CompanyUserBusinessTester
+        class_name: CompanyRoleBusinessTester
         modules:
             enabled:
                 - Asserts
-                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
-                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Zed\CompanyRole\Helper\CompanyRoleHelper

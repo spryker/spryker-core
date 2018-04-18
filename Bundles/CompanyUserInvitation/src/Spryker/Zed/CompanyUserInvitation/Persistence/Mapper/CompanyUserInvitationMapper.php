@@ -74,7 +74,7 @@ class CompanyUserInvitationMapper implements CompanyUserInvitationMapperInterfac
                 $this->mapEntityTransferToCompanyUserInvitationTransfer($spyCompanyUserInvitationEntityTransfer)
             );
         }
-        $companyUserInvitationCollectionTransfer->setInvitations($companyUserInvitations);
+        $companyUserInvitationCollectionTransfer->setCompanyUserInvitations($companyUserInvitations);
 
         return $companyUserInvitationCollectionTransfer;
     }

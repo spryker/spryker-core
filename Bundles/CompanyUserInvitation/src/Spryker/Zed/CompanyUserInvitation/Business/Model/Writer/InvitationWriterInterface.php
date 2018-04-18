@@ -7,27 +7,17 @@
 
 namespace Spryker\Zed\CompanyUserInvitation\Business\Model\Writer;
 
-use Generated\Shared\Transfer\CompanyUserInvitationCreateResultTransfer;
-use Generated\Shared\Transfer\CompanyUserInvitationDeleteResultTransfer;
-use Generated\Shared\Transfer\CompanyUserInvitationTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationCreateRequestTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationCreateResponseTransfer;
 
 interface InvitationWriterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $companyUserInvitationTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationCreateRequestTransfer $companyUserInvitationCreateRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserInvitationCreateResultTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationCreateResponseTransfer
      */
     public function create(
-        CompanyUserInvitationTransfer $companyUserInvitationTransfer
-    ): CompanyUserInvitationCreateResultTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $companyUserInvitationTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserInvitationDeleteResultTransfer
-     */
-    public function delete(
-        CompanyUserInvitationTransfer $companyUserInvitationTransfer
-    ): CompanyUserInvitationDeleteResultTransfer;
+        CompanyUserInvitationCreateRequestTransfer $companyUserInvitationCreateRequestTransfer
+    ): CompanyUserInvitationCreateResponseTransfer;
 }

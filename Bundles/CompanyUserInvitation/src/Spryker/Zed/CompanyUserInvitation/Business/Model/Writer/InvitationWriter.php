@@ -7,16 +7,18 @@
 
 namespace Spryker\Zed\CompanyUserInvitation\Business\Model\Writer;
 
-use Exception;
-use Generated\Shared\Transfer\CompanyUserInvitationCreateResultTransfer;
-use Generated\Shared\Transfer\CompanyUserInvitationDeleteResultTransfer;
-use Generated\Shared\Transfer\CompanyUserInvitationTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationCreateRequestTransfer;
+use Generated\Shared\Transfer\CompanyUserInvitationCreateResponseTransfer;
 use Spryker\Zed\CompanyUserInvitation\Business\Model\Hydrator\InvitationHydratorInterface;
 use Spryker\Zed\CompanyUserInvitation\Business\Model\Validator\InvitationValidatorInterface;
+use Spryker\Zed\CompanyUserInvitation\Communication\Plugin\Permission\ManageCompanyUserInvitationPermissionPlugin;
 use Spryker\Zed\CompanyUserInvitation\Persistence\CompanyUserInvitationEntityManagerInterface;
+use Spryker\Zed\Kernel\PermissionAwareTrait;
 
 class InvitationWriter implements InvitationWriterInterface
 {
+    use PermissionAwareTrait;
+
     /**
      * @var \Spryker\Zed\CompanyUserInvitation\Persistence\CompanyUserInvitationEntityManagerInterface
      */
@@ -48,53 +50,34 @@ class InvitationWriter implements InvitationWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $companyUserInvitationTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationCreateRequestTransfer $companyUserInvitationCreateRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserInvitationCreateResultTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationCreateResponseTransfer
      */
     public function create(
-        CompanyUserInvitationTransfer $companyUserInvitationTransfer
-    ): CompanyUserInvitationCreateResultTransfer {
-        $companyUserInvitationCreateResultTransfer = (new CompanyUserInvitationCreateResultTransfer())
-            ->setCompanyUserInvitation($companyUserInvitationTransfer);
+        CompanyUserInvitationCreateRequestTransfer $companyUserInvitationCreateRequestTransfer
+    ): CompanyUserInvitationCreateResponseTransfer {
+        $companyUserInvitationTransfer = $companyUserInvitationCreateRequestTransfer->getCompanyUserInvitation();
+        $companyUserInvitationCreateResponseTransfer = (new CompanyUserInvitationCreateResponseTransfer())
+            ->setCompanyUserInvitation($companyUserInvitationTransfer)
+            ->setIsSuccess(false);
+
+        if (!$this->can(ManageCompanyUserInvitationPermissionPlugin::KEY, $companyUserInvitationCreateRequestTransfer->getIdCompanyUser())) {
+            return $companyUserInvitationCreateResponseTransfer;
+        }
 
         if (!$this->invitationValidator->isValidInvitation($companyUserInvitationTransfer)) {
-            $companyUserInvitationCreateResultTransfer
-                ->setSuccess(false)
-                ->setErrorMessage($this->invitationValidator->getLastErrorMessage());
+            $companyUserInvitationCreateResponseTransfer->setError($this->invitationValidator->getLastErrorMessage());
 
-            return $companyUserInvitationCreateResultTransfer;
+            return $companyUserInvitationCreateResponseTransfer;
         }
 
         $invitationTransfer = $this->invitationHydrator->hydrate($companyUserInvitationTransfer);
         $companyUserInvitationTransfer = $this->entityManager->saveCompanyUserInvitation($invitationTransfer);
-        $companyUserInvitationCreateResultTransfer
+        $companyUserInvitationCreateResponseTransfer
             ->setCompanyUserInvitation($companyUserInvitationTransfer)
-            ->setSuccess(true);
+            ->setIsSuccess(true);
 
-        return $companyUserInvitationCreateResultTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $companyUserInvitationTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserInvitationDeleteResultTransfer
-     */
-    public function delete(
-        CompanyUserInvitationTransfer $companyUserInvitationTransfer
-    ): CompanyUserInvitationDeleteResultTransfer {
-        $companyUserInvitationDeleteResultTransfer = (new CompanyUserInvitationDeleteResultTransfer())
-            ->setCompanyUserInvitation($companyUserInvitationTransfer);
-
-        try {
-            $this->entityManager->deleteCompanyUserInvitationById(
-                $companyUserInvitationTransfer->getIdCompanyUserInvitation()
-            );
-            $companyUserInvitationDeleteResultTransfer->setSuccess(true);
-        } catch (Exception $e) {
-            $companyUserInvitationDeleteResultTransfer->setSuccess(false);
-        }
-
-        return $companyUserInvitationDeleteResultTransfer;
+        return $companyUserInvitationCreateResponseTransfer;
     }
 }

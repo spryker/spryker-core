@@ -154,7 +154,7 @@ class InvitationValidator implements InvitationValidatorInterface
             $companyUserInvitationCriteriaFilterTransfer
         );
 
-        foreach ($companyUserInvitationCollection->getInvitations() as $companyUserInvitationTransfer) {
+        foreach ($companyUserInvitationCollection->getCompanyUserInvitations() as $companyUserInvitationTransfer) {
             $this->emailCache[] = $companyUserInvitationTransfer->getEmail();
         }
     }
