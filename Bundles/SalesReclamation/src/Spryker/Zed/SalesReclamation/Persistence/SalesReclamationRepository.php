@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SalesReclamation\Persistence;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ReclamationTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\SalesReclamation\Persistence\Mapper\SalesReclamationMapperInterface;
@@ -43,7 +44,7 @@ class SalesReclamationRepository extends AbstractRepository implements SalesRecl
             ->filterByFkSalesReclamation($reclamationTransfer->getIdSalesReclamation());
         $createdOrdersEntityTransfer = $this->buildQueryFromCriteria($query)->find();
         if ($createdOrdersEntityTransfer) {
-            $spyReclamationEntityTransfer->setSpySalesOrders($createdOrdersEntityTransfer);
+            $spyReclamationEntityTransfer->setSpySalesOrders(new ArrayObject($createdOrdersEntityTransfer));
         }
 
         return $this->getMapper()->mapEntityTransferToReclamationTransfer($spyReclamationEntityTransfer);

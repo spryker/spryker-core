@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\SalesReclamation\Persistence\Mapper;
 
+use ArrayObject;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ReclamationItemTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
 use Generated\Shared\Transfer\SpySalesReclamationEntityTransfer;
@@ -45,8 +47,9 @@ class SalesReclamationMapper implements SalesReclamationMapperInterface
         SpySalesReclamationEntityTransfer $reclamationEntityTransfer
     ): ReclamationTransfer {
         $reclamationTransfer = new ReclamationTransfer();
-        $reclamationTransfer->fromArray($reclamationEntityTransfer->toArray(), true);
-        $reclamationTransfer->setStatus($reclamationEntityTransfer->getState());
+        $reclamationTransfer
+            ->fromArray($reclamationEntityTransfer->toArray(), true)
+            ->setStatus($reclamationEntityTransfer->getState());
 
         $reclamationItemsEntityTransfer = $reclamationEntityTransfer->getSpySalesReclamationItems();
         if ($reclamationItemsEntityTransfer->count()) {
@@ -54,6 +57,17 @@ class SalesReclamationMapper implements SalesReclamationMapperInterface
                 $reclamationItemTransfer = $this->mapEntityTransferToReclamationItemTransfer($reclamationItemEntityTransfer);
                 $reclamationTransfer->addReclamationItem($reclamationItemTransfer);
             }
+        }
+
+        $createdOrders = $reclamationEntityTransfer->getSpySalesOrders();
+        if ($createdOrders->count()) {
+            $createdOrdersTransfer = new ArrayObject();
+            foreach ($createdOrders as $orderEntityTransfer) {
+                $createdOrderTransfer = new OrderTransfer();
+                $createdOrderTransfer->fromArray($orderEntityTransfer->toArray(), true);
+                $createdOrdersTransfer->append($createdOrderTransfer);
+            }
+            $reclamationTransfer->setCreatedOrders($createdOrdersTransfer);
         }
 
         return $reclamationTransfer;
