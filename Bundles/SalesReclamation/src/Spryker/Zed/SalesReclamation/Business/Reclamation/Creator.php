@@ -34,8 +34,9 @@ class Creator implements CreatorInterface
      *
      * @return null|\Generated\Shared\Transfer\ReclamationTransfer
      */
-    public function createReclamation(ReclamationCreateRequestTransfer $reclamationCreateRequestTransfer): ?ReclamationTransfer
-    {
+    public function createReclamation(
+        ReclamationCreateRequestTransfer $reclamationCreateRequestTransfer
+    ): ?ReclamationTransfer {
         $reclamationCreateRequestTransfer
             ->requireOrder()
             ->requireOrderItems();
