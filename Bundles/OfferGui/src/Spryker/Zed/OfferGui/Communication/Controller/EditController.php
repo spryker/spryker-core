@@ -204,7 +204,7 @@ class EditController extends AbstractController
             '/offer-gui/edit',
             [
                 static::PARAM_ID_OFFER => $offerTransfer->getIdOffer(),
-                CreateController::PARAM_KEY_INITIAL_OFFER => $offerKey
+                CreateController::PARAM_KEY_INITIAL_OFFER => $offerKey,
             ]
         )->build();
 

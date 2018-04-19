@@ -154,7 +154,6 @@ class CreateController extends AbstractController
         $offerJsonData = $this->getFactory()->getUtilEncoding()->encodeJson($offerTransfer->toArray());
         $offerKey = $this->generateOfferKey($offerJsonData);
 
-
         $this->getFactory()
             ->getSessionClient()
             ->set($offerKey, $offerJsonData);
@@ -184,7 +183,6 @@ class CreateController extends AbstractController
     }
 
     /**
-     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Generated\Shared\Transfer\OfferTransfer
