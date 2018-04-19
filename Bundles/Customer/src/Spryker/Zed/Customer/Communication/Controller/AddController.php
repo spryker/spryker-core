@@ -20,7 +20,7 @@ class AddController extends AbstractController
     const MESSAGE_CUSTOMER_CREATE_SUCCESS = 'Customer was created successfully.';
     const MESSAGE_CUSTOMER_CREATE_ERROR = 'Customer was not created.';
 
-    const REDIRECT_URL_DEFAULT = '/customer';
+    const REDIRECT_URL_DEFAULT = '%2Fcustomer';
     const REDIRECT_URL_KEY = 'redirectUrl';
 
     /**
@@ -30,7 +30,7 @@ class AddController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $baseRedirectUrl = $request->query->get(static::REDIRECT_URL_KEY, static::REDIRECT_URL_DEFAULT);
+        $baseRedirectUrl = urldecode($request->query->get(static::REDIRECT_URL_KEY, static::REDIRECT_URL_DEFAULT));
         $dataProvider = $this->getFactory()->createCustomerFormDataProvider();
 
         $form = $this->getFactory()
