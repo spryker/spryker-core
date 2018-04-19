@@ -11,6 +11,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Orm\Zed\SalesReclamation\Persistence\SpySalesReclamationItemQuery;
 use Orm\Zed\SalesReclamation\Persistence\SpySalesReclamationQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\SalesReclamation\Persistence\Mapper\SalesReclamationMapper;
 
 /**
  * @method \Spryker\Zed\SalesReclamation\SalesReclamationConfig getConfig()
@@ -40,5 +41,13 @@ class SalesReclamationPersistenceFactory extends AbstractPersistenceFactory
     public function createSalesOrderQuery(): SpySalesOrderQuery
     {
         return SpySalesOrderQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesReclamation\Persistence\Mapper\SalesReclamationMapperInterface
+     */
+    public function createSalesReclamationMapper()
+    {
+        return new SalesReclamationMapper();
     }
 }

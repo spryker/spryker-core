@@ -19,6 +19,7 @@ use Spryker\Zed\SalesReclamation\SalesReclamationDependencyProvider;
 
 /**
  * @method \Spryker\Zed\SalesReclamation\SalesReclamationConfig getConfig()
+ * @method \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationQueryContainerInterface getQueryContainer()
  */
 class SalesReclamationBusinessFactory extends AbstractBusinessFactory
@@ -28,7 +29,9 @@ class SalesReclamationBusinessFactory extends AbstractBusinessFactory
      */
     public function createReclamationCreator(): CreatorInterface
     {
-        return new Creator();
+        return new Creator(
+            $this->getEntityManager()
+        );
     }
 
     /**
@@ -52,9 +55,9 @@ class SalesReclamationBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-        /**
-         * @return \Spryker\Zed\SalesReclamation\Dependency\Facade\SalesReclamationToSalesFacadeInterface
-         */
+    /**
+     * @return \Spryker\Zed\SalesReclamation\Dependency\Facade\SalesReclamationToSalesFacadeInterface
+     */
     public function getSalesFacade(): SalesReclamationToSalesFacadeInterface
     {
         return $this->getProvidedDependency(SalesReclamationDependencyProvider::FACADE_SALES);

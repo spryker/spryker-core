@@ -13,11 +13,24 @@ use Generated\Shared\Transfer\ReclamationItemTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
 use Orm\Zed\SalesReclamation\Persistence\Map\SpySalesReclamationItemTableMap;
 use Orm\Zed\SalesReclamation\Persistence\Map\SpySalesReclamationTableMap;
-use Orm\Zed\SalesReclamation\Persistence\SpySalesReclamation;
-use Orm\Zed\SalesReclamation\Persistence\SpySalesReclamationItem;
+use Spryker\Zed\SalesReclamation\Persistence\SalesReclamationEntityManagerInterface;
 
 class Creator implements CreatorInterface
 {
+    /**
+     * @var \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationEntityManagerInterface
+     */
+    private $reclamationManager;
+
+    /**
+     * @param \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationEntityManagerInterface $reclamationManager
+     */
+    public function __construct(
+        SalesReclamationEntityManagerInterface $reclamationManager
+    ) {
+        $this->reclamationManager = $reclamationManager;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\ReclamationCreateRequestTransfer $reclamationCreateRequestTransfer
      *
@@ -47,58 +60,37 @@ class Creator implements CreatorInterface
             $orderTransfer->getLastName()
         );
 
-        $spySaleReclamation = new SpySalesReclamation();
-        $spySaleReclamation->setFkSalesOrder($orderTransfer->getIdSalesOrder());
-        $spySaleReclamation->setCustomerName($customer);
-        $spySaleReclamation->setCustomerReference($orderTransfer->getCustomerReference());
-        $spySaleReclamation->setCustomerEmail($orderTransfer->getEmail());
-        $spySaleReclamation->setState(SpySalesReclamationTableMap::COL_STATE_OPEN);
-
-        $spySaleReclamation->save();
-
         $reclamationTransfer = new ReclamationTransfer();
         $reclamationTransfer->setOrder($orderTransfer);
         $reclamationTransfer->setCustomerName($customer);
-        $reclamationTransfer->setIdSalesReclamation($spySaleReclamation->getIdSalesReclamation());
-        $reclamationTransfer->setStatus($spySaleReclamation->getState());
+        $reclamationTransfer->setCustomerReference($orderTransfer->getCustomerReference());
+        $reclamationTransfer->setCustomerEmail($orderTransfer->getEmail());
+        $reclamationTransfer->setStatus(SpySalesReclamationTableMap::COL_STATE_OPEN);
 
         $orderItemsTransfer = $reclamationCreateRequestTransfer->getOrderItems();
         foreach ($orderItemsTransfer as $orderItemTransfer) {
-            $reclamationTransfer = $this->addReclamationItem(
-                $spySaleReclamation,
-                $orderItemTransfer,
-                $reclamationTransfer
-            );
+            $reclamationItemTransfer = $this->addReclamationItem($orderItemTransfer);
+            $reclamationTransfer->addReclamationItem($reclamationItemTransfer);
         }
+
+        $reclamationTransfer = $this->reclamationManager->saveReclamation($reclamationTransfer);
 
         return $reclamationTransfer;
     }
 
     /**
-     * @param \Orm\Zed\SalesReclamation\Persistence\SpySalesReclamation $spySaleReclamation
      * @param \Generated\Shared\Transfer\ItemTransfer $orderItemTransfer
-     * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
      *
-     * @return \Generated\Shared\Transfer\ReclamationTransfer
+     * @return \Generated\Shared\Transfer\ReclamationItemTransfer
      */
-    protected function addReclamationItem(
-        SpySalesReclamation $spySaleReclamation,
-        ItemTransfer $orderItemTransfer,
-        ReclamationTransfer $reclamationTransfer
-    ): ReclamationTransfer {
+    protected function addReclamationItem(ItemTransfer $orderItemTransfer): ReclamationItemTransfer
+    {
         $orderItemTransfer->requireIdSalesOrderItem();
-
-        $spySaleReclamationItem = new SpySalesReclamationItem();
-        $spySaleReclamationItem->setReclamation($spySaleReclamation);
-        $spySaleReclamationItem->setFkSalesOrderItem($orderItemTransfer->getIdSalesOrderItem());
-        $spySaleReclamationItem->setState(SpySalesReclamationItemTableMap::COL_STATE_OPEN);
-
-        $spySaleReclamationItem->save();
 
         $reclamationItemTransfer = new ReclamationItemTransfer();
         $reclamationItemTransfer->setOrderItem($orderItemTransfer);
-        $reclamationTransfer->addReclamationItem($reclamationItemTransfer);
+        $reclamationItemTransfer->setStatus(SpySalesReclamationItemTableMap::COL_STATE_OPEN);
 
-        return $reclamationTransfer;
+        return $reclamationItemTransfer;
     }
 }
