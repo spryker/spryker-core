@@ -6,10 +6,10 @@
         <icon>fa-file</icon>
         <pages>
             <group>
-                <label>File list</label>
-                <title>File list</title>
+                <label>File Tree</label>
+                <title>File Tree</title>
                 <bundle>file-manager-gui</bundle>
-                <controller>index</controller>
+                <controller>directories-tree</controller>
                 <action>index</action>
                 <visible>1</visible>
             </group>
