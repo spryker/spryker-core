@@ -22,6 +22,7 @@ class EditController extends AbstractController
     public const PARAM_ID_OFFER = 'id-offer';
     public const PARAM_SUBMIT_RELOAD = 'submit-reload';
     public const PARAM_SUBMIT_PERSIST = 'submit-persist';
+
     protected const MESSAGE_OFFER_UPDATE_SUCCESS = 'Offer was updated successfully.';
 
     /**
@@ -53,15 +54,33 @@ class EditController extends AbstractController
             $quoteTransfer->setVoucherDiscounts($voucherDiscounts);
 
             //remove items
-            $itemTransfers = new ArrayObject();
-            foreach ($quoteTransfer->getItems() as $itemTransfer) {
-                if ($itemTransfer->getQuantity() > 0) {
-                    $itemTransfers->append($itemTransfer);
-                }
-            }
-            $quoteTransfer->setItems($itemTransfers);
+//            $itemTransfers = new ArrayObject();
+//            foreach ($quoteTransfer->getItems() as $itemTransfer) {
+//                if ($itemTransfer->getQuantity() > 0) {
+//                    $itemTransfers->append($itemTransfer);
+//                }
+//            }
+//            $quoteTransfer->setItems($itemTransfers);
 
             //add items
+            $items = clone $quoteTransfer->getItems();
+            $quoteTransfer->setItems(new ArrayObject());
+
+            foreach ($items as $itemTransfer) {
+                if ($itemTransfer->getQuantity() <= 0) {
+                    continue;
+                }
+
+                $cartChangeTransfer = new CartChangeTransfer();
+                $cartChangeTransfer->setQuote($quoteTransfer);
+                $cartChangeTransfer->addItem($itemTransfer);
+
+                $quoteTransfer = $this->getFactory()
+                    ->getCartFacade()
+                    ->add($cartChangeTransfer);
+            }
+
+            //add incoming items
             $incomingItems = new ArrayObject;
             foreach ($quoteTransfer->getIncomingItems() as $itemTransfer) {
                 if ($itemTransfer->getSku()) {
@@ -79,12 +98,14 @@ class EditController extends AbstractController
                     ->add($cartChangeTransfer);
             }
 
-            //update cart
-            $quoteTransfer = $this->getFactory()
-                ->getCartFacade()
-                ->reloadItems($quoteTransfer);
-
-            $offerTransfer->setQuote($quoteTransfer);
+//            //update cart
+//            if ($quoteTransfer->getItems()->count()) {
+//                $quoteTransfer = $this->getFactory()
+//                    ->getCartFacade()
+//                    ->reloadItems($quoteTransfer);
+//            }
+//
+//            $offerTransfer->setQuote($quoteTransfer);
 
             //refresh form after calculations
             $form = $this->getFactory()->getOfferForm($offerTransfer, $request);
@@ -120,6 +141,10 @@ class EditController extends AbstractController
         $offerTransfer = $this->getFactory()
             ->getOfferFacade()
             ->getOfferById($offerTransfer);
+
+        if ($request->isMethod('POST')) {
+            $offerTransfer->getQuote()->setItems(new ArrayObject());
+        }
 
         return $offerTransfer;
     }

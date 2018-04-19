@@ -8,6 +8,7 @@
 namespace Spryker\Zed\OfferGui\Communication\Form\Item;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Spryker\Zed\Kernel\Locator;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -19,20 +20,25 @@ use Symfony\Component\Validator\Constraints\Regex;
 
 /**
  * @method \Spryker\Zed\OfferGui\Communication\OfferGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\OfferGui\OfferGuiConfig getConfig()
  */
 class ItemType extends AbstractType
 {
     public const FIELD_SKU = 'sku';
+    public const FIELD_GROUP_KEY = 'groupKey';
     public const FIELD_QUANTITY = 'quantity';
-
     public const FIELD_OFFER_FEE = 'offerFee';
     public const FIELD_STOCK = 'stock';
     public const FIELD_UNIT_GROSS_PRICE = 'unitGrossPrice';
+    public const FIELD_UNIT_NET_PRICE = 'unitNetPrice';
+    public const FIELD_SOURCE_UNIT_GROSS_PRICE = 'sourceUnitGrossPrice';
+    public const FIELD_SOURCE_UNIT_NET_PRICE = 'sourceUnitNetPrice';
     public const FIELD_OFFER_DISCOUNT = 'offerDiscount';
     public const FIELD_UNIT_SUBTOTAL_AGGREGATION = 'unitSubtotalAggregation';
     public const FIELD_SUM_SUBTOTAL_AGGREGATION = 'sumSubtotalAggregation';
 
     public const FIELD_FORCED_UNIT_GROSS_PRICE = 'forcedUnitGrossPrice';
+    public const FIELD_FORCED_UNIT_NET_PRICE = 'forcedUnitNetPrice';
 
     protected const ERROR_MESSAGE_PRICE = 'Invalid Price.';
     protected const PATTERN_MONEY = '/^\d*\.?\d{0,2}$/';
@@ -47,14 +53,14 @@ class ItemType extends AbstractType
     {
         $this
             ->addSkuField($builder, $options)
-            ->addQuantityField($builder, $options)
-            ->addUnitGrossPriceField($builder, $options)
+            ->addUnitPriceField($builder, $options)
+            ->addManualUnitPriceField($builder, $options)
             ->addOfferDiscountField($builder, $options)
             ->addOfferFeeField($builder, $options)
             ->addStockField($builder, $options)
+            ->addQuantityField($builder, $options)
             ->addUnitSubtotalAggregationPriceField($builder, $options)
-            ->addSumSubtotalAggregationPriceField($builder, $options)
-            ->addForcedUnitGrossPriceField($builder, $options);
+            ->addSumSubtotalAggregationPriceField($builder, $options);
     }
 
     /**
@@ -67,7 +73,10 @@ class ItemType extends AbstractType
     {
         $builder->add(static::FIELD_SKU, TextType::class, [
             'label' => 'SKU',
-            'required' => false,
+            'required' => true,
+            'attr' => [
+                'readonly' => true
+            ]
         ]);
 
         return $this;
@@ -79,11 +88,55 @@ class ItemType extends AbstractType
      *
      * @return $this
      */
+    protected function addGroupKeyField(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(static::FIELD_GROUP_KEY, HiddenType::class);
+
+        return $this;
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addUnitPriceField(FormBuilderInterface $builder, array $options)
+    {
+        if ($this->isDefaultPriceModeGross()) {
+            return $this->addUnitGrossPriceField($builder, $options);
+        }
+
+        return $this->addUnitNetPriceField($builder, $options);
+    }
+
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return ItemType
+     */
+    protected function addManualUnitPriceField(FormBuilderInterface $builder, array $options)
+    {
+        if ($this->isDefaultPriceModeGross()) {
+            return $this->addManualGrossPriceField($builder, $options);
+        }
+
+        return $this->addManualNetPriceField($builder, $options);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
     protected function addUnitGrossPriceField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_UNIT_GROSS_PRICE, NumberType::class, [
-            'label' => 'Unit Gross Price',
+            'label' => 'Gross Price',
             'required' => false,
+            'disabled' => true,
             'constraints' => [
                 $this->createMoneyConstraint($options),
             ],
@@ -91,6 +144,78 @@ class ItemType extends AbstractType
 
         $builder
             ->get(static::FIELD_UNIT_GROSS_PRICE)
+            ->addModelTransformer($this->createMoneyModelTransformer());
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addUnitNetPriceField(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(static::FIELD_UNIT_NET_PRICE, NumberType::class, [
+            'label' => 'Net Price',
+            'required' => false,
+            'disabled' => true,
+            'constraints' => [
+                $this->createMoneyConstraint($options),
+            ],
+        ]);
+
+        $builder
+            ->get(static::FIELD_UNIT_NET_PRICE)
+            ->addModelTransformer($this->createMoneyModelTransformer());
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addManualGrossPriceField(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(static::FIELD_SOURCE_UNIT_GROSS_PRICE, NumberType::class, [
+            'label' => 'Manual Gross Price',
+            'required' => false,
+            'disabled' => !$this->isDefaultPriceModeGross(),
+            'constraints' => [
+                $this->createMoneyConstraint($options),
+            ],
+        ]);
+
+        $builder
+            ->get(static::FIELD_SOURCE_UNIT_GROSS_PRICE)
+            ->addModelTransformer($this->createMoneyModelTransformer());
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addManualNetPriceField(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(static::FIELD_SOURCE_UNIT_NET_PRICE, NumberType::class, [
+            'label' => 'Manual Net Price',
+            'required' => false,
+            'disabled' => !$this->isDefaultPriceModeNet(),
+            'constraints' => [
+                $this->createMoneyConstraint($options),
+            ],
+        ]);
+
+        $builder
+            ->get(static::FIELD_SOURCE_UNIT_NET_PRICE)
             ->addModelTransformer($this->createMoneyModelTransformer());
 
         return $this;
@@ -229,21 +354,6 @@ class ItemType extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     *
-     * @return $this
-     */
-    protected function addForcedUnitGrossPriceField(FormBuilderInterface $builder, array $options)
-    {
-        $builder->add(static::FIELD_FORCED_UNIT_GROSS_PRICE, HiddenType::class, [
-            'data' => 1,
-        ]);
-
-        return $this;
-    }
-
-    /**
      * @param array $options
      *
      * @return \Symfony\Component\Validator\Constraints\Regex
@@ -302,8 +412,26 @@ class ItemType extends AbstractType
                 }
             },
             function ($value) {
-                return $value * 100;
+                if ($value !== null) {
+                    return $value * 100;
+                }
             }
         );
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isDefaultPriceModeNet()
+    {
+        return Locator::getInstance()->price()->facade()->getDefaultPriceMode() === $this->getConfig()->getPriceModeNet();
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isDefaultPriceModeGross()
+    {
+        return Locator::getInstance()->price()->facade()->getDefaultPriceMode() === $this->getConfig()->getPriceModeGross();
     }
 }

@@ -27,17 +27,20 @@
             <table>
                 {% for item in form.items %}
                     <tr>
-                        <td>{{ form_row(item.sku) }}</td>
-                        <td>
-                            {{ form_row(item.unitGrossPrice) }}
-                            {{ form_row(item.forcedUnitGrossPrice) }}
-                        </td>
-                        <td>{{ form_row(item.offerDiscount, { 'attr': {'placeholder': '0'}}) }}</td>
-                        <td>{{ form_row(item.stock) }}</td>
-                        <td>{{ form_row(item.offerFee, { 'attr': {'placeholder': '0'}}) }}</td>
-                        <td>{{ form_row(item.quantity) }}</td>
-                        <td>{{ form_row(item.unitSubtotalAggregation) }}</td>
-                        <td>{{ form_row(item.sumSubtotalAggregation) }}</td>
+                        {% for itemField in item %}
+                            <td>{{ form_row(itemField) }}</td>
+                        {% endfor %}
+                        {#<td>{{ form_row(item.sku) }}</td>#}
+                        {#<td>{{ form_row(item.unitGrossPrice) }}</td>#}
+                        {#<td>{{ form_row(item.unitNetPrice) }}</td>#}
+                        {#<td>{{ form_row(item.sourceUnitGrossPrice) }}</td>#}
+                        {#<td>{{ form_row(item.sourceUnitNetPrice) }}</td>#}
+                        {#<td>{{ form_row(item.offerDiscount, { 'attr': {'placeholder': '0'}}) }}</td>#}
+                        {#<td>{{ form_row(item.stock) }}</td>#}
+                        {#<td>{{ form_row(item.offerFee, { 'attr': {'placeholder': '0'}}) }}</td>#}
+                        {#<td>{{ form_row(item.quantity) }}</td>#}
+                        {#<td>{{ form_row(item.unitSubtotalAggregation) }}</td>#}
+                        {#<td>{{ form_row(item.sumSubtotalAggregation) }}</td>#}
                     </tr>
                 {% endfor %}
             </table>

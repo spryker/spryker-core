@@ -9,6 +9,12 @@
     </transfer>
 
     <transfer name="Item">
+        <property name="unitGrossPrice" type="int" />
+        <property name="unitNetPrice" type="int" />
+
+        <property name="sourceUnitGrossPrice" type="int" />
+        <property name="sourceUnitNetPrice" type="int" />
+
         <property name="offerDiscount" type="int" />
         <property name="offerFee" type="int" />
         <property name="stock" type="int" />
