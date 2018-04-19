@@ -55,7 +55,7 @@ class CustomersListManualOrderEntryFormPlugin extends AbstractPlugin implements 
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function handleData($quoteTransfer, &$form, $request): AbstractTransfer
+    public function handleData($quoteTransfer, &$form, Request $request): AbstractTransfer
     {
         $customerTransfer = new CustomerTransfer();
         $customerTransfer->setIdCustomer($quoteTransfer->getIdCustomer());

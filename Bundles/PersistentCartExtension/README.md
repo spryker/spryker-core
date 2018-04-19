@@ -1,6 +1,6 @@
 # PersistentCartExtension Module
 
-PersistentCartExtension module provides plugin interfaces used by PersistentCart module.
+This module provides module provides plugin interfaces used by PersistentCart module.
 
 ## Installation
 
