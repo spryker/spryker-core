@@ -42,7 +42,7 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer
      */
-    public function getInvitationCollectionAction(
+    public function getCompanyUserInvitationCollectionAction(
         CompanyUserInvitationGetCollectionRequestTransfer $companyUserInvitationGetCollectionRequestTransfer
     ): CompanyUserInvitationCollectionTransfer {
         return $this->getFacade()->getCompanyUserInvitationCollection($companyUserInvitationGetCollectionRequestTransfer);

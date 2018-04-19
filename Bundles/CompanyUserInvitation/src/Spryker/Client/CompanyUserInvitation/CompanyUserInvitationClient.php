@@ -100,7 +100,7 @@ class CompanyUserInvitationClient extends AbstractClient implements CompanyUserI
      *
      * @param \Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusRequestTransfer $companyUserInvitationUpdateStatusRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusResponseTransfer|null
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusResponseTransfer
      */
     public function updateCompanyUserInvitationStatus(
         CompanyUserInvitationUpdateStatusRequestTransfer $companyUserInvitationUpdateStatusRequestTransfer

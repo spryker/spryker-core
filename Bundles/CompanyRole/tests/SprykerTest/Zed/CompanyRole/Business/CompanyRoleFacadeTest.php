@@ -114,10 +114,6 @@ class CompanyRoleFacadeTest extends Test
      */
     protected function haveCompanyRole(array $seedData = []): CompanyRoleTransfer
     {
-        $seedData = [
-            CompanyRoleTransfer::FK_COMPANY => $this->haveCompany()->getIdCompany(),
-        ] + $seedData;
-
         return $this->tester->haveCompanyRole($seedData);
     }
 

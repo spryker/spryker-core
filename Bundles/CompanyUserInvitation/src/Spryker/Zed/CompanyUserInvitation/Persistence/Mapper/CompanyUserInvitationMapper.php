@@ -64,7 +64,7 @@ class CompanyUserInvitationMapper implements CompanyUserInvitationMapperInterfac
      *
      * @return \Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer
      */
-    public function mapCompanyUserInvitationCollection($collection): CompanyUserInvitationCollectionTransfer
+    public function mapCompanyUserInvitationCollection(array $collection): CompanyUserInvitationCollectionTransfer
     {
         $companyUserInvitations = new ArrayObject();
         $companyUserInvitationCollectionTransfer = new CompanyUserInvitationCollectionTransfer();

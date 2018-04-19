@@ -21,7 +21,7 @@ class InvitationImporter implements InvitationImporterInterface
     /**
      * @var \Spryker\Zed\CompanyUserInvitation\Business\Model\Writer\InvitationWriterInterface
      */
-    private $invitationWriter;
+    protected $invitationWriter;
 
     /**
      * @param \Spryker\Zed\CompanyUserInvitation\Business\Model\Writer\InvitationWriterInterface $invitationWriter

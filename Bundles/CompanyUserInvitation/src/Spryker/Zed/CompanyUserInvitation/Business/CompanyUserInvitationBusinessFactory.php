@@ -73,7 +73,7 @@ class CompanyUserInvitationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\CompanyUserInvitation\Business\Model\Validator\InvitationValidatorInterface
      */
-    protected function createInvitationValidator()
+    public function createInvitationValidator()
     {
         return new InvitationValidator(
             $this->getRepository(),
@@ -85,7 +85,7 @@ class CompanyUserInvitationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\CompanyUserInvitation\Business\Model\Hydrator\InvitationHydratorInterface
      */
-    protected function createInvitationHydrator()
+    public function createInvitationHydrator()
     {
         return new InvitationHydrator(
             $this->getRepository(),
@@ -144,7 +144,7 @@ class CompanyUserInvitationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\CompanyUserInvitation\Dependency\Facade\CompanyUserInvitationToCompanyUserFacadeInterface
      */
-    protected function getCompanyUserFacade()
+    public function getCompanyUserFacade()
     {
         return $this->getProvidedDependency(CompanyUserInvitationDependencyProvider::FACADE_COMPANY_USER);
     }
@@ -152,7 +152,7 @@ class CompanyUserInvitationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\CompanyUserInvitation\Dependency\Facade\CompanyUserInvitationToCompanyBusinessUnitFacadeInterface
      */
-    protected function getCompanyBusinessUnitFacade()
+    public function getCompanyBusinessUnitFacade()
     {
         return $this->getProvidedDependency(CompanyUserInvitationDependencyProvider::FACADE_COMPANY_BUSINESS_UNIT);
     }
@@ -160,7 +160,7 @@ class CompanyUserInvitationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\CompanyUserInvitation\Dependency\Facade\CompanyUserInvitationToMailFacadeInterface
      */
-    protected function getMailFacade()
+    public function getMailFacade()
     {
         return $this->getProvidedDependency(CompanyUserInvitationDependencyProvider::FACADE_MAIL);
     }
@@ -168,7 +168,7 @@ class CompanyUserInvitationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\CompanyUserInvitation\Dependency\Service\CompanyUserInvitationToUtilTextInterface
      */
-    protected function getUtilTextService()
+    public function getUtilTextService()
     {
         return $this->getProvidedDependency(CompanyUserInvitationDependencyProvider::SERVICE_UTIL_TEXT);
     }

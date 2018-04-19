@@ -19,7 +19,7 @@ class InvitationMailer implements InvitationMailerInterface
     /**
      * @var \Spryker\Zed\CompanyUserInvitation\CompanyUserInvitationConfig
      */
-    private $config;
+    protected $config;
 
     /**
      * @var \Spryker\Zed\CompanyUserInvitation\Dependency\Facade\CompanyUserInvitationToMailFacadeInterface

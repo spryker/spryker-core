@@ -26,7 +26,7 @@ class InvitationHydrator implements InvitationHydratorInterface
     /**
      * @var \Generated\Shared\Transfer\CompanyUserInvitationStatusTransfer
      */
-    protected $companyUserInvitationStatusCache;
+    protected $companyUserInvitationStatusTransfer;
 
     /**
      * @var \Spryker\Zed\CompanyUserInvitation\Persistence\CompanyUserInvitationRepositoryInterface
@@ -133,12 +133,12 @@ class InvitationHydrator implements InvitationHydratorInterface
      */
     protected function getIdCompanyUserInvitationStatus(): int
     {
-        if (!$this->companyUserInvitationStatusCache) {
-            $this->companyUserInvitationStatusCache = $this->repository->findCompanyUserInvitationStatusByStatusKey(
+        if (!$this->companyUserInvitationStatusTransfer) {
+            $this->companyUserInvitationStatusTransfer = $this->repository->findCompanyUserInvitationStatusByStatusKey(
                 CompanyUserInvitationConstants::INVITATION_STATUS_NEW
             );
         }
 
-        return $this->companyUserInvitationStatusCache->getIdCompanyUserInvitationStatus();
+        return $this->companyUserInvitationStatusTransfer->getIdCompanyUserInvitationStatus();
     }
 }

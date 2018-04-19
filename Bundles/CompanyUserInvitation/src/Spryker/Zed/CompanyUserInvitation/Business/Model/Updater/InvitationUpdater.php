@@ -26,7 +26,7 @@ class InvitationUpdater implements InvitationUpdaterInterface
     /**
      * @var \Spryker\Zed\CompanyUserInvitation\Persistence\CompanyUserInvitationRepositoryInterface
      */
-    private $repository;
+    protected $repository;
 
     /**
      * @var \Spryker\Zed\CompanyUserInvitation\Persistence\CompanyUserInvitationEntityManagerInterface

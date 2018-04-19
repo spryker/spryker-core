@@ -26,7 +26,7 @@ class InvitationDeleter implements InvitationDeleterInterface
     /**
      * @var \Spryker\Zed\CompanyUserInvitation\Persistence\CompanyUserInvitationRepositoryInterface
      */
-    private $repository;
+    protected $repository;
 
     /**
      * @param \Spryker\Zed\CompanyUserInvitation\Persistence\CompanyUserInvitationEntityManagerInterface $entityManager

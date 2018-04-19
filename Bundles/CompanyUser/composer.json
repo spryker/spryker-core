@@ -32,12 +32,6 @@
       "SprykerTest\\": "tests/SprykerTest/"
     }
   },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/",
-      "SprykerTest\\Zed\\CompanyUser\\Helper\\": "tests/SprykerTest/Zed/CompanyUser/_support/Helper/"
-    }
-  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {

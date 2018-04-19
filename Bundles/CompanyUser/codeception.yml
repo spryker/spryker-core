@@ -1,4 +1,4 @@
-namespace: CompanyUser
+namespace: SprykerTest
 actor: Tester
 
 include:

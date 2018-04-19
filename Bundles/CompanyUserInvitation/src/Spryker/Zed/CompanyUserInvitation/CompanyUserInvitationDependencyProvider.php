@@ -28,7 +28,6 @@ class CompanyUserInvitationDependencyProvider extends AbstractBundleDependencyPr
      */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
-        $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addCompanyUserFacade($container);
         $container = $this->addCompanyBusinessUnitFacade($container);
         $container = $this->addMailFacade($container);

@@ -23,8 +23,9 @@ interface CompanyUserInvitationClientInterface
 {
     /**
      * Specification:
-     * - Imports company user invitations to the persistence.
-     * - Result transfer contains all error messages for not imported invitations.
+     * - Imports company user invitations to the persistence with status new.
+     * - The invitations are assigned to the company user that executed the import action.
+     * - The response contains the result of the operation as well as error messages for not imported company user invitations.
      *
      * @api
      *
@@ -38,7 +39,7 @@ interface CompanyUserInvitationClientInterface
 
     /**
      * Specification:
-     * - Retrieves a company user invitation collection by company user ID and/or company user invitation status key.
+     * - Retrieves a company user invitation collection by the criteria defined in the request.
      *
      * @api
      *
@@ -52,7 +53,10 @@ interface CompanyUserInvitationClientInterface
 
     /**
      * Specification:
-     * - Sends and invitation
+     * - Sends the company user invitation specified in the request.
+     * - Emails to the recipient defined in the company user invitation.
+     * - Changes the status of the company user invitation from new to sent
+     * - The response contains the result of the operation.
      *
      * @api
      *
@@ -66,7 +70,10 @@ interface CompanyUserInvitationClientInterface
 
     /**
      * Specification:
-     * - Sends all company user invitations that have not been sent.
+     * - Sends all invitations with status new that were imported by the specified company user.
+     * - Emails to the recipients defined in each invitation.
+     * - Changes the status of the company user invitations from new to sent
+     * - The response contains the result of the operation as well as error messages for not sent company user invitations.
      *
      * @api
      *
@@ -80,13 +87,15 @@ interface CompanyUserInvitationClientInterface
 
     /**
      * Specification:
-     * - Updates the status of a company user invitation.
+     * - Updates the status of a company user invitation based on the statusKey defined in the request.
+     * - The response contains the result of the operation as well as the updated company user invitation.
+     * - This method is also used to soft delete company user invitations.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusRequestTransfer $companyUserInvitationUpdateStatusRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusResponseTransfer|null
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusResponseTransfer
      */
     public function updateCompanyUserInvitationStatus(
         CompanyUserInvitationUpdateStatusRequestTransfer $companyUserInvitationUpdateStatusRequestTransfer

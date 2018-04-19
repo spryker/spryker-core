@@ -36,5 +36,5 @@ interface CompanyUserInvitationMapperInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer
      */
-    public function mapCompanyUserInvitationCollection($collection): CompanyUserInvitationCollectionTransfer;
+    public function mapCompanyUserInvitationCollection(array $collection): CompanyUserInvitationCollectionTransfer;
 }

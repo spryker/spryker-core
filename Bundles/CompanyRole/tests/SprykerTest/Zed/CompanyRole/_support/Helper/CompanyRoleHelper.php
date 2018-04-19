@@ -25,9 +25,8 @@ class CompanyRoleHelper extends Module
      *
      * @return \Generated\Shared\Transfer\CompanyRoleTransfer
      */
-    public function haveCompanyRole(
-        array $companyRole = []
-    ): CompanyRoleTransfer {
+    public function haveCompanyRole(array $companyRole = []): CompanyRoleTransfer
+    {
         $companyRoleTransfer = (new CompanyRoleBuilder($companyRole))->build();
         $companyRoleTransfer = $this->getCompanyRoleFacade()
             ->create($companyRoleTransfer)
