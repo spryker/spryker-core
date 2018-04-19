@@ -164,7 +164,7 @@ class PriceManagerTest extends Unit
     }
 
     /**
-     * @return CartChangeTransfer
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
     protected function createCartChangeTransfer()
     {

@@ -81,7 +81,14 @@ class PriceManager implements PriceManagerInterface
         return $cartChangeTransfer;
     }
 
-    protected function setOriginUnitPrices(ItemTransfer $itemTransfer, ?string $priceMode, ?string $currencyIsoCode)
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param string $priceMode
+     * @param string $currencyIsoCode
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function setOriginUnitPrices(ItemTransfer $itemTransfer, $priceMode, $currencyIsoCode)
     {
         $priceProductFilterTransfer = $this->createPriceProductFilter($itemTransfer, $priceMode, $currencyIsoCode);
         $this->setPrice($itemTransfer, $priceProductFilterTransfer, $priceMode);
@@ -90,9 +97,9 @@ class PriceManager implements PriceManagerInterface
     }
 
     /**
-     * @param ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return ItemTransfer
+     * @return \Generated\Shared\Transfer\ItemTransfer
      */
     protected function applySourceUnitPrices(ItemTransfer $itemTransfer)
     {
@@ -110,9 +117,9 @@ class PriceManager implements PriceManagerInterface
     }
 
     /**
-     * @param ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return ItemTransfer
+     * @return \Generated\Shared\Transfer\ItemTransfer
      */
     protected function applyOriginUnitPrices(ItemTransfer $itemTransfer)
     {
@@ -123,7 +130,7 @@ class PriceManager implements PriceManagerInterface
     }
 
     /**
-     * @param ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return bool
      */
@@ -143,7 +150,7 @@ class PriceManager implements PriceManagerInterface
     /**
      * @deprecated Will be removed with a next major release
      *
-     * @param ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return bool
      */

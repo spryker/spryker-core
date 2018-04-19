@@ -208,7 +208,7 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return OfferGuiToPriceFacadeInterface
+     * @return \Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToPriceFacadeInterface
      */
     public function getPriceFacade(): OfferGuiToPriceFacadeInterface
     {

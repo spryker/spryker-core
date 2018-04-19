@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\OfferGui\Dependency\Facade;
 
-
 class OfferGuiToPriceFacadeBridge implements OfferGuiToPriceFacadeInterface
 {
     /**

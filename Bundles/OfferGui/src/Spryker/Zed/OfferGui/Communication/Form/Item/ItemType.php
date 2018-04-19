@@ -74,8 +74,8 @@ class ItemType extends AbstractType
             'label' => 'SKU',
             'required' => true,
             'attr' => [
-                'readonly' => true
-            ]
+                'readonly' => true,
+            ],
         ]);
 
         return $this;
@@ -95,7 +95,7 @@ class ItemType extends AbstractType
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
      * @return $this
@@ -110,10 +110,10 @@ class ItemType extends AbstractType
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
-     * @return ItemType
+     * @return \Spryker\Zed\OfferGui\Communication\Form\Item\ItemType
      */
     protected function addManualUnitPriceField(FormBuilderInterface $builder, array $options)
     {

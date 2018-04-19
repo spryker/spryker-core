@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\OfferGui;
 
-use Spryker\Shared\Price\PriceConfig;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class OfferGuiConfig extends AbstractBundleConfig
