@@ -81,7 +81,7 @@ class PriceManager implements PriceManagerInterface
         return $cartChangeTransfer;
     }
 
-    protected function setOriginUnitPrices(ItemTransfer $itemTransfer, string $priceMode, string $currencyIsoCode)
+    protected function setOriginUnitPrices(ItemTransfer $itemTransfer, ?string $priceMode, ?string $currencyIsoCode)
     {
         $priceProductFilterTransfer = $this->createPriceProductFilter($itemTransfer, $priceMode, $currencyIsoCode);
         $this->setPrice($itemTransfer, $priceProductFilterTransfer, $priceMode);
@@ -129,11 +129,11 @@ class PriceManager implements PriceManagerInterface
      */
     protected function hasSourceUnitPrices(ItemTransfer $itemTransfer)
     {
-        if ($itemTransfer->getSourceUnitGrossPrice()) {
+        if ($itemTransfer->getSourceUnitGrossPrice() !== null) {
             return true;
         }
 
-        if ($itemTransfer->getSourceUnitNetPrice()) {
+        if ($itemTransfer->getSourceUnitNetPrice() !== null) {
             return true;
         }
 
