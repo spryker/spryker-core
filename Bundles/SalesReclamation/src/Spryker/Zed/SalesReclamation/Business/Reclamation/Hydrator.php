@@ -65,15 +65,6 @@ class Hydrator implements HydratorInterface
         $orderTransfer = $this->salesFacade->getOrderByIdSalesOrder($orderTransfer->getIdSalesOrder());
         $reclamationTransfer->setOrder($orderTransfer);
 
-        # @TODO test created orders
-//        $createdOrders = new ArrayObject();
-//        foreach ($reclamationTransfer->getCreatedOrders() as $spyRelatedOrder) {
-//            $createdOrderTransfer = new OrderTransfer();
-//            $createdOrderTransfer->fromArray($spyRelatedOrder->toArray(), true);
-//            $createdOrders->append($createdOrderTransfer);
-//        }
-//        $reclamationTransfer->setCreatedOrders($createdOrders);
-
         /** @var \Generated\Shared\Transfer\ReclamationItemTransfer[]|\ArrayObject $reclamationItems */
         $reclamationItems = new ArrayObject();
         foreach ($reclamationTransfer->getReclamationItems() as $reclamationItemTransfer) {
