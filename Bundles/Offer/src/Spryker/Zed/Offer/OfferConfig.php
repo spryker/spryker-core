@@ -16,6 +16,16 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class OfferConfig extends AbstractBundleConfig
 {
     /**
+     * @uses PriceConfig::PRICE_MODE_NET
+     */
+    public const PRICE_MODE_NET = 'NET_MODE';
+
+    /**
+     * @uses PriceConfig::PRICE_MODE_GROSS
+     */
+    public const PRICE_MODE_GROSS = 'GROSS_MODE';
+
+    /**
      * @return string
      */
     public function getInitialStatus(): string
@@ -34,5 +44,21 @@ class OfferConfig extends AbstractBundleConfig
             SharedOfferConfig::STATUS_CONFIRMED_BY_CUSTOMER,
             SharedOfferConfig::STATUS_SENT_TO_CUSTOMER,
         ];
+    }
+
+    /**
+     * @return string
+     */
+    public function getPriceModeNet()
+    {
+        return static::PRICE_MODE_NET;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPriceModeGross()
+    {
+        return static::PRICE_MODE_GROSS;
     }
 }
