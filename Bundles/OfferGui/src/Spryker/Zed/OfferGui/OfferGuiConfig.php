@@ -35,4 +35,30 @@ class OfferGuiConfig extends AbstractBundleConfig
      * @uses \Spryker\Shared\Offer\OfferConfig
      */
     public const STATUS_CLOSE = 'Close';
+
+    /**
+     * @uses PriceConfig::PRICE_MODE_NET
+     */
+    public const PRICE_MODE_NET = 'NET_MODE';
+
+    /**
+     * @uses PriceConfig::PRICE_MODE_GROSS
+     */
+    public const PRICE_MODE_GROSS = 'GROSS_MODE';
+
+    /**
+     * @return string
+     */
+    public function getPriceModeNet()
+    {
+        return static::PRICE_MODE_NET;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPriceModeGross()
+    {
+        return static::PRICE_MODE_GROSS;
+    }
 }

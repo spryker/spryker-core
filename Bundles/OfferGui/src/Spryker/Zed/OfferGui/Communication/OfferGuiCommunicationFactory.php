@@ -22,6 +22,7 @@ use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToCustomerFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToMessengerFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToMoneyFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToOfferFacadeInterface;
+use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToPriceFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToStoreFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilDateTimeServiceInterface;
 use Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilEncodingServiceInterface;
@@ -204,5 +205,13 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
         return new CreateRequestHandler(
             $this->getCartFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToPriceFacadeInterface
+     */
+    public function getPriceFacade(): OfferGuiToPriceFacadeInterface
+    {
+        return $this->getProvidedDependency(OfferGuiDependencyProvider::FACADE_PRICE);
     }
 }

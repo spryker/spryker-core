@@ -124,6 +124,7 @@ class EditOfferType extends AbstractType
             if ($event->getData()->getIdOffer() === null) {
                 return;
             }
+
             $form = $event->getForm();
             $form->add(static::FIELD_OFFER_STATUS, Select2ComboBoxType::class, [
                 'label' => 'Select State',
@@ -163,7 +164,7 @@ class EditOfferType extends AbstractType
     protected function addStoreCurrencyField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_STORE_CURRENCY, Select2ComboBoxType::class, [
-            'label' => 'Store',
+            'label' => 'Store/Currency',
             'required' => true,
             'choices' => $options[static::OPTION_STORE_CURRENCY_LIST],
             'multiple' => false,
@@ -269,6 +270,10 @@ class EditOfferType extends AbstractType
             'required' => true,
             'allow_add' => true,
             'allow_delete' => true,
+            'entry_options' => [
+                'label' => false,
+                'data_class' => ItemTransfer::class,
+            ],
         ]);
 
         return $this;
