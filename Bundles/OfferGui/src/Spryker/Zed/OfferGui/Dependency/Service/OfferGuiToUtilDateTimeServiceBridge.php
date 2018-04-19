@@ -31,4 +31,14 @@ class OfferGuiToUtilDateTimeServiceBridge implements OfferGuiToUtilDateTimeServi
     {
         return $this->utilDateTimeService->formatDateTime($date);
     }
+
+    /**
+     * @param string $date
+     *
+     * @return string
+     */
+    public function formatDate($date): string
+    {
+        return $this->utilDateTimeService->formatDate($date);
+    }
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\OfferGui\Communication\Form\Offer;
 
+use DateTime;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
@@ -17,8 +18,11 @@ use Spryker\Zed\OfferGui\Communication\Form\Item\ItemType;
 use Spryker\Zed\OfferGui\Communication\Form\Voucher\VoucherType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -42,7 +46,9 @@ class EditOfferType extends AbstractType
     public const FIELD_QUOTE_SHIPPING_ADDRESS = 'shippingAddress';
     public const FIELD_QUOTE_BILLING_ADDRESS = 'billingAddress';
     public const FIELD_OFFER_FEE = 'offerFee';
-    public const FIELD_OFFER_STATUS = 'status';
+    public const FIELD_CONTACT_PERSON = 'contactPerson';
+    public const FIELD_CONTACT_DATE = 'contactDate';
+    public const FIELD_NOTE = 'note';
 
     public const OPTION_CUSTOMER_LIST = 'option-customer-list';
     public const OPTION_STORE_CURRENCY_LIST = 'option-store-currency-list';
@@ -74,7 +80,6 @@ class EditOfferType extends AbstractType
     {
         $this
             ->addIdOfferField($builder)
-            ->addStatusOfferList($builder, $options)
             ->addStoreNameField($builder)
             ->addCurrencyCodeField($builder)
             ->addStoreCurrencyField($builder, $options)
@@ -84,7 +89,10 @@ class EditOfferType extends AbstractType
             ->addItemsField($builder)
             ->addIncomingItemsField($builder)
             ->addVoucherDiscountsField($builder)
-            ->addOfferFeeField($builder, $options);
+            ->addOfferFeeField($builder, $options)
+            ->addContactPersonField($builder)
+            ->addContactDateField($builder)
+            ->addNoteField($builder);
     }
 
     /**
@@ -98,33 +106,6 @@ class EditOfferType extends AbstractType
             'property_path' => 'quote.store.name',
             'required' => true,
         ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     *
-     * @return $this
-     */
-    protected function addStatusOfferList(FormBuilderInterface $builder, array $options)
-    {
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($options) {
-            if ($event->getData()->getIdOffer() === null) {
-                return;
-            }
-            $form = $event->getForm();
-            $form->add(static::FIELD_OFFER_STATUS, Select2ComboBoxType::class, [
-                'label' => 'Select State',
-                'choices' => array_combine($options[static::OPTION_OFFER_STATUS_LIST], $options[static::OPTION_OFFER_STATUS_LIST]),
-                'multiple' => false,
-                'constraints' => [
-                    new NotBlank(),
-                ],
-                'required' => true,
-            ]);
-        });
 
         return $this;
     }
@@ -348,6 +329,57 @@ class EditOfferType extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
+     * @return $this
+     */
+    protected function addContactPersonField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_CONTACT_PERSON, TextType::class, [
+            'label' => 'Contact person',
+            'required' => false,
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addContactDateField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_CONTACT_DATE, DateType::class, [
+            'widget' => 'single_text',
+            'required' => false,
+            'attr' => [
+                'class' => 'datepicker safe-datetime',
+            ],
+        ]);
+
+        $builder->get(static::FIELD_CONTACT_DATE)
+            ->addModelTransformer($this->createDateTimeModelTransformer());
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addNoteField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_NOTE, TextareaType::class, [
+            'label' => 'Comment',
+            'required' => false,
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
      * @return string
      */
     private function getSelectedStoreCurrency(FormBuilderInterface $builder)
@@ -414,6 +446,25 @@ class EditOfferType extends AbstractType
             },
             function ($value) {
                 return (int)($value * 100);
+            }
+        );
+    }
+
+    /**
+     * @return \Symfony\Component\Form\CallbackTransformer
+     */
+    protected function createDateTimeModelTransformer()
+    {
+        return new CallbackTransformer(
+            function ($value) {
+                if ($value !== null && !($value instanceof DateTime)) {
+                    return new DateTime($value);
+                }
+
+                return $value;
+            },
+            function ($value) {
+                return $value;
             }
         );
     }
