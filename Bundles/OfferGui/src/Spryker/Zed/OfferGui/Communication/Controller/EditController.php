@@ -95,6 +95,10 @@ class EditController extends AbstractController
                     ->add($cartChangeTransfer);
             }
 
+            //reload
+            $quoteTransfer = $this->getFactory()->getCartFacade()->reloadItems($quoteTransfer);
+            $offerTransfer->setQuote($quoteTransfer);
+
             //refresh form after calculations
             $form = $this->getFactory()->getOfferForm($offerTransfer, $request);
 

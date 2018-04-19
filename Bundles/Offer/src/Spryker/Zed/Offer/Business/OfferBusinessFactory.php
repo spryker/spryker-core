@@ -95,7 +95,8 @@ class OfferBusinessFactory extends AbstractBusinessFactory
     {
         return new OfferSavingAmountHydrator(
             $this->getCartFacade(),
-            $this->getMessengerFacade()
+            $this->getMessengerFacade(),
+            $this->getConfig()
         );
     }
 
