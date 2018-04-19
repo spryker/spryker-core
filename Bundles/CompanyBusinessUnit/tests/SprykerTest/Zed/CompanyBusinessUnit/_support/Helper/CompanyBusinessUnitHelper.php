@@ -5,12 +5,10 @@ namespace SprykerTest\Zed\CompanyBusinessUnit\Helper;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\CompanyBuilder;
 use Generated\Shared\DataBuilder\CompanyBusinessUnitBuilder;
-use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class CompanyBusinessUnitHelper extends Module
 {
-    use DataCleanupHelperTrait;
     use LocatorHelperTrait;
 
     /**
@@ -24,10 +22,6 @@ class CompanyBusinessUnitHelper extends Module
         $companyBusinessUnit->setIdCompanyBusinessUnit(null);
 
         $this->getCompanyBusinessUnitFacade()->create($companyBusinessUnit);
-
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($companyBusinessUnit) {
-            $this->getCompanyBusinessUnitFacade()->delete($companyBusinessUnit);
-        });
 
         return $companyBusinessUnit;
     }
