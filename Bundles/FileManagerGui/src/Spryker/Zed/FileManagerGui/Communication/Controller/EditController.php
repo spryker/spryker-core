@@ -126,18 +126,18 @@ class EditController extends AbstractController
     {
         /** @var \Symfony\Component\HttpFoundation\File\UploadedFile $uploadedFile */
         $uploadedFile = $fileTransfer->getFileContent();
-        $fileInfo = new FileInfoTransfer();
+        $fileInfoTransfer = new FileInfoTransfer();
 
         if ($uploadedFile === null) {
-            return $fileInfo;
+            return $fileInfoTransfer;
         }
 
-        $fileInfo->setFkFile($fileTransfer->getIdFile());
-        $fileInfo->setFileExtension($uploadedFile->getClientOriginalExtension());
-        $fileInfo->setSize($uploadedFile->getSize());
-        $fileInfo->setType($uploadedFile->getMimeType());
+        $fileInfoTransfer->setFkFile($fileTransfer->getIdFile());
+        $fileInfoTransfer->setExtension($uploadedFile->getClientOriginalExtension());
+        $fileInfoTransfer->setSize($uploadedFile->getSize());
+        $fileInfoTransfer->setType($uploadedFile->getMimeType());
 
-        return $fileInfo;
+        return $fileInfoTransfer;
     }
 
     /**
@@ -147,11 +147,11 @@ class EditController extends AbstractController
      */
     protected function createFileTransfer(array $data)
     {
-        $file = new FileTransfer();
-        $file->setFileName($data[FileForm::FIELD_FILE_NAME]);
-        $file->setIdFile($data[FileForm::FIELD_ID_FILE]);
+        $fileTransfer = new FileTransfer();
+        $fileTransfer->setFileName($data[FileForm::FIELD_FILE_NAME]);
+        $fileTransfer->setIdFile($data[FileForm::FIELD_ID_FILE]);
 
-        return $file;
+        return $fileTransfer;
     }
 
     /**

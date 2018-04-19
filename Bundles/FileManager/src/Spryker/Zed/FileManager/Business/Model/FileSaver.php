@@ -160,7 +160,7 @@ class FileSaver implements FileSaverInterface
             $newFileName = $this->getNewFileName(
                 $file->getIdFile(),
                 $fileInfo->getVersionName(),
-                $fileInfo->getFileExtension()
+                $fileInfo->getExtension()
             );
 
             if ($file->getFkFileDirectory()) {

@@ -91,7 +91,7 @@ class AddController extends AbstractController
         $uploadedFile = $fileTransfer->getFileContent();
         $fileInfo = new FileInfoTransfer();
 
-        $fileInfo->setFileExtension($uploadedFile->getClientOriginalExtension());
+        $fileInfo->setExtension($uploadedFile->getClientOriginalExtension());
         $fileInfo->setSize($uploadedFile->getSize());
         $fileInfo->setType($uploadedFile->getMimeType());
 

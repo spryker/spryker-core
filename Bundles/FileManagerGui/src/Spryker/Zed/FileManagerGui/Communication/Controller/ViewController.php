@@ -92,7 +92,7 @@ class ViewController extends AbstractController
             return $fileInfo;
         }
 
-        $fileInfo->setFileExtension($uploadedFile->getClientOriginalExtension());
+        $fileInfo->setExtension($uploadedFile->getClientOriginalExtension());
         $fileInfo->setSize($uploadedFile->getSize());
         $fileInfo->setType($uploadedFile->getMimeType());
         $fileInfo->setFkFile($data[FileForm::FIELD_ID_FILE]);

@@ -22,7 +22,7 @@
         <property name="fileName" type="string" />
         <property name="fkFileDirectory" type="int" />
         <property name="fileInfo" type="FileInfo[]" />
-        <property name="fileLocalizedAttributes" type="FileLocalizedAttributes[]" />
+        <property name="localizedAttributes" type="FileLocalizedAttributes[]" />
         <property name="useRealName" type="bool" />
         <property name="fileContent" type="string" />
     </transfer>
@@ -32,14 +32,14 @@
         <property name="fkFile" type="int" />
         <property name="type" type="string" />
         <property name="size" type="string" />
-        <property name="fileExtension" type="string" />
+        <property name="extension" type="string" />
         <property name="version" type="int" />
         <property name="versionName" type="string" />
         <property name="storageName" type="string" />
         <property name="storageFileName" type="string" />
         <property name="createdAt" type="string" />
         <property name="updatedAt" type="string" />
-        <property name="fileInfoLocalizedAttributes" type="FileInfoLocalizedAttributes[]" />
+        <property name="localizedAttributes" type="FileInfoLocalizedAttributes[]" />
     </transfer>
 
     <transfer name="FileLocalizedAttributes">

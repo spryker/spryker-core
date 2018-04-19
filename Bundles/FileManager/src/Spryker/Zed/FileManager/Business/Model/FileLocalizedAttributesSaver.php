@@ -22,7 +22,7 @@ class FileLocalizedAttributesSaver implements FileLocalizedAttributesSaverInterf
      */
     public function saveLocalizedFileAttributes(SpyFile $fileEntity, FileManagerSaveRequestTransfer $fileManagerSaveRequestTransfer)
     {
-        $localizedAttributesToSave = $fileManagerSaveRequestTransfer->getFileLocalizedAttributes();
+        $localizedAttributesToSave = $fileManagerSaveRequestTransfer->getLocalizedAttributes();
         $existingFileLocalizedAttributes = $fileEntity->getSpyFileLocalizedAttributess()->toKeyIndex('fkLocale');
 
         if (empty($existingFileLocalizedAttributes)) {

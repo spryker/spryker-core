@@ -69,7 +69,7 @@ class FileFinderTest extends Unit
     protected function getMockedFileInfo()
     {
         $fileInfo = new SpyFileInfo();
-        $fileInfo->setFileExtension('txt');
+        $fileInfo->setExtension('txt');
         $fileInfo->setVersionName('v. 1');
         $fileInfo->setSize(1024);
         $fileInfo->setStorageFileName('report.txt');
@@ -117,7 +117,7 @@ class FileFinderTest extends Unit
 
         $fileFinder = new FileLoader($queryContainerMock);
         $fileInfo = $fileFinder->getLatestFileInfoByFkFile(1);
-        $this->assertEquals('txt', $fileInfo->getFileExtension());
+        $this->assertEquals('txt', $fileInfo->getExtension());
         $this->assertEquals('v. 1', $fileInfo->getVersionName());
         $this->assertEquals(1024, $fileInfo->getSize());
         $this->assertEquals('report.txt', $fileInfo->getStorageFileName());
@@ -141,7 +141,7 @@ class FileFinderTest extends Unit
 
         $fileFinder = new FileLoader($queryContainerMock);
         $fileInfo = $fileFinder->getFileInfo(1);
-        $this->assertEquals('txt', $fileInfo->getFileExtension());
+        $this->assertEquals('txt', $fileInfo->getExtension());
         $this->assertEquals('v. 1', $fileInfo->getVersionName());
         $this->assertEquals(1024, $fileInfo->getSize());
         $this->assertEquals('report.txt', $fileInfo->getStorageFileName());
