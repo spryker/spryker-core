@@ -53,15 +53,6 @@ class EditController extends AbstractController
             }
             $quoteTransfer->setVoucherDiscounts($voucherDiscounts);
 
-            //remove items
-//            $itemTransfers = new ArrayObject();
-//            foreach ($quoteTransfer->getItems() as $itemTransfer) {
-//                if ($itemTransfer->getQuantity() > 0) {
-//                    $itemTransfers->append($itemTransfer);
-//                }
-//            }
-//            $quoteTransfer->setItems($itemTransfers);
-
             //add items
             $items = clone $quoteTransfer->getItems();
             $quoteTransfer->setItems(new ArrayObject());
@@ -98,20 +89,11 @@ class EditController extends AbstractController
                     ->add($cartChangeTransfer);
             }
 
-//            //update cart
-//            if ($quoteTransfer->getItems()->count()) {
-//                $quoteTransfer = $this->getFactory()
-//                    ->getCartFacade()
-//                    ->reloadItems($quoteTransfer);
-//            }
-//
-//            $offerTransfer->setQuote($quoteTransfer);
-
             //refresh form after calculations
             $form = $this->getFactory()->getOfferForm($offerTransfer, $request);
-            //save offer and a quote
 
             if ($isSubmitPersist) {
+                //save offer and a quote
                 $this->getFactory()
                     ->getOfferFacade()
                     ->updateOffer($offerTransfer);

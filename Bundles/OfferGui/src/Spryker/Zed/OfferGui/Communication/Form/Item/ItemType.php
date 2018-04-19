@@ -8,7 +8,6 @@
 namespace Spryker\Zed\OfferGui\Communication\Form\Item;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
-use Spryker\Zed\Kernel\Locator;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -424,7 +423,7 @@ class ItemType extends AbstractType
      */
     protected function isDefaultPriceModeNet()
     {
-        return Locator::getInstance()->price()->facade()->getDefaultPriceMode() === $this->getConfig()->getPriceModeNet();
+        return $this->getFactory()->getPriceFacade()->getDefaultPriceMode() === $this->getConfig()->getPriceModeNet();
     }
 
     /**
@@ -432,6 +431,6 @@ class ItemType extends AbstractType
      */
     protected function isDefaultPriceModeGross()
     {
-        return Locator::getInstance()->price()->facade()->getDefaultPriceMode() === $this->getConfig()->getPriceModeGross();
+        return $this->getFactory()->getPriceFacade()->getDefaultPriceMode() === $this->getConfig()->getPriceModeGross();
     }
 }

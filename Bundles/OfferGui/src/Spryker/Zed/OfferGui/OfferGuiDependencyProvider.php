@@ -18,6 +18,7 @@ use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToMessengerFacadeBridge;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToMoneyFacadeBridge;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToOfferFacadeBridge;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToOmsFacadeBridge;
+use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToPriceFacadeBridge;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToStoreFacadeBridge;
 use Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilDateTimeServiceBridge;
 use Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilEncodingServiceBridge;
@@ -33,6 +34,7 @@ class OfferGuiDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_STORE = 'FACADE_STORE';
     public const FACADE_MESSENGER = 'FACADE_MESSENGER';
     public const FACADE_CURRENCY = 'FACADE_CURRENCY';
+    public const FACADE_PRICE = 'FACADE_PRICE';
     public const CLIENT_SESSION = 'CLIENT_SESSION';
     public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
@@ -61,6 +63,21 @@ class OfferGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addMessengerFacade($container);
         $container = $this->addSessionClient($container);
         $container = $this->addCurrencyFacade($container);
+        $container = $this->addPriceFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param Container $container
+     *
+     * @return Container
+     */
+    protected function addPriceFacade(Container $container): Container
+    {
+        $container[static::FACADE_PRICE] = function (Container $container) {
+            return new OfferGuiToPriceFacadeBridge($container->getLocator()->price()->facade());
+        };
 
         return $container;
     }

@@ -96,12 +96,12 @@ class PriceManager implements PriceManagerInterface
      */
     protected function applySourceUnitPrices(ItemTransfer $itemTransfer)
     {
-        if ($itemTransfer->getSourceUnitNetPrice()) {
+        if ($itemTransfer->getSourceUnitNetPrice() !== null) {
             $itemTransfer->setUnitNetPrice($itemTransfer->getSourceUnitNetPrice());
             $itemTransfer->setUnitGrossPrice(0);
         }
 
-        if ($itemTransfer->getSourceUnitGrossPrice()) {
+        if ($itemTransfer->getSourceUnitGrossPrice() !== null) {
             $itemTransfer->setUnitNetPrice(0);
             $itemTransfer->setUnitGrossPrice($itemTransfer->getSourceUnitGrossPrice());
         }
