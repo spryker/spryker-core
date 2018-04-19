@@ -12,8 +12,6 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ReclamationItemTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
-use Orm\Zed\SalesReclamation\Persistence\Map\SpySalesReclamationItemTableMap;
-use Orm\Zed\SalesReclamation\Persistence\Map\SpySalesReclamationTableMap;
 use Spryker\Zed\SalesReclamation\Dependency\Facade\SalesReclamationToSalesFacadeInterface;
 use Spryker\Zed\SalesReclamation\Persistence\SalesReclamationQueryContainerInterface;
 use Spryker\Zed\SalesReclamation\Persistence\SalesReclamationRepositoryInterface;
@@ -101,7 +99,6 @@ class Hydrator implements HydratorInterface
 
         $reclamationTransfer = new ReclamationTransfer();
 
-        $reclamationTransfer->setStatus(SpySalesReclamationTableMap::COL_STATE_OPEN);
         $reclamationTransfer->setOrder($orderTransfer);
         $reclamationTransfer->setCustomerReference($orderTransfer->getCustomerReference());
         $reclamationTransfer->setCustomerEmail($orderTransfer->getEmail());
@@ -110,7 +107,6 @@ class Hydrator implements HydratorInterface
         $reclamationItems = new ArrayObject();
         foreach ($orderTransfer->getItems() as $itemTransfer) {
             $reclamationItemTransfer = new ReclamationItemTransfer();
-            $reclamationItemTransfer->setStatus(SpySalesReclamationItemTableMap::COL_STATE_OPEN);
             $reclamationItemTransfer->setOrderItem($itemTransfer);
 
             $reclamationItems->append($reclamationItemTransfer);
