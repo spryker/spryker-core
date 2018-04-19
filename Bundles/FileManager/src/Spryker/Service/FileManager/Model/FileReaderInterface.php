@@ -12,16 +12,12 @@ interface FileReaderInterface
     /**
      * @param string $fileName
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
-     *
      * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
      */
     public function read(string $fileName);
 
     /**
      * @param string $fileName
-     *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemStreamException
      *
      * @return mixed
      */

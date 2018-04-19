@@ -30,8 +30,6 @@ class FileReader implements FileReaderInterface
     protected $config;
 
     /**
-     * FileReader constructor.
-     *
      * @param \Spryker\Service\FileManager\Dependency\Service\FileManagerToFileSystemServiceInterface $fileSystem
      * @param \Spryker\Service\FileManager\FileManagerConfig $config
      */
@@ -46,18 +44,16 @@ class FileReader implements FileReaderInterface
      */
     public function read(string $fileName)
     {
-        $fileSystemQueryTransfer = new FileSystemQueryTransfer();
-        $fileSystemQueryTransfer->setFileSystemName($this->config->getStorageName());
-        $fileSystemQueryTransfer->setPath($fileName);
+        $fileManagerReadResponseTransfer = new FileManagerReadResponseTransfer();
+        $fileSystemQueryTransfer = $this->createFileSystemQueryTransfer($fileName);
 
-        $fileManagerReadResponse = new FileManagerReadResponseTransfer();
-        $fileContent = $this->fileSystem->read($fileSystemQueryTransfer);
-        $fileManagerReadResponse->setContent($fileContent);
+        $fileContent = $this->getReadFileContentFromStorage($fileSystemQueryTransfer);
+        $fileManagerReadResponseTransfer->setContent($fileContent);
 
-        $fileManagerReadResponse->setFile($this->createFileTransfer($fileName));
-        $fileManagerReadResponse->setFileInfo($this->createFileInfoTransfer($fileSystemQueryTransfer));
+        $fileManagerReadResponseTransfer->setFile($this->createFileTransfer($fileName));
+        $fileManagerReadResponseTransfer->setFileInfo($this->createFileInfoTransfer($fileSystemQueryTransfer));
 
-        return $fileManagerReadResponse;
+        return $fileManagerReadResponseTransfer;
     }
 
     /**
@@ -68,6 +64,16 @@ class FileReader implements FileReaderInterface
         $fileSystemStreamTransfer = $this->createStreamTransfer($fileName);
 
         return $this->fileSystem->readStream($fileSystemStreamTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
+     *
+     * @return string
+     */
+    protected function getReadFileContentFromStorage(FileSystemQueryTransfer $fileSystemQueryTransfer)
+    {
+        return $this->fileSystem->read($fileSystemQueryTransfer);
     }
 
     /**
@@ -91,10 +97,10 @@ class FileReader implements FileReaderInterface
      */
     protected function createFileTransfer(string $fileName)
     {
-        $file = new FileTransfer();
-        $file->setFileName($fileName);
+        $fileTransfer = new FileTransfer();
+        $fileTransfer->setFileName($fileName);
 
-        return $file;
+        return $fileTransfer;
     }
 
     /**
@@ -104,9 +110,23 @@ class FileReader implements FileReaderInterface
      */
     protected function createFileInfoTransfer(FileSystemQueryTransfer $fileSystemQueryTransfer)
     {
-        $fileInfo = new FileInfoTransfer();
-        $fileInfo->setType($this->fileSystem->getMimeType($fileSystemQueryTransfer));
+        $fileInfoTransfer = new FileInfoTransfer();
+        $fileInfoTransfer->setType($this->fileSystem->getMimeType($fileSystemQueryTransfer));
 
-        return $fileInfo;
+        return $fileInfoTransfer;
+    }
+
+    /**
+     * @param string $fileName
+     *
+     * @return \Generated\Shared\Transfer\FileSystemQueryTransfer
+     */
+    protected function createFileSystemQueryTransfer($fileName)
+    {
+        $fileSystemQueryTransfer = new FileSystemQueryTransfer();
+        $fileSystemQueryTransfer->setFileSystemName($this->config->getStorageName());
+        $fileSystemQueryTransfer->setPath($fileName);
+
+        return $fileSystemQueryTransfer;
     }
 }

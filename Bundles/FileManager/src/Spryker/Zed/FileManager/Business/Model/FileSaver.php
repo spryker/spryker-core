@@ -51,8 +51,6 @@ class FileSaver implements FileSaverInterface
     protected $attributesSaver;
 
     /**
-     * FileSaver constructor.
-     *
      * @param \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\FileManager\Business\Model\FileVersionInterface $fileVersion
      * @param \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface $fileLoader

@@ -17,8 +17,6 @@ class FileLoader implements FileLoaderInterface
     protected $queryContainer;
 
     /**
-     * FileSaver constructor.
-     *
      * @param \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface $queryContainer
      */
     public function __construct(FileManagerQueryContainerInterface $queryContainer)
