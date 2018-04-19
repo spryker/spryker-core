@@ -49,6 +49,7 @@ class EditOfferType extends AbstractType
     public const FIELD_CONTACT_PERSON = 'contactPerson';
     public const FIELD_CONTACT_DATE = 'contactDate';
     public const FIELD_NOTE = 'note';
+    public const FIELD_OFFER_STATUS = 'status';
 
     public const OPTION_CUSTOMER_LIST = 'option-customer-list';
     public const OPTION_STORE_CURRENCY_LIST = 'option-store-currency-list';
@@ -80,6 +81,7 @@ class EditOfferType extends AbstractType
     {
         $this
             ->addIdOfferField($builder)
+            ->addStatusOfferList($builder, $options)
             ->addStoreNameField($builder)
             ->addCurrencyCodeField($builder)
             ->addStoreCurrencyField($builder, $options)
@@ -106,6 +108,33 @@ class EditOfferType extends AbstractType
             'property_path' => 'quote.store.name',
             'required' => true,
         ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addStatusOfferList(FormBuilderInterface $builder, array $options)
+    {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($options) {
+            if ($event->getData()->getIdOffer() === null) {
+                return;
+            }
+            $form = $event->getForm();
+            $form->add(static::FIELD_OFFER_STATUS, Select2ComboBoxType::class, [
+                'label' => 'Select State',
+                'choices' => array_combine($options[static::OPTION_OFFER_STATUS_LIST], $options[static::OPTION_OFFER_STATUS_LIST]),
+                'multiple' => false,
+                'constraints' => [
+                    new NotBlank(),
+                ],
+                'required' => true,
+            ]);
+        });
 
         return $this;
     }
