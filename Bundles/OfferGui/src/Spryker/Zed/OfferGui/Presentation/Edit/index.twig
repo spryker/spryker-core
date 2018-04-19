@@ -75,6 +75,9 @@
             </table>
 
             {{ form_row(form.offerFee) }}
+            {{ form_row(form.contactPerson) }}
+            {{ form_row(form.contactDate) }}
+            {{ form_row(form.note) }}
 
             {% include '@OfferGui/Edit/_partials/cart-rule-discounts.twig' with {'quote': offer.quote} %}
             {% include '@OfferGui/Edit/_partials/totals.twig' with {'quote': offer.quote} %}

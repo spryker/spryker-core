@@ -363,7 +363,7 @@ class EditOfferType extends AbstractType
     protected function addContactPersonField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_CONTACT_PERSON, TextType::class, [
-            'label' => 'Contact person',
+            'label' => 'Person in charge',
             'required' => false,
         ]);
 
@@ -378,6 +378,7 @@ class EditOfferType extends AbstractType
     protected function addContactDateField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_CONTACT_DATE, DateType::class, [
+            'label' => 'Next contact date',
             'widget' => 'single_text',
             'required' => false,
             'attr' => [
