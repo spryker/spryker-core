@@ -21,7 +21,6 @@ use Spryker\Zed\Offer\Business\Model\OfferReader;
 use Spryker\Zed\Offer\Business\Model\OfferReaderInterface;
 use Spryker\Zed\Offer\Business\Model\OfferWriter;
 use Spryker\Zed\Offer\Business\Model\OfferWriterInterface;
-use Spryker\Zed\Offer\Dependency\Facade\OfferToCartFacadeInterface;
 use Spryker\Zed\Offer\Dependency\Facade\OfferToCustomerFacadeInterface;
 use Spryker\Zed\Offer\Dependency\Facade\OfferToMessengerFacadeInterface;
 use Spryker\Zed\Offer\Dependency\Facade\OfferToSalesFacadeInterface;
@@ -94,7 +93,6 @@ class OfferBusinessFactory extends AbstractBusinessFactory
     public function createOfferSavingAmountHydrator(): OfferSavingAmountHydratorInterface
     {
         return new OfferSavingAmountHydrator(
-            $this->getCartFacade(),
             $this->getMessengerFacade(),
             $this->getConfig()
         );
@@ -130,14 +128,6 @@ class OfferBusinessFactory extends AbstractBusinessFactory
     public function getOfferDoUpdatePlugins(): array
     {
         return $this->getProvidedDependency(OfferDependencyProvider::PLUGINS_OFFER_DO_UPDATE);
-    }
-
-    /**
-     * @return \Spryker\Zed\Offer\Dependency\Facade\OfferToCartFacadeInterface
-     */
-    public function getCartFacade(): OfferToCartFacadeInterface
-    {
-        return $this->getProvidedDependency(OfferDependencyProvider::FACADE_CART);
     }
 
     /**

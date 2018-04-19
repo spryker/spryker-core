@@ -10,7 +10,6 @@ namespace Spryker\Zed\Offer;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Offer\Communication\Plugin\OfferSavingHydratorPlugin;
-use Spryker\Zed\Offer\Dependency\Facade\OfferToCartFacadeBridge;
 use Spryker\Zed\Offer\Dependency\Facade\OfferToCustomerFacadeBridge;
 use Spryker\Zed\Offer\Dependency\Facade\OfferToMessengerFacadeBridge;
 use Spryker\Zed\Offer\Dependency\Facade\OfferToSalesFacadeBridge;
@@ -19,7 +18,6 @@ use Spryker\Zed\Offer\Dependency\Service\OfferToUtilEncodingServiceBridge;
 class OfferDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_SALES = 'FACADE_SALES';
-    public const FACADE_CART = 'FACADE_CART';
     public const FACADE_MESSENGER = 'FACADE_MESSENGER';
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
@@ -35,7 +33,6 @@ class OfferDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addSalesFacade($container);
-        $container = $this->addCartFacade($container);
         $container = $this->addCustomerFacade($container);
         $container = $this->addMessengerFacade($container);
         $container = $this->addOfferHydratorPlugins($container);
@@ -52,7 +49,6 @@ class OfferDependencyProvider extends AbstractBundleDependencyProvider
     public function provideCommunicationLayerDependencies(Container $container)
     {
         $container = parent::provideCommunicationLayerDependencies($container);
-        $container = $this->addCartFacade($container);
         $container = $this->addMessengerFacade($container);
 
         return $container;
@@ -95,20 +91,6 @@ class OfferDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_MESSENGER] = function (Container $container) {
             return new OfferToMessengerFacadeBridge($container->getLocator()->messenger()->facade());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addCartFacade(Container $container): Container
-    {
-        $container[static::FACADE_CART] = function (Container $container) {
-            return new OfferToCartFacadeBridge($container->getLocator()->cart()->facade());
         };
 
         return $container;
