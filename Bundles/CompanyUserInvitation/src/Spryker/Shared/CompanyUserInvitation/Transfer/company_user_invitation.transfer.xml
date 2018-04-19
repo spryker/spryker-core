@@ -35,6 +35,7 @@
 
     <transfer name="Customer">
         <property name="companyUserTransfer" type="CompanyUser"/>
+        <property name="companyUserInvitationHash" type="string" />
     </transfer>
 
     <transfer name="CompanyUser">

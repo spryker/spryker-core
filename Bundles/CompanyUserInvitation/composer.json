@@ -18,6 +18,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/customer": "*",
     "spryker/installer": "*",
     "spryker/silex": "*",
     "spryker/testify": "*",
@@ -26,7 +27,8 @@
   "suggest": {
     "spryker/installer": "You need to have Installer to set up values for invitation statuses",
     "spryker/silex": "You need to have Silex installed to use the Config Profiler",
-    "spryker/twig": "You need to have Twig installed to use the Config Profiler"
+    "spryker/twig": "You need to have Twig installed to use the Config Profiler",
+    "spryker/customer": "You need to have Customer installed create company users after registration"
   },
   "autoload": {
     "psr-4": {

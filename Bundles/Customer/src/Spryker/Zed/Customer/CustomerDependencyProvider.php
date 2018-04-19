@@ -40,6 +40,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
 
     const PLUGINS_CUSTOMER_ANONYMIZER = 'PLUGINS_CUSTOMER_ANONYMIZER';
     const PLUGINS_CUSTOMER_TRANSFER_EXPANDER = 'PLUGINS_CUSTOMER_TRANSFER_EXPANDER';
+    const PLUGINS_POST_CUSTOMER_REGISTRATION = 'PLUGINS_POST_CUSTOMER_REGISTRATION';
 
     public const SUB_REQUEST_HANDLER = 'SUB_REQUEST_HANDLER';
 
@@ -59,6 +60,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addUtilValidateService($container);
         $container = $this->addLocaleFacade($container);
         $container = $this->addCustomerTransferExpanderPlugins($container);
+        $container = $this->addPostCustomerRegistrationPlugins($container);
 
         return $container;
     }
@@ -90,6 +92,20 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::PLUGINS_CUSTOMER_ANONYMIZER] = function (Container $container) {
             return $this->getCustomerAnonymizerPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPostCustomerRegistrationPlugins($container)
+    {
+        $container[static::PLUGINS_POST_CUSTOMER_REGISTRATION] = function () {
+            return $this->getPostCustomerRegistrationPlugins();
         };
 
         return $container;
@@ -278,5 +294,13 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Dependency\Plugin\PostCustomerRegistrationPluginInterface[]
+     */
+    protected function getPostCustomerRegistrationPlugins(): array
+    {
+        return [];
     }
 }

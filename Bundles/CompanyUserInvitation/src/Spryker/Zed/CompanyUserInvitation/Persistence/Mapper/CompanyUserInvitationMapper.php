@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationTransfer;
 use Generated\Shared\Transfer\SpyCompanyBusinessUnitEntityTransfer;
 use Generated\Shared\Transfer\SpyCompanyUserInvitationEntityTransfer;
+use Generated\Shared\Transfer\SpyCompanyUserInvitationStatusEntityTransfer;
 
 class CompanyUserInvitationMapper implements CompanyUserInvitationMapperInterface
 {
@@ -51,9 +52,9 @@ class CompanyUserInvitationMapper implements CompanyUserInvitationMapperInterfac
             );
         }
 
-        if (isset($companyUserInvitationEntityTransferData['spy_company_user_invitation_status'])) {
+        if (isset($companyUserInvitationEntityTransferData[SpyCompanyUserInvitationEntityTransfer::SPY_COMPANY_USER_INVITATION_STATUS])) {
             $companyUserInvitationTransfer->setCompanyUserInvitationStatusKey(
-                $companyUserInvitationEntityTransferData['spy_company_user_invitation_status']['status_key']
+                $companyUserInvitationEntityTransferData[SpyCompanyUserInvitationEntityTransfer::SPY_COMPANY_USER_INVITATION_STATUS][SpyCompanyUserInvitationStatusEntityTransfer::STATUS_KEY]
             );
         }
 

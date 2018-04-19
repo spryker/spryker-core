@@ -41,7 +41,8 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
             $this->getMailFacade(),
             $this->getLocaleQueryContainer(),
             $this->getStore(),
-            $this->createCustomerExpander()
+            $this->createCustomerExpander(),
+            $this->getPostCustomerRegistrationPlugins()
         );
 
         return $customer;
@@ -194,6 +195,14 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     protected function getCustomerTransferExpanderPlugins()
     {
         return $this->getProvidedDependency(CustomerDependencyProvider::PLUGINS_CUSTOMER_TRANSFER_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Dependency\Plugin\PostCustomerRegistrationPluginInterface[]
+     */
+    public function getPostCustomerRegistrationPlugins()
+    {
+        return $this->getProvidedDependency(CustomerDependencyProvider::PLUGINS_POST_CUSTOMER_REGISTRATION);
     }
 
     /**
