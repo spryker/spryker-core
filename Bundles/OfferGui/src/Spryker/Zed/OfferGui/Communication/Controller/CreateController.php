@@ -30,6 +30,7 @@ class CreateController extends AbstractController
     public const PARAM_SUBMIT_RELOAD = 'submit-reload';
     public const PARAM_CUSTOMER_REFERENCE = 'customerReference';
     public const REDIRECT_URL_OFFER_VIEW = '/offer-gui/view/details';
+    public const PARAM_KEY_REDIRECT_URL = 'redirectUrl';
 
     protected const SESSION_KEY_OFFER_DATA = 'key-offer-data';
 
@@ -55,14 +56,15 @@ class CreateController extends AbstractController
             $this->getFactory()
                 ->createCreateRequestHandler()
                 ->addItems($offerTransfer);
-            $this->storeFormDataIntoSession($form->getData());
 
-            return $this->redirectResponse(
-                Url::generate(
-                    '/customer/add',
-                    ['redirectUrl' => urlencode('/offer-gui/create')]
-                )->build()
-            );
+            $redirectBackUrl = $this->storeFormDataIntoSession($form->getData());
+
+            $redirectUrl = Url::generate(
+                '/customer/add',
+                [static::PARAM_KEY_REDIRECT_URL => urlencode($redirectBackUrl)]
+            )->build();
+
+            return $this->redirectResponse($redirectUrl);
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -145,18 +147,41 @@ class CreateController extends AbstractController
     /**
      * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
      *
-     * @return void
+     * @return string
      */
-    protected function storeFormDataIntoSession(OfferTransfer $offerTransfer)
+    protected function storeFormDataIntoSession(OfferTransfer $offerTransfer): string
     {
-        $jsonData = $this->getFactory()->getUtilEncoding()->encodeJson($offerTransfer->toArray());
+        $offerJsonData = $this->getFactory()->getUtilEncoding()->encodeJson($offerTransfer->toArray());
+        $offerKey = $this->generateOfferKey($offerJsonData);
+
 
         $this->getFactory()
             ->getSessionClient()
-            ->set(static::SESSION_KEY_OFFER_DATA, $jsonData);
+            ->set($offerKey, $offerJsonData);
+
+        $redirectUrl = Url::generate(
+            '/offer-gui/create',
+            [static::PARAM_KEY_INITIAL_OFFER => $offerKey]
+        )->build();
+
+        return $redirectUrl;
     }
 
     /**
+     * @param string $offerKey
+     *
+     * @return array|null
+     */
+    protected function retrieveFormDataFromSession(string $offerKey): ?array
+    {
+        $jsonData = $this->getFactory()
+            ->getSessionClient()
+            ->get($offerKey);
+
+        return $this->getFactory()
+            ->getUtilEncoding()
+            ->decodeJson($jsonData, true);
+    }
 
     /**
      *
@@ -210,12 +235,28 @@ class CreateController extends AbstractController
      */
     protected function processCustomerRedirect(Request $request, OfferTransfer $offerTransfer): OfferTransfer
     {
-        //TODO: probably change condition, add md5 key name here.
-        if (!$request->query->has(static::PARAM_CUSTOMER_REFERENCE)) {
+        if (!$request->query->has(static::PARAM_CUSTOMER_REFERENCE) || !$request->query->has(static::PARAM_KEY_INITIAL_OFFER)) {
             return $offerTransfer;
         }
+        $offerKey = $request->query->get(static::PARAM_KEY_INITIAL_OFFER);
 
-        //TODO: retrieve this by md5
-        return (new OfferTransfer())->fromArray(json_decode($this->getFactory()->getSessionClient()->get(static::SESSION_KEY_OFFER_DATA), true));
+        $data = $this->retrieveFormDataFromSession($offerKey);
+
+        if (!$data) {
+            return $offerTransfer;
+        }
+        return (new OfferTransfer())->fromArray(
+            $data
+        );
+    }
+
+    /**
+     * @param string $offerJsonData
+     *
+     * @return string
+     */
+    protected function generateOfferKey(string $offerJsonData): string
+    {
+        return md5($offerJsonData);
     }
 }
