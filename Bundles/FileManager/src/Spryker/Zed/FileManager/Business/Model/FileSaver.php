@@ -162,6 +162,11 @@ class FileSaver implements FileSaverInterface
                 $fileInfo->getVersionName(),
                 $fileInfo->getFileExtension()
             );
+
+            if ($file->getFkFileDirectory()) {
+                $newFileName = $file->getFkFileDirectory() . DIRECTORY_SEPARATOR . $newFileName;
+            }
+
             $this->fileContent->save($newFileName, $saveRequestTransfer->getContent());
             $this->addStorageInfo($fileInfo, $newFileName);
         }

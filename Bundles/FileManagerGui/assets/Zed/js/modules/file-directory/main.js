@@ -6,8 +6,8 @@
 'use strict';
 
 require('ZedGui');
-var fileDirectoryTable = require('./file-directory-table');
+var fileDirectoryTree = require('./file-directory-tree');
 
 $(document).ready(function() {
-    fileDirectoryTable.initialize('#file-directory-table');
+    fileDirectoryTree.initialize();
 });

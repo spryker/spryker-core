@@ -20,6 +20,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AddController extends AbstractController
 {
+    const FILE_DIRECTORY_ID = 'file-directory-id';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -35,6 +37,10 @@ class AddController extends AbstractController
             try {
                 $data = $form->getData();
                 $saveRequestTransfer = $this->createFileManagerSaveRequestTransfer($data);
+
+                if ($request->get(self::FILE_DIRECTORY_ID)) {
+                    $saveRequestTransfer->getFile()->setFkFileDirectory($request->get(self::FILE_DIRECTORY_ID));
+                }
 
                 $this->getFactory()->getFileManagerFacade()->save($saveRequestTransfer);
 

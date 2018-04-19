@@ -129,6 +129,6 @@ class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileMan
      */
     public function updateFileDirectoryTreeHierarchy(FileDirectoryTreeTransfer $fileDirectoryTreeTransfer)
     {
-        return $this->fileManagerFacade->findFileDirectoryTree($fileDirectoryTreeTransfer);
+        return $this->fileManagerFacade->updateFileDirectoryTreeHierarchy($fileDirectoryTreeTransfer);
     }
 }

@@ -20,6 +20,7 @@
     <transfer name="File">
         <property name="idFile" type="int" />
         <property name="fileName" type="string" />
+        <property name="fkFileDirectory" type="int" />
         <property name="fileInfo" type="FileInfo[]" />
         <property name="fileLocalizedAttributes" type="FileLocalizedAttributes[]" />
         <property name="useRealName" type="bool" />

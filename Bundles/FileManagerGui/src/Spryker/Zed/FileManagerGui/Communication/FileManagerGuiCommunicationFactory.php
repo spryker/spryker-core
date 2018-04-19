@@ -26,12 +26,15 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
+     * @param int|null $fileDirectoryId
+     *
      * @return \Spryker\Zed\FileManagerGui\Communication\Table\FileTable
      */
-    public function createFileTable()
+    public function createFileTable($fileDirectoryId = null)
     {
         return new FileTable(
-            $this->getFileManagerQueryContainer()
+            $this->getFileManagerQueryContainer(),
+            $fileDirectoryId
         );
     }
 
@@ -98,7 +101,11 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createFileFormDataProvider()
     {
-        return new FileFormDataProvider($this->getFileManagerQueryContainer(), $this->getLocaleFacade());
+        return new FileFormDataProvider(
+            $this->getFileManagerQueryContainer(),
+            $this->getLocaleFacade(),
+            $this->getFileManagerFacade()
+        );
     }
 
     /**

@@ -1,0 +1,10 @@
+<ul>
+    {% for node in nodes %}
+        <li id="file-directory-node-{{ node.fileDirectory.idFileDirectory }}" data-id-file-directory-node="{{ node.fileDirectory.idFileDirectory }}"
+            class="jstree-open"
+        >
+                {{ node.fileDirectory.name }}
+            {% include '@FileManagerGui/DirectoriesTree/_partials/nodes.twig' with {nodes: node.children} %}
+        </li>
+    {% endfor %}
+</ul>
