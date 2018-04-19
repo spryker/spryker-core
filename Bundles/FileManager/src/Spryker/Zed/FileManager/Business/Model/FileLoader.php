@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\FileManager\Business\Model;
 
+use Orm\Zed\FileManager\Persistence\SpyFile;
+use Spryker\Zed\FileManager\FileManagerConfig;
 use Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface;
 
 class FileLoader implements FileLoaderInterface
@@ -17,11 +19,18 @@ class FileLoader implements FileLoaderInterface
     protected $queryContainer;
 
     /**
-     * @param \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface $queryContainer
+     * @var \Spryker\Zed\FileManager\FileManagerConfig
      */
-    public function __construct(FileManagerQueryContainerInterface $queryContainer)
+    protected $config;
+
+    /**
+     * @param \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\FileManager\FileManagerConfig $config
+     */
+    public function __construct(FileManagerQueryContainerInterface $queryContainer, FileManagerConfig $config)
     {
         $this->queryContainer = $queryContainer;
+        $this->config = $config;
     }
 
     /**
@@ -64,5 +73,28 @@ class FileLoader implements FileLoaderInterface
         return $this->queryContainer
             ->queryFileInfo($idFileInfo)
             ->findOne();
+    }
+
+    /**
+     * @param \Orm\Zed\FileManager\Persistence\SpyFile $file
+     *
+     * @return string
+     */
+    public function buildFilename(SpyFile $file)
+    {
+        $fileInfo = $file->getSpyFileInfos()->getFirst();
+        $fileName = sprintf(
+            '%u%s%s.%s',
+            $file->getIdFile(),
+            $this->config->getFileNameVersionDelimiter(),
+            $fileInfo->getVersionName(),
+            $fileInfo->getFileExtension()
+        );
+
+        if ($file->getFkFileDirectory()) {
+            $fileName = $file->getFkFileDirectory() . DIRECTORY_SEPARATOR . $fileName;
+        }
+
+        return $fileName;
     }
 }

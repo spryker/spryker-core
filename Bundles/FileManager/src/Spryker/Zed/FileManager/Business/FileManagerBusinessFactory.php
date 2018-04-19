@@ -9,6 +9,7 @@ namespace Spryker\Zed\FileManager\Business;
 
 use Spryker\Zed\FileManager\Business\Model\FileContent;
 use Spryker\Zed\FileManager\Business\Model\FileDirectoryLocalizedAttributesSaver;
+use Spryker\Zed\FileManager\Business\Model\FileDirectoryRemover;
 use Spryker\Zed\FileManager\Business\Model\FileDirectorySaver;
 use Spryker\Zed\FileManager\Business\Model\FileLoader;
 use Spryker\Zed\FileManager\Business\Model\FileLocalizedAttributesSaver;
@@ -79,6 +80,19 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\FileManager\Business\Model\FileDirectoryRemoverInterface
+     */
+    public function createFileDirectoryRemover()
+    {
+        return new FileDirectoryRemover(
+            $this->getQueryContainer(),
+            $this->createFileLoader(),
+            $this->getFileSystemService(),
+            $this->getConfig()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\FileManager\Business\Model\FileLocalizedAttributesSaverInterface
      */
     public function createFileLocalizedAttributesSaver()
@@ -119,7 +133,8 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
     public function createFileLoader()
     {
         return new FileLoader(
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
+            $this->getConfig()
         );
     }
 

@@ -28,7 +28,7 @@ interface FileManagerFacadeInterface
      *
      * @return int
      */
-    public function save(FileManagerSaveRequestTransfer $saveRequestTransfer);
+    public function saveFile(FileManagerSaveRequestTransfer $saveRequestTransfer);
 
     /**
      * Specification:
@@ -68,7 +68,7 @@ interface FileManagerFacadeInterface
      *
      * @return bool
      */
-    public function delete($idFile);
+    public function deleteFile($idFile);
 
     /**
      * Specification:
@@ -84,6 +84,18 @@ interface FileManagerFacadeInterface
 
     /**
      * Specification:
+     * - Deletes only file info version with a given id
+     *
+     * @api
+     *
+     * @param int $idFileDirectory
+     *
+     * @return bool
+     */
+    public function deleteFileDirectory($idFileDirectory);
+
+    /**
+     * Specification:
      * - Creates a new file info version based on a given file info id
      *
      * @api
@@ -93,7 +105,7 @@ interface FileManagerFacadeInterface
      *
      * @return void
      */
-    public function rollback($idFile, $idFileInfo);
+    public function rollbackFile($idFile, $idFileInfo);
 
     /**
      * Specification:
@@ -106,7 +118,7 @@ interface FileManagerFacadeInterface
      *
      * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
      */
-    public function read($idFileInfo);
+    public function readFile($idFileInfo);
 
     /**
      * Specification:

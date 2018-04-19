@@ -34,7 +34,7 @@ interface FileManagerGuiToFileManagerQueryContainerInterface
      *
      * @return \Orm\Zed\FileManager\Persistence\SpyFileDirectoryQuery
      */
-    public function queryFileDirectoryId(int $idFileDirectory);
+    public function queryFileDirectoryById(int $idFileDirectory);
 
     /**
      * @param int|null $idFile

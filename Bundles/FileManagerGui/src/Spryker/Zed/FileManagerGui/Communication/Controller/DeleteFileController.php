@@ -46,7 +46,7 @@ class DeleteFileController extends AbstractController
 
         $this->getFactory()
             ->getFileManagerFacade()
-            ->delete($idFile);
+            ->deleteFile($idFile);
 
         return $this->redirectBack($request);
     }

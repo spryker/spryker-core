@@ -235,7 +235,7 @@ class FileManagerFacadeTest extends Unit
      */
     public function testRead()
     {
-        $fileTransfer = $this->facade->read(1);
+        $fileTransfer = $this->facade->readFile(1);
         $this->assertEquals('first version of the file', $fileTransfer->getContent());
         $this->assertEquals('customer.txt', $fileTransfer->getFile()->getFileName());
         $this->assertEquals(1, $fileTransfer->getFile()->getIdFile());
@@ -251,7 +251,7 @@ class FileManagerFacadeTest extends Unit
      */
     public function testDelete()
     {
-        $this->assertTrue($this->facade->delete(1));
+        $this->assertTrue($this->facade->deleteFile(1));
     }
 
     /**
@@ -284,7 +284,7 @@ class FileManagerFacadeTest extends Unit
         $fileManagerSaveRequestTransfer->setFile($file);
         $fileManagerSaveRequestTransfer->setFileInfo($fileInfo);
 
-        $savedFileId = $this->facade->save($fileManagerSaveRequestTransfer);
+        $savedFileId = $this->facade->saveFile($fileManagerSaveRequestTransfer);
         $this->assertEquals(2, $savedFileId);
     }
 
@@ -293,7 +293,7 @@ class FileManagerFacadeTest extends Unit
      */
     public function testRollback()
     {
-        $this->facade->rollback(1, 1);
+        $this->facade->rollbackFile(1, 1);
         $fileTransfer = $this->facade->readLatestFileVersion(1);
         $this->assertEquals('first version of the file', $fileTransfer->getContent());
         $this->assertEquals('customer.txt', $fileTransfer->getFile()->getFileName());

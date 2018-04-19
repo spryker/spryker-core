@@ -51,17 +51,17 @@ class FileDirectoryFormDataProvider
             return $this->createEmptyFileDirectoryTransfer();
         }
 
-        $file = $this
+        $fileDirectory = $this
             ->queryContainer
-            ->queryFileById($idFile)
+            ->queryFileDirectoryById($idFile)
             ->findOne();
 
         $fileDirectoryTransfer = $this->createEmptyFileDirectoryTransfer();
 
-        $this->addFileDirectoryLocalizedAttributes($file, $fileDirectoryTransfer);
-        $fileTransfer->fromArray($file->toArray());
+        $this->addFileDirectoryLocalizedAttributes($fileDirectory, $fileDirectoryTransfer);
+        $fileDirectoryTransfer->fromArray($fileDirectory->toArray());
 
-        return $fileTransfer;
+        return $fileDirectoryTransfer;
     }
 
     /**
@@ -100,17 +100,17 @@ class FileDirectoryFormDataProvider
     }
 
     /**
-     * @param \Orm\Zed\FileManager\Persistence\SpyFile $file
-     * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
+     * @param \Orm\Zed\FileManager\Persistence\SpyFileDirectory $fileDirectory
+     * @param \Generated\Shared\Transfer\FileDirectoryTransfer $fileDirectoryTransfer
      *
      * @return void
      */
-    protected function addFileDirectoryLocalizedAttributes(SpyFileDirectory $file, FileDirectoryTransfer $fileDirectoryTransfer)
+    protected function addFileDirectoryLocalizedAttributes(SpyFileDirectory $fileDirectory, FileDirectoryTransfer $fileDirectoryTransfer)
     {
-        $savedLocalizedAttributes = $file->getSpyFileLocalizedAttributess()
+        $savedLocalizedAttributes = $fileDirectory->getSpyFileDirectoryLocalizedAttributess()
             ->toKeyIndex(static::FK_LOCALE_KEY);
 
-        foreach ($fileTransfer->getFileLocalizedAttributes() as $fileLocalizedAttribute) {
+        foreach ($fileDirectoryTransfer->getFileDirectoryLocalizedAttributes() as $fileLocalizedAttribute) {
             $fkLocale = $fileLocalizedAttribute->getLocale()->getIdLocale();
 
             if (!empty($savedLocalizedAttributes[$fkLocale])) {

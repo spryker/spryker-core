@@ -32,9 +32,9 @@ class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileMan
      *
      * @return int
      */
-    public function save(FileManagerSaveRequestTransfer $saveRequestTransfer)
+    public function saveFile(FileManagerSaveRequestTransfer $saveRequestTransfer)
     {
-        return $this->fileManagerFacade->save($saveRequestTransfer);
+        return $this->fileManagerFacade->saveFile($saveRequestTransfer);
     }
 
     /**
@@ -66,9 +66,9 @@ class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileMan
      *
      * @return bool
      */
-    public function delete($idFile)
+    public function deleteFile($idFile)
     {
-        return $this->fileManagerFacade->delete($idFile);
+        return $this->fileManagerFacade->deleteFile($idFile);
     }
 
     /**
@@ -86,14 +86,26 @@ class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileMan
     /**
      * @api
      *
+     * @param int $idFileDirectory
+     *
+     * @return bool
+     */
+    public function deleteFileDirectory($idFileDirectory)
+    {
+        return $this->fileManagerFacade->deleteFileDirectory($idFileDirectory);
+    }
+
+    /**
+     * @api
+     *
      * @param int $idFile
      * @param int $idFileInfo
      *
      * @return void
      */
-    public function rollback($idFile, $idFileInfo)
+    public function rollbackFile($idFile, $idFileInfo)
     {
-        $this->fileManagerFacade->rollback($idFile, $idFileInfo);
+        $this->fileManagerFacade->rollbackFile($idFile, $idFileInfo);
     }
 
     /**
@@ -103,9 +115,9 @@ class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileMan
      *
      * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
      */
-    public function read($idFileInfo)
+    public function readFile($idFileInfo)
     {
-        return $this->fileManagerFacade->read($idFileInfo);
+        return $this->fileManagerFacade->readFile($idFileInfo);
     }
 
     /**

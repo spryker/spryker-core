@@ -1,10 +1,15 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
 {% set widget_title = 'File Directories' %}
-{% block section_title 'Overview of File Directories Elements' %}
+{% block section_title 'Overview of File Tree' %}
 
 {% block action %}
-    {{ createActionButton('/file-manager-gui/add-directory', 'Create File Directory Element' | trans) }}
+    <a id="delete-directory-link" class="btn btn-sm btn-outline safe-submit btn-remove"
+       href="{{ url('file-manager-gui/delete-directory') }}">
+        <i class="fa fa-trash"></i> {{ 'Delete Directory' | trans }}
+    </a>
+
+    {{ createActionButton('/file-manager-gui/add-directory', 'Create File Directory' | trans) }}
 {% endblock %}
 
 {% block content %}
@@ -34,8 +39,6 @@
         <div class="col-lg-6">
             <div id="file-directory-files-list">
             </div>
-            {#{% include '@FileManagerGui/DirectoriesTree/_partials/file-directory-tree.twig' %}#}
-            {#{% include '@FileManagerGui/DirectoriesTree/_partials/file-directory-tree-form-container.twig' %}#}
         </div>
     </div>
 

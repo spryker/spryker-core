@@ -36,7 +36,7 @@ class DownloadFileController extends AbstractController
 
         $file = $this->getFactory()
             ->getFileManagerFacade()
-            ->read($idFileInfo);
+            ->readFile($idFileInfo);
 
         if ($file->getContent() === null) {
             throw new NotFoundHttpException();

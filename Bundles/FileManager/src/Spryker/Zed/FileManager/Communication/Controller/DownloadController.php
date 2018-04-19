@@ -33,7 +33,7 @@ class DownloadController extends AbstractController
 
         $file = $this->getFactory()
             ->getFileManagerFacade()
-            ->read($idFileInfo);
+            ->readFile($idFileInfo);
 
         return $this->createResponse($file);
     }

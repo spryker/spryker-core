@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\FileManager\Business\Model;
 
+use Orm\Zed\FileManager\Persistence\SpyFile;
+
 interface FileLoaderInterface
 {
     /**
@@ -36,4 +38,11 @@ interface FileLoaderInterface
      * @return \Orm\Zed\FileManager\Persistence\SpyFileDirectory
      */
     public function getFileDirectory($idFileDirectory);
+
+    /**
+     * @param \Orm\Zed\FileManager\Persistence\SpyFile $file
+     *
+     * @return string
+     */
+    public function buildFilename(SpyFile $file);
 }

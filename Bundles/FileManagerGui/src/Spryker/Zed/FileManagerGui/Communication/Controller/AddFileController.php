@@ -42,7 +42,7 @@ class AddFileController extends AbstractController
                     $saveRequestTransfer->getFile()->setFkFileDirectory($request->get(self::FILE_DIRECTORY_ID));
                 }
 
-                $this->getFactory()->getFileManagerFacade()->save($saveRequestTransfer);
+                $this->getFactory()->getFileManagerFacade()->saveFile($saveRequestTransfer);
 
                 $this->addSuccessMessage(
                     'The file was added successfully.'

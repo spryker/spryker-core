@@ -85,6 +85,7 @@ function initJsTree() {
         var filesTable = $('#file-directory-files-list').find('table').first();
         filesTable.DataTable().ajax.url( '/file-manager-gui/files/table?file-directory-id=' + data.node.data.idFileDirectoryNode ).load();
         $('#add-file-link').attr('href', '/file-manager-gui/add-file?file-directory-id=' + data.node.data.idFileDirectoryNode);
+        $('#delete-directory-link').attr('href', '/file-manager-gui/delete-directory?id-directory=' + data.node.data.idFileDirectoryNode);
     });
 
     $treeProgressBar.removeClass('hidden');

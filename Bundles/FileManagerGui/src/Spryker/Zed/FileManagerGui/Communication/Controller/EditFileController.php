@@ -40,7 +40,7 @@ class EditFileController extends AbstractController
                 $data = $form->getData();
                 $saveRequestTransfer = $this->createFileManagerSaveRequestTransfer($data);
 
-                $this->getFactory()->getFileManagerFacade()->save($saveRequestTransfer);
+                $this->getFactory()->getFileManagerFacade()->saveFile($saveRequestTransfer);
 
                 $this->addSuccessMessage(
                     'The file was edited successfully.'

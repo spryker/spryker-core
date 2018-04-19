@@ -157,15 +157,7 @@ class FileSaver implements FileSaverInterface
     protected function saveContent(FileManagerSaveRequestTransfer $saveRequestTransfer, SpyFile $file, SpyFileInfo $fileInfo = null)
     {
         if ($saveRequestTransfer->getContent() !== null || $fileInfo !== null) {
-            $newFileName = $this->getNewFileName(
-                $file->getIdFile(),
-                $fileInfo->getVersionName(),
-                $fileInfo->getFileExtension()
-            );
-
-            if ($file->getFkFileDirectory()) {
-                $newFileName = $file->getFkFileDirectory() . DIRECTORY_SEPARATOR . $newFileName;
-            }
+            $newFileName = $this->fileLoader->buildFilename($file);
 
             $this->fileContent->save($newFileName, $saveRequestTransfer->getContent());
             $this->addStorageInfo($fileInfo, $newFileName);

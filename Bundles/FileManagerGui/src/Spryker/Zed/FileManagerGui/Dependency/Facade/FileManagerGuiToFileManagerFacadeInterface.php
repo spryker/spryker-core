@@ -19,7 +19,7 @@ interface FileManagerGuiToFileManagerFacadeInterface
      *
      * @return int
      */
-    public function save(FileManagerSaveRequestTransfer $saveRequestTransfer);
+    public function saveFile(FileManagerSaveRequestTransfer $saveRequestTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\FileDirectoryTransfer $fileDirectoryTransfer
@@ -46,7 +46,7 @@ interface FileManagerGuiToFileManagerFacadeInterface
      *
      * @return bool
      */
-    public function delete($idFile);
+    public function deleteFile($idFile);
 
     /**
      * @api
@@ -60,12 +60,21 @@ interface FileManagerGuiToFileManagerFacadeInterface
     /**
      * @api
      *
+     * @param int $idFileDirectory
+     *
+     * @return bool
+     */
+    public function deleteFileDirectory($idFileDirectory);
+
+    /**
+     * @api
+     *
      * @param int $idFile
      * @param int $idFileInfo
      *
      * @return void
      */
-    public function rollback($idFile, $idFileInfo);
+    public function rollbackFile($idFile, $idFileInfo);
 
     /**
      * @api
@@ -74,7 +83,7 @@ interface FileManagerGuiToFileManagerFacadeInterface
      *
      * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
      */
-    public function read($idFileInfo);
+    public function readFile($idFileInfo);
 
     /**
      * Specification:
