@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SalesReclamation\Persistence\Mapper;
 
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ReclamationItemTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
 use Generated\Shared\Transfer\SpySalesReclamationEntityTransfer;
@@ -23,7 +24,7 @@ class SalesReclamationMapper implements SalesReclamationMapperInterface
         ReclamationTransfer $reclamationTransfer
     ): SpySalesReclamationEntityTransfer {
         $reclamationEntityTransfer = new SpySalesReclamationEntityTransfer();
-        $reclamationEntityTransfer->fromArray($reclamationTransfer->modifiedToArray(), true);
+        $reclamationEntityTransfer->fromArray($reclamationTransfer->toArray(), true);
 
         $orderTransfer = $reclamationTransfer->getOrder();
         if ($orderTransfer && $orderTransfer->getIdSalesOrder()) {
@@ -45,8 +46,16 @@ class SalesReclamationMapper implements SalesReclamationMapperInterface
         SpySalesReclamationEntityTransfer $reclamationEntityTransfer
     ): ReclamationTransfer {
         $reclamationTransfer = new ReclamationTransfer();
+        $reclamationTransfer->fromArray($reclamationEntityTransfer->toArray(), true);
 
-        return $reclamationTransfer->fromArray($reclamationEntityTransfer->modifiedToArray(), true);
+        $orderEntityTransfer = $reclamationEntityTransfer->getOrder();
+        if ($orderEntityTransfer && $orderEntityTransfer->getIdSalesOrder()) {
+            $orderTransfer = new OrderTransfer();
+            $orderTransfer->fromArray($orderEntityTransfer->toArray(), true);
+            $reclamationTransfer->setOrder($orderTransfer);
+        }
+
+        return $reclamationTransfer;
     }
 
     /**
@@ -58,7 +67,7 @@ class SalesReclamationMapper implements SalesReclamationMapperInterface
         ReclamationItemTransfer $reclamationItemTransfer
     ): SpySalesReclamationItemEntityTransfer {
         $reclamationItemEntityTransfer = new SpySalesReclamationItemEntityTransfer();
-        $reclamationItemEntityTransfer->fromArray($reclamationItemTransfer->modifiedToArray(), true);
+        $reclamationItemEntityTransfer->fromArray($reclamationItemTransfer->toArray(), true);
 
         $itemTransfer = $reclamationItemTransfer->getOrderItem();
         if ($itemTransfer && $itemTransfer->getIdSalesOrderItem()) {
@@ -81,6 +90,6 @@ class SalesReclamationMapper implements SalesReclamationMapperInterface
     ): ReclamationItemTransfer {
         $reclamationItemTransfer = new ReclamationItemTransfer();
 
-        return $reclamationItemTransfer->fromArray($reclamationItemEntityTransfer->modifiedToArray(), true);
+        return $reclamationItemTransfer->fromArray($reclamationItemEntityTransfer->toArray(), true);
     }
 }

@@ -16,6 +16,7 @@ use Orm\Zed\SalesReclamation\Persistence\Map\SpySalesReclamationItemTableMap;
 use Orm\Zed\SalesReclamation\Persistence\Map\SpySalesReclamationTableMap;
 use Spryker\Zed\SalesReclamation\Dependency\Facade\SalesReclamationToSalesFacadeInterface;
 use Spryker\Zed\SalesReclamation\Persistence\SalesReclamationQueryContainerInterface;
+use Spryker\Zed\SalesReclamation\Persistence\SalesReclamationRepositoryInterface;
 
 class Hydrator implements HydratorInterface
 {
@@ -30,15 +31,24 @@ class Hydrator implements HydratorInterface
     protected $salesFacade;
 
     /**
+     * @var \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationRepositoryInterface
+     */
+    protected $repository;
+
+    /**
      * @param \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\SalesReclamation\Dependency\Facade\SalesReclamationToSalesFacadeInterface $salesFacade
+     * @param \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationRepositoryInterface $repository
      */
     public function __construct(
         SalesReclamationQueryContainerInterface $queryContainer,
-        SalesReclamationToSalesFacadeInterface $salesFacade
+        SalesReclamationToSalesFacadeInterface $salesFacade,
+        SalesReclamationRepositoryInterface $repository
     ) {
         $this->queryContainer = $queryContainer;
+        # @TODO remove
         $this->salesFacade = $salesFacade;
+        $this->repository = $repository;
     }
 
     /**
@@ -48,33 +58,27 @@ class Hydrator implements HydratorInterface
      */
     public function hydrateByIdReclamation(ReclamationTransfer $reclamationTransfer): ?ReclamationTransfer
     {
-        $reclamationTransfer->requireIdSalesReclamation();
+        $reclamationTransfer = $this->repository->findReclamationById($reclamationTransfer);
 
-        $spyReclamation = $this->queryContainer
-            ->queryReclamations()
-            ->findOneByIdSalesReclamation($reclamationTransfer->getIdSalesReclamation());
-
-        if (!$spyReclamation) {
+        if (!$reclamationTransfer) {
             return null;
         }
 
-        $orderTransfer = $this->salesFacade->getOrderByIdSalesOrder($spyReclamation->getFkSalesOrder());
-        $reclamationTransfer->setStatus($spyReclamation->getState());
-        $reclamationTransfer->setOrder($orderTransfer);
-        $reclamationTransfer->setCustomerReference($spyReclamation->getCustomerReference());
-        $reclamationTransfer->setCustomerEmail($spyReclamation->getCustomerEmail());
+        $orderTransfer = $reclamationTransfer->getOrder();
 
+        # @TODO fix mapper
         $createdOrders = new ArrayObject();
-        foreach ($spyReclamation->getCreatedOrders() as $spyRelatedOrder) {
+        foreach ($reclamationTransfer->getCreatedOrders() as $spyRelatedOrder) {
             $createdOrderTransfer = new OrderTransfer();
             $createdOrderTransfer->fromArray($spyRelatedOrder->toArray(), true);
             $createdOrders->append($createdOrderTransfer);
         }
         $reclamationTransfer->setCreatedOrders($createdOrders);
 
+        # @TODO fix mapper
         /** @var \Generated\Shared\Transfer\ReclamationItemTransfer[]|\ArrayObject $reclamationItems */
         $reclamationItems = new ArrayObject();
-        foreach ($spyReclamation->getItems() as $spyReclamationItem) {
+        foreach ($reclamationTransfer->getReclamationItems() as $spyReclamationItem) {
             $reclamationItemTransfer = new ReclamationItemTransfer();
             $reclamationItemTransfer->setId($spyReclamationItem->getIdSalesReclamationItem());
             $reclamationItemTransfer->setStatus($spyReclamationItem->getState());
