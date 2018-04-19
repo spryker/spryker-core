@@ -15,6 +15,7 @@
         {% block widget_content %}
 
             {{ form_start(form) }}
+            {{ form_errors(form) }}
 
             {{ form_row(form.status) }}
 
@@ -74,8 +75,6 @@
             </table>
 
             {{ form_row(form.offerFee) }}
-            
-            {{ form_widget(form) }}
 
             {% include '@OfferGui/Edit/_partials/cart-rule-discounts.twig' with {'quote': offer.quote} %}
             {% include '@OfferGui/Edit/_partials/totals.twig' with {'quote': offer.quote} %}

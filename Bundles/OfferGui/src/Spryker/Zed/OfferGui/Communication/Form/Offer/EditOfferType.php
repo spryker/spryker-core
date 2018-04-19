@@ -24,8 +24,10 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class EditOfferType extends AbstractType
 {
@@ -279,6 +281,17 @@ class EditOfferType extends AbstractType
             'entry_options' => [
                 'label' => false,
                 'data_class' => ItemTransfer::class,
+            ],
+            'constraints' => [
+                new Callback(function ($items, ExecutionContextInterface $context) {
+                    foreach ($items as $itemTransfer) {
+                        if ($itemTransfer->getSku() && empty($itemTransfer->getQuantity())) {
+                            $context->buildViolation('One of selected products contains invalid quantity')
+                                ->addViolation();
+                            break;
+                        }
+                    }
+                }),
             ],
         ]);
 
