@@ -15,8 +15,6 @@ class FileManagerStorageToStorageClientBridge implements FileManagerStorageToSto
     protected $storageClient;
 
     /**
-     * SynchronizationToStorageBridge constructor.
-     *
      * @param \Spryker\Client\Storage\StorageClientInterface $storageClient
      */
     public function __construct($storageClient)

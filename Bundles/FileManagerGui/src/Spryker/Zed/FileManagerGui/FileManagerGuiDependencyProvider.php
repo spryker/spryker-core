@@ -30,7 +30,7 @@ class FileManagerGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addFileManagerQueryContainer($container);
         $container = $this->addLocaleFacade($container);
 
-        return parent::provideCommunicationLayerDependencies($container);
+        return $container;
     }
 
     /**

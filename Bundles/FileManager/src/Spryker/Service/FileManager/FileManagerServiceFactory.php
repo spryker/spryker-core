@@ -16,18 +16,18 @@ use Spryker\Service\Kernel\AbstractServiceFactory;
 class FileManagerServiceFactory extends AbstractServiceFactory
 {
     /**
-     * @return \Spryker\Service\FileManager\Dependency\Service\FileManagerToFileSystemServiceInterface
-     */
-    public function getFileSystemService()
-    {
-        return $this->getProvidedDependency(FileManagerDependencyProvider::FILE_SYSTEM_SERVICE);
-    }
-
-    /**
      * @return \Spryker\Service\FileManager\Model\FileReaderInterface
      */
     public function createFileReader()
     {
         return new FileReader($this->getFileSystemService(), $this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Service\FileManager\Dependency\Service\FileManagerToFileSystemServiceInterface
+     */
+    protected function getFileSystemService()
+    {
+        return $this->getProvidedDependency(FileManagerDependencyProvider::FILE_SYSTEM_SERVICE);
     }
 }

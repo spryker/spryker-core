@@ -22,8 +22,18 @@ class FileManagerDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideServiceDependencies(Container $container)
     {
-        $container = parent::provideServiceDependencies($container);
+        $container = $this->addFileSystemService($container);
 
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Service\Kernel\Container $container
+     *
+     * @return \Spryker\Service\Kernel\Container
+     */
+    protected function addFileSystemService(Container $container)
+    {
         $container[static::FILE_SYSTEM_SERVICE] = function ($container) {
             $fileSystemService = $container->getLocator()->fileSystem()->service();
             return new FileManagerToFileSystemBridge($fileSystemService);

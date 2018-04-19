@@ -24,8 +24,6 @@ class FileRollback implements FileRollbackInterface
     protected $fileLoader;
 
     /**
-     * FileSaver constructor.
-     *
      * @param \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface $fileLoader
      * @param \Spryker\Zed\FileManager\Business\Model\FileVersionInterface $fileVersion
      */

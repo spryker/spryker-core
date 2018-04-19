@@ -27,10 +27,20 @@ class FileManagerStorageDependencyProvider extends AbstractBundleDependencyProvi
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addEventBehaviorFacade($container);
         $container = $this->addLocaleFacade($container);
+        $container = $this->addStore($container);
 
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStore(Container $container)
+    {
         $container[static::STORE] = function (Container $container) {
             return Store::getInstance();
         };

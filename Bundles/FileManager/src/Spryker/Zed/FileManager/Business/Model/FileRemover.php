@@ -30,8 +30,6 @@ class FileRemover implements FileRemoverInterface
     protected $fileManagerQueryContainer;
 
     /**
-     * FileSaver constructor.
-     *
      * @param \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface $fileLoader
      * @param \Spryker\Zed\FileManager\Business\Model\FileContentInterface $fileContent
      * @param \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface $fileManagerQueryContainer
