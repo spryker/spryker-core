@@ -46,7 +46,6 @@ class Hydrator implements HydratorInterface
         SalesReclamationRepositoryInterface $repository
     ) {
         $this->queryContainer = $queryContainer;
-        # @TODO remove
         $this->salesFacade = $salesFacade;
         $this->repository = $repository;
     }
@@ -65,24 +64,22 @@ class Hydrator implements HydratorInterface
         }
 
         $orderTransfer = $reclamationTransfer->getOrder();
+        $orderTransfer = $this->salesFacade->getOrderByIdSalesOrder($orderTransfer->getIdSalesOrder());
+        $reclamationTransfer->setOrder($orderTransfer);
 
-        # @TODO fix mapper
-        $createdOrders = new ArrayObject();
-        foreach ($reclamationTransfer->getCreatedOrders() as $spyRelatedOrder) {
-            $createdOrderTransfer = new OrderTransfer();
-            $createdOrderTransfer->fromArray($spyRelatedOrder->toArray(), true);
-            $createdOrders->append($createdOrderTransfer);
-        }
-        $reclamationTransfer->setCreatedOrders($createdOrders);
+        # @TODO test created orders
+//        $createdOrders = new ArrayObject();
+//        foreach ($reclamationTransfer->getCreatedOrders() as $spyRelatedOrder) {
+//            $createdOrderTransfer = new OrderTransfer();
+//            $createdOrderTransfer->fromArray($spyRelatedOrder->toArray(), true);
+//            $createdOrders->append($createdOrderTransfer);
+//        }
+//        $reclamationTransfer->setCreatedOrders($createdOrders);
 
-        # @TODO fix mapper
         /** @var \Generated\Shared\Transfer\ReclamationItemTransfer[]|\ArrayObject $reclamationItems */
         $reclamationItems = new ArrayObject();
-        foreach ($reclamationTransfer->getReclamationItems() as $spyReclamationItem) {
-            $reclamationItemTransfer = new ReclamationItemTransfer();
-            $reclamationItemTransfer->setId($spyReclamationItem->getIdSalesReclamationItem());
-            $reclamationItemTransfer->setStatus($spyReclamationItem->getState());
-            $itemTransfer = $this->getOrderItemById($orderTransfer, $spyReclamationItem->getFkSalesOrderItem());
+        foreach ($reclamationTransfer->getReclamationItems() as $reclamationItemTransfer) {
+            $itemTransfer = $this->getOrderItemById($orderTransfer, $reclamationItemTransfer->getOrderItem()->getIdSalesOrderItem());
             $reclamationItemTransfer->setOrderItem($itemTransfer);
 
             $reclamationItems->append($reclamationItemTransfer);

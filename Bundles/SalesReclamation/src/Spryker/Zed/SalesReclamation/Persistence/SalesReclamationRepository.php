@@ -28,9 +28,23 @@ class SalesReclamationRepository extends AbstractRepository implements SalesRecl
 
         $query = $this->getFactory()
             ->createSalesReclamationQuery()
-            ->innerJoinWithOrder()
+            ->leftJoinWithSpySalesReclamationItem()
+            ->useSpySalesReclamationItemQuery()
+                ->leftJoinWithOrderItem()
+            ->endUse()
+            ->leftJoinWithOrder()
             ->filterByIdSalesReclamation($reclamationTransfer->getIdSalesReclamation());
-        $spyReclamationEntityTransfer = $this->buildQueryFromCriteria($query)->findOne();
+        /** @var \Generated\Shared\Transfer\SpySalesReclamationEntityTransfer[] $spyReclamationsEntityTransfer */
+        $spyReclamationsEntityTransfer = $this->buildQueryFromCriteria($query)->find();
+        $spyReclamationEntityTransfer = $spyReclamationsEntityTransfer[0];
+
+        $query = $this->getFactory()
+            ->createSalesOrderQuery()
+            ->filterByFkSalesReclamation($reclamationTransfer->getIdSalesReclamation());
+        $createdOrdersEntityTransfer = $this->buildQueryFromCriteria($query)->find();
+        if ($createdOrdersEntityTransfer) {
+            $spyReclamationEntityTransfer->setSpySalesOrders($createdOrdersEntityTransfer);
+        }
 
         return $this->getMapper()->mapEntityTransferToReclamationTransfer($spyReclamationEntityTransfer);
     }

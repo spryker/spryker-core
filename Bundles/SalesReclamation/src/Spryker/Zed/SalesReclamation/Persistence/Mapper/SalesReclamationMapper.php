@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\SalesReclamation\Persistence\Mapper;
 
-use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ReclamationItemTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
 use Generated\Shared\Transfer\SpySalesReclamationEntityTransfer;
@@ -47,12 +46,14 @@ class SalesReclamationMapper implements SalesReclamationMapperInterface
     ): ReclamationTransfer {
         $reclamationTransfer = new ReclamationTransfer();
         $reclamationTransfer->fromArray($reclamationEntityTransfer->toArray(), true);
+        $reclamationTransfer->setStatus($reclamationEntityTransfer->getState());
 
-        $orderEntityTransfer = $reclamationEntityTransfer->getOrder();
-        if ($orderEntityTransfer && $orderEntityTransfer->getIdSalesOrder()) {
-            $orderTransfer = new OrderTransfer();
-            $orderTransfer->fromArray($orderEntityTransfer->toArray(), true);
-            $reclamationTransfer->setOrder($orderTransfer);
+        $reclamationItemsEntityTransfer = $reclamationEntityTransfer->getSpySalesReclamationItems();
+        if ($reclamationItemsEntityTransfer->count()) {
+            foreach ($reclamationItemsEntityTransfer as $reclamationItemEntityTransfer) {
+                $reclamationItemTransfer = $this->mapEntityTransferToReclamationItemTransfer($reclamationItemEntityTransfer);
+                $reclamationTransfer->addReclamationItem($reclamationItemTransfer);
+            }
         }
 
         return $reclamationTransfer;
@@ -89,7 +90,10 @@ class SalesReclamationMapper implements SalesReclamationMapperInterface
         SpySalesReclamationItemEntityTransfer $reclamationItemEntityTransfer
     ): ReclamationItemTransfer {
         $reclamationItemTransfer = new ReclamationItemTransfer();
+        $reclamationItemTransfer->fromArray($reclamationItemEntityTransfer->toArray(), true);
+        $reclamationItemTransfer->setId($reclamationItemEntityTransfer->getIdSalesReclamationItem());
+        $reclamationItemTransfer->setStatus($reclamationItemEntityTransfer->getState());
 
-        return $reclamationItemTransfer->fromArray($reclamationItemEntityTransfer->toArray(), true);
+        return $reclamationItemTransfer;
     }
 }
