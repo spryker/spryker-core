@@ -492,13 +492,17 @@ class EditOfferType extends AbstractType
     {
         return new CallbackTransformer(
             function ($value) {
-                if ($value !== null && !($value instanceof DateTime)) {
+                if ($value !== null) {
                     return new DateTime($value);
                 }
 
                 return $value;
             },
             function ($value) {
+                if ($value instanceof DateTime) {
+                    return $value->format('c');
+                }
+
                 return $value;
             }
         );
