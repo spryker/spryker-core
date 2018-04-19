@@ -11,8 +11,6 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ReclamationCreateRequestTransfer;
 use Generated\Shared\Transfer\ReclamationItemTransfer;
 use Generated\Shared\Transfer\ReclamationTransfer;
-use Orm\Zed\SalesReclamation\Persistence\Map\SpySalesReclamationItemTableMap;
-use Orm\Zed\SalesReclamation\Persistence\Map\SpySalesReclamationTableMap;
 use Spryker\Zed\SalesReclamation\Persistence\SalesReclamationEntityManagerInterface;
 
 class Creator implements CreatorInterface
@@ -65,7 +63,7 @@ class Creator implements CreatorInterface
         $reclamationTransfer->setCustomerName($customer);
         $reclamationTransfer->setCustomerReference($orderTransfer->getCustomerReference());
         $reclamationTransfer->setCustomerEmail($orderTransfer->getEmail());
-        $reclamationTransfer->setStatus(SpySalesReclamationTableMap::COL_STATE_OPEN);
+        $reclamationTransfer->setStatus(SalesReclamationEntityManagerInterface::RECLAMATION_STATE_OPEN);
 
         $orderItemsTransfer = $reclamationCreateRequestTransfer->getOrderItems();
         foreach ($orderItemsTransfer as $orderItemTransfer) {
@@ -89,7 +87,7 @@ class Creator implements CreatorInterface
 
         $reclamationItemTransfer = new ReclamationItemTransfer();
         $reclamationItemTransfer->setOrderItem($orderItemTransfer);
-        $reclamationItemTransfer->setStatus(SpySalesReclamationItemTableMap::COL_STATE_OPEN);
+        $reclamationItemTransfer->setStatus(SalesReclamationEntityManagerInterface::RECLAMATION_ITEM_STATE_OPEN);
 
         return $reclamationItemTransfer;
     }

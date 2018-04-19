@@ -15,6 +15,16 @@ use Generated\Shared\Transfer\ReclamationTransfer;
 interface SalesReclamationEntityManagerInterface
 {
     /**
+     * @see \Orm\Zed\SalesReclamation\Persistence\Map\SpySalesReclamationTableMap::COL_STATE_OPEN
+     */
+    public const RECLAMATION_STATE_OPEN = 'open';
+
+    /**
+     * @see \Orm\Zed\SalesReclamation\Persistence\Map\SpySalesReclamationItemTableMap::COL_STATE_OPEN
+     */
+    public const RECLAMATION_ITEM_STATE_OPEN = 'open';
+
+    /**
      * @param \Generated\Shared\Transfer\ReclamationTransfer $reclamationTransfer
      *
      * @return \Generated\Shared\Transfer\ReclamationTransfer
