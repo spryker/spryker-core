@@ -92,10 +92,6 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
      * {@inheritdoc}
      *
      * @api
-     *
-     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
-     *
-     * @return \Generated\Shared\Transfer\FileDirectoryTreeTransfer|null
      */
     public function findFileDirectoryTree(LocaleTransfer $localeTransfer = null)
     {
@@ -108,10 +104,6 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
      * {@inheritdoc}
      *
      * @api
-     *
-     * @param \Generated\Shared\Transfer\FileDirectoryTreeTransfer $fileDirectoryTreeTransfer
-     *
-     * @return void
      */
     public function updateFileDirectoryTreeHierarchy(FileDirectoryTreeTransfer $fileDirectoryTreeTransfer)
     {

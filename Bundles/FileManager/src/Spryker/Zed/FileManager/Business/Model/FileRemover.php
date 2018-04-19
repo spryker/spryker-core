@@ -50,7 +50,7 @@ class FileRemover implements FileRemoverInterface
     {
         $fileInfo = $this->fileLoader->getFileInfo($idFileInfo);
 
-        if ($fileInfo == null) {
+        if ($fileInfo === null) {
             return false;
         }
 
@@ -74,7 +74,7 @@ class FileRemover implements FileRemoverInterface
     {
         $file = $this->fileLoader->getFile($idFile);
 
-        if ($file == null) {
+        if ($file === null) {
             return false;
         }
 

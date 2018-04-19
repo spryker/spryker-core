@@ -57,9 +57,9 @@ class FileManagerGuiToFileManagerQueryContainerBridge implements FileManagerGuiT
      *
      * @return \Orm\Zed\FileManager\Persistence\SpyFileInfoQuery
      */
-    public function queryFileInfoByFkFile(int $idFile = null)
+    public function queryFileInfoByIdFile(int $idFile = null)
     {
-        return $this->queryContainer->queryFileInfoByFkFile($idFile);
+        return $this->queryContainer->queryFileInfoByIdFile($idFile);
     }
 
     /**

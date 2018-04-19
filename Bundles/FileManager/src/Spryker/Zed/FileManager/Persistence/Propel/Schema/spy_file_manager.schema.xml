@@ -20,7 +20,7 @@
         <column name="version_name" type="VARCHAR" size="255" required="true"/>
         <column name="storage_name" type="VARCHAR" size="255"/>
         <column name="storage_file_name" type="VARCHAR" size="255"/>
-        <column name="file_extension" type="VARCHAR" size="255" required="true"/>
+        <column name="extension" type="VARCHAR" size="255" required="true"/>
         <foreign-key name="spy_file_info-fk_file" foreignTable="spy_file" phpName="File" onDelete="CASCADE">
             <reference foreign="id_file" local="fk_file"/>
         </foreign-key>

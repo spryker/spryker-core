@@ -34,15 +34,15 @@ class DownloadFileController extends AbstractController
     {
         $idFileInfo = $request->get(static::URL_PARAM_ID_FILE_INFO);
 
-        $file = $this->getFactory()
+        $fileManagerReadResponseTransfer = $this->getFactory()
             ->getFileManagerFacade()
             ->readFile($idFileInfo);
 
-        if ($file->getContent() === null) {
+        if ($fileManagerReadResponseTransfer->getContent() === null) {
             throw new NotFoundHttpException();
         }
 
-        return $this->createResponse($file);
+        return $this->createResponse($fileManagerReadResponseTransfer);
     }
 
     /**

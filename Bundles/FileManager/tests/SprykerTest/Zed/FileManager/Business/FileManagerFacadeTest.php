@@ -126,7 +126,7 @@ class FileManagerFacadeTest extends Unit
         $fileInfo->setVersion(1);
         $fileInfo->setVersionName('v. 1');
         $fileInfo->setStorageFileName('customer_v1.txt');
-        $fileInfo->setFileExtension('txt');
+        $fileInfo->setExtension('txt');
         $fileInfo->setCreatedAt('2017-06-06 00:00:00');
         $fileInfo->setUpdatedAt('2017-06-06 00:00:00');
         $fileInfo->save();
@@ -138,7 +138,7 @@ class FileManagerFacadeTest extends Unit
         $fileInfo->setVersion(2);
         $fileInfo->setVersionName('v. 2');
         $fileInfo->setStorageFileName('customer_v2.txt');
-        $fileInfo->setFileExtension('txt');
+        $fileInfo->setExtension('txt');
         $fileInfo->setCreatedAt('2017-07-07 00:00:00');
         $fileInfo->setUpdatedAt('2017-07-07 00:00:00');
         $fileInfo->save();
@@ -217,22 +217,6 @@ class FileManagerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testReadLatestFileVersion()
-    {
-        $fileTransfer = $this->facade->readLatestFileVersion(1);
-        $this->assertEquals('second version of the file', $fileTransfer->getContent());
-        $this->assertEquals('customer.txt', $fileTransfer->getFile()->getFileName());
-        $this->assertEquals(1, $fileTransfer->getFile()->getIdFile());
-        $this->assertEquals('customer_v2.txt', $fileTransfer->getFileInfo()->getStorageFileName());
-        $this->assertEquals('txt', $fileTransfer->getFileInfo()->getFileExtension());
-        $this->assertEquals('2', $fileTransfer->getFileInfo()->getVersion());
-        $this->assertEquals('v. 2', $fileTransfer->getFileInfo()->getVersionName());
-        $this->assertEquals(10, $fileTransfer->getFileInfo()->getSize());
-    }
-
-    /**
-     * @return void
-     */
     public function testRead()
     {
         $fileTransfer = $this->facade->readFile(1);
@@ -240,7 +224,7 @@ class FileManagerFacadeTest extends Unit
         $this->assertEquals('customer.txt', $fileTransfer->getFile()->getFileName());
         $this->assertEquals(1, $fileTransfer->getFile()->getIdFile());
         $this->assertEquals('customer_v1.txt', $fileTransfer->getFileInfo()->getStorageFileName());
-        $this->assertEquals('txt', $fileTransfer->getFileInfo()->getFileExtension());
+        $this->assertEquals('txt', $fileTransfer->getFileInfo()->getExtension());
         $this->assertEquals('1', $fileTransfer->getFileInfo()->getVersion());
         $this->assertEquals('v. 1', $fileTransfer->getFileInfo()->getVersionName());
         $this->assertEquals(10, $fileTransfer->getFileInfo()->getSize());
@@ -273,7 +257,7 @@ class FileManagerFacadeTest extends Unit
         $fileInfo->setSize(17);
         $fileInfo->setStorageFileName('new_customer.txt');
         $fileInfo->setType('text');
-        $fileInfo->setFileExtension('txt');
+        $fileInfo->setExtension('txt');
 
         $file = new FileTransfer();
         $file->setFileContent('new customer file');
@@ -299,7 +283,7 @@ class FileManagerFacadeTest extends Unit
         $this->assertEquals('customer.txt', $fileTransfer->getFile()->getFileName());
         $this->assertEquals(1, $fileTransfer->getFile()->getIdFile());
         $this->assertEquals('customer_v1.txt', $fileTransfer->getFileInfo()->getStorageFileName());
-        $this->assertEquals('txt', $fileTransfer->getFileInfo()->getFileExtension());
+        $this->assertEquals('txt', $fileTransfer->getFileInfo()->getExtension());
         $this->assertEquals('3', $fileTransfer->getFileInfo()->getVersion());
         $this->assertEquals('v. 3', $fileTransfer->getFileInfo()->getVersionName());
         $this->assertEquals(10, $fileTransfer->getFileInfo()->getSize());

@@ -70,7 +70,7 @@ class FileRemoverTest extends Unit
     protected function getMockedFileInfo()
     {
         $fileInfo = new SpyFileInfo();
-        $fileInfo->setFileExtension('txt');
+        $fileInfo->setExtension('txt');
         $fileInfo->setVersionName('v. 1');
         $fileInfo->setVersion(1);
         $fileInfo->setSize(1024);

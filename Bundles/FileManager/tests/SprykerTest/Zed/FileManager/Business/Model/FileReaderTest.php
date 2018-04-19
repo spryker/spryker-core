@@ -60,7 +60,7 @@ class FileReaderTest extends Unit
     protected function getMockedFileInfo()
     {
         $fileInfo = new SpyFileInfo();
-        $fileInfo->setFileExtension('txt');
+        $fileInfo->setExtension('txt');
         $fileInfo->setVersionName('v. 1');
         $fileInfo->setVersion(1);
         $fileInfo->setSize(1024);
@@ -82,7 +82,7 @@ class FileReaderTest extends Unit
         $this->assertEquals('v. 1', $fileInfo->getFileInfo()->getVersionName());
         $this->assertEquals(1024, $fileInfo->getFileInfo()->getSize());
         $this->assertEquals(1, $fileInfo->getFileInfo()->getVersion());
-        $this->assertEquals('txt', $fileInfo->getFileInfo()->getFileExtension());
+        $this->assertEquals('txt', $fileInfo->getFileInfo()->getExtension());
         $this->assertEquals('report.txt', $fileInfo->getFileInfo()->getStorageFileName());
     }
 

@@ -68,7 +68,7 @@ abstract class FileInfoTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config)
     {
-        $query = $this->queryContainer->queryFileInfoByFkFile($this->idFile)->orderByCreatedAt(Criteria::DESC);
+        $query = $this->queryContainer->queryFileInfoByIdFile($this->idFile)->orderByCreatedAt(Criteria::DESC);
         $queryResults = $this->runQuery($query, $config);
 
         $results = [];

@@ -39,7 +39,7 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
             $this->createFileVersion(),
             $this->createFileLoader(),
             $this->createFileContent(),
-            $this->createFileLocalizedAttributesSaver(),
+            $this->createLocalizedAttributesSaver(),
             $this->getConfig()
         );
     }
@@ -95,7 +95,7 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\FileManager\Business\Model\FileLocalizedAttributesSaverInterface
      */
-    public function createFileLocalizedAttributesSaver()
+    public function createLocalizedAttributesSaver()
     {
         return new FileLocalizedAttributesSaver();
     }

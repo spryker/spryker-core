@@ -15,7 +15,7 @@
         <property name="versionName" dataBuilderRule="=v1" />
         <property name="storageName" dataBuilderRule="=file" />
         <property name="storageFileName" dataBuilderRule="=file" />
-        <property name="fileExtension" dataBuilderRule="=txt" />
+        <property name="extension" dataBuilderRule="=txt" />
         <property name="createdAt" dataBuilderRule="=date('Y-m-d', '-1 year')" />
         <property name="updatedAt" dataBuilderRule="=date('Y-m-d', '-1 year')" />
     </transfer>

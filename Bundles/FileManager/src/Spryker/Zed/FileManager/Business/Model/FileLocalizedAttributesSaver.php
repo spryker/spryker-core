@@ -22,7 +22,7 @@ class FileLocalizedAttributesSaver implements FileLocalizedAttributesSaverInterf
      */
     public function saveLocalizedFileAttributes(SpyFile $fileEntity, FileManagerSaveRequestTransfer $fileManagerSaveRequestTransfer)
     {
-        $localizedAttributesToSave = $fileManagerSaveRequestTransfer->getFileLocalizedAttributes();
+        $localizedAttributesToSave = $fileManagerSaveRequestTransfer->getLocalizedAttributes();
         $existingFileLocalizedAttributes = $fileEntity->getSpyFileLocalizedAttributess()->toKeyIndex('fkLocale');
 
         if (empty($existingFileLocalizedAttributes)) {
@@ -34,15 +34,15 @@ class FileLocalizedAttributesSaver implements FileLocalizedAttributesSaverInterf
     }
 
     /**
-     * @param \Generated\Shared\Transfer\FileLocalizedAttributesTransfer[] $localizedAttributesToSave
+     * @param \Generated\Shared\Transfer\FileLocalizedAttributesTransfer[] $localizedAttributes
      * @param array $existingFileLocalizedAttributes
      * @param \Orm\Zed\FileManager\Persistence\SpyFile $file
      *
      * @return void
      */
-    protected function updateOrCreateNew($localizedAttributesToSave, $existingFileLocalizedAttributes, SpyFile $file)
+    protected function updateOrCreateNew($localizedAttributes, $existingFileLocalizedAttributes, SpyFile $file)
     {
-        foreach ($localizedAttributesToSave as $localizedAttribute) {
+        foreach ($localizedAttributes as $localizedAttribute) {
             $localizedAttribute->requireLocale();
             $idLocale = $localizedAttribute->getLocale()->getIdLocale();
 
@@ -57,13 +57,13 @@ class FileLocalizedAttributesSaver implements FileLocalizedAttributesSaverInterf
 
     /**
      * @param \Orm\Zed\FileManager\Persistence\SpyFile $file
-     * @param array $localizedAttributesToSave
+     * @param \Generated\Shared\Transfer\LocalizedAttributesTransfer[] $localizedAttributes
      *
      * @return void
      */
-    protected function createLocalizedAttributes(SpyFile $file, $localizedAttributesToSave)
+    protected function createLocalizedAttributes(SpyFile $file, $localizedAttributes)
     {
-        foreach ($localizedAttributesToSave as $localizedAttribute) {
+        foreach ($localizedAttributes as $localizedAttribute) {
             $spyLocalizedAttribute = new SpyFileLocalizedAttributes();
             $spyLocalizedAttribute->fromArray($localizedAttribute->toArray());
             $spyLocalizedAttribute->setFkLocale($localizedAttribute->getLocale()->getIdLocale());

@@ -52,18 +52,6 @@ class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileMan
      *
      * @param int $idFile
      *
-     * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
-     */
-    public function readLatestFileVersion($idFile)
-    {
-        return $this->fileManagerFacade->readLatestFileVersion($idFile);
-    }
-
-    /**
-     * @api
-     *
-     * @param int $idFile
-     *
      * @return bool
      */
     public function deleteFile($idFile)

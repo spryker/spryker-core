@@ -18,11 +18,7 @@ class FileManagerQueryContainer extends AbstractQueryContainer implements FileMa
     /**
      * @api
      *
-     * @param int $idFile
-     *
-     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
-     *
-     * @return \Orm\Zed\FileManager\Persistence\SpyFileQuery
+     * {@inheritdoc}
      */
     public function queryFileWithFileInfoById($idFile)
     {
@@ -36,11 +32,7 @@ class FileManagerQueryContainer extends AbstractQueryContainer implements FileMa
     /**
      * @api
      *
-     * @param int $idFile
-     *
-     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
-     *
-     * @return \Orm\Zed\FileManager\Persistence\SpyFileQuery
+     * {@inheritdoc}
      */
     public function queryFileById($idFile)
     {
@@ -53,13 +45,9 @@ class FileManagerQueryContainer extends AbstractQueryContainer implements FileMa
     /**
      * @api
      *
-     * @param int|null $idFile
-     *
-     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
-     *
-     * @return \Orm\Zed\FileManager\Persistence\SpyFileInfoQuery
+     * {@inheritdoc}
      */
-    public function queryFileInfoByFkFile($idFile = null)
+    public function queryFileInfoByIdFile($idFile = null)
     {
         $query = $this->getFactory()->createFileInfoQuery();
         $query->orderByVersion(Criteria::DESC)
@@ -71,11 +59,7 @@ class FileManagerQueryContainer extends AbstractQueryContainer implements FileMa
     /**
      * @api
      *
-     * @param int $idFileInfo
-     *
-     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
-     *
-     * @return \Orm\Zed\FileManager\Persistence\SpyFileInfoQuery
+     * {@inheritdoc}
      */
     public function queryFileInfo($idFileInfo)
     {
@@ -88,7 +72,7 @@ class FileManagerQueryContainer extends AbstractQueryContainer implements FileMa
     /**
      * @api
      *
-     * @return \Orm\Zed\FileManager\Persistence\SpyFileQuery
+     * {@inheritdoc}
      */
     public function queryFiles()
     {
@@ -100,9 +84,7 @@ class FileManagerQueryContainer extends AbstractQueryContainer implements FileMa
     /**
      * @api
      *
-     * @param int $idFileDirectory
-     *
-     * @return \Orm\Zed\FileManager\Persistence\SpyFileDirectoryQuery
+     * {@inheritdoc}
      */
     public function queryFileDirectoryById($idFileDirectory)
     {
@@ -114,9 +96,7 @@ class FileManagerQueryContainer extends AbstractQueryContainer implements FileMa
     /**
      * @api
      *
-     * @param int $idFileDirectory
-     *
-     * @return \Orm\Zed\FileManager\Persistence\SpyFileDirectoryQuery
+     * {@inheritdoc}
      */
     public function queryFileDirectoryNodeById($idFileDirectory)
     {
@@ -128,9 +108,7 @@ class FileManagerQueryContainer extends AbstractQueryContainer implements FileMa
     /**
      * @api
      *
-     * @param int $idFileDirectoryNodeLocalizedAttributes
-     *
-     * @return \Orm\Zed\FileManager\Persistence\SpyFileDirectoryLocalizedAttributesQuery
+     * {@inheritdoc}
      */
     public function queryFileDirectoryLocalizedAttributesById($idFileDirectoryNodeLocalizedAttributes)
     {
@@ -142,7 +120,7 @@ class FileManagerQueryContainer extends AbstractQueryContainer implements FileMa
     /**
      * @api
      *
-     * @return \Orm\Zed\FileManager\Persistence\SpyFileDirectoryQuery
+     * {@inheritdoc}
      */
     public function queryRootFileDirectories()
     {
@@ -156,9 +134,7 @@ class FileManagerQueryContainer extends AbstractQueryContainer implements FileMa
     /**
      * @api
      *
-     * @param int $fkParentFileDirectoryNode
-     *
-     * @return \Orm\Zed\FileManager\Persistence\SpyFileDirectoryQuery
+     * {@inheritdoc}
      */
     public function queryFileDirectoriesByFkParentFileDirectory($fkParentFileDirectoryNode)
     {
@@ -172,7 +148,7 @@ class FileManagerQueryContainer extends AbstractQueryContainer implements FileMa
     /**
      * @api
      *
-     * @return \Orm\Zed\FileManager\Persistence\SpyFileDirectoryQuery
+     * {@inheritdoc}
      */
     public function queryFileDirectory()
     {
