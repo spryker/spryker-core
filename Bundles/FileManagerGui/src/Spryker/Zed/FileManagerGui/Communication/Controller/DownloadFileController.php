@@ -17,7 +17,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 /**
  * @method \Spryker\Zed\FileManagerGui\Communication\FileManagerGuiCommunicationFactory getFactory()
  */
-class DownloadController extends AbstractController
+class DownloadFileController extends AbstractController
 {
     const URL_PARAM_ID_FILE_INFO = 'id-file-info';
     const CONTENT_DISPOSITION = 'Content-Disposition';

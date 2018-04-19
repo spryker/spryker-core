@@ -14,7 +14,6 @@ var $treeProgressBar = $('#file-directory-tree-loader');
 var $formProgressBar = $('#file-directory-node-form-loader');
 var $treeUpdateProgressBar = $('#file-directory-tree-update-loader');
 var $treeOrderSaveBtn = $('#file-directory-tree-save-btn');
-var $iframe = $('#file-directory-node-form-iframe');
 
 var ajaxRequest;
 var treeSearchTimeout = false;
@@ -46,40 +45,6 @@ function initialize() {
 }
 
 /**
- * @param {int} idFileDirectory
- * @param {int|null} selected
- * @param {boolean} skipFormLoad
- *
- * @return {void}
- */
-function loadTree(idFileDirectory, selected, skipFormLoad)  {
-    $treeProgressBar.removeClass('hidden');
-    $treeContainer.addClass('hidden');
-
-    if (ajaxRequest) {
-        ajaxRequest.abort();
-    }
-
-    ajaxRequest = $.get(config.fileDirectoryTreeUrl, {}, createTreeLoadHandler())
-        .always(function() {
-            $treeProgressBar.addClass('hidden');
-        });
-
-}
-
-/**
- * @return {void}
- */
-function resetTree()  {
-    if (ajaxRequest) {
-        ajaxRequest.abort();
-    }
-
-    $treeContent.html('');
-    resetForm();
-}
-
-/**
  * @returns {Function}
  */
 function createTreeLoadHandler() {
@@ -88,7 +53,6 @@ function createTreeLoadHandler() {
 
         initJsTree();
         $treeContainer.removeClass('hidden');
-        setNodeSelectListener();
     }
 }
 
@@ -120,26 +84,10 @@ function initJsTree() {
     }).on("changed.jstree", function (e, data) {
         var filesTable = $('#file-directory-files-list').find('table').first();
         filesTable.DataTable().ajax.url( '/file-manager-gui/files/table?file-directory-id=' + data.node.data.idFileDirectoryNode ).load();
-        $('#add-file-link').attr('href', '/file-manager-gui/add?file-directory-id=' + data.node.data.idFileDirectoryNode);
+        $('#add-file-link').attr('href', '/file-manager-gui/add-file?file-directory-id=' + data.node.data.idFileDirectoryNode);
     });
-}
 
-/**
- * @return {void}
- */
-function setNodeSelectListener() {
-    $('#file-directory-tree').on('select_node.jstree', function(e, data){
-        // var idFileDirectory = data.node.data.idFileDirectory;
-
-        // loadForm(idFileDirectory, idFileDirectoryNode);
-    });
-}
-
-/**
- * @return {void}
- */
-function resetForm()  {
-    $iframe.addClass('hidden');
+    $treeProgressBar.removeClass('hidden');
 }
 
 /**
@@ -211,7 +159,5 @@ function getFileDirectoryNodesRecursively(jstreeNode) {
  * Open public methods
  */
 module.exports = {
-    initialize: initialize,
-    load: loadTree,
-    reset: resetTree
+    initialize: initialize
 };

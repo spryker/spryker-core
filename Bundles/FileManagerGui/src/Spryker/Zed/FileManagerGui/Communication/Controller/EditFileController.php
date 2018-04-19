@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\FileManagerGui\Communication\Controller;
 
+use Exception;
 use Generated\Shared\Transfer\FileInfoTransfer;
 use Generated\Shared\Transfer\FileManagerSaveRequestTransfer;
 use Generated\Shared\Transfer\FileTransfer;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\FileManagerGui\Communication\Form\FileForm;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,7 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\FileManagerGui\Communication\FileManagerGuiCommunicationFactory getFactory()
  */
-class ViewController extends AbstractController
+class EditFileController extends AbstractController
 {
     const URL_PARAM_ID_FILE = 'id-file';
 
@@ -28,17 +30,38 @@ class ViewController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idFile = $this->castId($request->get(static::URL_PARAM_ID_FILE));
+        $idFile = $request->get(static::URL_PARAM_ID_FILE);
+        $form = $this->getFactory()
+            ->getFileForm($idFile)
+            ->handleRequest($request);
 
-        $file = $this->getFactory()
-            ->getFileManagerQueryContainer()
-            ->queryFileById($idFile)
-            ->findOne();
-        $fileInfoTable = $this->getFactory()->createFileInfoViewTable($idFile);
+        if ($form->isValid()) {
+            try {
+                $data = $form->getData();
+                $saveRequestTransfer = $this->createFileManagerSaveRequestTransfer($data);
+
+                $this->getFactory()->getFileManagerFacade()->save($saveRequestTransfer);
+
+                $this->addSuccessMessage(
+                    'The file was edited successfully.'
+                );
+                $redirectUrl = Url::generate(sprintf('/file-manager-gui/edit-file?id-file=%d', $idFile))->build();
+
+                return $this->redirectResponse($redirectUrl);
+            } catch (Exception $exception) {
+                $this->addErrorMessage($exception->getMessage());
+            }
+        }
+
+        $fileInfoTable = $this->getFactory()->createFileInfoEditTable($idFile);
+        $fileFormsTabs = $this->getFactory()->createFileFormTabs();
 
         return [
-            'file' => $file,
+            'fileFormTabs' => $fileFormsTabs->createView(),
             'fileInfoTable' => $fileInfoTable->render(),
+            'fileForm' => $form->createView(),
+            'availableLocales' => $this->getFactory()->getLocaleFacade()->getLocaleCollection(),
+            'currentLocale' => $this->getFactory()->getCurrentLocale(),
         ];
     }
 
@@ -55,7 +78,7 @@ class ViewController extends AbstractController
 
         $fileInfoTable = $this
             ->getFactory()
-            ->createFileInfoViewTable($idFile);
+            ->createFileInfoEditTable($idFile);
 
         return $this->jsonResponse(
             $fileInfoTable->fetchData()
@@ -63,39 +86,56 @@ class ViewController extends AbstractController
     }
 
     /**
-     * @param array $data
+     * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
      *
      * @return \Generated\Shared\Transfer\FileManagerSaveRequestTransfer
      */
-    protected function createFileManagerSaveRequestTransfer(array $data)
+    protected function createFileManagerSaveRequestTransfer(FileTransfer $fileTransfer)
     {
         $requestTransfer = new FileManagerSaveRequestTransfer();
-        $requestTransfer->setFile($this->createFileTransfer($data));
-        $requestTransfer->setFileInfo($this->createFileInfoTransfer($data));
-        $requestTransfer->setContent($this->getFileContent($data));
+        $this->setFileName($fileTransfer);
+
+        $requestTransfer->setFile($fileTransfer);
+        $requestTransfer->setFileInfo($this->createFileInfoTransfer($fileTransfer));
+        $requestTransfer->setContent($this->getFileContent($fileTransfer));
+        $requestTransfer->setFileLocalizedAttributes($fileTransfer->getFileLocalizedAttributes());
 
         return $requestTransfer;
     }
 
     /**
-     * @param array $data
+     * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
+     *
+     * @return \Generated\Shared\Transfer\FileTransfer
+     */
+    protected function setFileName(FileTransfer $fileTransfer)
+    {
+        if (!$fileTransfer->getFileName()) {
+            $fileTransfer->setFileName($fileTransfer->getFileContent()->getClientOriginalName());
+        }
+
+        return $fileTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
      *
      * @return \Generated\Shared\Transfer\FileInfoTransfer
      */
-    protected function createFileInfoTransfer(array $data)
+    protected function createFileInfoTransfer(FileTransfer $fileTransfer)
     {
         /** @var \Symfony\Component\HttpFoundation\File\UploadedFile $uploadedFile */
-        $uploadedFile = $data[FileForm::FIELD_FILE_CONTENT];
+        $uploadedFile = $fileTransfer->getFileContent();
         $fileInfo = new FileInfoTransfer();
 
         if ($uploadedFile === null) {
             return $fileInfo;
         }
 
+        $fileInfo->setFkFile($fileTransfer->getIdFile());
         $fileInfo->setFileExtension($uploadedFile->getClientOriginalExtension());
         $fileInfo->setSize($uploadedFile->getSize());
         $fileInfo->setType($uploadedFile->getMimeType());
-        $fileInfo->setFkFile($data[FileForm::FIELD_ID_FILE]);
 
         return $fileInfo;
     }
@@ -115,14 +155,14 @@ class ViewController extends AbstractController
     }
 
     /**
-     * @param array $data
+     * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
      *
      * @return bool|string
      */
-    protected function getFileContent(array $data)
+    protected function getFileContent(FileTransfer $fileTransfer)
     {
         /** @var \Symfony\Component\HttpFoundation\File\UploadedFile $uploadedFile */
-        $uploadedFile = $data[FileForm::FIELD_FILE_CONTENT];
+        $uploadedFile = $fileTransfer->getFileContent();
 
         if ($uploadedFile === null) {
             return null;
