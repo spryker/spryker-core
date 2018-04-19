@@ -38,7 +38,9 @@ class FileManagerStorageDependencyProvider extends AbstractDependencyProvider
     protected function addClientStorage(Container $container)
     {
         $container[static::CLIENT_STORAGE] = function (Container $container) {
-            return new FileManagerStorageToStorageClientBridge($container->getLocator()->storage()->client());
+            return new FileManagerStorageToStorageClientBridge(
+                $container->getLocator()->storage()->client()
+            );
         };
 
         return $container;
@@ -52,7 +54,9 @@ class FileManagerStorageDependencyProvider extends AbstractDependencyProvider
     protected function addServiceSynchronization(Container $container)
     {
         $container[static::SERVICE_SYNCHRONIZATION] = function (Container $container) {
-            return new FileManagerStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());
+            return new FileManagerStorageToSynchronizationServiceBridge(
+                $container->getLocator()->synchronization()->service()
+            );
         };
 
         return $container;

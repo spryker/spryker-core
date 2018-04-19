@@ -35,7 +35,7 @@ class EditFileController extends AbstractController
             ->getFileForm($idFile)
             ->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted()) {
             try {
                 $data = $form->getData();
                 $saveRequestTransfer = $this->createFileManagerSaveRequestTransfer($data);

@@ -33,7 +33,7 @@ class AddFileController extends AbstractController
             ->getFileForm()
             ->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted()) {
             try {
                 $data = $form->getData();
                 $saveRequestTransfer = $this->createFileManagerSaveRequestTransfer($data);

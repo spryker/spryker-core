@@ -37,5 +37,5 @@ interface FileManagerStorageQueryContainerInterface
      *
      * @return \Orm\Zed\FileManagerStorage\Persistence\SpyFileStorageQuery
      */
-    public function queryFileStorageEntitiesByIds($fileStorageIds);
+    public function queryFileStorageByIds($fileStorageIds);
 }
