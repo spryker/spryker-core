@@ -10,6 +10,7 @@ namespace Spryker\Zed\CompanyUserInvitation\Persistence\Mapper;
 use ArrayObject;
 use Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationTransfer;
+use Generated\Shared\Transfer\SpyCompanyBusinessUnitEntityTransfer;
 use Generated\Shared\Transfer\SpyCompanyUserInvitationEntityTransfer;
 
 class CompanyUserInvitationMapper implements CompanyUserInvitationMapperInterface
@@ -36,17 +37,17 @@ class CompanyUserInvitationMapper implements CompanyUserInvitationMapperInterfac
     public function mapEntityTransferToCompanyUserInvitationTransfer(
         SpyCompanyUserInvitationEntityTransfer $companyUserInvitationEntityTransfer
     ): CompanyUserInvitationTransfer {
-        $companyUserInvitationEntityTransferData = $companyUserInvitationEntityTransfer->modifiedToArray();
+        $companyUserInvitationEntityTransferData = $companyUserInvitationEntityTransfer->modifiedToArray(true, true);
 
         $companyUserInvitationTransfer = new CompanyUserInvitationTransfer();
         $companyUserInvitationTransfer->fromArray($companyUserInvitationEntityTransferData, true);
 
-        if (isset($companyUserInvitationEntityTransferData['spy_company_business_unit'])) {
+        if (isset($companyUserInvitationEntityTransferData[SpyCompanyUserInvitationEntityTransfer::SPY_COMPANY_BUSINESS_UNIT])) {
             $companyUserInvitationTransfer->setCompanyBusinessUnitName(
-                $companyUserInvitationEntityTransferData['spy_company_business_unit']['name']
+                $companyUserInvitationEntityTransferData[SpyCompanyUserInvitationEntityTransfer::SPY_COMPANY_BUSINESS_UNIT][SpyCompanyBusinessUnitEntityTransfer::NAME]
             );
             $companyUserInvitationTransfer->setCompanyId(
-                $companyUserInvitationEntityTransferData['spy_company_business_unit']['fk_company']
+                $companyUserInvitationEntityTransferData[SpyCompanyUserInvitationEntityTransfer::SPY_COMPANY_BUSINESS_UNIT][SpyCompanyBusinessUnitEntityTransfer::FK_COMPANY]
             );
         }
 

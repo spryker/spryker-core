@@ -18,6 +18,9 @@ class CompanyUserInvitationMailTypePlugin extends AbstractPlugin implements Mail
 {
     public const MAIL_TYPE = 'company user invitation mail';
 
+    protected const HTML_TEMPLATE = 'company-user-invitation/mail/invitation.html.twig';
+    protected const TEXT_TEMPLATE = 'company-user-invitation/mail/invitation.text.twig';
+
     /**
      * @return string
      */
@@ -60,7 +63,7 @@ class CompanyUserInvitationMailTypePlugin extends AbstractPlugin implements Mail
      */
     protected function setHtmlTemplate(MailBuilderInterface $mailBuilder): CompanyUserInvitationMailTypePlugin
     {
-        $mailBuilder->setHtmlTemplate('company-user-invitation/mail/invitation.html.twig');
+        $mailBuilder->setHtmlTemplate(static::HTML_TEMPLATE);
 
         return $this;
     }
@@ -72,7 +75,7 @@ class CompanyUserInvitationMailTypePlugin extends AbstractPlugin implements Mail
      */
     protected function setTextTemplate(MailBuilderInterface $mailBuilder): CompanyUserInvitationMailTypePlugin
     {
-        $mailBuilder->setTextTemplate('company-user-invitation/mail/invitation.text.twig');
+        $mailBuilder->setTextTemplate(static::TEXT_TEMPLATE);
 
         return $this;
     }
