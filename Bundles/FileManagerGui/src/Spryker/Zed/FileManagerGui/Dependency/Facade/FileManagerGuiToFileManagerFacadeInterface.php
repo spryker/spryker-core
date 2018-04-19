@@ -33,17 +33,6 @@ interface FileManagerGuiToFileManagerFacadeInterface
      *
      * @param int $idFile
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
-     *
-     * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
-     */
-    public function readLatestFileVersion($idFile);
-
-    /**
-     * @api
-     *
-     * @param int $idFile
-     *
      * @return bool
      */
     public function delete($idFile);

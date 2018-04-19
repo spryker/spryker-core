@@ -21,6 +21,7 @@ interface FileManagerFacadeInterface
      * Specification:
      * - Saves file info
      * - Uploads file content
+     * - Creates a new file version
      *
      * @api
      *
@@ -44,23 +45,8 @@ interface FileManagerFacadeInterface
 
     /**
      * Specification:
-     * - Finds a latest file version
-     * - Returns a file meta info and a latest content
-     *
-     * @api
-     *
-     * @param int $idFile
-     *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
-     *
-     * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
-     */
-    public function readLatestFileVersion($idFile);
-
-    /**
-     * Specification:
      * - Deletes all file info
-     * - Deletes all file versions
+     * - Deletes all file versions and content
      *
      * @api
      *
@@ -84,7 +70,8 @@ interface FileManagerFacadeInterface
 
     /**
      * Specification:
-     * - Creates a new file info version based on a given file info id
+     * - Rolls back latest file info version to a specified file info version
+     * - Creates a copy of a specified file info version
      *
      * @api
      *
@@ -117,9 +104,6 @@ interface FileManagerFacadeInterface
      *
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
-     *
      * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
      */
     public function findFileDirectoryTree(LocaleTransfer $localeTransfer = null);
@@ -132,9 +116,6 @@ interface FileManagerFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\FileDirectoryTreeTransfer $fileDirectoryTreeTransfer
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
      *
      * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
      */

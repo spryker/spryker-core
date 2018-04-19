@@ -75,7 +75,7 @@ class FileVersionTest extends Unit
 
         $fileVersion = new FileVersion($fileFinderMock);
 
-        $this->assertEquals(2, $fileVersion->getNewVersionNumber(1));
+        $this->assertEquals(2, $fileVersion->getNextVersionNumber(1));
     }
 
     /**
@@ -86,6 +86,6 @@ class FileVersionTest extends Unit
         $fileFinderMock = $this->createFileFinderMock();
         $fileVersion = new FileVersion($fileFinderMock);
 
-        $this->assertEquals('v. 2', $fileVersion->getNewVersionName(2));
+        $this->assertEquals('v. 2', $fileVersion->getNextVersionName(2));
     }
 }

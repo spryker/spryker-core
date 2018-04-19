@@ -43,16 +43,6 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
      *
      * {@inheritdoc}
      */
-    public function readLatestFileVersion($idFile)
-    {
-        return $this->getFactory()->createFileReader()->readLatestByFileId($idFile);
-    }
-
-    /**
-     * @api
-     *
-     * {@inheritdoc}
-     */
     public function delete($idFile)
     {
         return $this->getFactory()->createFileRemover()->delete($idFile);
@@ -92,10 +82,6 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
      * {@inheritdoc}
      *
      * @api
-     *
-     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
-     *
-     * @return \Generated\Shared\Transfer\FileDirectoryTreeTransfer|null
      */
     public function findFileDirectoryTree(LocaleTransfer $localeTransfer = null)
     {
@@ -108,10 +94,6 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
      * {@inheritdoc}
      *
      * @api
-     *
-     * @param \Generated\Shared\Transfer\FileDirectoryTreeTransfer $fileDirectoryTreeTransfer
-     *
-     * @return void
      */
     public function updateFileDirectoryTreeHierarchy(FileDirectoryTreeTransfer $fileDirectoryTreeTransfer)
     {

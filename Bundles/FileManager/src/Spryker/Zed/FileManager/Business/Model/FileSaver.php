@@ -81,7 +81,7 @@ class FileSaver implements FileSaverInterface
      */
     public function save(FileManagerSaveRequestTransfer $saveRequestTransfer)
     {
-        if ($this->checkFileExists($saveRequestTransfer)) {
+        if ($this->fileExists($saveRequestTransfer)) {
             return $this->update($saveRequestTransfer);
         }
 
@@ -202,9 +202,9 @@ class FileSaver implements FileSaverInterface
         $fileInfo = new SpyFileInfo();
         $fileInfo->fromArray($fileInfoTransfer->toArray());
 
-        $newVersion = $this->fileVersion->getNewVersionNumber($fileInfoTransfer->getFkFile());
-        $newVersionName = $this->fileVersion->getNewVersionName($newVersion);
-        $fileInfo->setVersion($newVersion);
+        $nextVersion = $this->fileVersion->getNextVersionNumber($fileInfoTransfer->getFkFile());
+        $newVersionName = $this->fileVersion->getNextVersionName($nextVersion);
+        $fileInfo->setVersion($nextVersion);
         $fileInfo->setVersionName($newVersionName);
 
         return $fileInfo;
@@ -237,15 +237,15 @@ class FileSaver implements FileSaverInterface
      *
      * @return bool
      */
-    protected function checkFileExists(FileManagerSaveRequestTransfer $saveRequestTransfer)
+    protected function fileExists(FileManagerSaveRequestTransfer $saveRequestTransfer)
     {
-        $fileId = $saveRequestTransfer->getFile()->getIdFile();
+        $idFile = $saveRequestTransfer->getFile()->getIdFile();
 
-        if ($fileId == null) {
+        if ($idFile === null) {
             return false;
         }
 
-        $file = $this->fileLoader->getFile($fileId);
+        $file = $this->fileLoader->getFile($idFile);
 
         return $file !== null;
     }

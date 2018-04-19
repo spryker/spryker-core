@@ -51,7 +51,7 @@ class FileLoader implements FileLoaderInterface
      */
     public function getLatestFileInfoByFkFile($idFile)
     {
-        return $this->queryContainer->queryFileInfoByFkFile($idFile)->findOne();
+        return $this->queryContainer->queryFileInfoByIdFile($idFile)->findOne();
     }
 
     /**
