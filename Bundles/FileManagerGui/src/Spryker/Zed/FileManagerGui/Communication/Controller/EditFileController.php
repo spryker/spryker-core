@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\FileManagerGui\Communication\FileManagerGuiCommunicationFactory getFactory()
  */
-class EditController extends AbstractController
+class EditFileController extends AbstractController
 {
     const URL_PARAM_ID_FILE = 'id-file';
 
@@ -45,7 +45,7 @@ class EditController extends AbstractController
                 $this->addSuccessMessage(
                     'The file was edited successfully.'
                 );
-                $redirectUrl = Url::generate(sprintf('/file-manager-gui/edit?id-file=%d', $idFile))->build();
+                $redirectUrl = Url::generate(sprintf('/file-manager-gui/edit-file?id-file=%d', $idFile))->build();
 
                 return $this->redirectResponse($redirectUrl);
             } catch (Exception $exception) {

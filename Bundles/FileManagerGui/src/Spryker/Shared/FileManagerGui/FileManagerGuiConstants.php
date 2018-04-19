@@ -31,7 +31,7 @@ interface FileManagerGuiConstants
     const MAX_FILE_SIZE = 'MAX_FILE_SIZE';
     const DEFAULT_MAX_FILE_SIZE = '10M';
     
-    const FILE_MANAGER_GUI_VIEW_URL = '/file-manager-gui/view';
-    const FILE_MANAGER_GUI_EDIT_URL = '/file-manager-gui/edit';
-    const FILE_MANAGER_GUI_DELETE_URL = '/file-manager-gui/delete/file';
+    const FILE_MANAGER_GUI_VIEW_URL = '/file-manager-gui/view-file';
+    const FILE_MANAGER_GUI_EDIT_URL = '/file-manager-gui/edit-file';
+    const FILE_MANAGER_GUI_DELETE_URL = '/file-manager-gui/delete-file/file';
 }

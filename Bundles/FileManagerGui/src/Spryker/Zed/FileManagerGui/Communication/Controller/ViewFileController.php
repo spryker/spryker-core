@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\FileManagerGui\Communication\FileManagerGuiCommunicationFactory getFactory()
  */
-class ViewController extends AbstractController
+class ViewFileController extends AbstractController
 {
     const URL_PARAM_ID_FILE = 'id-file';
 

@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\FileManagerGui\Communication\FileManagerGuiCommunicationFactory getFactory()
  */
-class DeleteController extends AbstractController
+class DeleteFileController extends AbstractController
 {
     const URL_PARAM_ID_FILE_INFO = 'id-file-info';
     const URL_PARAM_ID_FILE = 'id-file';

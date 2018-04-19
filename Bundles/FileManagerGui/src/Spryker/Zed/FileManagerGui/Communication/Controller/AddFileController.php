@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\FileManagerGui\Communication\FileManagerGuiCommunicationFactory getFactory()
  */
-class AddController extends AbstractController
+class AddFileController extends AbstractController
 {
     const FILE_DIRECTORY_ID = 'file-directory-id';
 
@@ -47,7 +47,7 @@ class AddController extends AbstractController
                 $this->addSuccessMessage(
                     'The file was added successfully.'
                 );
-                $redirectUrl = Url::generate('/file-manager-gui')->build();
+                $redirectUrl = Url::generate('/file-manager-gui/directories-tree')->build();
 
                 return $this->redirectResponse($redirectUrl);
             } catch (Exception $exception) {

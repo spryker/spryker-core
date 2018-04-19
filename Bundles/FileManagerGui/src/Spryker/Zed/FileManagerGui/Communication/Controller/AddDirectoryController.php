@@ -33,7 +33,7 @@ class AddDirectoryController extends AbstractController
                 $this->addSuccessMessage(
                     'The file directory was added successfully.'
                 );
-                $redirectUrl = Url::generate('/file-manager-gui')->build();
+                $redirectUrl = Url::generate('/file-manager-gui/directories-tree')->build();
 
                 return $this->redirectResponse($redirectUrl);
             } catch (Exception $exception) {
