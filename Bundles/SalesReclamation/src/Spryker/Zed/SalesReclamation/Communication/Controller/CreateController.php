@@ -19,7 +19,6 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\SalesReclamation\Business\SalesReclamationFacadeInterface getFacade()
  * @method \Spryker\Zed\SalesReclamation\Communication\SalesReclamationCommunicationFactory getFactory()
- * @method \Spryker\Zed\SalesReclamation\Persistence\SalesReclamationQueryContainerInterface getQueryContainer()
  */
 class CreateController extends AbstractController
 {
