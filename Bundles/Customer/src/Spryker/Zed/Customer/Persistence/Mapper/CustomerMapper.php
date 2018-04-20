@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Customer\Persistence\Mapper;
 
-use Exception;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\SpyCustomerEntityTransfer;
 
