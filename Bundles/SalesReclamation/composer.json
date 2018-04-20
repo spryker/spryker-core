@@ -8,7 +8,7 @@
     "spryker/kernel": "^3.0.0",
     "spryker/manual-order-entry-gui": "*",
     "spryker/sales": "^7.0.0 || ^8.0.0",
-    "spryker/sales-extension": "^1.2.0",
+    "spryker/sales-extension": "^1.0.0",
     "spryker/symfony": "^3.0.0",
     "spryker/util-date-time": "^1.0.0",
     "spryker/util-text": "^1.1.0"
