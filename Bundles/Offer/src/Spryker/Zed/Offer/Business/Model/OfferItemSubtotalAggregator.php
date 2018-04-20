@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Offer\Business\Model;
 
 use Generated\Shared\Transfer\CalculableObjectTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 
 class OfferItemSubtotalAggregator implements OfferItemSubtotalAggregatorInterface
 {
