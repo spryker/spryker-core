@@ -47,19 +47,6 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideCommunicationLayerDependencies(Container $container)
-    {
-        $container = parent::provideCommunicationLayerDependencies($container);
-        $container = $this->addStoreFacade($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     public function providePersistenceLayerDependencies(Container $container)
     {
         $container = $this->addProductQueryContainer($container);

@@ -5,34 +5,34 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Availability\Business\Model\Hydrator;
+namespace Spryker\Zed\AvailabilityOfferConnector\Business\Model;
 
 use Generated\Shared\Transfer\OfferTransfer;
-use Spryker\Zed\Availability\Business\Model\SellableInterface;
-use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface;
+use Spryker\Zed\AvailabilityOfferConnector\Dependency\Facade\AvailabilityOfferConnectorToAvailabilityFacadeInterface;
+use Spryker\Zed\AvailabilityOfferConnector\Dependency\Facade\AvailabilityOfferConnectorToStoreFacadeInterface;
 
 class OfferQuoteItemStockHydrator implements OfferQuoteItemStockHydratorInterface
 {
     /**
-     * @var \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface
+     * @var \Spryker\Zed\AvailabilityOfferConnector\Dependency\Facade\AvailabilityOfferConnectorToStoreFacadeInterface
      */
     protected $storeFacade;
 
     /**
-     * @var \Spryker\Zed\Availability\Business\Model\SellableInterface
+     * @var \Spryker\Zed\AvailabilityOfferConnector\Dependency\Facade\AvailabilityOfferConnectorToAvailabilityFacadeInterface
      */
-    protected $sellableModel;
+    protected $availabilityFacade;
 
     /**
-     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface $storeFacade
-     * @param \Spryker\Zed\Availability\Business\Model\SellableInterface $sellableModel
+     * @param \Spryker\Zed\AvailabilityOfferConnector\Dependency\Facade\AvailabilityOfferConnectorToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\AvailabilityOfferConnector\Dependency\Facade\AvailabilityOfferConnectorToAvailabilityFacadeInterface $availabilityFacade
      */
     public function __construct(
-        AvailabilityToStoreFacadeInterface $storeFacade,
-        SellableInterface $sellableModel
+        AvailabilityOfferConnectorToStoreFacadeInterface $storeFacade,
+        AvailabilityOfferConnectorToAvailabilityFacadeInterface $availabilityFacade
     ) {
         $this->storeFacade = $storeFacade;
-        $this->sellableModel = $sellableModel;
+        $this->availabilityFacade = $availabilityFacade;
     }
 
     /**
@@ -51,7 +51,7 @@ class OfferQuoteItemStockHydrator implements OfferQuoteItemStockHydratorInterfac
             ->getStoreByName($storeTransfer->getName());
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $stock = $this->sellableModel
+            $stock = $this->availabilityFacade
                 ->calculateStockForProductWithStore(
                     $itemTransfer->getSku(),
                     $storeTransfer

@@ -6,8 +6,6 @@
 
 namespace Spryker\Zed\Availability\Communication;
 
-use Spryker\Zed\Availability\AvailabilityDependencyProvider;
-use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
@@ -16,11 +14,4 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class AvailabilityCommunicationFactory extends AbstractCommunicationFactory
 {
-    /**
-     * @return \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface
-     */
-    public function getStoreFacade(): AvailabilityToStoreFacadeInterface
-    {
-        return $this->getProvidedDependency(AvailabilityDependencyProvider::FACADE_STORE);
-    }
 }

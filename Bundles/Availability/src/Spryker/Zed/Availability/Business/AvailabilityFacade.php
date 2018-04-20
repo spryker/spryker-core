@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Availability\Business;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Generated\Shared\Transfer\OfferTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -247,21 +246,5 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
         return $this->getFactory()
             ->createAvailabilityHandler()
             ->saveCurrentAvailabilityForStore($sku, $quantity, $storeTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
-     *
-     * @return \Generated\Shared\Transfer\OfferTransfer
-     */
-    public function hydrateOfferWithQuoteItemStock(OfferTransfer $offerTransfer): OfferTransfer
-    {
-        return $this->getFactory()
-            ->createOfferQuoteItemStockHydrator()
-            ->hydrate($offerTransfer);
     }
 }

@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Availability\Business;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Generated\Shared\Transfer\OfferTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -207,16 +206,4 @@ interface AvailabilityFacadeInterface
      * @return int
      */
     public function saveProductAvailabilityForStore($sku, $quantity, StoreTransfer $storeTransfer);
-
-    /**
-     * Specification:
-     *  - Add information about quote item stock to an offer.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
-     *
-     * @return \Generated\Shared\Transfer\OfferTransfer
-     */
-    public function hydrateOfferWithQuoteItemStock(OfferTransfer $offerTransfer): OfferTransfer;
 }

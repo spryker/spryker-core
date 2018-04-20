@@ -5,16 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Availability\Business\Model\Hydrator;
+namespace Spryker\Zed\AvailabilityOfferConnector\Business;
 
 use Generated\Shared\Transfer\OfferTransfer;
 
-interface OfferQuoteItemStockHydratorInterface
+interface AvailabilityOfferConnectorFacadeInterface
 {
     /**
+     * Specification:
+     *  - Add information about quote item stock to an offer.
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
      *
      * @return \Generated\Shared\Transfer\OfferTransfer
      */
-    public function hydrate(OfferTransfer $offerTransfer): OfferTransfer;
+    public function hydrateOfferWithQuoteItemStock(OfferTransfer $offerTransfer): OfferTransfer;
 }
