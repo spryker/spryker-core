@@ -46,7 +46,7 @@ class OfferSavingAmountHydrator implements OfferSavingAmountHydratorInterface
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $savingAmount = $this->getOriginUnitPrice($itemTransfer, $quoteTransfer->getPriceMode());
             $savingAmount -= $this->getUnitPrice($itemTransfer, $quoteTransfer->getPriceMode());
-            $savingAmount += $this->getUnitPrice($itemTransfer, $quoteTransfer->getPriceMode()) / 100 * $itemTransfer->getOfferDiscount();
+            $savingAmount += (int)($this->getUnitPrice($itemTransfer, $quoteTransfer->getPriceMode()) / 100 * $itemTransfer->getOfferDiscount());
             $savingAmount -= $itemTransfer->getOfferFee();
             $savingAmount *= $itemTransfer->getQuantity();
 
