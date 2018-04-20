@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\ProductQuantityStorage\Business;
 
 use Codeception\Test\Unit;
-use PHPUnit\Framework\SkippedTestError;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 
@@ -35,17 +34,11 @@ class ProductQuantityStorageFacadeTest extends Unit
     protected $productQuantityStorageFacade;
 
     /**
-     * @throws \PHPUnit\Framework\SkippedTestError
-     *
      * @return void
      */
     public function setUp()
     {
         parent::setUp();
-
-        if (!$this->tester->isSuiteProject()) {
-            throw new SkippedTestError('Warning: not in suite environment');
-        }
 
         $this->tester->setDependency(QueueDependencyProvider::QUEUE_ADAPTERS, function (Container $container) {
             return [

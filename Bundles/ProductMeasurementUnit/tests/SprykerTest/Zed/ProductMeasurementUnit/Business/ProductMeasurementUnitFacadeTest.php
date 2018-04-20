@@ -191,7 +191,7 @@ class ProductMeasurementUnitFacadeTest extends Unit
         $expectedCode = $code;
 
         // Act
-        $productMeasurementUnitTransfer = $this->productMeasurementUnitFacade->findProductMeasurementUnitEntities([$productMeasurementUnitTransfer->getIdProductMeasurementUnit()]);
+        $productMeasurementUnitTransfer = $this->productMeasurementUnitFacade->findProductMeasurementUnitTransfers([$productMeasurementUnitTransfer->getIdProductMeasurementUnit()]);
         $actualCode = $productMeasurementUnitTransfer[0]->getCode();
 
         // Assert

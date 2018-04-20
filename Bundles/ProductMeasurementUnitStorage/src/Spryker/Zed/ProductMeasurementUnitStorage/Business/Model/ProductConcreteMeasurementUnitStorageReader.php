@@ -35,13 +35,13 @@ class ProductConcreteMeasurementUnitStorageReader implements ProductConcreteMeas
      */
     public function getProductConcreteMeasurementUnitStorageByIdProduct(int $idProduct): ProductConcreteMeasurementUnitStorageTransfer
     {
-        $productMeasurementBaseUnitEntity = $this->productMeasurementUnitFacade->getBaseUnitByIdProduct($idProduct);
+        $productMeasurementBaseUnitTransfer = $this->productMeasurementUnitFacade->getBaseUnitByIdProduct($idProduct);
 
         $productConcreteMeasurementUnitStorageTransfer = (new ProductConcreteMeasurementUnitStorageTransfer())
             ->setBaseUnit(
                 (new ProductConcreteMeasurementBaseUnitTransfer())
-                    ->fromArray($productMeasurementBaseUnitEntity->toArray(), true)
-                    ->setIdProductMeasurementUnit($productMeasurementBaseUnitEntity->getFkProductMeasurementUnit())
+                    ->fromArray($productMeasurementBaseUnitTransfer->toArray(), true)
+                    ->setIdProductMeasurementUnit($productMeasurementBaseUnitTransfer->getFkProductMeasurementUnit())
             )
             ->setSalesUnits($this->getProductConcreteMeasurementSalesUnitTransfers($idProduct));
 
@@ -55,14 +55,14 @@ class ProductConcreteMeasurementUnitStorageReader implements ProductConcreteMeas
      */
     protected function getProductConcreteMeasurementSalesUnitTransfers(int $idProduct): ArrayObject
     {
-        $productMeasurementSalesUnitEntities = $this->productMeasurementUnitFacade->getSalesUnitsByIdProduct($idProduct);
+        $productMeasurementSalesUnitTransfers = $this->productMeasurementUnitFacade->getSalesUnitsByIdProduct($idProduct);
 
         $productConcreteSalesUnitTransfers = new ArrayObject();
-        foreach ($productMeasurementSalesUnitEntities as $productMeasurementSalesUnitEntity) {
+        foreach ($productMeasurementSalesUnitTransfers as $productMeasurementSalesUnitTransfer) {
             $productConcreteSalesUnitTransfers->append(
                 (new ProductConcreteMeasurementSalesUnitTransfer())
-                    ->fromArray($productMeasurementSalesUnitEntity->toArray(), true)
-                    ->setIdProductMeasurementUnit($productMeasurementSalesUnitEntity->getFkProductMeasurementUnit())
+                    ->fromArray($productMeasurementSalesUnitTransfer->toArray(), true)
+                    ->setIdProductMeasurementUnit($productMeasurementSalesUnitTransfer->getFkProductMeasurementUnit())
             );
         }
 

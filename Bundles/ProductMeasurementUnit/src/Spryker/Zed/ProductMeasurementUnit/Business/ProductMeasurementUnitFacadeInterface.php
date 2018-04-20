@@ -8,8 +8,8 @@
 namespace Spryker\Zed\ProductMeasurementUnit\Business;
 
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\SpyProductMeasurementBaseUnitEntityTransfer;
-use Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer;
+use Generated\Shared\Transfer\ProductMeasurementBaseUnitTransfer;
+use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 
 interface ProductMeasurementUnitFacadeInterface
 {
@@ -21,9 +21,9 @@ interface ProductMeasurementUnitFacadeInterface
      *
      * @param int $idProduct
      *
-     * @return \Generated\Shared\Transfer\SpyProductMeasurementBaseUnitEntityTransfer
+     * @return \Generated\Shared\Transfer\ProductMeasurementBaseUnitTransfer
      */
-    public function getBaseUnitByIdProduct(int $idProduct): SpyProductMeasurementBaseUnitEntityTransfer;
+    public function getBaseUnitByIdProduct(int $idProduct): ProductMeasurementBaseUnitTransfer;
 
     /**
      * Specification:
@@ -33,7 +33,7 @@ interface ProductMeasurementUnitFacadeInterface
      *
      * @param int $idProduct
      *
-     * @return \Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer[]
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
      */
     public function getSalesUnitsByIdProduct(int $idProduct): array;
 
@@ -71,9 +71,9 @@ interface ProductMeasurementUnitFacadeInterface
      *
      * @param int $idProductMeasurementSalesUnit
      *
-     * @return \Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer
      */
-    public function getSalesUnitEntity(int $idProductMeasurementSalesUnit): SpyProductMeasurementSalesUnitEntityTransfer;
+    public function getSalesUnitEntity(int $idProductMeasurementSalesUnit): ProductMeasurementSalesUnitTransfer;
 
     /**
      * Specification:
@@ -93,7 +93,7 @@ interface ProductMeasurementUnitFacadeInterface
      *
      * @param int[] $productMeasurementUnitIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitEntityTransfer[]
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
      */
-    public function findProductMeasurementUnitEntities(array $productMeasurementUnitIds): array;
+    public function findProductMeasurementUnitTransfers(array $productMeasurementUnitIds): array;
 }

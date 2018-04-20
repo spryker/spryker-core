@@ -8,8 +8,8 @@
 namespace Spryker\Zed\ProductMeasurementUnit\Business;
 
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\SpyProductMeasurementBaseUnitEntityTransfer;
-use Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer;
+use Generated\Shared\Transfer\ProductMeasurementBaseUnitTransfer;
+use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -57,13 +57,13 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
      *
      * @param int $idProductMeasurementSalesUnit
      *
-     * @return \Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer
      */
-    public function getSalesUnitEntity(int $idProductMeasurementSalesUnit): SpyProductMeasurementSalesUnitEntityTransfer
+    public function getSalesUnitEntity(int $idProductMeasurementSalesUnit): ProductMeasurementSalesUnitTransfer
     {
         return $this->getFactory()
             ->createProductMeasurementSalesUnitReader()
-            ->getProductMeasurementSalesUnitEntity($idProductMeasurementSalesUnit);
+            ->getProductMeasurementSalesUnitTransfer($idProductMeasurementSalesUnit);
     }
 
     /**
@@ -73,13 +73,13 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
      *
      * @param int $idProduct
      *
-     * @return \Generated\Shared\Transfer\SpyProductMeasurementBaseUnitEntityTransfer
+     * @return \Generated\Shared\Transfer\ProductMeasurementBaseUnitTransfer
      */
-    public function getBaseUnitByIdProduct(int $idProduct): SpyProductMeasurementBaseUnitEntityTransfer
+    public function getBaseUnitByIdProduct(int $idProduct): ProductMeasurementBaseUnitTransfer
     {
         return $this->getFactory()
             ->createProductMeasurementBaseUnitReader()
-            ->getProductMeasurementBaseUnitEntityByIdProduct($idProduct);
+            ->getProductMeasurementBaseUnitTransferByIdProduct($idProduct);
     }
 
     /**
@@ -89,13 +89,13 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
      *
      * @param int $idProduct
      *
-     * @return \Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer[]
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
      */
     public function getSalesUnitsByIdProduct(int $idProduct): array
     {
         return $this->getFactory()
             ->createProductMeasurementSalesUnitReader()
-            ->getProductMeasurementSalesUnitEntitiesByIdProduct($idProduct);
+            ->getProductMeasurementSalesUnitTransfersByIdProduct($idProduct);
     }
 
     /**
@@ -117,10 +117,10 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
      *
      * @param int[] $productMeasurementUnitIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitEntityTransfer[]
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
      */
-    public function findProductMeasurementUnitEntities(array $productMeasurementUnitIds): array
+    public function findProductMeasurementUnitTransfers(array $productMeasurementUnitIds): array
     {
-        return $this->getRepository()->findProductMeasurementUnitEntities($productMeasurementUnitIds);
+        return $this->getRepository()->findProductMeasurementUnitTransfers($productMeasurementUnitIds);
     }
 }

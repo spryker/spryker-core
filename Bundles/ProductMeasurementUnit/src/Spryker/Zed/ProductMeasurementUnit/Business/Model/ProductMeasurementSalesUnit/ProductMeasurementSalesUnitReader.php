@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit;
 
-use Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer;
+use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 use Spryker\Zed\ProductMeasurementUnit\Dependency\Service\ProductMeasurementUnitToUtilMeasurementUnitConversionServiceInterface;
 use Spryker\Zed\ProductMeasurementUnit\Persistence\ProductMeasurementUnitRepositoryInterface;
 
@@ -38,76 +38,76 @@ class ProductMeasurementSalesUnitReader implements ProductMeasurementSalesUnitRe
     /**
      * @param int $idProduct
      *
-     * @return \Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer[]
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
      */
-    public function getProductMeasurementSalesUnitEntitiesByIdProduct(int $idProduct): array
+    public function getProductMeasurementSalesUnitTransfersByIdProduct(int $idProduct): array
     {
-        $productMeasurementSalesUnitEntities = $this->productMeasurementUnitRepository
-            ->getProductMeasurementSalesUnitEntitiesByIdProduct($idProduct);
+        $productMeasurementSalesUnitTransfers = $this->productMeasurementUnitRepository
+            ->getProductMeasurementSalesUnitTransfersByIdProduct($idProduct);
 
-        foreach ($productMeasurementSalesUnitEntities as $productMeasurementSalesUnitEntity) {
-            $this->setDefaults($productMeasurementSalesUnitEntity);
+        foreach ($productMeasurementSalesUnitTransfers as $productMeasurementSalesUnitTransfer) {
+            $this->setDefaults($productMeasurementSalesUnitTransfer);
         }
 
-        return $productMeasurementSalesUnitEntities;
+        return $productMeasurementSalesUnitTransfers;
     }
 
     /**
      * @param int $idProductMeasurementSalesUnit
      *
-     * @return \Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer
      */
-    public function getProductMeasurementSalesUnitEntity(int $idProductMeasurementSalesUnit): SpyProductMeasurementSalesUnitEntityTransfer
+    public function getProductMeasurementSalesUnitTransfer(int $idProductMeasurementSalesUnit): ProductMeasurementSalesUnitTransfer
     {
-        $productMeasurementSalesUnitEntity = $this->productMeasurementUnitRepository
-            ->getProductMeasurementSalesUnitEntity($idProductMeasurementSalesUnit);
+        $productMeasurementSalesUnitTransfer = $this->productMeasurementUnitRepository
+            ->getProductMeasurementSalesUnitTransfer($idProductMeasurementSalesUnit);
 
-        $this->setDefaults($productMeasurementSalesUnitEntity);
+        $this->setDefaults($productMeasurementSalesUnitTransfer);
 
-        return $productMeasurementSalesUnitEntity;
+        return $productMeasurementSalesUnitTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer $productMeasurementSalesUnitEntity
+     * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer
      *
      * @return void
      */
-    protected function setDefaults(SpyProductMeasurementSalesUnitEntityTransfer $productMeasurementSalesUnitEntity): void
+    protected function setDefaults(ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer): void
     {
-        if ($productMeasurementSalesUnitEntity->getPrecision() === null) {
-            $productMeasurementSalesUnitEntity->setPrecision($this->getDefaultPrecision($productMeasurementSalesUnitEntity));
+        if ($productMeasurementSalesUnitTransfer->getPrecision() === null) {
+            $productMeasurementSalesUnitTransfer->setPrecision($this->getDefaultPrecision($productMeasurementSalesUnitTransfer));
         }
 
-        if ($productMeasurementSalesUnitEntity->getConversion() === null) {
-            $productMeasurementSalesUnitEntity->setConversion($this->getDefaultConversion($productMeasurementSalesUnitEntity));
+        if ($productMeasurementSalesUnitTransfer->getConversion() === null) {
+            $productMeasurementSalesUnitTransfer->setConversion($this->getDefaultConversion($productMeasurementSalesUnitTransfer));
         }
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer $productMeasurementSalesUnitEntity
+     * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer
      *
      * @return int
      */
-    protected function getDefaultPrecision(SpyProductMeasurementSalesUnitEntityTransfer $productMeasurementSalesUnitEntity): int
+    protected function getDefaultPrecision(ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer): int
     {
-        $productMeasurementSalesUnitEntity->getProductMeasurementUnit()->requireDefaultPrecision();
+        $productMeasurementSalesUnitTransfer->getProductMeasurementUnit()->requireDefaultPrecision();
 
-        return $productMeasurementSalesUnitEntity->getProductMeasurementUnit()->getDefaultPrecision();
+        return $productMeasurementSalesUnitTransfer->getProductMeasurementUnit()->getDefaultPrecision();
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer $productMeasurementSalesUnitEntity
+     * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer
      *
      * @return float
      */
-    protected function getDefaultConversion(SpyProductMeasurementSalesUnitEntityTransfer $productMeasurementSalesUnitEntity): float
+    protected function getDefaultConversion(ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer): float
     {
-        $productMeasurementBaseUnitEntity = $this
+        $productMeasurementBaseUnitTransfer = $this
             ->productMeasurementUnitRepository
-            ->getProductMeasurementBaseUnitEntity($productMeasurementSalesUnitEntity->getFkProductMeasurementBaseUnit());
+            ->getProductMeasurementBaseUnitTransfer($productMeasurementSalesUnitTransfer->getFkProductMeasurementBaseUnit());
 
-        $salesUnitMeasurementUnitCode = $productMeasurementSalesUnitEntity->getProductMeasurementUnit()->getCode();
-        $baseUnitMeasurementUnitCode = $productMeasurementBaseUnitEntity->getProductMeasurementUnit()->getCode();
+        $salesUnitMeasurementUnitCode = $productMeasurementSalesUnitTransfer->getProductMeasurementUnit()->getCode();
+        $baseUnitMeasurementUnitCode = $productMeasurementBaseUnitTransfer->getProductMeasurementUnit()->getCode();
 
         $exchangeRatio = $this->utilMeasurementUnitConversionService->getMeasurementUnitExchangeRatio(
             $salesUnitMeasurementUnitCode,

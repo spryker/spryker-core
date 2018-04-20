@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\ProductMeasurementUnitStorage\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\SpyProductMeasurementUnitEntityTransfer;
-use PHPUnit\Framework\SkippedTestError;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 
@@ -37,17 +36,11 @@ class ProductMeasurementUnitStorageFacadeTest extends Unit
     protected $productMeasurementUnitStorageFacade;
 
     /**
-     * @throws \PHPUnit\Framework\SkippedTestError
-     *
      * @return void
      */
     public function setUp()
     {
         parent::setUp();
-
-        if (!$this->tester->isSuiteProject()) {
-            throw new SkippedTestError('Warning: not in suite environment');
-        }
 
         $this->tester->setDependency(QueueDependencyProvider::QUEUE_ADAPTERS, function (Container $container) {
             return [
@@ -84,7 +77,17 @@ class ProductMeasurementUnitStorageFacadeTest extends Unit
     public function testPublishProductConcreteMeasurementUnitDoesNotThrowException(): void
     {
         // Assign
+        $code = 'MYCODE' . random_int(1, 100);
         $productTransfer = $this->tester->haveProduct();
+        $productMeasurementUnitTransfer = $this->tester->haveProductMeasurementUnit([
+            SpyProductMeasurementUnitEntityTransfer::CODE => $code,
+        ]);
+
+        $this->tester->haveProductMeasurementBaseUnit(
+            $productTransfer->getFkProductAbstract(),
+            $productMeasurementUnitTransfer->getIdProductMeasurementUnit()
+        );
+
         $productIds = [$productTransfer->getIdProductConcrete()];
 
         // Act
