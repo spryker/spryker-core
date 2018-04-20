@@ -25,16 +25,14 @@ class ProductMeasurementUnitDataImportPluginTest extends Unit
      * @return void
      */
     public function testImportImportsData(): void
-{
-    $this->tester->ensureDatabaseTableIsEmpty();
+    {
+        $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
+        $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/product_measurement_unit.csv');
 
-    $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
-    $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/product_measurement_unit.csv');
+        $dataImportConfigurationTransfer = new DataImporterConfigurationTransfer();
+        $dataImportConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfigurationTransfer);
 
-    $dataImportConfigurationTransfer = new DataImporterConfigurationTransfer();
-    $dataImportConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfigurationTransfer);
-
-    $productMeasurementUnitDataImportPlugin = new ProductMeasurementUnitDataImportPlugin();
+        $productMeasurementUnitDataImportPlugin = new ProductMeasurementUnitDataImportPlugin();
         $dataImporterReportTransfer = $productMeasurementUnitDataImportPlugin->import($dataImportConfigurationTransfer);
 
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
