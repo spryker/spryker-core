@@ -76,7 +76,7 @@ class IndexControllerCest
             ],
         ];
 
-        $i->amOnPage('/customer/add');
+        $i->amOnPage('/customer/add?redirectUrl=' . urlencode('/customer'));
         $i->submitForm(['name' => 'customer'], $formData);
 
         $i->listDataTable('/customer/index/table');
@@ -104,7 +104,7 @@ class IndexControllerCest
         $i->amOnPage('/customer/add?redirectUrl=' . urlencode('/customer'));
         $i->submitForm(['name' => 'customer'], $formData);
         $i->expect('I am back on the form page');
-        $i->seeCurrentUrlEquals('/customer/add');
+        $i->seeCurrentUrlEquals('/customer');
         $i->see('This value should not be blank.', '#customer');
         $i->listDataTable('/customer/index/table');
         $i->dontSeeInLastRow([2 => $email]);
