@@ -156,7 +156,7 @@ class PriceManager implements PriceManagerInterface
      */
     protected function hasForcedUnitGrossPrice(ItemTransfer $itemTransfer)
     {
-        if ($itemTransfer->getForcedUnitGrossPrice()) {
+        if ($itemTransfer->getForcedUnitGrossPrice() && $itemTransfer->getUnitGrossPrice() !== null) {
             return true;
         }
 

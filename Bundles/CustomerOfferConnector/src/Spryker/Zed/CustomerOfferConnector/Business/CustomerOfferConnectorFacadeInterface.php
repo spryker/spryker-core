@@ -5,16 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\OfferGui\Communication\Handler;
+namespace Spryker\Zed\CustomerOfferConnector\Business;
 
 use Generated\Shared\Transfer\OfferTransfer;
 
-interface CreateRequestHandlerInterface
+interface CustomerOfferConnectorFacadeInterface
 {
     /**
+     * Specification:
+     *  - Puts customer transfer into offer transfer.
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
      *
      * @return \Generated\Shared\Transfer\OfferTransfer
      */
-    public function addItems(OfferTransfer $offerTransfer): OfferTransfer;
+    public function hydrateOfferWithCustomer(OfferTransfer $offerTransfer): OfferTransfer;
 }

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Offer\Business\Model;
 
 use Generated\Shared\Transfer\CalculableObjectTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 
 class OfferItemSubtotalAggregator implements OfferItemSubtotalAggregatorInterface
 {
@@ -16,37 +17,43 @@ class OfferItemSubtotalAggregator implements OfferItemSubtotalAggregatorInterfac
      *
      * @return void
      */
-    public function recalculate(CalculableObjectTransfer $calculableObjectTransfer)
+    public function recalculate(CalculableObjectTransfer $calculableObjectTransfer): void
     {
-        $itemTransfers = $calculableObjectTransfer->getItems();
-
-        foreach ($itemTransfers as $itemTransfer) {
-            //apply offer discount
-            if ($itemTransfer->getOfferDiscount() > 0) {
-                $originUnitSubtotal = $itemTransfer->getUnitSubtotalAggregation();
-                $calculatedDiscount = $originUnitSubtotal / 100 * $itemTransfer->getOfferDiscount();
-                $calculatedUnitSubtotal = $originUnitSubtotal - $calculatedDiscount;
-                $calculatedUnitSubtotal = (int)$calculatedUnitSubtotal;
-                $itemTransfer->setUnitSubtotalAggregation($calculatedUnitSubtotal);
-
-                $originUnitSubtotal = $itemTransfer->getSumSubtotalAggregation();
-                $calculatedDiscount = $originUnitSubtotal / 100 * $itemTransfer->getOfferDiscount();
-                $calculatedUnitSubtotal = $originUnitSubtotal - $calculatedDiscount;
-                $calculatedUnitSubtotal = (int)$calculatedUnitSubtotal;
-                $itemTransfer->setSumSubtotalAggregation($calculatedUnitSubtotal);
-            }
-
-            //apply fee
-            $originUnitSubtotal = $itemTransfer->getUnitSubtotalAggregation();
-            $calculatedUnitSubtotal = $originUnitSubtotal + $itemTransfer->getOfferFee();
-            $calculatedUnitSubtotal = (int)$calculatedUnitSubtotal;
-            $itemTransfer->setUnitSubtotalAggregation($calculatedUnitSubtotal);
-
-            $originSumSubtotal = $itemTransfer->getSumSubtotalAggregation();
-            $calculatedFeeSumSubtotal = $itemTransfer->getQuantity() * $itemTransfer->getOfferFee();
-            $calculatedSumSubtotal = $originSumSubtotal + $calculatedFeeSumSubtotal;
-            $calculatedSumSubtotal = (int)$calculatedSumSubtotal;
-            $itemTransfer->setSumSubtotalAggregation($calculatedSumSubtotal);
+        foreach ($calculableObjectTransfer->getItems() as $itemTransfer) {
+            $this->calculateItemUnitSubtotalAggregation($itemTransfer);
+            $this->calculateItemSumSubtotalAggregation($itemTransfer);
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return void
+     */
+    protected function calculateItemUnitSubtotalAggregation(ItemTransfer $itemTransfer): void
+    {
+        $unitSubtotal = $itemTransfer->getUnitSubtotalAggregation();
+        if ($itemTransfer->getOfferDiscount() > 0) {
+            $calculatedDiscount = (int)($unitSubtotal / 100 * $itemTransfer->getOfferDiscount());
+            $unitSubtotal = $unitSubtotal - $calculatedDiscount;
+        }
+        $unitSubtotal = $unitSubtotal + $itemTransfer->getOfferFee();
+        $itemTransfer->setUnitSubtotalAggregation($unitSubtotal);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return void
+     */
+    protected function calculateItemSumSubtotalAggregation(ItemTransfer $itemTransfer): void
+    {
+        $sumSubtotal = $itemTransfer->getSumSubtotalAggregation();
+        if ($itemTransfer->getOfferDiscount() > 0) {
+            $calculatedDiscount = (int)($sumSubtotal / 100 * $itemTransfer->getOfferDiscount());
+            $sumSubtotal = $sumSubtotal - $calculatedDiscount;
+        }
+        $sumSubtotal = $sumSubtotal + $itemTransfer->getQuantity() * $itemTransfer->getOfferFee();
+        $itemTransfer->setSumSubtotalAggregation($sumSubtotal);
     }
 }
