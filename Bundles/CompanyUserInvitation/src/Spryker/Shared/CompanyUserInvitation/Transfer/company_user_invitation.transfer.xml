@@ -72,7 +72,7 @@
 
     <transfer name="CompanyUserInvitationImportRequest">
         <property name="idCompanyUser" type="int"/>
-        <property name="companyUserInvitationCollection" type="companyUserInvitationCollection"/>
+        <property name="companyUserInvitationCollection" type="CompanyUserInvitationCollection"/>
     </transfer>
 
     <transfer name="CompanyUserInvitationImportResponse">

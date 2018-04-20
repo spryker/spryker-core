@@ -31,7 +31,9 @@ class CompanyRoleFacadeTest extends Test
      */
     public function testGetCompanyRoleByIdShouldReturnCorrectData()
     {
-        $existingCompanyRole = $this->haveCompanyRole();
+        $existingCompanyRole = $this->haveCompanyRole([
+            CompanyRoleTransfer::FK_COMPANY => $this->haveCompany()->getIdCompany(),
+        ]);
         $companyRoleTransfer = (new CompanyRoleBuilder([
             CompanyRoleTransfer::ID_COMPANY_ROLE => $existingCompanyRole->getIdCompanyRole(),
         ]))->build();
@@ -76,7 +78,9 @@ class CompanyRoleFacadeTest extends Test
      */
     public function testUpdateCompanyRoleShouldUpdateSuccessfully()
     {
-        $existingCompanyRole = $this->haveCompanyRole()->setName('Updated Name');
+        $existingCompanyRole = $this->haveCompanyRole([
+            CompanyRoleTransfer::FK_COMPANY => $this->haveCompany()->getIdCompany(),
+        ])->setName('Updated Name');
         $companyRoleTransfer = (new CompanyRoleBuilder([
             CompanyRoleTransfer::ID_COMPANY_ROLE => $existingCompanyRole->getIdCompanyRole(),
         ]))->build();
@@ -92,7 +96,9 @@ class CompanyRoleFacadeTest extends Test
      */
     public function testDeleteCompanyRoleShouldReturnIsSuccess()
     {
-        $companyResponseTransfer = $this->haveCompanyRole();
+        $companyResponseTransfer = $this->haveCompanyRole([
+            CompanyRoleTransfer::FK_COMPANY => $this->haveCompany()->getIdCompany(),
+        ]);
 
         $companyResponseTransfer = $this->getFacade()->delete($companyResponseTransfer);
 
@@ -118,7 +124,7 @@ class CompanyRoleFacadeTest extends Test
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\Business\AbstractFacade
+     * @return \Spryker\Zed\Kernel\Business\AbstractFacade|\Spryker\Zed\CompanyRole\Business\CompanyRoleFacadeInterface
      */
     protected function getFacade()
     {
