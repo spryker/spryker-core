@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit;
 
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface ProductMeasurementSalesUnitValueInterface
 {
@@ -17,4 +18,11 @@ interface ProductMeasurementSalesUnitValueInterface
      * @return int
      */
     public function calculateQuantityNormalizedSalesUnitValue(ItemTransfer $itemTransfer): int;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function normalizeSalesUnitValueInQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

@@ -25,3 +25,15 @@ suites:
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper
                 - \SprykerTest\Shared\ProductMeasurementUnit\Helper\ProductMeasurementUnitDataHelper
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+
+    Communication:
+        path: Communication
+        class_name: ProductMeasurementUnitCommunicationTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper

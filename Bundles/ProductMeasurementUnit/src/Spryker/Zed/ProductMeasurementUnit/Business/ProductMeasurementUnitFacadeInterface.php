@@ -7,9 +7,10 @@
 
 namespace Spryker\Zed\ProductMeasurementUnit\Business;
 
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductMeasurementBaseUnitTransfer;
-use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface ProductMeasurementUnitFacadeInterface
 {
@@ -64,16 +65,15 @@ interface ProductMeasurementUnitFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves a product measurement sales unit transfer object by the provided ID.
-     * - Sets related default precision and conversion ratio when not defined.
+     * - Expand CartChangeTransfer with QuantitySalesUnit.
      *
      * @api
      *
-     * @param int $idProductMeasurementSalesUnit
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function getSalesUnitEntity(int $idProductMeasurementSalesUnit): ProductMeasurementSalesUnitTransfer;
+    public function expandCartChangeTransfer(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
 
     /**
      * Specification:
@@ -96,4 +96,17 @@ interface ProductMeasurementUnitFacadeInterface
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
      */
     public function findProductMeasurementUnitTransfers(array $productMeasurementUnitIds): array;
+
+    /**
+     * Specification:
+     * - Calculate quantity normalized sales unit value.
+     * - Updates quote item transfers
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function normalizeSalesUnitValueInQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

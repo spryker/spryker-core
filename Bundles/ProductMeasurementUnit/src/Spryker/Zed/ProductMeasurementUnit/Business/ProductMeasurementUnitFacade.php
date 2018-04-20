@@ -7,9 +7,10 @@
 
 namespace Spryker\Zed\ProductMeasurementUnit\Business;
 
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductMeasurementBaseUnitTransfer;
-use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -48,22 +49,6 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
         return $this->getFactory()
             ->createProductMeasurementSalesUnitValue()
             ->calculateQuantityNormalizedSalesUnitValue($itemTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param int $idProductMeasurementSalesUnit
-     *
-     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer
-     */
-    public function getSalesUnitEntity(int $idProductMeasurementSalesUnit): ProductMeasurementSalesUnitTransfer
-    {
-        return $this->getFactory()
-            ->createProductMeasurementSalesUnitReader()
-            ->getProductMeasurementSalesUnitTransfer($idProductMeasurementSalesUnit);
     }
 
     /**
@@ -122,5 +107,37 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
     public function findProductMeasurementUnitTransfers(array $productMeasurementUnitIds): array
     {
         return $this->getRepository()->findProductMeasurementUnitTransfers($productMeasurementUnitIds);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function normalizeSalesUnitValueInQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $this->getFactory()
+            ->createProductMeasurementSalesUnitValue()
+            ->normalizeSalesUnitValueInQuote($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function expandCartChangeTransfer(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
+    {
+        return $this->getFactory()
+            ->createCartChangeTransferExpander()
+            ->expandCartChangeTransfer($cartChangeTransfer);
     }
 }

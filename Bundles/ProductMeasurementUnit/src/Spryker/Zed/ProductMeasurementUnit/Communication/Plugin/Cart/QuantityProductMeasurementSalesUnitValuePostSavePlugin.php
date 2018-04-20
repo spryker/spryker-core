@@ -28,16 +28,6 @@ class QuantityProductMeasurementSalesUnitValuePostSavePlugin extends AbstractPlu
      */
     public function postSave(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getQuantitySalesUnit() === null) {
-                continue;
-            }
-
-            $itemTransfer->getQuantitySalesUnit()->setValue(
-                $this->getFacade()->calculateQuantityNormalizedSalesUnitValue($itemTransfer)
-            );
-        }
-
-        return $quoteTransfer;
+        return $this->getFacade()->normalizeSalesUnitValueInQuote($quoteTransfer);
     }
 }

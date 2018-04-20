@@ -1,7 +1,13 @@
 <?php
+
 namespace SprykerTest\Zed\ProductMeasurementUnit;
 
+use ArrayObject;
 use Codeception\Actor;
+use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
 
@@ -16,7 +22,7 @@ use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
  * @SuppressWarnings(PHPMD)
  */
@@ -24,19 +30,58 @@ class ProductMeasurementUnitBusinessTester extends Actor
 {
     use _generated\ProductMeasurementUnitBusinessTesterActions;
 
-   /**
-    * Define custom actions here
-    */
+    /**
+     * Define custom actions here
+     */
 
     const DB_TYPE_PGSQL = 'pgsql';
 
     /**
      * @return bool
      */
-    public function isDbPgSql()
+    public function isDbPgSql(): bool
     {
         $dbType = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
 
         return $dbType === static::DB_TYPE_PGSQL;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function createEmptyCartChangeTransfer(): CartChangeTransfer
+    {
+        return (new CartChangeTransfer())
+            ->setQuote(
+                (new QuoteTransfer())
+                    ->setItems(new ArrayObject([]))
+            )
+            ->setItems(new ArrayObject([]));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param int $idProductMeasurementSalesUnit
+     * @param string $sku
+     * @param int $quantity
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function addSkuToCartChangeTransfer(
+        CartChangeTransfer $cartChangeTransfer,
+        int $idProductMeasurementSalesUnit,
+        $sku,
+        $quantity = 1
+    ): CartChangeTransfer {
+        $quantitySalesUnit = new ProductMeasurementSalesUnitTransfer();
+        $quantitySalesUnit->setIdProductMeasurementSalesUnit($idProductMeasurementSalesUnit);
+        $cartChangeTransfer->addItem(
+            (new ItemTransfer())
+                ->setSku($sku)
+                ->setQuantity($quantity)
+                ->setQuantitySalesUnit($quantitySalesUnit)
+        );
+
+        return $cartChangeTransfer;
     }
 }
