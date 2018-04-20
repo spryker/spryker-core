@@ -28,16 +28,4 @@ class CustomerMapper implements CustomerMapperInterface
 
         return $customerTransfer;
     }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @throws \Exception
-     *
-     * @return \Generated\Shared\Transfer\SpyCustomerEntityTransfer
-     */
-    public function mapCustomerToCustomerEntity(CustomerTransfer $customerTransfer): SpyCustomerEntityTransfer
-    {
-        throw new Exception('Method is not implemented');
-    }
 }

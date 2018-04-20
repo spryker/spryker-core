@@ -16,6 +16,10 @@
             <reference local="fk_user" foreign="id_user" />
         </foreign-key>
 
+        <index name="spy_offer-customer_reference">
+            <index-column name="customer_reference"/>
+        </index>
+
         <behavior name="timestampable"/>
 
         <id-method-parameter value="spy_offer_pk_seq"/>
