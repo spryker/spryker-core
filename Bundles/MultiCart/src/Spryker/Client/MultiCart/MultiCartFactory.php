@@ -41,7 +41,7 @@ class MultiCartFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\MultiCart\MultiCartConfig
      */
-    public function getMultiCartConfig()
+    public function getMultiCartConfig(): MultiCartConfig
     {
         return $this->getConfig();
     }

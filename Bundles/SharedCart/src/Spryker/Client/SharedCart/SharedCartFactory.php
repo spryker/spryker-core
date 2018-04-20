@@ -11,6 +11,10 @@ use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\SharedCart\CartSharer\CartSharer;
 use Spryker\Client\SharedCart\CartSharer\CartSharerInterface;
 use Spryker\Client\SharedCart\Dependency\Client\SharedCartToCartClientInterface;
+use Spryker\Client\SharedCart\Dependency\Client\SharedCartToCustomerClientInterface;
+use Spryker\Client\SharedCart\Dependency\Client\SharedCartToMessengerClientInterface;
+use Spryker\Client\SharedCart\Dependency\Client\SharedCartToMultiCartClientInterface;
+use Spryker\Client\SharedCart\Dependency\Client\SharedCartToPersistentCartClientInterface;
 use Spryker\Client\SharedCart\Zed\SharedCartStub;
 use Spryker\Client\SharedCart\Zed\SharedCartStubInterface;
 use Spryker\Client\ZedRequest\ZedRequestClientInterface;
@@ -49,7 +53,7 @@ class SharedCartFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\SharedCart\Dependency\Client\SharedCartToCustomerClientInterface
      */
-    public function getCustomerClient()
+    public function getCustomerClient(): SharedCartToCustomerClientInterface
     {
         return $this->getProvidedDependency(SharedCartDependencyProvider::CLIENT_CUSTOMER);
     }
@@ -57,7 +61,7 @@ class SharedCartFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\SharedCart\Dependency\Client\SharedCartToMessengerClientInterface
      */
-    public function getMessengerClient()
+    public function getMessengerClient(): SharedCartToMessengerClientInterface
     {
         return $this->getProvidedDependency(SharedCartDependencyProvider::CLIENT_MESSENGER);
     }
@@ -65,7 +69,7 @@ class SharedCartFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\SharedCart\Dependency\Client\SharedCartToMultiCartClientInterface
      */
-    public function getMultiCartClient()
+    public function getMultiCartClient(): SharedCartToMultiCartClientInterface
     {
         return $this->getProvidedDependency(SharedCartDependencyProvider::CLIENT_MULTI_CART);
     }
@@ -73,7 +77,7 @@ class SharedCartFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\SharedCart\Dependency\Client\SharedCartToPersistentCartClientInterface
      */
-    public function getPersistentCartClient()
+    public function getPersistentCartClient(): SharedCartToPersistentCartClientInterface
     {
         return $this->getProvidedDependency(SharedCartDependencyProvider::CLIENT_PERSISTENT_CART);
     }

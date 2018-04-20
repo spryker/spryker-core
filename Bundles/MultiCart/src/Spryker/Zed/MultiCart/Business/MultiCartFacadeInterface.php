@@ -46,7 +46,7 @@ interface MultiCartFacadeInterface
      *
      * @param string $customerReference
      *
-     * @return mixed
+     * @return void
      */
-    public function resetQuoteDefaultFlagByCustomer(string $customerReference);
+    public function resetQuoteDefaultFlagByCustomer(string $customerReference): void;
 }

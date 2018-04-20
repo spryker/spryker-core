@@ -35,7 +35,7 @@ class SharedCartDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addQuoteFacade(Container $container)
+    protected function addQuoteFacade(Container $container): Container
     {
         $container[static::FACADE_QUOTE] = function (Container $container) {
             return new SharedCartToQuoteFacadeBridge($container->getLocator()->quote()->facade());
@@ -49,7 +49,7 @@ class SharedCartDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCustomerFacade(Container $container)
+    protected function addCustomerFacade(Container $container): Container
     {
         $container[static::FACADE_CUSTOMER] = function (Container $container) {
             return new SharedCartToCustomerFacadeBridge($container->getLocator()->customer()->facade());

@@ -28,10 +28,6 @@ use Spryker\Shared\Quote\QuoteConfig;
 class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorageStrategyPluginInterface
 {
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param array $params
      *
@@ -51,10 +47,6 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      * @param array $params
      *
@@ -78,11 +70,8 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param array $params
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
@@ -105,10 +94,6 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param string $sku
      * @param string|null $groupKey
      *
@@ -128,10 +113,6 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
@@ -148,10 +129,6 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param string $sku
      * @param string|null $groupKey
      * @param int $quantity
@@ -172,10 +149,6 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param string $sku
      * @param string|null $groupKey
      * @param int $quantity
@@ -196,10 +169,6 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param string $sku
      * @param string|null $groupKey
      * @param int $quantity
@@ -220,10 +189,6 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return void
      */
     public function reloadItems()
@@ -234,11 +199,6 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
     }
 
     /**
-     * Specification:
-     * - Gets quote storage strategy type
-     *
-     * @api
-     *
      * @return string
      */
     public function getStorageStrategy()
