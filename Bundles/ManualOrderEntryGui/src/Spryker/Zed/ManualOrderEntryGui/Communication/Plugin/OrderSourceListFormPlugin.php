@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Plugin;
 
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\OrderSource\OrderSourceListType;
 use Symfony\Component\Form\FormInterface;
@@ -20,13 +20,13 @@ class OrderSourceListFormPlugin extends AbstractPlugin implements ManualOrderEnt
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createForm(Request $request, $dataTransfer = null): FormInterface
+    public function createForm(Request $request, QuoteTransfer $quoteTransfer): FormInterface
     {
-        return $this->getFactory()->createOrderSourceListForm($request, $dataTransfer);
+        return $this->getFactory()->createOrderSourceListForm($request, $quoteTransfer);
     }
 
     /**
@@ -36,7 +36,7 @@ class OrderSourceListFormPlugin extends AbstractPlugin implements ManualOrderEnt
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function handleData($quoteTransfer, &$form, Request $request): AbstractTransfer
+    public function handleData(QuoteTransfer $quoteTransfer, &$form, Request $request): QuoteTransfer
     {
         $orderSourceTransfer = $this->getFactory()->getManualOrderEntryFacade()->getOrderSourceById(
             $quoteTransfer->getOrderSource()->getIdOrderSource()
@@ -55,11 +55,11 @@ class OrderSourceListFormPlugin extends AbstractPlugin implements ManualOrderEnt
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    public function isPreFilled($dataTransfer = null): bool
+    public function isFormPreFilled(QuoteTransfer $quoteTransfer): bool
     {
         return false;
     }

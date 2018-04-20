@@ -17,7 +17,10 @@ use Spryker\Zed\OfferExtension\Dependency\Plugin\OfferHydratorPluginInterface;
  */
 class OfferSavingHydratorPlugin extends AbstractPlugin implements OfferHydratorPluginInterface
 {
-    /**OfferToMessengerFacadeBridge.php
+    /**
+     * {@inheritdoc}
+     *
+     * @api
      *
      * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
      *

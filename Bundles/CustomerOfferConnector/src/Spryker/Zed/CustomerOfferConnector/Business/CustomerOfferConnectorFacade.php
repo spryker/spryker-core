@@ -5,15 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\AvailabilityOfferConnector\Business;
+namespace Spryker\Zed\CustomerOfferConnector\Business;
 
 use Generated\Shared\Transfer\OfferTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method \Spryker\Zed\AvailabilityOfferConnector\Business\AvailabilityOfferConnectorBusinessFactory getFactory()
+ * @method \Spryker\Zed\CustomerOfferConnector\Business\CustomerOfferConnectorBusinessFactory getFactory()
  */
-class AvailabilityOfferConnectorFacade extends AbstractFacade implements AvailabilityOfferConnectorFacadeInterface
+class CustomerOfferConnectorFacade extends AbstractFacade implements CustomerOfferConnectorFacadeInterface
 {
     /**
      * {@inheritdoc}
@@ -24,10 +24,10 @@ class AvailabilityOfferConnectorFacade extends AbstractFacade implements Availab
      *
      * @return \Generated\Shared\Transfer\OfferTransfer
      */
-    public function hydrateOfferWithQuoteItemStock(OfferTransfer $offerTransfer): OfferTransfer
+    public function hydrateOfferWithCustomer(OfferTransfer $offerTransfer): OfferTransfer
     {
         return $this->getFactory()
-            ->createOfferQuoteItemStockHydrator()
+            ->createOfferCustomerHydrator()
             ->hydrate($offerTransfer);
     }
 }

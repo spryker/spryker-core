@@ -101,7 +101,7 @@ class IndexControllerCest
             ],
         ];
 
-        $i->amOnPage('/customer/add');
+        $i->amOnPage('/customer/add?redirectUrl=' . urlencode('/customer'));
         $i->submitForm(['name' => 'customer'], $formData);
         $i->expect('I am back on the form page');
         $i->seeCurrentUrlEquals('/customer/add');
