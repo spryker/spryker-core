@@ -94,7 +94,7 @@ class FileFormDataProvider
             $fileLocalizedAttribute = new FileLocalizedAttributesTransfer();
             $fileLocalizedAttribute->setLocale($locale);
 
-            $fileTransfer->addFileLocalizedAttributes($fileLocalizedAttribute);
+            $fileTransfer->addLocalizedAttributes($fileLocalizedAttribute);
         }
 
         return $fileTransfer;
@@ -111,7 +111,7 @@ class FileFormDataProvider
         $savedLocalizedAttributes = $file->getSpyFileLocalizedAttributess()
             ->toKeyIndex(static::FK_LOCALE_KEY);
 
-        foreach ($fileTransfer->getFileLocalizedAttributes() as $fileLocalizedAttribute) {
+        foreach ($fileTransfer->getLocalizedAttributes() as $fileLocalizedAttribute) {
             $fkLocale = $fileLocalizedAttribute->getLocale()->getIdLocale();
 
             if (!empty($savedLocalizedAttributes[$fkLocale])) {

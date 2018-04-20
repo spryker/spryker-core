@@ -98,7 +98,7 @@ class EditFileController extends AbstractController
         $requestTransfer->setFile($fileTransfer);
         $requestTransfer->setFileInfo($this->createFileInfoTransfer($fileTransfer));
         $requestTransfer->setContent($this->getFileContent($fileTransfer));
-        $requestTransfer->setFileLocalizedAttributes($fileTransfer->getFileLocalizedAttributes());
+        $requestTransfer->setFileLocalizedAttributes($fileTransfer->getLocalizedAttributes());
 
         return $requestTransfer;
     }

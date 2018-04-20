@@ -2,7 +2,7 @@
 {{ form_row(fileForm.fileName) }}
 {{ form_row(fileForm.fileContent) }}
 
-{% for localizedAttribute in fileForm.fileLocalizedAttributes %}
+{% for localizedAttribute in fileForm.localizedAttributes %}
 
     {% set localeName = localizedAttribute.vars.value.locale.localeName %}
     {% set collapsed = (currentLocale != localeName) %}

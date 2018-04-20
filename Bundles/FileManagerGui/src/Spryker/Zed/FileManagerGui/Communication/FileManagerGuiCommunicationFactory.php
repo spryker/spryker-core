@@ -103,8 +103,7 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new FileFormDataProvider(
             $this->getFileManagerQueryContainer(),
-            $this->getLocaleFacade(),
-            $this->getFileManagerFacade()
+            $this->getLocaleFacade()
         );
     }
 

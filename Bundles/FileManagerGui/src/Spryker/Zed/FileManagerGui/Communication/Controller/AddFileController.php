@@ -47,7 +47,11 @@ class AddFileController extends AbstractController
                 $this->addSuccessMessage(
                     'The file was added successfully.'
                 );
-                $redirectUrl = Url::generate('/file-manager-gui/directories-tree')->build();
+                if ($request->get(self::FILE_DIRECTORY_ID)) {
+                    $redirectUrl = Url::generate('/file-manager-gui/directories-tree')->build();
+                } else {
+                    $redirectUrl = Url::generate('/file-manager-gui')->build();
+                }
 
                 return $this->redirectResponse($redirectUrl);
             } catch (Exception $exception) {
@@ -75,7 +79,7 @@ class AddFileController extends AbstractController
         $requestTransfer->setFile($fileTransfer);
         $requestTransfer->setFileInfo($this->createFileInfoTransfer($fileTransfer));
         $requestTransfer->setContent($this->getFileContent($fileTransfer));
-        $requestTransfer->setFileLocalizedAttributes($fileTransfer->getFileLocalizedAttributes());
+        $requestTransfer->setFileLocalizedAttributes($fileTransfer->getLocalizedAttributes());
 
         return $requestTransfer;
     }

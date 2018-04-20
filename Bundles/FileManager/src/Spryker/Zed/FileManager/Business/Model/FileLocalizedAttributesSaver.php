@@ -22,7 +22,7 @@ class FileLocalizedAttributesSaver implements FileLocalizedAttributesSaverInterf
      */
     public function saveLocalizedFileAttributes(SpyFile $fileEntity, FileManagerSaveRequestTransfer $fileManagerSaveRequestTransfer)
     {
-        $localizedAttributesToSave = $fileManagerSaveRequestTransfer->getLocalizedAttributes();
+        $localizedAttributesToSave = $fileManagerSaveRequestTransfer->getFileLocalizedAttributes();
         $existingFileLocalizedAttributes = $fileEntity->getSpyFileLocalizedAttributess()->toKeyIndex('fkLocale');
 
         if (empty($existingFileLocalizedAttributes)) {
@@ -57,7 +57,7 @@ class FileLocalizedAttributesSaver implements FileLocalizedAttributesSaverInterf
 
     /**
      * @param \Orm\Zed\FileManager\Persistence\SpyFile $file
-     * @param \Generated\Shared\Transfer\LocalizedAttributesTransfer[] $localizedAttributes
+     * @param \Generated\Shared\Transfer\FileLocalizedAttributesTransfer[] $localizedAttributes
      *
      * @return void
      */

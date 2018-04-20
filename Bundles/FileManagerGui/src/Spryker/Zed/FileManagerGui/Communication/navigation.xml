@@ -5,14 +5,22 @@
         <title>File Manager</title>
         <icon>fa-file</icon>
         <pages>
-            <group>
+            <tree>
                 <label>File Tree</label>
                 <title>File Tree</title>
                 <bundle>file-manager-gui</bundle>
                 <controller>directories-tree</controller>
                 <action>index</action>
                 <visible>1</visible>
-            </group>
+            </tree>
+            <list>
+                <label>File List</label>
+                <title>File List</title>
+                <bundle>file-manager-gui</bundle>
+                <controller>index</controller>
+                <action>index</action>
+                <visible>1</visible>
+            </list>
         </pages>
     </file-manager>
 </config>

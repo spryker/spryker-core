@@ -28,7 +28,7 @@ class FileInfoEditTable extends FileInfoTable
             'Download'
         );
         $buttons[] = $this->generateRemoveButton(
-            Url::generate('/file-manager-gui/delete/file-info', [
+            Url::generate('/file-manager-gui/delete-file/file-info', [
                 static::REQUEST_ID_FILE_INFO => $item[FileManagerGuiConstants::COL_ID_FILE_INFO],
             ]),
             'Delete'

@@ -31,7 +31,7 @@ class FileForm extends AbstractType
     const FIELD_FILE_CONTENT = 'fileContent';
     const FIELD_ID_FILE = 'idFile';
     const FIELD_USE_REAL_NAME = 'useRealName';
-    const FILE_LOCALIZED_ATTRIBUTES = 'fileLocalizedAttributes';
+    const FILE_LOCALIZED_ATTRIBUTES = 'localizedAttributes';
 
     const OPTION_DATA_CLASS = 'data_class';
     const OPTION_AVAILABLE_LOCALES = 'option_available_locales';

@@ -88,7 +88,7 @@ class FileLoader implements FileLoaderInterface
             $file->getIdFile(),
             $this->config->getFileNameVersionDelimiter(),
             $fileInfo->getVersionName(),
-            $fileInfo->getFileExtension()
+            $fileInfo->getExtension()
         );
 
         if ($file->getFkFileDirectory()) {
