@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Customer\Business\Model\Hydrator;
+namespace Spryker\Zed\CustomerOfferConnector\Business\Model;
 
 use Generated\Shared\Transfer\OfferTransfer;
 

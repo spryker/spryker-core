@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CustomerCollectionTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\OfferTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
@@ -457,16 +456,4 @@ interface CustomerFacadeInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function hydrateSalesOrderCustomerInformation(OrderTransfer $orderTransfer);
-
-    /**
-     * Specification:
-     *  - Puts customer transfer into offer transfer.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
-     *
-     * @return \Generated\Shared\Transfer\OfferTransfer
-     */
-    public function hydrateOfferWithCustomer(OfferTransfer $offerTransfer): OfferTransfer;
 }
