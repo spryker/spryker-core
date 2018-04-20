@@ -52,8 +52,8 @@ class ItemType extends AbstractType
     {
         $this
             ->addSkuField($builder, $options)
-            ->addUnitPriceField($builder, $options)
             ->addManualUnitPriceField($builder, $options)
+            ->addUnitPriceField($builder, $options)
             ->addOfferDiscountField($builder, $options)
             ->addOfferFeeField($builder, $options)
             ->addStockField($builder, $options)

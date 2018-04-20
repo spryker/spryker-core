@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Offer\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Offer\Business\Model\Calculator\OfferCalculator;
+use Spryker\Zed\Offer\Business\Model\Calculator\OfferCalculatorInterface;
 use Spryker\Zed\Offer\Business\Model\Hydrator\OfferQuoteExpander;
 use Spryker\Zed\Offer\Business\Model\Hydrator\OfferQuoteExpanderInterface;
 use Spryker\Zed\Offer\Business\Model\Hydrator\OfferSavingAmountHydrator;
@@ -21,6 +23,7 @@ use Spryker\Zed\Offer\Business\Model\OfferReader;
 use Spryker\Zed\Offer\Business\Model\OfferReaderInterface;
 use Spryker\Zed\Offer\Business\Model\OfferWriter;
 use Spryker\Zed\Offer\Business\Model\OfferWriterInterface;
+use Spryker\Zed\Offer\Dependency\Facade\OfferToCartFacadeInterface;
 use Spryker\Zed\Offer\Dependency\Facade\OfferToCustomerFacadeInterface;
 use Spryker\Zed\Offer\Dependency\Facade\OfferToMessengerFacadeInterface;
 use Spryker\Zed\Offer\Dependency\Facade\OfferToSalesFacadeInterface;
@@ -42,6 +45,24 @@ class OfferBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createOfferPluginExecutor()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Offer\Business\Model\Calculator\OfferCalculatorInterface
+     */
+    public function createOfferCalculator(): OfferCalculatorInterface
+    {
+        return new OfferCalculator(
+            $this->getCartFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Offer\Dependency\Facade\OfferToCartFacadeInterface
+     */
+    public function getCartFacade(): OfferToCartFacadeInterface
+    {
+        return $this->getProvidedDependency(OfferDependencyProvider::FACADE_CART);
     }
 
     /**

@@ -8,7 +8,6 @@
 namespace Spryker\Zed\OfferGui\Communication\Controller;
 
 use ArrayObject;
-use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\OfferTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
@@ -29,7 +28,7 @@ class EditController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function indexAction(Request $request)
     {
@@ -48,68 +47,21 @@ class EditController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var \Generated\Shared\Transfer\OfferTransfer $offerTransfer */
             $offerTransfer = $form->getData();
-            $quoteTransfer = $offerTransfer->getQuote();
+            $offerTransfer = $this->getFactory()
+                ->getOfferFacade()
+                ->calculateOffer($offerTransfer);
 
-            //remove vouchers
-            $voucherDiscounts = $quoteTransfer->getVoucherDiscounts();
-            foreach ($quoteTransfer->getVoucherDiscounts() as $key => $discountTransfer) {
-                if (!$discountTransfer->getVoucherCode()) {
-                    $voucherDiscounts->offsetUnset($key);
-                }
-            }
-            $quoteTransfer->setVoucherDiscounts($voucherDiscounts);
-
-            //add items
-            $items = clone $quoteTransfer->getItems();
-            $quoteTransfer->setItems(new ArrayObject());
-
-            foreach ($items as $itemTransfer) {
-                if ($itemTransfer->getQuantity() <= 0) {
-                    continue;
-                }
-
-                $cartChangeTransfer = new CartChangeTransfer();
-                $cartChangeTransfer->setQuote($quoteTransfer);
-                $cartChangeTransfer->addItem($itemTransfer);
-
-                $quoteTransfer = $this->getFactory()
-                    ->getCartFacade()
-                    ->add($cartChangeTransfer);
-            }
-
-            //add incoming items
-            $incomingItems = new ArrayObject;
-            foreach ($quoteTransfer->getIncomingItems() as $itemTransfer) {
-                if ($itemTransfer->getSku()) {
-                    $incomingItems->append($itemTransfer);
-                }
-            }
-
-            foreach ($incomingItems as $itemTransfer) {
-                $cartChangeTransfer = new CartChangeTransfer();
-                $cartChangeTransfer->setQuote($quoteTransfer);
-                $cartChangeTransfer->addItem($itemTransfer);
-
-                $quoteTransfer = $this->getFactory()
-                    ->getCartFacade()
-                    ->add($cartChangeTransfer);
-            }
-
-            //reload
-            $quoteTransfer = $this->getFactory()->getCartFacade()->reloadItems($quoteTransfer);
-            $offerTransfer->setQuote($quoteTransfer);
-
-            //refresh form after calculations
             $form = $this->getFactory()->getOfferForm($offerTransfer, $request);
 
             if ($isSubmitPersist) {
-                //save offer and a quote
-                $this->getFactory()
+                $offerResponseTransfer = $this->getFactory()
                     ->getOfferFacade()
                     ->updateOffer($offerTransfer);
-            }
 
-            $this->addSuccessMessage(static::MESSAGE_OFFER_UPDATE_SUCCESS);
+                if ($offerResponseTransfer->getIsSuccessful()) {
+                    $this->addSuccessMessage(static::MESSAGE_OFFER_UPDATE_SUCCESS);
+                }
+            }
         }
 
         return $this->viewResponse([

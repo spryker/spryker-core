@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\OfferGui\Communication\Controller;
 
-use ArrayObject;
-use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\OfferResponseTransfer;
 use Generated\Shared\Transfer\OfferTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
@@ -70,58 +68,14 @@ class CreateController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var \Generated\Shared\Transfer\OfferTransfer $offerTransfer */
             $offerTransfer = $form->getData();
-            $quoteTransfer = $offerTransfer->getQuote();
 
-            //remove vouchers
-            $voucherDiscounts = $quoteTransfer->getVoucherDiscounts();
-            foreach ($quoteTransfer->getVoucherDiscounts() as $key => $discountTransfer) {
-                if (!$discountTransfer->getVoucherCode()) {
-                    $voucherDiscounts->offsetUnset($key);
-                }
-            }
-            $quoteTransfer->setVoucherDiscounts($voucherDiscounts);
+            $offerTransfer = $this->getFactory()
+                ->getOfferFacade()
+                ->calculateOffer($offerTransfer);
 
-            //add items
-            $items = clone $quoteTransfer->getItems();
-            $quoteTransfer->setItems(new ArrayObject());
-
-            foreach ($items as $itemTransfer) {
-                if ($itemTransfer->getQuantity() <= 0) {
-                    continue;
-                }
-
-                $cartChangeTransfer = new CartChangeTransfer();
-                $cartChangeTransfer->setQuote($quoteTransfer);
-                $cartChangeTransfer->addItem($itemTransfer);
-
-                $quoteTransfer = $this->getFactory()
-                    ->getCartFacade()
-                    ->add($cartChangeTransfer);
-            }
-
-            //add incoming items
-            $incomingItems = new ArrayObject();
-            foreach ($quoteTransfer->getIncomingItems() as $itemTransfer) {
-                if ($itemTransfer->getSku()) {
-                    $incomingItems->append($itemTransfer);
-                }
-            }
-
-            foreach ($incomingItems as $itemTransfer) {
-                $cartChangeTransfer = new CartChangeTransfer();
-                $cartChangeTransfer->setQuote($quoteTransfer);
-                $cartChangeTransfer->addItem($itemTransfer);
-
-                $quoteTransfer = $this->getFactory()
-                    ->getCartFacade()
-                    ->add($cartChangeTransfer);
-            }
-
-            //refresh form after calculations
             $form = $this->getFactory()->getOfferForm($offerTransfer, $request);
 
             if ($isSubmitPersist) {
-                //save offer and a quote
                 $offerResponseTransfer = $this->getFactory()
                     ->getOfferFacade()
                     ->createOffer($offerTransfer);

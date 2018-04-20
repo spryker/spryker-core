@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\OfferTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \Spryker\Zed\OfferGui\Communication\OfferGuiCommunicationFactory getFactory()
@@ -23,27 +24,20 @@ class CopyController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
      * @return array|\Symfony\Component\HttpFoundation\Response
      */
     public function indexAction(Request $request)
     {
         $idOffer = $request->get(static::PARAM_ID_OFFER);
 
-        $offerTransfer = new OfferTransfer();
-        $offerTransfer->setIdOffer($idOffer);
-        $offerTransfer = $this->getFactory()
-            ->getOfferFacade()
-            ->getOfferById($offerTransfer);
+        if (!$idOffer) {
+            throw new NotFoundHttpException();
+        }
 
-        $offerTransfer->setIdOffer(null);
-        $offerTransfer->setCustomerReference(null);
-        $offerTransfer->setCustomer(new CustomerTransfer());
-
-        //TODO: Use UtilEncoding
-        $offerJson = \json_encode($offerTransfer->toArray());
-        $offerKey = md5($offerJson);
-
-        $this->getFactory()->getSessionClient()->set($offerKey, $offerJson);
+        $offerTransfer = $this->getOffer($idOffer);
+        $offerKey = $this->persistOfferToSession($offerTransfer);
 
         $redirectUrl = Url::generate(
             '/offer-gui/create',
@@ -51,5 +45,56 @@ class CopyController extends AbstractController
         )->build();
 
         return $this->redirectResponse($redirectUrl);
+    }
+
+    /**
+     * @param int $idOffer
+     *
+     * @return \Generated\Shared\Transfer\OfferTransfer
+     */
+    protected function getOffer(int $idOffer)
+    {
+        $offerTransfer = (new OfferTransfer())->setIdOffer($idOffer);
+        $offerTransfer = $this->getFactory()
+            ->getOfferFacade()
+            ->getOfferById($offerTransfer);
+
+        return $offerTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
+     *
+     * @return string
+     */
+    protected function persistOfferToSession(OfferTransfer $offerTransfer)
+    {
+        $offerTransfer = $this->cleanupOfferForSession($offerTransfer);
+
+        $offerJson = $this->getFactory()
+            ->getUtilEncoding()
+            ->encodeJson($offerTransfer->toArray());
+
+        $offerKey = md5($offerJson);
+
+        $this->getFactory()
+            ->getSessionClient()
+            ->set($offerKey, $offerJson);
+
+        return $offerKey;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
+     *
+     * @return \Generated\Shared\Transfer\OfferTransfer
+     */
+    protected function cleanupOfferForSession(OfferTransfer $offerTransfer)
+    {
+        $offerTransfer->setIdOffer(null)
+            ->setCustomerReference(null)
+            ->setCustomer(new CustomerTransfer());
+
+        return $offerTransfer;
     }
 }
