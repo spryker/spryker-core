@@ -5,7 +5,7 @@
         <td>+ <span class="label">{{ 'Option' | trans }}</span></td>
         <td>
             <div>
-                <a target="_blank" href="{{ url('/product-option/view/index', {'id-product-option-group': productOption.idGroup}) }}">{{ productOption.value }}</a>
+                {{ productOption.value }}
             </div>
             <div class="sku">
               {{ 'Sku' | trans }}: {{ productOption.sku }}
