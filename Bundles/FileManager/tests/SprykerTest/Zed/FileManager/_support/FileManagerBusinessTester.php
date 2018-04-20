@@ -1,6 +1,8 @@
 <?php
 namespace SprykerTest\Zed\FileManager;
 
+use Codeception\Actor;
+
 /**
  * Inherited Methods
  *
@@ -17,7 +19,7 @@ namespace SprykerTest\Zed\FileManager;
  *
  * @SuppressWarnings(PHPMD)
  */
-class FileManagerBusinessTester extends \Codeception\Actor
+class FileManagerBusinessTester extends Actor
 {
     use _generated\FileManagerBusinessTesterActions;
 

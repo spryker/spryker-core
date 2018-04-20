@@ -31,6 +31,17 @@
         {{ form_row(inputCollection.quantity) }}
         {{ form_row(inputCollection.is_never_out_of_stock) }}
 
+        <div class="form-group">
+            {{ 'Available in stores' | trans }}:
+            {% if inputCollection.vars.available_in_stores is defined %}
+                {% for store in inputCollection.vars.available_in_stores %}
+                    <span class="badge"><strong>{{ store }}</strong></span>
+                {% endfor %}
+            {% else %}
+                {{ 'n/a' | trans }}
+            {% endif %}
+        </div>
+
     {% endfor %}
 
 {% endif %}

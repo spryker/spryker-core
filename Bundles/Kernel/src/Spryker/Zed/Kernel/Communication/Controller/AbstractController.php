@@ -15,12 +15,15 @@ use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver;
 use Spryker\Zed\Kernel\Dependency\Facade\KernelToMessengerBridge;
 use Spryker\Zed\Kernel\Dependency\Facade\NullMessenger;
 use Spryker\Zed\Kernel\Exception\Controller\InvalidIdException;
+use Spryker\Zed\Kernel\RepositoryResolverAwareTrait;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 abstract class AbstractController
 {
+    use RepositoryResolverAwareTrait;
+
     /**
      * @var \Silex\Application
      */

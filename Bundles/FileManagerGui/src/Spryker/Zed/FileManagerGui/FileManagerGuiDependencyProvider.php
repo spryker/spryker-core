@@ -30,7 +30,7 @@ class FileManagerGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addFileManagerQueryContainer($container);
         $container = $this->addLocaleFacade($container);
 
-        return parent::provideCommunicationLayerDependencies($container);
+        return $container;
     }
 
     /**
@@ -41,8 +41,9 @@ class FileManagerGuiDependencyProvider extends AbstractBundleDependencyProvider
     protected function addFileManagerFacade(Container $container)
     {
         $container[static::FACADE_FILE_MANAGER] = function (Container $container) {
-            $fileManagerFacade = $container->getLocator()->fileManager()->facade();
-            return new FileManagerGuiToFileManagerFacadeBridge($fileManagerFacade);
+            return new FileManagerGuiToFileManagerFacadeBridge(
+                $container->getLocator()->fileManager()->facade()
+            );
         };
 
         return $container;
@@ -56,8 +57,9 @@ class FileManagerGuiDependencyProvider extends AbstractBundleDependencyProvider
     protected function addFileManagerQueryContainer(Container $container)
     {
         $container[static::QUERY_CONTAINER_FILE_MANAGER] = function (Container $container) {
-            $queryContainer = $container->getLocator()->fileManager()->queryContainer();
-            return new FileManagerGuiToFileManagerQueryContainerBridge($queryContainer);
+            return new FileManagerGuiToFileManagerQueryContainerBridge(
+                $container->getLocator()->fileManager()->queryContainer()
+            );
         };
 
         return $container;
@@ -71,8 +73,9 @@ class FileManagerGuiDependencyProvider extends AbstractBundleDependencyProvider
     protected function addLocaleFacade(Container $container)
     {
         $container[static::FACADE_LOCALE] = function (Container $container) {
-            $localeFacade = $container->getLocator()->locale()->facade();
-            return new FileManagerGuiToLocaleFacadeBridge($localeFacade);
+            return new FileManagerGuiToLocaleFacadeBridge(
+                $container->getLocator()->locale()->facade()
+            );
         };
 
         return $container;

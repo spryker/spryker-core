@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\FileManager\Business;
 
+use Generated\Shared\Transfer\FileDirectoryTransfer;
+use Generated\Shared\Transfer\FileDirectoryTreeTransfer;
 use Generated\Shared\Transfer\FileManagerSaveRequestTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -20,9 +23,19 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
      *
      * {@inheritdoc}
      */
-    public function save(FileManagerSaveRequestTransfer $fileManagerSaveRequestTransfer)
+    public function saveFile(FileManagerSaveRequestTransfer $fileManagerSaveRequestTransfer)
     {
         return $this->getFactory()->createFileSaver()->save($fileManagerSaveRequestTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * {@inheritdoc}
+     */
+    public function saveDirectory(FileDirectoryTransfer $fileDirectoryTransfer)
+    {
+        return $this->getFactory()->createFileDirectorySaver()->save($fileDirectoryTransfer);
     }
 
     /**
@@ -40,7 +53,7 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
      *
      * {@inheritdoc}
      */
-    public function delete($idFile)
+    public function deleteFile($idFile)
     {
         return $this->getFactory()->createFileRemover()->delete($idFile);
     }
@@ -60,7 +73,7 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
      *
      * {@inheritdoc}
      */
-    public function rollback($idFile, $idFileInfo)
+    public function rollbackFile($idFile, $idFileInfo)
     {
         $this->getFactory()->createFileRollback()->rollback($idFile, $idFileInfo);
     }
@@ -70,8 +83,46 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
      *
      * {@inheritdoc}
      */
-    public function read($idFileInfo)
+    public function readFile($idFileInfo)
     {
         return $this->getFactory()->createFileReader()->read($idFileInfo);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     */
+    public function findFileDirectoryTree(LocaleTransfer $localeTransfer = null)
+    {
+        return $this->getFactory()
+            ->createFileDirectoryTreeReader()
+            ->findFileDirectoryTree($localeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     */
+    public function updateFileDirectoryTreeHierarchy(FileDirectoryTreeTransfer $fileDirectoryTreeTransfer)
+    {
+        $this->getFactory()
+            ->createFileDirectoryTreeHierarchyUpdater()
+            ->updateFileDirectoryTreeHierarchy($fileDirectoryTreeTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idFileDirectory
+     *
+     * @return void
+     */
+    public function deleteFileDirectory($idFileDirectory)
+    {
+        $this->getFactory()
+            ->createFileDirectoryRemover()
+            ->delete($idFileDirectory);
     }
 }

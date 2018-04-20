@@ -17,18 +17,33 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 class FileTable extends AbstractTable
 {
     const REQUEST_ID_FILE = 'id-file';
+    const VIEW_TITLE = 'View';
+    const EDIT_TITLE = 'Edit';
+    const DELETE_TITLE = 'Delete';
 
     /**
-     * @var \Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerBridgeInterface
+     * @var \Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerInterface
      */
     protected $queryContainer;
 
     /**
-     * @param \Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerBridgeInterface $queryContainer
+     * @var int
      */
-    public function __construct(FileManagerGuiToFileManagerQueryContainerInterface $queryContainer)
-    {
+    protected $fileDirectoryId;
+
+    /**
+     * @param \Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerInterface $queryContainer
+     * @param int|null $fileDirectoryId
+     */
+    public function __construct(
+        FileManagerGuiToFileManagerQueryContainerInterface $queryContainer,
+        $fileDirectoryId = null
+    ) {
         $this->queryContainer = $queryContainer;
+
+        if ($fileDirectoryId) {
+            $this->fileDirectoryId = $fileDirectoryId;
+        }
     }
 
     /**
@@ -55,6 +70,11 @@ class FileTable extends AbstractTable
     protected function prepareData(TableConfiguration $config)
     {
         $query = $this->queryContainer->queryFiles()->orderByIdFile(Criteria::DESC);
+
+        if ($this->fileDirectoryId) {
+            $query->filterByFkFileDirectory($this->fileDirectoryId);
+        }
+
         $queryResults = $this->runQuery($query, $config);
 
         $results = [];
@@ -156,19 +176,19 @@ class FileTable extends AbstractTable
             Url::generate(FileManagerGuiConstants::FILE_MANAGER_GUI_VIEW_URL, [
                 static::REQUEST_ID_FILE => $item[FileManagerGuiConstants::COL_ID_FILE],
             ]),
-            'View'
+            static::VIEW_TITLE
         );
         $buttons[] = $this->generateEditButton(
             Url::generate(FileManagerGuiConstants::FILE_MANAGER_GUI_EDIT_URL, [
                 static::REQUEST_ID_FILE => $item[FileManagerGuiConstants::COL_ID_FILE],
             ]),
-            'Edit'
+            static::EDIT_TITLE
         );
         $buttons[] = $this->generateRemoveButton(
             Url::generate(FileManagerGuiConstants::FILE_MANAGER_GUI_DELETE_URL, [
                 static::REQUEST_ID_FILE => $item[FileManagerGuiConstants::COL_ID_FILE],
             ]),
-            'Delete'
+            static::DELETE_TITLE
         );
 
         return $buttons;

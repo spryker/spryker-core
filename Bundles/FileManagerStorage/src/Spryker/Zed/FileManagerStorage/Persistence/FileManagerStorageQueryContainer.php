@@ -52,7 +52,7 @@ class FileManagerStorageQueryContainer extends AbstractQueryContainer implements
      *
      * @return \Orm\Zed\FileManagerStorage\Persistence\SpyFileStorageQuery
      */
-    public function queryFileStorageEntitiesByIds($fileStorageIds)
+    public function queryFileStorageByIds($fileStorageIds)
     {
         $query = $this->getFactory()->createFileStorageQuery();
         $query->filterByFkFile_In($fileStorageIds);

@@ -12,6 +12,8 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
@@ -123,5 +125,23 @@ class StockForm extends AbstractType
         ]);
 
         return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormView $view
+     * @param \Symfony\Component\Form\FormInterface $form
+     * @param array $options
+     *
+     * @return void
+     */
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        $stockProduct = $form->getViewData();
+        $stockType = $stockProduct[static::FIELD_TYPE];
+
+        $mapping = $this->getFactory()->getStockFacade()->getWarehouseToStoreMapping();
+        if (isset($mapping[$stockType])) {
+            $view->vars['available_in_stores'] = $mapping[$stockType];
+        }
     }
 }

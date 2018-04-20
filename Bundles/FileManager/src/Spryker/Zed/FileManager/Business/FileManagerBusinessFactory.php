@@ -8,13 +8,18 @@
 namespace Spryker\Zed\FileManager\Business;
 
 use Spryker\Zed\FileManager\Business\Model\FileContent;
-use Spryker\Zed\FileManager\Business\Model\FileFinder;
+use Spryker\Zed\FileManager\Business\Model\FileDirectoryLocalizedAttributesSaver;
+use Spryker\Zed\FileManager\Business\Model\FileDirectoryRemover;
+use Spryker\Zed\FileManager\Business\Model\FileDirectorySaver;
+use Spryker\Zed\FileManager\Business\Model\FileLoader;
 use Spryker\Zed\FileManager\Business\Model\FileLocalizedAttributesSaver;
 use Spryker\Zed\FileManager\Business\Model\FileReader;
 use Spryker\Zed\FileManager\Business\Model\FileRemover;
 use Spryker\Zed\FileManager\Business\Model\FileRollback;
 use Spryker\Zed\FileManager\Business\Model\FileSaver;
 use Spryker\Zed\FileManager\Business\Model\FileVersion;
+use Spryker\Zed\FileManager\Business\Tree\FileDirectoryTreeHierarchyUpdater;
+use Spryker\Zed\FileManager\Business\Tree\FileDirectoryTreeReader;
 use Spryker\Zed\FileManager\FileManagerDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -32,10 +37,22 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
         return new FileSaver(
             $this->getQueryContainer(),
             $this->createFileVersion(),
-            $this->createFileFinder(),
+            $this->createFileLoader(),
             $this->createFileContent(),
-            $this->createFileLocalizedAttributesSaver(),
+            $this->createLocalizedAttributesSaver(),
             $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\FileManager\Business\Model\FileDirectorySaverInterface
+     */
+    public function createFileDirectorySaver()
+    {
+        return new FileDirectorySaver(
+            $this->getQueryContainer(),
+            $this->createFileLoader(),
+            $this->createFileDirectoryLocalizedAttributesSaver()
         );
     }
 
@@ -45,7 +62,7 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
     public function createFileRollback()
     {
         return new FileRollback(
-            $this->createFileFinder(),
+            $this->createFileLoader(),
             $this->createFileVersion()
         );
     }
@@ -56,18 +73,39 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
     public function createFileRemover()
     {
         return new FileRemover(
-            $this->createFileFinder(),
+            $this->createFileLoader(),
             $this->createFileContent(),
             $this->getQueryContainer()
         );
     }
 
     /**
+     * @return \Spryker\Zed\FileManager\Business\Model\FileDirectoryRemoverInterface
+     */
+    public function createFileDirectoryRemover()
+    {
+        return new FileDirectoryRemover(
+            $this->getQueryContainer(),
+            $this->createFileLoader(),
+            $this->getFileSystemService(),
+            $this->getConfig()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\FileManager\Business\Model\FileLocalizedAttributesSaverInterface
      */
-    public function createFileLocalizedAttributesSaver()
+    public function createLocalizedAttributesSaver()
     {
         return new FileLocalizedAttributesSaver();
+    }
+
+    /**
+     * @return \Spryker\Zed\FileManager\Business\Model\FileDirectoryLocalizedAttributesSaverInterface
+     */
+    public function createFileDirectoryLocalizedAttributesSaver()
+    {
+        return new FileDirectoryLocalizedAttributesSaver();
     }
 
     /**
@@ -76,7 +114,7 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
     public function createFileReader()
     {
         return new FileReader(
-            $this->createFileFinder(),
+            $this->createFileLoader(),
             $this->createFileContent()
         );
     }
@@ -86,16 +124,17 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
      */
     public function createFileVersion()
     {
-        return new FileVersion($this->createFileFinder());
+        return new FileVersion($this->createFileLoader());
     }
 
     /**
-     * @return \Spryker\Zed\FileManager\Business\Model\FileFinderInterface
+     * @return \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface
      */
-    public function createFileFinder()
+    public function createFileLoader()
     {
-        return new FileFinder(
-            $this->getQueryContainer()
+        return new FileLoader(
+            $this->getQueryContainer(),
+            $this->getConfig()
         );
     }
 
@@ -116,5 +155,21 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
     public function getFileSystemService()
     {
         return $this->getProvidedDependency(FileManagerDependencyProvider::SERVICE_FILE_SYSTEM);
+    }
+
+    /**
+     * @return \Spryker\Zed\FileManager\Business\Tree\FileDirectoryTreeReaderInterface
+     */
+    public function createFileDirectoryTreeReader()
+    {
+        return new FileDirectoryTreeReader($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\FileManager\Business\Tree\FileDirectoryTreeHierarchyUpdaterInterface
+     */
+    public function createFileDirectoryTreeHierarchyUpdater()
+    {
+        return new FileDirectoryTreeHierarchyUpdater($this->getQueryContainer());
     }
 }

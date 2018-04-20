@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\FileManager\Business;
 
+use Generated\Shared\Transfer\FileDirectoryTransfer;
+use Generated\Shared\Transfer\FileDirectoryTreeTransfer;
 use Generated\Shared\Transfer\FileManagerSaveRequestTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 
 /**
  * @method \Spryker\Zed\FileManager\Business\FileManagerBusinessFactory getFactory()
@@ -18,6 +21,7 @@ interface FileManagerFacadeInterface
      * Specification:
      * - Saves file info
      * - Uploads file content
+     * - Creates a new file version
      *
      * @api
      *
@@ -25,27 +29,24 @@ interface FileManagerFacadeInterface
      *
      * @return int
      */
-    public function save(FileManagerSaveRequestTransfer $saveRequestTransfer);
+    public function saveFile(FileManagerSaveRequestTransfer $saveRequestTransfer);
 
     /**
      * Specification:
-     * - Finds a latest file version
-     * - Returns a file meta info and a latest content
+     * - Saves file directory info
      *
      * @api
      *
-     * @param int $idFile
+     * @param \Generated\Shared\Transfer\FileDirectoryTransfer $fileDirectoryTransfer
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
-     *
-     * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
+     * @return int
      */
-    public function readLatestFileVersion($idFile);
+    public function saveDirectory(FileDirectoryTransfer $fileDirectoryTransfer);
 
     /**
      * Specification:
      * - Deletes all file info
-     * - Deletes all file versions
+     * - Deletes all file versions and content
      *
      * @api
      *
@@ -53,7 +54,7 @@ interface FileManagerFacadeInterface
      *
      * @return bool
      */
-    public function delete($idFile);
+    public function deleteFile($idFile);
 
     /**
      * Specification:
@@ -69,6 +70,18 @@ interface FileManagerFacadeInterface
 
     /**
      * Specification:
+     * - Deletes only file info version with a given id
+     *
+     * @api
+     *
+     * @param int $idFileDirectory
+     *
+     * @return bool
+     */
+    public function deleteFileDirectory($idFileDirectory);
+
+    /**
+     * Specification:
      * - Creates a new file info version based on a given file info id
      *
      * @api
@@ -78,7 +91,7 @@ interface FileManagerFacadeInterface
      *
      * @return void
      */
-    public function rollback($idFile, $idFileInfo);
+    public function rollbackFile($idFile, $idFileInfo);
 
     /**
      * Specification:
@@ -89,10 +102,33 @@ interface FileManagerFacadeInterface
      *
      * @param int $idFileInfo
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
+     */
+    public function readFile($idFileInfo);
+
+    /**
+     * Specification:
+     * - Finds a file info
+     * - Returns a file meta info and a file content with a specified version
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
      */
-    public function read($idFileInfo);
+    public function findFileDirectoryTree(LocaleTransfer $localeTransfer = null);
+
+    /**
+     * Specification:
+     * - Finds a file info
+     * - Returns a file meta info and a file content with a specified version
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FileDirectoryTreeTransfer $fileDirectoryTreeTransfer
+     *
+     * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
+     */
+    public function updateFileDirectoryTreeHierarchy(FileDirectoryTreeTransfer $fileDirectoryTreeTransfer);
 }

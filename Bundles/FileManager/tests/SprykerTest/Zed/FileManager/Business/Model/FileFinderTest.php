@@ -12,9 +12,19 @@ use Orm\Zed\FileManager\Persistence\SpyFile;
 use Orm\Zed\FileManager\Persistence\SpyFileInfo;
 use Orm\Zed\FileManager\Persistence\SpyFileInfoQuery;
 use Orm\Zed\FileManager\Persistence\SpyFileQuery;
-use Spryker\Zed\FileManager\Business\Model\FileFinder;
+use Spryker\Zed\FileManager\Business\Model\FileLoader;
 use Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface;
 
+/**
+ * Auto-generated group annotations
+ * @group SprykerTest
+ * @group Zed
+ * @group FileManager
+ * @group Business
+ * @group Model
+ * @group FileFinderTest
+ * Add your own group annotations below this line
+ */
 class FileFinderTest extends Unit
 {
     /**
@@ -59,7 +69,7 @@ class FileFinderTest extends Unit
     protected function getMockedFileInfo()
     {
         $fileInfo = new SpyFileInfo();
-        $fileInfo->setFileExtension('txt');
+        $fileInfo->setExtension('txt');
         $fileInfo->setVersionName('v. 1');
         $fileInfo->setSize(1024);
         $fileInfo->setStorageFileName('report.txt');
@@ -83,7 +93,7 @@ class FileFinderTest extends Unit
             ->method('queryFileById')
             ->willReturn($spyFileQueryMock);
 
-        $fileFinder = new FileFinder($queryContainerMock);
+        $fileFinder = new FileLoader($queryContainerMock);
         $file = $fileFinder->getFile(1);
         $this->assertEquals('test.txt', $file->getFileName());
         $this->assertEquals(1, $file->getIdFile());
@@ -105,9 +115,9 @@ class FileFinderTest extends Unit
             ->method('queryFileInfoByFkFile')
             ->willReturn($spyFileInfoQueryMock);
 
-        $fileFinder = new FileFinder($queryContainerMock);
+        $fileFinder = new FileLoader($queryContainerMock);
         $fileInfo = $fileFinder->getLatestFileInfoByFkFile(1);
-        $this->assertEquals('txt', $fileInfo->getFileExtension());
+        $this->assertEquals('txt', $fileInfo->getExtension());
         $this->assertEquals('v. 1', $fileInfo->getVersionName());
         $this->assertEquals(1024, $fileInfo->getSize());
         $this->assertEquals('report.txt', $fileInfo->getStorageFileName());
@@ -129,9 +139,9 @@ class FileFinderTest extends Unit
             ->method('queryFileInfo')
             ->willReturn($spyFileInfoQueryMock);
 
-        $fileFinder = new FileFinder($queryContainerMock);
+        $fileFinder = new FileLoader($queryContainerMock);
         $fileInfo = $fileFinder->getFileInfo(1);
-        $this->assertEquals('txt', $fileInfo->getFileExtension());
+        $this->assertEquals('txt', $fileInfo->getExtension());
         $this->assertEquals('v. 1', $fileInfo->getVersionName());
         $this->assertEquals(1024, $fileInfo->getSize());
         $this->assertEquals('report.txt', $fileInfo->getStorageFileName());

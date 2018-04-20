@@ -1,0 +1,55 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'File Directories' %}
+{% block section_title 'Overview of File Tree' %}
+
+{% block action %}
+    <a id="delete-directory-link" class="btn btn-sm btn-outline safe-submit btn-remove"
+       href="{{ url('file-manager-gui/delete-directory') }}">
+        <i class="fa fa-trash"></i> {{ 'Delete Directory' | trans }}
+    </a>
+
+    {{ createActionButton('/file-manager-gui/add-directory', 'Create File Directory' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-lg-6">
+            <div id="file-directory-tree">
+                <ul>
+                    <li id="file-directory-tree-node-0"
+                        class="jstree-open"
+                        data-jstree='{"type":"navigation"}'
+                    >
+                        File Directories Tree
+                        {% include '@FileManagerGui/DirectoriesTree/_partials/nodes.twig' with {nodes: fileDirectoryTree.nodes} %}
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <input type="button" id="file-directory-tree-save-btn" class="btn btn-primary pull-left m-r-sm" value="{{ 'Save order' | trans }}" disabled="disabled" />
+                {% include '@FileManagerGui/_partials/progressbar.twig' with {
+                idProgressbar: 'file-directory-tree-update-loader',
+                fileDirectoryProgressbarClass: 'progress-inline'
+                } %}
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div id="file-directory-files-list">
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/assets/css/spryker-zed-file-directory.css" />
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-file-directory.js"></script>
+{% endblock %}

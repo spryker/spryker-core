@@ -4,7 +4,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/availability": "^5.0.1",
+    "spryker/availability": "^5.0.1 || ^6.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/locale": "^3.0.0",
     "spryker/price": "^5.0.0",
@@ -13,7 +13,8 @@
     "spryker/product-image": "^3.3.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/sales": "^6.0.0 || ^7.0.0 || ^8.0.0",
-    "spryker/stock": "^4.0.0"
+    "spryker/stock": "^4.0.0 || ^5.0.0",
+    "spryker/store": "^1.5.0"
   },
   "require-dev": {
     "spryker/calculation": "*",

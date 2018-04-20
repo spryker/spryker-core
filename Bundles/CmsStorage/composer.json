@@ -21,7 +21,7 @@
     "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0",
     "spryker/propel-orm": "If you want to use transaction functionality, minimum required version: 1.3.0",
     "spryker/url": "If you want to use Url plugins, minimum required version: 3.3.0",
-    "spryker/url-storage": "If you want to use UrlStorage plugins, minimum required version: 0.1.0"
+    "spryker/url-storage": "If you want to use UrlStorage plugins, minimum required version: 0.2.0"
   },
   "autoload": {
     "psr-4": {

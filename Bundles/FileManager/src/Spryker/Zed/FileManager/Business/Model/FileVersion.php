@@ -9,20 +9,20 @@ namespace Spryker\Zed\FileManager\Business\Model;
 
 class FileVersion implements FileVersionInterface
 {
-    const DEFAULT_VERSION_NUMBER = 1;
+    const INITIAL_VERSION_NUMBER = 1;
     const VERSION_FORMAT = 'v.%d';
 
     /**
-     * @var \Spryker\Zed\FileManager\Business\Model\FileFinderInterface
+     * @var \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface
      */
-    private $fileFinder;
+    protected $fileLoader;
 
     /**
-     * @param \Spryker\Zed\FileManager\Business\Model\FileFinderInterface $fileFinder
+     * @param \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface $fileLoader
      */
-    public function __construct(FileFinderInterface $fileFinder)
+    public function __construct(FileLoaderInterface $fileLoader)
     {
-        $this->fileFinder = $fileFinder;
+        $this->fileLoader = $fileLoader;
     }
 
     /**
@@ -30,15 +30,15 @@ class FileVersion implements FileVersionInterface
      *
      * @return int
      */
-    public function getNewVersionNumber($idFile = null)
+    public function getNextVersionNumber($idFile = null)
     {
         if ($idFile === null) {
-            return static::DEFAULT_VERSION_NUMBER;
+            return static::INITIAL_VERSION_NUMBER;
         }
-        $fileInfo = $this->fileFinder->getLatestFileInfoByFkFile($idFile);
+        $fileInfo = $this->fileLoader->getLatestFileInfoByFkFile($idFile);
 
         if ($fileInfo === null) {
-            return static::DEFAULT_VERSION_NUMBER;
+            return static::INITIAL_VERSION_NUMBER;
         }
 
         return $fileInfo->getVersion() + 1;
@@ -49,7 +49,7 @@ class FileVersion implements FileVersionInterface
      *
      * @return string
      */
-    public function getNewVersionName($versionNumber)
+    public function getNextVersionName($versionNumber)
     {
         return sprintf(static::VERSION_FORMAT, $versionNumber);
     }

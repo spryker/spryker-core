@@ -11,9 +11,19 @@ use Codeception\Test\Unit;
 use Orm\Zed\FileManager\Persistence\SpyFile;
 use Orm\Zed\FileManager\Persistence\SpyFileInfo;
 use Spryker\Zed\FileManager\Business\Model\FileContentInterface;
-use Spryker\Zed\FileManager\Business\Model\FileFinderInterface;
+use Spryker\Zed\FileManager\Business\Model\FileLoaderInterface;
 use Spryker\Zed\FileManager\Business\Model\FileReader;
 
+/**
+ * Auto-generated group annotations
+ * @group SprykerTest
+ * @group Zed
+ * @group FileManager
+ * @group Business
+ * @group Model
+ * @group FileReaderTest
+ * Add your own group annotations below this line
+ */
 class FileReaderTest extends Unit
 {
     /**
@@ -25,11 +35,11 @@ class FileReaderTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\FileManager\Business\Model\FileFinderInterface
+     * @return \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface
      */
     protected function createFileFinderMock()
     {
-        return $this->getMockBuilder(FileFinderInterface::class)->getMock();
+        return $this->getMockBuilder(FileLoaderInterface::class)->getMock();
     }
 
     /**
@@ -50,7 +60,7 @@ class FileReaderTest extends Unit
     protected function getMockedFileInfo()
     {
         $fileInfo = new SpyFileInfo();
-        $fileInfo->setFileExtension('txt');
+        $fileInfo->setExtension('txt');
         $fileInfo->setVersionName('v. 1');
         $fileInfo->setVersion(1);
         $fileInfo->setSize(1024);
@@ -62,6 +72,8 @@ class FileReaderTest extends Unit
 
     /**
      * @param \Generated\Shared\Transfer\FileManagerReadResponseTransfer $fileInfo
+     *
+     * @return void
      */
     protected function assertFileInfo($fileInfo)
     {
@@ -70,7 +82,7 @@ class FileReaderTest extends Unit
         $this->assertEquals('v. 1', $fileInfo->getFileInfo()->getVersionName());
         $this->assertEquals(1024, $fileInfo->getFileInfo()->getSize());
         $this->assertEquals(1, $fileInfo->getFileInfo()->getVersion());
-        $this->assertEquals('txt', $fileInfo->getFileInfo()->getFileExtension());
+        $this->assertEquals('txt', $fileInfo->getFileInfo()->getExtension());
         $this->assertEquals('report.txt', $fileInfo->getFileInfo()->getStorageFileName());
     }
 

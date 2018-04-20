@@ -1,0 +1,39 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Add a file' | trans %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
+
+{% block action %}
+    {{ backActionButton('/file-manager-gui/directories-tree', 'Back to File Tree' | trans) }}
+{% endblock %}
+
+{% block content %}
+    <div id="spy-file" class="glossary">
+        {% embed '@Gui/Partials/widget.twig' %}
+
+            {% block widget_content %}
+
+                {{ form_start(form) }}
+
+                {{ form_row(form.fileName) }}
+                {{ form_row(form.fileContent) }}
+                {{ form_row(form.useRealName) }}
+
+                {% embed '@FileManagerGui/_partials/localized-attributes.twig' with {
+                    currentLocale: currentLocale,
+                    localizedAttributes: form.localizedAttributes
+                } %}
+                {% endembed %}
+
+                <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
+
+                {{ form_end(form) }}
+
+            {% endblock %}
+
+        {% endembed %}
+
+    </div>
+{% endblock %}

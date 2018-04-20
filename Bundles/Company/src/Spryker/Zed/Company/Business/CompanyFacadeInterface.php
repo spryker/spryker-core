@@ -7,10 +7,23 @@
 
 namespace Spryker\Zed\Company\Business;
 
+use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 
 interface CompanyFacadeInterface
 {
+    /**
+     * Specification:
+     *  - Retrieve a company by CompanyTransfer::idCompany in the transfer
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyTransfer
+     */
+    public function getCompanyById(CompanyTransfer $companyTransfer): CompanyTransfer;
+
     /**
      * Specification:
      * - Creates a company
@@ -19,9 +32,9 @@ interface CompanyFacadeInterface
      *
      * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyTransfer
+     * @return \Generated\Shared\Transfer\CompanyResponseTransfer
      */
-    public function create(CompanyTransfer $companyTransfer): CompanyTransfer;
+    public function create(CompanyTransfer $companyTransfer): CompanyResponseTransfer;
 
     /**
      * Specification:
@@ -33,9 +46,9 @@ interface CompanyFacadeInterface
      *
      * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\CompanyResponseTransfer
      */
-    public function update(CompanyTransfer $companyTransfer): void;
+    public function update(CompanyTransfer $companyTransfer): CompanyResponseTransfer;
 
     /**
      * Specification:

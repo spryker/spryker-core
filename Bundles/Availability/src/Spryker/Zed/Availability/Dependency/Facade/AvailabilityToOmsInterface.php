@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Availability\Dependency\Facade;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 interface AvailabilityToOmsInterface
 {
     /**
@@ -21,8 +23,9 @@ interface AvailabilityToOmsInterface
 
     /**
      * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return int
      */
-    public function getOmsReservedProductQuantityForSku($sku);
+    public function getOmsReservedProductQuantityForSku($sku, StoreTransfer $storeTransfer);
 }

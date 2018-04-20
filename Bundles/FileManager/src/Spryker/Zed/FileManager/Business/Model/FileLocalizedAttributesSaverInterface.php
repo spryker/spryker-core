@@ -13,12 +13,12 @@ use Orm\Zed\FileManager\Persistence\SpyFile;
 interface FileLocalizedAttributesSaverInterface
 {
     /**
-     * @param \Orm\Zed\FileManager\Persistence\SpyFile                  $file
+     * @param \Orm\Zed\FileManager\Persistence\SpyFile $fileEntity
      * @param \Generated\Shared\Transfer\FileManagerSaveRequestTransfer $fileManagerSaveRequestTransfer
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
-    public function saveFileLocalizedAttributes(SpyFile $file, FileManagerSaveRequestTransfer $fileManagerSaveRequestTransfer);
+    public function saveLocalizedFileAttributes(SpyFile $fileEntity, FileManagerSaveRequestTransfer $fileManagerSaveRequestTransfer);
 }

@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\FileManagerGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\FileDirectoryTransfer;
+use Generated\Shared\Transfer\FileDirectoryTreeTransfer;
 use Generated\Shared\Transfer\FileManagerSaveRequestTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 
 class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileManagerFacadeInterface
 {
@@ -29,23 +32,19 @@ class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileMan
      *
      * @return int
      */
-    public function save(FileManagerSaveRequestTransfer $saveRequestTransfer)
+    public function saveFile(FileManagerSaveRequestTransfer $saveRequestTransfer)
     {
-        return $this->fileManagerFacade->save($saveRequestTransfer);
+        return $this->fileManagerFacade->saveFile($saveRequestTransfer);
     }
 
     /**
-     * @api
+     * @param \Generated\Shared\Transfer\FileDirectoryTransfer $fileDirectoryTransfer
      *
-     * @param int $idFile
-     *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
-     *
-     * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
+     * @return int
      */
-    public function readLatestFileVersion($idFile)
+    public function saveDirectory(FileDirectoryTransfer $fileDirectoryTransfer)
     {
-        return $this->fileManagerFacade->readLatestFileVersion($idFile);
+        return $this->fileManagerFacade->saveDirectory($fileDirectoryTransfer);
     }
 
     /**
@@ -55,9 +54,9 @@ class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileMan
      *
      * @return bool
      */
-    public function delete($idFile)
+    public function deleteFile($idFile)
     {
-        return $this->fileManagerFacade->delete($idFile);
+        return $this->fileManagerFacade->deleteFile($idFile);
     }
 
     /**
@@ -75,14 +74,26 @@ class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileMan
     /**
      * @api
      *
+     * @param int $idFileDirectory
+     *
+     * @return bool
+     */
+    public function deleteFileDirectory($idFileDirectory)
+    {
+        return $this->fileManagerFacade->deleteFileDirectory($idFileDirectory);
+    }
+
+    /**
+     * @api
+     *
      * @param int $idFile
      * @param int $idFileInfo
      *
      * @return void
      */
-    public function rollback($idFile, $idFileInfo)
+    public function rollbackFile($idFile, $idFileInfo)
     {
-        $this->fileManagerFacade->rollback($idFile, $idFileInfo);
+        $this->fileManagerFacade->rollbackFile($idFile, $idFileInfo);
     }
 
     /**
@@ -90,13 +101,34 @@ class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileMan
      *
      * @param int $idFileInfo
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
+     */
+    public function readFile($idFileInfo)
+    {
+        return $this->fileManagerFacade->readFile($idFileInfo);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
      */
-    public function read($idFileInfo)
+    public function findFileDirectoryTree(LocaleTransfer $localeTransfer = null)
     {
-        return $this->fileManagerFacade->read($idFileInfo);
+        return $this->fileManagerFacade->findFileDirectoryTree($localeTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FileDirectoryTreeTransfer $fileDirectoryTreeTransfer
+     *
+     * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
+     */
+    public function updateFileDirectoryTreeHierarchy(FileDirectoryTreeTransfer $fileDirectoryTreeTransfer)
+    {
+        return $this->fileManagerFacade->updateFileDirectoryTreeHierarchy($fileDirectoryTreeTransfer);
     }
 }

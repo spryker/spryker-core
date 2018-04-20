@@ -1,6 +1,6 @@
-{% for localizedAttributes in form.fileLocalizedAttributes %}
+{% for localizedAttribute in localizedAttributes %}
 
-    {% set localeName = localizedAttributes.vars.value.locale.localeName %}
+    {% set localeName = localizedAttribute.vars.value.locale.localeName %}
     {% set collapsed = (currentLocale != localeName) %}
 
     {% embed '@Gui/Partials/localized-ibox.twig' with {
@@ -8,7 +8,7 @@
         collapsed: collapsed
     } %}
         {% block content %}
-            {{ form_widget(localizedAttributes) }}
+            {{ form_widget(localizedAttribute) }}
         {% endblock %}
     {% endembed %}
 {% endfor %}

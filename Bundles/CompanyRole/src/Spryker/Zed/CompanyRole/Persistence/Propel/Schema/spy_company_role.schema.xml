@@ -5,11 +5,52 @@
         <column name="id_company_role" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="name" type="VARCHAR" size="255" required="true"/>
         <column name="is_default" type="BOOLEAN" required="true" defaultValue="false"/>
-    <id-method-parameter value="spy_company_role_pk_seq"/></table>
+        <column name="fk_company" type="INTEGER" required="true"/>
 
-    <table name="spy_company_role_permission" idMethod="native" allowPkInsert="true" phpName="SpyCompanyRolePermission">
-        <column name="id_company_role_permission" type="INTEGER" autoIncrement="true" required="true" primaryKey="true"/>
+        <foreign-key name="spy_company_role-fk_company" foreignTable="spy_company" phpName="Company" refPhpName="CompanyRole">
+            <reference local="fk_company" foreign="id_company"/>
+        </foreign-key>
+
+        <id-method-parameter value="spy_company_role_pk_seq"/>
+    </table>
+
+    <table name="spy_company_role_to_permission" idMethod="native" allowPkInsert="true" isCrossRef="true" phpName="SpyCompanyRoleToPermission">
+        <column name="id_company_role_to_permission" type="INTEGER" autoIncrement="true" required="true" primaryKey="true"/>
+        <column name="fk_company_role" type="INTEGER" required="true" primaryKey="true"/>
+        <column name="fk_permission" type="INTEGER" required="true" primaryKey="true"/>
         <column name="configuration" type="LONGVARCHAR" required="true"/>
-    <id-method-parameter value="spy_company_role_permission_pk_seq"/></table>
+
+        <foreign-key name="spy_company_role_to_permission-fk_permission" foreignTable="spy_permission" phpName="Permission" onDelete="CASCADE">
+            <reference local="fk_permission" foreign="id_permission"/>
+        </foreign-key>
+
+        <foreign-key name="spy_company_role_to_permission-fk_company_role" foreignTable="spy_company_role" phpName="CompanyRole" onDelete="CASCADE">
+            <reference local="fk_company_role" foreign="id_company_role"/>
+        </foreign-key>
+
+        <id-method-parameter value="spy_company_role_to_permission_pk_seq"/>
+    </table>
+
+    <table name="spy_company_role_to_company_user" idMethod="native" allowPkInsert="true" phpName="SpyCompanyRoleToCompanyUser" isCrossRef="true">
+        <column name="id_company_role_to_company_user" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_company_role" required="true" type="INTEGER" />
+        <column name="fk_company_user" required="true" type="INTEGER"/>
+
+        <behavior name="timestampable"/>
+
+        <foreign-key name="spy_company_role_to_company_user-fk_company_role" foreignTable="spy_company_role" phpName="CompanyRole" onDelete="CASCADE">
+            <reference local="fk_company_role" foreign="id_company_role"/>
+        </foreign-key>
+        <foreign-key name="spy_company_role_to_company_user-fk_company_user" foreignTable="spy_company_user" phpName="CompanyUser" onDelete="CASCADE">
+            <reference local="fk_company_user" foreign="id_company_user"/>
+        </foreign-key>
+
+        <unique name="fk_company_role-fk_company_user">
+            <unique-column name="fk_company_role"/>
+            <unique-column name="fk_company_user"/>
+        </unique>
+
+        <id-method-parameter value="spy_company_role_to_company_user_pk_seq"/>
+    </table>
 
 </database>

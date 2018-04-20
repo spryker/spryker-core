@@ -11,12 +11,21 @@ namespace SprykerTest\Zed\FileManager\Business\Model;
 use Codeception\Test\Unit;
 use Orm\Zed\FileManager\Persistence\SpyFile;
 use Orm\Zed\FileManager\Persistence\SpyFileInfo;
-use Spryker\Zed\FileManager\Business\Model\FileFinderInterface;
+use Spryker\Zed\FileManager\Business\Model\FileLoaderInterface;
 use Spryker\Zed\FileManager\Business\Model\FileVersion;
 
-class FileVersionTest  extends Unit
+/**
+ * Auto-generated group annotations
+ * @group SprykerTest
+ * @group Zed
+ * @group FileManager
+ * @group Business
+ * @group Model
+ * @group FileVersionTest
+ * Add your own group annotations below this line
+ */
+class FileVersionTest extends Unit
 {
-
     /**
      * @return \Orm\Zed\FileManager\Persistence\SpyFile
      */
@@ -30,11 +39,11 @@ class FileVersionTest  extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\FileManager\Business\Model\FileFinderInterface
+     * @return \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface
      */
     protected function createFileFinderMock()
     {
-        return $this->getMockBuilder(FileFinderInterface::class)->getMock();
+        return $this->getMockBuilder(FileLoaderInterface::class)->getMock();
     }
 
     /**
@@ -43,7 +52,7 @@ class FileVersionTest  extends Unit
     protected function getMockedFileInfo()
     {
         $fileInfo = new SpyFileInfo();
-        $fileInfo->setFileExtension('txt');
+        $fileInfo->setExtension('txt');
         $fileInfo->setVersionName('v. 1');
         $fileInfo->setVersion(1);
         $fileInfo->setSize(1024);
@@ -66,7 +75,7 @@ class FileVersionTest  extends Unit
 
         $fileVersion = new FileVersion($fileFinderMock);
 
-        $this->assertEquals(2, $fileVersion->getNewVersionNumber(1));
+        $this->assertEquals(2, $fileVersion->getNextVersionNumber(1));
     }
 
     /**
@@ -77,7 +86,6 @@ class FileVersionTest  extends Unit
         $fileFinderMock = $this->createFileFinderMock();
         $fileVersion = new FileVersion($fileFinderMock);
 
-        $this->assertEquals('v. 2', $fileVersion->getNewVersionName(2));
+        $this->assertEquals('v. 2', $fileVersion->getNextVersionName(2));
     }
-
 }

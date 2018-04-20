@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Service\FileManager\Business;
+namespace SprykerTest\Zed\FileManager\Business;
 
 use Codeception\Configuration;
 use Codeception\Test\Unit;
@@ -18,24 +18,34 @@ use Propel\Runtime\Propel;
 use Spryker\Service\FileSystem\FileSystemDependencyProvider;
 use Spryker\Service\FileSystem\FileSystemService;
 use Spryker\Service\FileSystem\FileSystemServiceFactory;
+use Spryker\Service\Flysystem\FlysystemDependencyProvider;
 use Spryker\Service\Flysystem\FlysystemService;
 use Spryker\Service\Flysystem\FlysystemServiceFactory;
 use Spryker\Service\Flysystem\Plugin\FileSystem\FileSystemReaderPlugin;
 use Spryker\Service\Flysystem\Plugin\FileSystem\FileSystemStreamPlugin;
 use Spryker\Service\Flysystem\Plugin\FileSystem\FileSystemWriterPlugin;
+use Spryker\Service\FlysystemLocalFileSystem\Plugin\Flysystem\LocalFilesystemBuilderPlugin;
+use Spryker\Service\Kernel\Container as ServiceContainer;
 use Spryker\Zed\FileManager\Business\FileManagerBusinessFactory;
 use Spryker\Zed\FileManager\Business\FileManagerFacade;
-use Spryker\Zed\FileManager\Dependency\Service\FileManagerToFileSystemBridge;
+use Spryker\Zed\FileManager\Dependency\Service\FileManagerToFileSystemServiceBridge;
 use Spryker\Zed\FileManager\FileManagerDependencyProvider;
-use Spryker\Service\Kernel\Container as ServiceContainer;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Service\Flysystem\FlysystemDependencyProvider;
-use Spryker\Service\FlysystemLocalFileSystem\Plugin\Flysystem\LocalFilesystemBuilderPlugin;
 use SprykerTest\Zed\FileManager\Stub\FileManagerConfigStub;
 use SprykerTest\Zed\FileManager\Stub\FileSystemConfigStub;
 use SprykerTest\Zed\FileManager\Stub\FlysystemConfigStub;
 
-class FileManagerServiceTest extends Unit
+/**
+ * Auto-generated group annotations
+ * @group SprykerTest
+ * @group Zed
+ * @group FileManager
+ * @group Business
+ * @group Facade
+ * @group FileManagerFacadeTest
+ * Add your own group annotations below this line
+ */
+class FileManagerFacadeTest extends Unit
 {
     const PATH_DOCUMENT = 'documents/';
     const FILE_CONTENT = 'Spryker is awesome';
@@ -74,7 +84,7 @@ class FileManagerServiceTest extends Unit
         $container = new Container();
 
         $container[FileManagerDependencyProvider::SERVICE_FILE_SYSTEM] = function (Container $container) use ($fileSystemService) {
-            return new FileManagerToFileSystemBridge($fileSystemService);
+            return new FileManagerToFileSystemServiceBridge($fileSystemService);
         };
 
         $config = new FileManagerConfigStub();
@@ -116,7 +126,7 @@ class FileManagerServiceTest extends Unit
         $fileInfo->setVersion(1);
         $fileInfo->setVersionName('v. 1');
         $fileInfo->setStorageFileName('customer_v1.txt');
-        $fileInfo->setFileExtension('txt');
+        $fileInfo->setExtension('txt');
         $fileInfo->setCreatedAt('2017-06-06 00:00:00');
         $fileInfo->setUpdatedAt('2017-06-06 00:00:00');
         $fileInfo->save();
@@ -128,7 +138,7 @@ class FileManagerServiceTest extends Unit
         $fileInfo->setVersion(2);
         $fileInfo->setVersionName('v. 2');
         $fileInfo->setStorageFileName('customer_v2.txt');
-        $fileInfo->setFileExtension('txt');
+        $fileInfo->setExtension('txt');
         $fileInfo->setCreatedAt('2017-07-07 00:00:00');
         $fileInfo->setUpdatedAt('2017-07-07 00:00:00');
         $fileInfo->save();
@@ -207,30 +217,14 @@ class FileManagerServiceTest extends Unit
     /**
      * @return void
      */
-    public function testReadLatestFileVersion()
-    {
-        $fileTransfer = $this->facade->readLatestFileVersion(1);
-        $this->assertEquals('second version of the file', $fileTransfer->getContent());
-        $this->assertEquals('customer.txt', $fileTransfer->getFile()->getFileName());
-        $this->assertEquals(1, $fileTransfer->getFile()->getIdFile());
-        $this->assertEquals('customer_v2.txt', $fileTransfer->getFileInfo()->getStorageFileName());
-        $this->assertEquals('txt', $fileTransfer->getFileInfo()->getFileExtension());
-        $this->assertEquals('2', $fileTransfer->getFileInfo()->getVersion());
-        $this->assertEquals('v. 2', $fileTransfer->getFileInfo()->getVersionName());
-        $this->assertEquals(10, $fileTransfer->getFileInfo()->getSize());
-    }
-
-    /**
-     * @return void
-     */
     public function testRead()
     {
-        $fileTransfer = $this->facade->read(1);
+        $fileTransfer = $this->facade->readFile(1);
         $this->assertEquals('first version of the file', $fileTransfer->getContent());
         $this->assertEquals('customer.txt', $fileTransfer->getFile()->getFileName());
         $this->assertEquals(1, $fileTransfer->getFile()->getIdFile());
         $this->assertEquals('customer_v1.txt', $fileTransfer->getFileInfo()->getStorageFileName());
-        $this->assertEquals('txt', $fileTransfer->getFileInfo()->getFileExtension());
+        $this->assertEquals('txt', $fileTransfer->getFileInfo()->getExtension());
         $this->assertEquals('1', $fileTransfer->getFileInfo()->getVersion());
         $this->assertEquals('v. 1', $fileTransfer->getFileInfo()->getVersionName());
         $this->assertEquals(10, $fileTransfer->getFileInfo()->getSize());
@@ -241,7 +235,7 @@ class FileManagerServiceTest extends Unit
      */
     public function testDelete()
     {
-        $this->assertTrue($this->facade->delete(1));
+        $this->assertTrue($this->facade->deleteFile(1));
     }
 
     /**
@@ -263,7 +257,7 @@ class FileManagerServiceTest extends Unit
         $fileInfo->setSize(17);
         $fileInfo->setStorageFileName('new_customer.txt');
         $fileInfo->setType('text');
-        $fileInfo->setFileExtension('txt');
+        $fileInfo->setExtension('txt');
 
         $file = new FileTransfer();
         $file->setFileContent('new customer file');
@@ -274,7 +268,7 @@ class FileManagerServiceTest extends Unit
         $fileManagerSaveRequestTransfer->setFile($file);
         $fileManagerSaveRequestTransfer->setFileInfo($fileInfo);
 
-        $savedFileId = $this->facade->save($fileManagerSaveRequestTransfer);
+        $savedFileId = $this->facade->saveFile($fileManagerSaveRequestTransfer);
         $this->assertEquals(2, $savedFileId);
     }
 
@@ -283,16 +277,15 @@ class FileManagerServiceTest extends Unit
      */
     public function testRollback()
     {
-        $this->facade->rollback(1, 1);
+        $this->facade->rollbackFile(1, 1);
         $fileTransfer = $this->facade->readLatestFileVersion(1);
         $this->assertEquals('first version of the file', $fileTransfer->getContent());
         $this->assertEquals('customer.txt', $fileTransfer->getFile()->getFileName());
         $this->assertEquals(1, $fileTransfer->getFile()->getIdFile());
         $this->assertEquals('customer_v1.txt', $fileTransfer->getFileInfo()->getStorageFileName());
-        $this->assertEquals('txt', $fileTransfer->getFileInfo()->getFileExtension());
+        $this->assertEquals('txt', $fileTransfer->getFileInfo()->getExtension());
         $this->assertEquals('3', $fileTransfer->getFileInfo()->getVersion());
         $this->assertEquals('v. 3', $fileTransfer->getFileInfo()->getVersionName());
         $this->assertEquals(10, $fileTransfer->getFileInfo()->getSize());
     }
-
 }

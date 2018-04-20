@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\FileManager;
 
-use Spryker\Zed\FileManager\Dependency\Service\FileManagerToFileSystemBridge;
+use Spryker\Zed\FileManager\Dependency\Service\FileManagerToFileSystemServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -35,8 +35,9 @@ class FileManagerDependencyProvider extends AbstractBundleDependencyProvider
     protected function addFileSystemService(Container $container)
     {
         $container[static::SERVICE_FILE_SYSTEM] = function (Container $container) {
-            $fileSystemService = $container->getLocator()->fileSystem()->service();
-            return new FileManagerToFileSystemBridge($fileSystemService);
+            return new FileManagerToFileSystemServiceBridge(
+                $container->getLocator()->fileSystem()->service()
+            );
         };
 
         return $container;

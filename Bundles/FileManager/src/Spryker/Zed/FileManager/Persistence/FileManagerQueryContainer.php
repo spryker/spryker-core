@@ -18,11 +18,7 @@ class FileManagerQueryContainer extends AbstractQueryContainer implements FileMa
     /**
      * @api
      *
-     * @param int $idFile
-     *
-     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
-     *
-     * @return \Orm\Zed\FileManager\Persistence\SpyFileQuery
+     * {@inheritdoc}
      */
     public function queryFileWithFileInfoById($idFile)
     {
@@ -36,11 +32,7 @@ class FileManagerQueryContainer extends AbstractQueryContainer implements FileMa
     /**
      * @api
      *
-     * @param int $idFile
-     *
-     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
-     *
-     * @return \Orm\Zed\FileManager\Persistence\SpyFileQuery
+     * {@inheritdoc}
      */
     public function queryFileById($idFile)
     {
@@ -53,13 +45,9 @@ class FileManagerQueryContainer extends AbstractQueryContainer implements FileMa
     /**
      * @api
      *
-     * @param int|null $idFile
-     *
-     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
-     *
-     * @return \Orm\Zed\FileManager\Persistence\SpyFileInfoQuery
+     * {@inheritdoc}
      */
-    public function queryFileInfoByFkFile($idFile = null)
+    public function queryFileInfoByIdFile($idFile = null)
     {
         $query = $this->getFactory()->createFileInfoQuery();
         $query->orderByVersion(Criteria::DESC)
@@ -71,11 +59,7 @@ class FileManagerQueryContainer extends AbstractQueryContainer implements FileMa
     /**
      * @api
      *
-     * @param int $idFileInfo
-     *
-     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
-     *
-     * @return \Orm\Zed\FileManager\Persistence\SpyFileInfoQuery
+     * {@inheritdoc}
      */
     public function queryFileInfo($idFileInfo)
     {
@@ -88,12 +72,86 @@ class FileManagerQueryContainer extends AbstractQueryContainer implements FileMa
     /**
      * @api
      *
-     * @return \Orm\Zed\FileManager\Persistence\SpyFileQuery
+     * {@inheritdoc}
      */
     public function queryFiles()
     {
         $query = $this->getFactory()->createFileQuery();
 
         return $query;
+    }
+
+    /**
+     * @api
+     *
+     * {@inheritdoc}
+     */
+    public function queryFileDirectoryById($idFileDirectory)
+    {
+        return $this->getFactory()
+            ->createFileDirectoryQuery()
+            ->filterByIdFileDirectory($idFileDirectory);
+    }
+
+    /**
+     * @api
+     *
+     * {@inheritdoc}
+     */
+    public function queryFileDirectoryNodeById($idFileDirectory)
+    {
+        return $this->getFactory()
+            ->createFileDirectoryQuery()
+            ->filterByIdFileDirectory($idFileDirectory);
+    }
+
+    /**
+     * @api
+     *
+     * {@inheritdoc}
+     */
+    public function queryFileDirectoryLocalizedAttributesById($idFileDirectoryNodeLocalizedAttributes)
+    {
+        return $this->getFactory()
+            ->createFileDirectoryLocalizedAttributesQuery()
+            ->filterByIdFileDirectoryLocalizedAttributes($idFileDirectoryNodeLocalizedAttributes);
+    }
+
+    /**
+     * @api
+     *
+     * {@inheritdoc}
+     */
+    public function queryRootFileDirectories()
+    {
+        return $this->getFactory()
+            ->createFileDirectoryQuery()
+            ->filterByFkParentFileDirectory(null, Criteria::ISNULL)
+            ->orderByPosition(Criteria::ASC)
+            ->orderByIdFileDirectory(Criteria::ASC);
+    }
+
+    /**
+     * @api
+     *
+     * {@inheritdoc}
+     */
+    public function queryFileDirectoriesByFkParentFileDirectory($fkParentFileDirectoryNode)
+    {
+        return $this->getFactory()
+            ->createFileDirectoryQuery()
+            ->filterByFkParentFileDirectory($fkParentFileDirectoryNode)
+            ->orderByPosition(Criteria::ASC)
+            ->orderByIdFileDirectory(Criteria::ASC);
+    }
+
+    /**
+     * @api
+     *
+     * {@inheritdoc}
+     */
+    public function queryFileDirectory()
+    {
+        return $this->getFactory()->createFileDirectoryQuery();
     }
 }

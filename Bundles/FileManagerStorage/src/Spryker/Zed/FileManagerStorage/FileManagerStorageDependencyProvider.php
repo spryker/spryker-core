@@ -27,10 +27,20 @@ class FileManagerStorageDependencyProvider extends AbstractBundleDependencyProvi
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addEventBehaviorFacade($container);
         $container = $this->addLocaleFacade($container);
+        $container = $this->addStore($container);
 
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStore(Container $container)
+    {
         $container[static::STORE] = function (Container $container) {
             return Store::getInstance();
         };
@@ -46,8 +56,9 @@ class FileManagerStorageDependencyProvider extends AbstractBundleDependencyProvi
     protected function addLocaleFacade(Container $container)
     {
         $container[static::FACADE_LOCALE] = function (Container $container) {
-            $localeFacade = $container->getLocator()->locale()->facade();
-            return new FileManagerStorageToLocaleFacadeBridge($localeFacade);
+            return new FileManagerStorageToLocaleFacadeBridge(
+                $container->getLocator()->locale()->facade()
+            );
         };
 
         return $container;
@@ -61,8 +72,9 @@ class FileManagerStorageDependencyProvider extends AbstractBundleDependencyProvi
     protected function addEventBehaviorFacade(Container $container)
     {
         $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
-            $eventBehaviourFacade = $container->getLocator()->eventBehavior()->facade();
-            return new FileManagerStorageToEventBehaviorFacadeBridge($eventBehaviourFacade);
+            return new FileManagerStorageToEventBehaviorFacadeBridge(
+                $container->getLocator()->eventBehavior()->facade()
+            );
         };
 
         return $container;

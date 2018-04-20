@@ -11,6 +11,8 @@ use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Required;
 
@@ -82,6 +84,24 @@ class StockSubForm extends AbstractType
         ]);
 
         return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormView $view
+     * @param \Symfony\Component\Form\FormInterface $form
+     * @param array $options
+     *
+     * @return void
+     */
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        /** @var \Generated\Shared\Transfer\StockProductTransfer $stockProductTransfer */
+        $stockProductTransfer = $form->getViewData();
+
+        $mapping = $this->getFactory()->getStockFacade()->getWarehouseToStoreMapping();
+        if (isset($mapping[$stockProductTransfer->getStockType()])) {
+            $view->vars['available_in_stores'] = $mapping[$stockProductTransfer->getStockType()];
+        }
     }
 
     /**

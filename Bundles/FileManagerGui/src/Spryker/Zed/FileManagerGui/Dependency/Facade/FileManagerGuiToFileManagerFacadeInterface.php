@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\FileManagerGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\FileDirectoryTransfer;
+use Generated\Shared\Transfer\FileDirectoryTreeTransfer;
 use Generated\Shared\Transfer\FileManagerSaveRequestTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 
 interface FileManagerGuiToFileManagerFacadeInterface
 {
@@ -16,18 +19,14 @@ interface FileManagerGuiToFileManagerFacadeInterface
      *
      * @return int
      */
-    public function save(FileManagerSaveRequestTransfer $saveRequestTransfer);
+    public function saveFile(FileManagerSaveRequestTransfer $saveRequestTransfer);
 
     /**
-     * @api
+     * @param \Generated\Shared\Transfer\FileDirectoryTransfer $fileDirectoryTransfer
      *
-     * @param int $idFile
-     *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
-     *
-     * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
+     * @return int
      */
-    public function readLatestFileVersion($idFile);
+    public function saveDirectory(FileDirectoryTransfer $fileDirectoryTransfer);
 
     /**
      * @api
@@ -36,7 +35,7 @@ interface FileManagerGuiToFileManagerFacadeInterface
      *
      * @return bool
      */
-    public function delete($idFile);
+    public function deleteFile($idFile);
 
     /**
      * @api
@@ -50,22 +49,60 @@ interface FileManagerGuiToFileManagerFacadeInterface
     /**
      * @api
      *
+     * @param int $idFileDirectory
+     *
+     * @return bool
+     */
+    public function deleteFileDirectory($idFileDirectory);
+
+    /**
+     * @api
+     *
      * @param int $idFile
      * @param int $idFileInfo
      *
      * @return void
      */
-    public function rollback($idFile, $idFileInfo);
+    public function rollbackFile($idFile, $idFileInfo);
 
     /**
      * @api
      *
      * @param int $idFileInfo
      *
+     * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
+     */
+    public function readFile($idFileInfo);
+
+    /**
+     * Specification:
+     * - Finds a file info
+     * - Returns a file meta info and a file content with a specified version
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
+     *
      * @throws \Propel\Runtime\Exception\PropelException
      * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
      *
      * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
      */
-    public function read($idFileInfo);
+    public function findFileDirectoryTree(LocaleTransfer $localeTransfer = null);
+
+    /**
+     * Specification:
+     * - Finds a file info
+     * - Returns a file meta info and a file content with a specified version
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FileDirectoryTreeTransfer $fileDirectoryTreeTransfer
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     *
+     * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
+     */
+    public function updateFileDirectoryTreeHierarchy(FileDirectoryTreeTransfer $fileDirectoryTreeTransfer);
 }

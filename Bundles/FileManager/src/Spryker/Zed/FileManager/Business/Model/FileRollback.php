@@ -19,20 +19,18 @@ class FileRollback implements FileRollbackInterface
     protected $fileVersion;
 
     /**
-     * @var \Spryker\Zed\FileManager\Business\Model\FileFinderInterface
+     * @var \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface
      */
-    protected $fileFinder;
+    protected $fileLoader;
 
     /**
-     * FileSaver constructor.
-     *
-     * @param \Spryker\Zed\FileManager\Business\Model\FileFinderInterface  $fileFinder
+     * @param \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface $fileLoader
      * @param \Spryker\Zed\FileManager\Business\Model\FileVersionInterface $fileVersion
      */
-    public function __construct(FileFinderInterface $fileFinder, FileVersionInterface $fileVersion)
+    public function __construct(FileLoaderInterface $fileLoader, FileVersionInterface $fileVersion)
     {
         $this->fileVersion = $fileVersion;
-        $this->fileFinder = $fileFinder;
+        $this->fileLoader = $fileLoader;
     }
 
     /**
@@ -45,7 +43,7 @@ class FileRollback implements FileRollbackInterface
     {
         $file = $this->getFile($idFile);
         $targetFileInfo = $this->getFileInfo($idFileInfo);
-        $file->addSpyFileInfo($this->createNewFileInfo($targetFileInfo));
+        $file->addSpyFileInfo($this->createFileInfo($targetFileInfo));
     }
 
     /**
@@ -53,7 +51,7 @@ class FileRollback implements FileRollbackInterface
      *
      * @return \Orm\Zed\FileManager\Persistence\SpyFileInfo
      */
-    protected function createNewFileInfo(SpyFileInfo $targetFileInfo)
+    protected function createFileInfo(SpyFileInfo $targetFileInfo)
     {
         $fileInfo = new SpyFileInfo();
         $targetFileInfoArray = $targetFileInfo->toArray();
@@ -68,15 +66,15 @@ class FileRollback implements FileRollbackInterface
 
     /**
      * @param \Orm\Zed\FileManager\Persistence\SpyFileInfo $fileInfo
-     * @param int                                          $idFile
+     * @param int $idFile
      *
      * @return void
      */
     protected function updateVersion(SpyFileInfo $fileInfo, $idFile)
     {
-        $newVersion = $this->fileVersion->getNewVersionNumber($idFile);
-        $newVersionName = $this->fileVersion->getNewVersionName($newVersion);
-        $fileInfo->setVersion($newVersion);
+        $nextVersion = $this->fileVersion->getNextVersionNumber($idFile);
+        $newVersionName = $this->fileVersion->getNextVersionName($nextVersion);
+        $fileInfo->setVersion($nextVersion);
         $fileInfo->setVersionName($newVersionName);
     }
 
@@ -89,9 +87,9 @@ class FileRollback implements FileRollbackInterface
      */
     protected function getFile($idFile)
     {
-        $file = $this->fileFinder->getFile($idFile);
+        $file = $this->fileLoader->getFile($idFile);
 
-        if ($file == null) {
+        if ($file === null) {
             throw new FileNotFoundException(sprintf('File with id %s not found', $idFile));
         }
 
@@ -107,9 +105,9 @@ class FileRollback implements FileRollbackInterface
      */
     protected function getFileInfo($idFileInfo)
     {
-        $fileInfo = $this->fileFinder->getFileInfo($idFileInfo);
+        $fileInfo = $this->fileLoader->getFileInfo($idFileInfo);
 
-        if ($fileInfo == null) {
+        if ($fileInfo === null) {
             throw new FileInfoNotFoundException(sprintf('Target file info with id %s not found', $idFileInfo));
         }
 

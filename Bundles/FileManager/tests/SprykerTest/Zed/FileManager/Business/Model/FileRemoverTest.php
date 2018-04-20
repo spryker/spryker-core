@@ -12,10 +12,20 @@ use Orm\Zed\FileManager\Persistence\SpyFile;
 use Orm\Zed\FileManager\Persistence\SpyFileInfo;
 use Propel\Runtime\Propel;
 use Spryker\Zed\FileManager\Business\Model\FileContentInterface;
-use Spryker\Zed\FileManager\Business\Model\FileFinderInterface;
+use Spryker\Zed\FileManager\Business\Model\FileLoaderInterface;
 use Spryker\Zed\FileManager\Business\Model\FileRemover;
 use Spryker\Zed\FileManager\Persistence\FileManagerQueryContainer;
 
+/**
+ * Auto-generated group annotations
+ * @group SprykerTest
+ * @group Zed
+ * @group FileManager
+ * @group Business
+ * @group Model
+ * @group FileRemoverTest
+ * Add your own group annotations below this line
+ */
 class FileRemoverTest extends Unit
 {
     /**
@@ -27,11 +37,11 @@ class FileRemoverTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\FileManager\Business\Model\FileFinderInterface
+     * @return \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface
      */
     protected function createFileFinderMock()
     {
-        return $this->getMockBuilder(FileFinderInterface::class)->getMock();
+        return $this->getMockBuilder(FileLoaderInterface::class)->getMock();
     }
 
     /**
@@ -60,7 +70,7 @@ class FileRemoverTest extends Unit
     protected function getMockedFileInfo()
     {
         $fileInfo = new SpyFileInfo();
-        $fileInfo->setFileExtension('txt');
+        $fileInfo->setExtension('txt');
         $fileInfo->setVersionName('v. 1');
         $fileInfo->setVersion(1);
         $fileInfo->setSize(1024);
@@ -129,5 +139,4 @@ class FileRemoverTest extends Unit
 
         $this->assertTrue($fileRemover->deleteFileInfo(1));
     }
-
 }

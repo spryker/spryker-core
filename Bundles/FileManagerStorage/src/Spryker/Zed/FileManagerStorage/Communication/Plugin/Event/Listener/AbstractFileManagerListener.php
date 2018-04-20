@@ -225,7 +225,7 @@ abstract class AbstractFileManagerListener extends AbstractPlugin implements Eve
     protected function findFileStorageEntities($fileIds)
     {
         return $this->getQueryContainer()
-            ->queryFileStorageEntitiesByIds($fileIds)
+            ->queryFileStorageByIds($fileIds)
             ->find()->toKeyIndex(FileManagerStorageConstants::STORAGE_COMPOSITE_KEY);
     }
 }

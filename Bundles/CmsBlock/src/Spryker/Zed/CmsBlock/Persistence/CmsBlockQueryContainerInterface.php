@@ -30,6 +30,15 @@ interface CmsBlockQueryContainerInterface
     /**
      * @api
      *
+     * @param int $idCmsBlock
+     *
+     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
+     */
+    public function queryCmsBlockByIdWithTemplateWithGlossaryWithStoreRelation($idCmsBlock);
+
+    /**
+     * @api
+     *
      * @param string $name
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
@@ -95,4 +104,32 @@ interface CmsBlockQueryContainerInterface
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMappingQuery
      */
     public function queryGlossaryKeyMappingById($idGlossaryKeyMapping);
+
+    /**
+     * @api
+     *
+     * @param int $idCmsBlock
+     * @param int[] $idStores
+     *
+     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockStoreQuery
+     */
+    public function queryCmsBlockStoreByFkCmsBlockAndFkStores($idCmsBlock, array $idStores);
+
+    /**
+     * @api
+     *
+     * @param int $idCmsBlock
+     *
+     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
+     */
+    public function queryCmsBlockWithStoreRelationByFkCmsBlock($idCmsBlock);
+
+    /**
+     * @api
+     *
+     * @param int $idCmsBlock
+     *
+     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockStoreQuery
+     */
+    public function queryCmsBlockStoreWithStoreByFkCmsBlock($idCmsBlock);
 }

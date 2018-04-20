@@ -1,0 +1,40 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Directory element details' %}
+{% block section_title 'Create Directory Element' %}
+
+{% block head_title widget_title %}
+
+{% block action %}
+    {{ backActionButton('/file-manager-gui/directories-tree', 'Back to File Directory Elements' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' %}
+
+        {% block widget_content %}
+            {{ form_start(form) }}
+
+            {{ form_row(form.name) }}
+
+            {% embed '@FileManagerGui/_partials/localized-attributes.twig' with {
+                currentLocale: currentLocale,
+                localizedAttributes: form.fileDirectoryLocalizedAttributes
+            } %}
+            {% endembed %}
+
+            <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
+
+            {{ form_end(form) }}
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}
+
+
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/assets/css/spryker-zed-file-directory.css" />
+{% endblock %}
