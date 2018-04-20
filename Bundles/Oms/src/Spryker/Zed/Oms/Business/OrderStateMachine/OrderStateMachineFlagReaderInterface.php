@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
-interface FlagReaderInterface
+interface OrderStateMachineFlagReaderInterface
 {
     /**
      * @param string $processName

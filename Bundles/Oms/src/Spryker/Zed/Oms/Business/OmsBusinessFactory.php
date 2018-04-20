@@ -12,9 +12,9 @@ use Spryker\Zed\Oms\Business\Lock\TriggerLocker;
 use Spryker\Zed\Oms\Business\Mail\MailHandler;
 use Spryker\Zed\Oms\Business\OrderStateMachine\Builder;
 use Spryker\Zed\Oms\Business\OrderStateMachine\Finder;
-use Spryker\Zed\Oms\Business\OrderStateMachine\FlagReader;
 use Spryker\Zed\Oms\Business\OrderStateMachine\LockedOrderStateMachine;
 use Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachine;
+use Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineFlagReader;
 use Spryker\Zed\Oms\Business\OrderStateMachine\PersistenceManager;
 use Spryker\Zed\Oms\Business\OrderStateMachine\Timeout;
 use Spryker\Zed\Oms\Business\Process\Event;
@@ -330,11 +330,11 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Oms\Business\OrderStateMachine\FlagReaderInterface
+     * @return \Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineFlagReaderInterface
      */
     public function createOrderStateMachineFlagReader()
     {
-        return new FlagReader(
+        return new OrderStateMachineFlagReader(
             $this->createOrderStateMachineBuilder()
         );
     }

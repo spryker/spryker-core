@@ -9,7 +9,7 @@ namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
 use Spryker\Zed\Oms\Business\Exception\StateNotFoundException;
 
-class FlagReader implements FlagReaderInterface
+class OrderStateMachineFlagReader implements OrderStateMachineFlagReaderInterface
 {
     /**
      * @var \Spryker\Zed\Oms\Business\OrderStateMachine\BuilderInterface
