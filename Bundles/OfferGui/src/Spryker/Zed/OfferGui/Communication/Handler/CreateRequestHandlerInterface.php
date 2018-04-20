@@ -16,19 +16,5 @@ interface CreateRequestHandlerInterface
      *
      * @return \Generated\Shared\Transfer\OfferTransfer
      */
-    public function removeRedundantItems(OfferTransfer $offerTransfer): OfferTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
-     *
-     * @return \Generated\Shared\Transfer\OfferTransfer
-     */
     public function addItems(OfferTransfer $offerTransfer): OfferTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
-     *
-     * @return \Generated\Shared\Transfer\OfferTransfer
-     */
-    public function updateCart(OfferTransfer $offerTransfer): OfferTransfer;
 }
