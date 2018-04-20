@@ -104,7 +104,7 @@ class IndexControllerCest
         $i->amOnPage('/customer/add?redirectUrl=' . urlencode('/customer'));
         $i->submitForm(['name' => 'customer'], $formData);
         $i->expect('I am back on the form page');
-        $i->seeCurrentUrlEquals('/customer');
+        $i->seeCurrentUrlEquals('/customer/add?redirectUrl=');
         $i->see('This value should not be blank.', '#customer');
         $i->listDataTable('/customer/index/table');
         $i->dontSeeInLastRow([2 => $email]);
