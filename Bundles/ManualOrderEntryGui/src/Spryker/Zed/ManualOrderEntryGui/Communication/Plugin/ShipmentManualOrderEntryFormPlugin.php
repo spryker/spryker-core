@@ -69,7 +69,7 @@ class ShipmentManualOrderEntryFormPlugin extends AbstractPlugin implements Manua
             $quoteTransfer->setShipment($shipmentTransfer);
 
             $expenseTransfer = $this->createShippingExpenseTransfer($shipmentMethodTransfer);
-            $quoteTransfer->addExpense($expenseTransfer);
+            $quoteTransfer->setExpenses(new \ArrayObject([$expenseTransfer]));
         }
 
         return $quoteTransfer;
