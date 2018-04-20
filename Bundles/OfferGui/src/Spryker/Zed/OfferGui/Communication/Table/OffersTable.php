@@ -326,7 +326,6 @@ class OffersTable extends AbstractTable
         return [
             static::COL_ID_OFFER,
             static::COL_CREATED_AT,
-            static::COL_EMAIL,
         ];
     }
 
