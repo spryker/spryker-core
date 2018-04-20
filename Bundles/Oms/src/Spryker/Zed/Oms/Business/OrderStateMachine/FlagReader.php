@@ -32,7 +32,7 @@ class FlagReader implements FlagReaderInterface
      *
      * @return string[]
      */
-    public function getStateFlags($processName, $stateName)
+    public function getStateFlags(string $processName, string $stateName): array
     {
         $process = $this->builder->createProcess($processName);
 

@@ -15,5 +15,5 @@ interface FlagReaderInterface
      *
      * @return string[]
      */
-    public function getStateFlags($processName, $stateName);
+    public function getStateFlags(string $processName, string $stateName): array;
 }
