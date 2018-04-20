@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Customer\Communication\Controller;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -20,7 +21,7 @@ class AddController extends AbstractController
     const MESSAGE_CUSTOMER_CREATE_SUCCESS = 'Customer was created successfully.';
     const MESSAGE_CUSTOMER_CREATE_ERROR = 'Customer was not created.';
 
-    const REDIRECT_URL_DEFAULT = '%2Fcustomer';
+    const REDIRECT_URL_DEFAULT = '/customer';
     const REDIRECT_URL_KEY = 'redirectUrl';
 
     /**
@@ -38,7 +39,9 @@ class AddController extends AbstractController
                 $dataProvider->getData(),
                 array_merge(
                     $dataProvider->getOptions(),
-                    ['action' => "/customer/add?redirectUrl=" . urlencode($baseRedirectUrl)]
+                    [
+                        'action' => Url::generate('/customer/add', [static::REDIRECT_URL_KEY => $baseRedirectUrl]),
+                    ]
                 )
             )
             ->handleRequest($request);
@@ -71,7 +74,9 @@ class AddController extends AbstractController
      */
     protected function getSuccessRedirectUrl(string $baseRedirectUrl, CustomerTransfer $customer): string
     {
-        return $baseRedirectUrl . (parse_url($baseRedirectUrl, PHP_URL_QUERY) ? '&' : '?')
-            . "customerReference={$customer->getCustomerReference()}";
+        $redirectUrl = Url::parse($baseRedirectUrl);
+        $redirectUrl->addQuery('customerReference', $customer->getCustomerReference());
+
+        return $redirectUrl->build();
     }
 }
