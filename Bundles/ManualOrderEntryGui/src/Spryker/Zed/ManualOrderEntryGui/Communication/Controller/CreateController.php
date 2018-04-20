@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Controller;
 
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -133,7 +134,7 @@ class CreateController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    protected function createOrder(QuoteTransfer $quoteTransfer)
+    protected function createOrder(QuoteTransfer $quoteTransfer): CheckoutResponseTransfer
     {
         $checkoutResponseTransfer = $this->getFactory()
             ->getCheckoutFacade()
@@ -153,7 +154,7 @@ class CreateController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
-    protected function registerCustomer(FormInterface $customerForm)
+    protected function registerCustomer(FormInterface $customerForm): CustomerResponseTransfer
     {
         $customerTransfer = $this->getCustomerTransferFromForm($customerForm);
 
@@ -169,7 +170,7 @@ class CreateController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    protected function getCustomerTransferFromForm(FormInterface $customerForm)
+    protected function getCustomerTransferFromForm(FormInterface $customerForm): CustomerTransfer
     {
         /** @var \Generated\Shared\Transfer\CustomerTransfer $customerTransfer */
         $customerTransfer = $customerForm->getData();
@@ -185,7 +186,7 @@ class CreateController extends AbstractController
      *
      * @return string
      */
-    protected function createRedirectUrlAfterUserCreation(CustomerTransfer $customerTransfer, Request $request)
+    protected function createRedirectUrlAfterUserCreation(CustomerTransfer $customerTransfer, Request $request): string
     {
         $params = $request->query->all();
         $params[CustomersListType::FIELD_CUSTOMER] = $customerTransfer->getIdCustomer();
@@ -201,14 +202,14 @@ class CreateController extends AbstractController
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return mixed|string
+     * @return string
      */
-    protected function createRedirectUrlAfterOrderCreation(SaveOrderTransfer $saveOrderTransfer, Request $request)
+    protected function createRedirectUrlAfterOrderCreation(SaveOrderTransfer $saveOrderTransfer, Request $request): string
     {
         $redirectUrl = $request->get(static::PARAM_REDIRECT_URL);
 
         if ($redirectUrl) {
-            return $redirectUrl;
+            return (string)$redirectUrl;
         }
 
         return Url::generate(

@@ -7,7 +7,6 @@
     "spryker/kernel": "^3.0.0",
     "spryker/key-builder": "^1.0.0",
     "spryker/locale": "^3.0.0",
-    "spryker/offer-extension": "^1.0.0",
     "spryker/oms": "^8.0.0",
     "spryker/product": "^5.0.0 || ^6.0.0",
     "spryker/propel-orm": "^1.0.0",

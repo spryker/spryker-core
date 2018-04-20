@@ -9,8 +9,6 @@ namespace Spryker\Zed\Availability\Business;
 
 use Spryker\Zed\Availability\AvailabilityDependencyProvider;
 use Spryker\Zed\Availability\Business\Model\AvailabilityHandler;
-use Spryker\Zed\Availability\Business\Model\Hydrator\OfferQuoteItemStockHydrator;
-use Spryker\Zed\Availability\Business\Model\Hydrator\OfferQuoteItemStockHydratorInterface;
 use Spryker\Zed\Availability\Business\Model\ProductReservationReader;
 use Spryker\Zed\Availability\Business\Model\ProductsAvailableCheckoutPreCondition;
 use Spryker\Zed\Availability\Business\Model\Sellable;
@@ -58,17 +56,6 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getStockFacade(),
             $this->getStoreFacade()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Availability\Business\Model\Hydrator\OfferQuoteItemStockHydratorInterface
-     */
-    public function createOfferQuoteItemStockHydrator(): OfferQuoteItemStockHydratorInterface
-    {
-        return new OfferQuoteItemStockHydrator(
-            $this->getStoreFacade(),
-            $this->createSellableModel()
         );
     }
 

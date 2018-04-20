@@ -5,15 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Availability\Communication\Plugin\Offer;
+namespace Spryker\Zed\AvailabilityOfferConnector\Communication\Plugin;
 
 use Generated\Shared\Transfer\OfferTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\OfferExtension\Dependency\Plugin\OfferHydratorPluginInterface;
 
 /**
- * @method \Spryker\Zed\Availability\Business\AvailabilityFacadeInterface getFacade()
- * @method \Spryker\Zed\Availability\Communication\AvailabilityCommunicationFactory getFactory()
+ * @method \Spryker\Zed\AvailabilityOfferConnector\Business\AvailabilityOfferConnectorFacadeInterface getFacade()
  */
 class OfferQuoteItemStockHydratorPlugin extends AbstractPlugin implements OfferHydratorPluginInterface
 {
