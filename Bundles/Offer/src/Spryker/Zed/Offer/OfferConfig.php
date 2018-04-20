@@ -49,6 +49,14 @@ class OfferConfig extends AbstractBundleConfig
     /**
      * @return string
      */
+    public function getConvertedStatus(): string
+    {
+        return SharedOfferConfig::STATUS_CLOSE;
+    }
+
+    /**
+     * @return string
+     */
     public function getPriceModeNet()
     {
         return static::PRICE_MODE_NET;
