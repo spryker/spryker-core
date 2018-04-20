@@ -8,7 +8,7 @@
     "spryker/currency": "^3.3.0",
     "spryker/customer": "^7.0.0",
     "spryker/gui": "^3.0.0",
-    "spryker/kernel": "^3.0.0",
+    "spryker/kernel": "^3.20.0",
     "spryker/messenger": "^3.1.0",
     "spryker/money": "^2.0.0",
     "spryker/offer": "^1.0.0",
