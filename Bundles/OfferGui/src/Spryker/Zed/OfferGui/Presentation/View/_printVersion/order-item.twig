@@ -14,6 +14,6 @@
 <td><div>{{ item.unitGrossPrice | money(true, quote.currency.code) }}</div></td>
 <td><div>{{ item.offerDiscount }}</div></td>
 <td><div>{{ item.quantity }}</div></td>
-<td><div>{{ item.offerFee | money(true, quote.currency.code) }}</div></td>
+<td><div>{{ item.offerFee | default(0) | money(true, quote.currency.code) }}</div></td>
 <td><div>{{ item.unitGrossPrice  }}</div></td>
 <td><div>{{ item.unitSubtotalAggregation | money(true, quote.currency.code) }}</div></td>
