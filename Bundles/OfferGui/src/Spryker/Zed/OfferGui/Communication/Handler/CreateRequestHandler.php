@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\OfferGui\Communication\Handler;
 
-use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\OfferTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToCartFacadeInterface;
 
 class CreateRequestHandler implements CreateRequestHandlerInterface
@@ -32,40 +32,26 @@ class CreateRequestHandler implements CreateRequestHandlerInterface
      *
      * @return \Generated\Shared\Transfer\OfferTransfer
      */
-    public function removeRedundantItems(OfferTransfer $offerTransfer): OfferTransfer
+    public function addItems(OfferTransfer $offerTransfer): OfferTransfer
     {
         $quoteTransfer = $offerTransfer->getQuote();
-
-        $itemTransfers = new ArrayObject();
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getQuantity() > 0) {
-                $itemTransfers->append($itemTransfer);
-            }
-        }
-        $quoteTransfer->setItems($itemTransfers);
+        $quoteTransfer = $this->addIncomingItemsToCart($quoteTransfer);
         $offerTransfer->setQuote($quoteTransfer);
 
         return $offerTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\OfferTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addItems(OfferTransfer $offerTransfer): OfferTransfer
+    protected function addIncomingItemsToCart(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        $quoteTransfer = $offerTransfer->getQuote();
-
-        //add items
-        $incomingItems = new ArrayObject();
         foreach ($quoteTransfer->getIncomingItems() as $itemTransfer) {
-            if ($itemTransfer->getSku()) {
-                $incomingItems->append($itemTransfer);
+            if (!$itemTransfer->getSku() || !$itemTransfer->getQuantity()) {
+                continue;
             }
-        }
-
-        foreach ($incomingItems as $itemTransfer) {
             $cartChangeTransfer = (new CartChangeTransfer())
                 ->setQuote($quoteTransfer)
                 ->addItem($itemTransfer);
@@ -74,22 +60,6 @@ class CreateRequestHandler implements CreateRequestHandlerInterface
                 ->add($cartChangeTransfer);
         }
 
-        $offerTransfer->setQuote($quoteTransfer);
-
-        return $offerTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
-     *
-     * @return \Generated\Shared\Transfer\OfferTransfer
-     */
-    public function updateCart(OfferTransfer $offerTransfer): OfferTransfer
-    {
-        $quoteTransfer = $offerTransfer->getQuote();
-        $quoteTransfer = $this->cartFacade->reloadItems($quoteTransfer);
-        $offerTransfer->setQuote($quoteTransfer);
-
-        return $offerTransfer;
+        return $quoteTransfer;
     }
 }

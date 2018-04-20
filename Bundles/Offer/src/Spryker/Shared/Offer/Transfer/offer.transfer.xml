@@ -18,7 +18,7 @@
         <property name="offerDiscount" type="int" />
         <property name="offerFee" type="int" />
         <property name="stock" type="int" />
-        <property name="saving" type="int" />
+        <property name="savingAmount" type="int" />
     </transfer>
 
     <transfer name="OfferList">
