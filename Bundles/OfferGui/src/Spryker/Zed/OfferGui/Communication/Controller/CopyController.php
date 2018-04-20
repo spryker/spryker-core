@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\OfferGui\Communication\Controller;
 
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\OfferTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
@@ -94,6 +95,11 @@ class CopyController extends AbstractController
         $offerTransfer->setIdOffer(null)
             ->setCustomerReference(null)
             ->setCustomer(new CustomerTransfer());
+
+        if ($offerTransfer->getQuote()) {
+            $offerTransfer->getQuote()->setBillingAddress(new AddressTransfer());
+            $offerTransfer->getQuote()->setShippingAddress(new AddressTransfer());
+        }
 
         return $offerTransfer;
     }
