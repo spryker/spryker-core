@@ -18,8 +18,6 @@ use Spryker\Zed\OfferExtension\Dependency\Plugin\OfferHydratorPluginInterface;
 class OfferQuoteItemStockHydratorPlugin extends AbstractPlugin implements OfferHydratorPluginInterface
 {
     /**
-     * //todo: move BL behind facade
-     *
      * {@inheritdoc}
      *
      * @api
