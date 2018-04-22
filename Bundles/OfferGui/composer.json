@@ -1,0 +1,50 @@
+{
+  "name": "spryker/offer-gui",
+  "description": "OfferGui module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1",
+    "spryker/cart": "^5.0.0",
+    "spryker/currency": "^3.3.0",
+    "spryker/customer": "^7.0.0",
+    "spryker/gui": "^3.0.0",
+    "spryker/kernel": "^3.20.0",
+    "spryker/messenger": "^3.1.0",
+    "spryker/money": "^2.0.0",
+    "spryker/offer": "^1.0.0",
+    "spryker/oms": "^8.0.0",
+    "spryker/price": "^5.2.0",
+    "spryker/session": "^3.0.0",
+    "spryker/store": "^1.1.0",
+    "spryker/symfony": "^3.0.0",
+    "spryker/util-date-time": "^1.0.0",
+    "spryker/util-encoding": "^2.0.0",
+    "spryker/util-sanitize": "^2.0.0",
+    "spryker/util-text": "^1.1.0"
+  },
+  "require-dev": {
+    "spryker/calculation": "*",
+    "spryker/code-sniffer": "*",
+    "spryker/manual-order-entry-gui": "^1.0.0",
+    "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/calculation": "Recalculates prices for offer",
+    "spryker/manual-order-entry-gui": "For order creation using offer quote transfer"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

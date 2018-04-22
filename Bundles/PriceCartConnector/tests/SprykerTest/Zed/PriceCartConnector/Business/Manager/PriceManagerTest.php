@@ -38,7 +38,7 @@ class PriceManagerTest extends Unit
         $priceProductFacadeStub->addPriceStub('123', 1000);
         $priceProductFacadeStub->addValidityStub('123', true);
 
-        $cartChangeTransfer = $this->createCartChangeTransfer();
+        $cartChangeTransfer = $this->createCartChangeTransferWithItem();
 
         $priceManager = $this->createPriceManager($priceProductFacadeStub);
 
@@ -52,6 +52,63 @@ class PriceManagerTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testSourceUnitPriceHasHighestPriority()
+    {
+        $priceProductFacadeStub = $this->createPriceProductFacadeStub();
+        $priceProductFacadeStub->addPriceStub('123', 1000);
+        $priceProductFacadeStub->addValidityStub('123', true);
+        $priceProductFacadeStub->addPriceStub('124', 2000);
+        $priceProductFacadeStub->addValidityStub('124', true);
+        $priceProductFacadeStub->addPriceStub('125', 3000);
+        $priceProductFacadeStub->addValidityStub('125', true);
+
+        $cartChangeTransfer = $this->createCartChangeTransfer();
+
+        $itemTransferWithForcedPrice = (new ItemTransfer())
+            ->setSku(123)
+            ->setId(123)
+            ->setSourceUnitGrossPrice(1001);
+
+        $itemTransferWithEmptyForcedPrice = (new ItemTransfer())
+            ->setSku(124)
+            ->setId(124);
+
+        $itemTransferWithZeroForcedPrice = (new ItemTransfer())
+            ->setSku(125)
+            ->setId(125)
+            ->setSourceUnitGrossPrice(0);
+
+        $cartChangeTransfer
+            ->addItem($itemTransferWithForcedPrice)
+            ->addItem($itemTransferWithEmptyForcedPrice)
+            ->addItem($itemTransferWithZeroForcedPrice);
+
+        $priceManager = $this->createPriceManager($priceProductFacadeStub);
+
+        $modifiedItemCollection = $priceManager->addPriceToItems($cartChangeTransfer);
+
+        $this->assertSame(3, $modifiedItemCollection->getItems()->count());
+
+        $modifiedItemIterator = $modifiedItemCollection->getItems()->getIterator();
+        $modifiedItemIterator->rewind();
+        $this->assertSame(1000, $modifiedItemIterator->current()->getOriginUnitGrossPrice());
+        $this->assertSame(1001, $modifiedItemIterator->current()->getSourceUnitGrossPrice());
+        $this->assertSame(1001, $modifiedItemIterator->current()->getUnitGrossPrice());
+
+        $modifiedItemIterator->next();
+        $this->assertSame(2000, $modifiedItemIterator->current()->getOriginUnitGrossPrice());
+        $this->assertSame(null, $modifiedItemIterator->current()->getSourceUnitGrossPrice());
+        $this->assertSame(2000, $modifiedItemIterator->current()->getUnitGrossPrice());
+
+        $modifiedItemIterator->next();
+        $this->assertSame(3000, $modifiedItemIterator->current()->getOriginUnitGrossPrice());
+        $this->assertSame(0, $modifiedItemIterator->current()->getSourceUnitGrossPrice());
+        $this->assertSame(0, $modifiedItemIterator->current()->getUnitGrossPrice());
+    }
+
+    /**
      * @expectedException \Spryker\Zed\PriceCartConnector\Business\Exception\PriceMissingException
      *
      * @return void
@@ -62,7 +119,7 @@ class PriceManagerTest extends Unit
         $priceProductFacadeStub->addPriceStub('123', 1000);
         $priceProductFacadeStub->addValidityStub('123', false);
 
-        $cartChangeTransfer = $this->createCartChangeTransfer();
+        $cartChangeTransfer = $this->createCartChangeTransferWithItem();
 
         $cartChangeTransfer->getItems()[0]->setSku('non existing');
 
@@ -115,14 +172,27 @@ class PriceManagerTest extends Unit
 
         $currencyTransfer = new CurrencyTransfer();
         $currencyTransfer->setCode('EUR');
+
         $quoteTransfer = new QuoteTransfer();
         $quoteTransfer->setCurrency($currencyTransfer);
 
         $itemCollection->setQuote($quoteTransfer);
+
+        return $itemCollection;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    protected function createCartChangeTransferWithItem()
+    {
+        $itemCollection = $this->createCartChangeTransfer();
+
         $item = new ItemTransfer();
         $item->setSku(123);
         $item->setId(123);
         $itemCollection->addItem($item);
+
         return $itemCollection;
     }
 }
