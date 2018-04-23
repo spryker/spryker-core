@@ -17,8 +17,8 @@ class OfferConfig extends AbstractBundleConfig
     public const STATUS_SENT_TO_CUSTOMER = 'Sent to customer';
     public const STATUS_CONFIRMED_BY_CUSTOMER = 'Confirmed by customer';
     public const STATUS_CLOSE = 'Close';
-  
-  /**
+    
+    /**
      * @return string
      */
     public function getStatusPending(): string
