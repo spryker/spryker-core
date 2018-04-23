@@ -11,10 +11,13 @@ use Codeception\Module;
 use Generated\Shared\DataBuilder\CompanyBuilder;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Orm\Zed\Company\Persistence\SpyCompanyQuery;
+use Spryker\Zed\Company\Business\CompanyFacadeInterface;
+use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class CompanyHelper extends Module
 {
+    use DataCleanupHelperTrait;
     use LocatorHelperTrait;
 
     /**
@@ -22,7 +25,7 @@ class CompanyHelper extends Module
      *
      * @return \Generated\Shared\Transfer\CompanyTransfer|null
      */
-    public function findCompanyById(int $idCompany)
+    public function findCompanyById(int $idCompany): ?CompanyTransfer
     {
         $entity = SpyCompanyQuery::create()
             ->filterByIdCompany($idCompany)
@@ -40,11 +43,25 @@ class CompanyHelper extends Module
      *
      * @return \Generated\Shared\Transfer\CompanyTransfer
      */
-    public function haveCompany(array $seedData = [])
+    public function haveCompany(array $seedData = []): CompanyTransfer
     {
         $companyTransfer = (new CompanyBuilder($seedData))->build();
         $companyTransfer->setIdCompany(null);
 
-        return $this->getLocator()->company()->facade()->create($companyTransfer)->getCompanyTransfer();
+        $companyTransfer = $this->getLocator()->company()->facade()->create($companyTransfer)->getCompanyTransfer();
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($companyTransfer) {
+            $this->getCompanyFacade()->delete($companyTransfer);
+        });
+
+        return $companyTransfer;
+    }
+
+    /**
+     * @return \Spryker\Zed\Company\Business\CompanyFacadeInterface
+     */
+    protected function getCompanyFacade(): CompanyFacadeInterface
+    {
+        return $this->getLocator()->company()->facade();
     }
 }

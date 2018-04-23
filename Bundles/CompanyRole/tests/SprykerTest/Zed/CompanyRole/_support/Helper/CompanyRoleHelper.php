@@ -9,9 +9,11 @@ namespace SprykerTest\Zed\CompanyRole\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\CompanyRoleBuilder;
+use Generated\Shared\DataBuilder\CompanyRoleCollectionBuilder;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Spryker\Zed\CompanyRole\Business\CompanyRoleFacadeInterface;
+use Spryker\Zed\CompanyUser\Business\CompanyUserFacadeInterface;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
@@ -28,6 +30,7 @@ class CompanyRoleHelper extends Module
     public function haveCompanyRole(array $companyRole = []): CompanyRoleTransfer
     {
         $companyRoleTransfer = (new CompanyRoleBuilder($companyRole))->build();
+
         $companyRoleTransfer = $this->getCompanyRoleFacade()
             ->create($companyRoleTransfer)
             ->getCompanyRoleTransfer();
@@ -44,10 +47,16 @@ class CompanyRoleHelper extends Module
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer
      */
-    public function assignCompanyRolesToCompanyUser(CompanyUserTransfer $companyUserTransfer)
+    public function assignCompanyRolesToCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer
     {
         $companyUserTransfer->requireCompanyRoleCollection();
+
         $this->getCompanyRoleFacade()->saveCompanyUser($companyUserTransfer);
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($companyUserTransfer) {
+            $companyUserTransfer->setCompanyRoleCollection((new CompanyRoleCollectionBuilder())->build());
+            $this->getCompanyRoleFacade()->saveCompanyUser($companyUserTransfer);
+        });
 
         return $companyUserTransfer;
     }
@@ -58,5 +67,13 @@ class CompanyRoleHelper extends Module
     protected function getCompanyRoleFacade(): CompanyRoleFacadeInterface
     {
         return $this->getLocator()->companyRole()->facade();
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyRole\Business\CompanyRoleFacadeInterface
+     */
+    protected function getCompanyUserFacade(): CompanyUserFacadeInterface
+    {
+        return $this->getLocator()->companyUser()->facade();
     }
 }

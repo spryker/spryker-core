@@ -4,7 +4,6 @@ namespace SprykerTest\Zed\CompanyUserInvitation\Business;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\DataBuilder\CompanyRoleCollectionBuilder;
-use Generated\Shared\DataBuilder\CompanyUserInvitationBuilder;
 use Generated\Shared\DataBuilder\PermissionCollectionBuilder;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
@@ -76,7 +75,7 @@ class CompanyUserInvitationFacadeWithUserPermissionTest extends Test
     {
         parent::setUp();
 
-        $this->tester->setDependency(PermissionDependencyProvider::PLUGINS_PERMISSION_STORAGE, [
+        $this->tester->addDependency(PermissionDependencyProvider::PLUGINS_PERMISSION_STORAGE, [
             new PermissionStoragePlugin(),
         ]);
 
@@ -106,6 +105,7 @@ class CompanyUserInvitationFacadeWithUserPermissionTest extends Test
             ->addRole($companyRoleTransfer);
 
         $this->companyUserTransfer->setCompanyRoleCollection($companyRoleCollectionTransfer);
+
         $this->tester->assignCompanyRolesToCompanyUser($this->companyUserTransfer);
     }
 
@@ -115,8 +115,8 @@ class CompanyUserInvitationFacadeWithUserPermissionTest extends Test
     public function testImportCompanyUserInvitationsShouldReturnNoErrorsWhenEmailsDoNotExist()
     {
         $companyUserInvitationCollection = (new CompanyUserInvitationCollectionTransfer())
-            ->addCompanyUserInvitation($this->generateCompanyUserInvitationTransfer())
-            ->addCompanyUserInvitation($this->generateCompanyUserInvitationTransfer());
+            ->addCompanyUserInvitation($this->createCompanyUserInvitationTransfer())
+            ->addCompanyUserInvitation($this->createCompanyUserInvitationTransfer());
         $companyUserInvitationImportRequestTransfer = (new CompanyUserInvitationImportRequestTransfer())
             ->setCompanyUserInvitationCollection($companyUserInvitationCollection)
             ->setIdCompanyUser($this->companyUserTransfer->getIdCompanyUser());
@@ -133,7 +133,7 @@ class CompanyUserInvitationFacadeWithUserPermissionTest extends Test
      */
     public function testImportCompanyUserInvitationsShouldReturnErrorsWhenEmailsExist()
     {
-        $companyUserInvitationTransfer = $this->generateCompanyUserInvitationTransfer();
+        $companyUserInvitationTransfer = $this->createCompanyUserInvitationTransfer();
         $this->haveCompanyUserInvitation(['email' => $companyUserInvitationTransfer->getEmail()]);
         $companyUserInvitationCollection = (new CompanyUserInvitationCollectionTransfer())
             ->addCompanyUserInvitation($companyUserInvitationTransfer);
@@ -222,7 +222,7 @@ class CompanyUserInvitationFacadeWithUserPermissionTest extends Test
     {
         $companyUserInvitationCreateRequestTransfer = (new CompanyUserInvitationCreateRequestTransfer())
             ->setIdCompanyUser($this->companyUserTransfer->getIdCompanyUser())
-            ->setCompanyUserInvitation($this->generateCompanyUserInvitationTransfer());
+            ->setCompanyUserInvitation($this->createCompanyUserInvitationTransfer());
 
         $companyUserInvitationCreateResponseTransfer = $this->getFacade()
             ->createCompanyUserInvitation($companyUserInvitationCreateRequestTransfer);
@@ -250,14 +250,14 @@ class CompanyUserInvitationFacadeWithUserPermissionTest extends Test
      *
      * @return \Generated\Shared\Transfer\CompanyUserInvitationTransfer
      */
-    protected function generateCompanyUserInvitationTransfer(array $seedData = []): CompanyUserInvitationTransfer
+    protected function createCompanyUserInvitationTransfer(array $seedData = []): CompanyUserInvitationTransfer
     {
         $seedData = $seedData + [
-                CompanyUserInvitationTransfer::FK_COMPANY_USER => $this->companyUserTransfer->getIdCompanyUser(),
-                CompanyUserInvitationTransfer::COMPANY_BUSINESS_UNIT_NAME => $this->companyBusinessUnitTransfer->getName(),
+            CompanyUserInvitationTransfer::FK_COMPANY_USER => $this->companyUserTransfer->getIdCompanyUser(),
+            CompanyUserInvitationTransfer::COMPANY_BUSINESS_UNIT_NAME => $this->companyBusinessUnitTransfer->getName(),
         ];
 
-        return (new CompanyUserInvitationBuilder($seedData))->build();
+        return $this->tester->createCompanyUserInvitationTransfer($seedData);
     }
 
     /**
