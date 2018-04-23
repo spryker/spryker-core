@@ -11,7 +11,7 @@
     "spryker/offer-extension": "^1.0.0",
     "spryker/propel": "^3.0.0",
     "spryker/propel-orm": "^1.0.0",
-    "spryker/sales": "^8.0.0",
+    "spryker/sales": "^8.10.0",
     "spryker/user": "^3.0.0",
     "spryker/util-encoding": "^2.0.1",
     "spryker/zed-request": "^3.0.0"
