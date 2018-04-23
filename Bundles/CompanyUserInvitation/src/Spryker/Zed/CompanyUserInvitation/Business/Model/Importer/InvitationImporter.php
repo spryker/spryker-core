@@ -46,6 +46,8 @@ class InvitationImporter implements InvitationImporterInterface
         }
 
         $companyUserInvitationCollection = $companyUserInvitationImportRequestTransfer->getCompanyUserInvitationCollection();
+
+        $invitationCounter = 1;
         foreach ($companyUserInvitationCollection->getCompanyUserInvitations() as $companyUserInvitationTransfer) {
             $companyUserInvitationCreateRequestTransfer = (new CompanyUserInvitationCreateRequestTransfer())
                 ->setIdCompanyUser($companyUserInvitationImportRequestTransfer->getIdCompanyUser())
@@ -54,9 +56,14 @@ class InvitationImporter implements InvitationImporterInterface
             $companyUserInvitationCreateResponseTransfer = $this->invitationWriter->create($companyUserInvitationCreateRequestTransfer);
             if (!$companyUserInvitationCreateResponseTransfer->getIsSuccess()) {
                 $companyUserInvitationImportResponseTransfer->addError(
-                    $companyUserInvitationCreateResponseTransfer->getError()
+                    sprintf(
+                        'Invitation %s : %s',
+                        $invitationCounter,
+                        $companyUserInvitationCreateResponseTransfer->getError()
+                    )
                 );
             }
+            $invitationCounter++;
         }
         $companyUserInvitationImportResponseTransfer->setIsSuccess(true);
 

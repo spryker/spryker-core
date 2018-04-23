@@ -68,7 +68,10 @@ class InvitationValidator implements InvitationValidatorInterface
      */
     public function isValidInvitation(CompanyUserInvitationTransfer $invitationTransfer): bool
     {
-        return $this->isValidBusinessUnit($invitationTransfer) && $this->isValidEmail($invitationTransfer);
+        return $this->isValidFirstName($invitationTransfer)
+            && $this->isValidLastName($invitationTransfer)
+            && $this->isValidBusinessUnit($invitationTransfer)
+            && $this->isValidEmail($invitationTransfer);
     }
 
     /**
@@ -84,14 +87,47 @@ class InvitationValidator implements InvitationValidatorInterface
      *
      * @return bool
      */
+    protected function isValidFirstName(CompanyUserInvitationTransfer $invitationTransfer): bool
+    {
+        if (!trim($invitationTransfer->getFirstName())) {
+            $this->errorMessage = sprintf('First name cannot be empty blank');
+
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $invitationTransfer
+     *
+     * @return bool
+     */
+    protected function isValidLastName(CompanyUserInvitationTransfer $invitationTransfer): bool
+    {
+        if (!trim($invitationTransfer->getLastName())) {
+            $this->errorMessage = sprintf('Last name cannot be blank');
+
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $invitationTransfer
+     *
+     * @return bool
+     */
     protected function isValidBusinessUnit(CompanyUserInvitationTransfer $invitationTransfer): bool
     {
         if (!$this->businessUnitNameCache) {
             $this->populateBusinessUnitCache($invitationTransfer);
         }
 
-        if (!in_array($invitationTransfer->getCompanyBusinessUnitName(), $this->businessUnitNameCache)) {
-            $this->errorMessage = sprintf('Business Unit %s is not valid', $invitationTransfer->getCompanyBusinessUnitName());
+        if (!trim($invitationTransfer->getCompanyBusinessUnitName())
+            || !in_array($invitationTransfer->getCompanyBusinessUnitName(), $this->businessUnitNameCache)) {
+            $this->errorMessage = sprintf('Business Unit "%s" is not valid', $invitationTransfer->getCompanyBusinessUnitName());
 
             return false;
         }
@@ -107,7 +143,13 @@ class InvitationValidator implements InvitationValidatorInterface
     protected function isValidEmail(CompanyUserInvitationTransfer $invitationTransfer): bool
     {
         if (!$this->emailCache) {
-            $this->populateEmailCache($invitationTransfer);
+            $this->populateEmailCache();
+        }
+
+        if (!filter_var($invitationTransfer->getEmail(), FILTER_VALIDATE_EMAIL)) {
+            $this->errorMessage = sprintf('Email "%s" is not valid', $invitationTransfer->getEmail());
+
+            return false;
         }
 
         if (in_array($invitationTransfer->getEmail(), $this->emailCache)) {
@@ -141,14 +183,11 @@ class InvitationValidator implements InvitationValidatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $invitationTransfer
-     *
      * @return void
      */
-    protected function populateEmailCache(CompanyUserInvitationTransfer $invitationTransfer)
+    protected function populateEmailCache()
     {
-        $companyUserInvitationCriteriaFilterTransfer = (new CompanyUserInvitationCriteriaFilterTransfer())
-            ->setFkCompanyUser($invitationTransfer->getFkCompanyUser());
+        $companyUserInvitationCriteriaFilterTransfer = (new CompanyUserInvitationCriteriaFilterTransfer());
 
         $companyUserInvitationCollection = $this->repository->getCompanyUserInvitationCollection(
             $companyUserInvitationCriteriaFilterTransfer
