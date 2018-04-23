@@ -125,6 +125,8 @@ class OfferMapper implements OfferMapperInterface
             'shipment',
             'bundle_items',
             'checkout_confirmed',
+            'offer_fee',
+            'payment',
         ];
 
         return $fieldsToPersist;

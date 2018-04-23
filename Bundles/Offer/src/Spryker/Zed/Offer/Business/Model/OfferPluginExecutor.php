@@ -57,6 +57,7 @@ class OfferPluginExecutor implements OfferPluginExecutorInterface
     {
         $offerResponseTransfer = new OfferResponseTransfer();
         $offerResponseTransfer->setOffer($offerTransfer);
+        $offerResponseTransfer->setIsSuccessful(true);
 
         foreach ($this->doUpdatePlugins as $doUpdatePlugin) {
             $offerResponseTransfer = $this->mergeOfferResponses(

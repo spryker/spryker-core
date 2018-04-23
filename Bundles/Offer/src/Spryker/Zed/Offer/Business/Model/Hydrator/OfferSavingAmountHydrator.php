@@ -7,35 +7,31 @@
 
 namespace Spryker\Zed\Offer\Business\Model\Hydrator;
 
-use ArrayObject;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OfferTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Offer\Dependency\Facade\OfferToCartFacadeInterface;
 use Spryker\Zed\Offer\Dependency\Facade\OfferToMessengerFacadeInterface;
+use Spryker\Zed\Offer\OfferConfig;
 
 class OfferSavingAmountHydrator implements OfferSavingAmountHydratorInterface
 {
-    /**
-     * @var \Spryker\Zed\Offer\Dependency\Facade\OfferToCartFacadeInterface
-     */
-    protected $cartFacade;
-
     /**
      * @var \Spryker\Zed\Offer\Dependency\Facade\OfferToMessengerFacadeInterface
      */
     protected $messengerFacade;
 
-    /**a
-     *
-     * @param \Spryker\Zed\Offer\Dependency\Facade\OfferToCartFacadeInterface $cartFacade
+    /** @var \Spryker\Zed\Offer\OfferConfig */
+    protected $offerConfig;
+
+    /**
      * @param \Spryker\Zed\Offer\Dependency\Facade\OfferToMessengerFacadeInterface $messengerFacade
+     * @param \Spryker\Zed\Offer\OfferConfig $offerConfig
      */
     public function __construct(
-        OfferToCartFacadeInterface $cartFacade,
-        OfferToMessengerFacadeInterface $messengerFacade
+        OfferToMessengerFacadeInterface $messengerFacade,
+        OfferConfig $offerConfig
     ) {
-        $this->cartFacade = $cartFacade;
         $this->messengerFacade = $messengerFacade;
+        $this->offerConfig = $offerConfig;
     }
 
     /**
@@ -47,10 +43,15 @@ class OfferSavingAmountHydrator implements OfferSavingAmountHydratorInterface
     {
         $quoteTransfer = $offerTransfer->getQuote();
 
-        $originalPriceQuoteTransfer = $this->getQuoteWithReloadedItemPrices($quoteTransfer);
-        $skuOriginalPrice = $this->getOriginalPriceBySku($originalPriceQuoteTransfer);
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $savingAmount = $this->getOriginUnitPrice($itemTransfer, $quoteTransfer->getPriceMode());
+            $savingAmount -= $this->getUnitPrice($itemTransfer, $quoteTransfer->getPriceMode());
+            $savingAmount += (int)($this->getUnitPrice($itemTransfer, $quoteTransfer->getPriceMode()) / 100 * $itemTransfer->getOfferDiscount());
+            $savingAmount -= $itemTransfer->getOfferFee();
+            $savingAmount *= $itemTransfer->getQuantity();
 
-        $this->hydrateItemsWithSavingAmount($quoteTransfer, $skuOriginalPrice);
+            $itemTransfer->setSavingAmount($savingAmount);
+        }
 
         $this->messengerFacade->getStoredMessages();
 
@@ -58,61 +59,32 @@ class OfferSavingAmountHydrator implements OfferSavingAmountHydratorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param string $priceMode
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return int
      */
-    protected function getQuoteWithReloadedItemPrices(QuoteTransfer $quoteTransfer): QuoteTransfer
+    protected function getOriginUnitPrice(ItemTransfer $itemTransfer, $priceMode)
     {
-        $originalPriceQuoteTransfer = clone $quoteTransfer;
-        $originalPriceQuoteTransfer->setItems(new ArrayObject());
-
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $originalPriceItemTransfer = clone $itemTransfer;
-            $originalPriceItemTransfer->setForcedUnitGrossPrice(false);
-
-            $originalPriceQuoteTransfer
-                ->getItems()
-                ->append($originalPriceItemTransfer);
+        if ($priceMode === $this->offerConfig->getPriceModeGross()) {
+            return $itemTransfer->getOriginUnitGrossPrice();
         }
 
-        return $this->cartFacade->reloadItems($originalPriceQuoteTransfer);
+        return $itemTransfer->getOriginUnitNetPrice();
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $originalPriceQuoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param string $priceMode
      *
-     * @return array
+     * @return int
      */
-    protected function getOriginalPriceBySku(QuoteTransfer $originalPriceQuoteTransfer): array
+    protected function getUnitPrice(ItemTransfer $itemTransfer, $priceMode)
     {
-        $skuOriginalPrice = [];
-
-        foreach ($originalPriceQuoteTransfer->getItems() as $originalPriceItemTransfer) {
-            $skuOriginalPrice[$originalPriceItemTransfer->getSku()] = $originalPriceItemTransfer->getSumGrossPrice();
+        if ($priceMode === $this->offerConfig->getPriceModeGross()) {
+            return $itemTransfer->getUnitGrossPrice();
         }
 
-        return $skuOriginalPrice;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param array $skuOriginalPrice
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected function hydrateItemsWithSavingAmount(QuoteTransfer $quoteTransfer, array $skuOriginalPrice): QuoteTransfer
-    {
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if (!isset($skuOriginalPrice[$itemTransfer->getSku()])) {
-                $itemTransfer->setSaving(0);
-                continue;
-            }
-
-            $savingAmount = $skuOriginalPrice[$itemTransfer->getSku()] - $itemTransfer->getSumSubtotalAggregation();
-            $itemTransfer->setSaving($savingAmount);
-        }
-
-        return $quoteTransfer;
+        return $itemTransfer->getUnitNetPrice();
     }
 }

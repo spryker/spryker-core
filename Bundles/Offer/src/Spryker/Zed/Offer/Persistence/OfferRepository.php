@@ -32,11 +32,7 @@ class OfferRepository extends AbstractRepository implements OfferRepositoryInter
         $offerQuery = $this->getFactory()->createPropelOfferQuery();
         $offerQuery = $this->applyFilterToQuery($offerQuery, $offerListTransfer->getFilter());
         $offerQuery->filterByCustomerReference($offerListTransfer->getCustomerReference());
-        $offerQuery->filterByStatus_In(
-            $this->getFactory()
-                ->getConfig()
-                ->getUnconvertedOfferStatuses()
-        );
+
         $offerQuery = $this->applyPagination($offerQuery, $offerListTransfer->getPagination());
 
         $offerQuery = $this->buildQueryFromCriteria($offerQuery);
@@ -73,7 +69,7 @@ class OfferRepository extends AbstractRepository implements OfferRepositoryInter
      *
      * @return \Orm\Zed\Offer\Persistence\SpyOfferQuery
      */
-    protected function applyFilterToQuery(SpyOfferQuery $spyOfferQuery, FilterTransfer $filterTransfer): SpyOfferQuery
+    protected function applyFilterToQuery(SpyOfferQuery $spyOfferQuery, ?FilterTransfer $filterTransfer): SpyOfferQuery
     {
         $criteria = new Criteria();
         if ($filterTransfer !== null) {

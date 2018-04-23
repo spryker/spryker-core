@@ -5,13 +5,20 @@
         <column name="id_offer" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
 
         <column name="quote_data" type="LONGVARCHAR" required="true"/>
-        <column name="status" type="VARCHAR" size="20"/>
+        <column name="status" type="enum" valueSet="Pending, On overview, Sent to customer, Confirmed by customer, Close" defaultValue="Pending"/>
         <column name="fk_user" type="INTEGER" required="false"/>
         <column name="customer_reference" type="VARCHAR" size="255" required="false"/>
+        <column name="contact_person" type="VARCHAR" size="255" required="false"/>
+        <column name="contact_date" type="TIMESTAMP" required="false"/>
+        <column name="note" type="LONGVARCHAR" required="false"/>
 
         <foreign-key name="spy_offer-fk_user" foreignTable="spy_user" phpName="User">
             <reference local="fk_user" foreign="id_user" />
         </foreign-key>
+
+        <index name="spy_offer-customer_reference">
+            <index-column name="customer_reference"/>
+        </index>
 
         <behavior name="timestampable"/>
 

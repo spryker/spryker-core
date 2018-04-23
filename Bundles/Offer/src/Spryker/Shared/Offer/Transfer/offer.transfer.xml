@@ -9,10 +9,16 @@
     </transfer>
 
     <transfer name="Item">
+        <property name="unitGrossPrice" type="int" />
+        <property name="unitNetPrice" type="int" />
+
+        <property name="sourceUnitGrossPrice" type="int" />
+        <property name="sourceUnitNetPrice" type="int" />
+
         <property name="offerDiscount" type="int" />
         <property name="offerFee" type="int" />
         <property name="stock" type="int" />
-        <property name="saving" type="int" />
+        <property name="savingAmount" type="int" />
     </transfer>
 
     <transfer name="OfferList">
@@ -30,6 +36,9 @@
         <property name="customerReference"  type="string" />
         <property name="customer" type="Customer" />
         <property name="createdAt" type="string" />
+        <property name="contactPerson" type="string" />
+        <property name="contactDate" type="string" />
+        <property name="note" type="string" />
     </transfer>
 
     <transfer name="ResponseMessage">

@@ -18,8 +18,10 @@ use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToMessengerFacadeBridge;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToMoneyFacadeBridge;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToOfferFacadeBridge;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToOmsFacadeBridge;
+use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToPriceFacadeBridge;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToStoreFacadeBridge;
 use Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilDateTimeServiceBridge;
+use Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilEncodingServiceBridge;
 use Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilSanitizeServiceBridge;
 
 class OfferGuiDependencyProvider extends AbstractBundleDependencyProvider
@@ -32,9 +34,11 @@ class OfferGuiDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_STORE = 'FACADE_STORE';
     public const FACADE_MESSENGER = 'FACADE_MESSENGER';
     public const FACADE_CURRENCY = 'FACADE_CURRENCY';
+    public const FACADE_PRICE = 'FACADE_PRICE';
     public const CLIENT_SESSION = 'CLIENT_SESSION';
     public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
     public const PROPEL_QUERY_OFFER = 'PROPEL_QUERY_OFFER';
 
     /**
@@ -54,10 +58,26 @@ class OfferGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCartFacade($container);
         $container = $this->addUtilDateTimeService($container);
         $container = $this->addUtilSanitize($container);
+        $container = $this->addUtilEncoding($container);
         $container = $this->addPropelQueryOffer($container);
         $container = $this->addMessengerFacade($container);
         $container = $this->addSessionClient($container);
         $container = $this->addCurrencyFacade($container);
+        $container = $this->addPriceFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPriceFacade(Container $container): Container
+    {
+        $container[static::FACADE_PRICE] = function (Container $container) {
+            return new OfferGuiToPriceFacadeBridge($container->getLocator()->price()->facade());
+        };
 
         return $container;
     }
@@ -197,6 +217,20 @@ class OfferGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::SERVICE_UTIL_SANITIZE] = function (Container $container) {
             return new OfferGuiToUtilSanitizeServiceBridge($container->getLocator()->utilSanitize()->service());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilEncoding(Container $container): Container
+    {
+        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+            return new OfferGuiToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
         };
 
         return $container;

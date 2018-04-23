@@ -149,6 +149,8 @@ class OfferFacade extends AbstractFacade implements OfferFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -159,5 +161,19 @@ class OfferFacade extends AbstractFacade implements OfferFacadeInterface
     public function expandQuoteUsingOffer(QuoteTransfer $quoteTransfer, int $idOffer): QuoteTransfer
     {
         return $this->getFactory()->createOfferQuoteExpander()->expand($quoteTransfer, $idOffer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
+     *
+     * @return \Generated\Shared\Transfer\OfferTransfer
+     */
+    public function calculateOffer(OfferTransfer $offerTransfer): OfferTransfer
+    {
+        return $this->getFactory()->createOfferCalculator()->calculate($offerTransfer);
     }
 }

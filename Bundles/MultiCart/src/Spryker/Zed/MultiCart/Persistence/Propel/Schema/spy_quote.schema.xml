@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" name="zed"
+          namespace="Orm\Zed\Quote\Persistence"
+          package="src.Orm.Zed.Quote.Persistence"
+>
+
+    <table name="spy_quote" idMethod="native" allowPkInsert="true">
+        <column name="name" required="true" type="VARCHAR" size="255"/>
+        <column name="is_default" type="BOOLEAN" default="false"/>
+
+        <unique name="spy_quote-unique-name-customer_reference">
+            <unique-column name="name"/>
+            <unique-column name="customer_reference"/>
+        </unique>
+    </table>
+
+</database>

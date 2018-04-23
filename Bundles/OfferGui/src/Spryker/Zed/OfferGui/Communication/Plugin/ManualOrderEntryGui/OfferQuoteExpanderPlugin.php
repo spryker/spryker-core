@@ -33,7 +33,9 @@ class OfferQuoteExpanderPlugin extends AbstractPlugin implements QuoteExpanderPl
             return $quoteTransfer;
         }
 
-        $quoteTransfer = $this->getFactory()->getOfferFacade()->expandQuoteUsingOffer($quoteTransfer, $idOffer);
+        $quoteTransfer = $this->getFactory()
+            ->getOfferFacade()
+            ->expandQuoteUsingOffer($quoteTransfer, $idOffer);
 
         return $quoteTransfer;
     }

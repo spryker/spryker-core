@@ -134,7 +134,7 @@ class Operation implements OperationInterface
     {
         $cartChangeTransfer->requireQuote();
 
-        $originalQuoteTransfer = (new QuoteTransfer())->fromArray($cartChangeTransfer->getQuote()->toArray(), true);
+        $originalQuoteTransfer = (new QuoteTransfer())->fromArray($cartChangeTransfer->getQuote()->modifiedToArray(), true);
 
         if (!$this->preCheckCart($cartChangeTransfer)) {
             return $cartChangeTransfer->getQuote();
@@ -163,7 +163,7 @@ class Operation implements OperationInterface
     {
         $cartChangeTransfer->requireQuote();
 
-        $originalQuoteTransfer = (new QuoteTransfer())->fromArray($cartChangeTransfer->getQuote()->toArray(), true);
+        $originalQuoteTransfer = (new QuoteTransfer())->fromArray($cartChangeTransfer->getQuote()->modifiedToArray(), true);
 
         if (!$this->executeCartRemovalPreCheckPlugins($cartChangeTransfer)) {
             return $cartChangeTransfer->getQuote();
@@ -190,7 +190,7 @@ class Operation implements OperationInterface
      */
     public function reloadItems(QuoteTransfer $quoteTransfer)
     {
-        $originalQuoteTransfer = (new QuoteTransfer())->fromArray($quoteTransfer->toArray(), true);
+        $originalQuoteTransfer = (new QuoteTransfer())->fromArray($quoteTransfer->modifiedToArray(), true);
 
         $quoteTransfer = $this->executePreReloadPlugins($quoteTransfer);
 

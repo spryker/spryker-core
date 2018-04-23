@@ -10,6 +10,7 @@ namespace Spryker\Zed\ManualOrderEntryGui\Communication\Plugin;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Summary\SummaryType;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Traits\UniqueFlashMessagesTrait;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -18,6 +19,18 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class SummaryManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOrderEntryFormPluginInterface
 {
+    use UniqueFlashMessagesTrait;
+
+    /**
+     * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToMessengerFacadeInterface
+     */
+    protected $messengerFacade;
+
+    public function __construct()
+    {
+        $this->messengerFacade = $this->getFactory()->getMessengerFacade();
+    }
+
     /**
      * @return string
      */
@@ -46,6 +59,8 @@ class SummaryManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
      */
     public function handleData(QuoteTransfer $quoteTransfer, &$form, Request $request): QuoteTransfer
     {
+        $this->uniqueFlashMessages();
+
         return $quoteTransfer;
     }
 

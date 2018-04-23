@@ -117,6 +117,9 @@ interface OfferFacadeInterface
     public function recalculateGrandTotal(CalculableObjectTransfer $calculableObjectTransfer): void;
 
     /**
+     * Specification:
+     * - Add a customer to quote based on a targeted offer customer
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -125,4 +128,20 @@ interface OfferFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function expandQuoteUsingOffer(QuoteTransfer $quoteTransfer, int $idOffer): QuoteTransfer;
+
+    /**
+     * Specification:
+     * - Removes empty vouchers
+     * - Cleans quote
+     * - Adds to quote available items
+     * - Adds to quote incoming items
+     * - Recalculates a quote
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
+     *
+     * @return \Generated\Shared\Transfer\OfferTransfer
+     */
+    public function calculateOffer(OfferTransfer $offerTransfer): OfferTransfer;
 }

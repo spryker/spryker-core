@@ -51,9 +51,7 @@ class CustomerReader implements CustomerReaderInterface
     public function getCustomerCollection(CustomerCollectionTransfer $customerCollectionTransfer): CustomerCollectionTransfer
     {
         $customerCollectionTransfer = $this->customerRepository->getCustomerCollection($customerCollectionTransfer);
-        //TODO: avoid separate address request for each customer.
         $customerCollectionTransfer = $this->hydrateCustomersWithAddresses($customerCollectionTransfer);
-        //TODO: hydrate locales(probably in persistence or at least here)
 
         return $customerCollectionTransfer;
     }

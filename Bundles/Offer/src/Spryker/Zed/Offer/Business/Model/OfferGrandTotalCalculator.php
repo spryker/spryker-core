@@ -20,7 +20,7 @@ class OfferGrandTotalCalculator implements OfferGrandTotalCalculatorInterface
     {
         $totalsTransfer = $calculableObjectTransfer->getTotals();
 
-        $offerFeeAmount = (int)$calculableObjectTransfer->getOriginalQuote()->getOfferFee();
+        $offerFeeAmount = $calculableObjectTransfer->getOriginalQuote()->getOfferFee();
 
         $grandTotal = $totalsTransfer->getGrandTotal();
         $grandTotal += $offerFeeAmount;

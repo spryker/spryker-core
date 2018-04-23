@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\OfferTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\OfferGui\Communication\Form\DataProvider\OfferDataProvider;
 use Spryker\Zed\OfferGui\Communication\Form\Offer\EditOfferType;
+use Spryker\Zed\OfferGui\Communication\Handler\CreateRequestHandler;
 use Spryker\Zed\OfferGui\Communication\Table\OffersTable;
 use Spryker\Zed\OfferGui\Communication\Table\OffersTableQueryBuilder;
 use Spryker\Zed\OfferGui\Communication\Table\OffersTableQueryBuilderInterface;
@@ -21,10 +22,13 @@ use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToCustomerFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToMessengerFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToMoneyFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToOfferFacadeInterface;
+use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToPriceFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToStoreFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilDateTimeServiceInterface;
+use Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilEncodingServiceInterface;
 use Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilSanitizeServiceInterface;
 use Spryker\Zed\OfferGui\OfferGuiDependencyProvider;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\OfferGui\OfferGuiConfig getConfig()
@@ -60,6 +64,14 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getUtilDateTimeService(): OfferGuiToUtilDateTimeServiceInterface
     {
         return $this->getProvidedDependency(OfferGuiDependencyProvider::SERVICE_UTIL_DATE_TIME);
+    }
+
+    /**
+     * @return \Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilEncodingServiceInterface
+     */
+    public function getUtilEncoding(): OfferGuiToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(OfferGuiDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 
     /**
@@ -114,12 +126,13 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
 
     /**
      * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getOfferForm(OfferTransfer $offerTransfer)
+    public function getOfferForm(OfferTransfer $offerTransfer, Request $request)
     {
-        $offerDataProvider = $this->createOfferDataProvider();
+        $offerDataProvider = $this->createOfferDataProvider($request);
 
         $form = $this->getFormFactory()->create(
             $this->getOfferType(),
@@ -139,13 +152,16 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return \Spryker\Zed\OfferGui\Communication\Form\DataProvider\OfferDataProvider
      */
-    public function createOfferDataProvider()
+    public function createOfferDataProvider(Request $request)
     {
         return new OfferDataProvider(
             $this->getCurrencyFacade(),
-            $this->getCustomerFacade()
+            $this->getCustomerFacade(),
+            $request
         );
     }
 
@@ -179,5 +195,23 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getMessengerFacade(): OfferGuiToMessengerFacadeInterface
     {
         return $this->getProvidedDependency(OfferGuiDependencyProvider::FACADE_MESSENGER);
+    }
+
+    /**
+     * @return \Spryker\Zed\OfferGui\Communication\Handler\CreateRequestHandlerInterface
+     */
+    public function createCreateRequestHandler()
+    {
+        return new CreateRequestHandler(
+            $this->getCartFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToPriceFacadeInterface
+     */
+    public function getPriceFacade(): OfferGuiToPriceFacadeInterface
+    {
+        return $this->getProvidedDependency(OfferGuiDependencyProvider::FACADE_PRICE);
     }
 }

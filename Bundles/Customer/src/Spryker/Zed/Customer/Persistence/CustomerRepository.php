@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\Formatter\ArrayFormatter;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\Propel\PropelFilterCriteria;
 
@@ -33,11 +34,8 @@ class CustomerRepository extends AbstractRepository implements CustomerRepositor
 
         $customerQuery = $this->applyFilterToQuery($customerQuery, $customerCollectionTransfer->getFilter());
         $customerQuery = $this->applyPagination($customerQuery, $customerCollectionTransfer->getPagination());
-
-        $customerQuery = $this->buildQueryFromCriteria($customerQuery);
-        $customerEntityTransfers = $customerQuery->find();
-
-        $customerCollectionTransfer = $this->hydrateCustomerListWithCustomers($customerCollectionTransfer, $customerEntityTransfers);
+        $customerQuery->setFormatter(ArrayFormatter::class);
+        $this->hydrateCustomerListWithCustomers($customerCollectionTransfer, $customerQuery->find()->getData());
 
         return $customerCollectionTransfer;
     }
@@ -96,21 +94,22 @@ class CustomerRepository extends AbstractRepository implements CustomerRepositor
 
     /**
      * @param \Generated\Shared\Transfer\CustomerCollectionTransfer $customerListTransfer
-     * @param array $customerEntityTransfers
+     * @param array $customers
      *
-     * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
+     * @return void
      */
-    public function hydrateCustomerListWithCustomers(CustomerCollectionTransfer $customerListTransfer, array $customerEntityTransfers): CustomerCollectionTransfer
+    public function hydrateCustomerListWithCustomers(CustomerCollectionTransfer $customerListTransfer, array $customers): void
     {
-        $customers = new ArrayObject();
+        $customerCollection = new ArrayObject();
 
-        foreach ($customerEntityTransfers as $customerEntityTransfer) {
-            $customerTransfer = $this->getFactory()
-                ->createCustomerMapper()
-                ->mapCustomerEntityToCustomer($customerEntityTransfer);
-            $customers->append($customerTransfer);
+        foreach ($customers as $customer) {
+            $customerCollection->append(
+                $this->getFactory()
+                    ->createCustomerMapper()
+                    ->mapCustomerEntityToCustomer($customer)
+            );
         }
 
-        return $customerListTransfer->setCustomers($customers);
+        $customerListTransfer->setCustomers($customerCollection);
     }
 }

@@ -14,26 +14,51 @@ class OfferGuiConfig extends AbstractBundleConfig
     /**
      * @uses \Spryker\Shared\Offer\OfferConfig
      */
-    public const STATUS_IN_PROGRESS = 'in_progress';
+    public const STATUS_PENDING = 'Pending';
 
     /**
-     * @uses \Spryker\Zed\Offer\OfferConfig
+     * @uses \Spryker\Shared\Offer\OfferConfig
      */
-    public const STATUS_ORDER = 'order';
+    public const STATUS_ON_OVERVIEW = 'On overview';
+
+    /**
+     * @uses \Spryker\Shared\Offer\OfferConfig
+     */
+    public const STATUS_SENT_TO_CUSTOMER = 'Sent to customer';
+
+    /**
+     * @uses \Spryker\Shared\Offer\OfferConfig
+     */
+    public const STATUS_CONFIRMED_BY_CUSTOMER = 'Confirmed by customer';
+
+    /**
+     * @uses \Spryker\Shared\Offer\OfferConfig
+     */
+    public const STATUS_CLOSE = 'Close';
+
+    /**
+     * @uses \Spryker\Shared\Price\PriceConfig::PRICE_MODE_NET
+     */
+    public const PRICE_MODE_NET = 'NET_MODE';
+
+    /**
+     * @uses \Spryker\Shared\Price\PriceConfig::PRICE_MODE_GROSS
+     */
+    public const PRICE_MODE_GROSS = 'GROSS_MODE';
 
     /**
      * @return string
      */
-    public function getStatusInProgress(): string
+    public function getPriceModeNet()
     {
-        return static::STATUS_IN_PROGRESS;
+        return static::PRICE_MODE_NET;
     }
 
     /**
      * @return string
      */
-    public function getStatusOrder(): string
+    public function getPriceModeGross()
     {
-        return static::STATUS_ORDER;
+        return static::PRICE_MODE_GROSS;
     }
 }

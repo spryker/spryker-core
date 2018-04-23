@@ -9,7 +9,6 @@
     "spryker/kernel": "^3.0.0",
     "spryker/locale": "^3.0.0",
     "spryker/mail": "^4.0.0",
-    "spryker/offer-extension": "^1.0.0",
     "spryker/propel": "^3.0.0",
     "spryker/propel-orm": "^1.5.0",
     "spryker/sequence-number": "^3.0.0",

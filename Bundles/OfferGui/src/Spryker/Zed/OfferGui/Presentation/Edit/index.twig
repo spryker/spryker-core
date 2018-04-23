@@ -1,39 +1,36 @@
-{% extends '@Gui/Layout/layout.twig' %}
+{% extends '@OfferGui/_layout/layout.twig' %}
 
-{% set widget_title = 'Edit Offer ' | trans ~ offer.idOffer %}
+{% set widget_title = 'Edit Offer: ' | trans ~ offer.idOffer %}
 
 {% block head_title widget_title %}
 {% block section_title widget_title %}
 
 {% block action %}
-    {{ backActionButton('/offer-gui/view/list', 'Back list' | trans) }}
+    {{ backActionButton('/offer-gui/view/list', 'Back to list' | trans) }}
 {% endblock %}
 
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Offer' | trans } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Edit Offer' | trans } %}
         {% block widget_content %}
 
             {{ form_start(form) }}
+            {{ form_errors(form) }}
+
+            {{ form_row(form.status) }}
 
             {{ form_row(form.storeCurrency) }}
             {{ form_row(form.customerReference) }}
+
+            <input type="submit" class="btn btn-primary safe-submit" name="submit-customer-create" value="{{ 'Create Customer' | trans }}" /> <br />
 
             {{ form_label(form.items) }}
             <table>
                 {% for item in form.items %}
                     <tr>
-                        <td>{{ form_row(item.sku) }}</td>
-                        <td>
-                            {{ form_row(item.unitGrossPrice) }}
-                            {{ form_row(item.forcedUnitGrossPrice) }}
-                        </td>
-                        <td>{{ form_row(item.offerDiscount, { 'attr': {'placeholder': '0'}}) }}</td>
-                        <td>{{ form_row(item.stock) }}</td>
-                        <td>{{ form_row(item.offerFee, { 'attr': {'placeholder': '0'}}) }}</td>
-                        <td>{{ form_row(item.quantity) }}</td>
-                        <td>{{ form_row(item.unitSubtotalAggregation) }}</td>
-                        <td>{{ form_row(item.sumSubtotalAggregation) }}</td>
+                        {% for itemField in item %}
+                            <td>{{ form_row(itemField) }}</td>
+                        {% endfor %}
                     </tr>
                 {% endfor %}
             </table>
@@ -70,8 +67,9 @@
             </table>
 
             {{ form_row(form.offerFee) }}
-            
-            {{ form_widget(form) }}
+            {{ form_row(form.contactPerson) }}
+            {{ form_row(form.contactDate) }}
+            {{ form_row(form.note) }}
 
             {% include '@OfferGui/Edit/_partials/cart-rule-discounts.twig' with {'quote': offer.quote} %}
             {% include '@OfferGui/Edit/_partials/totals.twig' with {'quote': offer.quote} %}

@@ -19,23 +19,31 @@ use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class BridgeBuilder
 {
-    const TEMPLATE_INTERFACE = 'interface';
-    const TEMPLATE_BRIDGE = 'bridge';
-    const TEMPLATE_INTERFACE_METHOD = 'interface_method';
-    const TEMPLATE_BRIDGE_METHOD = 'bridge_method';
+    protected const TEMPLATE_INTERFACE = 'interface';
+    protected const TEMPLATE_BRIDGE = 'bridge';
+    protected const TEMPLATE_INTERFACE_METHOD = 'interface_method';
+    protected const TEMPLATE_BRIDGE_METHOD = 'bridge_method';
 
-    const DEFAULT_VENDOR = 'Spryker';
-    const DEFAULT_TO_TYPE = 'Facade';
+    protected const DEFAULT_VENDOR = 'Spryker';
+    protected const DEFAULT_TO_TYPE = 'Facade';
 
-    const APPLICATION_LAYER_MAP = [
+    protected const APPLICATION_LAYER_MAP = [
         'Facade' => 'Zed',
         'QueryContainer' => 'Zed',
     ];
 
-    const MODULE_LAYER_MAP = [
+    protected const MODULE_LAYER_MAP = [
         'Facade' => 'Business',
         'QueryContainer' => 'Persistence',
     ];
+
+    protected const FUNCTION_RETURN = 'return ';
+
+    protected const NULLABLE_RETURN_TYPE_HINT = ': ?';
+    protected const NON_NULLABLE_RETURN_TYPE_HINT = ': ';
+
+    protected const TYPE_HINT = 'type_hint';
+    protected const FQCN = 'fqcn';
 
     /**
      * @var \Spryker\Zed\Development\DevelopmentConfig
@@ -59,7 +67,7 @@ class BridgeBuilder
      *
      * @return void
      */
-    public function build($bundle, $toBundle, $methods)
+    public function build($bundle, $toBundle, $methods): void
     {
         $bridgeBuilderDataTransfer = $this->getBridgeBuilderData($bundle, $toBundle, $methods);
         if (!$this->checkIfBridgeTargetExists($bridgeBuilderDataTransfer)) {
@@ -75,7 +83,7 @@ class BridgeBuilder
      *
      * @return void
      */
-    protected function createInterface(BridgeBuilderDataTransfer $bridgeBuilderDataTransfer)
+    protected function createInterface(BridgeBuilderDataTransfer $bridgeBuilderDataTransfer): void
     {
         $fileName = $bridgeBuilderDataTransfer->getModule() . 'To' . $bridgeBuilderDataTransfer->getToModule() . $bridgeBuilderDataTransfer->getToType() . 'Interface.php';
         $interfaceFilePath = $this->getPathToDependencyFiles($bridgeBuilderDataTransfer) . DIRECTORY_SEPARATOR . $fileName;
@@ -106,7 +114,7 @@ class BridgeBuilder
      *
      * @return void
      */
-    protected function createBridge(BridgeBuilderDataTransfer $bridgeBuilderDataTransfer)
+    protected function createBridge(BridgeBuilderDataTransfer $bridgeBuilderDataTransfer): void
     {
         $fileName = $bridgeBuilderDataTransfer->getModule() . 'To' . $bridgeBuilderDataTransfer->getToModule() . $bridgeBuilderDataTransfer->getToType() . 'Bridge.php';
         $bridgeFilePath = $this->getPathToDependencyFiles($bridgeBuilderDataTransfer) . DIRECTORY_SEPARATOR . $fileName;
@@ -138,7 +146,7 @@ class BridgeBuilder
     /**
      * @return string
      */
-    protected function getInterfaceTemplateContent()
+    protected function getInterfaceTemplateContent(): string
     {
         return $this->getTemplateContent(static::TEMPLATE_INTERFACE);
     }
@@ -146,7 +154,7 @@ class BridgeBuilder
     /**
      * @return string
      */
-    protected function getInterfaceMethodTemplateContent()
+    protected function getInterfaceMethodTemplateContent(): string
     {
         return $this->getTemplateContent(static::TEMPLATE_INTERFACE_METHOD);
     }
@@ -154,7 +162,7 @@ class BridgeBuilder
     /**
      * @return string
      */
-    protected function getBridgeMethodTemplateContent()
+    protected function getBridgeMethodTemplateContent(): string
     {
         return $this->getTemplateContent(static::TEMPLATE_BRIDGE_METHOD);
     }
@@ -162,7 +170,7 @@ class BridgeBuilder
     /**
      * @return string
      */
-    protected function getBridgeTemplateContent()
+    protected function getBridgeTemplateContent(): string
     {
         return $this->getTemplateContent(static::TEMPLATE_BRIDGE);
     }
@@ -172,7 +180,7 @@ class BridgeBuilder
      *
      * @return string
      */
-    protected function getTemplateContent($templateName)
+    protected function getTemplateContent(string $templateName): string
     {
         return file_get_contents(
             __DIR__ . DIRECTORY_SEPARATOR . 'Templates' . DIRECTORY_SEPARATOR . $templateName . '.tpl'
@@ -185,7 +193,7 @@ class BridgeBuilder
      *
      * @return string
      */
-    protected function replacePlaceHolder(BridgeBuilderDataTransfer $bridgeBuilderDataTransfer, $templateContent)
+    protected function replacePlaceHolder(BridgeBuilderDataTransfer $bridgeBuilderDataTransfer, string $templateContent): string
     {
         $replacements = [
             '{vendor}' => $bridgeBuilderDataTransfer->getVendor(),
@@ -218,7 +226,7 @@ class BridgeBuilder
      *
      * @return void
      */
-    protected function saveFile(BridgeBuilderDataTransfer $bridgeBuilderDataTransfer, $templateContent, $fileName)
+    protected function saveFile(BridgeBuilderDataTransfer $bridgeBuilderDataTransfer, string $templateContent, string $fileName): void
     {
         $path = $this->getPathToDependencyFiles($bridgeBuilderDataTransfer);
 
@@ -233,7 +241,7 @@ class BridgeBuilder
      *
      * @return string
      */
-    protected function getPathToDependencyFiles(BridgeBuilderDataTransfer $bridgeBuilderDataTransfer)
+    protected function getPathToDependencyFiles(BridgeBuilderDataTransfer $bridgeBuilderDataTransfer): string
     {
         $pathParts = [
             $this->resolveModulePath($bridgeBuilderDataTransfer),
@@ -255,7 +263,7 @@ class BridgeBuilder
      *
      * @return \Generated\Shared\Transfer\BridgeBuilderDataTransfer
      */
-    protected function getBridgeBuilderData($source, $target, array $methods)
+    protected function getBridgeBuilderData(string $source, string $target, array $methods): BridgeBuilderDataTransfer
     {
         list($vendor, $module, $type) = $this->interpretInputParameter($source);
         list($toVendor, $toModule, $toType) = $this->interpretInputParameter($target);
@@ -284,7 +292,7 @@ class BridgeBuilder
      *
      * @return array of [VendorName, ModuleName, Type]
      */
-    protected function interpretInputParameter($subject)
+    protected function interpretInputParameter($subject): array
     {
         if (preg_match('/^(\w+)$/', $subject, $matches)) {
             return [
@@ -321,7 +329,7 @@ class BridgeBuilder
      *
      * @return string
      */
-    protected function getApplicationLayer($type)
+    protected function getApplicationLayer($type): string
     {
         if (isset(static::APPLICATION_LAYER_MAP[$type])) {
             return static::APPLICATION_LAYER_MAP[$type];
@@ -335,7 +343,7 @@ class BridgeBuilder
      *
      * @return string
      */
-    protected function getModuleLayer($type)
+    protected function getModuleLayer($type): string
     {
         if (isset(static::MODULE_LAYER_MAP[$type])) {
             return static::MODULE_LAYER_MAP[$type];
@@ -349,7 +357,7 @@ class BridgeBuilder
      *
      * @return string
      */
-    protected function resolveModulePath(BridgeBuilderDataTransfer $bridgeBuilderDataTransfer)
+    protected function resolveModulePath(BridgeBuilderDataTransfer $bridgeBuilderDataTransfer): string
     {
         switch ($bridgeBuilderDataTransfer->getVendor()) {
             case 'Spryker':
@@ -375,7 +383,7 @@ class BridgeBuilder
      *
      * @return string
      */
-    protected function resolveTargetModulePath(BridgeBuilderDataTransfer $bridgeBuilderDataTransfer)
+    protected function resolveTargetModulePath(BridgeBuilderDataTransfer $bridgeBuilderDataTransfer): string
     {
         switch ($bridgeBuilderDataTransfer->getToVendor()) {
             case 'Spryker':
@@ -401,7 +409,7 @@ class BridgeBuilder
      *
      * @return string
      */
-    protected function normalizeNameForSplit($module)
+    protected function normalizeNameForSplit($module): string
     {
         $filterChain = new FilterChain();
         $filterChain
@@ -416,7 +424,7 @@ class BridgeBuilder
      *
      * @return bool
      */
-    protected function checkIfBridgeTargetExists(BridgeBuilderDataTransfer $bridgeBuilderDataTransfer)
+    protected function checkIfBridgeTargetExists(BridgeBuilderDataTransfer $bridgeBuilderDataTransfer): bool
     {
         return is_file($this->getBridgeTarget($bridgeBuilderDataTransfer) . '.php');
     }
@@ -426,7 +434,7 @@ class BridgeBuilder
      *
      * @return string
      */
-    protected function getBridgeTarget(BridgeBuilderDataTransfer $bridgeBuilderDataTransfer)
+    protected function getBridgeTarget(BridgeBuilderDataTransfer $bridgeBuilderDataTransfer): string
     {
         $pathParts = [
             $this->resolveTargetModulePath($bridgeBuilderDataTransfer),
@@ -447,7 +455,7 @@ class BridgeBuilder
      *
      * @return string
      */
-    protected function addMethodsToBridge(BridgeBuilderDataTransfer $bridgeBuilderDataTransfer, $templateContent)
+    protected function addMethodsToBridge(BridgeBuilderDataTransfer $bridgeBuilderDataTransfer, string $templateContent): string
     {
         $path =
             $bridgeBuilderDataTransfer->getToVendor() . '\\' .
@@ -476,7 +484,7 @@ class BridgeBuilder
      *
      * @return string
      */
-    protected function addMethodsToInterface(BridgeBuilderDataTransfer $bridgeBuilderDataTransfer, $templateContent)
+    protected function addMethodsToInterface(BridgeBuilderDataTransfer $bridgeBuilderDataTransfer, string $templateContent): string
     {
         $path =
             $bridgeBuilderDataTransfer->getToVendor() . '\\' .
@@ -507,7 +515,7 @@ class BridgeBuilder
      *
      * @return string
      */
-    protected function addMethodsToTemplate(ReflectionClass $reflectionClass, $methodNames, $methodTemplate, $templateContent)
+    protected function addMethodsToTemplate(ReflectionClass $reflectionClass, array $methodNames, string $methodTemplate, string $templateContent): string
     {
         $methods = '';
         $useStatements = [];
@@ -517,16 +525,29 @@ class BridgeBuilder
                 continue;
             }
             $method = $reflectionClass->getMethod($methodName);
-            $docComment = $this->cleanMethodDocBlock($method->getDocComment());
 
-            $useStatements = array_merge(
-                $useStatements,
-                $this->getParameterTypes($method)
-            );
+            $docComment = $this->cleanMethodDocBlock($method->getDocComment());
+            $methodReturnType = $this->getMethodReturnTypeFromDocComment($docComment);
+
+            $returnStatementReplacement = static::FUNCTION_RETURN;
+            $returnMethodTypeHint = $this->getMethodTypeHintForFunction($methodReturnType);
+
+            if ($methodReturnType === 'void') {
+                $returnStatementReplacement = '';
+            }
+
+            $useStatements = array_merge($useStatements, $this->getParameterTypes($method));
+
+            if (is_array($returnMethodTypeHint)) {
+                $useStatements = array_merge($useStatements, [$returnMethodTypeHint[static::FQCN] => true]);
+                $returnMethodTypeHint = $returnMethodTypeHint[static::TYPE_HINT];
+            }
 
             $replacements = [
                 '{docBlock}' => $docComment,
                 '{methodName}' => $methodName,
+                '{returnStatement}' => $returnStatementReplacement,
+                '{returnMethodTypeHint}' => $returnMethodTypeHint,
                 '{parameters}' => $this->getParameters($method),
                 '{parametersWithoutTypes}' => $this->getParameterNames($method),
             ];
@@ -537,16 +558,26 @@ class BridgeBuilder
                     array_values($replacements),
                     $methodTemplate
                 )
-                . PHP_EOL . PHP_EOL . "\t";
+                . PHP_EOL . PHP_EOL . str_repeat(' ', 4);
         }
 
         $useStatements = array_keys($useStatements);
+        sort($useStatements);
         $useStatements = array_reduce($useStatements, function ($prevUseStatement, $useStatement) {
             return $prevUseStatement . PHP_EOL . 'use ' . $useStatement . ';';
         }, '');
 
-        $templateContent = str_replace('{methods}', rtrim($methods, PHP_EOL . PHP_EOL . "\t"), $templateContent);
-        return str_replace('{useStatements}', $useStatements, $templateContent);
+        return str_replace(
+            [
+                '{methods}',
+                '{useStatements}',
+            ],
+            [
+                rtrim($methods, PHP_EOL . PHP_EOL . str_repeat(' ', 4)),
+                $useStatements,
+            ],
+            $templateContent
+        );
     }
 
     /**
@@ -554,7 +585,7 @@ class BridgeBuilder
      *
      * @return string
      */
-    protected function getParameters(ReflectionMethod $method)
+    protected function getParameters(ReflectionMethod $method): string
     {
         $finalOutput = '';
 
@@ -572,7 +603,13 @@ class BridgeBuilder
                     $finalOutput .= 'null';
                 }
 
-                $finalOutput .= $parameter->getDefaultValue();
+                if (!is_array($parameter->getDefaultValue())) {
+                    $finalOutput .= $parameter->getDefaultValue();
+                }
+
+                if (is_array($parameter->getDefaultValue())) {
+                    $finalOutput .= '[]';
+                }
             }
 
             $finalOutput .= ', ';
@@ -586,7 +623,7 @@ class BridgeBuilder
      *
      * @return string
      */
-    protected function getClassNameFromFqcn($fqcn)
+    protected function getClassNameFromFqcn($fqcn): string
     {
         $arr = explode('\\', $fqcn);
         return end($arr);
@@ -597,9 +634,11 @@ class BridgeBuilder
      *
      * @return string
      */
-    protected function cleanMethodDocBlock($docComment)
+    protected function cleanMethodDocBlock($docComment): string
     {
-        return preg_replace('/.+?(?=@param)/ms', '/**' . PHP_EOL . "\t * ", $docComment, 1);
+        $docCommentWithoutExtras = preg_replace('/.+?(?=@param|@return)/ms', '/**' . PHP_EOL . "\t * ", $docComment, 1);
+
+        return str_replace("\t", str_repeat(' ', 4), $docCommentWithoutExtras);
     }
 
     /**
@@ -607,7 +646,7 @@ class BridgeBuilder
      *
      * @return array
      */
-    protected function getParameterTypes(ReflectionMethod $method)
+    protected function getParameterTypes(ReflectionMethod $method): array
     {
         $parameterTypes = [];
         foreach ($method->getParameters() as $parameter) {
@@ -629,7 +668,7 @@ class BridgeBuilder
      *
      * @return string
      */
-    protected function getParameterNames(ReflectionMethod $method)
+    protected function getParameterNames(ReflectionMethod $method): string
     {
         $parameters = '';
         foreach ($method->getParameters() as $parameter) {
@@ -637,5 +676,70 @@ class BridgeBuilder
         }
 
         return rtrim($parameters, ', ');
+    }
+
+    /**
+     * @param string $docComment
+     *
+     * @return string
+     */
+    protected function getMethodReturnTypeFromDocComment(string $docComment): string
+    {
+        preg_match('/@return (.+)/', $docComment, $returnType);
+
+        if (!$returnType) {
+            return '';
+        }
+
+        return $returnType[1];
+    }
+
+    /**
+     * @param string $methodReturnType
+     *
+     * @return array|string
+     */
+    protected function getMethodTypeHintForFunction(string $methodReturnType)
+    {
+        $methodReturnParts = explode('|', $methodReturnType);
+        $numberOfReturnParts = count($methodReturnParts);
+
+        if ($numberOfReturnParts === 1) {
+            if (strpos($methodReturnType, '\\') !== false) {
+                $methodTypeHintArray = explode('\\', $methodReturnType);
+                return [
+                    static::TYPE_HINT => static::NON_NULLABLE_RETURN_TYPE_HINT . end($methodTypeHintArray),
+                    static::FQCN => ltrim($methodReturnType, '\\'),
+                ];
+            }
+
+            return static::NON_NULLABLE_RETURN_TYPE_HINT . $methodReturnType;
+        }
+
+        $nullReturnTypeIndex = array_search('null', $methodReturnParts, true);
+
+        if ($nullReturnTypeIndex === false && $numberOfReturnParts > 1) {
+            return '';
+        }
+
+        if ($nullReturnTypeIndex !== false && $numberOfReturnParts > 2) {
+            return '';
+        }
+
+        $methodTypeHint = $methodReturnParts[0];
+
+        if ($nullReturnTypeIndex === 0) {
+            $methodTypeHint = $methodReturnParts[1];
+        }
+
+        if (strpos($methodTypeHint, '\\') !== false) {
+            $methodTypeHintArray = explode('\\', $methodTypeHint);
+            return [
+                static::TYPE_HINT => static::NULLABLE_RETURN_TYPE_HINT . end($methodTypeHintArray),
+                static::FQCN => ltrim($methodTypeHint, '\\'),
+            ];
+        }
+
+        return static::NULLABLE_RETURN_TYPE_HINT . $methodTypeHint;
     }
 }

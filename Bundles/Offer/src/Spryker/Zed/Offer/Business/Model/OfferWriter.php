@@ -78,7 +78,11 @@ class OfferWriter implements OfferWriterInterface
     {
         $offerTransfer->requireIdOffer();
         $offerTransfer = $this->offerEntityManager->updateOffer($offerTransfer);
-        $offerResponseTransfer = $this->offerPluginExecutor->updateOffer($offerTransfer);
+        $offerResponseTransfer = new OfferResponseTransfer();
+        $offerResponseTransfer->setIsSuccessful(true);
+
+        $pluginOfferResponseTransfer = $this->offerPluginExecutor->updateOffer($offerTransfer);
+        $offerResponseTransfer->fromArray($pluginOfferResponseTransfer->toArray(), true);
 
         return $offerResponseTransfer;
     }

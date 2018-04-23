@@ -74,7 +74,7 @@ class CustomersListManualOrderEntryFormPlugin extends AbstractPlugin implements 
     public function isFormPreFilled(QuoteTransfer $quoteTransfer): bool
     {
         if ($quoteTransfer->getIdCustomer()) {
-                return true;
+            return true;
         }
 
         return false;

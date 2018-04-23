@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Plugin;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
@@ -69,7 +70,7 @@ class ShipmentManualOrderEntryFormPlugin extends AbstractPlugin implements Manua
             $quoteTransfer->setShipment($shipmentTransfer);
 
             $expenseTransfer = $this->createShippingExpenseTransfer($shipmentMethodTransfer);
-            $quoteTransfer->addExpense($expenseTransfer);
+            $quoteTransfer->setExpenses(new ArrayObject([$expenseTransfer]));
         }
 
         return $quoteTransfer;
