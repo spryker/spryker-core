@@ -9,6 +9,7 @@ namespace Spryker\Zed\Customer\Business;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\CustomerCollectionTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -16,6 +17,18 @@ use Generated\Shared\Transfer\SaveOrderTransfer;
 
 interface CustomerFacadeInterface
 {
+    /**
+     * Specification:
+     *  - Retrieves customers from database using filtration and pagination.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerCollectionTransfer $customerListTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
+     */
+    public function getCustomerCollection(CustomerCollectionTransfer $customerListTransfer): CustomerCollectionTransfer;
+
     /**
      * Specification:
      * - Checks if provided email address exists in persistent storage.

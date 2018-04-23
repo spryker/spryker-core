@@ -26,7 +26,8 @@ interface CartClientInterface
 
     /**
      * Specification:
-     *  - Empty existing quote and store to session
+     * - Empty existing quote and store to session.
+     * - In case of persistent strategy the quote is also deleted from database.
      *
      * @api
      *
@@ -52,37 +53,72 @@ interface CartClientInterface
 
     /**
      * Specification:
-     * - Adds single item
-     * - Makes zed request.
-     * - Returns update quote.
+     * - Session strategy:
+     *   - Adds single item.
+     *   - Makes zed request.
+     *   - Stores quote in session internally after zed request.
+     *   - Returns update quote.
+     *
+     * - Persistent strategy:
+     *   - Makes zed request with item and customer.
+     *   - Loads customer quote from database.
+     *   - Adds item to quote.
+     *   - Recalculates quote totals.
+     *   - Save updated quote to database.
+     *   - Stores quote in session internally after zed request.
+     *   - Returns update quote.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param array $params
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addItem(ItemTransfer $itemTransfer);
+    public function addItem(ItemTransfer $itemTransfer, array $params = []);
 
     /**
      * Specification:
-     * - Adds multiple items (identified by SKU and quantity), if all passed validation.
-     * - Makes zed request to stored cart into persistent store if used.
-     * - Adds notification to response.
+     * - Session strategy:
+     *   - Adds multiple items.
+     *   - Makes zed request.
+     *   - Stores quote in session internally after zed request.
+     *   - Returns update quote.
+     *
+     * - Persistent strategy:
+     *   - Makes zed request with items and customer.
+     *   - Loads customer quote from database.
+     *   - Adds items to quote.
+     *   - Recalculates quote totals.
+     *   - Save updated quote to database.
+     *   - Stores quote in session internally after zed request.
+     *   - Returns update quote.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array $params
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addItems(array $itemTransfers);
+    public function addItems(array $itemTransfers, array $params = []);
 
     /**
      * Specification:
-     *  - Removes single items from quote.
-     *  - Makes zed request.
-     *  - Returns update quote.
+     * - Session strategy:
+     *   - Removes single items from quote.
+     *   - Makes zed request.
+     *   - Stores quote in session internally after zed request.
+     *   - Returns update quote.
+     *
+     * - Persistent strategy:
+     *   - Makes zed request with items and customer.
+     *   - Loads customer quote from database.
+     *   - Removes single item from quote.
+     *   - Recalculates quote totals.
+     *   - Save updated quote to database.
+     *   - Stores quote in session internally after zed request.
+     *   - Returns update quote.
      *
      * @api
      *
@@ -105,9 +141,20 @@ interface CartClientInterface
 
     /**
      * Specification:
-     *  - Removes all given items from quote.
-     *  - Makes zed request.
-     *  - Returns update quote.
+     * - Session strategy:
+     *   - Removes single items from quote.
+     *   - Makes zed request.
+     *   - Stores quote in session internally after zed request.
+     *   - Returns update quote.
+     *
+     * - Persistent strategy:
+     *   - Makes zed request with items and customer.
+     *   - Loads customer quote from database.
+     *   - Removes items from quote.
+     *   - Recalculates quote totals.
+     *   - Save updated quote to database.
+     *   - Stores quote in session internally after zed request.
+     *   - Returns update quote.
      *
      * @api
      *
@@ -119,9 +166,20 @@ interface CartClientInterface
 
     /**
      * Specification:
-     *  - Changes quantity for given item.
-     *  - Makes zed request.
-     *  - Returns updated quote.
+     * - Session strategy:
+     *   - Changes quantity for given item.
+     *   - Makes zed request.
+     *   - Stores quote in session internally after zed request.
+     *   - Returns update quote.
+     *
+     * - Persistent strategy:
+     *   - Makes zed request with items and customer.
+     *   - Loads customer quote from database.
+     *   - Changes quantity for given item.
+     *   - Recalculates quote totals.
+     *   - Save updated quote to database.
+     *   - Stores quote in session internally after zed request.
+     *   - Returns update quote.
      *
      * @api
      *
@@ -135,9 +193,20 @@ interface CartClientInterface
 
     /**
      * Specification:
-     *  - Decreases quantity for given item.
-     *  - Makes zed request.
-     *  - Returns updated quote.
+     * - Session strategy:
+     *   - Decreases quantity for given item.
+     *   - Makes zed request.
+     *   - Stores quote in session internally after zed request.
+     *   - Returns update quote.
+     *
+     * - Persistent strategy:
+     *   - Makes zed request with items and customer.
+     *   - Loads customer quote from database.
+     *   - Decreases quantity for given item.
+     *   - Recalculates quote totals.
+     *   - Save updated quote to database.
+     *   - Stores quote in session internally after zed request.
+     *   - Returns update quote.
      *
      * @api
      *
@@ -151,9 +220,20 @@ interface CartClientInterface
 
     /**
      * Specification:
-     *  - Increases quantity for given item.
-     *  - Makes zed request.
-     *  - Returns updated quote.
+     * - Session strategy:
+     *   - Increases quantity for given item.
+     *   - Makes zed request.
+     *   - Stores quote in session internally after zed request.
+     *   - Returns update quote.
+     *
+     * - Persistent strategy:
+     *   - Makes zed request with items and customer.
+     *   - Loads customer quote from database.
+     *   - Increases quantity for given item.
+     *   - Recalculates quote totals.
+     *   - Save updated quote to database.
+     *   - Stores quote in session internally after zed request.
+     *   - Returns update quote.
      *
      * @api
      *
@@ -171,6 +251,8 @@ interface CartClientInterface
      *
      * @api
      *
+     * @deprecated Use QuoteClient::setQuote() instead.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
@@ -179,11 +261,59 @@ interface CartClientInterface
 
     /**
      * Specification:
-     *  - Reloads all items in cart anew, it recreates all items transfer, reads new prices, options, bundles.
+     * - Session strategy:
+     *   - Makes zed request.
+     *   - Reloads all items in cart anew, it recreates all items transfer, reads new prices, options, bundles.
+     *   - Stores quote in session internally after zed request.
+     *   - Returns update quote.
+     *
+     * - Persistent strategy:
+     *   - Makes zed request.
+     *   - Reloads all items in cart anew, it recreates all items transfer, reads new prices, options, bundles.
+     *   - Recalculates quote totals.
+     *   - Save updated quote to database.
+     *   - Stores quote in session internally after zed request.
+     *   - Returns update quote.
      *
      * @api
      *
      * @return void
      */
     public function reloadItems();
+
+    /**
+     * Specification:
+     * - Session strategy:
+     *   - Makes zed request.
+     *   - Reloads all items in cart anew, it recreates all items transfer, reads new prices, options, bundles.
+     *   - Add changes as notices to messages
+     *   - Check error messages
+     *   - Stores quote in session internally after zed request.
+     *   - Returns update quote.
+     *
+     * - Persistent strategy:
+     *   - Makes zed request.
+     *   - Reloads all items in cart anew, it recreates all items transfer, reads new prices, options, bundles.
+     *   - Add changes as notices to messages
+     *   - Check error messages
+     *   - Recalculates quote totals.
+     *   - Save updated quote to database.
+     *   - Stores quote in session internally after zed request.
+     *   - Returns update quote.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function validateQuote();
+
+    /**
+     * Specification:
+     * - Takes array of MessageTransfers for the last response and push them to flash messages.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function addFlashMessagesFromLastZedRequest();
 }
