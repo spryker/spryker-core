@@ -25,7 +25,7 @@ class CompanySupplierDataImportHelper extends Module
      */
     public function isProductCreated(string $sku): bool
     {
-        $productQuery = SpyProductQuery::create();
+        $productQuery = $this->getPropelProductQuery();
         $productQuery->filterBySku($sku);
 
         return $productQuery->exists();
@@ -36,7 +36,7 @@ class CompanySupplierDataImportHelper extends Module
      */
     public function ensureDatabaseTableCompanySupplierToProductIsEmpty(): void
     {
-        $this->getCompanySupplierToProductQuery()->find()->delete();
+        $this->getPropelCompanySupplierToProductQuery()->find()->delete();
     }
 
     /**
@@ -47,9 +47,9 @@ class CompanySupplierDataImportHelper extends Module
         $colPhpName = SpyCompanyTableMap::getTableMap()
             ->getColumn(SpyCompanyTableMap::COL_FK_COMPANY_TYPE)
             ->getPhpName();
-        $this->getSpyCompanyQuery()->update([$colPhpName => null]);
+        $this->getPropelCompanyQuery()->update([$colPhpName => null]);
 
-        $this->getSpyCompanyTypeQuery()->find()->delete();
+        $this->getPropelCompanyTypeQuery()->find()->delete();
     }
 
     /**
@@ -57,7 +57,7 @@ class CompanySupplierDataImportHelper extends Module
      */
     public function ensureDatabaseTablePriceProductIsEmpty(): void
     {
-        $priceProductQuery = $this->getSpyPriceProductQuery();
+        $priceProductQuery = $this->getPropelPriceProductQuery();
         $priceProductQuery->filterByFkCompany(null, Criteria::ISNOTNULL);
         foreach ($priceProductQuery->find() as $priceProduct) {
             $priceProduct->getPriceProductStores()->delete();
@@ -70,7 +70,7 @@ class CompanySupplierDataImportHelper extends Module
      */
     public function assertDatabaseTableCompanySupplierToProductContainsData(): void
     {
-        $companySupplierToProductQuery = $this->getCompanySupplierToProductQuery();
+        $companySupplierToProductQuery = $this->getPropelCompanySupplierToProductQuery();
         $this->assertTrue(($companySupplierToProductQuery->count() > 0), 'Expected at least one entry in the database table but database table is empty.');
     }
 
@@ -79,7 +79,7 @@ class CompanySupplierDataImportHelper extends Module
      */
     public function assertCompanyTypeImported(): void
     {
-        $companyQuery = $this->getSpyCompanyQuery();
+        $companyQuery = $this->getPropelCompanyQuery();
         $companyQuery->filterByFkCompanyType(null, Criteria::ISNOTNULL);
         $this->assertTrue(($companyQuery->count() > 0), 'Expected at least one entry in the database table but database table is empty.');
     }
@@ -89,7 +89,7 @@ class CompanySupplierDataImportHelper extends Module
      */
     public function assertCompanySupplierProductPriceImported(): void
     {
-        $priceProductQuery = $this->getSpyPriceProductQuery();
+        $priceProductQuery = $this->getPropelPriceProductQuery();
         $priceProductQuery->filterByFkCompany(null, Criteria::ISNOTNULL);
         $this->assertTrue(($priceProductQuery->count() > 0), 'Expected at least one entry in the database table but database table is empty.');
     }
@@ -97,7 +97,7 @@ class CompanySupplierDataImportHelper extends Module
     /**
      * @return \Orm\Zed\CompanySupplier\Persistence\SpyCompanySupplierToProductQuery
      */
-    protected function getCompanySupplierToProductQuery(): SpyCompanySupplierToProductQuery
+    protected function getPropelCompanySupplierToProductQuery(): SpyCompanySupplierToProductQuery
     {
         return SpyCompanySupplierToProductQuery::create();
     }
@@ -105,7 +105,7 @@ class CompanySupplierDataImportHelper extends Module
     /**
      * @return \Orm\Zed\CompanySupplier\Persistence\SpyCompanyTypeQuery
      */
-    protected function getSpyCompanyTypeQuery(): SpyCompanyTypeQuery
+    protected function getPropelCompanyTypeQuery(): SpyCompanyTypeQuery
     {
         return SpyCompanyTypeQuery::create();
     }
@@ -113,15 +113,23 @@ class CompanySupplierDataImportHelper extends Module
     /**
      * @return \Orm\Zed\Company\Persistence\SpyCompanyQuery
      */
-    protected function getSpyCompanyQuery(): SpyCompanyQuery
+    protected function getPropelCompanyQuery(): SpyCompanyQuery
     {
         return SpyCompanyQuery::create();
     }
 
     /**
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    protected function getPropelProductQuery(): SpyProductQuery
+    {
+        return SpyProductQuery::create();
+    }
+
+    /**
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */
-    protected function getSpyPriceProductQuery(): SpyPriceProductQuery
+    protected function getPropelPriceProductQuery(): SpyPriceProductQuery
     {
         return SpyPriceProductQuery::create();
     }

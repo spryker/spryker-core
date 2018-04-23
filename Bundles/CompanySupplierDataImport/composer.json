@@ -7,11 +7,11 @@
     "spryker/company": "^1.0.0",
     "spryker/company-supplier": "^1.0.0",
     "spryker/currency": "^3.0.0",
+    "spryker/data-import": "^1.2.0",
+    "spryker/kernel": "^3.0.0",
     "spryker/price-product": "^1.0.0",
     "spryker/product": "^5.0.0 || ^6.0.0",
-    "spryker/store": "^1.5.0",
-    "spryker/data-import": "^1.2.0",
-    "spryker/kernel": "^3.0.0"
+    "spryker/store": "^1.5.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
@@ -20,7 +20,7 @@
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Zed\\CompanyDataImport\\Helper\\": "tests/SprykerTest/Zed/CompanyDataImport/_support/Helper/"
+      "SprykerTest\\Zed\\CompanySupplierDataImport\\Helper\\": "tests/SprykerTest/Zed/CompanySupplierDataImport/_support/Helper/"
     }
   },
   "autoload-dev": {

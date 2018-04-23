@@ -37,7 +37,7 @@ class CompanySupplierDataImportPluginTest extends Unit
     /**
      * @return void
      */
-    public function testImportImportsCompany(): void
+    public function testImportImportsCompanySupplierRelations(): void
     {
         $this->tester->ensureDatabaseTableCompanySupplierToProductIsEmpty();
         $this->tester->haveCompany(['key' => static::COMPANY_KEY]);
