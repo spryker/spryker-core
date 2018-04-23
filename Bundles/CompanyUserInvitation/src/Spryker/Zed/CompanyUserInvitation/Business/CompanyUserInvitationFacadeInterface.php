@@ -75,7 +75,7 @@ interface CompanyUserInvitationFacadeInterface
     /**
      * Specification:
      * - Sends all invitations with status new that were imported by the specified company user.
-     * - Emails to the recipients defined in each invitation.
+     * - Sends Emails to the recipients defined in each invitation.
      * - Changes the status of the company user invitations from new to sent
      * - The response contains the result of the operation as well as error messages for not sent company user invitations.
      *
