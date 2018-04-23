@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
  */
 class OfferConfig extends AbstractBundleConfig
 {
+    public const PRICE_MODE_NET = 'NET_MODE';
+    
     /**
      * @uses \Spryker\Shared\Price\PriceConfig::PRICE_MODE_NET
      */
@@ -22,7 +24,6 @@ class OfferConfig extends AbstractBundleConfig
     {
         return $this->getSharedConfig()->getStatusPending();
     }
-  public const PRICE_MODE_NET = 'NET_MODE';
 
     /**
      * @uses \Spryker\Shared\Price\PriceConfig::PRICE_MODE_GROSS
