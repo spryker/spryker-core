@@ -75,16 +75,7 @@ class QuoteResolver implements QuoteResolverInterface
             return $this->createQuoteNotFoundResult($customerTransfer);
         }
 
-        if ($quoteUpdateRequestAttributesTransfer) {
-            $customerQuoteTransfer->fromArray($quoteUpdateRequestAttributesTransfer->modifiedToArray(), true);
-        }
-
-        $quoteResponseTransfer = new QuoteResponseTransfer();
-        $quoteResponseTransfer->setIsSuccessful(true);
-        $quoteResponseTransfer->setCustomer($customerTransfer);
-        $quoteResponseTransfer->setQuoteTransfer($customerQuoteTransfer);
-
-        return $quoteResponseTransfer;
+        return $this->updateQuote($customerTransfer, $customerQuoteTransfer, $quoteUpdateRequestAttributesTransfer);
     }
 
     /**
@@ -175,5 +166,30 @@ class QuoteResolver implements QuoteResolverInterface
             || ($customerTransfer->getCompanyUserTransfer()
                 && $this->can('ReadSharedCartPermissionPlugin', $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser(), $quoteTransfer->getIdQuote())
             );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param null|\Generated\Shared\Transfer\QuoteUpdateRequestAttributesTransfer $quoteUpdateRequestAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    protected function updateQuote(
+        CustomerTransfer $customerTransfer,
+        QuoteTransfer $quoteTransfer,
+        QuoteUpdateRequestAttributesTransfer $quoteUpdateRequestAttributesTransfer = null
+    ): QuoteResponseTransfer {
+        if ($quoteUpdateRequestAttributesTransfer) {
+            $quoteTransfer->fromArray($quoteUpdateRequestAttributesTransfer->modifiedToArray(), true);
+        }
+
+        $quoteTransfer->setCustomer($customerTransfer);
+        $quoteResponseTransfer = new QuoteResponseTransfer();
+        $quoteResponseTransfer->setIsSuccessful(true);
+        $quoteResponseTransfer->setCustomer($customerTransfer);
+        $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
+
+        return $quoteResponseTransfer;
     }
 }
