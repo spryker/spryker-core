@@ -92,12 +92,10 @@ class CmsBlockProductDataProvider
         $productAbstractArray = [];
 
         foreach ($productAbstracts as $spyProductAbstract) {
-
             $label = $spyProductAbstract->getVirtualColumn(static::PRODUCT_ABSTRACT_VIRTUAL_COLUMN_NAME) .
                 ' (SKU: ' . $spyProductAbstract->getSku() . ')';
 
             $productAbstractArray[$label] = $spyProductAbstract->getIdProductAbstract();
-
         }
 
         return $productAbstractArray;
