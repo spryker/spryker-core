@@ -198,7 +198,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Customer\Dependency\Plugin\PostCustomerRegistrationPluginInterface[]
+     * @return \Spryker\Zed\CustomerExtension\Dependency\Plugin\PostCustomerRegistrationPluginInterface[]
      */
     public function getPostCustomerRegistrationPlugins()
     {

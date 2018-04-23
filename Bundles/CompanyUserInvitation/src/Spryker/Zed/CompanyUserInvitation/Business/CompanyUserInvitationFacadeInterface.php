@@ -58,7 +58,7 @@ interface CompanyUserInvitationFacadeInterface
     /**
      * Specification:
      * - Sends the company user invitation specified in the request.
-     * - Emails to the recipient defined in the company user invitation.
+     * - Sends Emails to the recipient defined in the company user invitation.
      * - Changes the status of the company user invitation from new to sent
      * - The response contains the result of the operation.
      *
@@ -152,7 +152,7 @@ interface CompanyUserInvitationFacadeInterface
 
     /**
      * Specification:
-     * - Imports required company user invitation statuses to the persistence
+     * - Installs required company user invitation statuses to the persistence
      *
      * @api
      *

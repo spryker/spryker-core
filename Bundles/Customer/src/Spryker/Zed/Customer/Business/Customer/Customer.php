@@ -103,7 +103,7 @@ class Customer implements CustomerInterface
         LocaleQueryContainerInterface $localeQueryContainer,
         Store $store,
         CustomerExpanderInterface $customerExpander,
-        array $postCustomerRegistrationPlugins
+        array $postCustomerRegistrationPlugins = []
     ) {
         $this->queryContainer = $queryContainer;
         $this->customerReferenceGenerator = $customerReferenceGenerator;
@@ -858,7 +858,7 @@ class Customer implements CustomerInterface
      *
      * @return void
      */
-    protected function executePostCustomerRegistrationPlugins(CustomerTransfer $customerTransfer): void
+    protected function executePostCustomerRegistrationPlugins(CustomerTransfer $customerTransfer)
     {
         foreach ($this->postCustomerRegistrationPlugins as $postCustomerRegistrationPlugin) {
             $postCustomerRegistrationPlugin->execute($customerTransfer);

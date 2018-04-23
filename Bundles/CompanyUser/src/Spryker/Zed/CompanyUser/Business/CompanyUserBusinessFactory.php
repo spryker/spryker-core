@@ -19,7 +19,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  * @method \Spryker\Zed\CompanyUser\CompanyUserConfig getConfig()
  * @method \Spryker\Zed\CompanyUser\Persistence\CompanyUserRepositoryInterface getRepository()
  * @method \Spryker\Zed\CompanyUser\Persistence\CompanyUserEntityManagerInterface getEntityManager()
- * @method \Spryker\Zed\CompanyUser\CompanyUserConfig getConfig()
  */
 class CompanyUserBusinessFactory extends AbstractBusinessFactory
 {
