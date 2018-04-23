@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\CompanyUserInvitation\Business\Model\Updater;
 
+use Generated\Shared\Transfer\CompanyUserInvitationTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusRequestTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusResponseTransfer;
+use Spryker\Shared\CompanyUserInvitation\CompanyUserInvitationConstants;
 use Spryker\Zed\CompanyUserInvitation\Communication\Plugin\Permission\ManageCompanyUserInvitationPermissionPlugin;
 use Spryker\Zed\CompanyUserInvitation\Persistence\CompanyUserInvitationEntityManagerInterface;
 use Spryker\Zed\CompanyUserInvitation\Persistence\CompanyUserInvitationRepositoryInterface;
@@ -63,10 +65,13 @@ class InvitationUpdater implements InvitationUpdaterInterface
             return $companyUserInvitationUpdateStatusResponseTransfer;
         }
 
-        $idCompanyUserInvitationStatus = $this->getIdCompanyUserInvitationStatus(
-            $companyUserInvitationUpdateStatusRequestTransfer->getStatusKey()
+        $companyUserInvitationTransfer->setFkCompanyUserInvitationStatus(
+            $this->getIdCompanyUserInvitationStatus($companyUserInvitationUpdateStatusRequestTransfer->getStatusKey())
         );
-        $companyUserInvitationTransfer->setFkCompanyUserInvitationStatus($idCompanyUserInvitationStatus);
+
+        if ($companyUserInvitationUpdateStatusRequestTransfer->getStatusKey() === CompanyUserInvitationConstants::INVITATION_STATUS_DELETED) {
+            $this->anonymize($companyUserInvitationTransfer);
+        }
 
         $companyUserInvitationTransfer = $this->entityManager->saveCompanyUserInvitation($companyUserInvitationTransfer);
         $companyUserInvitationUpdateStatusResponseTransfer
@@ -90,5 +95,28 @@ class InvitationUpdater implements InvitationUpdaterInterface
         }
 
         return $this->invitationStatusCache[$statusKey];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $companyUserInvitationTransfer
+     *
+     * @return void
+     */
+    protected function anonymize(CompanyUserInvitationTransfer $companyUserInvitationTransfer): void
+    {
+        $companyUserInvitationTransfer->setEmail($this->generateRandomEmail());
+    }
+
+    /**
+     * @return string
+     */
+    protected function generateRandomEmail()
+    {
+        return sprintf(
+            '%s@%s.%s',
+            strtolower(md5(mt_rand())),
+            strtolower(md5(mt_rand())),
+            strtolower(md5(mt_rand()))
+        );
     }
 }
