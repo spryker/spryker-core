@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Customer\Dependency\Plugin;
+namespace Spryker\Zed\CustomerExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 

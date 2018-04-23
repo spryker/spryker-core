@@ -297,7 +297,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Customer\Dependency\Plugin\PostCustomerRegistrationPluginInterface[]
+     * @return \Spryker\Zed\CustomerExtension\Dependency\Plugin\PostCustomerRegistrationPluginInterface[]
      */
     protected function getPostCustomerRegistrationPlugins(): array
     {

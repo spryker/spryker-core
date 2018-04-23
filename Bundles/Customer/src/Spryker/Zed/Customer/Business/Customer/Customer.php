@@ -79,7 +79,7 @@ class Customer implements CustomerInterface
     protected $customerExpander;
 
     /**
-     * @var \Spryker\Zed\Customer\Dependency\Plugin\PostCustomerRegistrationPluginInterface[]
+     * @var \Spryker\Zed\CustomerExtension\Dependency\Plugin\PostCustomerRegistrationPluginInterface[]
      */
     protected $postCustomerRegistrationPlugins;
 

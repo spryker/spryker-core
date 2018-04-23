@@ -8,7 +8,7 @@
 namespace Spryker\Zed\CompanyUserInvitation\Communication\Plugin;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use Spryker\Zed\Customer\Dependency\Plugin\PostCustomerRegistrationPluginInterface;
+use Spryker\Zed\CustomerExtension\Dependency\Plugin\PostCustomerRegistrationPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
