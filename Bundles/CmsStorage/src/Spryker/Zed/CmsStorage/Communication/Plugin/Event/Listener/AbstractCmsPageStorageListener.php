@@ -78,7 +78,7 @@ class AbstractCmsPageStorageListener extends AbstractPlugin
      *
      * @return void
      */
-    protected function storeDataSet(SpyCmsPage $cmsPageEntity, $localeName, SpyCmsPageStorage $cmsPageStorageEntity = null)
+    protected function storeDataSet(SpyCmsPage $cmsPageEntity, $localeName, ?SpyCmsPageStorage $cmsPageStorageEntity = null)
     {
         if ($cmsPageStorageEntity === null) {
             $cmsPageStorageEntity = new SpyCmsPageStorage();
@@ -184,7 +184,7 @@ class AbstractCmsPageStorageListener extends AbstractPlugin
      *
      * @return null|string
      */
-    protected function convertDateTimeToString(DateTime $dateTime = null)
+    protected function convertDateTimeToString(?DateTime $dateTime = null)
     {
         if (!$dateTime) {
             return null;

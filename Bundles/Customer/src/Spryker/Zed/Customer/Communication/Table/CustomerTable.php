@@ -118,7 +118,7 @@ class CustomerTable extends AbstractTable
      *
      * @return string
      */
-    protected function buildLinks(SpyCustomer $customer = null)
+    protected function buildLinks(?SpyCustomer $customer = null)
     {
         if ($customer === null) {
             return '';

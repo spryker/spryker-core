@@ -25,7 +25,7 @@ class RelationMapper implements RelationMapperInterface
      *
      * @return \Spryker\Shared\Kernel\Transfer\EntityTransferInterface[]
      */
-    public function populateCollectionWithRelation(array &$collection, $relation, Criteria $criteria = null)
+    public function populateCollectionWithRelation(array &$collection, $relation, ?Criteria $criteria = null)
     {
         if (count($collection) === 0) {
             return $collection;
@@ -103,7 +103,7 @@ class RelationMapper implements RelationMapperInterface
         ModelCriteria $query,
         RelationMap $symRelationMap,
         array $primaryIds,
-        Criteria $criteria = null
+        ?Criteria $criteria = null
     ) {
         if ($criteria !== null) {
             $query->mergeWith($criteria);

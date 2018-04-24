@@ -23,7 +23,7 @@ class CancelPaymentTransaction extends BaseTransaction implements OrderTransacti
      */
     public function request(
         OrderTransfer $orderTransfer,
-        OrderTransfer $partialOrderTransfer = null,
+        ?OrderTransfer $partialOrderTransfer = null,
         array $orderItems = []
     ) {
         $paymentMethod = $this->getPaymentMethod($orderTransfer);

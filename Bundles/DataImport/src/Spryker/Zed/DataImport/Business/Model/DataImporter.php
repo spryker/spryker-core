@@ -115,7 +115,7 @@ class DataImporter implements
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
-    public function import(DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null)
+    public function import(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null)
     {
         $dataReader = $this->getDataReader($dataImporterConfigurationTransfer);
         $dataImporterReportTransfer = $this->prepareDataImportReport($dataReader);
@@ -206,7 +206,7 @@ class DataImporter implements
      *
      * @return \Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface|\Spryker\Zed\DataImport\Business\Model\DataSet\DataSet[]
      */
-    protected function getDataReader(DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null)
+    protected function getDataReader(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null)
     {
         if ($dataImporterConfigurationTransfer && $dataImporterConfigurationTransfer->getReaderConfiguration()) {
             if ($this->dataReader instanceof ConfigurableDataReaderInterface) {

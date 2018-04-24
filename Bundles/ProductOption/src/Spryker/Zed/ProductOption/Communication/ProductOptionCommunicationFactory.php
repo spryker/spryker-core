@@ -85,7 +85,7 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
      *
      * @return \Spryker\Zed\ProductOption\Communication\Form\DataProvider\ProductOptionGroupDataProvider
      */
-    public function createGeneralFormDataProvider(ProductOptionGroupTransfer $productOptionGroupTransfer = null)
+    public function createGeneralFormDataProvider(?ProductOptionGroupTransfer $productOptionGroupTransfer = null)
     {
         return new ProductOptionGroupDataProvider(
             $this->getTaxFacade(),

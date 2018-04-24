@@ -44,7 +44,7 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
     public function __construct(
         array $formTypes,
         FormFactoryInterface $formFactory,
-        StepEngineFormDataProviderInterface $dataProvider = null
+        ?StepEngineFormDataProviderInterface $dataProvider = null
     ) {
         $this->formTypes = $formTypes;
         $this->formFactory = $formFactory;

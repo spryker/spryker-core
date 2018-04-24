@@ -84,7 +84,7 @@ class Category
         CategoryQueryContainerInterface $queryContainer,
         array $deletePlugins,
         array $updatePlugins,
-        CategoryToEventInterface $eventFacade = null
+        ?CategoryToEventInterface $eventFacade = null
     ) {
         $this->category = $category;
         $this->categoryNode = $categoryNode;

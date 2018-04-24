@@ -28,7 +28,7 @@ class CategoryPersistenceFactory extends AbstractPersistenceFactory
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
-    public function createCategoryNodeQuery($modelAlias = null, Criteria $criteria = null)
+    public function createCategoryNodeQuery($modelAlias = null, ?Criteria $criteria = null)
     {
         return SpyCategoryNodeQuery::create($modelAlias, $criteria);
     }
@@ -39,7 +39,7 @@ class CategoryPersistenceFactory extends AbstractPersistenceFactory
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
-    public function createUrlQuery($modelAlias = null, Criteria $criteria = null)
+    public function createUrlQuery($modelAlias = null, ?Criteria $criteria = null)
     {
         return SpyUrlQuery::create($modelAlias, $criteria);
     }
@@ -50,7 +50,7 @@ class CategoryPersistenceFactory extends AbstractPersistenceFactory
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery
      */
-    public function createCategoryAttributeQuery($modelAlias = null, Criteria $criteria = null)
+    public function createCategoryAttributeQuery($modelAlias = null, ?Criteria $criteria = null)
     {
         return SpyCategoryAttributeQuery::create($modelAlias, $criteria);
     }
@@ -61,7 +61,7 @@ class CategoryPersistenceFactory extends AbstractPersistenceFactory
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
      */
-    public function createCategoryQuery($modelAlias = null, Criteria $criteria = null)
+    public function createCategoryQuery($modelAlias = null, ?Criteria $criteria = null)
     {
         return SpyCategoryQuery::create($modelAlias, $criteria);
     }
@@ -72,7 +72,7 @@ class CategoryPersistenceFactory extends AbstractPersistenceFactory
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery
      */
-    public function createCategoryClosureTableQuery($modelAlias = null, Criteria $criteria = null)
+    public function createCategoryClosureTableQuery($modelAlias = null, ?Criteria $criteria = null)
     {
         return SpyCategoryClosureTableQuery::create($modelAlias, $criteria);
     }
