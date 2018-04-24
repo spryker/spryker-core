@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\CustomerAccess\CustomerAccessConfig getConfig()
- * @method \Spryker\Zed\CustomerAccess\Persistence\CustomerAccessQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\CustomerAccess\Persistence\CustomerAccessRepositoryInterface getRepository()
  */
 class CustomerAccessBusinessFactory extends AbstractBusinessFactory
 {
@@ -44,7 +44,7 @@ class CustomerAccessBusinessFactory extends AbstractBusinessFactory
      */
     public function createCustomerAccessReader()
     {
-        return new CustomerAccessReader($this->getQueryContainer());
+        return new CustomerAccessReader($this->getRepository());
     }
 
     /**

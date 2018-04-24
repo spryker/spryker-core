@@ -9,7 +9,7 @@
 
     <transfer name="ContentTypeAccess">
         <property name="contentType" type="string" />
-        <property name="canAccess" type="bool" />
+        <property name="hasAccess" type="bool" />
     </transfer>
 
 </transfers>

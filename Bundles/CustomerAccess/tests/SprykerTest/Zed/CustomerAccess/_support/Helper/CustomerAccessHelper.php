@@ -38,7 +38,7 @@ class CustomerAccessHelper extends Module
         foreach ($customerAccessTransfer->getContentTypeAccess() as $contentType) {
             $customerAccess = new SpyUnauthenticatedCustomerAccess();
             $customerAccess->setContentType($contentType->getContentType());
-            $customerAccess->setCanAccess($contentType->getCanAccess());
+            $customerAccess->setHasAccess($contentType->getHasAccess());
 
             $customerAccess->save();
         }

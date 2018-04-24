@@ -19,10 +19,10 @@ interface CustomerAccessReaderInterface
     /**
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
-    public function findUnauthenticatedCustomerAccess();
+    public function getUnauthenticatedCustomerAccess();
 
     /**
      * @return \Generated\Shared\Transfer\ContentTypeAccessTransfer[]
      */
-    public function findAllContentTypes();
+    public function getAllContentTypes();
 }

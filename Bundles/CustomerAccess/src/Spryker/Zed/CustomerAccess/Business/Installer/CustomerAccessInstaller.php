@@ -47,7 +47,7 @@ class CustomerAccessInstaller implements CustomerAccessInstallerInterface
     {
         $defaultContentAccess = $this->customerAccessConfig->getDefaultContentTypeAccess();
         foreach ($this->customerAccessConfig->getContentTypes() as $contentType) {
-            if ($this->customerAccessReader->findCustomerAccessByContentType($contentType) !== null) {
+            if ($this->customerAccessReader->getCustomerAccessByContentType($contentType) !== null) {
                 continue;
             }
 

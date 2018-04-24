@@ -36,7 +36,7 @@ class CustomerAccessFacade extends AbstractFacade implements CustomerAccessFacad
      */
     public function findUnauthenticatedCustomerAccess()
     {
-        return $this->getFactory()->createCustomerAccessReader()->findUnauthenticatedCustomerAccess();
+        return $this->getFactory()->createCustomerAccessReader()->getUnauthenticatedCustomerAccess();
     }
 
     /**
@@ -48,7 +48,7 @@ class CustomerAccessFacade extends AbstractFacade implements CustomerAccessFacad
      */
     public function findAllContentTypes()
     {
-        return $this->getFactory()->createCustomerAccessReader()->findAllContentTypes();
+        return $this->getFactory()->createCustomerAccessReader()->getAllContentTypes();
     }
 
     /**

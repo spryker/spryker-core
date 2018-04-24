@@ -43,7 +43,7 @@ interface CustomerAccessFacadeInterface
 
     /**
      * Specification:
-     * - Updates only these content types supplied to accessible (canAccess->true)
+     * - Updates only these content types supplied to accessible (hasAccess->true)
      *
      * @api
      *

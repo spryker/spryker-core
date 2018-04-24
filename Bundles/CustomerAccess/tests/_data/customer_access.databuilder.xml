@@ -9,7 +9,7 @@
 
     <transfer name="ContentTypeAccess">
         <property name="contentType" dataBuilderRule="unique()->sentence(5)" />
-        <property name="canAccess" dataBuilderRule="boolean()" />
+        <property name="hasAccess" dataBuilderRule="boolean()" />
     </transfer>
 
 </transfers>

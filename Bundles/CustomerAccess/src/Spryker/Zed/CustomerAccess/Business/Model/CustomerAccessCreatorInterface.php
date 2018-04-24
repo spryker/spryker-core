@@ -11,9 +11,9 @@ interface CustomerAccessCreatorInterface
 {
     /**
      * @param string $contentType
-     * @param bool $canAccess
+     * @param bool $hasAccess
      *
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
-    public function createCustomerAccess($contentType, $canAccess);
+    public function createCustomerAccess($contentType, $hasAccess);
 }

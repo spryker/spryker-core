@@ -49,7 +49,7 @@ class CustomerAccessUpdater implements CustomerAccessUpdaterInterface
         $customerAccessEntities = $this->customerAccessQueryContainer->queryCustomerAccess()->find();
 
         foreach ($customerAccessEntities as $customerAccessEntity) {
-            $customerAccessEntity->setCanAccess(false);
+            $customerAccessEntity->setHasAccess(false);
             $customerAccessEntity->save();
         }
     }
@@ -67,7 +67,7 @@ class CustomerAccessUpdater implements CustomerAccessUpdaterInterface
                 ->filterByContentType($contentTypeAccess->getContentType())
                 ->findOne();
 
-            $customerAccessEntity->setCanAccess(true);
+            $customerAccessEntity->setHasAccess(true);
             $customerAccessEntity->save();
         }
     }

@@ -47,7 +47,7 @@ class CustomerAccessDataProvider
     public function getOptions()
     {
         return [
-            CustomerAccessForm::FIELD_CONTENT_TYPE_ACCESS => $this->customerAccessFacade->findAllContentTypes(),
+            CustomerAccessForm::FIELD_CONTENT_TYPE_ACCESS => $this->customerAccessFacade->findAllContentTypes()->getContentTypeAccess(),
         ];
     }
 }

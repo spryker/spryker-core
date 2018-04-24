@@ -85,11 +85,11 @@ class CustomerAccessFacadeTest extends Unit
 
         foreach ($customerAccessTransferFromDB->getContentTypeAccess() as $contentTypeAccess) {
             if ($contentTypeAccess->getContentType() === $removedContentTypeAccess->getContentType()) {
-                $this->assertFalse($removedContentTypeAccess->getCanAccess());
+                $this->assertFalse($removedContentTypeAccess->getHasAccess());
                 continue;
             }
 
-            $this->assertTrue($contentTypeAccess->getCanAccess());
+            $this->assertTrue($contentTypeAccess->getHasAccess());
         }
     }
 

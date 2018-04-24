@@ -4,7 +4,7 @@
     <table name="spy_unauthenticated_customer_access" idMethod="native" phpName="SpyUnauthenticatedCustomerAccess">
         <column name="id_unauthenticated_customer_access" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="content_type" required="true" size="100" type="VARCHAR" />
-        <column name="can_access" required="true" type="BOOLEAN" />
+        <column name="has_access" required="true" type="BOOLEAN" />
 
         <unique>
             <unique-column name="content_type" />
