@@ -14,6 +14,16 @@ use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Spryker\Zed\ProductQuantityDataImport\Communication\Plugin\ProductQuantityDataImportPlugin;
 use Spryker\Zed\ProductQuantityDataImport\ProductQuantityDataImportConfig;
 
+/**
+ * Auto-generated group annotations
+ * @group SprykerTest
+ * @group Zed
+ * @group ProductQuantityDataImport
+ * @group Communication
+ * @group Plugin
+ * @group ProductQuantityDataImportPluginTest
+ * Add your own group annotations below this line
+ */
 class ProductQuantityDataImportPluginTest extends Unit
 {
     /**

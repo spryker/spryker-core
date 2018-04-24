@@ -8,10 +8,10 @@
 namespace Spryker\Zed\ProductMeasurementUnitDataImport\Business\Model;
 
 use Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementUnitQuery;
-use Spryker\Zed\ProductMeasurementUnit\Dependency\ProductMeasurementUnitEvents;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
+use Spryker\Zed\ProductMeasurementUnit\Dependency\ProductMeasurementUnitEvents;
 
 class ProductMeasurementUnitWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
