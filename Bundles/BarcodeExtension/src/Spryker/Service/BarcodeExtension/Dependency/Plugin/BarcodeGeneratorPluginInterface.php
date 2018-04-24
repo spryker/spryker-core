@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\BarcodeExtension\Service\Dependency\Plugin;
+namespace Spryker\Service\BarcodeExtension\Dependency\Plugin;
 
 interface BarcodeGeneratorPluginInterface
 {
@@ -18,6 +18,7 @@ interface BarcodeGeneratorPluginInterface
      * @api
      *
      * @param string $text
+     *
      * @return string
      */
     public function generate(string $text): string;
