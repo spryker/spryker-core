@@ -7,6 +7,8 @@
 
 namespace Spryker\Service\BarcodeExtension\Dependency\Plugin;
 
+use Generated\Shared\Transfer\BarcodeResponseTransfer;
+
 interface BarcodeGeneratorPluginInterface
 {
     /**
@@ -19,7 +21,7 @@ interface BarcodeGeneratorPluginInterface
      *
      * @param string $text
      *
-     * @return string
+     * @return \Generated\Shared\Transfer\BarcodeResponseTransfer
      */
-    public function generate(string $text): string;
+    public function generate(string $text): BarcodeResponseTransfer;
 }
