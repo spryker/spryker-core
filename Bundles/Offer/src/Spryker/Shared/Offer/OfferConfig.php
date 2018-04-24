@@ -19,8 +19,8 @@ class OfferConfig extends AbstractBundleConfig
     public const STATUS_CLOSE = 'Close';
   
   /**
-     * @return string
-     */
+   * @return string
+   */
     public function getStatusPending(): string
     {
         return static::STATUS_PENDING;

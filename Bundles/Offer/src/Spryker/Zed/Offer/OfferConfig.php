@@ -18,7 +18,7 @@ class OfferConfig extends AbstractBundleConfig
     public const PRICE_MODE_NET = 'NET_MODE';
     
     /**
-     * @uses \Spryker\Shared\Price\PriceConfig::PRICE_MODE_NET
+     * @return string
      */
     public function getStatusPending(): string
     {
