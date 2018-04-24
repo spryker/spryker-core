@@ -8,9 +8,7 @@
 namespace Spryker\Zed\ProductQuantityDataImport\Business\Model;
 
 use Orm\Zed\Product\Persistence\SpyProductQuery;
-use Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementUnitQuery;
 use Orm\Zed\ProductQuantity\Persistence\SpyProductQuantityQuery;
-use Spryker\Zed\ProductMeasurementUnit\Dependency\ProductMeasurementUnitEvents;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;

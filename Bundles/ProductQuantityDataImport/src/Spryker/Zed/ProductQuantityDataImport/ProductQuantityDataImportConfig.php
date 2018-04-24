@@ -17,7 +17,7 @@ class ProductQuantityDataImportConfig extends DataImportConfig
     /**
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
-    public function getProductMeasurementUnitDataImportConfiguration(): DataImporterConfigurationTransfer
+    public function getProductQuantityDataImportConfiguration(): DataImporterConfigurationTransfer
     {
         $moduleDataImportDirectory = $this->getModuleRoot() . 'data' . DIRECTORY_SEPARATOR . 'import' . DIRECTORY_SEPARATOR;
 

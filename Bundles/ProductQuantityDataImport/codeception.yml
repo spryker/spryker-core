@@ -1,5 +1,7 @@
 namespace: ProductQuantityDataImport
 actor: Tester
+include:
+  - tests/SprykerTest/Zed/ProductQuantityDataImport
 paths:
     tests: tests
     log: tests/_output

@@ -18,9 +18,9 @@ class ProductQuantityDataImportBusinessFactory extends DataImportBusinessFactory
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
-    public function createProductMeasurementUnitDataImporter()
+    public function createProductQuantityDataImporter()
     {
-        $dataImporter = $this->getCsvDataImporterFromConfig($this->getConfig()->getProductMeasurementUnitDataImportConfiguration());
+        $dataImporter = $this->getCsvDataImporterFromConfig($this->getConfig()->getProductQuantityDataImportConfiguration());
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
         $dataSetStepBroker->addStep(new ProductQuantityDataImportWriterStep());
