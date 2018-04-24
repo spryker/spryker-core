@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductBarcode\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductBarcode\Business\ProductBarcodeNumberResolver\ProductBarcodeNumberResolver;
 use Spryker\Zed\ProductBarcode\ProductBarcodeDependencyProvider;
 
 class ProductBarcodeBusinessFactory extends AbstractBusinessFactory
