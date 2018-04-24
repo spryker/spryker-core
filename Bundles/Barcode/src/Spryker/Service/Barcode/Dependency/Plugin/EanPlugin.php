@@ -12,14 +12,12 @@ use Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInt
 use Spryker\Service\Kernel\AbstractPlugin;
 
 /**
- * TODO: This is a test code, it will be changed or removed in future
- *
  * @method \Spryker\Service\Barcode\BarcodeServiceFactory getFactory()
  */
 class EanPlugin extends AbstractPlugin implements BarcodeGeneratorPluginInterface
 {
-    protected const DUMMY_CODE = 'EAN_DUMMY_CODE';
-    protected const EAN_ENCODING = 'EAN';
+    private const DUMMY_CODE = 'EAN_DUMMY_CODE';
+    private const EAN_ENCODING = 'EAN';
 
     /**
      * {@inheritdoc}
@@ -32,7 +30,8 @@ class EanPlugin extends AbstractPlugin implements BarcodeGeneratorPluginInterfac
      */
     public function generate(string $text): BarcodeResponseTransfer
     {
-        $transfer = new BarcodeResponseTransfer();
+        $transfer = $this->getFactory()
+            ->createBarcodeTransferObject();
 
         return $transfer->setCode(static::DUMMY_CODE)
             ->setEncoding(static::EAN_ENCODING);

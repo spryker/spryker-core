@@ -7,8 +7,8 @@
 
 namespace Spryker\Service\Barcode;
 
+use Generated\Shared\Transfer\BarcodeResponseTransfer;
 use Spryker\Service\Barcode\BarcodeGenerator\BarcodeGenerator;
-use Spryker\Service\Barcode\BarcodeGenerator\BarcodeGeneratorInterface;
 use Spryker\Service\Kernel\AbstractServiceFactory;
 
 class BarcodeServiceFactory extends AbstractServiceFactory
@@ -16,8 +16,16 @@ class BarcodeServiceFactory extends AbstractServiceFactory
     /**
      * @return \Spryker\Service\Barcode\BarcodeGenerator\BarcodeGeneratorInterface
      */
-    public function createBarcodeGenerator(): BarcodeGeneratorInterface
+    public function createBarcodeGenerator(): BarcodeGenerator
     {
         return new BarcodeGenerator();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\BarcodeResponseTransfer
+     */
+    public function createBarcodeTransferObject(): BarcodeResponseTransfer
+    {
+        return new BarcodeResponseTransfer();
     }
 }
