@@ -34,8 +34,14 @@ class CompanyUserInvitationRepository extends AbstractRepository implements Comp
             ->joinWithSpyCompanyBusinessUnit()
             ->joinWithSpyCompanyUserInvitationStatus();
 
-        if ($criteriaFilterTransfer->getFkCompanyUser()) {
-            $queryCompanyUserInvitation->filterByFkCompanyUser($criteriaFilterTransfer->getFkCompanyUser());
+        if ($criteriaFilterTransfer->getFkCompany()) {
+            $queryCompanyUserInvitation
+                ->useSpyCompanyUserQuery()
+                ->filterByFkCompany(
+                    $criteriaFilterTransfer->getFkCompany(),
+                    Criteria::IN
+                )
+                ->endUse();
         }
 
         if ($criteriaFilterTransfer->getCompanyUserInvitationStatusKeyIn()) {

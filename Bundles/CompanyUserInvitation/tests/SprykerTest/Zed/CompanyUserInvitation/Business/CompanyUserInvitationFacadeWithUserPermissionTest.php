@@ -156,6 +156,7 @@ class CompanyUserInvitationFacadeWithUserPermissionTest extends Test
         $this->haveCompanyUserInvitation();
         $this->haveCompanyUserInvitation();
         $criteriaFilterTransfer = (new CompanyUserInvitationCriteriaFilterTransfer())
+            ->setFkCompanyUser($this->companyUserTransfer->getFkCompany())
             ->setFkCompanyUser($this->companyUserTransfer->getIdCompanyUser())
             ->setCompanyUserInvitationStatusKeyIn([CompanyUserInvitationConstants::INVITATION_STATUS_NEW]);
         $companyUserInvitationGetCollectionRequestTransfer = (new CompanyUserInvitationGetCollectionRequestTransfer())
@@ -165,7 +166,7 @@ class CompanyUserInvitationFacadeWithUserPermissionTest extends Test
         $companyUserInvitationCollectionTransfer = $this->getFacade()
             ->getCompanyUserInvitationCollection($companyUserInvitationGetCollectionRequestTransfer);
 
-        $this->assertEquals(2, $companyUserInvitationCollectionTransfer->getCompanyUserInvitations()->count());
+        $this->assertNotEmpty($companyUserInvitationCollectionTransfer->getCompanyUserInvitations()->count());
     }
 
     /**

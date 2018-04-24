@@ -123,6 +123,7 @@ class CompanyUserInvitationFacadeWithoutUserPermissionTest extends Test
         $this->haveCompanyUserInvitation();
         $this->haveCompanyUserInvitation();
         $criteriaFilterTransfer = (new CompanyUserInvitationCriteriaFilterTransfer())
+            ->setFkCompanyUser($this->companyUserTransfer->getFkCompany())
             ->setFkCompanyUser($this->companyUserTransfer->getIdCompanyUser())
             ->setCompanyUserInvitationStatusKeyIn([CompanyUserInvitationConstants::INVITATION_STATUS_NEW]);
         $companyUserInvitationGetCollectionRequestTransfer = (new CompanyUserInvitationGetCollectionRequestTransfer())

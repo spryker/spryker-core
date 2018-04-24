@@ -67,7 +67,9 @@ class CompanyUserCreator implements CompanyUserCreatorInterface
             ->setFkCompanyBusinessUnit($companyUserInvitationTransfer->getFkCompanyBusinessUnit())
             ->setCustomer($customerTransfer);
 
-        if ($this->companyUserFacade->update($companyUserTransfer)->getIsSuccessful()) {
+        $companyUserResponseTransfer = $this->companyUserFacade->update($companyUserTransfer);
+        if ($companyUserResponseTransfer->getIsSuccessful()) {
+            $customerTransfer->setCompanyUserTransfer($companyUserResponseTransfer->getCompanyUser());
             $companyUserInvitationUpdateStatusRequestTransfer = $this->getCompanyUserInvitationUpdateStatusRequestTransfer(
                 $companyUserInvitationTransfer
             );

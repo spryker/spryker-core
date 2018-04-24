@@ -46,6 +46,7 @@
     </transfer>
 
     <transfer name="CompanyUserInvitationCriteriaFilter">
+        <property name="fkCompany" type="int"/>
         <property name="fkCompanyUser" type="int"/>
         <property name="companyUserInvitationStatusKeyIn" type="array"/>
         <property name="companyUserInvitationStatusKeyNotIn" type="array"/>

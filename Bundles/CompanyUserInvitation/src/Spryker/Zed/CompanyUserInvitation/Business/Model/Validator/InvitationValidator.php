@@ -158,6 +158,8 @@ class InvitationValidator implements InvitationValidatorInterface
             return false;
         }
 
+        $this->emailCache[] = $invitationTransfer->getEmail();
+
         return true;
     }
 
