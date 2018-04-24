@@ -5,8 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductBarcode\Business\ProductBarcodeGenerator;
+namespace Spryker\Service\Barcode\Exception;
 
-interface ProductBarcodeGeneratorInterface
+use Exception;
+
+class PluginNotFoundException extends Exception
 {
 }

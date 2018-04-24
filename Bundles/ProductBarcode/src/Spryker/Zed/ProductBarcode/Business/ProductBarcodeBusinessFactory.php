@@ -8,21 +8,20 @@
 namespace Spryker\Zed\ProductBarcode\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductBarcode\Business\ProductBarcodeGenerator\ProductBarcodeGenerator;
 use Spryker\Zed\ProductBarcode\ProductBarcodeDependencyProvider;
 
 class ProductBarcodeBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\ProductBarcode\Business\ProductBarcodeGenerator\ProductBarcodeGeneratorInterface
+     * @return \Spryker\Zed\ProductBarcode\Business\ProductBarcodeNumberResolver\ProductBarcodeNumberResolverInterface
      */
-    public function createProductBarcodeGenerator(): ProductBarcodeGenerator
+    public function createProductBarcodeNumberResolver(): ProductBarcodeNumberResolver
     {
-        return new ProductBarcodeGenerator();
+        return new ProductBarcodeNumberResolver();
     }
 
     /**
-     * @return mixed
+     * @return \Spryker\Service\Barcode\BarcodeServiceInterface
      */
     public function getBarcodeGeneratorService()
     {
