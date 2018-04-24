@@ -7,37 +7,24 @@
 
 namespace Spryker\Zed\ProductBarcode\Business;
 
-use Spryker\Service\Barcode\BarcodeService;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductBarcode\Business\ProductBarcodeGenerator\ProductBarcodeGenerator;
-use Spryker\Zed\ProductBarcode\Business\ProductBarcodeGenerator\ProductBarcodeGeneratorInterface;
-use Spryker\Zed\ProductBarcode\Business\ProductStockCodeSelector\ProductStockCodeSelector;
-use Spryker\Zed\ProductBarcode\Business\ProductStockCodeSelector\ProductStockCodeSelectorInterface;
 use Spryker\Zed\ProductBarcode\ProductBarcodeDependencyProvider;
 
 class ProductBarcodeBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\ProductBarcode\Business\ProductBarcodeGenerator\ProductBarcodeGeneratorInterface
+     * @return \Spryker\Zed\ProductBarcode\Business\ProductBarcodeNumberResolver\ProductBarcodeNumberResolverInterface
      */
-    public function createProductBarcodeGenerator(): ProductBarcodeGeneratorInterface
+    public function createProductBarcodeNumberResolver(): ProductBarcodeNumberResolver
     {
-        return new ProductBarcodeGenerator($this->getBarcodeService(), $this->createProductStockCodeSelector());
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductBarcode\Business\ProductStockCodeSelector\ProductStockCodeSelectorInterface
-     */
-    public function createProductStockCodeSelector(): ProductStockCodeSelectorInterface
-    {
-        return new ProductStockCodeSelector();
+        return new ProductBarcodeNumberResolver();
     }
 
     /**
      * @return \Spryker\Service\Barcode\BarcodeServiceInterface
      */
-    protected function getBarcodeService(): BarcodeService
+    public function getBarcodeGeneratorService()
     {
-        return $this->getProvidedDependency(ProductBarcodeDependencyProvider::BARCODE_SERVICE);
+        return $this->getProvidedDependency(ProductBarcodeDependencyProvider::BARCODE_GENERATOR_SERVICE);
     }
 }
