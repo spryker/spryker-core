@@ -65,7 +65,7 @@ interface ProductMeasurementUnitFacadeInterface
 
     /**
      * Specification:
-     * - Expand CartChangeTransfer with QuantitySalesUnit.
+     * - Expands CartChangeTransfer with QuantitySalesUnit.
      *
      * @api
      *
@@ -99,7 +99,7 @@ interface ProductMeasurementUnitFacadeInterface
 
     /**
      * Specification:
-     * - Calculate quantity normalized sales unit value.
+     * - Calculates quantity normalized sales unit value.
      * - Updates quote item transfers
      *
      * @api
