@@ -25,7 +25,7 @@ class CompanySupplierDataImportFacade extends AbstractFacade implements CompanyS
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
-    public function importCompanyType(DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
+    public function importCompanyType(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
         return $this->getFactory()->createCompanyTypeDataImport()->import($dataImporterConfigurationTransfer);
     }
@@ -39,7 +39,7 @@ class CompanySupplierDataImportFacade extends AbstractFacade implements CompanyS
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
-    public function importCompanySupplier(DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
+    public function importCompanySupplier(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
         return $this->getFactory()->createCompanySupplierDataImport()->import($dataImporterConfigurationTransfer);
     }
@@ -53,7 +53,7 @@ class CompanySupplierDataImportFacade extends AbstractFacade implements CompanyS
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
-    public function importProductPrice(DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
+    public function importProductPrice(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
         return $this->getFactory()->createCompanySupplierProductPriceDataImport()->import($dataImporterConfigurationTransfer);
     }

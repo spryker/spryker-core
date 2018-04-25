@@ -22,7 +22,7 @@ interface CompanySupplierDataImportFacadeInterface
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
-    public function importCompanyType(DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer;
+    public function importCompanyType(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer;
 
     /**
      * Specification:
@@ -34,7 +34,7 @@ interface CompanySupplierDataImportFacadeInterface
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
-    public function importCompanySupplier(DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer;
+    public function importCompanySupplier(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer;
 
     /**
      * Specification:
@@ -46,5 +46,5 @@ interface CompanySupplierDataImportFacadeInterface
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
-    public function importProductPrice(DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer;
+    public function importProductPrice(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer;
 }
