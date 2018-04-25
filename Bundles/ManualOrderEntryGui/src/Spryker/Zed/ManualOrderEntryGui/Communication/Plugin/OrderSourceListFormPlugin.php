@@ -20,13 +20,13 @@ class OrderSourceListFormPlugin extends AbstractPlugin implements ManualOrderEnt
 {
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createForm(Request $request, QuoteTransfer $dataTransfer): FormInterface
+    public function createForm(Request $request, QuoteTransfer $quoteTransfer): FormInterface
     {
-        return $this->getFactory()->createOrderSourceListForm($request, $dataTransfer);
+        return $this->getFactory()->createOrderSourceListForm($request, $quoteTransfer);
     }
 
     /**

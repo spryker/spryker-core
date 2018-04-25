@@ -33,14 +33,11 @@ class OffersTable extends AbstractTable
     protected const COL_CUSTOMER_REFERENCE = SpyOfferTableMap::COL_CUSTOMER_REFERENCE;
     protected const COL_EMAIL = 'email';
     protected const COL_GRAND_TOTAL = 'grand_total';
-    protected const COL_NUMBER_OF_ORDER_ITEMS = 'number_of_order_items';
+    protected const COL_CONTACT_DATE = SpyOfferTableMap::COL_CONTACT_DATE;
+    protected const COL_CONTACT_PERSON = SpyOfferTableMap::COL_CONTACT_PERSON;
+    protected const COL_NOTE = SpyOfferTableMap::COL_NOTE;
     protected const COL_URL = 'url';
     protected const COL_STATUS = 'status';
-
-    /**
-     * @uses \Spryker\Shared\Offer\OfferConfig::STATUS_ORDER
-     */
-    protected const OFFER_STATUS_ORDER = 'order';
 
     /**
      * @var \Spryker\Zed\OfferGui\Communication\Table\OffersTableQueryBuilderInterface
@@ -110,6 +107,7 @@ class OffersTable extends AbstractTable
         $config->addRawColumn(static::COL_URL);
         $config->addRawColumn(static::COL_CUSTOMER_REFERENCE);
         $config->addRawColumn(static::COL_EMAIL);
+        $config->addRawColumn(static::COL_STATUS);
 
         $config->setDefaultSortField(static::COL_ID_OFFER, TableConfiguration::SORT_DESC);
 
@@ -178,7 +176,7 @@ class OffersTable extends AbstractTable
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
      *
      * @return string
      */
@@ -236,7 +234,7 @@ class OffersTable extends AbstractTable
     {
         $urls = [];
 
-        if ($this->isOrdered($item)) {
+        if ($this->isClosed($item)) {
             $urls[] = $this->generateEditButton(
                 Url::generate(static::URL_OFFER_GUI_EDIT, [
                     static::URL_PARAM_ID_OFFER => $item[SpyOfferTableMap::COL_ID_OFFER],
@@ -267,7 +265,7 @@ class OffersTable extends AbstractTable
             'Suggest to'
         );
 
-        if ($this->isOrdered($item)) {
+        if ($this->isClosed($item)) {
             $urls[] = $this->generateCreateButton(
                 Url::generate(static::URL_OFFER_GUI_PLACE_ORDER, [
                     static::URL_PARAM_ID_OFFER => $item[SpyOfferTableMap::COL_ID_OFFER],
@@ -284,9 +282,9 @@ class OffersTable extends AbstractTable
      *
      * @return bool
      */
-    protected function isOrdered(array $item)
+    protected function isClosed(array $item)
     {
-        return $item[SpyOfferTableMap::COL_STATUS] !== static::OFFER_STATUS_ORDER;
+        return $item[SpyOfferTableMap::COL_STATUS] !== OfferGuiConfig::STATUS_CLOSE;
     }
 
     /**
@@ -300,8 +298,10 @@ class OffersTable extends AbstractTable
             static::COL_CUSTOMER_REFERENCE => 'Customer Full Name',
             static::COL_EMAIL => 'Email',
             static::COL_GRAND_TOTAL => 'GrandTotal',
-            static::COL_NUMBER_OF_ORDER_ITEMS => 'Number of Items',
-            static::COL_STATUS => 'Status',
+            static::COL_CONTACT_DATE => 'Next contact date',
+            static::COL_CONTACT_PERSON => 'Person in charge',
+            static::COL_STATUS => 'Offer state',
+            static::COL_NOTE => 'Comment',
             static::COL_URL => 'Actions',
         ];
     }
@@ -326,8 +326,6 @@ class OffersTable extends AbstractTable
         return [
             static::COL_ID_OFFER,
             static::COL_CREATED_AT,
-            static::COL_EMAIL,
-            static::COL_NUMBER_OF_ORDER_ITEMS,
         ];
     }
 
@@ -349,8 +347,10 @@ class OffersTable extends AbstractTable
                 static::COL_CUSTOMER_REFERENCE => $this->formatCustomer($customerTransfer),
                 static::COL_EMAIL => $this->formatEmailAddress($customerTransfer),
                 static::COL_GRAND_TOTAL => $this->getGrandTotal($quoteTransfer),
-                static::COL_NUMBER_OF_ORDER_ITEMS => $quoteTransfer->getItems()->count(),
+                static::COL_CONTACT_DATE => $this->utilDateTimeService->formatDate($item[SpyOfferTableMap::COL_CONTACT_DATE]),
+                static::COL_CONTACT_PERSON => $item[SpyOfferTableMap::COL_CONTACT_PERSON],
                 static::COL_STATUS => $item[SpyOfferTableMap::COL_STATUS],
+                static::COL_NOTE => $item[SpyOfferTableMap::COL_NOTE],
                 static::COL_URL => implode(' ', $this->createActionUrls($item)),
             ];
         }

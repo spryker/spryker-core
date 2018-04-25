@@ -26,32 +26,22 @@ class OfferToCartFacadeBridge implements OfferToCartFacadeInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function add(CartChangeTransfer $cartChangeTransfer)
-    {
-        return $this->cartFacade->add($cartChangeTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function remove(CartChangeTransfer $cartChangeTransfer)
-    {
-        return $this->cartFacade->remove($cartChangeTransfer);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function reloadItems(QuoteTransfer $quoteTransfer)
+    public function reloadItems(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         return $this->cartFacade->reloadItems($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function add(CartChangeTransfer $cartChangeTransfer): QuoteTransfer
+    {
+        return $this->cartFacade->add($cartChangeTransfer);
     }
 }

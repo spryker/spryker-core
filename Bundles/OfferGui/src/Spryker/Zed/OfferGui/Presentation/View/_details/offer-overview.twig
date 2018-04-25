@@ -4,7 +4,8 @@
     {% block widget_content %}
         <div class="row">
             <div class="col-xs-12 col-md-4">
-                <p><b>{{ 'Created' | trans }}:</b> {{ offer.createdAt | formatDateTime }}</p>
+                <p><b>{{ 'Offer state' | trans }}:</b> {{ offer.state }}</p>
+                <p><b>{{ 'Offer date' | trans }}:</b> {{ offer.createdAt | formatDateTime }}</p>
                 <p><b>{{ 'Grand total' | trans }}:</b> {{ quote.totals.grandTotal | money(true, quote.currency.code) }}</p>
                 <p><b>{{ 'Discount' | trans }}:</b> {{ quote.totals.discountTotal | money(true, quote.currency.code) }}</p>
             </div>

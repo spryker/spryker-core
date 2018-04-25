@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Offer\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Offer\Business\Model\Calculator\OfferCalculator;
+use Spryker\Zed\Offer\Business\Model\Calculator\OfferCalculatorInterface;
 use Spryker\Zed\Offer\Business\Model\Hydrator\OfferQuoteExpander;
 use Spryker\Zed\Offer\Business\Model\Hydrator\OfferQuoteExpanderInterface;
 use Spryker\Zed\Offer\Business\Model\Hydrator\OfferSavingAmountHydrator;
@@ -43,6 +45,24 @@ class OfferBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createOfferPluginExecutor()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Offer\Business\Model\Calculator\OfferCalculatorInterface
+     */
+    public function createOfferCalculator(): OfferCalculatorInterface
+    {
+        return new OfferCalculator(
+            $this->getCartFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Offer\Dependency\Facade\OfferToCartFacadeInterface
+     */
+    public function getCartFacade(): OfferToCartFacadeInterface
+    {
+        return $this->getProvidedDependency(OfferDependencyProvider::FACADE_CART);
     }
 
     /**
@@ -94,8 +114,8 @@ class OfferBusinessFactory extends AbstractBusinessFactory
     public function createOfferSavingAmountHydrator(): OfferSavingAmountHydratorInterface
     {
         return new OfferSavingAmountHydrator(
-            $this->getCartFacade(),
-            $this->getMessengerFacade()
+            $this->getMessengerFacade(),
+            $this->getConfig()
         );
     }
 
@@ -129,14 +149,6 @@ class OfferBusinessFactory extends AbstractBusinessFactory
     public function getOfferDoUpdatePlugins(): array
     {
         return $this->getProvidedDependency(OfferDependencyProvider::PLUGINS_OFFER_DO_UPDATE);
-    }
-
-    /**
-     * @return \Spryker\Zed\Offer\Dependency\Facade\OfferToCartFacadeInterface
-     */
-    public function getCartFacade(): OfferToCartFacadeInterface
-    {
-        return $this->getProvidedDependency(OfferDependencyProvider::FACADE_CART);
     }
 
     /**

@@ -123,7 +123,7 @@ class DataImporterCollection implements
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
-    public function import(DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null)
+    public function import(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null)
     {
         $importType = $this->getCurrentImportType($dataImporterConfigurationTransfer);
         $dataImporterReportTransfer = $this->prepareDataImporterReport($importType);
@@ -185,7 +185,7 @@ class DataImporterCollection implements
     protected function executeDataImporter(
         DataImporterInterface $dataImporter,
         DataImporterReportTransfer $dataImporterReportTransfer,
-        DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
+        ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
     ) {
         $innerDataImportReportTransfer = $dataImporter->import($dataImporterConfigurationTransfer);
         $dataImporterReportTransfer
@@ -202,7 +202,7 @@ class DataImporterCollection implements
      *
      * @return string
      */
-    protected function getCurrentImportType(DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null)
+    protected function getCurrentImportType(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null)
     {
         if ($dataImporterConfigurationTransfer && $dataImporterConfigurationTransfer->getImportType()) {
             return $dataImporterConfigurationTransfer->getImportType();

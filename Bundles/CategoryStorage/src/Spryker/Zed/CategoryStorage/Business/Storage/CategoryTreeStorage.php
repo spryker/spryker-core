@@ -100,7 +100,7 @@ class CategoryTreeStorage implements CategoryTreeStorageInterface
      *
      * @return void
      */
-    protected function storeDataSet(array $categoryNodeStorageTransfers, $localeName, SpyCategoryTreeStorage $spyCategoryTreeStorage = null)
+    protected function storeDataSet(array $categoryNodeStorageTransfers, $localeName, ?SpyCategoryTreeStorage $spyCategoryTreeStorage = null)
     {
         if ($spyCategoryTreeStorage === null) {
             $spyCategoryTreeStorage = new SpyCategoryTreeStorage();

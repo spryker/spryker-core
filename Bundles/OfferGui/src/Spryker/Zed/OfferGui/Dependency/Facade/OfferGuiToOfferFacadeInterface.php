@@ -18,6 +18,13 @@ interface OfferGuiToOfferFacadeInterface
      *
      * @return \Generated\Shared\Transfer\OfferTransfer
      */
+    public function calculateOffer(OfferTransfer $offerTransfer): OfferTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
+     *
+     * @return \Generated\Shared\Transfer\OfferTransfer
+     */
     public function getOfferById(OfferTransfer $offerTransfer): OfferTransfer;
 
     /**

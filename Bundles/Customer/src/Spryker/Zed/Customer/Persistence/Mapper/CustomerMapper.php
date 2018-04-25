@@ -7,37 +7,23 @@
 
 namespace Spryker\Zed\Customer\Persistence\Mapper;
 
-use Exception;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\SpyCustomerEntityTransfer;
 
 class CustomerMapper implements CustomerMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SpyCustomerEntityTransfer $customerEntityTransfer
+     * @param array $customer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function mapCustomerEntityToCustomer(SpyCustomerEntityTransfer $customerEntityTransfer): CustomerTransfer
+    public function mapCustomerEntityToCustomer(array $customer): CustomerTransfer
     {
         $customerTransfer = (new CustomerTransfer())
             ->fromArray(
-                $customerEntityTransfer->modifiedToArray(),
+                $customer,
                 true
             );
 
         return $customerTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @throws \Exception
-     *
-     * @return \Generated\Shared\Transfer\SpyCustomerEntityTransfer
-     */
-    public function mapCustomerToCustomerEntity(CustomerTransfer $customerTransfer): SpyCustomerEntityTransfer
-    {
-        throw new Exception('Method is not implemented');
     }
 }

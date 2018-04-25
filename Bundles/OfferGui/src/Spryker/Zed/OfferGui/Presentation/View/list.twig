@@ -1,8 +1,9 @@
-{% extends '@Gui/Layout/layout.twig' %}
+{% extends '@OfferGui/_layout/layout.twig' %}
 
-{% block section_title %}
-    {{ 'Overview of Offers' | trans }}
-{% endblock %}
+{% set widget_title = 'Overview of Offers' | trans %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
 
 {% block action %}
     {{ createActionButton('/offer-gui/create', 'Create Offer' | trans) }}

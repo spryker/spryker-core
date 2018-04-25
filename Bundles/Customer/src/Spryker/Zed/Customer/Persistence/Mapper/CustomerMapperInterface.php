@@ -8,21 +8,13 @@
 namespace Spryker\Zed\Customer\Persistence\Mapper;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\SpyCustomerEntityTransfer;
 
 interface CustomerMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SpyCustomerEntityTransfer $customerEntityTransfer
+     * @param array $customer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function mapCustomerEntityToCustomer(SpyCustomerEntityTransfer $customerEntityTransfer): CustomerTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\SpyCustomerEntityTransfer
-     */
-    public function mapCustomerToCustomerEntity(CustomerTransfer $customerTransfer): SpyCustomerEntityTransfer;
+    public function mapCustomerEntityToCustomer(array $customer): CustomerTransfer;
 }

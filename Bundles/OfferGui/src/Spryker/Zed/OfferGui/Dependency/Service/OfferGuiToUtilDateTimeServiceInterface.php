@@ -15,4 +15,11 @@ interface OfferGuiToUtilDateTimeServiceInterface
      * @return string
      */
     public function formatDateTime($date): string;
+
+    /**
+     * @param string $date
+     *
+     * @return string
+     */
+    public function formatDate($date): string;
 }

@@ -54,7 +54,7 @@ class CustomersListType extends AbstractType
      *
      * @return $this
      */
-    protected function addCustomerField(FormBuilderInterface $builder, array $customerList, string $value = null)
+    protected function addCustomerField(FormBuilderInterface $builder, array $customerList, ?string $value = null)
     {
         $builder->add(static::FIELD_CUSTOMER, Select2ComboBoxType::class, [
             'property_path' => QuoteTransfer::CUSTOMER . '.' . CustomerTransfer::ID_CUSTOMER,

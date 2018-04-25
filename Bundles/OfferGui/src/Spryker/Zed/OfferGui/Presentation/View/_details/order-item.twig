@@ -15,6 +15,9 @@
 
 </td>
 <td>
+    {{ orderItem.quantity }}
+</td>
+<td>
     <div>
       {% embed '@OfferGui/View/_details/discounted-price.twig' with {subtotal: orderItem.unitPrice, priceToPay: orderItem.unitPrice - orderItem.unitDiscountAmountFullAggregation | default(0)} %} {% endembed %}
     </div>

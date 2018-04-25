@@ -16,7 +16,7 @@ class OfferItemSubtotalAggregator implements OfferItemSubtotalAggregatorInterfac
      *
      * @return void
      */
-    public function recalculate(CalculableObjectTransfer $calculableObjectTransfer)
+    public function recalculate(CalculableObjectTransfer $calculableObjectTransfer): void
     {
         $itemTransfers = $calculableObjectTransfer->getItems();
 

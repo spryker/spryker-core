@@ -6,12 +6,7 @@
 {% block section_title widget_title %}
 
 {% block content %}
-    {% set quoteType = '' %}
-    {% if (quoteTransfer.type) %}
-        {% set quoteType = ' [' ~ quoteTransfer.type ~ ']' %}
-    {% endif %}
-
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Create Order' | trans ~ quoteType } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Create Order' } %}
         {% block widget_content %}
 
             {% if forms|length %}

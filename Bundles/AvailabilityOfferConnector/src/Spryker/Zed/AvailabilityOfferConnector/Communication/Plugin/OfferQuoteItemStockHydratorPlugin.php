@@ -5,28 +5,28 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Customer\Communication\Plugin\Offer;
+namespace Spryker\Zed\AvailabilityOfferConnector\Communication\Plugin;
 
 use Generated\Shared\Transfer\OfferTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\OfferExtension\Dependency\Plugin\OfferHydratorPluginInterface;
 
 /**
- * @method \Spryker\Zed\Customer\Business\CustomerFacadeInterface getFacade()
- * @method \Spryker\Zed\Customer\Communication\CustomerCommunicationFactory getFactory()
+ * @method \Spryker\Zed\AvailabilityOfferConnector\Business\AvailabilityOfferConnectorFacadeInterface getFacade()
  */
-class OfferCustomerHydratorPlugin extends AbstractPlugin implements OfferHydratorPluginInterface
+class OfferQuoteItemStockHydratorPlugin extends AbstractPlugin implements OfferHydratorPluginInterface
 {
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
      *
      * @return \Generated\Shared\Transfer\OfferTransfer
      */
     public function hydrateOffer(OfferTransfer $offerTransfer): OfferTransfer
     {
-        $offerTransfer = $this->getFacade()
-            ->hydrateOfferWithCustomer($offerTransfer);
-
-        return $offerTransfer;
+        return $this->getFacade()->hydrateOfferWithQuoteItemStock($offerTransfer);
     }
 }

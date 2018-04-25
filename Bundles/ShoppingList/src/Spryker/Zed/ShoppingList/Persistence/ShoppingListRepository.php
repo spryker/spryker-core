@@ -305,7 +305,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
      *
      * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */
-    protected function mapShoppingListEntityToTransfer(SpyShoppingList $shoppingListEntity, ShoppingListTransfer $shoppingListTransfer = null): ShoppingListTransfer
+    protected function mapShoppingListEntityToTransfer(SpyShoppingList $shoppingListEntity, ?ShoppingListTransfer $shoppingListTransfer = null): ShoppingListTransfer
     {
         if (!$shoppingListTransfer) {
             $shoppingListTransfer = new ShoppingListTransfer();

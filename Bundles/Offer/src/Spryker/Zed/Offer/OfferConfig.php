@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Offer;
 
+use Spryker\Shared\Offer\OfferConfig as SharedOfferConfig;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 /**
@@ -15,28 +16,57 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class OfferConfig extends AbstractBundleConfig
 {
     /**
-     * @return string
+     * @uses \Spryker\Shared\Price\PriceConfig::PRICE_MODE_NET
      */
-    public function getStatusInProgress(): string
-    {
-        return $this->getSharedConfig()->getStatusInProgress();
-    }
+    public const PRICE_MODE_NET = 'NET_MODE';
+
+    /**
+     * @uses \Spryker\Shared\Price\PriceConfig::PRICE_MODE_GROSS
+     */
+    public const PRICE_MODE_GROSS = 'GROSS_MODE';
 
     /**
      * @return string
      */
-    public function getStatusOrder(): string
+    public function getInitialStatus(): string
     {
-        return $this->getSharedConfig()->getStatusOrder();
+        return SharedOfferConfig::STATUS_PENDING;
     }
 
     /**
      * @return array
      */
-    public function getUnconvertedOfferStatuses(): array
+    public function getIncompleteOfferStatuses(): array
     {
         return [
-            $this->getStatusInProgress(),
+            SharedOfferConfig::STATUS_PENDING,
+            SharedOfferConfig::STATUS_ON_OVERVIEW,
+            SharedOfferConfig::STATUS_CONFIRMED_BY_CUSTOMER,
+            SharedOfferConfig::STATUS_SENT_TO_CUSTOMER,
         ];
+    }
+
+    /**
+     * @return string
+     */
+    public function getConvertedStatus(): string
+    {
+        return SharedOfferConfig::STATUS_CLOSE;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPriceModeNet()
+    {
+        return static::PRICE_MODE_NET;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPriceModeGross()
+    {
+        return static::PRICE_MODE_GROSS;
     }
 }

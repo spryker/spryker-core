@@ -78,7 +78,11 @@ class OfferWriter implements OfferWriterInterface
     {
         $offerTransfer->requireIdOffer();
         $offerTransfer = $this->offerEntityManager->updateOffer($offerTransfer);
-        $offerResponseTransfer = $this->offerPluginExecutor->updateOffer($offerTransfer);
+        $offerResponseTransfer = new OfferResponseTransfer();
+        $offerResponseTransfer->setIsSuccessful(true);
+
+        $pluginOfferResponseTransfer = $this->offerPluginExecutor->updateOffer($offerTransfer);
+        $offerResponseTransfer->fromArray($pluginOfferResponseTransfer->toArray(), true);
 
         return $offerResponseTransfer;
     }
@@ -107,7 +111,7 @@ class OfferWriter implements OfferWriterInterface
      */
     protected function executeCreateOffer(OfferTransfer $offerTransfer)
     {
-        $offerTransfer->setStatus($this->offerConfig->getStatusInProgress());
+        $offerTransfer->setStatus($this->offerConfig->getInitialStatus());
         $offerTransfer = $this->offerEntityManager->createOffer($offerTransfer);
         $offerTransfer->getQuote()->setCheckoutConfirmed(true);
 

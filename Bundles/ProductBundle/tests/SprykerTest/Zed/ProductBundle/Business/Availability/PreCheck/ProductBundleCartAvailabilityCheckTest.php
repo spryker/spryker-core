@@ -112,9 +112,9 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\PreCheck\ProductBundleCartAvailabilityCheckInterface
      */
     protected function createProductBundleCartAvailabilityCheckMock(
-        ProductBundleToAvailabilityInterface $availabilityFacadeMock = null,
-        ProductBundleToAvailabilityQueryContainerInterface $availabilityQueryContainerMock = null,
-        ProductBundleToStoreFacadeInterface $storeFacadeMock = null
+        ?ProductBundleToAvailabilityInterface $availabilityFacadeMock = null,
+        ?ProductBundleToAvailabilityQueryContainerInterface $availabilityQueryContainerMock = null,
+        ?ProductBundleToStoreFacadeInterface $storeFacadeMock = null
     ) {
 
         if ($availabilityFacadeMock === null) {

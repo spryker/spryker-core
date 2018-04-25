@@ -16,8 +16,6 @@ use Spryker\Zed\Customer\Business\Customer\CustomerReaderInterface;
 use Spryker\Zed\Customer\Business\Customer\EmailValidator;
 use Spryker\Zed\Customer\Business\CustomerExpander\CustomerExpander;
 use Spryker\Zed\Customer\Business\Model\CustomerOrderSaver as ObsoleteCustomerOrderSaver;
-use Spryker\Zed\Customer\Business\Model\Hydrator\OfferCustomerHydrator;
-use Spryker\Zed\Customer\Business\Model\Hydrator\OfferCustomerHydratorInterface;
 use Spryker\Zed\Customer\Business\Model\PreConditionChecker;
 use Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGenerator;
 use Spryker\Zed\Customer\Business\Sales\CustomerOrderHydrator;
@@ -221,16 +219,6 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     {
         return new CustomerExpander(
             $this->getCustomerTransferExpanderPlugins()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Customer\Business\Model\Hydrator\OfferCustomerHydratorInterface
-     */
-    public function createOfferCustomerHydrator(): OfferCustomerHydratorInterface
-    {
-        return new OfferCustomerHydrator(
-            $this->createCustomer()
         );
     }
 }
