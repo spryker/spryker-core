@@ -17,7 +17,7 @@ abstract class AbstractLocator implements LocatorLocatorInterface
      *
      * @return \Spryker\Shared\Kernel\BundleProxy
      */
-    public function __call($bundle, array $arguments = null)
+    public function __call($bundle, ?array $arguments = null)
     {
         return $this->getBundleProxy()->setBundle($bundle);
     }

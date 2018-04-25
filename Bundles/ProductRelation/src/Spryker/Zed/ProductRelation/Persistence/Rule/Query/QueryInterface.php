@@ -21,5 +21,5 @@ interface QueryInterface
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */
-    public function prepareQuery(RuleQueryDataProviderTransfer $dataProviderTransfer = null);
+    public function prepareQuery(?RuleQueryDataProviderTransfer $dataProviderTransfer = null);
 }

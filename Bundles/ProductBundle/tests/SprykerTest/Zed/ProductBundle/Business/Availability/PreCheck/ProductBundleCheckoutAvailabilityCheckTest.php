@@ -90,8 +90,8 @@ class ProductBundleCheckoutAvailabilityCheckTest extends PreCheckMocks
      * @return \PHPUnit\Framework\MockObject\MockObject
      */
     protected function createProductBundleCheckoutAvailabilityCheckMock(
-        ProductBundleToAvailabilityInterface $availabilityFacadeMock = null,
-        ProductBundleToStoreFacadeInterface $storeFacadeMock = null
+        ?ProductBundleToAvailabilityInterface $availabilityFacadeMock = null,
+        ?ProductBundleToStoreFacadeInterface $storeFacadeMock = null
     ) {
 
         if ($availabilityFacadeMock === null) {

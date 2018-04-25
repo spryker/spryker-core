@@ -234,8 +234,8 @@ class DiscountPersistTest extends Unit
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Discount\Business\Persistence\DiscountPersist
      */
     protected function createDiscountPersist(
-        DiscountQueryContainerInterface $discountQueryContainerMock = null,
-        VoucherEngineInterface $voucherEngineMock = null
+        ?DiscountQueryContainerInterface $discountQueryContainerMock = null,
+        ?VoucherEngineInterface $voucherEngineMock = null
     ) {
 
         if (!$discountQueryContainerMock) {

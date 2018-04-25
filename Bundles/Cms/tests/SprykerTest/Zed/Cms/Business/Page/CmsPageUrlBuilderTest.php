@@ -77,7 +77,7 @@ class CmsPageUrlBuilderTest extends CmsMocks
      *
      * @return \Spryker\Zed\Cms\Business\Page\CmsPageUrlBuilder
      */
-    protected function createCmsUrlBuilder(CmsConfig $cmsConfigMock = null)
+    protected function createCmsUrlBuilder(?CmsConfig $cmsConfigMock = null)
     {
         if ($cmsConfigMock === null) {
             $cmsConfigMock = $this->createCmsConfigMock();

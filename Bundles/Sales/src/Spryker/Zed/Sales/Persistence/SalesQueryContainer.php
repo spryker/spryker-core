@@ -171,7 +171,7 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
-    public function querySalesOrdersByCustomerId($idCustomer, Criteria $criteria = null)
+    public function querySalesOrdersByCustomerId($idCustomer, ?Criteria $criteria = null)
     {
         $query = $this->getFactory()->createSalesOrderQuery();
         $query->filterByFkCustomer($idCustomer);
@@ -210,7 +210,7 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
-    public function queryCustomerOrders($idCustomer, FilterTransfer $filterTransfer = null)
+    public function queryCustomerOrders($idCustomer, ?FilterTransfer $filterTransfer = null)
     {
         $criteria = new Criteria();
         if ($filterTransfer !== null) {
