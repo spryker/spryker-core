@@ -12,4 +12,6 @@ class ProductMeasurementUnitDataSet
     const KEY_DEFAULT_PRECISION = 'default_precision';
     const KEY_NAME = 'name';
     const KEY_CODE = 'code';
+
+    const  DEFAULT_PRECISION = 1;
 }

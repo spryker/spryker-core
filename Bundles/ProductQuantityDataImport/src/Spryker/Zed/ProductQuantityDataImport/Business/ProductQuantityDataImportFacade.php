@@ -30,7 +30,7 @@ class ProductQuantityDataImportFacade extends AbstractFacade implements ProductQ
     public function import(DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
         return $this->getFactory()
-            ->createProductQuantityDataImporter()
+            ->getProductQuantityDataImporter()
             ->import($dataImporterConfigurationTransfer);
     }
 }

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductMeasurementUnitDataImport\Business;
 
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
+use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
 use Spryker\Zed\ProductMeasurementUnitDataImport\Business\Model\ProductMeasurementUnitWriterStep;
 
 /**
@@ -18,15 +19,23 @@ class ProductMeasurementUnitDataImportBusinessFactory extends DataImportBusiness
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
-    public function createProductMeasurementUnitDataImporter()
+    public function getProductMeasurementUnitDataImporter(): DataImporterInterface
     {
         $dataImporter = $this->getCsvDataImporterFromConfig($this->getConfig()->getProductMeasurementUnitDataImportConfiguration());
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
-        $dataSetStepBroker->addStep(new ProductMeasurementUnitWriterStep());
+        $dataSetStepBroker->addStep($this->createProductMeasurementUnitWriterStep());
 
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
 
         return $dataImporter;
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMeasurementUnitDataImport\Business\Model\ProductMeasurementUnitWriterStep
+     */
+    public function createProductMeasurementUnitWriterStep(): ProductMeasurementUnitWriterStep
+    {
+        return new ProductMeasurementUnitWriterStep();
     }
 }
