@@ -38,17 +38,16 @@ class CustomerAccessGuiCommunicationFactory extends AbstractCommunicationFactory
 
     /**
      * @param \Generated\Shared\Transfer\CustomerAccessTransfer|null $customerAccessTransfer
+     * @param array $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getCustomerAccessForm(CustomerAccessTransfer $customerAccessTransfer = null)
+    public function getCustomerAccessForm(?CustomerAccessTransfer $customerAccessTransfer, array $options)
     {
         return $this->getFormFactory()->create(
             CustomerAccessForm::class,
             $customerAccessTransfer,
-            [
-                'data_class' => CustomerAccessTransfer::class,
-            ]
+            $options
         );
     }
 }

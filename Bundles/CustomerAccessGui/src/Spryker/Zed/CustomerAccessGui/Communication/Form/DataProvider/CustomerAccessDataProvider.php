@@ -36,7 +36,7 @@ class CustomerAccessDataProvider
     /**
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
-    public function getData()
+    public function getData(): CustomerAccessTransfer
     {
         return $this->customerAccessTransfer;
     }
@@ -44,10 +44,11 @@ class CustomerAccessDataProvider
     /**
      * @return array
      */
-    public function getOptions()
+    public function getOptions(): array
     {
         return [
-            CustomerAccessForm::FIELD_CONTENT_TYPE_ACCESS => $this->customerAccessFacade->findAllContentTypes()->getContentTypeAccess(),
+            'data_class' => CustomerAccessTransfer::class,
+            CustomerAccessForm::OPTION_CONTENT_TYPE_ACCESS => $this->customerAccessFacade->getAllContentTypes()->getContentTypeAccess(),
         ];
     }
 }

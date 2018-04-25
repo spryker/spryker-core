@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CustomerAccess\Persistence;
 
+use Generated\Shared\Transfer\ContentTypeAccessTransfer;
 use Generated\Shared\Transfer\CustomerAccessTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -24,7 +25,7 @@ class CustomerAccessRepository extends AbstractRepository implements CustomerAcc
      *
      * @return \Generated\Shared\Transfer\ContentTypeAccessTransfer|null
      */
-    public function findCustomerAccessByContentType($contentType)
+    public function findCustomerAccessByContentType($contentType): ?ContentTypeAccessTransfer
     {
         $customerAccessEntity = $this->buildQueryFromCriteria(
             $this->getFactory()

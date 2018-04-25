@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CustomerAccessGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\CustomerAccessTransfer;
+
 class CustomerAccessGuiToCustomerAccessFacadeBridge implements CustomerAccessGuiToCustomerAccessFacadeInterface
 {
     /**
@@ -25,34 +27,26 @@ class CustomerAccessGuiToCustomerAccessFacadeBridge implements CustomerAccessGui
     /**
      * @param \Generated\Shared\Transfer\CustomerAccessTransfer $customerAccessTransfer
      *
-     * @return void
-     */
-    public function updateOnlyContentTypesToAccessible($customerAccessTransfer)
-    {
-        $this->customerAccessFacade->updateOnlyContentTypesToAccessible($customerAccessTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @return array
-     */
-    public function findAllContentTypes()
-    {
-        return $this->customerAccessFacade->findAllContentTypes();
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
-    public function findUnauthenticatedCustomerAccess()
+    public function updateUnauthenticatedCustomerAccess(CustomerAccessTransfer $customerAccessTransfer): CustomerAccessTransfer
     {
-        return $this->customerAccessFacade->findUnauthenticatedCustomerAccess();
+        return $this->customerAccessFacade->updateUnauthenticatedCustomerAccess($customerAccessTransfer);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CustomerAccessTransfer
+     */
+    public function getAllContentTypes(): CustomerAccessTransfer
+    {
+        return $this->customerAccessFacade->getAllContentTypes();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CustomerAccessTransfer
+     */
+    public function getContentTypesWithUnauthenticatedCustomerAccess(): CustomerAccessTransfer
+    {
+        return $this->customerAccessFacade->getContentTypesWithUnauthenticatedCustomerAccess();
     }
 }

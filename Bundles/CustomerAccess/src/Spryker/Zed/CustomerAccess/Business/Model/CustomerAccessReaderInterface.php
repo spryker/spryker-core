@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\CustomerAccess\Business\Model;
 
+use Generated\Shared\Transfer\ContentTypeAccessTransfer;
+use Generated\Shared\Transfer\CustomerAccessTransfer;
+
 interface CustomerAccessReaderInterface
 {
     /**
@@ -14,15 +17,15 @@ interface CustomerAccessReaderInterface
      *
      * @return \Generated\Shared\Transfer\ContentTypeAccessTransfer|null
      */
-    public function findCustomerAccessByContentType($contentType);
+    public function findCustomerAccessByContentType($contentType): ?ContentTypeAccessTransfer;
 
     /**
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
-    public function getUnauthenticatedCustomerAccess();
+    public function getContentTypesWithUnauthenticatedCustomerAccess(): CustomerAccessTransfer;
 
     /**
-     * @return \Generated\Shared\Transfer\ContentTypeAccessTransfer[]
+     * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
-    public function getAllContentTypes();
+    public function getAllContentTypes(): CustomerAccessTransfer;
 }

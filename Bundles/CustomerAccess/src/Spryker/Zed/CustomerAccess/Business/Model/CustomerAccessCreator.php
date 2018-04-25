@@ -7,28 +7,32 @@
 
 namespace Spryker\Zed\CustomerAccess\Business\Model;
 
-use Generated\Shared\Transfer\ContentTypeAccessTransfer;
 use Generated\Shared\Transfer\CustomerAccessTransfer;
-use Orm\Zed\CustomerAccess\Persistence\SpyUnauthenticatedCustomerAccess;
+use Spryker\Zed\CustomerAccess\Persistence\CustomerAccessEntityManagerInterface;
 
 class CustomerAccessCreator implements CustomerAccessCreatorInterface
 {
+    /**
+     * @var \Spryker\Zed\CustomerAccess\Persistence\CustomerAccessEntityManagerInterface
+     */
+    protected $entityManager;
+
+    /**
+     * @param \Spryker\Zed\CustomerAccess\Persistence\CustomerAccessEntityManagerInterface $entityManager
+     */
+    public function __construct(CustomerAccessEntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
+
     /**
      * @param string $contentType
      * @param bool $hasAccess
      *
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
-    public function createCustomerAccess($contentType, $hasAccess)
+    public function createCustomerAccess($contentType, $hasAccess): CustomerAccessTransfer
     {
-        $customerAccess = new SpyUnauthenticatedCustomerAccess();
-        $customerAccess->setContentType($contentType);
-        $customerAccess->setHasAccess($hasAccess);
-
-        $customerAccess->save();
-
-        $contentTypeAccess = (new ContentTypeAccessTransfer())->setHasAccess($hasAccess)->setContentType($contentType);
-
-        return (new CustomerAccessTransfer())->addContentTypeAccess($contentTypeAccess);
+        return $this->entityManager->createCustomerAccess($contentType, $hasAccess);
     }
 }

@@ -15,28 +15,28 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class IndexController extends AbstractController
 {
+    protected const MESSAGE_UPDATE_SUCCESS = 'Not logged in customer accessible content has been successfully updated.';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): array
     {
         $customerAccessDataProvider = $this->getFactory()->createCustomerAccessDataProvider(
-            $this->getFactory()->getCustomerAccessFacade()->findUnauthenticatedCustomerAccess()
+            $this->getFactory()->getCustomerAccessFacade()->getContentTypesWithUnauthenticatedCustomerAccess()
         );
 
-        $customerAccessForm = $this->getFactory()->getCustomerAccessForm($customerAccessDataProvider->getData());
+        $customerAccessForm = $this->getFactory()->getCustomerAccessForm($customerAccessDataProvider->getData(), $customerAccessDataProvider->getOptions());
 
-        if ($request->request->count() > 0) {
-            $customerAccessForm->handleRequest($request);
+        $customerAccessForm->handleRequest($request);
 
-            if ($customerAccessForm->isSubmitted() && $customerAccessForm->isValid()) {
-                $this->getFactory()
-                    ->getCustomerAccessFacade()
-                    ->updateOnlyContentTypesToAccessible($customerAccessForm->getData());
-                $this->addSuccessMessage('Not logged in customer accessible content has been successfully updated.');
-            }
+        if ($customerAccessForm->isSubmitted() && $customerAccessForm->isValid()) {
+            $this->getFactory()
+                ->getCustomerAccessFacade()
+                ->updateUnauthenticatedCustomerAccess($customerAccessForm->getData());
+            $this->addSuccessMessage(static::MESSAGE_UPDATE_SUCCESS);
         }
 
         return [

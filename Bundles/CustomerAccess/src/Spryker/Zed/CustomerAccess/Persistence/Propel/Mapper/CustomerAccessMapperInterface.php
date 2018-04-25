@@ -13,8 +13,16 @@ use Generated\Shared\Transfer\SpyUnauthenticatedCustomerAccessEntityTransfer;
 interface CustomerAccessMapperInterface
 {
     /**
-     * @param SpyUnauthenticatedCustomerAccessEntityTransfer $customerAccessEntity
-     * @return ContentTypeAccessTransfer
+     * @param \Generated\Shared\Transfer\SpyUnauthenticatedCustomerAccessEntityTransfer $customerAccessEntity
+     *
+     * @return \Generated\Shared\Transfer\ContentTypeAccessTransfer
      */
     public function mapEntityToTransfer(SpyUnauthenticatedCustomerAccessEntityTransfer $customerAccessEntity): ContentTypeAccessTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ContentTypeAccessTransfer $customerAccessEntity
+     *
+     * @return \Generated\Shared\Transfer\SpyUnauthenticatedCustomerAccessEntityTransfer
+     */
+    public function mapTransferToEntity(ContentTypeAccessTransfer $customerAccessEntity): SpyUnauthenticatedCustomerAccessEntityTransfer;
 }

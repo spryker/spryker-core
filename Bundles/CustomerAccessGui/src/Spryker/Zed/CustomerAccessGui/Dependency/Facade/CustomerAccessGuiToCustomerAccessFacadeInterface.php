@@ -7,32 +7,24 @@
 
 namespace Spryker\Zed\CustomerAccessGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\CustomerAccessTransfer;
+
 interface CustomerAccessGuiToCustomerAccessFacadeInterface
 {
     /**
-     * @param string[] $customerAccessTransfer
-     *
-     * @return void
-     */
-    public function updateOnlyContentTypesToAccessible($customerAccessTransfer);
-
-    /**
-     * Specification:
-     * - Returns all content types from the database table
-     *
-     * @api
-     *
-     * @return array
-     */
-    public function findAllContentTypes();
-
-    /**
-     * Specification:
-     * - Returns the all content types that the customer can see when not logged-in in a CustomerAccessTransfer object
-     *
-     * @api
+     * @param \Generated\Shared\Transfer\CustomerAccessTransfer $customerAccessTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
-    public function findUnauthenticatedCustomerAccess();
+    public function updateUnauthenticatedCustomerAccess(CustomerAccessTransfer $customerAccessTransfer): CustomerAccessTransfer;
+
+    /**
+     * @return \Generated\Shared\Transfer\CustomerAccessTransfer
+     */
+    public function getAllContentTypes(): CustomerAccessTransfer;
+
+    /**
+     * @return \Generated\Shared\Transfer\CustomerAccessTransfer
+     */
+    public function getContentTypesWithUnauthenticatedCustomerAccess(): CustomerAccessTransfer;
 }

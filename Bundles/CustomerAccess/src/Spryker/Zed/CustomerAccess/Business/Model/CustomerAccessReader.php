@@ -9,18 +9,17 @@ namespace Spryker\Zed\CustomerAccess\Business\Model;
 
 use Generated\Shared\Transfer\ContentTypeAccessTransfer;
 use Generated\Shared\Transfer\CustomerAccessTransfer;
-use Spryker\Zed\CustomerAccess\Persistence\CustomerAccessQueryContainerInterface;
 use Spryker\Zed\CustomerAccess\Persistence\CustomerAccessRepositoryInterface;
 
 class CustomerAccessReader implements CustomerAccessReaderInterface
 {
     /**
-     * @var CustomerAccessRepositoryInterface
+     * @var \Spryker\Zed\CustomerAccess\Persistence\CustomerAccessRepositoryInterface
      */
     protected $customerAccessRepository;
 
     /**
-     * @param CustomerAccessRepositoryInterface $customerAccessRepository
+     * @param \Spryker\Zed\CustomerAccess\Persistence\CustomerAccessRepositoryInterface $customerAccessRepository
      */
     public function __construct(CustomerAccessRepositoryInterface $customerAccessRepository)
     {
@@ -32,7 +31,7 @@ class CustomerAccessReader implements CustomerAccessReaderInterface
      *
      * @return \Generated\Shared\Transfer\ContentTypeAccessTransfer|null
      */
-    public function findCustomerAccessByContentType($contentType)
+    public function findCustomerAccessByContentType($contentType): ?ContentTypeAccessTransfer
     {
         return $this->customerAccessRepository->findCustomerAccessByContentType($contentType);
     }
@@ -40,7 +39,7 @@ class CustomerAccessReader implements CustomerAccessReaderInterface
     /**
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
-    public function getUnauthenticatedCustomerAccess(): CustomerAccessTransfer
+    public function getContentTypesWithUnauthenticatedCustomerAccess(): CustomerAccessTransfer
     {
         return $this->customerAccessRepository->getContentTypesWithUnauthenticatedCustomerAccess();
     }

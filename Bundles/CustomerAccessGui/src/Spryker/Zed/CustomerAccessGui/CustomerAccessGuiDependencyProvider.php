@@ -13,28 +13,31 @@ use Spryker\Zed\Kernel\Container;
 
 class CustomerAccessGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_CUSTOMER_ACCESS = 'FACADE_CUSTOMER_ACCESS';
+    public const FACADE_CUSTOMER_ACCESS = 'FACADE_CUSTOMER_ACCESS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideCommunicationLayerDependencies(Container $container)
+    public function provideCommunicationLayerDependencies(Container $container): Container
     {
-        $this->addCustomerAccessFacade($container);
+        $container = $this->addCustomerAccessFacade($container);
+
         return $container;
     }
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return void
+     * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCustomerAccessFacade(Container $container)
+    protected function addCustomerAccessFacade(Container $container): Container
     {
         $container[static::FACADE_CUSTOMER_ACCESS] = function (Container $container) {
             return new CustomerAccessGuiToCustomerAccessFacadeBridge($container->getLocator()->customerAccess()->facade());
         };
+
+        return $container;
     }
 }

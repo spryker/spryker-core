@@ -2,9 +2,9 @@
 [![Build Status](https://travis-ci.org/spryker/customer-access.svg)](https://travis-ci.org/spryker/customer-access)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/customer-access/badge.svg)](https://coveralls.io/github/spryker/customer-access)
 
-Contains the initial installation for CustomerAccess where it adds to the database tables the entries configured on project level with the default access type
+Contains installation for CustomerAccess where it adds to the database tables the entries configured on project level with the default access type
 
-Has logic to update specific content types to be accessible to unauthenticated customers
+Has logic to update specific content types to be accessible for unauthenticated customers
 
 ## Installation
 

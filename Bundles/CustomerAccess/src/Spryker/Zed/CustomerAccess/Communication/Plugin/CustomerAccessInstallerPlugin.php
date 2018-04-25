@@ -19,7 +19,7 @@ class CustomerAccessInstallerPlugin extends AbstractPlugin implements InstallerP
     /**
      * @return void
      */
-    public function install()
+    public function install(): void
     {
         $this->getFacade()->install();
     }

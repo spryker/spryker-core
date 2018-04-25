@@ -13,13 +13,13 @@ interface CustomerAccessFacadeInterface
 {
     /**
      * Specification:
-     * - Installs the necessary data for access of unauthenticated customers from config
+     * - Run installer, that fills table with restricted access to configured content types for unauthenticated customers
      *
      * @api
      *
      * @return void
      */
-    public function install();
+    public function install(): void;
 
     /**
      * Specification:
@@ -29,7 +29,7 @@ interface CustomerAccessFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
-    public function findUnauthenticatedCustomerAccess();
+    public function getContentTypesWithUnauthenticatedCustomerAccess(): CustomerAccessTransfer;
 
     /**
      * Specification:
@@ -37,19 +37,20 @@ interface CustomerAccessFacadeInterface
      *
      * @api
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
-    public function findAllContentTypes();
+    public function getAllContentTypes(): CustomerAccessTransfer;
 
     /**
      * Specification:
-     * - Updates only these content types supplied to accessible (hasAccess->true)
+     * - Updates unauthenticated customer access entities
+     * - Marks all content types as has no access and listed as has access
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerAccessTransfer $customerAccessTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
-    public function updateOnlyContentTypesToAccessible(CustomerAccessTransfer $customerAccessTransfer);
+    public function updateUnauthenticatedCustomerAccess(CustomerAccessTransfer $customerAccessTransfer): CustomerAccessTransfer;
 }

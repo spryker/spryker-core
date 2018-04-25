@@ -13,11 +13,22 @@ use Generated\Shared\Transfer\SpyUnauthenticatedCustomerAccessEntityTransfer;
 class CustomerAccessMapper implements CustomerAccessMapperInterface
 {
     /**
-     * @param SpyUnauthenticatedCustomerAccessEntityTransfer $customerAccessEntity
-     * @return ContentTypeAccessTransfer
+     * @param \Generated\Shared\Transfer\SpyUnauthenticatedCustomerAccessEntityTransfer $customerAccessEntity
+     *
+     * @return \Generated\Shared\Transfer\ContentTypeAccessTransfer
      */
     public function mapEntityToTransfer(SpyUnauthenticatedCustomerAccessEntityTransfer $customerAccessEntity): ContentTypeAccessTransfer
     {
         return (new ContentTypeAccessTransfer())->fromArray($customerAccessEntity->toArray(), true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ContentTypeAccessTransfer $customerAccessEntity
+     *
+     * @return \Generated\Shared\Transfer\SpyUnauthenticatedCustomerAccessEntityTransfer
+     */
+    public function mapTransferToEntity(ContentTypeAccessTransfer $customerAccessEntity): SpyUnauthenticatedCustomerAccessEntityTransfer
+    {
+        return (new SpyUnauthenticatedCustomerAccessEntityTransfer())->fromArray($customerAccessEntity->toArray());
     }
 }

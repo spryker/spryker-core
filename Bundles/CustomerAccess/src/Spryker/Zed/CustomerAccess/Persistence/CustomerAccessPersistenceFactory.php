@@ -12,6 +12,9 @@ use Spryker\Zed\CustomerAccess\Persistence\Propel\Mapper\CustomerAccessMapper;
 use Spryker\Zed\CustomerAccess\Persistence\Propel\Mapper\CustomerAccessMapperInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
+/**
+ * @method \Spryker\Zed\CustomerAccess\CustomerAccessConfig getConfig()
+ */
 class CustomerAccessPersistenceFactory extends AbstractPersistenceFactory
 {
     /**
@@ -23,7 +26,7 @@ class CustomerAccessPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return CustomerAccessMapperInterface
+     * @return \Spryker\Zed\CustomerAccess\Persistence\Propel\Mapper\CustomerAccessMapperInterface
      */
     public function createCustomerAccessMapper(): CustomerAccessMapperInterface
     {

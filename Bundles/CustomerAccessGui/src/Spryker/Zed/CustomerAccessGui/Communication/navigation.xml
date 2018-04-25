@@ -8,7 +8,6 @@
                 <bundle>customer-access-gui</bundle>
                 <controller>index</controller>
                 <action>index</action>
-                <visible>1</visible>
             </customer-access>
         </pages>
     </customer>

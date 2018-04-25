@@ -22,7 +22,7 @@ class CustomerAccessFacade extends AbstractFacade implements CustomerAccessFacad
      *
      * @return void
      */
-    public function install()
+    public function install(): void
     {
         $this->getFactory()->createInstaller()->install();
     }
@@ -34,9 +34,9 @@ class CustomerAccessFacade extends AbstractFacade implements CustomerAccessFacad
      *
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
-    public function findUnauthenticatedCustomerAccess()
+    public function getContentTypesWithUnauthenticatedCustomerAccess(): CustomerAccessTransfer
     {
-        return $this->getFactory()->createCustomerAccessReader()->getUnauthenticatedCustomerAccess();
+        return $this->getFactory()->createCustomerAccessReader()->getContentTypesWithUnauthenticatedCustomerAccess();
     }
 
     /**
@@ -44,22 +44,24 @@ class CustomerAccessFacade extends AbstractFacade implements CustomerAccessFacad
      *
      * @api
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
-    public function findAllContentTypes()
+    public function getAllContentTypes(): CustomerAccessTransfer
     {
         return $this->getFactory()->createCustomerAccessReader()->getAllContentTypes();
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CustomerAccessTransfer $customerAccessTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
-    public function updateOnlyContentTypesToAccessible(CustomerAccessTransfer $customerAccessTransfer)
+    public function updateUnauthenticatedCustomerAccess(CustomerAccessTransfer $customerAccessTransfer): CustomerAccessTransfer
     {
-        $this->getFactory()->createCustomerAccessUpdater()->updateOnlyContentTypesToAccessible($customerAccessTransfer);
+        return $this->getFactory()->createCustomerAccessUpdater()->updateUnauthenticatedCustomerAccess($customerAccessTransfer);
     }
 }

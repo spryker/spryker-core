@@ -14,7 +14,7 @@ interface CustomerAccessUpdaterInterface
     /**
      * @param \Generated\Shared\Transfer\CustomerAccessTransfer $customerAccessTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
-    public function updateOnlyContentTypesToAccessible(CustomerAccessTransfer $customerAccessTransfer);
+    public function updateUnauthenticatedCustomerAccess(CustomerAccessTransfer $customerAccessTransfer): CustomerAccessTransfer;
 }

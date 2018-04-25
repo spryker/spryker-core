@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\CustomerAccess\CustomerAccessConfig getConfig()
- * @method \Spryker\Zed\CustomerAccess\Persistence\CustomerAccessQueryContainerInterface getQueryContainer()
  */
 class CustomerAccessCommunicationFactory extends AbstractCommunicationFactory
 {

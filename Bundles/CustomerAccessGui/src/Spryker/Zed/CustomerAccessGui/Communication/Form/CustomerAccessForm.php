@@ -12,13 +12,26 @@ use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @method \Spryker\Zed\CustomerAccessGui\Communication\CustomerAccessGuiCommunicationFactory getFactory()
  */
 class CustomerAccessForm extends AbstractType
 {
-    const FIELD_CONTENT_TYPE_ACCESS = 'contentTypeAccess';
+    public const OPTION_CONTENT_TYPE_ACCESS = 'OPTION_CONTENT_TYPE_ACCESS';
+    protected const FIELD_CONTENT_TYPE_ACCESS = 'contentTypeAccess';
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        parent::configureOptions($resolver);
+        $resolver->setRequired(static::OPTION_CONTENT_TYPE_ACCESS);
+    }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -26,26 +39,27 @@ class CustomerAccessForm extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addContentTypeAccess($builder);
+        $this->addContentTypeAccess($builder, $options);
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
-     * @return void
+     * @return \Spryker\Zed\CustomerAccessGui\Communication\Form\CustomerAccessForm
      */
-    protected function addContentTypeAccess(FormBuilderInterface $builder)
+    protected function addContentTypeAccess(FormBuilderInterface $builder, array $options): CustomerAccessForm
     {
-        $builder->add(self::FIELD_CONTENT_TYPE_ACCESS, ChoiceType::class, [
+        $builder->add(static::FIELD_CONTENT_TYPE_ACCESS, ChoiceType::class, [
             'expanded' => true,
             'multiple' => true,
             'required' => false,
             'label' => 'Content Types',
             'choice_label' => 'contentType',
             'choice_value' => 'contentType',
-            'choices' => $this->getFactory()->createCustomerAccessDataProvider()->getOptions()[static::FIELD_CONTENT_TYPE_ACCESS],
+            'choices' => $options[static::OPTION_CONTENT_TYPE_ACCESS],
         ]);
 
         $builder

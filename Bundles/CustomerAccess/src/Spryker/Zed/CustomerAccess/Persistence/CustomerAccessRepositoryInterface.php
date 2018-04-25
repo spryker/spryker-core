@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CustomerAccess\Persistence;
 
+use Generated\Shared\Transfer\ContentTypeAccessTransfer;
 use Generated\Shared\Transfer\CustomerAccessTransfer;
 
 /**
@@ -24,7 +25,7 @@ interface CustomerAccessRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\ContentTypeAccessTransfer|null
      */
-    public function findCustomerAccessByContentType($contentType);
+    public function findCustomerAccessByContentType($contentType): ?ContentTypeAccessTransfer;
 
     /**
      * Specification:

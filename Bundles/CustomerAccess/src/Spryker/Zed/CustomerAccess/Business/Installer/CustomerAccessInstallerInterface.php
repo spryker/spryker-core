@@ -12,5 +12,5 @@ interface CustomerAccessInstallerInterface
     /**
      * @return void
      */
-    public function install();
+    public function install(): void;
 }

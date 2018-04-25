@@ -11,12 +11,12 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CustomerAccessConfig extends AbstractBundleConfig
 {
-    const CONTENT_TYPE_PRICE = 'price';
+    public const CONTENT_TYPE_PRICE = 'price';
 
     /**
      * @return array
      */
-    public function getContentTypes()
+    public function getContentTypes(): array
     {
         return [];
     }
@@ -24,7 +24,7 @@ class CustomerAccessConfig extends AbstractBundleConfig
     /**
      * @return bool
      */
-    public function getDefaultContentTypeAccess()
+    public function getDefaultContentTypeAccess(): bool
     {
         return false;
     }

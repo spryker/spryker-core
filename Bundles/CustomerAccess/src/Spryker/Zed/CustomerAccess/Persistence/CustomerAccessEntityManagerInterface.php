@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CustomerAccess\Business\Model;
+namespace Spryker\Zed\CustomerAccess\Persistence;
 
 use Generated\Shared\Transfer\CustomerAccessTransfer;
 
-interface CustomerAccessCreatorInterface
+interface CustomerAccessEntityManagerInterface
 {
     /**
      * @param string $contentType
@@ -18,4 +18,11 @@ interface CustomerAccessCreatorInterface
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
     public function createCustomerAccess($contentType, $hasAccess): CustomerAccessTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerAccessTransfer $customerAccessTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerAccessTransfer
+     */
+    public function updateUnauthenticatedCustomerAccess(CustomerAccessTransfer $customerAccessTransfer);
 }

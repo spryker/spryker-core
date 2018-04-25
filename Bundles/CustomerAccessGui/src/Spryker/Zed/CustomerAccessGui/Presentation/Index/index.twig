@@ -1,17 +1,8 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
 {% set widget_title = 'Customer Access' %}
-{% block section_title %}{{ widget_title }}{% endblock %}
-
-{#{% block content %}#}
-    {#Content hidden from not logged-in users:#}
-    {#<div>#}
-        {#{% for contentTypeAccess in customerAccess.contentTypeAccess %}#}
-            {#<input name="{{ contentTypeAccess.contentType }}" title="Show/hide {{ contentTypeAccess.contentType }}" type="checkbox" value="{{ contentTypeAccess.canAccess }}"/>#}
-            {#<span>{{ contentTypeAccess.contentType }}</span>#}
-        {#{% endfor %}#}
-    {#</div>#}
-{#{% endblock %}#}
+{% block head_title widget_title %}
+{% block section_title widget_title %}
 
 {% block content %}
 
