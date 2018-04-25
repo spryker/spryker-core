@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Product\Persistence" package="src.Orm.Zed.Product.Persistence">
+
+    <table name="spy_product" idMethod="native" allowPkInsert="true" identifierQuoting="true">
+        <column name="ean" required="false" type="VARCHAR" size="255" default="NULL"/>
+        <unique name="spy_product-ean">
+            <unique-column name="ean"/>
+        </unique>
+    </table>
+
+</database>
