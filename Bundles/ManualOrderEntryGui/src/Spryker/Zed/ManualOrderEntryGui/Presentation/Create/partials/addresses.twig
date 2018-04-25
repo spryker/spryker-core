@@ -1,0 +1,26 @@
+<div class="form-group">
+    <label class="control-label required">Add customer addresses</label>
+
+    <table class="manualOrderAddresses" style="width:80%;">
+        <tr>
+            <td valign="top">
+                <div class="callout">
+                <h4>{{ 'Shipping address' | trans }}</h4>
+
+                {% include '@ManualOrderEntryGui/create/partials/address-selection.twig' with {'addressForm': form.shippingAddress} %}
+                </div>
+            </td>
+            <td valign="top">
+                <div class="callout">
+                <h4>{{ 'Billing address' | trans }}</h4>
+
+                {{ form_widget(form.billingSameAsShipping, {'attr': {'class': '__toggler __inverted'}}) }}
+
+                <div class="__toggler-target">
+                    {% include '@ManualOrderEntryGui/create/partials/address-selection.twig' with {'addressForm': form.billingAddress} %}
+                </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>

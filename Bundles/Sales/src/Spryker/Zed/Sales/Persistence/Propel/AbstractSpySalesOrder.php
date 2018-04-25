@@ -78,7 +78,7 @@ abstract class AbstractSpySalesOrder extends BaseSpySalesOrder
      *
      * @return \Orm\Zed\Customer\Persistence\SpyCustomer The associated SpyCustomer object.
      */
-    public function getCustomer(ConnectionInterface $con = null)
+    public function getCustomer(?ConnectionInterface $con = null)
     {
         if (property_exists($this, static::COL_FK_CUSTOMER)) {
             return parent::getCustomer($con);
@@ -99,7 +99,7 @@ abstract class AbstractSpySalesOrder extends BaseSpySalesOrder
      *
      * @return $this
      */
-    public function setCustomer(SpyCustomer $customerEntity = null)
+    public function setCustomer(?SpyCustomer $customerEntity = null)
     {
         if (property_exists($this, static::COL_FK_CUSTOMER)) {
             parent::setCustomer($customerEntity);

@@ -119,6 +119,14 @@ class StoreToKernelStoreAdapter implements StoreToStoreInterface
     }
 
     /**
+     * @return array
+     */
+    public function getCountries()
+    {
+        return $this->store->getCountries();
+    }
+
+    /**
      * @param string $storeName
      *
      * @return array

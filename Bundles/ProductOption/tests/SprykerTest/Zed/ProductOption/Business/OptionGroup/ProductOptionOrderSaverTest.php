@@ -79,7 +79,7 @@ class ProductOptionOrderSaverTest extends MockProvider
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionOrderSaver
      */
-    protected function createProductOptionOrderSaver(ProductOptionToGlossaryFacadeInterface $glossaryFacadeMock = null)
+    protected function createProductOptionOrderSaver(?ProductOptionToGlossaryFacadeInterface $glossaryFacadeMock = null)
     {
         if (!$glossaryFacadeMock) {
             $glossaryFacadeMock = $this->createGlossaryFacadeMock();

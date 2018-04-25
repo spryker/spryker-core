@@ -88,7 +88,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     {
         return [
             $this->createSumGrossPriceCalculator(),
-            $this->createPriceCrossCalculator(),
+            $this->createPriceGrossCalculator(),
         ];
     }
 
@@ -111,9 +111,19 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface|\Spryker\Zed\Calculation\Business\Model\Calculator\GrossPrice\PriceGrossCalculator
      */
-    protected function createPriceCrossCalculator()
+    public function createPriceGrossCalculator()
     {
         return new PriceGrossCalculator();
+    }
+
+    /**
+     * @deprecated Use createPriceGrossCalculator() instead.
+     *
+     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface|\Spryker\Zed\Calculation\Business\Model\Calculator\GrossPrice\PriceGrossCalculator
+     */
+    protected function createPriceCrossCalculator()
+    {
+        return $this->createPriceGrossCalculator();
     }
 
     /**

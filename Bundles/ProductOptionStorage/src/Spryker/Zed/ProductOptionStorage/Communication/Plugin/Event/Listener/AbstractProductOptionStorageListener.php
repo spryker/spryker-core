@@ -87,7 +87,7 @@ class AbstractProductOptionStorageListener extends AbstractPlugin
      *
      * @return void
      */
-    protected function storeDataSet(SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity, array $productOptions, SpyProductAbstractOptionStorage $spyProductAbstractOptionStorageEntity = null)
+    protected function storeDataSet(SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity, array $productOptions, ?SpyProductAbstractOptionStorage $spyProductAbstractOptionStorageEntity = null)
     {
         if ($spyProductAbstractOptionStorageEntity === null) {
             $spyProductAbstractOptionStorageEntity = new SpyProductAbstractOptionStorage();

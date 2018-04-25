@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CompanyUnitAddressLabel\Business;
 
+use Generated\Shared\Transfer\CompanyUnitAddressLabelCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -17,6 +18,21 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class CompanyUnitAddressLabelFacade extends AbstractFacade implements CompanyUnitAddressLabelFacadeInterface
 {
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idCompanyUnitAddress
+     *
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressLabelCollectionTransfer
+     */
+    public function getCompanyUnitAddressLabelsByAddress(int $idCompanyUnitAddress): CompanyUnitAddressLabelCollectionTransfer
+    {
+        return $this->getRepository()
+            ->findCompanyUnitAddressLabelsByAddress($idCompanyUnitAddress);
+    }
+
     /**
      * {@inheritdoc}
      *
@@ -33,7 +49,6 @@ class CompanyUnitAddressLabelFacade extends AbstractFacade implements CompanyUni
     }
 
     /**
-     *
      * {@inheritdoc}
      *
      * @api

@@ -102,7 +102,7 @@ class CustomerGroupTable extends AbstractTable
      *
      * @return string
      */
-    protected function buildLinks(SpyCustomerGroup $customerGroup = null)
+    protected function buildLinks(?SpyCustomerGroup $customerGroup = null)
     {
         if ($customerGroup === null) {
             return '';

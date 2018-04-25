@@ -102,7 +102,7 @@ class RatepayToGlossaryBridge implements RatepayToGlossaryInterface
      *
      * @return bool
      */
-    public function hasTranslation($keyName, LocaleTransfer $locale = null)
+    public function hasTranslation($keyName, ?LocaleTransfer $locale = null)
     {
         return $this->glossaryFacade->hasTranslation($keyName, $locale);
     }

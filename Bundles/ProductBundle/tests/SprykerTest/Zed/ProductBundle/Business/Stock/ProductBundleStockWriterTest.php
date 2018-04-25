@@ -118,10 +118,10 @@ class ProductBundleStockWriterTest extends Unit
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockWriter
      */
     protected function createProductStockWriterMock(
-        ProductBundleAvailabilityHandlerInterface $productBundleAvailabilityMock = null,
-        ProductBundleQueryContainerInterface $productBundleQueryContainerMock = null,
-        ProductBundleToStockQueryContainerInterface $stockQueryContainerMock = null,
-        ProductBundleToStoreFacadeInterface $storeFacadeMock = null
+        ?ProductBundleAvailabilityHandlerInterface $productBundleAvailabilityMock = null,
+        ?ProductBundleQueryContainerInterface $productBundleQueryContainerMock = null,
+        ?ProductBundleToStockQueryContainerInterface $stockQueryContainerMock = null,
+        ?ProductBundleToStoreFacadeInterface $storeFacadeMock = null
     ) {
         if ($productBundleQueryContainerMock === null) {
             $productBundleQueryContainerMock = $this->createProductBundleQueryContainerMock();
@@ -209,7 +209,7 @@ class ProductBundleStockWriterTest extends Unit
      */
     protected function setupFindProductBundleBySku(
         PHPUnit_Framework_MockObject_MockObject $productStockWriteMock,
-        SpyProductBundle $productBundleEntity = null
+        ?SpyProductBundle $productBundleEntity = null
     ) {
         $productStockWriteMock->method('findProductBundleBySku')->willReturn($productBundleEntity);
 

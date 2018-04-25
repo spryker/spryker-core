@@ -11,4 +11,8 @@
         <property name="labelCollection" type="CompanyUnitAddressLabelCollection"/>
     </transfer>
 
+    <transfer name="CompanyUnitAddressLabel">
+        <property name="name" type="string"/>
+    </transfer>
+
 </transfers>

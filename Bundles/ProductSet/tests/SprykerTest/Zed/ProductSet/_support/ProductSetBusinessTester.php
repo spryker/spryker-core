@@ -35,7 +35,7 @@ class ProductSetBusinessTester extends Actor
      *
      * @return \Generated\Shared\Transfer\ProductSetTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    public function generateProductSetTransfer(array $productSetSeed = [], LocaleTransfer $localeTransfer = null)
+    public function generateProductSetTransfer(array $productSetSeed = [], ?LocaleTransfer $localeTransfer = null)
     {
         if (!$localeTransfer) {
             $localeTransfer = $this->haveLocale();

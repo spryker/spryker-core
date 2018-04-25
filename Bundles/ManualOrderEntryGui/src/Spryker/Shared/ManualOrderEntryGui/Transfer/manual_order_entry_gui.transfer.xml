@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="ManualOrderProduct">
+        <property name="sku" type="string" />
+        <property name="quantity" type="int" />
+        <property name="unitGrossPrice" type="string" />
+        <property name="forcedUnitGrossPrice" type="bool" />
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="idCustomer" type="int" />
+        <property name="store" type="Store" />
+        <property name="currency" type="Currency" />
+        <property name="customer" type="Customer" />
+        <property name="shippingAddress" type="Address" />
+        <property name="billingAddress" type="Address" />
+        <property name="voucherCode" type="string" />
+        <property name="voucherDiscounts" type="Discount[]" />
+        <property name="items" type="Item[]" />
+        <property name="idShipmentMethod" type="int" />
+        <property name="shipment" type="Shipment" />
+        <property name="payment" type="Payment" />
+        <property name="payments" type="Payment[]" />
+
+        <property name="storeCurrency" type="string" />
+        <property name="manualOrderProducts" type="ManualOrderProduct[]" />
+        <property name="manualOrderItems" type="ManualOrderProduct[]" />
+        <property name="isProductPosted" type="bool" />
+        <property name="submitOrder" type="bool" />
+    </transfer>
+
+    <transfer name="Item">
+        <property name="forcedUnitGrossPrice" type="bool" />
+    </transfer>
+
+</transfers>

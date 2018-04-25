@@ -54,7 +54,7 @@ class StepEngineWithBreadcrumbsTest extends AbstractStepEngineTest
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Yves\StepEngine\Dependency\DataContainer\DataContainerInterface
      */
-    protected function getDataContainerMock(AbstractTransfer $dataTransfer = null)
+    protected function getDataContainerMock(?AbstractTransfer $dataTransfer = null)
     {
         $dataContainerMock = $this->getMockBuilder(DataContainerInterface::class)->getMock();
 

@@ -9,6 +9,8 @@ namespace Spryker\Zed\Customer\Persistence;
 
 use Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
+use Spryker\Zed\Customer\Persistence\Mapper\CustomerMapper;
+use Spryker\Zed\Customer\Persistence\Mapper\CustomerMapperInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -31,5 +33,13 @@ class CustomerPersistenceFactory extends AbstractPersistenceFactory
     public function createSpyCustomerAddressQuery()
     {
         return SpyCustomerAddressQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Persistence\Mapper\CustomerMapperInterface
+     */
+    public function createCustomerMapper(): CustomerMapperInterface
+    {
+        return new CustomerMapper();
     }
 }

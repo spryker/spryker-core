@@ -99,9 +99,9 @@ class ProductBundleReaderTest extends Unit
      * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReader|\PHPUnit_Framework_MockObject_MockObject
      */
     protected function createProductBundleReader(
-        ProductBundleQueryContainerInterface $productBundleQueryContainerMock = null,
-        ProductBundleToAvailabilityQueryContainerInterface $productBundleToAvailabilityQueryContainerMock = null,
-        ProductBundleToStoreFacadeInterface $storeFacadeMock = null
+        ?ProductBundleQueryContainerInterface $productBundleQueryContainerMock = null,
+        ?ProductBundleToAvailabilityQueryContainerInterface $productBundleToAvailabilityQueryContainerMock = null,
+        ?ProductBundleToStoreFacadeInterface $storeFacadeMock = null
     ) {
 
         if ($productBundleQueryContainerMock === null) {

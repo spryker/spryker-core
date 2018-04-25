@@ -214,7 +214,7 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
      *
      * @return void
      */
-    public function updateDynamicProductLabelRelations(LoggerInterface $logger = null)
+    public function updateDynamicProductLabelRelations(?LoggerInterface $logger = null)
     {
         $this->getFactory()
             ->createProductAbstractRelationUpdater($logger)

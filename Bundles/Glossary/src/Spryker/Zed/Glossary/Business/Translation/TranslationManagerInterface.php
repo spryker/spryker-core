@@ -112,7 +112,7 @@ interface TranslationManagerInterface
      *
      * @return bool
      */
-    public function hasTranslation($keyName, LocaleTransfer $localeTransfer = null);
+    public function hasTranslation($keyName, ?LocaleTransfer $localeTransfer = null);
 
     /**
      * @param string $keyName
@@ -136,7 +136,7 @@ interface TranslationManagerInterface
      *
      * @return string
      */
-    public function translate($keyName, array $data = [], LocaleTransfer $localeTransfer = null);
+    public function translate($keyName, array $data = [], ?LocaleTransfer $localeTransfer = null);
 
     /**
      * @param int $idKey
@@ -169,7 +169,7 @@ interface TranslationManagerInterface
      *
      * @return void
      */
-    public function touchTranslationForKeyId($idKey, LocaleTransfer $localeTransfer = null);
+    public function touchTranslationForKeyId($idKey, ?LocaleTransfer $localeTransfer = null);
 
     /**
      * @param \Generated\Shared\Transfer\KeyTranslationTransfer $keyTranslationTransfer
