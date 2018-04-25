@@ -32,8 +32,8 @@ class RequestTest extends Unit
      */
     protected function createFullRequest(
         TransferInterface $transfer,
-        TransferInterface $metaTransfer1 = null,
-        TransferInterface $metaTransfer2 = null
+        ?TransferInterface $metaTransfer1 = null,
+        ?TransferInterface $metaTransfer2 = null
     ) {
         $request = new Request();
 

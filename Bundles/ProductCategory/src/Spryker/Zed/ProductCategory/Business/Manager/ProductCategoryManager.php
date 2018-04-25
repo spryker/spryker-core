@@ -50,7 +50,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
         ProductCategoryQueryContainerInterface $productCategoryQueryContainer,
         ProductCategoryToCategoryInterface $categoryFacade,
         ProductCategoryToProductInterface $productFacade,
-        ProductCategoryToEventInterface $eventFacade = null
+        ?ProductCategoryToEventInterface $eventFacade = null
     ) {
         $this->productCategoryQueryContainer = $productCategoryQueryContainer;
         $this->categoryFacade = $categoryFacade;

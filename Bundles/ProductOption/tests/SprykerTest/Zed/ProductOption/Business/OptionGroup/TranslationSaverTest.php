@@ -85,8 +85,8 @@ class TranslationSaverTest extends MockProvider
      * @return \Spryker\Zed\ProductOption\Business\OptionGroup\TranslationSaver
      */
     protected function createTranslationSaver(
-        ProductOptionToGlossaryFacadeInterface $glossaryFacadeMock = null,
-        ProductOptionToLocaleFacadeInterface $localeFacadeMock = null
+        ?ProductOptionToGlossaryFacadeInterface $glossaryFacadeMock = null,
+        ?ProductOptionToLocaleFacadeInterface $localeFacadeMock = null
     ) {
         if (!$glossaryFacadeMock) {
             $glossaryFacadeMock = $this->createGlossaryFacadeMock();

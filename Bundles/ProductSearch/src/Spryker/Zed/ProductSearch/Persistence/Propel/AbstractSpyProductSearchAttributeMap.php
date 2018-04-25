@@ -26,7 +26,7 @@ abstract class AbstractSpyProductSearchAttributeMap extends BaseSpyProductSearch
      *
      * @return bool
      */
-    public function preUpdate(ConnectionInterface $connection = null)
+    public function preUpdate(?ConnectionInterface $connection = null)
     {
         $this->setSynced(false);
 

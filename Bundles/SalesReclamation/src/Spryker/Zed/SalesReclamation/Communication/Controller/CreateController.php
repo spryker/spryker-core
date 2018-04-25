@@ -87,7 +87,7 @@ class CreateController extends AbstractController
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param int[] ...$idsOrderItem
+     * @param int[]|int ...$idsOrderItem
      *
      * @return null|\Generated\Shared\Transfer\ReclamationTransfer
      */

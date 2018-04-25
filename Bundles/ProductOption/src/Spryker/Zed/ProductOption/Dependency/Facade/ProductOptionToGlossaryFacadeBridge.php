@@ -40,7 +40,7 @@ class ProductOptionToGlossaryFacadeBridge implements ProductOptionToGlossaryFaca
      *
      * @return bool
      */
-    public function hasTranslation($keyName, LocaleTransfer $localeTransfer = null)
+    public function hasTranslation($keyName, ?LocaleTransfer $localeTransfer = null)
     {
         return $this->glossaryFacade->hasTranslation($keyName, $localeTransfer);
     }

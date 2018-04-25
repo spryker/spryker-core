@@ -51,7 +51,7 @@ interface StepCollectionInterface extends IteratorAggregate
      *
      * @return \Spryker\Yves\StepEngine\Dependency\Step\StepInterface
      */
-    public function getPreviousStep(StepInterface $currentStep, AbstractTransfer $dataTransfer = null);
+    public function getPreviousStep(StepInterface $currentStep, ?AbstractTransfer $dataTransfer = null);
 
     /**
      * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $currentStep
@@ -74,7 +74,7 @@ interface StepCollectionInterface extends IteratorAggregate
      *
      * @return string
      */
-    public function getPreviousUrl(StepInterface $currentStep, AbstractTransfer $dataTransfer = null);
+    public function getPreviousUrl(StepInterface $currentStep, ?AbstractTransfer $dataTransfer = null);
 
     /**
      * @param \Spryker\Yves\StepEngine\Dependency\Step\StepInterface $currentStep

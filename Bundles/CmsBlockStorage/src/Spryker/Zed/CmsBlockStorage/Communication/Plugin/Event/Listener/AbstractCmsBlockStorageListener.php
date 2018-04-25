@@ -86,7 +86,7 @@ class AbstractCmsBlockStorageListener extends AbstractPlugin
      *
      * @return void
      */
-    protected function storeDataSet(array $blockEntityArray, $localeName, SpyCmsBlockStorage $cmsBlockStorageEntity = null)
+    protected function storeDataSet(array $blockEntityArray, $localeName, ?SpyCmsBlockStorage $cmsBlockStorageEntity = null)
     {
         if ($cmsBlockStorageEntity === null) {
             $cmsBlockStorageEntity = new SpyCmsBlockStorage();

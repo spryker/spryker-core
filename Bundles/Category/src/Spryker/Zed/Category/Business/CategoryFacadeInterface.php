@@ -119,7 +119,7 @@ interface CategoryFacadeInterface
      *
      * @return int
      */
-    public function createCategory(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer = null);
+    public function createCategory(CategoryTransfer $categoryTransfer, ?LocaleTransfer $localeTransfer = null);
 
     /**
      * Specification:
@@ -152,7 +152,7 @@ interface CategoryFacadeInterface
      *
      * @return void
      */
-    public function updateCategory(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer = null);
+    public function updateCategory(CategoryTransfer $categoryTransfer, ?LocaleTransfer $localeTransfer = null);
 
     /**
      * Specification:
@@ -263,7 +263,7 @@ interface CategoryFacadeInterface
      *
      * @return int
      */
-    public function createCategoryNode(NodeTransfer $nodeTransfer, LocaleTransfer $localeTransfer = null, $createUrlPath = true);
+    public function createCategoryNode(NodeTransfer $nodeTransfer, ?LocaleTransfer $localeTransfer = null, $createUrlPath = true);
 
     /**
      * @api
@@ -275,7 +275,7 @@ interface CategoryFacadeInterface
      *
      * @return void
      */
-    public function updateCategoryNode(NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer = null);
+    public function updateCategoryNode(NodeTransfer $categoryNodeTransfer, ?LocaleTransfer $localeTransfer = null);
 
     /**
      * Specification:

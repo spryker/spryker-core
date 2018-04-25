@@ -157,7 +157,7 @@ class NavigationFacade extends AbstractFacade implements NavigationFacadeInterfa
      *
      * @return \Generated\Shared\Transfer\NavigationTreeTransfer|null
      */
-    public function findNavigationTree(NavigationTransfer $navigationTransfer, LocaleTransfer $localeTransfer = null)
+    public function findNavigationTree(NavigationTransfer $navigationTransfer, ?LocaleTransfer $localeTransfer = null)
     {
         return $this->getFactory()
             ->createNavigationTreeReader()

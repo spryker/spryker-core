@@ -87,7 +87,7 @@ interface RatepayToGlossaryInterface
      *
      * @return bool
      */
-    public function hasTranslation($keyName, LocaleTransfer $locale = null);
+    public function hasTranslation($keyName, ?LocaleTransfer $locale = null);
 
     /**
      * @param string $keyName

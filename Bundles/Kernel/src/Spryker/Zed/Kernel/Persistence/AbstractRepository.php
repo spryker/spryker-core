@@ -101,7 +101,7 @@ abstract class AbstractRepository
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function buildQueryFromCriteria(ModelCriteria $modelCriteria, FilterTransfer $filterTransfer = null)
+    public function buildQueryFromCriteria(ModelCriteria $modelCriteria, ?FilterTransfer $filterTransfer = null)
     {
         return $this->createCriteriaBuilder()->buildQueryFromCriteria($modelCriteria, $filterTransfer);
     }
@@ -121,7 +121,7 @@ abstract class AbstractRepository
      *
      * @return \Spryker\Shared\Kernel\Transfer\EntityTransferInterface[]
      */
-    public function populateCollectionWithRelation(array &$collection, $relation, Criteria $criteria = null)
+    public function populateCollectionWithRelation(array &$collection, $relation, ?Criteria $criteria = null)
     {
         return $this->createRelationMapper()->populateCollectionWithRelation($collection, $relation, $criteria);
     }

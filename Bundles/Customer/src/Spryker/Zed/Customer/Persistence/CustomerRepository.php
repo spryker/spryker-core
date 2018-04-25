@@ -42,7 +42,7 @@ class CustomerRepository extends AbstractRepository implements CustomerRepositor
 
     /**
      * @param \Orm\Zed\Customer\Persistence\SpyCustomerQuery $spyCustomerQuery
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param \Generated\Shared\Transfer\FilterTransfer|null $filterTransfer
      *
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
      */
@@ -65,7 +65,7 @@ class CustomerRepository extends AbstractRepository implements CustomerRepositor
      *
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
      */
-    protected function applyPagination(SpyCustomerQuery $spyCustomerQuery, PaginationTransfer $paginationTransfer = null): SpyCustomerQuery
+    protected function applyPagination(SpyCustomerQuery $spyCustomerQuery, ?PaginationTransfer $paginationTransfer = null): SpyCustomerQuery
     {
         if (empty($paginationTransfer)) {
             return $spyCustomerQuery;
