@@ -174,7 +174,7 @@ class StepEngineTest extends AbstractStepEngineTest
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Yves\StepEngine\Dependency\DataContainer\DataContainerInterface
      */
-    private function getDataContainerMock(AbstractTransfer $dataTransfer = null)
+    private function getDataContainerMock(?AbstractTransfer $dataTransfer = null)
     {
         $dataContainerMock = $this->getMockBuilder(DataContainerInterface::class)->getMock();
 

@@ -97,8 +97,8 @@ class CustomerGroupDecisionRuleTest extends Unit
      * @return \Spryker\Zed\CustomerGroupDiscountConnector\Business\DecisionRule\CustomerGroupDecisionRule
      */
     protected function createCustomerGroupDecisionRule(
-        CustomerGroupDiscountConnectorToDiscountFacadeInterface $discountFacadeMock = null,
-        CustomerGroupDiscountConnectorToCustomerGroupFacadeInterface $customerGroupFacadeMock = null
+        ?CustomerGroupDiscountConnectorToDiscountFacadeInterface $discountFacadeMock = null,
+        ?CustomerGroupDiscountConnectorToCustomerGroupFacadeInterface $customerGroupFacadeMock = null
     ) {
 
         if ($discountFacadeMock === null) {

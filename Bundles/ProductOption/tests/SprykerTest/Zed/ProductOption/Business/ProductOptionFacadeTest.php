@@ -761,7 +761,7 @@ class ProductOptionFacadeTest extends Unit
      *
      * @return \Generated\Shared\Transfer\ProductOptionGroupTransfer
      */
-    protected function createProductOptionGroupTransfer(ProductOptionValueTransfer $productOptionValueTransfer = null)
+    protected function createProductOptionGroupTransfer(?ProductOptionValueTransfer $productOptionValueTransfer = null)
     {
         $productOptionGroupTransfer = new ProductOptionGroupTransfer();
         $productOptionGroupTransfer->setName('translation.key');

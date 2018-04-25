@@ -131,7 +131,7 @@ class NavigationFormType extends AbstractType
      *
      * @return int|null
      */
-    protected function getIdNavigation(NavigationTransfer $navigationTransfer = null)
+    protected function getIdNavigation(?NavigationTransfer $navigationTransfer = null)
     {
         if (!$navigationTransfer) {
             return null;

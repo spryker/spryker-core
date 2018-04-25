@@ -125,7 +125,7 @@ class TwigFilesystemLoaderZedTest extends Unit
      *
      * @return \Spryker\Shared\Twig\TwigFilesystemLoader
      */
-    protected function getFilesystemLoader($path, CacheInterface $cache = null)
+    protected function getFilesystemLoader($path, ?CacheInterface $cache = null)
     {
         if (!$cache) {
             $cache = $this->getCacheStub();

@@ -285,7 +285,7 @@ interface OmsFacadeInterface
      *
      * @return int
      */
-    public function sumReservedProductQuantitiesForSku($sku, StoreTransfer $storeTransfer = null);
+    public function sumReservedProductQuantitiesForSku($sku, ?StoreTransfer $storeTransfer = null);
 
     /**
      * Specification:

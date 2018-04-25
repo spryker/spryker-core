@@ -28,7 +28,7 @@ class ProductAbstractDataFeedQueryContainer extends AbstractQueryContainer imple
      *
      * @return \Orm\Zed\Product\Persistence\Base\SpyProductAbstractQuery
      */
-    public function queryAbstractProductDataFeed(ProductAbstractDataFeedTransfer $productDataFeedTransfer = null)
+    public function queryAbstractProductDataFeed(?ProductAbstractDataFeedTransfer $productDataFeedTransfer = null)
     {
         $abstractProductQuery = $this->getFactory()
             ->getProductQueryContainer()

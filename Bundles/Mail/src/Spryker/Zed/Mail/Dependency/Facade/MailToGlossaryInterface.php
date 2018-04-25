@@ -18,7 +18,7 @@ interface MailToGlossaryInterface
      *
      * @return string
      */
-    public function translate($keyName, array $data = [], LocaleTransfer $localeTransfer = null);
+    public function translate($keyName, array $data = [], ?LocaleTransfer $localeTransfer = null);
 
     /**
      * @param string $keyName
@@ -26,5 +26,5 @@ interface MailToGlossaryInterface
      *
      * @return bool
      */
-    public function hasTranslation($keyName, LocaleTransfer $localeTransfer = null);
+    public function hasTranslation($keyName, ?LocaleTransfer $localeTransfer = null);
 }

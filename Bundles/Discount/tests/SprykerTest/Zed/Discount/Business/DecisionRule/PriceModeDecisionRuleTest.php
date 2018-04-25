@@ -48,7 +48,7 @@ class PriceModeDecisionRuleTest extends BaseRuleTester
      *
      * @return \Spryker\Zed\Discount\Business\DecisionRule\PriceModeDecisionRule
      */
-    protected function createCurrencyDecisionRuleMock(ComparatorOperatorsInterface $comparatorMock = null)
+    protected function createCurrencyDecisionRuleMock(?ComparatorOperatorsInterface $comparatorMock = null)
     {
         if ($comparatorMock === null) {
             $comparatorMock = $this->createComparatorMock();
