@@ -49,7 +49,6 @@ $(document).ready( function () {
         var skuLine = $('<td></td>').html(skuWidget);
         var quantityLine = $('<td></td>').html(quantityWidget);
         var addLine = '<tr><td>' + $(skuLine).html() + '</td><td>' + $(quantityLine).html() + '</td></tr>';
-        // var addLine = $('<tr></tr>').html(html);
 
         $(addLine).appendTo($('#product-fields-list'));
 

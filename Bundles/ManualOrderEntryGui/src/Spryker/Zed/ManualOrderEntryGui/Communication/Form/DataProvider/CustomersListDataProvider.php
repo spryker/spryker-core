@@ -59,9 +59,6 @@ class CustomersListDataProvider implements FormDataProviderInterface
      */
     public function getData($quoteTransfer)
     {
-        // @todo @artem checkIt with
-        // https://spryker.atlassian.net/browse/CORE-3784
-        // Offer management in Zed
         if ($quoteTransfer->getCustomer() === null) {
             $quoteTransfer->setCustomer(new CustomerTransfer());
         }
