@@ -38,7 +38,7 @@ class CustomerFormHandler implements FormHandlerInterface
     {
         $customerTransfer = $quoteTransfer->getCustomer();
 
-        $customerTransfer = $this->customerFacade->findCustomerById($customerTransfer);
+        $customerTransfer = $this->customerFacade->getCustomer($customerTransfer);
         $quoteTransfer->setCustomer($customerTransfer);
 
         return $quoteTransfer;

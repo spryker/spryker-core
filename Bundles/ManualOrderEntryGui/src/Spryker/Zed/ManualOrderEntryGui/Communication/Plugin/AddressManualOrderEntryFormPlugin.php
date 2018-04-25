@@ -58,7 +58,7 @@ class AddressManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
      *
      * @return bool
      */
-    public function isFormPreFilled(QuoteTransfer $quoteTransfer = null): bool
+    public function isFormPreFilled(QuoteTransfer $quoteTransfer): bool
     {
         return false;
     }
