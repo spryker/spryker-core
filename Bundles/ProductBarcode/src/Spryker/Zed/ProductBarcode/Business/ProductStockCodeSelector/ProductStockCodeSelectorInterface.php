@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductBarcode\Business\ProductBarcodeNumberResolver;
+namespace Spryker\Zed\ProductBarcode\Business\ProductStockCodeSelector;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 
-interface ProductBarcodeNumberResolverInterface
+interface ProductStockCodeSelectorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return string
      */
-    public function resolve(ProductConcreteTransfer $productConcreteTransfer): string;
+    public function selectAppropriateCode(ProductConcreteTransfer $productConcreteTransfer): string;
 }

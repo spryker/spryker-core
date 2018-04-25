@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\Container;
 
 class ProductBarcodeDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const BARCODE_GENERATOR_SERVICE = 'BARCODE_GENERATOR_SERVICE';
+    public const BARCODE_SERVICE = 'BARCODE_SERVICE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -33,7 +33,7 @@ class ProductBarcodeDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addBarcodeGeneratorService(Container $container): Container
     {
-        $container[static::BARCODE_GENERATOR_SERVICE] = function (Container $container) {
+        $container[static::BARCODE_SERVICE] = function (Container $container) {
             return $container->getLocator()->barcode()->service();
         };
 

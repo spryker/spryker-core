@@ -5,26 +5,26 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductBarcode\Business\ProductBarcodeNumberResolver;
+namespace Spryker\Zed\ProductBarcode\Business\ProductStockCodeSelector;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Spryker\Zed\Product\Persistence\ProductQueryContainer;
 
-class ProductBarcodeNumberResolver implements ProductBarcodeNumberResolverInterface
+class ProductStockCodeSelector implements ProductStockCodeSelectorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainer $queryContainer
      *
      * @return string
      */
-    public function resolve(ProductConcreteTransfer $productConcreteTransfer, ProductQueryContainer $queryContainer): string
+    public function selectAppropriateCode(ProductConcreteTransfer $productConcreteTransfer): string
     {
-        if ($number = $this->resolveEanOrSku($productConcreteTransfer)) {
+        $number = $this->selectEanOrSku($productConcreteTransfer);
+
+        if ($number) {
             return $number;
         }
 
-        return $this->resolveWithQueryContainer($productConcreteTransfer, $queryContainer);
+        return $this->resolveWithQueryContainer($productConcreteTransfer);
     }
 
     /**
@@ -32,7 +32,7 @@ class ProductBarcodeNumberResolver implements ProductBarcodeNumberResolverInterf
      *
      * @return null|string
      */
-    protected function resolveEanOrSku(ProductConcreteTransfer $productConcreteTransfer): ?string
+    protected function selectEanOrSku(ProductConcreteTransfer $productConcreteTransfer): ?string
     {
         if ($ean = $productConcreteTransfer->getEan()) {
             return $ean;
@@ -46,12 +46,13 @@ class ProductBarcodeNumberResolver implements ProductBarcodeNumberResolverInterf
     }
 
     /**
+     * TODO: Communication with ProductQueryContainer should be provided using Bridge
+     *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainer $queryContainer
      *
      * @return string
      */
-    protected function resolveWithQueryContainer(ProductConcreteTransfer $productConcreteTransfer, ProductQueryContainer $queryContainer): string
+    protected function resolveWithQueryContainer(ProductConcreteTransfer $productConcreteTransfer): string
     {
         $id = $productConcreteTransfer->getIdProductConcrete();
 
