@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class StepEngine
+class ManualOrderEntryFormPluginFilter
 {
     /**
      * @var string
