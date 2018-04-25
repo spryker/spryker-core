@@ -29,6 +29,7 @@ use Spryker\Zed\DataImport\Business\Model\Publisher\DataImporterPublisher;
 use Spryker\Zed\DataImport\DataImportDependencyProvider;
 use Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductBarcodeDataImport\Communication\Plugin\ProductBarcodeDataImportPlugin;
 
 /**
  * @method \Spryker\Zed\DataImport\DataImportConfig getConfig()
@@ -52,6 +53,8 @@ class DataImportBusinessFactory extends AbstractBusinessFactory
             $this->getDataImportBeforeImportHookPlugins(),
             $this->getDataImportAfterImportHookPlugins()
         );
+
+        $dataImporterCollection->addDataImporter(new ProductBarcodeDataImportPlugin());
 
         return $dataImporterCollection;
     }
