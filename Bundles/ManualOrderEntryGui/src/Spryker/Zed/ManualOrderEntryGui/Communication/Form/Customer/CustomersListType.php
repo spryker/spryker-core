@@ -18,11 +18,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class CustomersListType extends AbstractType
 {
     public const TYPE_NAME = 'customers';
-
-    public const FIELD_CUSTOMER = 'id_customer';
-
+    public const FIELD_CUSTOMER = 'idCustomer';
     public const OPTION_CUSTOMER_ARRAY = 'option-category-array';
-    public const OPTION_VALUE = 'option-value';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -34,8 +31,7 @@ class CustomersListType extends AbstractType
     {
         $this->addCustomerField(
             $builder,
-            $options[static::OPTION_CUSTOMER_ARRAY],
-            $options[static::OPTION_VALUE]
+            $options[static::OPTION_CUSTOMER_ARRAY]
         );
     }
 
@@ -46,9 +42,7 @@ class CustomersListType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver
-            ->setRequired(static::OPTION_CUSTOMER_ARRAY)
-            ->setDefault(static::OPTION_VALUE, null);
+        $resolver->setRequired(static::OPTION_CUSTOMER_ARRAY);
     }
 
     /**
@@ -67,7 +61,6 @@ class CustomersListType extends AbstractType
             'choices_as_values' => true,
             'multiple' => false,
             'required' => true,
-            'data' => $value,
         ]);
 
         return $this;

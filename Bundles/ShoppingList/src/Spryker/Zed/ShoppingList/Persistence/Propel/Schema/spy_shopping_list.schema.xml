@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\ShoppingList\Persistence" package="src.Orm.Zed.ShoppingList.Persistence">
+
+    <table name="spy_shopping_list" phpName="SpyShoppingList">
+        <column name="id_shopping_list" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="customer_reference" required="true" type="VARCHAR" size="255"/>
+        <column name="name" required="true" type="VARCHAR" size="255"/>
+        <column name="description" type="VARCHAR" size="255"/>
+        <behavior name="timestampable"/>
+        <id-method-parameter value="spy_shopping_list_pk_seq"/>
+    </table>
+
+    <table name="spy_shopping_list_item" phpName="SpyShoppingListItem">
+        <column name="id_shopping_list_item" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_shopping_list" required="true" type="INTEGER"/>
+        <column name="sku" type="VARCHAR" size="255"/>
+        <column name="quantity" type="INTEGER" unsigned="true" default="1" required="true"/>
+
+        <foreign-key name="spy_shopping_list_item-fk_shopping_list" foreignTable="spy_shopping_list">
+            <reference local="fk_shopping_list" foreign="id_shopping_list"/>
+        </foreign-key>
+
+        <behavior name="timestampable"/>
+        <id-method-parameter value="spy_shopping_list_item_pk_seq"/>
+    </table>
+
+    <table name="spy_shopping_list_company_user">
+        <column name="id_shopping_list_company_user" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_company_user" required="true" type="INTEGER"/>
+        <column name="fk_shopping_list" requird="true" type="INTEGER"/>
+        <column name="fk_shopping_list_permission_group" required="true" type="INTEGER"/>
+
+        <foreign-key name="spy_shopping_list_company_user-fk_company_user" foreignTable="spy_company_user">
+            <reference local="fk_company_user" foreign="id_company_user"/>
+        </foreign-key>
+
+        <foreign-key name="spy_shopping_list_company_user-fk_shopping_list" foreignTable="spy_shopping_list">
+            <reference local="fk_shopping_list" foreign="id_shopping_list"/>
+        </foreign-key>
+
+        <foreign-key name="spy_shopping_list_company_user-fk_shopping_list_perm_grp" foreignTable="spy_shopping_list_permission_group">
+            <reference local="fk_shopping_list_permission_group" foreign="id_shopping_list_permission_group"/>
+        </foreign-key>
+
+        <id-method-parameter value="spy_shopping_list_company_user_pk_seq"/>
+    </table>
+
+    <table name="spy_shopping_list_company_business_unit">
+        <column name="id_shopping_list_company_business_unit" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_company_business_unit" required="true" type="INTEGER"/>
+        <column name="fk_shopping_list" requird="true" type="INTEGER"/>
+        <column name="fk_shopping_list_permission_group" required="true" type="INTEGER"/>
+
+        <foreign-key name="spy_shopping_list_business_unit-fk_company_business_unit" foreignTable="spy_company_business_unit">
+            <reference local="fk_company_business_unit" foreign="id_company_business_unit"/>
+        </foreign-key>
+
+        <foreign-key name="spy_shopping_list_company_business_unit-fk_shopping_list" foreignTable="spy_shopping_list">
+            <reference local="fk_shopping_list" foreign="id_shopping_list"/>
+        </foreign-key>
+
+        <foreign-key name="spy_shopping_list_business_unit-fk_shopping_list_perm_group" foreignTable="spy_shopping_list_permission_group">
+            <reference local="fk_shopping_list_permission_group" foreign="id_shopping_list_permission_group"/>
+        </foreign-key>
+
+        <id-method-parameter value="spy_shopping_list_company_business_unit_pk_seq"/>
+    </table>
+
+    <table name="spy_shopping_list_permission_group">
+        <column name="id_shopping_list_permission_group" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="name" required="true" type="VARCHAR" size="255"/>
+        <id-method-parameter value="spy_shopping_list_permission_group_pk_seq"/>
+    </table>
+
+    <table name="spy_shopping_list_permission_group_to_permission">
+        <column name="id_shopping_list_permission_group_to_permission" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_shopping_list_permission_group" required="true" type="INTEGER"/>
+        <column name="fk_permission" requird="true" type="INTEGER"/>
+
+        <foreign-key name="spy_shopping_list_perm_grp_to_perm-fk_shopping_list_perm_grp" foreignTable="spy_shopping_list_permission_group">
+            <reference local="fk_shopping_list_permission_group" foreign="id_shopping_list_permission_group"/>
+        </foreign-key>
+
+        <foreign-key name="spy_shopping_list_permission_group_to_permission-fk_permission" foreignTable="spy_permission">
+            <reference local="fk_permission" foreign="id_permission"/>
+        </foreign-key>
+        <id-method-parameter value="spy_shopping_list_permission_group_to_permission_pk_seq"/>
+    </table>
+</database>

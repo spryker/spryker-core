@@ -8,22 +8,34 @@
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Traits\UniqueFlashMessagesTrait;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCalculationFacadeInterface;
+use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToMessengerFacadeInterface;
 
 class SummaryDataProvider implements FormDataProviderInterface
 {
+    use UniqueFlashMessagesTrait;
+
     /**
      * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCalculationFacadeInterface
      */
     protected $calculationFacade;
 
     /**
+     * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToMessengerFacadeInterface
+     */
+    protected $messengerFacade;
+
+    /**
      * @param \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCalculationFacadeInterface $calculationFacade
+     * @param \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToMessengerFacadeInterface $messengerFacade
      */
     public function __construct(
-        ManualOrderEntryGuiToCalculationFacadeInterface $calculationFacade
+        ManualOrderEntryGuiToCalculationFacadeInterface $calculationFacade,
+        ManualOrderEntryGuiToMessengerFacadeInterface $messengerFacade
     ) {
         $this->calculationFacade = $calculationFacade;
+        $this->messengerFacade = $messengerFacade;
     }
 
     /**
@@ -34,6 +46,8 @@ class SummaryDataProvider implements FormDataProviderInterface
     public function getData($quoteTransfer)
     {
         $quoteTransfer = $this->calculationFacade->recalculateQuote($quoteTransfer);
+
+        $this->uniqueFlashMessages();
 
         return $quoteTransfer;
     }
