@@ -11,8 +11,11 @@ use Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationStatusTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationTransfer;
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
+use Orm\Zed\CompanyUserInvitation\Persistence\SpyCompanyUserInvitationQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Propel\Runtime\Util\PropelModelPager;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
@@ -22,62 +25,45 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 class CompanyUserInvitationRepository extends AbstractRepository implements CompanyUserInvitationRepositoryInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer $companyUserInvitationCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer
      */
     public function getCompanyUserInvitationCollection(
-        CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
+        CompanyUserInvitationCriteriaFilterTransfer $companyUserInvitationCriteriaFilterTransfer
     ): CompanyUserInvitationCollectionTransfer {
         $queryCompanyUserInvitation = $this->getFactory()
             ->createCompanyUserInvitationQuery()
             ->joinWithSpyCompanyBusinessUnit()
             ->joinWithSpyCompanyUserInvitationStatus();
 
-        if ($criteriaFilterTransfer->getFkCompany()) {
-            $queryCompanyUserInvitation
-                ->useSpyCompanyUserQuery()
-                ->filterByFkCompany(
-                    $criteriaFilterTransfer->getFkCompany(),
-                    Criteria::IN
-                )
-                ->endUse();
+        $queryCompanyUserInvitation = $this->applyQueryFilters($queryCompanyUserInvitation, $companyUserInvitationCriteriaFilterTransfer);
+
+        if ($companyUserInvitationCriteriaFilterTransfer->getFilter() !== null) {
+            $queryCompanyUserInvitation = $this->setQueryCriteria(
+                $queryCompanyUserInvitation,
+                $companyUserInvitationCriteriaFilterTransfer->getFilter()
+            );
         }
 
-        if ($criteriaFilterTransfer->getCompanyUserInvitationStatusKeyIn()) {
-            $queryCompanyUserInvitation
-                ->useSpyCompanyUserInvitationStatusQuery()
-                ->filterByStatusKey(
-                    $criteriaFilterTransfer->getCompanyUserInvitationStatusKeyIn(),
-                    Criteria::IN
-                )
-                ->endUse();
+        if ($companyUserInvitationCriteriaFilterTransfer->getPagination() === null) {
+            return $this->getFactory()
+            ->createCompanyUserInvitationMapper()
+            ->mapCompanyUserInvitationCollection($queryCompanyUserInvitation->find());
         }
 
-        if ($criteriaFilterTransfer->getCompanyUserInvitationStatusKeyNotIn()) {
-            $queryCompanyUserInvitation
-                ->useSpyCompanyUserInvitationStatusQuery()
-                ->filterByStatusKey(
-                    $criteriaFilterTransfer->getCompanyUserInvitationStatusKeyNotIn(),
-                    Criteria::NOT_IN
-                )
-                ->endUse();
-        }
-
-        $companyUserInvitationCollection = $this->buildQueryFromCriteria(
-            $queryCompanyUserInvitation,
-            $criteriaFilterTransfer->getFilter()
-        );
-        $companyUserInvitationCollection = $this->getPaginatedCollection(
-            $companyUserInvitationCollection,
-            $criteriaFilterTransfer->getPagination()
+        $pager = $queryCompanyUserInvitation->paginate(
+            $companyUserInvitationCriteriaFilterTransfer->getPagination()->requirePage()->getPage(),
+            $companyUserInvitationCriteriaFilterTransfer->getPagination()->requireMaxPerPage()->getMaxPerPage()
         );
 
         $companyUserInvitationCollectionTransfer = $this->getFactory()
             ->createCompanyUserInvitationMapper()
-            ->mapCompanyUserInvitationCollection($companyUserInvitationCollection);
+            ->mapCompanyUserInvitationCollection($pager->getResults());
 
-        $companyUserInvitationCollectionTransfer->setPagination($criteriaFilterTransfer->getPagination());
+        $companyUserInvitationCollectionTransfer->setPagination(
+            $this->hydratePaginationTransfer($companyUserInvitationCriteriaFilterTransfer->getPagination(), $pager)
+        );
 
         return $companyUserInvitationCollectionTransfer;
     }
@@ -89,16 +75,16 @@ class CompanyUserInvitationRepository extends AbstractRepository implements Comp
      */
     public function findCompanyUserInvitationStatusByStatusKey(string $statusKey): ?CompanyUserInvitationStatusTransfer
     {
-        $queryCompanyUserInvitationStatus = $this->getFactory()
+        $spyCompanyUserInvitation = $this->getFactory()
             ->createCompanyUserInvitationStatusQuery()
-            ->filterByStatusKey($statusKey);
+            ->filterByStatusKey($statusKey)
+            ->findOne();
 
-        $entityTransfer = $this->buildQueryFromCriteria($queryCompanyUserInvitationStatus)->findOne();
+        if ($spyCompanyUserInvitation !== null) {
+            $companyUserInvitationStatusTransfer = new CompanyUserInvitationStatusTransfer();
+            $companyUserInvitationStatusTransfer->fromArray($spyCompanyUserInvitation->toArray(), true);
 
-        if ($entityTransfer !== null) {
-            return $this->getFactory()
-                ->createCompanyUserInvitationStatusMapper()
-                ->mapEntityTransferToCompanyUserInvitationStatusTransfer($entityTransfer);
+            return $companyUserInvitationStatusTransfer;
         }
 
         return null;
@@ -112,16 +98,15 @@ class CompanyUserInvitationRepository extends AbstractRepository implements Comp
     public function findCompanyUserInvitationById(
         CompanyUserInvitationTransfer $companyUserInvitationTransfer
     ): ?CompanyUserInvitationTransfer {
-        $queryCompanyUserInvitation = $this->getFactory()
+        $spyCompanyUserInvitation = $this->getFactory()
             ->createCompanyUserInvitationQuery()
-            ->filterByIdCompanyUserInvitation($companyUserInvitationTransfer->getIdCompanyUserInvitation());
+            ->filterByIdCompanyUserInvitation($companyUserInvitationTransfer->getIdCompanyUserInvitation())
+            ->findOne();
 
-        $entityTransfer = $this->buildQueryFromCriteria($queryCompanyUserInvitation)->findOne();
-
-        if ($entityTransfer !== null) {
+        if ($spyCompanyUserInvitation !== null) {
             return $this->getFactory()
                 ->createCompanyUserInvitationMapper()
-                ->mapEntityTransferToCompanyUserInvitationTransfer($entityTransfer);
+                ->mapSpyCompanyUserInvitationToCompanyUserInvitationTransfer($spyCompanyUserInvitation);
         }
 
         return null;
@@ -135,53 +120,97 @@ class CompanyUserInvitationRepository extends AbstractRepository implements Comp
     public function getCompanyUserInvitationByHash(
         CompanyUserInvitationTransfer $companyUserInvitationTransfer
     ): CompanyUserInvitationTransfer {
-        $queryCompanyUserInvitation = $this->getFactory()
+        $spyCompanyUserInvitation = $this->getFactory()
             ->createCompanyUserInvitationQuery()
             ->joinWithSpyCompanyBusinessUnit()
             ->joinWithSpyCompanyUserInvitationStatus()
-            ->filterByHash($companyUserInvitationTransfer->getHash());
+            ->filterByHash($companyUserInvitationTransfer->getHash())
+            ->findOne();
 
-        $entityTransfer = $this->buildQueryFromCriteria($queryCompanyUserInvitation)->findOne();
-
-        if ($entityTransfer == null) {
+        if ($spyCompanyUserInvitation == null) {
             return $companyUserInvitationTransfer;
         }
 
         return $this->getFactory()
             ->createCompanyUserInvitationMapper()
-            ->mapEntityTransferToCompanyUserInvitationTransfer($entityTransfer);
+            ->mapSpyCompanyUserInvitationToCompanyUserInvitationTransfer($spyCompanyUserInvitation);
+    }
+
+    /**
+     * @param \Orm\Zed\CompanyUserInvitation\Persistence\SpyCompanyUserInvitationQuery $queryCompanyUserInvitation
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer $companyUserInvitationCriteriaFilterTransfer
+     *
+     * @return \Orm\Zed\CompanyUserInvitation\Persistence\SpyCompanyUserInvitationQuery
+     */
+    protected function applyQueryFilters(
+        SpyCompanyUserInvitationQuery $queryCompanyUserInvitation,
+        CompanyUserInvitationCriteriaFilterTransfer $companyUserInvitationCriteriaFilterTransfer
+    ): SpyCompanyUserInvitationQuery {
+
+        if ($companyUserInvitationCriteriaFilterTransfer->getFkCompany()) {
+            $queryCompanyUserInvitation->useSpyCompanyUserQuery()->filterByFkCompany(
+                $companyUserInvitationCriteriaFilterTransfer->getFkCompany(),
+                Criteria::IN
+            )->endUse();
+        }
+
+        if ($companyUserInvitationCriteriaFilterTransfer->getCompanyUserInvitationStatusKeyIn()) {
+            $queryCompanyUserInvitation->useSpyCompanyUserInvitationStatusQuery()->filterByStatusKey(
+                $companyUserInvitationCriteriaFilterTransfer->getCompanyUserInvitationStatusKeyIn(),
+                Criteria::IN
+            )->endUse();
+        }
+
+        if ($companyUserInvitationCriteriaFilterTransfer->getCompanyUserInvitationStatusKeyNotIn()) {
+            $queryCompanyUserInvitation->useSpyCompanyUserInvitationStatusQuery()->filterByStatusKey(
+                $companyUserInvitationCriteriaFilterTransfer->getCompanyUserInvitationStatusKeyNotIn(),
+                Criteria::NOT_IN
+            )->endUse();
+        }
+
+        return $queryCompanyUserInvitation;
     }
 
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     * @param \Generated\Shared\Transfer\PaginationTransfer|null $paginationTransfer
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return mixed|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\Collection|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    protected function getPaginatedCollection(ModelCriteria $query, PaginationTransfer $paginationTransfer = null)
+    protected function setQueryCriteria(ModelCriteria $query, FilterTransfer $filterTransfer): ModelCriteria
     {
-        if ($paginationTransfer !== null) {
-            $page = $paginationTransfer
-                ->requirePage()
-                ->getPage();
-
-            $maxPerPage = $paginationTransfer
-                ->requireMaxPerPage()
-                ->getMaxPerPage();
-
-            $paginationModel = $query->paginate($page, $maxPerPage);
-
-            $paginationTransfer->setNbResults($paginationModel->getNbResults());
-            $paginationTransfer->setFirstIndex($paginationModel->getFirstIndex());
-            $paginationTransfer->setLastIndex($paginationModel->getLastIndex());
-            $paginationTransfer->setFirstPage($paginationModel->getFirstPage());
-            $paginationTransfer->setLastPage($paginationModel->getLastPage());
-            $paginationTransfer->setNextPage($paginationModel->getNextPage());
-            $paginationTransfer->setPreviousPage($paginationModel->getPreviousPage());
-
-            return $paginationModel->getResults();
+        if ($filterTransfer->getLimit()) {
+            $query->setLimit($filterTransfer->getLimit());
         }
 
-        return $query->find();
+        if ($filterTransfer->getOffset()) {
+            $query->setOffset($filterTransfer->getOffset());
+        }
+
+        if ($filterTransfer->getOrderBy() && $filterTransfer->getOrderDirection()) {
+            $query->orderBy($filterTransfer->getOrderBy(), $filterTransfer->getOrderDirection());
+        }
+
+        return $query;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
+     * @param \Propel\Runtime\Util\PropelModelPager $paginationModel
+     *
+     * @return \Generated\Shared\Transfer\PaginationTransfer
+     */
+    protected function hydratePaginationTransfer(
+        PaginationTransfer $paginationTransfer,
+        PropelModelPager $paginationModel
+    ): PaginationTransfer {
+        return $paginationTransfer
+            ->setNbResults($paginationModel->getNbResults())
+            ->setFirstIndex($paginationModel->getFirstIndex())
+            ->setLastIndex($paginationModel->getLastIndex())
+            ->setFirstPage($paginationModel->getFirstPage())
+            ->setLastPage($paginationModel->getLastPage())
+            ->setNextPage($paginationModel->getNextPage())
+            ->setPreviousPage($paginationModel->getPreviousPage());
     }
 }

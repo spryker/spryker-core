@@ -15,12 +15,12 @@ use Generated\Shared\Transfer\CompanyUserInvitationTransfer;
 interface CompanyUserInvitationRepositoryInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserInvitationCriteriaFilterTransfer $companyUserInvitationCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer
      */
     public function getCompanyUserInvitationCollection(
-        CompanyUserInvitationCriteriaFilterTransfer $criteriaFilterTransfer
+        CompanyUserInvitationCriteriaFilterTransfer $companyUserInvitationCriteriaFilterTransfer
     ): CompanyUserInvitationCollectionTransfer;
 
     /**

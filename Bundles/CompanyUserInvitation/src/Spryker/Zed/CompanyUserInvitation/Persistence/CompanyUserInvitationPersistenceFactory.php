@@ -11,8 +11,6 @@ use Orm\Zed\CompanyUserInvitation\Persistence\SpyCompanyUserInvitationQuery;
 use Orm\Zed\CompanyUserInvitation\Persistence\SpyCompanyUserInvitationStatusQuery;
 use Spryker\Zed\CompanyUserInvitation\Persistence\Mapper\CompanyUserInvitationMapper;
 use Spryker\Zed\CompanyUserInvitation\Persistence\Mapper\CompanyUserInvitationMapperInterface;
-use Spryker\Zed\CompanyUserInvitation\Persistence\Mapper\CompanyUserInvitationStatusMapper;
-use Spryker\Zed\CompanyUserInvitation\Persistence\Mapper\CompanyUserInvitationStatusMapperInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -42,13 +40,5 @@ class CompanyUserInvitationPersistenceFactory extends AbstractPersistenceFactory
     public function createCompanyUserInvitationMapper(): CompanyUserInvitationMapperInterface
     {
         return new CompanyUserInvitationMapper();
-    }
-
-    /**
-     * @return \Spryker\Zed\CompanyUserInvitation\Persistence\Mapper\CompanyUserInvitationStatusMapperInterface
-     */
-    public function createCompanyUserInvitationStatusMapper(): CompanyUserInvitationStatusMapperInterface
-    {
-        return new CompanyUserInvitationStatusMapper();
     }
 }

@@ -9,32 +9,28 @@ namespace Spryker\Zed\CompanyUserInvitation\Persistence\Mapper;
 
 use Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationTransfer;
-use Generated\Shared\Transfer\SpyCompanyUserInvitationEntityTransfer;
+use Orm\Zed\CompanyUserInvitation\Persistence\SpyCompanyUserInvitation;
+use Propel\Runtime\Collection\Collection;
 
 interface CompanyUserInvitationMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserInvitationTransfer $companyUserInvitationTransfer
-     *
-     * @return \Generated\Shared\Transfer\SpyCompanyUserInvitationEntityTransfer
-     */
-    public function mapCompanyUserInvitationTransferToEntityTransfer(
-        CompanyUserInvitationTransfer $companyUserInvitationTransfer
-    ): SpyCompanyUserInvitationEntityTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\SpyCompanyUserInvitationEntityTransfer $companyUserInvitationEntityTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserInvitationTransfer
-     */
-    public function mapEntityTransferToCompanyUserInvitationTransfer(
-        SpyCompanyUserInvitationEntityTransfer $companyUserInvitationEntityTransfer
-    ): CompanyUserInvitationTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\SpyCompanyUserInvitationEntityTransfer[] $collection
+     * @param \Propel\Runtime\Collection\Collection $companyUserInvitationCollection
      *
      * @return \Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer
      */
-    public function mapCompanyUserInvitationCollection(array $collection): CompanyUserInvitationCollectionTransfer;
+    public function mapCompanyUserInvitationCollection(
+        Collection $companyUserInvitationCollection
+    ): CompanyUserInvitationCollectionTransfer;
+
+    /**
+     * @param \Orm\Zed\CompanyUserInvitation\Persistence\SpyCompanyUserInvitation $spyCompanyUserInvitation
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserInvitationTransfer
+     */
+    public function mapSpyCompanyUserInvitationToCompanyUserInvitationTransfer(
+        SpyCompanyUserInvitation $spyCompanyUserInvitation
+    ): CompanyUserInvitationTransfer;
 }

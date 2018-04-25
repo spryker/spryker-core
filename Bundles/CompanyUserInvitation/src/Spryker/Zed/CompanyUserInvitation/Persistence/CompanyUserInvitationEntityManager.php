@@ -9,6 +9,7 @@ namespace Spryker\Zed\CompanyUserInvitation\Persistence;
 
 use Generated\Shared\Transfer\CompanyUserInvitationStatusTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationTransfer;
+use Orm\Zed\CompanyUserInvitation\Persistence\SpyCompanyUserInvitationStatus;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -23,15 +24,17 @@ class CompanyUserInvitationEntityManager extends AbstractEntityManager implement
      */
     public function saveCompanyUserInvitation(CompanyUserInvitationTransfer $companyUserInvitationTransfer): CompanyUserInvitationTransfer
     {
-        $entityTransfer = $this->getFactory()
-            ->createCompanyUserInvitationMapper()
-            ->mapCompanyUserInvitationTransferToEntityTransfer($companyUserInvitationTransfer);
+        $spyCompanyUserInvitation = $this->getFactory()
+            ->createCompanyUserInvitationQuery()
+            ->filterByIdCompanyUserInvitation($companyUserInvitationTransfer->getIdCompanyUserInvitation())
+            ->findOneOrCreate();
 
-        $entityTransfer = $this->save($entityTransfer);
+        $spyCompanyUserInvitation->fromArray($companyUserInvitationTransfer->modifiedToArray());
+        $spyCompanyUserInvitation->save();
 
         return $this->getFactory()
             ->createCompanyUserInvitationMapper()
-            ->mapEntityTransferToCompanyUserInvitationTransfer($entityTransfer);
+            ->mapSpyCompanyUserInvitationToCompanyUserInvitationTransfer($spyCompanyUserInvitation);
     }
 
     /**
@@ -42,15 +45,11 @@ class CompanyUserInvitationEntityManager extends AbstractEntityManager implement
     public function saveCompanyUserInvitationStatus(
         CompanyUserInvitationStatusTransfer $companyUserInvitationStatusTransfer
     ): CompanyUserInvitationStatusTransfer {
-        $entityTransfer = $this->getFactory()
-            ->createCompanyUserInvitationStatusMapper()
-            ->mapCompanyUserInvitationStatusTransferToEntityTransfer($companyUserInvitationStatusTransfer);
+        $spyCompanyUserInvitationStatus = new SpyCompanyUserInvitationStatus();
+        $spyCompanyUserInvitationStatus->fromArray($companyUserInvitationStatusTransfer->toArray());
+        $spyCompanyUserInvitationStatus->save();
 
-        $entityTransfer = $this->save($entityTransfer);
-
-        return $this->getFactory()
-            ->createCompanyUserInvitationStatusMapper()
-            ->mapEntityTransferToCompanyUserInvitationStatusTransfer($entityTransfer);
+        return $companyUserInvitationStatusTransfer->fromArray($spyCompanyUserInvitationStatus->toArray(), true);
     }
 
     /**
