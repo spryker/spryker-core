@@ -6,7 +6,9 @@
     "php": ">=7.1",
     "spryker/data-import": "^1.3.1",
     "spryker/kernel": "^3.20.0",
-    "spryker/product-measurement-unit": "^0.1.1"
+    "spryker/product": "^6.0.0",
+    "spryker/product-measurement-unit": "^0.1.1",
+    "spryker/store": "^1.6.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

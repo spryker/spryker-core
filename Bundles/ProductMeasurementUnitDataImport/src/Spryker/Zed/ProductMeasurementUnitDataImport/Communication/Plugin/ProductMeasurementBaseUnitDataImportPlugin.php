@@ -16,7 +16,7 @@ use Spryker\Zed\ProductMeasurementUnitDataImport\ProductMeasurementUnitDataImpor
 /**
  * @method \Spryker\Zed\ProductMeasurementUnitDataImport\Business\ProductMeasurementUnitDataImportFacadeInterface getFacade()
  */
-class ProductMeasurementUnitDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
+class ProductMeasurementBaseUnitDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
     /**
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
@@ -25,7 +25,7 @@ class ProductMeasurementUnitDataImportPlugin extends AbstractPlugin implements D
      */
     public function import(DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
-        return $this->getFacade()->importProductMeasurementUnit($dataImporterConfigurationTransfer);
+        return $this->getFacade()->importProductMeasurementBaseUnit($dataImporterConfigurationTransfer);
     }
 
     /**
@@ -33,6 +33,6 @@ class ProductMeasurementUnitDataImportPlugin extends AbstractPlugin implements D
      */
     public function getImportType(): string
     {
-        return ProductMeasurementUnitDataImportConfig::IMPORT_TYPE_PRODUCT_MEASUREMENT_UNIT;
+        return ProductMeasurementUnitDataImportConfig::IMPORT_TYPE_PRODUCT_MEASUREMENT_BASE_UNIT;
     }
 }
