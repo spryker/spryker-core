@@ -28,6 +28,6 @@ class ProductMeasurementUnitItemExpanderPlugin extends AbstractPlugin implements
      */
     public function expandItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
-        return $this->getFacade()->expandCartChangeTransfer($cartChangeTransfer);
+        return $this->getFacade()->expandQuantitySalesUnit($cartChangeTransfer);
     }
 }

@@ -118,11 +118,11 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function normalizeSalesUnitValueInQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function calculateSalesUnitValueInQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         return $this->getFactory()
             ->createProductMeasurementSalesUnitValue()
-            ->normalizeSalesUnitValueInQuote($quoteTransfer);
+            ->calculateSalesUnitValueInQuote($quoteTransfer);
     }
 
     /**
@@ -134,10 +134,10 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function expandCartChangeTransfer(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
+    public function expandQuantitySalesUnit(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         return $this->getFactory()
             ->createCartChangeTransferExpander()
-            ->expandCartChangeTransfer($cartChangeTransfer);
+            ->expandQuantitySalesUnit($cartChangeTransfer);
     }
 }

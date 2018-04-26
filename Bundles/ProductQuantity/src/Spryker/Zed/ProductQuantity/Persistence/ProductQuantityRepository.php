@@ -35,15 +35,16 @@ class ProductQuantityRepository extends AbstractRepository implements ProductQua
                 ->filterBySku_In($productSkus)
             ->endUse();
 
-        $result = $this->buildQueryFromCriteria($query)->find();
+        $productQuantityEntityTransfers = $this->buildQueryFromCriteria($query)->find();
 
-        $mapper = $this->getFactory()->createProductQuantityMapper();
-        $productQuantityCollection = [];
-        foreach ($result as $item) {
-            $productQuantityCollection[] = $mapper->mapProductQuantityTransfer($item, new ProductQuantityTransfer());
+        $productQuantityTransfers = [];
+        foreach ($productQuantityEntityTransfers as $productQuantityEntityTransfer) {
+            $productQuantityTransfers[] = $this->getFactory()
+                ->createProductQuantityMapper()
+                ->mapProductQuantityTransfer($productQuantityEntityTransfer, new ProductQuantityTransfer());
         }
 
-        return $productQuantityCollection;
+        return $productQuantityTransfers;
     }
 
     /**
@@ -61,14 +62,15 @@ class ProductQuantityRepository extends AbstractRepository implements ProductQua
             ->createProductQuantityQuery()
             ->filterByFkProduct_In($productIds);
 
-        $result = $this->buildQueryFromCriteria($query)->find();
+        $productQuantityEntityTransfers = $this->buildQueryFromCriteria($query)->find();
 
-        $mapper = $this->getFactory()->createProductQuantityMapper();
-        $productQuantityCollection = [];
-        foreach ($result as $item) {
-            $productQuantityCollection[] = $mapper->mapProductQuantityTransfer($item, new ProductQuantityTransfer());
+        $productQuantityTransfers = [];
+        foreach ($productQuantityEntityTransfers as $productQuantityEntityTransfer) {
+            $productQuantityTransfers[] = $this->getFactory()
+                ->createProductQuantityMapper()
+                ->mapProductQuantityTransfer($productQuantityEntityTransfer, new ProductQuantityTransfer());
         }
 
-        return $productQuantityCollection;
+        return $productQuantityTransfers;
     }
 }

@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductMeasurementUnit\Business\Model\CartChangeTransferExpander;
+namespace Spryker\Zed\ProductMeasurementUnit\Business\Model;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 
-interface CartChangeTransferExpanderInterface
+interface CartChangeInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function expandCartChangeTransfer(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
+    public function expandQuantitySalesUnit(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
 }

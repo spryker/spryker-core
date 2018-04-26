@@ -13,13 +13,13 @@ use Generated\Shared\Transfer\SpyProductQuantityEntityTransfer;
 interface ProductQuantityMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SpyProductQuantityEntityTransfer $spyProductQuantityEntityTransfer
+     * @param \Generated\Shared\Transfer\SpyProductQuantityEntityTransfer $productQuantityEntityTransfer
      * @param \Generated\Shared\Transfer\ProductQuantityTransfer $productQuantityTransfer
      *
      * @return \Generated\Shared\Transfer\ProductQuantityTransfer
      */
     public function mapProductQuantityTransfer(
-        SpyProductQuantityEntityTransfer $spyProductQuantityEntityTransfer,
+        SpyProductQuantityEntityTransfer $productQuantityEntityTransfer,
         ProductQuantityTransfer $productQuantityTransfer
     ): ProductQuantityTransfer;
 }

@@ -11,7 +11,6 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 use Generated\Shared\Transfer\SpyProductMeasurementUnitEntityTransfer;
-use PHPUnit\Framework\SkippedTestError;
 
 /**
  * Auto-generated group annotations
@@ -204,8 +203,6 @@ class ProductMeasurementUnitFacadeTest extends Unit
      */
     public function testGetSalesUnitsByIdProductRetrievesAllProductRelatedSalesUnits()
     {
-        $this->assertDbPgSql();
-
         // Assign
         $code = 'MYCODE' . random_int(1, 100);
         $productTransfer = $this->tester->haveProduct();
@@ -244,10 +241,8 @@ class ProductMeasurementUnitFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testExpandCartChangeTransferExpandTransferWithQuantitySalesUnit()
+    public function testExpandQuantitySalesUnitExpandsTransferWithQuantitySalesUnit()
     {
-        $this->assertDbPgSql();
-
         // Assign
         $code = 'MYCODE' . random_int(1, 100);
         $productTransfer = $this->tester->haveProduct();
@@ -274,23 +269,11 @@ class ProductMeasurementUnitFacadeTest extends Unit
         );
 
         //Act
-        $cartChangeTransfer = $this->productMeasurementUnitFacade->expandCartChangeTransfer($cartChangeTransfer);
+        $cartChangeTransfer = $this->productMeasurementUnitFacade->expandQuantitySalesUnit($cartChangeTransfer);
 
         //Assert
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             $this->assertNotNull($itemTransfer->getQuantitySalesUnit()->getConversion());
-        }
-    }
-
-    /**
-     * @throws \PHPUnit\Framework\SkippedTestError
-     *
-     * @return void
-     */
-    protected function assertDbPgSql()
-    {
-        if (!$this->tester->isDbPgSql()) {
-            throw new SkippedTestError('Warning: no PostgreSQL is detected');
         }
     }
 }

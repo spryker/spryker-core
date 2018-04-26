@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductMeasurementUnit\Business\Model\CartChangeTransferExpander;
+namespace Spryker\Zed\ProductMeasurementUnit\Business\Model;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit\ProductMeasurementSalesUnitReaderInterface;
 
-class CartChangeTransferExpander implements CartChangeTransferExpanderInterface
+class CartChange implements CartChangeInterface
 {
     /**
      * @var \Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit\ProductMeasurementSalesUnitReaderInterface
@@ -31,7 +31,7 @@ class CartChangeTransferExpander implements CartChangeTransferExpanderInterface
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function expandCartChangeTransfer(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
+    public function expandQuantitySalesUnit(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             if ($itemTransfer->getQuantitySalesUnit() === null) {

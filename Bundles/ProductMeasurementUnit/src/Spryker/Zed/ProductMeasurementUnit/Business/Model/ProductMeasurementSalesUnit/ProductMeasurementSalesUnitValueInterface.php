@@ -24,5 +24,5 @@ interface ProductMeasurementSalesUnitValueInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function normalizeSalesUnitValueInQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
+    public function calculateSalesUnitValueInQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

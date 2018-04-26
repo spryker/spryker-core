@@ -76,7 +76,7 @@ class ProductMeasurementSalesUnitValue implements ProductMeasurementSalesUnitVal
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function normalizeSalesUnitValueInQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function calculateSalesUnitValueInQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             if ($itemTransfer->getQuantitySalesUnit() === null) {

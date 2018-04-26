@@ -73,7 +73,7 @@ interface ProductMeasurementUnitFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function expandCartChangeTransfer(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
+    public function expandQuantitySalesUnit(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
 
     /**
      * Specification:
@@ -108,5 +108,5 @@ interface ProductMeasurementUnitFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function normalizeSalesUnitValueInQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
+    public function calculateSalesUnitValueInQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }
