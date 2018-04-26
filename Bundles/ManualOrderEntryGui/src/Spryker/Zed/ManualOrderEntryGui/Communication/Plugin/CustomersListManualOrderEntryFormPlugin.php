@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Plugin;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Customer\CustomersListType;
 use Symfony\Component\Form\FormInterface;
@@ -39,13 +39,13 @@ class CustomersListManualOrderEntryFormPlugin extends AbstractPlugin implements 
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createForm(Request $request, $dataTransfer = null): FormInterface
+    public function createForm(Request $request, QuoteTransfer $quoteTransfer): FormInterface
     {
-        return $this->getFactory()->createCustomersListForm($request, $dataTransfer);
+        return $this->getFactory()->createCustomersListForm($request, $quoteTransfer);
     }
 
     /**
@@ -55,7 +55,7 @@ class CustomersListManualOrderEntryFormPlugin extends AbstractPlugin implements 
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function handleData($quoteTransfer, &$form, $request): AbstractTransfer
+    public function handleData(QuoteTransfer $quoteTransfer, &$form, Request $request): QuoteTransfer
     {
         $customerTransfer = new CustomerTransfer();
         $customerTransfer->setIdCustomer($quoteTransfer->getIdCustomer());
@@ -67,12 +67,16 @@ class CustomersListManualOrderEntryFormPlugin extends AbstractPlugin implements 
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    public function isPreFilled($dataTransfer = null): bool
+    public function isFormPreFilled(QuoteTransfer $quoteTransfer): bool
     {
+        if ($quoteTransfer->getIdCustomer()) {
+            return true;
+        }
+
         return false;
     }
 }

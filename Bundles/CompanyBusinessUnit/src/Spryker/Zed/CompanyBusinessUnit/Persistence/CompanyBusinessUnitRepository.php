@@ -118,7 +118,7 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
      *
      * @return mixed|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\Collection|\Propel\Runtime\Collection\ObjectCollection
      */
-    protected function getPaginatedCollection(ModelCriteria $query, PaginationTransfer $paginationTransfer = null)
+    protected function getPaginatedCollection(ModelCriteria $query, ?PaginationTransfer $paginationTransfer = null)
     {
         if ($paginationTransfer !== null) {
             $page = $paginationTransfer

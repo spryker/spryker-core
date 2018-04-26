@@ -97,9 +97,9 @@ class AbstractProductOptionSaverTest extends MockProvider
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOption\Business\OptionGroup\AbstractProductOptionSaverInterface
      */
     protected function createAbstractProductOptionSaver(
-        ProductOptionQueryContainerInterface $productOptionContainerMock = null,
-        ProductOptionToTouchFacadeInterface $touchFacadeMock = null,
-        ProductOptionToEventFacadeInterface $eventFacadeMock = null
+        ?ProductOptionQueryContainerInterface $productOptionContainerMock = null,
+        ?ProductOptionToTouchFacadeInterface $touchFacadeMock = null,
+        ?ProductOptionToEventFacadeInterface $eventFacadeMock = null
     ) {
 
         if (!$productOptionContainerMock) {

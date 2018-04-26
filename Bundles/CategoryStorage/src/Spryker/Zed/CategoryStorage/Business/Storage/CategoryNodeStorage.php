@@ -122,7 +122,7 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
      *
      * @return void
      */
-    protected function storeDataSet(CategoryNodeStorageTransfer $categoryNodeStorageTransfer, $localeName, SpyCategoryNodeStorage $spyCategoryNodeStorageEntity = null)
+    protected function storeDataSet(CategoryNodeStorageTransfer $categoryNodeStorageTransfer, $localeName, ?SpyCategoryNodeStorage $spyCategoryNodeStorageEntity = null)
     {
         if ($spyCategoryNodeStorageEntity === null) {
             $spyCategoryNodeStorageEntity = new SpyCategoryNodeStorage();

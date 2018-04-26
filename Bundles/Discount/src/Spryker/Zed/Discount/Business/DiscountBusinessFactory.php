@@ -48,6 +48,8 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProvide
 use Spryker\Zed\Discount\Business\QueryString\SpecificationBuilder;
 use Spryker\Zed\Discount\Business\QueryString\Tokenizer;
 use Spryker\Zed\Discount\Business\QueryString\Validator;
+use Spryker\Zed\Discount\Business\QuoteChangeObserver\QuoteChangeObserver;
+use Spryker\Zed\Discount\Business\QuoteChangeObserver\QuoteChangeObserverInterface;
 use Spryker\Zed\Discount\Business\Voucher\VoucherCode;
 use Spryker\Zed\Discount\Business\Voucher\VoucherEngine;
 use Spryker\Zed\Discount\Business\Voucher\VoucherValidator;
@@ -606,5 +608,13 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->createDiscountStoreRelationMapper()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\QuoteChangeObserver\QuoteChangeObserverInterface
+     */
+    public function createQuoteChangeObserver(): QuoteChangeObserverInterface
+    {
+        return new QuoteChangeObserver($this->getMessengerFacade());
     }
 }

@@ -137,7 +137,7 @@ class CategoryNodePageSearch implements CategoryNodePageSearchInterface
      *
      * @return void
      */
-    protected function storeDataSet(SpyCategoryNode $spyCategoryNodeEntity, $localeName, SpyCategoryNodePageSearch $spyCategoryNodePageSearchEntity = null)
+    protected function storeDataSet(SpyCategoryNode $spyCategoryNodeEntity, $localeName, ?SpyCategoryNodePageSearch $spyCategoryNodePageSearchEntity = null)
     {
         if ($spyCategoryNodePageSearchEntity === null) {
             $spyCategoryNodePageSearchEntity = new SpyCategoryNodePageSearch();

@@ -17,5 +17,5 @@ interface ProductConcreteSearchReaderInterface
      *
      * @return bool
      */
-    public function isProductConcreteSearchable($idProductConcrete, LocaleTransfer $localeTransfer = null);
+    public function isProductConcreteSearchable($idProductConcrete, ?LocaleTransfer $localeTransfer = null);
 }

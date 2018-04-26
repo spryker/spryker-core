@@ -25,7 +25,7 @@ class PermissionStoragePlugin extends AbstractPlugin implements PermissionStorag
             ->getCustomerClient()
             ->getCustomer();
 
-        if (!$customerTransfer) {
+        if (!$customerTransfer || !$customerTransfer->getPermissions()) {
             return new PermissionCollectionTransfer();
         }
 

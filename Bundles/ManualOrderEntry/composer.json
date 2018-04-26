@@ -1,0 +1,33 @@
+{
+  "name": "spryker/manual-order-entry",
+  "description": "ManualOrderEntry module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1",
+    "spryker/kernel": "^3.18.0",
+    "spryker/symfony": "^3.1.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/sales": "^8.8.3",
+    "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/sales": "If you want to use PreSaveOrderHydratePluginInterface"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

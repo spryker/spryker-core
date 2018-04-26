@@ -17,5 +17,5 @@ interface ProductCategoryFilterGuiToProductFacadeInterface
      *
      * @return array
      */
-    public function getCombinedAbstractAttributeKeysForProductIds($productIds, LocaleTransfer $localeTransfer = null);
+    public function getCombinedAbstractAttributeKeysForProductIds($productIds, ?LocaleTransfer $localeTransfer = null);
 }

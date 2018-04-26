@@ -22,7 +22,7 @@ class CompanyUnitAddressLabelDataImportPlugin extends AbstractPlugin implements 
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
-    public function import(DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null)
+    public function import(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null)
     {
         return $this->getFacade()->import($dataImporterConfigurationTransfer);
     }

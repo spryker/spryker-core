@@ -11,6 +11,9 @@ use Orm\Zed\Permission\Persistence\SpyPermissionQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\Permission\Persistence\Propel\Mapper\PermissionMapper;
 
+/**
+ * @method \Spryker\Zed\Permission\PermissionConfig getConfig()
+ */
 class PermissionPersistenceFactory extends AbstractPersistenceFactory
 {
     /**

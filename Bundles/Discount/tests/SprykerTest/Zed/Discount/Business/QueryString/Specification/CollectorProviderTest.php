@@ -102,7 +102,7 @@ class CollectorProviderTest extends Unit
      *
      * @return \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorProvider
      */
-    protected function createCollectorProvider(CollectorPluginInterface $collectorPluginMock = null)
+    protected function createCollectorProvider(?CollectorPluginInterface $collectorPluginMock = null)
     {
         if ($collectorPluginMock === null) {
             $collectorPluginMock = $this->createCollectorPluginMock();

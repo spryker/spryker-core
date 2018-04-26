@@ -38,7 +38,7 @@ abstract class AbstractProductSearchReader
      *
      * @return int
      */
-    protected function getIdLocale(LocaleTransfer $localeTransfer = null)
+    protected function getIdLocale(?LocaleTransfer $localeTransfer = null)
     {
         if ($localeTransfer) {
             return $localeTransfer->getIdLocale();

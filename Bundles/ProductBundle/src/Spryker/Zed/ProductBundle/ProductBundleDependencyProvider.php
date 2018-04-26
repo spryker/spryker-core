@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityBridge;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleBridge;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToMessengerFacadeBridge;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceBridge;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceProductFacadeBridge;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductBridge;
@@ -35,6 +36,7 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
     const QUERY_CONTAINER_SALES = 'sales query container';
     const QUERY_CONTAINER_STOCK = 'stock query container';
     const QUERY_CONTAINER_PRODUCT = 'product query container';
+    const FACADE_MESSENGER = 'FACADE_MESSENGER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -50,6 +52,7 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addFacadeProductImage($container);
         $container = $this->addFacadePrice($container);
         $container = $this->addStoreFacade($container);
+        $container = $this->addMessengerFacade($container);
 
         $container = $this->addQueryContainerAvailability($container);
         $container = $this->addQueryContainerSales($container);
@@ -218,6 +221,19 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_STORE] = function (Container $container) {
             return new ProductBundleToStoreFacadeBridge($container->getLocator()->store()->facade());
+        };
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMessengerFacade(Container $container)
+    {
+        $container[static::FACADE_MESSENGER] = function (Container $container) {
+            return new ProductBundleToMessengerFacadeBridge($container->getLocator()->messenger()->facade());
         };
         return $container;
     }

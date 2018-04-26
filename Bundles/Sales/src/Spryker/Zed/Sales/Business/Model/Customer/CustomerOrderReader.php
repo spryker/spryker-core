@@ -40,7 +40,7 @@ class CustomerOrderReader implements CustomerOrderReaderInterface
     public function __construct(
         SalesQueryContainerInterface $queryContainer,
         OrderHydratorInterface $orderHydrator,
-        SalesToOmsInterface $omsFacade = null
+        ?SalesToOmsInterface $omsFacade = null
     ) {
         $this->queryContainer = $queryContainer;
         $this->orderHydrator = $orderHydrator;
