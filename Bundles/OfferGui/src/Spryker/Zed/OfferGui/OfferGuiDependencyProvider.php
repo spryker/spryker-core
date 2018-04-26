@@ -23,6 +23,7 @@ use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToStoreFacadeBridge;
 use Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilDateTimeServiceBridge;
 use Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilEncodingServiceBridge;
 use Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilSanitizeServiceBridge;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 
 class OfferGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -40,6 +41,7 @@ class OfferGuiDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
     public const PROPEL_QUERY_OFFER = 'PROPEL_QUERY_OFFER';
+    public const FLASH_BAG = 'FLASH_BAG';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -64,6 +66,7 @@ class OfferGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addSessionClient($container);
         $container = $this->addCurrencyFacade($container);
         $container = $this->addPriceFacade($container);
+        $container = $this->addFlashBag($container);
 
         return $container;
     }
@@ -259,6 +262,20 @@ class OfferGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_OFFER] = function (Container $container) {
             return new OfferGuiToOfferFacadeBridge($container->getLocator()->offer()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addFlashBag($container)
+    {
+        $container[static::FLASH_BAG] = function () {
+            return new FlashBag();
         };
 
         return $container;

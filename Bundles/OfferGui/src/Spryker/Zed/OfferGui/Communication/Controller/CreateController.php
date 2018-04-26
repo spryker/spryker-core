@@ -75,15 +75,15 @@ class CreateController extends AbstractController
                 ->calculateOffer($offerTransfer);
 
             $form = $this->getFactory()->getOfferForm($offerTransfer, $request);
+            $this->getFactory()->getFlashBag()->clear();
 
             if ($isSubmitPersist) {
                 $offerResponseTransfer = $this->getFactory()
                     ->getOfferFacade()
                     ->createOffer($offerTransfer);
 
-                $this->addSuccessMessage(static::MESSAGE_OFFER_CREATE_SUCCESS);
-
                 if ($offerResponseTransfer->getIsSuccessful()) {
+                    $this->addSuccessMessage(static::MESSAGE_OFFER_CREATE_SUCCESS);
                     return $this->getSuccessfulRedirect($offerResponseTransfer);
                 }
             }

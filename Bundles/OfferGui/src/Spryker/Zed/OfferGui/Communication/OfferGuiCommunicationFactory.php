@@ -214,4 +214,21 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(OfferGuiDependencyProvider::FACADE_PRICE);
     }
+
+    /**]
+     *
+     * @return \Symfony\Component\HttpFoundation\Session\SessionBagInterface
+     */
+    public function getFlashBag()
+    {
+        return $this->getSessionClient()->getBag($this->getFlashBagName());
+    }
+
+    /**
+     * @return string
+     */
+    public function getFlashBagName(): string
+    {
+        return $this->getProvidedDependency(OfferGuiDependencyProvider::FLASH_BAG)->getName();
+    }
 }

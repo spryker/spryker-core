@@ -24,6 +24,7 @@ class EditController extends AbstractController
     public const PARAM_SUBMIT_PERSIST = 'submit-persist';
 
     protected const MESSAGE_OFFER_UPDATE_SUCCESS = 'Offer was updated successfully.';
+    protected const MESSAGE_OFFER_RELOAD_SUCCESS = 'Offer was reloaded successfully.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -32,8 +33,6 @@ class EditController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $isSubmitPersist = $request->request->get(static::PARAM_SUBMIT_PERSIST);
-
         $offerTransfer = $this->getOfferTransfer($request);
         $offerTransfer = $this->processCustomerRedirect($request, $offerTransfer);
 
@@ -52,22 +51,39 @@ class EditController extends AbstractController
                 ->calculateOffer($offerTransfer);
 
             $form = $this->getFactory()->getOfferForm($offerTransfer, $request);
+            $this->getFactory()->getFlashBag()->clear();
 
-            if ($isSubmitPersist) {
-                $offerResponseTransfer = $this->getFactory()
-                    ->getOfferFacade()
-                    ->updateOffer($offerTransfer);
-
-                if ($offerResponseTransfer->getIsSuccessful()) {
-                    $this->addSuccessMessage(static::MESSAGE_OFFER_UPDATE_SUCCESS);
-                }
-            }
+            $this->updateOffer($offerTransfer, $request);
         }
 
         return $this->viewResponse([
             'offer' => $offerTransfer,
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return void
+     */
+    protected function updateOffer(OfferTransfer $offerTransfer, Request $request)
+    {
+        $isSubmitPersist = $request->request->get(static::PARAM_SUBMIT_PERSIST);
+
+        if (!$isSubmitPersist) {
+            $this->addSuccessMessage(static::MESSAGE_OFFER_RELOAD_SUCCESS);
+            return;
+        }
+
+        $offerResponseTransfer = $this->getFactory()
+            ->getOfferFacade()
+            ->updateOffer($offerTransfer);
+
+        if ($offerResponseTransfer->getIsSuccessful()) {
+            $this->addSuccessMessage(static::MESSAGE_OFFER_UPDATE_SUCCESS);
+        }
     }
 
     /**

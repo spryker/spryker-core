@@ -24,4 +24,11 @@ interface OfferGuiToSessionClientInterface
      * @return string
      */
     public function get($name, $default = null);
+
+    /**
+     * @param string $name
+     *
+     * @return \Symfony\Component\HttpFoundation\Session\SessionBagInterface
+     */
+    public function getBag($name);
 }
