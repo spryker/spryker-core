@@ -103,10 +103,10 @@ class ProductBundleCartExpanderTest extends Unit
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartExpander
      */
     protected function createProductExpanderMock(
-        ProductBundleToPriceProductFacadeInterface $priceProductFacadeMock = null,
-        ProductBundleToProductInterface $productFacadeMock = null,
-        ProductBundleToLocaleInterface $localeFacadeMock = null,
-        ProductBundleQueryContainerInterface $productBundleQueryContainerMock = null
+        ?ProductBundleToPriceProductFacadeInterface $priceProductFacadeMock = null,
+        ?ProductBundleToProductInterface $productFacadeMock = null,
+        ?ProductBundleToLocaleInterface $localeFacadeMock = null,
+        ?ProductBundleQueryContainerInterface $productBundleQueryContainerMock = null
     ) {
 
         if ($productBundleQueryContainerMock === null) {

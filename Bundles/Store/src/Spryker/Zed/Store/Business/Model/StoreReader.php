@@ -170,4 +170,12 @@ class StoreReader implements StoreReaderInterface
 
         return $stores;
     }
+
+    /**
+     * @return array
+     */
+    public function getCountries()
+    {
+        return $this->store->getCountries();
+    }
 }

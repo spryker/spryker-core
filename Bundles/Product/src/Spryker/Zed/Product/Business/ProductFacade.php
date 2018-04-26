@@ -713,7 +713,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @return array
      */
-    public function getCombinedAbstractAttributeKeys(ProductAbstractTransfer $productAbstractTransfer, LocaleTransfer $localeTransfer = null)
+    public function getCombinedAbstractAttributeKeys(ProductAbstractTransfer $productAbstractTransfer, ?LocaleTransfer $localeTransfer = null)
     {
         return $this->getFactory()
             ->createAttributeLoader()
@@ -735,7 +735,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @return array
      */
-    public function getCombinedAbstractAttributeKeysForProductIds($productIds, LocaleTransfer $localeTransfer = null)
+    public function getCombinedAbstractAttributeKeysForProductIds($productIds, ?LocaleTransfer $localeTransfer = null)
     {
         return $this->getFactory()
             ->createAttributeLoader()
@@ -752,7 +752,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @return array
      */
-    public function getCombinedConcreteAttributes(ProductConcreteTransfer $productConcreteTransfer, LocaleTransfer $localeTransfer = null)
+    public function getCombinedConcreteAttributes(ProductConcreteTransfer $productConcreteTransfer, ?LocaleTransfer $localeTransfer = null)
     {
         return $this->getFactory()
             ->createAttributeLoader()

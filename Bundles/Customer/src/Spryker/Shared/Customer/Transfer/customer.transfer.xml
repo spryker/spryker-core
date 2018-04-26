@@ -89,4 +89,10 @@
         <property name="customer" type="Customer" />
     </transfer>
 
+    <transfer name="CustomerCollection">
+        <property name="filter" type="Filter" />
+        <property name="customers" type="Customer[]" singular="customer" />
+        <property name="pagination" type="Pagination" />
+    </transfer>
+
 </transfers>

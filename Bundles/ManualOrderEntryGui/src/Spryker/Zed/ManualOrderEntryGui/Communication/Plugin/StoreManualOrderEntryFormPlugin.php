@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Plugin;
 
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreWithCurrencyTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Store\StoreType;
 use Symfony\Component\Form\FormInterface;
@@ -38,13 +40,13 @@ class StoreManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOr
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createForm(Request $request, $dataTransfer = null): FormInterface
+    public function createForm(Request $request, QuoteTransfer $quoteTransfer): FormInterface
     {
-        return $this->getFactory()->createStoreForm($request, $dataTransfer);
+        return $this->getFactory()->createStoreForm($request, $quoteTransfer);
     }
 
     /**
@@ -54,20 +56,18 @@ class StoreManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOr
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function handleData($quoteTransfer, &$form, $request): AbstractTransfer
+    public function handleData(QuoteTransfer $quoteTransfer, &$form, Request $request): QuoteTransfer
     {
-        $storeCurrencyString = $quoteTransfer->getIdStoreCurrency();
+        $storeCurrencyString = $quoteTransfer->getStoreCurrency();
         if (!$this->isValidStoreCurrencyString($storeCurrencyString)) {
             return $quoteTransfer;
         }
 
-        list($idStore, $idCurrency) = explode(';', $storeCurrencyString);
-        $idStore = (int)$idStore;
-        $idCurrency = (int)$idCurrency;
+        list($storeName, $currencyCode) = explode(';', $storeCurrencyString);
         $storeWithCurrencyTransfers = $this->currencyFacade->getAllStoresWithCurrencies();
 
         foreach ($storeWithCurrencyTransfers as $storeWithCurrencyTransfer) {
-            if ($this->setStoreToQuote($quoteTransfer, $storeWithCurrencyTransfer, $idStore, $idCurrency)) {
+            if ($this->setStoreToQuote($quoteTransfer, $storeWithCurrencyTransfer, $storeName, $currencyCode)) {
                 break;
             }
         }
@@ -76,12 +76,18 @@ class StoreManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOr
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    public function isPreFilled($dataTransfer = null): bool
+    public function isFormPreFilled(QuoteTransfer $quoteTransfer): bool
     {
+        if ($quoteTransfer->getStore() !== null
+            && $quoteTransfer->getCurrency() !== null
+        ) {
+            return $quoteTransfer->getStore()->getName() && $quoteTransfer->getCurrency()->getCode();
+        }
+
         return false;
     }
 
@@ -92,26 +98,29 @@ class StoreManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOr
      */
     protected function isValidStoreCurrencyString($storeCurrencyString)
     {
-        return strlen($storeCurrencyString)
-            && strpos($storeCurrencyString, ';') !== false;
+        return strlen($storeCurrencyString) && strpos($storeCurrencyString, ';') !== false;
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\StoreWithCurrencyTransfer $storeWithCurrencyTransfer
-     * @param int $idStore
-     * @param int $idCurrency
+     * @param string $storeName
+     * @param string $currencyCode
      *
      * @return bool
      */
-    protected function setStoreToQuote($quoteTransfer, $storeWithCurrencyTransfer, $idStore, $idCurrency)
-    {
+    protected function setStoreToQuote(
+        QuoteTransfer $quoteTransfer,
+        StoreWithCurrencyTransfer $storeWithCurrencyTransfer,
+        $storeName,
+        $currencyCode
+    ) {
         $storeTransfer = $storeWithCurrencyTransfer->getStore();
-        if ($idStore == $storeTransfer->getIdStore()) {
+        if ($storeName == $storeTransfer->getName()) {
             $quoteTransfer->setStore($storeTransfer);
 
             foreach ($storeWithCurrencyTransfer->getCurrencies() as $currencyTransfer) {
-                if ($this->setCurrencyToQuote($quoteTransfer, $idCurrency, $currencyTransfer)) {
+                if ($this->setCurrencyToQuote($quoteTransfer, $currencyCode, $currencyTransfer)) {
                     break;
                 }
             }
@@ -124,14 +133,14 @@ class StoreManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOr
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param int $idCurrency
+     * @param string $currencyCode
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *
      * @return bool
      */
-    protected function setCurrencyToQuote($quoteTransfer, $idCurrency, $currencyTransfer)
+    protected function setCurrencyToQuote(QuoteTransfer $quoteTransfer, $currencyCode, CurrencyTransfer $currencyTransfer)
     {
-        if ($idCurrency == $currencyTransfer->getIdCurrency()) {
+        if ($currencyCode == $currencyTransfer->getCode()) {
             $quoteTransfer->setCurrency($currencyTransfer);
 
             return true;

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Service;
 
+use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class StepEngine
@@ -31,16 +33,30 @@ class StepEngine
      *
      * @return array
      */
-    public function filterFormPlugins($formPlugins, Request $request, $quoteTransfer)
+    public function filterFormPlugins($formPlugins, Request $request, QuoteTransfer $quoteTransfer)
     {
         $filteredPlugins = [];
+        $isFormPreFilledLast = false;
 
         foreach ($formPlugins as $formPlugin) {
-            $filteredPlugins[] = $formPlugin;
+            $pluginAdded = false;
+            $isFormSubmitted = $this->isFormSubmitted($formPlugin, $request);
+            $isShowNext = $this->isShowNext($request);
+            $isFormPreFilled = $this->isFormPreFilled($formPlugin, $quoteTransfer);
 
-            if (!$this->showNext($formPlugin, $request, $quoteTransfer)) {
+            if ($isShowNext || $isFormPreFilledLast) {
+                $filteredPlugins[] = $formPlugin;
+                $pluginAdded = true;
+            }
+
+            if (!$isFormSubmitted && !$isFormPreFilled) {
                 break;
             }
+
+            if (!$pluginAdded) {
+                $filteredPlugins[] = $formPlugin;
+            }
+            $isFormPreFilledLast = $isFormPreFilled;
         }
 
         $filteredPlugins = $this->augmentFilteredPlugins($formPlugins, $filteredPlugins);
@@ -49,34 +65,34 @@ class StepEngine
     }
 
     /**
-     * @param \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface $formPlugin
      * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return bool
+     */
+    protected function isShowNext(Request $request): bool
+    {
+        return $request->request->get($this->nextStepName) !== null;
+    }
+
+    /**
+     * @param \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface $formPlugin
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    protected function showNext($formPlugin, $request, $quoteTransfer): bool
+    protected function isFormPreFilled(ManualOrderEntryFormPluginInterface $formPlugin, QuoteTransfer $quoteTransfer): bool
     {
-        if ($this->isFormSubmitted($formPlugin, $request, $quoteTransfer)) {
-            return true;
-        }
-
-        return $request->request->get($formPlugin->getName()) !== null;
+        return $formPlugin->isFormPreFilled($quoteTransfer);
     }
 
     /**
      * @param \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface $formPlugin
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    protected function isFormSubmitted($formPlugin, $request, $quoteTransfer): bool
+    protected function isFormSubmitted(ManualOrderEntryFormPluginInterface $formPlugin, Request $request): bool
     {
-        if ($formPlugin->isPreFilled($quoteTransfer)) {
-            return true;
-        }
-
         return ($request->request->get($formPlugin->getName()) !== null);
     }
 

@@ -23,7 +23,7 @@ class ConfirmPaymentTransaction extends BaseTransaction implements OrderTransact
      */
     public function request(
         OrderTransfer $orderTransfer,
-        OrderTransfer $partialOrderTransfer = null,
+        ?OrderTransfer $partialOrderTransfer = null,
         array $orderItems = []
     ) {
         $paymentMethod = $this->getPaymentMethod($orderTransfer);

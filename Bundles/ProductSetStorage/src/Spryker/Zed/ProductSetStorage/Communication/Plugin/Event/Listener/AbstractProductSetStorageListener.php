@@ -80,7 +80,7 @@ class AbstractProductSetStorageListener extends AbstractPlugin
      *
      * @return void
      */
-    protected function storeDataSet(array $spyProductSetLocalizedEntity, SpyProductSetStorage $spyProductSetStorageEntity = null)
+    protected function storeDataSet(array $spyProductSetLocalizedEntity, ?SpyProductSetStorage $spyProductSetStorageEntity = null)
     {
         $productSetStorageTransfer = new ProductSetDataStorageTransfer();
         if ($spyProductSetStorageEntity === null) {

@@ -28,7 +28,7 @@ trait DatabaseTransactionHandlerTrait
      *
      * @return mixed
      */
-    protected function handleDatabaseTransaction(Closure $callback, ConnectionInterface $connection = null)
+    protected function handleDatabaseTransaction(Closure $callback, ?ConnectionInterface $connection = null)
     {
         if (!$connection) {
             $connection = Propel::getConnection();

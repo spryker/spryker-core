@@ -19,7 +19,7 @@ class StoreType extends AbstractType
 {
     public const TYPE_NAME = 'stores';
 
-    public const FIELD_STORE = 'id_store_currency';
+    public const FIELD_STORE = 'storeCurrency';
 
     public const OPTION_STORES_ARRAY = 'option-stores-array';
 
@@ -44,8 +44,7 @@ class StoreType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver
-            ->setRequired(static::OPTION_STORES_ARRAY);
+        $resolver->setRequired(static::OPTION_STORES_ARRAY);
     }
 
     /**

@@ -1,5 +1,5 @@
 {docBlock}
-    public function {methodName}({parameters})
+    public function {methodName}({parameters}){returnMethodTypeHint}
     {
-        return $this->{toModuleVariable}{toType}->{methodName}({parametersWithoutTypes});
+        {returnStatement}$this->{toModuleVariable}{toType}->{methodName}({parametersWithoutTypes});
     }

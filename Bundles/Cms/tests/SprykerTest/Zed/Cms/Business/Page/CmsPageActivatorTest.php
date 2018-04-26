@@ -75,8 +75,8 @@ class CmsPageActivatorTest extends CmsMocks
      */
     protected function createCmsPageActivateMock(
         SpyCmsPage $cmsPageEntity,
-        CmsQueryContainerInterface $cmsQueryContainerMock = null,
-        CmsToTouchInterface $touchFacadeMock = null
+        ?CmsQueryContainerInterface $cmsQueryContainerMock = null,
+        ?CmsToTouchInterface $touchFacadeMock = null
     ) {
 
         if ($cmsQueryContainerMock === null) {

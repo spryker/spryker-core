@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Customer\Communication\Controller;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -20,6 +21,9 @@ class AddController extends AbstractController
     const MESSAGE_CUSTOMER_CREATE_SUCCESS = 'Customer was created successfully.';
     const MESSAGE_CUSTOMER_CREATE_ERROR = 'Customer was not created.';
 
+    const REDIRECT_URL_DEFAULT = '/customer';
+    const REDIRECT_URL_KEY = 'redirectUrl';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -27,12 +31,18 @@ class AddController extends AbstractController
      */
     public function indexAction(Request $request)
     {
+        $baseRedirectUrl = urldecode($request->query->get(static::REDIRECT_URL_KEY, static::REDIRECT_URL_DEFAULT));
         $dataProvider = $this->getFactory()->createCustomerFormDataProvider();
 
         $form = $this->getFactory()
             ->createCustomerForm(
                 $dataProvider->getData(),
-                $dataProvider->getOptions()
+                array_merge(
+                    $dataProvider->getOptions(),
+                    [
+                        'action' => Url::generate('/customer/add', [static::REDIRECT_URL_KEY => $baseRedirectUrl]),
+                    ]
+                )
             )
             ->handleRequest($request);
 
@@ -44,15 +54,29 @@ class AddController extends AbstractController
 
             if (!$customerResponseTransfer->getIsSuccess()) {
                 $this->addErrorMessage(static::MESSAGE_CUSTOMER_CREATE_ERROR);
-                return $this->redirectResponse('/customer');
+                return $this->redirectResponse($baseRedirectUrl);
             }
 
             $this->addSuccessMessage(static::MESSAGE_CUSTOMER_CREATE_SUCCESS);
-            return $this->redirectResponse('/customer');
+            return $this->redirectResponse($this->getSuccessRedirectUrl($baseRedirectUrl, $customerTransfer));
         }
 
         return $this->viewResponse([
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @param string $baseRedirectUrl
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customer
+     *
+     * @return string
+     */
+    protected function getSuccessRedirectUrl(string $baseRedirectUrl, CustomerTransfer $customer): string
+    {
+        $redirectUrl = Url::parse($baseRedirectUrl);
+        $redirectUrl->addQuery('customerReference', $customer->getCustomerReference());
+
+        return $redirectUrl->build();
     }
 }

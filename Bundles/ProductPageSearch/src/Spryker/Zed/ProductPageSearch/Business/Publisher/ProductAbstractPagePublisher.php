@@ -142,7 +142,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
      *
      * @return void
      */
-    protected function storeDataSet(array $spyProductAbstractLocalizedEntity, SpyProductAbstractPageSearch $spyProductPageSearchEntity = null, $isRefresh = false)
+    protected function storeDataSet(array $spyProductAbstractLocalizedEntity, ?SpyProductAbstractPageSearch $spyProductPageSearchEntity = null, $isRefresh = false)
     {
         if (!$this->isActive($spyProductAbstractLocalizedEntity)) {
             if (!$spyProductPageSearchEntity === null) {
@@ -181,7 +181,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
      *
      * @return \Generated\Shared\Transfer\ProductPageSearchTransfer
      */
-    protected function getProductPageSearchTransfer(array $productAbstractLocalizedData, SpyProductAbstractPageSearch $productPageSearchEntity = null, $isRefresh = false)
+    protected function getProductPageSearchTransfer(array $productAbstractLocalizedData, ?SpyProductAbstractPageSearch $productPageSearchEntity = null, $isRefresh = false)
     {
         if ($isRefresh) {
             $productPageSearchTransfer = $this->productPageSearchMapper->mapToProductPageSearchTransferFromJson($productPageSearchEntity->getStructuredData());

@@ -33,7 +33,7 @@ class AbstractSpySalesOrderItem extends BaseSpySalesOrderItem
      *
      * @return bool
      */
-    public function preSave(ConnectionInterface $con = null)
+    public function preSave(?ConnectionInterface $con = null)
     {
         $this->statusChanged = array_key_exists(SpySalesOrderItemTableMap::COL_FK_OMS_ORDER_ITEM_STATE, $this->modifiedColumns);
 
@@ -45,7 +45,7 @@ class AbstractSpySalesOrderItem extends BaseSpySalesOrderItem
      *
      * @return void
      */
-    public function postSave(ConnectionInterface $con = null)
+    public function postSave(?ConnectionInterface $con = null)
     {
         if ($this->statusChanged) {
             // FIXME Wrong dependency direction
