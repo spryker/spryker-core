@@ -75,7 +75,7 @@ class QuoteResolver implements QuoteResolverInterface
     }
 
     /**
-     * @param null|int $idQuote
+     * @param int $idQuote
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return null|\Generated\Shared\Transfer\QuoteTransfer
