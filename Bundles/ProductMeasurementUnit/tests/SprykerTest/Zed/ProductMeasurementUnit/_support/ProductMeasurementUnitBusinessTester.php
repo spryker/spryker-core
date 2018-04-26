@@ -8,8 +8,6 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
 
 /**
  * Inherited Methods
@@ -35,16 +33,6 @@ class ProductMeasurementUnitBusinessTester extends Actor
      */
 
     const DB_TYPE_PGSQL = 'pgsql';
-
-    /**
-     * @return bool
-     */
-    public function isDbPgSql(): bool
-    {
-        $dbType = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
-
-        return $dbType === static::DB_TYPE_PGSQL;
-    }
 
     /**
      * @return \Generated\Shared\Transfer\CartChangeTransfer
