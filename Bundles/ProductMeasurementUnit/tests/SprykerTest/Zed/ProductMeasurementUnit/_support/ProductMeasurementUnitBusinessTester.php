@@ -32,8 +32,6 @@ class ProductMeasurementUnitBusinessTester extends Actor
      * Define custom actions here
      */
 
-    const DB_TYPE_PGSQL = 'pgsql';
-
     /**
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
