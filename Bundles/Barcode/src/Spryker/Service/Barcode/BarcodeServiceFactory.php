@@ -9,6 +9,7 @@ namespace Spryker\Service\Barcode;
 
 use Spryker\Service\Barcode\Model\BarcodeGenerator\BarcodeGenerator;
 use Spryker\Service\Barcode\Model\BarcodeGenerator\BarcodeGeneratorInterface;
+use Spryker\Service\Barcode\Model\BarcodeGeneratorPluginCollection\BarcodeGeneratorPluginCollectionInterface;
 use Spryker\Service\Barcode\Model\BarcodeGeneratorToServiceFactoryBridge\BarcodeGeneratorToServiceFactoryBridge;
 use Spryker\Service\Barcode\Model\BarcodeGeneratorToServiceFactoryBridge\BarcodeGeneratorToServiceFactoryBridgeInterface;
 use Spryker\Service\Barcode\Model\PluginAvailabilityChecker\PluginAvailabilityChecker;
@@ -30,6 +31,14 @@ class BarcodeServiceFactory extends AbstractServiceFactory
     public function createPluginInstance(string $fqcn): BarcodeGeneratorPluginInterface
     {
         return new $fqcn();
+    }
+
+    /**
+     * @return \Spryker\Service\Barcode\Model\BarcodeGeneratorPluginCollection\BarcodeGeneratorPluginCollectionInterface
+     */
+    public function getBarcodePlugins(): BarcodeGeneratorPluginCollectionInterface
+    {
+        return $this->getProvidedDependency(BarcodeDependencyProvider::BARCODE_PLUGINS);
     }
 
     /**

@@ -7,6 +7,7 @@
 
 namespace Spryker\Service\Barcode;
 
+use Spryker\Service\Barcode\Model\BarcodeGeneratorPluginCollection\BarcodeGeneratorPluginCollection;
 use Spryker\Service\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Service\Kernel\Container;
 
@@ -34,7 +35,9 @@ class BarcodeDependencyProvider extends AbstractBundleDependencyProvider
     protected function addBarcodePlugins(Container $container): Container
     {
         $container[static::BARCODE_PLUGINS] = function (Container $container) {
-            return $this->getBarcodePlugins();
+            return new BarcodeGeneratorPluginCollection(
+                $this->getBarcodePlugins()
+            );
         };
 
         return $container;
