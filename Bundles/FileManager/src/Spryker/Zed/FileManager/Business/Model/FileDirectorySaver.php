@@ -113,10 +113,11 @@ class FileDirectorySaver implements FileDirectorySaverInterface
         return $this->handleDatabaseTransaction(function () use ($fileDirectory, $fileDirectoryTransfer) {
             $fileDirectory->fromArray($fileDirectoryTransfer->toArray());
 
-            $savedRowsCount = $fileDirectory->save();
+            $fileDirectory->save();
+            $idFileDirectory = $fileDirectory->getIdFileDirectory();
             $this->attributesSaver->saveFileLocalizedAttributes($fileDirectory, $fileDirectoryTransfer);
 
-            return $savedRowsCount;
+            return $idFileDirectory;
         }, $this->queryContainer->getConnection());
     }
 }

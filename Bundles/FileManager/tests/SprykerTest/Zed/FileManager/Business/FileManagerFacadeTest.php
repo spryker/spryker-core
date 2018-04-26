@@ -9,10 +9,14 @@ namespace SprykerTest\Zed\FileManager\Business;
 
 use Codeception\Configuration;
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\FileDirectoryTransfer;
+use Generated\Shared\Transfer\FileDirectoryTreeNodeTransfer;
+use Generated\Shared\Transfer\FileDirectoryTreeTransfer;
 use Generated\Shared\Transfer\FileInfoTransfer;
 use Generated\Shared\Transfer\FileManagerSaveRequestTransfer;
 use Generated\Shared\Transfer\FileTransfer;
 use Orm\Zed\FileManager\Persistence\SpyFile;
+use Orm\Zed\FileManager\Persistence\SpyFileDirectory;
 use Orm\Zed\FileManager\Persistence\SpyFileInfo;
 use Propel\Runtime\Propel;
 use Spryker\Service\FileSystem\FileSystemDependencyProvider;
@@ -104,8 +108,10 @@ class FileManagerFacadeTest extends Unit
     protected function resetDb()
     {
         Propel::getConnection()->exec('TRUNCATE TABLE spy_file CASCADE;');
+        Propel::getConnection()->exec('TRUNCATE TABLE spy_file_directory CASCADE;');
         Propel::getConnection()->exec('ALTER SEQUENCE spy_file_pk_seq RESTART WITH 1;');
         Propel::getConnection()->exec('ALTER SEQUENCE spy_file_info_pk_seq RESTART WITH 1;');
+        Propel::getConnection()->exec('ALTER SEQUENCE spy_file_directory_pk_seq RESTART WITH 1;');
     }
 
     /**
@@ -142,6 +148,25 @@ class FileManagerFacadeTest extends Unit
         $fileInfo->setCreatedAt('2017-07-07 00:00:00');
         $fileInfo->setUpdatedAt('2017-07-07 00:00:00');
         $fileInfo->save();
+
+        $fileDirectory = new SpyFileDirectory();
+        $fileDirectory->setName('first_directory');
+        $fileDirectory->setPosition(1);
+        $fileDirectory->setIsActive(true);
+        $fileDirectory->save();
+
+        $fileDirectory2 = new SpyFileDirectory();
+        $fileDirectory2->setName('second_directory');
+        $fileDirectory2->setPosition(2);
+        $fileDirectory2->setIsActive(true);
+        $fileDirectory2->save();
+
+        $fileSubDirectory = new SpyFileDirectory();
+        $fileSubDirectory->setName('subdirectory');
+        $fileSubDirectory->setIsActive(true);
+        $fileSubDirectory->setPosition(1);
+        $fileSubDirectory->setParentFileDirectory($fileDirectory);
+        $fileSubDirectory->save();
     }
 
     /**
@@ -150,7 +175,7 @@ class FileManagerFacadeTest extends Unit
     protected function tearDown()
     {
         $this->resetDb();
-        exec('rm -f ' . $this->getDocumentFullFileName('*'));
+        exec('rm -rf ' . $this->getDocumentFullFileName('*'));
     }
 
     /**
@@ -285,7 +310,104 @@ class FileManagerFacadeTest extends Unit
         $this->assertEquals('customer_v1.txt', $fileTransfer->getFileInfo()->getStorageFileName());
         $this->assertEquals('txt', $fileTransfer->getFileInfo()->getExtension());
         $this->assertEquals('3', $fileTransfer->getFileInfo()->getVersion());
-        $this->assertEquals('v. 3', $fileTransfer->getFileInfo()->getVersionName());
+        $this->assertEquals('v.3', $fileTransfer->getFileInfo()->getVersionName());
         $this->assertEquals(10, $fileTransfer->getFileInfo()->getSize());
     }
+
+    /**
+     * @return void
+     */
+    public function testSaveDirectory()
+    {
+        $fileDirectoryTransfer = new FileDirectoryTransfer();
+        $fileDirectoryTransfer->setName('big directory');
+        $fileDirectoryTransfer->setIsActive(true);
+        $fileDirectoryTransfer->setPosition(1);
+        $fileDirectoryId = $this->facade->saveDirectory($fileDirectoryTransfer);
+        $this->assertInternalType('int', $fileDirectoryId);
+
+        $file = new FileTransfer();
+        $file->setFileContent('big directory file');
+        $file->setFileName('big_directory.txt');
+        $file->setFkFileDirectory($fileDirectoryId);
+
+        $fileInfo = new FileInfoTransfer();
+        $fileInfo->setVersionName('v10');
+        $fileInfo->setVersion(10);
+        $fileInfo->setSize(17);
+        $fileInfo->setStorageFileName('big_directory.txt');
+        $fileInfo->setType('text');
+        $fileInfo->setExtension('txt');
+
+        $fileManagerSaveRequestTransfer = new FileManagerSaveRequestTransfer();
+        $fileManagerSaveRequestTransfer->setContent('new version of the file');
+        $fileManagerSaveRequestTransfer->setFile($file);
+        $fileManagerSaveRequestTransfer->setFileInfo($fileInfo);
+
+        $fileId = $this->facade->saveFile($fileManagerSaveRequestTransfer);
+        $this->assertInternalType('int', $fileId);
+        $this->assertFileExists($this->getDocumentFullFileName($fileDirectoryId . '/2-v.1.txt'));
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindFileDirectoryTree()
+    {
+        $tree = $this->facade->findFileDirectoryTree();
+        $this->assertInstanceOf(FileDirectoryTreeTransfer::class, $tree);
+
+        foreach($tree->getNodes()->getArrayCopy() as $node) {
+            $this->assertInstanceOf(FileDirectoryTreeNodeTransfer::class, $node);
+        }
+    }
+
+    public function testUpdateFileDirectoryTreeHierarchy()
+    {
+        $tree = $this->facade->findFileDirectoryTree();
+
+        $firstNode = $tree->getNodes()->getArrayCopy()[0];
+        $secondNode = $firstNode->getChildren()->getArrayCopy()[0];
+        $thirdNode = $tree->getNodes()->getArrayCopy()[1];
+
+        $this->assertEquals(2, $tree->getNodes()->count());
+        $this->assertEquals(1, $firstNode->getChildren()->count());
+        $this->assertEquals(0, $secondNode->getChildren()->count());
+        $this->assertEquals(0, $thirdNode->getChildren()->count());
+        $this->assertEquals(1, $firstNode->getFileDirectory()->getIdFileDirectory());
+        $this->assertEquals(3, $secondNode->getFileDirectory()->getIdFileDirectory());
+        $this->assertEquals(2, $thirdNode->getFileDirectory()->getIdFileDirectory());
+
+        $firstNode = $tree->getNodes()->getArrayCopy()[0];
+        $subNode = $tree->getNodes()->getArrayCopy()[0]->getChildren()[0];
+        $thirdNode = $tree->getNodes()->getArrayCopy()[1];
+        $subNode->addChild($thirdNode);
+
+        $newFileDirectoryTreeHierarchy = new FileDirectoryTreeTransfer();
+        $newFileDirectoryTreeHierarchy->addNode($firstNode);
+
+        $this->facade->updateFileDirectoryTreeHierarchy($newFileDirectoryTreeHierarchy);
+        $tree = $this->facade->findFileDirectoryTree();
+
+        $firstNode = $tree->getNodes()->getArrayCopy()[0];
+        $secondNode = $firstNode->getChildren()->getArrayCopy()[0];
+        $thirdNode = $secondNode->getChildren()->getArrayCopy()[0];
+
+        $this->assertEquals(1, $tree->getNodes()->count());
+        $this->assertEquals(1, $firstNode->getChildren()->count());
+        $this->assertEquals(1, $secondNode->getChildren()->count());
+        $this->assertEquals(0, $thirdNode->getChildren()->count());
+        $this->assertEquals(1, $firstNode->getFileDirectory()->getIdFileDirectory());
+        $this->assertEquals(3, $secondNode->getFileDirectory()->getIdFileDirectory());
+        $this->assertEquals(2, $thirdNode->getFileDirectory()->getIdFileDirectory());
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeleteFileDirectory()
+    {
+        $this->facade->deleteFileDirectory(1);
+    }
+
 }
