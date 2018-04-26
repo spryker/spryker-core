@@ -3,6 +3,7 @@
   "description": "ProductBarcodeDataImport module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
@@ -10,7 +11,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Zed\\ProductBarcodeDataImport\\Helper\\": "tests/SprykerTest/Zed/ProductBarcodeDataImport/_support/Helper/"
     }
   },
   "autoload-dev": {

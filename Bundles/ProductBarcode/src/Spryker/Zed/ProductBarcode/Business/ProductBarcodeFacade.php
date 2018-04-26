@@ -27,13 +27,8 @@ class ProductBarcodeFacade implements ProductBarcodeFacadeInterface
      */
     public function generateBarcode(ProductConcreteTransfer $productConcreteTransfer, string $generatorPlugin = null): BarcodeResponseTransfer
     {
-        $resolver = $this->getFactory()
-            ->createProductBarcodeNumberResolver();
-
-        $text = $resolver->resolve($productConcreteTransfer);
-
-        $this->getFactory()
-            ->getBarcodeGeneratorService()
-            ->generateBarcode($text, $generatorPlugin);
+        return $this->getFactory()
+            ->createProductBarcodeGenerator()
+            ->generateBarcode($productConcreteTransfer, $generatorPlugin);
     }
 }
