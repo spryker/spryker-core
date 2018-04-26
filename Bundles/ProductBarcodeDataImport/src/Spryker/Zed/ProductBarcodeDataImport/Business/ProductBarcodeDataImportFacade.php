@@ -9,13 +9,12 @@ namespace Spryker\Zed\ProductBarcodeDataImport\Business;
 
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * TODO: Fix "Call to undefined method Spryker\Zed\ProductBarcodeDataImport\Business\ProductBarcodeDataImportFacade::getFactory()"
- *
  * @method \Spryker\Zed\ProductBarcodeDataImport\Business\ProductBarcodeDataImportBusinessFactory getFactory()
  */
-class ProductBarcodeDataImportFacade implements ProductBarcodeDataImportFacadeInterface
+class ProductBarcodeDataImportFacade extends AbstractFacade implements ProductBarcodeDataImportFacadeInterface
 {
     /**
      * {@inheritdoc}
