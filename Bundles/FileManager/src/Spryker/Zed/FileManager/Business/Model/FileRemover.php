@@ -30,8 +30,8 @@ class FileRemover implements FileRemoverInterface
     protected $fileManagerQueryContainer;
 
     /**
-     * @param \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface $fileLoader
-     * @param \Spryker\Zed\FileManager\Business\Model\FileContentInterface $fileContent
+     * @param \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface             $fileLoader
+     * @param \Spryker\Zed\FileManager\Business\Model\FileContentInterface            $fileContent
      * @param \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface $fileManagerQueryContainer
      */
     public function __construct(FileLoaderInterface $fileLoader, FileContentInterface $fileContent, FileManagerQueryContainerInterface $fileManagerQueryContainer)

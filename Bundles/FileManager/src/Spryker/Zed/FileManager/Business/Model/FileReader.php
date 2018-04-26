@@ -26,7 +26,7 @@ class FileReader implements FileReaderInterface
     protected $fileContent;
 
     /**
-     * @param \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface $fileLoader
+     * @param \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface  $fileLoader
      * @param \Spryker\Zed\FileManager\Business\Model\FileContentInterface $fileContent
      */
     public function __construct(FileLoaderInterface $fileLoader, FileContentInterface $fileContent)

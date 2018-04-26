@@ -32,8 +32,8 @@ class FileDirectorySaver implements FileDirectorySaverInterface
     protected $attributesSaver;
 
     /**
-     * @param \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface $fileLoader
+     * @param \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface                $queryContainer
+     * @param \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface                            $fileLoader
      * @param \Spryker\Zed\FileManager\Business\Model\FileDirectoryLocalizedAttributesSaverInterface $attributesSaver
      */
     public function __construct(
@@ -104,20 +104,22 @@ class FileDirectorySaver implements FileDirectorySaverInterface
 
     /**
      * @param \Orm\Zed\FileManager\Persistence\SpyFileDirectory $fileDirectory
-     * @param \Generated\Shared\Transfer\FileDirectoryTransfer $fileDirectoryTransfer
+     * @param \Generated\Shared\Transfer\FileDirectoryTransfer  $fileDirectoryTransfer
      *
      * @return int
      */
     protected function saveFileDirectory(SpyFileDirectory $fileDirectory, FileDirectoryTransfer $fileDirectoryTransfer)
     {
-        return $this->handleDatabaseTransaction(function () use ($fileDirectory, $fileDirectoryTransfer) {
-            $fileDirectory->fromArray($fileDirectoryTransfer->toArray());
+        return $this->handleDatabaseTransaction(
+            function () use ($fileDirectory, $fileDirectoryTransfer) {
+                $fileDirectory->fromArray($fileDirectoryTransfer->toArray());
 
-            $fileDirectory->save();
-            $idFileDirectory = $fileDirectory->getIdFileDirectory();
-            $this->attributesSaver->saveFileLocalizedAttributes($fileDirectory, $fileDirectoryTransfer);
+                $fileDirectory->save();
+                $idFileDirectory = $fileDirectory->getIdFileDirectory();
+                $this->attributesSaver->saveFileLocalizedAttributes($fileDirectory, $fileDirectoryTransfer);
 
-            return $idFileDirectory;
-        }, $this->queryContainer->getConnection());
+                return $idFileDirectory;
+            }, $this->queryContainer->getConnection()
+        );
     }
 }

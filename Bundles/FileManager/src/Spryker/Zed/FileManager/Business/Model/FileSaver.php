@@ -51,12 +51,12 @@ class FileSaver implements FileSaverInterface
     protected $attributesSaver;
 
     /**
-     * @param \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\FileManager\Business\Model\FileVersionInterface $fileVersion
-     * @param \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface $fileLoader
-     * @param \Spryker\Zed\FileManager\Business\Model\FileContentInterface $fileContent
+     * @param \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface       $queryContainer
+     * @param \Spryker\Zed\FileManager\Business\Model\FileVersionInterface                  $fileVersion
+     * @param \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface                   $fileLoader
+     * @param \Spryker\Zed\FileManager\Business\Model\FileContentInterface                  $fileContent
      * @param \Spryker\Zed\FileManager\Business\Model\FileLocalizedAttributesSaverInterface $attributesSaver
-     * @param \Spryker\Zed\FileManager\FileManagerConfig $config
+     * @param \Spryker\Zed\FileManager\FileManagerConfig                                    $config
      */
     public function __construct(
         FileManagerQueryContainerInterface $queryContainer,
@@ -113,29 +113,31 @@ class FileSaver implements FileSaverInterface
     }
 
     /**
-     * @param \Orm\Zed\FileManager\Persistence\SpyFile $file
+     * @param \Orm\Zed\FileManager\Persistence\SpyFile                  $file
      * @param \Generated\Shared\Transfer\FileManagerSaveRequestTransfer $saveRequestTransfer
      *
      * @return int
      */
     protected function saveFile(SpyFile $file, FileManagerSaveRequestTransfer $saveRequestTransfer)
     {
-        return $this->handleDatabaseTransaction(function () use ($file, $saveRequestTransfer) {
-            $file->fromArray($saveRequestTransfer->getFile()->toArray());
+        return $this->handleDatabaseTransaction(
+            function () use ($file, $saveRequestTransfer) {
+                $file->fromArray($saveRequestTransfer->getFile()->toArray());
 
-            $fileInfo = $this->createFileInfo($saveRequestTransfer);
-            $this->addFileInfoToFile($file, $fileInfo);
+                $fileInfo = $this->createFileInfo($saveRequestTransfer);
+                $this->addFileInfoToFile($file, $fileInfo);
 
-            $savedRowsCount = $file->save();
-            $this->attributesSaver->saveLocalizedFileAttributes($file, $saveRequestTransfer);
-            $this->saveContent($saveRequestTransfer, $file, $fileInfo);
+                $savedRowsCount = $file->save();
+                $this->attributesSaver->saveLocalizedFileAttributes($file, $saveRequestTransfer);
+                $this->saveContent($saveRequestTransfer, $file, $fileInfo);
 
-            return $savedRowsCount;
-        }, $this->queryContainer->getConnection());
+                return $savedRowsCount;
+            }, $this->queryContainer->getConnection()
+        );
     }
 
     /**
-     * @param \Orm\Zed\FileManager\Persistence\SpyFile $file
+     * @param \Orm\Zed\FileManager\Persistence\SpyFile          $file
      * @param \Orm\Zed\FileManager\Persistence\SpyFileInfo|null $fileInfo
      *
      * @return void
@@ -149,8 +151,8 @@ class FileSaver implements FileSaverInterface
 
     /**
      * @param \Generated\Shared\Transfer\FileManagerSaveRequestTransfer $saveRequestTransfer
-     * @param \Orm\Zed\FileManager\Persistence\SpyFile $file
-     * @param \Orm\Zed\FileManager\Persistence\SpyFileInfo|null $fileInfo
+     * @param \Orm\Zed\FileManager\Persistence\SpyFile                  $file
+     * @param \Orm\Zed\FileManager\Persistence\SpyFileInfo|null         $fileInfo
      *
      * @return void
      */
@@ -165,7 +167,7 @@ class FileSaver implements FileSaverInterface
 
     /**
      * @param \Orm\Zed\FileManager\Persistence\SpyFileInfo $fileInfo
-     * @param string $newFileName
+     * @param string                                       $newFileName
      *
      * @return void
      */
@@ -202,7 +204,7 @@ class FileSaver implements FileSaverInterface
     }
 
     /**
-     * @param int $idFile
+     * @param int    $idFile
      * @param string $versionName
      * @param string $fileExtension
      *

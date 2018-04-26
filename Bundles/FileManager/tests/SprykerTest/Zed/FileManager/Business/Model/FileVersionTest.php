@@ -16,6 +16,7 @@ use Spryker\Zed\FileManager\Business\Model\FileVersion;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group FileManager

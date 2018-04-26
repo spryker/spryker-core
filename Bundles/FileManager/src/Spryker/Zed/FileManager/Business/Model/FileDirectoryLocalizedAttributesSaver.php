@@ -16,7 +16,7 @@ class FileDirectoryLocalizedAttributesSaver implements FileDirectoryLocalizedAtt
 {
     /**
      * @param \Orm\Zed\FileManager\Persistence\SpyFileDirectory $fileDirectory
-     * @param \Generated\Shared\Transfer\FileDirectoryTransfer $fileDirectoryTransfer
+     * @param \Generated\Shared\Transfer\FileDirectoryTransfer  $fileDirectoryTransfer
      *
      * @return void
      */
@@ -44,7 +44,7 @@ class FileDirectoryLocalizedAttributesSaver implements FileDirectoryLocalizedAtt
 
     /**
      * @param \Orm\Zed\FileManager\Persistence\SpyFileDirectory $fileDirectory
-     * @param array $localizedAttributesToSave
+     * @param array                                             $localizedAttributesToSave
      *
      * @return void
      */
@@ -64,7 +64,7 @@ class FileDirectoryLocalizedAttributesSaver implements FileDirectoryLocalizedAtt
 
     /**
      * @param \Orm\Zed\FileManager\Persistence\SpyFileDirectoryLocalizedAttributes $existingAttribute
-     * @param \Generated\Shared\Transfer\FileDirectoryLocalizedAttributesTransfer $newAttribute
+     * @param \Generated\Shared\Transfer\FileDirectoryLocalizedAttributesTransfer  $newAttribute
      *
      * @return void
      */

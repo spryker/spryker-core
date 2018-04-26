@@ -24,7 +24,7 @@ class FileRollback implements FileRollbackInterface
     protected $fileLoader;
 
     /**
-     * @param \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface $fileLoader
+     * @param \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface  $fileLoader
      * @param \Spryker\Zed\FileManager\Business\Model\FileVersionInterface $fileVersion
      */
     public function __construct(FileLoaderInterface $fileLoader, FileVersionInterface $fileVersion)
@@ -66,7 +66,7 @@ class FileRollback implements FileRollbackInterface
 
     /**
      * @param \Orm\Zed\FileManager\Persistence\SpyFileInfo $fileInfo
-     * @param int $idFile
+     * @param int                                          $idFile
      *
      * @return void
      */

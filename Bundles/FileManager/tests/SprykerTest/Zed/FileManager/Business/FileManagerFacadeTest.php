@@ -41,6 +41,7 @@ use SprykerTest\Zed\FileManager\Stub\FlysystemConfigStub;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group FileManager

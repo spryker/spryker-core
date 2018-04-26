@@ -101,7 +101,7 @@ class FileDirectoryTreeReader implements FileDirectoryTreeReaderInterface
 
     /**
      * @param \Orm\Zed\FileManager\Persistence\SpyFileDirectory $spyFileDirectory
-     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null    $localeTransfer
      *
      * @return \Generated\Shared\Transfer\FileDirectoryTreeNodeTransfer
      */
@@ -123,7 +123,7 @@ class FileDirectoryTreeReader implements FileDirectoryTreeReaderInterface
 
     /**
      * @param \Orm\Zed\FileManager\Persistence\SpyFileDirectory $fileDirectory
-     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null    $localeTransfer
      *
      * @return \Generated\Shared\Transfer\FileDirectoryTransfer
      */
@@ -143,7 +143,7 @@ class FileDirectoryTreeReader implements FileDirectoryTreeReaderInterface
 
     /**
      * @param \Orm\Zed\FileManager\Persistence\SpyFileDirectory $fileDirectory
-     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null    $localeTransfer
      *
      * @return \Orm\Zed\FileManager\Persistence\SpyFileDirectoryLocalizedAttributes[]|\Propel\Runtime\Collection\ObjectCollection
      */

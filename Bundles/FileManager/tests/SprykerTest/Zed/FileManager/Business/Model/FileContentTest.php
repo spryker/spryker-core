@@ -14,6 +14,7 @@ use Spryker\Zed\FileManager\FileManagerConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group FileManager

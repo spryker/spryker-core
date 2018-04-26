@@ -40,10 +40,10 @@ class FileDirectoryRemover implements FileDirectoryRemoverInterface
     protected $config;
 
     /**
-     * @param \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface $fileManagerQueryContainer
-     * @param \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface $fileLoader
+     * @param \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface             $fileManagerQueryContainer
+     * @param \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface                         $fileLoader
      * @param \Spryker\Zed\FileManager\Dependency\Service\FileManagerToFileSystemServiceInterface $fileSystemService
-     * @param \Spryker\Zed\FileManager\FileManagerConfig $config
+     * @param \Spryker\Zed\FileManager\FileManagerConfig                                          $config
      */
     public function __construct(
         FileManagerQueryContainerInterface $fileManagerQueryContainer,
@@ -67,31 +67,33 @@ class FileDirectoryRemover implements FileDirectoryRemoverInterface
         $fileDirectory = $this->fileManagerQueryContainer->queryFileDirectoryById($idFileDirectory)->findOne();
         $fileParentDirectory = $fileDirectory->getParentFileDirectory();
 
-        return $this->handleDatabaseTransaction(function () use ($fileDirectory, $fileParentDirectory) {
-            foreach ($fileDirectory->getSpyFiles() as $file) {
-                $fileSystemRenameTransfer = new FileSystemRenameTransfer();
-                $fileSystemRenameTransfer->setFileSystemName($this->config->getStorageName());
-                $fileSystemRenameTransfer->setPath($this->fileLoader->buildFilename($file));
-                $file->setFileDirectory($fileParentDirectory);
-                $fileSystemRenameTransfer->setNewPath($this->fileLoader->buildFilename($file));
+        return $this->handleDatabaseTransaction(
+            function () use ($fileDirectory, $fileParentDirectory) {
+                foreach ($fileDirectory->getSpyFiles() as $file) {
+                    $fileSystemRenameTransfer = new FileSystemRenameTransfer();
+                    $fileSystemRenameTransfer->setFileSystemName($this->config->getStorageName());
+                    $fileSystemRenameTransfer->setPath($this->fileLoader->buildFilename($file));
+                    $file->setFileDirectory($fileParentDirectory);
+                    $fileSystemRenameTransfer->setNewPath($this->fileLoader->buildFilename($file));
 
-                $this->fileSystemService->rename($fileSystemRenameTransfer);
-                $file->save();
-            }
+                    $this->fileSystemService->rename($fileSystemRenameTransfer);
+                    $file->save();
+                }
 
-            $fileSystemDeleteDirectoryTransfer = new FileSystemDeleteDirectoryTransfer();
-            $fileSystemDeleteDirectoryTransfer->setFileSystemName($this->config->getStorageName());
-            $fileSystemDeleteDirectoryTransfer->setPath($fileDirectory->getIdFileDirectory());
+                $fileSystemDeleteDirectoryTransfer = new FileSystemDeleteDirectoryTransfer();
+                $fileSystemDeleteDirectoryTransfer->setFileSystemName($this->config->getStorageName());
+                $fileSystemDeleteDirectoryTransfer->setPath($fileDirectory->getIdFileDirectory());
 
-            $fileSystemQueryTransfer = new FileSystemQueryTransfer();
-            $fileSystemQueryTransfer->setFileSystemName($this->config->getStorageName());
-            $fileSystemQueryTransfer->setPath($fileDirectory->getIdFileDirectory());
+                $fileSystemQueryTransfer = new FileSystemQueryTransfer();
+                $fileSystemQueryTransfer->setFileSystemName($this->config->getStorageName());
+                $fileSystemQueryTransfer->setPath($fileDirectory->getIdFileDirectory());
 
-            if ($this->fileSystemService->has($fileSystemQueryTransfer)) {
-                $this->fileSystemService->deleteDirectory($fileSystemDeleteDirectoryTransfer);
-            }
+                if ($this->fileSystemService->has($fileSystemQueryTransfer)) {
+                    $this->fileSystemService->deleteDirectory($fileSystemDeleteDirectoryTransfer);
+                }
 
-            $fileDirectory->delete();
-        }, $this->fileManagerQueryContainer->getConnection());
+                $fileDirectory->delete();
+            }, $this->fileManagerQueryContainer->getConnection()
+        );
     }
 }

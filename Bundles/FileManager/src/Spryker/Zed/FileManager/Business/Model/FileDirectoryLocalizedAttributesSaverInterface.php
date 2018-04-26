@@ -14,7 +14,7 @@ interface FileDirectoryLocalizedAttributesSaverInterface
 {
     /**
      * @param \Orm\Zed\FileManager\Persistence\SpyFileDirectory $fileDirectory
-     * @param \Generated\Shared\Transfer\FileDirectoryTransfer $fileDirectoryTransfer
+     * @param \Generated\Shared\Transfer\FileDirectoryTransfer  $fileDirectoryTransfer
      *
      * @return void
      */

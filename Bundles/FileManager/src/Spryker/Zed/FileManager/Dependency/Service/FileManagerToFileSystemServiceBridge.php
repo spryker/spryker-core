@@ -215,7 +215,7 @@ class FileManagerToFileSystemServiceBridge implements FileManagerToFileSystemSer
 
     /**
      * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
-     * @param mixed $stream
+     * @param mixed                                               $stream
      *
      * @return void
      */
@@ -236,7 +236,7 @@ class FileManagerToFileSystemServiceBridge implements FileManagerToFileSystemSer
 
     /**
      * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
-     * @param mixed $stream
+     * @param mixed                                               $stream
      *
      * @return void
      */
@@ -247,7 +247,7 @@ class FileManagerToFileSystemServiceBridge implements FileManagerToFileSystemSer
 
     /**
      * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
-     * @param mixed $stream
+     * @param mixed                                               $stream
      *
      * @return void
      */
