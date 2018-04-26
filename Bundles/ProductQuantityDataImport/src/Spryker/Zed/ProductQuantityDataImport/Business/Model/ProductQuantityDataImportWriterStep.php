@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductQuantityDataImport\Business\Model;
 
 use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Orm\Zed\ProductQuantity\Persistence\SpyProductQuantity;
 use Orm\Zed\ProductQuantity\Persistence\SpyProductQuantityQuery;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
@@ -17,6 +18,9 @@ use Spryker\Zed\ProductQuantityDataImport\Business\Exception\EntityNotFoundExcep
 
 class ProductQuantityDataImportWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
+    protected const DEFAULT_MAX = null;
+    protected const DEFAULT_INTERVAL = 1;
+
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
@@ -26,17 +30,7 @@ class ProductQuantityDataImportWriterStep extends PublishAwareStep implements Da
     {
         $dataSet = $this->filterDataSet($dataSet);
 
-        $idProduct = $this->getIdProductBySku($dataSet[ProductQuantityDataImportDataSet::KEY_CONCRETE_SKU]);
-
-        $spyProductQuantityEntity = SpyProductQuantityQuery::create()
-            ->filterByFkProduct($idProduct)
-            ->findOneOrCreate();
-
-        $spyProductQuantityEntity
-            ->setQuantityMin($dataSet[ProductQuantityDataImportDataSet::KEY_QUANTITY_MIN])
-            ->setQuantityMax($dataSet[ProductQuantityDataImportDataSet::KEY_QUANTITY_MAX])
-            ->setQuantityInterval($dataSet[ProductQuantityDataImportDataSet::KEY_QUANTITY_INTERVAL])
-            ->save();
+        $spyProductQuantityEntity = $this->saveProductQuantity($dataSet);
 
         $this->addPublishEvents(ProductQuantityEvents::PRODUCT_QUANTITY_PUBLISH, $spyProductQuantityEntity->getFkProduct());
     }
@@ -48,16 +42,16 @@ class ProductQuantityDataImportWriterStep extends PublishAwareStep implements Da
      */
     protected function filterDataSet(DataSetInterface $dataSet): DataSetInterface
     {
-        if ($dataSet[ProductQuantityDataImportDataSet::KEY_QUANTITY_INTERVAL] === "") {
-            $dataSet[ProductQuantityDataImportDataSet::KEY_QUANTITY_INTERVAL] = ProductQuantityDataImportDataSet::DEFAULT_INTERVAL;
+        if ($dataSet[ProductQuantityDataImportDataSet::COLUMN_QUANTITY_INTERVAL] === "") {
+            $dataSet[ProductQuantityDataImportDataSet::COLUMN_QUANTITY_INTERVAL] = static::DEFAULT_INTERVAL;
         }
 
-        if ($dataSet[ProductQuantityDataImportDataSet::KEY_QUANTITY_MIN] === "") {
-            $dataSet[ProductQuantityDataImportDataSet::KEY_QUANTITY_MIN] = $dataSet[ProductQuantityDataImportDataSet::KEY_QUANTITY_INTERVAL];
+        if ($dataSet[ProductQuantityDataImportDataSet::COLUMN_QUANTITY_MIN] === "") {
+            $dataSet[ProductQuantityDataImportDataSet::COLUMN_QUANTITY_MIN] = $dataSet[ProductQuantityDataImportDataSet::COLUMN_QUANTITY_INTERVAL];
         }
 
-        if ($dataSet[ProductQuantityDataImportDataSet::KEY_QUANTITY_MAX] === "") {
-            $dataSet[ProductQuantityDataImportDataSet::KEY_QUANTITY_MAX] = ProductQuantityDataImportDataSet::DEFAULT_MAX;
+        if ($dataSet[ProductQuantityDataImportDataSet::COLUMN_QUANTITY_MAX] === "") {
+            $dataSet[ProductQuantityDataImportDataSet::COLUMN_QUANTITY_MAX] = static::DEFAULT_MAX;
         }
 
         return $dataSet;
@@ -81,5 +75,26 @@ class ProductQuantityDataImportWriterStep extends PublishAwareStep implements Da
         }
 
         return $spyProductEntity->getIdProduct();
+    }
+
+    /**
+     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
+     *
+     * @return \Orm\Zed\ProductQuantity\Persistence\SpyProductQuantity
+     */
+    protected function saveProductQuantity(DataSetInterface $dataSet): SpyProductQuantity
+    {
+        $idProduct = $this->getIdProductBySku($dataSet[ProductQuantityDataImportDataSet::COLUMN_CONCRETE_SKU]);
+
+        $spyProductQuantityEntity = SpyProductQuantityQuery::create()
+            ->filterByFkProduct($idProduct)
+            ->findOneOrCreate();
+
+        $spyProductQuantityEntity
+            ->setQuantityMin($dataSet[ProductQuantityDataImportDataSet::COLUMN_QUANTITY_MIN])
+            ->setQuantityMax($dataSet[ProductQuantityDataImportDataSet::COLUMN_QUANTITY_MAX])
+            ->setQuantityInterval($dataSet[ProductQuantityDataImportDataSet::COLUMN_QUANTITY_INTERVAL])
+            ->save();
+        return $spyProductQuantityEntity;
     }
 }
