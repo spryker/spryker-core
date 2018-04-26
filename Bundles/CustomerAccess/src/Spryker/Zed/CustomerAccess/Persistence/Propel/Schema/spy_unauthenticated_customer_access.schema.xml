@@ -11,6 +11,9 @@
         </unique>
 
         <id-method-parameter value="spy_unauthenticated_customer_access_pk_seq"/>
+        <behavior name="event">
+            <parameter name="spy_unauthenticated_customer_access_all" column="*"/>
+        </behavior>
     </table>
 
 </database>

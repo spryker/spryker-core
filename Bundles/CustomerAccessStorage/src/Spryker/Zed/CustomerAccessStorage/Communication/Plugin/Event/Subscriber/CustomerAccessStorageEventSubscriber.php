@@ -26,10 +26,11 @@ class CustomerAccessStorageEventSubscriber extends AbstractPlugin implements Eve
      *
      * @return \Spryker\Zed\Event\Dependency\EventCollectionInterface
      */
-    public function getSubscribedEvents(EventCollectionInterface $eventCollection)
+    public function getSubscribedEvents(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
         $this->addUnauthenticatedCustomerAccessCreateListener($eventCollection);
         $this->addUnauthenticatedCustomerAccessUpdateListener($eventCollection);
+        $this->addUnauthenticatedCustomerAccessDeleteListener($eventCollection);
 
         return $eventCollection;
     }
@@ -39,7 +40,7 @@ class CustomerAccessStorageEventSubscriber extends AbstractPlugin implements Eve
      *
      * @return void
      */
-    protected function addUnauthenticatedCustomerAccessUpdateListener(EventCollectionInterface $eventCollection)
+    protected function addUnauthenticatedCustomerAccessUpdateListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection->addListenerQueued(CustomerAccessEvents::ENTITY_SPY_UNAUTHENTICATED_CUSTOMER_ACCESS_UPDATE, new CustomerAccessStorageListener());
     }
@@ -49,8 +50,18 @@ class CustomerAccessStorageEventSubscriber extends AbstractPlugin implements Eve
      *
      * @return void
      */
-    protected function addUnauthenticatedCustomerAccessCreateListener(EventCollectionInterface $eventCollection)
+    protected function addUnauthenticatedCustomerAccessCreateListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(CustomerAccessEvents::UNAUTHENTICATED_CUSTOMER_ACCESS_ABSTRACT_PUBLISH, new CustomerAccessStorageListener());
+        $eventCollection->addListenerQueued(CustomerAccessEvents::ENTITY_SPY_UNAUTHENTICATED_CUSTOMER_ACCESS_CREATE, new CustomerAccessStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addUnauthenticatedCustomerAccessDeleteListener(EventCollectionInterface $eventCollection): void
+    {
+        $eventCollection->addListenerQueued(CustomerAccessEvents::ENTITY_SPY_UNAUTHENTICATED_CUSTOMER_ACCESS_DELETE, new CustomerAccessStorageListener());
     }
 }

@@ -7,7 +7,7 @@
 
 namespace Spryker\Shared\CustomerAccessStorage;
 
-class CustomerAccessStorageConstants
+interface CustomerAccessStorageConstants
 {
     /**
      * Specification:
@@ -15,7 +15,7 @@ class CustomerAccessStorageConstants
      *
      * @api
      */
-    const CUSTOMER_ACCESS_SYNC_STORAGE_QUEUE = 'sync.storage.access';
+    public const CUSTOMER_ACCESS_SYNC_STORAGE_QUEUE = 'sync.storage.customer_access';
 
     /**
      * Specification:
@@ -23,7 +23,7 @@ class CustomerAccessStorageConstants
      *
      * @api
      */
-    const CUSTOMER_ACCESS_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.access.error';
+    public const CUSTOMER_ACCESS_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.customer_access.error';
 
     /**
      * Specification:
@@ -31,5 +31,5 @@ class CustomerAccessStorageConstants
      *
      * @api
      */
-    const CUSTOMER_ACCESS_RESOURCE_NAME = 'unauthenticated_customer_access';
+    public const CUSTOMER_ACCESS_RESOURCE_NAME = 'unauthenticated_customer_access';
 }

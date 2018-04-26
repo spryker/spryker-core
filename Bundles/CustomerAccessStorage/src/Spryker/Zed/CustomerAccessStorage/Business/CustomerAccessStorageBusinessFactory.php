@@ -11,7 +11,8 @@ use Spryker\Zed\CustomerAccessStorage\Business\Model\CustomerAccessStorage;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
- * @method \Spryker\Zed\CustomerAccessStorage\Persistence\CustomerAccessStorageQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\CustomerAccessStorage\Persistence\CustomerAccessStorageRepositoryInterface getRepository()
+ * @method \Spryker\Zed\CustomerAccessStorage\Persistence\CustomerAccessStorageEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\CustomerAccessStorage\CustomerAccessStorageConfig getConfig()
  */
 class CustomerAccessStorageBusinessFactory extends AbstractBusinessFactory
@@ -21,6 +22,6 @@ class CustomerAccessStorageBusinessFactory extends AbstractBusinessFactory
      */
     public function createCustomerAccessStorage()
     {
-        return new CustomerAccessStorage($this->getQueryContainer());
+        return new CustomerAccessStorage($this->getRepository(), $this->getEntityManager());
     }
 }

@@ -81,7 +81,7 @@ class CustomerAccessRepository extends AbstractRepository implements CustomerAcc
      *
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
-    protected function fillCustomerAccessTransferFromEntities($customerAccessEntities): CustomerAccessTransfer
+    protected function fillCustomerAccessTransferFromEntities(array $customerAccessEntities): CustomerAccessTransfer
     {
         $customerAccessTransfer = new CustomerAccessTransfer();
 

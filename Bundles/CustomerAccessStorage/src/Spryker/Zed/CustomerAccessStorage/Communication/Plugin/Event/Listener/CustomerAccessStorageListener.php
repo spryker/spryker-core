@@ -15,8 +15,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 /**
- * @method \Spryker\Zed\CustomerAccessStorage\Communication\CustomerAccessStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\CustomerAccessStorage\Business\CustomerAccessStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\CustomerAccessStorage\Communication\CustomerAccessStorageCommunicationFactory getFactory()
  */
 class CustomerAccessStorageListener extends AbstractPlugin implements EventHandlerInterface
 {
@@ -28,9 +28,11 @@ class CustomerAccessStorageListener extends AbstractPlugin implements EventHandl
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $eventTransfer
      * @param string $eventName
      *
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
      * @return void
      */
-    public function handle(TransferInterface $eventTransfer, $eventName)
+    public function handle(TransferInterface $eventTransfer, $eventName): void
     {
         if (Propel::getConnection()->inTransaction()) {
             throw new PropelException('This operation is not allowed inside of transaction');

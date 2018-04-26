@@ -21,7 +21,7 @@ class CustomerAccessStorageFacade extends AbstractFacade implements CustomerAcce
      *
      * @return void
      */
-    public function publish()
+    public function publish(): void
     {
         $this->getFactory()->createCustomerAccessStorage()->publish();
     }

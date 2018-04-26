@@ -9,6 +9,8 @@ namespace Spryker\Zed\CustomerAccessStorage\Persistence;
 
 use Orm\Zed\CustomerAccess\Persistence\SpyUnauthenticatedCustomerAccessQuery;
 use Orm\Zed\CustomerAccessStorage\Persistence\SpyUnauthenticatedCustomerAccessStorageQuery;
+use Spryker\Zed\CustomerAccessStorage\Persistence\Propel\Mapper\CustomerAccessMapper;
+use Spryker\Zed\CustomerAccessStorage\Persistence\Propel\Mapper\CustomerAccessMapperInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -31,5 +33,13 @@ class CustomerAccessStoragePersistenceFactory extends AbstractPersistenceFactory
     public function createPropelCustomerAccessStorageQuery(): SpyUnauthenticatedCustomerAccessStorageQuery
     {
         return SpyUnauthenticatedCustomerAccessStorageQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\CustomerAccessStorage\Persistence\Propel\Mapper\CustomerAccessMapperInterface
+     */
+    public function createCustomerAccessMapper(): CustomerAccessMapperInterface
+    {
+        return new CustomerAccessMapper();
     }
 }

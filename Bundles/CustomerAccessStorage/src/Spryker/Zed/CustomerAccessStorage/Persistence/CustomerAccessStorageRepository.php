@@ -7,18 +7,42 @@
 
 namespace Spryker\Zed\CustomerAccessStorage\Persistence;
 
+use Generated\Shared\Transfer\CustomerAccessTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
  * @method \Spryker\Zed\CustomerAccessStorage\Persistence\CustomerAccessStoragePersistenceFactory getFactory()
  */
-class CustomerAccessStorageRepository extends AbstractRepository
+class CustomerAccessStorageRepository extends AbstractRepository implements CustomerAccessStorageRepositoryInterface
 {
     /**
-     * @return \Orm\Zed\CustomerAccess\Persistence\SpyUnauthenticatedCustomerAccess[]
+     * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
-    protected function getUnauthenticatedCustomerAccess()
+    public function getUnauthenticatedCustomerAccess(): CustomerAccessTransfer
     {
-        return $this->buildQueryFromCriteria($this->getFactory()->createPropelCustomerAccessQuery())->find();
+        $unauthenticatedCustomerAccess = $this->buildQueryFromCriteria(
+            $this->getFactory()
+                ->createPropelCustomerAccessQuery()
+        )->find();
+
+        return $this->fillCustomerAccessTransferFromEntities($unauthenticatedCustomerAccess);
+    }
+
+    /**
+     * @param \Orm\Zed\CustomerAccess\Persistence\SpyUnauthenticatedCustomerAccess[] $customerAccessEntities
+     *
+     * @return \Generated\Shared\Transfer\CustomerAccessTransfer
+     */
+    protected function fillCustomerAccessTransferFromEntities(array $customerAccessEntities): CustomerAccessTransfer
+    {
+        $customerAccessTransfer = new CustomerAccessTransfer();
+
+        foreach ($customerAccessEntities as $customerAccess) {
+            $customerAccessTransfer->addContentTypeAccess(
+                $this->getFactory()->createCustomerAccessMapper()->mapEntityToTransfer($customerAccess)
+            );
+        }
+
+        return $customerAccessTransfer;
     }
 }

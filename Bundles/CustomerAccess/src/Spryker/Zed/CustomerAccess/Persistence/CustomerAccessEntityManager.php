@@ -44,18 +44,16 @@ class CustomerAccessEntityManager extends AbstractEntityManager implements Custo
      */
     public function updateUnauthenticatedCustomerAccess(CustomerAccessTransfer $customerAccessTransfer)
     {
-        $result = $this->getTransactionHandler()->handleTransaction(function () use ($customerAccessTransfer) {
+        return $this->getTransactionHandler()->handleTransaction(function () use ($customerAccessTransfer) {
             $this->setAllContentTypesToInaccessible();
             return $this->setContentTypesToAccessible($customerAccessTransfer);
         });
-
-        return $result;
     }
 
     /**
      * @return void
      */
-    protected function setAllContentTypesToInaccessible()
+    protected function setAllContentTypesToInaccessible(): void
     {
         $customerAccessEntities = $this->getFactory()->createPropelCustomerAccessQuery()->find();
 

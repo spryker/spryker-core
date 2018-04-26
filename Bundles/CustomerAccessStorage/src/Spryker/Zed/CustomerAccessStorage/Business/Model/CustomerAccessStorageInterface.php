@@ -12,5 +12,5 @@ interface CustomerAccessStorageInterface
     /**
      * @return void
      */
-    public function publish();
+    public function publish(): void;
 }

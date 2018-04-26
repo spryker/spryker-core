@@ -7,79 +7,36 @@
 
 namespace Spryker\Zed\CustomerAccessStorage\Business\Model;
 
-use Generated\Shared\Transfer\ContentTypeAccessTransfer;
-use Generated\Shared\Transfer\CustomerAccessTransfer;
-use Orm\Zed\CustomerAccessStorage\Persistence\SpyUnauthenticatedCustomerAccessStorage;
-use Spryker\Zed\CustomerAccessStorage\Persistence\CustomerAccessStorageQueryContainerInterface;
+use Spryker\Zed\CustomerAccessStorage\Persistence\CustomerAccessStorageEntityManagerInterface;
+use Spryker\Zed\CustomerAccessStorage\Persistence\CustomerAccessStorageRepositoryInterface;
 
 class CustomerAccessStorage implements CustomerAccessStorageInterface
 {
     /**
-     * @var \Spryker\Zed\CustomerAccessStorage\Persistence\CustomerAccessStorageQueryContainerInterface
+     * @var \Spryker\Zed\CustomerAccessStorage\Persistence\CustomerAccessStorageRepositoryInterface
      */
-    protected $customerAccessQueryContainer;
+    protected $repository;
 
     /**
-     * @param \Spryker\Zed\CustomerAccessStorage\Persistence\CustomerAccessStorageQueryContainerInterface $customerAccessQueryContainer
+     * @var \Spryker\Zed\CustomerAccessStorage\Persistence\CustomerAccessStorageEntityManagerInterface
      */
-    public function __construct(CustomerAccessStorageQueryContainerInterface $customerAccessQueryContainer)
+    protected $entityManager;
+
+    /**
+     * @param \Spryker\Zed\CustomerAccessStorage\Persistence\CustomerAccessStorageRepositoryInterface $repository
+     * @param \Spryker\Zed\CustomerAccessStorage\Persistence\CustomerAccessStorageEntityManagerInterface $entityManager
+     */
+    public function __construct(CustomerAccessStorageRepositoryInterface $repository, CustomerAccessStorageEntityManagerInterface $entityManager)
     {
-        $this->customerAccessQueryContainer = $customerAccessQueryContainer;
+        $this->repository = $repository;
+        $this->entityManager = $entityManager;
     }
 
     /**
      * @return void
      */
-    public function publish()
+    public function publish(): void
     {
-        $customerAccessEntities = $this->getUnauthenticatedCustomerAccess();
-        $customerAccessStorageEntity = $this->customerAccessQueryContainer->queryCustomerAccessStorage()->findOne();
-
-        $this->storeData($customerAccessEntities, $customerAccessStorageEntity);
-    }
-
-    /**
-     * @param \Orm\Zed\CustomerAccess\Persistence\SpyUnauthenticatedCustomerAccess[] $customerAccessEntities
-     * @param \Orm\Zed\CustomerAccessStorage\Persistence\SpyUnauthenticatedCustomerAccessStorage|null|null $customerAccessStorageEntity
-     *
-     * @return void
-     */
-    protected function storeData($customerAccessEntities, $customerAccessStorageEntity = null)
-    {
-        if ($customerAccessStorageEntity === null) {
-            $customerAccessStorageEntity = new SpyUnauthenticatedCustomerAccessStorage();
-        }
-
-        $customerAccessTransfer = $this->fillCustomerAccessTransferFromEntities($customerAccessEntities);
-        $customerAccessStorageEntity->setData($customerAccessTransfer->toArray());
-        $customerAccessStorageEntity->save();
-    }
-
-    /**
-     * @param \Orm\Zed\CustomerAccess\Persistence\SpyUnauthenticatedCustomerAccess[] $customerAccessEntities
-     *
-     * @return \Generated\Shared\Transfer\CustomerAccessTransfer
-     */
-    protected function fillCustomerAccessTransferFromEntities($customerAccessEntities)
-    {
-        $customerAccessTransfer = new CustomerAccessTransfer();
-
-        foreach ($customerAccessEntities as $customerAccess) {
-            $customerAccessTransfer->addContentTypeAccess(
-                (new ContentTypeAccessTransfer())
-                    ->setContentType($customerAccess->getContentType())
-                    ->setCanAccess($customerAccess->getCanAccess())
-            );
-        }
-
-        return $customerAccessTransfer;
-    }
-
-    /**
-     * @return \Orm\Zed\CustomerAccess\Persistence\SpyUnauthenticatedCustomerAccess[]
-     */
-    protected function getUnauthenticatedCustomerAccess()
-    {
-        return $this->customerAccessQueryContainer->queryCustomerAccess()->find();
+        $this->entityManager->storeData($this->repository->getUnauthenticatedCustomerAccess());
     }
 }

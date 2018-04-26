@@ -10,7 +10,7 @@
         <id-method-parameter value="unauthenticated_customer_access_storage_pk_seq"/>
         <behavior name="synchronization">
             <parameter name="resource" value="unauthenticated_customer_access"/>
-            <parameter name="queue_group" value="sync.storage.access"/>
+            <parameter name="queue_group" value="sync.storage.customer_access"/>
         </behavior>
         <behavior name="timestampable"/>
     </table>
