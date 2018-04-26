@@ -10,7 +10,7 @@ namespace Spryker\Zed\ManualOrderEntryGui\Communication\Plugin;
 use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ManualOrderProductTransfer;
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Product\ItemCollectionType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Traits\UniqueFlashMessagesTrait;
@@ -50,13 +50,13 @@ class ItemManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOrd
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createForm(Request $request, $dataTransfer = null): FormInterface
+    public function createForm(Request $request, QuoteTransfer $quoteTransfer): FormInterface
     {
-        return $this->getFactory()->createItemsCollectionForm($dataTransfer);
+        return $this->getFactory()->createItemsCollectionForm($quoteTransfer);
     }
 
     /**
@@ -66,7 +66,7 @@ class ItemManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOrd
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function handleData($quoteTransfer, &$form, $request): AbstractTransfer
+    public function handleData(QuoteTransfer $quoteTransfer, &$form, Request $request): QuoteTransfer
     {
         $items = new ArrayObject();
         $addedSkus = [];
@@ -101,6 +101,7 @@ class ItemManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOrd
         }
 
         $quoteTransfer->setItems($items);
+
         if (count($items)) {
             $quoteTransfer = $this->cartFacade->reloadItems($quoteTransfer);
         }
@@ -116,13 +117,13 @@ class ItemManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOrd
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    public function isPreFilled($dataTransfer = null): bool
+    public function isFormPreFilled(QuoteTransfer $quoteTransfer): bool
     {
-        return false;
+        return $quoteTransfer->getItems()->count() > 0;
     }
 
     /**
@@ -130,7 +131,7 @@ class ItemManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOrd
      *
      * @return void
      */
-    protected function updateManualOrderItems($quoteTransfer)
+    protected function updateManualOrderItems(QuoteTransfer $quoteTransfer)
     {
         $quoteTransfer->setManualOrderItems(new ArrayObject());
 

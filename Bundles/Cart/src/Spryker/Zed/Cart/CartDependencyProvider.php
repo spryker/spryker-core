@@ -23,6 +23,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
     const CART_POST_SAVE_PLUGINS = 'cart post save plugins';
     const CART_PRE_RELOAD_PLUGINS = 'cart pre reload plugins';
     const CART_TERMINATION_PLUGINS = 'CART_TERMINATION_PLUGINS';
+    const PLUGINS_QUOTE_CHANGE_OBSERVER = 'PLUGINS_QUOTE_CHANGE_OBSERVER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -39,6 +40,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCartRemovalPreCheckPlugins($container);
         $container = $this->addPreReloadPlugins($container);
         $container = $this->addTerminationPlugins($container);
+        $container = $this->addQuoteChangeObserverPlugins($container);
 
         return $container;
     }
@@ -152,6 +154,20 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addQuoteChangeObserverPlugins(Container $container)
+    {
+        $container[static::PLUGINS_QUOTE_CHANGE_OBSERVER] = function (Container $container) {
+            return $this->getQuoteChangeObserverPlugins($container);
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
      * @return \Spryker\Zed\Cart\Dependency\ItemExpanderPluginInterface[]
      */
     protected function getExpanderPlugins(Container $container)
@@ -205,6 +221,16 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\CartExtension\Dependency\Plugin\CartTerminationPluginInterface[]
      */
     protected function getTerminationPlugins(Container $container)
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\QuoteChangeObserverPluginInterface[]
+     */
+    protected function getQuoteChangeObserverPlugins(Container $container): array
     {
         return [];
     }

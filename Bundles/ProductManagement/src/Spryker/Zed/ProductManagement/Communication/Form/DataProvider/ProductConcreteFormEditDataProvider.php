@@ -53,7 +53,7 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
      * @param array $attributeCollection
      * @param array $taxCollection
      * @param string $imageUrlPrefix
-     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreInterface|null $store
+     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreInterface $store
      * @param \Spryker\Zed\ProductManagement\Communication\Helper\ProductStockHelperInterface $productStockHelper
      * @param \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteFormEditDataProviderExpanderPluginInterface[] $formEditDataProviderExpanderPlugins
      */

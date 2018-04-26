@@ -47,4 +47,22 @@ class ProductBundleClient extends AbstractClient implements ProductBundleClientI
             ->createProductBundleGrouper()
             ->getItemsWithBundlesItems($quoteTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $sku
+     * @param string|null $groupKey
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function findBundleItemsInQuote(QuoteTransfer $quoteTransfer, $sku, $groupKey): array
+    {
+        return $this->getFactory()
+            ->createQuoteBundleItemsFinder()
+            ->findBundledItems($quoteTransfer, $sku, $groupKey);
+    }
 }

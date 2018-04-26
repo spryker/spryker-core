@@ -27,7 +27,7 @@ abstract class AbstractSpyUrlRedirect extends BaseSpyUrlRedirect
      *
      * @return bool
      */
-    public function preSave(ConnectionInterface $con = null)
+    public function preSave(?ConnectionInterface $con = null)
     {
         $result = parent::preSave($con);
 

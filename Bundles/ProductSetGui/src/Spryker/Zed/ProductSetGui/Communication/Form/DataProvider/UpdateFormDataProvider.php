@@ -221,7 +221,7 @@ class UpdateFormDataProvider extends AbstractProductSetFormDataProvider
      *
      * @return array
      */
-    protected function getImageSetFormData(ProductSetTransfer $productSetTransfer, LocaleTransfer $localeTransfer = null)
+    protected function getImageSetFormData(ProductSetTransfer $productSetTransfer, ?LocaleTransfer $localeTransfer = null)
     {
         $idLocale = $localeTransfer ? $localeTransfer->getIdLocale() : null;
         $productImageSetTransfers = $this->getLocalizeImageSetTransfers($productSetTransfer, $idLocale);

@@ -9,6 +9,7 @@ namespace Spryker\Zed\Customer\Business;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\CustomerCollectionTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -20,6 +21,22 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
 {
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerCollectionTransfer $customerCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
+     */
+    public function getCustomerCollection(CustomerCollectionTransfer $customerCollectionTransfer): CustomerCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createCustomerReader()
+            ->getCustomerCollection($customerCollectionTransfer);
+    }
+
     /**
      * {@inheritdoc}
      *

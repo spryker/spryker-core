@@ -227,7 +227,7 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function buildQueryFromCriteria(ModelCriteria $criteria, FilterTransfer $filterTransfer = null): ModelCriteria
+    public function buildQueryFromCriteria(ModelCriteria $criteria, ?FilterTransfer $filterTransfer = null): ModelCriteria
     {
         if (!$filterTransfer) {
             return $criteria;
@@ -254,7 +254,7 @@ class CompanyRoleRepository extends AbstractRepository implements CompanyRoleRep
      *
      * @return mixed|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\Collection|\Propel\Runtime\Collection\ObjectCollection
      */
-    protected function getPaginatedCollection(ModelCriteria $query, PaginationTransfer $paginationTransfer = null)
+    protected function getPaginatedCollection(ModelCriteria $query, ?PaginationTransfer $paginationTransfer = null)
     {
         if ($paginationTransfer !== null) {
             $page = $paginationTransfer

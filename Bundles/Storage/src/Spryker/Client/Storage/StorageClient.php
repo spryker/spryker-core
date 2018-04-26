@@ -404,7 +404,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
      *
      * @return void
      */
-    public static function persistCache(Request $request = null)
+    public static function persistCache(?Request $request = null)
     {
         $cacheKey = static::generateCacheKey($request);
 
@@ -435,7 +435,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
      *
      * @return string
      */
-    protected static function generateCacheKey(Request $request = null)
+    protected static function generateCacheKey(?Request $request = null)
     {
         if ($request) {
             $requestUri = $request->getRequestUri();
