@@ -12,7 +12,7 @@ use Spryker\Zed\DataImport\DataImportConfig;
 
 class ProductMeasurementUnitDataImportConfig extends DataImportConfig
 {
-    const IMPORT_TYPE_PRODUCT_MEASUREMENT_UNIT = 'product-measurement-unit';
+    public const IMPORT_TYPE_PRODUCT_MEASUREMENT_UNIT = 'product-measurement-unit';
 
     /**
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer

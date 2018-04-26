@@ -7,13 +7,13 @@
 
 namespace Spryker\Zed\ProductQuantityDataImport\Business\Model;
 
-class ProductQuantityDataImportDataSet
+interface ProductQuantityDataImportDataSet
 {
-    const KEY_CONCRETE_SKU = 'concrete_sku';
-    const KEY_QUANTITY_MIN = 'quantity_min';
-    const KEY_QUANTITY_MAX = 'quantity_max';
-    const KEY_QUANTITY_INTERVAL = 'quantity_interval';
+    public const KEY_CONCRETE_SKU = 'concrete_sku';
+    public const KEY_QUANTITY_MIN = 'quantity_min';
+    public const KEY_QUANTITY_MAX = 'quantity_max';
+    public const KEY_QUANTITY_INTERVAL = 'quantity_interval';
 
-    const DEFAULT_MAX = null;
-    const DEFAULT_INTERVAL = 1;
+    public const DEFAULT_MAX = null;
+    public const DEFAULT_INTERVAL = 1;
 }

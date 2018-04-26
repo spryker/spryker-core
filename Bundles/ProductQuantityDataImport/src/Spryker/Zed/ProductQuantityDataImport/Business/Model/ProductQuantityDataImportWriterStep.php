@@ -22,7 +22,7 @@ class ProductQuantityDataImportWriterStep extends PublishAwareStep implements Da
      *
      * @return void
      */
-    public function execute(DataSetInterface $dataSet)
+    public function execute(DataSetInterface $dataSet): void
     {
         $dataSet = $this->filterDataSet($dataSet);
 
@@ -46,7 +46,7 @@ class ProductQuantityDataImportWriterStep extends PublishAwareStep implements Da
      *
      * @return \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface
      */
-    protected function filterDataSet(DataSetInterface $dataSet)
+    protected function filterDataSet(DataSetInterface $dataSet): DataSetInterface
     {
         if ($dataSet[ProductQuantityDataImportDataSet::KEY_QUANTITY_INTERVAL] === "") {
             $dataSet[ProductQuantityDataImportDataSet::KEY_QUANTITY_INTERVAL] = ProductQuantityDataImportDataSet::DEFAULT_INTERVAL;
@@ -70,7 +70,7 @@ class ProductQuantityDataImportWriterStep extends PublishAwareStep implements Da
      *
      * @return int
      */
-    protected function getIdProductBySku($productConcreteSku)
+    protected function getIdProductBySku($productConcreteSku): int
     {
         $spyProductEntity = SpyProductQuery::create()->findOneBySku($productConcreteSku);
 

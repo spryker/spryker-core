@@ -20,7 +20,7 @@ class ProductMeasurementUnitWriterStep extends PublishAwareStep implements DataI
      *
      * @return void
      */
-    public function execute(DataSetInterface $dataSet)
+    public function execute(DataSetInterface $dataSet): void
     {
         $productMeasurementUnitEntity = SpyProductMeasurementUnitQuery::create()
             ->filterByCode($dataSet[ProductMeasurementUnitDataSet::KEY_CODE])
@@ -42,7 +42,7 @@ class ProductMeasurementUnitWriterStep extends PublishAwareStep implements DataI
      *
      * @return int
      */
-    protected function filterDefaultPrecision($defaultPrecision)
+    protected function filterDefaultPrecision($defaultPrecision): int
     {
         if ($defaultPrecision === "") {
             return ProductMeasurementUnitDataSet::DEFAULT_PRECISION;

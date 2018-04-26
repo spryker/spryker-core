@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\ProductMeasurementUnitDataImport\Business\Model;
 
-class ProductMeasurementUnitDataSet
+interface ProductMeasurementUnitDataSet
 {
-    const KEY_DEFAULT_PRECISION = 'default_precision';
-    const KEY_NAME = 'name';
-    const KEY_CODE = 'code';
+    public const KEY_DEFAULT_PRECISION = 'default_precision';
+    public const KEY_NAME = 'name';
+    public const KEY_CODE = 'code';
 
-    const  DEFAULT_PRECISION = 1;
+    public const  DEFAULT_PRECISION = 1;
 }
