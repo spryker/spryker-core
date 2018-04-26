@@ -65,7 +65,7 @@ class AbstractFacadeTest extends Unit
      *
      * @return \Spryker\Zed\Braintree\Business\BraintreeFacade
      */
-    protected function getBraintreeFacade(BraintreeBusinessFactory $braintreeBusinessFactoryMock = null)
+    protected function getBraintreeFacade(?BraintreeBusinessFactory $braintreeBusinessFactoryMock = null)
     {
         $braintreeFacade = new BraintreeFacade();
         if ($braintreeBusinessFactoryMock) {

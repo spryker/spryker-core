@@ -135,7 +135,8 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getProductTaxCollection(),
             $this->getConfig()->getImageUrlPrefix(),
             $this->getStore(),
-            $this->createProductStockHelper()
+            $this->createProductStockHelper(),
+            $this->getProductConcreteFormEditDataProviderExpanderPlugins()
         );
     }
 
@@ -312,7 +313,8 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getQueryContainer(),
             $this->getLocaleFacade(),
             $this->getUtilTextService(),
-            $this->createLocaleProvider()
+            $this->createLocaleProvider(),
+            $this->getProductFormTransferMapperExpanderPlugins()
         );
     }
 
@@ -500,5 +502,29 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     public function getStockFacade()
     {
         return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_STOCK);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteEditFormExpanderPluginInterface[]
+     */
+    public function getProductConcreteEditFormExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::PRODUCT_CONCRETE_EDIT_FORM_EXPANDER_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteEditFormExpanderPluginInterface[]
+     */
+    public function getProductConcreteFormEditDataProviderExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::PRODUCT_CONCRETE_FORM_EDIT_DATA_PROVIDER_EXPANDER_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductFormTransferMapperExpanderPluginInterface[]
+     */
+    public function getProductFormTransferMapperExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::PRODUCT_FORM_TRANSFER_MAPPER_EXPANDER_PLUGINS);
     }
 }

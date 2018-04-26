@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CompanyUnitAddressLabel\Communication\Plugin;
 
-use Spryker\Zed\CompanyUnitAddressGuiExtension\Communication\Plugin\CompanyUnitAddressEditFormExpanderPluginInterface;
+use Spryker\Zed\CompanyUnitAddressGuiExtension\Dependency\Plugin\CompanyUnitAddressEditFormExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\Form\FormBuilderInterface;
 

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Company\Business;
 
+use Generated\Shared\Transfer\CompanyCollectionTransfer;
 use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 
@@ -62,4 +63,14 @@ interface CompanyFacadeInterface
      * @return void
      */
     public function delete(CompanyTransfer $companyTransfer): void;
+
+    /**
+     * Specification:
+     * - Retrieves collection of all companies
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\CompanyCollectionTransfer
+     */
+    public function getCompanies(): CompanyCollectionTransfer;
 }

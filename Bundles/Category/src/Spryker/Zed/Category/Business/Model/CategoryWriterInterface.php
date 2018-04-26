@@ -21,7 +21,7 @@ interface CategoryWriterInterface
      *
      * @return int
      */
-    public function create(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer = null);
+    public function create(CategoryTransfer $categoryTransfer, ?LocaleTransfer $localeTransfer = null);
 
     /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
@@ -29,7 +29,7 @@ interface CategoryWriterInterface
      *
      * @return void
      */
-    public function update(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer = null);
+    public function update(CategoryTransfer $categoryTransfer, ?LocaleTransfer $localeTransfer = null);
 
     /**
      * @param int $idCategory

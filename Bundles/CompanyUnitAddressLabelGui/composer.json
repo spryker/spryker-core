@@ -1,0 +1,36 @@
+{
+  "name": "spryker/company-unit-address-label-gui",
+  "description": "CompanyUnitAddressLabelGui module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1",
+    "spryker/company-unit-address-gui-extension": "^1.0.0",
+    "spryker/company-unit-address-label": "^1.1.0",
+    "spryker/kernel": "^3.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/company-unit-address": "*",
+    "spryker/gui": "*",
+    "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/gui": "If you want to use CompanyUnitAddressTableExpanderPlugin which used Gui transfer object.",
+    "spryker/company-unit-address": "If you want to use CompanyUnitAddressTableExpanderPlugin which used CompanyUnitAddress module entity map."
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

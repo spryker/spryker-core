@@ -173,6 +173,10 @@ class Method implements MethodInterface
      */
     protected function transformShipmentMethod(SpyShipmentMethod $shipmentMethodEntity, QuoteTransfer $quoteTransfer, $storeCurrencyPrice)
     {
+        $quoteTransfer->requireCurrency()
+            ->getCurrency()
+            ->requireCode();
+
         $shipmentMethodTransfer = $this->methodTransformer->transformEntityToTransfer($shipmentMethodEntity);
         $shipmentMethodTransfer
             ->setStoreCurrencyPrice($storeCurrencyPrice)

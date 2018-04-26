@@ -7,11 +7,15 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/company-unit-address": "^1.2.0",
+    "spryker/gui": "^3.13.0",
     "spryker/symfony": "^3.0.0",
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/symfony": "If you want to provide plugins to CompanyUnitAddressGui module"
+    "spryker/symfony": "If you want to provide plugins to CompanyUnitAddressGui module",
+    "spryker/company-unit-address": "To get full functionality of the current module",
+    "spryker/gui": "If you want to use CompanyUnitAddressGuiExtension module plugin interfaces which used Gui transfer object."
   },
   "autoload": {
     "psr-4": {

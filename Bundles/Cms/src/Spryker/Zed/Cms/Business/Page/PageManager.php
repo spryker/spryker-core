@@ -240,7 +240,7 @@ class PageManager implements PageManagerInterface
      *
      * @return void
      */
-    public function touchPageActive(PageTransfer $pageTransfer, LocaleTransfer $localeTransfer = null)
+    public function touchPageActive(PageTransfer $pageTransfer, ?LocaleTransfer $localeTransfer = null)
     {
         $pageMappings = $this->cmsQueryContainer->queryGlossaryKeyMappingsByPageId($pageTransfer->getIdCmsPage())
             ->find();

@@ -48,7 +48,7 @@ class ItemSkuDecisionRuleTest extends BaseRuleTester
      *
      * @return \Spryker\Zed\Discount\Business\DecisionRule\ItemSkuDecisionRule
      */
-    protected function createItemSkuDecisionRule(ComparatorOperatorsInterface $comparatorMock = null)
+    protected function createItemSkuDecisionRule(?ComparatorOperatorsInterface $comparatorMock = null)
     {
         if ($comparatorMock === null) {
             $comparatorMock = $this->createComparatorMock();

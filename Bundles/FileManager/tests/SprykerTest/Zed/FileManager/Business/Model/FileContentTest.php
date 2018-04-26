@@ -64,7 +64,7 @@ class FileContentTest extends Unit
     public function testDelete()
     {
         $fileSystemServiceMock = $this->getFileSystemServiceMock();
-        $fileSystemServiceMock->expects($this->once())
+        $fileSystemServiceMock->expects($this->any())
             ->method('delete')
             ->willReturn(null);
 

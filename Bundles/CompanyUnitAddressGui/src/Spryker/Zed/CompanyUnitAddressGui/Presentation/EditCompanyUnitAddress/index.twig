@@ -5,6 +5,9 @@
 {% block head_title widget_title %}
 {% block section_title widget_title %}
 
+{% block action %}
+    {{ backActionButton(url('/company-unit-address-gui/list-company-unit-address'), 'Back to Company Unit Addresses' | trans) }}
+{% endblock %}
 
 {% block content %}
 

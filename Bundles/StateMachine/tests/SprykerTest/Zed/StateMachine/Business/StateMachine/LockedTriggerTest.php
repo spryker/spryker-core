@@ -67,7 +67,7 @@ class LockedTriggerTest extends StateMachineMocks
      *
      * @return \Spryker\Zed\StateMachine\Business\StateMachine\LockedTrigger
      */
-    public function createLockedTrigger(TriggerInterface $triggerMock = null, ItemLockInterface $itemLockMock = null)
+    public function createLockedTrigger(?TriggerInterface $triggerMock = null, ?ItemLockInterface $itemLockMock = null)
     {
         if ($triggerMock === null) {
             $triggerMock = $this->createTriggerMock();

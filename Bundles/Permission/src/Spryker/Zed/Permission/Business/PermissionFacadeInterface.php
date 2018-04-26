@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Permission\Business;
 
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
+use Generated\Shared\Transfer\PermissionTransfer;
 
 interface PermissionFacadeInterface
 {
@@ -51,4 +52,16 @@ interface PermissionFacadeInterface
      * @return void
      */
     public function syncPermissionPlugins(): void;
+
+    /**
+     * Specification:
+     * - Finds a permission by key
+     *
+     * @api
+     *
+     * @param string $key
+     *
+     * @return \Generated\Shared\Transfer\PermissionTransfer|null
+     */
+    public function findPermissionByKey(string $key): ?PermissionTransfer;
 }

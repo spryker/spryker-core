@@ -20,10 +20,10 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
 class ProductBundleCartAvailabilityCheck extends BasePreCheck implements ProductBundleCartAvailabilityCheckInterface
 {
-    const CART_PRE_CHECK_ITEM_AVAILABILITY_FAILED = 'cart.pre.check.availability.failed';
-    const CART_PRE_CHECK_ITEM_AVAILABILITY_EMPTY = 'cart.pre.check.availability.failed.empty';
-    const STOCK_TRANSLATION_PARAMETER = 'stock';
-    const SKU_TRANSLATION_PARAMTER = 'sku';
+    public const CART_PRE_CHECK_ITEM_AVAILABILITY_FAILED = 'cart.pre.check.availability.failed';
+    public const CART_PRE_CHECK_ITEM_AVAILABILITY_EMPTY = 'cart.pre.check.availability.failed.empty';
+    public const STOCK_TRANSLATION_PARAMETER = '%stock%';
+    public const SKU_TRANSLATION_PARAMETER = '%sku%';
 
     /**
      * @var \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface
@@ -55,7 +55,7 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
     public function checkCartAvailability(CartChangeTransfer $cartChangeTransfer)
     {
         $cartPreCheckFailedItems = new ArrayObject();
-        $itemsInCart = $cartChangeTransfer->getQuote()->getItems();
+        $itemsInCart = clone $cartChangeTransfer->getQuote()->getItems();
 
         $storeTransfer = $cartChangeTransfer->getQuote()->getStore();
         $storeTransfer->requireName();
@@ -65,6 +65,7 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
             $itemTransfer->requireSku()->requireQuantity();
 
             $messageTransfer = $this->checkItemAvailability($itemsInCart, $itemTransfer, $storeTransfer);
+            $itemsInCart->append($itemTransfer);
 
             if ($messageTransfer !== null) {
                 $cartPreCheckFailedItems[] = $messageTransfer;
@@ -121,7 +122,7 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
         $messageTransfer = new MessageTransfer();
         $messageTransfer->setValue($translationKey);
         $messageTransfer->setParameters([
-            static::SKU_TRANSLATION_PARAMTER => $sku,
+            static::SKU_TRANSLATION_PARAMETER => $sku,
             static::STOCK_TRANSLATION_PARAMETER => $stock,
         ]);
 

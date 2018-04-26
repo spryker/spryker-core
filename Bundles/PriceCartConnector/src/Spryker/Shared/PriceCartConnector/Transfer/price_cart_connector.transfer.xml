@@ -6,7 +6,14 @@
     <transfer name="Item">
         <property name="id" type="int" />
         <property name="unitGrossPrice" type="int" />
+        <property name="forcedUnitGrossPrice" type="bool" deprecated="Will be removed with a next major release" />
         <property name="sumGrossPrice" type="int" />
+
+        <property name="sourceUnitGrossPrice" type="int" />
+        <property name="sourceUnitNetPrice" type="int" />
+
+        <property name="originUnitGrossPrice" type="int" />
+        <property name="originUnitNetPrice" type="int" />
     </transfer>
 
 </transfers>

@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="PersistentCartChange">
+        <property name="customer" type="Customer"/>
+        <property name="idQuote" type="int"/>
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="QuoteSyncRequest">
+        <property name="quoteTransfer" type="Quote"/>
+        <property name="customerTransfer" type="Customer"/>
+    </transfer>
+
+    <transfer name="PersistentCartChangeQuantity">
+        <property name="customer" type="Customer"/>
+        <property name="idQuote" type="int"/>
+        <property name="item" type="Item"/>
+    </transfer>
+
+    <transfer name="QuoteMergeRequest">
+        <property name="targetQuote" type="Quote"/>
+        <property name="sourceQuote" type="Quote"/>
+    </transfer>
+
+    <transfer name="QuoteUpdateRequest">
+        <property name="idQuote" type="int"/>
+        <property name="customer" type="Customer"/>
+        <property name="quoteUpdateRequestAttributes" type="QuoteUpdateRequestAttributes"/>
+    </transfer>
+
+    <transfer name="QuoteUpdateRequestAttributes">
+        <property name="currency" type="Currency"/>
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+</transfers>
+

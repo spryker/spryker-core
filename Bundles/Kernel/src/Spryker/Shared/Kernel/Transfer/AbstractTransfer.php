@@ -369,13 +369,11 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
      * @param mixed $offset
      * @param mixed $value
      *
-     * @throws \Spryker\Shared\Kernel\Transfer\Exception\ArrayAccessReadyOnlyException
-     *
      * @return void
      */
     public function offsetSet($offset, $value)
     {
-        throw new ArrayAccessReadyOnlyException('Transfer object as an array is available only for read');
+        $this->$offset = $value;
     }
 
     /**

@@ -64,11 +64,103 @@ class PriceManager implements PriceManagerInterface
         $currencyIsoCode = $cartChangeTransfer->getQuote()->getCurrency()->getCode();
 
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            $priceProductFilterTransfer = $this->createPriceProductFilter($itemTransfer, $priceMode, $currencyIsoCode);
-            $this->setPrice($itemTransfer, $priceProductFilterTransfer, $priceMode);
+            $this->setOriginUnitPrices($itemTransfer, $priceMode, $currencyIsoCode);
+
+            if ($this->hasForcedUnitGrossPrice($itemTransfer)) {
+                continue;
+            }
+
+            if ($this->hasSourceUnitPrices($itemTransfer)) {
+                $this->applySourceUnitPrices($itemTransfer);
+                continue;
+            }
+
+            $this->applyOriginUnitPrices($itemTransfer);
         }
 
         return $cartChangeTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param string $priceMode
+     * @param string $currencyIsoCode
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function setOriginUnitPrices(ItemTransfer $itemTransfer, $priceMode, $currencyIsoCode)
+    {
+        $priceProductFilterTransfer = $this->createPriceProductFilter($itemTransfer, $priceMode, $currencyIsoCode);
+        $this->setPrice($itemTransfer, $priceProductFilterTransfer, $priceMode);
+
+        return $itemTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function applySourceUnitPrices(ItemTransfer $itemTransfer)
+    {
+        if ($itemTransfer->getSourceUnitNetPrice() !== null) {
+            $itemTransfer->setUnitNetPrice($itemTransfer->getSourceUnitNetPrice());
+            $itemTransfer->setUnitGrossPrice(0);
+        }
+
+        if ($itemTransfer->getSourceUnitGrossPrice() !== null) {
+            $itemTransfer->setUnitNetPrice(0);
+            $itemTransfer->setUnitGrossPrice($itemTransfer->getSourceUnitGrossPrice());
+        }
+
+        return $itemTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function applyOriginUnitPrices(ItemTransfer $itemTransfer)
+    {
+        $itemTransfer->setUnitNetPrice($itemTransfer->getOriginUnitNetPrice());
+        $itemTransfer->setUnitGrossPrice($itemTransfer->getOriginUnitGrossPrice());
+
+        return $itemTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return bool
+     */
+    protected function hasSourceUnitPrices(ItemTransfer $itemTransfer)
+    {
+        if ($itemTransfer->getSourceUnitGrossPrice() !== null) {
+            return true;
+        }
+
+        if ($itemTransfer->getSourceUnitNetPrice() !== null) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @deprecated Will be removed with a next major release
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return bool
+     */
+    protected function hasForcedUnitGrossPrice(ItemTransfer $itemTransfer)
+    {
+        if ($itemTransfer->getForcedUnitGrossPrice() && $itemTransfer->getUnitGrossPrice() !== null) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -111,13 +203,13 @@ class PriceManager implements PriceManagerInterface
         }
 
         if ($priceMode === $this->getNetPriceModeIdentifier()) {
-            $itemTransfer->setUnitNetPrice($price);
-            $itemTransfer->setUnitGrossPrice(0);
+            $itemTransfer->setOriginUnitNetPrice($price);
+            $itemTransfer->setOriginUnitGrossPrice(0);
             return;
         }
 
-        $itemTransfer->setUnitGrossPrice($price);
-        $itemTransfer->setUnitNetPrice(0);
+        $itemTransfer->setOriginUnitNetPrice(0);
+        $itemTransfer->setOriginUnitGrossPrice($price);
     }
 
     /**

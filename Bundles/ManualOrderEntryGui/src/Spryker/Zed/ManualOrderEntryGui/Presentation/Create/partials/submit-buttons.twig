@@ -1,0 +1,23 @@
+
+{% if form.vars.id == 'voucher' %}
+    {% set submitBtnValue = 'Redeem' | trans %}
+{% else %}
+    {% set submitBtnValue = 'Submit' | trans %}
+{% endif %}
+
+{% if form.vars.id == 'summary' %}
+    {% set nextStepBtnValue = 'Submit Order' %}
+{% else %}
+    {% set nextStepBtnValue = 'Next Step' | trans %}
+{% endif %}
+
+{%
+    if form.vars.id != 'products'
+      and form.vars.id != 'summary'
+%}
+    <input type="submit" class="btn btn-primary safe-submit" value="{{ submitBtnValue }}" />
+{% endif %}
+
+<input type="submit" class="btn btn-primary safe-submit" value="{{ nextStepBtnValue }}" name="{{ nextStepName }}" />
+
+

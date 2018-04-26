@@ -22,7 +22,7 @@ class StepBreadcrumbGenerator implements StepBreadcrumbGeneratorInterface
      *
      * @return \Generated\Shared\Transfer\StepBreadcrumbsTransfer
      */
-    public function generateStepBreadcrumbs(StepCollectionInterface $stepCollection, AbstractTransfer $dataTransfer = null, StepInterface $currentStep = null)
+    public function generateStepBreadcrumbs(StepCollectionInterface $stepCollection, ?AbstractTransfer $dataTransfer = null, ?StepInterface $currentStep = null)
     {
         $stepBreadcrumbTransfer = new StepBreadcrumbsTransfer();
 
@@ -43,7 +43,7 @@ class StepBreadcrumbGenerator implements StepBreadcrumbGeneratorInterface
      *
      * @return \Spryker\Yves\StepEngine\Dependency\Step\StepWithBreadcrumbInterface[]
      */
-    protected function getStepsWithBreadcrumb(StepCollectionInterface $stepCollection, AbstractTransfer $dataTransfer = null)
+    protected function getStepsWithBreadcrumb(StepCollectionInterface $stepCollection, ?AbstractTransfer $dataTransfer = null)
     {
         $breadcrumbSteps = [];
         foreach ($stepCollection as $step) {
@@ -76,7 +76,7 @@ class StepBreadcrumbGenerator implements StepBreadcrumbGeneratorInterface
      *
      * @return bool
      */
-    protected function isEnabled(StepWithBreadcrumbInterface $stepWithBreadcrumb, AbstractTransfer $dataTransfer = null)
+    protected function isEnabled(StepWithBreadcrumbInterface $stepWithBreadcrumb, ?AbstractTransfer $dataTransfer = null)
     {
         if (!$dataTransfer) {
             return false;
@@ -91,7 +91,7 @@ class StepBreadcrumbGenerator implements StepBreadcrumbGeneratorInterface
      *
      * @return bool
      */
-    protected function isActive(StepWithBreadcrumbInterface $stepWithBreadcrumb, StepInterface $currentStep = null)
+    protected function isActive(StepWithBreadcrumbInterface $stepWithBreadcrumb, ?StepInterface $currentStep = null)
     {
         return $stepWithBreadcrumb == $currentStep;
     }
@@ -102,7 +102,7 @@ class StepBreadcrumbGenerator implements StepBreadcrumbGeneratorInterface
      *
      * @return bool
      */
-    protected function isHidden(StepWithBreadcrumbInterface $stepWithBreadcrumb, AbstractTransfer $dataTransfer = null)
+    protected function isHidden(StepWithBreadcrumbInterface $stepWithBreadcrumb, ?AbstractTransfer $dataTransfer = null)
     {
         if (!$dataTransfer) {
             return false;

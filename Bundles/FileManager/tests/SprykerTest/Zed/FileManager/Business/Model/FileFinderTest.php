@@ -13,6 +13,7 @@ use Orm\Zed\FileManager\Persistence\SpyFileInfo;
 use Orm\Zed\FileManager\Persistence\SpyFileInfoQuery;
 use Orm\Zed\FileManager\Persistence\SpyFileQuery;
 use Spryker\Zed\FileManager\Business\Model\FileLoader;
+use Spryker\Zed\FileManager\FileManagerConfig;
 use Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface;
 
 /**
@@ -49,6 +50,14 @@ class FileFinderTest extends Unit
     protected function getSpyFileInfoQueryMock()
     {
         return $this->getMockBuilder(SpyFileInfoQuery::class)->getMock();
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\FileManager\FileManagerConfig
+     */
+    protected function getConfigMock()
+    {
+        return $this->getMockBuilder(FileManagerConfig::class)->getMock();
     }
 
     /**
@@ -93,7 +102,7 @@ class FileFinderTest extends Unit
             ->method('queryFileById')
             ->willReturn($spyFileQueryMock);
 
-        $fileFinder = new FileLoader($queryContainerMock);
+        $fileFinder = new FileLoader($queryContainerMock, $this->getConfigMock());
         $file = $fileFinder->getFile(1);
         $this->assertEquals('test.txt', $file->getFileName());
         $this->assertEquals(1, $file->getIdFile());
@@ -112,10 +121,10 @@ class FileFinderTest extends Unit
             ->willReturn($this->getMockedFileInfo());
 
         $queryContainerMock->expects($this->once())
-            ->method('queryFileInfoByFkFile')
+            ->method('queryFileInfoByIdFile')
             ->willReturn($spyFileInfoQueryMock);
 
-        $fileFinder = new FileLoader($queryContainerMock);
+        $fileFinder = new FileLoader($queryContainerMock, $this->getConfigMock());
         $fileInfo = $fileFinder->getLatestFileInfoByFkFile(1);
         $this->assertEquals('txt', $fileInfo->getExtension());
         $this->assertEquals('v. 1', $fileInfo->getVersionName());
@@ -139,7 +148,7 @@ class FileFinderTest extends Unit
             ->method('queryFileInfo')
             ->willReturn($spyFileInfoQueryMock);
 
-        $fileFinder = new FileLoader($queryContainerMock);
+        $fileFinder = new FileLoader($queryContainerMock, $this->getConfigMock());
         $fileInfo = $fileFinder->getFileInfo(1);
         $this->assertEquals('txt', $fileInfo->getExtension());
         $this->assertEquals('v. 1', $fileInfo->getVersionName());

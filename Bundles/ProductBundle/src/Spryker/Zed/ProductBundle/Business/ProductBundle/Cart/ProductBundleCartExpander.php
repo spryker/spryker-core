@@ -96,8 +96,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
      */
     public function expandBundleItems(CartChangeTransfer $cartChangeTransfer)
     {
-        $cartChangeTransfer->requireQuote()
-            ->requireItems();
+        $cartChangeTransfer->requireQuote();
 
         $cartChangeItems = new ArrayObject();
         $quoteTransfer = $cartChangeTransfer->getQuote();

@@ -83,7 +83,7 @@ class CategoryTreeWriter implements CategoryTreeWriterInterface
      */
     public function createCategoryNode(
         NodeTransfer $categoryNodeTransfer,
-        LocaleTransfer $localeTransfer = null,
+        ?LocaleTransfer $localeTransfer = null,
         $createUrlPath = true
     ) {
         $this->connection->beginTransaction();
@@ -112,7 +112,7 @@ class CategoryTreeWriter implements CategoryTreeWriterInterface
      *
      * @return void
      */
-    public function updateNode(NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer = null)
+    public function updateNode(NodeTransfer $categoryNodeTransfer, ?LocaleTransfer $localeTransfer = null)
     {
         $this->connection->beginTransaction();
 

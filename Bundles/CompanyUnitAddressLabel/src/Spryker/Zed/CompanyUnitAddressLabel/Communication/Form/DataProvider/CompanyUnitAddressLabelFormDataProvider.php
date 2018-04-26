@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CompanyUnitAddressLabel\Communication\Form\DataProvider;
 
+use ArrayObject;
+use Generated\Shared\Transfer\CompanyUnitAddressLabelCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Spryker\Zed\CompanyUnitAddressLabel\Communication\Form\CompanyUnitAddressLabelChoiceFormType;
 use Spryker\Zed\CompanyUnitAddressLabel\Persistence\CompanyUnitAddressLabelRepositoryInterface;
@@ -44,6 +46,11 @@ class CompanyUnitAddressLabelFormDataProvider
      */
     public function getData(CompanyUnitAddressTransfer $companyUnitAddressTransfer)
     {
+        if (!$companyUnitAddressTransfer->getIdCompanyUnitAddress()) {
+            $companyUnitAddressTransfer->setLabelCollection($this->getEmptyAddressLabelCollection());
+
+            return $companyUnitAddressTransfer;
+        }
         $labelCollection = $this->companyUnitAddressLabelRepository
             ->findCompanyUnitAddressLabelsByAddress($companyUnitAddressTransfer->getIdCompanyUnitAddress());
         $companyUnitAddressTransfer->setLabelCollection($labelCollection);
@@ -64,5 +71,16 @@ class CompanyUnitAddressLabelFormDataProvider
         }
 
         return $result;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressLabelCollectionTransfer
+     */
+    protected function getEmptyAddressLabelCollection(): CompanyUnitAddressLabelCollectionTransfer
+    {
+        $labelCollection = new CompanyUnitAddressLabelCollectionTransfer();
+        $labelCollection->setLabels(new ArrayObject());
+
+        return $labelCollection;
     }
 }
