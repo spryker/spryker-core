@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CompanyUser\Communication\Plugin\Company;
 
-use ArrayObject;
 use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Spryker\Zed\CompanyExtension\Dependency\Plugin\CompanyPostCreatePluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -18,8 +17,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class CompanyUserCreatePlugin extends AbstractPlugin implements CompanyPostCreatePluginInterface
 {
     /**
-     * {@inheritdoc}
-     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CompanyResponseTransfer $companyResponseTransfer
@@ -29,43 +26,9 @@ class CompanyUserCreatePlugin extends AbstractPlugin implements CompanyPostCreat
     public function postCreate(CompanyResponseTransfer $companyResponseTransfer): CompanyResponseTransfer
     {
         $companyTransfer = $companyResponseTransfer->getCompanyTransfer();
-        $companyUserTransfer = $companyTransfer->getInitialUserTransfer();
 
-        if ($companyUserTransfer === null) {
-            return $companyResponseTransfer;
-        }
-
-        $companyUserTransfer->setFkCompany($companyTransfer->getIdCompany());
-        $companyUserResponseTransfer = $this->getFacade()->create($companyUserTransfer);
-
-        if ($companyUserResponseTransfer->getIsSuccessful()) {
-            $companyTransfer->setInitialUserTransfer($companyUserResponseTransfer->getCompanyUser());
-            $companyResponseTransfer->setCompanyTransfer($companyTransfer);
-
-            return $companyResponseTransfer;
-        }
-
-        $companyResponseTransfer->setIsSuccessful(false);
-        $companyResponseTransfer = $this->addMessagesToCompanyResponse(
-            $companyUserResponseTransfer->getMessages(),
-            $companyResponseTransfer
-        );
-
-        return $companyResponseTransfer;
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ResponseMessageTransfer[] $messages
-     * @param \Generated\Shared\Transfer\CompanyResponseTransfer $companyResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyResponseTransfer
-     */
-    protected function addMessagesToCompanyResponse(
-        ArrayObject $messages,
-        CompanyResponseTransfer $companyResponseTransfer
-    ) {
-        foreach ($messages as $messageTransfer) {
-            $companyResponseTransfer->addMessage($messageTransfer);
+        if ($companyTransfer->getInitialUserTransfer() !== null) {
+            return $this->getFacade()->createInitialCompanyUser($companyResponseTransfer);
         }
 
         return $companyResponseTransfer;
