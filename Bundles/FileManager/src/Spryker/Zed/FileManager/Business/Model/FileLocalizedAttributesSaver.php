@@ -15,7 +15,7 @@ use Orm\Zed\FileManager\Persistence\SpyFileLocalizedAttributes;
 class FileLocalizedAttributesSaver implements FileLocalizedAttributesSaverInterface
 {
     /**
-     * @param \Orm\Zed\FileManager\Persistence\SpyFile                  $fileEntity
+     * @param \Orm\Zed\FileManager\Persistence\SpyFile $fileEntity
      * @param \Generated\Shared\Transfer\FileManagerSaveRequestTransfer $fileManagerSaveRequestTransfer
      *
      * @return void

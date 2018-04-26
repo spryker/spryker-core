@@ -32,8 +32,8 @@ class FileDirectorySaver implements FileDirectorySaverInterface
     protected $attributesSaver;
 
     /**
-     * @param \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface                $queryContainer
-     * @param \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface                            $fileLoader
+     * @param \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface $fileLoader
      * @param \Spryker\Zed\FileManager\Business\Model\FileDirectoryLocalizedAttributesSaverInterface $attributesSaver
      */
     public function __construct(
@@ -104,7 +104,7 @@ class FileDirectorySaver implements FileDirectorySaverInterface
 
     /**
      * @param \Orm\Zed\FileManager\Persistence\SpyFileDirectory $fileDirectory
-     * @param \Generated\Shared\Transfer\FileDirectoryTransfer  $fileDirectoryTransfer
+     * @param \Generated\Shared\Transfer\FileDirectoryTransfer $fileDirectoryTransfer
      *
      * @return int
      */
@@ -119,7 +119,8 @@ class FileDirectorySaver implements FileDirectorySaverInterface
                 $this->attributesSaver->saveFileLocalizedAttributes($fileDirectory, $fileDirectoryTransfer);
 
                 return $idFileDirectory;
-            }, $this->queryContainer->getConnection()
+            },
+            $this->queryContainer->getConnection()
         );
     }
 }

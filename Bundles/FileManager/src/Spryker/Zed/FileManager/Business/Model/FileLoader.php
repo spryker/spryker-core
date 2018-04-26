@@ -25,7 +25,7 @@ class FileLoader implements FileLoaderInterface
 
     /**
      * @param \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\FileManager\FileManagerConfig                              $config
+     * @param \Spryker\Zed\FileManager\FileManagerConfig $config
      */
     public function __construct(FileManagerQueryContainerInterface $queryContainer, FileManagerConfig $config)
     {

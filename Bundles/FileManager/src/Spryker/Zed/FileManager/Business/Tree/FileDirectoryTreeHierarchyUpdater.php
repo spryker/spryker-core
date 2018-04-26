@@ -91,7 +91,7 @@ class FileDirectoryTreeHierarchyUpdater implements FileDirectoryTreeHierarchyUpd
 
     /**
      * @param \Generated\Shared\Transfer\FileDirectoryTreeTransfer $fileDirectoryTreeTransfer
-     * @param int|null                                             $fkParentFileDirectory
+     * @param int|null $fkParentFileDirectory
      *
      * @return void
      */
@@ -104,7 +104,7 @@ class FileDirectoryTreeHierarchyUpdater implements FileDirectoryTreeHierarchyUpd
 
     /**
      * @param \Generated\Shared\Transfer\FileDirectoryTreeNodeTransfer $fileDirectoryTreeNodeTransfer
-     * @param int                                                      $fkParentFileDirectory
+     * @param int $fkParentFileDirectory
      *
      * @return void
      */
@@ -156,7 +156,7 @@ class FileDirectoryTreeHierarchyUpdater implements FileDirectoryTreeHierarchyUpd
     /**
      * @param \Orm\Zed\FileManager\Persistence\SpyFileDirectory $fileDirectoryEntity
      * @param \Generated\Shared\Transfer\FileDirectoryTransfer  $fileDirectoryTransfer
-     * @param int                                               $fkParentFileDirectory
+     * @param int $fkParentFileDirectory
      *
      * @return \Orm\Zed\FileManager\Persistence\SpyFileDirectory
      */

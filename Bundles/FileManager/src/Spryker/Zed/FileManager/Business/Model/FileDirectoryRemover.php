@@ -40,10 +40,10 @@ class FileDirectoryRemover implements FileDirectoryRemoverInterface
     protected $config;
 
     /**
-     * @param \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface             $fileManagerQueryContainer
-     * @param \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface                         $fileLoader
+     * @param \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface $fileManagerQueryContainer
+     * @param \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface $fileLoader
      * @param \Spryker\Zed\FileManager\Dependency\Service\FileManagerToFileSystemServiceInterface $fileSystemService
-     * @param \Spryker\Zed\FileManager\FileManagerConfig                                          $config
+     * @param \Spryker\Zed\FileManager\FileManagerConfig $config
      */
     public function __construct(
         FileManagerQueryContainerInterface $fileManagerQueryContainer,
@@ -93,7 +93,8 @@ class FileDirectoryRemover implements FileDirectoryRemoverInterface
                 }
 
                 $fileDirectory->delete();
-            }, $this->fileManagerQueryContainer->getConnection()
+            },
+            $this->fileManagerQueryContainer->getConnection()
         );
     }
 }
