@@ -251,7 +251,7 @@ class AbstractTransfer extends ParentAbstractTransfer
      *
      * @return $this
      */
-    public function setTransfer(TransferInterface $transfer = null)
+    public function setTransfer(?TransferInterface $transfer = null)
     {
         $this->transfer = $transfer;
         $this->modifiedProperties[self::TRANSFER] = true;

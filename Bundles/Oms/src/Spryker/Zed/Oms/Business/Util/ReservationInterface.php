@@ -23,7 +23,7 @@ interface ReservationInterface
      *
      * @return int
      */
-    public function sumReservedProductQuantitiesForSku($sku, StoreTransfer $storeTransfer = null);
+    public function sumReservedProductQuantitiesForSku($sku, ?StoreTransfer $storeTransfer = null);
 
     /**
      * @param string $sku

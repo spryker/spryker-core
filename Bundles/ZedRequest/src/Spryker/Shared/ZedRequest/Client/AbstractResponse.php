@@ -28,7 +28,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
     /**
      * @param array|null $values
      */
-    public function __construct(array $values = null)
+    public function __construct(?array $values = null)
     {
         parent::__construct($values);
     }

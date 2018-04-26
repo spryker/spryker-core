@@ -74,7 +74,7 @@ abstract class AbstractProductReviewSearchListener extends AbstractPlugin implem
      *
      * @return void
      */
-    protected function storeDataSet(SpyProductReview $productReviewEntity, SpyProductReviewSearch $spyProductReviewSearchEntity = null)
+    protected function storeDataSet(SpyProductReview $productReviewEntity, ?SpyProductReviewSearch $spyProductReviewSearchEntity = null)
     {
         if ($spyProductReviewSearchEntity === null) {
             $spyProductReviewSearchEntity = new SpyProductReviewSearch();

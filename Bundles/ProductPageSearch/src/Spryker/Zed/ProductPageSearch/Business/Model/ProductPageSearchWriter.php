@@ -37,7 +37,7 @@ class ProductPageSearchWriter implements ProductPageSearchWriterInterface
      *
      * @return void
      */
-    public function save(ProductPageSearchTransfer $productPageSearchTransfer, array $data, SpyProductAbstractPageSearch $productPageSearchEntity = null)
+    public function save(ProductPageSearchTransfer $productPageSearchTransfer, array $data, ?SpyProductAbstractPageSearch $productPageSearchEntity = null)
     {
         if ($productPageSearchEntity === null) {
             $productPageSearchEntity = new SpyProductAbstractPageSearch();

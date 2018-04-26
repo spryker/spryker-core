@@ -45,7 +45,7 @@ class OutdatedValidator implements OutdatedValidatorInterface
 
     /**
      * @param array $newEntry
-     * @param array|null $existingEntry
+     * @param array $existingEntry
      *
      * @return bool
      */
