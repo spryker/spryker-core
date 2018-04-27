@@ -44,7 +44,7 @@ interface PluginCollectionInterface
      *
      * @return bool
      */
-    public function contains(BarcodeGeneratorPluginInterface $generatorPlugin): bool;
+    public function has(BarcodeGeneratorPluginInterface $generatorPlugin): bool;
 
     /**
      * @param int $index

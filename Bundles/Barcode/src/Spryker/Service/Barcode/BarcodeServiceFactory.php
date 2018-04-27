@@ -27,7 +27,7 @@ class BarcodeServiceFactory extends AbstractServiceFactory
     /**
      * @return \Spryker\Service\Barcode\Model\PluginCollection\PluginCollectionInterface
      */
-    protected function getBarcodePlugins(): PluginCollectionInterface
+    public function getBarcodePlugins(): PluginCollectionInterface
     {
         return $this->getProvidedDependency(BarcodeDependencyProvider::BARCODE_PLUGINS);
     }

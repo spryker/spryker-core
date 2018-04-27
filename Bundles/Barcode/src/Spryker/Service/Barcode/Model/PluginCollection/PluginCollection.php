@@ -128,13 +128,13 @@ class PluginCollection implements PluginCollectionInterface
      *
      * @return bool
      */
-    public function contains(BarcodeGeneratorPluginInterface $generatorPlugin): bool
+    public function has(BarcodeGeneratorPluginInterface $generatorPlugin): bool
     {
         if ($this->isEmpty()) {
             throw new PluginCollectionIsEmptyException();
         }
 
-        return $this->find($generatorPlugin) > -1;
+        return array_search($generatorPlugin, $this->collection, true) !== false;
     }
 
     /**
