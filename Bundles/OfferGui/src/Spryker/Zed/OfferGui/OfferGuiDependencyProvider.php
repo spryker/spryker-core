@@ -272,7 +272,7 @@ class OfferGuiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addFlashBag($container)
+    protected function addFlashBag(Container $container): Container
     {
         $container[static::FLASH_BAG] = function () {
             return new FlashBag();

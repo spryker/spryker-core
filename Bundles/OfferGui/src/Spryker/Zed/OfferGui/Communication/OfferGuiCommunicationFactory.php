@@ -29,6 +29,7 @@ use Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilEncodingServiceInterfa
 use Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilSanitizeServiceInterface;
 use Spryker\Zed\OfferGui\OfferGuiDependencyProvider;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionBagInterface;
 
 /**
  * @method \Spryker\Zed\OfferGui\OfferGuiConfig getConfig()
@@ -215,11 +216,10 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
         return $this->getProvidedDependency(OfferGuiDependencyProvider::FACADE_PRICE);
     }
 
-    /**]
-     *
+    /**
      * @return \Symfony\Component\HttpFoundation\Session\SessionBagInterface
      */
-    public function getFlashBag()
+    public function getFlashBag(): SessionBagInterface
     {
         return $this->getSessionClient()->getBag($this->getFlashBagName());
     }

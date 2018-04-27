@@ -68,7 +68,7 @@ class EditController extends AbstractController
      *
      * @return void
      */
-    protected function updateOffer(OfferTransfer $offerTransfer, Request $request)
+    protected function updateOffer(OfferTransfer $offerTransfer, Request $request): void
     {
         $isSubmitPersist = $request->request->get(static::PARAM_SUBMIT_PERSIST);
 
