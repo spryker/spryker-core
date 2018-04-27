@@ -189,7 +189,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return int
      */
-    public function createCategory(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer = null)
+    public function createCategory(CategoryTransfer $categoryTransfer, ?LocaleTransfer $localeTransfer = null)
     {
         return $this
             ->getFactory()
@@ -227,7 +227,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return void
      */
-    public function updateCategory(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer = null)
+    public function updateCategory(CategoryTransfer $categoryTransfer, ?LocaleTransfer $localeTransfer = null)
     {
         $this
             ->getFactory()
@@ -339,7 +339,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return int
      */
-    public function createCategoryNode(NodeTransfer $nodeTransfer, LocaleTransfer $localeTransfer = null, $createUrlPath = true)
+    public function createCategoryNode(NodeTransfer $nodeTransfer, ?LocaleTransfer $localeTransfer = null, $createUrlPath = true)
     {
         return $this
             ->getFactory()
@@ -357,7 +357,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @return void
      */
-    public function updateCategoryNode(NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer = null)
+    public function updateCategoryNode(NodeTransfer $categoryNodeTransfer, ?LocaleTransfer $localeTransfer = null)
     {
         $this
             ->getFactory()

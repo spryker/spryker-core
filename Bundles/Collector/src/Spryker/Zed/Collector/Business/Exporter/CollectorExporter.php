@@ -49,7 +49,7 @@ class CollectorExporter
         TouchQueryContainerInterface $touchQueryContainer,
         CollectorToLocaleInterface $localeFacade,
         ExporterInterface $exporter,
-        CollectorToStoreFacadeInterface $storeFacade = null
+        ?CollectorToStoreFacadeInterface $storeFacade = null
     ) {
         $this->touchQueryContainer = $touchQueryContainer;
         $this->localeFacade = $localeFacade;

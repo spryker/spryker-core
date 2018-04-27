@@ -30,7 +30,7 @@ class DataImporterHelper extends Module
      *
      * @return object|\Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
-    public function getDataImporterMock($importType, $isCalled = false, DataImporterReportTransfer $dataImporterReportTransfer = null)
+    public function getDataImporterMock($importType, $isCalled = false, ?DataImporterReportTransfer $dataImporterReportTransfer = null)
     {
         if (!$dataImporterReportTransfer) {
             $dataImporterReportTransfer = new DataImporterReportTransfer();
@@ -57,7 +57,7 @@ class DataImporterHelper extends Module
      *
      * @return object|\Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface
      */
-    public function getDataImporterPluginMock($importType, $isCalled = false, DataImporterReportTransfer $dataImporterReportTransfer = null)
+    public function getDataImporterPluginMock($importType, $isCalled = false, ?DataImporterReportTransfer $dataImporterReportTransfer = null)
     {
         if (!$dataImporterReportTransfer) {
             $dataImporterReportTransfer = new DataImporterReportTransfer();
@@ -142,7 +142,7 @@ class DataImporterHelper extends Module
      *
      * @return \Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface
      */
-    public function getDataReader(array $dataSets = null, $numberOfDataSets = 3)
+    public function getDataReader(?array $dataSets = null, $numberOfDataSets = 3)
     {
         if (!$dataSets) {
             $faker = Factory::create();

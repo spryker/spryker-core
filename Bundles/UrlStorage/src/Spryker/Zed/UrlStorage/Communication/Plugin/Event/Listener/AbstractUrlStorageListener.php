@@ -82,7 +82,7 @@ class AbstractUrlStorageListener extends AbstractPlugin
      *
      * @return void
      */
-    protected function storeDataSet(UrlStorageTransfer $urlStorageTransfer, SpyUrlStorage $urlStorageEntity = null)
+    protected function storeDataSet(UrlStorageTransfer $urlStorageTransfer, ?SpyUrlStorage $urlStorageEntity = null)
     {
         if ($urlStorageEntity === null) {
             $urlStorageEntity = new SpyUrlStorage();

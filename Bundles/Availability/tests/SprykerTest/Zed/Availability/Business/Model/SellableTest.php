@@ -80,9 +80,9 @@ class SellableTest extends Unit
      * @return \Spryker\Zed\Availability\Business\Model\Sellable
      */
     protected function createSellable(
-        AvailabilityToOmsInterface $omsFacadeMock = null,
-        AvailabilityToStockInterface $stockFacadeMock = null,
-        AvailabilityToStoreFacadeInterface $storeFacade = null
+        ?AvailabilityToOmsInterface $omsFacadeMock = null,
+        ?AvailabilityToStockInterface $stockFacadeMock = null,
+        ?AvailabilityToStoreFacadeInterface $storeFacade = null
     ) {
 
         if ($omsFacadeMock === null) {

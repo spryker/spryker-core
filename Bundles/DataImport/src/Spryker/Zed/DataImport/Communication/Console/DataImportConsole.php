@@ -128,7 +128,7 @@ class DataImportConsole extends Console
      *
      * @return string
      */
-    protected function getImporterType(InputInterface $input = null): string
+    protected function getImporterType(?InputInterface $input = null): string
     {
         if ($input && $input->getArgument(static::ARGUMENT_IMPORTER)) {
             return $input->getArgument(static::ARGUMENT_IMPORTER);
