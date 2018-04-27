@@ -16,10 +16,16 @@ class ModuleBuilder
     const TEMPLATE_INTERFACE = 'interface';
     const TEMPLATE_BRIDGE = 'bridge';
 
+    const OPTION_FILE = 'file';
+    const OPTION_FORCE = 'force';
+
+    const NAMESPACE_SPRYKER = 'Spryker';
+    const NAMESPACE_SPRYKER_SHOP = 'SprykerShop';
+
     /**
-     * @var string
+     * @var \Spryker\Zed\Development\DevelopmentConfig
      */
-    protected $moduleRootDirectory;
+    protected $config;
 
     /**
      * List of files to generate in each module.
@@ -41,11 +47,11 @@ class ModuleBuilder
     ];
 
     /**
-     * @param string $moduleRootDirectory
+     * @param string $config
      */
-    public function __construct($moduleRootDirectory)
+    public function __construct($config)
     {
-        $this->moduleRootDirectory = $moduleRootDirectory;
+        $this->config = $config;
     }
 
     /**
@@ -56,15 +62,20 @@ class ModuleBuilder
      */
     public function build($module, array $options)
     {
+        $namespace = static::NAMESPACE_SPRYKER;
+        if (strpos($module, '.') !== false) {
+            list ($namespace, $module) = explode('.', $module, 2);
+        }
+
         if ($module !== 'all') {
             $module = $this->getUnderscoreToCamelCaseFilter()->filter($module);
             $modules = (array)$module;
         } else {
-            $modules = $this->getModuleNames();
+            $modules = $this->getModuleNames($namespace);
         }
 
         foreach ($modules as $module) {
-            $this->createOrUpdateModule($module, $options);
+            $this->createOrUpdateModule($namespace, $module, $options);
         }
     }
 
@@ -81,11 +92,15 @@ class ModuleBuilder
     }
 
     /**
+     * @param string $namespace
+     *
      * @return array
      */
-    protected function getModuleNames()
+    protected function getModuleNames($namespace)
     {
-        $moduleDirectories = glob($this->moduleRootDirectory . '*');
+        $moduleDirectory = $this->getDirectoryName($namespace);
+
+        $moduleDirectories = glob($moduleDirectory . '*');
 
         $modules = [];
         foreach ($moduleDirectories as $moduleDirectory) {
@@ -96,12 +111,13 @@ class ModuleBuilder
     }
 
     /**
+     * @param string $namespace
      * @param string $module
      * @param array $options
      *
      * @return void
      */
-    protected function createOrUpdateModule($module, $options)
+    protected function createOrUpdateModule($namespace, $module, array $options)
     {
         foreach ($this->files as $alias => $file) {
             $source = $file;
@@ -109,15 +125,15 @@ class ModuleBuilder
                 $source = $alias;
             }
 
-            if (!empty($options['file']) && $file !== $options['file']) {
+            if (!empty($options[static::OPTION_FILE]) && $file !== $options[static::OPTION_FILE]) {
                 continue;
             }
 
             $templateContent = $this->getTemplateContent($source);
 
-            $templateContent = $this->replacePlaceHolder($module, $templateContent);
+            $templateContent = $this->replacePlaceHolder($namespace, $module, $templateContent);
 
-            $this->saveFile($module, $templateContent, $file, $options['force']);
+            $this->saveFile($namespace, $module, $templateContent, $file, $options[static::OPTION_FORCE]);
         }
     }
 
@@ -134,16 +150,33 @@ class ModuleBuilder
     }
 
     /**
+     * @param string $namespace
      * @param string $module
      * @param string $templateContent
      *
      * @return string
      */
-    protected function replacePlaceHolder($module, $templateContent)
+    protected function replacePlaceHolder($namespace, $module, $templateContent)
     {
+        $from = [
+            '{module}',
+            '{moduleVariable}',
+            '{moduleDashed}',
+            '{namespace}',
+            '{namespaceDashed}',
+        ];
+
+        $to = [
+            $module,
+            lcfirst($module),
+            $this->camelCaseToDash($module),
+            $namespace,
+            $this->camelCaseToDash($namespace),
+        ];
+
         $templateContent = str_replace(
-            ['{module}', '{moduleVariable}', '{moduleDashed}'],
-            [$module, lcfirst($module), $this->camelCaseToDash($module)],
+            $from,
+            $to,
             $templateContent
         );
 
@@ -165,6 +198,7 @@ class ModuleBuilder
     }
 
     /**
+     * @param string $namespace
      * @param string $module
      * @param string $templateContent
      * @param string $fileName
@@ -172,18 +206,51 @@ class ModuleBuilder
      *
      * @return void
      */
-    protected function saveFile($module, $templateContent, $fileName, $overwrite = false)
+    protected function saveFile($namespace, $module, $templateContent, $fileName, $overwrite = false)
     {
-        $path = $this->moduleRootDirectory . $module . DIRECTORY_SEPARATOR;
+        $path = $this->getDirectoryName($namespace) . $this->getModuleName($module, $namespace) . DIRECTORY_SEPARATOR;
         if (!is_dir($path)) {
             mkdir($path, 0770, true);
         }
 
         $filesystem = new Filesystem();
         $filePath = $path . $fileName;
-
         if (!is_file($filePath) || $overwrite) {
             $filesystem->dumpFile($filePath, $templateContent);
         }
+    }
+
+    /**
+     * @param string $namespace
+     *
+     * @return string
+     */
+    protected function getDirectoryName($namespace)
+    {
+        if ($namespace === static::NAMESPACE_SPRYKER_SHOP) {
+            return $this->config->getPathToShop();
+        }
+        if ($namespace === static::NAMESPACE_SPRYKER) {
+            return $this->config->getPathToCore();
+        }
+
+        $folder = $this->camelCaseToDash($namespace);
+
+        return $this->config->getPathToRoot() . 'vendor' . DIRECTORY_SEPARATOR . $folder . DIRECTORY_SEPARATOR;
+    }
+
+    /**
+     * @param string $module
+     * @param string $namespace
+     *
+     * @return string
+     */
+    protected function getModuleName($module, $namespace)
+    {
+        if ($namespace === static::NAMESPACE_SPRYKER_SHOP || $namespace === static::NAMESPACE_SPRYKER) {
+            return $module;
+        }
+
+        return $this->camelCaseToDash($module);
     }
 }
