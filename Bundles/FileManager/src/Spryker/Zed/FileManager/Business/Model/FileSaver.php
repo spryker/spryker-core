@@ -132,7 +132,8 @@ class FileSaver implements FileSaverInterface
                 $this->saveContent($saveRequestTransfer, $file, $fileInfo);
 
                 return $savedRowsCount;
-            }, $this->queryContainer->getConnection()
+            },
+            $this->queryContainer->getConnection()
         );
     }
 
