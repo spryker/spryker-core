@@ -70,13 +70,18 @@ class FileDirectoryRemover implements FileDirectoryRemoverInterface
         return $this->handleDatabaseTransaction(
             function () use ($fileDirectory, $fileParentDirectory) {
                 foreach ($fileDirectory->getSpyFiles() as $file) {
-                    $fileSystemRenameTransfer = new FileSystemRenameTransfer();
-                    $fileSystemRenameTransfer->setFileSystemName($this->config->getStorageName());
-                    $fileSystemRenameTransfer->setPath($this->fileLoader->buildFilename($file));
-                    $file->setFileDirectory($fileParentDirectory);
-                    $fileSystemRenameTransfer->setNewPath($this->fileLoader->buildFilename($file));
+                    foreach ($file->getSpyFileInfos() as $fileInfo) {
+                        $fileSystemRenameTransfer = new FileSystemRenameTransfer();
+                        $fileSystemRenameTransfer->setFileSystemName($this->config->getStorageName());
+                        $fileSystemRenameTransfer->setPath($fileInfo->getStorageFileName());
+                        $fileInfo->getFile()->setFileDirectory($fileParentDirectory);
+                        $newPath = $this->fileLoader->buildFilename($fileInfo);
+                        $fileSystemRenameTransfer->setNewPath($newPath);
+                        $fileInfo->setStorageFileName($newPath);
 
-                    $this->fileSystemService->rename($fileSystemRenameTransfer);
+                        $this->fileSystemService->rename($fileSystemRenameTransfer);
+                    }
+                    $file->setFileDirectory($fileParentDirectory);
                     $file->save();
                 }
 
