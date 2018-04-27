@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Development\Business\CodeBuilder\Module;
 
+use Spryker\Zed\Development\DevelopmentConfig;
 use Symfony\Component\Filesystem\Filesystem;
 use Zend\Filter\FilterChain;
 use Zend\Filter\Word\CamelCaseToDash;
@@ -44,9 +45,9 @@ class ModuleBuilder
     ];
 
     /**
-     * @param string $config
+     * @param \Spryker\Zed\Development\DevelopmentConfig $config
      */
-    public function __construct($config)
+    public function __construct(DevelopmentConfig $config)
     {
         $this->config = $config;
     }
