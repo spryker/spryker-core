@@ -11,7 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
-use Spryker\Zed\ProductMeasurementUnitDataImport\Communication\Plugin\ProductMeasurementUnitDataImportPlugin;
+use Spryker\Zed\ProductMeasurementUnitDataImport\Communication\Plugin\ProductMeasurementSalesUnitStoreDataImportPlugin;
 use Spryker\Zed\ProductMeasurementUnitDataImport\ProductMeasurementUnitDataImportConfig;
 
 /**
@@ -21,13 +21,13 @@ use Spryker\Zed\ProductMeasurementUnitDataImport\ProductMeasurementUnitDataImpor
  * @group ProductMeasurementUnitDataImport
  * @group Communication
  * @group Plugin
- * @group ProductMeasurementUnitDataImportPluginTest
+ * @group ProductMeasurementSalesUnitStoreDataImportPluginTest
  * Add your own group annotations below this line
  */
-class ProductMeasurementUnitDataImportPluginTest extends Unit
+class ProductMeasurementSalesUnitStoreDataImportPluginTest extends Unit
 {
     /**
-     * @var \SprykerTest\Zed\ProductMeasurementUnitDataImport\ProductMeasurementUnitDataImportCommunicationTester
+     * @var \SprykerTest\Zed\ProductMeasurementUnitDataImport\ProductMeasurementSalesUnitStoreDataImportCommunicationTester
      */
     protected $tester;
 
@@ -37,17 +37,17 @@ class ProductMeasurementUnitDataImportPluginTest extends Unit
     public function testImportImportsData(): void
     {
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
-        $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/product_measurement_unit.csv');
+        $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/product_measurement_sales_unit_store.csv');
 
         $dataImportConfigurationTransfer = new DataImporterConfigurationTransfer();
         $dataImportConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfigurationTransfer);
 
-        $productMeasurementUnitDataImportPlugin = new ProductMeasurementUnitDataImportPlugin();
-        $dataImporterReportTransfer = $productMeasurementUnitDataImportPlugin->import($dataImportConfigurationTransfer);
+        $productMeasurementSalesUnitStoreDataImportPlugin = new ProductMeasurementSalesUnitStoreDataImportPlugin();
+        $dataImporterReportTransfer = $productMeasurementSalesUnitStoreDataImportPlugin->import($dataImportConfigurationTransfer);
 
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
 
-        $this->tester->assertProductMeasurementUnitContainsData();
+        $this->tester->assertMeasurementSalesUnitStoreContainsData();
     }
 
     /**
@@ -55,10 +55,10 @@ class ProductMeasurementUnitDataImportPluginTest extends Unit
      */
     public function testGetImportTypeReturnsTypeOfImporter(): void
     {
-        $productMeasurementUnitDataImportPlugin = new ProductMeasurementUnitDataImportPlugin();
+        $productMeasurementSalesUnitStoreDataImportPlugin = new ProductMeasurementSalesUnitStoreDataImportPlugin();
         $this->assertSame(
-            ProductMeasurementUnitDataImportConfig::IMPORT_TYPE_PRODUCT_MEASUREMENT_UNIT,
-            $productMeasurementUnitDataImportPlugin->getImportType()
+            ProductMeasurementUnitDataImportConfig::IMPORT_TYPE_PRODUCT_MEASUREMENT_SALES_UNIT_STORE,
+            $productMeasurementSalesUnitStoreDataImportPlugin->getImportType()
         );
     }
 }

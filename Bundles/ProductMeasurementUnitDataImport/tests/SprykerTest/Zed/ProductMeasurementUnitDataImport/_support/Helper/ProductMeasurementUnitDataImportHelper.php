@@ -15,7 +15,7 @@ class ProductMeasurementUnitDataImportHelper extends Module
     /**
      * @return void
      */
-    public function ensureDatabaseTableIsEmpty(): void
+    public function ensureProductMeasurementUnitIsEmpty(): void
     {
         $query = $this->getProductMeasurementUnitQuery();
         $query->deleteAll();
@@ -24,7 +24,7 @@ class ProductMeasurementUnitDataImportHelper extends Module
     /**
      * @return void
      */
-    public function assertDatabaseTableIsEmpty(): void
+    public function assertProductMeasurementUnitIsEmpty(): void
     {
         $query = $this->getProductMeasurementUnitQuery();
         $this->assertCount(0, $query, 'Found at least one entry in the database table but database table was expected to be empty.');
@@ -33,7 +33,7 @@ class ProductMeasurementUnitDataImportHelper extends Module
     /**
      * @return void
      */
-    public function assertDatabaseTableContainsData(): void
+    public function assertProductMeasurementUnitContainsData(): void
     {
         $query = $this->getProductMeasurementUnitQuery();
         $this->assertTrue(($query->count() > 0), 'Expected at least one entry in the database table but database table is empty.');
