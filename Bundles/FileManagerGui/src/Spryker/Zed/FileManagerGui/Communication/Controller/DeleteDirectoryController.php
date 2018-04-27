@@ -10,6 +10,8 @@ namespace Spryker\Zed\FileManagerGui\Communication\Controller;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
 
 /**
  * @method \Spryker\Zed\FileManagerGui\Communication\FileManagerGuiCommunicationFactory getFactory()
@@ -26,6 +28,10 @@ class DeleteDirectoryController extends AbstractController
     public function indexAction(Request $request)
     {
         $idFileDirectory = $request->get(static::URL_PARAM_ID_DIRECTORY);
+
+        if (!$idFileDirectory) {
+            throw new NotFoundHttpException();
+        }
 
         $this->getFactory()
             ->getFileManagerFacade()

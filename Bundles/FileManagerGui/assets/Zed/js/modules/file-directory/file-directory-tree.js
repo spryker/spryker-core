@@ -82,14 +82,17 @@ function initJsTree() {
             }
         }
     }).on("changed.jstree", function (e, data) {
+        var filesTable = $('#file-directory-files-list').find('table').first();
+
         if (data.node.data.idFileDirectoryNode) {
-            var filesTable = $('#file-directory-files-list').find('table').first();
+            $('#file-directory-files-list').show();
             filesTable.DataTable().ajax.url( '/file-manager-gui/files/table?file-directory-id=' + data.node.data.idFileDirectoryNode ).load();
             $('#add-file-link').attr('href', '/file-manager-gui/add-file?file-directory-id=' + data.node.data.idFileDirectoryNode);
 
             $('#delete-directory-link')
                 .attr('href', '/file-manager-gui/delete-directory?id-directory=' + data.node.data.idFileDirectoryNode);
         } else {
+            $('#file-directory-files-list').hide();
             $('#delete-directory-link')
                 .attr('href', '#');
         }
