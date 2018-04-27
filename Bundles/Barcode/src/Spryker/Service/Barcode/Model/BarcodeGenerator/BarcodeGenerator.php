@@ -8,7 +8,6 @@
 namespace Spryker\Service\Barcode\Model\BarcodeGenerator;
 
 use Generated\Shared\Transfer\BarcodeResponseTransfer;
-use Spryker\Service\Barcode\Model\BarcodeGeneratorToServiceFactoryBridge\BarcodeGeneratorToServiceFactoryBridgeInterface;
 use Spryker\Service\Barcode\Model\PluginCollection\PluginCollectionInterface;
 use Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface;
 
@@ -20,18 +19,11 @@ class BarcodeGenerator implements BarcodeGeneratorInterface
     protected $pluginCollection;
 
     /**
-     * @var \Spryker\Service\Barcode\Model\BarcodeGeneratorToServiceFactoryBridge\BarcodeGeneratorToServiceFactoryBridgeInterface
-     */
-    protected $serviceFactoryBridge;
-
-    /**
      * @param \Spryker\Service\Barcode\Model\PluginCollection\PluginCollectionInterface $pluginCollection
-     * @param \Spryker\Service\Barcode\Model\BarcodeGeneratorToServiceFactoryBridge\BarcodeGeneratorToServiceFactoryBridgeInterface $serviceFactoryBridge
      */
-    public function __construct(PluginCollectionInterface $pluginCollection, BarcodeGeneratorToServiceFactoryBridgeInterface $serviceFactoryBridge)
+    public function __construct(PluginCollectionInterface $pluginCollection)
     {
         $this->pluginCollection = $pluginCollection;
-        $this->serviceFactoryBridge = $serviceFactoryBridge;
     }
 
     /**
@@ -57,15 +49,5 @@ class BarcodeGenerator implements BarcodeGeneratorInterface
         }
 
         return $this->pluginCollection->findByClassName($generatorPlugin);
-    }
-
-    /**
-     * @param string $resolvedClassName
-     *
-     * @return \Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface
-     */
-    protected function createPluginInstance(string $resolvedClassName): BarcodeGeneratorPluginInterface
-    {
-        return $this->serviceFactoryBridge->createPluginInstance($resolvedClassName);
     }
 }
