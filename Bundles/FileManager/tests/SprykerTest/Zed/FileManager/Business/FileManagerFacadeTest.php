@@ -41,6 +41,7 @@ use SprykerTest\Zed\FileManager\Stub\FlysystemConfigStub;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group FileManager
@@ -357,11 +358,14 @@ class FileManagerFacadeTest extends Unit
         $tree = $this->facade->findFileDirectoryTree();
         $this->assertInstanceOf(FileDirectoryTreeTransfer::class, $tree);
 
-        foreach($tree->getNodes()->getArrayCopy() as $node) {
+        foreach ($tree->getNodes()->getArrayCopy() as $node) {
             $this->assertInstanceOf(FileDirectoryTreeNodeTransfer::class, $node);
         }
     }
 
+    /**
+     * @return void
+     */
     public function testUpdateFileDirectoryTreeHierarchy()
     {
         $tree = $this->facade->findFileDirectoryTree();
@@ -409,5 +413,4 @@ class FileManagerFacadeTest extends Unit
     {
         $this->facade->deleteFileDirectory(1);
     }
-
 }

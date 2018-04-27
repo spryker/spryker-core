@@ -18,6 +18,7 @@ use Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group FileManager

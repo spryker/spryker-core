@@ -120,18 +120,21 @@ class FileSaver implements FileSaverInterface
      */
     protected function saveFile(SpyFile $file, FileManagerSaveRequestTransfer $saveRequestTransfer)
     {
-        return $this->handleDatabaseTransaction(function () use ($file, $saveRequestTransfer) {
-            $file->fromArray($saveRequestTransfer->getFile()->toArray());
+        return $this->handleDatabaseTransaction(
+            function () use ($file, $saveRequestTransfer) {
+                $file->fromArray($saveRequestTransfer->getFile()->toArray());
 
-            $fileInfo = $this->createFileInfo($saveRequestTransfer);
-            $this->addFileInfoToFile($file, $fileInfo);
+                $fileInfo = $this->createFileInfo($saveRequestTransfer);
+                $this->addFileInfoToFile($file, $fileInfo);
 
-            $savedRowsCount = $file->save();
-            $this->attributesSaver->saveLocalizedFileAttributes($file, $saveRequestTransfer);
-            $this->saveContent($saveRequestTransfer, $file, $fileInfo);
+                $savedRowsCount = $file->save();
+                $this->attributesSaver->saveLocalizedFileAttributes($file, $saveRequestTransfer);
+                $this->saveContent($saveRequestTransfer, $file, $fileInfo);
 
-            return $savedRowsCount;
-        }, $this->queryContainer->getConnection());
+                return $savedRowsCount;
+            },
+            $this->queryContainer->getConnection()
+        );
     }
 
     /**
@@ -157,7 +160,7 @@ class FileSaver implements FileSaverInterface
     protected function saveContent(FileManagerSaveRequestTransfer $saveRequestTransfer, SpyFile $file, SpyFileInfo $fileInfo = null)
     {
         if ($saveRequestTransfer->getContent() !== null || $fileInfo !== null) {
-            $newFileName = $this->fileLoader->buildFilename($file);
+            $newFileName = $this->fileLoader->buildFilename($fileInfo);
             $this->fileContent->save($newFileName, $saveRequestTransfer->getContent());
             $this->addStorageInfo($fileInfo, $newFileName);
         }

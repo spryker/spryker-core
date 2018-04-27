@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\FileManager\Business\Model;
 
-use Orm\Zed\FileManager\Persistence\SpyFile;
+use Orm\Zed\FileManager\Persistence\SpyFileInfo;
 use Spryker\Zed\FileManager\FileManagerConfig;
 use Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface;
 
@@ -76,23 +76,22 @@ class FileLoader implements FileLoaderInterface
     }
 
     /**
-     * @param \Orm\Zed\FileManager\Persistence\SpyFile $file
+     * @param \Orm\Zed\FileManager\Persistence\SpyFileInfo $fileInfo
      *
      * @return string
      */
-    public function buildFilename(SpyFile $file)
+    public function buildFilename(SpyFileInfo $fileInfo)
     {
-        $fileInfo = $file->getSpyFileInfos()->getFirst();
         $fileName = sprintf(
             '%u%s%s.%s',
-            $file->getIdFile(),
+            $fileInfo->getFkFile(),
             $this->config->getFileNameVersionDelimiter(),
             $fileInfo->getVersionName(),
             $fileInfo->getExtension()
         );
 
-        if ($file->getFkFileDirectory()) {
-            $fileName = $file->getFkFileDirectory() . DIRECTORY_SEPARATOR . $fileName;
+        if ($fileInfo->getFile() && $fileInfo->getFile()->getFkFileDirectory()) {
+            $fileName = $fileInfo->getFile()->getFkFileDirectory() . DIRECTORY_SEPARATOR . $fileName;
         }
 
         return $fileName;

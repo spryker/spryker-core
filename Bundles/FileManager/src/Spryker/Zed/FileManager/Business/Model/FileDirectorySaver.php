@@ -110,14 +110,17 @@ class FileDirectorySaver implements FileDirectorySaverInterface
      */
     protected function saveFileDirectory(SpyFileDirectory $fileDirectory, FileDirectoryTransfer $fileDirectoryTransfer)
     {
-        return $this->handleDatabaseTransaction(function () use ($fileDirectory, $fileDirectoryTransfer) {
-            $fileDirectory->fromArray($fileDirectoryTransfer->toArray());
+        return $this->handleDatabaseTransaction(
+            function () use ($fileDirectory, $fileDirectoryTransfer) {
+                $fileDirectory->fromArray($fileDirectoryTransfer->toArray());
 
-            $fileDirectory->save();
-            $idFileDirectory = $fileDirectory->getIdFileDirectory();
-            $this->attributesSaver->saveFileLocalizedAttributes($fileDirectory, $fileDirectoryTransfer);
+                $fileDirectory->save();
+                $idFileDirectory = $fileDirectory->getIdFileDirectory();
+                $this->attributesSaver->saveFileLocalizedAttributes($fileDirectory, $fileDirectoryTransfer);
 
-            return $idFileDirectory;
-        }, $this->queryContainer->getConnection());
+                return $idFileDirectory;
+            },
+            $this->queryContainer->getConnection()
+        );
     }
 }

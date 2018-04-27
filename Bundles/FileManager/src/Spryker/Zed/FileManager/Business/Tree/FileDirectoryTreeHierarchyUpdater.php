@@ -41,9 +41,11 @@ class FileDirectoryTreeHierarchyUpdater implements FileDirectoryTreeHierarchyUpd
     {
         $this->assertFileDirectoryTreeForUpdate($fileDirectoryTreeTransfer);
 
-        $this->handleDatabaseTransaction(function () use ($fileDirectoryTreeTransfer) {
-            $this->executeUpdateFileDirectoryTreeHierarchyTransaction($fileDirectoryTreeTransfer);
-        });
+        $this->handleDatabaseTransaction(
+            function () use ($fileDirectoryTreeTransfer) {
+                $this->executeUpdateFileDirectoryTreeHierarchyTransaction($fileDirectoryTreeTransfer);
+            }
+        );
     }
 
     /**
@@ -80,7 +82,7 @@ class FileDirectoryTreeHierarchyUpdater implements FileDirectoryTreeHierarchyUpd
         $fileDirectoryTreeNodeTransfer
             ->requireFileDirectory()
             ->getFileDirectory()
-                ->requireIdFileDirectory();
+            ->requireIdFileDirectory();
 
         foreach ($fileDirectoryTreeNodeTransfer->getChildren() as $childFileDirectoryTreeNodeTransfer) {
             $this->assertFileDirectoryTreeNodeRecursively($childFileDirectoryTreeNodeTransfer);
@@ -132,10 +134,12 @@ class FileDirectoryTreeHierarchyUpdater implements FileDirectoryTreeHierarchyUpd
             ->findOne();
 
         if (!$fileDirectoryEntity) {
-            throw new FileDirectoryNotFoundException(sprintf(
-                'File directory entity not found with ID %d.',
-                $fileDirectoryTransfer->getIdFileDirectory()
-            ));
+            throw new FileDirectoryNotFoundException(
+                sprintf(
+                    'File directory entity not found with ID %d.',
+                    $fileDirectoryTransfer->getIdFileDirectory()
+                )
+            );
         }
 
         return $fileDirectoryEntity;
@@ -151,7 +155,7 @@ class FileDirectoryTreeHierarchyUpdater implements FileDirectoryTreeHierarchyUpd
 
     /**
      * @param \Orm\Zed\FileManager\Persistence\SpyFileDirectory $fileDirectoryEntity
-     * @param \Generated\Shared\Transfer\FileDirectoryTransfer $fileDirectoryTransfer
+     * @param \Generated\Shared\Transfer\FileDirectoryTransfer  $fileDirectoryTransfer
      * @param int $fkParentFileDirectory
      *
      * @return \Orm\Zed\FileManager\Persistence\SpyFileDirectory
