@@ -8,23 +8,16 @@
 namespace Spryker\Service\Barcode\Model\BarcodeGenerator;
 
 use Generated\Shared\Transfer\BarcodeResponseTransfer;
-use Spryker\Service\Barcode\Exception\PluginNotFoundException;
 use Spryker\Service\Barcode\Model\BarcodeGeneratorToServiceFactoryBridge\BarcodeGeneratorToServiceFactoryBridgeInterface;
-use Spryker\Service\Barcode\Model\PluginAvailabilityChecker\PluginAvailabilityCheckerInterface;
-use Spryker\Service\Barcode\Model\PluginClassNameResolver\PluginClassNameResolverInterface;
+use Spryker\Service\Barcode\Model\PluginCollection\PluginCollectionInterface;
 use Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface;
 
 class BarcodeGenerator implements BarcodeGeneratorInterface
 {
     /**
-     * @var \Spryker\Service\Barcode\Model\PluginAvailabilityChecker\PluginAvailabilityCheckerInterface
+     * @var \Spryker\Service\Barcode\Model\PluginCollection\PluginCollectionInterface
      */
-    protected $pluginAvailabilityChecker;
-
-    /**
-     * @var \Spryker\Service\Barcode\Model\PluginClassNameResolver\PluginClassNameResolverInterface
-     */
-    protected $pluginClassNameResolver;
+    protected $pluginCollection;
 
     /**
      * @var \Spryker\Service\Barcode\Model\BarcodeGeneratorToServiceFactoryBridge\BarcodeGeneratorToServiceFactoryBridgeInterface
@@ -32,35 +25,38 @@ class BarcodeGenerator implements BarcodeGeneratorInterface
     protected $serviceFactoryBridge;
 
     /**
-     * @param \Spryker\Service\Barcode\Model\PluginAvailabilityChecker\PluginAvailabilityCheckerInterface $availabilityChecker
-     * @param \Spryker\Service\Barcode\Model\PluginClassNameResolver\PluginClassNameResolverInterface $classNameResolver
+     * @param \Spryker\Service\Barcode\Model\PluginCollection\PluginCollectionInterface $pluginCollection
      * @param \Spryker\Service\Barcode\Model\BarcodeGeneratorToServiceFactoryBridge\BarcodeGeneratorToServiceFactoryBridgeInterface $serviceFactoryBridge
      */
-    public function __construct(PluginAvailabilityCheckerInterface $availabilityChecker, PluginClassNameResolverInterface $classNameResolver, BarcodeGeneratorToServiceFactoryBridgeInterface $serviceFactoryBridge)
+    public function __construct(PluginCollectionInterface $pluginCollection, BarcodeGeneratorToServiceFactoryBridgeInterface $serviceFactoryBridge)
     {
-        $this->pluginAvailabilityChecker = $availabilityChecker;
-        $this->pluginClassNameResolver = $classNameResolver;
+        $this->pluginCollection = $pluginCollection;
         $this->serviceFactoryBridge = $serviceFactoryBridge;
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @param string $text
-     * @param string|null $generatorPlugin
+     * @param null|string $generatorPlugin
      *
-     * @throws \Spryker\Service\Barcode\Exception\PluginNotFoundException
      * @return \Generated\Shared\Transfer\BarcodeResponseTransfer
      */
-    public function generateBarcode(string $text, string $generatorPlugin = null): BarcodeResponseTransfer
+    public function generateBarcode(string $text, ?string $generatorPlugin): BarcodeResponseTransfer
     {
-        $fqcn = $this->pluginClassNameResolver->resolveBarcodeGeneratorPluginClassName($generatorPlugin);
+        return $this->getBarcodeGeneratorPlugin($generatorPlugin)->generate($text);
+    }
 
-        if ($this->pluginAvailabilityChecker->check($fqcn)) {
-            return $this->createPluginInstance($fqcn)->generate($text);
+    /**
+     * @param null|string $generatorPlugin
+     *
+     * @return \Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface
+     */
+    protected function getBarcodeGeneratorPlugin(?string $generatorPlugin): BarcodeGeneratorPluginInterface
+    {
+        if ($generatorPlugin === null) {
+            return $this->pluginCollection->first();
         }
 
-        throw new PluginNotFoundException();
+        return $this->pluginCollection->findByClassName($generatorPlugin);
     }
 
     /**
