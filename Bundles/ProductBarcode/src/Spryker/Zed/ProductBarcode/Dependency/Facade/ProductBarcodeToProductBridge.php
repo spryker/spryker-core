@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductBarcode\Dependency\Facade;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 
-class ProductBarcodeToProductBridge implements ProductBarcodeToProductInterface
+class ProductBarcodeToProductBridge implements ProductBarcodeToProductBridgeInterface
 {
     /**
      * @var \Spryker\Zed\Product\Business\ProductFacadeInterface
@@ -22,16 +22,6 @@ class ProductBarcodeToProductBridge implements ProductBarcodeToProductInterface
     public function __construct($productFacade)
     {
         $this->productFacade = $productFacade;
-    }
-
-    /**
-     * @param string $sku
-     *
-     * @return int|null
-     */
-    public function findProductConcreteIdBySku($sku): ?int
-    {
-        return $this->productFacade->findProductConcreteIdBySku($sku);
     }
 
     /**

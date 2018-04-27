@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/product-barcode.svg)](https://travis-ci.org/spryker/product-barcode)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/product-barcode/badge.svg)](https://coveralls.io/github/spryker/product-barcode)
 
-ProductBarcode module which allows to generate barcode for existing products.
+ProductBarcode module which allows to generate barcode for concrete products.
 
 ## Installation
 

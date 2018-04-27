@@ -7,12 +7,13 @@
 
 namespace Spryker\Zed\ProductBarcode\Business;
 
-use Spryker\Service\Barcode\BarcodeService;
+use Spryker\Service\Barcode\BarcodeServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductBarcode\Business\ProductBarcodeGenerator\ProductBarcodeGenerator;
 use Spryker\Zed\ProductBarcode\Business\ProductBarcodeGenerator\ProductBarcodeGeneratorInterface;
-use Spryker\Zed\ProductBarcode\Business\ProductStockCodeSelector\ProductStockCodeSelector;
-use Spryker\Zed\ProductBarcode\Business\ProductStockCodeSelector\ProductStockCodeSelectorInterface;
+use Spryker\Zed\ProductBarcode\Business\ProductSkuProvider\ProductSkuProvider;
+use Spryker\Zed\ProductBarcode\Business\ProductSkuProvider\ProductSkuProviderInterface;
+use Spryker\Zed\ProductBarcode\Dependency\Facade\ProductBarcodeToProductBridgeInterface;
 use Spryker\Zed\ProductBarcode\ProductBarcodeDependencyProvider;
 
 class ProductBarcodeBusinessFactory extends AbstractBusinessFactory
@@ -22,21 +23,34 @@ class ProductBarcodeBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductBarcodeGenerator(): ProductBarcodeGeneratorInterface
     {
-        return new ProductBarcodeGenerator($this->getBarcodeService(), $this->createProductStockCodeSelector());
+        return new ProductBarcodeGenerator(
+            $this->getBarcodeService(),
+            $this->createProductSkuProvider()
+        );
     }
 
     /**
-     * @return \Spryker\Zed\ProductBarcode\Business\ProductStockCodeSelector\ProductStockCodeSelectorInterface
+     * @return \Spryker\Zed\ProductBarcode\Business\ProductSkuProvider\ProductSkuProviderInterface
      */
-    public function createProductStockCodeSelector(): ProductStockCodeSelectorInterface
+    public function createProductSkuProvider(): ProductSkuProviderInterface
     {
-        return new ProductStockCodeSelector();
+        return new ProductSkuProvider(
+            $this->getProductFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductBarcode\Dependency\Facade\ProductBarcodeToProductBridgeInterface
+     */
+    public function getProductFacade(): ProductBarcodeToProductBridgeInterface
+    {
+        return $this->getProvidedDependency(ProductBarcodeDependencyProvider::PRODUCT_FACADE);
     }
 
     /**
      * @return \Spryker\Service\Barcode\BarcodeServiceInterface
      */
-    protected function getBarcodeService(): BarcodeService
+    public function getBarcodeService(): BarcodeServiceInterface
     {
         return $this->getProvidedDependency(ProductBarcodeDependencyProvider::BARCODE_SERVICE);
     }

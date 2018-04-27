@@ -23,7 +23,7 @@ class ProductBarcodeDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
-        $container = $this->addBarcodeGeneratorService($container);
+        $container = $this->addBarcodeService($container);
         $container = $this->addProductFacade($container);
 
         return $container;
@@ -34,7 +34,7 @@ class ProductBarcodeDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addBarcodeGeneratorService(Container $container): Container
+    protected function addBarcodeService(Container $container): Container
     {
         $container[static::BARCODE_SERVICE] = function (Container $container) {
             return $container->getLocator()->barcode()->service();

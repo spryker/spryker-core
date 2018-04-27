@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductBarcode\Business\ProductStockCodeSelector;
+namespace Spryker\Zed\ProductBarcode\Business\ProductSkuProvider;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 
-interface ProductStockCodeSelectorInterface
+interface ProductSkuProviderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return string
      */
-    public function selectAppropriateCode(ProductConcreteTransfer $productConcreteTransfer): string;
+    public function getConcreteProductSku(ProductConcreteTransfer $productConcreteTransfer): string;
 }

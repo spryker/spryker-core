@@ -14,9 +14,9 @@ interface ProductBarcodeGeneratorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param string|null $generatorPlugin
+     * @param null|string $generatorPlugin
      *
      * @return \Generated\Shared\Transfer\BarcodeResponseTransfer
      */
-    public function generateBarcode(ProductConcreteTransfer $productConcreteTransfer, string $generatorPlugin = null): BarcodeResponseTransfer;
+    public function generateBarcode(ProductConcreteTransfer $productConcreteTransfer, ?string $generatorPlugin): BarcodeResponseTransfer;
 }
