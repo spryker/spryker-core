@@ -13,14 +13,11 @@ use Zend\Filter\Word\CamelCaseToDash;
 
 class ModuleBuilder
 {
-    const TEMPLATE_INTERFACE = 'interface';
-    const TEMPLATE_BRIDGE = 'bridge';
+    protected const OPTION_FILE = 'file';
+    protected const OPTION_FORCE = 'force';
 
-    const OPTION_FILE = 'file';
-    const OPTION_FORCE = 'force';
-
-    const NAMESPACE_SPRYKER = 'Spryker';
-    const NAMESPACE_SPRYKER_SHOP = 'SprykerShop';
+    protected const NAMESPACE_SPRYKER = 'Spryker';
+    protected const NAMESPACE_SPRYKER_SHOP = 'SprykerShop';
 
     /**
      * @var \Spryker\Zed\Development\DevelopmentConfig
