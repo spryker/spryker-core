@@ -48,8 +48,6 @@ class NumericFacetAggregation extends AbstractFacetAggregation
             ->createStatsAggregation($nestedFieldName . static::STATS_SUFFIX)
             ->setField($prefixedFieldName);
 
-        $facetValueStats = $this->applyAggregationParams($facetValueStats, $this->facetConfigTransfer);
-
         if ($this->facetConfigTransfer->getAggregationParams()) {
             $facetNameAgg = $this
                 ->createStandaloneFacetNameAggregation(
@@ -61,6 +59,7 @@ class NumericFacetAggregation extends AbstractFacetAggregation
         }
 
         $facetNameAgg->addAggregation($facetValueStats);
+        $this->applyAggregationParams($facetNameAgg, $this->facetConfigTransfer);
 
         return $this->createNestedFacetAggregation($nestedFieldName, $facetNameAgg, $fieldName);
     }
