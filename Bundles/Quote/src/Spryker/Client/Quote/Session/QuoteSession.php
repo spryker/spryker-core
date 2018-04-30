@@ -42,7 +42,7 @@ class QuoteSession implements QuoteSessionInterface
      */
     public function __construct(
         SessionInterface $session,
-        QuoteToCurrencyInterface $currencyPlugin = null,
+        ?QuoteToCurrencyInterface $currencyPlugin = null,
         array $quoteTransferExpanderPlugins = []
     ) {
         $this->session = $session;

@@ -78,7 +78,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      *
      * @return void
      */
-    public function createModule($module, $options)
+    public function createModule($module, array $options)
     {
         $this->getFactory()->createModuleBuilder()->build($module, $options);
     }

@@ -17,7 +17,7 @@ class ProductConcreteSearchReader extends AbstractProductSearchReader implements
      *
      * @return bool
      */
-    public function isProductConcreteSearchable($idProductConcrete, LocaleTransfer $localeTransfer = null)
+    public function isProductConcreteSearchable($idProductConcrete, ?LocaleTransfer $localeTransfer = null)
     {
         $idLocale = $this->getIdLocale($localeTransfer);
 

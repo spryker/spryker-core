@@ -51,7 +51,7 @@ class AttributeLoader implements AttributeLoaderInterface
      *
      * @return array
      */
-    public function getCombinedAbstractAttributeKeys(ProductAbstractTransfer $productAbstractTransfer, LocaleTransfer $localeTransfer = null)
+    public function getCombinedAbstractAttributeKeys(ProductAbstractTransfer $productAbstractTransfer, ?LocaleTransfer $localeTransfer = null)
     {
         $productAbstractEntity = $this->getProductAbstractEntity($productAbstractTransfer);
 
@@ -64,7 +64,7 @@ class AttributeLoader implements AttributeLoaderInterface
      *
      * @return array
      */
-    public function getCombinedAbstractAttributeKeysForProductIds($productIds, LocaleTransfer $localeTransfer = null)
+    public function getCombinedAbstractAttributeKeysForProductIds($productIds, ?LocaleTransfer $localeTransfer = null)
     {
         $productAbstractEntities = $this->getProductAbstractEntitiesFromIds($productIds);
         $productIdsWithAttributes = [];
@@ -81,7 +81,7 @@ class AttributeLoader implements AttributeLoaderInterface
      *
      * @return array
      */
-    protected function getCombinedAbstractAttributeKeysForEntity(SpyProductAbstract $productAbstractEntity, LocaleTransfer $localeTransfer = null)
+    protected function getCombinedAbstractAttributeKeysForEntity(SpyProductAbstract $productAbstractEntity, ?LocaleTransfer $localeTransfer = null)
     {
         $rawProductAttributesTransfer = new RawProductAttributesTransfer();
         $rawProductAttributesTransfer->setAbstractAttributes($this->getAbstractAttributes($productAbstractEntity));
@@ -115,7 +115,7 @@ class AttributeLoader implements AttributeLoaderInterface
      *
      * @return array
      */
-    public function getCombinedConcreteAttributes(ProductConcreteTransfer $productConcreteTransfer, LocaleTransfer $localeTransfer = null)
+    public function getCombinedConcreteAttributes(ProductConcreteTransfer $productConcreteTransfer, ?LocaleTransfer $localeTransfer = null)
     {
         $rawProductAttributesTransfer = new RawProductAttributesTransfer();
 

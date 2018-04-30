@@ -71,7 +71,7 @@ abstract class AbstractProductReviewStorageListener extends AbstractPlugin imple
      *
      * @return void
      */
-    protected function storeDataSet(array $productReview, SpyProductAbstractReviewStorage $spyProductAbstractReviewStorageEntity = null)
+    protected function storeDataSet(array $productReview, ?SpyProductAbstractReviewStorage $spyProductAbstractReviewStorageEntity = null)
     {
         if ($spyProductAbstractReviewStorageEntity === null) {
             $spyProductAbstractReviewStorageEntity = new SpyProductAbstractReviewStorage();

@@ -201,7 +201,7 @@ interface AvailabilityFacadeInterface
      *
      * @param string $sku
      * @param int $quantity
-     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return int
      */

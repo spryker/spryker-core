@@ -154,8 +154,8 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createDiscountFormTabs(
         FormInterface $discountForm,
-        FormInterface $voucherForm = null,
-        DiscountConfiguratorTransfer $discountConfiguratorTransfer = null
+        ?FormInterface $voucherForm = null,
+        ?DiscountConfiguratorTransfer $discountConfiguratorTransfer = null
     ) {
         return new DiscountFormTabs($discountForm, $voucherForm, $discountConfiguratorTransfer);
     }

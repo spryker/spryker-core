@@ -208,9 +208,9 @@ class CartClientTest extends Unit
      * @return \PHPUnit_Framework_MockObject_MockObject
      */
     private function getFactoryMock(
-        CartToQuoteInterface $quote = null,
-        CartStubInterface $cartStub = null,
-        QuoteStorageStrategyPluginInterface $quoteStorageStrategyPlugin = null
+        ?CartToQuoteInterface $quote = null,
+        ?CartStubInterface $cartStub = null,
+        ?QuoteStorageStrategyPluginInterface $quoteStorageStrategyPlugin = null
     ) {
         $factoryMock = $this->getMockBuilder(AbstractFactory::class)
             ->setMethods(['getQuoteClient', 'createZedStub', 'getQuoteStorageStrategy', 'createCartChangeRequestExpander', 'getQuoteItemFinderPlugin'])
