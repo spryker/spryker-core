@@ -1,8 +1,6 @@
 {
   "description": "Needed for core dependency management - overwrites dependencies between modules",
   "include": {
-  },
-  "exclude": {
-    "Messenger": "Required by tests"
+    "CompanyGuiExtension": "Interfaces it depends on"
   }
 }

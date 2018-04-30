@@ -1,6 +1,6 @@
 {
-  "description": "Needed for core dependency management - overwrites dependencies between bundles",
+  "description": "Needed for core dependency management - overwrites dependencies between modules",
   "include": {
-    "Transfer": "Required by bundle"
+    "Transfer": "Required by module"
   }
 }
