@@ -249,7 +249,7 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
      */
     public function shareShoppingListWithCompanyBusinessUnit(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ShoppingListShareResponseTransfer
     {
-        return $this->getFactory()->createWriter()->shareShoppingListWithCompanyBusinessUnit($shoppingListShareRequestTransfer);
+        return $this->getFactory()->createShoppingListSharer()->shareShoppingListWithCompanyBusinessUnit($shoppingListShareRequestTransfer);
     }
 
     /**
@@ -263,7 +263,7 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
      */
     public function shareShoppingListWithCompanyUser(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ShoppingListShareResponseTransfer
     {
-        return $this->getFactory()->createWriter()->shareShoppingListWithCompanyUser($shoppingListShareRequestTransfer);
+        return $this->getFactory()->createShoppingListSharer()->shareShoppingListWithCompanyUser($shoppingListShareRequestTransfer);
     }
 
     /**

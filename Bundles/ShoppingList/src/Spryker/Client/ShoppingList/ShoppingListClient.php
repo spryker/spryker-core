@@ -271,6 +271,20 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isShoppingListAvailable(): bool
+    {
+        $customerTransfer = $this->getFactory()->getCustomerClient()->getCustomer();
+
+        return $customerTransfer && $customerTransfer->getCompanyUserTransfer();
+    }
+
+    /**
      * @return \Spryker\Client\ShoppingList\Zed\ShoppingListStubInterface
      */
     protected function getZedStub(): ShoppingListStubInterface

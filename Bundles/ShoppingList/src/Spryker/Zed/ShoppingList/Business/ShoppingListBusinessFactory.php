@@ -12,6 +12,8 @@ use Spryker\Zed\ShoppingList\Business\Installer\ShoppingListPermissionInstaller;
 use Spryker\Zed\ShoppingList\Business\Installer\ShoppingListPermissionInstallerInterface;
 use Spryker\Zed\ShoppingList\Business\Model\Reader;
 use Spryker\Zed\ShoppingList\Business\Model\ReaderInterface;
+use Spryker\Zed\ShoppingList\Business\Model\ShoppingListSharer;
+use Spryker\Zed\ShoppingList\Business\Model\ShoppingListSharerInterface;
 use Spryker\Zed\ShoppingList\Business\Model\Writer;
 use Spryker\Zed\ShoppingList\Business\Model\WriterInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToCompanyUserFacadeInterface;
@@ -51,6 +53,17 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getConfig(),
             $this->getPersistentCartFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingList\Business\Model\ShoppingListSharerInterface
+     */
+    public function createShoppingListSharer(): ShoppingListSharerInterface
+    {
+        return new ShoppingListSharer(
+            $this->getEntityManager(),
+            $this->getRepository()
         );
     }
 

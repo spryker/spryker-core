@@ -31,9 +31,9 @@ interface ShoppingListRepositoryInterface
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListTransfer
+     * @return null|\Generated\Shared\Transfer\ShoppingListTransfer
      */
-    public function findCustomerShoppingListById(ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer;
+    public function findCustomerShoppingListById(ShoppingListTransfer $shoppingListTransfer): ?ShoppingListTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer
@@ -52,9 +52,9 @@ interface ShoppingListRepositoryInterface
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListTransfer
+     * @return null|\Generated\Shared\Transfer\ShoppingListTransfer
      */
-    public function findShoppingListById(ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer;
+    public function findShoppingListById(ShoppingListTransfer $shoppingListTransfer): ?ShoppingListTransfer;
 
     /**
      * @param int[] $shoppingListIds

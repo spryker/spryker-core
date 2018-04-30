@@ -45,7 +45,7 @@ class Reader implements ReaderInterface
     /**
      * @var \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToCompanyUserFacadeInterface
      */
-    private $companyUserFacade;
+    protected $companyUserFacade;
 
     /**
      * @param \Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface $shoppingListRepository
@@ -110,7 +110,7 @@ class Reader implements ReaderInterface
         $shoppingListOverviewResponseTransfer = $this->expandProducts($shoppingListOverviewResponseTransfer);
 
         $customerTransfer = new CustomerTransfer();
-        $requestCompanyUserTransfer = $this->companyUserFacade->getCompanyUserById($shoppingListOverviewRequestTransfer->getShoppingList()->getRequesterId());
+        $requestCompanyUserTransfer = $this->companyUserFacade->getCompanyUserById($shoppingListOverviewRequestTransfer->getShoppingList()->getIdCompanyUser());
 
         $customerTransfer->setCustomerReference($requestCompanyUserTransfer->getCustomer()->getCustomerReference());
         $customerTransfer->setCompanyUserTransfer($requestCompanyUserTransfer);
@@ -318,15 +318,15 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListCollectionTransfer[] ...$shoppingListCollections
+     * @param \Generated\Shared\Transfer\ShoppingListCollectionTransfer ...$shoppingListTransferCollections
      *
      * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
      */
-    protected function mergeShoppingListCollections(...$shoppingListCollections): ShoppingListCollectionTransfer
+    protected function mergeShoppingListCollections(ShoppingListCollectionTransfer ...$shoppingListTransferCollections): ShoppingListCollectionTransfer
     {
         $mergedShoppingListCollection = new ShoppingListCollectionTransfer();
         $mergedShoppingListIds = [];
-        foreach ($shoppingListCollections as $shoppingListCollection) {
+        foreach ($shoppingListTransferCollections as $shoppingListCollection) {
             foreach ($shoppingListCollection->getShoppingLists() as $shoppingList) {
                 if (!isset($mergedShoppingListIds[$shoppingList->getIdShoppingList()])) {
                     $mergedShoppingListCollection->addShoppingList($shoppingList);
@@ -345,13 +345,13 @@ class Reader implements ReaderInterface
      */
     protected function checkReadPermission(ShoppingListTransfer $shoppingListTransfer): bool
     {
-        if (!$shoppingListTransfer->getRequesterId()) {
+        if (!$shoppingListTransfer->getIdCompanyUser()) {
             return false;
         }
 
         return $this->can(
             'ReadShoppingListPermissionPlugin',
-            $shoppingListTransfer->getRequesterId(),
+            $shoppingListTransfer->getIdCompanyUser(),
             $shoppingListTransfer->getIdShoppingList()
         );
     }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ShoppingList\Cart;
 
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShoppingListAddToCartRequestCollectionTransfer;
@@ -43,14 +44,16 @@ class CartHandler implements CartHandlerInterface
      */
     public function addItemCollectionToCart(ShoppingListAddToCartRequestCollectionTransfer $shoppingListAddToCartRequestCollectionTransfer): ShoppingListAddToCartRequestCollectionTransfer
     {
-        $itemTransfers = [];
-
+        $cartChangeTransfer = new CartChangeTransfer();
+        $cartChangeTransfer->setQuote($this->cartClient->getQuote());
         foreach ($shoppingListAddToCartRequestCollectionTransfer->getRequests() as $ShoppingListAddToCartRequestTransfer) {
             $this->assertRequestTransfer($ShoppingListAddToCartRequestTransfer);
-            $itemTransfers[] = $this->createItemTransfer($ShoppingListAddToCartRequestTransfer->getSku(), $ShoppingListAddToCartRequestTransfer->getQuantity());
+            $cartChangeTransfer->addItem(
+                $this->createItemTransfer($ShoppingListAddToCartRequestTransfer->getSku(), $ShoppingListAddToCartRequestTransfer->getQuantity())
+            );
         }
 
-        $quoteTransfer = $this->cartClient->addItems($itemTransfers);
+        $quoteTransfer = $this->cartClient->addValidItems($cartChangeTransfer);
 
         $failedToMoveRequestCollectionTransfer = $this->getShoppingListRequestCollectionToCartDiff(
             $shoppingListAddToCartRequestCollectionTransfer,

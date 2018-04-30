@@ -9,9 +9,11 @@
         <property name="name" type="string" />
         <property name="description" type="string" />
         <property name="updatedAt" type="string" />
+        <property name="createdAt" type="string" />
         <property name="numberOfItems" type="int" />
+        <property name="sum" type="int" />
         <property name="owner" type="string" />
-        <property name="requesterId" type="int" />
+        <property name="idCompanyUser" type="int" />
     </transfer>
 
     <transfer name="ShoppingListCollection">
@@ -27,7 +29,7 @@
         <property name="idProduct" type="int" />
         <property name="shoppingListName" type="string" />
         <property name="product" type="StorageProduct" />
-        <property name="requesterId" type="int" />
+        <property name="idCompanyUser" type="int" />
     </transfer>
 
     <transfer name="ShoppingListItemCollection">
@@ -105,8 +107,21 @@
 
     <transfer name="ShoppingListFromCartRequest">
         <property name="shoppingListName" type="string" />
+        <property name="newShoppingListName" type="string" />
         <property name="idQuote" type="int" />
         <property name="customer" type="Customer" />
+    </transfer>
+
+    <transfer name="ShoppingListCompanyBusinessUnit">
+        <property name="idShoppingList" type="int" />
+        <property name="idShoppingListPermissionGroup" type="int" />
+        <property name="idCompanyBusinessUnit" type="int" />
+    </transfer>
+
+    <transfer name="ShoppingListCompanyUser">
+        <property name="idShoppingList" type="int" />
+        <property name="idShoppingListPermissionGroup" type="int" />
+        <property name="idCompanyUser" type="int" />
     </transfer>
 
 </transfers>

@@ -40,11 +40,11 @@ class ShoppingListConfig extends AbstractBundleConfig
      */
     protected function getReadOnlyPermissionGroup(): ShoppingListPermissionGroupTransfer
     {
-        $readOnlyQuotePermissionGroupTransfer = new ShoppingListPermissionGroupTransfer();
-        $readOnlyQuotePermissionGroupTransfer
+        $readOnlyShoppingListPermissionGroupTransfer = new ShoppingListPermissionGroupTransfer();
+        $readOnlyShoppingListPermissionGroupTransfer
             ->setName(SharedConfig::PERMISSION_GROUP_READ_ONLY)
             ->addPermission((new PermissionTransfer())->setKey(ReadShoppingListPermissionPlugin::KEY));
 
-        return $readOnlyQuotePermissionGroupTransfer;
+        return $readOnlyShoppingListPermissionGroupTransfer;
     }
 }

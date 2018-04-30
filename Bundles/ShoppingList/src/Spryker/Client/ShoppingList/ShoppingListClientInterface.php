@@ -210,4 +210,14 @@ interface ShoppingListClientInterface
      * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
      */
     public function shareShoppingList(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ShoppingListShareResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Checks if ShoppingList available.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isShoppingListAvailable(): bool;
 }
