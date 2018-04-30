@@ -59,7 +59,7 @@ class CustomerAccessStorageReader implements CustomerAccessStorageReaderInterfac
         $customerAccessTransfer = new CustomerAccessTransfer();
 
         foreach ($this->customerAccess->getContentTypeAccess() as $contentTypeAccess) {
-            if ($contentTypeAccess->getCanAccess()) {
+            if ($contentTypeAccess->getHasAccess()) {
                 $customerAccessTransfer->addContentTypeAccess($contentTypeAccess);
             }
         }

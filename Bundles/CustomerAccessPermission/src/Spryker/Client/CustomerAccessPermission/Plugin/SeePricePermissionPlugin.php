@@ -15,7 +15,7 @@ use Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterfa
  */
 class SeePricePermissionPlugin extends AbstractPlugin implements PermissionPluginInterface
 {
-    const KEY = 'SeePrice';
+    public const KEY = 'SeePricePermissionPlugin';
 
     /**
      * @return string
