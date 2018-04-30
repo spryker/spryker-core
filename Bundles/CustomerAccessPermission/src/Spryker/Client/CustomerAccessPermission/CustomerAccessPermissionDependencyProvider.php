@@ -14,18 +14,19 @@ use Spryker\Client\Kernel\Container;
 
 class CustomerAccessPermissionDependencyProvider extends AbstractDependencyProvider
 {
-    const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
-    const CLIENT_CUSTOMER_ACCESS_STORAGE = 'CLIENT_CUSTOMER_ACCESS_STORAGE';
+    public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    public const CLIENT_CUSTOMER_ACCESS_STORAGE = 'CLIENT_CUSTOMER_ACCESS_STORAGE';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    public function provideServiceLayerDependencies(Container $container)
+    public function provideServiceLayerDependencies(Container $container): Container
     {
-        $this->addCustomerClient($container);
-        $this->addCustomerAccessStorageClient($container);
+        $container = parent::provideServiceLayerDependencies($container);
+        $container = $this->addCustomerClient($container);
+        $container = $this->addCustomerAccessStorageClient($container);
 
         return $container;
     }
@@ -33,24 +34,28 @@ class CustomerAccessPermissionDependencyProvider extends AbstractDependencyProvi
     /**
      * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return void
+     * @return \Spryker\Client\Kernel\Container
      */
-    protected function addCustomerClient(Container $container)
+    protected function addCustomerClient(Container $container): Container
     {
         $container[static::CLIENT_CUSTOMER] = function (Container $container) {
             return new CustomerAccessPermissionPermissionToCustomerClientBridge($container->getLocator()->customer()->client());
         };
+
+        return $container;
     }
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return void
+     * @return \Spryker\Client\Kernel\Container
      */
-    protected function addCustomerAccessStorageClient($container)
+    protected function addCustomerAccessStorageClient($container): Container
     {
         $container[static::CLIENT_CUSTOMER_ACCESS_STORAGE] = function (Container $container) {
             return new CustomerAccessPermissionPermissionToCustomerAccessStorageClientBridge($container->getLocator()->customerAccessStorage()->client());
         };
+
+        return $container;
     }
 }

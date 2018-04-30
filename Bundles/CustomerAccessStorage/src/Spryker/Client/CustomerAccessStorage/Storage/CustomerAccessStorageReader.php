@@ -41,16 +41,6 @@ class CustomerAccessStorageReader implements CustomerAccessStorageReaderInterfac
     }
 
     /**
-     * @return string
-     */
-    protected function generateKey()
-    {
-        $synchronizationDataTransfer = new SynchronizationDataTransfer();
-
-        return $this->synchronizationService->getStorageKeyBuilder(CustomerAccessStorageConstants::CUSTOMER_ACCESS_RESOURCE_NAME)->generateKey($synchronizationDataTransfer);
-    }
-
-    /**
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
     public function getUnauthenticatedCustomerAccess(): CustomerAccessTransfer
@@ -77,10 +67,22 @@ class CustomerAccessStorageReader implements CustomerAccessStorageReaderInterfac
         return $this->customerAccess;
     }
 
+
+
+    /**
+     * @return string
+     */
+    protected function generateKey(): string
+    {
+        $synchronizationDataTransfer = new SynchronizationDataTransfer();
+
+        return $this->synchronizationService->getStorageKeyBuilder(CustomerAccessStorageConstants::CUSTOMER_ACCESS_RESOURCE_NAME)->generateKey($synchronizationDataTransfer);
+    }
+
     /**
      * @return void
      */
-    protected function readCustomerAccess()
+    protected function readCustomerAccess(): void
     {
         if (!$this->customerAccess) {
             $unauthenticatedCustomerAccess = $this->storageClient->get($this->generateKey());

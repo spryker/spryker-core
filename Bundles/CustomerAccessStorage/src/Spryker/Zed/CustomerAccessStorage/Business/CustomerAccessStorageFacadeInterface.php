@@ -11,7 +11,7 @@ interface CustomerAccessStorageFacadeInterface
 {
     /**
      * Specification:
-     * - Queries all customer access
+     * - Queries all customer content access
      * - Stores data as json encoded to storage table
      * - Sends a copy of data to queue based on module config
      *

@@ -14,18 +14,19 @@ use Spryker\Client\Kernel\Container;
 
 class CustomerAccessStorageDependencyProvider extends AbstractDependencyProvider
 {
-    const CLIENT_STORAGE = 'CLIENT_STORAGE';
-    const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
+    public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+    public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    public function provideServiceLayerDependencies(Container $container)
+    public function provideServiceLayerDependencies(Container $container): Container
     {
-        $this->addStorageClient($container);
-        $this->addSynchronizationService($container);
+        $container = parent::provideServiceLayerDependencies($container);
+        $container = $this->addStorageClient($container);
+        $container = $this->addSynchronizationService($container);
 
         return $container;
     }
@@ -33,24 +34,28 @@ class CustomerAccessStorageDependencyProvider extends AbstractDependencyProvider
     /**
      * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return void
+     * @return \Spryker\Client\Kernel\Container
      */
-    protected function addStorageClient(Container $container)
+    protected function addStorageClient(Container $container): Container
     {
-        $container[self::CLIENT_STORAGE] = function (Container $container) {
+        $container[static::CLIENT_STORAGE] = function (Container $container) {
             return new CustomerAccessStorageToStorageClientBridge($container->getLocator()->storage()->client());
         };
+
+        return $container;
     }
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return void
+     * @return \Spryker\Client\Kernel\Container
      */
-    protected function addSynchronizationService(Container $container)
+    protected function addSynchronizationService(Container $container): Container
     {
-        $container[self::SERVICE_SYNCHRONIZATION] = function (Container $container) {
+        $container[static::SERVICE_SYNCHRONIZATION] = function (Container $container) {
             return new CustomerAccessStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());
         };
+
+        return $container;
     }
 }
