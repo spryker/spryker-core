@@ -50,38 +50,13 @@ class ItemFormHandler implements FormHandlerInterface
         $items = new ArrayObject();
         $addedSkus = [];
 
-        foreach ($quoteTransfer->getManualOrderEntry()->getItems() as $newItemTransfer) {
-            if ($newItemTransfer->getQuantity() <= 0
-                || in_array($newItemTransfer->getSku(), $addedSkus)
-            ) {
-                continue;
-            }
+        $this->appendItemsFromManualOrderEntryItems($quoteTransfer, $addedSkus, $items);
 
-            $addedSkus[] = $newItemTransfer->getSku();
-            $itemTransfer = new ItemTransfer();
-            $itemTransfer->fromArray($newItemTransfer->toArray());
-
-            $items->append($itemTransfer);
-        }
-
-        foreach ($quoteTransfer->getItems() as $quoteItemTransfer) {
-            $skuAdded = false;
-            foreach ($items as $itemTransfer) {
-                if ($itemTransfer->getSku() === $quoteItemTransfer->getSku()) {
-                    $skuAdded = true;
-
-                    break;
-                }
-            }
-
-            if (!$skuAdded) {
-                $items->append($quoteItemTransfer);
-            }
-        }
+        $this->appendItemsFromQuoteItems($quoteTransfer, $items);
 
         $quoteTransfer->setItems($items);
 
-        if (count($items)) {
+        if (!empty($items)) {
             $quoteTransfer = $this->cartFacade->reloadItems($quoteTransfer);
         }
 
@@ -106,6 +81,54 @@ class ItemFormHandler implements FormHandlerInterface
                 ->setUnitGrossPrice($itemTransfer->getUnitGrossPrice());
 
             $quoteTransfer->getManualOrderEntry()->addItems($newItemTransfer);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param array $addedSkus
+     * @param \ArrayObject $items
+     *
+     * @return void
+     */
+    protected function appendItemsFromManualOrderEntryItems(QuoteTransfer $quoteTransfer, $addedSkus, $items): void
+    {
+        foreach ($quoteTransfer->getManualOrderEntry()->getItems() as $newItemTransfer) {
+            if ($newItemTransfer->getQuantity() <= 0
+                || in_array($newItemTransfer->getSku(), $addedSkus)
+            ) {
+                continue;
+            }
+
+            $addedSkus[] = $newItemTransfer->getSku();
+            $itemTransfer = new ItemTransfer();
+            $itemTransfer->fromArray($newItemTransfer->toArray());
+
+            $items->append($itemTransfer);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \ArrayObject $items
+     *
+     * @return void
+     */
+    protected function appendItemsFromQuoteItems(QuoteTransfer $quoteTransfer, $items): void
+    {
+        foreach ($quoteTransfer->getItems() as $quoteItemTransfer) {
+            $skuAdded = false;
+            foreach ($items as $itemTransfer) {
+                if ($itemTransfer->getSku() === $quoteItemTransfer->getSku()) {
+                    $skuAdded = true;
+
+                    break;
+                }
+            }
+
+            if (!$skuAdded) {
+                $items->append($quoteItemTransfer);
+            }
         }
     }
 }

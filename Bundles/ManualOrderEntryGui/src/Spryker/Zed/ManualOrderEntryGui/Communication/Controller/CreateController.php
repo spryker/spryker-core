@@ -41,7 +41,7 @@ class CreateController extends AbstractController
         $quoteTransfer = $this->getInitialQuote($request);
 
         $forms = [];
-        $validForms = true;
+        $allFormsAreValid = true;
         $allFormPlugins = $this->getFactory()->getManualOrderEntryFormPlugins();
         $filteredFormPlugins = $this->getFactory()->getManualOrderEntryFilteredFormPlugins($allFormPlugins, $request, $quoteTransfer);
         $skippedFormPlugins = $this->getFactory()->getManualOrderEntrySkippedFormPlugins($allFormPlugins, $request, $quoteTransfer);
@@ -59,16 +59,13 @@ class CreateController extends AbstractController
             if ($form->isValid()) {
                 $quoteTransfer = $formPlugin->handleData($quoteTransfer, $form, $request);
             } else {
-                $validForms = false;
+                $allFormsAreValid = false;
             }
 
             $forms[] = $form;
         }
 
-        if ($validForms
-            && count($allFormPlugins)
-            && count($allFormPlugins) == count($filteredFormPlugins) + count($skippedFormPlugins)
-        ) {
+        if ($this->isReadyToCreateOrder($allFormsAreValid, $allFormPlugins, $filteredFormPlugins, $skippedFormPlugins)) {
             $checkoutResponseTransfer = $this->createOrder($quoteTransfer);
 
             if ($checkoutResponseTransfer->getIsSuccess()) {
@@ -225,7 +222,7 @@ class CreateController extends AbstractController
      *
      * @return void
      */
-    protected function processResponseErrors(CustomerResponseTransfer $customerResponseTransfer)
+    protected function processResponseErrors(CustomerResponseTransfer $customerResponseTransfer): void
     {
         foreach ($customerResponseTransfer->getErrors() as $errorTransfer) {
             $this->addErrorMessage($errorTransfer->getMessage());
@@ -246,5 +243,22 @@ class CreateController extends AbstractController
         }
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param bool $allFormsAreValid
+     * @param \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface[] $allFormPlugins
+     * @param \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface[] $filteredFormPlugins
+     * @param \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface[] $skippedFormPlugins
+     *
+     * @return bool
+     */
+    protected function isReadyToCreateOrder($allFormsAreValid, $allFormPlugins, $filteredFormPlugins, $skippedFormPlugins): bool
+    {
+        $numberProcessedForms = count($filteredFormPlugins) + count($skippedFormPlugins);
+
+        return $allFormsAreValid
+            && count($allFormPlugins)
+            && count($allFormPlugins) === $numberProcessedForms;
     }
 }

@@ -46,7 +46,7 @@ class VoucherFormHandler implements FormHandlerInterface
         $quoteTransfer->setVoucherDiscounts(new ArrayObject());
         $quoteTransfer->addVoucherDiscount($discountTransfer);
 
-        if (count($quoteTransfer->getItems())) {
+        if (!empty($quoteTransfer->getItems())) {
             $quoteTransfer = $this->cartFacade->reloadItems($quoteTransfer);
         }
 

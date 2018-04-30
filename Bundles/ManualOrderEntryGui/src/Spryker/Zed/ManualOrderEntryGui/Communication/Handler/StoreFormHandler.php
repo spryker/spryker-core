@@ -80,7 +80,7 @@ class StoreFormHandler implements FormHandlerInterface
         $currencyCode
     ) {
         $storeTransfer = $storeWithCurrencyTransfer->getStore();
-        if ($storeName == $storeTransfer->getName()) {
+        if ($storeName === $storeTransfer->getName()) {
             $quoteTransfer->setStore($storeTransfer);
 
             foreach ($storeWithCurrencyTransfer->getCurrencies() as $currencyTransfer) {
@@ -104,7 +104,7 @@ class StoreFormHandler implements FormHandlerInterface
      */
     protected function setCurrencyToQuote(QuoteTransfer $quoteTransfer, $currencyCode, CurrencyTransfer $currencyTransfer)
     {
-        if ($currencyCode == $currencyTransfer->getCode()) {
+        if ($currencyCode === $currencyTransfer->getCode()) {
             $quoteTransfer->setCurrency($currencyTransfer);
 
             return true;

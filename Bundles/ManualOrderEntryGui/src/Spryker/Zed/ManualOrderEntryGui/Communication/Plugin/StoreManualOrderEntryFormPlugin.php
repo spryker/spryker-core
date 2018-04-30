@@ -60,8 +60,8 @@ class StoreManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOr
      */
     public function isFormPreFilled(QuoteTransfer $quoteTransfer): bool
     {
-        if ($quoteTransfer->getStore() !== null
-            && $quoteTransfer->getCurrency() !== null
+        if ($quoteTransfer->getStore()
+            && $quoteTransfer->getCurrency()
         ) {
             return $quoteTransfer->getStore()->getName() && $quoteTransfer->getCurrency()->getCode();
         }

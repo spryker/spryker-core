@@ -40,7 +40,7 @@ class ManualOrderEntryFormPluginFilter
      *
      * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface[]
      */
-    public function getFilteredFormPlugins($formPlugins, Request $request, QuoteTransfer $quoteTransfer)
+    public function getFilteredFormPlugins($formPlugins, Request $request, QuoteTransfer $quoteTransfer): array
     {
         $filteredPlugins = [];
         $skippedPlugins = [];

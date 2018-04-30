@@ -42,16 +42,18 @@ class ShipmentFormHandler implements FormHandlerInterface
     public function handle(QuoteTransfer $quoteTransfer, &$form, Request $request): QuoteTransfer
     {
         $idShipmentMethod = $quoteTransfer->getShipment()->getMethod()->getIdShipmentMethod();
-        if ($idShipmentMethod) {
-            $shipmentMethodTransfer = $this->shipmentFacade->findAvailableMethodById($idShipmentMethod, $quoteTransfer);
-            $shipmentTransfer = new ShipmentTransfer();
-            $shipmentTransfer->setMethod($shipmentMethodTransfer);
-
-            $quoteTransfer->setShipment($shipmentTransfer);
-
-            $expenseTransfer = $this->createShippingExpenseTransfer($shipmentMethodTransfer);
-            $quoteTransfer->setExpenses(new ArrayObject([$expenseTransfer]));
+        if (!$idShipmentMethod) {
+            return $quoteTransfer;
         }
+
+        $shipmentMethodTransfer = $this->shipmentFacade->findAvailableMethodById($idShipmentMethod, $quoteTransfer);
+        $shipmentTransfer = new ShipmentTransfer();
+        $shipmentTransfer->setMethod($shipmentMethodTransfer);
+
+        $quoteTransfer->setShipment($shipmentTransfer);
+
+        $expenseTransfer = $this->createShippingExpenseTransfer($shipmentMethodTransfer);
+        $quoteTransfer->setExpenses(new ArrayObject([$expenseTransfer]));
 
         return $quoteTransfer;
     }

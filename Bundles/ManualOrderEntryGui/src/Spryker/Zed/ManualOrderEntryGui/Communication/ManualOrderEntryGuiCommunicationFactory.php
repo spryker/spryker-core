@@ -35,6 +35,7 @@ use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Summary\SummaryType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Voucher\VoucherType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Handler\AddressFormHandler;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Handler\CustomerFormHandler;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Handler\FormHandlerInterface;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Handler\ItemFormHandler;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Handler\OrderSourceFormHandler;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Handler\PaymentFormHandler;
@@ -537,9 +538,9 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
-     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Handler\AddressFormHandler
+     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Handler\FormHandlerInterface
      */
-    public function createAddressFormHandler(): AddressFormHandler
+    public function createAddressFormHandler(): FormHandlerInterface
     {
         return new AddressFormHandler(
             $this->getCustomerFacade()
@@ -547,9 +548,9 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
-     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Handler\CustomerFormHandler
+     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Handler\FormHandlerInterface
      */
-    public function createCustomerFormHandler(): CustomerFormHandler
+    public function createCustomerFormHandler(): FormHandlerInterface
     {
         return new CustomerFormHandler(
             $this->getCustomerFacade()
@@ -557,9 +558,9 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
-     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Handler\PaymentFormHandler
+     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Handler\FormHandlerInterface
      */
-    public function createPaymentFormHandler(): PaymentFormHandler
+    public function createPaymentFormHandler(): FormHandlerInterface
     {
         return new PaymentFormHandler(
             $this->getPaymentFacade(),
@@ -568,9 +569,9 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
-     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Handler\ProductFormHandler
+     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Handler\FormHandlerInterface
      */
-    public function createProductFormHandler(): ProductFormHandler
+    public function createProductFormHandler(): FormHandlerInterface
     {
         return new ProductFormHandler(
             $this->getCartFacade(),
@@ -579,9 +580,9 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
-     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Handler\ItemFormHandler
+     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Handler\FormHandlerInterface
      */
-    public function createItemFormHandler(): ItemFormHandler
+    public function createItemFormHandler(): FormHandlerInterface
     {
         return new ItemFormHandler(
             $this->getCartFacade(),
@@ -590,9 +591,9 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
-     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Handler\ShipmentFormHandler
+     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Handler\FormHandlerInterface
      */
-    public function createShipmentFormHandler(): ShipmentFormHandler
+    public function createShipmentFormHandler(): FormHandlerInterface
     {
         return new ShipmentFormHandler(
             $this->getShipmentFacade()
@@ -600,9 +601,9 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
-     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Handler\StoreFormHandler
+     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Handler\FormHandlerInterface
      */
-    public function createStoreFormHandler(): StoreFormHandler
+    public function createStoreFormHandler(): FormHandlerInterface
     {
         return new StoreFormHandler(
             $this->getCurrencyFacade()
@@ -610,9 +611,9 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
-     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Handler\VoucherFormHandler
+     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Handler\FormHandlerInterface
      */
-    public function createVoucherFormHandler(): VoucherFormHandler
+    public function createVoucherFormHandler(): FormHandlerInterface
     {
         return new VoucherFormHandler(
             $this->getCartFacade()
@@ -620,9 +621,9 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
-     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Handler\OrderSourceFormHandler
+     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Handler\FormHandlerInterface
      */
-    public function createOrderSourceFormHandler(): OrderSourceFormHandler
+    public function createOrderSourceFormHandler(): FormHandlerInterface
     {
         return new OrderSourceFormHandler(
             $this->getManualOrderEntryFacade()

@@ -52,11 +52,7 @@ class ProductFormHandler implements FormHandlerInterface
         $addedSkus = [];
 
         foreach ($quoteTransfer->getManualOrderEntry()->getProducts() as $newProduct) {
-            if (!strlen($newProduct->getSku())
-                || $newProduct->getQuantity() <= 0
-                || in_array($newProduct->getSku(), $addedSkus)
-                || !$this->productFacade->hasProductConcrete($newProduct->getSku())
-            ) {
+            if ($this->isProductValid($newProduct, $addedSkus)) {
                 continue;
             }
 
@@ -103,10 +99,24 @@ class ProductFormHandler implements FormHandlerInterface
         $items = new ArrayObject($items);
         $quoteTransfer->setItems($items);
         $quoteTransfer->setBundleItems(new ArrayObject());
-        if (count($items)) {
+        if (!empty($items)) {
             $quoteTransfer = $this->cartFacade->reloadItems($quoteTransfer);
         }
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $newProduct
+     * @param array $addedSkus
+     *
+     * @return bool
+     */
+    protected function isProductValid($newProduct, $addedSkus): bool
+    {
+        return $newProduct->getSku() === ''
+            || $newProduct->getQuantity() <= 0
+            || in_array($newProduct->getSku(), $addedSkus)
+            || !$this->productFacade->hasProductConcrete($newProduct->getSku());
     }
 }

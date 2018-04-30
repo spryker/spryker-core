@@ -48,7 +48,7 @@ class PaymentFormHandler implements FormHandlerInterface
         $paymentSelection = $quoteTransfer->getPayment()->getPaymentSelection();
 
         foreach ($this->subFormPlugins as $subFormPlugin) {
-            if ($paymentSelection == $subFormPlugin->getName()) {
+            if ($paymentSelection === $subFormPlugin->getName()) {
                 $quoteTransfer->getPayment()
                     ->setPaymentProvider($subFormPlugin->getPaymentProvider())
                     ->setPaymentMethod($subFormPlugin->getPaymentMethod());
@@ -57,6 +57,22 @@ class PaymentFormHandler implements FormHandlerInterface
             }
         }
 
+        $calculableObjectTransfer = $this->createCalculableObjectTransfer($quoteTransfer);
+
+        if (!empty($calculableObjectTransfer->getItems())) {
+            $this->paymentFacade->recalculatePayments($calculableObjectTransfer);
+        }
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\CalculableObjectTransfer
+     */
+    protected function createCalculableObjectTransfer(QuoteTransfer $quoteTransfer): CalculableObjectTransfer
+    {
         $calculableObjectTransfer = new CalculableObjectTransfer();
         $calculableObjectTransfer->setItems($quoteTransfer->getItems())
             ->setTotals($quoteTransfer->getTotals())
@@ -72,10 +88,6 @@ class PaymentFormHandler implements FormHandlerInterface
             ->setPayments($quoteTransfer->getPayments())
             ->setPayment($quoteTransfer->getPayment());
 
-        if (count($calculableObjectTransfer->getItems())) {
-            $this->paymentFacade->recalculatePayments($calculableObjectTransfer);
-        }
-
-        return $quoteTransfer;
+        return $calculableObjectTransfer;
     }
 }
