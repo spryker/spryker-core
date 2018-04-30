@@ -53,5 +53,7 @@ class ProductBarcodeDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::PRODUCT_FACADE] = function (Container $container) {
             return new ProductBarcodeToProductBridge($container->getLocator()->product()->facade());
         };
+
+        return $container;
     }
 }

@@ -9,11 +9,12 @@ namespace Spryker\Zed\ProductBarcode\Business;
 
 use Generated\Shared\Transfer\BarcodeResponseTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\ProductBarcode\Business\ProductBarcodeBusinessFactory getFactory()
  */
-class ProductBarcodeFacade implements ProductBarcodeFacadeInterface
+class ProductBarcodeFacade extends AbstractFacade implements ProductBarcodeFacadeInterface
 {
     /**
      * {@inheritdoc}
