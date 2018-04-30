@@ -392,6 +392,7 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
      * @param \Generated\Shared\Transfer\BundleDependencyCollectionTransfer $moduleDependencyCollectionTransfer
      * @param string $declaredDependency
      * @param bool $isInTest
+     *
      * @return \Generated\Shared\Transfer\BundleDependencyCollectionTransfer
      */
     protected function addDeclaredDependency(BundleDependencyCollectionTransfer $moduleDependencyCollectionTransfer, $declaredDependency, $isInTest = false)
