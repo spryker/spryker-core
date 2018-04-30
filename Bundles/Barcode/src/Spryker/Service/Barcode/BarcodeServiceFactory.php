@@ -9,25 +9,33 @@ namespace Spryker\Service\Barcode;
 
 use Spryker\Service\Barcode\Model\BarcodeGenerator\BarcodeGenerator;
 use Spryker\Service\Barcode\Model\BarcodeGenerator\BarcodeGeneratorInterface;
-use Spryker\Service\Barcode\Model\PluginCollection\PluginCollectionInterface;
+use Spryker\Service\Barcode\Model\BarcodeGeneratorPluginResolver\BarcodeGeneratorPluginResolver;
 use Spryker\Service\Kernel\AbstractServiceFactory;
 
 class BarcodeServiceFactory extends AbstractServiceFactory
 {
     /**
-     * @return \Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface
+     * @return \Spryker\Service\Barcode\Model\BarcodeGenerator\BarcodeGeneratorInterface
      */
     public function createBarcodeGenerator(): BarcodeGeneratorInterface
     {
         return new BarcodeGenerator(
-            $this->getBarcodePlugins()
+            $this->createBarcodePluginResolver()
         );
     }
 
     /**
-     * @return \Spryker\Service\Barcode\Model\PluginCollection\PluginCollectionInterface
+     * @return \Spryker\Service\Barcode\Model\BarcodeGeneratorPluginResolver\BarcodeGeneratorPluginResolverInterface
      */
-    public function getBarcodePlugins(): PluginCollectionInterface
+    public function createBarcodePluginResolver(): BarcodeGeneratorPluginResolver
+    {
+        return new BarcodeGeneratorPluginResolver($this->getBarcodePlugins());
+    }
+
+    /**
+     * @return \Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface[]
+     */
+    public function getBarcodePlugins(): array
     {
         return $this->getProvidedDependency(BarcodeDependencyProvider::BARCODE_PLUGINS);
     }
