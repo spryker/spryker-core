@@ -20,7 +20,9 @@ use Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInt
  */
 class ProductBarcodeFacadeTest extends Test
 {
-    protected const GENERATED_CODE = 'result code';
+    protected const GENERATED_CODE = 'generated code';
+    protected const GENERATED_ENCODING = 'generated encoding';
+
     /**
      * @var \SprykerTest\Zed\ProductBarcode\ProductBarcodeBusinessTester
      */
@@ -39,11 +41,9 @@ class ProductBarcodeFacadeTest extends Test
         parent::setUp();
 
         $this->barcodePlugin = $this->getBarcodePluginMock();
-        $this->tester->setDependency(BarcodeDependencyProvider::BARCODE_PLUGINS,
-            [
-                $this->barcodePlugin,
-            ]
-        );
+        $this->tester->setDependency(BarcodeDependencyProvider::BARCODE_PLUGINS, [
+            $this->barcodePlugin,
+        ]);
     }
 
     /**
@@ -52,7 +52,8 @@ class ProductBarcodeFacadeTest extends Test
     public function testGenerateBarcode()
     {
         $productConcreteTransfer = $this->tester->getProductConcrete();
-        $barcodeResponseTransfer = $this->getFacade()->generateBarcode($productConcreteTransfer, get_class($this->barcodePlugin));
+        $barcodeResponseTransfer = $this->getFacade()
+            ->generateBarcode($productConcreteTransfer, get_class($this->barcodePlugin));
 
         $this->assertEquals(static::GENERATED_CODE, $barcodeResponseTransfer->getCode());
     }
@@ -66,7 +67,7 @@ class ProductBarcodeFacadeTest extends Test
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject | \Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface
      */
     protected function getBarcodePluginMock()
     {
@@ -77,7 +78,7 @@ class ProductBarcodeFacadeTest extends Test
 
         $barcodeTransfer = (new BarcodeResponseTransfer())
             ->setCode(static::GENERATED_CODE)
-            ->setEncoding('');
+            ->setEncoding(static::GENERATED_ENCODING);
 
         $barcodePlugin->method('generate')
             ->willReturn($barcodeTransfer);
