@@ -19,7 +19,7 @@
             {{ form_row(form.storeCurrency) }}
             {{ form_row(form.customerReference) }}
 
-            <input type="submit" class="btn btn-primary safe-submit" name="submit-customer-create" value="{{ 'Create Customer' | trans }}" /> <br />
+            <input type="button" class="btn btn-primary safe-submit" name="submit-customer-create" value="{{ 'Create Customer' | trans }}" /> <br />
 
             {{ form_label(form.items) }}
             <table>
@@ -60,7 +60,7 @@
             {% endif %}
 
             <input type="submit" class="btn btn-primary safe-submit" name="submit-reload" value="{{ 'Reload' | trans }}" />
-            <input type="submit" class="btn btn-primary safe-submit" name="submit-persist" value="{{ 'Submit an Offer' | trans }}" />
+            <input type="button" class="btn btn-primary safe-submit" name="submit-persist" value="{{ 'Submit an Offer' | trans }}" />
             {{ form_end(form) }}
 
         {% endblock %}

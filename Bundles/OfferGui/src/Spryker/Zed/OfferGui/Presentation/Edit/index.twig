@@ -22,7 +22,7 @@
             {{ form_row(form.storeCurrency) }}
             {{ form_row(form.customerReference) }}
 
-            <input type="submit" class="btn btn-primary safe-submit" name="submit-customer-create" value="{{ 'Create Customer' | trans }}" /> <br />
+            <input type="button" class="btn btn-primary safe-submit" name="submit-customer-create" value="{{ 'Create Customer' | trans }}" /> <br />
 
             {{ form_label(form.items) }}
             <table>
@@ -75,7 +75,7 @@
             {% include '@OfferGui/Edit/_partials/totals.twig' with {'quote': offer.quote} %}
 
             <input type="submit" class="btn btn-primary safe-submit" name="submit-reload" value="{{ 'Reload' | trans }}" />
-            <input type="submit" class="btn btn-primary safe-submit" name="submit-persist" value="{{ 'Save' | trans }}" />
+            <input type="button" class="btn btn-primary safe-submit" name="submit-persist" value="{{ 'Save' | trans }}" />
             {{ form_end(form) }}
 
         {% endblock %}
