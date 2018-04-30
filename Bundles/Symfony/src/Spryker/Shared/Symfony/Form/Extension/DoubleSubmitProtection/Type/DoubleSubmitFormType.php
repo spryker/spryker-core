@@ -62,7 +62,7 @@ class DoubleSubmitFormType extends AbstractTypeExtension
     public function __construct(
         TokenGeneratorInterface $tokenGenerator,
         StorageInterface $storage,
-        TranslatorInterface $translator = null,
+        ?TranslatorInterface $translator = null,
         $translationDomain = null
     ) {
         $this->tokenGenerator = $tokenGenerator;

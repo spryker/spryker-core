@@ -149,8 +149,8 @@ class ValidatorTest extends Unit
      * @return \Spryker\Zed\Discount\Business\QueryString\Validator
      */
     protected function createValidator(
-        SpecificationBuilder $decisionRuleMock = null,
-        SpecificationBuilder $collectorMock = null
+        ?SpecificationBuilder $decisionRuleMock = null,
+        ?SpecificationBuilder $collectorMock = null
     ) {
 
         if ($decisionRuleMock === null) {

@@ -175,10 +175,10 @@ class StateUpdaterTest extends StateMachineMocks
      * @return \Spryker\Zed\StateMachine\Business\StateMachine\StateUpdater
      */
     protected function createStateUpdater(
-        TimeoutInterface $timeoutMock = null,
-        HandlerResolverInterface $handlerResolverMock = null,
-        PersistenceInterface $stateMachinePersistenceMock = null,
-        ConnectionInterface $propelConnectionMock = null
+        ?TimeoutInterface $timeoutMock = null,
+        ?HandlerResolverInterface $handlerResolverMock = null,
+        ?PersistenceInterface $stateMachinePersistenceMock = null,
+        ?ConnectionInterface $propelConnectionMock = null
     ) {
 
         if ($timeoutMock === null) {

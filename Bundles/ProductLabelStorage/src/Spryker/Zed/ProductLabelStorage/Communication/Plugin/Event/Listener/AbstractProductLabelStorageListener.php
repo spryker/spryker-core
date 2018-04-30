@@ -67,7 +67,7 @@ class AbstractProductLabelStorageListener extends AbstractPlugin
      *
      * @return void
      */
-    protected function storeDataSet($productAbstractId, array $productLabelsIds, SpyProductAbstractLabelStorage $spyProductAbstractLabelStorageEntity = null)
+    protected function storeDataSet($productAbstractId, array $productLabelsIds, ?SpyProductAbstractLabelStorage $spyProductAbstractLabelStorageEntity = null)
     {
         if ($spyProductAbstractLabelStorageEntity === null) {
             $spyProductAbstractLabelStorageEntity = new SpyProductAbstractLabelStorage();

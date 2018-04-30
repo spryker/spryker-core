@@ -71,7 +71,7 @@ class SubtotalDecisionRuleTest extends BaseRuleTester
      *
      * @return \Spryker\Zed\Discount\Business\DecisionRule\SubTotalDecisionRule
      */
-    protected function createSubtotalDecisionRule(ComparatorOperatorsInterface $comparatorMock = null)
+    protected function createSubtotalDecisionRule(?ComparatorOperatorsInterface $comparatorMock = null)
     {
         if ($comparatorMock === null) {
             $comparatorMock = $this->createComparatorMock();

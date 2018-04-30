@@ -32,7 +32,7 @@ abstract class CmsMocks extends Unit
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface
      */
-    protected function createCmsQueryContainerMock(ConnectionInterface $propelConnectionMock = null)
+    protected function createCmsQueryContainerMock(?ConnectionInterface $propelConnectionMock = null)
     {
         $cmsQueryContainerMock = $this->getMockBuilder(CmsQueryContainerInterface::class)
             ->getMock();

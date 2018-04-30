@@ -242,9 +242,9 @@ class EventFacadeTest extends Unit
      * @return \Spryker\Zed\Event\Business\EventBusinessFactory
      */
     protected function createEventBusinessFactory(
-        EventToQueueInterface $queueClientMock = null,
-        EventCollectionInterface $eventCollection = null,
-        EventSubscriberCollectionInterface $eventSubscriberCollection = null
+        ?EventToQueueInterface $queueClientMock = null,
+        ?EventCollectionInterface $eventCollection = null,
+        ?EventSubscriberCollectionInterface $eventSubscriberCollection = null
     ) {
 
         if ($queueClientMock === null) {
@@ -290,8 +290,8 @@ class EventFacadeTest extends Unit
      * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer
      */
     protected function createQueueReceiveMessageTransfer(
-        EventHandlerInterface $eventListenerMock = null,
-        TransferInterface $transferObject = null
+        ?EventHandlerInterface $eventListenerMock = null,
+        ?TransferInterface $transferObject = null
     ) {
 
         $message = [

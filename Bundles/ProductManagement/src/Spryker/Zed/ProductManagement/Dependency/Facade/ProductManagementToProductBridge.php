@@ -176,7 +176,7 @@ class ProductManagementToProductBridge implements ProductManagementToProductInte
      *
      * @return array
      */
-    public function getCombinedAbstractAttributeKeys(ProductAbstractTransfer $productAbstractTransfer, LocaleTransfer $localeTransfer = null)
+    public function getCombinedAbstractAttributeKeys(ProductAbstractTransfer $productAbstractTransfer, ?LocaleTransfer $localeTransfer = null)
     {
         return $this->productFacade->getCombinedAbstractAttributeKeys($productAbstractTransfer, $localeTransfer);
     }
@@ -187,7 +187,7 @@ class ProductManagementToProductBridge implements ProductManagementToProductInte
      *
      * @return array
      */
-    public function getCombinedConcreteAttributes(ProductConcreteTransfer $productConcreteTransfer, LocaleTransfer $localeTransfer = null)
+    public function getCombinedConcreteAttributes(ProductConcreteTransfer $productConcreteTransfer, ?LocaleTransfer $localeTransfer = null)
     {
         return $this->productFacade->getCombinedConcreteAttributes($productConcreteTransfer, $localeTransfer);
     }
