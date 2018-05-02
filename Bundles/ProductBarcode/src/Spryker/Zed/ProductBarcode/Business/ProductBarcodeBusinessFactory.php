@@ -9,6 +9,8 @@ namespace Spryker\Zed\ProductBarcode\Business;
 
 use Spryker\Service\Barcode\BarcodeServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductBarcode\Business\ProductBarcodeFinder\ProductBarcodeFinder;
+use Spryker\Zed\ProductBarcode\Business\ProductBarcodeFinder\ProductBarcodeFinderInterface;
 use Spryker\Zed\ProductBarcode\Business\ProductBarcodeGenerator\ProductBarcodeGenerator;
 use Spryker\Zed\ProductBarcode\Business\ProductBarcodeGenerator\ProductBarcodeGeneratorInterface;
 use Spryker\Zed\ProductBarcode\Business\ProductSkuProvider\ProductSkuProvider;
@@ -18,6 +20,7 @@ use Spryker\Zed\ProductBarcode\ProductBarcodeDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductBarcode\ProductBarcodeConfig getConfig()
+ * @method \Spryker\Zed\ProductBarcode\Persistence\ProductBarcodeQueryContainerInterface getQueryContainer()
  */
 class ProductBarcodeBusinessFactory extends AbstractBusinessFactory
 {
@@ -40,6 +43,14 @@ class ProductBarcodeBusinessFactory extends AbstractBusinessFactory
         return new ProductSkuProvider(
             $this->getProductFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductBarcode\Business\ProductBarcodeFinder\ProductBarcodeFinderInterface
+     */
+    public function createProductBarcodeFinder(): ProductBarcodeFinderInterface
+    {
+        return new ProductBarcodeFinder();
     }
 
     /**
