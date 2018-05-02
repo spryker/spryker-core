@@ -12,16 +12,15 @@ use Spryker\Client\Kernel\AbstractBundleConfig;
 
 class CustomerAccessPermissionConfig extends AbstractBundleConfig
 {
-
     protected const CONTENT_PERMISSION_PLUGIN = [];
     protected const MESSAGE_PLUGIN_NOT_FOUND_EXCEPTION = 'Plugin not found';
 
     /**
      * @param string $contentType
      *
-     * @return string
+     * @throws \Spryker\Client\CustomerAccessPermission\Exception\PermissionPluginNotFoundException
      *
-     * @throws PermissionPluginNotFoundException
+     * @return string
      */
     public function getPluginNameToSeeContentType(string $contentType): string
     {

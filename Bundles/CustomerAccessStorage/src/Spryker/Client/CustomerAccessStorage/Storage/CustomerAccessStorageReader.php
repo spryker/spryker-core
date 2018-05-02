@@ -67,8 +67,6 @@ class CustomerAccessStorageReader implements CustomerAccessStorageReaderInterfac
         return $this->customerAccess;
     }
 
-
-
     /**
      * @return string
      */
