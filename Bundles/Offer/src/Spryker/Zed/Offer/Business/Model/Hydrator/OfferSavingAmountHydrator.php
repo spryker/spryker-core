@@ -9,28 +9,19 @@ namespace Spryker\Zed\Offer\Business\Model\Hydrator;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OfferTransfer;
-use Spryker\Zed\Offer\Dependency\Facade\OfferToMessengerFacadeInterface;
 use Spryker\Zed\Offer\OfferConfig;
 
 class OfferSavingAmountHydrator implements OfferSavingAmountHydratorInterface
 {
-    /**
-     * @var \Spryker\Zed\Offer\Dependency\Facade\OfferToMessengerFacadeInterface
-     */
-    protected $messengerFacade;
-
     /** @var \Spryker\Zed\Offer\OfferConfig */
     protected $offerConfig;
 
     /**
-     * @param \Spryker\Zed\Offer\Dependency\Facade\OfferToMessengerFacadeInterface $messengerFacade
      * @param \Spryker\Zed\Offer\OfferConfig $offerConfig
      */
     public function __construct(
-        OfferToMessengerFacadeInterface $messengerFacade,
         OfferConfig $offerConfig
     ) {
-        $this->messengerFacade = $messengerFacade;
         $this->offerConfig = $offerConfig;
     }
 
