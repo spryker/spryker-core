@@ -54,7 +54,7 @@ class AddressManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer|null $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
