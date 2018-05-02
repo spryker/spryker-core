@@ -12,11 +12,15 @@ use Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementUnitQuery;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\ProductMeasurementUnit\Dependency\ProductMeasurementUnitEvents;
 
 class ProductMeasurementUnitWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
     protected const  DEFAULT_PRECISION = 1;
+
+    /**
+     * @see \Spryker\Zed\ProductMeasurementUnit\Dependency\ProductMeasurementUnitEvents::PRODUCT_MEASUREMENT_UNIT_PUBLISH
+     */
+    public const PRODUCT_MEASUREMENT_UNIT_PUBLISH = 'ProductMeasurementUnit.product_measurement_unit.publish';
 
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
@@ -28,7 +32,7 @@ class ProductMeasurementUnitWriterStep extends PublishAwareStep implements DataI
         $productMeasurementUnitEntity = $this->saveProductMeasurementUnit($dataSet);
 
         $this->addPublishEvents(
-            ProductMeasurementUnitEvents::PRODUCT_MEASUREMENT_UNIT_PUBLISH,
+            static::PRODUCT_MEASUREMENT_UNIT_PUBLISH,
             $productMeasurementUnitEntity->getIdProductMeasurementUnit()
         );
     }

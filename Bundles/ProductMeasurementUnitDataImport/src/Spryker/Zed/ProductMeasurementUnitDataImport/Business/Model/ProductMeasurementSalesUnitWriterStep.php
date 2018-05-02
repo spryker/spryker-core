@@ -17,11 +17,15 @@ use Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementUnitQuery;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\ProductMeasurementUnit\Dependency\ProductMeasurementUnitEvents;
 use Spryker\Zed\ProductMeasurementUnitDataImport\Business\Exception\EntityNotFoundException;
 
 class ProductMeasurementSalesUnitWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
+    /**
+     * @see \Spryker\Zed\ProductMeasurementUnit\Dependency\ProductMeasurementUnitEvents::PRODUCT_CONCRETE_MEASUREMENT_UNIT_PUBLISH
+     */
+    protected const PRODUCT_CONCRETE_MEASUREMENT_UNIT_PUBLISH = 'ProductMeasurementUnit.product_concrete_measurement_unit.publish';
+
     /**
      * @var int[] Keys are product measurement unit codes, values are product measurement unit ids.
      */
@@ -39,7 +43,7 @@ class ProductMeasurementSalesUnitWriterStep extends PublishAwareStep implements 
         $spyProductMeasurementSalesUnitEntity = $this->saveProductMeasurementSalesUnit($dataSet);
 
         $this->addPublishEvents(
-            ProductMeasurementUnitEvents::PRODUCT_CONCRETE_MEASUREMENT_UNIT_PUBLISH,
+            static::PRODUCT_CONCRETE_MEASUREMENT_UNIT_PUBLISH,
             $spyProductMeasurementSalesUnitEntity->getFkProduct()
         );
     }
