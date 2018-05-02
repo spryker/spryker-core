@@ -68,7 +68,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
         if ($module) {
             $paths = $this->getPaths($module);
         } else {
-            $paths[$this->config->getPathToRoot() . 'src' . DIRECTORY_SEPARATOR] = 'phpstan.neon';
+            $paths[$this->config->getPathToRoot()] = $this->config->getPathToRoot();
         }
         if (empty($paths)) {
             throw new RuntimeException('No path found for module ' . $module);
@@ -94,7 +94,13 @@ class PhpstanRunner implements PhpstanRunnerInterface
     {
         $command = 'php -d memory_limit=%s vendor/bin/phpstan analyze --no-progress -c %s %s -l %s';
 
-        $level = $input->getOption('level') ?: $this->getDefaultLevel($configFilePath);
+        $level = $input->getOption('level') ?: $this->getDefaultLevel($path, $configFilePath);
+
+        if (is_dir($path . 'src')) {
+            $path .= 'src' . DIRECTORY_SEPARATOR;
+        }
+        $configFilePath .= 'phpstan.neon';
+
         $command = sprintf($command, static::MEMORY_LIMIT, $configFilePath, $path, $level);
 
         if ($input->getOption(static::OPTION_DRY_RUN)) {
@@ -199,11 +205,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
             $configFilePath = $this->detectConfigFilePath($path);
         }
 
-        if (is_dir($path . 'src')) {
-            $path .= 'src' . DIRECTORY_SEPARATOR;
-        }
-
-        $paths[$path] = $configFilePath ?: 'phpstan.neon';
+        $paths[$path] = $configFilePath ?: $this->config->getPathToRoot();
 
         return $paths;
     }
@@ -294,16 +296,22 @@ class PhpstanRunner implements PhpstanRunnerInterface
     }
 
     /**
-     * @param string $configFilePath
+     * @param string $path
+     * @param string $fallbackPath
      *
      * @return int
      */
-    protected function getDefaultLevel($configFilePath)
+    protected function getDefaultLevel($path, $fallbackPath)
     {
         $configLevel = $this->config->getPhpstanLevel();
 
-        $directory = dirname($configFilePath) . DIRECTORY_SEPARATOR;
-        $configFile = $directory . 'phpstan.json';
+        if (file_exists($path . 'phpstan.json')) {
+            $configFile = $path . 'phpstan.json';
+        } else {
+            $directory = dirname($fallbackPath) . DIRECTORY_SEPARATOR;
+            $configFile = $directory . 'phpstan.json';
+        }
+
         if (!file_exists($configFile)) {
             return $configLevel;
         }
