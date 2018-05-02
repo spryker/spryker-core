@@ -88,13 +88,12 @@ class FlashMessageCleaner implements FlashMessageCleanerInterface
         foreach ($messages as $message) {
             if (is_array($message)) {
                 $result = array_merge($result, $message);
-            } else {
-                $result[] = $message;
+                continue;
             }
+            $result[] = $message;
         }
-        $result = array_unique($result);
 
-        return $result;
+        return array_unique($result);
     }
 
     /**
