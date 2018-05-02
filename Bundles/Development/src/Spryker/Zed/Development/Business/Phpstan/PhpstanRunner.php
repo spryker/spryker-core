@@ -42,7 +42,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
     /**
      * @var int
      */
-    protected $errors = 0;
+    protected $errorCount = 0;
 
     /**
      * @param \Spryker\Zed\Development\DevelopmentConfig $config
@@ -83,7 +83,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
         $resultCode = 0;
         $count = 0;
         $total = count($paths);
-        $this->errors = 0;
+        $this->errorCount = 0;
         foreach ($paths as $path => $configFilePath) {
             $resultCode |= $this->runCommand($path, $configFilePath, $input, $output);
             $count++;
@@ -91,8 +91,8 @@ class PhpstanRunner implements PhpstanRunnerInterface
                 $output->writeln(sprintf('Finished %s/%s.', $count, $total));
             }
         }
-        if ($this->errors) {
-            $output->writeln('<error>Total errors found: ' . $this->errors . '</error>');
+        if ($this->errorCount) {
+            $output->writeln('<error>Total errors found: ' . $this->errorCount . '</error>');
         }
 
         return (int)$resultCode;
@@ -351,6 +351,6 @@ class PhpstanRunner implements PhpstanRunnerInterface
         if (!$matches) {
             return;
         }
-        $this->errors += (int)$matches[1];
+        $this->errorCount += (int)$matches[1];
     }
 }
