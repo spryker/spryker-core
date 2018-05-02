@@ -40,6 +40,11 @@ class PhpstanRunner implements PhpstanRunnerInterface
     protected $config;
 
     /**
+     * @var int
+     */
+    protected $errors = 0;
+
+    /**
      * @param \Spryker\Zed\Development\DevelopmentConfig $config
      */
     public function __construct(DevelopmentConfig $config)
@@ -78,12 +83,16 @@ class PhpstanRunner implements PhpstanRunnerInterface
         $resultCode = 0;
         $count = 0;
         $total = count($paths);
+        $this->errors = 0;
         foreach ($paths as $path => $configFilePath) {
             $resultCode |= $this->runCommand($path, $configFilePath, $input, $output);
             $count++;
             if ($input->getOption(static::OPTION_VERBOSE)) {
                 $output->writeln(sprintf('Finished %s/%s.', $count, $total));
             }
+        }
+        if ($this->errors) {
+            $output->writeln('<error>Total errors found: ' . $this->errors . '</error>');
         }
 
         return (int)$resultCode;
@@ -119,6 +128,8 @@ class PhpstanRunner implements PhpstanRunnerInterface
 
         $process = $this->getProcess($command);
         $process->run(function ($type, $buffer) use ($output) {
+            $this->addErrors($buffer);
+
             $output->write($buffer);
         });
 
@@ -225,7 +236,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
     protected function detectConfigFilePath($path)
     {
         if (file_exists($path . 'phpstan.neon')) {
-            return $path . 'phpstan.neon';
+            return $path;
         }
 
         return null;
@@ -327,5 +338,19 @@ class PhpstanRunner implements PhpstanRunnerInterface
         $json = json_decode($content, true);
 
         return $json[static::DEFAULT_LEVEL];
+    }
+
+    /**
+     * @param string $buffer
+     *
+     * @return void
+     */
+    protected function addErrors($buffer)
+    {
+        preg_match('#\[ERROR\] Found (\d+) error#i', $buffer, $matches);
+        if (!$matches) {
+            return;
+        }
+        $this->errors += (int)$matches[1];
     }
 }
