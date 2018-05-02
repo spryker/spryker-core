@@ -31,6 +31,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
     const CODE_ERROR = 0;
 
     const OPTION_DRY_RUN = 'dry-run';
+    const OPTION_VERBOSE = 'verbose';
     const OPTION_MODULE = 'module';
 
     /**
@@ -74,12 +75,18 @@ class PhpstanRunner implements PhpstanRunnerInterface
             throw new RuntimeException('No path found for module ' . $module);
         }
 
-        $result = 0;
+        $resultCode = 0;
+        $count = 0;
+        $total = count($paths);
         foreach ($paths as $path => $configFilePath) {
-            $result |= $this->runCommand($path, $configFilePath, $input, $output);
+            $resultCode |= $this->runCommand($path, $configFilePath, $input, $output);
+            $count++;
+            if ($input->getOption(static::OPTION_VERBOSE)) {
+                $output->writeln(sprintf('Finished %s/%s.', $count, $total));
+            }
         }
 
-        return (int)$result;
+        return (int)$resultCode;
     }
 
     /**
