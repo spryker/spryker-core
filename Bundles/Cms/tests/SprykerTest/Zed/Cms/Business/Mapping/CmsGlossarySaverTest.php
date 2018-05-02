@@ -113,9 +113,9 @@ class CmsGlossarySaverTest extends CmsMocks
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Cms\Business\Mapping\CmsGlossarySaver
      */
     protected function createCmsGlossarySaverMock(
-        CmsQueryContainerInterface $cmsQueryContainerMock = null,
-        CmsToGlossaryInterface $glossaryFacadeMock = null,
-        CmsGlossaryKeyGeneratorInterface $cmsGlossaryKeyGeneratorMock = null
+        ?CmsQueryContainerInterface $cmsQueryContainerMock = null,
+        ?CmsToGlossaryInterface $glossaryFacadeMock = null,
+        ?CmsGlossaryKeyGeneratorInterface $cmsGlossaryKeyGeneratorMock = null
     ) {
 
         if ($glossaryFacadeMock === null) {

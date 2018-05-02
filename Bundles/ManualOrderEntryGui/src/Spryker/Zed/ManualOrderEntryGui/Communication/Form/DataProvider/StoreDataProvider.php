@@ -49,6 +49,15 @@ class StoreDataProvider implements FormDataProviderInterface
      */
     public function getData($quoteTransfer)
     {
+        if ($quoteTransfer->getStore() !== null
+            && $quoteTransfer->getCurrency() !== null
+        ) {
+            $storeName = $quoteTransfer->getStore()->getName();
+            $currencyCode = $quoteTransfer->getCurrency()->getCode();
+
+            $quoteTransfer->setStoreCurrency($storeName . ';' . $currencyCode);
+        }
+
         return $quoteTransfer;
     }
 
@@ -69,7 +78,7 @@ class StoreDataProvider implements FormDataProviderInterface
                     . $currencyTransfer->getName()
                     . ' [' . $currencyTransfer->getCode() . ']';
 
-                $storeList[$storeTransfer->getIdStore() . ';' . $currencyTransfer->getIdCurrency()] = $row;
+                $storeList[$storeTransfer->getName() . ';' . $currencyTransfer->getCode()] = $row;
             }
         }
 

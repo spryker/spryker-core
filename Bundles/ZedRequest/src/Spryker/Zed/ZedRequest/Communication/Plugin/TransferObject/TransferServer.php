@@ -60,7 +60,7 @@ class TransferServer
      *
      * @return $this
      */
-    public static function getInstance(Repeater $repeater = null)
+    public static function getInstance(?Repeater $repeater = null)
     {
         if (self::$instance) {
             return self::$instance;

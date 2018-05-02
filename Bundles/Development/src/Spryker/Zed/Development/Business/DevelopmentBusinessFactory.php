@@ -150,7 +150,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createModuleBuilder()
     {
         return new ModuleBuilder(
-            $this->getConfig()->getPathToCore()
+            $this->getConfig()
         );
     }
 

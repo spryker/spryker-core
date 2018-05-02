@@ -501,4 +501,12 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
             $formDataProvider->getOptions($quoteTransfer)
         );
     }
+
+    /**
+     * @return \Spryker\Zed\ManualOrderEntryGui\Dependency\Plugin\QuoteExpanderPluginInterface[]
+     */
+    public function getQuoteExpanderPlugins()
+    {
+        return $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::PLUGINS_QUOTE_EXPANDER);
+    }
 }

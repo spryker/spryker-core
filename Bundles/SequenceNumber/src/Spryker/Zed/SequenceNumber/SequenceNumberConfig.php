@@ -18,7 +18,7 @@ class SequenceNumberConfig extends AbstractBundleConfig
      *
      * @return \Generated\Shared\Transfer\SequenceNumberSettingsTransfer
      */
-    public function getDefaultSettings(SequenceNumberSettingsTransfer $settings = null)
+    public function getDefaultSettings(?SequenceNumberSettingsTransfer $settings = null)
     {
         $defaultSettings = new SequenceNumberSettingsTransfer();
         $defaultSettings->setName($this->getSequenceName());

@@ -35,7 +35,7 @@ class View implements ViewInterface, WidgetContainerInterface
      * @param string[] $widgetPlugins
      * @param string|null $template
      */
-    public function __construct(array $data = [], array $widgetPlugins = [], string $template = null)
+    public function __construct(array $data = [], array $widgetPlugins = [], ?string $template = null)
     {
         $this->data = $data;
         $this->template = $template;

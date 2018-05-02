@@ -521,6 +521,9 @@ class BridgeBuilder
         $useStatements = [];
 
         foreach (array_unique($methodNames) as $methodName) {
+            if (empty($methodName)) {
+                continue;
+            }
             $method = $reflectionClass->getMethod($methodName);
 
             $docComment = $this->cleanMethodDocBlock($method->getDocComment());
