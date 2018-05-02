@@ -75,7 +75,6 @@ class CreateController extends AbstractController
                 ->calculateOffer($offerTransfer);
 
             $form = $this->getFactory()->getOfferForm($offerTransfer, $request);
-            $this->getFactory()->getFlashBag()->clear();
 
             if ($isSubmitPersist) {
                 $offerResponseTransfer = $this->getFactory()
@@ -166,7 +165,7 @@ class CreateController extends AbstractController
      */
     protected function getSuccessfulRedirect(OfferResponseTransfer $offerResponseTransfer)
     {
-        $this->getFactory()->getMessengerFacade()->getStoredMessages();
+        $this->getFactory()->createFlashMessageCleaner()->clearDuplicateMessages();
 
         $redirectUrl = Url::generate(
             static::REDIRECT_URL_OFFER_VIEW,

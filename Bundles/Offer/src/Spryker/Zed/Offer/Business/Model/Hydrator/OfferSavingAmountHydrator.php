@@ -53,8 +53,6 @@ class OfferSavingAmountHydrator implements OfferSavingAmountHydratorInterface
             $itemTransfer->setSavingAmount($savingAmount);
         }
 
-        $this->messengerFacade->getStoredMessages();
-
         return $offerTransfer;
     }
 

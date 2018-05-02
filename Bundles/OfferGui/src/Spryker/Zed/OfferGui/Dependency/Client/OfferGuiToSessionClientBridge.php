@@ -43,14 +43,4 @@ class OfferGuiToSessionClientBridge implements OfferGuiToSessionClientInterface
     {
         return $this->sessionClient->get($name, $default);
     }
-
-    /**
-     * @param string $name
-     *
-     * @return \Symfony\Component\HttpFoundation\Session\SessionBagInterface
-     */
-    public function getBag($name)
-    {
-        return $this->sessionClient->getBag($name);
-    }
 }

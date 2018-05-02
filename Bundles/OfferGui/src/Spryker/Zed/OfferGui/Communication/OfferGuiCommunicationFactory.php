@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\OfferGui\Communication\Form\DataProvider\OfferDataProvider;
 use Spryker\Zed\OfferGui\Communication\Form\Offer\EditOfferType;
 use Spryker\Zed\OfferGui\Communication\Handler\CreateRequestHandler;
+use Spryker\Zed\OfferGui\Communication\Message\FlashMessageCleaner;
+use Spryker\Zed\OfferGui\Communication\Message\FlashMessageCleanerInterface;
 use Spryker\Zed\OfferGui\Communication\Table\OffersTable;
 use Spryker\Zed\OfferGui\Communication\Table\OffersTableQueryBuilder;
 use Spryker\Zed\OfferGui\Communication\Table\OffersTableQueryBuilderInterface;
@@ -29,7 +31,6 @@ use Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilEncodingServiceInterfa
 use Spryker\Zed\OfferGui\Dependency\Service\OfferGuiToUtilSanitizeServiceInterface;
 use Spryker\Zed\OfferGui\OfferGuiDependencyProvider;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\SessionBagInterface;
 
 /**
  * @method \Spryker\Zed\OfferGui\OfferGuiConfig getConfig()
@@ -217,18 +218,10 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\Session\SessionBagInterface
+     * @return \Spryker\Zed\OfferGui\Communication\Message\FlashMessageCleanerInterface
      */
-    public function getFlashBag(): SessionBagInterface
+    public function createFlashMessageCleaner(): FlashMessageCleanerInterface
     {
-        return $this->getSessionClient()->getBag($this->getFlashBagName());
-    }
-
-    /**
-     * @return string
-     */
-    public function getFlashBagName(): string
-    {
-        return $this->getProvidedDependency(OfferGuiDependencyProvider::FLASH_BAG)->getName();
+        return new FlashMessageCleaner($this->getMessengerFacade());
     }
 }

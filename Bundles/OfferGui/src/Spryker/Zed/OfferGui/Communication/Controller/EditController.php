@@ -51,7 +51,7 @@ class EditController extends AbstractController
                 ->calculateOffer($offerTransfer);
 
             $form = $this->getFactory()->getOfferForm($offerTransfer, $request);
-            $this->getFactory()->getFlashBag()->clear();
+            $this->getFactory()->createFlashMessageCleaner()->clearDuplicateMessages();
 
             $this->updateOffer($offerTransfer, $request);
         }
