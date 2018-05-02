@@ -1,0 +1,24 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{# TODO: Update markup to meet Spryker requirements #}
+
+{% block content %}
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Product Name</th>
+            <th>SKU</th>
+            <th>Barcode</th>
+        </tr>
+        {% for productBarcode in productBarcodes %}
+            <tr>
+                <td>{{ productBarcode.product_id }}</td>
+                <td>{{ productBarcode.product_name }}</td>
+                <td>{{ productBarcode.product_sku }}</td>
+                <td>{{ productBarcode.barcode }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+{% endblock %}
