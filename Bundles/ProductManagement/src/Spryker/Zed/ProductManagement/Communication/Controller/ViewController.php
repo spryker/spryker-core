@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductManagement\Communication\Controller;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
@@ -142,6 +143,17 @@ class ViewController extends AddController
 
         $imageSets = $this->getProductImageSetCollection($imageSetCollection);
 
+        $productAbstractTransfer = new ProductAbstractTransfer();
+        $productAbstractTransfer->setSku($productTransfer->getAbstractSku());
+
+        $isProductBundle = $this->getFactory()
+            ->createProductTypeHelper()
+            ->isProductBundleByProductAbstract($productAbstractTransfer);
+
+        $isGiftCard = $this->getFactory()
+            ->createProductTypeHelper()
+            ->isGiftCardByProductAbstractTransfer($productAbstractTransfer);
+
         return $this->viewResponse([
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
             'currentProduct' => $productTransfer->toArray(),
@@ -151,6 +163,8 @@ class ViewController extends AddController
             'idProductAbstract' => $idProductAbstract,
             'productAttributes' => $attributes,
             'imageSetCollection' => $imageSets,
+            'isProductBundle' => $isProductBundle,
+            'isGiftCard' => $isGiftCard,
         ]);
     }
 

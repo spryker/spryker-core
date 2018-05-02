@@ -300,7 +300,7 @@ class ObjectBuilder extends PropelObjectBuilder
             if ($col->isTemporalType()) {
                 $script .= "
         if (\$result[\$keys[$num]] instanceof \DateTime) {
-            \$result[\$keys[$num]] = \$result[\$keys[$num]]->format('Y-m-d H:i:s.u');
+            \$result[\$keys[$num]] = \$result[\$keys[$num]]->format('" . $this->getTemporalFormatter($col) . "');
         }
         ";
             }
