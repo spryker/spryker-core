@@ -75,7 +75,7 @@ class AbstractProductRelationStorageListener extends AbstractPlugin
      *
      * @return void
      */
-    protected function storeDataSet(SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity, array $productRelations, SpyProductAbstractRelationStorage $spyProductAbstractRelationStorageEntity = null)
+    protected function storeDataSet(SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity, array $productRelations, ?SpyProductAbstractRelationStorage $spyProductAbstractRelationStorageEntity = null)
     {
         if ($spyProductAbstractRelationStorageEntity === null) {
             $spyProductAbstractRelationStorageEntity = new SpyProductAbstractRelationStorage();

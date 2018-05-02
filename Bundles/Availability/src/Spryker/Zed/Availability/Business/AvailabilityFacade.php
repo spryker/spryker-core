@@ -237,7 +237,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      *
      * @param string $sku
      * @param int $quantity
-     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return int
      */

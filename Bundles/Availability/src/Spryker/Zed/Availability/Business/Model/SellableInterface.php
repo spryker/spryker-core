@@ -37,7 +37,7 @@ interface SellableInterface
 
     /**
      * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return int
      */

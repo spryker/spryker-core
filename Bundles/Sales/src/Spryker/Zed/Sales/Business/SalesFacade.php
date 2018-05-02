@@ -247,7 +247,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function expandSalesOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer = null)
+    public function expandSalesOrder(QuoteTransfer $quoteTransfer, ?CheckoutResponseTransfer $checkoutResponseTransfer = null)
     {
         return $this->getFactory()
             ->createOrderExpander()

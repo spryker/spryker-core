@@ -112,8 +112,8 @@ class EventDispatcherTest extends Unit
      */
     protected function createEventDispatcher(
         EventCollectionInterface $eventCollection,
-        EventQueueProducerInterface $queueProducerMock = null,
-        EventLoggerInterface $eventLoggerMock = null
+        ?EventQueueProducerInterface $queueProducerMock = null,
+        ?EventLoggerInterface $eventLoggerMock = null
     ) {
 
         if ($queueProducerMock === null) {

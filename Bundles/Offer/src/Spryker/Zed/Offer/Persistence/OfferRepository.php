@@ -65,7 +65,7 @@ class OfferRepository extends AbstractRepository implements OfferRepositoryInter
 
     /**
      * @param \Orm\Zed\Offer\Persistence\SpyOfferQuery $spyOfferQuery
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param \Generated\Shared\Transfer\FilterTransfer|null $filterTransfer
      *
      * @return \Orm\Zed\Offer\Persistence\SpyOfferQuery
      */
@@ -88,7 +88,7 @@ class OfferRepository extends AbstractRepository implements OfferRepositoryInter
      *
      * @return \Orm\Zed\Offer\Persistence\SpyOfferQuery
      */
-    protected function applyPagination(SpyOfferQuery $spyOfferQuery, PaginationTransfer $paginationTransfer = null): SpyOfferQuery
+    protected function applyPagination(SpyOfferQuery $spyOfferQuery, ?PaginationTransfer $paginationTransfer = null): SpyOfferQuery
     {
         if (empty($paginationTransfer)) {
             return $spyOfferQuery;

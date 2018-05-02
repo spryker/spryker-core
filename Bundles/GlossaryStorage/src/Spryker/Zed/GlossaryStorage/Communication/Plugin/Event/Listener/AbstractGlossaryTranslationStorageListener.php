@@ -71,7 +71,7 @@ abstract class AbstractGlossaryTranslationStorageListener extends AbstractPlugin
      *
      * @return void
      */
-    protected function storeDataSet(array $spyGlossaryTranslationEntity, SpyGlossaryStorage $spyGlossaryStorage = null)
+    protected function storeDataSet(array $spyGlossaryTranslationEntity, ?SpyGlossaryStorage $spyGlossaryStorage = null)
     {
         if ($spyGlossaryStorage === null) {
             $spyGlossaryStorage = new SpyGlossaryStorage();

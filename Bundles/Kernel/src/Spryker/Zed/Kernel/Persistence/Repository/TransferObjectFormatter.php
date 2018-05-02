@@ -25,7 +25,7 @@ class TransferObjectFormatter extends ArrayFormatter
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface[]
      */
-    public function format(DataFetcherInterface $dataFetcher = null)
+    public function format(?DataFetcherInterface $dataFetcher = null)
     {
         $this->checkInit();
 
@@ -68,7 +68,7 @@ class TransferObjectFormatter extends ArrayFormatter
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|null
      */
-    public function formatOne(DataFetcherInterface $dataFetcher = null)
+    public function formatOne(?DataFetcherInterface $dataFetcher = null)
     {
         $this->checkInit();
         $result = null;

@@ -75,7 +75,7 @@ abstract class AbstractCmsBlockCategoryStorageListener extends AbstractPlugin im
      *
      * @return void
      */
-    protected function storeDataSet(CmsBlockCategoriesTransfer $cmsBlockCategoriesTransfer, SpyCmsBlockCategoryStorage $spyCmsBlockCategoryStorage = null)
+    protected function storeDataSet(CmsBlockCategoriesTransfer $cmsBlockCategoriesTransfer, ?SpyCmsBlockCategoryStorage $spyCmsBlockCategoryStorage = null)
     {
         if ($spyCmsBlockCategoryStorage === null) {
             $spyCmsBlockCategoryStorage = new SpyCmsBlockCategoryStorage();

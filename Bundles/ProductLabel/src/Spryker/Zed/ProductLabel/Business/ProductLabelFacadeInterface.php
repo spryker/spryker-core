@@ -171,5 +171,5 @@ interface ProductLabelFacadeInterface
      *
      * @return void
      */
-    public function updateDynamicProductLabelRelations(LoggerInterface $logger = null);
+    public function updateDynamicProductLabelRelations(?LoggerInterface $logger = null);
 }

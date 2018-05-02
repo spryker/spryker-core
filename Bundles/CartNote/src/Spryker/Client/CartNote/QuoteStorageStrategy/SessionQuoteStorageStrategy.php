@@ -66,7 +66,7 @@ class SessionQuoteStorageStrategy implements QuoteStorageStrategyInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setNoteToQuoteItem(string $note, string $sku, string $groupKey = null): QuoteResponseTransfer
+    public function setNoteToQuoteItem(string $note, string $sku, ?string $groupKey = null): QuoteResponseTransfer
     {
         $quoteTransfer = $this->quoteClient->getQuote();
         $quoteItemTransferCollection = $this->findItem($quoteTransfer, $sku, $groupKey);

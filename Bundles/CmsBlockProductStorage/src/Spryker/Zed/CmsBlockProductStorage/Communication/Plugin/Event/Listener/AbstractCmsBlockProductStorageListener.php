@@ -74,7 +74,7 @@ abstract class AbstractCmsBlockProductStorageListener extends AbstractPlugin imp
      *
      * @return void
      */
-    protected function storeDataSet(CmsBlockProductTransfer $cmsBlockProductsTransfer, SpyCmsBlockProductStorage $spyCmsBlockProductStorage = null)
+    protected function storeDataSet(CmsBlockProductTransfer $cmsBlockProductsTransfer, ?SpyCmsBlockProductStorage $spyCmsBlockProductStorage = null)
     {
         if ($spyCmsBlockProductStorage === null) {
             $spyCmsBlockProductStorage = new SpyCmsBlockProductStorage();

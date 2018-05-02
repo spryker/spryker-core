@@ -86,7 +86,7 @@ class ProductOptionGroupReaderTest extends MockProvider
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface
      */
-    protected function getQueryContainerMock(SpyProductOptionGroup $productOptionGroupEntity = null)
+    protected function getQueryContainerMock(?SpyProductOptionGroup $productOptionGroupEntity = null)
     {
         $groupCollection = $this->getMockBuilder(ObjectCollection::class)->getMock();
         $groupCollection->expects($this->any())->method('getFirst')->willReturn($productOptionGroupEntity);
