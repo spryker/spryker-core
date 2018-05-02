@@ -27,7 +27,7 @@ use Spryker\Zed\ProductMeasurementUnitDataImport\ProductMeasurementUnitDataImpor
 class ProductMeasurementSalesUnitDataImportPluginTest extends Unit
 {
     /**
-     * @var \SprykerTest\Zed\ProductMeasurementUnitDataImport\ProductMeasurementSalesUnitDataImportCommunicationTester
+     * @var \SprykerTest\Zed\ProductMeasurementUnitDataImport\ProductMeasurementUnitDataImportCommunicationTester
      */
     protected $tester;
 
