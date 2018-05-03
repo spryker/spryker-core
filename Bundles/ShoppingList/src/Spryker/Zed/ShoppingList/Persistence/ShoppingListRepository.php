@@ -15,8 +15,6 @@ use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListPaginationTransfer;
 use Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
-use Generated\Shared\Transfer\SpyShoppingListCompanyBusinessUnitEntityTransfer;
-use Generated\Shared\Transfer\SpyShoppingListCompanyUserEntityTransfer;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\ShoppingList\Persistence\Map\SpyShoppingListCompanyBusinessUnitTableMap;
 use Orm\Zed\ShoppingList\Persistence\Map\SpyShoppingListCompanyUserTableMap;
@@ -187,32 +185,32 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
      * @param int $idShoppingList
      * @param int $idCompanyBusinessUnit
      *
-     * @return \Generated\Shared\Transfer\SpyShoppingListCompanyBusinessUnitEntityTransfer|null
+     * @return bool
      */
-    public function getShoppingListCompanyBusinessUnit(int $idShoppingList, int $idCompanyBusinessUnit): ?SpyShoppingListCompanyBusinessUnitEntityTransfer
+    public function isShoppingListSharedCompanyBusinessUnit(int $idShoppingList, int $idCompanyBusinessUnit): bool
     {
         $shoppingListCompanyBusinessUnitEntityQuery = $this->getFactory()
             ->createShoppingListCompanyBusinessUnitQuery()
             ->filterByFkShoppingList($idShoppingList)
             ->filterByFkCompanyBusinessUnit($idCompanyBusinessUnit);
 
-        return $this->buildQueryFromCriteria($shoppingListCompanyBusinessUnitEntityQuery)->findOne();
+        return (bool)$this->buildQueryFromCriteria($shoppingListCompanyBusinessUnitEntityQuery)->count();
     }
 
     /**
      * @param int $idShoppingList
      * @param int $idCompanyUser
      *
-     * @return \Generated\Shared\Transfer\SpyShoppingListCompanyUserEntityTransfer|null
+     * @return bool
      */
-    public function getShoppingListCompanyUser(int $idShoppingList, int $idCompanyUser): ?SpyShoppingListCompanyUserEntityTransfer
+    public function isShoppingListSharedCompanyUser(int $idShoppingList, int $idCompanyUser): bool
     {
         $shoppingListCompanyUserEntityQuery = $this->getFactory()
             ->createShoppingListCompanyUserQuery()
             ->filterByFkShoppingList($idShoppingList)
             ->filterByFkCompanyUser($idCompanyUser);
 
-        return $this->buildQueryFromCriteria($shoppingListCompanyUserEntityQuery)->findOne();
+        return (bool)$this->buildQueryFromCriteria($shoppingListCompanyUserEntityQuery)->count();
     }
 
     /**

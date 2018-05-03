@@ -80,14 +80,7 @@ class QuoteToShoppingListConverter implements QuoteToShoppingListConverterInterf
 
                 $itemTransferCollection = $this->getQuoteItems($quoteResponseTransfer->getQuoteTransfer());
 
-                foreach ($itemTransferCollection as $item) {
-                    $shoppingListItemTransfer = (new ShoppingListItemTransfer())
-                        ->setFkShoppingList($shoppingListTransfer->getIdShoppingList())
-                        ->setQuantity($item->getQuantity())
-                        ->setSku($item->getSku());
-
-                    $this->shoppingListEntityManager->saveShoppingListItem($shoppingListItemTransfer);
-                }
+                $this->createShoppingListItems($itemTransferCollection, $shoppingListTransfer);
 
                 return $shoppingListTransfer;
             }
@@ -108,5 +101,23 @@ class QuoteToShoppingListConverter implements QuoteToShoppingListConverterInterf
         }
 
         return $itemTransferCollection;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransferCollection
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return void
+     */
+    protected function createShoppingListItems(array $itemTransferCollection, ShoppingListTransfer $shoppingListTransfer): void
+    {
+        foreach ($itemTransferCollection as $item) {
+            $shoppingListItemTransfer = (new ShoppingListItemTransfer())
+                ->setFkShoppingList($shoppingListTransfer->getIdShoppingList())
+                ->setQuantity($item->getQuantity())
+                ->setSku($item->getSku());
+
+            $this->shoppingListEntityManager->saveShoppingListItem($shoppingListItemTransfer);
+        }
     }
 }

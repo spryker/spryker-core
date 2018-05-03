@@ -71,14 +71,12 @@ class ShoppingListSharer implements ShoppingListSharerInterface
             return $shoppingListShareResponseTransfer;
         }
 
-        $shoppingListCompanyBusinessUnitEntityTransfer = $this->shoppingListRepository->getShoppingListCompanyBusinessUnit(
+        $isShoppingListSharedCompanyBusinessUnit = $this->shoppingListRepository->isShoppingListSharedCompanyBusinessUnit(
             $shoppingListTransfer->getIdShoppingList(),
             $shoppingListShareRequestTransfer->getIdCompanyBusinessUnit()
         );
 
-        $shoppingListShareResponseTransfer = new ShoppingListShareResponseTransfer();
-
-        if ($shoppingListCompanyBusinessUnitEntityTransfer) {
+        if ($isShoppingListSharedCompanyBusinessUnit) {
             $shoppingListShareResponseTransfer->setIsSuccess(false);
             $shoppingListShareResponseTransfer->setError(static::CANNOT_RESHARE_SHOPPING_LIST);
 
@@ -122,7 +120,7 @@ class ShoppingListSharer implements ShoppingListSharerInterface
             return $shoppingListShareResponseTransfer;
         }
 
-        $shoppingListCompanyUserEntityTransfer = $this->shoppingListRepository->getShoppingListCompanyUser(
+        $shoppingListCompanyUserEntityTransfer = $this->shoppingListRepository->isShoppingListSharedCompanyUser(
             $shoppingListTransfer->getIdShoppingList(),
             $shoppingListShareRequestTransfer->getIdCompanyUser()
         );

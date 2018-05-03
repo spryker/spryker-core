@@ -81,7 +81,7 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
         $shoppingListItemTransfer->requireSku();
         $shoppingListItemTransfer->requireQuantity();
 
-        if ($this->productFacade && !$this->productFacade->hasProductConcrete($shoppingListItemTransfer->getSku())) {
+        if (!$this->productFacade->hasProductConcrete($shoppingListItemTransfer->getSku())) {
             $this->messengerFacade->addSuccessMessage(
                 (new MessageTransfer())
                     ->setValue(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_ADD_FAILED)

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ShoppingList\Business\Model;
 
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
@@ -202,12 +203,7 @@ class ShoppingListReader implements ShoppingListReaderInterface
         $companyUserTransfer = $this->companyUserFacade->getCompanyUserById($idCompanyUser);
         $companyUserPermissionCollectionTransfer = new PermissionCollectionTransfer();
 
-        $companyUserOwnShoppingLists = $this->shoppingListRepository->findCustomerShoppingLists($companyUserTransfer->getCustomer()->getCustomerReference());
-        $companyUserOwnShoppingListIds = [];
-
-        foreach ($companyUserOwnShoppingLists->getShoppingLists() as $shoppingList) {
-            $companyUserOwnShoppingListIds[] = $shoppingList->getIdShoppingList();
-        }
+        $companyUserOwnShoppingListIds = $this->findCompanyUserShoppingListIds($companyUserTransfer);
 
         $companyUserPermissionCollectionTransfer = $this->addReadPermissionToPermissionCollectionTransfer(
             $companyUserPermissionCollectionTransfer,
@@ -354,5 +350,22 @@ class ShoppingListReader implements ShoppingListReaderInterface
             $shoppingListTransfer->getIdCompanyUser(),
             $shoppingListTransfer->getIdShoppingList()
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return array
+     */
+    protected function findCompanyUserShoppingListIds(CompanyUserTransfer $companyUserTransfer): array
+    {
+        $companyUserOwnShoppingLists = $this->shoppingListRepository->findCustomerShoppingLists($companyUserTransfer->getCustomer()->getCustomerReference());
+        $companyUserOwnShoppingListIds = [];
+
+        foreach ($companyUserOwnShoppingLists->getShoppingLists() as $shoppingList) {
+            $companyUserOwnShoppingListIds[] = $shoppingList->getIdShoppingList();
+        }
+
+        return $companyUserOwnShoppingListIds;
     }
 }

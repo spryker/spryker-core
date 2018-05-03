@@ -13,8 +13,6 @@ use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
-use Generated\Shared\Transfer\SpyShoppingListCompanyBusinessUnitEntityTransfer;
-use Generated\Shared\Transfer\SpyShoppingListCompanyUserEntityTransfer;
 
 /**
  * @method \Spryker\Zed\ShoppingList\Persistence\ShoppingListPersistenceFactory getFactory()
@@ -79,17 +77,17 @@ interface ShoppingListRepositoryInterface
      * @param int $idShoppingList
      * @param int $idCompanyBusinessUnit
      *
-     * @return \Generated\Shared\Transfer\SpyShoppingListCompanyBusinessUnitEntityTransfer|null
+     * @return bool
      */
-    public function getShoppingListCompanyBusinessUnit(int $idShoppingList, int $idCompanyBusinessUnit): ?SpyShoppingListCompanyBusinessUnitEntityTransfer;
+    public function isShoppingListSharedCompanyBusinessUnit(int $idShoppingList, int $idCompanyBusinessUnit): bool;
 
     /**
      * @param int $idShoppingList
      * @param int $idCompanyUser
      *
-     * @return \Generated\Shared\Transfer\SpyShoppingListCompanyUserEntityTransfer|null
+     * @return bool
      */
-    public function getShoppingListCompanyUser(int $idShoppingList, int $idCompanyUser): ?SpyShoppingListCompanyUserEntityTransfer;
+    public function isShoppingListSharedCompanyUser(int $idShoppingList, int $idCompanyUser): bool;
 
     /**
      * @param int $idCompanyBusinessUnit

@@ -85,7 +85,7 @@ class ShoppingListWriter implements ShoppingListWriterInterface
         $shoppingListResponseTransfer = new ShoppingListResponseTransfer();
         $shoppingListResponseTransfer->setIsSuccess(false);
 
-        if (!$shoppingListTransfer->getIdShoppingList() && !$this->checkShoppingListWithSameName($shoppingListTransfer)) {
+        if (!$this->checkShoppingListWithSameName($shoppingListTransfer)) {
             $shoppingListResponseTransfer->addError(static::DUPLICATE_NAME_SHOPPING_LIST);
 
             return $shoppingListResponseTransfer;
@@ -146,7 +146,7 @@ class ShoppingListWriter implements ShoppingListWriterInterface
      */
     protected function checkShoppingListWithSameName(ShoppingListTransfer $shoppingListTransfer): bool
     {
-        return $this->findCustomerShoppingListByName($shoppingListTransfer) === null;
+        return $shoppingListTransfer->getIdShoppingList() && $this->findCustomerShoppingListByName($shoppingListTransfer) === null;
     }
 
     /**

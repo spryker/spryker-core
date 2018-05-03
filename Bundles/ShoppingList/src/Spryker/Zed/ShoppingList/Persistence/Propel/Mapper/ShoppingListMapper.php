@@ -16,7 +16,7 @@ class ShoppingListMapper implements ShoppingListMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\SpyShoppingListEntityTransfer $shoppingListEntityTransfer
-     * @param \Generated\Shared\Transfer\ShoppingListTransfer|null $shoppingListTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */
@@ -34,15 +34,7 @@ class ShoppingListMapper implements ShoppingListMapperInterface
             $shoppingListTransfer->setCreatedAt($virtualPropertiesCollection[static::FIELD_CREATED_AT]);
         }
 
-        $numberOfItems = [];
-        $sum = 0;
-        foreach ($shoppingListEntityTransfer->getSpyShoppingListItems() as $shoppingListItem) {
-            $sum += $shoppingListItem->getQuantity();
-            $numberOfItems[$shoppingListItem->getSku()] = 1;
-        }
-
-        $shoppingListTransfer->setSum($sum);
-        $shoppingListTransfer->setNumberOfItems(array_sum($numberOfItems));
+        $this->addItemsCount($shoppingListEntityTransfer, $shoppingListTransfer);
 
         return $shoppingListTransfer;
     }
@@ -74,5 +66,24 @@ class ShoppingListMapper implements ShoppingListMapperInterface
         $shoppingListEntity->fromArray($shoppingListTransfer->modifiedToArray());
 
         return $shoppingListEntity;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyShoppingListEntityTransfer $shoppingListEntityTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return void
+     */
+    protected function addItemsCount(SpyShoppingListEntityTransfer $shoppingListEntityTransfer, ShoppingListTransfer $shoppingListTransfer): void
+    {
+        $numberOfItems = [];
+        $sum = 0;
+        foreach ($shoppingListEntityTransfer->getSpyShoppingListItems() as $shoppingListItem) {
+            $sum += $shoppingListItem->getQuantity();
+            $numberOfItems[$shoppingListItem->getSku()] = 1;
+        }
+
+        $shoppingListTransfer->setSum($sum);
+        $shoppingListTransfer->setNumberOfItems(array_sum($numberOfItems));
     }
 }
