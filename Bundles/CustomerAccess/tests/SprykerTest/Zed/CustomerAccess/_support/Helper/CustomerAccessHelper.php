@@ -23,11 +23,11 @@ class CustomerAccessHelper extends Module
         $data = [
             CustomerAccessTransfer::CONTENT_TYPE_ACCESS => [
                 [
-                    ContentTypeAccessTransfer::CAN_ACCESS => true,
+                    ContentTypeAccessTransfer::HAS_ACCESS => true,
                     ContentTypeAccessTransfer::CONTENT_TYPE => 'test content 1',
                 ],
                 [
-                    ContentTypeAccessTransfer::CAN_ACCESS => false,
+                    ContentTypeAccessTransfer::HAS_ACCESS => false,
                     ContentTypeAccessTransfer::CONTENT_TYPE => 'test content 2',
                 ],
             ],
