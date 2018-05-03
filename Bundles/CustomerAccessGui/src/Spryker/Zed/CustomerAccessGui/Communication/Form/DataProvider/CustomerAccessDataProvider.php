@@ -27,7 +27,7 @@ class CustomerAccessDataProvider
      * @param \Spryker\Zed\CustomerAccessGui\Dependency\Facade\CustomerAccessGuiToCustomerAccessFacadeInterface $customerAccessFacade
      * @param \Generated\Shared\Transfer\CustomerAccessTransfer|null $customerAccessTransfer
      */
-    public function __construct(CustomerAccessGuiToCustomerAccessFacadeInterface $customerAccessFacade, CustomerAccessTransfer $customerAccessTransfer = null)
+    public function __construct(CustomerAccessGuiToCustomerAccessFacadeInterface $customerAccessFacade, ?CustomerAccessTransfer $customerAccessTransfer = null)
     {
         $this->customerAccessFacade = $customerAccessFacade;
         $this->customerAccessTransfer = $customerAccessTransfer;
