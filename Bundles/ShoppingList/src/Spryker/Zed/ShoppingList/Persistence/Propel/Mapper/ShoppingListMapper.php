@@ -30,6 +30,9 @@ class ShoppingListMapper implements ShoppingListMapperInterface
                 $virtualPropertiesCollection[static::FIELD_FIRST_NAME] . ' ' . $virtualPropertiesCollection[static::FIELD_LAST_NAME]
             );
         }
+        if (isset($virtualPropertiesCollection[static::FIELD_CREATED_AT])) {
+            $shoppingListTransfer->setCreatedAt($virtualPropertiesCollection[static::FIELD_CREATED_AT]);
+        }
 
         $numberOfItems = [];
         $sum = 0;

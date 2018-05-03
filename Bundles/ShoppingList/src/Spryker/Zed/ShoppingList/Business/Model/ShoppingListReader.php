@@ -23,7 +23,7 @@ use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToCompanyUserFacadeIn
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterface;
 use Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface;
 
-class Reader implements ReaderInterface
+class ShoppingListReader implements ShoppingListReaderInterface
 {
     use PermissionAwareTrait;
 
@@ -33,7 +33,7 @@ class Reader implements ReaderInterface
     protected $shoppingListRepository;
 
     /**
-     * @var \Spryker\Zed\ShoppingList\Dependency\Plugin\ItemExpanderPluginInterface[]
+     * @var \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemExpanderPluginInterface[]
      */
     protected $itemExpanderPlugins;
 
@@ -51,7 +51,7 @@ class Reader implements ReaderInterface
      * @param \Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface $shoppingListRepository
      * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToCompanyUserFacadeInterface $customerFacade
-     * @param \Spryker\Zed\ShoppingList\Dependency\Plugin\ItemExpanderPluginInterface[] $itemExpanderPlugins
+     * @param \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemExpanderPluginInterface[] $itemExpanderPlugins
      */
     public function __construct(
         ShoppingListRepositoryInterface $shoppingListRepository,

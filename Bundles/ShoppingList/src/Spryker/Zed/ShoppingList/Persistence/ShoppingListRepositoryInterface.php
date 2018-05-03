@@ -26,7 +26,7 @@ interface ShoppingListRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListTransfer|null
      */
-    public function findCustomerShoppingListWithSameName(ShoppingListTransfer $shoppingListTransfer): ?ShoppingListTransfer;
+    public function findCustomerShoppingListByName(ShoppingListTransfer $shoppingListTransfer): ?ShoppingListTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer

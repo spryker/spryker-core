@@ -35,7 +35,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
      *
      * @return \Generated\Shared\Transfer\ShoppingListTransfer|null
      */
-    public function findCustomerShoppingListWithSameName(ShoppingListTransfer $shoppingListTransfer): ?ShoppingListTransfer
+    public function findCustomerShoppingListByName(ShoppingListTransfer $shoppingListTransfer): ?ShoppingListTransfer
     {
         $shoppingListQuery = $this->createCustomerShoppingListQuery($shoppingListTransfer->getCustomerReference())
             ->filterByName($shoppingListTransfer->getName());
@@ -80,7 +80,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     public function findShoppingListById(ShoppingListTransfer $shoppingListTransfer): ?ShoppingListTransfer
     {
         $shoppingListQuery = $this->getFactory()->createShoppingListQuery()
-            ->joinWithSpyShoppingListItem()
+            ->leftJoinWithSpyShoppingListItem()
             ->filterByIdShoppingList($shoppingListTransfer->getIdShoppingList());
 
         $shoppingListEntityTransferCollection = $this->buildQueryFromCriteria($shoppingListQuery)->find();
@@ -260,7 +260,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
             ->useSpyShoppingListCompanyUserQuery()
             ->filterByFkCompanyUser($idCompanyUser)
             ->endUse()
-            ->joinWithSpyShoppingListItem();
+            ->leftJoinWithSpyShoppingListItem();
 
         $shoppingListsEntityTransferCollection = $this->buildQueryFromCriteria($shoppingListsQuery)->find();
 
@@ -284,7 +284,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
             ->useSpyShoppingListCompanyBusinessUnitQuery()
             ->filterByFkCompanyBusinessUnit($idCompanyBusinessUnit)
             ->endUse()
-            ->joinWithSpyShoppingListItem();
+            ->leftJoinWithSpyShoppingListItem();
 
         $shoppingListsEntityTransferCollection = $this->buildQueryFromCriteria($shoppingListQuery)->find();
 
@@ -307,6 +307,6 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
             ->withColumn(SpyCustomerTableMap::COL_LAST_NAME, ShoppingListMapperInterface::FIELD_LAST_NAME)
             ->filterByCustomerReference($customerReference)
             ->orderByIdShoppingList()
-            ->joinWithSpyShoppingListItem();
+            ->leftJoinWithSpyShoppingListItem();
     }
 }

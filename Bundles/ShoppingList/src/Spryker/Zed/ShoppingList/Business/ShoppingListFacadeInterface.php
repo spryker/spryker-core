@@ -26,19 +26,19 @@ interface ShoppingListFacadeInterface
 {
     /**
      * Specification:
-     * TODO: Specs
+     * - Create new shopping list entity if it does not exist.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
      */
     public function createShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer;
 
     /**
      * Specification:
-     * TODO: Specs
+     * - Update shopping list entity if it exist or create new.
      *
      * @api
      *
@@ -50,7 +50,7 @@ interface ShoppingListFacadeInterface
 
     /**
      * Specification:
-     * TODO: Specs
+     *  - Remove shopping list.
      *
      * @api
      *
@@ -62,7 +62,7 @@ interface ShoppingListFacadeInterface
 
     /**
      * Specification:
-     * TODO: Specs
+     *  - Add item to shopping list.
      *
      * @api
      *
@@ -74,7 +74,7 @@ interface ShoppingListFacadeInterface
 
     /**
      * Specification:
-     * TODO: Specs
+     *  - Remove item by id.
      *
      * @api
      *
@@ -86,7 +86,7 @@ interface ShoppingListFacadeInterface
 
     /**
      * Specification:
-     * TODO: Specs
+     *  - Load shopping list by id.
      *
      * @api
      *
@@ -98,7 +98,7 @@ interface ShoppingListFacadeInterface
 
     /**
      * Specification:
-     * TODO: Specs
+     *  - Get shopping list detail information.
      *
      * @api
      *
@@ -110,7 +110,7 @@ interface ShoppingListFacadeInterface
 
     /**
      * Specification:
-     * TODO: Specs
+     *  - Get shopping list collection by customer.
      *
      * @api
      *
@@ -122,7 +122,7 @@ interface ShoppingListFacadeInterface
 
     /**
      * Specification:
-     * TODO: Specs
+     *  - Get items collection for shopping list collection.
      *
      * @api
      *
@@ -134,7 +134,7 @@ interface ShoppingListFacadeInterface
 
     /**
      * Specification:
-     * TODO: Specs
+     *  - Get shopping list item collection by ids.
      *
      * @api
      *
@@ -146,7 +146,7 @@ interface ShoppingListFacadeInterface
 
     /**
      * Specification:
-     * TODO: Specs
+     *  - Update shopping list item.
      *
      * @api
      *
@@ -158,7 +158,7 @@ interface ShoppingListFacadeInterface
 
     /**
      * Specification:
-     * TODO: Specs
+     *  - Push items from quote to shopping list.
      *
      * @api
      *
@@ -170,7 +170,7 @@ interface ShoppingListFacadeInterface
 
     /**
      * Specification:
-     * TODO: Specs
+     *  - Install shopping list permissions.
      *
      * @api
      *
@@ -180,7 +180,7 @@ interface ShoppingListFacadeInterface
 
     /**
      * Specification:
-     * TODO: Specs
+     *  - Get shopping list permission groups.
      *
      * @api
      *
@@ -190,7 +190,7 @@ interface ShoppingListFacadeInterface
 
     /**
      * Specification:
-     * TODO: Specs
+     *  - Share shopping list with company business unit.
      *
      * @api
      *
@@ -202,7 +202,7 @@ interface ShoppingListFacadeInterface
 
     /**
      * Specification:
-     * TODO: Specs
+     *  - Share shopping list with company user.
      *
      * @api
      *
@@ -214,7 +214,7 @@ interface ShoppingListFacadeInterface
 
     /**
      * Specification:
-     * TODO: Specs
+     *  - Find company user shopping list permissions.
      *
      * @api
      *

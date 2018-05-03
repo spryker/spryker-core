@@ -65,10 +65,7 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
     {
         $this->getFactory()
             ->createShoppingListItemQuery()
-            ->useSpyShoppingListQuery()
-            ->filterByName($shoppingListTransfer->getName())
-            ->filterByCustomerReference($shoppingListTransfer->getCustomerReference())
-            ->endUse()
+            ->filterByFkShoppingList($shoppingListTransfer->getIdShoppingList())
             ->delete();
     }
 

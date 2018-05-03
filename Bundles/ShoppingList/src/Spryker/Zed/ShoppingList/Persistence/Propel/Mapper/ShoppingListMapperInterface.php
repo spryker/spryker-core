@@ -16,6 +16,7 @@ interface ShoppingListMapperInterface
 {
     public const FIELD_FIRST_NAME = 'first_name';
     public const FIELD_LAST_NAME = 'last_name';
+    public const FIELD_CREATED_AT = 'created_at';
 
     /**
      * @param \Generated\Shared\Transfer\SpyShoppingListEntityTransfer $shoppingListEntityTransfer

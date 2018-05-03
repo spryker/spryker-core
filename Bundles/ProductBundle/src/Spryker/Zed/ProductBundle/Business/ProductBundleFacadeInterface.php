@@ -334,4 +334,17 @@ interface ProductBundleFacadeInterface
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
     public function findBundleItemsInQuote(QuoteTransfer $quoteTransfer, $sku, $groupKey): array;
+
+    /**
+     * Specification:
+     *  - Find all items in quote.
+     *  - Group bundle items as one.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function extractQuoteItems(QuoteTransfer $quoteTransfer): array;
 }

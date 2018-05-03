@@ -62,7 +62,7 @@ class ShoppingListSharer implements ShoppingListSharerInterface
             ->setIdShoppingList($shoppingListShareRequestTransfer->getIdShoppingList());
 
         $shoppingListTransfer = $this->getShoppingListById($shoppingListTransfer);
-        $shoppingListTransfer->setIdCompanyUser($shoppingListShareRequestTransfer->getIdCompanyUser());
+        $shoppingListTransfer->setIdCompanyUser($shoppingListShareRequestTransfer->getRequesterId());
 
         if (!$this->checkWritePermission($shoppingListTransfer)) {
             $shoppingListShareResponseTransfer->setIsSuccess(false);
@@ -113,7 +113,7 @@ class ShoppingListSharer implements ShoppingListSharerInterface
             ->setIdShoppingList($shoppingListShareRequestTransfer->getIdShoppingList());
 
         $shoppingListTransfer = $this->getShoppingListById($shoppingListTransfer);
-        $shoppingListTransfer->setIdCompanyUser($shoppingListShareRequestTransfer->getIdCompanyUser());
+        $shoppingListTransfer->setIdCompanyUser($shoppingListShareRequestTransfer->getRequesterId());
 
         if (!$this->checkWritePermission($shoppingListTransfer)) {
             $shoppingListShareResponseTransfer->setIsSuccess(false);

@@ -384,4 +384,18 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
             ->createQuoteBundleItemsFinder()
             ->findItems($quoteTransfer, $sku, $groupKey);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function extractQuoteItems(QuoteTransfer $quoteTransfer): array
+    {
+        return $this->getFactory()->createQuoteItemsGrouper()->extractQuoteItems($quoteTransfer);
+    }
 }
