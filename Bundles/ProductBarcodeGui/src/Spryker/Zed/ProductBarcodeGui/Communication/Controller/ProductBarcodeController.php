@@ -23,10 +23,10 @@ class ProductBarcodeController extends AbstractController
      */
     public function indexAction(Request $request): array
     {
-        $productBarcodeTable = $this->getFactory()->createProductBarcodeTable();
+        $productBarcodesTable = $this->getFactory()->createProductBarcodeTable();
 
         return [
-            'productBarcodeTable' => $productBarcodeTable->render(),
+            'productBarcodesTable' => $productBarcodesTable->render(),
         ];
     }
 

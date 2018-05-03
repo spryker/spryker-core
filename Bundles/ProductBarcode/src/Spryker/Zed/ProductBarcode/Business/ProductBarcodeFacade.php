@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductBarcode\Business;
 
 use Generated\Shared\Transfer\BarcodeResponseTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Orm\Zed\ProductBarcode\Persistence\SpyProductBarcode;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
