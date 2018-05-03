@@ -14,9 +14,6 @@ use Spryker\Client\ProductReview\Storage\ProductAbstractReviewStorageReader;
 use Spryker\Client\ProductReview\Zed\ProductReviewStub;
 use Spryker\Shared\ProductReview\KeyBuilder\ProductAbstractReviewResourceKeyBuilder;
 
-/**
- * @method \Spryker\Client\ProductReview\ProductReviewConfig getConfig()
- */
 class ProductReviewFactory extends AbstractFactory
 {
     /**
@@ -90,13 +87,26 @@ class ProductReviewFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated use getProductReviewConfig
+     *
+     * @return \Spryker\Client\ProductReview\ProductReviewConfig
+     */
+    public function getConfig()
+    {
+        return $this->getProductReviewConfig();
+    }
+
+    /**
      * Exposes the protected getConfig() method as public method.
      *
      * @return \Spryker\Client\ProductReview\ProductReviewConfig
      */
     public function getProductReviewConfig()
     {
-        return parent::getConfig();
+        /** @var \Spryker\Client\ProductReview\ProductReviewConfig $config */
+        $config = parent::getConfig();
+
+        return $config;
     }
 
     /**

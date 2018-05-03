@@ -77,6 +77,6 @@ class ProductReviewClient extends AbstractClient implements ProductReviewClientI
      */
     public function getMaximumRating()
     {
-        return $this->getFactory()->getProductReviewConfig()->getMaximumRating();
+        return $this->getFactory()->getConfig()->getMaximumRating();
     }
 }
