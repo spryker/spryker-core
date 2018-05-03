@@ -26,7 +26,7 @@ interface DataImportFacadeInterface
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
-    public function import(DataImporterConfigurationTransfer $dataImporterConfiguration = null);
+    public function import(?DataImporterConfigurationTransfer $dataImporterConfiguration = null);
 
     /**
      * Specification:

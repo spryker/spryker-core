@@ -6,8 +6,7 @@
 {% block section_title widget_title %}
 
 {% block content %}
-
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Create Order' | trans } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Create Order' } %}
         {% block widget_content %}
 
             {% if forms|length %}

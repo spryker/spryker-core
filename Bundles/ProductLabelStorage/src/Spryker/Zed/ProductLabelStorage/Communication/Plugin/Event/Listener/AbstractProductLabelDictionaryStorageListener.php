@@ -97,7 +97,7 @@ class AbstractProductLabelDictionaryStorageListener extends AbstractPlugin
     protected function storeDataSet(
         ProductLabelDictionaryStorageTransfer $productLabelDictionaryStorageTransfer,
         $localeName,
-        SpyProductLabelDictionaryStorage $spyProductLabelStorageEntity = null
+        ?SpyProductLabelDictionaryStorage $spyProductLabelStorageEntity = null
     ) {
         if ($spyProductLabelStorageEntity === null) {
             $spyProductLabelStorageEntity = new SpyProductLabelDictionaryStorage();

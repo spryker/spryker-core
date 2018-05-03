@@ -38,8 +38,8 @@ class DiscountFormTabs extends AbstractTabs
      */
     public function __construct(
         FormInterface $discountForm,
-        FormInterface $voucherForm = null,
-        DiscountConfiguratorTransfer $discountConfiguratorTransfer = null
+        ?FormInterface $voucherForm = null,
+        ?DiscountConfiguratorTransfer $discountConfiguratorTransfer = null
     ) {
         $this->discountForm = $discountForm;
         $this->voucherForm = $voucherForm;

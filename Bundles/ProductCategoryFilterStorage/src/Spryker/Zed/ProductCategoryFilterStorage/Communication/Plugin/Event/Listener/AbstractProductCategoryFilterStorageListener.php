@@ -60,7 +60,7 @@ class AbstractProductCategoryFilterStorageListener extends AbstractPlugin
      *
      * @return void
      */
-    protected function storeDataSet($idCategory, array $filterData, SpyProductCategoryFilterStorage $spyProductCategoryFilterStorage = null)
+    protected function storeDataSet($idCategory, array $filterData, ?SpyProductCategoryFilterStorage $spyProductCategoryFilterStorage = null)
     {
         if ($spyProductCategoryFilterStorage === null) {
             $spyProductCategoryFilterStorage = new SpyProductCategoryFilterStorage();

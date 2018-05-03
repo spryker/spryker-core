@@ -69,7 +69,7 @@ class AbstractRedirectStorageListener extends AbstractPlugin
      *
      * @return void
      */
-    protected function storeDataSet(array $spyRedirectEntity, SpyUrlRedirectStorage $spyUrlRedirectStorage = null)
+    protected function storeDataSet(array $spyRedirectEntity, ?SpyUrlRedirectStorage $spyUrlRedirectStorage = null)
     {
         if ($spyUrlRedirectStorage === null) {
             $spyUrlRedirectStorage = new SpyUrlRedirectStorage();

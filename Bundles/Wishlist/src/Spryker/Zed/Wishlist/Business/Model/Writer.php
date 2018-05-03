@@ -48,7 +48,7 @@ class Writer implements WriterInterface
     public function __construct(
         WishlistQueryContainerInterface $queryContainer,
         ReaderInterface $reader,
-        WishlistToProductInterface $productFacade = null
+        ?WishlistToProductInterface $productFacade = null
     ) {
         $this->queryContainer = $queryContainer;
         $this->reader = $reader;

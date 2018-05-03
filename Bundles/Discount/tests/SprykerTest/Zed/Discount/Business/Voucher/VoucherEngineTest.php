@@ -206,9 +206,9 @@ class VoucherEngineTest extends Unit
      * @return \Spryker\Zed\Discount\Business\Voucher\VoucherEngineInterface
      */
     protected function createVoucherEngine(
-        DiscountConfig $discountConfigMock = null,
-        DiscountQueryContainerInterface $discountQueryContainerMock = null,
-        SpyDiscountVoucher $discountVoucherEntity = null
+        ?DiscountConfig $discountConfigMock = null,
+        ?DiscountQueryContainerInterface $discountQueryContainerMock = null,
+        ?SpyDiscountVoucher $discountVoucherEntity = null
     ) {
 
         if (!$discountConfigMock) {

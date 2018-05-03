@@ -23,7 +23,7 @@ class PropelArraySetFormatter extends SimpleArrayFormatter
      *
      * @return $this|\Propel\Runtime\Formatter\AbstractFormatter The current formatter object
      */
-    public function init(BaseModelCriteria $criteria, DataFetcherInterface $dataFetcher = null)
+    public function init(BaseModelCriteria $criteria, ?DataFetcherInterface $dataFetcher = null)
     {
         $this->dbName = $criteria->getDbName();
         $this->setClass($criteria->getModelName());
@@ -44,7 +44,7 @@ class PropelArraySetFormatter extends SimpleArrayFormatter
      *
      * @return array
      */
-    public function format(DataFetcherInterface $dataFetcher = null)
+    public function format(?DataFetcherInterface $dataFetcher = null)
     {
         $this->checkInit();
         if ($dataFetcher) {

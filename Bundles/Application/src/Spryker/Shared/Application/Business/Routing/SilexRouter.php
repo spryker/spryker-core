@@ -39,7 +39,7 @@ class SilexRouter implements RouterInterface
      * @param \Pimple $app
      * @param \Psr\Log\LoggerInterface|null $logger
      */
-    public function __construct(Pimple $app, LoggerInterface $logger = null)
+    public function __construct(Pimple $app, ?LoggerInterface $logger = null)
     {
         $this->app = $app;
         $this->logger = $logger;

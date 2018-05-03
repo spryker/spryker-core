@@ -401,7 +401,7 @@ class Writer implements WriterInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */
-    protected function createShoppingListIfNotExists(string $customerReference, string $shoppingListName = null): ShoppingListTransfer
+    protected function createShoppingListIfNotExists(string $customerReference, ?string $shoppingListName = null): ShoppingListTransfer
     {
         if (!$shoppingListName) {
             return $this->createDefaultShoppingListIfNotExists($customerReference);

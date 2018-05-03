@@ -54,7 +54,7 @@ class TotalQuantityDecisionRuleTest extends BaseRuleTester
      *
      * @return \Spryker\Zed\Discount\Business\DecisionRule\GrandTotalDecisionRule
      */
-    protected function createTotalQuantityDecisionRule(ComparatorOperatorsInterface $comparatorMock = null)
+    protected function createTotalQuantityDecisionRule(?ComparatorOperatorsInterface $comparatorMock = null)
     {
         if ($comparatorMock === null) {
             $comparatorMock = $this->createComparatorMock();
