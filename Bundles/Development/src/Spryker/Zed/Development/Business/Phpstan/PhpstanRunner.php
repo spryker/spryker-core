@@ -95,7 +95,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
             $output->writeln('<error>Total errors found: ' . $this->errorCount . '</error>');
         }
 
-        return (int)$resultCode;
+        return $resultCode;
     }
 
     /**
