@@ -30,7 +30,7 @@ class BundleProductQuoteItemFinderPlugin extends AbstractPlugin implements Quote
      *
      * @return \Generated\Shared\Transfer\ItemTransfer|null
      */
-    public function findItem(QuoteTransfer $quoteTransfer, string $sku, string $groupKey = null): ?ItemTransfer
+    public function findItem(QuoteTransfer $quoteTransfer, string $sku, ?string $groupKey = null): ?ItemTransfer
     {
         return $this->getFacade()->findItemInQuote($quoteTransfer, $sku, $groupKey);
     }

@@ -5,16 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MultiCart\Persistence;
+namespace Spryker\Client\PersistentCart\QuoteWriter;
 
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface MultiCartRepositoryInterface
+interface QuoteCreatorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return string
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function resolveCustomerQuoteName(QuoteTransfer $quoteTransfer): string;
+    public function createQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 }

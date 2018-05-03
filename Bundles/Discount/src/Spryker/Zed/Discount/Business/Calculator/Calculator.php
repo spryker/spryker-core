@@ -300,7 +300,7 @@ class Calculator implements CalculatorInterface
      *
      * @return void
      */
-    protected function addNewCartRuleDiscountsAppliedMessage(array $collectedDiscountTransferCollection, ArrayObject $oldCartRuleDiscountTransferCollection)
+    protected function addNewCartRuleDiscountsAppliedMessage(array $collectedDiscountTransferCollection, ArrayObject $oldCartRuleDiscountTransferCollection): void
     {
         $oldCartRulesIds = $this->getCartRulesDiscountIds($oldCartRuleDiscountTransferCollection);
         foreach ($collectedDiscountTransferCollection as $discountTransfer) {

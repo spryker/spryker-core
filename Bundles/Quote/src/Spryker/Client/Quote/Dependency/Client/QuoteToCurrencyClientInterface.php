@@ -19,5 +19,5 @@ interface QuoteToCurrencyClientInterface
      *
      * @return void
      */
-    public function setCurrentCurrencyIsoCode(string $currencyIsoCode);
+    public function setCurrentCurrencyIsoCode(string $currencyIsoCode): void;
 }

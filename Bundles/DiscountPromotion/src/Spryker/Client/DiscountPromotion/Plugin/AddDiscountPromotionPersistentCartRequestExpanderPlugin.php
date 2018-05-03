@@ -10,9 +10,10 @@ namespace Spryker\Client\DiscountPromotion\Plugin;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 use Spryker\Client\PersistentCartExtension\Dependency\Plugin\PersistentCartChangeExpanderPluginInterface;
 
-class AddDiscountPromotionPersistentCartRequestExpandPlugin implements PersistentCartChangeExpanderPluginInterface
+class AddDiscountPromotionPersistentCartRequestExpanderPlugin implements PersistentCartChangeExpanderPluginInterface
 {
     public const URL_PARAM_ID_DISCOUNT_PROMOTION = 'idDiscountPromotion';
+
     /**
      * Specification:
      * - Adds discount promotion id to quote items if it exist in params

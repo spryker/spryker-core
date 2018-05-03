@@ -23,6 +23,6 @@ interface QuoteResolverInterface
     public function resolveCustomerQuote(
         int $idQuote,
         CustomerTransfer $customerTransfer,
-        QuoteUpdateRequestAttributesTransfer $quoteUpdateRequestAttributesTransfer = null
+        ?QuoteUpdateRequestAttributesTransfer $quoteUpdateRequestAttributesTransfer = null
     ): QuoteResponseTransfer;
 }

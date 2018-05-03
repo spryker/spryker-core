@@ -16,7 +16,7 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
 {
     const BUNDLE_ITEMS = 'bundleItems';
     const BUNDLE_PRODUCT = 'bundleProduct';
-    const GROUP_KEY_DELIMITER = '_';
+    protected const GROUP_KEY_FORMAT = '%s_%s';
 
     /**
      * @var array
@@ -126,7 +126,7 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
     protected function buildGroupKey(ItemTransfer $itemTransfer): string
     {
         if ($itemTransfer->getGroupKeyPrefix()) {
-            return $itemTransfer->getGroupKeyPrefix() . static::GROUP_KEY_DELIMITER . $itemTransfer->getSku();
+            return sprintf(static::GROUP_KEY_FORMAT, $itemTransfer->getGroupKeyPrefix(), $itemTransfer->getSku());
         }
 
         return $itemTransfer->getSku();

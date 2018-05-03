@@ -21,7 +21,7 @@ class QuickOrderQuoteNameExpanderPlugin extends AbstractPlugin implements Persis
 
     /**
      * Specification:
-     * - Takes quote id form params and replace it in quote change request.
+     * - Takes quote id from params and replace it in quote change request.
      *
      * @api
      *
@@ -32,17 +32,22 @@ class QuickOrderQuoteNameExpanderPlugin extends AbstractPlugin implements Persis
      */
     public function extend(PersistentCartChangeTransfer $cartChangeTransfer, array $params = []): PersistentCartChangeTransfer
     {
-        if (isset($params[self::PARAM_SUBMIT_BUTTON_CREATE_ORDER])) {
-            $quoteUpdateRequestAttributes = new QuoteUpdateRequestAttributesTransfer();
-            if ($cartChangeTransfer->getQuoteUpdateRequestAttributes()) {
-                $quoteUpdateRequestAttributes = $cartChangeTransfer->getQuoteUpdateRequestAttributes();
-            }
-            $quoteUpdateRequestAttributes->setName(
-                sprintf($this->getFactory()->getMultiCartConfig()->getQuickOrderQuoteName(), date('Y-m-d H:i:s'))
-            );
-            $cartChangeTransfer->setIdQuote(0);
-            $cartChangeTransfer->setQuoteUpdateRequestAttributes($quoteUpdateRequestAttributes);
+        if (!isset($params[self::PARAM_SUBMIT_BUTTON_CREATE_ORDER])) {
+            return $cartChangeTransfer;
         }
+
+        $quoteUpdateRequestAttributes = new QuoteUpdateRequestAttributesTransfer();
+        if ($cartChangeTransfer->getQuoteUpdateRequestAttributes()) {
+            $quoteUpdateRequestAttributes = $cartChangeTransfer->getQuoteUpdateRequestAttributes();
+        }
+        $quoteUpdateRequestAttributes->setName(
+            sprintf(
+                $this->getFactory()->getMultiCartConfig()->getQuickOrderQuoteName(),
+                $this->getFactory()->getDateTimeService()->formatDateTime(date('Y-m-d H:i:s'))
+            )
+        );
+        $cartChangeTransfer->setIdQuote(0)
+            ->setQuoteUpdateRequestAttributes($quoteUpdateRequestAttributes);
 
         return $cartChangeTransfer;
     }

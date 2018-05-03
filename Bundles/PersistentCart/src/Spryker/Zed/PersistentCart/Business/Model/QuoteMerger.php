@@ -41,7 +41,7 @@ class QuoteMerger implements QuoteMergerInterface
         foreach ($sourceQuote->getItems() as $itemTransfer) {
             $itemIdentifier = $this->getItemIdentifier($itemTransfer);
             if (isset($cartIndex[$itemIdentifier])) {
-                $this->increaseExistingItem($existingItems, $cartIndex[$itemIdentifier], $itemTransfer);
+                $this->increaseExistingItem((array)$existingItems, $cartIndex[$itemIdentifier], $itemTransfer);
             } else {
                 $existingItems->append($itemTransfer);
             }
@@ -83,7 +83,7 @@ class QuoteMerger implements QuoteMergerInterface
      *
      * @return void
      */
-    protected function increaseExistingItem($existingItems, $index, $itemTransfer): void
+    protected function increaseExistingItem(array $existingItems, int $index, ItemTransfer $itemTransfer): void
     {
         $existingItemTransfer = $existingItems[$index];
         $changedQuantity = $existingItemTransfer->getQuantity() + $itemTransfer->getQuantity();

@@ -29,14 +29,16 @@ class DefaultQuoteUpdatePlugin extends AbstractPlugin implements QuoteUpdatePlug
      */
     public function processResponse(QuoteResponseTransfer $quoteResponseTransfer): QuoteResponseTransfer
     {
-        if ($quoteResponseTransfer->getCustomerQuotes()) {
-            $defaultQuoteTransfer = $this->findDefaultQuote($quoteResponseTransfer->getCustomerQuotes());
-            if ($defaultQuoteTransfer) {
-                $defaultQuoteTransfer = $this->updateSessionQuote($defaultQuoteTransfer);
-                $this->getFactory()->getQuoteClient()->setQuote($defaultQuoteTransfer);
-                $quoteResponseTransfer->setQuoteTransfer($defaultQuoteTransfer);
-                return $quoteResponseTransfer;
-            }
+        if (!$quoteResponseTransfer->getCustomerQuotes()) {
+            return $quoteResponseTransfer;
+        }
+        $defaultQuoteTransfer = $this->getDefaultQuote($quoteResponseTransfer->getCustomerQuotes());
+        if ($defaultQuoteTransfer) {
+            $defaultQuoteTransfer = $this->updateSessionQuote($defaultQuoteTransfer);
+            $this->getFactory()->getQuoteClient()->setQuote($defaultQuoteTransfer);
+            $quoteResponseTransfer->setQuoteTransfer($defaultQuoteTransfer);
+
+            return $quoteResponseTransfer;
         }
 
         return $quoteResponseTransfer;
@@ -45,9 +47,9 @@ class DefaultQuoteUpdatePlugin extends AbstractPlugin implements QuoteUpdatePlug
     /**
      * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer
      *
-     * @return null|\Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function findDefaultQuote(QuoteCollectionTransfer $quoteCollectionTransfer): QuoteTransfer
+    protected function getDefaultQuote(QuoteCollectionTransfer $quoteCollectionTransfer): QuoteTransfer
     {
         foreach ($quoteCollectionTransfer->getQuotes() as $quoteTransfer) {
             if ($quoteTransfer->getIsDefault()) {

@@ -224,7 +224,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function validateQuote(): QuoteResponseTransfer
+    public function validateQuote()
     {
         return $this->getFactory()->getQuoteStorageStrategy()->validateQuote();
     }
@@ -288,7 +288,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer|null
      */
-    public function findQuoteItem(QuoteTransfer $quoteTransfer, string $sku, string $groupKey = null): ?ItemTransfer
+    public function findQuoteItem(QuoteTransfer $quoteTransfer, string $sku, ?string $groupKey = null): ?ItemTransfer
     {
         return $this->getFactory()->getQuoteItemFinderPlugin()->findItem($quoteTransfer, $sku, $groupKey);
     }

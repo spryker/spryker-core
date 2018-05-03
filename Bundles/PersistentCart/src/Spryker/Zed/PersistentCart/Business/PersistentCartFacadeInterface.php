@@ -82,7 +82,7 @@ interface PersistentCartFacadeInterface
 
     /**
      * Specification:
-     *  - Reloads all items in cart anew, it recreates all items transfer, reads new prices, options, bundles.
+     *  - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles.
      *  - Call quote response extend plugins.
      *
      * @api
@@ -157,7 +157,7 @@ interface PersistentCartFacadeInterface
 
     /**
      * Specification:
-     *  - Reloads all items in cart anew, it recreates all items transfer, reads new prices, options, bundles.
+     *  - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles.
      *  - Check changes and add notes to messenger (-> Messenger)
      *
      * @api

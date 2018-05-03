@@ -36,7 +36,7 @@ class BundleProductQuoteItemFinder implements BundleProductQuoteItemFinderInterf
      *
      * @return \Generated\Shared\Transfer\ItemTransfer|null
      */
-    protected function findBundleItem(QuoteTransfer $quoteTransfer, string $sku, string $groupKey = null): ?ItemTransfer
+    protected function findBundleItem(QuoteTransfer $quoteTransfer, string $sku, ?string $groupKey = null): ?ItemTransfer
     {
         foreach ($quoteTransfer->getBundleItems() as $itemTransfer) {
             if ($this->checkItem($itemTransfer, $sku, $groupKey)) {
@@ -76,7 +76,7 @@ class BundleProductQuoteItemFinder implements BundleProductQuoteItemFinderInterf
      *
      * @return \Generated\Shared\Transfer\ItemTransfer|null
      */
-    protected function findQuoteItem(QuoteTransfer $quoteTransfer, string $sku, string $groupKey = null): ?ItemTransfer
+    protected function findQuoteItem(QuoteTransfer $quoteTransfer, string $sku, ?string $groupKey = null): ?ItemTransfer
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             if ($this->checkItem($itemTransfer, $sku, $groupKey)) {
@@ -94,7 +94,7 @@ class BundleProductQuoteItemFinder implements BundleProductQuoteItemFinderInterf
      *
      * @return bool
      */
-    protected function checkItem(ItemTransfer $itemTransfer, string $sku, string $groupKey = null): bool
+    protected function checkItem(ItemTransfer $itemTransfer, string $sku, ?string $groupKey = null): bool
     {
         return ($itemTransfer->getSku() === $sku && $groupKey === null) ||
             $itemTransfer->getGroupKey() === $groupKey;

@@ -28,13 +28,7 @@ class PersistentCartClient extends AbstractClient implements PersistentCartClien
      */
     public function deleteQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        $persistentCartStub = $this->getFactory()->createZedPersistentCartStub();
-        $quoteTransfer->setCustomer($this->getFactory()->getCustomerClient()->getCustomer());
-        $quoteResponseTransfer = $persistentCartStub->deleteQuote($quoteTransfer);
-        $quoteResponseTransfer = $this->executeUpdateQuotePlugins($quoteResponseTransfer);
-        $this->getFactory()->getZedRequestClient()->addFlashMessagesFromLastZedRequest();
-
-        return $quoteResponseTransfer;
+        return $this->getFactory()->createQuoteDeleter()->deleteQuote($quoteTransfer);
     }
 
     /**
@@ -48,15 +42,7 @@ class PersistentCartClient extends AbstractClient implements PersistentCartClien
      */
     public function createQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        $persistentCartStub = $this->getFactory()->createZedPersistentCartStub();
-        $quoteResponseTransfer = $persistentCartStub->createQuote($quoteTransfer);
-        if ($quoteResponseTransfer->getIsSuccessful()) {
-            $this->getFactory()->getQuoteClient()->setQuote($quoteResponseTransfer->getQuoteTransfer());
-        }
-        $quoteResponseTransfer = $this->executeUpdateQuotePlugins($quoteResponseTransfer);
-        $this->getFactory()->getZedRequestClient()->addFlashMessagesFromLastZedRequest();
-
-        return $quoteResponseTransfer;
+        return $this->getFactory()->createQuoteCreator()->createQuote($quoteTransfer);
     }
 
     /**
@@ -70,23 +56,6 @@ class PersistentCartClient extends AbstractClient implements PersistentCartClien
      */
     public function updateQuote(QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer): QuoteResponseTransfer
     {
-        $persistentCartStub = $this->getFactory()->createZedPersistentCartStub();
-        $quoteResponseTransfer = $persistentCartStub->updateQuote($quoteUpdateRequestTransfer);
-        if ($quoteResponseTransfer->getIsSuccessful()) {
-            $this->getFactory()->getQuoteClient()->setQuote($quoteResponseTransfer->getQuoteTransfer());
-        }
-        $quoteResponseTransfer = $this->executeUpdateQuotePlugins($quoteResponseTransfer);
-
-        return $quoteResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    protected function executeUpdateQuotePlugins(QuoteResponseTransfer $quoteResponseTransfer): QuoteResponseTransfer
-    {
-        return $this->getFactory()->createQuoteUpdatePluginExecutor()->executePlugins($quoteResponseTransfer);
+        return $this->getFactory()->createQuoteUpdater()->updateQuote($quoteUpdateRequestTransfer);
     }
 }

@@ -21,7 +21,7 @@ class ReorderQuoteNameExpanderPlugin extends AbstractPlugin implements Persisten
 
     /**
      * Specification:
-     * - Takes quote id form params and replace it in quote change request.
+     * - Takes quote id from params and replace it in quote change request.
      *
      * @api
      *
@@ -32,16 +32,18 @@ class ReorderQuoteNameExpanderPlugin extends AbstractPlugin implements Persisten
      */
     public function extend(PersistentCartChangeTransfer $cartChangeTransfer, array $params = []): PersistentCartChangeTransfer
     {
-        if (isset($params[self::PARAM_ORDER_REFERENCE])) {
-            $quoteUpdateRequestAttributes = new QuoteUpdateRequestAttributesTransfer();
-            if ($cartChangeTransfer->getQuoteUpdateRequestAttributes()) {
-                $quoteUpdateRequestAttributes = $cartChangeTransfer->getQuoteUpdateRequestAttributes();
-            }
-            $quoteUpdateRequestAttributes->setName(
-                sprintf($this->getFactory()->getMultiCartConfig()->getReorderQuoteName(), $params[self::PARAM_ORDER_REFERENCE])
-            );
-            $cartChangeTransfer->setQuoteUpdateRequestAttributes($quoteUpdateRequestAttributes);
+        if (!isset($params[self::PARAM_ORDER_REFERENCE])) {
+            return $cartChangeTransfer;
         }
+
+        $quoteUpdateRequestAttributes = new QuoteUpdateRequestAttributesTransfer();
+        if ($cartChangeTransfer->getQuoteUpdateRequestAttributes()) {
+            $quoteUpdateRequestAttributes = $cartChangeTransfer->getQuoteUpdateRequestAttributes();
+        }
+        $quoteUpdateRequestAttributes->setName(
+            sprintf($this->getFactory()->getMultiCartConfig()->getReorderQuoteName(), $params[self::PARAM_ORDER_REFERENCE])
+        );
+        $cartChangeTransfer->setQuoteUpdateRequestAttributes($quoteUpdateRequestAttributes);
 
         return $cartChangeTransfer;
     }

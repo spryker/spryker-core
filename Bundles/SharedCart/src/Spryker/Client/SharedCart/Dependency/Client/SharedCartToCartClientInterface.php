@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\SharedCart\Dependency\Client;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface SharedCartToCartClientInterface
@@ -18,5 +19,5 @@ interface SharedCartToCartClientInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer|null
      */
-    public function findQuoteItem(QuoteTransfer $quoteTransfer, string $sku, string $groupKey = null);
+    public function findQuoteItem(QuoteTransfer $quoteTransfer, string $sku, ?string $groupKey = null): ?ItemTransfer;
 }

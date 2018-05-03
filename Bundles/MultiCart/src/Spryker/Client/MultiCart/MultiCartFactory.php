@@ -88,6 +88,7 @@ class MultiCartFactory extends AbstractFactory
             $this->getPersistentCartClient(),
             $this->getQuoteClient(),
             $this->getCustomerClient(),
+            $this->getDateTimeService(),
             $this->getConfig()
         );
     }
@@ -138,5 +139,13 @@ class MultiCartFactory extends AbstractFactory
     public function getPersistentCartClient(): MultiCartToPersistentCartClientInterface
     {
         return $this->getProvidedDependency(MultiCartDependencyProvider::CLIENT_PERSISTENT_CART);
+    }
+
+    /**
+     * @return \Spryker\Client\MultiCart\Dependency\Service\MultiCartToUtilDateTimeServiceInterface
+     */
+    public function getDateTimeService()
+    {
+        return $this->getProvidedDependency(MultiCartDependencyProvider::SERVICE_DATETIME);
     }
 }

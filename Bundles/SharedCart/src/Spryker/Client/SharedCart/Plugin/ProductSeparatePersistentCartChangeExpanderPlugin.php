@@ -53,7 +53,7 @@ class ProductSeparatePersistentCartChangeExpanderPlugin extends AbstractPlugin i
     {
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             if ($this->findQuoteItem($quoteTransfer, $itemTransfer->getSku())) {
-                $itemTransfer->setGroupKeyPrefix(time());
+                $itemTransfer->setGroupKeyPrefix(uniqid('', true));
             }
         }
     }

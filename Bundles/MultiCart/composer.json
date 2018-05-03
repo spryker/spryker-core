@@ -13,6 +13,7 @@
     "spryker/quote": "^2.0.0",
     "spryker/quote-extension": "^1.0.0",
     "spryker/session": "^3.0.0",
+    "spryker/util-date-time": "^1.0.0",
     "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {

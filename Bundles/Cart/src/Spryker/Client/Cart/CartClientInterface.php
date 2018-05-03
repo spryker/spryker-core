@@ -39,11 +39,21 @@ interface CartClientInterface
 
     /**
      * Specification:
-     * - Adds only items, that passed cart validation.
-     * - Makes zed request to stored cart into persistent store if used.
-     * - Adds notification to response.
-     * - Returns updated quote.
-     * - Quote not saved.
+     * - Session strategy:
+     *   - Adds multiple items.
+     *   - Makes zed request.
+     *   - Adds only items, that passed cart validation.
+     *   - Stores quote in session internally after zed request.
+     *   - Returns update quote.
+     *
+     * - Persistent strategy:
+     *   - Makes zed request with items and customer.
+     *   - Loads customer quote from database.
+     *   - Adds only items, that passed validation.
+     *   - Recalculates quote totals.
+     *   - Save updated quote to database.
+     *   - Stores quote in session internally after zed request.
+     *   - Returns update quote.
      *
      * @api
      *
@@ -57,7 +67,7 @@ interface CartClientInterface
     /**
      * Specification:
      * - Session strategy:
-     *   - Adds single item.
+     *   - Adds items.
      *   - Makes zed request.
      *   - Stores quote in session internally after zed request.
      *   - Returns update quote.
@@ -308,7 +318,7 @@ interface CartClientInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function validateQuote(): QuoteResponseTransfer;
+    public function validateQuote();
 
     /**
      * Specification:
@@ -357,5 +367,5 @@ interface CartClientInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer|null
      */
-    public function findQuoteItem(QuoteTransfer $quoteTransfer, string $sku, string $groupKey = null): ?ItemTransfer;
+    public function findQuoteItem(QuoteTransfer $quoteTransfer, string $sku, ?string $groupKey = null): ?ItemTransfer;
 }

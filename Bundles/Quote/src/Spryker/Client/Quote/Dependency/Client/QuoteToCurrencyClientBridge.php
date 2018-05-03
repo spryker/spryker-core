@@ -35,7 +35,7 @@ class QuoteToCurrencyClientBridge implements QuoteToCurrencyClientInterface
      *
      * @return void
      */
-    public function setCurrentCurrencyIsoCode(string $currencyIsoCode)
+    public function setCurrentCurrencyIsoCode(string $currencyIsoCode): void
     {
         $this->currencyClient->setCurrentCurrencyIsoCode($currencyIsoCode);
     }

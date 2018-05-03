@@ -34,12 +34,12 @@ class UpdatePersistentCartPriceModePlugin extends AbstractPlugin implements Pric
         if ($this->getFactory()->getQuoteClient()->getStorageStrategy() !== QuoteConfig::STORAGE_STRATEGY_DATABASE) {
             return;
         }
-        $quoteUpdateRequestTransfer = new QuoteUpdateRequestTransfer();
-        $quoteUpdateRequestTransfer->setIdQuote($this->getFactory()->getQuoteClient()->getQuote()->getIdQuote());
-        $quoteUpdateRequestTransfer->setCustomer($this->getFactory()->getCustomerClient()->getCustomer());
-        $quoteUpdateRequestAttributesTransfer = new QuoteUpdateRequestAttributesTransfer();
-        $quoteUpdateRequestAttributesTransfer->setPriceMode($priceMode);
-        $quoteUpdateRequestTransfer->setQuoteUpdateRequestAttributes($quoteUpdateRequestAttributesTransfer);
+        $quoteUpdateRequestAttributesTransfer = (new QuoteUpdateRequestAttributesTransfer())
+            ->setPriceMode($priceMode);
+        $quoteUpdateRequestTransfer = (new QuoteUpdateRequestTransfer())
+            ->setIdQuote($this->getFactory()->getQuoteClient()->getQuote()->getIdQuote())
+            ->setCustomer($this->getFactory()->getCustomerClient()->getCustomer())
+            ->setQuoteUpdateRequestAttributes($quoteUpdateRequestAttributesTransfer);
 
         $this->getFactory()->createZedPersistentCartStub()->updateQuote($quoteUpdateRequestTransfer);
     }

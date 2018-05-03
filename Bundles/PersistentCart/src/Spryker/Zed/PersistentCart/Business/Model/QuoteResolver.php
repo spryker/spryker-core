@@ -61,7 +61,7 @@ class QuoteResolver implements QuoteResolverInterface
     public function resolveCustomerQuote(
         int $idQuote,
         CustomerTransfer $customerTransfer,
-        QuoteUpdateRequestAttributesTransfer $quoteUpdateRequestAttributesTransfer = null
+        ?QuoteUpdateRequestAttributesTransfer $quoteUpdateRequestAttributesTransfer = null
     ): QuoteResponseTransfer {
         if (!$idQuote) {
             return $this->createNewQuote($customerTransfer, $quoteUpdateRequestAttributesTransfer);
@@ -142,7 +142,7 @@ class QuoteResolver implements QuoteResolverInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    protected function createNewQuote(CustomerTransfer $customerTransfer, QuoteUpdateRequestAttributesTransfer $quoteUpdateRequestAttributesTransfer = null): QuoteResponseTransfer
+    protected function createNewQuote(CustomerTransfer $customerTransfer, ?QuoteUpdateRequestAttributesTransfer $quoteUpdateRequestAttributesTransfer = null): QuoteResponseTransfer
     {
         $quoteTransfer = new QuoteTransfer();
         $quoteTransfer->setCustomer($customerTransfer);
@@ -178,7 +178,7 @@ class QuoteResolver implements QuoteResolverInterface
     protected function updateQuote(
         CustomerTransfer $customerTransfer,
         QuoteTransfer $quoteTransfer,
-        QuoteUpdateRequestAttributesTransfer $quoteUpdateRequestAttributesTransfer = null
+        ?QuoteUpdateRequestAttributesTransfer $quoteUpdateRequestAttributesTransfer = null
     ): QuoteResponseTransfer {
         if ($quoteUpdateRequestAttributesTransfer) {
             $quoteTransfer->fromArray($quoteUpdateRequestAttributesTransfer->modifiedToArray(), true);

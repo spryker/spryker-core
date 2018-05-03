@@ -16,12 +16,57 @@ use Spryker\Client\PersistentCart\QuoteUpdatePluginExecutor\ChangeRequestExtendP
 use Spryker\Client\PersistentCart\QuoteUpdatePluginExecutor\ChangeRequestExtendPluginExecutorInterface;
 use Spryker\Client\PersistentCart\QuoteUpdatePluginExecutor\QuoteUpdatePluginExecutor;
 use Spryker\Client\PersistentCart\QuoteUpdatePluginExecutor\QuoteUpdatePluginExecutorInterface;
+use Spryker\Client\PersistentCart\QuoteWriter\QuoteCreator;
+use Spryker\Client\PersistentCart\QuoteWriter\QuoteCreatorInterface;
+use Spryker\Client\PersistentCart\QuoteWriter\QuoteDeleter;
+use Spryker\Client\PersistentCart\QuoteWriter\QuoteDeleterInterface;
+use Spryker\Client\PersistentCart\QuoteWriter\QuoteUpdater;
+use Spryker\Client\PersistentCart\QuoteWriter\QuoteUpdaterInterface;
 use Spryker\Client\PersistentCart\Zed\PersistentCartStub;
 use Spryker\Client\PersistentCart\Zed\PersistentCartStubInterface;
 use Spryker\Client\ZedRequest\ZedRequestClientInterface;
 
 class PersistentCartFactory extends AbstractFactory
 {
+    /**
+     * @return \Spryker\Client\PersistentCart\QuoteWriter\QuoteCreatorInterface
+     */
+    public function createQuoteCreator(): QuoteCreatorInterface
+    {
+        return new QuoteCreator(
+            $this->getQuoteClient(),
+            $this->getZedRequestClient(),
+            $this->createZedPersistentCartStub(),
+            $this->createQuoteUpdatePluginExecutor()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\PersistentCart\QuoteWriter\QuoteUpdaterInterface
+     */
+    public function createQuoteUpdater(): QuoteUpdaterInterface
+    {
+        return new QuoteUpdater(
+            $this->getQuoteClient(),
+            $this->createZedPersistentCartStub(),
+            $this->createQuoteUpdatePluginExecutor()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\PersistentCart\QuoteWriter\QuoteDeleterInterface
+     */
+    public function createQuoteDeleter(): QuoteDeleterInterface
+    {
+        return new QuoteDeleter(
+            $this->getQuoteClient(),
+            $this->getZedRequestClient(),
+            $this->getCustomerClient(),
+            $this->createZedPersistentCartStub(),
+            $this->createQuoteUpdatePluginExecutor()
+        );
+    }
+
     /**
      * @return \Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToQuoteClientInterface
      */
