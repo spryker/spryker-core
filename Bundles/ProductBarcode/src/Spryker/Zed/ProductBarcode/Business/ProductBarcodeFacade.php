@@ -14,7 +14,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\ProductBarcode\Business\ProductBarcodeBusinessFactory getFactory()
- * @method \Spryker\Zed\ProductBarcode\Persistence\ProductBarcodeQueryContainerInterface getQueryContainer()
  */
 class ProductBarcodeFacade extends AbstractFacade implements ProductBarcodeFacadeInterface
 {
@@ -33,67 +32,5 @@ class ProductBarcodeFacade extends AbstractFacade implements ProductBarcodeFacad
         return $this->getFactory()
             ->createProductBarcodeGenerator()
             ->generateBarcode($productConcreteTransfer, $generatorPlugin);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param int $productId
-     *
-     * @return \Orm\Zed\ProductBarcode\Persistence\SpyProductBarcode
-     */
-    public function findProductBarcodeByProductId(int $productId): SpyProductBarcode
-    {
-        return $this->getFactory()
-            ->createProductBarcodeFinder()
-            ->findProductBarcodeByProductId($productId);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param string $productName
-     *
-     * @return \Orm\Zed\ProductBarcode\Persistence\SpyProductBarcode
-     */
-    public function findProductBarcodeByProductName(string $productName): SpyProductBarcode
-    {
-        return $this->getFactory()
-            ->createProductBarcodeFinder()
-            ->findProductBarcodeByProductName($productName);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param string $productSku
-     *
-     * @return \Orm\Zed\ProductBarcode\Persistence\SpyProductBarcode
-     */
-    public function findProductBarcodeByProductSku(string $productSku): SpyProductBarcode
-    {
-        return $this->getFactory()
-            ->createProductBarcodeFinder()
-            ->findProductBarcodeByProductSku($productSku);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @return \Orm\Zed\ProductBarcode\Persistence\SpyProductBarcode[]
-     */
-    public function getAllProductBarcodes(): array
-    {
-        return $this->getFactory()
-            ->createProductBarcodeFinder()
-            ->getAllProductBarcodes();
     }
 }

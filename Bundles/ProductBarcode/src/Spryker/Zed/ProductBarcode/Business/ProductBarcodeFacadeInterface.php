@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductBarcode\Business;
 
 use Generated\Shared\Transfer\BarcodeResponseTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Orm\Zed\ProductBarcode\Persistence\SpyProductBarcode;
 
 interface ProductBarcodeFacadeInterface
 {
@@ -25,50 +24,4 @@ interface ProductBarcodeFacadeInterface
      * @return \Generated\Shared\Transfer\BarcodeResponseTransfer
      */
     public function generateBarcode(ProductConcreteTransfer $productConcreteTransfer, string $generatorPlugin = null): BarcodeResponseTransfer;
-
-    /**
-     * Specification:
-     * - Returns ProductBarcode instances filtered by product id.
-     *
-     * @api
-     *
-     * @param int $productId
-     *
-     * @return \Orm\Zed\ProductBarcode\Persistence\SpyProductBarcode
-     */
-    public function findProductBarcodeByProductId(int $productId): SpyProductBarcode;
-
-    /**
-     * Specification:
-     * - Returns ProductBarcode instances filtered by product name.
-     *
-     * @api
-     *
-     * @param string $productName
-     *
-     * @return \Orm\Zed\ProductBarcode\Persistence\SpyProductBarcode
-     */
-    public function findProductBarcodeByProductName(string $productName): SpyProductBarcode;
-
-    /**
-     * Specification:
-     * - Returns ProductBarcode instances filtered by product sku.
-     *
-     * @api
-     *
-     * @param string $productSku
-     *
-     * @return \Orm\Zed\ProductBarcode\Persistence\SpyProductBarcode
-     */
-    public function findProductBarcodeByProductSku(string $productSku): SpyProductBarcode;
-
-    /**
-     * Specification:
-     * - Returns all existing ProductBarcode instances from the database.
-     *
-     * @api
-     *
-     * @return \Orm\Zed\ProductBarcode\Persistence\SpyProductBarcode[]
-     */
-    public function getAllProductBarcodes(): array;
 }
