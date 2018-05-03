@@ -59,7 +59,7 @@ class PaymentFormHandler implements FormHandlerInterface
 
         $calculableObjectTransfer = $this->createCalculableObjectTransfer($quoteTransfer);
 
-        if (!empty($calculableObjectTransfer->getItems())) {
+        if (count($calculableObjectTransfer->getItems())) {
             $this->paymentFacade->recalculatePayments($calculableObjectTransfer);
         }
 

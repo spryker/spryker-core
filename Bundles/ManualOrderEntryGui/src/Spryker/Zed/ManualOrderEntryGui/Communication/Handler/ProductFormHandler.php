@@ -62,7 +62,7 @@ class ProductFormHandler implements FormHandlerInterface
 
             $cartChangeTransfer->addItem($itemTransfer);
         }
-        if (!empty($cartChangeTransfer->getItems())) {
+        if (count($cartChangeTransfer->getItems())) {
             $cartChangeTransfer->setQuote($quoteTransfer);
             $quoteTransfer = $this->cartFacade->add($cartChangeTransfer);
         }
@@ -99,7 +99,7 @@ class ProductFormHandler implements FormHandlerInterface
         $items = new ArrayObject($items);
         $quoteTransfer->setItems($items);
         $quoteTransfer->setBundleItems(new ArrayObject());
-        if (!empty($items)) {
+        if (count($items)) {
             $quoteTransfer = $this->cartFacade->reloadItems($quoteTransfer);
         }
 

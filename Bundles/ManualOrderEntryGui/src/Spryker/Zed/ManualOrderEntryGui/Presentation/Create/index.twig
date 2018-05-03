@@ -10,7 +10,7 @@
         {% block widget_content %}
 
             {% if forms|length %}
-            {{ form_start(forms[0]) }}
+            {{ form_start(forms[0], {'attr': {'class': 'ManualOrderEntry'}}) }}
 
                 {% for form in forms %}
 

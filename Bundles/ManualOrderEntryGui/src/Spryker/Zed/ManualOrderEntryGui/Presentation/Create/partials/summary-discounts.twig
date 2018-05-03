@@ -9,7 +9,7 @@
     {% for voucherDiscount in quoteTransfer.voucherDiscounts %}
         <tr>
             <td>{{ voucherDiscount.displayName }}</td>
-            <td>- {{ voucherDiscount.amount | money }}</td>
+            <td>- {{ voucherDiscount.amount | money(true, quoteTransfer.currency.code) }}</td>
         </tr>
     {% endfor %}
 
@@ -26,7 +26,7 @@
     {% for ruleDiscount in quoteTransfer.cartRuleDiscounts %}
         <tr>
             <td>{{ ruleDiscount.displayName }}</td>
-            <td>- {{ ruleDiscount.amount | money }}</td>
+            <td>- {{ ruleDiscount.amount | money(true, quoteTransfer.currency.code) }}</td>
         </tr>
     {% endfor %}
 

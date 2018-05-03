@@ -31,7 +31,7 @@ class CustomersListType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addCustomerField(
+        $this->addCustomerIdField(
             $builder,
             $options[static::OPTION_CUSTOMER_ARRAY]
         );
@@ -50,11 +50,10 @@ class CustomersListType extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $customerList
-     * @param string|null $value
      *
      * @return $this
      */
-    protected function addCustomerField(FormBuilderInterface $builder, array $customerList, ?string $value = null)
+    protected function addCustomerIdField(FormBuilderInterface $builder, array $customerList)
     {
         $builder->add(static::FIELD_CUSTOMER, Select2ComboBoxType::class, [
             'property_path' => QuoteTransfer::CUSTOMER . '.' . CustomerTransfer::ID_CUSTOMER,

@@ -11,7 +11,7 @@
             </td>
             <td>
                 {% if quoteTransfer.totals %}
-                    {{ quoteTransfer.totals.subtotal | money }}
+                    {{ quoteTransfer.totals.subtotal | money(true, quoteTransfer.currency.code) }}
                 {% endif %}
             </td>
         </tr>
@@ -27,7 +27,7 @@
         </tr>
         <tr>
             <td>{{ quoteTransfer.shipment.method.name }}:</td>
-            <td>{{ quoteTransfer.shipment.method.storeCurrencyPrice | money }}</td>
+            <td>{{ quoteTransfer.shipment.method.storeCurrencyPrice | money(true, quoteTransfer.currency.code) }}</td>
         </tr>
     {% endif %}
 
@@ -35,7 +35,7 @@
         <td><strong>{{ 'Grand Total' | trans }}:</strong></td>
         <td>
             {% if quoteTransfer.totals %}
-                {{ quoteTransfer.totals.grandtotal | money }}
+                {{ quoteTransfer.totals.grandtotal | money(true, quoteTransfer.currency.code) }}
             {% endif %}
         </td>
     </tr>
@@ -43,7 +43,7 @@
         <td><strong>{{ 'Tax' | trans }}:</strong></td>
         <td>
             {% if quoteTransfer.totals %}
-                {{ quoteTransfer.totals.taxtotal.amount | money }}
+                {{ quoteTransfer.totals.taxtotal.amount | money(true, quoteTransfer.currency.code) }}
             {% endif %}
         </td>
     </tr>
@@ -54,7 +54,7 @@
         <td><strong>{{ 'Price to pay' | trans }}:</strong></td>
         <td>
             {% if quoteTransfer.totals %}
-                {{ quoteTransfer.totals.priceToPay | money }}
+                {{ quoteTransfer.totals.priceToPay | money(true, quoteTransfer.currency.code) }}
             {% endif %}
         </td>
     </tr>

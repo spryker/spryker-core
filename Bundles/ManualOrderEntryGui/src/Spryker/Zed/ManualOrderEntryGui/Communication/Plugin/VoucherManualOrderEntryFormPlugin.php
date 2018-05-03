@@ -65,14 +65,14 @@ class VoucherManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
     {
         $voucherCode = $quoteTransfer->getManualOrderEntry()->getVoucherCode();
 
-        if ($voucherCode !== '') {
+        if (!empty($voucherCode)) {
             $quoteTransfer = $this->getFactory()
                 ->createVoucherFormHandler()
                 ->handle($quoteTransfer, $form, $request);
 
             $message = static::MESSAGE_SUCCESS;
             $isSuccessMessage = true;
-            if (empty($quoteTransfer->getVoucherDiscounts())) {
+            if (!count($quoteTransfer->getVoucherDiscounts())) {
                 $message = static::MESSAGE_ERROR;
                 $isSuccessMessage = false;
                 $quoteTransfer->setVoucherCode('');

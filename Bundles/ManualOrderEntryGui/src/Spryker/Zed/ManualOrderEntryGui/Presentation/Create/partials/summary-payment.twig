@@ -8,7 +8,7 @@
         </tr>
         <tr>
             <td>{{ payment.paymentMethod }}</td>
-            <td>- {{ payment.amount | money }}</td>
+            <td>- {{ payment.amount | money(true, quoteTransfer.currency.code) }}</td>
         </tr>
     {% endif %}
 {% endfor %}

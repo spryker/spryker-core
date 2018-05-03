@@ -56,7 +56,7 @@ class ItemFormHandler implements FormHandlerInterface
 
         $quoteTransfer->setItems($items);
 
-        if (!empty($items)) {
+        if (count($items)) {
             $quoteTransfer = $this->cartFacade->reloadItems($quoteTransfer);
         }
 

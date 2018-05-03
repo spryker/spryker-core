@@ -63,4 +63,17 @@ $(document).ready( function () {
 
     billingAddressSelectionToggle();
     $('#addresses_billingSameAsShipping').click(billingAddressSelectionToggle);
+
+
+    $('form.ManualOrderEntry input').on('keyup keypress', function(e) {
+        if (e.which === 13) {
+            var btn = $('form.ManualOrderEntry input.submitBtn');
+            if (btn.length) {
+                btn.click();
+            } else {
+                $('form.ManualOrderEntry input.nextStepBtn').click();
+            }
+
+        }
+    });
 });

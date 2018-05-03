@@ -14,14 +14,14 @@
 {%
     if lastForm.vars.id != firstForm.vars.id
 %}
-    <input type="submit" class="btn btn-info safe-submit" value="{{ '<- Prev Strep' | trans }}" name="{{ prevStepName }}" />
+    <input type="submit" class="btn btn-info safe-submit" value="{{ '<- Prev Step' | trans }}" name="{{ prevStepName }}" />
 {% endif %}
 
 {%
     if lastForm.vars.id != 'products'
       and lastForm.vars.id != 'summary'
 %}
-    <input type="submit" class="btn btn-primary safe-submit" value="{{ submitBtnValue }}" />
+    <input type="submit" class="btn btn-primary safe-submit submitBtn" value="{{ submitBtnValue }}" />
 {% endif %}
 
-<input type="submit" class="btn btn-info safe-submit" value="{{ nextStepBtnValue }}" name="{{ nextStepName }}" />
+<input type="submit" class="btn btn-info safe-submit nextStepBtn" value="{{ nextStepBtnValue }}" name="{{ nextStepName }}" />
