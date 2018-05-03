@@ -20,7 +20,7 @@ class SetupDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return void
+     * @return \Spryker\Zed\Kernel\Container $container
      */
     public function provideBusinessLayerDependencies(Container $container)
     {

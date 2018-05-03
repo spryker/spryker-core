@@ -71,10 +71,6 @@ class SetupBusinessFactory extends AbstractBusinessFactory
     public function getConsoleCommands()
     {
         return [
-            $this->createGenerateIdeAutoCompletionConsole(),
-            $this->createGenerateZedIdeAutoCompletionConsole(),
-            $this->createGenerateClientIdeAutoCompletionConsole(),
-            $this->createGenerateServiceIdeAutoCompletionConsole(),
             $this->createRunnerConsole(),
             $this->createRemoveGeneratedDirectoryConsole(),
             $this->createInstallConsole(),
@@ -83,46 +79,6 @@ class SetupBusinessFactory extends AbstractBusinessFactory
             $this->createJenkinsGenerateConsole(),
             $this->createDeployPreparePropelConsole(),
         ];
-    }
-
-    /**
-     * @deprecated Will be removed with next major release
-     *
-     * @return \Spryker\Zed\Setup\Communication\Console\GenerateIdeAutoCompletionConsole
-     */
-    protected function createGenerateIdeAutoCompletionConsole()
-    {
-        return new GenerateIdeAutoCompletionConsole();
-    }
-
-    /**
-     * @deprecated Will be removed with next major release
-     *
-     * @return \Spryker\Zed\Setup\Communication\Console\GenerateZedIdeAutoCompletionConsole
-     */
-    protected function createGenerateZedIdeAutoCompletionConsole()
-    {
-        return new GenerateZedIdeAutoCompletionConsole();
-    }
-
-    /**
-     * @deprecated Will be removed with next major release
-     *
-     * @return \Spryker\Zed\Setup\Communication\Console\GenerateClientIdeAutoCompletionConsole
-     */
-    protected function createGenerateClientIdeAutoCompletionConsole()
-    {
-        return new GenerateClientIdeAutoCompletionConsole();
-    }
-
-    /**
-     * @deprecated Will be removed with next major release
-     *
-     * @return \Spryker\Zed\Setup\Communication\Console\GenerateServiceIdeAutoCompletionConsole
-     */
-    protected function createGenerateServiceIdeAutoCompletionConsole()
-    {
-        return new GenerateServiceIdeAutoCompletionConsole();
     }
 
     /**

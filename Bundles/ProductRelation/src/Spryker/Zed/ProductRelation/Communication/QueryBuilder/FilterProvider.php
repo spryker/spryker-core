@@ -137,7 +137,7 @@ class FilterProvider implements FilterProviderInterface
     }
 
     /**
-     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKey[]|mixed|mixed[]|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKey[]|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function findProductAttributes()
     {

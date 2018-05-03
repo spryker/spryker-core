@@ -90,9 +90,9 @@ class ProductReviewFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Use getConfig()
+     * Exposes the protected getConfig() method as public method.
      *
-     * @return \Spryker\Client\ProductReview\ProductReviewConfig|\Spryker\Client\Kernel\AbstractBundleConfig
+     * @return \Spryker\Client\ProductReview\ProductReviewConfig
      */
     public function getProductReviewConfig()
     {
