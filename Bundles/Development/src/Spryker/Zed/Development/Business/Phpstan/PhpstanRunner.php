@@ -214,13 +214,19 @@ class PhpstanRunner implements PhpstanRunnerInterface
      * @param array $paths
      * @param string $path
      * @param string|null $configFilePath
+     * @param string|null $namespace
      *
      * @return array
      */
-    protected function addPath(array $paths, $path, $configFilePath = null)
+    protected function addPath(array $paths, $path, $configFilePath = null, $namespace = null)
     {
         if (!$configFilePath) {
             $configFilePath = $this->detectConfigFilePath($path);
+        }
+        if (!$configFilePath && $namespace) {
+            $pathToModules = $namespace === static::NAMESPACE_SPRYKER_SHOP ? $this->config->getPathToShop() : $this->config->getPathToCore();
+            $vendorPath = dirname($pathToModules) . DIRECTORY_SEPARATOR;
+            $configFilePath = $this->detectConfigFilePath($vendorPath);
         }
 
         $paths[$path] = $configFilePath ?: $this->config->getPathToRoot();
@@ -272,21 +278,21 @@ class PhpstanRunner implements PhpstanRunnerInterface
             return $paths;
         }
 
-        $namespace = $this->normalizeName($namespace);
-        if ($namespace === $this->normalizeName(static::NAMESPACE_SPRYKER) && is_dir($this->config->getPathToCore() . $module)) {
-            $paths = $this->addPath($paths, $this->config->getPathToCore() . $module . DIRECTORY_SEPARATOR);
+        if ($namespace === static::NAMESPACE_SPRYKER && is_dir($this->config->getPathToCore() . $module)) {
+            $paths = $this->addPath($paths, $this->config->getPathToCore() . $module . DIRECTORY_SEPARATOR, null, $namespace);
 
             return $paths;
         }
 
-        if ($namespace === $this->normalizeName(static::NAMESPACE_SPRYKER_SHOP) && is_dir($this->config->getPathToShop() . $module)) {
-            $paths = $this->addPath($paths, $this->config->getPathToShop() . $module . DIRECTORY_SEPARATOR);
+        if ($namespace === static::NAMESPACE_SPRYKER_SHOP && is_dir($this->config->getPathToShop() . $module)) {
+            $paths = $this->addPath($paths, $this->config->getPathToShop() . $module . DIRECTORY_SEPARATOR, null, $namespace);
 
             return $paths;
         }
 
+        $vendor = $this->normalizeName($namespace);
         $module = $this->normalizeName($module);
-        $path = $this->config->getPathToRoot() . 'vendor' . DIRECTORY_SEPARATOR . $namespace . DIRECTORY_SEPARATOR . $module;
+        $path = $this->config->getPathToRoot() . 'vendor' . DIRECTORY_SEPARATOR . $vendor . DIRECTORY_SEPARATOR . $module;
         $paths = $this->addPath($paths, $path);
 
         return $paths;
