@@ -27,7 +27,7 @@ use Spryker\Zed\CompanyDataImport\CompanyDataImportConfig;
 class CompanyDataImportPluginTest extends Unit
 {
     /**
-     * @var \SprykerTest\Zed\CompanyDataImport\ProductBarcodeDataImportCommunicationTester
+     * @var \SprykerTest\Zed\CompanyDataImport\CompanyDataImportCommunicationTester
      */
     protected $tester;
 

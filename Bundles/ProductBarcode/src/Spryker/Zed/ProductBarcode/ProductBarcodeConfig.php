@@ -5,10 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\Barcode\Exception;
+namespace Spryker\Zed\ProductBarcode;
 
-use Exception;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
 
-class PluginCollectionIsEmptyException extends Exception
+class ProductBarcodeConfig extends AbstractBundleConfig
 {
 }

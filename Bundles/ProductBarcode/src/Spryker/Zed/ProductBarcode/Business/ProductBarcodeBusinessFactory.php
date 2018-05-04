@@ -16,6 +16,9 @@ use Spryker\Zed\ProductBarcode\Business\ProductSkuProvider\ProductSkuProviderInt
 use Spryker\Zed\ProductBarcode\Dependency\Facade\ProductBarcodeToProductBridgeInterface;
 use Spryker\Zed\ProductBarcode\ProductBarcodeDependencyProvider;
 
+/**
+ * @method \Spryker\Zed\ProductBarcode\ProductBarcodeConfig getConfig()
+ */
 class ProductBarcodeBusinessFactory extends AbstractBusinessFactory
 {
     /**

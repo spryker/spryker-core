@@ -8,22 +8,21 @@
 namespace Spryker\Service\Barcode\Model\BarcodeGenerator;
 
 use Generated\Shared\Transfer\BarcodeResponseTransfer;
-use Spryker\Service\Barcode\Model\PluginCollection\PluginCollectionInterface;
-use Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface;
+use Spryker\Service\Barcode\Model\BarcodeGeneratorPluginResolver\BarcodeGeneratorPluginResolverInterface;
 
 class BarcodeGenerator implements BarcodeGeneratorInterface
 {
     /**
-     * @var \Spryker\Service\Barcode\Model\PluginCollection\PluginCollectionInterface
+     * @var \Spryker\Service\Barcode\Model\BarcodeGeneratorPluginResolver\BarcodeGeneratorPluginResolverInterface
      */
-    protected $pluginCollection;
+    protected $pluginResolver;
 
     /**
-     * @param \Spryker\Service\Barcode\Model\PluginCollection\PluginCollectionInterface $pluginCollection
+     * @param \Spryker\Service\Barcode\Model\BarcodeGeneratorPluginResolver\BarcodeGeneratorPluginResolverInterface $pluginResolver
      */
-    public function __construct(PluginCollectionInterface $pluginCollection)
+    public function __construct(BarcodeGeneratorPluginResolverInterface $pluginResolver)
     {
-        $this->pluginCollection = $pluginCollection;
+        $this->pluginResolver = $pluginResolver;
     }
 
     /**
@@ -34,20 +33,8 @@ class BarcodeGenerator implements BarcodeGeneratorInterface
      */
     public function generateBarcode(string $text, ?string $generatorPlugin): BarcodeResponseTransfer
     {
-        return $this->getBarcodeGeneratorPlugin($generatorPlugin)->generate($text);
-    }
-
-    /**
-     * @param null|string $generatorPlugin
-     *
-     * @return \Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface
-     */
-    protected function getBarcodeGeneratorPlugin(?string $generatorPlugin): BarcodeGeneratorPluginInterface
-    {
-        if ($generatorPlugin === null) {
-            return $this->pluginCollection->first();
-        }
-
-        return $this->pluginCollection->findByClassName($generatorPlugin);
+        return $this->pluginResolver
+            ->getBarcodeGeneratorPlugin($generatorPlugin)
+            ->generate($text);
     }
 }

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <product-barcode-gui>
+        <label>Product Barcode</label>
+        <title>Product Barcode</title>
+        <bundle>product-barcode-gui</bundle>
+        <pages>
+            <main>
+                <label>Main</label>
+                <title>Main</title>
+                <bundle>product-barcode-gui</bundle>
+                <controller>index</controller>
+                <action>index</action>
+            </main>
+        </pages>
+    </product-barcode-gui>
+</config>
