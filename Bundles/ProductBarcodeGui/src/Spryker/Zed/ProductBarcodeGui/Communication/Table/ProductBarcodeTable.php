@@ -21,7 +21,7 @@ class ProductBarcodeTable extends AbstractTable
     protected const COL_ID_PRODUCT = 'id_product';
     protected const COL_PRODUCT_SKU = 'sku';
 
-    protected const COL_PRODUCT_NAME = 'product_name';
+    protected const COL_PRODUCT_NAME = 'name';
     protected const COL_BARCODE = 'barcode';
 
     /**
