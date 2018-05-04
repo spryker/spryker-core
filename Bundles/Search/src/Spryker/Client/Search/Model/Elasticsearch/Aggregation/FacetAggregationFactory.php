@@ -25,13 +25,20 @@ class FacetAggregationFactory implements FacetAggregationFactoryInterface
     protected $aggregationBuilder;
 
     /**
+     * @var int
+     */
+    protected $facetNameAggregationSize;
+
+    /**
      * @param \Spryker\Shared\Search\IndexMapInterface $indexMap
      * @param \Spryker\Client\Search\Model\Elasticsearch\Aggregation\AggregationBuilderInterface $aggregationBuilder
+     * @param int $facetNameAggregationSize
      */
-    public function __construct(IndexMapInterface $indexMap, AggregationBuilderInterface $aggregationBuilder)
+    public function __construct(IndexMapInterface $indexMap, AggregationBuilderInterface $aggregationBuilder, $facetNameAggregationSize)
     {
         $this->indexMap = $indexMap;
         $this->aggregationBuilder = $aggregationBuilder;
+        $this->facetNameAggregationSize = $facetNameAggregationSize;
     }
 
     /**
@@ -127,6 +134,6 @@ class FacetAggregationFactory implements FacetAggregationFactoryInterface
      */
     protected function createNumericFacetAggregation(FacetConfigTransfer $facetConfigTransfer)
     {
-        return new NumericFacetAggregation($facetConfigTransfer, $this->aggregationBuilder);
+        return new NumericFacetAggregation($facetConfigTransfer, $this->aggregationBuilder, $this->facetNameAggregationSize);
     }
 }

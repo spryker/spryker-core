@@ -56,4 +56,12 @@ class SearchConfig extends AbstractBundleConfig
 
         return $config;
     }
+
+    /**
+     * @return int
+     */
+    public function getFacetNameAggregationSize()
+    {
+        return $this->get(SearchConstants::FACET_NAME_AGGREGATION_SIZE, 10);
+    }
 }
