@@ -64,7 +64,7 @@ class DevelopmentConfig extends AbstractBundleConfig
      */
     public function getPathToCore()
     {
-        // Check for deprecated enviroment config constant.
+        // Check for deprecated environment config constant.
         $path = $this->getConfig()->get(KernelConstants::SPRYKER_ROOT);
         if ($path) {
             return rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
