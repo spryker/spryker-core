@@ -272,7 +272,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
             $modules = $this->getCoreModules($corePath);
             foreach ($modules as $module) {
                 $path = $corePath . $module . DIRECTORY_SEPARATOR;
-                $paths = $this->addPath($paths, $path);
+                $paths = $this->addPath($paths, $path, null, $namespace);
             }
 
             return $paths;
