@@ -39,21 +39,10 @@ interface CartClientInterface
 
     /**
      * Specification:
-     * - Session strategy:
-     *   - Adds multiple items.
-     *   - Makes zed request.
-     *   - Adds only items, that passed cart validation.
-     *   - Stores quote in session internally after zed request.
-     *   - Returns update quote.
-     *
-     * - Persistent strategy:
-     *   - Makes zed request with items and customer.
-     *   - Loads customer quote from database.
-     *   - Adds only items, that passed validation.
-     *   - Recalculates quote totals.
-     *   - Save updated quote to database.
-     *   - Stores quote in session internally after zed request.
-     *   - Returns update quote.
+     *  - Resolve quote storage strategy which implements \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface.
+     *  - Default quote storage strategy \Spryker\Client\Cart\Plugin\SessionQuoteStorageStrategyPlugin.
+     *  - Adds items to cart using quote storage strategy.
+     *  - Invalid items will be skipped.
      *
      * @api
      *
@@ -66,20 +55,9 @@ interface CartClientInterface
 
     /**
      * Specification:
-     * - Session strategy:
-     *   - Adds items.
-     *   - Makes zed request.
-     *   - Stores quote in session internally after zed request.
-     *   - Returns update quote.
-     *
-     * - Persistent strategy:
-     *   - Makes zed request with item and customer.
-     *   - Loads customer quote from database.
-     *   - Adds item to quote.
-     *   - Recalculates quote totals.
-     *   - Save updated quote to database.
-     *   - Stores quote in session internally after zed request.
-     *   - Returns update quote.
+     *  - Resolve quote storage strategy which implements \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface.
+     *  - Default quote storage strategy \Spryker\Client\Cart\Plugin\SessionQuoteStorageStrategyPlugin.
+     *  - Adds item to cart using quote storage strategy.
      *
      * @api
      *
@@ -92,20 +70,9 @@ interface CartClientInterface
 
     /**
      * Specification:
-     * - Session strategy:
-     *   - Adds multiple items.
-     *   - Makes zed request.
-     *   - Stores quote in session internally after zed request.
-     *   - Returns update quote.
-     *
-     * - Persistent strategy:
-     *   - Makes zed request with items and customer.
-     *   - Loads customer quote from database.
-     *   - Adds items to quote.
-     *   - Recalculates quote totals.
-     *   - Save updated quote to database.
-     *   - Stores quote in session internally after zed request.
-     *   - Returns update quote.
+     *  - Resolve quote storage strategy which implements \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface.
+     *  - Default quote storage strategy \Spryker\Client\Cart\Plugin\SessionQuoteStorageStrategyPlugin.
+     *  - Adds items to cart using quote storage strategy.
      *
      * @api
      *
@@ -118,20 +85,9 @@ interface CartClientInterface
 
     /**
      * Specification:
-     * - Session strategy:
-     *   - Removes single items from quote.
-     *   - Makes zed request.
-     *   - Stores quote in session internally after zed request.
-     *   - Returns update quote.
-     *
-     * - Persistent strategy:
-     *   - Makes zed request with items and customer.
-     *   - Loads customer quote from database.
-     *   - Removes single item from quote.
-     *   - Recalculates quote totals.
-     *   - Save updated quote to database.
-     *   - Stores quote in session internally after zed request.
-     *   - Returns update quote.
+     *  - Resolve quote storage strategy which implements \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface.
+     *  - Default quote storage strategy \Spryker\Client\Cart\Plugin\SessionQuoteStorageStrategyPlugin.
+     *  - Remove item from cart using quote storage strategy.
      *
      * @api
      *
@@ -154,20 +110,9 @@ interface CartClientInterface
 
     /**
      * Specification:
-     * - Session strategy:
-     *   - Removes single items from quote.
-     *   - Makes zed request.
-     *   - Stores quote in session internally after zed request.
-     *   - Returns update quote.
-     *
-     * - Persistent strategy:
-     *   - Makes zed request with items and customer.
-     *   - Loads customer quote from database.
-     *   - Removes items from quote.
-     *   - Recalculates quote totals.
-     *   - Save updated quote to database.
-     *   - Stores quote in session internally after zed request.
-     *   - Returns update quote.
+     *  - Resolve quote storage strategy which implements \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface.
+     *  - Default quote storage strategy \Spryker\Client\Cart\Plugin\SessionQuoteStorageStrategyPlugin.
+     *  - Remove items from cart using quote storage strategy.
      *
      * @api
      *
@@ -179,20 +124,9 @@ interface CartClientInterface
 
     /**
      * Specification:
-     * - Session strategy:
-     *   - Changes quantity for given item.
-     *   - Makes zed request.
-     *   - Stores quote in session internally after zed request.
-     *   - Returns update quote.
-     *
-     * - Persistent strategy:
-     *   - Makes zed request with items and customer.
-     *   - Loads customer quote from database.
-     *   - Changes quantity for given item.
-     *   - Recalculates quote totals.
-     *   - Save updated quote to database.
-     *   - Stores quote in session internally after zed request.
-     *   - Returns update quote.
+     *  - Resolve quote storage strategy which implements \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface.
+     *  - Default quote storage strategy \Spryker\Client\Cart\Plugin\SessionQuoteStorageStrategyPlugin.
+     *  - Change item quantity using quote storage strategy.
      *
      * @api
      *
@@ -206,20 +140,9 @@ interface CartClientInterface
 
     /**
      * Specification:
-     * - Session strategy:
-     *   - Decreases quantity for given item.
-     *   - Makes zed request.
-     *   - Stores quote in session internally after zed request.
-     *   - Returns update quote.
-     *
-     * - Persistent strategy:
-     *   - Makes zed request with items and customer.
-     *   - Loads customer quote from database.
-     *   - Decreases quantity for given item.
-     *   - Recalculates quote totals.
-     *   - Save updated quote to database.
-     *   - Stores quote in session internally after zed request.
-     *   - Returns update quote.
+     *  - Resolve quote storage strategy which implements \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface.
+     *  - Default quote storage strategy \Spryker\Client\Cart\Plugin\SessionQuoteStorageStrategyPlugin.
+     *  - Decrease item quantity using quote storage strategy.
      *
      * @api
      *
@@ -233,20 +156,9 @@ interface CartClientInterface
 
     /**
      * Specification:
-     * - Session strategy:
-     *   - Increases quantity for given item.
-     *   - Makes zed request.
-     *   - Stores quote in session internally after zed request.
-     *   - Returns update quote.
-     *
-     * - Persistent strategy:
-     *   - Makes zed request with items and customer.
-     *   - Loads customer quote from database.
-     *   - Increases quantity for given item.
-     *   - Recalculates quote totals.
-     *   - Save updated quote to database.
-     *   - Stores quote in session internally after zed request.
-     *   - Returns update quote.
+     *  - Resolve quote storage strategy which implements \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface.
+     *  - Default quote storage strategy \Spryker\Client\Cart\Plugin\SessionQuoteStorageStrategyPlugin.
+     *  - Increase item quantity using quote storage strategy.
      *
      * @api
      *
@@ -274,19 +186,9 @@ interface CartClientInterface
 
     /**
      * Specification:
-     * - Session strategy:
-     *   - Makes zed request.
-     *   - Reloads all items in cart anew, it recreates all items transfer, reads new prices, options, bundles.
-     *   - Stores quote in session internally after zed request.
-     *   - Returns update quote.
-     *
-     * - Persistent strategy:
-     *   - Makes zed request.
-     *   - Reloads all items in cart anew, it recreates all items transfer, reads new prices, options, bundles.
-     *   - Recalculates quote totals.
-     *   - Save updated quote to database.
-     *   - Stores quote in session internally after zed request.
-     *   - Returns update quote.
+     *  - Resolve quote storage strategy which implements \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface.
+     *  - Default quote storage strategy \Spryker\Client\Cart\Plugin\SessionQuoteStorageStrategyPlugin.
+     *  - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles using quote storage strategy.
      *
      * @api
      *
@@ -296,23 +198,10 @@ interface CartClientInterface
 
     /**
      * Specification:
-     * - Session strategy:
-     *   - Makes zed request.
-     *   - Reloads all items in cart anew, it recreates all items transfer, reads new prices, options, bundles.
-     *   - Add changes as notices to messages
-     *   - Check error messages
-     *   - Stores quote in session internally after zed request.
-     *   - Returns update quote.
-     *
-     * - Persistent strategy:
-     *   - Makes zed request.
-     *   - Reloads all items in cart anew, it recreates all items transfer, reads new prices, options, bundles.
-     *   - Add changes as notices to messages
-     *   - Check error messages
-     *   - Recalculates quote totals.
-     *   - Save updated quote to database.
-     *   - Stores quote in session internally after zed request.
-     *   - Returns update quote.
+     *  - Resolve quote storage strategy which implements \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface.
+     *  - Default quote storage strategy \Spryker\Client\Cart\Plugin\SessionQuoteStorageStrategyPlugin.
+     *  - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles using quote storage strategy.
+     *  - Observe quote changes after reloading.
      *
      * @api
      *
@@ -322,20 +211,10 @@ interface CartClientInterface
 
     /**
      * Specification:
-     * - Session strategy:
-     *   - Set currency to quote.
-     *   - Makes zed request.
-     *   - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles.
-     *   - Stores quote in session internally after zed request.
-     *   - Returns update quote.
-     *
-     * - Persistent strategy:
-     *   - Makes zed request.
-     *   - Reloads all items in cart anew, it recreates all items transfer, reads new prices, options, bundles.
-     *   - Recalculates quote totals.
-     *   - Save updated quote to database.
-     *   - Stores quote in session internally after zed request.
-     *   - Returns update quote.
+     *  - Resolve quote storage strategy which implements \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface.
+     *  - Default quote storage strategy \Spryker\Client\Cart\Plugin\SessionQuoteStorageStrategyPlugin.
+     *  - Update quote currency using quote storage strategy.
+     *  - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles.
      *
      * @api
      *
