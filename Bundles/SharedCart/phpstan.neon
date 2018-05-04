@@ -3,6 +3,7 @@ parameters:
 
     ignoreErrors:
     - '#Call to an undefined method .+Criteria::.+\(\).#'
+    - '#Method .+Criteria::addJoinObject\(\) invoked with 2 parameters, 1 required.#'
 
 services:
     -

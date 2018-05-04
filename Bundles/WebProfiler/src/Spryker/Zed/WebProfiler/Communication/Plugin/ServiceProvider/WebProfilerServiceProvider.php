@@ -68,7 +68,7 @@ class WebProfilerServiceProvider extends AbstractPlugin implements ServiceProvid
     }
 
     /**
-     * @return \Silex\ControllerProviderInterface[]|\Silex\ServiceProviderInterface[]
+     * @return \Silex\ServiceProviderInterface[]
      */
     protected function getWebProfiler()
     {
