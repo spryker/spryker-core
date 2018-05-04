@@ -18,6 +18,7 @@ use Spryker\Client\MultiCart\Dependency\Client\MultiCartToPersistentCartClientIn
 use Spryker\Client\MultiCart\Dependency\Client\MultiCartToQuoteClientInterface;
 use Spryker\Client\MultiCart\Dependency\Client\MultiCartToSessionClientInterface;
 use Spryker\Client\MultiCart\Dependency\Client\MultiCartToZedRequestClientInterface;
+use Spryker\Client\MultiCart\Dependency\Service\MultiCartToUtilDateTimeServiceInterface;
 use Spryker\Client\MultiCart\QuoteStorageSynchronizer\CustomerLoginQuoteSync;
 use Spryker\Client\MultiCart\QuoteStorageSynchronizer\CustomerLoginQuoteSyncInterface;
 use Spryker\Client\MultiCart\Storage\MultiCartStorage;
@@ -144,7 +145,7 @@ class MultiCartFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\MultiCart\Dependency\Service\MultiCartToUtilDateTimeServiceInterface
      */
-    public function getDateTimeService()
+    public function getDateTimeService(): MultiCartToUtilDateTimeServiceInterface
     {
         return $this->getProvidedDependency(MultiCartDependencyProvider::SERVICE_DATETIME);
     }

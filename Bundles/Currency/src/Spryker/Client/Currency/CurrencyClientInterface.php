@@ -36,8 +36,8 @@ interface CurrencyClientInterface
 
     /**
      * Specification:
-     * - Set selected currency to customer session.
-     * - Call currency post change plugins.
+     * - Sets selected currency to customer session.
+     * - Calls currency post change plugins.
      *
      * @api
      *

@@ -58,11 +58,9 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
 
     /**
      * Specification:
-     *  - Makes zed request with items and customer.
-     *  - Loads customer quote from database.
+     *  - Makes zed request.
      *  - Adds items to quote.
      *  - Recalculates quote totals.
-     *  - Save updated quote to database.
      *  - Stores quote in session internally after zed request.
      *  - Returns update quote.
      *
@@ -302,7 +300,7 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
      * Specification:
      *  - Makes zed request.
      *  - Reloads all items in cart anew, it recreates all items transfer, reads new prices, options, bundles.
-     *  - Add changes as notices to messages
+     *  - Adds changes as notices to messages
      *  - Check error messages
      *  - Stores quote in session internally after zed request.
      *  - Returns update quote.
@@ -319,7 +317,7 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
 
     /**
      * Specification:
-     *  - Set currency to quote.
+     *  - Sets currency to quote.
      *  - Makes zed request.
      *  - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles.
      *  - Stores quote in session internally after zed request.
