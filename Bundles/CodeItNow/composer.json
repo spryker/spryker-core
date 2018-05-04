@@ -3,7 +3,8 @@
   "description": "CodeItNow module",
   "license": "proprietary",
   "require": {
-    "codeitnowin/barcode-generator": "^3.0.0"
+    "spryker/barcode-extension": "^1.0.0",
+    "codeitnowin/barcode": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
