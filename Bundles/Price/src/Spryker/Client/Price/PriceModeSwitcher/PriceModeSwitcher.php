@@ -53,7 +53,7 @@ class PriceModeSwitcher implements PriceModeSwitcherInterface
 
         if (!isset($priceModes[$priceMode])) {
             throw new UnknownPriceModeException(
-                sprintf('Unknown price mode "%s".' . $priceMode)
+                sprintf('Unknown price mode "%s".', $priceMode)
             );
         }
         $quoteTransfer = $this->quoteClient->getQuote();

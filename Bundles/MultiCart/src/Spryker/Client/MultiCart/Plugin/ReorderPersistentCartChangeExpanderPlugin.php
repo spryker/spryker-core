@@ -15,7 +15,7 @@ use Spryker\Client\PersistentCartExtension\Dependency\Plugin\PersistentCartChang
 /**
  * @method \Spryker\Client\MultiCart\MultiCartFactory getFactory()
  */
-class ReorderQuoteNameExpanderPlugin extends AbstractPlugin implements PersistentCartChangeExpanderPluginInterface
+class ReorderPersistentCartChangeExpanderPlugin extends AbstractPlugin implements PersistentCartChangeExpanderPluginInterface
 {
     public const PARAM_ORDER_REFERENCE = 'orderReference';
 
