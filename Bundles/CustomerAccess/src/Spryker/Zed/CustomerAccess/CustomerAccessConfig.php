@@ -14,6 +14,8 @@ class CustomerAccessConfig extends AbstractBundleConfig
     public const CONTENT_TYPE_PRICE = 'price';
 
     /**
+     * Gets list of content types for which admin will be able to define permissions
+     *
      * @return array
      */
     public function getContentTypes(): array
@@ -22,6 +24,8 @@ class CustomerAccessConfig extends AbstractBundleConfig
     }
 
     /**
+     * Gets default content type access for install (all content types will be created with restricted access)
+     *
      * @return bool
      */
     public function getDefaultContentTypeAccess(): bool

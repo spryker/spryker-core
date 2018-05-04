@@ -44,7 +44,8 @@ interface CustomerAccessFacadeInterface
     /**
      * Specification:
      * - Updates unauthenticated customer access entities
-     * - Marks all content types as has no access and listed as has access
+     * - Marks all content types as has no access
+     * - Marks listed in CustomerAccessTransfer content types as has access
      *
      * @api
      *

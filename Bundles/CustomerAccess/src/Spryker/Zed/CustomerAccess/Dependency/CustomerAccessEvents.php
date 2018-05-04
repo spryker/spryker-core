@@ -11,7 +11,7 @@ interface CustomerAccessEvents
 {
     /**
      * Specification
-     * - This events will be used for spy_unauthenticated_customer_access entity changes
+     * - This event will be used for spy_unauthenticated_customer_access entity changes
      *
      * @api
      */
@@ -19,7 +19,7 @@ interface CustomerAccessEvents
 
     /**
      * Specification
-     * - This events will be used for spy_unauthenticated_customer_access entity created
+     * - This event will be used for spy_unauthenticated_customer_access entity created
      *
      * @api
      */
@@ -27,7 +27,7 @@ interface CustomerAccessEvents
 
     /**
      * Specification
-     * - This events will be used for spy_unauthenticated_customer_access entity changes
+     * - This event will be used for spy_unauthenticated_customer_access entity deletion
      *
      * @api
      */
