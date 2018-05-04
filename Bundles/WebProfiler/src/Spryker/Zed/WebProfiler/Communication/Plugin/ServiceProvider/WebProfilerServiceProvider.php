@@ -19,7 +19,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class WebProfilerServiceProvider extends AbstractPlugin implements ServiceProviderInterface, ControllerProviderInterface
 {
     /**
-     * @var \Silex\ServiceProviderInterface[]|\Silex\ControllerProviderInterface[]
+     * @var \Silex\ServiceProviderInterface[]
      */
     protected $webProfiler;
 
