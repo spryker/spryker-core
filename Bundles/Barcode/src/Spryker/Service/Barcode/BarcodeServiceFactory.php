@@ -7,15 +7,16 @@
 
 namespace Spryker\Service\Barcode;
 
-use Spryker\Service\Barcode\Model\BarcodeGenerator\BarcodeGenerator;
-use Spryker\Service\Barcode\Model\BarcodeGenerator\BarcodeGeneratorInterface;
-use Spryker\Service\Barcode\Model\BarcodeGeneratorPluginResolver\BarcodeGeneratorPluginResolver;
+use Spryker\Service\Barcode\BarcodeGenerator\BarcodeGenerator;
+use Spryker\Service\Barcode\BarcodeGenerator\BarcodeGeneratorInterface;
+use Spryker\Service\Barcode\BarcodeGenerator\BarcodeGeneratorPluginResolver;
+use Spryker\Service\Barcode\BarcodeGenerator\BarcodeGeneratorPluginResolverInterface;
 use Spryker\Service\Kernel\AbstractServiceFactory;
 
 class BarcodeServiceFactory extends AbstractServiceFactory
 {
     /**
-     * @return \Spryker\Service\Barcode\Model\BarcodeGenerator\BarcodeGeneratorInterface
+     * @return \Spryker\Service\Barcode\BarcodeGenerator\BarcodeGeneratorInterface
      */
     public function createBarcodeGenerator(): BarcodeGeneratorInterface
     {
@@ -25,9 +26,9 @@ class BarcodeServiceFactory extends AbstractServiceFactory
     }
 
     /**
-     * @return \Spryker\Service\Barcode\Model\BarcodeGeneratorPluginResolver\BarcodeGeneratorPluginResolverInterface
+     * @return \Spryker\Service\Barcode\BarcodeGenerator\BarcodeGeneratorPluginResolverInterface
      */
-    public function createBarcodePluginResolver(): BarcodeGeneratorPluginResolver
+    public function createBarcodePluginResolver(): BarcodeGeneratorPluginResolverInterface
     {
         return new BarcodeGeneratorPluginResolver($this->getBarcodePlugins());
     }

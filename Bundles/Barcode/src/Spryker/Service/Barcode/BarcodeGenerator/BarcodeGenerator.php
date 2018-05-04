@@ -5,20 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\Barcode\Model\BarcodeGenerator;
+namespace Spryker\Service\Barcode\BarcodeGenerator;
 
 use Generated\Shared\Transfer\BarcodeResponseTransfer;
-use Spryker\Service\Barcode\Model\BarcodeGeneratorPluginResolver\BarcodeGeneratorPluginResolverInterface;
 
 class BarcodeGenerator implements BarcodeGeneratorInterface
 {
     /**
-     * @var \Spryker\Service\Barcode\Model\BarcodeGeneratorPluginResolver\BarcodeGeneratorPluginResolverInterface
+     * @var \Spryker\Service\Barcode\BarcodeGenerator\BarcodeGeneratorPluginResolverInterface
      */
     protected $pluginResolver;
 
     /**
-     * @param \Spryker\Service\Barcode\Model\BarcodeGeneratorPluginResolver\BarcodeGeneratorPluginResolverInterface $pluginResolver
+     * @param \Spryker\Service\Barcode\BarcodeGenerator\BarcodeGeneratorPluginResolverInterface $pluginResolver
      */
     public function __construct(BarcodeGeneratorPluginResolverInterface $pluginResolver)
     {

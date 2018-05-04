@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\Barcode\Model\BarcodeGenerator;
+namespace Spryker\Service\Barcode\BarcodeGenerator;
 
 use Generated\Shared\Transfer\BarcodeResponseTransfer;
 
@@ -17,5 +17,5 @@ interface BarcodeGeneratorInterface
      *
      * @return \Generated\Shared\Transfer\BarcodeResponseTransfer
      */
-    public function generateBarcode(string $text, string $generatorPlugin): BarcodeResponseTransfer;
+    public function generateBarcode(string $text, ?string $generatorPlugin): BarcodeResponseTransfer;
 }
