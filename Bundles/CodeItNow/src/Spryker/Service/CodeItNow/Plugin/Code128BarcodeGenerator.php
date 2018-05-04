@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\BarcodeResponseTransfer;
 use Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface;
 use Spryker\Service\Kernel\AbstractPlugin;
 
-class EANBarcodeGenerator extends AbstractPlugin implements BarcodeGeneratorPluginInterface
+class Code128BarcodeGenerator extends AbstractPlugin implements BarcodeGeneratorPluginInterface
 {
     /**
      * @param string $text
@@ -24,12 +24,12 @@ class EANBarcodeGenerator extends AbstractPlugin implements BarcodeGeneratorPlug
         $barcodeResponseTransfer = new BarcodeResponseTransfer();
         $barcode = new BarcodeGenerator();
         $barcode->setText($text);
-        $barcode->setType(BarcodeGenerator::Ean128);
+        $barcode->setType(BarcodeGenerator::Code128);
         $code = $barcode->generate();
 
         $barcodeResponseTransfer
             ->setCode($code)
-            ->setEncoding('EAN');
+            ->setEncoding('data:image/png;base64');
 
         return $barcodeResponseTransfer;
     }
