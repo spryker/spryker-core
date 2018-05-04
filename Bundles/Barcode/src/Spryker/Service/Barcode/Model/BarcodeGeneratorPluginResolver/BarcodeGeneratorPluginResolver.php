@@ -33,7 +33,7 @@ class BarcodeGeneratorPluginResolver implements BarcodeGeneratorPluginResolverIn
     public function getBarcodeGeneratorPlugin(?string $generatorPlugin): BarcodeGeneratorPluginInterface
     {
         if ($generatorPlugin === null) {
-            return array_shift($barcodeKeys);
+            return reset($this->barcodePlugins);
         }
 
         return $this->findByClassName($generatorPlugin);
