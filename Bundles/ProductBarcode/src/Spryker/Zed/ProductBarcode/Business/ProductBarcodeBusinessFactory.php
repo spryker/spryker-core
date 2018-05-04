@@ -9,10 +9,10 @@ namespace Spryker\Zed\ProductBarcode\Business;
 
 use Spryker\Service\Barcode\BarcodeServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductBarcode\Business\ProductBarcodeGenerator\ProductBarcodeGenerator;
-use Spryker\Zed\ProductBarcode\Business\ProductBarcodeGenerator\ProductBarcodeGeneratorInterface;
-use Spryker\Zed\ProductBarcode\Business\ProductSkuProvider\ProductSkuProvider;
-use Spryker\Zed\ProductBarcode\Business\ProductSkuProvider\ProductSkuProviderInterface;
+use Spryker\Zed\ProductBarcode\Business\Barcode\ProductBarcodeGenerator;
+use Spryker\Zed\ProductBarcode\Business\Barcode\ProductBarcodeGeneratorInterface;
+use Spryker\Zed\ProductBarcode\Business\Product\ProductSkuProvider;
+use Spryker\Zed\ProductBarcode\Business\Product\ProductSkuProviderInterface;
 use Spryker\Zed\ProductBarcode\Dependency\Facade\ProductBarcodeToProductBridgeInterface;
 use Spryker\Zed\ProductBarcode\ProductBarcodeDependencyProvider;
 
@@ -22,7 +22,7 @@ use Spryker\Zed\ProductBarcode\ProductBarcodeDependencyProvider;
 class ProductBarcodeBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\ProductBarcode\Business\ProductBarcodeGenerator\ProductBarcodeGeneratorInterface
+     * @return \Spryker\Zed\ProductBarcode\Business\Barcode\ProductBarcodeGeneratorInterface
      */
     public function createProductBarcodeGenerator(): ProductBarcodeGeneratorInterface
     {
@@ -33,7 +33,7 @@ class ProductBarcodeBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductBarcode\Business\ProductSkuProvider\ProductSkuProviderInterface
+     * @return \Spryker\Zed\ProductBarcode\Business\Product\ProductSkuProviderInterface
      */
     public function createProductSkuProvider(): ProductSkuProviderInterface
     {

@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductBarcode\Business\ProductBarcodeGenerator;
+namespace Spryker\Zed\ProductBarcode\Business\Barcode;
 
 use Generated\Shared\Transfer\BarcodeResponseTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Service\Barcode\BarcodeServiceInterface;
-use Spryker\Zed\ProductBarcode\Business\ProductSkuProvider\ProductSkuProviderInterface;
+use Spryker\Zed\ProductBarcode\Business\Product\ProductSkuProviderInterface;
 
 class ProductBarcodeGenerator implements ProductBarcodeGeneratorInterface
 {
@@ -20,13 +20,13 @@ class ProductBarcodeGenerator implements ProductBarcodeGeneratorInterface
     protected $barcodeService;
 
     /**
-     * @var \Spryker\Zed\ProductBarcode\Business\ProductSkuProvider\ProductSkuProviderInterface
+     * @var \Spryker\Zed\ProductBarcode\Business\Product\ProductSkuProviderInterface
      */
     protected $productSkuProvider;
 
     /**
      * @param \Spryker\Service\Barcode\BarcodeServiceInterface $barcodeService
-     * @param \Spryker\Zed\ProductBarcode\Business\ProductSkuProvider\ProductSkuProviderInterface $stockCodeSelector
+     * @param \Spryker\Zed\ProductBarcode\Business\Product\ProductSkuProviderInterface $stockCodeSelector
      */
     public function __construct(BarcodeServiceInterface $barcodeService, ProductSkuProviderInterface $stockCodeSelector)
     {
