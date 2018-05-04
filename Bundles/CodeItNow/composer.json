@@ -3,13 +3,14 @@
   "description": "CodeItNow module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "codeitnowin/barcode": "^3.0.0",
     "spryker/barcode-extension": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*",
-    "spryker/kernel": "^3.0.0"
+    "spryker/kernel": "^3.0.0",
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/kernel": "for testing"
@@ -17,11 +18,6 @@
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",
