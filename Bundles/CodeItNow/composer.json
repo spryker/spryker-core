@@ -3,12 +3,16 @@
   "description": "CodeItNow module",
   "license": "proprietary",
   "require": {
-    "spryker/barcode-extension": "^1.0.0",
-    "codeitnowin/barcode": "^3.0.0"
+    "codeitnowin/barcode": "^3.0.0",
+    "spryker/barcode-extension": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/kernel": "^3.0.0"
+  },
+  "suggest": {
+    "spryker/kernel": "for testing"
   },
   "autoload": {
     "psr-4": {

@@ -1,14 +1,13 @@
 <?php
+
 /**
- * Created by PhpStorm.
- * User: khatsko
- * Date: 5/4/18
- * Time: 7:41 AM
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\GetItNow\Plugin;
+namespace Spryker\Service\CodeItNow\Plugin;
 
-
+use CodeItNow\BarcodeBundle\Utils\BarcodeGenerator;
 use Generated\Shared\Transfer\BarcodeResponseTransfer;
 use Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface;
 use Spryker\Service\Kernel\AbstractPlugin;
@@ -34,5 +33,4 @@ class EANBarcodeGenerator extends AbstractPlugin implements BarcodeGeneratorPlug
 
         return $barcodeResponseTransfer;
     }
-
 }
