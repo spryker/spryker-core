@@ -30,7 +30,7 @@ class ProductBarcodeGuiToBarcodeServiceBridge implements ProductBarcodeGuiToBarc
      *
      * @return \Generated\Shared\Transfer\BarcodeResponseTransfer
      */
-    public function generateBarcode(string $text, string $generatorPlugin = null): BarcodeResponseTransfer
+    public function generateBarcode(string $text, ?string $generatorPlugin = null): BarcodeResponseTransfer
     {
         return $this->barcodeService->generateBarcode($text, $generatorPlugin);
     }

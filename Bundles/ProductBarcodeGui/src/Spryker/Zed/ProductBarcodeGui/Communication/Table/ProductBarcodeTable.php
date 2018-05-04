@@ -149,7 +149,7 @@ class ProductBarcodeTable extends AbstractTable
      *
      * @return \Generated\Shared\Transfer\BarcodeResponseTransfer
      */
-    protected function generateBarcode(string $text, string $generatorPlugin = null): BarcodeResponseTransfer
+    protected function generateBarcode(string $text, ?string $generatorPlugin = null): BarcodeResponseTransfer
     {
         return $this->barcodeServiceBridge->generateBarcode($text, $generatorPlugin);
     }
