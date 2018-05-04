@@ -123,13 +123,11 @@ class ProductBarcodeTable extends AbstractTable
     {
         $sku = $product->getSku();
 
-        $barcodeTransfer = $this->generateBarcode($sku);
-
         return [
             static::COL_ID_PRODUCT => $product->getIdProduct(),
             static::COL_PRODUCT_SKU => $sku,
             static::COL_PRODUCT_NAME => $product->getVirtualColumn(static::COL_PRODUCT_NAME),
-            static::COL_BARCODE => sprintf('<img src="%s,%s">', $barcodeTransfer->getEncoding(), $barcodeTransfer->getCode()),
+            static::COL_BARCODE => $this->getBarcodeImageBySku($sku),
         ];
     }
 
@@ -141,6 +139,22 @@ class ProductBarcodeTable extends AbstractTable
         return $this->localeFacadeBridge
             ->getCurrentLocale()
             ->getIdLocale();
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @return string
+     */
+    protected function getBarcodeImageBySku(string $sku): string
+    {
+        $barcodeTransfer = $this->generateBarcode($sku);
+
+        return sprintf(
+            '<img src="%s,%s">',
+            $barcodeTransfer->getEncoding(),
+            $barcodeTransfer->getCode()
+        );
     }
 
     /**
