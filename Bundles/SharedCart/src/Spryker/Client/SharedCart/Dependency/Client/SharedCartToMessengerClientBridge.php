@@ -29,6 +29,6 @@ class SharedCartToMessengerClientBridge implements SharedCartToMessengerClientIn
      */
     public function addErrorMessage($message)
     {
-        return $this->messengerClient->addErrorMessage($message);
+        $this->messengerClient->addErrorMessage($message);
     }
 }

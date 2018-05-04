@@ -17,20 +17,26 @@ class CartNoteStub extends ZedRequestStub implements CartNoteStubInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteCartNoteRequestTransfer $quoteCartNoteRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function setNoteToQuote(QuoteCartNoteRequestTransfer $quoteCartNoteRequestTransfer): QuoteResponseTransfer
     {
-        return $this->zedStub->call('/cart-note/gateway/set-quote-note', $quoteCartNoteRequestTransfer);
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedStub->call('/cart-note/gateway/set-quote-note', $quoteCartNoteRequestTransfer);
+
+        return $quoteResponseTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteItemCartNoteRequestTransfer $quoteItemCartNoteRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function setNoteToQuoteItem(QuoteItemCartNoteRequestTransfer $quoteItemCartNoteRequestTransfer): QuoteResponseTransfer
     {
-        return $this->zedStub->call('/cart-note/gateway/set-quote-item-note', $quoteItemCartNoteRequestTransfer);
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedStub->call('/cart-note/gateway/set-quote-item-note', $quoteItemCartNoteRequestTransfer);
+
+        return $quoteResponseTransfer;
     }
 }
