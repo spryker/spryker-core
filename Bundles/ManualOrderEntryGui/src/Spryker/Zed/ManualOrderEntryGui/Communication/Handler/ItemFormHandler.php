@@ -72,7 +72,7 @@ class ItemFormHandler implements FormHandlerInterface
      */
     protected function updateItems(QuoteTransfer $quoteTransfer)
     {
-        $quoteTransfer->getManualOrderEntry()->setItems(new ArrayObject());
+        $quoteTransfer->getManualOrder()->setItems(new ArrayObject());
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $newItemTransfer = new ItemTransfer();
@@ -80,7 +80,7 @@ class ItemFormHandler implements FormHandlerInterface
                 ->setQuantity($itemTransfer->getQuantity())
                 ->setUnitGrossPrice($itemTransfer->getUnitGrossPrice());
 
-            $quoteTransfer->getManualOrderEntry()->addItems($newItemTransfer);
+            $quoteTransfer->getManualOrder()->addItems($newItemTransfer);
         }
     }
 
@@ -93,7 +93,7 @@ class ItemFormHandler implements FormHandlerInterface
      */
     protected function appendItemsFromManualOrderEntryItems(QuoteTransfer $quoteTransfer, $addedSkus, $items): void
     {
-        foreach ($quoteTransfer->getManualOrderEntry()->getItems() as $newItemTransfer) {
+        foreach ($quoteTransfer->getManualOrder()->getItems() as $newItemTransfer) {
             if ($newItemTransfer->getQuantity() <= 0
                 || in_array($newItemTransfer->getSku(), $addedSkus)
             ) {

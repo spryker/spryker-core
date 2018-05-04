@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\Product;
 
-use Generated\Shared\Transfer\ManualOrderEntryTransfer;
+use Generated\Shared\Transfer\ManualOrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -58,7 +58,7 @@ class ItemCollectionType extends AbstractType
     protected function addItemsField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_ITEMS, CollectionType::class, [
-            'property_path' => QuoteTransfer::MANUAL_ORDER_ENTRY . '.' . ManualOrderEntryTransfer::ITEMS,
+            'property_path' => QuoteTransfer::MANUAL_ORDER . '.' . ManualOrderTransfer::ITEMS,
             'entry_type' => ItemType::class,
             'label' => 'Added Items',
             'required' => false,

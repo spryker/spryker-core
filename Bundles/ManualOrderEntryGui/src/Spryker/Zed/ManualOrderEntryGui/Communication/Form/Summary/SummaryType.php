@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\Summary;
 
-use Generated\Shared\Transfer\ManualOrderEntryTransfer;
+use Generated\Shared\Transfer\ManualOrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -21,7 +21,7 @@ class SummaryType extends AbstractType
 {
     public const TYPE_NAME = 'summary';
 
-    public const FIELD_SUBMIT_ORDER = 'submitOrder';
+    public const FIELD_IS_SUBMIT_ORDER = 'isSubmitOrder';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -41,7 +41,7 @@ class SummaryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this
-            ->addIsSummaryPostedField($builder, $options);
+            ->addIsSubmitOrderField($builder, $options);
     }
 
     /**
@@ -50,13 +50,13 @@ class SummaryType extends AbstractType
      *
      * @return $this
      */
-    protected function addIsSummaryPostedField(FormBuilderInterface $builder, array $options)
+    protected function addIsSubmitOrderField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(
-            static::FIELD_SUBMIT_ORDER,
+            static::FIELD_IS_SUBMIT_ORDER,
             CheckboxType::class,
             [
-                'property_path' => QuoteTransfer::MANUAL_ORDER_ENTRY . '.' . ManualOrderEntryTransfer::SUBMIT_ORDER,
+                'property_path' => QuoteTransfer::MANUAL_ORDER . '.' . ManualOrderTransfer::IS_SUBMIT_ORDER,
                 'label' => 'Submit order',
                 'required' => true,
             ]

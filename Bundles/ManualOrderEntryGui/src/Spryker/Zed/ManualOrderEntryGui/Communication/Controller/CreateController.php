@@ -82,7 +82,7 @@ class CreateController extends AbstractController
 
         return $this->viewResponse([
             'forms' => $formsView,
-            'prevStepName' => $this->getFactory()->getConfig()->getPrevStepName(),
+            'previousStepName' => $this->getFactory()->getConfig()->getPreviousStepName(),
             'nextStepName' => $this->getFactory()->getConfig()->getNextStepName(),
             'quoteTransfer' => $quoteTransfer,
             'params' => $request->query->all(),

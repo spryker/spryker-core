@@ -56,8 +56,8 @@ use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToMoney
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToPaymentFacadeInterface;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToProductFacadeInterface;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToShipmentFacadeInterface;
+use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToStoreFacadeInterface;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\QueryContainer\ManualOrderEntryGuiToCustomerQueryContainerInterface;
-use Spryker\Zed\ManualOrderEntryGui\Dependency\Service\ManualOrderEntryGuiToStoreInterface;
 use Spryker\Zed\ManualOrderEntryGui\ManualOrderEntryGuiDependencyProvider;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -165,19 +165,19 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
+     * @return \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToStoreFacadeInterface
+     */
+    public function getStoreFacade(): ManualOrderEntryGuiToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::FACADE_STORE);
+    }
+
+    /**
      * @return \Spryker\Zed\ManualOrderEntryGui\Dependency\QueryContainer\ManualOrderEntryGuiToCustomerQueryContainerInterface
      */
     public function getCustomerQueryContainer(): ManualOrderEntryGuiToCustomerQueryContainerInterface
     {
         return $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::QUERY_CONTAINER_CUSTOMER);
-    }
-
-    /**
-     * @return \Spryker\Zed\ManualOrderEntryGui\Dependency\Service\ManualOrderEntryGuiToStoreInterface
-     */
-    public function getStore(): ManualOrderEntryGuiToStoreInterface
-    {
-        return $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::STORE);
     }
 
     /**
@@ -220,7 +220,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     public function createManualOrderEntryFormPluginFilter(): ManualOrderEntryFormPluginFilter
     {
         return new ManualOrderEntryFormPluginFilter(
-            $this->getConfig()->getPrevStepName(),
+            $this->getConfig()->getPreviousStepName(),
             $this->getConfig()->getNextStepName()
         );
     }
@@ -311,7 +311,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
      */
     public function createAddressCollectionDataProvider(): AddressCollectionDataProvider
     {
-        return new AddressCollectionDataProvider($this->getStore());
+        return new AddressCollectionDataProvider($this->getStoreFacade());
     }
 
     /**

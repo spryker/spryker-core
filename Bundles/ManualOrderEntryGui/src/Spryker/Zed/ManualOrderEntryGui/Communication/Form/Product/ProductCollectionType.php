@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\Product;
 
-use Generated\Shared\Transfer\ManualOrderEntryTransfer;
+use Generated\Shared\Transfer\ManualOrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -59,7 +59,7 @@ class ProductCollectionType extends AbstractType
     protected function addProductsEmptyField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_PRODUCTS, CollectionType::class, [
-            'property_path' => QuoteTransfer::MANUAL_ORDER_ENTRY . '.' . ManualOrderEntryTransfer::PRODUCTS,
+            'property_path' => QuoteTransfer::MANUAL_ORDER . '.' . ManualOrderTransfer::PRODUCTS,
             'entry_type' => ProductType::class,
             'label' => 'Products',
             'required' => false,
@@ -82,7 +82,7 @@ class ProductCollectionType extends AbstractType
     protected function addIsProductPostedField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_IS_PRODUCT_POSTED, HiddenType::class, [
-            'property_path' => QuoteTransfer::MANUAL_ORDER_ENTRY . '.' . ManualOrderEntryTransfer::IS_PRODUCT_POSTED,
+            'property_path' => QuoteTransfer::MANUAL_ORDER . '.' . ManualOrderTransfer::IS_PRODUCT_POSTED,
             'data' => 1,
         ]);
 

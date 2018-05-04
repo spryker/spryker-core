@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider;
 
-use Generated\Shared\Transfer\ManualOrderEntryTransfer;
+use Generated\Shared\Transfer\ManualOrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 class VoucherDataProvider implements FormDataProviderInterface
@@ -19,8 +19,8 @@ class VoucherDataProvider implements FormDataProviderInterface
      */
     public function getData($quoteTransfer)
     {
-        if ($quoteTransfer->getManualOrderEntry() === null) {
-            $quoteTransfer->setManualOrderEntry(new ManualOrderEntryTransfer());
+        if ($quoteTransfer->getManualOrder() === null) {
+            $quoteTransfer->setManualOrder(new ManualOrderTransfer());
         }
 
         return $quoteTransfer;

@@ -38,7 +38,7 @@ class VoucherFormHandler implements FormHandlerInterface
      */
     public function handle(QuoteTransfer $quoteTransfer, &$form, Request $request): QuoteTransfer
     {
-        $voucherCode = $quoteTransfer->getManualOrderEntry()->getVoucherCode();
+        $voucherCode = $quoteTransfer->getManualOrder()->getVoucherCode();
 
         $discountTransfer = new DiscountTransfer();
         $discountTransfer->setVoucherCode($voucherCode);

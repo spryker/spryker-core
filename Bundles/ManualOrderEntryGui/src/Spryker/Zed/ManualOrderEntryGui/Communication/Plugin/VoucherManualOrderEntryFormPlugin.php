@@ -63,7 +63,7 @@ class VoucherManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
      */
     public function handleData(QuoteTransfer $quoteTransfer, &$form, Request $request): QuoteTransfer
     {
-        $voucherCode = $quoteTransfer->getManualOrderEntry()->getVoucherCode();
+        $voucherCode = $quoteTransfer->getManualOrder()->getVoucherCode();
 
         if (!empty($voucherCode)) {
             $quoteTransfer = $this->getFactory()

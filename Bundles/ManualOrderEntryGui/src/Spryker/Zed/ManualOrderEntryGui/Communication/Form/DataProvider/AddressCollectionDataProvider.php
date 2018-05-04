@@ -10,14 +10,14 @@ namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Address\AddressCollectionType;
-use Spryker\Zed\ManualOrderEntryGui\Dependency\Service\ManualOrderEntryGuiToStoreInterface;
+use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToStoreFacadeInterface;
 
 class AddressCollectionDataProvider implements FormDataProviderInterface
 {
     /**
-     * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Service\ManualOrderEntryGuiToStoreInterface
+     * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToStoreFacadeInterface
      */
-    protected $store;
+    protected $storeFacade;
 
     /**
      * @var \Generated\Shared\Transfer\CustomerTransfer
@@ -25,11 +25,11 @@ class AddressCollectionDataProvider implements FormDataProviderInterface
     protected $customerTransfer;
 
     /**
-     * @param \Spryker\Zed\ManualOrderEntryGui\Dependency\Service\ManualOrderEntryGuiToStoreInterface $store
+     * @param \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToStoreFacadeInterface $storeFacade
      */
-    public function __construct(ManualOrderEntryGuiToStoreInterface $store)
+    public function __construct(ManualOrderEntryGuiToStoreFacadeInterface $storeFacade)
     {
-        $this->store = $store;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -144,7 +144,7 @@ class AddressCollectionDataProvider implements FormDataProviderInterface
     {
         $countries = [];
 
-        foreach ($this->store->getCountries() as $iso2Code) {
+        foreach ($this->storeFacade->getCountries() as $iso2Code) {
             $countries[$iso2Code] = $iso2Code;
         }
 

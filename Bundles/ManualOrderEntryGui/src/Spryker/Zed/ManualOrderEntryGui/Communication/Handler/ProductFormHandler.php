@@ -51,7 +51,7 @@ class ProductFormHandler implements FormHandlerInterface
         $cartChangeTransfer = new CartChangeTransfer();
         $addedSkus = [];
 
-        foreach ($quoteTransfer->getManualOrderEntry()->getProducts() as $newProduct) {
+        foreach ($quoteTransfer->getManualOrder()->getProducts() as $newProduct) {
             if ($this->isProductValid($newProduct, $addedSkus)) {
                 continue;
             }

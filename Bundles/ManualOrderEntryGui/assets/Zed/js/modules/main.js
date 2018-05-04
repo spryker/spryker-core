@@ -65,13 +65,13 @@ $(document).ready( function () {
     $('#addresses_billingSameAsShipping').click(billingAddressSelectionToggle);
 
 
-    $('form.ManualOrderEntry input').on('keyup keypress', function(e) {
+    $('form.ManualOrderEntryForm input').on('keyup keypress', function(e) {
         if (e.which === 13) {
-            var btn = $('form.ManualOrderEntry input.submitBtn');
+            var btn = $('form.ManualOrderEntryForm input.submitBtn');
             if (btn.length) {
                 btn.click();
             } else {
-                $('form.ManualOrderEntry input.nextStepBtn').click();
+                $('form.ManualOrderEntryForm input.nextStepBtn').click();
             }
 
         }

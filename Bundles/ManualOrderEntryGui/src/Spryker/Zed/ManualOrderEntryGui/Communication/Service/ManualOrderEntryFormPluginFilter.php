@@ -16,7 +16,7 @@ class ManualOrderEntryFormPluginFilter
     /**
      * @var string
      */
-    protected $prevStepName;
+    protected $previousStepName;
 
     /**
      * @var string
@@ -24,12 +24,12 @@ class ManualOrderEntryFormPluginFilter
     protected $nextStepName;
 
     /**
-     * @param string $prevStepName
+     * @param string $previousStepName
      * @param string $nextStepName
      */
-    public function __construct($prevStepName, $nextStepName)
+    public function __construct($previousStepName, $nextStepName)
     {
-        $this->prevStepName = $prevStepName;
+        $this->previousStepName = $previousStepName;
         $this->nextStepName = $nextStepName;
     }
 
@@ -44,7 +44,7 @@ class ManualOrderEntryFormPluginFilter
     {
         $filteredPlugins = [];
         $skippedPlugins = [];
-        $isPrevFormPreFilled = false;
+        $isPreviousFormPreFilled = false;
 
         foreach ($formPlugins as $formPlugin) {
             $pluginAdded = false;
@@ -58,7 +58,7 @@ class ManualOrderEntryFormPluginFilter
             $isShowNext = $this->isShowNext($request);
             $isFormPreFilled = $this->isFormPreFilled($formPlugin, $quoteTransfer);
 
-            if ($isShowNext || $isPrevFormPreFilled) {
+            if ($isShowNext || $isPreviousFormPreFilled) {
                 $filteredPlugins[] = $formPlugin;
                 $pluginAdded = true;
             }
@@ -70,12 +70,12 @@ class ManualOrderEntryFormPluginFilter
             if (!$pluginAdded) {
                 $filteredPlugins[] = $formPlugin;
             }
-            $isPrevFormPreFilled = $isFormPreFilled;
+            $isPreviousFormPreFilled = $isFormPreFilled;
         }
 
         $filteredPlugins = $this->augmentFilteredPlugins($formPlugins, $filteredPlugins, $skippedPlugins);
 
-        if ($this->isShowPrev($request) && count($filteredPlugins) > 1) {
+        if ($this->isShowPrevious($request) && count($filteredPlugins) > 1) {
             array_pop($filteredPlugins);
         }
 
@@ -125,9 +125,9 @@ class ManualOrderEntryFormPluginFilter
      *
      * @return bool
      */
-    protected function isShowPrev(Request $request): bool
+    protected function isShowPrevious(Request $request): bool
     {
-        return $request->request->get($this->prevStepName) !== null;
+        return $request->request->get($this->previousStepName) !== null;
     }
 
     /**

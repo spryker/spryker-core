@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\ManualOrderEntryGuiExtension\Dependency\Plugin;
 
+use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+
 interface PaymentSubFormPluginInterface
 {
     /**
@@ -17,7 +20,7 @@ interface PaymentSubFormPluginInterface
      *
      * @return \Spryker\Zed\Kernel\Communication\Form\AbstractType
      */
-    public function createSubForm();
+    public function createSubForm(): AbstractType;
 
     /**
      * Specification:
@@ -27,7 +30,7 @@ interface PaymentSubFormPluginInterface
      *
      * @return string
      */
-    public function getPropertyPath();
+    public function getPropertyPath(): string;
 
     /**
      * Specification:
@@ -37,7 +40,7 @@ interface PaymentSubFormPluginInterface
      *
      * @return string
      */
-    public function getName();
+    public function getName(): string;
 
     /**
      * Specification:
@@ -47,7 +50,7 @@ interface PaymentSubFormPluginInterface
      *
      * @return string
      */
-    public function getPaymentProvider();
+    public function getPaymentProvider(): string;
 
     /**
      * Specification:
@@ -57,7 +60,7 @@ interface PaymentSubFormPluginInterface
      *
      * @return string
      */
-    public function getPaymentMethod();
+    public function getPaymentMethod(): string;
 
     /**
      * Specification:
@@ -65,11 +68,11 @@ interface PaymentSubFormPluginInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getData($dataTransfer);
+    public function getData(QuoteTransfer $quoteTransfer): QuoteTransfer;
 
     /**
      * Specification:
@@ -77,9 +80,9 @@ interface PaymentSubFormPluginInterface
      *
      * @api
      *
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return array
      */
-    public function getOptions($dataTransfer);
+    public function getOptions(QuoteTransfer $quoteTransfer): array;
 }

@@ -38,7 +38,7 @@ class StoreFormHandler implements FormHandlerInterface
      */
     public function handle(QuoteTransfer $quoteTransfer, &$form, Request $request): QuoteTransfer
     {
-        $storeCurrencyString = $quoteTransfer->getManualOrderEntry()->getStoreCurrency();
+        $storeCurrencyString = $quoteTransfer->getManualOrder()->getStoreCurrency();
         if (!$this->isValidStoreCurrencyString($storeCurrencyString)) {
             return $quoteTransfer;
         }

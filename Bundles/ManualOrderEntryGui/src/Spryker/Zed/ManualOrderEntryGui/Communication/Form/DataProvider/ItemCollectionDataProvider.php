@@ -9,7 +9,7 @@ namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ManualOrderEntryTransfer;
+use Generated\Shared\Transfer\ManualOrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Product\ItemCollectionType;
 
@@ -22,8 +22,8 @@ class ItemCollectionDataProvider implements FormDataProviderInterface
      */
     public function getData($quoteTransfer)
     {
-        if ($quoteTransfer->getManualOrderEntry() === null) {
-            $quoteTransfer->setManualOrderEntry(new ManualOrderEntryTransfer());
+        if ($quoteTransfer->getManualOrder() === null) {
+            $quoteTransfer->setManualOrder(new ManualOrderTransfer());
         }
 
         $items = new ArrayObject();
@@ -33,7 +33,7 @@ class ItemCollectionDataProvider implements FormDataProviderInterface
 
             $items->append($newItemTransfer);
         }
-        $quoteTransfer->getManualOrderEntry()->setItems($items);
+        $quoteTransfer->getManualOrder()->setItems($items);
 
         return $quoteTransfer;
     }
