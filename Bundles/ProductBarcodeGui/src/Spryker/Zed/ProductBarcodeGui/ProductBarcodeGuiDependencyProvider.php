@@ -22,7 +22,7 @@ class ProductBarcodeGuiDependencyProvider extends AbstractBundleDependencyProvid
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideCommunicationLayerDependencies(Container $container)
+    public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = $this->addBarcodeService($container);
         $container = $this->addLocaleFacade($container);
