@@ -14,8 +14,8 @@ use Spryker\Zed\ProductBarcodeGui\Dependency\Service\ProductBarcodeGuiToBarcodeS
 
 class ProductBarcodeGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const BARCODE_SERVICE = 'BARCODE_SERVICE';
-    public const LOCALE_FACADE = 'LOCALE_FACADE';
+    public const SERVICE_BARCODE = 'SERVICE_BARCODE';
+    public const FACADE_LOCALE = 'FACADE_LOCALE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -37,7 +37,7 @@ class ProductBarcodeGuiDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addBarcodeService(Container $container): Container
     {
-        $container[static::BARCODE_SERVICE] = function (Container $container) {
+        $container[static::SERVICE_BARCODE] = function (Container $container) {
             return new ProductBarcodeGuiToBarcodeServiceBridge(
                 $container->getLocator()->barcode()->service()
             );
@@ -53,7 +53,7 @@ class ProductBarcodeGuiDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addLocaleFacade(Container $container): Container
     {
-        $container[static::LOCALE_FACADE] = function (Container $container) {
+        $container[static::FACADE_LOCALE] = function (Container $container) {
             return new ProductBarcodeGuiToLocaleBridge(
                 $container->getLocator()->locale()->facade()
             );

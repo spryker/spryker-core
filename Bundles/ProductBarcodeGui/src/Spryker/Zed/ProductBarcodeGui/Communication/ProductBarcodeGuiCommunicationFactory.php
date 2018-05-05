@@ -31,7 +31,7 @@ class ProductBarcodeGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function getBarcodeService(): ProductBarcodeGuiToBarcodeServiceBridgeInterface
     {
-        return $this->getProvidedDependency(ProductBarcodeGuiDependencyProvider::BARCODE_SERVICE);
+        return $this->getProvidedDependency(ProductBarcodeGuiDependencyProvider::SERVICE_BARCODE);
     }
 
     /**
@@ -39,6 +39,6 @@ class ProductBarcodeGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function getLocaleFacade(): ProductBarcodeGuiToLocaleBridgeInterface
     {
-        return $this->getProvidedDependency(ProductBarcodeGuiDependencyProvider::LOCALE_FACADE);
+        return $this->getProvidedDependency(ProductBarcodeGuiDependencyProvider::FACADE_LOCALE);
     }
 }
