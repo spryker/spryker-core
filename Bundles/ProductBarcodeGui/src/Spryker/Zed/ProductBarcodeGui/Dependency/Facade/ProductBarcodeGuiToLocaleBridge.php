@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ProductBarcodeGui\Dependency\Facade;
 
-use Generated\Shared\Transfer\LocaleTransfer;
-
 class ProductBarcodeGuiToLocaleBridge implements ProductBarcodeGuiToLocaleBridgeInterface
 {
     /**
@@ -27,7 +25,7 @@ class ProductBarcodeGuiToLocaleBridge implements ProductBarcodeGuiToLocaleBridge
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getCurrentLocale(): LocaleTransfer
+    public function getCurrentLocale()
     {
         return $this->localeFacade->getCurrentLocale();
     }
