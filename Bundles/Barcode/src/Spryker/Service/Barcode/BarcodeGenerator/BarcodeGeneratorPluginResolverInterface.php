@@ -12,9 +12,9 @@ use Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInt
 interface BarcodeGeneratorPluginResolverInterface
 {
     /**
-     * @param null|string $generatorPlugin
+     * @param null|string $generatorPluginClassName
      *
      * @return \Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface
      */
-    public function getBarcodeGeneratorPlugin(?string $generatorPlugin): BarcodeGeneratorPluginInterface;
+    public function getBarcodeGeneratorPlugin(?string $generatorPluginClassName): BarcodeGeneratorPluginInterface;
 }
