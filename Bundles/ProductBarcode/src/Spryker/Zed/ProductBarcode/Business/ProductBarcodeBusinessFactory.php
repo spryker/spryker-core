@@ -47,7 +47,7 @@ class ProductBarcodeBusinessFactory extends AbstractBusinessFactory
      */
     public function getProductFacade(): ProductBarcodeToProductFacadeInterface
     {
-        return $this->getProvidedDependency(ProductBarcodeDependencyProvider::PRODUCT_FACADE);
+        return $this->getProvidedDependency(ProductBarcodeDependencyProvider::FACADE_PRODUCT);
     }
 
     /**
@@ -55,6 +55,6 @@ class ProductBarcodeBusinessFactory extends AbstractBusinessFactory
      */
     public function getBarcodeService(): BarcodeServiceInterface
     {
-        return $this->getProvidedDependency(ProductBarcodeDependencyProvider::BARCODE_SERVICE);
+        return $this->getProvidedDependency(ProductBarcodeDependencyProvider::SERVICE_BARCODE);
     }
 }

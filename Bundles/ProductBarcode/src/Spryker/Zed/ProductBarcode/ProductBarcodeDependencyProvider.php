@@ -13,8 +13,8 @@ use Spryker\Zed\ProductBarcode\Dependency\Facade\ProductBarcodeToProductFacadeBr
 
 class ProductBarcodeDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const BARCODE_SERVICE = 'BARCODE_SERVICE';
-    public const PRODUCT_FACADE = 'PRODUCT_FACADE';
+    public const SERVICE_BARCODE = 'SERVICE_BARCODE';
+    public const FACADE_PRODUCT = 'FACADE_PRODUCT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -36,7 +36,7 @@ class ProductBarcodeDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addBarcodeService(Container $container): Container
     {
-        $container[static::BARCODE_SERVICE] = function (Container $container) {
+        $container[static::SERVICE_BARCODE] = function (Container $container) {
             return $container->getLocator()->barcode()->service();
         };
 
@@ -50,7 +50,7 @@ class ProductBarcodeDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductFacade(Container $container): Container
     {
-        $container[static::PRODUCT_FACADE] = function (Container $container) {
+        $container[static::FACADE_PRODUCT] = function (Container $container) {
             return new ProductBarcodeToProductFacadeBridge($container->getLocator()->product()->facade());
         };
 
