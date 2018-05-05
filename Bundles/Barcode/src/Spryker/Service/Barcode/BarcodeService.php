@@ -25,7 +25,7 @@ class BarcodeService extends AbstractService implements BarcodeServiceInterface
      *
      * @return \Generated\Shared\Transfer\BarcodeResponseTransfer
      */
-    public function generateBarcode(string $text, string $generatorPlugin = null): BarcodeResponseTransfer
+    public function generateBarcode(string $text, ?string $generatorPlugin = null): BarcodeResponseTransfer
     {
         return $this->getFactory()
             ->createBarcodeGenerator()
