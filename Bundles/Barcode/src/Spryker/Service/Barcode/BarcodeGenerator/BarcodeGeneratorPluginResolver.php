@@ -7,7 +7,7 @@
 
 namespace Spryker\Service\Barcode\BarcodeGenerator;
 
-use Spryker\Service\Barcode\Exception\PluginNotFoundException;
+use Spryker\Service\Barcode\Exception\BarcodeGeneratorPluginNotFoundException;
 use Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface;
 
 class BarcodeGeneratorPluginResolver implements BarcodeGeneratorPluginResolverInterface
@@ -42,7 +42,7 @@ class BarcodeGeneratorPluginResolver implements BarcodeGeneratorPluginResolverIn
     /**
      * @param string $fullClassName
      *
-     * @throws \Spryker\Service\Barcode\Exception\PluginNotFoundException
+     * @throws \Spryker\Service\Barcode\Exception\BarcodeGeneratorPluginNotFoundException
      *
      * @return \Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface
      */
@@ -54,6 +54,6 @@ class BarcodeGeneratorPluginResolver implements BarcodeGeneratorPluginResolverIn
             }
         }
 
-        throw new PluginNotFoundException();
+        throw new BarcodeGeneratorPluginNotFoundException();
     }
 }

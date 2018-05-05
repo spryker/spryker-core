@@ -9,6 +9,6 @@ namespace Spryker\Service\Barcode\Exception;
 
 use Exception;
 
-class PluginNotFoundException extends Exception
+class BarcodeGeneratorPluginNotFoundException extends Exception
 {
 }
