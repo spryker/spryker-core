@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductBarcode\Dependency\Facade;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 
-interface ProductBarcodeToProductBridgeInterface
+interface ProductBarcodeToProductFacadeInterface
 {
     /**
      * @param int $idProduct

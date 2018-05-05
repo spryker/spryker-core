@@ -8,19 +8,19 @@
 namespace Spryker\Zed\ProductBarcode\Business\Product;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Spryker\Zed\ProductBarcode\Dependency\Facade\ProductBarcodeToProductBridgeInterface;
+use Spryker\Zed\ProductBarcode\Dependency\Facade\ProductBarcodeToProductFacadeInterface;
 
 class ProductSkuProvider implements ProductSkuProviderInterface
 {
     /**
-     * @var \Spryker\Zed\ProductBarcode\Dependency\Facade\ProductBarcodeToProductBridgeInterface
+     * @var \Spryker\Zed\ProductBarcode\Dependency\Facade\ProductBarcodeToProductFacadeInterface
      */
     protected $productFacade;
 
     /**
-     * @param \Spryker\Zed\ProductBarcode\Dependency\Facade\ProductBarcodeToProductBridgeInterface $productBridge
+     * @param \Spryker\Zed\ProductBarcode\Dependency\Facade\ProductBarcodeToProductFacadeInterface $productBridge
      */
-    public function __construct(ProductBarcodeToProductBridgeInterface $productBridge)
+    public function __construct(ProductBarcodeToProductFacadeInterface $productBridge)
     {
         $this->productFacade = $productBridge;
     }

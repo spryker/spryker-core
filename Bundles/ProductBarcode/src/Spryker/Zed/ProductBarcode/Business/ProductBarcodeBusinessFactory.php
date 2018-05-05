@@ -13,7 +13,7 @@ use Spryker\Zed\ProductBarcode\Business\Barcode\ProductBarcodeGenerator;
 use Spryker\Zed\ProductBarcode\Business\Barcode\ProductBarcodeGeneratorInterface;
 use Spryker\Zed\ProductBarcode\Business\Product\ProductSkuProvider;
 use Spryker\Zed\ProductBarcode\Business\Product\ProductSkuProviderInterface;
-use Spryker\Zed\ProductBarcode\Dependency\Facade\ProductBarcodeToProductBridgeInterface;
+use Spryker\Zed\ProductBarcode\Dependency\Facade\ProductBarcodeToProductFacadeInterface;
 use Spryker\Zed\ProductBarcode\ProductBarcodeDependencyProvider;
 
 /**
@@ -43,9 +43,9 @@ class ProductBarcodeBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductBarcode\Dependency\Facade\ProductBarcodeToProductBridgeInterface
+     * @return \Spryker\Zed\ProductBarcode\Dependency\Facade\ProductBarcodeToProductFacadeInterface
      */
-    public function getProductFacade(): ProductBarcodeToProductBridgeInterface
+    public function getProductFacade(): ProductBarcodeToProductFacadeInterface
     {
         return $this->getProvidedDependency(ProductBarcodeDependencyProvider::PRODUCT_FACADE);
     }

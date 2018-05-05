@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductBarcode\Dependency\Facade;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 
-class ProductBarcodeToProductBridge implements ProductBarcodeToProductBridgeInterface
+class ProductBarcodeToProductFacadeBridge implements ProductBarcodeToProductFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Product\Business\ProductFacadeInterface
