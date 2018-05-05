@@ -12,7 +12,7 @@ use Spryker\Service\Kernel\Container;
 
 class BarcodeDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const BARCODE_PLUGINS = 'BARCODE_PLUGINS';
+    public const PLUGINS_BARCODE_GENERATOR = 'PLUGINS_BARCODE_GENERATOR';
 
     /**
      * @param \Spryker\Service\Kernel\Container $container
@@ -33,7 +33,7 @@ class BarcodeDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addBarcodePlugins(Container $container): Container
     {
-        $container[static::BARCODE_PLUGINS] = function (Container $container) {
+        $container[static::PLUGINS_BARCODE_GENERATOR] = function (Container $container) {
             return $this->getBarcodePlugins();
         };
 

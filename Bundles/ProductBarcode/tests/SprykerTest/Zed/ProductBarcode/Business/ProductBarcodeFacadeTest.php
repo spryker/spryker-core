@@ -41,7 +41,7 @@ class ProductBarcodeFacadeTest extends Test
         parent::setUp();
 
         $this->barcodePlugin = $this->getBarcodePluginMock();
-        $this->tester->setDependency(BarcodeDependencyProvider::BARCODE_PLUGINS, [
+        $this->tester->setDependency(BarcodeDependencyProvider::PLUGINS_BARCODE_GENERATOR, [
             $this->barcodePlugin,
         ]);
     }

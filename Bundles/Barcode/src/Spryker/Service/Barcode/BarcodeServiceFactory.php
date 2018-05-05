@@ -38,6 +38,6 @@ class BarcodeServiceFactory extends AbstractServiceFactory
      */
     public function getBarcodePlugins(): array
     {
-        return $this->getProvidedDependency(BarcodeDependencyProvider::BARCODE_PLUGINS);
+        return $this->getProvidedDependency(BarcodeDependencyProvider::PLUGINS_BARCODE_GENERATOR);
     }
 }
