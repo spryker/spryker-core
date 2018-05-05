@@ -27,7 +27,7 @@ class ProductBarcodeGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Service\Barcode\BarcodeServiceInterface
+     * @return \Spryker\Zed\ProductBarcodeGui\Dependency\Service\ProductBarcodeGuiToBarcodeServiceBridgeInterface
      */
     public function getBarcodeService(): ProductBarcodeGuiToBarcodeServiceBridgeInterface
     {

@@ -25,7 +25,7 @@ class ProductBarcodeTable extends AbstractTable
     protected const COL_BARCODE = 'barcode';
 
     /**
-     * @var \Spryker\Service\Barcode\BarcodeServiceInterface
+     * @var \Spryker\Zed\ProductBarcodeGui\Dependency\Service\ProductBarcodeGuiToBarcodeServiceBridgeInterface
      */
     protected $barcodeServiceBridge;
 
