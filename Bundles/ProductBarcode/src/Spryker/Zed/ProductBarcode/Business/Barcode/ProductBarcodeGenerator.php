@@ -9,13 +9,13 @@ namespace Spryker\Zed\ProductBarcode\Business\Barcode;
 
 use Generated\Shared\Transfer\BarcodeResponseTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Spryker\Service\Barcode\BarcodeServiceInterface;
 use Spryker\Zed\ProductBarcode\Business\Product\ProductSkuProviderInterface;
+use Spryker\Zed\ProductBarcode\Dependency\Service\ProductBarcodeToBarcodeServiceInterface;
 
 class ProductBarcodeGenerator implements ProductBarcodeGeneratorInterface
 {
     /**
-     * @var \Spryker\Service\Barcode\BarcodeServiceInterface
+     * @var \Spryker\Zed\ProductBarcode\Dependency\Service\ProductBarcodeToBarcodeServiceInterface
      */
     protected $barcodeService;
 
@@ -25,11 +25,13 @@ class ProductBarcodeGenerator implements ProductBarcodeGeneratorInterface
     protected $productSkuProvider;
 
     /**
-     * @param \Spryker\Service\Barcode\BarcodeServiceInterface $barcodeService
+     * @param \Spryker\Zed\ProductBarcode\Dependency\Service\ProductBarcodeToBarcodeServiceInterface $barcodeService
      * @param \Spryker\Zed\ProductBarcode\Business\Product\ProductSkuProviderInterface $stockCodeSelector
      */
-    public function __construct(BarcodeServiceInterface $barcodeService, ProductSkuProviderInterface $stockCodeSelector)
-    {
+    public function __construct(
+        ProductBarcodeToBarcodeServiceInterface $barcodeService,
+        ProductSkuProviderInterface $stockCodeSelector
+    ) {
         $this->barcodeService = $barcodeService;
         $this->productSkuProvider = $stockCodeSelector;
     }

@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductBarcode;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductBarcode\Dependency\Facade\ProductBarcodeToProductFacadeBridge;
+use Spryker\Zed\ProductBarcode\Dependency\Service\ProductBarcodeToBarcodeServiceBridge;
 
 class ProductBarcodeDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -37,7 +38,9 @@ class ProductBarcodeDependencyProvider extends AbstractBundleDependencyProvider
     protected function addBarcodeService(Container $container): Container
     {
         $container[static::SERVICE_BARCODE] = function (Container $container) {
-            return $container->getLocator()->barcode()->service();
+            return new ProductBarcodeToBarcodeServiceBridge(
+                $container->getLocator()->barcode()->service()
+            );
         };
 
         return $container;
