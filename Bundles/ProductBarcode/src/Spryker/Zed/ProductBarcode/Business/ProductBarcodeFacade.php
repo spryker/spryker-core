@@ -26,7 +26,7 @@ class ProductBarcodeFacade extends AbstractFacade implements ProductBarcodeFacad
      *
      * @return \Generated\Shared\Transfer\BarcodeResponseTransfer
      */
-    public function generateBarcode(ProductConcreteTransfer $productConcreteTransfer, string $generatorPlugin = null): BarcodeResponseTransfer
+    public function generateBarcode(ProductConcreteTransfer $productConcreteTransfer, ?string $generatorPlugin = null): BarcodeResponseTransfer
     {
         return $this->getFactory()
             ->createProductBarcodeGenerator()

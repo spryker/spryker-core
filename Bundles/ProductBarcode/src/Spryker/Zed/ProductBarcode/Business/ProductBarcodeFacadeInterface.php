@@ -23,5 +23,5 @@ interface ProductBarcodeFacadeInterface
      *
      * @return \Generated\Shared\Transfer\BarcodeResponseTransfer
      */
-    public function generateBarcode(ProductConcreteTransfer $productConcreteTransfer, string $generatorPlugin = null): BarcodeResponseTransfer;
+    public function generateBarcode(ProductConcreteTransfer $productConcreteTransfer, ?string $generatorPlugin = null): BarcodeResponseTransfer;
 }
