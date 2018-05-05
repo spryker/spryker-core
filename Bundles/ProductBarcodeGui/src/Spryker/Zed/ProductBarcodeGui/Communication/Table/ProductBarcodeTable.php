@@ -27,21 +27,23 @@ class ProductBarcodeTable extends AbstractTable
     /**
      * @var \Spryker\Zed\ProductBarcodeGui\Dependency\Service\ProductBarcodeGuiToBarcodeServiceBridgeInterface
      */
-    protected $barcodeServiceBridge;
+    protected $barcodeService;
 
     /**
      * @var \Spryker\Zed\ProductBarcodeGui\Dependency\Facade\ProductBarcodeGuiToLocaleBridgeInterface
      */
-    protected $localeFacadeBridge;
+    protected $localeFacade;
 
     /**
      * @param \Spryker\Zed\ProductBarcodeGui\Dependency\Service\ProductBarcodeGuiToBarcodeServiceBridgeInterface $barcodeServiceBridge
      * @param \Spryker\Zed\ProductBarcodeGui\Dependency\Facade\ProductBarcodeGuiToLocaleBridgeInterface $localeFacadeBridge
      */
-    public function __construct(ProductBarcodeGuiToBarcodeServiceBridgeInterface $barcodeServiceBridge, ProductBarcodeGuiToLocaleBridgeInterface $localeFacadeBridge)
-    {
-        $this->barcodeServiceBridge = $barcodeServiceBridge;
-        $this->localeFacadeBridge = $localeFacadeBridge;
+    public function __construct(
+        ProductBarcodeGuiToBarcodeServiceBridgeInterface $barcodeServiceBridge,
+        ProductBarcodeGuiToLocaleBridgeInterface $localeFacadeBridge
+    ) {
+        $this->barcodeService = $barcodeServiceBridge;
+        $this->localeFacade = $localeFacadeBridge;
     }
 
     /**
@@ -136,7 +138,7 @@ class ProductBarcodeTable extends AbstractTable
      */
     protected function getCurrentLocaleId(): int
     {
-        return $this->localeFacadeBridge
+        return $this->localeFacade
             ->getCurrentLocale()
             ->getIdLocale();
     }
@@ -165,6 +167,6 @@ class ProductBarcodeTable extends AbstractTable
      */
     protected function generateBarcode(string $text, ?string $generatorPlugin = null): BarcodeResponseTransfer
     {
-        return $this->barcodeServiceBridge->generateBarcode($text, $generatorPlugin);
+        return $this->barcodeService->generateBarcode($text, $generatorPlugin);
     }
 }
