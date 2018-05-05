@@ -32,7 +32,7 @@ class BarcodeGeneratorPluginResolver implements BarcodeGeneratorPluginResolverIn
      */
     public function getBarcodeGeneratorPlugin(?string $generatorPluginClassName): BarcodeGeneratorPluginInterface
     {
-        if ($generatorPluginClassName === null) {
+        if (!$generatorPluginClassName) {
             return reset($this->barcodePlugins);
         }
 
