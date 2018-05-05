@@ -15,14 +15,14 @@ class ProductSkuProvider implements ProductSkuProviderInterface
     /**
      * @var \Spryker\Zed\ProductBarcode\Dependency\Facade\ProductBarcodeToProductBridgeInterface
      */
-    protected $productBridge;
+    protected $productFacade;
 
     /**
      * @param \Spryker\Zed\ProductBarcode\Dependency\Facade\ProductBarcodeToProductBridgeInterface $productBridge
      */
     public function __construct(ProductBarcodeToProductBridgeInterface $productBridge)
     {
-        $this->productBridge = $productBridge;
+        $this->productFacade = $productBridge;
     }
 
     /**
@@ -50,7 +50,7 @@ class ProductSkuProvider implements ProductSkuProviderInterface
      */
     protected function getConcreteProductSkuFromDatabase(int $idProductConcrete): string
     {
-        return $this->productBridge->findProductConcreteById($idProductConcrete)
+        return $this->productFacade->findProductConcreteById($idProductConcrete)
             ->getSku();
     }
 }
