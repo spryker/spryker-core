@@ -16,6 +16,8 @@ use Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInt
  * @group Barcode
  * @group BarcodeServiceTest
  * Add your own group annotations below this line
+ *
+ * @property \SprykerTest\Service\Barcode\BarcodeServiceTester $tester
  */
 class BarcodeServiceTest extends Test
 {
