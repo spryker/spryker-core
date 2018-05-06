@@ -13,6 +13,7 @@ use Spryker\Shared\Kernel\ContainerMocker\ContainerMocker;
 use Spryker\Shared\Testify\Config\TestifyConfig;
 use Spryker\Zed\Kernel\AbstractFactory;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Kernel\ClassResolver\Config\BundleConfigNotFoundException;
 use Spryker\Zed\Kernel\ClassResolver\Config\BundleConfigResolver;
 use Spryker\Zed\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver;
 use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
@@ -86,11 +87,14 @@ class BundleProxy extends KernelBundleProxy
             $configurator->getContainer()
         );
         $container = $this->overwriteForTesting($container);
-
-        $bundleConfig = $this->getBundleConfig($factory);
-
         $factory->setContainer($container);
-        $factory->setConfig($bundleConfig);
+
+        try {
+            $bundleConfig = $this->getBundleConfig($factory);
+            $factory->setConfig($bundleConfig);
+        } catch (BundleConfigNotFoundException $e) {
+        }
+
         $facade->setFactory($factory);
 
         return $facade;
