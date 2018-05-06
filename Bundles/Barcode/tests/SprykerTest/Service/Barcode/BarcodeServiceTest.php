@@ -57,7 +57,7 @@ class BarcodeServiceTest extends Test
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface
      */
-    protected function getBarcodePluginMock()
+    protected function getBarcodePluginMock(): BarcodeGeneratorPluginInterface
     {
         $barcodePlugin = $this->getMockBuilder(BarcodeGeneratorPluginInterface::class)
             ->disableOriginalConstructor()
