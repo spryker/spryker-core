@@ -1,5 +1,7 @@
 namespace: CodeItNow
 actor: Tester
+include:
+  - tests/SprykerTest/Service/CodeItNow
 paths:
     tests: tests
     log: tests/_output
