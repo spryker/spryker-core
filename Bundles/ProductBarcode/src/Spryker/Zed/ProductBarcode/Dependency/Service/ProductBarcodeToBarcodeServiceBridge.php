@@ -32,6 +32,6 @@ class ProductBarcodeToBarcodeServiceBridge implements ProductBarcodeToBarcodeSer
      */
     public function generateBarcode(string $text, ?string $generatorPlugin = null): BarcodeResponseTransfer
     {
-        $this->barcodeService->generateBarcode($text, $generatorPlugin);
+        return $this->barcodeService->generateBarcode($text, $generatorPlugin);
     }
 }

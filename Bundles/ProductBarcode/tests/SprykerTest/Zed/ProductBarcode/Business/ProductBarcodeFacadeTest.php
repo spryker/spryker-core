@@ -6,6 +6,7 @@ use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\BarcodeResponseTransfer;
 use Spryker\Service\Barcode\BarcodeDependencyProvider;
 use Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface;
+use Spryker\Zed\ProductBarcode\Business\ProductBarcodeFacadeInterface;
 
 /**
  * Auto-generated group annotations
@@ -52,16 +53,18 @@ class ProductBarcodeFacadeTest extends Test
     public function testGenerateBarcode()
     {
         $productConcreteTransfer = $this->tester->getProductConcrete();
+
         $barcodeResponseTransfer = $this->getFacade()
             ->generateBarcode($productConcreteTransfer, get_class($this->barcodePlugin));
 
-        $this->assertEquals(static::GENERATED_CODE, $barcodeResponseTransfer->getCode());
+        $this->assertSame(static::GENERATED_CODE, $barcodeResponseTransfer->getCode());
+        $this->assertSame(static::GENERATED_ENCODING, $barcodeResponseTransfer->getEncoding());
     }
 
     /**
      * @return \Spryker\Zed\ProductBarcode\Business\ProductBarcodeFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade
      */
-    protected function getFacade()
+    protected function getFacade(): ProductBarcodeFacadeInterface
     {
         return $this->tester->getFacade();
     }
@@ -69,18 +72,19 @@ class ProductBarcodeFacadeTest extends Test
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface
      */
-    protected function getBarcodePluginMock()
+    protected function getBarcodePluginMock(): BarcodeGeneratorPluginInterface
     {
         $barcodePlugin = $this->getMockBuilder(BarcodeGeneratorPluginInterface::class)
             ->disableOriginalConstructor()
-            ->setMethods(['generate'])
             ->getMock();
 
         $barcodeTransfer = (new BarcodeResponseTransfer())
             ->setCode(static::GENERATED_CODE)
             ->setEncoding(static::GENERATED_ENCODING);
 
-        $barcodePlugin->method('generate')
+        $barcodePlugin
+            ->expects($this->once())
+            ->method('generate')
             ->willReturn($barcodeTransfer);
 
         return $barcodePlugin;
