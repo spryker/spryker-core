@@ -57,8 +57,20 @@ class ProductBarcodeFacadeTest extends Test
         $barcodeResponseTransfer = $this->getFacade()
             ->generateBarcode($productConcreteTransfer, get_class($this->barcodePlugin));
 
-        $this->assertSame(static::GENERATED_CODE, $barcodeResponseTransfer->getCode());
         $this->assertSame(static::GENERATED_ENCODING, $barcodeResponseTransfer->getEncoding());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGenerateBarcodeUseProductSku()
+    {
+        $productConcreteTransfer = $this->tester->getProductConcrete();
+
+        $barcodeResponseTransfer = $this->getFacade()
+            ->generateBarcode($productConcreteTransfer, get_class($this->barcodePlugin));
+
+        $this->assertSame($productConcreteTransfer->getSku(), $barcodeResponseTransfer->getCode());
     }
 
     /**
@@ -78,14 +90,16 @@ class ProductBarcodeFacadeTest extends Test
             ->disableOriginalConstructor()
             ->getMock();
 
-        $barcodeTransfer = (new BarcodeResponseTransfer())
-            ->setCode(static::GENERATED_CODE)
-            ->setEncoding(static::GENERATED_ENCODING);
-
         $barcodePlugin
             ->expects($this->once())
             ->method('generate')
-            ->willReturn($barcodeTransfer);
+            ->willReturnCallback(
+                function (string $code) {
+                    return (new BarcodeResponseTransfer())
+                        ->setCode($code)
+                        ->setEncoding(static::GENERATED_ENCODING);
+                }
+            );
 
         return $barcodePlugin;
     }
