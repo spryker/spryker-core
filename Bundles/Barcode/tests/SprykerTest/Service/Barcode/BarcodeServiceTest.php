@@ -22,14 +22,8 @@ use Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInt
 class BarcodeServiceTest extends Test
 {
     protected const GENERATION_SEED = 'seed for generation';
-
     protected const GENERATED_CODE = 'generated string';
     protected const GENERATED_ENCODING = 'data:image/png;base64';
-
-    /**
-     * @var \SprykerTest\Service\Barcode\BarcodeServiceTester
-     */
-    protected $tester;
 
     /**
      * @var \Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface
@@ -57,7 +51,7 @@ class BarcodeServiceTest extends Test
         $barcodeResponseTransfer = $this->getService()
             ->generateBarcode(static::GENERATION_SEED, get_class($this->barcodePlugin));
 
-        $this->assertEquals(static::GENERATED_CODE, $barcodeResponseTransfer->getCode());
+        $this->assertSame(static::GENERATED_CODE, $barcodeResponseTransfer->getCode());
     }
 
     /**
@@ -74,7 +68,9 @@ class BarcodeServiceTest extends Test
             ->setCode(static::GENERATED_CODE)
             ->setEncoding(static::GENERATED_ENCODING);
 
-        $barcodePlugin->method('generate')
+        $barcodePlugin
+            ->expects($this->once())
+            ->method('generate')
             ->willReturn($barcodeTransfer);
 
         return $barcodePlugin;
@@ -85,7 +81,8 @@ class BarcodeServiceTest extends Test
      */
     protected function getService(): BarcodeServiceInterface
     {
-        return $this->tester->getLocator()
+        return $this->tester
+            ->getLocator()
             ->barcode()
             ->service();
     }

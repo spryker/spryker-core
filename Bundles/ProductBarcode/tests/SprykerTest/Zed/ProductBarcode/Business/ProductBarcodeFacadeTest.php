@@ -18,16 +18,15 @@ use Spryker\Zed\ProductBarcode\Business\ProductBarcodeFacadeInterface;
  * @group Facade
  * @group ProductBarcodeFacadeTest
  * Add your own group annotations below this line
+ *
+ * @group Barcode
+ * @group Product
+ * @property \SprykerTest\Zed\ProductBarcode\ProductBarcodeBusinessTester $tester
  */
 class ProductBarcodeFacadeTest extends Test
 {
     protected const GENERATED_CODE = 'generated code';
     protected const GENERATED_ENCODING = 'generated encoding';
-
-    /**
-     * @var \SprykerTest\Zed\ProductBarcode\ProductBarcodeBusinessTester
-     */
-    protected $tester;
 
     /**
      * @var \Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface

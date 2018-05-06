@@ -14,6 +14,7 @@ use Spryker\Service\CodeItNow\CodeItNowServiceInterface;
  * @group CodeItNowServiceTest
  * Add your own group annotations below this line
  *
+ * @group Barcode
  * @property \SprykerTest\Service\CodeItNow\CodeItNowServiceTester $tester
  */
 class CodeItNowServiceTest extends Test
