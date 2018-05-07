@@ -12,6 +12,8 @@ use Spryker\Shared\Search\SearchConstants;
 
 class SearchConfig extends AbstractBundleConfig
 {
+    const FACET_NAME_AGGREGATION_SIZE = 10;
+
     /**
      * @return string
      */
@@ -62,6 +64,6 @@ class SearchConfig extends AbstractBundleConfig
      */
     public function getFacetNameAggregationSize()
     {
-        return $this->get(SearchConstants::FACET_NAME_AGGREGATION_SIZE, 10);
+        return static::FACET_NAME_AGGREGATION_SIZE;
     }
 }

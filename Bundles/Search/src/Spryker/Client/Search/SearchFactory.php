@@ -113,7 +113,7 @@ class SearchFactory extends AbstractFactory
         return new FacetAggregationFactory(
             $this->createPageIndexMap(),
             $this->createAggregationBuilder(),
-            $this->getConfig()->getFacetNameAggregationSize()
+            $this->getConfig()
         );
     }
 

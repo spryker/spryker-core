@@ -18,11 +18,6 @@ interface SearchConstants
     const FULL_TEXT_BOOSTED_BOOSTING_VALUE = 'FULL_TEXT_BOOSTED_BOOSTING_VALUE';
 
     /**
-     * @api
-     */
-    const FACET_NAME_AGGREGATION_SIZE = 'FACET_NAME_AGGREGATION_SIZE';
-
-    /**
      * Elasticsearch connection host name. (Required)
      *
      * @api

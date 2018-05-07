@@ -8,6 +8,7 @@
 namespace Spryker\Client\Search\Model\Elasticsearch\Aggregation;
 
 use Generated\Shared\Transfer\FacetConfigTransfer;
+use Spryker\Client\Search\SearchConfig;
 
 class NumericFacetAggregation extends AbstractFacetAggregation
 {
@@ -24,20 +25,20 @@ class NumericFacetAggregation extends AbstractFacetAggregation
     protected $aggregationBuilder;
 
     /**
-     * @var int
+     * @var \Spryker\Client\Search\SearchConfig
      */
-    protected $facetNameAggregationSize;
+    protected $searchConfig;
 
     /**
      * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
      * @param \Spryker\Client\Search\Model\Elasticsearch\Aggregation\AggregationBuilderInterface $aggregationBuilder
-     * @param int $facetNameAggregationSize
+     * @param int $searchConfig
      */
-    public function __construct(FacetConfigTransfer $facetConfigTransfer, AggregationBuilderInterface $aggregationBuilder, int $facetNameAggregationSize = 0)
+    public function __construct(FacetConfigTransfer $facetConfigTransfer, AggregationBuilderInterface $aggregationBuilder, SearchConfig $searchConfig)
     {
         $this->facetConfigTransfer = $facetConfigTransfer;
         $this->aggregationBuilder = $aggregationBuilder;
-        $this->facetNameAggregationSize = $facetNameAggregationSize;
+        $this->searchConfig = $searchConfig;
     }
 
     /**
@@ -64,7 +65,7 @@ class NumericFacetAggregation extends AbstractFacetAggregation
                     $this->facetConfigTransfer->getName()
                 );
         } else {
-            $facetNameAgg = $this->createFacetNameAggregation($fieldName, $this->facetNameAggregationSize);
+            $facetNameAgg = $this->createFacetNameAggregation($fieldName, $this->searchConfig->getFacetNameAggregationSize());
         }
 
         $facetNameAgg->addAggregation($facetValueStats);
