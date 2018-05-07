@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductBarcodeGui\Dependency\Service;
 
 use Generated\Shared\Transfer\BarcodeResponseTransfer;
 
-interface ProductBarcodeGuiToBarcodeServiceBridgeInterface
+interface ProductBarcodeGuiToBarcodeServiceInterface
 {
     /**
      * @param string $text

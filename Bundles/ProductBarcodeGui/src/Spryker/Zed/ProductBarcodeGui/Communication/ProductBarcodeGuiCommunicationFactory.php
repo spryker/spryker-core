@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductBarcodeGui\Communication;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductBarcodeGui\Communication\Table\ProductBarcodeTable;
 use Spryker\Zed\ProductBarcodeGui\Dependency\Facade\ProductBarcodeGuiToLocaleBridgeInterface;
-use Spryker\Zed\ProductBarcodeGui\Dependency\Service\ProductBarcodeGuiToBarcodeServiceBridgeInterface;
+use Spryker\Zed\ProductBarcodeGui\Dependency\Service\ProductBarcodeGuiToBarcodeServiceInterface;
 use Spryker\Zed\ProductBarcodeGui\ProductBarcodeGuiDependencyProvider;
 
 class ProductBarcodeGuiCommunicationFactory extends AbstractCommunicationFactory
@@ -27,9 +27,9 @@ class ProductBarcodeGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductBarcodeGui\Dependency\Service\ProductBarcodeGuiToBarcodeServiceBridgeInterface
+     * @return \Spryker\Zed\ProductBarcodeGui\Dependency\Service\ProductBarcodeGuiToBarcodeServiceInterface
      */
-    public function getBarcodeService(): ProductBarcodeGuiToBarcodeServiceBridgeInterface
+    public function getBarcodeService(): ProductBarcodeGuiToBarcodeServiceInterface
     {
         return $this->getProvidedDependency(ProductBarcodeGuiDependencyProvider::SERVICE_BARCODE);
     }

@@ -14,7 +14,7 @@ use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductBarcodeGui\Dependency\Facade\ProductBarcodeGuiToLocaleBridgeInterface;
-use Spryker\Zed\ProductBarcodeGui\Dependency\Service\ProductBarcodeGuiToBarcodeServiceBridgeInterface;
+use Spryker\Zed\ProductBarcodeGui\Dependency\Service\ProductBarcodeGuiToBarcodeServiceInterface;
 
 class ProductBarcodeTable extends AbstractTable
 {
@@ -26,7 +26,7 @@ class ProductBarcodeTable extends AbstractTable
     protected const BARCODE_IMAGE_TEMPLATE = '<img src="%s,%s">';
 
     /**
-     * @var \Spryker\Zed\ProductBarcodeGui\Dependency\Service\ProductBarcodeGuiToBarcodeServiceBridgeInterface
+     * @var \Spryker\Zed\ProductBarcodeGui\Dependency\Service\ProductBarcodeGuiToBarcodeServiceInterface
      */
     protected $barcodeService;
 
@@ -36,11 +36,11 @@ class ProductBarcodeTable extends AbstractTable
     protected $localeFacade;
 
     /**
-     * @param \Spryker\Zed\ProductBarcodeGui\Dependency\Service\ProductBarcodeGuiToBarcodeServiceBridgeInterface $barcodeServiceBridge
+     * @param \Spryker\Zed\ProductBarcodeGui\Dependency\Service\ProductBarcodeGuiToBarcodeServiceInterface $barcodeServiceBridge
      * @param \Spryker\Zed\ProductBarcodeGui\Dependency\Facade\ProductBarcodeGuiToLocaleBridgeInterface $localeFacadeBridge
      */
     public function __construct(
-        ProductBarcodeGuiToBarcodeServiceBridgeInterface $barcodeServiceBridge,
+        ProductBarcodeGuiToBarcodeServiceInterface $barcodeServiceBridge,
         ProductBarcodeGuiToLocaleBridgeInterface $localeFacadeBridge
     ) {
         $this->barcodeService = $barcodeServiceBridge;

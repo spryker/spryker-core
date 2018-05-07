@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductBarcodeGui\Dependency\Service;
 
 use Generated\Shared\Transfer\BarcodeResponseTransfer;
 
-class ProductBarcodeGuiToBarcodeServiceBridge implements ProductBarcodeGuiToBarcodeServiceBridgeInterface
+class ProductBarcodeGuiToBarcodeServiceBridge implements ProductBarcodeGuiToBarcodeServiceInterface
 {
     /**
      * @var \Spryker\Service\Barcode\BarcodeServiceInterface
