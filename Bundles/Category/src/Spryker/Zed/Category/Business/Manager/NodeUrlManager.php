@@ -215,7 +215,7 @@ class NodeUrlManager implements NodeUrlManagerInterface
      * @param int $idCategoryNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return int
+     * @return bool
      */
     protected function hasCategoryNodeUrl($idCategoryNode, LocaleTransfer $localeTransfer)
     {

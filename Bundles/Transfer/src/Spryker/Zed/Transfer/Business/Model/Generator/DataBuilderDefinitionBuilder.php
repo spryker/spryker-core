@@ -20,14 +20,14 @@ class DataBuilderDefinitionBuilder extends AbstractDefinitionBuilder
     private $merger;
 
     /**
-     * @var \Spryker\Zed\Transfer\Business\Model\Generator\DataBuilderDefinition
+     * @var \Spryker\Zed\Transfer\Business\Model\Generator\DataBuilderDefinitionInterface
      */
     private $dataBuilderDefinition;
 
     /**
      * @param \Spryker\Zed\Transfer\Business\Model\Generator\LoaderInterface $loader
      * @param \Spryker\Zed\Transfer\Business\Model\Generator\MergerInterface $merger
-     * @param \Spryker\Zed\Transfer\Business\Model\Generator\DataBuilderDefinition|\Spryker\Zed\Transfer\Business\Model\Generator\DataBuilderDefinitionInterface $dataBuilderDefinition
+     * @param \Spryker\Zed\Transfer\Business\Model\Generator\DataBuilderDefinitionInterface $dataBuilderDefinition
      */
     public function __construct(LoaderInterface $loader, MergerInterface $merger, DataBuilderDefinitionInterface $dataBuilderDefinition)
     {

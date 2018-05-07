@@ -89,6 +89,7 @@ class CategoryEditDataProvider
     protected function getCategoriesWithPaths()
     {
         $idLocale = $this->getIdLocale();
+        /** @var \Orm\Zed\Category\Persistence\SpyCategory[] $categoryEntityList */
         $categoryEntityList = $this
             ->queryContainer
             ->queryCategory($idLocale)

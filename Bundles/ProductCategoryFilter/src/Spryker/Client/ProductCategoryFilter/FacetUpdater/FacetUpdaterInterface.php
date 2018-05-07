@@ -21,7 +21,7 @@ interface FacetUpdaterInterface
 
     /**
      * @param array $facets
-     * @param array \Generated\Shared\Transfer\ProductCategoryFilterTransfer $productCategoryFilterTransfer
+     * @param \Generated\Shared\Transfer\ProductCategoryFilterTransfer $productCategoryFilterTransfer
      *
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer[]
      */

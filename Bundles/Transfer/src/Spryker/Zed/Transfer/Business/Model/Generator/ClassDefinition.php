@@ -519,7 +519,7 @@ class ClassDefinition implements ClassDefinitionInterface
     /**
      * @param array $property
      *
-     * @return int
+     * @return bool
      */
     private function isTypedArray(array $property)
     {

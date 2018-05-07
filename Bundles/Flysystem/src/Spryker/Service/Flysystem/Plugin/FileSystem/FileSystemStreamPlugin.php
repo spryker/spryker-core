@@ -12,7 +12,7 @@ use Spryker\Service\FileSystem\Dependency\Plugin\FileSystemStreamPluginInterface
 use Spryker\Service\Kernel\AbstractPlugin;
 
 /**
- * @method \Spryker\Service\Flysystem\FlysystemServiceInterface getService
+ * @method \Spryker\Service\Flysystem\FlysystemServiceInterface getService()
  */
 class FileSystemStreamPlugin extends AbstractPlugin implements FileSystemStreamPluginInterface
 {

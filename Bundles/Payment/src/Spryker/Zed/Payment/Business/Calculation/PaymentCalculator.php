@@ -42,7 +42,7 @@ class PaymentCalculator implements PaymentCalculatorInterface
      *
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
-     * @return \Generated\Shared\Transfer\PaymentTransfer[]|\ArrayObject
+     * @return \Generated\Shared\Transfer\PaymentTransfer[]
      */
     protected function getPaymentCollection(CalculableObjectTransfer $calculableObjectTransfer)
     {

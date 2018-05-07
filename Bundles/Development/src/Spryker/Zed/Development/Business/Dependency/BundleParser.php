@@ -11,7 +11,6 @@ use ArrayObject;
 use Generated\Shared\Transfer\BundleDependencyCollectionTransfer;
 use Generated\Shared\Transfer\DependencyBundleTransfer;
 use Generated\Shared\Transfer\DependencyTransfer;
-use Spryker\Zed\Development\Business\DependencyTree\Finder;
 use Spryker\Zed\Development\Business\DependencyTree\Finder\FinderInterface;
 use Spryker\Zed\Development\DevelopmentConfig;
 use Symfony\Component\Finder\Finder as SymfonyFinder;
@@ -199,21 +198,6 @@ class BundleParser implements BundleParserInterface
         }
 
         return false;
-    }
-
-    /**
-     * @param string $module
-     *
-     * @return \Symfony\Component\Finder\SplFileInfo[]|\Symfony\Component\Finder\Finder
-     */
-    protected function findAllFilesOfBundle($module)
-    {
-        $finder = new Finder($this->config->getPathToCore(), '*', $module);
-        if ($finder === null) {
-            return [];
-        }
-
-        return $finder->getFiles();
     }
 
     /**

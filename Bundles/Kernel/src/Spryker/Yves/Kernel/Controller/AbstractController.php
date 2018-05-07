@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 abstract class AbstractController
 {
     /**
-     * @var \Spryker\Shared\Kernel\Communication\Application|\Silex\Application
+     * @var \Spryker\Yves\Kernel\Application
      */
     private $application;
 
@@ -41,7 +41,7 @@ abstract class AbstractController
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Communication\Application|\Silex\Application $application
+     * @param \Spryker\Yves\Kernel\Application $application
      *
      * @return $this
      */
@@ -65,7 +65,7 @@ abstract class AbstractController
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Communication\Application|\Silex\Application
+     * @return \Spryker\Yves\Kernel\Application
      */
     protected function getApplication()
     {
@@ -118,7 +118,7 @@ abstract class AbstractController
      * @param \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface[] $widgetPlugins
      * @param string|null $template
      *
-     * @return array|\Spryker\Yves\Kernel\View\View
+     * @return \Spryker\Yves\Kernel\View\View
      */
     protected function view(array $data = [], array $widgetPlugins = [], $template = null)
     {
