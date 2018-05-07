@@ -21,13 +21,13 @@ class CustomerAccessFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindUnauthenticatedCustomerAccessReturnsCorrectCustomerAccessObject()
+    public function testGetContentTypesWithUnauthenticatedCustomerAccessReturnsCorrectCustomerAccessObject()
     {
         // Arrange
         $this->tester->haveCustomerAccess();
 
         // Act
-        $customerTransferAccess = $this->tester->getFacade()->findUnauthenticatedCustomerAccess();
+        $customerTransferAccess = $this->tester->getFacade()->getContentTypesWithUnauthenticatedCustomerAccess();
 
         // Assert
         $this->assertInstanceOf(CustomerAccessTransfer::class, $customerTransferAccess);
@@ -36,18 +36,18 @@ class CustomerAccessFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindAllContentTypesReturnsAllTableRows()
+    public function testGetAllContentTypesReturnsAllTableRows()
     {
         // Arrange
         $contentType1 = 'test content 1';
         $contentType2 = 'test content 2';
         $data = [
             [
-                ContentTypeAccessTransfer::CAN_ACCESS => true,
+                ContentTypeAccessTransfer::HAS_ACCESS => true,
                 ContentTypeAccessTransfer::CONTENT_TYPE => $contentType1,
             ],
             [
-                ContentTypeAccessTransfer::CAN_ACCESS => false,
+                ContentTypeAccessTransfer::HAS_ACCESS => false,
                 ContentTypeAccessTransfer::CONTENT_TYPE => $contentType2,
             ],
         ];
@@ -59,7 +59,7 @@ class CustomerAccessFacadeTest extends Unit
         );
 
         // Act
-        $contentTypes = $this->tester->getFacade()->findAllContentTypes();
+        $contentTypes = $this->tester->getFacade()->getAllContentTypes();
 
         // Assert
         foreach ($contentTypes as $contentType) {
@@ -70,7 +70,7 @@ class CustomerAccessFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateOnlyContentTypeToAccessibleUpdatesCorrectContentType()
+    public function testUpdateUnauthenticatedCustomerAccessUpdatesCorrectContentType()
     {
         // Arrange
         $customerAccessTransfer = $this->tester->haveCustomerAccess();
@@ -78,10 +78,10 @@ class CustomerAccessFacadeTest extends Unit
         $customerAccessTransfer->getContentTypeAccess()->offsetUnset(0);
 
         // Act
-        $this->tester->getFacade()->updateOnlyContentTypesToAccessible($customerAccessTransfer);
+        $this->tester->getFacade()->updateUnauthenticatedCustomerAccess($customerAccessTransfer);
 
         /** @var \Generated\Shared\Transfer\CustomerAccessTransfer $customerAccessTransferFromDB */
-        $customerAccessTransferFromDB = $this->tester->getFacade()->findUnauthenticatedCustomerAccess();
+        $customerAccessTransferFromDB = $this->tester->getFacade()->getContentTypesWithUnauthenticatedCustomerAccess();
 
         foreach ($customerAccessTransferFromDB->getContentTypeAccess() as $contentTypeAccess) {
             if ($contentTypeAccess->getContentType() === $removedContentTypeAccess->getContentType()) {

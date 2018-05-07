@@ -6,7 +6,7 @@ use Codeception\Module;
 use Generated\Shared\DataBuilder\CustomerAccessBuilder;
 use Generated\Shared\Transfer\ContentTypeAccessTransfer;
 use Generated\Shared\Transfer\CustomerAccessTransfer;
-use Orm\Zed\CustomerAccess\Persistence\SpyUnauthenticatedCustomerAccess;
+use Orm\Zed\CustomerAccess\Persistence\SpyUnauthenticatedCustomerAccessQuery;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class CustomerAccessHelper extends Module
@@ -36,11 +36,13 @@ class CustomerAccessHelper extends Module
         $customerAccessTransfer = (new CustomerAccessBuilder(array_merge($data, $override)))->build();
 
         foreach ($customerAccessTransfer->getContentTypeAccess() as $contentType) {
-            $customerAccess = new SpyUnauthenticatedCustomerAccess();
-            $customerAccess->setContentType($contentType->getContentType());
+            $customerAccess = SpyUnauthenticatedCustomerAccessQuery::create()
+                ->filterByContentType($contentType->getContentType())
+                ->findOneOrCreate();
             $customerAccess->setHasAccess($contentType->getHasAccess());
-
             $customerAccess->save();
+
+            $contentType->fromArray($customerAccess->toArray(), true);
         }
 
         return $customerAccessTransfer;
