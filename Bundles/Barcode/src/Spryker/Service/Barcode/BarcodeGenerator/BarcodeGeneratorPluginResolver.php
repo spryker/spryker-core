@@ -46,7 +46,7 @@ class BarcodeGeneratorPluginResolver implements BarcodeGeneratorPluginResolverIn
      */
     protected function getPluginByClassNameCashed(string $fullClassName): BarcodeGeneratorPluginInterface
     {
-        static $cashedPluginsMap;
+        static $cashedPluginsMap = [];
 
         if (!array_key_exists($fullClassName, $cashedPluginsMap)) {
             $cashedPluginsMap[$fullClassName] = $this->getPluginByClassName($fullClassName);
