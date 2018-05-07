@@ -1,4 +1,4 @@
-namespace: Barcode
+namespace: SprykerTest
 
 actor: Tester
 

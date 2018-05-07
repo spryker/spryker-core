@@ -1,4 +1,4 @@
-namespace: BarcodeExtension
+namespace: SprykerTest
 actor: Tester
 paths:
     tests: tests
