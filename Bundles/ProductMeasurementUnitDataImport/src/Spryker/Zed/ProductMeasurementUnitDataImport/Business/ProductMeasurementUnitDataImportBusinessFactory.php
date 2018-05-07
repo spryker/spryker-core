@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductMeasurementUnitDataImport\Business;
 
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
-use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
 use Spryker\Zed\ProductMeasurementUnitDataImport\Business\Model\ProductMeasurementBaseUnitWriterStep;
 use Spryker\Zed\ProductMeasurementUnitDataImport\Business\Model\ProductMeasurementSalesUnitStoreWriterStep;
 use Spryker\Zed\ProductMeasurementUnitDataImport\Business\Model\ProductMeasurementSalesUnitWriterStep;
@@ -20,9 +19,9 @@ use Spryker\Zed\ProductMeasurementUnitDataImport\Business\Model\ProductMeasureme
 class ProductMeasurementUnitDataImportBusinessFactory extends DataImportBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerAwareInterface
      */
-    public function getProductMeasurementUnitDataImporter(): DataImporterInterface
+    public function getProductMeasurementUnitDataImporter()
     {
         $dataImporter = $this->getCsvDataImporterFromConfig($this->getConfig()->getProductMeasurementUnitDataImportConfiguration());
 
@@ -35,9 +34,9 @@ class ProductMeasurementUnitDataImportBusinessFactory extends DataImportBusiness
     }
 
     /**
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerAwareInterface
      */
-    public function getProductMeasurementBaseUnitDataImporter(): DataImporterInterface
+    public function getProductMeasurementBaseUnitDataImporter()
     {
         $dataImporter = $this->getCsvDataImporterFromConfig($this->getConfig()->getProductMeasurementBaseUnitDataImportConfiguration());
 
@@ -50,9 +49,9 @@ class ProductMeasurementUnitDataImportBusinessFactory extends DataImportBusiness
     }
 
     /**
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerAwareInterface
      */
-    public function getProductMeasurementSalesUnitDataImporter(): DataImporterInterface
+    public function getProductMeasurementSalesUnitDataImporter()
     {
         $dataImporter = $this->getCsvDataImporterFromConfig($this->getConfig()->getProductMeasurementSalesUnitDataImportConfiguration());
 
@@ -65,9 +64,9 @@ class ProductMeasurementUnitDataImportBusinessFactory extends DataImportBusiness
     }
 
     /**
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerAwareInterface
      */
-    public function getProductMeasurementSalesUnitStoreDataImporter(): DataImporterInterface
+    public function getProductMeasurementSalesUnitStoreDataImporter()
     {
         $dataImporter = $this->getCsvDataImporterFromConfig($this->getConfig()->getProductMeasurementSalesUnitStoreDataImportConfiguration());
 

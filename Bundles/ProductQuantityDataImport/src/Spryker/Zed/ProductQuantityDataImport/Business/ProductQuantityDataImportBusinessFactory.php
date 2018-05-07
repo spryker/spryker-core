@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductQuantityDataImport\Business;
 
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
-use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
 use Spryker\Zed\ProductQuantityDataImport\Business\Model\ProductQuantityDataImportWriterStep;
 
 /**
@@ -17,9 +16,9 @@ use Spryker\Zed\ProductQuantityDataImport\Business\Model\ProductQuantityDataImpo
 class ProductQuantityDataImportBusinessFactory extends DataImportBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerAwareInterface
      */
-    public function getProductQuantityDataImporter(): DataImporterInterface
+    public function getProductQuantityDataImporter()
     {
         $dataImporter = $this->getCsvDataImporterFromConfig($this->getConfig()->getProductQuantityDataImportConfiguration());
 
