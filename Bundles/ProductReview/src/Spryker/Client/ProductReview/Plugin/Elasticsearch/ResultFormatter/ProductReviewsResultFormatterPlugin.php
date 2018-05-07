@@ -29,7 +29,7 @@ class ProductReviewsResultFormatterPlugin extends AbstractElasticsearchResultFor
     /**
      * @api
      *
-     * @param mixed ResultSet $searchResult
+     * @param \Elastica\ResultSet $searchResult
      * @param array $requestParameters
      *
      * @return mixed

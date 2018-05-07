@@ -16,10 +16,13 @@ class SharedCartStub extends ZedRequestStub implements SharedCartStubInterface
     /**
      * @param \Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer $criteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\QuotePermissionGroupResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\QuotePermissionGroupResponseTransfer
      */
     public function getQuotePermissionGroupList(QuotePermissionGroupCriteriaFilterTransfer $criteriaFilterTransfer): QuotePermissionGroupResponseTransfer
     {
-        return $this->zedStub->call('/shared-cart/gateway/get-quote-permission-groups', $criteriaFilterTransfer);
+        /** @var \Generated\Shared\Transfer\QuotePermissionGroupResponseTransfer $criteriaFilterTransfer */
+        $criteriaFilterTransfer = $this->zedStub->call('/shared-cart/gateway/get-quote-permission-groups', $criteriaFilterTransfer);
+
+        return $criteriaFilterTransfer;
     }
 }

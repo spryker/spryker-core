@@ -124,11 +124,14 @@ class BundleProxy extends KernelBundleProxy
      * @param string $method
      * @param array $arguments
      *
-     * @return \Spryker\Zed\Kernel\Business\AbstractFacade|object
+     * @return \Spryker\Zed\Kernel\Business\AbstractFacade
      */
     private function getFacade($method, array $arguments)
     {
-        return parent::__call($method, $arguments);
+        /** @var \Spryker\Zed\Kernel\Business\AbstractFacade $facade */
+        $facade = parent::__call($method, $arguments);
+
+        return $facade;
     }
 
     /**

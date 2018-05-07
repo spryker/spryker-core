@@ -16,7 +16,7 @@ interface CurrencyPostChangePluginExecutorInterface
      * @param string $currencyIsoCode
      * @param string $previousCurrencyIsoCode
      *
-     * @return bool
+     * @return void
      */
     public function execute($currencyIsoCode, $previousCurrencyIsoCode);
 }

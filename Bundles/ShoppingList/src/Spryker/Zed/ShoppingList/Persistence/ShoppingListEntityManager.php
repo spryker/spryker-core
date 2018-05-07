@@ -25,7 +25,7 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
     /**
      * @param \Generated\Shared\Transfer\SpyShoppingListEntityTransfer $shoppingListEntityTransfer
      *
-     * @return \Generated\Shared\Transfer\SpyShoppingListEntityTransfer|\Spryker\Shared\Kernel\Transfer\EntityTransferInterface
+     * @return \Generated\Shared\Transfer\SpyShoppingListEntityTransfer
      */
     public function saveShoppingList(SpyShoppingListEntityTransfer $shoppingListEntityTransfer): SpyShoppingListEntityTransfer
     {
@@ -69,7 +69,7 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
     /**
      * @param \Generated\Shared\Transfer\SpyShoppingListItemEntityTransfer $shoppingListItemEntityTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\EntityTransferInterface|\Generated\Shared\Transfer\SpyShoppingListItemEntityTransfer
+     * @return \Generated\Shared\Transfer\SpyShoppingListItemEntityTransfer
      */
     public function saveShoppingListItem(SpyShoppingListItemEntityTransfer $shoppingListItemEntityTransfer): SpyShoppingListItemEntityTransfer
     {
@@ -145,7 +145,7 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
     /**
      * @param \Generated\Shared\Transfer\SpyShoppingListCompanyBusinessUnitEntityTransfer $shoppingListCompanyBusinessUnitEntityTransfer
      *
-     * @return \Generated\Shared\Transfer\SpyShoppingListCompanyBusinessUnitEntityTransfer|\Spryker\Shared\Kernel\Transfer\EntityTransferInterface
+     * @return \Generated\Shared\Transfer\SpyShoppingListCompanyBusinessUnitEntityTransfer
      */
     public function saveShoppingListCompanyBusinessUnitEntity(SpyShoppingListCompanyBusinessUnitEntityTransfer $shoppingListCompanyBusinessUnitEntityTransfer): SpyShoppingListCompanyBusinessUnitEntityTransfer
     {
@@ -155,7 +155,7 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
     /**
      * @param \Generated\Shared\Transfer\SpyShoppingListCompanyUserEntityTransfer $shoppingListCompanyUserEntityTransfer
      *
-     * @return \Generated\Shared\Transfer\SpyShoppingListCompanyUserEntityTransfer|\Spryker\Shared\Kernel\Transfer\EntityTransferInterface
+     * @return \Generated\Shared\Transfer\SpyShoppingListCompanyUserEntityTransfer
      */
     public function saveShoppingListCompanyUserEntity(SpyShoppingListCompanyUserEntityTransfer $shoppingListCompanyUserEntityTransfer): SpyShoppingListCompanyUserEntityTransfer
     {

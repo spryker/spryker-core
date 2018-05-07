@@ -18,7 +18,7 @@ interface TouchUpdaterInterface
      * @param int $idStore
      * @param \Propel\Runtime\Connection\ConnectionInterface|null $connection
      *
-     * @return
+     * @return void
      */
     public function bulkUpdate(TouchUpdaterSet $touchUpdaterSet, $idLocale, $idStore, ?ConnectionInterface $connection = null);
 

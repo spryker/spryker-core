@@ -62,8 +62,8 @@ class CurrencyPostChangePluginExecutor implements CurrencyPostChangePluginExecut
      */
     public function execute($currencyIsoCode, $previousCurrencyIsoCode)
     {
-        foreach ($this->currencyPostChangePlugins as $currencyPostChangePlugins) {
-            if ($currencyPostChangePlugins->execute($currencyIsoCode)) {
+        foreach ($this->currencyPostChangePlugins as $currencyPostChangePlugin) {
+            if ($currencyPostChangePlugin->execute($currencyIsoCode)) {
                 continue;
             }
 

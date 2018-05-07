@@ -1,45 +1,7 @@
-# !!! This is a deprecated file and running core phpstan check !!!
-# Please use phpstan.neon file per module now and console code:phpstan -m ModuleName instead.
-# Never excludes_analyse files from now on, instead use ignoreErrors where necessary then.
-# Also et up a phpstan.json config per module and set the highest defaultLevel possible.
+# !!! This is the fallback file for running core phpstan check !!!
+# Please use phpstan.neon file per module now and console code:phpstan -m Spryker.ModuleName instead.
+# Also set up a phpstan.json config per module and set the highest defaultLevel possible.
 parameters:
-    ignoreErrors:
-        - '#Class PHP_CodeSniffer\\Config not found#'
-        - '#Parameter \$resolver of method [a-zA-Z0-9\\]+\:\:setDefaultOptions\(\) has invalid typehint type Symfony\\Component\\OptionsResolver\\OptionsResolverInterface\.#'
-        - '#Access to undefined constant Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface::TABLE_MAP\.#'
-        - '#Parameter \$resolver of method [a-zA-Z0-9\\]+::setDefaultOptions\(\) has invalid typehint type Symfony\\Component\\OptionsResolver\\OptionsResolverInterface\.#'
-        - '#Call to an undefined static method Orm\\Zed\\Sales\\Persistence\\Base\\SpySalesOrder::getFkCustomer\(\)\.#'
-        - '#Call to an undefined static method Orm\\Zed\\Sales\\Persistence\\Base\\SpySalesOrderQuery::filterByFkCustomer\(\)\.#'
-        - '#Call to an undefined static method Orm\\Zed\\Sales\\Persistence\\Base\\SpySalesOrder::getCustomer\(\)\.#'
-        - '#Call to an undefined static method Orm\\Zed\\Sales\\Persistence\\Base\\SpySalesOrder::setCustomer\(\)\.#'
-
-    reportUnmatchedIgnoredErrors: false
-
-    excludes_analyse:
-        - %rootDir%/../../../vendor/spryker/spryker/Bundles/Development/tests/Unit/Spryker/Zed/Development/Business/DependencyTree/DependencyFinder/Fixtures/*
-        - %rootDir%/../../../vendor/spryker/spryker/Bundles/Development/src/Spryker/Zed/Development/Business/DependencyTree/DependencyFinder/ExternalDependency.php
-        - %rootDir%/../../../vendor/spryker/spryker/Bundles/Event/src/Spryker/Zed/Event/Business/Dispatcher/*
-        - %rootDir%/../../../vendor/spryker/spryker/Bundles/Setup/src/Spryker/Zed/Setup/Communication/Console/*
-        - %rootDir%/../../../vendor/spryker/spryker/Bundles/Session/src/Spryker/Shared/Session/Business/Handler/SessionHandlerCouchbase.php
-        - %rootDir%/../../../vendor/spryker/spryker/Bundles/Ratepay/src/Spryker/Zed/Ratepay/Dependency/Facade/RatepayToSalesAggregatorBridge.php
-        - %rootDir%/../../../vendor/spryker/spryker/Bundles/Price/src/Spryker/Zed/Price/Communication/Plugin/ServiceProvider/PriceServiceProvider.php
-        - %rootDir%/../../../vendor/spryker/spryker/Bundles/NewRelicApi/src/Spryker/Shared/NewRelicApi/NewRelicApi.php
-        - %rootDir%/../../../vendor/spryker/spryker/Bundles/Auth/src/Spryker/Zed/Auth/Dependency/Plugin/AuthPasswordResetSenderInterface.php
-        - %rootDir%/../../../vendor/spryker/spryker/Bundles/AuthMailConnector/src/Spryker/Zed/AuthMailConnector/Communication/Plugin/AuthPasswordResetMailSenderPlugin.php
-        - %rootDir%/../../../vendor/spryker/spryker/Bundles/AuthMailConnector/src/Spryker/Zed/AuthMailConnector/Dependency/Facade/AuthMailConnectorToMailBridge.php
-        - %rootDir%/../../../vendor/spryker/spryker/Bundles/AuthMailConnector/src/Spryker/Zed/AuthMailConnector/Dependency/Facade/AuthMailConnectorToMailInterface.php
-        - %rootDir%/../../../vendor/spryker/spryker/Bundles/Braintree/src/Spryker/Zed/Braintree/Communication/Controller/GatewayController.php
-        - %rootDir%/../../../vendor/spryker/spryker/Bundles/Payolution/src/Spryker/Zed/Payolution/Dependency/Facade/PayolutionToMailBridge.php
-        - %rootDir%/../../../vendor/spryker/spryker/Bundles/Payolution/src/Spryker/Zed/Payolution/Dependency/Facade/PayolutionToMailInterface.php
-        - %rootDir%/../../../vendor/spryker/spryker/Bundles/Ratepay/src/Spryker/Zed/Ratepay/Business/Api/Mapper/MapperFactory.php
-        - %rootDir%/../../../vendor/spryker/spryker/Bundles/Storage/src/Spryker/Client/Storage/StorageClient.php
-        - %rootDir%/../../../vendor/spryker/spryker/Bundles/ZedRequest/src/Spryker/Shared/ZedRequest/Provider/AbstractZedClientProvider.php
-        - %rootDir%/../../../vendor/spryker/spryker/Bundles/FlysystemAws3v3FileSystem/src/Spryker/Service/FlysystemAws3v3FileSystem/Model/Builder/Adapter/Aws3v3AdapterBuilder.php
-        - %rootDir%/../../../vendor/spryker/spryker/Bundles/Gui/src/Spryker/Zed/Gui/Communication/Table/AbstractTable.php
-        - %rootDir%/../../../vendor/spryker/spryker/Bundles/*/tests/*
-        - %rootDir%/../../../vendor/spryker/spryker/Bundles/Twig/src/Spryker/Yves/Twig/Plugin/ServiceProvider/TwigServiceProvider.php
-        - %rootDir%/../../../vendor/spryker/spryker/Bundles/Twig/src/Spryker/Zed/Twig/Communication/Plugin/ServiceProvider/TwigServiceProvider.php
-
     bootstrap: %rootDir%/../../../phpstan-bootstrap.php
 
 services:

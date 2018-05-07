@@ -15,11 +15,11 @@ interface StepInterface
     /**
      * Requirements for this step, return true when satisfied.
      *
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $quoteTransfer
      *
      * @return bool
      */
-    public function preCondition(AbstractTransfer $dataTransfer);
+    public function preCondition(AbstractTransfer $quoteTransfer);
 
     /**
      * Require input, should we render view with form or just skip step after calling execute.

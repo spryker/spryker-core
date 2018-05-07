@@ -407,7 +407,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      *
      * @deprecated Will be removed with next major release
      *
-     * @return bool
+     * @return string|false
      */
     public function renderCategoryTreeVisual()
     {
