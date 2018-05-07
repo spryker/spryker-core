@@ -3,10 +3,7 @@
 namespace SprykerTest\Zed\ProductBarcode\Business;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\Transfer\BarcodeResponseTransfer;
 use Spryker\Service\Barcode\BarcodeDependencyProvider;
-use Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface;
-use Spryker\Zed\ProductBarcode\Business\ProductBarcodeFacadeInterface;
 
 /**
  * Auto-generated group annotations
@@ -25,8 +22,7 @@ use Spryker\Zed\ProductBarcode\Business\ProductBarcodeFacadeInterface;
  */
 class ProductBarcodeFacadeTest extends Test
 {
-    protected const GENERATED_CODE = 'generated code';
-    protected const GENERATED_ENCODING = 'generated encoding';
+    protected const GENERATED_ENCODING = 'data:image/png;base64';
 
     /**
      * @var \Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface
@@ -40,7 +36,8 @@ class ProductBarcodeFacadeTest extends Test
     {
         parent::setUp();
 
-        $this->barcodePlugin = $this->getBarcodePluginMock();
+        $this->barcodePlugin = $this->tester->getBarcodePluginMock();
+
         $this->tester->setDependency(BarcodeDependencyProvider::PLUGINS_BARCODE_GENERATOR, [
             $this->barcodePlugin,
         ]);
@@ -49,57 +46,14 @@ class ProductBarcodeFacadeTest extends Test
     /**
      * @return void
      */
-    public function testGenerateBarcode()
+    public function testGenerateBarcodeUsingProductConcreteTransfer()
     {
         $productConcreteTransfer = $this->tester->getProductConcrete();
 
-        $barcodeResponseTransfer = $this->getFacade()
-            ->generateBarcode($productConcreteTransfer, get_class($this->barcodePlugin));
-
-        $this->assertSame(static::GENERATED_ENCODING, $barcodeResponseTransfer->getEncoding());
-    }
-
-    /**
-     * @return void
-     */
-    public function testGenerateBarcodeUseProductSku()
-    {
-        $productConcreteTransfer = $this->tester->getProductConcrete();
-
-        $barcodeResponseTransfer = $this->getFacade()
+        $barcodeResponseTransfer = $this->tester->getFacade()
             ->generateBarcode($productConcreteTransfer, get_class($this->barcodePlugin));
 
         $this->assertSame($productConcreteTransfer->getSku(), $barcodeResponseTransfer->getCode());
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductBarcode\Business\ProductBarcodeFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade
-     */
-    protected function getFacade(): ProductBarcodeFacadeInterface
-    {
-        return $this->tester->getFacade();
-    }
-
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface
-     */
-    protected function getBarcodePluginMock(): BarcodeGeneratorPluginInterface
-    {
-        $barcodePlugin = $this->getMockBuilder(BarcodeGeneratorPluginInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $barcodePlugin
-            ->expects($this->once())
-            ->method('generate')
-            ->willReturnCallback(
-                function (string $code) {
-                    return (new BarcodeResponseTransfer())
-                        ->setCode($code)
-                        ->setEncoding(static::GENERATED_ENCODING);
-                }
-            );
-
-        return $barcodePlugin;
+        $this->assertSame(static::GENERATED_ENCODING, $barcodeResponseTransfer->getEncoding());
     }
 }
