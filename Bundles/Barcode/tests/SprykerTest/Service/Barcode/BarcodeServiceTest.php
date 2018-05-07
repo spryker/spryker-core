@@ -3,10 +3,7 @@
 namespace SprykerTest\Service\Barcode;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\Transfer\BarcodeResponseTransfer;
 use Spryker\Service\Barcode\BarcodeDependencyProvider;
-use Spryker\Service\Barcode\BarcodeServiceInterface;
-use Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface;
 
 /**
  * Auto-generated group annotations
@@ -36,8 +33,7 @@ class BarcodeServiceTest extends Test
     protected function setUp()
     {
         parent::setUp();
-
-        $this->barcodePlugin = $this->getBarcodePluginMock();
+        $this->barcodePlugin = $this->tester->getBarcodePluginMock();
         $this->tester->setDependency(BarcodeDependencyProvider::PLUGINS_BARCODE_GENERATOR, [
             $this->barcodePlugin,
         ]);
@@ -48,42 +44,9 @@ class BarcodeServiceTest extends Test
      */
     public function testGenerateBarcode()
     {
-        $barcodeResponseTransfer = $this->getService()
+        $barcodeResponseTransfer = $this->tester->getBarcodeService()
             ->generateBarcode(static::GENERATION_SEED, get_class($this->barcodePlugin));
 
         $this->assertSame(static::GENERATED_CODE, $barcodeResponseTransfer->getCode());
-    }
-
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface
-     */
-    protected function getBarcodePluginMock(): BarcodeGeneratorPluginInterface
-    {
-        $barcodePlugin = $this->getMockBuilder(BarcodeGeneratorPluginInterface::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['generate'])
-            ->getMock();
-
-        $barcodeTransfer = (new BarcodeResponseTransfer())
-            ->setCode(static::GENERATED_CODE)
-            ->setEncoding(static::GENERATED_ENCODING);
-
-        $barcodePlugin
-            ->expects($this->once())
-            ->method('generate')
-            ->willReturn($barcodeTransfer);
-
-        return $barcodePlugin;
-    }
-
-    /**
-     * @return \Spryker\Service\Barcode\BarcodeServiceInterface
-     */
-    protected function getService(): BarcodeServiceInterface
-    {
-        return $this->tester
-            ->getLocator()
-            ->barcode()
-            ->service();
     }
 }
