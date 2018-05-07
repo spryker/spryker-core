@@ -14,7 +14,7 @@ interface BarcodeServiceInterface
     /**
      * Specification:
      * - Generates a barcode based on the given $text.
-     * - Returns a base64 encoded string that represents the barcode.
+     * - Returns BarcodeResponseTransfer with encoding (like base64) and encoded string that represents the barcode.
      * - The generation is based on the given $generatorPlugin,
      *     which is the FQCN of a registered barcode generator plugin.
      * - When the plugin is not provided, uses the first registered plugin.
