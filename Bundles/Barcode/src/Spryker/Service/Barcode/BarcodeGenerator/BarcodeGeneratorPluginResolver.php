@@ -36,7 +36,23 @@ class BarcodeGeneratorPluginResolver implements BarcodeGeneratorPluginResolverIn
             return reset($this->barcodePlugins);
         }
 
-        return $this->getPluginByClassName($generatorPluginClassName);
+        return $this->getPluginByClassNameCashed($generatorPluginClassName);
+    }
+
+    /**
+     * @param string $fullClassName
+     *
+     * @return \Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface
+     */
+    protected function getPluginByClassNameCashed(string $fullClassName): BarcodeGeneratorPluginInterface
+    {
+        static $cashedPluginsMap;
+
+        if (!array_key_exists($fullClassName, $cashedPluginsMap)) {
+            $cashedPluginsMap[$fullClassName] = $this->getPluginByClassName($fullClassName);
+        }
+
+        return $cashedPluginsMap[$fullClassName];
     }
 
     /**
