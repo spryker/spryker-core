@@ -15,13 +15,13 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Zed\\ProductQuantityDataImport\\Helper\\": "tests/SprykerTest/Zed/ProductQuantityDataImport/_support/Helper/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/",
-      "SprykerTest\\Zed\\ProductQuantityDataImport\\Helper\\": "tests/SprykerTest/Zed/ProductQuantityDataImport/_support/Helper/"
+      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",
