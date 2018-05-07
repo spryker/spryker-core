@@ -38,7 +38,9 @@ class ProductSkuProvider implements ProductSkuProviderInterface
             return $sku;
         }
 
-        $idProductConcrete = $productConcreteTransfer->getIdProductConcrete();
+        $idProductConcrete = $productConcreteTransfer
+            ->requireIdProductConcrete()
+            ->getIdProductConcrete();
 
         return $this->getConcreteProductSkuFromDatabase($idProductConcrete);
     }
