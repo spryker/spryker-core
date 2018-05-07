@@ -15,6 +15,8 @@ interface ProductBarcodeFacadeInterface
     /**
      * Specification:
      * - Generates a barcode for the given concrete product with the use of Barcode module service.
+     * - Barcode generated using SKU as data.
+     * - If ProductConcreteTransfer has no SKU, it will be obtained from DB using idProductConcrete.
      *
      * @api
      *
@@ -23,5 +25,8 @@ interface ProductBarcodeFacadeInterface
      *
      * @return \Generated\Shared\Transfer\BarcodeResponseTransfer
      */
-    public function generateBarcode(ProductConcreteTransfer $productConcreteTransfer, ?string $generatorPlugin = null): BarcodeResponseTransfer;
+    public function generateBarcode(
+        ProductConcreteTransfer $productConcreteTransfer,
+        ?string $generatorPlugin = null
+    ): BarcodeResponseTransfer;
 }
