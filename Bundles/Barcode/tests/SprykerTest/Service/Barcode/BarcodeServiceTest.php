@@ -48,5 +48,6 @@ class BarcodeServiceTest extends Test
             ->generateBarcode(static::GENERATION_SEED, get_class($this->barcodePlugin));
 
         $this->assertSame(static::GENERATED_CODE, $barcodeResponseTransfer->getCode());
+        $this->assertSame(static::GENERATED_ENCODING, $barcodeResponseTransfer->getEncoding());
     }
 }
