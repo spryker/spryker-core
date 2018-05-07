@@ -24,5 +24,5 @@ interface CustomerAccessEntityManagerInterface
      *
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
-    public function updateUnauthenticatedCustomerAccess(CustomerAccessTransfer $customerAccessTransfer);
+    public function updateUnauthenticatedCustomerAccess(CustomerAccessTransfer $customerAccessTransfer): CustomerAccessTransfer;
 }

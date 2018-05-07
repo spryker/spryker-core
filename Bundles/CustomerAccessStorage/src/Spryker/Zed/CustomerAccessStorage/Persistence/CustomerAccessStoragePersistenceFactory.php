@@ -9,13 +9,11 @@ namespace Spryker\Zed\CustomerAccessStorage\Persistence;
 
 use Orm\Zed\CustomerAccess\Persistence\SpyUnauthenticatedCustomerAccessQuery;
 use Orm\Zed\CustomerAccessStorage\Persistence\SpyUnauthenticatedCustomerAccessStorageQuery;
-use Spryker\Zed\CustomerAccessStorage\Persistence\Propel\Mapper\CustomerAccessMapper;
-use Spryker\Zed\CustomerAccessStorage\Persistence\Propel\Mapper\CustomerAccessMapperInterface;
+use Spryker\Zed\CustomerAccessStorage\CustomerAccessStorageDependencyProvider;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\CustomerAccessStorage\CustomerAccessStorageConfig getConfig()
- * @method \Spryker\Zed\CustomerAccessStorage\Persistence\CustomerAccessStorageQueryContainerInterface getQueryContainer()
  */
 class CustomerAccessStoragePersistenceFactory extends AbstractPersistenceFactory
 {
@@ -24,7 +22,7 @@ class CustomerAccessStoragePersistenceFactory extends AbstractPersistenceFactory
      */
     public function createPropelCustomerAccessQuery(): SpyUnauthenticatedCustomerAccessQuery
     {
-        return SpyUnauthenticatedCustomerAccessQuery::create();
+        return $this->getProvidedDependency(CustomerAccessStorageDependencyProvider::QUERY_CUSTOMER_ACCESS);
     }
 
     /**
@@ -33,13 +31,5 @@ class CustomerAccessStoragePersistenceFactory extends AbstractPersistenceFactory
     public function createPropelCustomerAccessStorageQuery(): SpyUnauthenticatedCustomerAccessStorageQuery
     {
         return SpyUnauthenticatedCustomerAccessStorageQuery::create();
-    }
-
-    /**
-     * @return \Spryker\Zed\CustomerAccessStorage\Persistence\Propel\Mapper\CustomerAccessMapperInterface
-     */
-    public function createCustomerAccessMapper(): CustomerAccessMapperInterface
-    {
-        return new CustomerAccessMapper();
     }
 }
