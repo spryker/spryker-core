@@ -70,6 +70,12 @@ class BarcodeGeneratorPluginResolver implements BarcodeGeneratorPluginResolverIn
             }
         }
 
-        throw new BarcodeGeneratorPluginNotFoundException();
+        throw new BarcodeGeneratorPluginNotFoundException(
+            sprintf(
+                'There is no plugin for barcode generation with class "%s".'
+                . ' Or it is not provided in BarcodeDependencyProvider::getBarcodeGeneratorPlugins()',
+                $fullClassName
+            )
+        );
     }
 }
