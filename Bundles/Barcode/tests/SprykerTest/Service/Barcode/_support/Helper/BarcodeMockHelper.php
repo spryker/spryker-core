@@ -21,11 +21,14 @@ class BarcodeMockHelper extends Module
         $barcodePlugin = Stub::makeEmpty(BarcodeGeneratorPluginInterface::class, [
             'generate' => function (string $text): BarcodeResponseTransfer {
                 return (new BarcodeResponseTransfer())
-                    ->setCode(static::GENERATED_CODE)
+                    ->setCode($text)
                     ->setEncoding(static::GENERATED_ENCODING);
             },
         ]);
-        $barcodeTransfer = $this->getBarcodeResponseTransfer();
+
+        $barcodeTransfer = (new BarcodeResponseTransfer())
+            ->setCode(static::GENERATED_CODE)
+            ->setEncoding(static::GENERATED_ENCODING);
 
         $barcodePlugin
             ->expects(Expected::once()->getMatcher())
@@ -33,17 +36,5 @@ class BarcodeMockHelper extends Module
             ->willReturn($barcodeTransfer);
 
         return $barcodePlugin;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\BarcodeResponseTransfer
-     */
-    protected function getBarcodeResponseTransfer(): BarcodeResponseTransfer
-    {
-        $barcodeResponseTransfer = new BarcodeResponseTransfer();
-
-        return $barcodeResponseTransfer
-            ->setCode(static::GENERATED_CODE)
-            ->setEncoding(static::GENERATED_ENCODING);
     }
 }
