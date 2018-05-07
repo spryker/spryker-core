@@ -20,9 +20,10 @@ class ProductBarcodeTable extends AbstractTable
 {
     protected const COL_ID_PRODUCT = 'id_product';
     protected const COL_PRODUCT_SKU = 'sku';
-
     protected const COL_PRODUCT_NAME = 'name';
     protected const COL_BARCODE = 'barcode';
+
+    protected const BARCODE_IMAGE_TEMPLATE = '<img src="%s,%s">';
 
     /**
      * @var \Spryker\Zed\ProductBarcodeGui\Dependency\Service\ProductBarcodeGuiToBarcodeServiceBridgeInterface
@@ -153,7 +154,7 @@ class ProductBarcodeTable extends AbstractTable
         $barcodeTransfer = $this->generateBarcode($sku);
 
         return sprintf(
-            '<img src="%s,%s">',
+            static::BARCODE_IMAGE_TEMPLATE,
             $barcodeTransfer->getEncoding(),
             $barcodeTransfer->getCode()
         );
