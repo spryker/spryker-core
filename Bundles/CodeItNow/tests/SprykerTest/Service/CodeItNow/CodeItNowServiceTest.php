@@ -4,7 +4,6 @@ namespace SprykerTest\Service\CodeItNow;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\BarcodeResponseTransfer;
-use Spryker\Service\CodeItNow\CodeItNowServiceInterface;
 
 /**
  * Auto-generated group annotations
@@ -36,23 +35,11 @@ class CodeItNowServiceTest extends Test
      */
     public function testCode128BarcodeGeneration()
     {
-        $barcodeResponseTransfer = $this->getService()
+        $barcodeResponseTransfer = $this->tester->getCodeItNowService()
             ->generateCode128Barcode(static::SOME_STRING);
 
         $this->assertInstanceOf(BarcodeResponseTransfer::class, $barcodeResponseTransfer);
         $this->assertSame(static::STRING_BARCODE, $barcodeResponseTransfer->getCode());
         $this->assertSame(static::STANDARD_ENCODING, $barcodeResponseTransfer->getEncoding());
-    }
-
-    /**
-     * @return \Spryker\Service\CodeItNow\CodeItNowServiceInterface
-     */
-    protected function getService(): CodeItNowServiceInterface
-    {
-        return $this
-            ->tester
-            ->getLocator()
-            ->codeItNow()
-            ->service();
     }
 }
