@@ -15,7 +15,7 @@ use Spryker\Service\FileSystem\Dependency\Plugin\FileSystemReaderPluginInterface
 use Spryker\Service\Kernel\AbstractPlugin;
 
 /**
- * @method \Spryker\Service\Flysystem\FlysystemServiceInterface getService
+ * @method \Spryker\Service\Flysystem\FlysystemServiceInterface getService()
  */
 class FileSystemReaderPlugin extends AbstractPlugin implements FileSystemReaderPluginInterface
 {

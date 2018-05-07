@@ -53,7 +53,7 @@ class TableMapBuilder extends PropelTableMapBuilder
     /**
      * Adds the populateObject() method.
      *
-     * @param string &$script The script will be modified in this method.
+     * @param string $script The script will be modified in this method.
      *
      * @return void
      */
