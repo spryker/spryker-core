@@ -60,7 +60,9 @@ class QuoteDeleter implements QuoteDeleterInterface
         $quoteResponseTransfer = new QuoteResponseTransfer();
         $quoteResponseTransfer->setIsSuccessful(false);
         if ($this->validateQuote($quoteTransfer)) {
-            return $this->executeDeleteTransaction($quoteTransfer);
+            return $this->getTransactionHandler()->handleTransaction(function () use ($quoteTransfer) {
+                return $this->executeDeleteTransaction($quoteTransfer);
+            });
         }
 
         return $quoteResponseTransfer;
@@ -92,15 +94,13 @@ class QuoteDeleter implements QuoteDeleterInterface
      */
     protected function executeDeleteTransaction(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        return $this->getTransactionHandler()->handleTransaction(function () use ($quoteTransfer) {
-            $quoteResponseTransfer = new QuoteResponseTransfer();
-            $quoteTransfer = $this->executeDeleteBeforePlugins($quoteTransfer);
-            $this->quoteEntityManager->deleteQuoteById($quoteTransfer->getIdQuote());
-            $quoteResponseTransfer->setCustomer($quoteTransfer->getCustomer());
-            $quoteResponseTransfer->setIsSuccessful(true);
+        $quoteResponseTransfer = new QuoteResponseTransfer();
+        $quoteTransfer = $this->executeDeleteBeforePlugins($quoteTransfer);
+        $this->quoteEntityManager->deleteQuoteById($quoteTransfer->getIdQuote());
+        $quoteResponseTransfer->setCustomer($quoteTransfer->getCustomer());
+        $quoteResponseTransfer->setIsSuccessful(true);
 
-            return $quoteResponseTransfer;
-        });
+        return $quoteResponseTransfer;
     }
 
     /**

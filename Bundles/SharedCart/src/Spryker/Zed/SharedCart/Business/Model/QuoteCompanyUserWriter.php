@@ -50,12 +50,22 @@ class QuoteCompanyUserWriter implements QuoteCompanyUserWriterInterface
     public function updateQuoteCompanyUsers(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         return $this->getTransactionHandler()->handleTransaction(function () use ($quoteTransfer) {
-            $currentQuoteCompanyUserIdCollection = $this->sharedCartRepository->findQuoteCompanyUserIdCollection($quoteTransfer->getIdQuote());
-            $this->addNewQuoteCompanyUsers($quoteTransfer);
-            $this->removeQuoteCompanyUsers((array)$quoteTransfer->getShareDetails(), $currentQuoteCompanyUserIdCollection);
-
-            return $quoteTransfer;
+            return $this->executeUpdateQuoteCompanyUsersTransaction($quoteTransfer);
         });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function executeUpdateQuoteCompanyUsersTransaction(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        $currentQuoteCompanyUserIdCollection = $this->sharedCartRepository->findQuoteCompanyUserIdCollection($quoteTransfer->getIdQuote());
+        $this->addNewQuoteCompanyUsers($quoteTransfer);
+        $this->removeQuoteCompanyUsers((array)$quoteTransfer->getShareDetails(), $currentQuoteCompanyUserIdCollection);
+
+        return $quoteTransfer;
     }
 
     /**
