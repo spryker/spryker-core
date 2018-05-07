@@ -54,7 +54,7 @@ class CategoryTreeRenderer
     }
 
     /**
-     * @return bool
+     * @return string|false
      */
     public function render()
     {
