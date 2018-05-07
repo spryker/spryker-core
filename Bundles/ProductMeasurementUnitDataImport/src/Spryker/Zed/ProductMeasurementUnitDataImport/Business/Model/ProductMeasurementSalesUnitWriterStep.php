@@ -74,7 +74,7 @@ class ProductMeasurementSalesUnitWriterStep extends PublishAwareStep implements 
      *
      * @throws \Spryker\Zed\ProductMeasurementUnitDataImport\Business\Exception\EntityNotFoundException
      *
-     * @return \Orm\Zed\ProductMeasurementUnit\Persistence\Base\SpyProductMeasurementBaseUnit
+     * @return \Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementBaseUnit
      */
     protected function getProductMeasurementBaseUnit($idProductAbstract): SpyProductMeasurementBaseUnit
     {
