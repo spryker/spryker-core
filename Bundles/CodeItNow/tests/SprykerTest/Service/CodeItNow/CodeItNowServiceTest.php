@@ -19,8 +19,8 @@ use Spryker\Service\CodeItNow\CodeItNowServiceInterface;
  */
 class CodeItNowServiceTest extends Test
 {
-    const SOME_STRING = 'some string';
-    const STANDARD_ENCODING = 'data:image/png;base64';
+    public const SOME_STRING = 'some string';
+    public const STANDARD_ENCODING = 'data:image/png;base64';
 
     /**
      * @return void
