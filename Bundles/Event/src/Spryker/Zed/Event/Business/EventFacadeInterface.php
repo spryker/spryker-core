@@ -31,6 +31,21 @@ interface EventFacadeInterface
 
     /**
      * Specification:
+     * - Handles all events by registered by give $eventName
+     * - Passes array of eventTransfer to each listener
+     * - If listener is queueable then it will put into queue system.
+     *
+     * @api
+     *
+     * @param string $eventName
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $eventTransfers
+     *
+     * @return void
+     */
+    public function triggerBulk($eventName, array $eventTransfers);
+
+    /**
+     * Specification:
      * - Processes all listeners enqueued in event queue (queue consumer)
      *
      * @api

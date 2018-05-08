@@ -18,4 +18,12 @@ interface EventDispatcherInterface
      * @return void
      */
     public function trigger($eventName, TransferInterface $eventTransfer);
+
+    /**
+     * @param string $eventName
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $eventTransfers
+     *
+     * @return void
+     */
+    public function triggerBulk($eventName, array $eventTransfers);
 }
