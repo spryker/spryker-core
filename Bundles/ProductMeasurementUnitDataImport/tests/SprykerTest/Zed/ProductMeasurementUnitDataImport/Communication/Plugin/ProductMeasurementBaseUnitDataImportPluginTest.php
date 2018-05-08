@@ -11,7 +11,9 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
+use Spryker\Zed\DataImport\DataImportDependencyProvider;
 use Spryker\Zed\ProductMeasurementUnitDataImport\Communication\Plugin\ProductMeasurementBaseUnitDataImportPlugin;
+use Spryker\Zed\ProductMeasurementUnitDataImport\Communication\Plugin\ProductMeasurementUnitDataImportPlugin;
 use Spryker\Zed\ProductMeasurementUnitDataImport\ProductMeasurementUnitDataImportConfig;
 
 /**
@@ -30,6 +32,22 @@ class ProductMeasurementBaseUnitDataImportPluginTest extends Unit
      * @var \SprykerTest\Zed\ProductMeasurementUnitDataImport\ProductMeasurementUnitDataImportCommunicationTester
      */
     protected $tester;
+
+    /**
+     * @return void
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->tester->setDependency(
+            DataImportDependencyProvider::DATA_IMPORTER_PLUGINS,
+            [
+                new ProductMeasurementUnitDataImportPlugin(),
+                new ProductMeasurementBaseUnitDataImportPlugin(),
+            ]
+        );
+    }
 
     /**
      * @return void
