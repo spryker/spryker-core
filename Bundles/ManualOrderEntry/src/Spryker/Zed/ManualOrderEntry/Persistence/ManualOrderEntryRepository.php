@@ -9,6 +9,7 @@ namespace Spryker\Zed\ManualOrderEntry\Persistence;
 
 use Generated\Shared\Transfer\OrderSourceTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
+use Spryker\Zed\ManualOrderEntry\Business\Exception\OrderSourceNotFoundException;
 
 /**
  * @method \Spryker\Zed\ManualOrderEntry\Persistence\ManualOrderEntryPersistenceFactory getFactory()
@@ -20,19 +21,22 @@ class ManualOrderEntryRepository extends AbstractRepository implements ManualOrd
      *
      * @param int $idOrderSource
      *
+     * @throws \Spryker\Zed\ManualOrderEntry\Business\Exception\OrderSourceNotFoundException
+     *
      * @return \Generated\Shared\Transfer\OrderSourceTransfer
      */
     public function getOrderSourceById($idOrderSource): OrderSourceTransfer
     {
-        $query = $this->getFactory()->createOrderSourceQuery();
-        $orderSourceEntity = $query->filterByIdOrderSource($idOrderSource)
+        $query = $this->getFactory()->createOrderSourceQuery()
+            ->filterByIdOrderSource($idOrderSource);
+        $spyOrderSourceEntityTransfer = $this->buildQueryFromCriteria($query)
             ->findOne();
 
-        $orderSourceTransfer = new OrderSourceTransfer();
-        if ($orderSourceEntity) {
-            $orderSourceTransfer->setIdOrderSource($orderSourceEntity->getIdOrderSource());
-            $orderSourceTransfer->setName($orderSourceEntity->getName());
+        if (!$spyOrderSourceEntityTransfer) {
+            throw new OrderSourceNotFoundException();
         }
+        $orderSourceTransfer = new OrderSourceTransfer();
+        $orderSourceTransfer->fromArray($spyOrderSourceEntityTransfer->toArray(), true);
 
         return $orderSourceTransfer;
     }
@@ -42,15 +46,15 @@ class ManualOrderEntryRepository extends AbstractRepository implements ManualOrd
      *
      * @return \Generated\Shared\Transfer\OrderSourceTransfer[]
      */
-    public function getAllOrderSources(): array
+    public function findAllOrderSources(): array
     {
         $query = $this->getFactory()->createOrderSourceQuery();
-        $orderSourceEntities = $query->find();
+        $spyOrderSourceEntityTransfers = $this->buildQueryFromCriteria($query)->find();
         $orderSourceTransfers = [];
 
-        foreach ($orderSourceEntities as $orderSourceEntity) {
+        foreach ($spyOrderSourceEntityTransfers as $spyOrderSourceEntityTransfer) {
             $orderSourceTransfer = new OrderSourceTransfer();
-            $orderSourceTransfer->fromArray($orderSourceEntity->toArray(), true);
+            $orderSourceTransfer->fromArray($spyOrderSourceEntityTransfer->toArray(), true);
 
             $orderSourceTransfers[] = $orderSourceTransfer;
         }
