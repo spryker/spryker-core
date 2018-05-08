@@ -410,7 +410,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     /**
      * @param int $idProductConcrete
      *
-     * @return mixed|mixed[]|\Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection|mixed
+     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function findBundledItemsByIdProductConcrete($idProductConcrete)
     {
