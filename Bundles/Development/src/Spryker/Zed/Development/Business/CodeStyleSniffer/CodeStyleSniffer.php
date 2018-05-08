@@ -7,28 +7,31 @@
 
 namespace Spryker\Zed\Development\Business\CodeStyleSniffer;
 
+use RuntimeException;
 use Spryker\Zed\Development\Business\Exception\CodeStyleSniffer\PathDoesNotExistException;
 use Spryker\Zed\Development\DevelopmentConfig;
 use Symfony\Component\Process\Process;
 use Zend\Filter\FilterChain;
+use Zend\Filter\StringToLower;
 use Zend\Filter\Word\CamelCaseToDash;
-use Zend\Filter\Word\DashToCamelCase;
-use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class CodeStyleSniffer
 {
-    const CODE_SUCCESS = 0;
+    protected const CODE_SUCCESS = 0;
 
-    const OPTION_FIX = 'fix';
-    const OPTION_PRINT_DIFF_REPORT = 'report-diff';
-    const OPTION_DRY_RUN = 'dry-run';
-    const OPTION_QUIET = 'quiet';
-    const OPTION_EXPLAIN = 'explain';
-    const OPTION_SNIFFS = 'sniffs';
-    const OPTION_VERBOSE = 'verbose';
+    protected const OPTION_FIX = 'fix';
+    protected const OPTION_PRINT_DIFF_REPORT = 'report-diff';
+    protected const OPTION_DRY_RUN = 'dry-run';
+    protected const OPTION_QUIET = 'quiet';
+    protected const OPTION_EXPLAIN = 'explain';
+    protected const OPTION_SNIFFS = 'sniffs';
+    protected const OPTION_VERBOSE = 'verbose';
 
-    const APPLICATION_NAMESPACES = ['Orm'];
-    const APPLICATION_LAYERS = ['Zed', 'Client', 'Yves', 'Service', 'Shared'];
+    protected const APPLICATION_NAMESPACES = ['Orm'];
+    protected const APPLICATION_LAYERS = ['Zed', 'Client', 'Yves', 'Service', 'Shared'];
+
+    protected const NAMESPACE_SPRYKER_SHOP = 'SprykerShop';
+    protected const NAMESPACE_SPRYKER = 'Spryker';
 
     /**
      * @var \Spryker\Zed\Development\DevelopmentConfig
@@ -51,35 +54,39 @@ class CodeStyleSniffer
      */
     public function checkCodeStyle($module, array $options = [])
     {
-        $isCore = isset($options['core']) ? $options['core'] : false;
+        $namespace = null;
+        if (strpos($module, '.') !== false) {
+            list ($namespace, $module) = explode('.', $module, 2);
+        }
+
         $pathOption = isset($options['path']) ? $options['path'] : null;
         $defaults = [
-            'ignore' => $isCore || $pathOption ? '' : 'vendor/',
+            'ignore' => $namespace || $pathOption ? '' : 'vendor/',
         ];
         $options += $defaults;
 
-        $path = $this->resolvePath($module, $isCore, $pathOption);
+        $path = $this->resolvePath($module, $namespace, $pathOption);
 
         return $this->runSnifferCommand($path, $options);
     }
 
     /**
      * @param string $module
-     * @param bool $isCore
+     * @param string|null $namespace
      * @param string|null $path
      *
      * @return string
      */
-    protected function resolvePath($module, $isCore, $path = null)
+    protected function resolvePath($module, $namespace = null, $path = null)
     {
         $path = $path !== null ? trim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR : null;
 
-        if ($isCore) {
-            if (!$module) {
-                return rtrim($this->config->getPathToCore(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        if ($namespace) {
+            if ($module === 'all') {
+                return $this->getPathToCore($namespace, $path);
             }
 
-            return $this->getPathToModule($module, $path);
+            return $this->getPathToModule($module, $namespace, $path);
         }
 
         $pathToRoot = $this->config->getPathToRoot();
@@ -92,27 +99,50 @@ class CodeStyleSniffer
     }
 
     /**
+     * @param string $namespace
+     * @param string $path
+     *
+     * @throws \RuntimeException
+     *
+     * @return string
+     */
+    protected function getPathToCore($namespace, $path)
+    {
+        if ($path) {
+            throw new RuntimeException('Path suffix option is not possible for "all".');
+        }
+
+        if ($namespace === static::NAMESPACE_SPRYKER_SHOP) {
+            $corePath = $this->config->getPathToShop();
+        } elseif ($namespace === static::NAMESPACE_SPRYKER) {
+            $corePath = $this->config->getPathToCore();
+        } else {
+            throw new RuntimeException('Namespace invalid: ' . $namespace);
+        }
+
+        return $corePath;
+    }
+
+    /**
      * @param string $module
+     * @param string $namespace
      * @param string|null $pathSuffix
      *
      * @throws \Spryker\Zed\Development\Business\Exception\CodeStyleSniffer\PathDoesNotExistException
      *
      * @return string
      */
-    protected function getPathToModule($module, $pathSuffix = null)
+    protected function getPathToModule($module, $namespace, $pathSuffix = null)
     {
-        $lookupPaths = $this->buildPaths($module, $pathSuffix);
-
-        foreach ($lookupPaths as $path) {
-            if ($this->isPathValid($path)) {
-                return $path;
-            }
+        $path = $this->getCorePath($module, $namespace, $pathSuffix);
+        if ($this->isPathValid($path)) {
+            return $path;
         }
 
         $message = sprintf(
-            'Could not find valid paths to your module "%s". Lookup paths "%s". Maybe there is a typo in the module name?',
+            'Could not find a valid path to your module "%s". Expected path "%s". Maybe there is a typo in the module name?',
             $module,
-            implode(', ', $lookupPaths)
+            $path
         );
 
         throw new PathDoesNotExistException($message);
@@ -120,76 +150,56 @@ class CodeStyleSniffer
 
     /**
      * @param string $module
+     * @param string $namespace
      * @param string|null $pathSuffix
-     *
-     * @return array
-     */
-    protected function buildPaths($module, $pathSuffix = null)
-    {
-        return [
-            $this->getPathToCorePackageNonSplit($this->normalizeModuleNameForSplit($module), $pathSuffix),
-            $this->getPathToCoreModule($this->normalizeModuleNameForNonSplit($module), $pathSuffix),
-        ];
-    }
-
-    /**
-     * @param string $module
      *
      * @return string
      */
-    protected function normalizeModuleNameForNonSplit($module)
+    protected function getCorePath($module, $namespace, $pathSuffix = null)
+    {
+        if ($namespace === static::NAMESPACE_SPRYKER && is_dir($this->config->getPathToCore() . $module)) {
+            return $this->buildPath($this->config->getPathToCore() . $module . DIRECTORY_SEPARATOR, $pathSuffix);
+        }
+
+        if ($namespace === static::NAMESPACE_SPRYKER_SHOP && is_dir($this->config->getPathToShop() . $module)) {
+            return $this->buildPath($this->config->getPathToShop() . $module . DIRECTORY_SEPARATOR, $pathSuffix);
+        }
+
+        $vendor = $this->normalizeName($namespace);
+        $module = $this->normalizeName($module);
+        $path = $this->config->getPathToRoot() . 'vendor' . DIRECTORY_SEPARATOR . $vendor . DIRECTORY_SEPARATOR . $module;
+
+        return $path;
+    }
+
+    /**
+     * @param string $path
+     * @param string $suffix
+     *
+     * @return string
+     */
+    protected function buildPath($path, $suffix)
+    {
+        if (!$suffix) {
+            return $path;
+        }
+
+        return $path . $suffix;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return string
+     */
+    protected function normalizeName($name)
     {
         $filterChain = new FilterChain();
         $filterChain
-            ->attach(new UnderscoreToCamelCase())
-            ->attach(new DashToCamelCase());
+            ->attach(new CamelCaseToDash())
+            ->attach(new StringToLower());
 
-        return ucfirst($filterChain->filter($module));
-    }
-
-    /**
-     * @param string $module
-     *
-     * @return string
-     */
-    protected function normalizeModuleNameForSplit($module)
-    {
-        $filterChain = new FilterChain();
-        $filterChain
-            ->attach(new UnderscoreToCamelCase())
-            ->attach(new CamelCaseToDash());
-
-        return strtolower($filterChain->filter($module));
-    }
-
-    /**
-     * @param string $module
-     * @param string|null $pathSuffix
-     *
-     * @return string
-     */
-    protected function getPathToCoreModule($module, $pathSuffix = null)
-    {
-        return implode('', [
-            rtrim($this->config->getPathToCore(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR,
-            $module . DIRECTORY_SEPARATOR,
-            $pathSuffix,
-        ]);
-    }
-
-    /**
-     * @param string $module
-     * @param string|null $pathSuffix
-     *
-     * @return string
-     */
-    protected function getPathToCorePackageNonSplit($module, $pathSuffix = null)
-    {
-        return implode('', [
-            rtrim(dirname(dirname($this->config->getPathToCore())), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR,
-            $module . DIRECTORY_SEPARATOR,
-            $pathSuffix,
-        ]);
+        return $filterChain->filter($name);
     }
 
     /**
