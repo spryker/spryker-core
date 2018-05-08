@@ -34,7 +34,7 @@ class ModuleCreateConsole extends Console
             ->setHelp('<info>' . static::COMMAND_NAME . ' -h</info>')
             ->setDescription('Create basic core module (Spryker core dev only).');
 
-        $this->addArgument(static::ARGUMENT_MODULE, InputArgument::REQUIRED, 'Name of core module to create or sync. Use "all" for all.');
+        $this->addArgument(static::ARGUMENT_MODULE, InputArgument::REQUIRED, 'Name of core module to create or sync. Use "all" for all. Use prefix for vendor namespace, e.g. `SprykerShop.ModuleName`.');
         $this->addArgument(static::ARGUMENT_FILE, InputArgument::OPTIONAL, 'Name of file to create or sync.');
         $this->addOption(static::OPTION_FORCE, 'f', InputOption::VALUE_NONE, 'Force the command, will overwrite existing files.');
     }

@@ -1,0 +1,75 @@
+parameters:
+    bootstrap: %rootDir%/../../../phpstan-bootstrap.php
+
+    ignoreErrors:
+    - '#Property .+Aws3v3AdapterBuilder::\$adapter has unknown class League\\Flysystem\\AwsS3v3\\AwsS3Adapter as its type.#'
+    - '#Property .+Aws3v3AdapterBuilder::\$client has unknown class Aws\\S3\\S3Client as its type.#'
+    - '#Instantiated class Aws\\S3\\S3Client not found.#'
+    - '#Instantiated class League\\Flysystem\\AwsS3v3\\AwsS3Adapter not found.#'
+    - '#Method .+Aws3v3AdapterBuilder::build\(\) should return League\\Flysystem\\AdapterInterface but returns League\\Flysystem\\AwsS3v3\\AwsS3Adapter.#'
+
+services:
+    -
+        class: PhpStan\DynamicType\FacadeDynamicTypeExtension
+        tags:
+            - phpstan.broker.dynamicMethodReturnTypeExtension
+
+    -
+        class: PhpStan\DynamicType\QueryContainerDynamicTypeExtension
+        tags:
+            - phpstan.broker.dynamicMethodReturnTypeExtension
+
+    -
+        class: PhpStan\DynamicType\ConsoleDynamicTypeExtension
+        tags:
+            - phpstan.broker.dynamicMethodReturnTypeExtension
+
+    -
+        class: PhpStan\DynamicType\ControllerDynamicTypeExtension
+        tags:
+            - phpstan.broker.dynamicMethodReturnTypeExtension
+
+    -
+        class: PhpStan\DynamicType\PluginDynamicTypeExtension
+        tags:
+            - phpstan.broker.dynamicMethodReturnTypeExtension
+
+    -
+        class: PhpStan\DynamicType\ServiceDynamicTypeExtension
+        tags:
+            - phpstan.broker.dynamicMethodReturnTypeExtension
+
+    -
+        class: PhpStan\DynamicType\ConfigDynamicTypeExtension
+        tags:
+            - phpstan.broker.dynamicMethodReturnTypeExtension
+
+    -
+        class: PhpStan\DynamicType\ClientDynamicTypeExtension
+        tags:
+            - phpstan.broker.dynamicMethodReturnTypeExtension
+
+    -
+        class: PhpStan\DynamicType\ClientPluginDynamicTypeExtension
+        tags:
+            - phpstan.broker.dynamicMethodReturnTypeExtension
+
+    -
+        class: PhpStan\DynamicType\YvesFormTypeDynamicTypeExtension
+        tags:
+            - phpstan.broker.dynamicMethodReturnTypeExtension
+
+    -
+        class: PhpStan\DynamicType\ZedFormTypeDynamicTypeExtension
+        tags:
+            - phpstan.broker.dynamicMethodReturnTypeExtension
+
+    -
+        class: PhpStan\DynamicType\YvesFactoryDynamicTypeExtension
+        tags:
+            - phpstan.broker.dynamicMethodReturnTypeExtension
+
+    -
+        class: PhpStan\DynamicType\ZedFactoryDynamicTypeExtension
+        tags:
+            - phpstan.broker.dynamicMethodReturnTypeExtension
