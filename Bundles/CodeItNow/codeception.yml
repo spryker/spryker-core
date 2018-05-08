@@ -1,4 +1,4 @@
-namespace: CodeItNow
+namespace: SprykerTest
 actor: Tester
 include:
   - tests/SprykerTest/Service/CodeItNow
