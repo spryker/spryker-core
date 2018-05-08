@@ -196,21 +196,6 @@ class PhpstanRunner implements PhpstanRunnerInterface
     }
 
     /**
-     * @param string $name
-     *
-     * @return string
-     */
-    protected function normalizeName($name)
-    {
-        $filterChain = new FilterChain();
-        $filterChain
-            ->attach(new CamelCaseToDash())
-            ->attach(new StringToLower());
-
-        return $filterChain->filter($name);
-    }
-
-    /**
      * @param array $paths
      * @param string $path
      * @param string|null $configFilePath
@@ -290,12 +275,27 @@ class PhpstanRunner implements PhpstanRunnerInterface
             return $paths;
         }
 
-        $vendor = $this->normalizeName($namespace);
-        $module = $this->normalizeName($module);
+        $vendor = $this->dasherize($namespace);
+        $module = $this->dasherize($module);
         $path = $this->config->getPathToRoot() . 'vendor' . DIRECTORY_SEPARATOR . $vendor . DIRECTORY_SEPARATOR . $module;
         $paths = $this->addPath($paths, $path);
 
         return $paths;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return string
+     */
+    protected function dasherize($name)
+    {
+        $filterChain = new FilterChain();
+        $filterChain
+            ->attach(new CamelCaseToDash())
+            ->attach(new StringToLower());
+
+        return $filterChain->filter($name);
     }
 
     /**
