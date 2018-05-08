@@ -141,7 +141,7 @@ class CodeArchitectureSnifferConsole extends Console
         $vendor = $this->dasherize($namespace);
         $module = $this->dasherize($module);
         $pathToModule = $this->getFactory()->getConfig()->getPathToRoot() . 'vendor' . DIRECTORY_SEPARATOR . $vendor . DIRECTORY_SEPARATOR;
-        $path =  $pathToModule . $module . DIRECTORY_SEPARATOR;
+        $path = $pathToModule . $module . DIRECTORY_SEPARATOR;
 
         return $this->buildPath($path, $pathSuffix);
     }
@@ -280,5 +280,4 @@ class CodeArchitectureSnifferConsole extends Console
 
         return $filterChain->filter($name);
     }
-
 }
