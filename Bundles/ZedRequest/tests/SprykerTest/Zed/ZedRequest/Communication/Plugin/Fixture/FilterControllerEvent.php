@@ -20,9 +20,9 @@ class FilterControllerEvent extends SymfonyFilterControllerEvent
      * @param int|null $requestType
      */
     public function __construct(
-        HttpKernelInterface $kernel = null,
+        ?HttpKernelInterface $kernel = null,
         $controller = null,
-        Request $request = null,
+        ?Request $request = null,
         $requestType = null
     ) {
         unset($kernel, $controller, $request, $requestType);

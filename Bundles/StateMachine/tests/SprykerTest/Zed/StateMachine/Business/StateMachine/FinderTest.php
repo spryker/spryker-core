@@ -172,9 +172,9 @@ class FinderTest extends StateMachineMocks
      * @return \Spryker\Zed\StateMachine\Business\StateMachine\Finder
      */
     protected function createFinder(
-        HandlerResolverInterface $handlerResolverMock = null,
-        BuilderInterface $builderMock = null,
-        StateMachineQueryContainerInterface $stateMachineQueryContainerMock = null
+        ?HandlerResolverInterface $handlerResolverMock = null,
+        ?BuilderInterface $builderMock = null,
+        ?StateMachineQueryContainerInterface $stateMachineQueryContainerMock = null
     ) {
 
         if ($builderMock === null) {

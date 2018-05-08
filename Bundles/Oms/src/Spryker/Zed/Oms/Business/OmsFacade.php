@@ -315,7 +315,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @return int
      */
-    public function sumReservedProductQuantitiesForSku($sku, StoreTransfer $storeTransfer = null)
+    public function sumReservedProductQuantitiesForSku($sku, ?StoreTransfer $storeTransfer = null)
     {
         return $this->getFactory()
             ->createUtilReservation()

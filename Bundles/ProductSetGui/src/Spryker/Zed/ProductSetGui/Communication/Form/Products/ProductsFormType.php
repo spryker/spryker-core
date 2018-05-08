@@ -57,7 +57,7 @@ class ProductsFormType extends AbstractType
 
         $builder->get(static::FIELD_ASSIGN_ID_PRODUCT_ABSTRACTS)
             ->addModelTransformer(new CallbackTransformer(
-                function (array $productAbstractIds = null) {
+                function (?array $productAbstractIds = null) {
                     return implode(',', (array)$productAbstractIds);
                 },
                 function ($productAbstractIds = '') {

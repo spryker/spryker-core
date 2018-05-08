@@ -200,7 +200,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     /**
      * @param int $idCompanyBusinessUnit
      *
-     * @return mixed|\Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyBusinessUnit[]|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyBusinessUnit[]
      */
     public function findCompanyBusinessUnitSharedShoppingListsIds(int $idCompanyBusinessUnit): array
     {
@@ -215,7 +215,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     /**
      * @param int $idCompanyUser
      *
-     * @return mixed|\Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyUser[]|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyUser[]
      */
     public function findCompanyUserSharedShoppingListsIds(int $idCompanyUser): array
     {
@@ -284,7 +284,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     }
 
     /**
-     * @param \Propel\Runtime\Collection\Collection|\Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ShoppingList\Persistence\SpyShoppingListItem[] $itemEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ShoppingList\Persistence\SpyShoppingListItem[] $itemEntities
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
@@ -305,7 +305,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
      *
      * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */
-    protected function mapShoppingListEntityToTransfer(SpyShoppingList $shoppingListEntity, ShoppingListTransfer $shoppingListTransfer = null): ShoppingListTransfer
+    protected function mapShoppingListEntityToTransfer(SpyShoppingList $shoppingListEntity, ?ShoppingListTransfer $shoppingListTransfer = null): ShoppingListTransfer
     {
         if (!$shoppingListTransfer) {
             $shoppingListTransfer = new ShoppingListTransfer();

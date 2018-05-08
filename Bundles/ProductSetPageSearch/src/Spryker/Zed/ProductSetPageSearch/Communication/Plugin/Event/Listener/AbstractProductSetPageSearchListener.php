@@ -76,7 +76,7 @@ class AbstractProductSetPageSearchListener extends AbstractPlugin
      *
      * @return void
      */
-    protected function storeDataSet(array $spyProductSetLocalizedEntity, SpyProductSetPageSearch $spyProductSetPageSearchEntity = null)
+    protected function storeDataSet(array $spyProductSetLocalizedEntity, ?SpyProductSetPageSearch $spyProductSetPageSearchEntity = null)
     {
         if ($spyProductSetPageSearchEntity === null) {
             $spyProductSetPageSearchEntity = new SpyProductSetPageSearch();

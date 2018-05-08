@@ -124,7 +124,7 @@ class ProductQuery implements QueryInterface
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */
-    public function prepareQuery(RuleQueryDataProviderTransfer $dataProviderTransfer = null)
+    public function prepareQuery(?RuleQueryDataProviderTransfer $dataProviderTransfer = null)
     {
         $idLocale = $this->localeFacade
             ->getCurrentLocale()
@@ -195,7 +195,7 @@ class ProductQuery implements QueryInterface
      */
     protected function filterProductAbstractId(
         ModelCriteria $query,
-        RuleQueryDataProviderTransfer $ruleQueryDataProviderTransfer = null
+        ?RuleQueryDataProviderTransfer $ruleQueryDataProviderTransfer = null
     ) {
         if (!$ruleQueryDataProviderTransfer || !$ruleQueryDataProviderTransfer->getIdProductAbstract()) {
             return $query;

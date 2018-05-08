@@ -96,8 +96,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
      */
     public function expandBundleItems(CartChangeTransfer $cartChangeTransfer)
     {
-        $cartChangeTransfer->requireQuote()
-            ->requireItems();
+        $cartChangeTransfer->requireQuote();
 
         $cartChangeItems = new ArrayObject();
         $quoteTransfer = $cartChangeTransfer->getQuote();
@@ -411,7 +410,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     /**
      * @param int $idProductConcrete
      *
-     * @return mixed|mixed[]|\Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection|mixed
+     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function findBundledItemsByIdProductConcrete($idProductConcrete)
     {

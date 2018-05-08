@@ -39,7 +39,7 @@ class CompanyStoreRelationWriter implements CompanyStoreRelationWriterInterface
      *
      * @return void
      */
-    public function save(StoreRelationTransfer $storeRelationTransfer = null): void
+    public function save(?StoreRelationTransfer $storeRelationTransfer = null): void
     {
         if ($storeRelationTransfer === null) {
             return;

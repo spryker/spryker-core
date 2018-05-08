@@ -16,7 +16,7 @@ trait LoggerTrait
      *
      * @return \Psr\Log\LoggerInterface|null
      */
-    protected function getLogger(LoggerConfigInterface $loggerConfig = null)
+    protected function getLogger(?LoggerConfigInterface $loggerConfig = null)
     {
         return LoggerFactory::getInstance($loggerConfig);
     }

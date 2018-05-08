@@ -48,7 +48,7 @@ class ItemPriceDecisionRuleTest extends BaseRuleTester
      *
      * @return \Spryker\Zed\Discount\Business\DecisionRule\ItemPriceDecisionRule
      */
-    protected function createItemPriceDecisionRule(ComparatorOperatorsInterface $comparatorMock = null)
+    protected function createItemPriceDecisionRule(?ComparatorOperatorsInterface $comparatorMock = null)
     {
         if ($comparatorMock === null) {
             $comparatorMock = $this->createComparatorMock();

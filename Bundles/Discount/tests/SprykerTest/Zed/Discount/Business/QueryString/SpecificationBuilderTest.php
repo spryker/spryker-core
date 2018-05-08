@@ -428,8 +428,8 @@ class SpecificationBuilderTest extends Unit
      */
     public function createSpecificationBuilder(
         SpecificationProviderInterface $specificationProviderMock,
-        ComparatorOperatorsInterface $createComparatorOperatorsMock = null,
-        MetaDataProviderInterface $metaDataProviderMock = null
+        ?ComparatorOperatorsInterface $createComparatorOperatorsMock = null,
+        ?MetaDataProviderInterface $metaDataProviderMock = null
     ) {
 
         if ($createComparatorOperatorsMock === null) {

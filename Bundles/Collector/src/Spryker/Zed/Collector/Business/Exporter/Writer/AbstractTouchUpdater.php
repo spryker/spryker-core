@@ -79,7 +79,7 @@ abstract class AbstractTouchUpdater implements TouchUpdaterInterface
      *
      * @return void
      */
-    public function bulkUpdate(TouchUpdaterSet $touchUpdaterSet, $idLocale, $idStore, ConnectionInterface $connection = null)
+    public function bulkUpdate(TouchUpdaterSet $touchUpdaterSet, $idLocale, $idStore, ?ConnectionInterface $connection = null)
     {
         foreach ($touchUpdaterSet->getData() as $key => $touchData) {
             $idKey = $this->findCollectorKeyFromData($touchData);
@@ -113,7 +113,7 @@ abstract class AbstractTouchUpdater implements TouchUpdaterInterface
      *
      * @return void
      */
-    public function bulkDelete(TouchUpdaterSet $touchUpdaterSet, $idLocale, ConnectionInterface $connection = null)
+    public function bulkDelete(TouchUpdaterSet $touchUpdaterSet, $idLocale, ?ConnectionInterface $connection = null)
     {
         $idsToDelete = [];
         foreach ($touchUpdaterSet->getData() as $key => $touchData) {

@@ -19,5 +19,5 @@ interface StepBreadcrumbGeneratorInterface
      *
      * @return \Generated\Shared\Transfer\StepBreadcrumbsTransfer
      */
-    public function generateStepBreadcrumbs(StepCollectionInterface $stepCollection, AbstractTransfer $dataTransfer = null, StepInterface $currentStep = null);
+    public function generateStepBreadcrumbs(StepCollectionInterface $stepCollection, ?AbstractTransfer $dataTransfer = null, ?StepInterface $currentStep = null);
 }

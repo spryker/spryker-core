@@ -527,9 +527,9 @@ class CalculatorTest extends Unit
      * @return \Spryker\Zed\Discount\Business\Calculator\Calculator
      */
     protected function createCalculator(
-        SpecificationBuilderInterface $specificationBuilderMock = null,
-        DiscountToMessengerInterface $messengerFacadeMock = null,
-        DistributorInterface $distributorMock = null,
+        ?SpecificationBuilderInterface $specificationBuilderMock = null,
+        ?DiscountToMessengerInterface $messengerFacadeMock = null,
+        ?DistributorInterface $distributorMock = null,
         $calculatorPluginMock = null
     ) {
 

@@ -32,7 +32,7 @@ interface ShoppingListFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
      */
     public function createShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer;
 

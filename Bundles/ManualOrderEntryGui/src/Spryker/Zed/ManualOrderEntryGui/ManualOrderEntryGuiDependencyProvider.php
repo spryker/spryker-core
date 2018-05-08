@@ -46,6 +46,7 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
     public const STORE = 'STORE';
 
     public const PLUGINS_MANUAL_ORDER_ENTRY_FORM = 'PLUGINS_MANUAL_ORDER_ENTRY_FORM';
+    public const PLUGINS_QUOTE_EXPANDER = 'PLUGINS_QUOTE_EXPANDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -71,6 +72,7 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
         $container = $this->addCustomerQueryContainer($container);
         $container = $this->addStore($container);
         $container = $this->addManualOrderEntryFormPlugins($container);
+        $container = $this->addQuoteExpanderPlugins($container);
 
         return $container;
     }
@@ -311,6 +313,28 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
      * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface[]
      */
     protected function getManualOrderEntryFormPlugins()
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addQuoteExpanderPlugins(Container $container)
+    {
+        $container[static::PLUGINS_QUOTE_EXPANDER] = function (Container $container) {
+            return $this->getQuoteExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\ManualOrderEntryGui\Dependency\Plugin\QuoteExpanderPluginInterface[]
+     */
+    protected function getQuoteExpanderPlugins()
     {
         return [];
     }

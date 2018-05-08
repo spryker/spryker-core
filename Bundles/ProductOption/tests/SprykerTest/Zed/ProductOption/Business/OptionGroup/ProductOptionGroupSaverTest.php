@@ -130,11 +130,11 @@ class ProductOptionGroupSaverTest extends MockProvider
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionGroupSaver
      */
     protected function createProductOptionGroupSaver(
-        ProductOptionQueryContainerInterface $productOptionContainerMock = null,
-        ProductOptionToTouchFacadeInterface $touchFacadeMock = null,
-        TranslationSaverInterface $translationSaverMock = null,
-        ProductOptionValueSaverInterface $productOptionValueSaverMock = null,
-        AbstractProductOptionSaverInterface $abstractProductOptionSaver = null
+        ?ProductOptionQueryContainerInterface $productOptionContainerMock = null,
+        ?ProductOptionToTouchFacadeInterface $touchFacadeMock = null,
+        ?TranslationSaverInterface $translationSaverMock = null,
+        ?ProductOptionValueSaverInterface $productOptionValueSaverMock = null,
+        ?AbstractProductOptionSaverInterface $abstractProductOptionSaver = null
     ) {
 
         if (!$productOptionContainerMock) {

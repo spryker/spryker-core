@@ -55,7 +55,7 @@ class ItemQuantityCollectorTest extends BaseRuleTester
      *
      * @return \Spryker\Zed\Discount\Business\Collector\ItemPriceCollector
      */
-    protected function createItemQuantityCollector(ComparatorOperatorsInterface $comparatorMock = null)
+    protected function createItemQuantityCollector(?ComparatorOperatorsInterface $comparatorMock = null)
     {
         if (!$comparatorMock) {
             $comparatorMock = $this->createComparatorMock();

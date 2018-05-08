@@ -262,12 +262,12 @@ class TriggerTest extends StateMachineMocks
      * @return \Spryker\Zed\StateMachine\Business\StateMachine\Trigger
      */
     protected function createTrigger(
-        TransitionLogInterface $transitionLogMock = null,
-        FinderInterface $finderMock = null,
-        PersistenceInterface $persistenceMock = null,
-        ConditionInterface $conditionMock = null,
-        StateUpdaterInterface $stateUpdaterMock = null,
-        HandlerResolverInterface $handlerResolverMock = null
+        ?TransitionLogInterface $transitionLogMock = null,
+        ?FinderInterface $finderMock = null,
+        ?PersistenceInterface $persistenceMock = null,
+        ?ConditionInterface $conditionMock = null,
+        ?StateUpdaterInterface $stateUpdaterMock = null,
+        ?HandlerResolverInterface $handlerResolverMock = null
     ) {
         if ($transitionLogMock === null) {
             $transitionLogMock = $this->createTransitionLogMock();
