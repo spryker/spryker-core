@@ -12,7 +12,6 @@ use Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPreSavePluginI
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitRepositoryInterface getRepository()
  * @method \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface getFacade()
  */
 class AssignDefaultBusinessUnitToCompanyUserPlugin extends AbstractPlugin implements CompanyUserPreSavePluginInterface
@@ -28,18 +27,6 @@ class AssignDefaultBusinessUnitToCompanyUserPlugin extends AbstractPlugin implem
      */
     public function preSave(CompanyUserResponseTransfer $companyUserResponseTransfer): CompanyUserResponseTransfer
     {
-        if ($companyUserResponseTransfer->getCompanyUser()->getIdCompanyUser() === null
-            && $companyUserResponseTransfer->getCompanyUser()->getFkCompanyBusinessUnit() === null) {
-            $companyBusinessUnit = $this->getFacade()
-                ->findDefaultBusinessUnitByCompanyId($companyUserResponseTransfer->getCompanyUser()->getFkCompany());
-
-            if ($companyBusinessUnit !== null) {
-                $companyUserResponseTransfer->getCompanyUser()->setFkCompanyBusinessUnit(
-                    $companyBusinessUnit->getIdCompanyBusinessUnit()
-                );
-            }
-        }
-
-        return $companyUserResponseTransfer;
+        return $this->getFacade()->assignDefaultBusinessUnitToCompanyUser($companyUserResponseTransfer);
     }
 }
