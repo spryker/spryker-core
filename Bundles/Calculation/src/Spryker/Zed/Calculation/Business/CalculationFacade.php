@@ -120,7 +120,7 @@ class CalculationFacade extends AbstractFacade implements CalculationFacadeInter
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $CalculableObjectTransfer
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
      * @return void
      */
@@ -136,7 +136,7 @@ class CalculationFacade extends AbstractFacade implements CalculationFacadeInter
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $CalculableObjectTransfer
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
      * @return void
      */
@@ -168,7 +168,7 @@ class CalculationFacade extends AbstractFacade implements CalculationFacadeInter
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $CalculableObjectTransfer
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
      * @return void
      */
@@ -184,7 +184,7 @@ class CalculationFacade extends AbstractFacade implements CalculationFacadeInter
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $CalculableObjectTransfer
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
      * @return void
      */
@@ -232,7 +232,7 @@ class CalculationFacade extends AbstractFacade implements CalculationFacadeInter
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $CalculableObjectTransfer
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
      * @return void
      */

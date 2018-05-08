@@ -86,7 +86,7 @@ class RequireUpdater implements UpdaterInterface
         $bundleName = array_pop($nameParts);
         $filter = new DashToCamelCase();
 
-        return $filter->filter($bundleName);
+        return (string)$filter->filter($bundleName);
     }
 
     /**
