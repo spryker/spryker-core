@@ -167,9 +167,9 @@ class CodeStyleSniffer
 
         $vendor = $this->normalizeName($namespace);
         $module = $this->normalizeName($module);
-        $path = $this->config->getPathToRoot() . 'vendor' . DIRECTORY_SEPARATOR . $vendor . DIRECTORY_SEPARATOR . $module;
+        $path = $this->config->getPathToRoot() . 'vendor' . DIRECTORY_SEPARATOR . $vendor . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR;
 
-        return $path;
+        return $this->buildPath($path, $pathSuffix);
     }
 
     /**
