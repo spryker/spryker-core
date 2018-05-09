@@ -13,8 +13,11 @@ use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Spryker\Zed\DataImport\DataImportDependencyProvider;
 use Spryker\Zed\ProductMeasurementUnitDataImport\Communication\Plugin\ProductMeasurementBaseUnitDataImportPlugin;
+use Spryker\Zed\ProductMeasurementUnitDataImport\Communication\Plugin\ProductMeasurementSalesUnitDataImportPlugin;
+use Spryker\Zed\ProductMeasurementUnitDataImport\Communication\Plugin\ProductMeasurementSalesUnitStoreDataImportPlugin;
 use Spryker\Zed\ProductMeasurementUnitDataImport\Communication\Plugin\ProductMeasurementUnitDataImportPlugin;
 use Spryker\Zed\ProductMeasurementUnitDataImport\ProductMeasurementUnitDataImportConfig;
+use Spryker\Zed\ProductQuantityDataImport\Communication\Plugin\ProductQuantityDataImportPlugin;
 
 /**
  * Auto-generated group annotations
@@ -45,6 +48,9 @@ class ProductMeasurementBaseUnitDataImportPluginTest extends Unit
             [
                 new ProductMeasurementUnitDataImportPlugin(),
                 new ProductMeasurementBaseUnitDataImportPlugin(),
+                new ProductMeasurementSalesUnitDataImportPlugin(),
+                new ProductMeasurementSalesUnitStoreDataImportPlugin(),
+                new ProductQuantityDataImportPlugin(),
             ]
         );
     }
@@ -54,6 +60,7 @@ class ProductMeasurementBaseUnitDataImportPluginTest extends Unit
      */
     public function testImportImportsData(): void
     {
+        $this->importMeasurementUnitData();
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
         $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/product_measurement_base_unit.csv');
 
@@ -78,5 +85,20 @@ class ProductMeasurementBaseUnitDataImportPluginTest extends Unit
             ProductMeasurementUnitDataImportConfig::IMPORT_TYPE_PRODUCT_MEASUREMENT_BASE_UNIT,
             $productMeasurementBaseUnitDataImportPlugin->getImportType()
         );
+    }
+
+    /**
+     * @return void
+     */
+    protected function importMeasurementUnitData(): void
+    {
+        $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
+        $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/product_measurement_unit.csv');
+
+        $dataImportConfigurationTransfer = new DataImporterConfigurationTransfer();
+        $dataImportConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfigurationTransfer);
+
+        $productMeasurementUnitDataImportPlugin = new ProductMeasurementUnitDataImportPlugin();
+        $productMeasurementUnitDataImportPlugin->import($dataImportConfigurationTransfer);
     }
 }
