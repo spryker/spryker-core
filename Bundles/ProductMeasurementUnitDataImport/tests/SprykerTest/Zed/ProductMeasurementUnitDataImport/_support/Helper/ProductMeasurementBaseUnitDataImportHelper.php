@@ -8,7 +8,11 @@
 namespace SprykerTest\Zed\ProductMeasurementUnitDataImport\Helper;
 
 use Codeception\Module;
+use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
+use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
+use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementBaseUnitQuery;
+use Spryker\Zed\ProductMeasurementUnitDataImport\Communication\Plugin\ProductMeasurementBaseUnitDataImportPlugin;
 
 class ProductMeasurementBaseUnitDataImportHelper extends Module
 {
@@ -45,5 +49,23 @@ class ProductMeasurementBaseUnitDataImportHelper extends Module
     protected function getProductMeasurementBaseUnitQuery(): SpyProductMeasurementBaseUnitQuery
     {
         return SpyProductMeasurementBaseUnitQuery::create();
+    }
+
+    /**
+     * @param string $dataDir
+     *
+     * @return \Generated\Shared\Transfer\DataImporterReportTransfer
+     */
+    public function importMeasurementBaseUnitData($dataDir): DataImporterReportTransfer
+    {
+        $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
+        $dataImporterReaderConfigurationTransfer->setFileName($dataDir . 'import/product_measurement_base_unit.csv');
+
+        $dataImportConfigurationTransfer = new DataImporterConfigurationTransfer();
+        $dataImportConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfigurationTransfer);
+
+        $productMeasurementBaseUnitDataImportPlugin = new ProductMeasurementBaseUnitDataImportPlugin();
+
+        return $productMeasurementBaseUnitDataImportPlugin->import($dataImportConfigurationTransfer);
     }
 }

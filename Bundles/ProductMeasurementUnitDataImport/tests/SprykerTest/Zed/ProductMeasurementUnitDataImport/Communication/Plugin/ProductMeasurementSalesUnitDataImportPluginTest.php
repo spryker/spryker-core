@@ -8,8 +8,6 @@
 namespace SprykerTest\Zed\ProductMeasurementUnitDataImport\Communication\Plugin;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
-use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Spryker\Zed\DataImport\DataImportDependencyProvider;
 use Spryker\Zed\ProductMeasurementUnitDataImport\Communication\Plugin\ProductMeasurementBaseUnitDataImportPlugin;
@@ -17,7 +15,6 @@ use Spryker\Zed\ProductMeasurementUnitDataImport\Communication\Plugin\ProductMea
 use Spryker\Zed\ProductMeasurementUnitDataImport\Communication\Plugin\ProductMeasurementSalesUnitStoreDataImportPlugin;
 use Spryker\Zed\ProductMeasurementUnitDataImport\Communication\Plugin\ProductMeasurementUnitDataImportPlugin;
 use Spryker\Zed\ProductMeasurementUnitDataImport\ProductMeasurementUnitDataImportConfig;
-use Spryker\Zed\ProductQuantityDataImport\Communication\Plugin\ProductQuantityDataImportPlugin;
 
 /**
  * Auto-generated group annotations
@@ -50,7 +47,6 @@ class ProductMeasurementSalesUnitDataImportPluginTest extends Unit
                 new ProductMeasurementBaseUnitDataImportPlugin(),
                 new ProductMeasurementSalesUnitDataImportPlugin(),
                 new ProductMeasurementSalesUnitStoreDataImportPlugin(),
-                new ProductQuantityDataImportPlugin(),
             ]
         );
     }
@@ -60,14 +56,10 @@ class ProductMeasurementSalesUnitDataImportPluginTest extends Unit
      */
     public function testImportImportsData(): void
     {
-        $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
-        $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/product_measurement_sales_unit.csv');
-
-        $dataImportConfigurationTransfer = new DataImporterConfigurationTransfer();
-        $dataImportConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfigurationTransfer);
-
-        $productMeasurementSalesUnitDataImportPlugin = new ProductMeasurementSalesUnitDataImportPlugin();
-        $dataImporterReportTransfer = $productMeasurementSalesUnitDataImportPlugin->import($dataImportConfigurationTransfer);
+        $dataDir = codecept_data_dir();
+        $this->tester->importMeasurementUnitData($dataDir);
+        $this->tester->importMeasurementBaseUnitData($dataDir);
+        $dataImporterReportTransfer = $this->tester->importMeasurementSalesUnitData($dataDir);
 
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
 
