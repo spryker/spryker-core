@@ -18,4 +18,12 @@ interface DataImportToEventFacadeInterface
      * @return void
      */
     public function trigger(string $eventName, TransferInterface $transfer): void;
+
+    /**
+     * @param string $eventName
+     * @param array $eventTransfers
+     *
+     * @return void
+     */
+    public function triggerBulk(string $eventName, array $eventTransfers): void;
 }

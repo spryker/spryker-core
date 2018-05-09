@@ -34,4 +34,15 @@ class DataImportToEventBridge implements DataImportToEventFacadeInterface
     {
         $this->eventFacade->trigger($eventName, $eventTransfer);
     }
+
+    /**
+     * @param string $eventName
+     * @param array $eventTransfers
+     *
+     * @return void
+     */
+    public function triggerBulk(string $eventName, array $eventTransfers): void
+    {
+        $this->eventFacade->triggerBulk($eventName, $eventTransfers);
+    }
 }

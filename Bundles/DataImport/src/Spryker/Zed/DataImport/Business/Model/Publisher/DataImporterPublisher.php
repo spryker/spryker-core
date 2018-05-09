@@ -49,10 +49,13 @@ class DataImporterPublisher implements DataImporterPublisherInterface
     {
         foreach (static::$importedEntityEvents as $event => $ids) {
             $uniqueIds = array_unique($ids);
+            $events = [];
             foreach ($uniqueIds as $id) {
-                $this->eventFacade->trigger($event, (new EventEntityTransfer())->setId($id));
+                $events[] = (new EventEntityTransfer())->setId($id);
             }
+            $this->eventFacade->triggerBulk($event, $events);
         }
+        static::$importedEntityEvents = [];
     }
 
     /**
