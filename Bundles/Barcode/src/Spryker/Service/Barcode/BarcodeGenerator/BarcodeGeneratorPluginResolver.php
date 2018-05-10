@@ -44,7 +44,7 @@ class BarcodeGeneratorPluginResolver implements BarcodeGeneratorPluginResolverIn
     public function getBarcodeGeneratorPlugin(?string $generatorPluginClassName): BarcodeGeneratorPluginInterface
     {
         if ($this->barcodeGeneratorPlugins && !$generatorPluginClassName) {
-            return reset($this->barcodePlugins);
+            return reset($this->barcodeGeneratorPlugins);
         }
 
         return $this->getPluginByClassNameCashed($generatorPluginClassName);
