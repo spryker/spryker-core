@@ -3,9 +3,12 @@
 namespace SprykerTest\Service\Barcode;
 
 use Codeception\TestCase\Test;
-use Exception;
 use Generated\Shared\Transfer\BarcodeResponseTransfer;
 use Spryker\Service\Barcode\BarcodeDependencyProvider;
+use Spryker\Service\Barcode\Exception\BarcodeGeneratorPluginNotFoundException;
+use SprykerTest\Service\Barcode\Mocks\BarcodeGeneratorPluginMockRegistered1;
+use SprykerTest\Service\Barcode\Mocks\BarcodeGeneratorPluginMockRegistered2;
+use SprykerTest\Service\Barcode\Mocks\BarcodeGeneratorPluginMockUnregistered;
 
 /**
  * Auto-generated group annotations
@@ -23,9 +26,6 @@ class BarcodeServiceTest extends Test
     protected const GENERATED_CODE = 'generated string';
     protected const GENERATED_ENCODING = 'data:image/png;base64';
 
-    protected const TEST_PLUGIN_0_ENCODING = 'test_plugin_0_encoding';
-    protected const TEST_PLUGIN_1_ENCODING = 'test_plugin_1_encoding';
-
     /**
      * @var \Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface[]
      */
@@ -34,7 +34,7 @@ class BarcodeServiceTest extends Test
     /**
      * @var \Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface
      */
-    protected $barcodeGeneratorPlugin;
+    protected $activeBarcodeGeneratorPlugin;
 
     /**
      * @return void
@@ -44,60 +44,26 @@ class BarcodeServiceTest extends Test
         parent::setUp();
 
         $this->registeredBarcodeGeneratorPlugins = [
-            $this->tester->getBarcodePluginMock(static::TEST_PLUGIN_0_ENCODING),
-            $this->tester->getBarcodePluginMockUsingAlphaAnonymousClass(static::TEST_PLUGIN_1_ENCODING),
-            $this->tester->getBarcodePluginMockUsingBetaAnonymousClass(static::TEST_PLUGIN_1_ENCODING),
+            new BarcodeGeneratorPluginMockRegistered1(),
+            new BarcodeGeneratorPluginMockRegistered2(),
         ];
 
-        $this->barcodeGeneratorPlugin = reset($this->registeredBarcodeGeneratorPlugins);
+        $this->activeBarcodeGeneratorPlugin = reset($this->registeredBarcodeGeneratorPlugins);
 
         $this->tester->setDependency(BarcodeDependencyProvider::PLUGINS_BARCODE_GENERATOR, $this->registeredBarcodeGeneratorPlugins);
     }
 
     /**
-     * @throws \Exception
-     *
      * @return void
      */
     public function testGenerateBarcode(): void
     {
+        $barcodeResponseTransfer = $this->tester->generateBarcodeUsingBarcodeService(
+            get_class($this->activeBarcodeGeneratorPlugin)
+        );
 
-        // this works
-//        throw new \Exception($this
-//            ->tester
-//            ->getBarcodePluginMock()
-//            ->generate('text')->getEncoding());
-
-
-        // this doesn't
-//        throw new \Exception($this
-//            ->generateBarcode(get_class(
-//                $this->tester->getBarcodePluginMock()
-//            ))->getEncoding());
-
-
-        // what about real one?
-//        throw new \Exception($this->generateBarcode(Code128BarcodeGeneratorPlugin::class)->getEncoding());
-
-
-        $test = [
-            'registered' => [],
-            'newMock' => get_class($this->tester->getBarcodePluginMock()),
-        ];
-
-        foreach ($this->registeredBarcodeGeneratorPlugins as $plugin) {
-            $test['registered'][] = get_class($plugin);
-        }
-
-        $test['in_array'] = in_array($test['newMock'], $test['registered']);
-
-        throw new Exception(json_encode($test, JSON_PRETTY_PRINT));
-
-//        $barcodeGeneratorPluginWithDefaultEncoding = get_class($this->tester->getBarcodePluginMock());
-//        $barcodeResponseTransfer = $this->generateBarcode($barcodeGeneratorPluginWithDefaultEncoding);
-//
-//        $this->assertSame(static::GENERATED_CODE, $barcodeResponseTransfer->getCode());
-//        $this->assertSame(static::GENERATED_ENCODING, $barcodeResponseTransfer->getEncoding());
+        $this->assertSame(BarcodeGeneratorPluginMockRegistered1::GENERATED_CODE, $barcodeResponseTransfer->getCode());
+        $this->assertSame(BarcodeGeneratorPluginMockRegistered1::GENERATED_ENCODING, $barcodeResponseTransfer->getEncoding());
     }
 
     /**
@@ -105,7 +71,11 @@ class BarcodeServiceTest extends Test
      */
     public function testGeneratedBarcodeResponseHasCorrectType(): void
     {
-        $barcodeResponseTransfer = $this->generateBarcode();
+        $barcodeResponseTransfer = $this
+            ->tester
+            ->generateBarcodeUsingBarcodeService(
+                get_class($this->activeBarcodeGeneratorPlugin)
+            );
 
         $this->assertInstanceOf(BarcodeResponseTransfer::class, $barcodeResponseTransfer);
     }
@@ -115,7 +85,9 @@ class BarcodeServiceTest extends Test
      */
     public function testGeneratedBarcodeResponseIsNotEmpty(): void
     {
-        $barcodeResponseTransfer = $this->generateBarcode();
+        $barcodeResponseTransfer = $this->tester->generateBarcodeUsingBarcodeService(
+            get_class($this->activeBarcodeGeneratorPlugin)
+        );
 
         $this->assertNotEmpty($barcodeResponseTransfer->getCode());
         $this->assertNotEmpty($barcodeResponseTransfer->getEncoding());
@@ -126,7 +98,7 @@ class BarcodeServiceTest extends Test
      */
     public function testBarcodeGeneratorUsesPluginFullQualifiedClassName(): void
     {
-        $barcodeGeneratorPluginClass = get_class($this->barcodeGeneratorPlugin);
+        $barcodeGeneratorPluginClass = get_class($this->activeBarcodeGeneratorPlugin);
 
         $this->assertTrue(class_exists($barcodeGeneratorPluginClass));
     }
@@ -134,28 +106,27 @@ class BarcodeServiceTest extends Test
     /**
      * @return void
      */
-    public function testBarcodeGeneratorUsesRegisteredPlugin(): void
+    public function testBarcodeGeneratorUsesFirstRegisteredPlugin(): void
     {
-        $barcodeResponseTransfer = $this->generateBarcode();
+        $firstRegisteredPlugin = reset($this->registeredBarcodeGeneratorPlugins);
 
-        $this->assertSame(static::TEST_PLUGIN_0_ENCODING, $barcodeResponseTransfer->getEncoding());
+        $barcodeResponseTransfer = $this
+            ->tester
+            ->generateBarcodeUsingBarcodeService();
+
+        $this->assertSame($firstRegisteredPlugin::GENERATED_CODE, $barcodeResponseTransfer->getCode());
+        $this->assertSame($firstRegisteredPlugin::GENERATED_ENCODING, $barcodeResponseTransfer->getEncoding());
     }
 
     /**
-     * @param null|string $generatorPlugin
-     *
-     * @return \Generated\Shared\Transfer\BarcodeResponseTransfer
+     * @return void
      */
-    protected function generateBarcode(?string $generatorPlugin = null): BarcodeResponseTransfer
+    public function testBarcodeGeneratorThrowsExceptionForUnregisteredPlugin(): void
     {
-        $generatorPluginClass = $generatorPlugin ?: get_class($this->barcodeGeneratorPlugin);
+        $unregisteredPlugin = new BarcodeGeneratorPluginMockUnregistered();
 
-        return $this
-            ->tester
-            ->getBarcodeService()
-            ->generateBarcode(
-                static::GENERATED_CODE,
-                $generatorPluginClass
-            );
+        $this->tester->expectException(BarcodeGeneratorPluginNotFoundException::class, function () use ($unregisteredPlugin) {
+            $this->tester->generateBarcodeUsingBarcodeService(get_class($unregisteredPlugin));
+        });
     }
 }
