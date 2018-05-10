@@ -121,4 +121,17 @@ interface SharedCartFacadeInterface
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function expandCustomer(CustomerTransfer $customerTransfer): CustomerTransfer;
+
+    /**
+     * Specification:
+     *  - Checks if shared cart default for company user.
+     *
+     * @api
+     *
+     * @param int $idQuote
+     * @param int $idCompanyUser
+     *
+     * @return bool
+     */
+    public function isSharedQuoteDefault(int $idQuote, int $idCompanyUser): bool;
 }

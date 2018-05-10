@@ -149,4 +149,19 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
     {
         return $this->getFactory()->createCustomerExpander()->expandCustomer($customerTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idQuote
+     * @param int $idCompanyUser
+     *
+     * @return bool
+     */
+    public function isSharedQuoteDefault(int $idQuote, int $idCompanyUser): bool
+    {
+        return $this->getRepository()->isSharedQuoteDefault($idQuote, $idCompanyUser);
+    }
 }
