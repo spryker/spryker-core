@@ -13,9 +13,6 @@ use Spryker\Zed\ProductBarcodeGui\Dependency\Facade\ProductBarcodeGuiToLocaleFac
 use Spryker\Zed\ProductBarcodeGui\Dependency\Facade\ProductBarcodeGuiToProductBarcodeFacadeInterface;
 use Spryker\Zed\ProductBarcodeGui\ProductBarcodeGuiDependencyProvider;
 
-/**
- * @method \Spryker\Zed\ProductBarcodeGui\Persistence\ProductBarcodeGuiQueryContainerInterface getQueryContainer()
- */
 class ProductBarcodeGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
@@ -25,8 +22,7 @@ class ProductBarcodeGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new ProductBarcodeTable(
             $this->getProductBarcodeFacade(),
-            $this->getLocaleFacade(),
-            $this->getQueryContainer()
+            $this->getLocaleFacade()
         );
     }
 

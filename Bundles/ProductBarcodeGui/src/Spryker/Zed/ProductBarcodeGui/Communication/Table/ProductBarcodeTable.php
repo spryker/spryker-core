@@ -7,20 +7,16 @@
 
 namespace Spryker\Zed\ProductBarcodeGui\Communication\Table;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductBarcodeGui\Dependency\Facade\ProductBarcodeGuiToLocaleFacadeInterface;
 use Spryker\Zed\ProductBarcodeGui\Dependency\Facade\ProductBarcodeGuiToProductBarcodeFacadeInterface;
-use Spryker\Zed\ProductBarcodeGui\Persistence\ProductBarcodeGuiQueryContainerInterface;
 
-/**
- * @uses SpyProduct
- * @uses SpyProductQuery
- * @uses ProductBarcodeGuiQueryContainerInterface
- */
 class ProductBarcodeTable extends AbstractTable
 {
     protected const COL_ID_PRODUCT = 'id_product';
@@ -41,23 +37,15 @@ class ProductBarcodeTable extends AbstractTable
     protected $localeFacade;
 
     /**
-     * @var \Spryker\Zed\ProductBarcodeGui\Persistence\ProductBarcodeGuiQueryContainerInterface
-     */
-    protected $queryContainer;
-
-    /**
      * @param \Spryker\Zed\ProductBarcodeGui\Dependency\Facade\ProductBarcodeGuiToProductBarcodeFacadeInterface $barcodeServiceBridge
      * @param \Spryker\Zed\ProductBarcodeGui\Dependency\Facade\ProductBarcodeGuiToLocaleFacadeInterface $localeFacadeBridge
-     * @param \Spryker\Zed\ProductBarcodeGui\Persistence\ProductBarcodeGuiQueryContainerInterface $queryContainer
      */
     public function __construct(
         ProductBarcodeGuiToProductBarcodeFacadeInterface $barcodeServiceBridge,
-        ProductBarcodeGuiToLocaleFacadeInterface $localeFacadeBridge,
-        ProductBarcodeGuiQueryContainerInterface $queryContainer
+        ProductBarcodeGuiToLocaleFacadeInterface $localeFacadeBridge
     ) {
         $this->productBarcodeFacade = $barcodeServiceBridge;
         $this->localeFacade = $localeFacadeBridge;
-        $this->queryContainer = $queryContainer;
     }
 
     /**
@@ -94,6 +82,25 @@ class ProductBarcodeTable extends AbstractTable
     }
 
     /**
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    protected function prepareTableQuery(LocaleTransfer $localeTransfer): SpyProductQuery
+    {
+        $localeTransfer->requireIdLocale();
+
+        $query = SpyProductQuery::create()
+            ->innerJoinSpyProductLocalizedAttributes()
+            ->useSpyProductLocalizedAttributesQuery()
+            ->filterByFkLocale($localeTransfer->getIdLocale())
+            ->endUse()
+            ->withColumn(SpyProductLocalizedAttributesTableMap::COL_NAME, static::COL_PRODUCT_NAME);
+
+        return $query;
+    }
+
+    /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return array
@@ -122,7 +129,7 @@ class ProductBarcodeTable extends AbstractTable
     {
         $localeTransfer = $this->localeFacade->getCurrentLocale();
 
-        return $this->queryContainer->prepareTableQuery($localeTransfer);
+        return $this->prepareTableQuery($localeTransfer);
     }
 
     /**
@@ -133,7 +140,7 @@ class ProductBarcodeTable extends AbstractTable
     protected function generateItem(SpyProduct $product): array
     {
         $sku = $product->getSku();
-        $productName = $product->getVirtualColumn(ProductBarcodeGuiQueryContainerInterface::COL_PRODUCT_NAME);
+        $productName = $product->getVirtualColumn(static::COL_PRODUCT_NAME);
 
         return [
             static::COL_ID_PRODUCT => $product->getIdProduct(),
