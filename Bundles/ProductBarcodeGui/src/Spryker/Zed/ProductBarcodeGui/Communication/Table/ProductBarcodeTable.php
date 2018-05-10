@@ -8,13 +8,13 @@
 namespace Spryker\Zed\ProductBarcodeGui\Communication\Table;
 
 use Generated\Shared\Transfer\BarcodeResponseTransfer;
-use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductBarcodeGui\Dependency\Facade\ProductBarcodeGuiToLocaleInterface;
 use Spryker\Zed\ProductBarcodeGui\Dependency\Service\ProductBarcodeGuiToBarcodeServiceInterface;
+use Spryker\Zed\ProductBarcodeGui\Persistence\ProductBarcodeGuiQueryContainerInterface;
 
 class ProductBarcodeTable extends AbstractTable
 {
@@ -36,15 +36,23 @@ class ProductBarcodeTable extends AbstractTable
     protected $localeFacade;
 
     /**
+     * @var \Spryker\Zed\ProductBarcodeGui\Persistence\ProductBarcodeGuiQueryContainerInterface
+     */
+    protected $queryContainer;
+
+    /**
      * @param \Spryker\Zed\ProductBarcodeGui\Dependency\Service\ProductBarcodeGuiToBarcodeServiceInterface $barcodeServiceBridge
      * @param \Spryker\Zed\ProductBarcodeGui\Dependency\Facade\ProductBarcodeGuiToLocaleInterface $localeFacadeBridge
+     * @param \Spryker\Zed\ProductBarcodeGui\Persistence\ProductBarcodeGuiQueryContainerInterface $queryContainer
      */
     public function __construct(
         ProductBarcodeGuiToBarcodeServiceInterface $barcodeServiceBridge,
-        ProductBarcodeGuiToLocaleInterface $localeFacadeBridge
+        ProductBarcodeGuiToLocaleInterface $localeFacadeBridge,
+        ProductBarcodeGuiQueryContainerInterface $queryContainer
     ) {
         $this->barcodeService = $barcodeServiceBridge;
         $this->localeFacade = $localeFacadeBridge;
+        $this->queryContainer = $queryContainer;
     }
 
     /**
@@ -107,14 +115,9 @@ class ProductBarcodeTable extends AbstractTable
      */
     protected function prepareQuery(): SpyProductQuery
     {
-        $query = SpyProductQuery::create()
-            ->innerJoinSpyProductLocalizedAttributes()
-            ->useSpyProductLocalizedAttributesQuery()
-            ->filterByFkLocale($this->getCurrentLocaleId())
-            ->endUse()
-            ->withColumn(SpyProductLocalizedAttributesTableMap::COL_NAME, static::COL_PRODUCT_NAME);
+        $localeTransfer = $this->localeFacade->getCurrentLocale();
 
-        return $query;
+        return $this->queryContainer->prepareTableQuery($localeTransfer);
     }
 
     /**
@@ -125,11 +128,12 @@ class ProductBarcodeTable extends AbstractTable
     protected function generateItem(SpyProduct $product): array
     {
         $sku = $product->getSku();
+        $productName = $product->getVirtualColumn(ProductBarcodeGuiQueryContainerInterface::COL_PRODUCT_NAME);
 
         return [
             static::COL_ID_PRODUCT => $product->getIdProduct(),
             static::COL_PRODUCT_SKU => $sku,
-            static::COL_PRODUCT_NAME => $product->getVirtualColumn(static::COL_PRODUCT_NAME),
+            static::COL_PRODUCT_NAME => $productName,
             static::COL_BARCODE => $this->getBarcodeImageBySku($sku),
         ];
     }
