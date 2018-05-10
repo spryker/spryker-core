@@ -8,11 +8,14 @@
 namespace Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit;
 
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
+use Spryker\Service\UtilMeasurementUnitConversion\Exception\InvalidMeasurementUnitExchangeException;
 use Spryker\Zed\ProductMeasurementUnit\Dependency\Service\ProductMeasurementUnitToUtilMeasurementUnitConversionServiceInterface;
 use Spryker\Zed\ProductMeasurementUnit\Persistence\ProductMeasurementUnitRepositoryInterface;
 
 class ProductMeasurementSalesUnitReader implements ProductMeasurementSalesUnitReaderInterface
 {
+    protected const DEFAULT_EXCHANGE_RATIO = 1;
+
     /**
      * @var \Spryker\Zed\ProductMeasurementUnit\Persistence\ProductMeasurementUnitRepositoryInterface
      */
@@ -109,10 +112,14 @@ class ProductMeasurementSalesUnitReader implements ProductMeasurementSalesUnitRe
         $salesUnitMeasurementUnitCode = $productMeasurementSalesUnitTransfer->getProductMeasurementUnit()->getCode();
         $baseUnitMeasurementUnitCode = $productMeasurementBaseUnitTransfer->getProductMeasurementUnit()->getCode();
 
-        $exchangeRatio = $this->utilMeasurementUnitConversionService->getMeasurementUnitExchangeRatio(
-            $salesUnitMeasurementUnitCode,
-            $baseUnitMeasurementUnitCode
-        );
+        try {
+            $exchangeRatio = $this->utilMeasurementUnitConversionService->getMeasurementUnitExchangeRatio(
+                $salesUnitMeasurementUnitCode,
+                $baseUnitMeasurementUnitCode
+            );
+        } catch (InvalidMeasurementUnitExchangeException $e) {
+            $exchangeRatio = static::DEFAULT_EXCHANGE_RATIO;
+        }
 
         return $exchangeRatio;
     }
