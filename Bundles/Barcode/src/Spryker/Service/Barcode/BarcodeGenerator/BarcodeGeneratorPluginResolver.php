@@ -9,6 +9,7 @@ namespace Spryker\Service\Barcode\BarcodeGenerator;
 
 use Spryker\Service\Barcode\Exception\BarcodeGeneratorPluginAlreadyRegisteredException;
 use Spryker\Service\Barcode\Exception\BarcodeGeneratorPluginNotFoundException;
+use Spryker\Service\Barcode\Exception\BarcodeGeneratorPluginsNotProvided;
 use Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface;
 
 class BarcodeGeneratorPluginResolver implements BarcodeGeneratorPluginResolverInterface
@@ -21,19 +22,29 @@ class BarcodeGeneratorPluginResolver implements BarcodeGeneratorPluginResolverIn
     /**
      * @param \Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface[] $barcodeGeneratorPlugins
      *
+     * @throws \Spryker\Service\Barcode\Exception\BarcodeGeneratorPluginsNotProvided
      * @throws \Spryker\Service\Barcode\Exception\BarcodeGeneratorPluginAlreadyRegisteredException
      */
     public function __construct(array $barcodeGeneratorPlugins)
     {
+        if (!$barcodeGeneratorPlugins) {
+            throw new BarcodeGeneratorPluginsNotProvided(
+                'BarcodeGeneratorPluginResolver cannot work without plugin list'
+            );
+        }
+
         foreach ($barcodeGeneratorPlugins as $barcodeGeneratorPlugin) {
             if (in_array($barcodeGeneratorPlugin, $this->barcodeGeneratorPlugins)) {
-                throw new BarcodeGeneratorPluginAlreadyRegisteredException();
+                throw new BarcodeGeneratorPluginAlreadyRegisteredException(
+                    sprintf(
+                        'BarcodeGeneratorPluginResolver requires unique plugin class name. "%s" already injected.',
+                        get_class($barcodeGeneratorPlugin)
+                    )
+                );
             }
 
             $this->barcodeGeneratorPlugins[] = $barcodeGeneratorPlugin;
         }
-
-        $this->barcodeGeneratorPlugins = $barcodeGeneratorPlugins;
     }
 
     /**
@@ -43,7 +54,7 @@ class BarcodeGeneratorPluginResolver implements BarcodeGeneratorPluginResolverIn
      */
     public function getBarcodeGeneratorPlugin(?string $generatorPluginClassName): BarcodeGeneratorPluginInterface
     {
-        if ($this->barcodeGeneratorPlugins && !$generatorPluginClassName) {
+        if (!$generatorPluginClassName) {
             return reset($this->barcodeGeneratorPlugins);
         }
 
