@@ -10,12 +10,12 @@ namespace Spryker\Zed\ProductBarcodeGui;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductBarcodeGui\Dependency\Facade\ProductBarcodeGuiToLocaleBridge;
-use Spryker\Zed\ProductBarcodeGui\Dependency\Service\ProductBarcodeGuiToBarcodeServiceBridge;
+use Spryker\Zed\ProductBarcodeGui\Dependency\Facade\ProductBarcodeGuiToProductBarcodeFacadeBridge;
 
 class ProductBarcodeGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const SERVICE_BARCODE = 'SERVICE_BARCODE';
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+    public const FACADE_PRODUCT_BARCODE = 'FACADE_PRODUCT_BARCODE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -24,7 +24,7 @@ class ProductBarcodeGuiDependencyProvider extends AbstractBundleDependencyProvid
      */
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
-        $container = $this->addBarcodeService($container);
+        $container = $this->addProductBarcodeFacade($container);
         $container = $this->addLocaleFacade($container);
 
         return $container;
@@ -35,11 +35,11 @@ class ProductBarcodeGuiDependencyProvider extends AbstractBundleDependencyProvid
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addBarcodeService(Container $container): Container
+    protected function addProductBarcodeFacade(Container $container): Container
     {
-        $container[static::SERVICE_BARCODE] = function (Container $container) {
-            return new ProductBarcodeGuiToBarcodeServiceBridge(
-                $container->getLocator()->barcode()->service()
+        $container[static::FACADE_PRODUCT_BARCODE] = function (Container $container) {
+            return new ProductBarcodeGuiToProductBarcodeFacadeBridge(
+                $container->getLocator()->productBarcode()->facade()
             );
         };
 

@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface ProductBarcodeGuiQueryContainerInterface extends QueryContainerInterface
 {
-    public const COL_PRODUCT_NAME = 'PRODUCT NAME';
+    public const COL_PRODUCT_NAME = 'PRODUCT_NAME';
 
     /**
      * @api
