@@ -44,7 +44,9 @@ class ProductBarcodeGenerator implements ProductBarcodeGeneratorInterface
      */
     public function generateBarcode(ProductConcreteTransfer $productConcreteTransfer, ?string $generatorPlugin): BarcodeResponseTransfer
     {
-        $code = $this->productSkuProvider->getConcreteProductSku($productConcreteTransfer);
+        $code = $this
+            ->productSkuProvider
+            ->getConcreteProductSku($productConcreteTransfer);
 
         return $this->barcodeService->generateBarcode($code, $generatorPlugin);
     }
