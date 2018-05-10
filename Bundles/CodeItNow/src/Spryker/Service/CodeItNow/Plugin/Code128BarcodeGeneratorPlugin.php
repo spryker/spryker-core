@@ -7,15 +7,15 @@
 
 namespace Spryker\Service\CodeItNow\Plugin;
 
+use CodeItNow\BarcodeBundle\Utils\BarcodeGenerator;
 use Generated\Shared\Transfer\BarcodeResponseTransfer;
 use Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface;
 use Spryker\Service\Kernel\AbstractPlugin;
 
-/**
- * @method \Spryker\Service\CodeItNow\CodeItNowServiceInterface getService()
- */
 class Code128BarcodeGeneratorPlugin extends AbstractPlugin implements BarcodeGeneratorPluginInterface
 {
+    public const ENCODING = 'data:image/png;base64';
+
     /**
      * @param string $text
      *
@@ -23,7 +23,16 @@ class Code128BarcodeGeneratorPlugin extends AbstractPlugin implements BarcodeGen
      */
     public function generate(string $text): BarcodeResponseTransfer
     {
-        return $this->getService()
-            ->generateCode128Barcode($text);
+        $barcodeResponseTransfer = new BarcodeResponseTransfer();
+        $barcode = new BarcodeGenerator();
+        $barcode->setText($text);
+        $barcode->setType(BarcodeGenerator::Code128);
+        $code = $barcode->generate();
+
+        $barcodeResponseTransfer
+            ->setCode($code)
+            ->setEncoding(static::ENCODING);
+
+        return $barcodeResponseTransfer;
     }
 }
