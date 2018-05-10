@@ -16,6 +16,9 @@ use Spryker\Zed\ProductBarcode\Dependency\Facade\ProductBarcodeToProductFacadeIn
 use Spryker\Zed\ProductBarcode\Dependency\Service\ProductBarcodeToBarcodeServiceInterface;
 use Spryker\Zed\ProductBarcode\ProductBarcodeDependencyProvider;
 
+/**
+ * @method \Spryker\Zed\ProductBarcode\ProductBarcodeConfig getConfig()
+ */
 class ProductBarcodeBusinessFactory extends AbstractBusinessFactory
 {
     /**

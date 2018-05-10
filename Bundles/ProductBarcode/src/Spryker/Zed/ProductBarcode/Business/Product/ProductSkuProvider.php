@@ -34,11 +34,13 @@ class ProductSkuProvider implements ProductSkuProviderInterface
     {
         $sku = $productConcreteTransfer->getSku();
 
-        if ($sku && strlen($sku) > 0) {
+        if (strlen($sku) > 0) {
             return $sku;
         }
 
-        $idProductConcrete = $productConcreteTransfer->getIdProductConcrete();
+        $idProductConcrete = $productConcreteTransfer
+            ->requireIdProductConcrete()
+            ->getIdProductConcrete();
 
         return $this->getConcreteProductSkuFromDatabase($idProductConcrete);
     }

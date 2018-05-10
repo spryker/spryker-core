@@ -3,8 +3,8 @@
     <product>
         <pages>
             <product-barcode>
-                <label>Barcode</label>
-                <title>Barcode</title>
+                <label>Product Barcode</label>
+                <title>Product Barcode</title>
                 <bundle>product-barcode-gui</bundle>
                 <controller>product-barcode</controller>
                 <action>index</action>

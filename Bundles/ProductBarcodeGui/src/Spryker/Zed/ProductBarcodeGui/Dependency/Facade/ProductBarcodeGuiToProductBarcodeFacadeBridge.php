@@ -5,22 +5,27 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductBarcode\Business;
+namespace Spryker\Zed\ProductBarcodeGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\BarcodeResponseTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Spryker\Zed\Kernel\Business\AbstractFacade;
 
-/**
- * @method \Spryker\Zed\ProductBarcode\Business\ProductBarcodeBusinessFactory getFactory()
- */
-class ProductBarcodeFacade extends AbstractFacade implements ProductBarcodeFacadeInterface
+class ProductBarcodeGuiToProductBarcodeFacadeBridge implements ProductBarcodeGuiToProductBarcodeFacadeInterface
 {
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
+     * @var \Spryker\Zed\ProductBarcode\Business\ProductBarcodeFacadeInterface
+     */
+    protected $productBarcodeFacade;
+
+    /**
+     * @param \Spryker\Zed\ProductBarcode\Business\ProductBarcodeFacadeInterface $productBarcodeFacade
+     */
+    public function __construct($productBarcodeFacade)
+    {
+        $this->productBarcodeFacade = $productBarcodeFacade;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param string|null $generatorPlugin
      *
@@ -30,8 +35,6 @@ class ProductBarcodeFacade extends AbstractFacade implements ProductBarcodeFacad
         ProductConcreteTransfer $productConcreteTransfer,
         ?string $generatorPlugin = null
     ): BarcodeResponseTransfer {
-        return $this->getFactory()
-            ->createProductBarcodeGenerator()
-            ->generateBarcode($productConcreteTransfer, $generatorPlugin);
+        return $this->productBarcodeFacade->generateBarcode($productConcreteTransfer, $generatorPlugin);
     }
 }

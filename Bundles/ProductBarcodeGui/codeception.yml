@@ -1,4 +1,4 @@
-namespace: ProductBarcodeGui
+namespace: SprykerTest
 actor: Tester
 paths:
     tests: tests

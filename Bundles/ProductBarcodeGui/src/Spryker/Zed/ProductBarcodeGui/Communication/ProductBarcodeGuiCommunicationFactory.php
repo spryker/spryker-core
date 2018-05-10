@@ -9,10 +9,13 @@ namespace Spryker\Zed\ProductBarcodeGui\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductBarcodeGui\Communication\Table\ProductBarcodeTable;
-use Spryker\Zed\ProductBarcodeGui\Dependency\Facade\ProductBarcodeGuiToLocaleBridgeInterface;
-use Spryker\Zed\ProductBarcodeGui\Dependency\Service\ProductBarcodeGuiToBarcodeServiceBridgeInterface;
+use Spryker\Zed\ProductBarcodeGui\Dependency\Facade\ProductBarcodeGuiToLocaleInterface;
+use Spryker\Zed\ProductBarcodeGui\Dependency\Facade\ProductBarcodeGuiToProductBarcodeFacadeInterface;
 use Spryker\Zed\ProductBarcodeGui\ProductBarcodeGuiDependencyProvider;
 
+/**
+ * @method \Spryker\Zed\ProductBarcodeGui\Persistence\ProductBarcodeGuiQueryContainerInterface getQueryContainer()
+ */
 class ProductBarcodeGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
@@ -21,23 +24,24 @@ class ProductBarcodeGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createProductBarcodeTable(): ProductBarcodeTable
     {
         return new ProductBarcodeTable(
-            $this->getBarcodeService(),
-            $this->getLocaleFacade()
+            $this->getProductBarcodeFacade(),
+            $this->getLocaleFacade(),
+            $this->getQueryContainer()
         );
     }
 
     /**
-     * @return \Spryker\Zed\ProductBarcodeGui\Dependency\Service\ProductBarcodeGuiToBarcodeServiceBridgeInterface
+     * @return \Spryker\Zed\ProductBarcodeGui\Dependency\Facade\ProductBarcodeGuiToProductBarcodeFacadeInterface
      */
-    public function getBarcodeService(): ProductBarcodeGuiToBarcodeServiceBridgeInterface
+    public function getProductBarcodeFacade(): ProductBarcodeGuiToProductBarcodeFacadeInterface
     {
-        return $this->getProvidedDependency(ProductBarcodeGuiDependencyProvider::SERVICE_BARCODE);
+        return $this->getProvidedDependency(ProductBarcodeGuiDependencyProvider::FACADE_PRODUCT_BARCODE);
     }
 
     /**
-     * @return \Spryker\Zed\ProductBarcodeGui\Dependency\Facade\ProductBarcodeGuiToLocaleBridgeInterface
+     * @return \Spryker\Zed\ProductBarcodeGui\Dependency\Facade\ProductBarcodeGuiToLocaleInterface
      */
-    public function getLocaleFacade(): ProductBarcodeGuiToLocaleBridgeInterface
+    public function getLocaleFacade(): ProductBarcodeGuiToLocaleInterface
     {
         return $this->getProvidedDependency(ProductBarcodeGuiDependencyProvider::FACADE_LOCALE);
     }

@@ -30,13 +30,13 @@ class BarcodeServiceFactory extends AbstractServiceFactory
      */
     public function createBarcodePluginResolver(): BarcodeGeneratorPluginResolverInterface
     {
-        return new BarcodeGeneratorPluginResolver($this->getBarcodePlugins());
+        return new BarcodeGeneratorPluginResolver($this->getBarcodeGeneratorPlugins());
     }
 
     /**
      * @return \Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface[]
      */
-    public function getBarcodePlugins(): array
+    public function getBarcodeGeneratorPlugins(): array
     {
         return $this->getProvidedDependency(BarcodeDependencyProvider::PLUGINS_BARCODE_GENERATOR);
     }

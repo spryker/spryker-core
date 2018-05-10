@@ -7,43 +7,57 @@
 
 namespace Spryker\Zed\ProductBarcodeGui\Communication\Table;
 
-use Generated\Shared\Transfer\BarcodeResponseTransfer;
-use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Spryker\Zed\ProductBarcodeGui\Dependency\Facade\ProductBarcodeGuiToLocaleBridgeInterface;
-use Spryker\Zed\ProductBarcodeGui\Dependency\Service\ProductBarcodeGuiToBarcodeServiceBridgeInterface;
+use Spryker\Zed\ProductBarcodeGui\Dependency\Facade\ProductBarcodeGuiToLocaleInterface;
+use Spryker\Zed\ProductBarcodeGui\Dependency\Facade\ProductBarcodeGuiToProductBarcodeFacadeInterface;
+use Spryker\Zed\ProductBarcodeGui\Persistence\ProductBarcodeGuiQueryContainerInterface;
 
+/**
+ * @uses SpyProduct
+ * @uses SpyProductQuery
+ * @uses ProductBarcodeGuiQueryContainerInterface
+ */
 class ProductBarcodeTable extends AbstractTable
 {
     protected const COL_ID_PRODUCT = 'id_product';
     protected const COL_PRODUCT_SKU = 'sku';
-
     protected const COL_PRODUCT_NAME = 'name';
     protected const COL_BARCODE = 'barcode';
 
-    /**
-     * @var \Spryker\Zed\ProductBarcodeGui\Dependency\Service\ProductBarcodeGuiToBarcodeServiceBridgeInterface
-     */
-    protected $barcodeService;
+    protected const BARCODE_IMAGE_TEMPLATE = '<img src="%s,%s">';
 
     /**
-     * @var \Spryker\Zed\ProductBarcodeGui\Dependency\Facade\ProductBarcodeGuiToLocaleBridgeInterface
+     * @var \Spryker\Zed\ProductBarcodeGui\Dependency\Facade\ProductBarcodeGuiToProductBarcodeFacadeInterface
+     */
+    protected $productBarcodeFacade;
+
+    /**
+     * @var \Spryker\Zed\ProductBarcodeGui\Dependency\Facade\ProductBarcodeGuiToLocaleInterface
      */
     protected $localeFacade;
 
     /**
-     * @param \Spryker\Zed\ProductBarcodeGui\Dependency\Service\ProductBarcodeGuiToBarcodeServiceBridgeInterface $barcodeServiceBridge
-     * @param \Spryker\Zed\ProductBarcodeGui\Dependency\Facade\ProductBarcodeGuiToLocaleBridgeInterface $localeFacadeBridge
+     * @var \Spryker\Zed\ProductBarcodeGui\Persistence\ProductBarcodeGuiQueryContainerInterface
+     */
+    protected $queryContainer;
+
+    /**
+     * @param \Spryker\Zed\ProductBarcodeGui\Dependency\Facade\ProductBarcodeGuiToProductBarcodeFacadeInterface $barcodeServiceBridge
+     * @param \Spryker\Zed\ProductBarcodeGui\Dependency\Facade\ProductBarcodeGuiToLocaleInterface $localeFacadeBridge
+     * @param \Spryker\Zed\ProductBarcodeGui\Persistence\ProductBarcodeGuiQueryContainerInterface $queryContainer
      */
     public function __construct(
-        ProductBarcodeGuiToBarcodeServiceBridgeInterface $barcodeServiceBridge,
-        ProductBarcodeGuiToLocaleBridgeInterface $localeFacadeBridge
+        ProductBarcodeGuiToProductBarcodeFacadeInterface $barcodeServiceBridge,
+        ProductBarcodeGuiToLocaleInterface $localeFacadeBridge,
+        ProductBarcodeGuiQueryContainerInterface $queryContainer
     ) {
-        $this->barcodeService = $barcodeServiceBridge;
+        $this->productBarcodeFacade = $barcodeServiceBridge;
         $this->localeFacade = $localeFacadeBridge;
+        $this->queryContainer = $queryContainer;
     }
 
     /**
@@ -106,14 +120,9 @@ class ProductBarcodeTable extends AbstractTable
      */
     protected function prepareQuery(): SpyProductQuery
     {
-        $query = SpyProductQuery::create()
-            ->innerJoinSpyProductLocalizedAttributes()
-            ->useSpyProductLocalizedAttributesQuery()
-            ->filterByFkLocale($this->getCurrentLocaleId())
-            ->endUse()
-            ->withColumn(SpyProductLocalizedAttributesTableMap::COL_NAME, static::COL_PRODUCT_NAME);
+        $localeTransfer = $this->localeFacade->getCurrentLocale();
 
-        return $query;
+        return $this->queryContainer->prepareTableQuery($localeTransfer);
     }
 
     /**
@@ -124,11 +133,12 @@ class ProductBarcodeTable extends AbstractTable
     protected function generateItem(SpyProduct $product): array
     {
         $sku = $product->getSku();
+        $productName = $product->getVirtualColumn(ProductBarcodeGuiQueryContainerInterface::COL_PRODUCT_NAME);
 
         return [
             static::COL_ID_PRODUCT => $product->getIdProduct(),
             static::COL_PRODUCT_SKU => $sku,
-            static::COL_PRODUCT_NAME => $product->getVirtualColumn(static::COL_PRODUCT_NAME),
+            static::COL_PRODUCT_NAME => $productName,
             static::COL_BARCODE => $this->getBarcodeImageBySku($sku),
         ];
     }
@@ -150,23 +160,14 @@ class ProductBarcodeTable extends AbstractTable
      */
     protected function getBarcodeImageBySku(string $sku): string
     {
-        $barcodeTransfer = $this->generateBarcode($sku);
+        $productTransfer = new ProductConcreteTransfer();
+        $productTransfer->setSku($sku);
+        $barcodeResponseTransfer = $this->productBarcodeFacade->generateBarcode($productTransfer);
 
         return sprintf(
-            '<img src="%s,%s">',
-            $barcodeTransfer->getEncoding(),
-            $barcodeTransfer->getCode()
+            static::BARCODE_IMAGE_TEMPLATE,
+            $barcodeResponseTransfer->getEncoding(),
+            $barcodeResponseTransfer->getCode()
         );
-    }
-
-    /**
-     * @param string $text
-     * @param string|null $generatorPlugin
-     *
-     * @return \Generated\Shared\Transfer\BarcodeResponseTransfer
-     */
-    protected function generateBarcode(string $text, ?string $generatorPlugin = null): BarcodeResponseTransfer
-    {
-        return $this->barcodeService->generateBarcode($text, $generatorPlugin);
     }
 }

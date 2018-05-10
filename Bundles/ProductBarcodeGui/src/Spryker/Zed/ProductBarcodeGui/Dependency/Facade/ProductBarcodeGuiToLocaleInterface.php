@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductBarcodeGui\Dependency\Facade;
 
-interface ProductBarcodeGuiToLocaleBridgeInterface
+interface ProductBarcodeGuiToLocaleInterface
 {
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer
