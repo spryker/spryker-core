@@ -6,7 +6,7 @@
 
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Accessible content for not logged-in customers' | trans } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Hide the following information from not logged in users:' | trans } %}
 
         {% block widget_content %}
             {{ form_start(form) }}
