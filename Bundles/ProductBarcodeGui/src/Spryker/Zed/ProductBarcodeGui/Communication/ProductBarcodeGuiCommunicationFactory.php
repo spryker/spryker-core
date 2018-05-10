@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductBarcodeGui\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductBarcodeGui\Communication\Table\ProductBarcodeTable;
-use Spryker\Zed\ProductBarcodeGui\Dependency\Facade\ProductBarcodeGuiToLocaleInterface;
+use Spryker\Zed\ProductBarcodeGui\Dependency\Facade\ProductBarcodeGuiToLocaleFacadeInterface;
 use Spryker\Zed\ProductBarcodeGui\Dependency\Facade\ProductBarcodeGuiToProductBarcodeFacadeInterface;
 use Spryker\Zed\ProductBarcodeGui\ProductBarcodeGuiDependencyProvider;
 
@@ -39,9 +39,9 @@ class ProductBarcodeGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductBarcodeGui\Dependency\Facade\ProductBarcodeGuiToLocaleInterface
+     * @return \Spryker\Zed\ProductBarcodeGui\Dependency\Facade\ProductBarcodeGuiToLocaleFacadeInterface
      */
-    public function getLocaleFacade(): ProductBarcodeGuiToLocaleInterface
+    public function getLocaleFacade(): ProductBarcodeGuiToLocaleFacadeInterface
     {
         return $this->getProvidedDependency(ProductBarcodeGuiDependencyProvider::FACADE_LOCALE);
     }

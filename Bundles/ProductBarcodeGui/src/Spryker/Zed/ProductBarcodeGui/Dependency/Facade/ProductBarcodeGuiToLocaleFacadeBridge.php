@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductBarcodeGui\Dependency\Facade;
 
-class ProductBarcodeGuiToLocaleBridge implements ProductBarcodeGuiToLocaleInterface
+class ProductBarcodeGuiToLocaleFacadeBridge implements ProductBarcodeGuiToLocaleFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Locale\Business\LocaleFacadeInterface

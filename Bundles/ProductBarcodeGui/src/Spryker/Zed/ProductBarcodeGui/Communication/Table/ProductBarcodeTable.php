@@ -12,7 +12,7 @@ use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Spryker\Zed\ProductBarcodeGui\Dependency\Facade\ProductBarcodeGuiToLocaleInterface;
+use Spryker\Zed\ProductBarcodeGui\Dependency\Facade\ProductBarcodeGuiToLocaleFacadeInterface;
 use Spryker\Zed\ProductBarcodeGui\Dependency\Facade\ProductBarcodeGuiToProductBarcodeFacadeInterface;
 use Spryker\Zed\ProductBarcodeGui\Persistence\ProductBarcodeGuiQueryContainerInterface;
 
@@ -36,7 +36,7 @@ class ProductBarcodeTable extends AbstractTable
     protected $productBarcodeFacade;
 
     /**
-     * @var \Spryker\Zed\ProductBarcodeGui\Dependency\Facade\ProductBarcodeGuiToLocaleInterface
+     * @var \Spryker\Zed\ProductBarcodeGui\Dependency\Facade\ProductBarcodeGuiToLocaleFacadeInterface
      */
     protected $localeFacade;
 
@@ -47,12 +47,12 @@ class ProductBarcodeTable extends AbstractTable
 
     /**
      * @param \Spryker\Zed\ProductBarcodeGui\Dependency\Facade\ProductBarcodeGuiToProductBarcodeFacadeInterface $barcodeServiceBridge
-     * @param \Spryker\Zed\ProductBarcodeGui\Dependency\Facade\ProductBarcodeGuiToLocaleInterface $localeFacadeBridge
+     * @param \Spryker\Zed\ProductBarcodeGui\Dependency\Facade\ProductBarcodeGuiToLocaleFacadeInterface $localeFacadeBridge
      * @param \Spryker\Zed\ProductBarcodeGui\Persistence\ProductBarcodeGuiQueryContainerInterface $queryContainer
      */
     public function __construct(
         ProductBarcodeGuiToProductBarcodeFacadeInterface $barcodeServiceBridge,
-        ProductBarcodeGuiToLocaleInterface $localeFacadeBridge,
+        ProductBarcodeGuiToLocaleFacadeInterface $localeFacadeBridge,
         ProductBarcodeGuiQueryContainerInterface $queryContainer
     ) {
         $this->productBarcodeFacade = $barcodeServiceBridge;

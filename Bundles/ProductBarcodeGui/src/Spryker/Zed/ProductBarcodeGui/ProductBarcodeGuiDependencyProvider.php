@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductBarcodeGui;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\ProductBarcodeGui\Dependency\Facade\ProductBarcodeGuiToLocaleBridge;
+use Spryker\Zed\ProductBarcodeGui\Dependency\Facade\ProductBarcodeGuiToLocaleFacadeBridge;
 use Spryker\Zed\ProductBarcodeGui\Dependency\Facade\ProductBarcodeGuiToProductBarcodeFacadeBridge;
 
 class ProductBarcodeGuiDependencyProvider extends AbstractBundleDependencyProvider
@@ -54,7 +54,7 @@ class ProductBarcodeGuiDependencyProvider extends AbstractBundleDependencyProvid
     protected function addLocaleFacade(Container $container): Container
     {
         $container[static::FACADE_LOCALE] = function (Container $container) {
-            return new ProductBarcodeGuiToLocaleBridge(
+            return new ProductBarcodeGuiToLocaleFacadeBridge(
                 $container->getLocator()->locale()->facade()
             );
         };
