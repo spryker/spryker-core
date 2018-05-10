@@ -17,6 +17,11 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductBarcodeGui\Dependency\Facade\ProductBarcodeGuiToLocaleFacadeInterface;
 use Spryker\Zed\ProductBarcodeGui\Dependency\Facade\ProductBarcodeGuiToProductBarcodeFacadeInterface;
 
+/**
+ * @uses SpyProduct
+ * @uses SpyProductQuery
+ * @uses SpyProductLocalizedAttributesTableMap
+ */
 class ProductBarcodeTable extends AbstractTable
 {
     protected const COL_ID_PRODUCT = 'id_product';
