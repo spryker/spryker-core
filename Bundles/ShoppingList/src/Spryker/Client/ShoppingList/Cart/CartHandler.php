@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShoppingListAddToCartRequestCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListAddToCartRequestTransfer;
 use Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToCartClientInterface;
+use Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToZedRequestClientInterface;
 use Spryker\Client\ShoppingList\Zed\ShoppingListStubInterface;
 
 class CartHandler implements CartHandlerInterface
@@ -28,13 +29,23 @@ class CartHandler implements CartHandlerInterface
     protected $shoppingListStub;
 
     /**
+     * @var \Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToZedRequestClientInterface
+     */
+    protected $zedRequestClient;
+
+    /**
      * @param \Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToCartClientInterface $cartClient
      * @param \Spryker\Client\ShoppingList\Zed\ShoppingListStubInterface $shoppingListStub
+     * @param \Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToZedRequestClientInterface $zedRequestClient
      */
-    public function __construct(ShoppingListToCartClientInterface $cartClient, ShoppingListStubInterface $shoppingListStub)
-    {
+    public function __construct(
+        ShoppingListToCartClientInterface $cartClient,
+        ShoppingListStubInterface $shoppingListStub,
+        ShoppingListToZedRequestClientInterface $zedRequestClient
+    ) {
         $this->cartClient = $cartClient;
         $this->shoppingListStub = $shoppingListStub;
+        $this->zedRequestClient = $zedRequestClient;
     }
 
     /**
@@ -46,15 +57,15 @@ class CartHandler implements CartHandlerInterface
     {
         $cartChangeTransfer = new CartChangeTransfer();
         $cartChangeTransfer->setQuote($this->cartClient->getQuote());
-        foreach ($shoppingListAddToCartRequestCollectionTransfer->getRequests() as $ShoppingListAddToCartRequestTransfer) {
-            $this->assertRequestTransfer($ShoppingListAddToCartRequestTransfer);
+        foreach ($shoppingListAddToCartRequestCollectionTransfer->getRequests() as $shoppingListAddToCartRequestTransfer) {
+            $this->assertRequestTransfer($shoppingListAddToCartRequestTransfer);
             $cartChangeTransfer->addItem(
-                $this->createItemTransfer($ShoppingListAddToCartRequestTransfer->getSku(), $ShoppingListAddToCartRequestTransfer->getQuantity())
+                $this->createItemTransfer($shoppingListAddToCartRequestTransfer->getSku(), $shoppingListAddToCartRequestTransfer->getQuantity())
             );
         }
 
         $quoteTransfer = $this->cartClient->addValidItems($cartChangeTransfer);
-
+        $this->zedRequestClient->addFlashMessagesFromLastZedRequest();
         $failedToMoveRequestCollectionTransfer = $this->getShoppingListRequestCollectionToCartDiff(
             $shoppingListAddToCartRequestCollectionTransfer,
             $quoteTransfer

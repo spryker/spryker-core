@@ -85,7 +85,7 @@ class ShoppingListWriter implements ShoppingListWriterInterface
         $shoppingListResponseTransfer = new ShoppingListResponseTransfer();
         $shoppingListResponseTransfer->setIsSuccess(false);
 
-        if (!$this->checkShoppingListWithSameName($shoppingListTransfer)) {
+        if ($this->checkShoppingListWithSameName($shoppingListTransfer)) {
             $shoppingListResponseTransfer->addError(static::DUPLICATE_NAME_SHOPPING_LIST);
 
             return $shoppingListResponseTransfer;
@@ -99,7 +99,6 @@ class ShoppingListWriter implements ShoppingListWriterInterface
 
         $shoppingListResponseTransfer->setIsSuccess(true);
         $shoppingListResponseTransfer->setShoppingList($this->saveShoppingList($shoppingListTransfer));
-        $this->addCreateSuccessMessage($shoppingListTransfer->getName());
 
         return $shoppingListResponseTransfer;
     }
@@ -119,12 +118,7 @@ class ShoppingListWriter implements ShoppingListWriterInterface
 
         return $this->getTransactionHandler()->handleTransaction(
             function () use ($shoppingListTransfer) {
-                $this->shoppingListEntityManager->deleteShoppingListItems($shoppingListTransfer);
-                $this->shoppingListEntityManager->deleteShoppingListCompanyUsers($shoppingListTransfer);
-                $this->shoppingListEntityManager->deleteShoppingListCompanyBusinessUnits($shoppingListTransfer);
-                $this->shoppingListEntityManager->deleteShoppingListByName($shoppingListTransfer);
-
-                return (new ShoppingListResponseTransfer())->setIsSuccess(true);
+                return $this->executeRemoveShoppingListTransaction($shoppingListTransfer);
             }
         );
     }
@@ -146,7 +140,9 @@ class ShoppingListWriter implements ShoppingListWriterInterface
      */
     protected function checkShoppingListWithSameName(ShoppingListTransfer $shoppingListTransfer): bool
     {
-        return $shoppingListTransfer->getIdShoppingList() && $this->findCustomerShoppingListByName($shoppingListTransfer) === null;
+        $foundShoppingListTransfer = $this->findCustomerShoppingListByName($shoppingListTransfer);
+
+        return $foundShoppingListTransfer && ($foundShoppingListTransfer->getIdShoppingList() !== $shoppingListTransfer->getIdShoppingList());
     }
 
     /**
@@ -196,5 +192,20 @@ class ShoppingListWriter implements ShoppingListWriterInterface
                 ->setValue(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_CREATE_SUCCESS)
                 ->setParameters([static::GLOSSARY_PARAM_NAME => $shoppingListName])
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
+     */
+    protected function executeRemoveShoppingListTransaction(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
+    {
+        $this->shoppingListEntityManager->deleteShoppingListItems($shoppingListTransfer);
+        $this->shoppingListEntityManager->deleteShoppingListCompanyUsers($shoppingListTransfer);
+        $this->shoppingListEntityManager->deleteShoppingListCompanyBusinessUnits($shoppingListTransfer);
+        $this->shoppingListEntityManager->deleteShoppingListByName($shoppingListTransfer);
+
+        return (new ShoppingListResponseTransfer())->setIsSuccess(true);
     }
 }

@@ -43,7 +43,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
         if ($shoppingListEntityTransferCollection) {
             return $this->getFactory()
                 ->createShoppingListMapper()
-                ->mapShoppingListTransfer($shoppingListEntityTransferCollection[0], $shoppingListTransfer);
+                ->mapShoppingListTransfer($shoppingListEntityTransferCollection[0], new ShoppingListTransfer());
         }
 
         return null;
