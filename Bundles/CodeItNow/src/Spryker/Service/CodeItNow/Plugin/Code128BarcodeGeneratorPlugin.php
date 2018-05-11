@@ -23,16 +23,37 @@ class Code128BarcodeGeneratorPlugin extends AbstractPlugin implements BarcodeGen
      */
     public function generate(string $text): BarcodeResponseTransfer
     {
-        $barcodeResponseTransfer = new BarcodeResponseTransfer();
-        $barcode = new BarcodeGenerator();
-        $barcode->setText($text);
-        $barcode->setType(BarcodeGenerator::Code128);
-        $code = $barcode->generate();
+        $code = $this
+            ->createBarcodeGenerator($text)
+            ->generate();
 
-        $barcodeResponseTransfer
-            ->setCode($code)
+        return $this->createBarcodeResponseTransfer($code);
+    }
+
+    /**
+     * @param string $text
+     *
+     * @return \CodeItNow\BarcodeBundle\Utils\BarcodeGenerator
+     */
+    protected function createBarcodeGenerator(string $text): BarcodeGenerator
+    {
+        $barcodeGenerator = new BarcodeGenerator();
+
+        $barcodeGenerator->setText($text);
+        $barcodeGenerator->setType(BarcodeGenerator::Code128);
+
+        return $barcodeGenerator;
+    }
+
+    /**
+     * @param string $text
+     *
+     * @return \Generated\Shared\Transfer\BarcodeResponseTransfer
+     */
+    protected function createBarcodeResponseTransfer(string $text): BarcodeResponseTransfer
+    {
+        return (new BarcodeResponseTransfer())
+            ->setCode($text)
             ->setEncoding(static::ENCODING);
-
-        return $barcodeResponseTransfer;
     }
 }
