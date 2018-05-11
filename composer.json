@@ -22,7 +22,8 @@
   "autoload": {
     "files": [
       "autoload.php",
-      "Bundles/Config/src/Spryker/Shared/Config.php"
+      "Bundles/Config/src/Spryker/Shared/Config.php",
+      "Bundles/Development/tests/dd.php"
     ]
   },
   "bin": [
