@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\Company\Dependency\Client;
 
-use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 interface CompanyToZedRequestClientInterface
