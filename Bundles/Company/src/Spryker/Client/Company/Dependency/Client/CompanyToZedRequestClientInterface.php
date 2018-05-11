@@ -19,5 +19,5 @@ interface CompanyToZedRequestClientInterface
      *
      * @return \Generated\Shared\Transfer\CompanyResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
      */
-    public function call($url, TransferInterface $object, $requestOptions = null): CompanyResponseTransfer;
+    public function call($url, TransferInterface $object, $requestOptions = null);
 }
