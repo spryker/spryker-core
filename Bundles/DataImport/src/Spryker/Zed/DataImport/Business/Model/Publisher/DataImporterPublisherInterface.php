@@ -12,7 +12,7 @@ interface DataImporterPublisherInterface
     /**
      * @param array $events
      *
-     * @return mixed
+     * @return void
      */
     public static function addImportedEntityEvents(array $events);
 

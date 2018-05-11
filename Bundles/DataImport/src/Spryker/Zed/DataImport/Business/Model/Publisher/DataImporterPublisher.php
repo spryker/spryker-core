@@ -31,15 +31,26 @@ class DataImporterPublisher implements DataImporterPublisherInterface
     }
 
     /**
+     * @param string $eventName
+     * @param int $entityId
+     *
+     * @return void
+     */
+    public function addEvent($eventName, $entityId): void
+    {
+        static::$importedEntityEvents[$eventName][] = $entityId;
+    }
+
+    /**
+     * @deprecated use addEvent() instead.
+     *
      * @param array $events
      *
      * @return void
      */
     public static function addImportedEntityEvents(array $events): void
     {
-        $mergedArray = array_merge_recursive(static::$importedEntityEvents, $events);
-
-        static::$importedEntityEvents = static::getUniqueArray($mergedArray);
+        static::$importedEntityEvents = array_merge_recursive(static::$importedEntityEvents, $events);
     }
 
     /**
@@ -47,7 +58,7 @@ class DataImporterPublisher implements DataImporterPublisherInterface
      */
     public function triggerEvents(): void
     {
-        foreach (static::$importedEntityEvents as $event => $ids) {
+        foreach (static::getUniqueArray() as $event => $ids) {
             $uniqueIds = array_unique($ids);
             $events = [];
             foreach ($uniqueIds as $id) {
@@ -59,14 +70,12 @@ class DataImporterPublisher implements DataImporterPublisherInterface
     }
 
     /**
-     * @param array $mergedArray
-     *
      * @return array
      */
-    protected static function getUniqueArray(array $mergedArray): array
+    protected static function getUniqueArray(): array
     {
         $uniqueArray = [];
-        foreach ($mergedArray as $event => $ids) {
+        foreach (static::$importedEntityEvents as $event => $ids) {
             $uniqueArray[$event] = array_unique($ids);
         }
 
