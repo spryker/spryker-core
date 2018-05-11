@@ -156,16 +156,6 @@ class ProductBarcodeTable extends AbstractTable
     }
 
     /**
-     * @return int
-     */
-    protected function getCurrentLocaleId(): int
-    {
-        return $this->localeFacade
-            ->getCurrentLocale()
-            ->getIdLocale();
-    }
-
-    /**
      * @param string $sku
      *
      * @return string
