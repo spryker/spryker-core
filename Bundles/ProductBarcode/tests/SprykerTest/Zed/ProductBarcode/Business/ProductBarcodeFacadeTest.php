@@ -3,6 +3,8 @@
 namespace SprykerTest\Zed\ProductBarcode\Business;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\DataBuilder\ProductConcreteBuilder;
+use Generated\Shared\Transfer\BarcodeResponseTransfer;
 use Spryker\Service\Barcode\BarcodeDependencyProvider;
 
 /**
@@ -22,12 +24,18 @@ use Spryker\Service\Barcode\BarcodeDependencyProvider;
  */
 class ProductBarcodeFacadeTest extends Test
 {
-    protected const GENERATED_ENCODING = 'data:image/png;base64';
+    protected const BARCODE_GENERATION_SOURCE_TEXT = 'generated text';
+    protected const BARCODE_GENERATION_ENCODING = 'data:image/png;base64';
 
     /**
      * @var \Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface
      */
     protected $barcodePlugin;
+
+    /**
+     * @var \Generated\Shared\DataBuilder\ProductConcreteBuilder
+     */
+    protected $productConcreteBuilder;
 
     /**
      * @return void
@@ -36,7 +44,11 @@ class ProductBarcodeFacadeTest extends Test
     {
         parent::setUp();
 
-        $this->barcodePlugin = $this->tester->getBarcodePluginMock();
+        $this->barcodePlugin = $this
+            ->tester
+            ->getBarcodePluginMock();
+
+        $this->productConcreteBuilder = new ProductConcreteBuilder();
 
         $this->tester->setDependency(BarcodeDependencyProvider::PLUGINS_BARCODE_GENERATOR, [
             $this->barcodePlugin,
@@ -46,14 +58,50 @@ class ProductBarcodeFacadeTest extends Test
     /**
      * @return void
      */
-    public function testGenerateBarcodeUsingProductConcreteTransfer()
+    public function testBarcodeGenerationWithoutPluginSpecifiedReturnsCorrectData(): void
     {
-        $productConcreteTransfer = $this->tester->getProductConcrete();
+        $product = $this->productConcreteBuilder->build();
 
-        $barcodeResponseTransfer = $this->tester->getFacade()
-            ->generateBarcode($productConcreteTransfer, get_class($this->barcodePlugin));
+        $barcodeResponseTransfer = $this
+            ->tester
+            ->generateBarcode($product, get_class($this->barcodePlugin));
 
-        $this->assertSame($productConcreteTransfer->getSku(), $barcodeResponseTransfer->getCode());
-        $this->assertSame(static::GENERATED_ENCODING, $barcodeResponseTransfer->getEncoding());
+        $this->assertInstanceOf(BarcodeResponseTransfer::class, $barcodeResponseTransfer);
+        $this->assertSame($product->getSku(), $barcodeResponseTransfer->getCode());
+        $this->assertSame(static::BARCODE_GENERATION_ENCODING, $barcodeResponseTransfer->getEncoding());
+    }
+
+    /**
+     * @return void
+     */
+    public function testBarcodeGenerationWithMockPluginSpecifiedReturnsCorrectData(): void
+    {
+        $product = $this->productConcreteBuilder->build();
+
+        $barcodeResponseTransfer = $this
+            ->tester
+            ->generateBarcode($product, get_class($this->barcodePlugin));
+
+        $this->assertInstanceOf(BarcodeResponseTransfer::class, $barcodeResponseTransfer);
+        $this->assertSame($product->getSku(), $barcodeResponseTransfer->getCode());
+        $this->assertSame(static::BARCODE_GENERATION_ENCODING, $barcodeResponseTransfer->getEncoding());
+    }
+
+    /**
+     * @return void
+     */
+    public function testBarcodeGenerationUsesProductDataFromDatabaseAsFallback(): void
+    {
+        $existingProduct = $this->tester->haveProduct();
+        $existingProductSku = $existingProduct->getSku();
+
+        $existingProduct->setSku('');
+
+        $barcodeResponseTransfer = $this
+            ->tester
+            ->generateBarcode($existingProduct, get_class($this->barcodePlugin));
+
+        $this->assertSame($existingProductSku, $barcodeResponseTransfer->getCode());
+        $this->assertSame(static::BARCODE_GENERATION_ENCODING, $barcodeResponseTransfer->getEncoding());
     }
 }

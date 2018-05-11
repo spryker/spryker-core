@@ -23,7 +23,6 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
-                - \SprykerTest\Service\Barcode\Helper\BarcodeServiceHelper
-                - \SprykerTest\Zed\ProductBarcode\Helper\ProductBarcodeDataHelper
                 - \SprykerTest\Zed\ProductBarcode\Helper\ProductBarcodeMockHelper
                 - \SprykerTest\Zed\ProductBarcode\Helper\ProductBarcodeFacadeHelper
+                - \SprykerTest\Shared\Product\Helper\ProductDataHelper
