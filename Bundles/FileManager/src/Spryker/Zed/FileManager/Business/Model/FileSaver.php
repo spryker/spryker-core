@@ -19,6 +19,7 @@ class FileSaver implements FileSaverInterface
     use DatabaseTransactionHandlerTrait;
 
     const FILE_NAME_PATTERN = '%u%s%s.%s';
+    const DEFAULT_FILENAME = 'file';
 
     /**
      * @var \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface
@@ -123,6 +124,7 @@ class FileSaver implements FileSaverInterface
         return $this->handleDatabaseTransaction(
             function () use ($file, $saveRequestTransfer) {
                 $file->fromArray($saveRequestTransfer->getFile()->toArray());
+                $file->setFileName($this->sanitizeFileName($file->getFileName()));
 
                 $fileInfo = $this->createFileInfo($saveRequestTransfer);
                 $this->addFileInfoToFile($file, $fileInfo);
@@ -135,6 +137,25 @@ class FileSaver implements FileSaverInterface
             },
             $this->queryContainer->getConnection()
         );
+    }
+
+    /**
+     * @param $fileName
+     *
+     * @return string
+     */
+    protected function sanitizeFileName($fileName)
+    {
+        $fileName = mb_ereg_replace("([^\w\s\d\-_~,;\[\]\(\).])", '', $fileName);
+        $fileName = mb_ereg_replace("([\.]{2,})", '', $fileName);
+        $fileName = preg_replace("/\s+/", ' ', $fileName);
+        $fileName = trim($fileName);
+
+        if (!strlen($fileName) || $fileName === '.') {
+            $fileName = static::DEFAULT_FILENAME;
+        }
+
+        return $fileName;
     }
 
     /**

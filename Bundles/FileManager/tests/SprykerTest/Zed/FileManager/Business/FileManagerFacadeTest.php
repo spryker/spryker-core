@@ -18,6 +18,7 @@ use Generated\Shared\Transfer\FileTransfer;
 use Orm\Zed\FileManager\Persistence\SpyFile;
 use Orm\Zed\FileManager\Persistence\SpyFileDirectory;
 use Orm\Zed\FileManager\Persistence\SpyFileInfo;
+use Orm\Zed\FileManager\Persistence\SpyFileQuery;
 use Propel\Runtime\Propel;
 use Spryker\Service\FileSystem\FileSystemDependencyProvider;
 use Spryker\Service\FileSystem\FileSystemService;
@@ -287,7 +288,7 @@ class FileManagerFacadeTest extends Unit
 
         $file = new FileTransfer();
         $file->setFileContent('new customer file');
-        $file->setFileName('new_customer.txt');
+        $file->setFileName('new%customer.txt');
 
         $fileManagerSaveRequestTransfer = new FileManagerSaveRequestTransfer();
         $fileManagerSaveRequestTransfer->setContent('new version of the file');
@@ -295,7 +296,10 @@ class FileManagerFacadeTest extends Unit
         $fileManagerSaveRequestTransfer->setFileInfo($fileInfo);
 
         $savedFileId = $this->facade->saveFile($fileManagerSaveRequestTransfer);
+        $file = SpyFileQuery::create()->findOneByFileName('newcustomer.txt');
+
         $this->assertEquals(2, $savedFileId);
+        $this->assertInstanceOf(SpyFile::class, $file);
     }
 
     /**
