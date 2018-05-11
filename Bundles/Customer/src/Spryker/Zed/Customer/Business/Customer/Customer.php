@@ -31,12 +31,10 @@ use Spryker\Zed\Customer\CustomerConfig;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface;
 use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface;
-use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
 
 class Customer implements CustomerInterface
 {
-    const BCRYPT_FACTOR = 12;
-    const BCRYPT_SALT = '';
+    protected const BCRYPT_FACTOR = 12;
 
     /**
      * @var \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface
@@ -741,15 +739,11 @@ class Customer implements CustomerInterface
      */
     protected function getEncodedPassword($currentPassword)
     {
-        $newPassword = $currentPassword;
+        $options = [
+            'cost' => static::BCRYPT_FACTOR,
+        ];
 
-        if (mb_substr($currentPassword, 0, 2) !== '$2') {
-            $encoder = new BCryptPasswordEncoder(self::BCRYPT_FACTOR);
-
-            $newPassword = $encoder->encodePassword($currentPassword, self::BCRYPT_SALT);
-        }
-
-        return $newPassword;
+        return password_hash($currentPassword, PASSWORD_BCRYPT, $options);
     }
 
     /**
@@ -760,9 +754,7 @@ class Customer implements CustomerInterface
      */
     protected function isValidPassword($hash, $rawPassword)
     {
-        $encoder = new BCryptPasswordEncoder(self::BCRYPT_FACTOR);
-
-        return $encoder->isPasswordValid($hash, $rawPassword, self::BCRYPT_SALT);
+        return password_verify($rawPassword, $hash);
     }
 
     /**
