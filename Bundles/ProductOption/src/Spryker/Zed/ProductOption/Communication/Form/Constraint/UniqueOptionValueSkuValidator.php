@@ -21,7 +21,7 @@ class UniqueOptionValueSkuValidator extends ConstraintValidator
     /**
      * Checks if the passed value is valid.
      *
-     * @param mixed|\Generated\Shared\Transfer\ProductOptionValueTransfer $productOptionValueTransfer $productOptionValueTransfer
+     * @param \Generated\Shared\Transfer\ProductOptionValueTransfer $productOptionValueTransfer $productOptionValueTransfer
      * @param \Symfony\Component\Validator\Constraint $constraint
      *
      * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException

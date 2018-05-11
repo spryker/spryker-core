@@ -20,7 +20,7 @@ class Install implements InstallInterface
     protected $glossary;
 
     /**
-     * @var \Spryker\Zed\Price\PriceConfig
+     * @var \Spryker\Zed\Ratepay\RatepayConfig
      */
     protected $config;
 

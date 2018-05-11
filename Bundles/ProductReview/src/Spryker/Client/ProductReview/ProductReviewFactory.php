@@ -89,19 +89,24 @@ class ProductReviewFactory extends AbstractFactory
     /**
      * @deprecated use getProductReviewConfig
      *
-     * @return \Spryker\Client\ProductReview\ProductReviewConfig|\Spryker\Client\Kernel\AbstractBundleConfig
+     * @return \Spryker\Client\ProductReview\ProductReviewConfig
      */
     public function getConfig()
     {
-        return parent::getConfig();
+        return $this->getProductReviewConfig();
     }
 
     /**
-     * @return \Spryker\Client\ProductReview\ProductReviewConfig|\Spryker\Client\Kernel\AbstractBundleConfig
+     * Exposes the protected getConfig() method as public method.
+     *
+     * @return \Spryker\Client\ProductReview\ProductReviewConfig
      */
     public function getProductReviewConfig()
     {
-        return parent::getConfig();
+        /** @var \Spryker\Client\ProductReview\ProductReviewConfig $config */
+        $config = parent::getConfig();
+
+        return $config;
     }
 
     /**

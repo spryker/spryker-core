@@ -37,7 +37,7 @@ class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
      * @deprecated Use `getNavigationForm()` instead.
      *
      * @param \Generated\Shared\Transfer\NavigationTransfer|null $data
-     * @param array|null $options
+     * @param array $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -48,7 +48,7 @@ class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
 
     /**
      * @param \Generated\Shared\Transfer\NavigationTransfer|null $data
-     * @param array|null $options
+     * @param array $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -71,7 +71,7 @@ class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
      * @deprecated Use `getUpdateNavigationForm()` instead.
      *
      * @param \Generated\Shared\Transfer\NavigationTransfer|null $data
-     * @param array|null $options
+     * @param array $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -82,7 +82,7 @@ class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
 
     /**
      * @param \Generated\Shared\Transfer\NavigationTransfer|null $data
-     * @param array|null $options
+     * @param array $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */

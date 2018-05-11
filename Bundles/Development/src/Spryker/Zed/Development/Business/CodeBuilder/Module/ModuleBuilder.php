@@ -39,6 +39,7 @@ class ModuleBuilder
         '.travis.yml',
         'codecept.yml' => 'codeception.yml',
         'composer.json',
+        'phpstan.json',
         'CHANGELOG.md',
         'README.md',
         'LICENSE',
