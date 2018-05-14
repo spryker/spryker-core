@@ -43,4 +43,12 @@ class ShoppingListToZedRequestClientBridge implements ShoppingListToZedRequestCl
     {
         return $this->zedRequestClient->call($url, $object, $requestOptions);
     }
+
+    /**
+     * @return void
+     */
+    public function addFlashMessagesFromLastZedRequest()
+    {
+        $this->zedRequestClient->addFlashMessagesFromLastZedRequest();
+    }
 }
