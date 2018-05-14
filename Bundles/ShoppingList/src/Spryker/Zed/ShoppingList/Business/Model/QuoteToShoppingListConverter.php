@@ -66,25 +66,33 @@ class QuoteToShoppingListConverter implements QuoteToShoppingListConverterInterf
     {
         $shoppingListFromCartRequestTransfer->requireShoppingListName()->requireIdQuote();
 
-        return $this->getTransactionHandler()->handleTransaction(
-            function () use ($shoppingListFromCartRequestTransfer) {
-                $quoteResponseTransfer = $this->persistentCartFacade->findQuote(
-                    $shoppingListFromCartRequestTransfer->getIdQuote(),
-                    $shoppingListFromCartRequestTransfer->getCustomer()
-                );
+        return $this->getTransactionHandler()->handleTransaction(function () use ($shoppingListFromCartRequestTransfer) {
+            $this->executeCreateShoppingListFromQuoteTransaction($shoppingListFromCartRequestTransfer);
+        });
+    }
 
-                $shoppingListTransfer = $this->shoppingListResolver->createShoppingListIfNotExists(
-                    $shoppingListFromCartRequestTransfer->getCustomer()->getCustomerReference(),
-                    $shoppingListFromCartRequestTransfer->getShoppingListName()
-                );
-
-                $itemTransferCollection = $this->getQuoteItems($quoteResponseTransfer->getQuoteTransfer());
-
-                $this->createShoppingListItems($itemTransferCollection, $shoppingListTransfer);
-
-                return $shoppingListTransfer;
-            }
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer $shoppingListFromCartRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer
+     */
+    protected function executeCreateShoppingListFromQuoteTransaction(ShoppingListFromCartRequestTransfer $shoppingListFromCartRequestTransfer): ShoppingListTransfer
+    {
+        $quoteResponseTransfer = $this->persistentCartFacade->findQuote(
+            $shoppingListFromCartRequestTransfer->getIdQuote(),
+            $shoppingListFromCartRequestTransfer->getCustomer()
         );
+
+        $shoppingListTransfer = $this->shoppingListResolver->createShoppingListIfNotExists(
+            $shoppingListFromCartRequestTransfer->getCustomer()->getCustomerReference(),
+            $shoppingListFromCartRequestTransfer->getShoppingListName()
+        );
+
+        $itemTransferCollection = $this->getQuoteItems($quoteResponseTransfer->getQuoteTransfer());
+
+        $this->createShoppingListItems($itemTransferCollection, $shoppingListTransfer);
+
+        return $shoppingListTransfer;
     }
 
     /**

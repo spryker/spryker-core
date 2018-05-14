@@ -120,24 +120,24 @@ class ShoppingListSharer implements ShoppingListSharerInterface
             return $shoppingListShareResponseTransfer;
         }
 
-        $shoppingListCompanyUserEntityTransfer = $this->shoppingListRepository->isShoppingListSharedCompanyUser(
+        $isShoppingListSharedCompanyUser = $this->shoppingListRepository->isShoppingListSharedCompanyUser(
             $shoppingListTransfer->getIdShoppingList(),
             $shoppingListShareRequestTransfer->getIdCompanyUser()
         );
 
-        if ($shoppingListCompanyUserEntityTransfer) {
+        if ($isShoppingListSharedCompanyUser) {
             $shoppingListShareResponseTransfer->setIsSuccess(false);
             $shoppingListShareResponseTransfer->setError(static::CANNOT_RESHARE_SHOPPING_LIST);
 
             return $shoppingListShareResponseTransfer;
         }
 
-        $shoppingListCompanyUserEntityTransfer = (new ShoppingListCompanyUserTransfer())
+        $isShoppingListSharedCompanyUser = (new ShoppingListCompanyUserTransfer())
             ->setIdCompanyUser($shoppingListShareRequestTransfer->getIdCompanyUser())
             ->setIdShoppingList($shoppingListTransfer->getIdShoppingList())
             ->setIdShoppingListPermissionGroup($shoppingListShareRequestTransfer->getIdShoppingListPermissionGroup());
 
-        $this->shoppingListEntityManager->saveShoppingListCompanyUser($shoppingListCompanyUserEntityTransfer);
+        $this->shoppingListEntityManager->saveShoppingListCompanyUser($isShoppingListSharedCompanyUser);
         $shoppingListShareResponseTransfer = $shoppingListShareResponseTransfer->setIsSuccess(true);
 
         return $shoppingListShareResponseTransfer;
