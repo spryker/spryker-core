@@ -3,7 +3,6 @@
 namespace SprykerTest\Service\CodeItNow\Plugin;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\BarcodeResponseTransfer;
 use Spryker\Service\CodeItNow\Plugin\Code128BarcodeGeneratorPlugin;
 
 /**
@@ -23,32 +22,10 @@ class Code128BarcodeGeneratorPluginTest extends Unit
     /**
      * @return void
      */
-    public function testCode128BarcodeGeneratorPluginCreated(): void
-    {
-        $plugin = new Code128BarcodeGeneratorPlugin();
-        $this->assertInstanceOf(Code128BarcodeGeneratorPlugin::class, $plugin);
-    }
-
-    /**
-     * @return void
-     */
     public function testCode128BarcodeGeneration(): void
     {
         $plugin = new Code128BarcodeGeneratorPlugin();
         $plugin->generate(static::CODE128_BARCODE_GENERATOR_PLUGIN_SOURCE_TEXT);
-
-        $this->assertTrue(true);
-    }
-
-    /**
-     * @return void
-     */
-    public function testCode128BarcodeGeneratorPluginReturnsBarcodeResponseTransfer(): void
-    {
-        $plugin = new Code128BarcodeGeneratorPlugin();
-        $barcodeResponseTransfer = $plugin->generate(static::CODE128_BARCODE_GENERATOR_PLUGIN_SOURCE_TEXT);
-
-        $this->assertInstanceOf(BarcodeResponseTransfer::class, $barcodeResponseTransfer);
     }
 
     /**
