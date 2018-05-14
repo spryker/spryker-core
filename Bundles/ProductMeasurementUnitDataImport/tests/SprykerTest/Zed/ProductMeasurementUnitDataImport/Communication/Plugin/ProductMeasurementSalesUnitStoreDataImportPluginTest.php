@@ -56,6 +56,8 @@ class ProductMeasurementSalesUnitStoreDataImportPluginTest extends Unit
      */
     public function testImportImportsData(): void
     {
+        $this->tester->ensureMeasurementSalesUnitStoreIsEmpty();
+
         $dataDir = codecept_data_dir();
         $this->tester->importMeasurementUnitData($dataDir);
         $this->tester->importMeasurementBaseUnitData($dataDir);
