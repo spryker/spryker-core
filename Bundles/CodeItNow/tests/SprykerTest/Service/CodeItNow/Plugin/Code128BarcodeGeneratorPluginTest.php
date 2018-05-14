@@ -13,6 +13,8 @@ use Spryker\Service\CodeItNow\Plugin\Code128BarcodeGeneratorPlugin;
  * @group Plugin
  * @group Code128BarcodeGeneratorPluginTest
  * Add your own group annotations below this line
+ *
+ * @group Barcode
  */
 class Code128BarcodeGeneratorPluginTest extends Unit
 {
