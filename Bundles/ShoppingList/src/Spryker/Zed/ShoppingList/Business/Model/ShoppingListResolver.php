@@ -73,14 +73,7 @@ class ShoppingListResolver implements ShoppingListResolverInterface
             ->setName($shoppingListName)
             ->setCustomerReference($customerReference);
 
-        $existingShoppingListTransfer = $this->findCustomerShoppingListByName($shoppingListTransfer);
-
-        if (!$existingShoppingListTransfer) {
-            $existingShoppingListTransfer = $this->saveShoppingList($shoppingListTransfer);
-            $this->addCreateSuccessMessage($shoppingListTransfer->getName());
-        }
-
-        return $existingShoppingListTransfer;
+        return $this->resolveShoppingList($shoppingListTransfer);
     }
 
     /**
@@ -94,14 +87,7 @@ class ShoppingListResolver implements ShoppingListResolverInterface
             ->setName($this->shoppingListConfig->getDefaultShoppingListName())
             ->setCustomerReference($customerReference);
 
-        $existingShoppingListTransfer = $this->findCustomerShoppingListByName($shoppingListTransfer);
-
-        if (!$existingShoppingListTransfer) {
-            $existingShoppingListTransfer = $this->saveShoppingList($shoppingListTransfer);
-            $this->addCreateSuccessMessage($shoppingListTransfer->getName());
-        }
-
-        return $existingShoppingListTransfer;
+        return $this->resolveShoppingList($shoppingListTransfer);
     }
 
     /**
@@ -139,5 +125,22 @@ class ShoppingListResolver implements ShoppingListResolverInterface
                 ->setValue(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_CREATE_SUCCESS)
                 ->setParameters([static::GLOSSARY_PARAM_NAME => $shoppingListName])
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer
+     */
+    protected function resolveShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer
+    {
+        $existingShoppingListTransfer = $this->findCustomerShoppingListByName($shoppingListTransfer);
+
+        if (!$existingShoppingListTransfer) {
+            $existingShoppingListTransfer = $this->saveShoppingList($shoppingListTransfer);
+            $this->addCreateSuccessMessage($shoppingListTransfer->getName());
+        }
+
+        return $existingShoppingListTransfer;
     }
 }
