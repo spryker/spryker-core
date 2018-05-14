@@ -67,7 +67,7 @@ class QuoteToShoppingListConverter implements QuoteToShoppingListConverterInterf
         $shoppingListFromCartRequestTransfer->requireShoppingListName()->requireIdQuote();
 
         return $this->getTransactionHandler()->handleTransaction(function () use ($shoppingListFromCartRequestTransfer) {
-            $this->executeCreateShoppingListFromQuoteTransaction($shoppingListFromCartRequestTransfer);
+            return $this->executeCreateShoppingListFromQuoteTransaction($shoppingListFromCartRequestTransfer);
         });
     }
 

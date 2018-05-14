@@ -106,26 +106,22 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
             ->createShoppingListItemQuery()
             ->filterByFkShoppingList($shoppingListOverviewRequestTransfer->getShoppingList()->getIdShoppingList());
 
-        $filterTransfer = (new FilterTransfer())
-            ->setOrderBy(SpyShoppingListItemTableMap::COL_ID_SHOPPING_LIST_ITEM)
-            ->setOrderDirection('ASC');
-
-        $paginationTransfer = new PaginationTransfer();
-        $paginationTransfer->setMaxPerPage($shoppingListOverviewRequestTransfer->getItemsPerPage())
+        $paginationTransfer = (new PaginationTransfer())
+            ->setMaxPerPage($shoppingListOverviewRequestTransfer->getItemsPerPage())
             ->setPage($shoppingListOverviewRequestTransfer->getPage());
         $shoppingListItemQuery = $this->preparePagination($shoppingListItemQuery, $paginationTransfer);
 
-        $shoppingListItemEntityTransferCollection = $this->buildQueryFromCriteria($shoppingListItemQuery, $filterTransfer)->find();
+        $shoppingListItemEntityTransferCollection = $this->buildQueryFromCriteria(
+            $shoppingListItemQuery,
+            (new FilterTransfer())
+                ->setOrderBy(SpyShoppingListItemTableMap::COL_ID_SHOPPING_LIST_ITEM)
+                ->setOrderDirection('ASC')
+        )
+            ->find();
 
-        $shoppingListOverviewResponseTransfer = new ShoppingListOverviewResponseTransfer();
-        $shoppingListOverviewResponseTransfer->setItemsCollection(
-            $this->getFactory()->createShoppingListItemMapper()->mapItemCollectionTransfer($shoppingListItemEntityTransferCollection)
-        );
-        $shoppingListOverviewResponseTransfer->setPagination(
-            $paginationTransfer
-        );
-
-        return $shoppingListOverviewResponseTransfer;
+        return (new ShoppingListOverviewResponseTransfer())
+            ->setItemsCollection($this->getFactory()->createShoppingListItemMapper()->mapItemCollectionTransfer($shoppingListItemEntityTransferCollection))
+            ->setPagination($paginationTransfer);
     }
 
     /**
