@@ -9,13 +9,13 @@ namespace Spryker\Zed\ShoppingList\Business\Model;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
-use Generated\Shared\Transfer\ShoppingListPaginationTransfer;
 use Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Shared\ShoppingList\ShoppingListConfig;
@@ -260,26 +260,26 @@ class ShoppingListReader implements ShoppingListReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListPaginationTransfer
+     * @return \Generated\Shared\Transfer\PaginationTransfer
      */
-    protected function buildShoppingListPaginationTransfer(ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer): ShoppingListPaginationTransfer
+    protected function buildShoppingListPaginationTransfer(ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer): PaginationTransfer
     {
-        return (new ShoppingListPaginationTransfer())
+        return (new PaginationTransfer())
             ->setPage($shoppingListOverviewRequestTransfer->getPage())
-            ->setItemsPerPage($shoppingListOverviewRequestTransfer->getItemsPerPage());
+            ->setMaxPerPage($shoppingListOverviewRequestTransfer->getItemsPerPage());
     }
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingList
-     * @param \Generated\Shared\Transfer\ShoppingListPaginationTransfer $shoppingListPaginationTransfer
+     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer
      */
-    protected function buildShoppingListOverviewResponseTransfer(ShoppingListTransfer $shoppingList, ShoppingListPaginationTransfer $shoppingListPaginationTransfer): ShoppingListOverviewResponseTransfer
+    protected function buildShoppingListOverviewResponseTransfer(ShoppingListTransfer $shoppingList, PaginationTransfer $paginationTransfer): ShoppingListOverviewResponseTransfer
     {
         return (new ShoppingListOverviewResponseTransfer())
             ->setShoppingList($shoppingList)
-            ->setPagination($shoppingListPaginationTransfer);
+            ->setPagination($paginationTransfer);
     }
 
     /**

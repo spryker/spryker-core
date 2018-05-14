@@ -60,15 +60,8 @@
     <transfer name="ShoppingListOverviewResponse">
         <property name="shoppingList" type="ShoppingList"/>
         <property name="itemsCollection" type="ShoppingListItemCollection"/>
-        <property name="pagination" type="ShoppingListPagination" />
+        <property name="pagination" type="Pagination" />
         <property name="shoppingLists" type="ShoppingListCollection" />
-    </transfer>
-
-    <transfer name="ShoppingListPagination">
-        <property name="page" type="int" />
-        <property name="pagesTotal" type="int" />
-        <property name="itemsPerPage" type="int" />
-        <property name="itemsTotal" type="int" />
     </transfer>
 
     <transfer name="ShoppingListAddToCartRequest">

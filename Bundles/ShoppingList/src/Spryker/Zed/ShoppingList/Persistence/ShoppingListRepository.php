@@ -8,18 +8,21 @@
 namespace Spryker\Zed\ShoppingList\Persistence;
 
 use Generated\Shared\Transfer\FilterTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
-use Generated\Shared\Transfer\ShoppingListPaginationTransfer;
 use Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\ShoppingList\Persistence\Map\SpyShoppingListCompanyBusinessUnitTableMap;
 use Orm\Zed\ShoppingList\Persistence\Map\SpyShoppingListCompanyUserTableMap;
+use Orm\Zed\ShoppingList\Persistence\Map\SpyShoppingListItemTableMap;
 use Orm\Zed\ShoppingList\Persistence\Map\SpyShoppingListTableMap;
+use Orm\Zed\ShoppingList\Persistence\SpyShoppingListItemQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\ShoppingList\Persistence\Propel\Mapper\ShoppingListMapperInterface;
 
@@ -103,16 +106,24 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
             ->createShoppingListItemQuery()
             ->filterByFkShoppingList($shoppingListOverviewRequestTransfer->getShoppingList()->getIdShoppingList());
 
-        $filterTransfer = new FilterTransfer();
-        $filterTransfer->setLimit($shoppingListOverviewRequestTransfer->getItemsPerPage());
-        $filterTransfer->setOffset($shoppingListOverviewRequestTransfer->getPage() - 1);
+        $filterTransfer = (new FilterTransfer())
+            ->setOrderBy(SpyShoppingListItemTableMap::COL_ID_SHOPPING_LIST_ITEM)
+            ->setOrderDirection('ASC');
+
+        $paginationTransfer = new PaginationTransfer();
+        $paginationTransfer->setMaxPerPage($shoppingListOverviewRequestTransfer->getItemsPerPage())
+            ->setPage($shoppingListOverviewRequestTransfer->getPage());
+        $shoppingListItemQuery = $this->preparePagination($shoppingListItemQuery, $paginationTransfer);
+
         $shoppingListItemEntityTransferCollection = $this->buildQueryFromCriteria($shoppingListItemQuery, $filterTransfer)->find();
 
         $shoppingListOverviewResponseTransfer = new ShoppingListOverviewResponseTransfer();
         $shoppingListOverviewResponseTransfer->setItemsCollection(
             $this->getFactory()->createShoppingListItemMapper()->mapItemCollectionTransfer($shoppingListItemEntityTransferCollection)
         );
-        $shoppingListOverviewResponseTransfer->setPagination((new ShoppingListPaginationTransfer())->setPage($shoppingListOverviewRequestTransfer->getPage()));
+        $shoppingListOverviewResponseTransfer->setPagination(
+            $paginationTransfer
+        );
 
         return $shoppingListOverviewResponseTransfer;
     }
@@ -306,5 +317,34 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
             ->filterByCustomerReference($customerReference)
             ->orderByIdShoppingList()
             ->leftJoinWithSpyShoppingListItem();
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
+     *
+     * @return \Orm\Zed\ShoppingList\Persistence\SpyShoppingListItemQuery
+     */
+    protected function preparePagination(ModelCriteria $query, PaginationTransfer $paginationTransfer): SpyShoppingListItemQuery
+    {
+        $page = $paginationTransfer
+            ->requirePage()
+            ->getPage();
+
+        $maxPerPage = $paginationTransfer
+            ->requireMaxPerPage()
+            ->getMaxPerPage();
+
+        $paginationModel = $query->paginate($page, $maxPerPage);
+
+        $paginationTransfer->setNbResults($paginationModel->getNbResults())
+            ->setFirstIndex($paginationModel->getFirstIndex())
+            ->setLastIndex($paginationModel->getLastIndex())
+            ->setFirstPage($paginationModel->getFirstPage())
+            ->setLastPage($paginationModel->getLastPage())
+            ->setNextPage($paginationModel->getNextPage())
+            ->setPreviousPage($paginationModel->getPreviousPage());
+
+        return $paginationModel->getQuery();
     }
 }
