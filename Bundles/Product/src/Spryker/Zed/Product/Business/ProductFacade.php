@@ -706,6 +706,22 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @api
      *
+     * @param string $concreteSku
+     *
+     * @return bool
+     */
+    public function isProductConcreteActive(string $concreteSku): bool
+    {
+        return $this->getFactory()
+            ->createProductConcreteStatusChecker()
+            ->isActive($concreteSku);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *

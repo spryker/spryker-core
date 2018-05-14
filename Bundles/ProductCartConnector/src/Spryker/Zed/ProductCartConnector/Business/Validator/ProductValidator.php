@@ -18,6 +18,7 @@ class ProductValidator implements ProductValidatorInterface
     const MESSAGE_ERROR_ABSTRACT_PRODUCT_EXISTS = 'product-cart.validation.error.abstract-product-exists';
     const MESSAGE_ERROR_CONCRETE_PRODUCT_EXISTS = 'product-cart.validation.error.concrete-product-exists';
     const MESSAGE_PARAM_SKU = 'sku';
+    public const MESSAGE_ERROR_CONCRETE_PRODUCT_INACTIVE = 'product-cart.validation.error.concrete-product-inactive';
 
     /** @var \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface */
     protected $productFacade;
@@ -41,6 +42,7 @@ class ProductValidator implements ProductValidatorInterface
 
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             if ($itemTransfer->getSku()) {
+                $this->productStatusCheck($itemTransfer, $responseTransfer);
                 $this->validateConcreteItem($itemTransfer, $responseTransfer);
                 continue;
             }
@@ -66,6 +68,28 @@ class ProductValidator implements ProductValidatorInterface
         }
 
         $message = $this->createViolationMessage(static::MESSAGE_ERROR_CONCRETE_PRODUCT_EXISTS);
+        $message->setParameters([
+            static::MESSAGE_PARAM_SKU => $itemTransfer->getSku(),
+        ]);
+
+        $responseTransfer->addMessage($message);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $responseTransfer
+     *
+     * @return void
+     */
+    protected function productStatusCheck(ItemTransfer $itemTransfer, CartPreCheckResponseTransfer $responseTransfer): void
+    {
+        $isValid = $this->productFacade->isProductConcreteActive($itemTransfer->getSku());
+
+        if ($isValid) {
+            return;
+        }
+
+        $message = $this->createViolationMessage(static::MESSAGE_ERROR_CONCRETE_PRODUCT_INACTIVE);
         $message->setParameters([
             static::MESSAGE_PARAM_SKU => $itemTransfer->getSku(),
         ]);

@@ -12,9 +12,9 @@ use Spryker\Shared\Kernel\Transfer\TransferInterface;
 interface ShoppingListToZedRequestClientInterface
 {
     /**
-     * @return void
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
-    public function addFlashMessagesFromLastZedRequest(): void;
+    public function getLastResponseErrorMessages();
 
     /**
      * @param string $url

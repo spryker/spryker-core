@@ -621,6 +621,18 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
+     * - Returns true if concrete products is active.
+     *
+     * @api
+     *
+     * @param string $concreteSku
+     *
+     * @return bool
+     */
+    public function isProductConcreteActive(string $concreteSku): bool;
+
+    /**
+     * Specification:
      * - Returns the attribute keys of the abstract product and its concrete products.
      * - Includes localized abstract product and concrete products attribute keys when $localeTransfer is provided.
      *

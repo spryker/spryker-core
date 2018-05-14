@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShoppingListAddToCartRequestCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListAddToCartRequestTransfer;
 use Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToCartClientInterface;
+use Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToMessengerClientInterface;
 use Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToZedRequestClientInterface;
 use Spryker\Client\ShoppingList\Zed\ShoppingListStubInterface;
 
@@ -34,18 +35,26 @@ class CartHandler implements CartHandlerInterface
     protected $zedRequestClient;
 
     /**
+     * @var \Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToMessengerClientInterface
+     */
+    protected $messengerClient;
+
+    /**
      * @param \Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToCartClientInterface $cartClient
      * @param \Spryker\Client\ShoppingList\Zed\ShoppingListStubInterface $shoppingListStub
      * @param \Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToZedRequestClientInterface $zedRequestClient
+     * @param \Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToMessengerClientInterface $messengerClient
      */
     public function __construct(
         ShoppingListToCartClientInterface $cartClient,
         ShoppingListStubInterface $shoppingListStub,
-        ShoppingListToZedRequestClientInterface $zedRequestClient
+        ShoppingListToZedRequestClientInterface $zedRequestClient,
+        ShoppingListToMessengerClientInterface $messengerClient
     ) {
         $this->cartClient = $cartClient;
         $this->shoppingListStub = $shoppingListStub;
         $this->zedRequestClient = $zedRequestClient;
+        $this->messengerClient = $messengerClient;
     }
 
     /**
@@ -65,7 +74,7 @@ class CartHandler implements CartHandlerInterface
         }
 
         $quoteTransfer = $this->cartClient->addValidItems($cartChangeTransfer);
-        $this->zedRequestClient->addFlashMessagesFromLastZedRequest();
+        $this->addErrorMessages();
         $failedToMoveRequestCollectionTransfer = $this->getShoppingListRequestCollectionToCartDiff(
             $shoppingListAddToCartRequestCollectionTransfer,
             $quoteTransfer
@@ -137,5 +146,15 @@ class CartHandler implements CartHandlerInterface
             $skuIndex[$itemTransfer->getSku()] = true;
         }
         return $skuIndex;
+    }
+
+    /**
+     * @return void
+     */
+    protected function addErrorMessages(): void
+    {
+        foreach ($this->zedRequestClient->getLastResponseErrorMessages() as $messageTransfer) {
+            $this->messengerClient->addErrorMessage($messageTransfer->getValue());
+        }
     }
 }

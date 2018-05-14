@@ -40,4 +40,11 @@ interface ProductCartConnectorToProductInterface
      * @return bool
      */
     public function hasProductAbstract($abstractSku);
+
+    /**
+     * @param string $concreteSku
+     *
+     * @return bool
+     */
+    public function isProductConcreteActive(string $concreteSku): bool;
 }

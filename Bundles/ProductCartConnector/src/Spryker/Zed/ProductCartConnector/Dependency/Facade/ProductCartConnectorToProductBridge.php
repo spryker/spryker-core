@@ -65,4 +65,14 @@ class ProductCartConnectorToProductBridge implements ProductCartConnectorToProdu
     {
         return $this->productFacade->hasProductAbstract($abstractSku);
     }
+
+    /**
+     * @param string $concreteSku
+     *
+     * @return bool
+     */
+    public function isProductConcreteActive(string $concreteSku): bool
+    {
+        return $this->productFacade->isProductConcreteActive($concreteSku);
+    }
 }

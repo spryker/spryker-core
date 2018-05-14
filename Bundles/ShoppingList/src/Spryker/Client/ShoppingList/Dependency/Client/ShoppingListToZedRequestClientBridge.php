@@ -25,11 +25,11 @@ class ShoppingListToZedRequestClientBridge implements ShoppingListToZedRequestCl
     }
 
     /**
-     * @return void
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
-    public function addFlashMessagesFromLastZedRequest(): void
+    public function getLastResponseErrorMessages()
     {
-        $this->zedRequestClient->addFlashMessagesFromLastZedRequest();
+        return $this->zedRequestClient->getLastResponseErrorMessages();
     }
 
     /**

@@ -32,6 +32,8 @@ use Spryker\Zed\Product\Business\Product\ProductConcreteManager;
 use Spryker\Zed\Product\Business\Product\ProductManager;
 use Spryker\Zed\Product\Business\Product\Sku\SkuGenerator;
 use Spryker\Zed\Product\Business\Product\Status\ProductAbstractStatusChecker;
+use Spryker\Zed\Product\Business\Product\Status\ProductConcreteStatusChecker;
+use Spryker\Zed\Product\Business\Product\Status\ProductConcreteStatusCheckerInterface;
 use Spryker\Zed\Product\Business\Product\StoreRelation\ProductAbstractStoreRelationReader;
 use Spryker\Zed\Product\Business\Product\StoreRelation\ProductAbstractStoreRelationWriter;
 use Spryker\Zed\Product\Business\Product\Touch\ProductAbstractTouch;
@@ -162,6 +164,14 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     public function createProductAbstractStatusChecker()
     {
         return new ProductAbstractStatusChecker($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\Status\ProductConcreteStatusCheckerInterface
+     */
+    public function createProductConcreteStatusChecker(): ProductConcreteStatusCheckerInterface
+    {
+        return new ProductConcreteStatusChecker($this->getQueryContainer());
     }
 
     /**
