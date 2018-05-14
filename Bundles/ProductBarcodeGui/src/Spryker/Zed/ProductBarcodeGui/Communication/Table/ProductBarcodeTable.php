@@ -43,14 +43,14 @@ class ProductBarcodeTable extends AbstractTable
 
     /**
      * @param \Spryker\Zed\ProductBarcodeGui\Dependency\Facade\ProductBarcodeGuiToProductBarcodeFacadeInterface $productBarcodeFacade
-     * @param \Spryker\Zed\ProductBarcodeGui\Dependency\Facade\ProductBarcodeGuiToLocaleFacadeInterface $localeFacadeBridge
+     * @param \Spryker\Zed\ProductBarcodeGui\Dependency\Facade\ProductBarcodeGuiToLocaleFacadeInterface $localeFacade
      */
     public function __construct(
         ProductBarcodeGuiToProductBarcodeFacadeInterface $productBarcodeFacade,
-        ProductBarcodeGuiToLocaleFacadeInterface $localeFacadeBridge
+        ProductBarcodeGuiToLocaleFacadeInterface $localeFacade
     ) {
         $this->productBarcodeFacade = $productBarcodeFacade;
-        $this->localeFacade = $localeFacadeBridge;
+        $this->localeFacade = $localeFacade;
     }
 
     /**
