@@ -7,7 +7,6 @@
 
 namespace Spryker\Service\Barcode\BarcodeGenerator;
 
-use Spryker\Service\Barcode\Exception\BarcodeGeneratorPluginAlreadyRegisteredException;
 use Spryker\Service\Barcode\Exception\BarcodeGeneratorPluginNotFoundException;
 use Spryker\Service\Barcode\Exception\BarcodeGeneratorPluginsNotProvided;
 use Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface;
@@ -21,30 +20,12 @@ class BarcodeGeneratorPluginResolver implements BarcodeGeneratorPluginResolverIn
 
     /**
      * @param \Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface[] $barcodeGeneratorPlugins
-     *
-     * @throws \Spryker\Service\Barcode\Exception\BarcodeGeneratorPluginsNotProvided
-     * @throws \Spryker\Service\Barcode\Exception\BarcodeGeneratorPluginAlreadyRegisteredException
      */
     public function __construct(array $barcodeGeneratorPlugins)
     {
-        if (!$barcodeGeneratorPlugins) {
-            throw new BarcodeGeneratorPluginsNotProvided(
-                'BarcodeGeneratorPluginResolver cannot work without plugin list'
-            );
-        }
+        $this->assertBarcodeGeneratorPlugins($barcodeGeneratorPlugins);
 
-        foreach ($barcodeGeneratorPlugins as $barcodeGeneratorPlugin) {
-            if (in_array($barcodeGeneratorPlugin, $this->barcodeGeneratorPlugins)) {
-                throw new BarcodeGeneratorPluginAlreadyRegisteredException(
-                    sprintf(
-                        'BarcodeGeneratorPluginResolver requires unique plugin class name. "%s" already injected.',
-                        get_class($barcodeGeneratorPlugin)
-                    )
-                );
-            }
-
-            $this->barcodeGeneratorPlugins[] = $barcodeGeneratorPlugin;
-        }
+        $this->setBarcodeGeneratorPluginCache($barcodeGeneratorPlugins);
     }
 
     /**
@@ -58,26 +39,35 @@ class BarcodeGeneratorPluginResolver implements BarcodeGeneratorPluginResolverIn
             return reset($this->barcodeGeneratorPlugins);
         }
 
-        return $this->getPluginByClassNameCashed($generatorPluginClassName);
+        return $this->getPluginByClassName($generatorPluginClassName);
     }
 
     /**
-     * @param string $fullClassName
+     * @param array $barcodeGeneratorPlugins
      *
-     * @return \Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface
+     * @throws \Spryker\Service\Barcode\Exception\BarcodeGeneratorPluginsNotProvided
+     *
+     * @return void
      */
-    protected function getPluginByClassNameCashed(string $fullClassName): BarcodeGeneratorPluginInterface
+    protected function assertBarcodeGeneratorPlugins(array $barcodeGeneratorPlugins): void
     {
-        /**
-         * @var \Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface[] $cashedPluginsMap
-         */
-        static $cashedPluginsMap = [];
-
-        if (!array_key_exists($fullClassName, $cashedPluginsMap)) {
-            $cashedPluginsMap[$fullClassName] = $this->getPluginByClassName($fullClassName);
+        if (!$barcodeGeneratorPlugins) {
+            throw new BarcodeGeneratorPluginsNotProvided(
+                'BarcodeGeneratorPluginResolver cannot work without plugin list'
+            );
         }
+    }
 
-        return $cashedPluginsMap[$fullClassName];
+    /**
+     * @param array $barcodeGeneratorPlugins
+     *
+     * @return void
+     */
+    protected function setBarcodeGeneratorPluginCache(array $barcodeGeneratorPlugins): void
+    {
+        foreach ($barcodeGeneratorPlugins as $barcodeGeneratorPlugin) {
+            $this->barcodeGeneratorPlugins[get_class($barcodeGeneratorPlugin)] = $barcodeGeneratorPlugin;
+        }
     }
 
     /**
@@ -89,18 +79,16 @@ class BarcodeGeneratorPluginResolver implements BarcodeGeneratorPluginResolverIn
      */
     protected function getPluginByClassName(string $fullClassName): BarcodeGeneratorPluginInterface
     {
-        foreach ($this->barcodeGeneratorPlugins as $barcodePlugin) {
-            if (get_class($barcodePlugin) === $fullClassName) {
-                return $barcodePlugin;
-            }
+        if (!array_key_exists($fullClassName, $this->barcodeGeneratorPlugins)) {
+            throw new BarcodeGeneratorPluginNotFoundException(
+                sprintf(
+                    'There is no plugin for barcode generation with class "%s".'
+                    . ' Or it is not provided in BarcodeDependencyProvider::getBarcodeGeneratorPlugins()',
+                    $fullClassName
+                )
+            );
         }
 
-        throw new BarcodeGeneratorPluginNotFoundException(
-            sprintf(
-                'There is no plugin for barcode generation with class "%s".'
-                . ' Or it is not provided in BarcodeDependencyProvider::getBarcodeGeneratorPlugins()',
-                $fullClassName
-            )
-        );
+        return $this->barcodeGeneratorPlugins[$fullClassName];
     }
 }
