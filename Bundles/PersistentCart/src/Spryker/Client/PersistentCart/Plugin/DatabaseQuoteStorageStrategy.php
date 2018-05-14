@@ -123,7 +123,7 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
             ->createChangeRequestExtendPluginExecutor()
             ->executePlugins($persistentCartChangeTransfer, $params);
 
-        $quoteResponseTransfer = $this->getZedStub()->addItem($persistentCartChangeTransfer);
+        $quoteResponseTransfer = $this->getZedStub()->addValidItems($persistentCartChangeTransfer);
 
         return $this->updateQuote($quoteResponseTransfer);
     }
