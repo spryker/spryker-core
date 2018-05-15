@@ -61,10 +61,26 @@ class ActiveProcessFetcherTest extends Unit
     /**
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
+        $this->clearReservedStatesCache();
+    }
 
+    /**
+     * @return void
+     */
+    protected function setUp(): void
+    {
+        $this->clearReservedStatesCache();
+        parent::setUp();
+    }
+
+    /**
+     * @return void
+     */
+    protected function clearReservedStatesCache()
+    {
         $reflectionResolver = new ReflectionClass(ActiveProcessFetcher::class);
         $reflectionProperty = $reflectionResolver->getProperty('reservedStatesCache');
         $reflectionProperty->setAccessible(true);
