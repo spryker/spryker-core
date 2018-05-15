@@ -29,7 +29,7 @@ class CompanyToZedRequestClientBridge implements CompanyToZedRequestClientInterf
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $object
      * @param array|null $requestOptions
      *
-     * @return \Generated\Shared\Transfer\CompanyResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     public function call($url, TransferInterface $object, $requestOptions = null)
     {
