@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Oms\Business\Util;
 
 use Codeception\Test\Unit;
+use ReflectionClass;
 use Spryker\Zed\Oms\Business\OrderStateMachine\Builder;
 use Spryker\Zed\Oms\Business\OrderStateMachine\BuilderInterface;
 use Spryker\Zed\Oms\Business\Process\Event;
@@ -31,7 +32,7 @@ use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
  */
 class ActiveProcessFetcherTest extends Unit
 {
-    protected const TEST_STATE_MACHINE_NAME = 'StateMachine01';
+    protected const TEST_STATE_MACHINE_NAME = 'ActiveStateMachine';
     protected const RESERVED_STATES = [
         'new',
         'payment pending',
@@ -55,6 +56,19 @@ class ActiveProcessFetcherTest extends Unit
         sort($reservedStateNames);
 
         $this->assertEquals($expectedStates, $reservedStateNames);
+    }
+
+    /**
+     * @return void
+     */
+    public function tearDown()
+    {
+        parent::tearDown();
+
+        $reflectionResolver = new ReflectionClass(ActiveProcessFetcher::class);
+        $reflectionProperty = $reflectionResolver->getProperty('reservedStatesCache');
+        $reflectionProperty->setAccessible(true);
+        $reflectionProperty->setValue([]);
     }
 
     /**
@@ -100,7 +114,7 @@ class ActiveProcessFetcherTest extends Unit
     /**
      * @return string
      */
-    private function getProcessLocation()
+    protected function getProcessLocation()
     {
         return __DIR__ . '/ActiveProcessFetcher/Fixtures';
     }

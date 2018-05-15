@@ -4,9 +4,9 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="spryker:oms-01 http://static.spryker.com/oms-01.xsd">
 
-    <process name="StateMachine02" main="true">
+    <process name="ActiveStateMachine" main="true">
         <subprocesses>
-            <process>SubProcessA</process>
+            <process>ActiveSubProcess</process>
         </subprocesses>
 
         <states>
@@ -36,6 +36,6 @@
         </events>
     </process>
 
-    <process name="SubProcessA" file="Sub/SubProcess01.xml"/>
+    <process name="ActiveSubProcess" file="Sub/ActiveSubProcess.xml"/>
 
 </statemachine>
