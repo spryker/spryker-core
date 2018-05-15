@@ -35,9 +35,6 @@ class ActiveProcessFetcherTest extends Unit
     protected const RESERVED_STATES = [
         'new',
         'payment pending',
-        'paid',
-        'exported',
-        'shipped',
     ];
 
     /**
@@ -56,6 +53,7 @@ class ActiveProcessFetcherTest extends Unit
         $expectedStates = static::RESERVED_STATES;
         sort($expectedStates);
         sort($reservedStateNames);
+
         $this->assertEquals($expectedStates, $reservedStateNames);
     }
 
@@ -95,7 +93,15 @@ class ActiveProcessFetcherTest extends Unit
             new State(),
             new Transition(),
             new Process($drawerMock),
-            []
+            [$this->getProcessLocation()]
         );
+    }
+
+    /**
+     * @return string
+     */
+    private function getProcessLocation()
+    {
+        return __DIR__ . '/ActiveProcessFetcher/Fixtures';
     }
 }
