@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CompanyUser\Business;
 
-use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
@@ -43,15 +42,15 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CompanyResponseTransfer $companyResponseTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyResponseTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
-    public function createInitialCompanyUser(CompanyResponseTransfer $companyResponseTransfer): CompanyResponseTransfer
+    public function createInitialCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
         return $this->getFactory()
             ->createCompanyUser()
-            ->createInitialCompanyUser($companyResponseTransfer);
+            ->createInitialCompanyUser($companyUserTransfer);
     }
 
     /**

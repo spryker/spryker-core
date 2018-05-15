@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CompanyUser\Business\Model;
 
 use ArrayObject;
-use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
@@ -278,37 +277,15 @@ class CompanyUser implements CompanyUserInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyResponseTransfer $companyResponseTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyResponseTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
-    public function createInitialCompanyUser(CompanyResponseTransfer $companyResponseTransfer): CompanyResponseTransfer
+    public function createInitialCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
-        $companyTransfer = $companyResponseTransfer
-            ->requireCompanyTransfer()
-            ->getCompanyTransfer();
+        $companyUserTransfer->requireFkCompany();
 
-        $companyUserTransfer = $companyTransfer
-            ->requireInitialUserTransfer()
-            ->getInitialUserTransfer();
-
-        $companyUserTransfer->setFkCompany($companyTransfer->getIdCompany());
-        $companyUserResponseTransfer = $this->create($companyUserTransfer);
-
-        if ($companyUserResponseTransfer->getIsSuccessful()) {
-            $companyTransfer->setInitialUserTransfer($companyUserResponseTransfer->getCompanyUser());
-            $companyResponseTransfer->setCompanyTransfer($companyTransfer);
-
-            return $companyResponseTransfer;
-        }
-
-        $companyResponseTransfer->setIsSuccessful(false);
-
-        foreach ($companyUserResponseTransfer->getMessages() as $responseMessageTransfer) {
-            $companyResponseTransfer->addMessage($responseMessageTransfer);
-        }
-
-        return $companyResponseTransfer;
+        return $this->create($companyUserTransfer);
     }
 
     /**
