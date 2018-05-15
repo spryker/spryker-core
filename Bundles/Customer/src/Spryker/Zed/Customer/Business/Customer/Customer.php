@@ -35,8 +35,8 @@ use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
 
 class Customer implements CustomerInterface
 {
-    const BCRYPT_FACTOR = 12;
-    const BCRYPT_SALT = '';
+    protected const BCRYPT_FACTOR = 12;
+    protected const BCRYPT_SALT = '';
 
     /**
      * @var \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface
@@ -751,15 +751,9 @@ class Customer implements CustomerInterface
      */
     protected function getEncodedPassword($currentPassword)
     {
-        $newPassword = $currentPassword;
+        $encoder = new BCryptPasswordEncoder(self::BCRYPT_FACTOR);
 
-        if (mb_substr($currentPassword, 0, 2) !== '$2') {
-            $encoder = new BCryptPasswordEncoder(self::BCRYPT_FACTOR);
-
-            $newPassword = $encoder->encodePassword($currentPassword, self::BCRYPT_SALT);
-        }
-
-        return $newPassword;
+        return $encoder->encodePassword($currentPassword, self::BCRYPT_SALT);
     }
 
     /**

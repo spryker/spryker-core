@@ -167,7 +167,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     /**
      * @api
      *
-     * @param string|bool $moduleToView
+     * @param string $moduleToView
      * @param array $excludedModules
      * @param bool $showIncomingDependencies
      *

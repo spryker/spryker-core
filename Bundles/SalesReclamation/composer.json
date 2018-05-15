@@ -6,7 +6,7 @@
     "php": ">=7.1",
     "spryker/gui": "^3.7.0",
     "spryker/kernel": "^3.0.0",
-    "spryker/manual-order-entry-gui": "*",
+    "spryker/manual-order-entry-gui": "^0.4.0",
     "spryker/sales": "^7.0.0 || ^8.0.0",
     "spryker/sales-extension": "^1.0.0",
     "spryker/symfony": "^3.0.0",
@@ -19,7 +19,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/checkout": "Used interfase for SaveOrder plugin. Version from 3.0.0"
+    "spryker/checkout": "Used interface for SaveOrder plugin. Version from 3.0.0"
   },
   "autoload": {
     "psr-4": {
