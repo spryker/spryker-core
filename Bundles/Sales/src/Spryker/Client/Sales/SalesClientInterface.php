@@ -38,6 +38,20 @@ interface SalesClientInterface
 
     /**
      * Specification:
+     *  - Returns a list of of orders for the given customer id and (optional) filters, without order items information.
+     *  - Aggregates order totals calls -> SalesAggregator
+     *  - Paginates order list for limited result
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderListTransfer
+     */
+    public function getPaginatedCustomerOrdersOverview(OrderListTransfer $orderListTransfer): OrderListTransfer;
+
+    /**
+     * Specification:
      * - Returns details for the given order id.
      *
      * @api
