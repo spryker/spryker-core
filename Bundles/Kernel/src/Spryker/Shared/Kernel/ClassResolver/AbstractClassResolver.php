@@ -138,7 +138,7 @@ abstract class AbstractClassResolver
     }
 
     /**
-     * @return object
+     * @return \Spryker\Yves\Kernel\Controller\AbstractController
      */
     protected function getResolvedClassInstance()
     {

@@ -40,7 +40,7 @@ class ShoppingListStub implements ShoppingListStubInterface
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
      */
     public function createShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
     {
@@ -50,7 +50,7 @@ class ShoppingListStub implements ShoppingListStubInterface
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
      */
     public function updateShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
     {
@@ -60,7 +60,7 @@ class ShoppingListStub implements ShoppingListStubInterface
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
      */
     public function removeShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
     {
@@ -70,7 +70,7 @@ class ShoppingListStub implements ShoppingListStubInterface
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
     public function addItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
     {
@@ -80,7 +80,7 @@ class ShoppingListStub implements ShoppingListStubInterface
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */
     public function removeItemById(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemResponseTransfer
     {
@@ -90,7 +90,7 @@ class ShoppingListStub implements ShoppingListStubInterface
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */
     public function getShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer
     {
@@ -100,7 +100,7 @@ class ShoppingListStub implements ShoppingListStubInterface
     /**
      * @param \Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer
      */
     public function getShoppingListOverview(ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer): ShoppingListOverviewResponseTransfer
     {
@@ -110,7 +110,7 @@ class ShoppingListStub implements ShoppingListStubInterface
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
      */
     public function getCustomerShoppingListCollection(CustomerTransfer $customerTransfer): ShoppingListCollectionTransfer
     {
@@ -120,7 +120,7 @@ class ShoppingListStub implements ShoppingListStubInterface
     /**
      * @param \Generated\Shared\Transfer\ShoppingListCollectionTransfer $shoppingListCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
     public function getShoppingListItemCollection(ShoppingListCollectionTransfer $shoppingListCollectionTransfer): ShoppingListItemCollectionTransfer
     {
@@ -130,7 +130,7 @@ class ShoppingListStub implements ShoppingListStubInterface
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
     public function getShoppingListItemCollectionTransfer(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ShoppingListItemCollectionTransfer
     {
@@ -140,7 +140,7 @@ class ShoppingListStub implements ShoppingListStubInterface
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
     public function updateShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
     {
@@ -150,7 +150,7 @@ class ShoppingListStub implements ShoppingListStubInterface
     /**
      * @param \Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer $shoppingListFromCartRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */
     public function createShoppingListFromQuote(ShoppingListFromCartRequestTransfer $shoppingListFromCartRequestTransfer): ShoppingListTransfer
     {
@@ -158,7 +158,7 @@ class ShoppingListStub implements ShoppingListStubInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer
      */
     public function getShoppingListPermissionGroup(): ShoppingListPermissionGroupTransfer
     {
@@ -168,7 +168,7 @@ class ShoppingListStub implements ShoppingListStubInterface
     /**
      * @param \Generated\Shared\Transfer\ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
      */
     public function shareShoppingListWithCompanyBusinessUnit(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ShoppingListShareResponseTransfer
     {
@@ -178,7 +178,7 @@ class ShoppingListStub implements ShoppingListStubInterface
     /**
      * @param \Generated\Shared\Transfer\ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
      */
     public function shareShoppingListWithCompanyUser(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ShoppingListShareResponseTransfer
     {

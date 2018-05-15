@@ -40,7 +40,7 @@ class CustomerFacadeTest extends Unit
     const TESTER_INVALID_EMAIL = 'tester<>@spryker.com';
     const TESTER_NON_EXISTING_EMAIL = 'nonexisting@spryker.com';
     const TESTER_UPDATE_EMAIL = 'update.tester@spryker.com';
-    const TESTER_PASSWORD = 'tester';
+    const TESTER_PASSWORD = '$2tester';
     const TESTER_NAME = 'Tester';
     const TESTER_CITY = 'Testcity';
     const TESTER_ADDRESS1 = 'Testerstreet 23';

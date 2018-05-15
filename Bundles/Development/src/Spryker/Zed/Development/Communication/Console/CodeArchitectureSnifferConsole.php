@@ -12,6 +12,9 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Zend\Filter\FilterChain;
+use Zend\Filter\StringToLower;
+use Zend\Filter\Word\CamelCaseToDash;
 use Zend\Filter\Word\UnderscoreToCamelCase;
 
 /**
@@ -20,14 +23,16 @@ use Zend\Filter\Word\UnderscoreToCamelCase;
  */
 class CodeArchitectureSnifferConsole extends Console
 {
-    const COMMAND_NAME = 'code:sniff:architecture';
-    const OPTION_MODULE = 'module';
-    const OPTION_CORE = 'core';
-    const OPTION_STRICT = 'strict';
-    const OPTION_PRIORITY = 'priority';
-    const OPTION_DRY_RUN = 'dry-run';
-    const ARGUMENT_SUB_PATH = 'path';
-    const APPLICATION_LAYERS = ['Zed', 'Client', 'Yves', 'Service', 'Shared'];
+    protected const COMMAND_NAME = 'code:sniff:architecture';
+    protected const OPTION_MODULE = 'module';
+    protected const OPTION_STRICT = 'strict';
+    protected const OPTION_PRIORITY = 'priority';
+    protected const OPTION_DRY_RUN = 'dry-run';
+    protected const ARGUMENT_SUB_PATH = 'path';
+    protected const APPLICATION_LAYERS = ['Zed', 'Client', 'Yves', 'Service', 'Shared'];
+
+    protected const NAMESPACE_SPRYKER_SHOP = 'SprykerShop';
+    protected const NAMESPACE_SPRYKER = 'Spryker';
 
     /**
      * @return void
@@ -41,8 +46,7 @@ class CodeArchitectureSnifferConsole extends Console
             ->setHelp('<info>' . static::COMMAND_NAME . ' -h</info>')
             ->setDescription('Check architecture rules for project or core');
 
-        $this->addOption(static::OPTION_MODULE, 'm', InputOption::VALUE_OPTIONAL, 'Name of module to run architecture sniffer for');
-        $this->addOption(static::OPTION_CORE, 'c', InputOption::VALUE_NONE, 'Core (instead of Project)');
+        $this->addOption(static::OPTION_MODULE, 'm', InputOption::VALUE_OPTIONAL, 'Name of module to run architecture sniffer for. You can use dot syntax for namespaced ones, e.g. `SprykerEco.FooBar`. `Spryker.all`/`SprykerShop.all` is reserved for CORE internal usage.');
         $this->addOption(static::OPTION_PRIORITY, 'p', InputOption::VALUE_OPTIONAL, 'Priority [1 (highest), 2 (medium), 3 (experimental)], defaults to 2.');
         $this->addOption(static::OPTION_STRICT, 's', InputOption::VALUE_NONE, 'Also report those nodes with a @SuppressWarnings annotation');
         $this->addOption(static::OPTION_DRY_RUN, 'd', InputOption::VALUE_NONE, 'Dry-Run the command, display it only');
@@ -58,8 +62,8 @@ class CodeArchitectureSnifferConsole extends Console
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $isCore = $this->input->getOption(static::OPTION_CORE);
         $module = $this->input->getOption(static::OPTION_MODULE);
+        $isCore = strpos($module, '.') !== false;
         $message = sprintf('Run Architecture Sniffer for %s', $isCore ? 'CORE' : 'PROJECT');
 
         if ($module) {
@@ -98,12 +102,11 @@ class CodeArchitectureSnifferConsole extends Console
      */
     protected function runForCore(OutputInterface $output, $module, $subPath)
     {
-        $path = $this->getFactory()->getConfig()->getPathToCore();
-        if ($module) {
-            $path .= $module . DIRECTORY_SEPARATOR;
-        }
-        if ($subPath) {
-            $path .= trim($subPath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        $path = $this->getCorePath($module, $subPath);
+        if (!is_dir($path)) {
+            $output->writeln(sprintf('<error>Path not found: %s</error>', $path));
+
+            return false;
         }
 
         $output->writeln($path, OutputInterface::VERBOSITY_VERBOSE);
@@ -112,6 +115,50 @@ class CodeArchitectureSnifferConsole extends Console
         $output->writeln($count . ' violations found');
 
         return $count === 0;
+    }
+
+    /**
+     * @param string $module
+     * @param string $pathSuffix
+     *
+     * @return string
+     */
+    protected function getCorePath($module, $pathSuffix)
+    {
+        $namespace = null;
+        if (strpos($module, '.') !== false) {
+            list ($namespace, $module) = explode('.', $module, 2);
+        }
+
+        if ($namespace === static::NAMESPACE_SPRYKER && is_dir($this->getFactory()->getConfig()->getPathToCore() . $module)) {
+            return $this->buildPath($this->getFactory()->getConfig()->getPathToCore() . $module . DIRECTORY_SEPARATOR, $pathSuffix);
+        }
+
+        if ($namespace === static::NAMESPACE_SPRYKER_SHOP && is_dir($this->getFactory()->getConfig()->getPathToShop() . $module)) {
+            return $this->buildPath($this->getFactory()->getConfig()->getPathToShop() . $module . DIRECTORY_SEPARATOR, $pathSuffix);
+        }
+
+        $vendor = $this->dasherize($namespace);
+        $module = $this->dasherize($module);
+        $pathToModule = $this->getFactory()->getConfig()->getPathToRoot() . 'vendor' . DIRECTORY_SEPARATOR . $vendor . DIRECTORY_SEPARATOR;
+        $path = $pathToModule . $module . DIRECTORY_SEPARATOR;
+
+        return $this->buildPath($path, $pathSuffix);
+    }
+
+    /**
+     * @param string $path
+     * @param string $suffix
+     *
+     * @return string
+     */
+    protected function buildPath($path, $suffix)
+    {
+        if (!$suffix) {
+            return $path;
+        }
+
+        return $path . $suffix;
     }
 
     /**
@@ -217,5 +264,20 @@ class CodeArchitectureSnifferConsole extends Console
         $normalized = ucfirst($normalized);
 
         return $normalized;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return string
+     */
+    protected function dasherize($name)
+    {
+        $filterChain = new FilterChain();
+        $filterChain
+            ->attach(new CamelCaseToDash())
+            ->attach(new StringToLower());
+
+        return $filterChain->filter($name);
     }
 }
