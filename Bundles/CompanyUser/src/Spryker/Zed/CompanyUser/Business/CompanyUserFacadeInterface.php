@@ -29,7 +29,7 @@ interface CompanyUserFacadeInterface
 
     /**
      * Specification:
-     * - Creates a initial company user
+     * - Creates an initial company user
      *
      * @api
      *
