@@ -81,9 +81,8 @@ class CreateController extends AbstractController
                     ->getOfferFacade()
                     ->createOffer($offerTransfer);
 
-                $this->addSuccessMessage(static::MESSAGE_OFFER_CREATE_SUCCESS);
-
                 if ($offerResponseTransfer->getIsSuccessful()) {
+                    $this->addSuccessMessage(static::MESSAGE_OFFER_CREATE_SUCCESS);
                     return $this->getSuccessfulRedirect($offerResponseTransfer);
                 }
             }
@@ -166,7 +165,7 @@ class CreateController extends AbstractController
      */
     protected function getSuccessfulRedirect(OfferResponseTransfer $offerResponseTransfer)
     {
-        $this->getFactory()->getMessengerFacade()->getStoredMessages();
+        $this->getFactory()->createFlashMessageCleaner()->clearDuplicateMessages();
 
         $redirectUrl = Url::generate(
             static::REDIRECT_URL_OFFER_VIEW,
