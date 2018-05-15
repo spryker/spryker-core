@@ -33,7 +33,7 @@ class CompanyStub implements CompanyStubInterface
      */
     public function createCompany(CompanyTransfer $companyTransfer): CompanyResponseTransfer
     {
-        /** @var CompanyResponseTransfer $companyResponseTransfer */
+        /** @var \Generated\Shared\Transfer\CompanyResponseTransfer $companyResponseTransfer */
         $companyResponseTransfer = $this->zedRequestClient->call('/company/gateway/create', $companyTransfer);
 
         return $companyResponseTransfer;
@@ -46,7 +46,7 @@ class CompanyStub implements CompanyStubInterface
      */
     public function getCompanyById(CompanyTransfer $companyTransfer): CompanyTransfer
     {
-        /** @var CompanyTransfer $companyTransfer */
+        /** @var \Generated\Shared\Transfer\CompanyTransfer $companyTransfer */
         $companyTransfer = $this->zedRequestClient->call('/company/gateway/get-company-by-id', $companyTransfer);
 
         return $companyTransfer;
