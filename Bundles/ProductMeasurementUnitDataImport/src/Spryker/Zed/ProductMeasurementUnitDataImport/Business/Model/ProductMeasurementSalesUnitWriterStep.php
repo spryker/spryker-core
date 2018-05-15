@@ -153,8 +153,10 @@ class ProductMeasurementSalesUnitWriterStep extends PublishAwareStep implements 
             ->setConversion($dataSet[ProductMeasurementSalesUnitDataSet::COLUMN_CONVERSION])
             ->setPrecision($dataSet[ProductMeasurementSalesUnitDataSet::COLUMN_PRECISION])
             ->setIsDefault($dataSet[ProductMeasurementSalesUnitDataSet::COLUMN_IS_DEFAULT])
-            ->setIsDisplayed($dataSet[ProductMeasurementSalesUnitDataSet::COLUMN_IS_DISPLAYED])
-            ->save();
+            ->setIsDisplayed($dataSet[ProductMeasurementSalesUnitDataSet::COLUMN_IS_DISPLAYED]);
+
+        // todo line  fails on mysql w/o error
+        $spyProductMeasurementSalesUnitEntity->save();
 
         return $spyProductMeasurementSalesUnitEntity;
     }
