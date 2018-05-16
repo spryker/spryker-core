@@ -82,7 +82,7 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
         $shoppingListItemTransfer->requireQuantity();
 
         if (!$this->productFacade->hasProductConcrete($shoppingListItemTransfer->getSku())) {
-            $this->messengerFacade->addSuccessMessage(
+            $this->messengerFacade->addErrorMessage(
                 (new MessageTransfer())
                     ->setValue(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_ADD_FAILED)
                     ->setParameters([static::GLOSSARY_PARAM_SKU => $shoppingListItemTransfer->getSku()])
@@ -91,22 +91,22 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
             return $shoppingListItemTransfer;
         }
 
-        $shoppingListTransfer = (new ShoppingListTransfer())->setIdShoppingList($shoppingListItemTransfer->getFkShoppingList());
-
-        if (!$shoppingListItemTransfer->getFkShoppingList()) {
-            $shoppingListTransfer = $this->shoppingListResolver->createDefaultShoppingListIfNotExists(
-                $shoppingListItemTransfer->getCustomerReference()
+        $shoppingListTransfer = (new ShoppingListTransfer())
+            ->setIdShoppingList($shoppingListItemTransfer->getFkShoppingList())
+            ->setIdCompanyUser($shoppingListItemTransfer->getIdCompanyUser())
+            ->setCustomerReference($shoppingListItemTransfer->getCustomerReference());
+        $shoppingListTransfer = $this->resolveShoppingList($shoppingListTransfer);
+        $shoppingListItemTransfer->setFkShoppingList($shoppingListTransfer->getIdShoppingList());
+        $shoppingListItemTransfer = $this->saveShoppingListItem($shoppingListItemTransfer);
+        if (!$shoppingListItemTransfer->getIdShoppingListItem()) {
+            $this->messengerFacade->addSuccessMessage(
+                (new MessageTransfer())
+                    ->setValue(static::GLOSARRY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_ADD_SUCCESS)
+                    ->setParameters([static::GLOSSARY_PARAM_SKU => $shoppingListItemTransfer->getSku()])
             );
         }
 
-        $shoppingListItemTransfer->setFkShoppingList($shoppingListTransfer->getIdShoppingList());
-        $this->messengerFacade->addSuccessMessage(
-            (new MessageTransfer())
-                ->setValue(static::GLOSARRY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_ADD_SUCCESS)
-                ->setParameters([static::GLOSSARY_PARAM_SKU => $shoppingListItemTransfer->getSku()])
-        );
-
-        return $this->saveShoppingListItem($shoppingListItemTransfer);
+        return $shoppingListItemTransfer;
     }
 
     /**
@@ -121,6 +121,11 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
         $shoppingListTransfer = $this->shoppingListRepository->findShoppingListById(
             (new ShoppingListTransfer())->setIdShoppingList($shoppingListItemTransfer->getFkShoppingList())
         );
+
+        if (!$shoppingListTransfer) {
+            return (new ShoppingListItemResponseTransfer())->setIsSuccess(false);
+        }
+
         $shoppingListTransfer->setIdCompanyUser($shoppingListItemTransfer->getIdCompanyUser());
 
         if (!$this->checkWritePermission($shoppingListTransfer)) {
@@ -139,7 +144,30 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
      */
     public function saveShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
     {
+        $shoppingListTransfer = (new ShoppingListTransfer())
+            ->setIdShoppingList($shoppingListItemTransfer->getFkShoppingList())
+            ->setIdCompanyUser($shoppingListItemTransfer->getIdCompanyUser());
+        if (!$this->checkWritePermission($shoppingListTransfer)) {
+            return $shoppingListItemTransfer;
+        }
+
         return $this->shoppingListEntityManager->saveShoppingListItem($shoppingListItemTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer
+     */
+    protected function resolveShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer
+    {
+        if (!$shoppingListTransfer->getIdShoppingList()) {
+            return $this->shoppingListResolver
+                ->createDefaultShoppingListIfNotExists($shoppingListTransfer->getCustomerReference())
+                ->setIdCompanyUser($shoppingListTransfer->getIdCompanyUser());
+        }
+
+        return $shoppingListTransfer;
     }
 
     /**
