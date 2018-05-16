@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\ProductMeasurementUnit\Business\ProductMeasurementUnitFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductMeasurementUnit\Communication\ProductMeasurementUnitCommunicationFactory getFactory()
  */
-class QuantityProductMeasurementSalesUnitValuePostSavePlugin extends AbstractPlugin implements PostSavePluginInterface
+class QuantitySalesUnitValuePostSavePlugin extends AbstractPlugin implements PostSavePluginInterface
 {
     /**
      * {@inheritdoc}
@@ -28,6 +28,6 @@ class QuantityProductMeasurementSalesUnitValuePostSavePlugin extends AbstractPlu
      */
     public function postSave(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        return $this->getFacade()->calculateSalesUnitValueInQuote($quoteTransfer);
+        return $this->getFacade()->calculateQuantitySalesUnitValueInQuote($quoteTransfer);
     }
 }

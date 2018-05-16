@@ -28,7 +28,7 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
      *
      * @return string
      */
-    public function expandItemGroupKeyWithSalesUnit(ItemTransfer $itemTransfer): string
+    public function expandItemGroupKeyWithQuantitySalesUnit(ItemTransfer $itemTransfer): string
     {
         return $this->getFactory()
             ->createProductMeasurementSalesUnitItemGroupKeyGenerator()
@@ -118,7 +118,7 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function calculateSalesUnitValueInQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function calculateQuantitySalesUnitValueInQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         return $this->getFactory()
             ->createProductMeasurementSalesUnitValue()

@@ -49,7 +49,7 @@ interface ProductMeasurementUnitFacadeInterface
      *
      * @return string
      */
-    public function expandItemGroupKeyWithSalesUnit(ItemTransfer $itemTransfer): string;
+    public function expandItemGroupKeyWithQuantitySalesUnit(ItemTransfer $itemTransfer): string;
 
     /**
      * Specification:
@@ -108,5 +108,5 @@ interface ProductMeasurementUnitFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function calculateSalesUnitValueInQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
+    public function calculateQuantitySalesUnitValueInQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

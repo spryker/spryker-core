@@ -13,21 +13,20 @@ use Generated\Shared\DataBuilder\ProductMeasurementUnitBuilder;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
-use Spryker\Zed\ProductMeasurementUnit\Communication\Plugin\SalesExtension\ProductMeasurementSalesUnitOrderItemExpanderPreSavePlugin;
+use Spryker\Zed\ProductMeasurementUnit\Communication\Plugin\SalesExtension\QuantitySalesUnitOrderItemExpanderPreSavePlugin;
 
 /**
  * Auto-generated group annotations
- *
  * @group SprykerTest
  * @group Zed
  * @group ProductMeasurementUnit
  * @group Communication
  * @group Plugin
  * @group SalesExtension
- * @group ProductMeasurementSalesUnitOrderItemExpanderPreSavePluginTest
+ * @group QuantitySalesUnitOrderItemExpanderPreSavePluginTest
  * Add your own group annotations below this line
  */
-class ProductMeasurementSalesUnitOrderItemExpanderPreSavePluginTest extends Unit
+class QuantitySalesUnitOrderItemExpanderPreSavePluginTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\ProductMeasurementUnit\ProductMeasurementUnitCommunicationTester
@@ -35,9 +34,9 @@ class ProductMeasurementSalesUnitOrderItemExpanderPreSavePluginTest extends Unit
     protected $tester;
 
     /**
-     * @var \Spryker\Zed\ProductMeasurementUnit\Communication\Plugin\SalesExtension\ProductMeasurementSalesUnitOrderItemExpanderPreSavePlugin
+     * @var \Spryker\Zed\ProductMeasurementUnit\Communication\Plugin\SalesExtension\QuantitySalesUnitOrderItemExpanderPreSavePlugin
      */
-    protected $productMeasurementSalesUnitOrderItemExpanderPreSavePlugin;
+    protected $quantitySalesUnitOrderItemExpanderPreSavePlugin;
 
     /**
      * @return void
@@ -46,7 +45,7 @@ class ProductMeasurementSalesUnitOrderItemExpanderPreSavePluginTest extends Unit
     {
         parent::setUp();
 
-        $this->productMeasurementSalesUnitOrderItemExpanderPreSavePlugin = new ProductMeasurementSalesUnitOrderItemExpanderPreSavePlugin();
+        $this->quantitySalesUnitOrderItemExpanderPreSavePlugin = new QuantitySalesUnitOrderItemExpanderPreSavePlugin();
     }
 
     /**
@@ -61,7 +60,7 @@ class ProductMeasurementSalesUnitOrderItemExpanderPreSavePluginTest extends Unit
         $itemTransfer->setQuantitySalesUnit($quantitySalesUnitTransfer);
 
         //Act
-        $salesOrderItemEntity = $this->productMeasurementSalesUnitOrderItemExpanderPreSavePlugin->expandOrderItem(
+        $salesOrderItemEntity = $this->quantitySalesUnitOrderItemExpanderPreSavePlugin->expandOrderItem(
             new QuoteTransfer(),
             $itemTransfer,
             new SpySalesOrderItemEntityTransfer()

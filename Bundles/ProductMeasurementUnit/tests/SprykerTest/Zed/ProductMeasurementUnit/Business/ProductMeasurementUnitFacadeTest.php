@@ -59,7 +59,7 @@ class ProductMeasurementUnitFacadeTest extends Unit
             ->setGroupKey($dummyGroupKey);
 
         // Act
-        $actualResult = $this->productMeasurementUnitFacade->expandItemGroupKeyWithSalesUnit($itemTransfer);
+        $actualResult = $this->productMeasurementUnitFacade->expandItemGroupKeyWithQuantitySalesUnit($itemTransfer);
 
         // Assert
         $this->assertSame($expectedResult, $actualResult);
@@ -80,7 +80,7 @@ class ProductMeasurementUnitFacadeTest extends Unit
             ->setGroupKey($dummyGroupKey);
 
         // Act
-        $actualResult = $this->productMeasurementUnitFacade->expandItemGroupKeyWithSalesUnit($itemTransfer);
+        $actualResult = $this->productMeasurementUnitFacade->expandItemGroupKeyWithQuantitySalesUnit($itemTransfer);
 
         // Assert
         $this->assertRegExp($expectedPregMatch, $actualResult);
