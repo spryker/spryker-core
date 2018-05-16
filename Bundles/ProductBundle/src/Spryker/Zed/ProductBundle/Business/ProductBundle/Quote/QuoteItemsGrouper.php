@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Quote;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 class QuoteItemsGrouper implements QuoteItemsGrouperInterface
@@ -15,51 +16,56 @@ class QuoteItemsGrouper implements QuoteItemsGrouperInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return \Generated\Shared\Transfer\ItemCollectionTransfer
      */
-    public function extractQuoteItems(QuoteTransfer $quoteTransfer): array
+    public function extractQuoteItems(QuoteTransfer $quoteTransfer): ItemCollectionTransfer
     {
-        $quoteTransfer = (new QuoteTransfer())->fromArray($quoteTransfer->modifiedToArray(), true);
-        $quoteTransfer = $this->removeBundledItems($quoteTransfer);
+        $itemCollectionTransfer = new ItemCollectionTransfer();
+        $itemCollectionTransfer->setItems($quoteTransfer->getItems());
 
-        return array_merge((array)$quoteTransfer->getItems(), $this->findBundleItems($quoteTransfer));
+        $itemCollectionTransfer = $this->filterBundledItems($itemCollectionTransfer);
+        $itemCollectionTransfer = $this->addBundleItems($itemCollectionTransfer, $quoteTransfer);
+
+        return $itemCollectionTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemCollectionTransfer $itemCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return \Generated\Shared\Transfer\ItemCollectionTransfer
      */
-    protected function findBundleItems(QuoteTransfer $quoteTransfer): array
-    {
-        $itemTransferCollection = [];
-        foreach ($quoteTransfer->getBundleItems() as $itemTransfer) {
-            if (!isset($itemTransferCollection[$itemTransfer->getGroupKey()])) {
-                $itemTransferCollection[$itemTransfer->getGroupKey()] = $itemTransfer
-                    ->setQuantity($this->getBundledProductTotalQuantity($quoteTransfer, $itemTransfer->getGroupKey()));
-            }
-        }
-
-        return array_values($itemTransferCollection);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected function removeBundledItems(QuoteTransfer $quoteTransfer): QuoteTransfer
+    protected function filterBundledItems(ItemCollectionTransfer $itemCollectionTransfer): ItemCollectionTransfer
     {
         $items = new ArrayObject();
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+        foreach ($itemCollectionTransfer->getItems() as $itemTransfer) {
             if ($itemTransfer->getRelatedBundleItemIdentifier()) {
                 continue;
             }
-            $items[] = $itemTransfer;
+            $items->append($itemTransfer);
         }
-        $quoteTransfer->setItems($items);
+        $itemCollectionTransfer->setItems($items);
 
-        return $quoteTransfer;
+        return $itemCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemCollectionTransfer $itemCollectionTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemCollectionTransfer
+     */
+    protected function addBundleItems(ItemCollectionTransfer $itemCollectionTransfer, QuoteTransfer $quoteTransfer): ItemCollectionTransfer
+    {
+        $itemsProcessedIndex = [];
+        foreach ($quoteTransfer->getBundleItems() as $itemTransfer) {
+            if (!isset($itemsProcessedIndex[$itemTransfer->getGroupKey()])) {
+                $itemsProcessedIndex[$itemTransfer->getGroupKey()] = true;
+                $itemTransfer->setQuantity($this->getBundledProductTotalQuantity($quoteTransfer, $itemTransfer->getGroupKey()));
+                $itemCollectionTransfer->addItem($itemTransfer);
+            }
+        }
+
+        return $itemCollectionTransfer;
     }
 
     /**

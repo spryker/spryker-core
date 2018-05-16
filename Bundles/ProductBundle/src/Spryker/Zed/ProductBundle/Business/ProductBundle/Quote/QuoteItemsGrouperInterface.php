@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Quote;
 
+use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface QuoteItemsGrouperInterface
@@ -14,7 +15,7 @@ interface QuoteItemsGrouperInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return \Generated\Shared\Transfer\ItemCollectionTransfer
      */
-    public function extractQuoteItems(QuoteTransfer $quoteTransfer): array;
+    public function extractQuoteItems(QuoteTransfer $quoteTransfer): ItemCollectionTransfer;
 }

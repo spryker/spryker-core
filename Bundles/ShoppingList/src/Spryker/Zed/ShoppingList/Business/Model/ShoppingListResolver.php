@@ -93,16 +93,6 @@ class ShoppingListResolver implements ShoppingListResolverInterface
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListTransfer
-     */
-    protected function saveShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer
-    {
-        return $this->shoppingListEntityManager->saveShoppingList($shoppingListTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
-     *
      * @return \Generated\Shared\Transfer\ShoppingListTransfer|null
      */
     protected function findCustomerShoppingListByName(ShoppingListTransfer $shoppingListTransfer): ?ShoppingListTransfer
@@ -142,5 +132,15 @@ class ShoppingListResolver implements ShoppingListResolverInterface
         }
 
         return $existingShoppingListTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer
+     */
+    protected function saveShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer
+    {
+        return $this->shoppingListEntityManager->saveShoppingList($shoppingListTransfer);
     }
 }

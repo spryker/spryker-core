@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ShoppingListExtension\Dependency\Plugin;
 
+use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface QuoteItemsExtractorExpanderPluginInterface
@@ -17,10 +18,10 @@ interface QuoteItemsExtractorExpanderPluginInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransferCollection
+     * @param \Generated\Shared\Transfer\ItemCollectionTransfer $itemCollectionTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return \Generated\Shared\Transfer\ItemCollectionTransfer
      */
-    public function expand(array $itemTransferCollection, QuoteTransfer $quoteTransfer): array;
+    public function expand(ItemCollectionTransfer $itemCollectionTransfer, QuoteTransfer $quoteTransfer): ItemCollectionTransfer;
 }

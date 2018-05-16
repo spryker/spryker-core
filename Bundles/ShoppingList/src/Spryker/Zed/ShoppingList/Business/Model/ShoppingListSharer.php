@@ -64,7 +64,7 @@ class ShoppingListSharer implements ShoppingListSharerInterface
         $shoppingListTransfer = $this->getShoppingListById($shoppingListTransfer);
         $shoppingListTransfer->setIdCompanyUser($shoppingListShareRequestTransfer->getRequesterId());
 
-        if (!$this->checkWritePermission($shoppingListTransfer)) {
+        if (!$shoppingListTransfer || !$this->checkWritePermission($shoppingListTransfer)) {
             $shoppingListShareResponseTransfer->setIsSuccess(false);
             $shoppingListShareResponseTransfer->setError(static::CANNOT_UPDATE_SHOPPING_LIST);
 
@@ -113,7 +113,7 @@ class ShoppingListSharer implements ShoppingListSharerInterface
         $shoppingListTransfer = $this->getShoppingListById($shoppingListTransfer);
         $shoppingListTransfer->setIdCompanyUser($shoppingListShareRequestTransfer->getRequesterId());
 
-        if (!$this->checkWritePermission($shoppingListTransfer)) {
+        if (!$shoppingListTransfer || !$this->checkWritePermission($shoppingListTransfer)) {
             $shoppingListShareResponseTransfer->setIsSuccess(false);
             $shoppingListShareResponseTransfer->setError(static::CANNOT_UPDATE_SHOPPING_LIST);
 

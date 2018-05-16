@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ShoppingList\Business\Model;
 
+use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
@@ -98,11 +99,12 @@ class QuoteToShoppingListConverter implements QuoteToShoppingListConverterInterf
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return \Generated\Shared\Transfer\ItemCollectionTransfer
      */
-    protected function getQuoteItems(QuoteTransfer $quoteTransfer): array
+    protected function getQuoteItems(QuoteTransfer $quoteTransfer): ItemCollectionTransfer
     {
-        $itemTransferCollection = (array)$quoteTransfer->getItems();
+        $itemTransferCollection = (new ItemCollectionTransfer())
+            ->setItems($quoteTransfer->getItems());
 
         foreach ($this->quoteItemExpanderPlugins as $expanderPlugin) {
             $itemTransferCollection = $expanderPlugin->expand($itemTransferCollection, $quoteTransfer);
@@ -112,14 +114,14 @@ class QuoteToShoppingListConverter implements QuoteToShoppingListConverterInterf
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransferCollection
+     * @param \Generated\Shared\Transfer\ItemCollectionTransfer $itemCollectionTransfer
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
      * @return void
      */
-    protected function createShoppingListItems(array $itemTransferCollection, ShoppingListTransfer $shoppingListTransfer): void
+    protected function createShoppingListItems(ItemCollectionTransfer $itemCollectionTransfer, ShoppingListTransfer $shoppingListTransfer): void
     {
-        foreach ($itemTransferCollection as $item) {
+        foreach ($itemCollectionTransfer as $item) {
             $shoppingListItemTransfer = (new ShoppingListItemTransfer())
                 ->setFkShoppingList($shoppingListTransfer->getIdShoppingList())
                 ->setQuantity($item->getQuantity())

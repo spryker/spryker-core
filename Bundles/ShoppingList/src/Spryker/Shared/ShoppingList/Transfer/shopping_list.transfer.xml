@@ -117,4 +117,8 @@
         <property name="idCompanyUser" type="int" />
     </transfer>
 
+    <transfer name="ItemCollection">
+        <property name="Items" type="Item[]" singular="item"/>
+    </transfer>
+
 </transfers>
