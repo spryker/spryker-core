@@ -154,10 +154,10 @@ class OffersTable extends AbstractTable
         }
 
         $customer = sprintf(
-            '%s%s %s',
+            '%s. %s %s',
             $customerTransfer->getSalutation(),
-            $customerTransfer->getFirstName(),
-            $customerTransfer->getLastName()
+            ucfirst($customerTransfer->getFirstName()),
+            ucfirst($customerTransfer->getLastName())
         );
 
         $customer = $this->sanitizeService->escapeHtml($customer);
@@ -384,9 +384,41 @@ class OffersTable extends AbstractTable
      */
     protected function getCustomer(array $item): ?CustomerTransfer
     {
+        $customer = $this->getCustomerByReference($item);
+        if ($customer) {
+            return $customer;
+        }
+
+        $quoteTransfer = $this->mapQuote($item);
+
+        $customer = $this->getCustomerFromQuoteTransfer($quoteTransfer);
+        if ($customer) {
+            return $customer;
+        }
+
+        return null;
+    }
+
+    /**
+     * @param array $item
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    protected function getCustomerByReference(array $item): ?CustomerTransfer
+    {
         return $this->customerFacade->findCustomerByReference(
             $item[SpyOfferTableMap::COL_CUSTOMER_REFERENCE]
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    protected function getCustomerFromQuoteTransfer(QuoteTransfer $quoteTransfer): ?CustomerTransfer
+    {
+        return $quoteTransfer->getCustomer();
     }
 
     /**
