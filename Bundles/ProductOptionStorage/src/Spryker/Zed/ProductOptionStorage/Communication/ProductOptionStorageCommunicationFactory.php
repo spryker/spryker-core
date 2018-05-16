@@ -17,34 +17,10 @@ use Spryker\Zed\ProductOptionStorage\ProductOptionStorageDependencyProvider;
 class ProductOptionStorageCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\ProductOptionStorage\Dependency\Service\ProductOptionStorageToUtilSanitizeServiceInterface
-     */
-    public function getUtilSanitizeService()
-    {
-        return $this->getProvidedDependency(ProductOptionStorageDependencyProvider::SERVICE_UTIL_SANITIZE);
-    }
-
-    /**
      * @return \Spryker\Zed\ProductOptionStorage\Dependency\Facade\ProductOptionStorageToEventBehaviorFacadeInterface
      */
     public function getEventBehaviorFacade()
     {
         return $this->getProvidedDependency(ProductOptionStorageDependencyProvider::FACADE_EVENT_BEHAVIOR);
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    public function getStore()
-    {
-        return $this->getProvidedDependency(ProductOptionStorageDependencyProvider::STORE);
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductOptionStorage\Dependency\Facade\ProductOptionStorageToProductOptionFacadeInterface
-     */
-    public function getProductOptionFacade()
-    {
-        return $this->getProvidedDependency(ProductOptionStorageDependencyProvider::FACADE_PRODUCT_OPTION);
     }
 }

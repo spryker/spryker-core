@@ -16,6 +16,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\GlossaryStorage\Communication\GlossaryStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\GlossaryStorage\Business\GlossaryStorageFacadeInterface getFacade()
  */
 class GlossaryStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
@@ -28,15 +29,85 @@ class GlossaryStorageEventSubscriber extends AbstractPlugin implements EventSubs
      */
     public function getSubscribedEvents(EventCollectionInterface $eventCollection)
     {
-        $eventCollection
-            ->addListenerQueued(GlossaryEvents::GLOSSARY_KEY_PUBLISH, new GlossaryKeyStorageListener())
-            ->addListenerQueued(GlossaryEvents::GLOSSARY_KEY_UNPUBLISH, new GlossaryKeyStorageListener())
-            ->addListenerQueued(GlossaryEvents::ENTITY_SPY_GLOSSARY_KEY_CREATE, new GlossaryKeyStorageListener())
-            ->addListenerQueued(GlossaryEvents::ENTITY_SPY_GLOSSARY_KEY_UPDATE, new GlossaryKeyStorageListener())
-            ->addListenerQueued(GlossaryEvents::ENTITY_SPY_GLOSSARY_KEY_DELETE, new GlossaryKeyStorageListener())
-            ->addListenerQueued(GlossaryEvents::ENTITY_SPY_GLOSSARY_TRANSLATION_CREATE, new GlossaryTranslationStorageListener())
-            ->addListenerQueued(GlossaryEvents::ENTITY_SPY_GLOSSARY_TRANSLATION_UPDATE, new GlossaryTranslationStorageListener());
+        $this->addGlossaryKeyPublishStorageListener($eventCollection);
+        $this->addGlossaryKeyUnpublishStorageListener($eventCollection);
+        $this->addGlossaryKeyCreateStorageListener($eventCollection);
+        $this->addGlossaryKeyUpdateStorageListener($eventCollection);
+        $this->addGlossaryKeyDeleteStorageListener($eventCollection);
+        $this->addGlossaryTranslationCreateStorageListener($eventCollection);
+        $this->addGlossaryTranslationUpdateStorageListener($eventCollection);
 
         return $eventCollection;
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addGlossaryKeyPublishStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(GlossaryEvents::GLOSSARY_KEY_PUBLISH, new GlossaryKeyStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addGlossaryKeyUnpublishStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(GlossaryEvents::GLOSSARY_KEY_UNPUBLISH, new GlossaryKeyStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addGlossaryKeyCreateStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(GlossaryEvents::ENTITY_SPY_GLOSSARY_KEY_CREATE, new GlossaryKeyStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addGlossaryKeyUpdateStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(GlossaryEvents::ENTITY_SPY_GLOSSARY_KEY_UPDATE, new GlossaryKeyStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addGlossaryKeyDeleteStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(GlossaryEvents::ENTITY_SPY_GLOSSARY_KEY_DELETE, new GlossaryKeyStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addGlossaryTranslationCreateStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(GlossaryEvents::ENTITY_SPY_GLOSSARY_TRANSLATION_CREATE, new GlossaryTranslationStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addGlossaryTranslationUpdateStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(GlossaryEvents::ENTITY_SPY_GLOSSARY_TRANSLATION_UPDATE, new GlossaryTranslationStorageListener());
+        ;
     }
 }
