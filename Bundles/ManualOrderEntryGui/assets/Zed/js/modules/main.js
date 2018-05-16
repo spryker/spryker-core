@@ -76,4 +76,11 @@ $(document).ready( function () {
 
         }
     });
+
+    $('form.ManualOrderEntryForm input.previousStepBtn').click(function(){
+        $(this).parent('form').find(':input').each(function(index, element){
+            $(element).removeAttr('required');
+        });
+    });
+
 });
