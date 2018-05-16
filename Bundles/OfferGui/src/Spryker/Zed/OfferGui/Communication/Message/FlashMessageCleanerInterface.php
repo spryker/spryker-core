@@ -5,10 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Payolution\Business\Exception;
+namespace Spryker\Zed\OfferGui\Communication\Message;
 
-use Exception;
-
-class GenderNotDefinedException extends Exception
+interface FlashMessageCleanerInterface
 {
+    /**
+     * @return void
+     */
+    public function clearDuplicateMessages(): void;
 }

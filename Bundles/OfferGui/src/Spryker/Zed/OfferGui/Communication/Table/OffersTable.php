@@ -347,7 +347,7 @@ class OffersTable extends AbstractTable
                 static::COL_CUSTOMER_REFERENCE => $this->formatCustomer($customerTransfer),
                 static::COL_EMAIL => $this->formatEmailAddress($customerTransfer),
                 static::COL_GRAND_TOTAL => $this->getGrandTotal($quoteTransfer),
-                static::COL_CONTACT_DATE => $this->utilDateTimeService->formatDate($item[SpyOfferTableMap::COL_CONTACT_DATE]),
+                static::COL_CONTACT_DATE => $this->formatContactDate($item[SpyOfferTableMap::COL_CONTACT_DATE]),
                 static::COL_CONTACT_PERSON => $item[SpyOfferTableMap::COL_CONTACT_PERSON],
                 static::COL_STATUS => $item[SpyOfferTableMap::COL_STATUS],
                 static::COL_NOTE => $item[SpyOfferTableMap::COL_NOTE],
@@ -387,5 +387,19 @@ class OffersTable extends AbstractTable
         return $this->customerFacade->findCustomerByReference(
             $item[SpyOfferTableMap::COL_CUSTOMER_REFERENCE]
         );
+    }
+
+    /**
+     * @param string|null $contactDate
+     *
+     * @return string
+     */
+    protected function formatContactDate(?string $contactDate): string
+    {
+        if (!$contactDate) {
+            return '';
+        }
+
+        return $this->utilDateTimeService->formatDate($contactDate);
     }
 }
