@@ -391,12 +391,7 @@ class OffersTable extends AbstractTable
 
         $quoteTransfer = $this->mapQuote($item);
 
-        $customer = $this->getCustomerFromQuoteTransfer($quoteTransfer);
-        if ($customer) {
-            return $customer;
-        }
-
-        return null;
+        return $this->getCustomerFromQuoteTransfer($quoteTransfer);
     }
 
     /**
