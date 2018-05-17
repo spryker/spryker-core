@@ -8,14 +8,18 @@
 namespace Spryker\Zed\SharedCart\Business\Model;
 
 use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
+use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShareDetailTransfer;
 use Generated\Shared\Transfer\SpyQuoteCompanyUserEntityTransfer;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\SharedCart\Persistence\SharedCartEntityManagerInterface;
 use Spryker\Zed\SharedCart\Persistence\SharedCartRepositoryInterface;
 
 class QuoteCompanyUserWriter implements QuoteCompanyUserWriterInterface
 {
+    use TransactionTrait;
+
     /**
      * @var \Spryker\Zed\SharedCart\Persistence\SharedCartRepositoryInterface
      */
@@ -44,6 +48,18 @@ class QuoteCompanyUserWriter implements QuoteCompanyUserWriterInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function updateQuoteCompanyUsers(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $this->getTransactionHandler()->handleTransaction(function () use ($quoteTransfer) {
+            return $this->executeUpdateQuoteCompanyUsersTransaction($quoteTransfer);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function executeUpdateQuoteCompanyUsersTransaction(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         $currentQuoteCompanyUserIdCollection = $this->sharedCartRepository->findQuoteCompanyUserIdCollection($quoteTransfer->getIdQuote());
         $this->addNewQuoteCompanyUsers($quoteTransfer);
@@ -95,7 +111,7 @@ class QuoteCompanyUserWriter implements QuoteCompanyUserWriterInterface
     /**
      * @return \Generated\Shared\Transfer\QuotePermissionGroupTransfer
      */
-    protected function getDefaultPermissionGroup()
+    protected function getDefaultPermissionGroup(): QuotePermissionGroupTransfer
     {
         $criteriaFilterTransfer = new QuotePermissionGroupCriteriaFilterTransfer();
         $criteriaFilterTransfer->setIsDefault(true);

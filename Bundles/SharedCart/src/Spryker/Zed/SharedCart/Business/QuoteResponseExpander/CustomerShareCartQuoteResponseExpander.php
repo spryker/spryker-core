@@ -34,11 +34,14 @@ class CustomerShareCartQuoteResponseExpander implements QuoteResponseExpanderInt
      */
     public function expand(QuoteResponseTransfer $quoteResponseTransfer): QuoteResponseTransfer
     {
-        $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
-        $customerTransfer = $quoteTransfer->requireCustomer()->getCustomer();
+        $customerTransfer = $quoteResponseTransfer->requireCustomer()->getCustomer();
 
         $sharedQuoteCollectionTransfer = $this->findSharedCustomerQuotes($customerTransfer);
         $quoteResponseTransfer->setSharedCustomerQuotes($sharedQuoteCollectionTransfer);
+
+        if (!$quoteResponseTransfer->getQuoteTransfer()) {
+            return $quoteResponseTransfer;
+        }
 
         return $this->replaceCurrentQuoteFromList($quoteResponseTransfer, $sharedQuoteCollectionTransfer);
     }

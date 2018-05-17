@@ -15,6 +15,7 @@ use Spryker\Client\MultiCart\Dependency\Client\MultiCartToPersistentCartClientBr
 use Spryker\Client\MultiCart\Dependency\Client\MultiCartToQuoteClientBridge;
 use Spryker\Client\MultiCart\Dependency\Client\MultiCartToSessionClientBridge;
 use Spryker\Client\MultiCart\Dependency\Client\MultiCartToZedRequestClientBridge;
+use Spryker\Client\MultiCart\Dependency\Service\MultiCartToUtilDateTimeServiceBridge;
 
 class MultiCartDependencyProvider extends AbstractDependencyProvider
 {
@@ -24,13 +25,14 @@ class MultiCartDependencyProvider extends AbstractDependencyProvider
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
     public const CLIENT_SESSION = 'CLIENT_SESSION';
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+    public const SERVICE_DATETIME = 'SERVICE_DATETIME';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    public function provideServiceLayerDependencies(Container $container)
+    public function provideServiceLayerDependencies(Container $container): Container
     {
         $container = $this->addCustomerClient($container);
         $container = $this->addMessengerClient($container);
@@ -38,6 +40,7 @@ class MultiCartDependencyProvider extends AbstractDependencyProvider
         $container = $this->addQuoteClient($container);
         $container = $this->addSessionClient($container);
         $container = $this->addZedRequestClient($container);
+        $container = $this->addDateTimeService($container);
 
         return $container;
     }
@@ -121,6 +124,22 @@ class MultiCartDependencyProvider extends AbstractDependencyProvider
     {
         $container[static::CLIENT_MESSENGER] = function (Container $container) {
             return new MultiCartToMessengerClientBridge($container->getLocator()->messenger()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addDateTimeService(Container $container): Container
+    {
+        $container[static::SERVICE_DATETIME] = function (Container $container) {
+            return new MultiCartToUtilDateTimeServiceBridge(
+                $container->getLocator()->utilDateTime()->service()
+            );
         };
 
         return $container;

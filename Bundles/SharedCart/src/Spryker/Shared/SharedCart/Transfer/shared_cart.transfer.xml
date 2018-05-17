@@ -35,10 +35,6 @@
         <property name="quotePermissionGroup" type="QuotePermissionGroup"/>
     </transfer>
 
-    <transfer name="Item">
-        <property name="separator" type="int"/>
-    </transfer>
-
     <transfer name="Quote">
         <property name="shareDetails" type="ShareDetail[]" singular="shareDetail"/>
     </transfer>

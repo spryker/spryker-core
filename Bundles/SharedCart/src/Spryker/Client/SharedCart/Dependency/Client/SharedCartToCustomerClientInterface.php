@@ -19,11 +19,6 @@ interface SharedCartToCustomerClientInterface
     public function setCustomer(CustomerTransfer $customerTransfer);
 
     /**
-     * Specification:
-     * - Returns customer information from session.
-     *
-     * @api
-     *
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
     public function getCustomer();
