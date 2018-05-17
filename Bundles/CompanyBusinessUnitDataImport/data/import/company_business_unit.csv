@@ -1,2 +1,3 @@
-company_key,business_unit_key,name,email,phone,external_url,iban,bic
-test-company,test-business-unit,Test business unit,test@spryker.com,1234567890,"",test iban,test bic
+company_key,business_unit_key,name,email,phone,external_url,iban,bic,parent_business_unit_key
+test-company,test-business-unit,Test business unit,test@spryker.com,1234567890,"",test iban,test bic,""
+test-company,test-business-unit-children,Child test business unit,test2@spryker.com,1234567891,"",test iban 2,test bic 2,test-business-unit
