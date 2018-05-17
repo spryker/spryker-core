@@ -17,6 +17,8 @@
         <property name="iban" type="string"/>
         <property name="bic" type="string"/>
         <property name="fkCompany" type="int"/>
+        <property name="idParentCompanyBusinessUnit" type="int"/>
+        <property name="parentCompanyBusinessUnit" type="CompanyBusinessUnit"/>
     </transfer>
 
     <transfer name="CompanyBusinessUnitResponse">

@@ -29,6 +29,8 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
     ): CompanyBusinessUnitTransfer {
         $query = $this->getFactory()
             ->createCompanyBusinessUnitQuery()
+            ->leftJoinParentCompanyBusinessUnit('parentCompanyBusinessUnit')
+            ->with('parentCompanyBusinessUnit')
             ->filterByIdCompanyBusinessUnit($idCompanyBusinessUnit);
         $entityTransfer = $this->buildQueryFromCriteria($query)->findOne();
 
@@ -48,6 +50,8 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
         $criteriaFilterTransfer->requireIdCompany();
         $query = $this->getFactory()
             ->createCompanyBusinessUnitQuery()
+            ->leftJoinParentCompanyBusinessUnit('parentCompanyBusinessUnit')
+            ->with('parentCompanyBusinessUnit')
             ->filterByFkCompany($criteriaFilterTransfer->getIdCompany());
 
         if ($criteriaFilterTransfer->getIdCompanyUser() !== null) {
@@ -103,6 +107,8 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
     {
         $query = $this->getFactory()
             ->createCompanyBusinessUnitQuery()
+            ->leftJoinParentCompanyBusinessUnit('parentCompanyBusinessUnit')
+            ->with('parentCompanyBusinessUnit')
             ->filterByFkCompany($idCompany);
 
         $entityTransfer = $this->buildQueryFromCriteria($query)->findOne();
