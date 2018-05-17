@@ -156,8 +156,8 @@ class OffersTable extends AbstractTable
         $customer = sprintf(
             '%s. %s %s',
             $customerTransfer->getSalutation(),
-            ucfirst($customerTransfer->getFirstName()),
-            ucfirst($customerTransfer->getLastName())
+            $customerTransfer->getFirstName(),
+            $customerTransfer->getLastName()
         );
 
         $customer = $this->sanitizeService->escapeHtml($customer);
