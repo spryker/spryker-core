@@ -24,7 +24,7 @@ class NameQuoteTransferExpanderPlugin extends AbstractPlugin implements QuoteTra
      */
     public function expandQuote(QuoteTransfer $quoteTransfer)
     {
-        if ($quoteTransfer->getName() !== null || !count($quoteTransfer->getItems())) {
+        if ($quoteTransfer->getName() || !count($quoteTransfer->getItems())) {
             return $quoteTransfer;
         }
 
@@ -42,7 +42,7 @@ class NameQuoteTransferExpanderPlugin extends AbstractPlugin implements QuoteTra
     /**
      * @return string
      */
-    protected function getCustomerQuoteDefaultName()
+    protected function getCustomerQuoteDefaultName(): string
     {
         return $this->getFactory()
             ->getMultiCartConfig()
@@ -52,7 +52,7 @@ class NameQuoteTransferExpanderPlugin extends AbstractPlugin implements QuoteTra
     /**
      * @return string
      */
-    protected function getGuestQuoteDefaultName()
+    protected function getGuestQuoteDefaultName(): string
     {
         return $this->getFactory()
             ->getMultiCartConfig()

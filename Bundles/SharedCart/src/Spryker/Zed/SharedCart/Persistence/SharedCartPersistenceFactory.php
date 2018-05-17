@@ -26,7 +26,7 @@ class SharedCartPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\Permission\Persistence\SpyPermissionQuery
      */
-    public function createPermissionQuery()
+    public function createPermissionQuery(): SpyPermissionQuery
     {
         return SpyPermissionQuery::create();
     }
@@ -34,7 +34,7 @@ class SharedCartPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\Quote\Persistence\SpyQuoteQuery
      */
-    public function createQuoteQuery()
+    public function createQuoteQuery(): SpyQuoteQuery
     {
         return SpyQuoteQuery::create();
     }
@@ -42,7 +42,7 @@ class SharedCartPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\SharedCart\Persistence\SpyQuotePermissionGroupQuery
      */
-    public function createQuotePermissionGroupQuery()
+    public function createQuotePermissionGroupQuery(): SpyQuotePermissionGroupQuery
     {
         return SpyQuotePermissionGroupQuery::create();
     }
@@ -50,7 +50,7 @@ class SharedCartPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\SharedCart\Persistence\SpyQuoteCompanyUserQuery
      */
-    public function createQuoteCompanyUserQuery()
+    public function createQuoteCompanyUserQuery(): SpyQuoteCompanyUserQuery
     {
         return SpyQuoteCompanyUserQuery::create();
     }
@@ -58,7 +58,7 @@ class SharedCartPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\SharedCart\Persistence\SpyQuotePermissionGroupToPermissionQuery
      */
-    public function createQuotePermissionGroupToPermissionQuery()
+    public function createQuotePermissionGroupToPermissionQuery(): SpyQuotePermissionGroupToPermissionQuery
     {
         return SpyQuotePermissionGroupToPermissionQuery::create();
     }
