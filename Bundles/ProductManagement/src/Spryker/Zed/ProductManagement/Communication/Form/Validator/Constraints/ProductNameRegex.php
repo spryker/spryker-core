@@ -17,8 +17,8 @@ class ProductNameRegex extends Regex
     public function __construct($options = null)
     {
         $defaults = [
-            'pattern' => '/^[a-zA-Z0-9\pL\.\-\_\s*]+$/u',
-            'message' => 'Invalid value provided. Please use only alphanumeric characters and  ", . - _"',
+            'pattern' => '/^[a-zA-Z0-9\pL\.\-\_\(\)\s*]+$/u',
+            'message' => 'Invalid value provided. Please use only alphanumeric characters and  ", . - _ ( )"',
         ];
 
         $options = array_merge($defaults, (array)$options);
