@@ -46,7 +46,7 @@ class ProductCartConnectorDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addMessengerFacade(Container $container): Container
     {
-        $container[self::FACADE_MESSENGER] = function (Container $container) {
+        $container[static::FACADE_MESSENGER] = function (Container $container) {
             return new ProductCartConnectorToMessengerFacadeBridge($container->getLocator()->messenger()->facade());
         };
 

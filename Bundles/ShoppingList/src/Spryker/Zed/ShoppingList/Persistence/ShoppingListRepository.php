@@ -183,9 +183,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
         $shoppingListPermissionGroupQuery = $this->getFactory()->createShoppingListPermissionGroupQuery();
         $permissionGroupEntityTransfer = $this->buildQueryFromCriteria($shoppingListPermissionGroupQuery)->findOne();
 
-        return $this->getFactory()
-            ->createShoppingListPermissionGroupMapper()
-            ->mapShoppingListPermissionGroupTransfer($permissionGroupEntityTransfer, new ShoppingListPermissionGroupTransfer());
+        return (new ShoppingListPermissionGroupTransfer())->fromArray($permissionGroupEntityTransfer->modifiedToArray(), true);
     }
 
     /**
@@ -194,7 +192,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
      *
      * @return bool
      */
-    public function isShoppingListSharedCompanyBusinessUnit(int $idShoppingList, int $idCompanyBusinessUnit): bool
+    public function isShoppingListSharedToCompanyBusinessUnit(int $idShoppingList, int $idCompanyBusinessUnit): bool
     {
         $shoppingListCompanyBusinessUnitEntityQuery = $this->getFactory()
             ->createShoppingListCompanyBusinessUnitQuery()
@@ -210,7 +208,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
      *
      * @return bool
      */
-    public function isShoppingListSharedCompanyUser(int $idShoppingList, int $idCompanyUser): bool
+    public function isShoppingListSharedToCompanyUser(int $idShoppingList, int $idCompanyUser): bool
     {
         $shoppingListCompanyUserEntityQuery = $this->getFactory()
             ->createShoppingListCompanyUserQuery()

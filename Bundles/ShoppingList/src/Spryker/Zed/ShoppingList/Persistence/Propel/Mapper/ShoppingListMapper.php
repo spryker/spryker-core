@@ -20,8 +20,10 @@ class ShoppingListMapper implements ShoppingListMapperInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */
-    public function mapShoppingListTransfer(SpyShoppingListEntityTransfer $shoppingListEntityTransfer, ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer
-    {
+    public function mapShoppingListTransfer(
+        SpyShoppingListEntityTransfer $shoppingListEntityTransfer,
+        ShoppingListTransfer $shoppingListTransfer
+    ): ShoppingListTransfer {
         $shoppingListTransfer = $shoppingListTransfer->fromArray($shoppingListEntityTransfer->modifiedToArray(), true);
 
         $virtualPropertiesCollection = $shoppingListEntityTransfer->virtualProperties();
@@ -74,8 +76,10 @@ class ShoppingListMapper implements ShoppingListMapperInterface
      *
      * @return void
      */
-    protected function addItemsCount(SpyShoppingListEntityTransfer $shoppingListEntityTransfer, ShoppingListTransfer $shoppingListTransfer): void
-    {
+    protected function addItemsCount(
+        SpyShoppingListEntityTransfer $shoppingListEntityTransfer,
+        ShoppingListTransfer $shoppingListTransfer
+    ): void {
         $numberOfItems = [];
         $sum = 0;
         foreach ($shoppingListEntityTransfer->getSpyShoppingListItems() as $shoppingListItem) {

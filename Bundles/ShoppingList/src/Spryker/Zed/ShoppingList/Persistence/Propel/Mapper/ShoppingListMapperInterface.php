@@ -24,7 +24,10 @@ interface ShoppingListMapperInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */
-    public function mapShoppingListTransfer(SpyShoppingListEntityTransfer $shoppingListEntityTransfer, ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer;
+    public function mapShoppingListTransfer(
+        SpyShoppingListEntityTransfer $shoppingListEntityTransfer,
+        ShoppingListTransfer $shoppingListTransfer
+    ): ShoppingListTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\SpyShoppingListItemEntityTransfer[] $shoppingListEntityTransferCollection
@@ -39,5 +42,8 @@ interface ShoppingListMapperInterface
      *
      * @return \Orm\Zed\ShoppingList\Persistence\SpyShoppingList
      */
-    public function mapTransferToEntity(ShoppingListTransfer $shoppingListTransfer, SpyShoppingList $shoppingListEntity): SpyShoppingList;
+    public function mapTransferToEntity(
+        ShoppingListTransfer $shoppingListTransfer,
+        SpyShoppingList $shoppingListEntity
+    ): SpyShoppingList;
 }

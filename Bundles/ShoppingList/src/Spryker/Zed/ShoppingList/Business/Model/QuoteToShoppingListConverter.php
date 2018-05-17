@@ -77,8 +77,9 @@ class QuoteToShoppingListConverter implements QuoteToShoppingListConverterInterf
      *
      * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */
-    protected function executeCreateShoppingListFromQuoteTransaction(ShoppingListFromCartRequestTransfer $shoppingListFromCartRequestTransfer): ShoppingListTransfer
-    {
+    protected function executeCreateShoppingListFromQuoteTransaction(
+        ShoppingListFromCartRequestTransfer $shoppingListFromCartRequestTransfer
+    ): ShoppingListTransfer {
         $quoteResponseTransfer = $this->persistentCartFacade->findQuote(
             $shoppingListFromCartRequestTransfer->getIdQuote(),
             $shoppingListFromCartRequestTransfer->getCustomer()
@@ -119,8 +120,10 @@ class QuoteToShoppingListConverter implements QuoteToShoppingListConverterInterf
      *
      * @return void
      */
-    protected function createShoppingListItems(ItemCollectionTransfer $itemCollectionTransfer, ShoppingListTransfer $shoppingListTransfer): void
-    {
+    protected function createShoppingListItems(
+        ItemCollectionTransfer $itemCollectionTransfer,
+        ShoppingListTransfer $shoppingListTransfer
+    ): void {
         foreach ($itemCollectionTransfer as $item) {
             $shoppingListItemTransfer = (new ShoppingListItemTransfer())
                 ->setFkShoppingList($shoppingListTransfer->getIdShoppingList())

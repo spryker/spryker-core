@@ -53,34 +53,19 @@ class ShoppingListSharer implements ShoppingListSharerInterface
     public function shareShoppingListWithCompanyBusinessUnit(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ShoppingListShareResponseTransfer
     {
         $shoppingListShareRequestTransfer->requireIdShoppingListPermissionGroup()
-            ->requireIdCompanyBusinessUnit()
-            ->requireIdShoppingList();
+            ->requireIdCompanyBusinessUnit();
 
-        $shoppingListShareResponseTransfer = new ShoppingListShareResponseTransfer();
-
-        $shoppingListTransfer = (new ShoppingListTransfer())
-            ->setIdShoppingList($shoppingListShareRequestTransfer->getIdShoppingList());
-
-        $shoppingListTransfer = $this->getShoppingListById($shoppingListTransfer);
-        $shoppingListTransfer->setIdCompanyUser($shoppingListShareRequestTransfer->getRequesterId());
-
-        if (!$shoppingListTransfer || !$this->checkWritePermission($shoppingListTransfer)) {
-            $shoppingListShareResponseTransfer->setIsSuccess(false);
-            $shoppingListShareResponseTransfer->setError(static::CANNOT_UPDATE_SHOPPING_LIST);
-
-            return $shoppingListShareResponseTransfer;
+        $shoppingListTransfer = $this->resolveShoppingList($shoppingListShareRequestTransfer);
+        if (!$shoppingListTransfer) {
+            return $this->createErrorShareResponse(static::CANNOT_UPDATE_SHOPPING_LIST);
         }
 
-        $isShoppingListSharedCompanyBusinessUnit = $this->shoppingListRepository->isShoppingListSharedCompanyBusinessUnit(
+        if ($this->shoppingListRepository->isShoppingListSharedToCompanyBusinessUnit(
             $shoppingListTransfer->getIdShoppingList(),
             $shoppingListShareRequestTransfer->getIdCompanyBusinessUnit()
-        );
-
-        if ($isShoppingListSharedCompanyBusinessUnit) {
-            $shoppingListShareResponseTransfer->setIsSuccess(false);
-            $shoppingListShareResponseTransfer->setError(static::CANNOT_RESHARE_SHOPPING_LIST);
-
-            return $shoppingListShareResponseTransfer;
+        )
+        ) {
+            return $this->createErrorShareResponse(static::CANNOT_RESHARE_SHOPPING_LIST);
         }
 
         $shoppingListCompanyBusinessUnitEntityTransfer = (new ShoppingListCompanyBusinessUnitTransfer())
@@ -89,9 +74,8 @@ class ShoppingListSharer implements ShoppingListSharerInterface
             ->setIdShoppingListPermissionGroup($shoppingListShareRequestTransfer->getIdShoppingListPermissionGroup());
 
         $this->shoppingListEntityManager->saveShoppingListCompanyBusinessUnit($shoppingListCompanyBusinessUnitEntityTransfer);
-        $shoppingListShareResponseTransfer = $shoppingListShareResponseTransfer->setIsSuccess(true);
 
-        return $shoppingListShareResponseTransfer;
+        return (new ShoppingListShareResponseTransfer())->setIsSuccess(true);
     }
 
     /**
@@ -102,10 +86,40 @@ class ShoppingListSharer implements ShoppingListSharerInterface
     public function shareShoppingListWithCompanyUser(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ShoppingListShareResponseTransfer
     {
         $shoppingListShareRequestTransfer->requireIdShoppingListPermissionGroup()
-            ->requireIdCompanyUser()
-            ->requireIdShoppingList();
+            ->requireIdCompanyUser();
 
-        $shoppingListShareResponseTransfer = new ShoppingListShareResponseTransfer();
+        $shoppingListTransfer = $this->resolveShoppingList($shoppingListShareRequestTransfer);
+        if (!$shoppingListTransfer) {
+            return $this->createErrorShareResponse(static::CANNOT_UPDATE_SHOPPING_LIST);
+        }
+
+        if ($this->shoppingListRepository->isShoppingListSharedToCompanyUser(
+            $shoppingListTransfer->getIdShoppingList(),
+            $shoppingListShareRequestTransfer->getIdCompanyUser()
+        )
+        ) {
+            return $this->createErrorShareResponse(static::CANNOT_RESHARE_SHOPPING_LIST);
+        }
+
+        $shoppingListCompanyUserTransfer = (new ShoppingListCompanyUserTransfer())
+            ->setIdCompanyUser($shoppingListShareRequestTransfer->getIdCompanyUser())
+            ->setIdShoppingList($shoppingListTransfer->getIdShoppingList())
+            ->setIdShoppingListPermissionGroup($shoppingListShareRequestTransfer->getIdShoppingListPermissionGroup());
+
+        $this->shoppingListEntityManager->saveShoppingListCompanyUser($shoppingListCompanyUserTransfer);
+
+        return (new ShoppingListShareResponseTransfer())->setIsSuccess(true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer|null
+     */
+    protected function resolveShoppingList(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ?ShoppingListTransfer
+    {
+        $shoppingListShareRequestTransfer->requireRequesterId()
+            ->requireIdShoppingList();
 
         $shoppingListTransfer = (new ShoppingListTransfer())
             ->setIdShoppingList($shoppingListShareRequestTransfer->getIdShoppingList());
@@ -113,34 +127,11 @@ class ShoppingListSharer implements ShoppingListSharerInterface
         $shoppingListTransfer = $this->getShoppingListById($shoppingListTransfer);
         $shoppingListTransfer->setIdCompanyUser($shoppingListShareRequestTransfer->getRequesterId());
 
-        if (!$shoppingListTransfer || !$this->checkWritePermission($shoppingListTransfer)) {
-            $shoppingListShareResponseTransfer->setIsSuccess(false);
-            $shoppingListShareResponseTransfer->setError(static::CANNOT_UPDATE_SHOPPING_LIST);
-
-            return $shoppingListShareResponseTransfer;
+        if ($shoppingListTransfer && $this->checkWritePermission($shoppingListTransfer)) {
+            return $shoppingListTransfer;
         }
 
-        $isShoppingListSharedCompanyUser = $this->shoppingListRepository->isShoppingListSharedCompanyUser(
-            $shoppingListTransfer->getIdShoppingList(),
-            $shoppingListShareRequestTransfer->getIdCompanyUser()
-        );
-
-        if ($isShoppingListSharedCompanyUser) {
-            $shoppingListShareResponseTransfer->setIsSuccess(false);
-            $shoppingListShareResponseTransfer->setError(static::CANNOT_RESHARE_SHOPPING_LIST);
-
-            return $shoppingListShareResponseTransfer;
-        }
-
-        $isShoppingListSharedCompanyUser = (new ShoppingListCompanyUserTransfer())
-            ->setIdCompanyUser($shoppingListShareRequestTransfer->getIdCompanyUser())
-            ->setIdShoppingList($shoppingListTransfer->getIdShoppingList())
-            ->setIdShoppingListPermissionGroup($shoppingListShareRequestTransfer->getIdShoppingListPermissionGroup());
-
-        $this->shoppingListEntityManager->saveShoppingListCompanyUser($isShoppingListSharedCompanyUser);
-        $shoppingListShareResponseTransfer = $shoppingListShareResponseTransfer->setIsSuccess(true);
-
-        return $shoppingListShareResponseTransfer;
+        return null;
     }
 
     /**
@@ -153,6 +144,18 @@ class ShoppingListSharer implements ShoppingListSharerInterface
         $shoppingListTransfer->requireIdShoppingList();
 
         return $this->shoppingListRepository->findShoppingListById($shoppingListTransfer);
+    }
+
+    /**
+     * @param string $errorMessage
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListShareResponseTransfer
+     */
+    protected function createErrorShareResponse(string $errorMessage): ShoppingListShareResponseTransfer
+    {
+        return (new ShoppingListShareResponseTransfer())
+            ->setIsSuccess(false)
+            ->setError($errorMessage);
     }
 
     /**

@@ -19,8 +19,6 @@ use Spryker\Zed\ShoppingList\Persistence\Propel\Mapper\ShoppingListItemMapper;
 use Spryker\Zed\ShoppingList\Persistence\Propel\Mapper\ShoppingListItemMapperInterface;
 use Spryker\Zed\ShoppingList\Persistence\Propel\Mapper\ShoppingListMapper;
 use Spryker\Zed\ShoppingList\Persistence\Propel\Mapper\ShoppingListMapperInterface;
-use Spryker\Zed\ShoppingList\Persistence\Propel\Mapper\ShoppingListPermissionGroupMapper;
-use Spryker\Zed\ShoppingList\Persistence\Propel\Mapper\ShoppingListPermissionGroupMapperInterface;
 
 /**
  * @method \Spryker\Zed\ShoppingList\ShoppingListConfig getConfig()
@@ -97,13 +95,5 @@ class ShoppingListPersistenceFactory extends AbstractPersistenceFactory
     public function createShoppingListItemMapper(): ShoppingListItemMapperInterface
     {
         return new ShoppingListItemMapper();
-    }
-
-    /**
-     * @return \Spryker\Zed\ShoppingList\Persistence\Propel\Mapper\ShoppingListPermissionGroupMapperInterface
-     */
-    public function createShoppingListPermissionGroupMapper(): ShoppingListPermissionGroupMapperInterface
-    {
-        return new ShoppingListPermissionGroupMapper();
     }
 }

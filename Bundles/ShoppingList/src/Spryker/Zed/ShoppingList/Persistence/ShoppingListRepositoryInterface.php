@@ -79,7 +79,7 @@ interface ShoppingListRepositoryInterface
      *
      * @return bool
      */
-    public function isShoppingListSharedCompanyBusinessUnit(int $idShoppingList, int $idCompanyBusinessUnit): bool;
+    public function isShoppingListSharedToCompanyBusinessUnit(int $idShoppingList, int $idCompanyBusinessUnit): bool;
 
     /**
      * @param int $idShoppingList
@@ -87,7 +87,7 @@ interface ShoppingListRepositoryInterface
      *
      * @return bool
      */
-    public function isShoppingListSharedCompanyUser(int $idShoppingList, int $idCompanyUser): bool;
+    public function isShoppingListSharedToCompanyUser(int $idShoppingList, int $idCompanyUser): bool;
 
     /**
      * @param int $idCompanyBusinessUnit

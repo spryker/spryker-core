@@ -29,7 +29,7 @@ class ShoppingListToMessengerFacadeBridge implements ShoppingListToMessengerFaca
      *
      * @return void
      */
-    public function addErrorMessage(MessageTransfer $message): void
+    public function addErrorMessage(MessageTransfer $message)
     {
         $this->messengerFacade->addErrorMessage($message);
     }
@@ -39,7 +39,7 @@ class ShoppingListToMessengerFacadeBridge implements ShoppingListToMessengerFaca
      *
      * @return void
      */
-    public function addSuccessMessage(MessageTransfer $message): void
+    public function addSuccessMessage(MessageTransfer $message)
     {
         $this->messengerFacade->addSuccessMessage($message);
     }

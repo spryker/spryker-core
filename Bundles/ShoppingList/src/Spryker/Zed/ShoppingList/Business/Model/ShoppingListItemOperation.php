@@ -78,16 +78,7 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
      */
     public function addItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
     {
-        $shoppingListItemTransfer->requireSku();
-        $shoppingListItemTransfer->requireQuantity();
-
-        if (!$this->productFacade->hasProductConcrete($shoppingListItemTransfer->getSku())) {
-            $this->messengerFacade->addErrorMessage(
-                (new MessageTransfer())
-                    ->setValue(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_ADD_FAILED)
-                    ->setParameters([static::GLOSSARY_PARAM_SKU => $shoppingListItemTransfer->getSku()])
-            );
-
+        if (!$this->assertItem($shoppingListItemTransfer)) {
             return $shoppingListItemTransfer;
         }
 
@@ -97,6 +88,7 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
             ->setCustomerReference($shoppingListItemTransfer->getCustomerReference());
         $shoppingListTransfer = $this->resolveShoppingList($shoppingListTransfer);
         $shoppingListItemTransfer->setFkShoppingList($shoppingListTransfer->getIdShoppingList());
+
         $shoppingListItemTransfer = $this->saveShoppingListItem($shoppingListItemTransfer);
         if (!$shoppingListItemTransfer->getIdShoppingListItem()) {
             $this->messengerFacade->addSuccessMessage(
@@ -152,6 +144,29 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
         }
 
         return $this->shoppingListEntityManager->saveShoppingListItem($shoppingListItemTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return bool
+     */
+    protected function assertItem(ShoppingListItemTransfer $shoppingListItemTransfer): bool
+    {
+        $shoppingListItemTransfer->requireSku();
+        $shoppingListItemTransfer->requireQuantity();
+
+        if (!$this->productFacade->hasProductConcrete($shoppingListItemTransfer->getSku())) {
+            $this->messengerFacade->addErrorMessage(
+                (new MessageTransfer())
+                    ->setValue(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_ADD_FAILED)
+                    ->setParameters([static::GLOSSARY_PARAM_SKU => $shoppingListItemTransfer->getSku()])
+            );
+
+            return false;
+        }
+
+        return true;
     }
 
     /**

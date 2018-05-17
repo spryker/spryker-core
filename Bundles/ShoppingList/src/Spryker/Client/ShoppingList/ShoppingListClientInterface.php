@@ -28,6 +28,7 @@ interface ShoppingListClientInterface
      *  - Makes Zed request.
      *  - Create new shopping list entity if it does not exist.
      *  - Updates customer permissions.
+     *  - Get messages from zed request and put them to session.
      *
      * @api
      *
@@ -42,6 +43,7 @@ interface ShoppingListClientInterface
      *  - Makes Zed request.
      *  - Update shopping list entity if it exist or create new.
      *  - Updates customer permissions.
+     *  - Get messages from zed request and put them to session.
      *
      * @api
      *
@@ -56,6 +58,7 @@ interface ShoppingListClientInterface
      *  - Makes Zed request.
      *  - Remove shopping list.
      *  - Updates customer permissions.
+     *  - Get messages from zed request and put them to session.
      *
      * @api
      *
@@ -70,6 +73,7 @@ interface ShoppingListClientInterface
      *  - Makes Zed request.
      *  - Add item to shopping list.
      *  - Updates customer permissions.
+     *  - Get messages from zed request and put them to session.
      *
      * @api
      *
@@ -84,6 +88,7 @@ interface ShoppingListClientInterface
      *  - Makes Zed request.
      *  - Remove item by id.
      *  - Updates customer permissions.
+     *  - Get messages from zed request and put them to session.
      *
      * @api
      *
@@ -98,6 +103,7 @@ interface ShoppingListClientInterface
      *  - Makes Zed request.
      *  - Load shopping list by id.
      *  - Updates customer permissions.
+     *  - Get messages from zed request and put them to session.
      *
      * @api
      *
@@ -206,6 +212,7 @@ interface ShoppingListClientInterface
      *  - Makes Zed request.
      *  - Push items from quote to shopping list.
      *  - Updates customer permissions.
+     *  - Get messages from zed request and put them to session.
      *
      * @api
      *

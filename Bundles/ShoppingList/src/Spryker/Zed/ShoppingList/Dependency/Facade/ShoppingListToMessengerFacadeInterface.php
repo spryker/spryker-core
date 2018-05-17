@@ -16,12 +16,12 @@ interface ShoppingListToMessengerFacadeInterface
      *
      * @return void
      */
-    public function addErrorMessage(MessageTransfer $message): void;
+    public function addErrorMessage(MessageTransfer $message);
 
     /**
      * @param \Generated\Shared\Transfer\MessageTransfer $message
      *
      * @return void
      */
-    public function addSuccessMessage(MessageTransfer $message): void;
+    public function addSuccessMessage(MessageTransfer $message);
 }

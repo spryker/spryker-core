@@ -33,6 +33,7 @@ class ProductConcreteStatusChecker implements ProductConcreteStatusCheckerInterf
     {
         return $this->productQueryContainer
             ->queryProduct()
-            ->findOneBySku($sku)->getIsActive();
+            ->findOneBySku($sku)
+            ->getIsActive();
     }
 }
