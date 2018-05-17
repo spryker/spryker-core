@@ -144,10 +144,11 @@ class OffersTable extends AbstractTable
 
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
+     * @param bool $customerExists
      *
      * @return string
      */
-    protected function formatCustomer(?CustomerTransfer $customerTransfer)
+    protected function formatCustomer(?CustomerTransfer $customerTransfer, bool $customerExists)
     {
         if (!$customerTransfer) {
             return 'No reference';
@@ -166,11 +167,13 @@ class OffersTable extends AbstractTable
             return $customer;
         }
 
-        $url = Url::generate('/customer/view', [
-            'id-customer' => $customerTransfer->getIdCustomer(),
-        ]);
+        if ($customerExists) {
+            $url = Url::generate('/customer/view', [
+                'id-customer' => $customerTransfer->getIdCustomer(),
+            ]);
 
-        $customer = '<a href="' . $url . '">' . $customer . '</a>';
+            $customer = '<a href="' . $url . '">' . $customer . '</a>';
+        }
 
         return $customer;
     }
@@ -339,12 +342,19 @@ class OffersTable extends AbstractTable
         $results = [];
         foreach ($queryResults as $item) {
             $quoteTransfer = $this->mapQuote($item);
-            $customerTransfer = $this->getCustomer($item);
+
+            $customerExists = true;
+            $customerTransfer = $this->getCustomerByReference($item);
+
+            if ($customerTransfer === null) {
+                $customerTransfer = $this->getCustomerFromQuoteTransfer($quoteTransfer);
+                $customerExists = false;
+            }
 
             $results[] = [
                 static::COL_ID_OFFER => $item[SpyOfferTableMap::COL_ID_OFFER],
                 static::COL_CREATED_AT => $this->utilDateTimeService->formatDateTime($item[SpyOfferTableMap::COL_CREATED_AT]),
-                static::COL_CUSTOMER_REFERENCE => $this->formatCustomer($customerTransfer),
+                static::COL_CUSTOMER_REFERENCE => $this->formatCustomer($customerTransfer, $customerExists),
                 static::COL_EMAIL => $this->formatEmailAddress($customerTransfer),
                 static::COL_GRAND_TOTAL => $this->getGrandTotal($quoteTransfer),
                 static::COL_CONTACT_DATE => $this->formatContactDate($item[SpyOfferTableMap::COL_CONTACT_DATE]),
@@ -375,23 +385,6 @@ class OffersTable extends AbstractTable
         $quoteTransfer->fromArray($quoteArray, true);
 
         return $quoteTransfer;
-    }
-
-    /**
-     * @param array $item
-     *
-     * @return \Generated\Shared\Transfer\CustomerTransfer|null
-     */
-    protected function getCustomer(array $item): ?CustomerTransfer
-    {
-        $customer = $this->getCustomerByReference($item);
-        if ($customer) {
-            return $customer;
-        }
-
-        $quoteTransfer = $this->mapQuote($item);
-
-        return $this->getCustomerFromQuoteTransfer($quoteTransfer);
     }
 
     /**
