@@ -63,6 +63,7 @@ class CompanyBusinessUnitFormDataProvider
         return [
             'data_class' => CompanyBusinessUnitTransfer::class,
             CompanyBusinessUnitForm::OPTION_COMPANY_CHOICES => $this->prepareCompanyChoices(),
+            CompanyBusinessUnitForm::OPTION_PARENT_CHOICES => $this->prepareParentChoices(),
         ];
     }
 
@@ -84,6 +85,22 @@ class CompanyBusinessUnitFormDataProvider
         foreach ($this->companyFacade->getCompanies()->getCompanies() as $company) {
             $result[$company->getIdCompany()] = $company->getName();
         }
+
+        return $result;
+    }
+
+    /**
+     * @return string[] [business unit id => business unit name]
+     */
+    protected function prepareParentChoices(): array
+    {
+        $result = [
+            1 => 'some name',
+        ];
+
+//        foreach ($this->companyBusinessUnitFacade-> as $company) {
+//            $result[$company->getIdCompany()] = $company->getName();
+//        }
 
         return $result;
     }
