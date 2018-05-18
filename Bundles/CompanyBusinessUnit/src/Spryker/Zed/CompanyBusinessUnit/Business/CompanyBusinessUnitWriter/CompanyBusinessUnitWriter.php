@@ -100,6 +100,12 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
             return $companyBusinessUnitResponseTransfer;
         }
 
+        $this->entityManager->clearParentBusinessUnit(
+            $companyBusinessUnitResponseTransfer
+                ->getCompanyBusinessUnitTransfer()
+                ->getIdCompanyBusinessUnit()
+        );
+
         $this->entityManager->deleteCompanyBusinessUnitById(
             $companyBusinessUnitResponseTransfer
                 ->getCompanyBusinessUnitTransfer()
