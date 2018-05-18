@@ -59,7 +59,7 @@ $(document).ready( function () {
         const fragment = document.createDocumentFragment();
 
         parentList.forEach(function(parentBU, index) {
-            alert('setParentNames each: ' + )
+            alert('setParentNames each: ' + parentBU);
             let opt = document.createElement('option');
             opt.innerHTML = parentBU;
             opt.value = parentBU;
