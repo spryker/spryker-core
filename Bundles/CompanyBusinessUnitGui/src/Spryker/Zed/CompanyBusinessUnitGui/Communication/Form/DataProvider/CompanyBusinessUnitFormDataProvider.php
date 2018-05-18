@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\DataProvider;
 
+use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyBusinessUnitForm;
 use Spryker\Zed\CompanyBusinessUnitGui\Dependency\Facade\CompanyBusinessUnitGuiToCompanyBusinessUnitFacadeInterface;
@@ -94,13 +95,14 @@ class CompanyBusinessUnitFormDataProvider
      */
     protected function prepareParentChoices(): array
     {
-        $result = [
-            1 => 'some name',
-        ];
+        $businessUnitCollection = $this->companyBusinessUnitFacade
+            ->getCompanyBusinessUnitCollection(new CompanyBusinessUnitCriteriaFilterTransfer())
+            ->getCompanyBusinessUnits();
+        $result = [];
 
-//        foreach ($this->companyBusinessUnitFacade-> as $company) {
-//            $result[$company->getIdCompany()] = $company->getName();
-//        }
+        foreach ($businessUnitCollection as $businessUnit) {
+            $result[$businessUnit->getIdCompanyBusinessUnit()] = $businessUnit->getName();
+        }
 
         return $result;
     }

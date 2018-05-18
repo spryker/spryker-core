@@ -47,12 +47,15 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
     public function getCompanyBusinessUnitCollection(
         CompanyBusinessUnitCriteriaFilterTransfer $criteriaFilterTransfer
     ): CompanyBusinessUnitCollectionTransfer {
-        $criteriaFilterTransfer->requireIdCompany();
         $query = $this->getFactory()
             ->createCompanyBusinessUnitQuery()
             ->leftJoinParentCompanyBusinessUnit('parentCompanyBusinessUnit')
-            ->with('parentCompanyBusinessUnit')
-            ->filterByFkCompany($criteriaFilterTransfer->getIdCompany());
+            ->with('parentCompanyBusinessUnit');
+
+        if ($criteriaFilterTransfer->getIdCompany()) {
+            $query
+                ->filterByFkCompany($criteriaFilterTransfer->getIdCompany());
+        }
 
         if ($criteriaFilterTransfer->getIdCompanyUser() !== null) {
             $query->useCompanyUserQuery()
