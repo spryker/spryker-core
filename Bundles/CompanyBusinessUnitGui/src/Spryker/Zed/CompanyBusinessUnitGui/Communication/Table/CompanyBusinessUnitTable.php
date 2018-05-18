@@ -21,9 +21,10 @@ class CompanyBusinessUnitTable extends AbstractTable
     protected const COL_IBAN = SpyCompanyBusinessUnitTableMap::COL_IBAN;
     protected const COL_BIC = SpyCompanyBusinessUnitTableMap::COL_BIC;
     protected const COL_ACTIONS = 'actions';
+    protected const FORMAT_ADDRESS = '%s, %s, %s';
     protected const REQUEST_ID_COMPANY_BUSINESS_UNIT = 'id-company-business-unit';
     protected const URL_COMPANY_BUSINESS_UNIT_EDIT = '/company-business-unit-gui/edit-company-business-unit/index?%s=%d';
-    protected const FORMAT_ADDRESS = '%s, %s, %s';
+    protected const URL_COMPANY_BUSINESS_UNIT_DELETE = '/company-business-unit-gui/delete-company-business-unit/index?%s=%d';
 
     /**
      * @var \Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery
@@ -124,9 +125,16 @@ class CompanyBusinessUnitTable extends AbstractTable
     {
         $buttons = [];
 
+        $idCompanyBusinessUnit = $spyCompanyBusinessUnit->getIdCompanyBusinessUnit();
+
         $buttons[] = $this->generateEditButton(
-            sprintf(static::URL_COMPANY_BUSINESS_UNIT_EDIT, static::REQUEST_ID_COMPANY_BUSINESS_UNIT, $spyCompanyBusinessUnit->getIdCompanyBusinessUnit()),
+            sprintf(static::URL_COMPANY_BUSINESS_UNIT_EDIT, static::REQUEST_ID_COMPANY_BUSINESS_UNIT, $idCompanyBusinessUnit),
             'Edit'
+        );
+
+        $buttons[] = $this->generateRemoveButton(
+            sprintf(static::URL_COMPANY_BUSINESS_UNIT_DELETE, static::REQUEST_ID_COMPANY_BUSINESS_UNIT, $idCompanyBusinessUnit),
+            'Delete'
         );
 
         return implode(' ', $buttons);
