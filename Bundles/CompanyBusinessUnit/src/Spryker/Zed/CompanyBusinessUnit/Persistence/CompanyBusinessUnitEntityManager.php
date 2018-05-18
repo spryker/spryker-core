@@ -52,4 +52,17 @@ class CompanyBusinessUnitEntityManager extends AbstractEntityManager implements 
             ->filterByIdCompanyBusinessUnit($idCompanyBusinessUnit)
             ->delete();
     }
+
+    /**
+     * @param int $idCompanyBusinessUnit
+     *
+     * @return void
+     */
+    public function clearParentBusinessUnit(int $idCompanyBusinessUnit): void
+    {
+        $this->getFactory()
+            ->createCompanyBusinessUnitQuery()
+            ->filterByIdParentCompanyBusinessUnit($idCompanyBusinessUnit)
+            ->update(['IdParentCompanyBusinessUnit' => null]);
+    }
 }

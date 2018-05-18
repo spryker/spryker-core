@@ -117,6 +117,76 @@ class CompanyBusinessUnitFacadeTest extends Test
     /**
      * @return void
      */
+    public function testBusinessUnitCanHaveParentBusinessUnit()
+    {
+        // Arrange
+        $idCompany = $this->tester->haveCompany()->getIdCompany();
+        $seedData = [
+            'fkCompany' => $idCompany,
+            'idCompanyBusinessUnit' => null,
+        ];
+        $businessUnitTransfer = (new CompanyBusinessUnitBuilder($seedData))->build();
+        $businessUnitTransfer = $this->getFacade()
+            ->create($businessUnitTransfer)
+            ->getCompanyBusinessUnitTransfer();
+        $seedData = [
+            'fkCompany' => $idCompany,
+            'idCompanyBusinessUnit' => null,
+            'idParentCompanyBusinessUnit' => $businessUnitTransfer->getIdCompanyBusinessUnit(),
+        ];
+        $childBusinessUnitTransfer = (new CompanyBusinessUnitBuilder($seedData))->build();
+        $childBusinessUnitTransfer = $this->getFacade()
+            ->create($childBusinessUnitTransfer)
+            ->getCompanyBusinessUnitTransfer();
+
+        // Act
+        $loadedChildBusinessUnitTransfer = $this->getFacade()
+            ->getCompanyBusinessUnitById($childBusinessUnitTransfer);
+
+        // Assert
+        $this->assertSame(
+            $loadedChildBusinessUnitTransfer->getParentCompanyBusinessUnit()->getIdParentCompanyBusinessUnit(),
+            $businessUnitTransfer->getIdParentCompanyBusinessUnit()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeleteShouldClearParentForChildrenBusinessUnit()
+    {
+        // Arrange
+        $idCompany = $this->tester->haveCompany()->getIdCompany();
+        $seedData = [
+            'fkCompany' => $idCompany,
+            'idCompanyBusinessUnit' => null,
+        ];
+        $businessUnitTransfer = (new CompanyBusinessUnitBuilder($seedData))->build();
+        $businessUnitTransfer = $this->getFacade()
+            ->create($businessUnitTransfer)
+            ->getCompanyBusinessUnitTransfer();
+        $seedData = [
+            'fkCompany' => $idCompany,
+            'idCompanyBusinessUnit' => null,
+            'idParentCompanyBusinessUnit' => $businessUnitTransfer->getIdCompanyBusinessUnit(),
+        ];
+        $childBusinessUnitTransfer = (new CompanyBusinessUnitBuilder($seedData))->build();
+        $childBusinessUnitTransfer = $this->getFacade()
+            ->create($childBusinessUnitTransfer)
+            ->getCompanyBusinessUnitTransfer();
+
+        // Act
+        $this->getFacade()->delete($businessUnitTransfer);
+        $loadedChildBusinessUnitTransfer = $this->getFacade()
+            ->getCompanyBusinessUnitById($childBusinessUnitTransfer);
+
+        // Assert
+        $this->assertNull($loadedChildBusinessUnitTransfer->getParentCompanyBusinessUnit()->getIdParentCompanyBusinessUnit());
+    }
+
+    /**
+     * @return void
+     */
     public function testGetCompanyBusinessUnitCollectionshouldReturnTransferObject()
     {
     }
