@@ -22,8 +22,8 @@ class DeleteCompanyBusinessUnitController extends AbstractController
     protected const URL_PARAM_REDIRECT_URL = 'redirect-url';
     protected const REDIRECT_URL_DEFAULT = '/company-business-unit-gui/list-company-business-unit';
 
-    protected const MESSAGE_COMPANY_BUSINESS_UNIT_DELETE_SUCCESS = 'Company Business Unit %d has been deleted.';
-    protected const MESSAGE_COMPANY_BUSINESS_UNIT_DELETE_ERROR = 'Company Business Unit %d has not been deleted.';
+    protected const MESSAGE_COMPANY_BUSINESS_UNIT_DELETE_SUCCESS = 'Company Business Unit "%s" was deleted.';
+    protected const MESSAGE_COMPANY_BUSINESS_UNIT_DELETE_ERROR = 'Company Business Unit "%s" was not deleted.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -42,25 +42,20 @@ class DeleteCompanyBusinessUnitController extends AbstractController
             ->getFactory()
             ->getCompanyBusinessUnitFacade();
 
-        $companyBusinessUnit = $companyBusinessUnitFacade->getCompanyBusinessUnitById($companyBusinessUnitTransfer);
+        $companyBusinessUnit = $companyBusinessUnitFacade
+            ->getCompanyBusinessUnitById($companyBusinessUnitTransfer);
+
         if ($companyBusinessUnit) {
-            $companyBusinessUnitFacade = $this
-                ->getFactory()
-                ->getCompanyBusinessUnitFacade();
-
-            $companyBusinessUnit = $companyBusinessUnitFacade
-                ->getCompanyBusinessUnitById($companyBusinessUnitTransfer);
-
             $companyBusinessUnitFacade->delete($companyBusinessUnit);
 
             $this->addSuccessMessage(sprintf(
                 static::MESSAGE_COMPANY_BUSINESS_UNIT_DELETE_SUCCESS,
-                $idCompanyBusinessUnit
+                $companyBusinessUnit->getName()
             ));
         } else {
             $this->addErrorMessage(sprintf(
                 static::MESSAGE_COMPANY_BUSINESS_UNIT_DELETE_ERROR,
-                $idCompanyBusinessUnit
+                $companyBusinessUnit->getName()
             ));
         }
 
