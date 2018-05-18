@@ -144,7 +144,7 @@ class CompanyBusinessUnitFacadeTest extends Test
             ->getCompanyBusinessUnitById($childBusinessUnitTransfer);
 
         // Assert
-        $this->assertEquals(
+        $this->assertSame(
             $loadedChildBusinessUnitTransfer->getParentCompanyBusinessUnit()->getIdParentCompanyBusinessUnit(),
             $businessUnitTransfer->getIdParentCompanyBusinessUnit()
         );
