@@ -3,6 +3,10 @@
   "description": "MerchantDataImport module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
+    "spryker/data-import": "^1.3.0",
+    "spryker/kernel": "^3.0.0",
+    "spryker/merchant": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

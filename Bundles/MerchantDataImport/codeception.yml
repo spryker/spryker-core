@@ -1,5 +1,7 @@
 namespace: MerchantDataImport
 actor: Tester
+include:
+  - tests/SprykerTest/Zed/MerchantDataImport
 paths:
     tests: tests
     log: tests/_output
