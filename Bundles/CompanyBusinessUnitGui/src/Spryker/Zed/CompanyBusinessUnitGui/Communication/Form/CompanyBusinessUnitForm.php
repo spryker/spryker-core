@@ -94,9 +94,6 @@ class CompanyBusinessUnitForm extends AbstractType
             'placeholder' => 'Select one',
             'choices' => array_flip($choices),
             'choices_as_values' => true,
-            'constraints' => [
-                new NotBlank(),
-            ],
         ]);
 
         return $this;
