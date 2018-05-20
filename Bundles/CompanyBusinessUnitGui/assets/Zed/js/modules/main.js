@@ -10,82 +10,102 @@ require('ZedGui');
 $(document).ready( function () {
     console.log('module start');
 
-    unitParenField.addListenerOnCompany();
+    const field = createIt();
+    document.bm13kk = field;
+    document.$bm13kk = $;
+
+    field.addListenerOnCompany();
 });
 
-const unitParenField = {
+function createIt() {
+    return {
 
-    companyField: $('input#company-business-unit_id_company_business_unit') || {value: null},
-    parentField: $('select#company-business-unit_fk_parent_company_business_unit'),
+        $companyField: $('select#company-business-unit_fk_company'),
+        $parentField: $('select#company-business-unit_fk_parent_company_business_unit'),
 
-    /**
-     * @returns Null|string
-     */
-    getCompanyId: function(){
-        console.log('company id: ' + this.companyField.value)
-        return this.companyField.value;
-    },
+        /**
+         * @returns Null|string
+         */
+        getCompanyId: function () {
+            console.log('get company')
 
-    /**
-     * @returns {string: string}
-     */
-    getBusinessUnitList: function(){
-        const idCompany = this.getCompanyId();
+            if (!this.$companyField) {
+                return null;
+            }
 
-        console.log('getBusinessUnitList company: ' + idCompany)
-        if (!idCompany) {
-            return {};
-        }
+            console.log('get company id: ' + this.$companyField.value)
+            return this.$companyField.value;
+        },
 
-        return {
-            idCompany: 'some name',
-        };
-    },
+        /**
+         * @returns {string: string}
+         */
+        getBusinessUnitList: function () {
+            const idCompany = this.getCompanyId();
 
-    cleanParents: function(){
-        console.log('cleanParents')
-        if (!this.parentField) {
-            return;
-        }
+            console.log('getBusinessUnitList company: ' + idCompany)
+            if (!idCompany) {
+                return {};
+            }
 
-        console.log('cleanParents parents id: ' + this.parentField.id)
-        while (this.parentField.firstChild) {
-            this.parentField.removeChild(this.parentField.firstChild);
-        }
-    },
+            return {
+                idCompany: 'some name',
+            };
+        },
 
-    setParentNames: function(){
+        cleanParents: function () {
+            console.log('cleanParents')
 
-        console.log('setParentNames')
+            if (!this.$parentField) {
+                return;
+            }
 
-        if (!this.parentField) {
-            return;
-        }
-        this.cleanParents();
-        const parentList = this.getBusinessUnitList();
-        const fragment = document.createDocumentFragment();
+            console.log('cleanParents parents id: ' + this.$parentField.id)
+            while (this.$parentField.firstChild) {
+                this.$parentField.removeChild(this.$parentField.firstChild);
+            }
+        },
 
-        parentList.forEach(function(parentBU, index) {
-            console.log('setParentNames each: ' + parentBU);
-            let opt = document.createElement('option');
-            opt.innerHTML = parentBU;
-            opt.value = parentBU;
-            fragment.appendChild(opt);
-        });
+        setParentNames: function () {
+            console.log('setParentNames')
 
-        this.parentField.appendChild(fragment);
-    },
+            if (!this.$parentField) {
+                return;
+            }
+            this.cleanParents();
+            const parentList = this.getBusinessUnitList();
+            const fragment = document.createDocumentFragment();
 
-    addListenerOnCompany: function(){
+            parentList.forEach(function (parentBU, index) {
+                console.log('setParentNames indes: ' + index);
+                console.log('setParentNames each: ' + parentBU);
 
-        console.log('addListenerOnCompany')
-        if (!this.companyField) {
-            return;
-        }
+                let opt = document.createElement('option');
+                opt.innerHTML = parentBU;
+                opt.value = parentBU;
+                fragment.appendChild(opt);
+            });
 
-        this.companyField.change(function (){
-            console.log('change')
-            this.setParentNames();
-        });
-    },
-};
+            this.$parentField.appendChild(fragment);
+        },
+
+        addListenerOnCompany: function () {
+            console.log('addListenerOnCompany')
+
+            if (!this.$companyField) {
+                return;
+            }
+            console.log('addListenerOnCompany has field')
+            console.log(this.$companyField)
+            console.log(this.$companyField.change)
+
+            // @TODO why this.$companyField.change() not working?
+            // this.$companyField.addEventListener('change', function () {
+            this.$companyField.change(function () {
+                console.log('change')
+
+                this.setParentNames();
+            });
+        },
+    };
+}
