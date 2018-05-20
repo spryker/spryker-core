@@ -8,24 +8,31 @@
 require('ZedGui');
 
 $(document).ready( function () {
-    const companyField = $('input#company-business-unit_id_company_business_unit') || {value: null};
-    const parentField = $('select#company-business-unit_fk_parent_company_business_unit');
+    console.log('module start');
+
+    unitParenField.addListenerOnCompany();
+});
+
+const unitParenField = {
+
+    companyField: $('input#company-business-unit_id_company_business_unit') || {value: null},
+    parentField: $('select#company-business-unit_fk_parent_company_business_unit'),
 
     /**
      * @returns Null|string
      */
-    function getCompanyId() {
-        alert ('company id: ' + companyField.value)
-        return companyField.value;
-    }
+    getCompanyId: function(){
+        console.log('company id: ' + this.companyField.value)
+        return this.companyField.value;
+    },
 
     /**
      * @returns {string: string}
      */
-    function getBusinessUnitList() {
-        const idCompany = getCompanyId();
+    getBusinessUnitList: function(){
+        const idCompany = this.getCompanyId();
 
-        alert ('getBusinessUnitList company: ' + idCompany)
+        console.log('getBusinessUnitList company: ' + idCompany)
         if (!idCompany) {
             return {};
         }
@@ -33,54 +40,52 @@ $(document).ready( function () {
         return {
             idCompany: 'some name',
         };
-    }
+    },
 
-    function cleanParents() {
-        alert ('cleanParents')
-        if (!cleanParents) {
+    cleanParents: function(){
+        console.log('cleanParents')
+        if (!this.parentField) {
             return;
         }
 
-        alert ('cleanParents parents: ' + cleanParents.id)
-        while (parentField.firstChild) {
-            parentField.removeChild(parentField.firstChild);
+        console.log('cleanParents parents id: ' + this.parentField.id)
+        while (this.parentField.firstChild) {
+            this.parentField.removeChild(this.parentField.firstChild);
         }
-    }
+    },
 
-    function setParentNames() {
+    setParentNames: function(){
 
-        alert ('setParentNames')
+        console.log('setParentNames')
 
-        if (!parentField) {
+        if (!this.parentField) {
             return;
         }
-        cleanParents();
-        const parentList = getBusinessUnitList();
+        this.cleanParents();
+        const parentList = this.getBusinessUnitList();
         const fragment = document.createDocumentFragment();
 
         parentList.forEach(function(parentBU, index) {
-            alert('setParentNames each: ' + parentBU);
+            console.log('setParentNames each: ' + parentBU);
             let opt = document.createElement('option');
             opt.innerHTML = parentBU;
             opt.value = parentBU;
             fragment.appendChild(opt);
         });
 
-        parentField.appendChild(fragment);
-    }
+        this.parentField.appendChild(fragment);
+    },
 
-    function addListenerOnCompany() {
+    addListenerOnCompany: function(){
 
-        alert ('addListenerOnCompany')
-        if (!companyField) {
+        console.log('addListenerOnCompany')
+        if (!this.companyField) {
             return;
         }
 
-        companyField.change(function () {
-            alert ('change')
-            setParentNames();
+        this.companyField.change(function (){
+            console.log('change')
+            this.setParentNames();
         });
-    }
-
-    addListenerOnCompany();
-});
+    },
+};
