@@ -36,7 +36,7 @@ class ParentBusinessUnitKeyToIdCompanyBusinessUnitStep implements DataImportStep
         }
         if (!isset($this->idCompanyBusinessUnitCache[$companyBusinessUnitKey])) {
             $idCompany = $dataSet[CompanyBusinessUnitDataSet::ID_COMPANY];
-            $companyBusinessUnitQuery = new SpyCompanyBusinessUnitQuery();
+            $companyBusinessUnitQuery = SpyCompanyBusinessUnitQuery::create();
             $idCompanyBusinessUnit = $companyBusinessUnitQuery
                 ->filterByFkCompany($idCompany)
                 ->select(SpyCompanyBusinessUnitTableMap::COL_ID_COMPANY_BUSINESS_UNIT)
