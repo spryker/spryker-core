@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Copyright © 2018-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
 namespace SprykerTest\Zed\BusinessOnBehalfDataImport\Communication\Plugin;
 
@@ -22,6 +26,9 @@ use Spryker\Zed\BusinessOnBehalfDataImport\Communication\Plugin\BusinessOnBehalf
  */
 class BusinessOnBehalfDataImportPluginTest extends Unit
 {
+    protected const COMPANY_KEY = 'test-company';
+    protected const BUSINESS_UNIT_KEY = 'test-business-unit';
+
     /**
      * @var \SprykerTest\Zed\BusinessOnBehalfDataImport\BusinessOnBehalfDataImportCommunicationTester
      */
@@ -30,11 +37,18 @@ class BusinessOnBehalfDataImportPluginTest extends Unit
     /**
      * @return void
      */
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->prepareTestData();
+    }
+
+    /**
+     * @return void
+     */
     public function testImportImportsData(): void
     {
         $this->tester->ensureDatabaseTableIsEmpty();
-
-        $this->tester->prepareTestData();
 
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
         $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/company_user.csv');
@@ -57,5 +71,18 @@ class BusinessOnBehalfDataImportPluginTest extends Unit
     {
         $businessOnBehalfDataImportPlugin = new BusinessOnBehalfDataImportPlugin();
         $this->assertSame(BusinessOnBehalfDataImportConfig::IMPORT_TYPE_COMPANY_USER, $businessOnBehalfDataImportPlugin->getImportType());
+    }
+
+    /**
+     * @return void
+     */
+    protected function prepareTestData(): void
+    {
+        $this->tester->prepareTestData();
+        $companyTransfer = $this->tester->haveCompany(['key' => static::COMPANY_KEY]);
+        $this->tester->haveCompanyBusinessUnit([
+            'key' => static::BUSINESS_UNIT_KEY,
+            'fkCompany' => $companyTransfer->getIdCompany(),
+        ]);
     }
 }

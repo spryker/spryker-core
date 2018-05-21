@@ -1,13 +1,14 @@
 <?php
 
+/**
+ * Copyright © 2018-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace SprykerTest\Zed\BusinessOnBehalfDataImport\Helper;
 
 use Codeception\Module;
-use Generated\Shared\DataBuilder\CompanyBuilder;
-use Generated\Shared\DataBuilder\CompanyBusinessUnitBuilder;
 use Generated\Shared\DataBuilder\CustomerBuilder;
-use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
-use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
@@ -20,8 +21,6 @@ class BusinessOnBehalfDataImportHelper extends Module
     use LocatorHelperTrait;
 
     protected const CUSTOMER_REFERENCE = 'TEST--1';
-    protected const COMPANY_KEY = 'test-company';
-    protected const BUSINESS_UNIT_KEY = 'test-business-unit';
 
     /**
      * @return void
@@ -29,8 +28,6 @@ class BusinessOnBehalfDataImportHelper extends Module
     public function prepareTestData(): void
     {
         $this->createTestCustomer();
-        $companyTransfer = $this->createTestCompany();
-        $this->createTestBusinessUnit($companyTransfer);
     }
 
     /**
@@ -90,59 +87,5 @@ class BusinessOnBehalfDataImportHelper extends Module
     protected function cleanupCustomer(CustomerTransfer $customerTransfer): void
     {
         $this->getLocator()->customer()->facade()->deleteCustomer($customerTransfer);
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\CompanyTransfer
-     */
-    protected function createTestCompany(): CompanyTransfer
-    {
-        $companyTransfer = (new CompanyBuilder(['key' => static::COMPANY_KEY]))->build();
-        $companyTransfer = $this->getLocator()->company()->facade()->create($companyTransfer)->getCompanyTransfer();
-
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($companyTransfer) {
-            $this->cleanupCompany($companyTransfer);
-        });
-
-        return $companyTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
-     *
-     * @return void
-     */
-    protected function cleanupCompany(CompanyTransfer $companyTransfer): void
-    {
-        $this->getLocator()->company()->facade()->delete($companyTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
-     */
-    protected function createTestBusinessUnit(CompanyTransfer $companyTransfer): CompanyBusinessUnitTransfer
-    {
-        $businessUnitTransfer = (new CompanyBusinessUnitBuilder(['key' => static::BUSINESS_UNIT_KEY]))->build();
-        $businessUnitTransfer->setIdCompanyBusinessUnit(null);
-        $businessUnitTransfer->setFkCompany($companyTransfer->getIdCompany());
-        $businessUnitTransfer = $this->getLocator()->companyBusinessUnit()->facade()->create($businessUnitTransfer)->getCompanyBusinessUnitTransfer();
-
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($businessUnitTransfer) {
-            $this->cleanupBusinessUnit($businessUnitTransfer);
-        });
-
-        return $businessUnitTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $businessUnitTransfer
-     *
-     * @return void
-     */
-    protected function cleanupBusinessUnit(CompanyBusinessUnitTransfer $businessUnitTransfer): void
-    {
-        $this->getLocator()->companyBusinessUnit()->facade()->delete($businessUnitTransfer);
     }
 }
