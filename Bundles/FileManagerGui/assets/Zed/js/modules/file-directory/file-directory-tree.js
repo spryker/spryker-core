@@ -82,20 +82,23 @@ function initJsTree() {
             }
         }
     }).on("changed.jstree", function (e, data) {
-        var filesTable = $('#file-directory-files-list').find('table').first();
+        var $filesList = $('#file-directory-files-list'),
+            $filesTable = $filesList.find('table').first(),
+            $deleteDirectoryButton = $('#delete-directory-link');
 
-        if (data.node.data.idFileDirectoryNode) {
-            $('#file-directory-files-list').show();
-            filesTable.DataTable().ajax.url( '/file-manager-gui/files/table?file-directory-id=' + data.node.data.idFileDirectoryNode ).load();
-            $('#add-file-link').attr('href', '/file-manager-gui/add-file?file-directory-id=' + data.node.data.idFileDirectoryNode);
+        $('#add-file-link').attr('href', '/file-manager-gui/add-file?file-directory-id=' + data.node.data.idFileDirectoryNode);
 
-            $('#delete-directory-link')
-                .attr('href', '/file-manager-gui/delete-directory?id-directory=' + data.node.data.idFileDirectoryNode);
-        } else {
-            $('#file-directory-files-list').hide();
-            $('#delete-directory-link')
-                .attr('href', '#');
+        if (typeof data.node.data.idFileDirectoryNode === 'undefined') {
+            $deleteDirectoryButton.removeAttr('href');
+            $deleteDirectoryButton.attr('disabled', true);
+            $filesList.hide()
+            return;
         }
+
+        $filesList.show();
+        $filesTable.DataTable().ajax.url('/file-manager-gui/files/table?file-directory-id=' + data.node.data.idFileDirectoryNode).load();
+        $deleteDirectoryButton.removeAttr('disabled');
+        $deleteDirectoryButton.attr('href', '/file-manager-gui/delete-directory?id-directory=' + data.node.data.idFileDirectoryNode);
     });
 
     $treeProgressBar.removeClass('hidden');
