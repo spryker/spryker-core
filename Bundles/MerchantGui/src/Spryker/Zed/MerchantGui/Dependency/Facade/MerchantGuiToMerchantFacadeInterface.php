@@ -5,26 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Merchant\Business;
+namespace Spryker\Zed\MerchantGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\MerchantTransfer;
 
-/**
- * @method \Spryker\Zed\Merchant\Business\MerchantBusinessFactory getFactory()
- * @method \Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface getRepository()
- * @method \Spryker\Zed\Merchant\Persistence\MerchantEntityManagerInterface getEntityManager()
- */
-interface MerchantFacadeInterface
+interface MerchantGuiToMerchantFacadeInterface
 {
     /**
-     * Specification:
-     * - Creates a new merchant entity.
-     * - Uses incoming transfer to set entity fields.
-     * - Persists the entity to DB.
-     * - Sets ID to the returning transfer.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer
@@ -32,14 +19,6 @@ interface MerchantFacadeInterface
     public function createMerchant(MerchantTransfer $merchantTransfer): MerchantTransfer;
 
     /**
-     * Specification:
-     * - Finds a merchant record by ID in DB.
-     * - Uses incoming transfer to update entity fields.
-     * - Persists the entity to DB.
-     * - Throws MerchantNotFoundException in case a record is not found.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer
@@ -47,12 +26,6 @@ interface MerchantFacadeInterface
     public function updateMerchant(MerchantTransfer $merchantTransfer): MerchantTransfer;
 
     /**
-     * Specification:
-     * - Finds a merchant record by ID in DB.
-     * - Removes the merchant record.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
      * @return void
@@ -60,12 +33,6 @@ interface MerchantFacadeInterface
     public function deleteMerchant(MerchantTransfer $merchantTransfer): void;
 
     /**
-     * Specification:
-     * - Returns a merchant by merchant id in provided transfer.
-     * - Throws an exception in case a record is not found.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer|null

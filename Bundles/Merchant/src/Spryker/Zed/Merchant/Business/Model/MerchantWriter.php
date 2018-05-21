@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Merchant\Business\Model;
 
 use Generated\Shared\Transfer\MerchantTransfer;
-use Generated\Shared\Transfer\SpyMerchantEntityTransfer;
 use Spryker\Zed\Merchant\Persistence\MerchantEntityManagerInterface;
 
 class MerchantWriter implements MerchantWriterInterface
@@ -19,18 +18,11 @@ class MerchantWriter implements MerchantWriterInterface
     protected $entityManager;
 
     /**
-     * @var \Spryker\Zed\Merchant\Business\Model\MerchantKeyGeneratorInterface
-     */
-    protected $keyGenerator;
-
-    /**
      * @param \Spryker\Zed\Merchant\Persistence\MerchantEntityManagerInterface $entityManager
-     * @param \Spryker\Zed\Merchant\Business\Model\MerchantKeyGeneratorInterface $keyGenerator
      */
-    public function __construct(MerchantEntityManagerInterface $entityManager, MerchantKeyGeneratorInterface $keyGenerator)
+    public function __construct(MerchantEntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
-        $this->keyGenerator = $keyGenerator;
     }
 
     /**
@@ -42,21 +34,7 @@ class MerchantWriter implements MerchantWriterInterface
     {
         $merchantTransfer->requireName();
 
-        if (!$merchantTransfer->getKey()) {
-            $key = $this->keyGenerator->generateUniqueKey($merchantTransfer->getName());
-            $merchantTransfer->setKey($key);
-        }
-
-        $merchantEntityTransfer = (new SpyMerchantEntityTransfer())
-            ->setName($merchantTransfer->getName())
-            ->setMerchantKey($merchantTransfer->getKey());
-
-        $merchantEntityTransfer = $this->entityManager->saveMerchant($merchantEntityTransfer);
-
-        return (new MerchantTransfer())
-            ->setIdMerchant($merchantEntityTransfer->getIdMerchant())
-            ->setName($merchantEntityTransfer->getName())
-            ->setKey($merchantEntityTransfer->getMerchantKey());
+        return $this->entityManager->saveMerchant($merchantTransfer);
     }
 
     /**
@@ -70,20 +48,7 @@ class MerchantWriter implements MerchantWriterInterface
             ->requireIdMerchant()
             ->requireName();
 
-        $merchantEntityTransfer = (new SpyMerchantEntityTransfer())
-            ->setIdMerchant($merchantTransfer->getIdMerchant())
-            ->setName($merchantTransfer->getName());
-
-        if ($merchantTransfer->getKey()) {
-            $merchantEntityTransfer->setMerchantKey($merchantTransfer->getKey());
-        }
-
-        $merchantEntityTransfer = $this->entityManager->saveMerchant($merchantEntityTransfer);
-
-        return (new MerchantTransfer())
-            ->setIdMerchant($merchantEntityTransfer->getIdMerchant())
-            ->setName($merchantEntityTransfer->getName())
-            ->setKey($merchantEntityTransfer->getMerchantKey());
+        return $this->entityManager->saveMerchant($merchantTransfer);
     }
 
     /**

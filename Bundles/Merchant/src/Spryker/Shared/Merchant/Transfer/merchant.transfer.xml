@@ -5,7 +5,7 @@
 
     <transfer name="Merchant">
         <property name="idMerchant" type="int" />
-        <property name="key" type="string" />
+        <property name="merchantKey" type="string" />
         <property name="name" type="string" />
     </transfer>
 
