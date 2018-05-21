@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 class DeleteCompanyBusinessUnitController extends AbstractController
 {
     protected const MESSAGE_COMPANY_BUSINESS_UNIT_DELETE_SUCCESS = 'Company Business Unit "%s" was deleted.';
-    protected const MESSAGE_COMPANY_BUSINESS_UNIT_DELETE_ERROR = 'Company Business Unit "%s" was not deleted.';
+    protected const MESSAGE_COMPANY_BUSINESS_UNIT_DELETE_ERROR = 'You can not delete a business unit while it contains users';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
