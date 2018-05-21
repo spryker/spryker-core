@@ -66,7 +66,7 @@ function createIt() {
 
             this.$parentField.children().each(function() {
                 console.log(this)
-                const $option = $(this)
+                const $option = $(this);
 
                 if (!$option.val()) {
                     return;

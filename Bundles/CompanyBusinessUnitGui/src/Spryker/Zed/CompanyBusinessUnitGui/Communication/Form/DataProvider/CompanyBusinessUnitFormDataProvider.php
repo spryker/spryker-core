@@ -65,6 +65,7 @@ class CompanyBusinessUnitFormDataProvider
             'data_class' => CompanyBusinessUnitTransfer::class,
             CompanyBusinessUnitForm::OPTION_COMPANY_CHOICES => $this->prepareCompanyChoices(),
             CompanyBusinessUnitForm::OPTION_PARENT_CHOICES => $this->prepareParentChoices($idCompanyBusinessUnit),
+            CompanyBusinessUnitForm::DATA_COMPANY_UNIT_MAP => $this->prepareAllParents(),
         ];
     }
 
@@ -101,17 +102,28 @@ class CompanyBusinessUnitFormDataProvider
             return [];
         }
 
+        $businessUnitNames = $this->prepareAllParents();
+
+        return $businessUnitNames[$idCompanyBusinessUnit];
+    }
+
+    /**
+     * @return array [idCompany => [idUnit => unitName]]
+     */
+    protected function prepareAllParents(): array
+    {
         $businessUnitCollection = $this->companyBusinessUnitFacade
             ->getCompanyBusinessUnitCollection(new CompanyBusinessUnitCriteriaFilterTransfer())
             ->getCompanyBusinessUnits();
         $result = [];
 
         foreach ($businessUnitCollection as $businessUnit) {
-            if ($businessUnit->getFkCompany() != $idCompanyBusinessUnit) {
-                continue;
+            $idCompany = $businessUnit->getFkCompany();
+            if (!array_key_exists($idCompany, $result)) {
+                $result[$idCompany] = [];
             }
 
-            $result[$businessUnit->getIdCompanyBusinessUnit()] = $businessUnit->getName();
+            $result[$idCompany][$businessUnit->getIdCompanyBusinessUnit()] = $businessUnit->getName();
         }
 
         return $result;
