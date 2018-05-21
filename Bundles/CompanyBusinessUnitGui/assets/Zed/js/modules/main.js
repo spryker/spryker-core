@@ -8,11 +8,7 @@
 require('ZedGui');
 
 $(document).ready( function () {
-    console.log('module start');
-
     const field = createIt();
-    document.bm13kk = field;
-    document.$bm13kk = $;
 
     field.addListenerOnCompany();
 });
@@ -27,15 +23,10 @@ function createIt() {
          * @returns Null|string
          */
         getCompanyId: function () {
-            console.log('get company')
-
             if (!this.$companyField) {
                 return null;
             }
-
             const idCompany = this.$companyField.val();
-
-            console.log('get company id: ' + idCompany)
 
             return idCompany;
         },
@@ -44,50 +35,30 @@ function createIt() {
          * @returns {string: string}
          */
         getBusinessUnitList: function () {
-            console.log('getBusinessUnitList')
-
             const idCompany = this.getCompanyId();
-
-            console.log('getBusinessUnitList company: ' + idCompany)
             if (!idCompany) {
                 return {};
             }
-
             const companyUnitMap = this.$parentField.data('company_unit_map');
             const companyUnitNames = companyUnitMap[idCompany];
-
-            console.log('getBusinessUnitList data:')
-            console.log(companyUnitMap)
-            console.log('getBusinessUnitList names:')
-            console.log(companyUnitNames)
 
             return companyUnitNames;
         },
 
         cleanParents: function () {
-            console.log('cleanParents')
-
             if (!this.$parentField) {
                 return;
             }
-
-            console.log('cleanParents parents id: ' + this.$parentField.val())
-
             this.$parentField.children().each(function() {
-                console.log(this)
                 const $option = $(this);
-
                 if (!$option.val()) {
                     return;
                 }
-
                 $option.remove();
             });
         },
 
         setParentNames: function () {
-            console.log('setParentNames')
-
             if (!this.$parentField) {
                 return;
             }
@@ -100,11 +71,7 @@ function createIt() {
                 if (!parentList.hasOwnProperty(idBusinessUnit)) {
                     continue;
                 }
-
                 const BusinessUnitName = parentList[idBusinessUnit];
-
-                console.log('setParentNames indes: ' + idBusinessUnit);
-                console.log('setParentNames each: ' + BusinessUnitName);
 
                 let opt = document.createElement('option');
                 opt.innerHTML = BusinessUnitName;
@@ -116,22 +83,12 @@ function createIt() {
         },
 
         addListenerOnCompany: function () {
-            console.log('addListenerOnCompany')
-
             if (!this.$companyField) {
                 return;
             }
-            console.log('addListenerOnCompany has field')
-            console.log(this.$companyField)
-            console.log(this.$companyField.change)
-
             const parentFieldHandler = this;
 
-            // @TODO why this.$companyField.change() not working?
-            // this.$companyField.addEventListener('change', function () {
             this.$companyField.change(function () {
-                console.log('change')
-
                 parentFieldHandler.setParentNames();
             });
         },
