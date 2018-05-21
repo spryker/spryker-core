@@ -11,7 +11,6 @@
         <property name="updatedAt" type="string" />
         <property name="createdAt" type="string" />
         <property name="numberOfItems" type="int" />
-        <property name="sum" type="int" />
         <property name="owner" type="string" />
         <property name="idCompanyUser" type="int" />
     </transfer>
