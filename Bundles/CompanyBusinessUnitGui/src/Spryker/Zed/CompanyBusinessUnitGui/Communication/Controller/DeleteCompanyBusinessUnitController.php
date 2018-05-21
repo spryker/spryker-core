@@ -9,6 +9,7 @@ namespace Spryker\Zed\CompanyBusinessUnitGui\Communication\Controller;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Shared\CompanyBusinessUnitGui\CompanyBusinessUnitGuiConstants;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,10 +19,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DeleteCompanyBusinessUnitController extends AbstractController
 {
-    protected const URL_PARAM_ID_COMPANY_BUSINESS_UNIT = 'id-company-business-unit';
-    protected const URL_PARAM_REDIRECT_URL = 'redirect-url';
-    protected const REDIRECT_URL_DEFAULT = '/company-business-unit-gui/list-company-business-unit';
-
     protected const MESSAGE_COMPANY_BUSINESS_UNIT_DELETE_SUCCESS = 'Company Business Unit "%s" was deleted.';
     protected const MESSAGE_COMPANY_BUSINESS_UNIT_DELETE_ERROR = 'Company Business Unit "%s" was not deleted.';
 
@@ -32,8 +29,9 @@ class DeleteCompanyBusinessUnitController extends AbstractController
      */
     public function indexAction(Request $request): RedirectResponse
     {
-        $idCompanyBusinessUnit = $this->castId($request->query->get(static::URL_PARAM_ID_COMPANY_BUSINESS_UNIT));
-        $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL, static::REDIRECT_URL_DEFAULT);
+        $idCompanyBusinessUnit = $this->castId($request->query->get(
+            CompanyBusinessUnitGuiConstants::REQUEST_ID_COMPANY_BUSINESS_UNIT
+        ));
 
         $companyBusinessUnitTransfer = new CompanyBusinessUnitTransfer();
         $companyBusinessUnitTransfer->setIdCompanyBusinessUnit($idCompanyBusinessUnit);
@@ -45,9 +43,9 @@ class DeleteCompanyBusinessUnitController extends AbstractController
         $companyBusinessUnit = $companyBusinessUnitFacade
             ->getCompanyBusinessUnitById($companyBusinessUnitTransfer);
 
-        if ($companyBusinessUnit) {
-            $companyBusinessUnitFacade->delete($companyBusinessUnit);
+        $companyBusinessUnitResponseTransfer = $companyBusinessUnitFacade->delete($companyBusinessUnit);
 
+        if ($companyBusinessUnitResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(sprintf(
                 static::MESSAGE_COMPANY_BUSINESS_UNIT_DELETE_SUCCESS,
                 $companyBusinessUnit->getName()
@@ -60,7 +58,9 @@ class DeleteCompanyBusinessUnitController extends AbstractController
         }
 
         return $this->redirectResponse(
-            Url::generate($redirectUrl)->build()
+            Url::generate(
+                CompanyBusinessUnitGuiConstants::REDIRECT_URL_DEFAULT
+            )->build()
         );
     }
 }

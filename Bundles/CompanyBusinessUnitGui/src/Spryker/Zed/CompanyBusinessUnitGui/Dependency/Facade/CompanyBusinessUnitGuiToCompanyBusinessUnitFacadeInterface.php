@@ -36,7 +36,8 @@ interface CompanyBusinessUnitGuiToCompanyBusinessUnitFacadeInterface
         CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
     ): CompanyBusinessUnitResponseTransfer;
 
-    /** @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
      */

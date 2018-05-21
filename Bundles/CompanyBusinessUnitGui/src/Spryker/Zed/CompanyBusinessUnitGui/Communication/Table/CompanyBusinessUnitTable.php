@@ -10,6 +10,8 @@ namespace Spryker\Zed\CompanyBusinessUnitGui\Communication\Table;
 use Orm\Zed\CompanyBusinessUnit\Persistence\Map\SpyCompanyBusinessUnitTableMap;
 use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnit;
 use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
+use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Shared\CompanyBusinessUnitGui\CompanyBusinessUnitGuiConstants;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -21,10 +23,9 @@ class CompanyBusinessUnitTable extends AbstractTable
     protected const COL_IBAN = SpyCompanyBusinessUnitTableMap::COL_IBAN;
     protected const COL_BIC = SpyCompanyBusinessUnitTableMap::COL_BIC;
     protected const COL_ACTIONS = 'actions';
-    protected const FORMAT_ADDRESS = '%s, %s, %s';
     protected const REQUEST_ID_COMPANY_BUSINESS_UNIT = 'id-company-business-unit';
     protected const URL_COMPANY_BUSINESS_UNIT_EDIT = '/company-business-unit-gui/edit-company-business-unit/index?%s=%d';
-    protected const URL_COMPANY_BUSINESS_UNIT_DELETE = '/company-business-unit-gui/delete-company-business-unit/index?%s=%d';
+    protected const FORMAT_ADDRESS = '%s, %s, %s';
 
     /**
      * @var \Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery
@@ -133,7 +134,9 @@ class CompanyBusinessUnitTable extends AbstractTable
         );
 
         $buttons[] = $this->generateRemoveButton(
-            sprintf(static::URL_COMPANY_BUSINESS_UNIT_DELETE, static::REQUEST_ID_COMPANY_BUSINESS_UNIT, $idCompanyBusinessUnit),
+            Url::generate(CompanyBusinessUnitGuiConstants::URL_COMPANY_BUSINESS_UNIT_DELETE, [
+                CompanyBusinessUnitGuiConstants::REQUEST_ID_COMPANY_BUSINESS_UNIT => $idCompanyBusinessUnit,
+            ]),
             'Delete'
         );
 
