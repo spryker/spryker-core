@@ -9,7 +9,7 @@ namespace Spryker\Zed\FileManager\Business;
 
 use Generated\Shared\Transfer\FileDirectoryTransfer;
 use Generated\Shared\Transfer\FileDirectoryTreeTransfer;
-use Generated\Shared\Transfer\FileManagerSaveRequestTransfer;
+use Generated\Shared\Transfer\FileManagerDataTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -23,9 +23,9 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
      *
      * {@inheritdoc}
      */
-    public function saveFile(FileManagerSaveRequestTransfer $fileManagerSaveRequestTransfer)
+    public function saveFile(FileManagerDataTransfer $fileManagerDataTransfer)
     {
-        return $this->getFactory()->createFileSaver()->save($fileManagerSaveRequestTransfer);
+        return $this->getFactory()->createFileSaver()->save($fileManagerDataTransfer);
     }
 
     /**

@@ -8,7 +8,7 @@
 namespace Spryker\Zed\FileManager\Business\Model;
 
 use Generated\Shared\Transfer\FileLocalizedAttributesTransfer;
-use Generated\Shared\Transfer\FileManagerSaveRequestTransfer;
+use Generated\Shared\Transfer\FileManagerDataTransfer;
 use Orm\Zed\FileManager\Persistence\SpyFile;
 use Orm\Zed\FileManager\Persistence\SpyFileLocalizedAttributes;
 
@@ -16,13 +16,13 @@ class FileLocalizedAttributesSaver implements FileLocalizedAttributesSaverInterf
 {
     /**
      * @param \Orm\Zed\FileManager\Persistence\SpyFile $fileEntity
-     * @param \Generated\Shared\Transfer\FileManagerSaveRequestTransfer $fileManagerSaveRequestTransfer
+     * @param \Generated\Shared\Transfer\FileManagerDataTransfer $fileManagerDataTransfer
      *
      * @return void
      */
-    public function saveLocalizedFileAttributes(SpyFile $fileEntity, FileManagerSaveRequestTransfer $fileManagerSaveRequestTransfer)
+    public function saveLocalizedFileAttributes(SpyFile $fileEntity, FileManagerDataTransfer $fileManagerDataTransfer)
     {
-        $localizedAttributesToSave = $fileManagerSaveRequestTransfer->getFileLocalizedAttributes();
+        $localizedAttributesToSave = $fileManagerDataTransfer->getFileLocalizedAttributes();
         $existingFileLocalizedAttributes = $fileEntity->getSpyFileLocalizedAttributess()->toKeyIndex('fkLocale');
 
         if (empty($existingFileLocalizedAttributes)) {
@@ -35,8 +35,8 @@ class FileLocalizedAttributesSaver implements FileLocalizedAttributesSaverInterf
 
     /**
      * @param \Generated\Shared\Transfer\FileLocalizedAttributesTransfer[] $localizedAttributes
-     * @param array                                                        $existingFileLocalizedAttributes
-     * @param \Orm\Zed\FileManager\Persistence\SpyFile                     $file
+     * @param array $existingFileLocalizedAttributes
+     * @param \Orm\Zed\FileManager\Persistence\SpyFile $file
      *
      * @return void
      */
@@ -56,7 +56,7 @@ class FileLocalizedAttributesSaver implements FileLocalizedAttributesSaverInterf
     }
 
     /**
-     * @param \Orm\Zed\FileManager\Persistence\SpyFile                     $file
+     * @param \Orm\Zed\FileManager\Persistence\SpyFile $file
      * @param \Generated\Shared\Transfer\FileLocalizedAttributesTransfer[] $localizedAttributes
      *
      * @return void
@@ -77,7 +77,7 @@ class FileLocalizedAttributesSaver implements FileLocalizedAttributesSaverInterf
 
     /**
      * @param \Orm\Zed\FileManager\Persistence\SpyFileLocalizedAttributes $existingAttribute
-     * @param \Generated\Shared\Transfer\FileLocalizedAttributesTransfer  $newAttribute
+     * @param \Generated\Shared\Transfer\FileLocalizedAttributesTransfer $newAttribute
      *
      * @return void
      */

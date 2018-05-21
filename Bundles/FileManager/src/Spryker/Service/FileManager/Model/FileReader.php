@@ -8,7 +8,7 @@
 namespace Spryker\Service\FileManager\Model;
 
 use Generated\Shared\Transfer\FileInfoTransfer;
-use Generated\Shared\Transfer\FileManagerReadResponseTransfer;
+use Generated\Shared\Transfer\FileManagerDataTransfer;
 use Generated\Shared\Transfer\FileSystemQueryTransfer;
 use Generated\Shared\Transfer\FileSystemStreamTransfer;
 use Generated\Shared\Transfer\FileTransfer;
@@ -44,16 +44,16 @@ class FileReader implements FileReaderInterface
      */
     public function read(string $fileName)
     {
-        $fileManagerReadResponseTransfer = new FileManagerReadResponseTransfer();
+        $fileManagerDataTransfer = new FileManagerDataTransfer();
         $fileSystemQueryTransfer = $this->createFileSystemQueryTransfer($fileName);
 
         $fileContent = $this->getReadFileContentFromStorage($fileSystemQueryTransfer);
-        $fileManagerReadResponseTransfer->setContent($fileContent);
+        $fileManagerDataTransfer->setContent($fileContent);
 
-        $fileManagerReadResponseTransfer->setFile($this->createFileTransfer($fileName));
-        $fileManagerReadResponseTransfer->setFileInfo($this->createFileInfoTransfer($fileSystemQueryTransfer));
+        $fileManagerDataTransfer->setFile($this->createFileTransfer($fileName));
+        $fileManagerDataTransfer->setFileInfo($this->createFileInfoTransfer($fileSystemQueryTransfer));
 
-        return $fileManagerReadResponseTransfer;
+        return $fileManagerDataTransfer;
     }
 
     /**

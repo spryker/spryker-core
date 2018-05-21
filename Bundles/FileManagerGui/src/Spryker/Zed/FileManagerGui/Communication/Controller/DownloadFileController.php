@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\FileManagerGui\Communication\Controller;
 
-use Generated\Shared\Transfer\FileManagerReadResponseTransfer;
+use Generated\Shared\Transfer\FileManagerDataTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -34,27 +34,27 @@ class DownloadFileController extends AbstractController
     {
         $idFileInfo = $request->get(static::URL_PARAM_ID_FILE_INFO);
 
-        $fileManagerReadResponseTransfer = $this->getFactory()
+        $fileManagerDataTransfer = $this->getFactory()
             ->getFileManagerFacade()
             ->readFile($idFileInfo);
 
-        if ($fileManagerReadResponseTransfer->getContent() === null) {
+        if ($fileManagerDataTransfer->getContent() === null) {
             throw new NotFoundHttpException();
         }
 
-        return $this->createResponse($fileManagerReadResponseTransfer);
+        return $this->createResponse($fileManagerDataTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\FileManagerReadResponseTransfer $fileManagerReadResponseTransfer
+     * @param \Generated\Shared\Transfer\FileManagerDataTransfer $fileManagerDataTransfer
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected function createResponse(FileManagerReadResponseTransfer $fileManagerReadResponseTransfer)
+    protected function createResponse(FileManagerDataTransfer $fileManagerDataTransfer)
     {
-        $response = new Response($fileManagerReadResponseTransfer->getContent());
-        $fileName = $fileManagerReadResponseTransfer->getFile()->getFileName();
-        $contentType = $fileManagerReadResponseTransfer->getFileInfo()->getType();
+        $response = new Response($fileManagerDataTransfer->getContent());
+        $fileName = $fileManagerDataTransfer->getFile()->getFileName();
+        $contentType = $fileManagerDataTransfer->getFileInfo()->getType();
         $disposition = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $fileName);
 
         $response->headers->set(static::CONTENT_DISPOSITION, $disposition);

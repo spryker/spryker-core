@@ -7,18 +7,18 @@
 
 namespace Spryker\Zed\FileManager\Business\Model;
 
-use Generated\Shared\Transfer\FileManagerSaveRequestTransfer;
+use Generated\Shared\Transfer\FileManagerDataTransfer;
 use Orm\Zed\FileManager\Persistence\SpyFile;
 
 interface FileLocalizedAttributesSaverInterface
 {
     /**
-     * @param \Orm\Zed\FileManager\Persistence\SpyFile                  $fileEntity
-     * @param \Generated\Shared\Transfer\FileManagerSaveRequestTransfer $fileManagerSaveRequestTransfer
+     * @param \Orm\Zed\FileManager\Persistence\SpyFile $fileEntity
+     * @param \Generated\Shared\Transfer\FileManagerDataTransfer $fileManagerDataTransfer
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return void
      */
-    public function saveLocalizedFileAttributes(SpyFile $fileEntity, FileManagerSaveRequestTransfer $fileManagerSaveRequestTransfer);
+    public function saveLocalizedFileAttributes(SpyFile $fileEntity, FileManagerDataTransfer $fileManagerDataTransfer);
 }

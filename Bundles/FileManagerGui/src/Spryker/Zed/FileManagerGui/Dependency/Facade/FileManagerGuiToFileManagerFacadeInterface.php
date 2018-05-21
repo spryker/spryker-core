@@ -9,17 +9,17 @@ namespace Spryker\Zed\FileManagerGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\FileDirectoryTransfer;
 use Generated\Shared\Transfer\FileDirectoryTreeTransfer;
-use Generated\Shared\Transfer\FileManagerSaveRequestTransfer;
+use Generated\Shared\Transfer\FileManagerDataTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 
 interface FileManagerGuiToFileManagerFacadeInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\FileManagerSaveRequestTransfer $saveRequestTransfer
+     * @param \Generated\Shared\Transfer\FileManagerDataTransfer $fileManagerDataTransfer
      *
      * @return int
      */
-    public function saveFile(FileManagerSaveRequestTransfer $saveRequestTransfer);
+    public function saveFile(FileManagerDataTransfer $fileManagerDataTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\FileDirectoryTransfer $fileDirectoryTransfer
@@ -70,7 +70,7 @@ interface FileManagerGuiToFileManagerFacadeInterface
      *
      * @param int $idFileInfo
      *
-     * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
+     * @return \Generated\Shared\Transfer\FileManagerDataTransfer
      */
     public function readFile($idFileInfo);
 
@@ -86,7 +86,7 @@ interface FileManagerGuiToFileManagerFacadeInterface
      * @throws \Propel\Runtime\Exception\PropelException
      * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
      *
-     * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
+     * @return \Generated\Shared\Transfer\FileManagerDataTransfer
      */
     public function findFileDirectoryTree(LocaleTransfer $localeTransfer = null);
 
@@ -102,7 +102,7 @@ interface FileManagerGuiToFileManagerFacadeInterface
      * @throws \Propel\Runtime\Exception\PropelException
      * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
      *
-     * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
+     * @return \Generated\Shared\Transfer\FileManagerDataTransfer
      */
     public function updateFileDirectoryTreeHierarchy(FileDirectoryTreeTransfer $fileDirectoryTreeTransfer);
 }

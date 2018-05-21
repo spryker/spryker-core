@@ -8,7 +8,7 @@
 namespace Spryker\Zed\FileManagerGui\Communication\Controller;
 
 use Generated\Shared\Transfer\FileInfoTransfer;
-use Generated\Shared\Transfer\FileManagerSaveRequestTransfer;
+use Generated\Shared\Transfer\FileManagerDataTransfer;
 use Generated\Shared\Transfer\FileTransfer;
 use Spryker\Zed\FileManagerGui\Communication\Form\FileForm;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
@@ -65,16 +65,16 @@ class ViewFileController extends AbstractController
     /**
      * @param array $data
      *
-     * @return \Generated\Shared\Transfer\FileManagerSaveRequestTransfer
+     * @return \Generated\Shared\Transfer\FileManagerDataTransfer
      */
-    protected function createFileManagerSaveRequestTransfer(array $data)
+    protected function createFileManagerDataTransfer(array $data)
     {
-        $requestTransfer = new FileManagerSaveRequestTransfer();
-        $requestTransfer->setFile($this->createFileTransfer($data));
-        $requestTransfer->setFileInfo($this->createFileInfoTransfer($data));
-        $requestTransfer->setContent($this->getFileContent($data));
+        $fileManagerDataTransfer = new FileManagerDataTransfer();
+        $fileManagerDataTransfer->setFile($this->createFileTransfer($data));
+        $fileManagerDataTransfer->setFileInfo($this->createFileInfoTransfer($data));
+        $fileManagerDataTransfer->setContent($this->getFileContent($data));
 
-        return $requestTransfer;
+        return $fileManagerDataTransfer;
     }
 
     /**

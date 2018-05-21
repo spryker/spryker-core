@@ -8,7 +8,7 @@
 namespace Spryker\Zed\FileManager\Business\Model;
 
 use Generated\Shared\Transfer\FileInfoTransfer;
-use Generated\Shared\Transfer\FileManagerReadResponseTransfer;
+use Generated\Shared\Transfer\FileManagerDataTransfer;
 use Generated\Shared\Transfer\FileTransfer;
 use Orm\Zed\FileManager\Persistence\Base\SpyFile;
 use Orm\Zed\FileManager\Persistence\SpyFileInfo;
@@ -38,14 +38,14 @@ class FileReader implements FileReaderInterface
     /**
      * @param int $idFileInfo
      *
-     * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
+     * @return \Generated\Shared\Transfer\FileManagerDataTransfer
      */
     public function read($idFileInfo)
     {
         $fileInfo = $this->fileLoader->getFileInfo($idFileInfo);
 
         if ($fileInfo === null) {
-            return new FileManagerReadResponseTransfer();
+            return new FileManagerDataTransfer();
         }
 
         return $this->createResponseTransfer($fileInfo);
@@ -54,14 +54,14 @@ class FileReader implements FileReaderInterface
     /**
      * @param int $idFile
      *
-     * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
+     * @return \Generated\Shared\Transfer\FileManagerDataTransfer
      */
     public function readLatestByFileId($idFile)
     {
         $fileInfo = $this->fileLoader->getLatestFileInfoByFkFile($idFile);
 
         if ($fileInfo === null) {
-            return new FileManagerReadResponseTransfer();
+            return new FileManagerDataTransfer();
         }
 
         return $this->createResponseTransfer($fileInfo);
@@ -70,21 +70,21 @@ class FileReader implements FileReaderInterface
     /**
      * @param \Orm\Zed\FileManager\Persistence\SpyFileInfo $fileInfo
      *
-     * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
+     * @return \Generated\Shared\Transfer\FileManagerDataTransfer
      */
     protected function createResponseTransfer(SpyFileInfo $fileInfo)
     {
         $fileTransfer = $this->createFileTransfer($fileInfo->getFile());
         $fileInfoTransfer = $this->createFileInfoTransfer($fileInfo);
 
-        $responseTransfer = new FileManagerReadResponseTransfer();
-        $responseTransfer->setFile($fileTransfer);
-        $responseTransfer->setFileInfo($fileInfoTransfer);
+        $fileManagerDataTransfer = new FileManagerDataTransfer();
+        $fileManagerDataTransfer->setFile($fileTransfer);
+        $fileManagerDataTransfer->setFileInfo($fileInfoTransfer);
 
         $content = $this->fileContent->read($fileInfo->getStorageFileName());
-        $responseTransfer->setContent($content);
+        $fileManagerDataTransfer->setContent($content);
 
-        return $responseTransfer;
+        return $fileManagerDataTransfer;
     }
 
     /**

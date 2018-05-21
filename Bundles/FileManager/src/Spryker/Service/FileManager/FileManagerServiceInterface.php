@@ -29,7 +29,7 @@ interface FileManagerServiceInterface
      * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
      * @throws \Spryker\Service\Kernel\Exception\Container\ContainerKeyNotFoundException
      *
-     * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
+     * @return \Generated\Shared\Transfer\FileManagerDataTransfer
      */
     public function read(string $fileName);
 

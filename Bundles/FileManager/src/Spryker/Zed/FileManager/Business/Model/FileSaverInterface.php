@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\FileManager\Business\Model;
 
-use Generated\Shared\Transfer\FileManagerSaveRequestTransfer;
+use Generated\Shared\Transfer\FileManagerDataTransfer;
 
 interface FileSaverInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\FileManagerSaveRequestTransfer $saveRequestTransfer
+     * @param \Generated\Shared\Transfer\FileManagerDataTransfer $fileManagerDataTransfer
      *
      * @return int
      */
-    public function save(FileManagerSaveRequestTransfer $saveRequestTransfer);
+    public function save(FileManagerDataTransfer $fileManagerDataTransfer);
 }

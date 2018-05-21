@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\FileDirectoryTransfer;
 use Generated\Shared\Transfer\FileDirectoryTreeNodeTransfer;
 use Generated\Shared\Transfer\FileDirectoryTreeTransfer;
 use Generated\Shared\Transfer\FileInfoTransfer;
-use Generated\Shared\Transfer\FileManagerSaveRequestTransfer;
+use Generated\Shared\Transfer\FileManagerDataTransfer;
 use Generated\Shared\Transfer\FileTransfer;
 use Orm\Zed\FileManager\Persistence\SpyFile;
 use Orm\Zed\FileManager\Persistence\SpyFileDirectory;
@@ -290,12 +290,12 @@ class FileManagerFacadeTest extends Unit
         $file->setFileContent('new customer file');
         $file->setFileName('new%customer.txt');
 
-        $fileManagerSaveRequestTransfer = new FileManagerSaveRequestTransfer();
-        $fileManagerSaveRequestTransfer->setContent('new version of the file');
-        $fileManagerSaveRequestTransfer->setFile($file);
-        $fileManagerSaveRequestTransfer->setFileInfo($fileInfo);
+        $fileManagerDataTransfer = new FileManagerDataTransfer();
+        $fileManagerDataTransfer->setContent('new version of the file');
+        $fileManagerDataTransfer->setFile($file);
+        $fileManagerDataTransfer->setFileInfo($fileInfo);
 
-        $savedFileId = $this->facade->saveFile($fileManagerSaveRequestTransfer);
+        $savedFileId = $this->facade->saveFile($fileManagerDataTransfer);
         $file = SpyFileQuery::create()->findOneByFileName('newcustomer.txt');
 
         $this->assertEquals(2, $savedFileId);
@@ -344,12 +344,12 @@ class FileManagerFacadeTest extends Unit
         $fileInfo->setType('text');
         $fileInfo->setExtension('txt');
 
-        $fileManagerSaveRequestTransfer = new FileManagerSaveRequestTransfer();
-        $fileManagerSaveRequestTransfer->setContent('new version of the file');
-        $fileManagerSaveRequestTransfer->setFile($file);
-        $fileManagerSaveRequestTransfer->setFileInfo($fileInfo);
+        $fileManagerDataTransfer = new FileManagerDataTransfer();
+        $fileManagerDataTransfer->setContent('new version of the file');
+        $fileManagerDataTransfer->setFile($file);
+        $fileManagerDataTransfer->setFileInfo($fileInfo);
 
-        $fileId = $this->facade->saveFile($fileManagerSaveRequestTransfer);
+        $fileId = $this->facade->saveFile($fileManagerDataTransfer);
         $this->assertInternalType('int', $fileId);
         $this->assertFileExists($this->getDocumentFullFileName($fileDirectoryId . '/2-v.1.txt'));
     }

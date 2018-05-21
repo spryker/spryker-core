@@ -9,7 +9,7 @@ namespace Spryker\Zed\FileManagerGui\Communication\Controller;
 
 use Exception;
 use Generated\Shared\Transfer\FileInfoTransfer;
-use Generated\Shared\Transfer\FileManagerSaveRequestTransfer;
+use Generated\Shared\Transfer\FileManagerDataTransfer;
 use Generated\Shared\Transfer\FileTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\FileManagerGui\Communication\Form\FileForm;
@@ -38,9 +38,9 @@ class EditFileController extends AbstractController
         if ($form->isSubmitted()) {
             try {
                 $data = $form->getData();
-                $saveRequestTransfer = $this->createFileManagerSaveRequestTransfer($data);
+                $fileManagerDataTransfer = $this->createFileManagerDataTransfer($data);
 
-                $this->getFactory()->getFileManagerFacade()->saveFile($saveRequestTransfer);
+                $this->getFactory()->getFileManagerFacade()->saveFile($fileManagerDataTransfer);
 
                 $this->addSuccessMessage(
                     'The file was edited successfully.'
@@ -88,19 +88,19 @@ class EditFileController extends AbstractController
     /**
      * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
      *
-     * @return \Generated\Shared\Transfer\FileManagerSaveRequestTransfer
+     * @return \Generated\Shared\Transfer\FileManagerDataTransfer
      */
-    protected function createFileManagerSaveRequestTransfer(FileTransfer $fileTransfer)
+    protected function createFileManagerDataTransfer(FileTransfer $fileTransfer)
     {
-        $requestTransfer = new FileManagerSaveRequestTransfer();
+        $fileManagerDataTransfer = new FileManagerDataTransfer();
         $this->setFileName($fileTransfer);
 
-        $requestTransfer->setFile($fileTransfer);
-        $requestTransfer->setFileInfo($this->createFileInfoTransfer($fileTransfer));
-        $requestTransfer->setContent($this->getFileContent($fileTransfer));
-        $requestTransfer->setFileLocalizedAttributes($fileTransfer->getLocalizedAttributes());
+        $fileManagerDataTransfer->setFile($fileTransfer);
+        $fileManagerDataTransfer->setFileInfo($this->createFileInfoTransfer($fileTransfer));
+        $fileManagerDataTransfer->setContent($this->getFileContent($fileTransfer));
+        $fileManagerDataTransfer->setFileLocalizedAttributes($fileTransfer->getLocalizedAttributes());
 
-        return $requestTransfer;
+        return $fileManagerDataTransfer;
     }
 
     /**

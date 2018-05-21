@@ -15,7 +15,7 @@ interface FileReaderInterface
      * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
      * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return \Generated\Shared\Transfer\FileManagerSaveRequestTransfer
+     * @return \Generated\Shared\Transfer\FileManagerDataTransfer
      */
     public function read($idFileInfo);
 
@@ -25,7 +25,7 @@ interface FileReaderInterface
      * @throws \Propel\Runtime\Exception\PropelException
      * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
      *
-     * @return \Generated\Shared\Transfer\FileManagerSaveRequestTransfer
+     * @return \Generated\Shared\Transfer\FileManagerDataTransfer
      */
     public function readLatestByFileId($idFile);
 }

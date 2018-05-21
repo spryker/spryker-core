@@ -72,7 +72,7 @@ class FileReaderTest extends Unit
     }
 
     /**
-     * @param \Generated\Shared\Transfer\FileManagerReadResponseTransfer $fileInfo
+     * @param \Generated\Shared\Transfer\FileManagerDataTransfer $fileInfo
      *
      * @return void
      */

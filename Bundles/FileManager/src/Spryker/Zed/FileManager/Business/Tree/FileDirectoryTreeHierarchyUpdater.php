@@ -155,7 +155,7 @@ class FileDirectoryTreeHierarchyUpdater implements FileDirectoryTreeHierarchyUpd
 
     /**
      * @param \Orm\Zed\FileManager\Persistence\SpyFileDirectory $fileDirectoryEntity
-     * @param \Generated\Shared\Transfer\FileDirectoryTransfer  $fileDirectoryTransfer
+     * @param \Generated\Shared\Transfer\FileDirectoryTransfer $fileDirectoryTransfer
      * @param int $fkParentFileDirectory
      *
      * @return \Orm\Zed\FileManager\Persistence\SpyFileDirectory

@@ -9,7 +9,7 @@ namespace Spryker\Zed\FileManagerGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\FileDirectoryTransfer;
 use Generated\Shared\Transfer\FileDirectoryTreeTransfer;
-use Generated\Shared\Transfer\FileManagerSaveRequestTransfer;
+use Generated\Shared\Transfer\FileManagerDataTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 
 class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileManagerFacadeInterface
@@ -28,13 +28,13 @@ class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileMan
     }
 
     /**
-     * @param \Generated\Shared\Transfer\FileManagerSaveRequestTransfer $saveRequestTransfer
+     * @param \Generated\Shared\Transfer\FileManagerDataTransfer $fileManagerDataTransfer
      *
      * @return int
      */
-    public function saveFile(FileManagerSaveRequestTransfer $saveRequestTransfer)
+    public function saveFile(FileManagerDataTransfer $fileManagerDataTransfer)
     {
-        return $this->fileManagerFacade->saveFile($saveRequestTransfer);
+        return $this->fileManagerFacade->saveFile($fileManagerDataTransfer);
     }
 
     /**
@@ -101,7 +101,7 @@ class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileMan
      *
      * @param int $idFileInfo
      *
-     * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
+     * @return \Generated\Shared\Transfer\FileManagerDataTransfer
      */
     public function readFile($idFileInfo)
     {
@@ -113,7 +113,7 @@ class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileMan
      *
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
-     * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
+     * @return \Generated\Shared\Transfer\FileManagerDataTransfer
      */
     public function findFileDirectoryTree(LocaleTransfer $localeTransfer = null)
     {
@@ -125,7 +125,7 @@ class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileMan
      *
      * @param \Generated\Shared\Transfer\FileDirectoryTreeTransfer $fileDirectoryTreeTransfer
      *
-     * @return \Generated\Shared\Transfer\FileManagerReadResponseTransfer
+     * @return \Generated\Shared\Transfer\FileManagerDataTransfer
      */
     public function updateFileDirectoryTreeHierarchy(FileDirectoryTreeTransfer $fileDirectoryTreeTransfer)
     {
