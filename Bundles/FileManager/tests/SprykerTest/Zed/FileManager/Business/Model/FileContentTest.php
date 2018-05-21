@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\FileManager\Business\Model;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\FileTransfer;
 use Spryker\Zed\FileManager\Business\Model\FileContent;
 use Spryker\Zed\FileManager\Dependency\Service\FileManagerToFileSystemServiceInterface;
 use Spryker\Zed\FileManager\FileManagerConfig;
@@ -56,7 +57,11 @@ class FileContentTest extends Unit
             $this->getConfigMock()
         );
 
-        $fileContent->save('report.txt', 'this is the report');
+        $fileTransfer = new FileTransfer();
+        $fileTransfer->setFileName('report.txt');
+        $fileTransfer->setFileContent('this is the report');
+
+        $fileContent->save($fileTransfer);
     }
 
     /**

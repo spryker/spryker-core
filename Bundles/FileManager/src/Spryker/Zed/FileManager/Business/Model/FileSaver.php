@@ -8,6 +8,7 @@
 namespace Spryker\Zed\FileManager\Business\Model;
 
 use Generated\Shared\Transfer\FileManagerDataTransfer;
+use Generated\Shared\Transfer\FileTransfer;
 use Orm\Zed\FileManager\Persistence\SpyFile;
 use Orm\Zed\FileManager\Persistence\SpyFileInfo;
 use Spryker\Zed\FileManager\FileManagerConfig;
@@ -181,9 +182,11 @@ class FileSaver implements FileSaverInterface
     protected function saveContent(FileManagerDataTransfer $fileManagerDataTransfer, SpyFile $file, SpyFileInfo $fileInfo = null)
     {
         if ($fileManagerDataTransfer->getContent() !== null || $fileInfo !== null) {
-            $newFileName = $this->fileLoader->buildFilename($fileInfo);
-            $this->fileContent->save($newFileName, $fileManagerDataTransfer->getContent());
-            $this->addStorageInfo($fileInfo, $newFileName);
+            $fileTransfer = new FileTransfer();
+            $fileTransfer->setFileName($this->fileLoader->buildFilename($fileInfo));
+            $fileTransfer->setFileContent($fileManagerDataTransfer->getContent());
+            $this->fileContent->save($fileTransfer);
+            $this->addStorageInfo($fileInfo, $fileTransfer->getFileName());
         }
     }
 

@@ -10,6 +10,7 @@ namespace Spryker\Zed\FileManager\Business\Model;
 use Generated\Shared\Transfer\FileSystemContentTransfer;
 use Generated\Shared\Transfer\FileSystemDeleteTransfer;
 use Generated\Shared\Transfer\FileSystemQueryTransfer;
+use Generated\Shared\Transfer\FileTransfer;
 use Spryker\Zed\FileManager\Dependency\Service\FileManagerToFileSystemServiceInterface;
 use Spryker\Zed\FileManager\FileManagerConfig;
 
@@ -36,17 +37,16 @@ class FileContent implements FileContentInterface
     }
 
     /**
-     * @param string $fileName
-     * @param string $content
+     * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
      *
      * @return void
      */
-    public function save($fileName, $content)
+    public function save(FileTransfer $fileTransfer)
     {
         $fileSystemContentTransfer = new FileSystemContentTransfer();
         $fileSystemContentTransfer->setFileSystemName($this->config->getStorageName());
-        $fileSystemContentTransfer->setPath($fileName);
-        $fileSystemContentTransfer->setContent($content);
+        $fileSystemContentTransfer->setPath($fileTransfer->getFileName());
+        $fileSystemContentTransfer->setContent($fileTransfer->getFileContent());
 
         $this->fileSystemService->put($fileSystemContentTransfer);
     }

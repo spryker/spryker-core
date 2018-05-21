@@ -7,15 +7,16 @@
 
 namespace Spryker\Zed\FileManager\Business\Model;
 
+use Generated\Shared\Transfer\FileTransfer;
+
 interface FileContentInterface
 {
     /**
-     * @param string $fileName
-     * @param string $content
+     * @param \Generated\Transfer\FileTransfer $fileTransfer
      *
      * @return void
      */
-    public function save($fileName, $content);
+    public function save(FileTransfer $fileTransfer);
 
     /**
      * @param string $fileName
