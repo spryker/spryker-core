@@ -50,6 +50,10 @@ function CompanyFieldHandler() {
             });
     }
 
+    function blinkParentField() {
+        $parentField.effect("highlight", {}, 3000);
+    }
+
     function setParentNames() {
         cleanParents();
         const parentList = getBusinessUnitList();
@@ -68,6 +72,7 @@ function CompanyFieldHandler() {
         }
 
         $parentField.append(fragment);
+        blinkParentField();
     }
 
     function addListenerOnCompany() {
