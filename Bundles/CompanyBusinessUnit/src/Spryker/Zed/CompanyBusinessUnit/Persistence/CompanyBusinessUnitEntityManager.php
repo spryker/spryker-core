@@ -63,6 +63,6 @@ class CompanyBusinessUnitEntityManager extends AbstractEntityManager implements 
         $this->getFactory()
             ->createCompanyBusinessUnitQuery()
             ->filterByFkParentCompanyBusinessUnit($idCompanyBusinessUnit)
-            ->update(['fkParentCompanyBusinessUnit' => null]);
+            ->update(['FkParentCompanyBusinessUnit' => null]);
     }
 }
