@@ -24,6 +24,7 @@ class CompanyBusinessUnitForm extends AbstractType
 {
     public const OPTION_COMPANY_CHOICES = 'company_choices';
     public const OPTION_PARENT_CHOICES = 'parent_choices';
+    public const DATA_COMPANY_UNIT_MAP = 'data-company_unit_map';
 
     protected const FIELD_ID_COMPANY_BUSINESS_UNIT = 'id_company_business_unit';
     protected const FIELD_FK_COMPANY = 'fk_company';
@@ -49,6 +50,7 @@ class CompanyBusinessUnitForm extends AbstractType
     {
         $resolver->setRequired(static::OPTION_COMPANY_CHOICES);
         $resolver->setRequired(static::OPTION_PARENT_CHOICES);
+        $resolver->setRequired(static::DATA_COMPANY_UNIT_MAP);
     }
 
     /**
@@ -62,7 +64,11 @@ class CompanyBusinessUnitForm extends AbstractType
         $this
             ->addCompanyField($builder, $options[static::OPTION_COMPANY_CHOICES])
             ->addIdCompanyBusinessUnitField($builder)
-            ->addParentNameField($builder, $options[static::OPTION_PARENT_CHOICES])
+            ->addParentNameField(
+                $builder,
+                $options[static::OPTION_PARENT_CHOICES],
+                $options[static::DATA_COMPANY_UNIT_MAP]
+            )
             ->addNameField($builder)
             ->addIbanField($builder)
             ->addBicField($builder)
@@ -84,16 +90,23 @@ class CompanyBusinessUnitForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $choices
+     * @param array $companyUnitMap
      *
      * @return \Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyBusinessUnitForm
      */
-    protected function addParentNameField(FormBuilderInterface $builder, array $choices): CompanyBusinessUnitForm
-    {
+    protected function addParentNameField(
+        FormBuilderInterface $builder,
+        array $choices,
+        array $companyUnitMap
+    ): CompanyBusinessUnitForm {
         $builder->add(static::FIELD_FK_PARENT_COMPANY_BUSINESS_UNIT, ChoiceType::class, [
             'label' => 'Parent',
             'placeholder' => 'Select one',
             'choices' => array_flip($choices),
             'choices_as_values' => true,
+            'attr' => [
+                static::DATA_COMPANY_UNIT_MAP => json_encode($companyUnitMap),
+            ],
         ]);
 
         return $this;
