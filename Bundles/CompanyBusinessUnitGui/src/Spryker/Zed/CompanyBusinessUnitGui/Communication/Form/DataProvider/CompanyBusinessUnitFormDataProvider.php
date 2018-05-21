@@ -102,9 +102,14 @@ class CompanyBusinessUnitFormDataProvider
             return [];
         }
 
-        $businessUnitNames = $this->prepareAllParents();
+        $companyUnitNames = $this->prepareAllParents();
+        foreach ($companyUnitNames as $unitNames) {
+            if (array_key_exists($idCompanyBusinessUnit, $unitNames)) {
+                return $unitNames;
+            }
+        }
 
-        return $businessUnitNames[$idCompanyBusinessUnit];
+        return [];
     }
 
     /**

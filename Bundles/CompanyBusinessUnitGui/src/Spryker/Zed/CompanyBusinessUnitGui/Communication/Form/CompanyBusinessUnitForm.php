@@ -104,6 +104,7 @@ class CompanyBusinessUnitForm extends AbstractType
             'placeholder' => 'Select one',
             'choices' => array_flip($choices),
             'choices_as_values' => true,
+            'required' => false,
             'attr' => [
                 static::DATA_COMPANY_UNIT_MAP => json_encode($companyUnitMap),
             ],
