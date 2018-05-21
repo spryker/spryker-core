@@ -26,9 +26,8 @@ function createIt() {
             if (!this.$companyField) {
                 return null;
             }
-            const idCompany = this.$companyField.val();
 
-            return idCompany;
+            return this.$companyField.val();
         },
 
         /**
@@ -40,9 +39,8 @@ function createIt() {
                 return {};
             }
             const companyUnitMap = this.$parentField.data('company_unit_map');
-            const companyUnitNames = companyUnitMap[idCompany];
 
-            return companyUnitNames;
+            return companyUnitMap[idCompany];
         },
 
         cleanParents: function () {
