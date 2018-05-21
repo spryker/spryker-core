@@ -22,10 +22,13 @@ class CompanyBusinessUnitTable extends AbstractTable
     protected const COL_ID_COMPANY_BUSINESS_UNIT = SpyCompanyBusinessUnitTableMap::COL_ID_COMPANY_BUSINESS_UNIT;
     protected const COL_COMPANY_NAME = SpyCompanyTableMap::COL_NAME;
     protected const COL_NAME = SpyCompanyBusinessUnitTableMap::COL_NAME;
+    protected const COL_PARENT_NAME = 'parent.name';
     protected const COL_ADDRESS = 'address';
     protected const COL_IBAN = SpyCompanyBusinessUnitTableMap::COL_IBAN;
     protected const COL_BIC = SpyCompanyBusinessUnitTableMap::COL_BIC;
     protected const COL_ACTIONS = 'actions';
+
+    protected const TABLE_PARENT_UNIT = 'parent';
     protected const REQUEST_ID_COMPANY_BUSINESS_UNIT = 'id-company-business-unit';
     protected const URL_COMPANY_BUSINESS_UNIT_EDIT = '/company-business-unit-gui/edit-company-business-unit/index?%s=%d';
     protected const FORMAT_ADDRESS = '%s, %s, %s';
@@ -41,6 +44,7 @@ class CompanyBusinessUnitTable extends AbstractTable
     public function __construct(SpyCompanyBusinessUnitQuery $companyBusinessUnitQuery)
     {
         $companyBusinessUnitQuery->leftJoinCompany();
+        $companyBusinessUnitQuery->leftJoinParentCompanyBusinessUnit(static::TABLE_PARENT_UNIT);
         $this->companyBusinessUnitQuery = $companyBusinessUnitQuery;
     }
 
@@ -55,6 +59,7 @@ class CompanyBusinessUnitTable extends AbstractTable
             static::COL_ID_COMPANY_BUSINESS_UNIT => 'Id',
             static::COL_COMPANY_NAME => 'Company',
             static::COL_NAME => 'Name',
+            static::COL_PARENT_NAME => 'Parent',
             static::COL_ADDRESS => 'Address',
             static::COL_IBAN => 'IBAN',
             static::COL_BIC => 'BIC',
@@ -68,11 +73,13 @@ class CompanyBusinessUnitTable extends AbstractTable
             static::COL_ID_COMPANY_BUSINESS_UNIT,
             static::COL_COMPANY_NAME,
             static::COL_NAME,
+            static::COL_PARENT_NAME,
         ]);
 
         $config->setSearchable([
             static::COL_NAME,
             static::COL_COMPANY_NAME,
+            static::COL_PARENT_NAME,
         ]);
 
         return $config;
@@ -89,10 +96,13 @@ class CompanyBusinessUnitTable extends AbstractTable
         $results = [];
 
         foreach ($queryResults as $item) {
+            $parent = $item->getParentCompanyBusinessUnit();
+
             $results[] = [
                 static::COL_ID_COMPANY_BUSINESS_UNIT => $item->getIdCompanyBusinessUnit(),
                 static::COL_COMPANY_NAME => $item->getCompany()->getName(),
                 static::COL_NAME => $item->getName(),
+                static::COL_PARENT_NAME => $parent ? $parent->getName() : '',
                 static::COL_ADDRESS => $this->formatAddress($item),
                 static::COL_IBAN => $item->getIban(),
                 static::COL_BIC => $item->getBic(),
