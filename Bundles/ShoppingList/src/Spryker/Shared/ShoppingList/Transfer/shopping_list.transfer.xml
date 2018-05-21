@@ -51,8 +51,6 @@
 
     <transfer name="ShoppingListOverviewRequest">
         <property name="shoppingList" type="ShoppingList"/>
-        <property name="page" type="int" />
-        <property name="itemsPerPage" type="int" />
         <property name="orderBy" type="string" />
         <property name="orderDirection" type="string" />
     </transfer>
@@ -60,7 +58,6 @@
     <transfer name="ShoppingListOverviewResponse">
         <property name="shoppingList" type="ShoppingList"/>
         <property name="itemsCollection" type="ShoppingListItemCollection"/>
-        <property name="pagination" type="Pagination" />
         <property name="shoppingLists" type="ShoppingListCollection" />
     </transfer>
 
