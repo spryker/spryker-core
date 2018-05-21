@@ -24,11 +24,7 @@
         <foreign-key name="spy_file_info-fk_file" foreignTable="spy_file" phpName="File" onDelete="CASCADE">
             <reference foreign="id_file" local="fk_file"/>
         </foreign-key>
-        <behavior name="timestampable" />
         <id-method-parameter value="spy_file_info_pk_seq"/>
-        <behavior name="event">
-            <parameter name="spy_file_info_all" column="*" />
-        </behavior>
     </table>
 
     <table name="spy_file_localized_attributes" idMethod="native" allowPkInsert="true"  phpName="SpyFileLocalizedAttributes">
@@ -48,9 +44,6 @@
             <unique-column name="fk_locale"/>
         </unique>
         <id-method-parameter value="spy_file_localized_attributes_pk_seq"/>
-        <behavior name="event">
-            <parameter name="spy_file_localized_attributes_all" column="*" />
-        </behavior>
     </table>
 
     <table name="spy_file_directory" idMethod="native" phpName="SpyFileDirectory">
@@ -84,12 +77,6 @@
         <foreign-key foreignTable="spy_locale">
             <reference foreign="id_locale" local="fk_locale"/>
         </foreign-key>
-
-        <behavior name="timestampable"/>
-
-        <behavior name="event">
-            <parameter name="spy_file_directory_localized_attributes_all" column="*" />
-        </behavior>
 
         <id-method-parameter value="spy_file_directory_localized_attributes_pk_seq"/>
     </table>
