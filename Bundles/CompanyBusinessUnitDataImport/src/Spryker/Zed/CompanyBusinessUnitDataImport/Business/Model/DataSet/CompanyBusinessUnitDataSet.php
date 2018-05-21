@@ -15,5 +15,5 @@ interface CompanyBusinessUnitDataSet
     public const ID_COMPANY = 'idCompany';
 
     public const PARENT_BUSINESS_UNIT_KEY = 'parent_business_unit_key';
-    public const ID_PARENT_BUSINESS_UNIT = 'id_parent_company_business_unit';
+    public const FK_PARENT_BUSINESS_UNIT = 'fk_parent_company_business_unit';
 }

@@ -49,6 +49,6 @@ class ParentBusinessUnitKeyToIdCompanyBusinessUnitStep implements DataImportStep
             $this->idCompanyBusinessUnitCache[$companyBusinessUnitKey] = $idCompanyBusinessUnit;
         }
 
-        $dataSet[CompanyBusinessUnitDataSet::ID_PARENT_BUSINESS_UNIT] = $this->idCompanyBusinessUnitCache[$companyBusinessUnitKey];
+        $dataSet[CompanyBusinessUnitDataSet::FK_PARENT_BUSINESS_UNIT] = $this->idCompanyBusinessUnitCache[$companyBusinessUnitKey];
     }
 }
