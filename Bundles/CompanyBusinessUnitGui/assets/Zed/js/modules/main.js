@@ -33,8 +33,11 @@ function createIt() {
                 return null;
             }
 
-            console.log('get company id: ' + this.$companyField.value)
-            return this.$companyField.value;
+            const idCompany = this.$companyField.val();
+
+            console.log('get company id: ' + idCompany)
+
+            return idCompany;
         },
 
         /**
@@ -50,9 +53,15 @@ function createIt() {
                 return {};
             }
 
-            return {
-                idCompany: 'some name',
-            };
+            const companyUnitMap = this.$parentField.data('company_unit_map');
+            const companyUnitNames = companyUnitMap[idCompany];
+
+            console.log('getBusinessUnitList data:')
+            console.log(companyUnitMap)
+            console.log('getBusinessUnitList names:')
+            console.log(companyUnitNames)
+
+            return companyUnitNames;
         },
 
         cleanParents: function () {
