@@ -29,6 +29,7 @@ interface PersistentCartFacadeInterface
      *  - Group items in quote (-> ItemGrouper)
      *  - Recalculate quote (-> Calculation)
      *  - Add success message to messenger (-> Messenger)
+     *  - Call quote response extend plugins.
      *  - Return updated quote
      *
      * @api
@@ -51,6 +52,7 @@ interface PersistentCartFacadeInterface
      *  - Group items in quote (-> ItemGrouper)
      *  - Recalculate quote (-> Calculation)
      *  - Add success message to messenger (-> Messenger)
+     *  - Call quote response extend plugins.
      *  - Return updated quote
      *
      * @api
@@ -67,6 +69,7 @@ interface PersistentCartFacadeInterface
      *  - Decreases the given quantity for the given item(s) from the quote
      *  - Recalculate quote (-> Calculation)
      *  - Add success message to messenger (-> Messenger)
+     *  - Call quote response extend plugins.
      *  - Return updated quote
      *
      * @api
@@ -79,7 +82,8 @@ interface PersistentCartFacadeInterface
 
     /**
      * Specification:
-     *  - Reloads all items in cart anew, it recreates all items transfer, reads new prices, options, bundles.
+     *  - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles.
+     *  - Call quote response extend plugins.
      *
      * @api
      *
@@ -91,6 +95,11 @@ interface PersistentCartFacadeInterface
 
     /**
      * Specification:
+     *  - Load quote from db.
+     *  - Call calculate quantity to add or remove.
+     *  - Remove or add items.
+     *  - Saves quote to DB.
+     *  - Call quote response extend plugins.
      *
      * @api
      *
@@ -102,6 +111,11 @@ interface PersistentCartFacadeInterface
 
     /**
      * Specification:
+     *  - Load quote from db.
+     *  - Call calculate quantity to remove.
+     *  - Remove items from quote.
+     *  - Saves quote to DB.
+     *  - Call quote response extend plugins.
      *
      * @api
      *
@@ -113,6 +127,11 @@ interface PersistentCartFacadeInterface
 
     /**
      * Specification:
+     *  - Load quote from db.
+     *  - Call calculate quantity to add.
+     *  - Add items to quote.
+     *  - Saves quote to DB.
+     *  - Call quote response extend plugins.
      *
      * @api
      *
@@ -138,7 +157,7 @@ interface PersistentCartFacadeInterface
 
     /**
      * Specification:
-     *  - Reloads all items in cart anew, it recreates all items transfer, reads new prices, options, bundles.
+     *  - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles.
      *  - Check changes and add notes to messenger (-> Messenger)
      *
      * @api
@@ -163,7 +182,8 @@ interface PersistentCartFacadeInterface
 
     /**
      * Specification:
-     *  - Find customer quote
+     *  - Find customer quote.
+     *  - Call quote response extend plugins.
      *
      * @api
      *
@@ -176,7 +196,8 @@ interface PersistentCartFacadeInterface
 
     /**
      * Specification:
-     *  - Saves quote in database
+     *  - Saves quote in database.
+     *  - Call quote response extend plugins.
      *
      * @api
      *
@@ -188,7 +209,8 @@ interface PersistentCartFacadeInterface
 
     /**
      * Specification:
-     *  - Saves quote in database
+     *  - Saves quote in database.
+     *  - Call quote response extend plugins.
      *
      * @api
      *
@@ -197,4 +219,20 @@ interface PersistentCartFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function createQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Load quote by id.
+     *  - Add changes.
+     *  - Reloads all items in cart anew, it recreates all items transfer, reads new prices, options, bundles.
+     *  - Saves quote in database.
+     *  - Call quote response extend plugins.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function updateAndReloadQuote(QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer): QuoteResponseTransfer;
 }
