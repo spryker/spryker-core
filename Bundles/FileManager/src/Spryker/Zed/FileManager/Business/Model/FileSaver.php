@@ -140,7 +140,7 @@ class FileSaver implements FileSaverInterface
     }
 
     /**
-     * @param $fileName
+     * @param string $fileName
      *
      * @return string
      */

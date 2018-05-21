@@ -45,6 +45,19 @@ interface FileManagerFacadeInterface
 
     /**
      * Specification:
+     * - Finds latest file version
+     * - Returns a file meta info and a file content
+     *
+     * @api
+     *
+     * @param int $idFile
+     *
+     * @return \Generated\Shared\Transfer\FileManagerDataTransfer
+     */
+    public function readLatestFileVersion($idFile);
+
+    /**
+     * Specification:
      * - Deletes all file info
      * - Deletes all file versions and content
      *
