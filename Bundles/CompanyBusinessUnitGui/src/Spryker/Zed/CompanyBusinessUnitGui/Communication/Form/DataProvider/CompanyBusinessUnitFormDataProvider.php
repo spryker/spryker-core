@@ -78,7 +78,7 @@ class CompanyBusinessUnitFormDataProvider
     }
 
     /**
-     * @return array
+     * @return int[] [company name => company id]
      */
     protected function prepareCompanyChoices(): array
     {
@@ -94,7 +94,7 @@ class CompanyBusinessUnitFormDataProvider
     /**
      * @param int|null $idCompanyBusinessUnit
      *
-     * @return string[] [business unit id => business unit name]
+     * @return int[] [business unit name => business unit id]
      */
     protected function prepareParentChoices(?int $idCompanyBusinessUnit = null): array
     {
