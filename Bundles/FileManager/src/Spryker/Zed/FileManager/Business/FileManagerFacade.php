@@ -89,9 +89,9 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @api
+     *
+     * {@inheritdoc}
      */
     public function findFileDirectoryTree(LocaleTransfer $localeTransfer = null)
     {
@@ -101,9 +101,9 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @api
+     *
+     * {@inheritdoc}
      */
     public function updateFileDirectoryTreeHierarchy(FileDirectoryTreeTransfer $fileDirectoryTreeTransfer)
     {
@@ -115,9 +115,7 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
     /**
      * @api
      *
-     * @param int $idFileDirectory
-     *
-     * @return void
+     * {@inheritdoc}
      */
     public function deleteFileDirectory($idFileDirectory)
     {
