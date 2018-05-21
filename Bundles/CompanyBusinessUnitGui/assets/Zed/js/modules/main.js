@@ -41,6 +41,8 @@ function createIt() {
          * @returns {string: string}
          */
         getBusinessUnitList: function () {
+            console.log('getBusinessUnitList')
+
             const idCompany = this.getCompanyId();
 
             console.log('getBusinessUnitList company: ' + idCompany)
@@ -60,10 +62,18 @@ function createIt() {
                 return;
             }
 
-            console.log('cleanParents parents id: ' + this.$parentField.id)
-            while (this.$parentField.firstChild) {
-                this.$parentField.removeChild(this.$parentField.firstChild);
-            }
+            console.log('cleanParents parents id: ' + this.$parentField.val())
+
+            this.$parentField.children().each(function() {
+                console.log(this)
+                const $option = $(this)
+
+                if (!$option.val()) {
+                    return;
+                }
+
+                $option.remove();
+            });
         },
 
         setParentNames: function () {
@@ -72,21 +82,28 @@ function createIt() {
             if (!this.$parentField) {
                 return;
             }
+
             this.cleanParents();
             const parentList = this.getBusinessUnitList();
             const fragment = document.createDocumentFragment();
 
-            parentList.forEach(function (parentBU, index) {
-                console.log('setParentNames indes: ' + index);
-                console.log('setParentNames each: ' + parentBU);
+            for (const idBusinessUnit in parentList) {
+                if (!parentList.hasOwnProperty(idBusinessUnit)) {
+                    continue;
+                }
+
+                const BusinessUnitName = parentList[idBusinessUnit];
+
+                console.log('setParentNames indes: ' + idBusinessUnit);
+                console.log('setParentNames each: ' + BusinessUnitName);
 
                 let opt = document.createElement('option');
-                opt.innerHTML = parentBU;
-                opt.value = parentBU;
+                opt.innerHTML = BusinessUnitName;
+                opt.value = idBusinessUnit;
                 fragment.appendChild(opt);
-            });
+            }
 
-            this.$parentField.appendChild(fragment);
+            this.$parentField.append(fragment);
         },
 
         addListenerOnCompany: function () {
@@ -99,12 +116,14 @@ function createIt() {
             console.log(this.$companyField)
             console.log(this.$companyField.change)
 
+            const parentFieldHandler = this;
+
             // @TODO why this.$companyField.change() not working?
             // this.$companyField.addEventListener('change', function () {
             this.$companyField.change(function () {
                 console.log('change')
 
-                this.setParentNames();
+                parentFieldHandler.setParentNames();
             });
         },
     };
