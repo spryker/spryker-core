@@ -85,7 +85,7 @@ class CompanyBusinessUnitFormDataProvider
         $result = [];
 
         foreach ($this->companyFacade->getCompanies()->getCompanies() as $company) {
-            $result[$company->getIdCompany()] = $company->getName();
+            $result[$company->getName()] = $company->getIdCompany();
         }
 
         return $result;
@@ -105,7 +105,7 @@ class CompanyBusinessUnitFormDataProvider
         $companyUnitNames = $this->prepareAllParents();
         foreach ($companyUnitNames as $unitNames) {
             if (array_key_exists($idCompanyBusinessUnit, $unitNames)) {
-                return $unitNames;
+                return array_flip($unitNames);
             }
         }
 

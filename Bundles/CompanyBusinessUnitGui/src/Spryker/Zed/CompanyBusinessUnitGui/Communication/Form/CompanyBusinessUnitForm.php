@@ -102,7 +102,7 @@ class CompanyBusinessUnitForm extends AbstractType
         $builder->add(static::FIELD_FK_PARENT_COMPANY_BUSINESS_UNIT, ChoiceType::class, [
             'label' => 'Parent',
             'placeholder' => 'Select one',
-            'choices' => array_flip($choices),
+            'choices' => $choices,
             'choices_as_values' => true,
             'required' => false,
             'attr' => [
@@ -177,7 +177,7 @@ class CompanyBusinessUnitForm extends AbstractType
         $builder->add(static::FIELD_FK_COMPANY, ChoiceType::class, [
             'label' => 'Company',
             'placeholder' => 'Select one',
-            'choices' => array_flip($choices),
+            'choices' => $choices,
             'choices_as_values' => true,
             'constraints' => [
                 new NotBlank(),
