@@ -25,7 +25,7 @@ class IndexController extends AbstractController
     public function indexAction(Request $request)
     {
         $sprykForm = $this->getFactory()
-            ->createSprykSelectForm()
+            ->getSprykSelectForm()
             ->handleRequest($request);
 
         if ($sprykForm->isSubmitted() && $sprykForm->isValid()) {
@@ -41,7 +41,7 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @param \Symfony\SprykGui/Communication/Form/DataProvider/SprykDataProvider.phpComponent\HttpFoundation\Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
@@ -50,11 +50,13 @@ class IndexController extends AbstractController
         $spryk = $request->query->get('spryk');
 
         $sprykForm = $this->getFactory()
-            ->createSprykForm($spryk)
+            ->getSprykForm($spryk)
             ->handleRequest($request);
 
         if ($sprykForm->isSubmitted() && $sprykForm->isValid()) {
-            $data = $sprykForm->getData();
+            return $this->viewResponse(
+                $this->getFacade()->buildSprykView($sprykForm->getData())
+            );
         }
 
         return $this->viewResponse([

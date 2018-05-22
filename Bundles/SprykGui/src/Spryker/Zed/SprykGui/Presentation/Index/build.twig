@@ -1,0 +1,23 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set page_title = 'ADD TITLE HERE' %}
+{% block head_title page_title %}
+{% block section_title page_title %}
+
+{% block action %}
+{% endblock %}
+
+{% block content %}
+    {% if form is defined %}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Run' | trans }}" />
+    {{ form_end(form) }}
+    {% else %}
+        <p>Console command to run: {{ consoleCommand }}</p>
+        {#<p>Jira: {{ jira }}</p>#}
+    {% endif %}
+{% endblock %}
+
+{% block footer_js %}
+{% endblock %}
