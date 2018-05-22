@@ -22,7 +22,7 @@ class FileInfoEditTable extends FileInfoTable
         $buttons = [];
 
         $buttons[] = $this->generateViewButton(
-            Url::generate('/file-manager/download', [
+            Url::generate('/file-manager-gui/download-file', [
                 static::REQUEST_ID_FILE_INFO => $item[FileManagerGuiConstants::COL_ID_FILE_INFO],
             ]),
             'Download'

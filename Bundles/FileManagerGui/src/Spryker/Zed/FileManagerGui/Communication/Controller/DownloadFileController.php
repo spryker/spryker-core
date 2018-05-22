@@ -34,15 +34,19 @@ class DownloadFileController extends AbstractController
     {
         $idFileInfo = $request->get(static::URL_PARAM_ID_FILE_INFO);
 
-        $fileManagerDataTransfer = $this->getFactory()
-            ->getFileManagerFacade()
-            ->readFile($idFileInfo);
+        try {
+            $file = $this->getFactory()
+                ->getFileManagerFacade()
+                ->readFile($idFileInfo);
+        } catch (FileSystemReadException $e) {
+            $this->addErrorMessage(static::MESSAGE_FILE_UNAVAILABLE);
+            $redirectUrl = Url::generate('/file-manager-gui')->build();
 
-        if ($fileManagerDataTransfer->getContent() === null) {
-            throw new NotFoundHttpException();
+            return $this->redirectResponse($redirectUrl);
         }
 
-        return $this->createResponse($fileManagerDataTransfer);
+        return $this->createResponse($file);
+
     }
 
     /**
