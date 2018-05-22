@@ -8,6 +8,7 @@
 namespace Spryker\Zed\FileManager\Business\Model;
 
 use Orm\Zed\FileManager\Persistence\SpyFileInfo;
+use Spryker\Shared\FileManager\FileManagerConstants;
 use Spryker\Zed\FileManager\FileManagerConfig;
 use Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface;
 
@@ -85,7 +86,7 @@ class FileLoader implements FileLoaderInterface
         $fileName = sprintf(
             '%u%s%s.%s',
             $fileInfo->getFkFile(),
-            $this->config->getFileNameVersionDelimiter(),
+            FileManagerConstants::FILE_NAME_VERSION_DELIMITER,
             $fileInfo->getVersionName(),
             $fileInfo->getExtension()
         );

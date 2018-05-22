@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\FileManagerDataTransfer;
 use Generated\Shared\Transfer\FileTransfer;
 use Orm\Zed\FileManager\Persistence\SpyFile;
 use Orm\Zed\FileManager\Persistence\SpyFileInfo;
+use Spryker\Shared\FileManager\FileManagerConstants;
 use Spryker\Zed\FileManager\FileManagerConfig;
 use Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
@@ -198,7 +199,6 @@ class FileSaver implements FileSaverInterface
      */
     protected function addStorageInfo(SpyFileInfo $fileInfo, string $newFileName)
     {
-        $fileInfo->reload();
         $fileInfo->setStorageName($this->config->getStorageName());
         $fileInfo->setStorageFileName($newFileName);
 
@@ -242,7 +242,7 @@ class FileSaver implements FileSaverInterface
         $newFileName = sprintf(
             static::FILE_NAME_PATTERN,
             $idFile,
-            $fileNameVersionDelimiter,
+            FileManagerConstants::FILE_NAME_VERSION_DELIMITER,
             $versionName,
             $fileExtension
         );

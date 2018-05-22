@@ -9,7 +9,6 @@ namespace Spryker\Zed\FileManagerStorage\Communication\Plugin\Event\Listener;
 
 use Orm\Zed\FileManager\Persistence\Map\SpyFileInfoTableMap;
 use Spryker\Zed\FileManager\Dependency\FileManagerEvents;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\FileManagerStorage\Persistence\FileManagerStorageQueryContainerInterface getQueryContainer()
@@ -17,8 +16,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class FileInfoListener extends AbstractFileManagerListener
 {
-    use DatabaseTransactionHandlerTrait;
-
     /**
      * Specification
      *  - Listeners needs to implement this interface to execute the codes for more
