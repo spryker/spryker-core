@@ -7,6 +7,11 @@
 
 namespace Spryker\Client\Currency;
 
+use Spryker\Client\Currency\CurrencyChange\CurrencyPostChangePluginExecutor;
+use Spryker\Client\Currency\CurrencyChange\CurrencyPostChangePluginExecutorInterface;
+use Spryker\Client\Currency\CurrencyChange\CurrencyUpdater;
+use Spryker\Client\Currency\CurrencyChange\CurrencyUpdaterInterface;
+use Spryker\Client\Currency\Dependency\Client\CurrencyToZedRequestClientInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Shared\Currency\Builder\CurrencyBuilder;
 use Spryker\Shared\Currency\Persistence\CurrencyPersistence;
@@ -34,6 +39,29 @@ class CurrencyFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\Currency\CurrencyChange\CurrencyUpdaterInterface
+     */
+    public function createCurrencyUpdater(): CurrencyUpdaterInterface
+    {
+        return new CurrencyUpdater(
+            $this->createCurrencyBuilder(),
+            $this->createCurrencyPostChangePluginExecutor(),
+            $this->createCurrencyPersistence()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\Currency\CurrencyChange\CurrencyPostChangePluginExecutorInterface
+     */
+    public function createCurrencyPostChangePluginExecutor(): CurrencyPostChangePluginExecutorInterface
+    {
+        return new CurrencyPostChangePluginExecutor(
+            $this->getZedRequestClient(),
+            $this->getCurrencyPostChangePlugins()
+        );
+    }
+
+    /**
      * @return \Spryker\Shared\Currency\Dependency\Internationalization\CurrencyToInternationalizationInterface
      */
     protected function getInternationalization()
@@ -55,5 +83,21 @@ class CurrencyFactory extends AbstractFactory
     protected function getSessionClient()
     {
         return $this->getProvidedDependency(CurrencyDependencyProvider::CLIENT_SESSION);
+    }
+
+    /**
+     * @return \Spryker\Client\Currency\Dependency\Client\CurrencyToZedRequestClientInterface
+     */
+    public function getZedRequestClient(): CurrencyToZedRequestClientInterface
+    {
+        return $this->getProvidedDependency(CurrencyDependencyProvider::CLIENT_ZED_REQUEST);
+    }
+
+    /**
+     * @return \Spryker\Client\CurrencyExtension\Dependency\CurrencyPostChangePluginInterface[]
+     */
+    protected function getCurrencyPostChangePlugins(): array
+    {
+        return $this->getProvidedDependency(CurrencyDependencyProvider::PLUGINS_CURRENCY_POST_CHANGE);
     }
 }

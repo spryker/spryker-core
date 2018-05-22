@@ -48,7 +48,7 @@ class BasePreCheck
     /**
      * @param string $sku
      *
-     * @return mixed|mixed[]|\Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection|mixed
+     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function findBundledProducts($sku)
     {
@@ -59,7 +59,7 @@ class BasePreCheck
 
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
-     * @param mixed|mixed[]|\Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection $bundledProducts
+     * @param \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\Collection\ObjectCollection $bundledProducts
      * @param int $itemQuantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *

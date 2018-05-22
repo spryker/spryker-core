@@ -62,7 +62,7 @@ interface DevelopmentFacadeInterface
      *
      * @return void
      */
-    public function createModule($module, $options);
+    public function createModule($module, array $options);
 
     /**
      * @api

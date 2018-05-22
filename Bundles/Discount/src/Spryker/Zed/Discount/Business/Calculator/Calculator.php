@@ -86,6 +86,7 @@ class Calculator implements CalculatorInterface
         $collectedDiscounts = $this->calculateDiscountAmount($discounts, $quoteTransfer);
         $collectedDiscounts = $this->filterExclusiveDiscounts($collectedDiscounts);
         $this->distributeDiscountAmount($collectedDiscounts);
+        $this->addNewCartRuleDiscountsAppliedMessage($collectedDiscounts, $quoteTransfer->getCartRuleDiscounts());
 
         return $collectedDiscounts;
     }
@@ -162,7 +163,6 @@ class Calculator implements CalculatorInterface
     {
         foreach ($collectedDiscountsTransfer as $collectedDiscountTransfer) {
             $this->distributor->distributeDiscountAmountToDiscountableItems($collectedDiscountTransfer);
-            $this->setSuccessfulDiscountAddMessage($collectedDiscountTransfer->getDiscount());
         }
     }
 
@@ -292,5 +292,36 @@ class Calculator implements CalculatorInterface
     public function setCollectorStrategyResolver(CollectorStrategyResolverInterface $collectorStrategyResolver)
     {
         $this->collectorStrategyResolver = $collectorStrategyResolver;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CollectedDiscountTransfer[] $collectedDiscountTransferCollection
+     * @param \ArrayObject|\Generated\Shared\Transfer\DiscountTransfer[] $oldCartRuleDiscountTransferCollection
+     *
+     * @return void
+     */
+    protected function addNewCartRuleDiscountsAppliedMessage(array $collectedDiscountTransferCollection, ArrayObject $oldCartRuleDiscountTransferCollection): void
+    {
+        $oldCartRulesIds = $this->getCartRulesDiscountIds($oldCartRuleDiscountTransferCollection);
+        foreach ($collectedDiscountTransferCollection as $discountTransfer) {
+            if (!in_array($discountTransfer->getDiscount()->getIdDiscount(), $oldCartRulesIds)) {
+                $this->setSuccessfulDiscountAddMessage($discountTransfer->getDiscount());
+            }
+        }
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\DiscountTransfer[] $cartRuleDiscountTransferCollection
+     *
+     * @return array
+     */
+    protected function getCartRulesDiscountIds(ArrayObject $cartRuleDiscountTransferCollection): array
+    {
+        $cartRulesIds = [];
+        foreach ($cartRuleDiscountTransferCollection as $discountTransfer) {
+            $cartRulesIds[] = $discountTransfer->getIdDiscount();
+        }
+
+        return $cartRulesIds;
     }
 }

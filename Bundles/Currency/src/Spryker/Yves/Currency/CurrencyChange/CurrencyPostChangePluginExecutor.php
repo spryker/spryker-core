@@ -11,6 +11,9 @@ use Spryker\Shared\Currency\Persistence\CurrencyPersistenceInterface;
 use Spryker\Yves\Currency\Dependency\Client\CurrencyToMessengerClientInterface;
 use Spryker\Yves\Currency\Dependency\Client\CurrencyToZedRequestClientInterface;
 
+/**
+ * @deprecated use \Spryker\Client\Currency\CurrencyChange\CurrencyPostChangePluginExecutor instead
+ */
 class CurrencyPostChangePluginExecutor implements CurrencyPostChangePluginExecutorInterface
 {
     /**
@@ -59,8 +62,8 @@ class CurrencyPostChangePluginExecutor implements CurrencyPostChangePluginExecut
      */
     public function execute($currencyIsoCode, $previousCurrencyIsoCode)
     {
-        foreach ($this->currencyPostChangePlugins as $currencyPostChangePlugins) {
-            if ($currencyPostChangePlugins->execute($currencyIsoCode)) {
+        foreach ($this->currencyPostChangePlugins as $currencyPostChangePlugin) {
+            if ($currencyPostChangePlugin->execute($currencyIsoCode)) {
                 continue;
             }
 

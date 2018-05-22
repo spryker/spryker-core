@@ -14,7 +14,14 @@ interface MultiCartRepositoryInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return null|\Generated\Shared\Transfer\SpyQuoteEntityTransfer
+     * @return array
      */
-    public function resolveCustomerQuoteName(QuoteTransfer $quoteTransfer): string;
+    public function findSimilarCustomerQuoteNames(QuoteTransfer $quoteTransfer): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function checkQuoteNameAvailability(QuoteTransfer $quoteTransfer): bool;
 }

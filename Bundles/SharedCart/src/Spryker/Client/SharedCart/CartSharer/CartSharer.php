@@ -9,6 +9,7 @@ namespace Spryker\Client\SharedCart\CartSharer;
 
 use ArrayObject;
 use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
+use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestAttributesTransfer;
@@ -162,7 +163,7 @@ class CartSharer implements CartSharerInterface
      *
      * @return \Generated\Shared\Transfer\QuotePermissionGroupTransfer|null
      */
-    protected function findQuotePermissionGroup(int $idQuotePermissionGroup)
+    protected function findQuotePermissionGroup(int $idQuotePermissionGroup): ?QuotePermissionGroupTransfer
     {
         $criteriaFilterTransfer = new QuotePermissionGroupCriteriaFilterTransfer();
         $quotePermissionGroupTransferList = $this->sharedCartStub->getQuotePermissionGroupList($criteriaFilterTransfer);

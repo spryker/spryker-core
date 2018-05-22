@@ -16,6 +16,7 @@ interface KernelConstants
     const PROJECT_NAMESPACE = 'PROJECT_NAMESPACE';
     const PROJECT_NAMESPACES = 'PROJECT_NAMESPACES';
 
+    /** @deprecated Use Module Config class directly instead. */
     const SPRYKER_ROOT = 'SPRYKER_ROOT';
 
     const STORE_PREFIX = 'STORE_PREFIX';
