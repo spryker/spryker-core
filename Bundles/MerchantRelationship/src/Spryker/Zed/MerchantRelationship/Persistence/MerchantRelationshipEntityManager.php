@@ -45,7 +45,6 @@ class MerchantRelationshipEntityManager extends AbstractEntityManager implements
      */
     public function saveMerchantRelationship(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipTransfer
     {
-        var_dump('13');
         $spyMerchantRelationship = $this->getFactory()
             ->createMerchantRelationshipQuery()
             ->filterByIdMerchantRelationship($merchantRelationshipTransfer->getIdMerchantRelationship())
