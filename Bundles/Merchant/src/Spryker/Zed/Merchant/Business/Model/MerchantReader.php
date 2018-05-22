@@ -8,31 +8,10 @@
 namespace Spryker\Zed\Merchant\Business\Model;
 
 use Generated\Shared\Transfer\MerchantTransfer;
-use Spryker\Zed\Merchant\Business\Exception\MerchantNotFoundException;
 use Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface;
 
 class MerchantReader implements MerchantReaderInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     *
-     * @throws \Spryker\Zed\Merchant\Business\Exception\MerchantNotFoundException
-     *
-     * @return \Generated\Shared\Transfer\MerchantTransfer
-     */
-    public function getMerchantById(MerchantTransfer $merchantTransfer): MerchantTransfer
-    {
-        $merchantTransfer->requireIdMerchant();
-
-        $merchantTransfer = $this->repository->getMerchantById($merchantTransfer->getIdMerchant());
-
-        if (!$merchantTransfer->getIdMerchant()) {
-            throw new MerchantNotFoundException();
-        }
-
-        return $merchantTransfer;
-    }
-
     /**
      * @var \Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface
      */
@@ -44,5 +23,17 @@ class MerchantReader implements MerchantReaderInterface
     public function __construct(MerchantRepositoryInterface $repository)
     {
         $this->repository = $repository;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantTransfer
+     */
+    public function getMerchantById(MerchantTransfer $merchantTransfer): MerchantTransfer
+    {
+        $merchantTransfer->requireIdMerchant();
+
+        return $this->repository->getMerchantById($merchantTransfer->getIdMerchant());
     }
 }
