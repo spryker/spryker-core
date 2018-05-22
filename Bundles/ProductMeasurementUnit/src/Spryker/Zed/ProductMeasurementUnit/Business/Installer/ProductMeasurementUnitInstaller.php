@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductMeasurementUnit\Business\Installer;
 
-use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\ProductMeasurementUnit\Persistence\ProductMeasurementUnitEntityManagerInterface;
 use Spryker\Zed\ProductMeasurementUnit\ProductMeasurementUnitConfig;
@@ -55,8 +54,7 @@ class ProductMeasurementUnitInstaller implements ProductMeasurementUnitInstaller
     {
         $productInfrastructuralMeasurementUnits = $this->config->getInfrastructuralMeasurementUnits();
 
-        foreach ($productInfrastructuralMeasurementUnits as $productInfrastructuralMeasurementUnit) {
-            $productMeasurementUnitTransfer = (new ProductMeasurementUnitTransfer())->fromArray($productInfrastructuralMeasurementUnit);
+        foreach ($productInfrastructuralMeasurementUnits as $productMeasurementUnitTransfer) {
             $this->entityManager->saveProductMeasurementUnit($productMeasurementUnitTransfer);
         }
     }

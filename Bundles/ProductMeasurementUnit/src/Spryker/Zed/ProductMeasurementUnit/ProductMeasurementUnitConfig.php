@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductMeasurementUnit;
 
+use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductMeasurementUnitConfig extends AbstractBundleConfig
@@ -28,11 +29,17 @@ class ProductMeasurementUnitConfig extends AbstractBundleConfig
     ];
 
     /**
-     * @return array
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
      */
     public function getInfrastructuralMeasurementUnits(): array
     {
-        return static::INFRASTRUCTURAL_MEASUREMENT_UNITS;
+        $infrastructuralMeasurementUnits = [];
+
+        foreach (static::INFRASTRUCTURAL_MEASUREMENT_UNITS as $infrastructuralMeasurementUnit) {
+            $infrastructuralMeasurementUnits[] = (new ProductMeasurementUnitTransfer())->fromArray($infrastructuralMeasurementUnit);
+        }
+
+        return $infrastructuralMeasurementUnits;
     }
 
     /**
