@@ -7,36 +7,36 @@
 
 namespace Spryker\Zed\SharedCart\Persistence;
 
+use Generated\Shared\Transfer\PermissionTransfer;
+use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\SpyPermissionEntityTransfer;
 use Generated\Shared\Transfer\SpyQuoteCompanyUserEntityTransfer;
-use Generated\Shared\Transfer\SpyQuotePermissionGroupEntityTransfer;
 
 interface SharedCartEntityManagerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SpyPermissionEntityTransfer $permissionEntityTransfer
+     * @param \Generated\Shared\Transfer\PermissionTransfer $permissionTransfer
      *
-     * @return \Generated\Shared\Transfer\SpyPermissionEntityTransfer
+     * @return \Generated\Shared\Transfer\PermissionTransfer
      */
-    public function savePermissionEntity(SpyPermissionEntityTransfer $permissionEntityTransfer): SpyPermissionEntityTransfer;
+    public function savePermission(PermissionTransfer $permissionTransfer): PermissionTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\SpyQuotePermissionGroupEntityTransfer $quotePermissionGroupEntityTransfer
+     * @param \Generated\Shared\Transfer\QuotePermissionGroupTransfer $quotePermissionGroupTransfer
      *
-     * @return \Generated\Shared\Transfer\SpyQuotePermissionGroupEntityTransfer
+     * @return \Generated\Shared\Transfer\QuotePermissionGroupTransfer
      */
-    public function saveQuotePermissionGroupEntity(SpyQuotePermissionGroupEntityTransfer $quotePermissionGroupEntityTransfer): SpyQuotePermissionGroupEntityTransfer;
+    public function saveQuotePermissionGroup(QuotePermissionGroupTransfer $quotePermissionGroupTransfer): QuotePermissionGroupTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\SpyQuotePermissionGroupEntityTransfer $quotePermissionGroupEntityTransfer
-     * @param \Generated\Shared\Transfer\SpyPermissionEntityTransfer $permissionEntityTransfer
+     * @param \Generated\Shared\Transfer\QuotePermissionGroupTransfer $quotePermissionGroupTransfer
+     * @param \Generated\Shared\Transfer\PermissionTransfer $permissionTransfer
      *
      * @return void
      */
-    public function saveQuotePermissionGroupToPermissionEntity(
-        SpyQuotePermissionGroupEntityTransfer $quotePermissionGroupEntityTransfer,
-        SpyPermissionEntityTransfer $permissionEntityTransfer
+    public function saveQuotePermissionGroupToPermission(
+        QuotePermissionGroupTransfer $quotePermissionGroupTransfer,
+        PermissionTransfer $permissionTransfer
     ): void;
 
     /**

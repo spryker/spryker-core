@@ -4,6 +4,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker/currency-extension": "^1.0.0",
     "spryker/kernel": "^3.15.0",
     "spryker/messenger": "^3.1.0",
     "spryker/propel-orm": "^1.0.0",
