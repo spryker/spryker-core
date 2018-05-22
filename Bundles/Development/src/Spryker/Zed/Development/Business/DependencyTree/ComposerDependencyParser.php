@@ -11,6 +11,8 @@ use ArrayObject;
 use Generated\Shared\Transfer\BundleDependencyCollectionTransfer;
 use Generated\Shared\Transfer\ComposerDependencyCollectionTransfer;
 use Generated\Shared\Transfer\ComposerDependencyTransfer;
+use Generated\Shared\Transfer\DependencyBundleTransfer;
+use Generated\Shared\Transfer\DependencyTransfer;
 use Spryker\Zed\Development\Business\Composer\ComposerJsonFinderInterface;
 use Spryker\Zed\Development\Business\Exception\DependencyTree\InvalidComposerJsonException;
 use Symfony\Component\Finder\SplFileInfo;
@@ -72,6 +74,7 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
                 'composerRequire' => in_array($moduleName, $requireNames) ? $moduleName : '',
                 'composerRequireDev' => in_array($moduleName, $requireDevNames) ? $moduleName : '',
                 'suggested' => in_array($moduleName, $suggestedNames) ? $moduleName : '',
+                'isOwnExtensionModule' => $this->isOwnExtensionModule($moduleName, $moduleDependencyCollectionTransfer),
             ];
         }
 
@@ -203,14 +206,21 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
             return $moduleDependencyCollectionTransfer;
         }
 
-        $excluded = $declaredDependencies[static::TYPE_EXCLUDE];
+        $excluded = array_merge($declaredDependencies[static::TYPE_EXCLUDE], $declaredDependencies[static::TYPE_EXCLUDE_DEV]);
 
         $dependencyModulesCollectionTransfer = $moduleDependencyCollectionTransfer->getDependencyBundles();
+
         $moduleDependencyCollectionTransfer->setDependencyBundles(new ArrayObject());
         foreach ($dependencyModulesCollectionTransfer as $moduleDependencyTransfer) {
             if (!in_array($moduleDependencyTransfer->getBundle(), $excluded)) {
                 $moduleDependencyCollectionTransfer->addDependencyBundle($moduleDependencyTransfer);
             }
+        }
+        foreach ($declaredDependencies[static::TYPE_INCLUDE] as $declaredDependency) {
+            $moduleDependencyCollectionTransfer = $this->addDeclaredDependency($moduleDependencyCollectionTransfer, $declaredDependency);
+        }
+        foreach ($declaredDependencies[static::TYPE_INCLUDE_DEV] as $declaredDependency) {
+            $moduleDependencyCollectionTransfer = $this->addDeclaredDependency($moduleDependencyCollectionTransfer, $declaredDependency, true);
         }
 
         return $moduleDependencyCollectionTransfer;
@@ -365,5 +375,36 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
         $name = ucfirst($filter->filter($name));
 
         return $name;
+    }
+
+    /**
+     * @param string $moduleName
+     * @param \Generated\Shared\Transfer\BundleDependencyCollectionTransfer $moduleDependencyCollectionTransfer
+     *
+     * @return bool
+     */
+    protected function isOwnExtensionModule($moduleName, $moduleDependencyCollectionTransfer)
+    {
+        return $moduleName === $moduleDependencyCollectionTransfer->getBundle() . 'Extension';
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\BundleDependencyCollectionTransfer $moduleDependencyCollectionTransfer
+     * @param string $declaredDependency
+     * @param bool $isInTest
+     *
+     * @return \Generated\Shared\Transfer\BundleDependencyCollectionTransfer
+     */
+    protected function addDeclaredDependency(BundleDependencyCollectionTransfer $moduleDependencyCollectionTransfer, $declaredDependency, $isInTest = false)
+    {
+        $moduleDependencyTransfer = new DependencyBundleTransfer();
+        $dependencyTransfer = new DependencyTransfer();
+        $dependencyTransfer->setBundle($declaredDependency);
+        $dependencyTransfer->setIsInTest($isInTest);
+        $moduleDependencyTransfer->addDependency($dependencyTransfer);
+        $moduleDependencyTransfer->setBundle($declaredDependency);
+        $moduleDependencyCollectionTransfer->addDependencyBundle($moduleDependencyTransfer);
+
+        return $moduleDependencyCollectionTransfer;
     }
 }

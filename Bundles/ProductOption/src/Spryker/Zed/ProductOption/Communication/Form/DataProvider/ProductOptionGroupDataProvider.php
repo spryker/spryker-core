@@ -39,7 +39,7 @@ class ProductOptionGroupDataProvider
     public function __construct(
         ProductOptionToTaxFacadeInterface $taxFacade,
         ProductOptionToLocaleFacadeInterface $localeFacade,
-        ProductOptionGroupTransfer $productOptionGroupTransfer = null
+        ?ProductOptionGroupTransfer $productOptionGroupTransfer = null
     ) {
         $this->taxFacade = $taxFacade;
         $this->productOptionGroupTransfer = $productOptionGroupTransfer;

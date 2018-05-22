@@ -180,7 +180,7 @@ class UpSellingDataProvider implements ProductRelationDataProviderInterface
      *
      * @return bool
      */
-    protected function isProductRelationActive(StorageProductRelationsTransfer $productRelationTransfer = null)
+    protected function isProductRelationActive(?StorageProductRelationsTransfer $productRelationTransfer = null)
     {
         return $productRelationTransfer !== null && $productRelationTransfer->getIsActive();
     }

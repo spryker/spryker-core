@@ -96,7 +96,7 @@ class AddressTable extends AbstractTable
             SpyCustomerAddressTableMap::COL_ZIP_CODE,
         ]);
 
-        $config->setUrl(sprintf('table?id-customer=%d', $this->idCustomer));
+        $config->setUrl(sprintf('address-table?id-customer=%d', $this->idCustomer));
 
         return $config;
     }
@@ -104,7 +104,7 @@ class AddressTable extends AbstractTable
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection
+     * @return array|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function prepareData(TableConfiguration $config)
     {

@@ -93,7 +93,7 @@ class AbstractProductAbstractStorageListener extends AbstractPlugin
      *
      * @return void
      */
-    protected function storeDataSet(array $spyProductAbstractLocalizedEntity, SpyProductAbstractStorage $spyProductStorageEntity = null)
+    protected function storeDataSet(array $spyProductAbstractLocalizedEntity, ?SpyProductAbstractStorage $spyProductStorageEntity = null)
     {
         $productAbstractStorageTransfer = new ProductAbstractStorageTransfer();
         if ($spyProductStorageEntity === null) {
@@ -138,7 +138,7 @@ class AbstractProductAbstractStorageListener extends AbstractPlugin
      *
      * @return \Generated\Shared\Transfer\ProductAbstractStorageTransfer
      */
-    protected function mapToProductAbstractStorageTransfer(array $spyProductAbstractLocalizedEntity, ProductAbstractStorageTransfer $productStorageTransfer = null)
+    protected function mapToProductAbstractStorageTransfer(array $spyProductAbstractLocalizedEntity, ?ProductAbstractStorageTransfer $productStorageTransfer = null)
     {
         $attributes = $this->getAbstractAttributes($spyProductAbstractLocalizedEntity);
         $attributeMap = $this->getFactory()->createAttributeMapHelper()->generateAttributeMap(

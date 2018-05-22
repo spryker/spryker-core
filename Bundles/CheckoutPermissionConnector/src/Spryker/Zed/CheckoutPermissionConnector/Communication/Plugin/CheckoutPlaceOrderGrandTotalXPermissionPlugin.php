@@ -10,9 +10,9 @@ namespace Spryker\Zed\CheckoutPermissionConnector\Communication\Plugin;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface;
 use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Permission\Communication\Plugin\ExecutablePermissionPluginInterface;
 
 /**
  * @example
@@ -62,13 +62,17 @@ class CheckoutPlaceOrderGrandTotalXPermissionPlugin extends AbstractPlugin imple
 
     /**
      * @param array $configuration
-     * @param int $amount
+     * @param int|null $centAmount
      *
      * @return bool
      */
-    public function can(array $configuration, $amount)
+    public function can(array $configuration, $centAmount = null)
     {
-        if ($amount > $configuration[static::CONFIG_FIELD_AMOUNT]) {
+        if ($centAmount === null) {
+            return false;
+        }
+
+        if ($centAmount > $configuration[static::CONFIG_FIELD_AMOUNT]) {
             return false;
         }
 
@@ -88,7 +92,7 @@ class CheckoutPlaceOrderGrandTotalXPermissionPlugin extends AbstractPlugin imple
     /**
      * @return string
      */
-    public function getKey()
+    public function getKey(): string
     {
         return 'permission.allow.checkout.placeOrder.grandTotalX';
     }

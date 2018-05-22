@@ -55,7 +55,7 @@ class SkuCollectorTest extends BaseRuleTester
      *
      * @return \Spryker\Zed\Discount\Business\Collector\SkuCollector
      */
-    protected function createItemSkuCollector(ComparatorOperatorsInterface $comparatorMock = null)
+    protected function createItemSkuCollector(?ComparatorOperatorsInterface $comparatorMock = null)
     {
         if (!$comparatorMock) {
             $comparatorMock = $this->createComparatorMock();

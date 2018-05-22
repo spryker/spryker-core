@@ -5,6 +5,7 @@
 
     <transfer name="CompanyUser">
         <property name="fkCompanyBusinessUnit" type="int"/>
+        <property name="companyBusinessUnit" type="CompanyBusinessUnit"/>
     </transfer>
 
     <transfer name="CompanyBusinessUnit">
@@ -13,19 +14,25 @@
         <property name="email" type="string"/>
         <property name="phone" type="string"/>
         <property name="externalUrl" type="string"/>
+        <property name="iban" type="string"/>
+        <property name="bic" type="string"/>
         <property name="fkCompany" type="int"/>
     </transfer>
 
     <transfer name="CompanyBusinessUnitResponse">
         <property name="companyBusinessUnitTransfer" type="CompanyBusinessUnit"/>
         <property name="isSuccessful" type="bool"/>
-        <property name="errors" type="ResponseError[]" singular="error"/>
+        <property name="messages" type="ResponseMessage[]" singular="message"/>
     </transfer>
 
     <transfer name="CompanyBusinessUnitCollection">
+        <property name="companyBusinessUnits" type="CompanyBusinessUnit[]" singular="companyBusinessUnit"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="CompanyBusinessUnitCriteriaFilter">
         <property name="idCompany" type="int"/>
         <property name="idCompanyUser" type="int"/>
-        <property name="companyBusinessUnits" type="CompanyBusinessUnit[]" singular="companyBusinessUnit"/>
         <property name="filter" type="Filter"/>
         <property name="pagination" type="Pagination"/>
     </transfer>
@@ -49,7 +56,7 @@
         <property name="lastPage" type="int"/>
     </transfer>
 
-    <transfer name="ResponseError">
-        <property name="message" type="string"/>
+    <transfer name="ResponseMessage">
+        <property name="text" type="string"/>
     </transfer>
 </transfers>

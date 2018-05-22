@@ -38,8 +38,12 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
     public function testCheckCartAvailabilityWhenBundledItemsAvailableShouldReturnEmptyMessageContainer()
     {
         $availabilityFacadeMock = $this->createAvailabilityFacadeMock();
-        $availabilityFacadeMock->expects($this->once())
+        $availabilityFacadeMock
+            ->expects($this->once())
             ->method('isProductSellableForStore')
+            ->withConsecutive(
+                [$this->equalTo($this->fixtures['bundledProductSku']), $this->equalTo(15)]
+            )
             ->willReturn(true);
 
         $productBundleAvailabilityCheckMock = $this->createProductBundleCartAvailabilityCheckMock($availabilityFacadeMock);
@@ -105,12 +109,12 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
      * @param \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface|null $availabilityQueryContainerMock
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface|null $storeFacadeMock
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityCheck
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\PreCheck\ProductBundleCartAvailabilityCheckInterface
      */
     protected function createProductBundleCartAvailabilityCheckMock(
-        ProductBundleToAvailabilityInterface $availabilityFacadeMock = null,
-        ProductBundleToAvailabilityQueryContainerInterface $availabilityQueryContainerMock = null,
-        ProductBundleToStoreFacadeInterface $storeFacadeMock = null
+        ?ProductBundleToAvailabilityInterface $availabilityFacadeMock = null,
+        ?ProductBundleToAvailabilityQueryContainerInterface $availabilityQueryContainerMock = null,
+        ?ProductBundleToStoreFacadeInterface $storeFacadeMock = null
     ) {
 
         if ($availabilityFacadeMock === null) {

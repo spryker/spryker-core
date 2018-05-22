@@ -19,7 +19,10 @@
     "psr-4": {
       "Spryker\\": "src/Spryker/",
       "SprykerTest\\Zed\\Development\\Helper\\": "tests/SprykerTest/Zed/Development/_support/Helper/"
-    }
+    },
+    "files": [
+      "tests/dd.php"
+    ]
   },
   "autoload-dev": {
     "psr-4": {

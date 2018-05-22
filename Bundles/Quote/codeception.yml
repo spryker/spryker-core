@@ -2,6 +2,7 @@ namespace: SprykerTest
 
 include:
     - tests/SprykerTest/Client/Quote
+    - tests/SprykerTest/Zed/Quote
 
 paths:
     tests: tests
@@ -20,11 +21,3 @@ settings:
 coverage:
     enabled: true
     whitelist: { include: ['src/*'] }
-
-extensions:
-    enabled:
-        - Codeception\Extension\Phantoman
-
-    config:
-        Codeception\Extension\Phantoman:
-            suites: ['Presentation']

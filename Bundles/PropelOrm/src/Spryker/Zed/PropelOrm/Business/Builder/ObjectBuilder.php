@@ -43,7 +43,7 @@ class ObjectBuilder extends PropelObjectBuilder
      *
      * @see \Propel\Generator\Builder\Om\ObjectBuilder::addColumnMutators()
      *
-     * @param string &$script The script will be modified in this method.
+     * @param string $script The script will be modified in this method.
      * @param \Propel\Generator\Model\Column $col The current column.
      *
      * @return void
@@ -243,7 +243,7 @@ class ObjectBuilder extends PropelObjectBuilder
     /**
      * Adds the toArray method
      *
-     * @param string &$script The script will be modified in this method.
+     * @param string $script The script will be modified in this method.
      *
      * @return void
      **/
@@ -300,7 +300,7 @@ class ObjectBuilder extends PropelObjectBuilder
             if ($col->isTemporalType()) {
                 $script .= "
         if (\$result[\$keys[$num]] instanceof \DateTime) {
-            \$result[\$keys[$num]] = \$result[\$keys[$num]]->format('Y-m-d H:i:s.u');
+            \$result[\$keys[$num]] = \$result[\$keys[$num]]->format('" . $this->getTemporalFormatter($col) . "');
         }
         ";
             }

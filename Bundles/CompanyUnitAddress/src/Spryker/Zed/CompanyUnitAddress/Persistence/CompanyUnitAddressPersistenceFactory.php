@@ -8,14 +8,14 @@
 namespace Spryker\Zed\CompanyUnitAddress\Persistence;
 
 use Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery;
-use Spryker\Zed\CompanyUnitAddress\Persistence\Propel\CompanyUnitAddressHydrator;
-use Spryker\Zed\CompanyUnitAddress\Persistence\Propel\CompanyUnitAddressHydratorInterface;
-use Spryker\Zed\CompanyUnitAddress\Persistence\Propel\Mapper\CompanyUnitAddressMapper;
-use Spryker\Zed\CompanyUnitAddress\Persistence\Propel\Mapper\CompanyUnitAddressMapperInterface;
+use Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressToCompanyBusinessUnitQuery;
+use Spryker\Zed\CompanyUnitAddress\Persistence\Mapper\CompanyUnitAddressMapper;
+use Spryker\Zed\CompanyUnitAddress\Persistence\Mapper\CompanyUnitAddressMapperInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\CompanyUnitAddress\Persistence\CompanyUnitAddressQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\CompanyUnitAddress\CompanyUnitAddressConfig getConfig()
  */
 class CompanyUnitAddressPersistenceFactory extends AbstractPersistenceFactory
 {
@@ -28,18 +28,18 @@ class CompanyUnitAddressPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUnitAddress\Persistence\Propel\CompanyUnitAddressHydratorInterface
-     */
-    public function createCompanyUnitAddressHydrator(): CompanyUnitAddressHydratorInterface
-    {
-        return new CompanyUnitAddressHydrator($this->createCompanyUniAddressMapper());
-    }
-
-    /**
-     * @return \Spryker\Zed\CompanyUnitAddress\Persistence\Propel\Mapper\CompanyUnitAddressMapperInterface
+     * @return \Spryker\Zed\CompanyUnitAddress\Persistence\Mapper\CompanyUnitAddressMapperInterface
      */
     public function createCompanyUniAddressMapper(): CompanyUnitAddressMapperInterface
     {
         return new CompanyUnitAddressMapper();
+    }
+
+    /**
+     * @return \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressToCompanyBusinessUnitQuery
+     */
+    public function createCompanyUnitAddressToCompanyBusinessUnitQuery(): SpyCompanyUnitAddressToCompanyBusinessUnitQuery
+    {
+        return SpyCompanyUnitAddressToCompanyBusinessUnitQuery::create();
     }
 }

@@ -11,7 +11,6 @@ use ArrayObject;
 use Generated\Shared\Transfer\BundleDependencyCollectionTransfer;
 use Generated\Shared\Transfer\DependencyBundleTransfer;
 use Generated\Shared\Transfer\DependencyTransfer;
-use Spryker\Zed\Development\Business\DependencyTree\Finder;
 use Spryker\Zed\Development\Business\DependencyTree\Finder\FinderInterface;
 use Spryker\Zed\Development\DevelopmentConfig;
 use Symfony\Component\Finder\Finder as SymfonyFinder;
@@ -202,21 +201,6 @@ class BundleParser implements BundleParserInterface
     }
 
     /**
-     * @param string $module
-     *
-     * @return \Symfony\Component\Finder\SplFileInfo[]|\Symfony\Component\Finder\Finder
-     */
-    protected function findAllFilesOfBundle($module)
-    {
-        $finder = new Finder($this->config->getPathToCore(), '*', $module);
-        if ($finder === null) {
-            return [];
-        }
-
-        return $finder->getFiles();
-    }
-
-    /**
      * @param array $dependencies
      *
      * @return array
@@ -249,18 +233,28 @@ class BundleParser implements BundleParserInterface
         foreach ($allFileDependencies as $file => $fileDependencies) {
             foreach ($fileDependencies as $fileDependency) {
                 $fileNameParts = explode('\\', $fileDependency);
-                $foreignBundle = $fileNameParts[2];
-                if ($this->bundleDependencyCollectionTransfer->getBundle() !== $foreignBundle) {
+                $foreignModule = $fileNameParts[2];
+                if ($this->bundleDependencyCollectionTransfer->getBundle() !== $foreignModule) {
                     $dependencyTransfer = new DependencyTransfer();
-                    $dependencyTransfer->setBundle($foreignBundle);
+                    $dependencyTransfer->setBundle($foreignModule);
                     $dependencyTransfer->setType('spryker');
-                    $dependencyTransfer->setIsOptional($this->isPluginFile($file));
+                    $dependencyTransfer->setIsOptional($this->isPluginFile($file) && !$this->isExtensionModule($foreignModule));
                     $dependencyTransfer->setIsInTest($this->isTestFile($file));
 
                     $this->addDependency($dependencyTransfer);
                 }
             }
         }
+    }
+
+    /**
+     * @param string $moduleName
+     *
+     * @return bool
+     */
+    protected function isExtensionModule($moduleName)
+    {
+        return preg_match('/Extension$/', $moduleName);
     }
 
     /**

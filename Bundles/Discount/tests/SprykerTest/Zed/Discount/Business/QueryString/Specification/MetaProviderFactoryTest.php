@@ -85,7 +85,7 @@ class MetaProviderFactoryTest extends Unit
      *
      * @return \Spryker\Zed\Discount\Business\QueryString\Specification\MetaProviderFactory
      */
-    protected function createMetaProviderFactory(DiscountBusinessFactory $discountBusinessFactoryMock = null)
+    protected function createMetaProviderFactory(?DiscountBusinessFactory $discountBusinessFactoryMock = null)
     {
         if (!isset($discountBusinessFactoryMock)) {
             $discountBusinessFactoryMock = $this->createDiscountBusinessFactoryMock();

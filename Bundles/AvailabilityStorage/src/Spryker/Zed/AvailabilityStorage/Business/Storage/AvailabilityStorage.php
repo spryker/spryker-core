@@ -98,7 +98,7 @@ class AvailabilityStorage implements AvailabilityStorageInterface
      *
      * @return void
      */
-    protected function storeDataSet(array $availability, SpyAvailabilityStorage $availabilityStorageEntity = null)
+    protected function storeDataSet(array $availability, ?SpyAvailabilityStorage $availabilityStorageEntity = null)
     {
         if ($availabilityStorageEntity === null) {
             $availabilityStorageEntity = new SpyAvailabilityStorage();

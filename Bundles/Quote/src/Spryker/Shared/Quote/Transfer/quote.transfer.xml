@@ -1,11 +1,36 @@
 <?xml version="1.0"?>
 <transfers xmlns="spryker:transfer-01"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="Quote">
+        <property name="idQuote" type="int"/>
+        <property name="customerReference" type="string"/>
         <property name="items" type="Item[]" singular="item"/>
-        <property name="currency" type="Currency" />
+        <property name="currency" type="Currency"/>
+    </transfer>
+
+    <transfer name="QuoteCollection">
+        <property name="quotes" type="Quote[]" singular="quote"/>
+    </transfer>
+
+    <transfer name="QuoteCriteriaFilter">
+        <property name="customerReference" type="string"/>
+        <property name="filter" type="Filter"/>
+    </transfer>
+
+    <transfer name="QuoteResponse">
+        <property name="quoteTransfer" type="Quote"/>
+        <property name="customer" type="Customer"/>
+        <property name="isSuccessful" type="bool"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="companyUserTransfer" type="CompanyUser"/>
+    </transfer>
+
+    <transfer name="CompanyUser">
+        <property name="idCompanyUser" type="int"/>
     </transfer>
 
 </transfers>

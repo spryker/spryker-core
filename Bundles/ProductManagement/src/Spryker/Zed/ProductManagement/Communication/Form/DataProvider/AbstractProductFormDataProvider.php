@@ -135,7 +135,7 @@ class AbstractProductFormDataProvider
         array $attributeCollection,
         array $taxCollection,
         $imageUrlPrefix,
-        ProductManagementToStoreInterface $store = null
+        ?ProductManagementToStoreInterface $store = null
     ) {
         $this->categoryQueryContainer = $categoryQueryContainer;
         $this->productManagementQueryContainer = $productManagementQueryContainer;
@@ -205,7 +205,7 @@ class AbstractProductFormDataProvider
      *
      * @return \Generated\Shared\Transfer\MoneyValueTransfer
      */
-    protected function mapMoneyTransfer(CurrencyTransfer $currencyTransfer, StoreTransfer $storeTransfer = null)
+    protected function mapMoneyTransfer(CurrencyTransfer $currencyTransfer, ?StoreTransfer $storeTransfer = null)
     {
         $moneyValueTransfer = new MoneyValueTransfer();
         $moneyValueTransfer->setCurrency($currencyTransfer);
@@ -474,7 +474,7 @@ class AbstractProductFormDataProvider
      *
      * @return array
      */
-    protected function convertAbstractLocalizedAttributesToFormOptions(ProductAbstractTransfer $productAbstractTransfer = null, LocaleTransfer $localeTransfer = null)
+    protected function convertAbstractLocalizedAttributesToFormOptions(?ProductAbstractTransfer $productAbstractTransfer = null, ?LocaleTransfer $localeTransfer = null)
     {
         $values = [];
         foreach ($this->attributeTransferCollection as $type => $attributeTransfer) {
@@ -519,7 +519,10 @@ class AbstractProductFormDataProvider
 
         foreach ($productAttributeKeys as $type) {
             $isDefined = $this->attributeTransferCollection->has($type);
-
+            if ($isDefined) {
+                continue;
+            }
+            
             $isProductSpecificAttribute = true;
             $id = null;
             $isSuper = false;
@@ -529,10 +532,6 @@ class AbstractProductFormDataProvider
             $shouldBeTextArea = mb_strlen($value) > 255;
             $checkboxDisabled = true;
             $valueDisabled = true;
-
-            if ($isDefined) {
-                continue;
-            }
 
             if ($shouldBeTextArea) {
                 $inputType = self::TEXT_AREA_INPUT_TYPE;
@@ -593,7 +592,7 @@ class AbstractProductFormDataProvider
      *
      * @return array
      */
-    protected function convertVariantAttributesToFormOptions(ProductAbstractTransfer $productAbstractTransfer = null)
+    protected function convertVariantAttributesToFormOptions(?ProductAbstractTransfer $productAbstractTransfer = null)
     {
         $productAttributeKeys = [];
         if ($productAbstractTransfer) {

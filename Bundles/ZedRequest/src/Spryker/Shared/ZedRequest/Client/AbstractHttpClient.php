@@ -140,7 +140,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
      */
     public function request(
         $pathInfo,
-        TransferInterface $transferObject = null,
+        ?TransferInterface $transferObject = null,
         array $metaTransfers = [],
         $requestOptions = null
     ) {
@@ -196,7 +196,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
      *
      * @return \Spryker\Client\ZedRequest\Client\Request
      */
-    protected function createRequestTransfer(TransferInterface $transferObject = null, array $metaTransfers = [])
+    protected function createRequestTransfer(?TransferInterface $transferObject = null, array $metaTransfers = [])
     {
         $request = $this->getRequest();
         $request->setSessionId(session_id());

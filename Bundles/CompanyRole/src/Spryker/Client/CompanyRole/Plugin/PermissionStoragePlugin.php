@@ -9,7 +9,7 @@ namespace Spryker\Client\CompanyRole\Plugin;
 
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\Permission\Dependency\Plugin\PermissionStoragePluginInterface;
+use Spryker\Client\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface;
 
 /**
  * @method \Spryker\Client\CompanyRole\CompanyRoleFactory getFactory()
@@ -25,7 +25,7 @@ class PermissionStoragePlugin extends AbstractPlugin implements PermissionStorag
             ->getCustomerClient()
             ->getCustomer();
 
-        if (!$customerTransfer) {
+        if (!$customerTransfer || !$customerTransfer->getPermissions()) {
             return new PermissionCollectionTransfer();
         }
 

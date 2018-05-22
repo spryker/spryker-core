@@ -92,12 +92,12 @@ class AvailabilityHandlerTest extends Unit
      * @return \Spryker\Zed\Availability\Business\Model\AvailabilityHandler
      */
     protected function createAvailabilityHandler(
-        SellableInterface $sellable = null,
-        AvailabilityToStockInterface $stockFacade = null,
-        AvailabilityToTouchInterface $touchFacade = null,
-        AvailabilityQueryContainerInterface $availabilityQueryContainer = null,
-        AvailabilityToProductInterface $availabilityToProductFacade = null,
-        AvailabilityToStoreFacadeInterface $availabilityToStoreFacade = null
+        ?SellableInterface $sellable = null,
+        ?AvailabilityToStockInterface $stockFacade = null,
+        ?AvailabilityToTouchInterface $touchFacade = null,
+        ?AvailabilityQueryContainerInterface $availabilityQueryContainer = null,
+        ?AvailabilityToProductInterface $availabilityToProductFacade = null,
+        ?AvailabilityToStoreFacadeInterface $availabilityToStoreFacade = null
     ) {
 
         if ($sellable === null) {

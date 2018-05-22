@@ -24,7 +24,7 @@ abstract class AbstractControllerResolver extends AbstractClassResolver
      *
      * @throws \Spryker\Shared\Kernel\ClassResolver\Controller\ControllerNotFoundException
      *
-     * @return object
+     * @return \Spryker\Yves\Kernel\Controller\AbstractController
      */
     public function resolve(BundleControllerActionInterface $bundleControllerAction)
     {

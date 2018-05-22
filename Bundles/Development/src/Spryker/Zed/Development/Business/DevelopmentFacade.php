@@ -61,12 +61,13 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      *
      * @param string $module
      * @param string $toModule
+     * @param array $methods
      *
      * @return void
      */
-    public function createBridge($module, $toModule)
+    public function createBridge($module, $toModule, array $methods)
     {
-        $this->getFactory()->createBridgeBuilder()->build($module, $toModule);
+        $this->getFactory()->createBridgeBuilder()->build($module, $toModule, $methods);
     }
 
     /**
@@ -77,7 +78,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      *
      * @return void
      */
-    public function createModule($module, $options)
+    public function createModule($module, array $options)
     {
         $this->getFactory()->createModuleBuilder()->build($module, $options);
     }
@@ -166,7 +167,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     /**
      * @api
      *
-     * @param string|bool $moduleToView
+     * @param string $moduleToView
      * @param array $excludedModules
      * @param bool $showIncomingDependencies
      *

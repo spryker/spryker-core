@@ -8,14 +8,14 @@
 namespace Spryker\Zed\Company\Business\Model;
 
 use Generated\Shared\Transfer\StoreRelationTransfer;
-use Spryker\Zed\Company\Persistence\CompanyWriterRepositoryInterface;
+use Spryker\Zed\Company\Persistence\CompanyEntityManagerInterface;
 
 class CompanyStoreRelationWriter implements CompanyStoreRelationWriterInterface
 {
     /**
-     * @var \Spryker\Zed\Company\Persistence\CompanyWriterRepositoryInterface
+     * @var \Spryker\Zed\Company\Persistence\CompanyEntityManagerInterface
      */
-    protected $companyWriterRepository;
+    protected $companyEntityManager;
 
     /**
      * @var \Spryker\Zed\Company\Business\Model\CompanyStoreRelationReaderInterface
@@ -23,24 +23,28 @@ class CompanyStoreRelationWriter implements CompanyStoreRelationWriterInterface
     protected $companyStoreRelationReader;
 
     /**
-     * @param \Spryker\Zed\Company\Persistence\CompanyWriterRepositoryInterface $companyWriterRepository
+     * @param \Spryker\Zed\Company\Persistence\CompanyEntityManagerInterface $companyEntityManager
      * @param \Spryker\Zed\Company\Business\Model\CompanyStoreRelationReaderInterface $companyStoreRelationReader
      */
     public function __construct(
-        CompanyWriterRepositoryInterface $companyWriterRepository,
+        CompanyEntityManagerInterface $companyEntityManager,
         CompanyStoreRelationReaderInterface $companyStoreRelationReader
     ) {
-        $this->companyWriterRepository = $companyWriterRepository;
+        $this->companyEntityManager = $companyEntityManager;
         $this->companyStoreRelationReader = $companyStoreRelationReader;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
+     * @param \Generated\Shared\Transfer\StoreRelationTransfer|null $storeRelationTransfer
      *
      * @return void
      */
-    public function save(StoreRelationTransfer $storeRelationTransfer): void
+    public function save(?StoreRelationTransfer $storeRelationTransfer = null): void
     {
+        if ($storeRelationTransfer === null) {
+            return;
+        }
+
         $storeRelationTransfer->requireIdEntity();
         $currentIdStores = $this->getIdStoresByIdCompany($storeRelationTransfer->getIdEntity());
         $requestedIdStores = $this->findStoreRelationIdStores($storeRelationTransfer);
@@ -51,8 +55,8 @@ class CompanyStoreRelationWriter implements CompanyStoreRelationWriterInterface
 
         $saveIdStores = array_diff($requestedIdStores, $currentIdStores);
         $deleteIdStores = array_diff($currentIdStores, $requestedIdStores);
-        $this->companyWriterRepository->addStores($saveIdStores, $storeRelationTransfer->getIdEntity());
-        $this->companyWriterRepository->removeStores($deleteIdStores, $storeRelationTransfer->getIdEntity());
+        $this->companyEntityManager->addStores($saveIdStores, $storeRelationTransfer->getIdEntity());
+        $this->companyEntityManager->removeStores($deleteIdStores, $storeRelationTransfer->getIdEntity());
     }
 
     /**
@@ -80,6 +84,12 @@ class CompanyStoreRelationWriter implements CompanyStoreRelationWriterInterface
         $storeRelationTransfer->setIdEntity($idCompany);
         $storeRelations = $this->companyStoreRelationReader->getStoreRelation($storeRelationTransfer);
 
-        return $storeRelations->getStores();
+        $idStores = [];
+
+        foreach ($storeRelations->getStores() as $store) {
+            $idStores[] = $store->getIdStore();
+        }
+
+        return $idStores;
     }
 }
