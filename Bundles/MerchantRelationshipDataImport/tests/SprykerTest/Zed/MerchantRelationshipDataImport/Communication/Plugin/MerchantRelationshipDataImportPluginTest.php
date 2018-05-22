@@ -34,15 +34,7 @@ class MerchantRelationshipDataImportPluginTest extends Unit
         $this->tester->ensureDatabaseTableIsEmpty();
         $this->tester->assertDatabaseTableIsEmpty();
 
-        $idCompany = $this->tester->haveCompany()->getIdCompany();
-
-        $this->createCompanyBusinessUnit($idCompany, 'ttest-business-unit-1');
-        $this->createCompanyBusinessUnit($idCompany, 'ttest-business-unit-2');
-        $this->createCompanyBusinessUnit($idCompany, 'ttest-business-unit-3');
-
-        $this->tester->haveMerchant([
-            'merchantKey' => 'oryx-merchant-test',
-        ]);
+        $this->createRelatedData();
 
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
         $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/merchant_relationship.csv');
@@ -88,5 +80,21 @@ class MerchantRelationshipDataImportPluginTest extends Unit
             ->getCompanyBusinessUnitTransfer();
 
         $this->assertNotNull($createdTransfer->getIdCompanyBusinessUnit());
+    }
+
+    /**
+     * @return void
+     */
+    protected function createRelatedData(): void
+    {
+        $idCompany = $this->tester->haveCompany()->getIdCompany();
+
+        $this->createCompanyBusinessUnit($idCompany, 'ttest-business-unit-1');
+        $this->createCompanyBusinessUnit($idCompany, 'ttest-business-unit-2');
+        $this->createCompanyBusinessUnit($idCompany, 'ttest-business-unit-3');
+
+        $this->tester->haveMerchant([
+            'merchantKey' => 'oryx-merchant-test',
+        ]);
     }
 }
