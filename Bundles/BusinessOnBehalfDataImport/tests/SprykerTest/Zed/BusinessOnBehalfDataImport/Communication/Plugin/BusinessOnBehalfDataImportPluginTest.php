@@ -23,6 +23,9 @@ use Spryker\Zed\BusinessOnBehalfDataImport\Communication\Plugin\BusinessOnBehalf
  * @group Plugin
  * @group BusinessOnBehalfDataImportPluginTest
  * Add your own group annotations below this line
+ *
+ * @group DataImport
+ * @group CompanyUser
  */
 class BusinessOnBehalfDataImportPluginTest extends Unit
 {
