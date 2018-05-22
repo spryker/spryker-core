@@ -31,6 +31,13 @@ class QuantitySalesUnitOrderItemExpanderPreSavePlugin implements OrderItemExpand
             return $salesOrderItemEntity;
         }
 
+        $salesOrderItemEntity->setQuantityBaseMeasurementUnitName(
+            $itemTransfer->getQuantitySalesUnit()
+                ->getProductMeasurementBaseUnit()
+                ->getProductMeasurementUnit()
+                ->getName()
+        );
+
         $salesOrderItemEntity->setQuantityMeasurementUnitName($itemTransfer->getQuantitySalesUnit()->getProductMeasurementUnit()->getName());
         $salesOrderItemEntity->setQuantityMeasurementUnitPrecision($itemTransfer->getQuantitySalesUnit()->getPrecision());
         $salesOrderItemEntity->setQuantityMeasurementUnitConversion($itemTransfer->getQuantitySalesUnit()->getConversion());

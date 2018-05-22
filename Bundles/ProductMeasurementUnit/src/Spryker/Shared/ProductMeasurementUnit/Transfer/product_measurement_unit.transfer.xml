@@ -26,6 +26,7 @@
         <property name="isDefault" type="bool" />
         <property name="fkProductMeasurementUnit" type="int" />
         <property name="fkProductMeasurementBaseUnit" type="int" />
+        <property name="productMeasurementBaseUnit" type="ProductMeasurementBaseUnit" />
         <property name="productMeasurementUnit" type="ProductMeasurementUnit" />
         <property name="value" type="int" />
     </transfer>

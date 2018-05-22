@@ -73,7 +73,8 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
         $query = $this->getFactory()
             ->createProductMeasurementSalesUnitQuery()
             ->filterByIdProductMeasurementSalesUnit($idProductMeasurementSalesUnit)
-            ->joinWithProductMeasurementUnit();
+            ->joinWithProductMeasurementUnit()
+            ->joinWithProductMeasurementBaseUnit();
 
         $productMeasurementSalesUnitEntityTransfer = $this->buildQueryFromCriteria($query)->findOne();
         if (!$productMeasurementSalesUnitEntityTransfer) {
@@ -98,7 +99,8 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
         $query = $this->getFactory()
             ->createProductMeasurementSalesUnitQuery()
             ->filterByFkProduct($idProduct)
-            ->joinWithProductMeasurementUnit();
+            ->joinWithProductMeasurementUnit()
+            ->joinWithProductMeasurementBaseUnit();
 
         $productMeasurementSalesUnitEntityTransfers = $this->buildQueryFromCriteria($query)->find();
         $productMeasurementSalesUnitTransfers = [];
