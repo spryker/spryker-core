@@ -29,20 +29,26 @@ class CompanyStub implements CompanyStubInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\CompanyResponseTransfer
      */
     public function createCompany(CompanyTransfer $companyTransfer): CompanyResponseTransfer
     {
-        return $this->zedRequestClient->call('/company/gateway/create', $companyTransfer);
+        /** @var \Generated\Shared\Transfer\CompanyResponseTransfer $companyResponseTransfer */
+        $companyResponseTransfer = $this->zedRequestClient->call('/company/gateway/create', $companyTransfer);
+
+        return $companyResponseTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\CompanyTransfer
      */
     public function getCompanyById(CompanyTransfer $companyTransfer): CompanyTransfer
     {
-        return $this->zedRequestClient->call('/company/gateway/get-company-by-id', $companyTransfer);
+        /** @var \Generated\Shared\Transfer\CompanyTransfer $companyTransfer */
+        $companyTransfer = $this->zedRequestClient->call('/company/gateway/get-company-by-id', $companyTransfer);
+
+        return $companyTransfer;
     }
 }
