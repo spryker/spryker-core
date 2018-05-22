@@ -9,6 +9,7 @@ namespace Spryker\Zed\Merchant\Persistence;
 
 use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
+use Spryker\Zed\Merchant\Business\Exception\MerchantNotFoundException;
 
 /**
  * @method \Spryker\Zed\Merchant\Persistence\MerchantPersistenceFactory getFactory()
@@ -22,6 +23,8 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
      *
      * @param int $idMerchant
      *
+     * @throws \Spryker\Zed\Merchant\Business\Exception\MerchantNotFoundException
+     *
      * @return \Generated\Shared\Transfer\MerchantTransfer
      */
     public function getMerchantById(int $idMerchant): MerchantTransfer
@@ -30,6 +33,10 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
             ->createMerchantQuery()
             ->filterByIdMerchant($idMerchant)
             ->findOne();
+
+        if (!$spyMerchant) {
+            throw new MerchantNotFoundException();
+        }
 
         return $this->getFactory()
             ->createMerchantMapper()

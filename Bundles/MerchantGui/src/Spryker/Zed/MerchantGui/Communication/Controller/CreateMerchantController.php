@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantGui\Communication\Controller;
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\MerchantGui\Communication\Table\MerchantTableConstants;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -28,8 +29,6 @@ class CreateMerchantController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $redirectUrl = $request->get(static::PARAM_REDIRECT_URL, MerchantTableConstants::URL_MERCHANT_LIST);
-
         $dataProvider = $this->getFactory()->createMerchantFormDataProvider();
         $merchantForm = $this->getFactory()
             ->getMerchantForm(
@@ -39,26 +38,38 @@ class CreateMerchantController extends AbstractController
             ->handleRequest($request);
 
         if ($merchantForm->isSubmitted() && $merchantForm->isValid()) {
-            $merchantTransfer = $merchantForm->getData();
-            $merchantTransfer = $this->getFactory()
-                ->getMerchantFacade()
-                ->createMerchant($merchantTransfer);
-
-            if (!$merchantTransfer->getIdMerchant()) {
-                $this->addErrorMessage(static::MESSAGE_MERCHANT_CREATE_ERROR);
-
-                return $this->viewResponse([
-                    'form' => $merchantForm->createView(),
-                ]);
-            }
-
-            $this->addSuccessMessage(static::MESSAGE_MERCHANT_CREATE_SUCCESS);
-
-            return $this->redirectResponse($redirectUrl);
+            return $this->createMerchant($request, $merchantForm);
         }
 
         return $this->viewResponse([
             'form' => $merchantForm->createView(),
         ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Symfony\Component\Form\FormInterface $merchantForm
+     *
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function createMerchant(Request $request, FormInterface $merchantForm)
+    {
+        $redirectUrl = $request->get(static::PARAM_REDIRECT_URL, MerchantTableConstants::URL_MERCHANT_LIST);
+        $merchantTransfer = $merchantForm->getData();
+        $merchantTransfer = $this->getFactory()
+            ->getMerchantFacade()
+            ->createMerchant($merchantTransfer);
+
+        if (!$merchantTransfer->getIdMerchant()) {
+            $this->addErrorMessage(static::MESSAGE_MERCHANT_CREATE_ERROR);
+
+            return $this->viewResponse([
+                'form' => $merchantForm->createView(),
+            ]);
+        }
+
+        $this->addSuccessMessage(static::MESSAGE_MERCHANT_CREATE_SUCCESS);
+
+        return $this->redirectResponse($redirectUrl);
     }
 }

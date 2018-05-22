@@ -2,8 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/merchant-gui.svg)](https://travis-ci.org/spryker/merchant-gui)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/merchant-gui/badge.svg)](https://coveralls.io/github/spryker/merchant-gui)
 
-{{ADD DESCRIPTION HERE}}
-
+Merchant Gui Module provides Zed UI interface for merchant management
 ## Installation
 
 ```

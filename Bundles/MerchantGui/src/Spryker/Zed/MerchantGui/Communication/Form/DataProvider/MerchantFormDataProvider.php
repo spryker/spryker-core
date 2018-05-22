@@ -37,7 +37,9 @@ class MerchantFormDataProvider
             return $merchant;
         }
 
-        return $this->merchantFacade->getMerchantById($merchant->setIdMerchant($idMerchant));
+        $merchant->setIdMerchant($idMerchant);
+
+        return $this->merchantFacade->getMerchantById($merchant);
     }
 
     /**

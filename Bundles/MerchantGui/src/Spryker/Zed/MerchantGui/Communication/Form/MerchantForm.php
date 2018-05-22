@@ -27,6 +27,9 @@ class MerchantForm extends AbstractType
     protected const FIELD_MERCHANT_KEY = 'merchant_key';
     protected const FIELD_NAME = 'name';
 
+    protected const LABEL_MERCHANT_KEY = 'Merchant key';
+    protected const LABEL_NAME = 'Name';
+
     /**
      * @return string
      */
@@ -52,9 +55,9 @@ class MerchantForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return \Spryker\Zed\MerchantGui\Communication\Form\MerchantForm
+     * @return $this
      */
-    protected function addIdMerchantField(FormBuilderInterface $builder): MerchantForm
+    protected function addIdMerchantField(FormBuilderInterface $builder): self
     {
         $builder->add(static::FIELD_ID_MERCHANT, HiddenType::class);
 
@@ -64,12 +67,12 @@ class MerchantForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return \Spryker\Zed\MerchantGui\Communication\Form\MerchantForm
+     * @return $this
      */
-    protected function addMerchantKeyField(FormBuilderInterface $builder): MerchantForm
+    protected function addMerchantKeyField(FormBuilderInterface $builder): self
     {
         $builder->add(static::FIELD_MERCHANT_KEY, TextType::class, [
-            'label' => 'Merchant key',
+            'label' => self::LABEL_MERCHANT_KEY,
             'constraints' => $this->getMerchantKeyFieldConstraints(),
         ]);
 
@@ -79,12 +82,12 @@ class MerchantForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return \Spryker\Zed\MerchantGui\Communication\Form\MerchantForm
+     * @return $this
      */
-    protected function addNameField(FormBuilderInterface $builder): MerchantForm
+    protected function addNameField(FormBuilderInterface $builder): self
     {
         $builder->add(static::FIELD_NAME, TextType::class, [
-            'label' => 'Name',
+            'label' => static::LABEL_NAME,
             'constraints' => $this->getTextFieldConstraints(),
         ]);
 

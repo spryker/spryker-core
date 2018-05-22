@@ -106,23 +106,13 @@ class MerchantTable extends AbstractTable
     {
         $buttons = [];
 
+        $urlParams = [MerchantTableConstants::REQUEST_ID_MERCHANT => $item[MerchantTableConstants::COL_ID_MERCHANT]];
         $buttons[] = $this->generateEditButton(
-            Url::generate(
-                MerchantTableConstants::URL_MERCHANT_EDIT,
-                [
-                    MerchantTableConstants::REQUEST_ID_MERCHANT => $item[MerchantTableConstants::COL_ID_MERCHANT],
-                ]
-            ),
+            Url::generate(MerchantTableConstants::URL_MERCHANT_EDIT, $urlParams),
             'Edit'
         );
-
         $buttons[] = $this->generateRemoveButton(
-            Url::generate(
-                MerchantTableConstants::URL_MERCHANT_DELETE,
-                [
-                    MerchantTableConstants::REQUEST_ID_MERCHANT => $item[MerchantTableConstants::COL_ID_MERCHANT],
-                ]
-            ),
+            Url::generate(MerchantTableConstants::URL_MERCHANT_DELETE, $urlParams),
             'Delete'
         );
 

@@ -13,7 +13,8 @@ interface MerchantRepositoryInterface
 {
     /**
      * Specification:
-     *  - Retrieves a merchant by merchant ID.
+     * - Returns a MerchantTransfer by merchant id.
+     * - Throws an exception in case a record is not found.
      *
      * @api
      *

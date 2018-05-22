@@ -27,6 +27,7 @@ interface MerchantEntityManagerInterface
      * - Creates a merchant.
      * - Finds a merchant by MerchantTransfer::idMerchant in the transfer.
      * - Updates fields in a merchant entity.
+     * - Persists the entity to DB.
      *
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
