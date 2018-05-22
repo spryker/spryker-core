@@ -118,7 +118,7 @@ interface SalesFacadeInterface
     public function updateOrderAddress(AddressTransfer $addressesTransfer, $idAddress);
 
     /**
-     * Returns a list of of orders for the given customer id and (optional) filters.
+     * Returns a list of orders for the given customer id and (optional) filters.
      *
      * @api
      *
@@ -131,7 +131,7 @@ interface SalesFacadeInterface
 
     /**
      * Specification:
-     *  - Returns a list of of orders for the given customer id and (optional) filters.
+     *  - Returns a list of orders for the given customer id and (optional) filters.
      *  - Aggregates order totals calls -> SalesAggregator
      *  - Paginates order list for limited result
      *
@@ -146,18 +146,17 @@ interface SalesFacadeInterface
 
     /**
      * Specification:
-     *  - Returns a list of of orders for the given customer id and (optional) filters, without order items information.
+     *  - Returns a list of orders for the given customer id and (optional) filters, without order items information.
      *  - Aggregates order totals calls -> SalesAggregator
      *  - Paginates order list for limited result
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
-     * @param int $idCustomer
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    public function getPaginatedCustomerOrdersOverview(OrderListTransfer $orderListTransfer, $idCustomer): OrderListTransfer;
+    public function getPaginatedCustomerOrdersOverview(OrderListTransfer $orderListTransfer): OrderListTransfer;
 
     /**
      * Specification:

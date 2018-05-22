@@ -13,9 +13,8 @@ interface CustomerOrderOverviewInterface
 {
     /**
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
-     * @param int $idCustomer
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    public function getOrdersOverview(OrderListTransfer $orderListTransfer, $idCustomer): OrderListTransfer;
+    public function getOrdersOverview(OrderListTransfer $orderListTransfer): OrderListTransfer;
 }

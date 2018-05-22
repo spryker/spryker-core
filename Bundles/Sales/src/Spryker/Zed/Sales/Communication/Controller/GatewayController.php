@@ -57,11 +57,7 @@ class GatewayController extends AbstractGatewayController
      */
     public function getPaginatedCustomerOrdersOverviewAction(OrderListTransfer $orderListTransfer)
     {
-        return $this->getFacade()
-            ->getPaginatedCustomerOrdersOverview(
-                $orderListTransfer,
-                $orderListTransfer->getIdCustomer()
-            );
+        return $this->getFacade()->getPaginatedCustomerOrdersOverview($orderListTransfer);
     }
 
     /**

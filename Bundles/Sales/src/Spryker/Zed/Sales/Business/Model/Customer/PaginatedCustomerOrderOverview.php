@@ -50,20 +50,20 @@ class PaginatedCustomerOrderOverview implements CustomerOrderOverviewInterface
 
     /**
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
-     * @param int $idCustomer
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
-    public function getOrdersOverview(OrderListTransfer $orderListTransfer, $idCustomer): OrderListTransfer
+    public function getOrdersOverview(OrderListTransfer $orderListTransfer): OrderListTransfer
     {
+        $orderListTransfer->requireIdCustomer();
+
         $ordersQuery = $this->queryContainer->queryCustomerOrders(
-            $idCustomer,
+            $orderListTransfer->getIdCustomer(),
             $orderListTransfer->getFilter()
         );
 
         $ordersQuery
             ->clearOrderByColumns()
-
             ->addDescendingOrderByColumn(SpySalesOrderTableMap::COL_CREATED_AT);
         $orderCollection = $this->getOrderCollection($orderListTransfer, $ordersQuery);
 
