@@ -67,23 +67,7 @@ class PaginatedCustomerOrderOverview implements CustomerOrderOverviewInterface
             ->addDescendingOrderByColumn(SpySalesOrderTableMap::COL_CREATED_AT);
         $orderCollection = $this->getOrderCollection($orderListTransfer, $ordersQuery);
 
-        $orders = new ArrayObject();
-        foreach ($orderCollection as $salesOrderEntity) {
-            if ($salesOrderEntity->countItems() === 0) {
-                continue;
-            }
-
-            if ($this->excludeOrder($salesOrderEntity)) {
-                continue;
-            }
-
-            $orderTransfer = $this->customerOrderOverviewHydrator->hydrateOrderTransfer($salesOrderEntity);
-            $orders->append($orderTransfer);
-        }
-
-        $orderListTransfer->setOrders($orders);
-
-        return $orderListTransfer;
+        return $this->prepareOrderListTransfer($orderListTransfer, $orderCollection);
     }
 
     /**
@@ -146,5 +130,32 @@ class PaginatedCustomerOrderOverview implements CustomerOrderOverviewInterface
         $orderListTransfer->setPagination($paginationTransfer);
 
         return $paginationModel->getResults();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder[]|\Propel\Runtime\Collection\ObjectCollection $orderCollection
+     *
+     * @return \Generated\Shared\Transfer\OrderListTransfer
+     */
+    protected function prepareOrderListTransfer(OrderListTransfer $orderListTransfer, $orderCollection): OrderListTransfer
+    {
+        $orders = new ArrayObject();
+        foreach ($orderCollection as $salesOrderEntity) {
+            if ($salesOrderEntity->countItems() === 0) {
+                continue;
+            }
+
+            if ($this->excludeOrder($salesOrderEntity)) {
+                continue;
+            }
+
+            $orderTransfer = $this->customerOrderOverviewHydrator->hydrateOrderTransfer($salesOrderEntity);
+            $orders->append($orderTransfer);
+        }
+
+        $orderListTransfer->setOrders($orders);
+
+        return $orderListTransfer;
     }
 }
