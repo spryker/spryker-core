@@ -38,12 +38,15 @@ class DeleteCompanyBusinessUnitController extends AbstractController
         $companyBusinessUnitTransfer = new CompanyBusinessUnitTransfer();
         $companyBusinessUnitTransfer->setIdCompanyBusinessUnit($idCompanyBusinessUnit);
 
-        $companyBusinessUnitFacade = $this->getFactory()->getCompanyBusinessUnitFacade();
-
-        $companyBusinessUnit = $companyBusinessUnitFacade
+        $companyBusinessUnit = $this
+            ->getFactory()
+            ->getCompanyBusinessUnitFacade()
             ->getCompanyBusinessUnitById($companyBusinessUnitTransfer);
 
-        $companyBusinessUnitResponseTransfer = $companyBusinessUnitFacade->delete($companyBusinessUnit);
+        $companyBusinessUnitResponseTransfer = $this
+            ->getFactory()
+            ->getCompanyBusinessUnitFacade()
+            ->delete($companyBusinessUnit);
 
         if ($companyBusinessUnitResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(sprintf(
