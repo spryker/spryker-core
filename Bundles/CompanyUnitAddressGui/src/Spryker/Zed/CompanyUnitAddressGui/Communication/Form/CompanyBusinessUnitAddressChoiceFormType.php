@@ -27,7 +27,7 @@ class CompanyBusinessUnitAddressChoiceFormType extends AbstractType
      *
      * @return \Spryker\Zed\CompanyUnitAddressGui\Communication\Form\CompanyBusinessUnitAddressChoiceFormType
      */
-    public function buildForm(FormBuilderInterface $builder, array $options): CompanyBusinessUnitAddressChoiceFormType
+    public function buildForm(FormBuilderInterface $builder, array $options): self
     {
         $this->addLabelSelectField($builder, $options);
 

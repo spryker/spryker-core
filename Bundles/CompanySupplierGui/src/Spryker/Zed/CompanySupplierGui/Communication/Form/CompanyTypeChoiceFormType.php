@@ -24,7 +24,7 @@ class CompanyTypeChoiceFormType extends AbstractType
      *
      * @return \Spryker\Zed\CompanySupplierGui\Communication\Form\CompanyTypeChoiceFormType
      */
-    public function buildForm(FormBuilderInterface $builder, array $options): CompanyTypeChoiceFormType
+    public function buildForm(FormBuilderInterface $builder, array $options): self
     {
         $this->addCompanyTypeField($builder, $options);
 

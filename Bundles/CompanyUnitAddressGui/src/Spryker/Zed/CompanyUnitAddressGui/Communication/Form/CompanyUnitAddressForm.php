@@ -84,7 +84,7 @@ class CompanyUnitAddressForm extends AbstractType
      *
      * @return \Spryker\Zed\CompanyUnitAddressGui\Communication\Form\CompanyUnitAddressForm
      */
-    protected function addCompanyField(FormBuilderInterface $builder, array $choices = []): CompanyUnitAddressForm
+    protected function addCompanyField(FormBuilderInterface $builder, array $choices = []): self
     {
         $builder->add(static::FIELD_FK_COMPANY, ChoiceType::class, [
             'label' => 'Company',
@@ -105,7 +105,7 @@ class CompanyUnitAddressForm extends AbstractType
      *
      * @return \Spryker\Zed\CompanyUnitAddressGui\Communication\Form\CompanyUnitAddressForm
      */
-    protected function addCountryField(FormBuilderInterface $builder, array $choices = []): CompanyUnitAddressForm
+    protected function addCountryField(FormBuilderInterface $builder, array $choices = []): self
     {
         $builder->add(static::FIELD_FK_COUNTRY, ChoiceType::class, [
             'label' => 'Country',

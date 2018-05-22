@@ -49,7 +49,7 @@ class NoteForm extends AbstractType
      *
      * @return \Spryker\Zed\CustomerNoteGui\Communication\Form\NoteForm
      */
-    protected function addNoteField(FormBuilderInterface $builder): NoteForm
+    protected function addNoteField(FormBuilderInterface $builder): self
     {
         $builder->add(SpyCustomerNoteEntityTransfer::MESSAGE, TextareaType::class, [
             'constraints' => [
@@ -67,7 +67,7 @@ class NoteForm extends AbstractType
      *
      * @return \Spryker\Zed\CustomerNoteGui\Communication\Form\NoteForm
      */
-    protected function addFkCustomerField(FormBuilderInterface $builder): NoteForm
+    protected function addFkCustomerField(FormBuilderInterface $builder): self
     {
         $builder->add(SpyCustomerNoteEntityTransfer::FK_CUSTOMER, HiddenType::class);
 

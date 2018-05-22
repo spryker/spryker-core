@@ -360,7 +360,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
      *
      * @return \Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormEdit
      */
-    protected function addFormBuildPlugins(FormBuilderInterface $builder, array $options): ProductConcreteFormEdit
+    protected function addFormBuildPlugins(FormBuilderInterface $builder, array $options): self
     {
         /** @var \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteEditFormExpanderPluginInterface $plugin */
         foreach ($this->getFactory()->getProductConcreteEditFormExpanderPlugins() as $plugin) {
