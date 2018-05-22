@@ -68,7 +68,7 @@ class CompanyBusinessUnitForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return \Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyBusinessUnitForm
+     * @return $this
      */
     protected function addIdCompanyBusinessUnitField(FormBuilderInterface $builder): self
     {
@@ -80,7 +80,7 @@ class CompanyBusinessUnitForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return \Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyBusinessUnitForm
+     * @return $this
      */
     protected function addNameField(FormBuilderInterface $builder): self
     {
@@ -95,7 +95,7 @@ class CompanyBusinessUnitForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return \Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyBusinessUnitForm
+     * @return $this
      */
     protected function addIbanField(FormBuilderInterface $builder): self
     {
@@ -114,7 +114,7 @@ class CompanyBusinessUnitForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return \Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyBusinessUnitForm
+     * @return $this
      */
     protected function addBicField(FormBuilderInterface $builder): self
     {
@@ -134,7 +134,7 @@ class CompanyBusinessUnitForm extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $choices
      *
-     * @return \Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyBusinessUnitForm
+     * @return $this
      */
     protected function addCompanyField(FormBuilderInterface $builder, array $choices): self
     {
@@ -166,7 +166,7 @@ class CompanyBusinessUnitForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return \Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyBusinessUnitForm
+     * @return $this
      */
     protected function addPluginForms(FormBuilderInterface $builder): AbstractType
     {

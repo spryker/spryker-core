@@ -358,7 +358,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
-     * @return \Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormEdit
+     * @return $this
      */
     protected function addFormBuildPlugins(FormBuilderInterface $builder, array $options): self
     {

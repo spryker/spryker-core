@@ -22,7 +22,7 @@ class CompanyTypeChoiceFormType extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
-     * @return \Spryker\Zed\CompanySupplierGui\Communication\Form\CompanyTypeChoiceFormType
+     * @return $this
      */
     public function buildForm(FormBuilderInterface $builder, array $options): self
     {

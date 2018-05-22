@@ -48,7 +48,7 @@ class CompanyForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return \Spryker\Zed\CompanyGui\Communication\Form\CompanyForm
+     * @return $this
      */
     protected function addIdCompanyField(FormBuilderInterface $builder): self
     {
@@ -60,7 +60,7 @@ class CompanyForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return \Spryker\Zed\CompanyGui\Communication\Form\CompanyForm
+     * @return $this
      */
     protected function addNameField(FormBuilderInterface $builder): self
     {

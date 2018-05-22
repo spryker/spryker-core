@@ -82,7 +82,7 @@ class CompanyUnitAddressForm extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $choices
      *
-     * @return \Spryker\Zed\CompanyUnitAddressGui\Communication\Form\CompanyUnitAddressForm
+     * @return $this
      */
     protected function addCompanyField(FormBuilderInterface $builder, array $choices = []): self
     {
@@ -103,7 +103,7 @@ class CompanyUnitAddressForm extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $choices
      *
-     * @return \Spryker\Zed\CompanyUnitAddressGui\Communication\Form\CompanyUnitAddressForm
+     * @return $this
      */
     protected function addCountryField(FormBuilderInterface $builder, array $choices = []): self
     {

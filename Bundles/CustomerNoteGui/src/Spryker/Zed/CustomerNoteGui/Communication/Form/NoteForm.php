@@ -47,7 +47,7 @@ class NoteForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return \Spryker\Zed\CustomerNoteGui\Communication\Form\NoteForm
+     * @return $this
      */
     protected function addNoteField(FormBuilderInterface $builder): self
     {
@@ -65,7 +65,7 @@ class NoteForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return \Spryker\Zed\CustomerNoteGui\Communication\Form\NoteForm
+     * @return $this
      */
     protected function addFkCustomerField(FormBuilderInterface $builder): self
     {
