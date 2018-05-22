@@ -1,0 +1,64 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Zed\MerchantRelationship\Persistence;
+
+use Generated\Shared\Transfer\MerchantRelationshipTransfer;
+use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
+
+/**
+ * @method \Spryker\Zed\MerchantRelationship\Persistence\MerchantRelationshipPersistenceFactory getFactory()
+ */
+class MerchantRelationshipEntityManager extends AbstractEntityManager implements MerchantRelationshipEntityManagerInterface
+{
+    /**
+     * Specification:
+     * - Finds a merchant relationship by merchant relationship ID.
+     * - Deletes the merchant relationship.
+     *
+     * @param int $idMerchantRelationship
+     *
+     * @return void
+     */
+    public function deleteMerchantRelationshipById(int $idMerchantRelationship): void
+    {
+        $this->getFactory()
+            ->createMerchantRelationshipQuery()
+            ->filterByIdMerchantRelationship($idMerchantRelationship)
+            ->delete();
+    }
+
+    /**
+     * Specification:
+     * - Creates a merchant relationship.
+     * - Finds a merchant relationship by MerchantRelationshipTransfer::idMerchantRelationship in the transfer.
+     * - Updates fields in a merchant relationship entity.
+     * - Persists the entity to DB.
+     *
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
+     */
+    public function saveMerchantRelationship(MerchantRelationshipTransfer $merchantRelationshipTransfer): MerchantRelationshipTransfer
+    {
+        var_dump('13');
+        $spyMerchantRelationship = $this->getFactory()
+            ->createMerchantRelationshipQuery()
+            ->filterByIdMerchantRelationship($merchantRelationshipTransfer->getIdMerchantRelationship())
+            ->findOneOrCreate();
+
+        $spyMerchantRelationship = $this->getFactory()
+            ->createMerchantRelationshipMapper()
+            ->mapMerchantRelationshipTransferToEntity($merchantRelationshipTransfer, $spyMerchantRelationship);
+
+        $spyMerchantRelationship->save();
+
+        $merchantRelationshipTransfer->setIdMerchantRelationship($spyMerchantRelationship->getIdMerchantRelationship());
+
+        return $merchantRelationshipTransfer;
+    }
+}
