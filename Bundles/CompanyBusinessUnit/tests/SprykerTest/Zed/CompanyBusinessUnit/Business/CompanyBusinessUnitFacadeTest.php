@@ -4,6 +4,7 @@ namespace SprykerTest\Zed\CompanyBusinessUnit\Business;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\DataBuilder\CompanyBusinessUnitBuilder;
+use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface;
 use TypeError;
 
 /**
@@ -214,14 +215,14 @@ class CompanyBusinessUnitFacadeTest extends Test
     /**
      * @return void
      */
-    public function testGetCompanyBusinessUnitCollectionshouldReturnTransferObject()
+    public function testGetCompanyBusinessUnitCollectionShouldReturnTransferObject()
     {
     }
 
     /**
      * @return \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade
      */
-    protected function getFacade()
+    protected function getFacade(): CompanyBusinessUnitFacadeInterface
     {
         return $this->tester->getFacade();
     }
