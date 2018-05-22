@@ -157,8 +157,8 @@ class VoucherValidatorTest extends Unit
      * @return \Spryker\Zed\Discount\Business\Voucher\VoucherValidator
      */
     protected function createVoucherValidator(
-        DiscountQueryContainerInterface $discountQueryContainerMock = null,
-        DiscountToMessengerInterface $messengerFacadeMock = null
+        ?DiscountQueryContainerInterface $discountQueryContainerMock = null,
+        ?DiscountToMessengerInterface $messengerFacadeMock = null
     ) {
 
         if ($discountQueryContainerMock == null) {

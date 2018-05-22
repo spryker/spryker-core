@@ -137,7 +137,7 @@ interface NavigationFacadeInterface
      *
      * @return \Generated\Shared\Transfer\NavigationTreeTransfer|null
      */
-    public function findNavigationTree(NavigationTransfer $navigationTransfer, LocaleTransfer $localeTransfer = null);
+    public function findNavigationTree(NavigationTransfer $navigationTransfer, ?LocaleTransfer $localeTransfer = null);
 
     /**
      * Specification:

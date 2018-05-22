@@ -124,7 +124,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
      *
      * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
-    public function savePageKeyMappingAndTouch(PageKeyMappingTransfer $pageKeyMappingTransfer, LocaleTransfer $localeTransfer = null)
+    public function savePageKeyMappingAndTouch(PageKeyMappingTransfer $pageKeyMappingTransfer, ?LocaleTransfer $localeTransfer = null)
     {
         $savedPageKeyMappingTransfer = $this->savePageKeyMapping($pageKeyMappingTransfer);
 
@@ -234,7 +234,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
      *
      * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
-    public function addPlaceholderText(PageTransfer $pageTransfer, $placeholder, $value, LocaleTransfer $localeTransfer = null, $autoGlossaryKeyIncrement = true)
+    public function addPlaceholderText(PageTransfer $pageTransfer, $placeholder, $value, ?LocaleTransfer $localeTransfer = null, $autoGlossaryKeyIncrement = true)
     {
         $template = $this->templateManager->getTemplateById($pageTransfer->getFkTemplate());
 
@@ -331,7 +331,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
      *
      * @return void
      */
-    protected function createGlossaryTranslation($keyName, $value, LocaleTransfer $localeTransfer = null)
+    protected function createGlossaryTranslation($keyName, $value, ?LocaleTransfer $localeTransfer = null)
     {
         if ($localeTransfer !== null) {
             $this->glossaryFacade->createAndTouchTranslation($keyName, $localeTransfer, $value);
@@ -366,7 +366,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
      *
      * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
-    protected function createGlossaryPageKeyMapping(PageTransfer $page, $placeholder, $keyName, $value, LocaleTransfer $localeTransfer = null)
+    protected function createGlossaryPageKeyMapping(PageTransfer $page, $placeholder, $keyName, $value, ?LocaleTransfer $localeTransfer = null)
     {
         $idKey = $this->glossaryFacade->getOrCreateKey($keyName);
         $this->createGlossaryTranslation($keyName, $value, $localeTransfer);

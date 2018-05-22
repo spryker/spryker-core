@@ -10,16 +10,37 @@ namespace Spryker\Client\ProductBundle\Grouper;
 use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 class ProductBundleGrouper implements ProductBundleGrouperInterface
 {
     const BUNDLE_ITEMS = 'bundleItems';
     const BUNDLE_PRODUCT = 'bundleProduct';
+    protected const GROUP_KEY_FORMAT = '%s_%s';
 
     /**
      * @var array
      */
     protected $bundleGroupKeys = [];
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function getItemsWithBundlesItems(QuoteTransfer $quoteTransfer): array
+    {
+        $items = $this->getGroupedBundleItems($quoteTransfer->getItems(), $quoteTransfer->getBundleItems());
+        $items = array_map(function ($groupedItem) {
+            if ($groupedItem instanceof ItemTransfer) {
+                return $groupedItem;
+            }
+
+            return $groupedItem[static::BUNDLE_PRODUCT];
+        }, $items);
+
+        return $items;
+    }
 
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
@@ -86,15 +107,29 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
 
         $bundleOptions = $this->getBundleOptions($bundleItemTransfer, $items);
         if (count($bundleOptions) == 0) {
-            return $bundleItemTransfer->getSku();
+            return $this->buildGroupKey($bundleItemTransfer);
         }
 
         $bundleOptions = $this->sortOptions($bundleOptions);
         $bundleItemTransfer->setProductOptions(new ArrayObject($bundleOptions));
 
-        $this->bundleGroupKeys[$bundleItemTransfer->getBundleItemIdentifier()] = $bundleItemTransfer->getSku() . '_' . $this->combineOptionParts($bundleOptions);
+        $this->bundleGroupKeys[$bundleItemTransfer->getBundleItemIdentifier()] = $this->buildGroupKey($bundleItemTransfer) . '_' . $this->combineOptionParts($bundleOptions);
 
         return $this->bundleGroupKeys[$bundleItemTransfer->getBundleItemIdentifier()];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return string
+     */
+    protected function buildGroupKey(ItemTransfer $itemTransfer): string
+    {
+        if ($itemTransfer->getGroupKeyPrefix()) {
+            return sprintf(static::GROUP_KEY_FORMAT, $itemTransfer->getGroupKeyPrefix(), $itemTransfer->getSku());
+        }
+
+        return $itemTransfer->getSku();
     }
 
     /**

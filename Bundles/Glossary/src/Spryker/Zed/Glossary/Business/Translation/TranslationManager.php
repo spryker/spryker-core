@@ -200,7 +200,7 @@ class TranslationManager implements TranslationManagerInterface
      *
      * @return bool
      */
-    public function hasTranslation($keyName, LocaleTransfer $localeTransfer = null)
+    public function hasTranslation($keyName, ?LocaleTransfer $localeTransfer = null)
     {
         if ($localeTransfer === null) {
             $localeTransfer = $this->localeFacade->getCurrentLocale();
@@ -364,7 +364,7 @@ class TranslationManager implements TranslationManagerInterface
      *
      * @return string
      */
-    public function translate($keyName, array $data = [], LocaleTransfer $localeTransfer = null)
+    public function translate($keyName, array $data = [], ?LocaleTransfer $localeTransfer = null)
     {
         if ($localeTransfer === null) {
             $localeTransfer = $this->localeFacade->getCurrentLocale();
@@ -635,7 +635,7 @@ class TranslationManager implements TranslationManagerInterface
      *
      * @return void
      */
-    public function touchTranslationForKeyId($idKey, LocaleTransfer $localeTransfer = null)
+    public function touchTranslationForKeyId($idKey, ?LocaleTransfer $localeTransfer = null)
     {
         if ($localeTransfer === null) {
             $localeTransfer = $this->localeFacade->getCurrentLocale();

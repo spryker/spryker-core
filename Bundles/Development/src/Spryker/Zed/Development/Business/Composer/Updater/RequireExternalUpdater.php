@@ -92,7 +92,7 @@ class RequireExternalUpdater implements UpdaterInterface
         $moduleName = array_pop($nameParts);
         $filter = new DashToCamelCase();
 
-        return $filter->filter($moduleName);
+        return (string)$filter->filter($moduleName);
     }
 
     /**

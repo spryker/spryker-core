@@ -78,7 +78,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      *
      * @return void
      */
-    public function createModule($module, $options)
+    public function createModule($module, array $options)
     {
         $this->getFactory()->createModuleBuilder()->build($module, $options);
     }
@@ -167,7 +167,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
     /**
      * @api
      *
-     * @param string|bool $moduleToView
+     * @param string $moduleToView
      * @param array $excludedModules
      * @param bool $showIncomingDependencies
      *

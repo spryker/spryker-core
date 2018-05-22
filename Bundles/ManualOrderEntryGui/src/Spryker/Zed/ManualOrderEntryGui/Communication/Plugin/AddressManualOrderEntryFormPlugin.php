@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Plugin;
 
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Address\AddressCollectionType;
 use Symfony\Component\Form\FormInterface;
@@ -38,13 +38,13 @@ class AddressManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createForm(Request $request, $dataTransfer = null): FormInterface
+    public function createForm(Request $request, QuoteTransfer $quoteTransfer): FormInterface
     {
-        return $this->getFactory()->createAddressCollectionForm($dataTransfer);
+        return $this->getFactory()->createAddressCollectionForm($quoteTransfer);
     }
 
     /**
@@ -52,9 +52,9 @@ class AddressManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
      * @param \Symfony\Component\Form\FormInterface $form
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function handleData($quoteTransfer, &$form, $request): AbstractTransfer
+    public function handleData(QuoteTransfer $quoteTransfer, &$form, Request $request): QuoteTransfer
     {
         if ($quoteTransfer->getShippingAddress()->getIdCustomerAddress()) {
             $addressTransfer = $quoteTransfer->getShippingAddress();
@@ -75,5 +75,15 @@ class AddressManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
         }
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer|null $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isFormPreFilled(?QuoteTransfer $quoteTransfer = null): bool
+    {
+        return false;
     }
 }

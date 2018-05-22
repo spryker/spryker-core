@@ -5,7 +5,8 @@
   "require": {
     "php": ">=7.1",
     "spryker/kernel": "^3.0.0",
-    "spryker/quote": "^1.0.0",
+    "spryker/price-extension": "^1.0.0",
+    "spryker/quote": "^1.2.0 || ^2.0.0",
     "spryker/symfony": "^3.0.0"
   },
   "require-dev": {

@@ -193,7 +193,7 @@ class UpdateProductsFormType extends AbstractType
     protected function createProductAbstractIdsFieldTransformer()
     {
         return new CallbackTransformer(
-            function (array $productAbstractIds = null) {
+            function (?array $productAbstractIds = null) {
                 return implode(',', (array)$productAbstractIds);
             },
             function ($productAbstractIds = '') {

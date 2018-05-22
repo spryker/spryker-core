@@ -7,9 +7,10 @@
 
 namespace Spryker\Zed\ManualOrderEntryGui\Communication\Plugin;
 
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Summary\SummaryType;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Traits\UniqueFlashMessagesTrait;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -18,6 +19,18 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class SummaryManualOrderEntryFormPlugin extends AbstractPlugin implements ManualOrderEntryFormPluginInterface
 {
+    use UniqueFlashMessagesTrait;
+
+    /**
+     * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToMessengerFacadeInterface
+     */
+    protected $messengerFacade;
+
+    public function __construct()
+    {
+        $this->messengerFacade = $this->getFactory()->getMessengerFacade();
+    }
+
     /**
      * @return string
      */
@@ -28,24 +41,36 @@ class SummaryManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createForm(Request $request, $dataTransfer = null): FormInterface
+    public function createForm(Request $request, QuoteTransfer $quoteTransfer): FormInterface
     {
-        return $this->getFactory()->createSummaryForm($dataTransfer);
+        return $this->getFactory()->createSummaryForm($quoteTransfer);
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Symfony\Component\Form\FormInterface $form
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function handleData($dataTransfer, &$form, $request): AbstractTransfer
+    public function handleData(QuoteTransfer $quoteTransfer, &$form, Request $request): QuoteTransfer
     {
-        return $dataTransfer;
+        $this->uniqueFlashMessages();
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isFormPreFilled(QuoteTransfer $quoteTransfer): bool
+    {
+        return false;
     }
 }

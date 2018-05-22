@@ -357,7 +357,7 @@ class ProductAttributeQueryContainer extends AbstractQueryContainer implements P
      *
      * @return \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion
      */
-    protected function appendOrCriterion($criterionToAppend, AbstractCriterion $defaultCriterion = null)
+    protected function appendOrCriterion($criterionToAppend, ?AbstractCriterion $defaultCriterion = null)
     {
         if ($defaultCriterion === null) {
             return $criterionToAppend;

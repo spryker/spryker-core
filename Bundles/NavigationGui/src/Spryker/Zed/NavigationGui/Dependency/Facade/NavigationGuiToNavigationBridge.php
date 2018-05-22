@@ -113,7 +113,7 @@ class NavigationGuiToNavigationBridge implements NavigationGuiToNavigationInterf
      *
      * @return \Generated\Shared\Transfer\NavigationTreeTransfer
      */
-    public function findNavigationTree(NavigationTransfer $navigationTransfer, LocaleTransfer $localeTransfer = null)
+    public function findNavigationTree(NavigationTransfer $navigationTransfer, ?LocaleTransfer $localeTransfer = null)
     {
         return $this->navigationFacade->findNavigationTree($navigationTransfer, $localeTransfer);
     }

@@ -29,7 +29,7 @@ class CompanyBusinessUnitFacadeTest extends Test
      */
     public function testCreateShouldPersistCompanyBusinessUnit()
     {
-        $idCompany = $this->tester->getCompany()->getIdCompany();
+        $idCompany = $this->tester->haveCompany()->getIdCompany();
 
         $seedData = [
             'fkCompany' => $idCompany,
@@ -50,7 +50,7 @@ class CompanyBusinessUnitFacadeTest extends Test
      */
     public function testGetCompanyBusinessUnitByIdShouldReturnTransferObject()
     {
-        $idCompany = $this->tester->getCompany()->getIdCompany();
+        $idCompany = $this->tester->haveCompany()->getIdCompany();
 
         $seedData = [
             'fkCompany' => $idCompany,
@@ -72,7 +72,7 @@ class CompanyBusinessUnitFacadeTest extends Test
      */
     public function testUpdateShouldPersistCompanyBusinessUnitChanges()
     {
-        $idCompany = $this->tester->getCompany()->getIdCompany();
+        $idCompany = $this->tester->haveCompany()->getIdCompany();
 
         $seedData = [
             'fkCompany' => $idCompany,
@@ -96,7 +96,7 @@ class CompanyBusinessUnitFacadeTest extends Test
      */
     public function testDeleteShouldRemoveCompanyBusinessUnitFromStorage()
     {
-        $idCompany = $this->tester->getCompany()->getIdCompany();
+        $idCompany = $this->tester->haveCompany()->getIdCompany();
 
         $seedData = [
             'fkCompany' => $idCompany,

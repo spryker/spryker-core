@@ -29,3 +29,7 @@
 
 {{ form_row(form.valid_from) }}
 {{ form_row(form.valid_to) }}
+{# @uses CompanySupplier #}
+{% if form.companySuppliers is defined %}
+    {{ form_row(form.companySuppliers) }}
+{% endif %}

@@ -85,7 +85,7 @@ class Reservation implements ReservationInterface
      *
      * @return int
      */
-    public function sumReservedProductQuantitiesForSku($sku, StoreTransfer $storeTransfer = null)
+    public function sumReservedProductQuantitiesForSku($sku, ?StoreTransfer $storeTransfer = null)
     {
         return $this->sumProductQuantitiesForSku(
             $this->retrieveReservedStates(),
@@ -155,7 +155,7 @@ class Reservation implements ReservationInterface
         array $states,
         $sku,
         $returnTest = true,
-        StoreTransfer $storeTransfer = null
+        ?StoreTransfer $storeTransfer = null
     ) {
 
         if ($storeTransfer) {

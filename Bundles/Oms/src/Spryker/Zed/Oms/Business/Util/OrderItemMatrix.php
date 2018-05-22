@@ -208,7 +208,7 @@ class OrderItemMatrix
     }
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]|\Propel\Runtime\Collection\ObjectCollection|mixed[] $orderItems
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]|\Propel\Runtime\Collection\ObjectCollection $orderItems
      *
      * @return array
      */

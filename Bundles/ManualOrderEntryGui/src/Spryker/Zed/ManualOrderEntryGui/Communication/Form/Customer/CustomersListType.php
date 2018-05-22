@@ -18,9 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class CustomersListType extends AbstractType
 {
     public const TYPE_NAME = 'customers';
-
-    public const FIELD_CUSTOMER = 'id_customer';
-
+    public const FIELD_CUSTOMER = 'idCustomer';
     public const OPTION_CUSTOMER_ARRAY = 'option-category-array';
 
     /**
@@ -44,21 +42,21 @@ class CustomersListType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver
-            ->setRequired(static::OPTION_CUSTOMER_ARRAY);
+        $resolver->setRequired(static::OPTION_CUSTOMER_ARRAY);
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $customerList
+     * @param string|null $value
      *
      * @return $this
      */
-    protected function addCustomerField(FormBuilderInterface $builder, array $customerList)
+    protected function addCustomerField(FormBuilderInterface $builder, array $customerList, ?string $value = null)
     {
         $builder->add(static::FIELD_CUSTOMER, Select2ComboBoxType::class, [
             'property_path' => static::FIELD_CUSTOMER,
-            'label' => 'Customers',
+            'label' => 'Select Customer',
             'choices' => array_flip($customerList),
             'choices_as_values' => true,
             'multiple' => false,

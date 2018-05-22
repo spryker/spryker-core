@@ -97,7 +97,7 @@ class GrandTotalDecisionRuleTest extends BaseRuleTester
      *
      * @return \Spryker\Zed\Discount\Business\DecisionRule\GrandTotalDecisionRule
      */
-    protected function createGrandTotalDecisionRule(ComparatorOperatorsInterface $comparatorMock = null)
+    protected function createGrandTotalDecisionRule(?ComparatorOperatorsInterface $comparatorMock = null)
     {
         if ($comparatorMock === null) {
             $comparatorMock = $this->createComparatorMock();

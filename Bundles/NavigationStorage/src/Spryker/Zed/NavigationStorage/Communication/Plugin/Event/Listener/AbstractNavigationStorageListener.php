@@ -81,7 +81,7 @@ abstract class AbstractNavigationStorageListener extends AbstractPlugin implemen
      *
      * @return void
      */
-    protected function storeDataSet(NavigationTreeTransfer $navigationTreeByLocaleTransfer, $localeName, SpyNavigationStorage $spyNavigationStorage = null)
+    protected function storeDataSet(NavigationTreeTransfer $navigationTreeByLocaleTransfer, $localeName, ?SpyNavigationStorage $spyNavigationStorage = null)
     {
         if ($spyNavigationStorage === null) {
             $spyNavigationStorage = new SpyNavigationStorage();

@@ -1,0 +1,30 @@
+namespace: SprykerTest\Zed\Offer
+
+paths:
+    tests: .
+    data: ../../../_data
+    support: _support
+    log: ../../../_output
+
+coverage:
+    enabled: true
+    remote: false
+    whitelist: { include: ['../../../../src/*'] }
+
+suites:
+    Business:
+        path: Business
+        class_name: OfferBusinessTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Zed\Locale\Helper\LocaleDataHelper
+                - \SprykerTest\Zed\Touch\Helper\TouchAssertionHelper
+                - \SprykerTest\Zed\Offer\Helper\OfferDataHelper
+                - \SprykerTest\Shared\Sales\Helper\SalesDataHelper
+

@@ -40,7 +40,7 @@ class CustomerFacadeTest extends Unit
     const TESTER_INVALID_EMAIL = 'tester<>@spryker.com';
     const TESTER_NON_EXISTING_EMAIL = 'nonexisting@spryker.com';
     const TESTER_UPDATE_EMAIL = 'update.tester@spryker.com';
-    const TESTER_PASSWORD = 'tester';
+    const TESTER_PASSWORD = '$2tester';
     const TESTER_NAME = 'Tester';
     const TESTER_CITY = 'Testcity';
     const TESTER_ADDRESS1 = 'Testerstreet 23';
@@ -765,7 +765,7 @@ class CustomerFacadeTest extends Unit
      *
      * @return \Spryker\Zed\Customer\Business\CustomerFacade
      */
-    private function getFacade(TransferInterface $transfer = null, $hasEmail = true)
+    private function getFacade(?TransferInterface $transfer = null, $hasEmail = true)
     {
         $customerFacade = new CustomerFacade();
         $customerFacade->setFactory($this->getFactory($transfer, $hasEmail));
@@ -779,7 +779,7 @@ class CustomerFacadeTest extends Unit
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Customer\Business\CustomerBusinessFactory
      */
-    protected function getFactory(TransferInterface $transfer = null, $hasEmail = true)
+    protected function getFactory(?TransferInterface $transfer = null, $hasEmail = true)
     {
         $factoryMock = $this->getMockBuilder(CustomerBusinessFactory::class)
             ->getMock();
@@ -801,7 +801,7 @@ class CustomerFacadeTest extends Unit
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Customer\Business\Customer\Customer
      */
-    private function getCustomerMock(CustomerTransfer $customerTransfer = null, $hasEmail = true)
+    private function getCustomerMock(?CustomerTransfer $customerTransfer = null, $hasEmail = true)
     {
         $customerMock = $this->getMockBuilder(Customer::class)
             ->disableOriginalConstructor()
@@ -823,7 +823,7 @@ class CustomerFacadeTest extends Unit
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Customer\Business\Customer\Address
      */
-    private function getAddressMock(AddressTransfer $addressTransfer = null)
+    private function getAddressMock(?AddressTransfer $addressTransfer = null)
     {
         $addressMock = $this->getMockBuilder(Address::class)
             ->disableOriginalConstructor()

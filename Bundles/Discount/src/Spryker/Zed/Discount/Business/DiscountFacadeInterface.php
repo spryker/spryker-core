@@ -520,4 +520,17 @@ interface DiscountFacadeInterface
         ItemTransfer $itemTransfer,
         ClauseTransfer $clauseTransfer
     );
+
+    /**
+     * Specification:
+     * - Checks discount cart changes
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $resultQuoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $sourceQuoteTransfer
+     *
+     * @return void
+     */
+    public function checkDiscountChanges(QuoteTransfer $resultQuoteTransfer, QuoteTransfer $sourceQuoteTransfer): void;
 }

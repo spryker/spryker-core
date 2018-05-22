@@ -10,7 +10,7 @@ namespace Spryker\Zed\ManualOrderEntryGui\Communication\Plugin;
 use ArrayObject;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Voucher\VoucherType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\Traits\UniqueFlashMessagesTrait;
@@ -53,13 +53,13 @@ class VoucherManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createForm(Request $request, $dataTransfer = null): FormInterface
+    public function createForm(Request $request, QuoteTransfer $quoteTransfer): FormInterface
     {
-        return $this->getFactory()->createVoucherForm($dataTransfer);
+        return $this->getFactory()->createVoucherForm($quoteTransfer);
     }
 
     /**
@@ -69,7 +69,7 @@ class VoucherManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function handleData($quoteTransfer, &$form, $request): AbstractTransfer
+    public function handleData(QuoteTransfer $quoteTransfer, &$form, Request $request): QuoteTransfer
     {
         if (strlen($quoteTransfer->getVoucherCode())) {
             $discountTransfer = new DiscountTransfer();
@@ -96,6 +96,16 @@ class VoucherManualOrderEntryFormPlugin extends AbstractPlugin implements Manual
         }
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isFormPreFilled(QuoteTransfer $quoteTransfer): bool
+    {
+        return false;
     }
 
     /**
