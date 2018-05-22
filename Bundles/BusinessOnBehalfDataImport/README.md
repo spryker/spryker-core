@@ -5,7 +5,7 @@
 ## Installation
 
 ```
-composer require spryker/business-on-behalf-data-impor
+composer require spryker/business-on-behalf-data-import
 ```
 
 ## Documentation

@@ -22,7 +22,10 @@ class BusinessOnBehalfDataImportConfig extends DataImportConfig
     {
         $moduleDataImportDirectory = $this->getModuleRoot() . 'data' . DIRECTORY_SEPARATOR . 'import' . DIRECTORY_SEPARATOR;
 
-        return $this->buildImporterConfiguration($moduleDataImportDirectory . static::IMPORT_FILE, static::IMPORT_TYPE_COMPANY_USER);
+        return $this->buildImporterConfiguration(
+            $moduleDataImportDirectory . static::IMPORT_FILE,
+            static::IMPORT_TYPE_COMPANY_USER
+        );
     }
 
     /**

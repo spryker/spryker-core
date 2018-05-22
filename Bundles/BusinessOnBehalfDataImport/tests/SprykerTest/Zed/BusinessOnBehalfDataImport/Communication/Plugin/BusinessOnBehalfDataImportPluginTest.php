@@ -62,6 +62,7 @@ class BusinessOnBehalfDataImportPluginTest extends Unit
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
 
         $this->tester->assertDatabaseTableContainsData();
+        $this->tester->assertDatabaseTableContainsCorrectData();
     }
 
     /**

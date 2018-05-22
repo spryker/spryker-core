@@ -11,8 +11,6 @@ use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @api
- *
  * @method \Spryker\Zed\BusinessOnBehalfDataImport\Business\BusinessOnBehalfDataImportBusinessFactory getFactory()
  */
 class BusinessOnBehalfDataImportFacade extends AbstractFacade implements BusinessOnBehalfDataImportFacadeInterface

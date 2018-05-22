@@ -32,8 +32,7 @@ class BusinessUnitKeyToIdCompanyBusinessUnitStep implements DataImportStepInterf
     {
         $businessUnitKey = $dataSet[BusinessOnBehalfDataSet::BUSINESS_UNIT_KEY];
         if (!isset($this->idBusinessUnitCache[$businessUnitKey])) {
-            $businessUnitQuery = SpyCompanyBusinessUnitQuery::create();
-            $idBusinessUnit = $businessUnitQuery
+            $idBusinessUnit = SpyCompanyBusinessUnitQuery::create()
                 ->select(SpyCompanyBusinessUnitTableMap::COL_ID_COMPANY_BUSINESS_UNIT)
                 ->findOneByKey($businessUnitKey);
 
