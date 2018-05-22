@@ -109,4 +109,14 @@ interface ProductMeasurementUnitFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function calculateQuantitySalesUnitValueInQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
+
+    /**
+     * Specification:
+     * - Add infrastructural measurement unit list to database.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function installProductMeasurementUnit(): void;
 }

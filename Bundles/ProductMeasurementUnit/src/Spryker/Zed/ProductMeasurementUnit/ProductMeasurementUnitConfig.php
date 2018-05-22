@@ -7,17 +7,32 @@
 
 namespace Spryker\Zed\ProductMeasurementUnit;
 
-use Spryker\Shared\ProductMeasurementUnit\ProductMeasurementUnitConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductMeasurementUnitConfig extends AbstractBundleConfig
 {
     /**
+     * Default measurement unit code.
+     */
+    public const DEFAULT_MEASUREMENT_UNIT_CODE = 'ITEM';
+
+    /**
+     * Infrastructural measurement units list.
+     */
+    public const INFRASTRUCTURAL_MEASUREMENT_UNITS = [
+        [
+            'name' => 'measurement_units.item.name',
+            'code' => 'ITEM',
+            'default_precision' => 1,
+        ],
+    ];
+
+    /**
      * @return array
      */
     public function getInfrastructuralMeasurementUnits(): array
     {
-        return $this->get(ProductMeasurementUnitConstants::INFRASTRUCTURAL_MEASUREMENT_UNITS);
+        return static::INFRASTRUCTURAL_MEASUREMENT_UNITS;
     }
 
     /**
@@ -25,6 +40,6 @@ class ProductMeasurementUnitConfig extends AbstractBundleConfig
      */
     public function getDefaultMeasurementUnitCode(): string
     {
-        return $this->get(ProductMeasurementUnitConstants::DEFAULT_MEASUREMENT_UNIT_CODE);
+        return static::DEFAULT_MEASUREMENT_UNIT_CODE;
     }
 }

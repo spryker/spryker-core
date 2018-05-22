@@ -16,10 +16,12 @@
   "require-dev": {
     "spryker/cart": "*",
     "spryker/code-sniffer": "*",
+    "spryker/installer": "*",
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/cart": "If you want to use cart plugins: ^4.0.0"
+    "spryker/cart": "If you want to use cart plugins: ^4.0.0",
+    "spryker/installer": "If you want to use ProductMeasurementUnitInstallerPlugin. Minimum required version: ^4.0.0."
   },
   "autoload": {
     "psr-4": {

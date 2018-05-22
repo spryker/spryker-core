@@ -140,4 +140,18 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
             ->createCartChangeTransferExpander()
             ->expandQuantitySalesUnit($cartChangeTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function installProductMeasurementUnit(): void
+    {
+        $this->getFactory()
+            ->createProductMeasurementUnitInstaller()
+            ->install();
+    }
 }
