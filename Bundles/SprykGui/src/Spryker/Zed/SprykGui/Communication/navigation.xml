@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<config>
+  <spryk-gui>
+    <label>SprykGui</label>
+    <title>SprykGui</title>
+    <pages>
+      <spryk-gui>
+        <lable>SprykGui</lable>
+        <title>SprykGui</title>
+        <bundle>spryk-gui</bundle>
+        <controller>index</controller>
+        <action>index</action>
+      </spryk-gui>
+      <spryk-gui>
+        <lable>SprykGui</lable>
+        <title>SprykGui</title>
+        <bundle>spryk-gui</bundle>
+        <controller>index</controller>
+        <action>index</action>
+      </spryk-gui>
+      <spryk-gui>
+        <lable>SprykGui</lable>
+        <title>SprykGui</title>
+        <bundle>spryk-gui</bundle>
+        <controller>index</controller>
+        <action>index</action>
+      </spryk-gui>
+    </pages>
+  </spryk-gui>
+</config>

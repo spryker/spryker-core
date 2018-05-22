@@ -1,0 +1,18 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set page_title = 'ADD TITLE HERE' %}
+{% block head_title page_title %}
+{% block section_title page_title %}
+
+{% block action %}
+{% endblock %}
+
+{% block content %}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Next' | trans }}" />
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block footer_js %}
+{% endblock %}
