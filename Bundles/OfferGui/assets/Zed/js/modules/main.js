@@ -17,4 +17,9 @@ $(document).ready( function () {
         changeMonth: true,
         numberOfMonths: 3
     });
+
+    $('form[name="edit_offer"] input').on('keyup keypress', function(e) {
+        return e.which !== 13;
+    });
+
 });

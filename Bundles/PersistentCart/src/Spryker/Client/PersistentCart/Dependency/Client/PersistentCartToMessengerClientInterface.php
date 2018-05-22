@@ -14,19 +14,19 @@ interface PersistentCartToMessengerClientInterface
      *
      * @return $this
      */
-    public function addSuccessMessage($message): void;
+    public function addSuccessMessage($message);
 
     /**
      * @param string $message
      *
      * @return void
      */
-    public function addInfoMessage($message): void;
+    public function addInfoMessage($message);
 
     /**
      * @param string $message
      *
      * @return void
      */
-    public function addErrorMessage($message): void;
+    public function addErrorMessage($message);
 }
