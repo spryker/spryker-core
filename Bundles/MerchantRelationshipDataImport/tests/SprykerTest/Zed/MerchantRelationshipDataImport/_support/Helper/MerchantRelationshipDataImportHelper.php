@@ -8,6 +8,8 @@
 namespace SprykerTest\Zed\MerchantRelationshipDataImport\Helper;
 
 use Codeception\Module;
+use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
+use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
@@ -20,8 +22,16 @@ class MerchantRelationshipDataImportHelper extends Module
      */
     public function ensureDatabaseTableIsEmpty(): void
     {
-        $query = $this->getMerchantRelationshipQuery();
-        $query->deleteAll();
+        $this->getMerchantRelationshipQuery()->deleteAll();
+    }
+
+    /**
+     * @return void
+     */
+    public function ensureRelatedDataIsNotExists(): void
+    {
+        $this->getMerchantQuery()->deleteAll();
+        $this->getCompanyBusinessUnitQuery()->deleteAll();
     }
 
     /**
@@ -51,15 +61,19 @@ class MerchantRelationshipDataImportHelper extends Module
     }
 
     /**
-     * @param string $key
-     *
-     * @return \Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationship
+     * @return \Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery
      */
-    public function findMerchantRelationshipByKey(string $key)
+    protected function getCompanyBusinessUnitQuery(): SpyCompanyBusinessUnitQuery
     {
-        return $this->getMerchantRelationshipQuery()
-            ->filterByKey($key)
-            ->findOne();
+        return SpyCompanyBusinessUnitQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Merchant\Persistence\SpyMerchantQuery
+     */
+    protected function getMerchantQuery(): SpyMerchantQuery
+    {
+        return SpyMerchantQuery::create();
     }
 
     /**

@@ -29,8 +29,6 @@ class CompanyBusinessUnitAssigneeKeysToIdCompanyBusinessUnitCollectionStep imple
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
-     * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException
-     *
      * @return void
      */
     public function execute(DataSetInterface $dataSet)
@@ -48,19 +46,7 @@ class CompanyBusinessUnitAssigneeKeysToIdCompanyBusinessUnitCollectionStep imple
 
         $companyBusinessUnitAssignee = [];
         foreach ($companyBusinessUnitKeys as $companyBusinessUnitKey) {
-            if (!isset($this->idCompanyBusinessUnitCache[$companyBusinessUnitKey])) {
-                $idCompanyBusinessUnit = SpyCompanyBusinessUnitQuery::create()
-                    ->select(SpyCompanyBusinessUnitTableMap::COL_ID_COMPANY_BUSINESS_UNIT)
-                    ->findOneByKey($companyBusinessUnitKey);
-
-                if (!$idCompanyBusinessUnit) {
-                    throw new EntityNotFoundException(sprintf('Could not find Company Business Unit by key "%s"', $companyBusinessUnitKey));
-                }
-
-                $this->idCompanyBusinessUnitCache[$companyBusinessUnitKey] = $idCompanyBusinessUnit;
-            }
-
-            $companyBusinessUnitAssignee[] = $this->idCompanyBusinessUnitCache[$companyBusinessUnitKey];
+            $companyBusinessUnitAssignee[] = $this->findIdCompanyBusinessUnit($companyBusinessUnitKey);
         }
 
         $dataSet[MerchantRelationshipDataSet::ID_COMPANY_BUSINESS_UNIT_ASSIGNEE_COLLECTION] = $companyBusinessUnitAssignee;
@@ -82,5 +68,29 @@ class CompanyBusinessUnitAssigneeKeysToIdCompanyBusinessUnitCollectionStep imple
     public function setAssigneeDelimiter(string $assigneeDelimiter): void
     {
         $this->assigneeDelimiter = $assigneeDelimiter;
+    }
+
+    /**
+     * @param string $companyBusinessUnitKey
+     *
+     * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException
+     *
+     * @return int
+     */
+    protected function findIdCompanyBusinessUnit(string $companyBusinessUnitKey): int
+    {
+        if (!isset($this->idCompanyBusinessUnitCache[$companyBusinessUnitKey])) {
+            $idCompanyBusinessUnit = SpyCompanyBusinessUnitQuery::create()
+                ->select(SpyCompanyBusinessUnitTableMap::COL_ID_COMPANY_BUSINESS_UNIT)
+                ->findOneByKey($companyBusinessUnitKey);
+
+            if (!$idCompanyBusinessUnit) {
+                throw new EntityNotFoundException(sprintf('Could not find Company Business Unit by key "%s"', $companyBusinessUnitKey));
+            }
+
+            $this->idCompanyBusinessUnitCache[$companyBusinessUnitKey] = $idCompanyBusinessUnit;
+        }
+
+        return $this->idCompanyBusinessUnitCache[$companyBusinessUnitKey];
     }
 }

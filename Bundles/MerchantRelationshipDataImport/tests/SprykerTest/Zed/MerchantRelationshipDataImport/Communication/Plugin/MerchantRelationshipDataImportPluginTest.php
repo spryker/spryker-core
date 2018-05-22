@@ -34,6 +34,7 @@ class MerchantRelationshipDataImportPluginTest extends Unit
         $this->tester->ensureDatabaseTableIsEmpty();
         $this->tester->assertDatabaseTableIsEmpty();
 
+        $this->tester->ensureRelatedDataIsNotExists();
         $this->createRelatedData();
 
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
