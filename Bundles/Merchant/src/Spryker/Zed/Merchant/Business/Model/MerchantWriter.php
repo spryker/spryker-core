@@ -32,7 +32,9 @@ class MerchantWriter implements MerchantWriterInterface
      */
     public function create(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
-        $merchantTransfer->requireName();
+        $merchantTransfer
+            ->requireMerchantKey()
+            ->requireName();
 
         return $this->entityManager->saveMerchant($merchantTransfer);
     }
@@ -46,6 +48,7 @@ class MerchantWriter implements MerchantWriterInterface
     {
         $merchantTransfer
             ->requireIdMerchant()
+            ->requireMerchantKey()
             ->requireName();
 
         return $this->entityManager->saveMerchant($merchantTransfer);
