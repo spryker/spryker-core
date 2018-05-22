@@ -105,7 +105,10 @@ class CompanyBusinessUnitTable extends AbstractTable
     {
         $result = '';
         if ($spyCompanyBusinessUnit->getSpyCompanyUnitAddressToCompanyBusinessUnitsJoinCompanyUnitAddress()->count() > 0) {
-            $address = $spyCompanyBusinessUnit->getSpyCompanyUnitAddressToCompanyBusinessUnitsJoinCompanyUnitAddress()[0]->getCompanyUnitAddress();
+            $address = $spyCompanyBusinessUnit
+                ->getSpyCompanyUnitAddressToCompanyBusinessUnitsJoinCompanyUnitAddress()[0]
+                ->getCompanyUnitAddress();
+
             $result = sprintf(
                 static::FORMAT_ADDRESS,
                 $address->getCity(),
@@ -129,7 +132,11 @@ class CompanyBusinessUnitTable extends AbstractTable
         $idCompanyBusinessUnit = $spyCompanyBusinessUnit->getIdCompanyBusinessUnit();
 
         $buttons[] = $this->generateEditButton(
-            sprintf(static::URL_COMPANY_BUSINESS_UNIT_EDIT, static::REQUEST_ID_COMPANY_BUSINESS_UNIT, $idCompanyBusinessUnit),
+            sprintf(
+                static::URL_COMPANY_BUSINESS_UNIT_EDIT,
+                static::REQUEST_ID_COMPANY_BUSINESS_UNIT,
+                $idCompanyBusinessUnit
+            ),
             'Edit'
         );
 

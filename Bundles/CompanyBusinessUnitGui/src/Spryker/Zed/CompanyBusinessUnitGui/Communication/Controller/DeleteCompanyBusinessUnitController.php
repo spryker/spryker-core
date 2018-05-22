@@ -29,9 +29,11 @@ class DeleteCompanyBusinessUnitController extends AbstractController
      */
     public function indexAction(Request $request): RedirectResponse
     {
-        $idCompanyBusinessUnit = $this->castId($request->query->get(
-            CompanyBusinessUnitGuiConstants::REQUEST_ID_COMPANY_BUSINESS_UNIT
-        ));
+        $redirectUrl = Url::generate(CompanyBusinessUnitGuiConstants::REDIRECT_URL_DEFAULT)->build();
+
+        $idCompanyBusinessUnit = $this->castId(
+            $request->query->get(CompanyBusinessUnitGuiConstants::REQUEST_ID_COMPANY_BUSINESS_UNIT)
+        );
 
         $companyBusinessUnitTransfer = new CompanyBusinessUnitTransfer();
         $companyBusinessUnitTransfer->setIdCompanyBusinessUnit($idCompanyBusinessUnit);
@@ -50,17 +52,15 @@ class DeleteCompanyBusinessUnitController extends AbstractController
                 static::MESSAGE_COMPANY_BUSINESS_UNIT_DELETE_SUCCESS,
                 $companyBusinessUnit->getName()
             ));
-        } else {
-            $this->addErrorMessage(sprintf(
-                static::MESSAGE_COMPANY_BUSINESS_UNIT_DELETE_ERROR,
-                $companyBusinessUnit->getName()
-            ));
+
+            return $this->redirectResponse($redirectUrl);
         }
 
-        return $this->redirectResponse(
-            Url::generate(
-                CompanyBusinessUnitGuiConstants::REDIRECT_URL_DEFAULT
-            )->build()
-        );
+        $this->addErrorMessage(sprintf(
+            static::MESSAGE_COMPANY_BUSINESS_UNIT_DELETE_ERROR,
+            $companyBusinessUnit->getName()
+        ));
+
+        return $this->redirectResponse($redirectUrl);
     }
 }
