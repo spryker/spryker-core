@@ -51,7 +51,7 @@ class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPropelMerchantQuery(Container $container): Container
     {
-        $container[static::PROPEL_MERCHANT_QUERY] = function (Container $container) {
+        $container[static::PROPEL_MERCHANT_QUERY] = function () {
             return SpyMerchantQuery::create();
         };
 
