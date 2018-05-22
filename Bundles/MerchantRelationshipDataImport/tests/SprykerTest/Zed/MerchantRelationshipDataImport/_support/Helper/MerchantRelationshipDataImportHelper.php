@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\MerchantDataImport\Helper;
+namespace SprykerTest\Zed\MerchantRelationshipDataImport\Helper;
 
 use Codeception\Module;
-use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
+use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
-class MerchantDataImportHelper extends Module
+class MerchantRelationshipDataImportHelper extends Module
 {
     use LocatorHelperTrait;
 
@@ -20,7 +20,7 @@ class MerchantDataImportHelper extends Module
      */
     public function ensureDatabaseTableIsEmpty(): void
     {
-        $query = $this->getMerchantQuery();
+        $query = $this->getMerchantRelationshipQuery();
         $query->deleteAll();
     }
 
@@ -29,7 +29,7 @@ class MerchantDataImportHelper extends Module
      */
     public function assertDatabaseTableIsEmpty(): void
     {
-        $query = $this->getMerchantQuery();
+        $query = $this->getMerchantRelationshipQuery();
         $this->assertEquals(0, $query->count(), 'Found at least one entry in the database table but database table was expected to be empty.');
     }
 
@@ -38,27 +38,35 @@ class MerchantDataImportHelper extends Module
      */
     public function assertDatabaseTableContainsData(): void
     {
-        $query = $this->getMerchantQuery();
+        $query = $this->getMerchantRelationshipQuery();
         $this->assertTrue($query->count() > 0, 'Expected at least one entry in the database table but database table is empty.');
     }
 
     /**
-     * @return \Orm\Zed\Merchant\Persistence\SpyMerchantQuery
+     * @return \Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery
      */
-    protected function getMerchantQuery(): SpyMerchantQuery
+    protected function getMerchantRelationshipQuery(): SpyMerchantRelationshipQuery
     {
-        return SpyMerchantQuery::create();
+        return SpyMerchantRelationshipQuery::create();
     }
 
     /**
      * @param string $key
      *
-     * @return \Orm\Zed\Merchant\Persistence\SpyMerchant
+     * @return \Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationship
      */
-    public function findMerchantByKey(string $key)
+    public function findMerchantRelationshipByKey(string $key)
     {
-        return $this->getMerchantQuery()
+        return $this->getMerchantRelationshipQuery()
             ->filterByKey($key)
             ->findOne();
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface
+     */
+    public function getCompanyBusinessUnitFacade()
+    {
+        return $this->getLocator()->companyBusinessUnit()->facade();
     }
 }

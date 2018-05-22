@@ -21,11 +21,11 @@ class MerchantWriterStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $companySupplierToProductEntity = SpyMerchantQuery::create()
+        $merchantEntity = SpyMerchantQuery::create()
             ->filterByMerchantKey($dataSet[MerchantDataSet::MERCHANT_KEY])
             ->findOneOrCreate();
 
-        $companySupplierToProductEntity
+        $merchantEntity
             ->setName($dataSet[MerchantDataSet::NAME])
             ->save();
     }

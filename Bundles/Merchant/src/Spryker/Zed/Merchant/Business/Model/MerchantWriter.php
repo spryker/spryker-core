@@ -42,21 +42,21 @@ class MerchantWriter implements MerchantWriterInterface
     {
         $merchantTransfer->requireName();
 
-        if (!$merchantTransfer->getKey()) {
+        if (!$merchantTransfer->getMerchantKey()) {
             $key = $this->keyGenerator->generateUniqueKey($merchantTransfer->getName());
-            $merchantTransfer->setKey($key);
+            $merchantTransfer->setMerchantKey($key);
         }
 
         $merchantEntityTransfer = (new SpyMerchantEntityTransfer())
             ->setName($merchantTransfer->getName())
-            ->setMerchantKey($merchantTransfer->getKey());
+            ->setMerchantKey($merchantTransfer->getMerchantKey());
 
         $merchantEntityTransfer = $this->entityManager->saveMerchant($merchantEntityTransfer);
 
         return (new MerchantTransfer())
             ->setIdMerchant($merchantEntityTransfer->getIdMerchant())
             ->setName($merchantEntityTransfer->getName())
-            ->setKey($merchantEntityTransfer->getMerchantKey());
+            ->setMerchantKey($merchantEntityTransfer->getMerchantKey());
     }
 
     /**
@@ -74,8 +74,8 @@ class MerchantWriter implements MerchantWriterInterface
             ->setIdMerchant($merchantTransfer->getIdMerchant())
             ->setName($merchantTransfer->getName());
 
-        if ($merchantTransfer->getKey()) {
-            $merchantEntityTransfer->setMerchantKey($merchantTransfer->getKey());
+        if ($merchantTransfer->getMerchantKey()) {
+            $merchantEntityTransfer->setMerchantKey($merchantTransfer->getMerchantKey());
         }
 
         $merchantEntityTransfer = $this->entityManager->saveMerchant($merchantEntityTransfer);
@@ -83,7 +83,7 @@ class MerchantWriter implements MerchantWriterInterface
         return (new MerchantTransfer())
             ->setIdMerchant($merchantEntityTransfer->getIdMerchant())
             ->setName($merchantEntityTransfer->getName())
-            ->setKey($merchantEntityTransfer->getMerchantKey());
+            ->setMerchantKey($merchantEntityTransfer->getMerchantKey());
     }
 
     /**

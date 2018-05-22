@@ -1,5 +1,5 @@
 <?php
-namespace SprykerTest\Zed\Communication\Plugin;
+namespace SprykerTest\Zed\MerchantDataImport\Communication\Plugin;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
@@ -12,6 +12,7 @@ use Spryker\Zed\MerchantDataImport\MerchantDataImportConfig;
  * Auto-generated group annotations
  * @group SprykerTest
  * @group Zed
+ * @group MerchantDataImport
  * @group Communication
  * @group Plugin
  * @group MerchantDataImportPluginTest
@@ -38,8 +39,8 @@ class MerchantDataImportPluginTest extends Unit
         $dataImportConfigurationTransfer = new DataImporterConfigurationTransfer();
         $dataImportConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfigurationTransfer);
 
-        $MerchantDataImportPlugin = new MerchantDataImportPlugin();
-        $dataImporterReportTransfer = $MerchantDataImportPlugin->import($dataImportConfigurationTransfer);
+        $dataImportPlugin = new MerchantDataImportPlugin();
+        $dataImporterReportTransfer = $dataImportPlugin->import($dataImportConfigurationTransfer);
 
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
 
@@ -51,7 +52,7 @@ class MerchantDataImportPluginTest extends Unit
      */
     public function testGetImportTypeReturnsTypeOfImporter(): void
     {
-        $MerchantDataImportPlugin = new MerchantDataImportPlugin();
-        $this->assertSame(MerchantDataImportConfig::IMPORT_TYPE_MERCHANT, $MerchantDataImportPlugin->getImportType());
+        $dataImportPlugin = new MerchantDataImportPlugin();
+        $this->assertSame(MerchantDataImportConfig::IMPORT_TYPE_MERCHANT, $dataImportPlugin->getImportType());
     }
 }
