@@ -43,7 +43,10 @@ class ParentBusinessUnitKeyToIdCompanyBusinessUnitStep implements DataImportStep
                 ->findOneByKey($companyBusinessUnitKey);
 
             if (!$idCompanyBusinessUnit) {
-                throw new EntityNotFoundException(sprintf('Could not find business unit by key "%s"', $companyBusinessUnitKey));
+                throw new EntityNotFoundException(sprintf(
+                    'Could not find company business unit by key "%s"',
+                    $companyBusinessUnitKey
+                ));
             }
 
             $this->idCompanyBusinessUnitCache[$companyBusinessUnitKey] = $idCompanyBusinessUnit;
