@@ -14,11 +14,4 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class ChartBusinessFactory extends AbstractBusinessFactory
 {
-    /**
-     * @return \Spryker\Zed\Chart\ChartConfig|\Spryker\Zed\Kernel\AbstractBundleConfig
-     */
-    public function getModuleConfig()
-    {
-        return parent::getConfig();
-    }
 }
