@@ -1,2 +1,9 @@
-company_key,business_unit_key,name,email,phone,external_url,iban,bic
-test-company,test-business-unit,Test business unit,test@spryker.com,1234567890,"",test iban,test bic
+company_key,business_unit_key,name,email,phone,external_url,iban,bic,parent_key
+test-company,test-business-unit,Test business unit,test@spryker.com,1234567890,"",test iban,test bic,""
+BoB-Hotel-Jim,business-unit-jim-1,Restaurant Jim,Restaurant.Jim@spryker.com,12345617,"","","",""
+BoB-Hotel-Jim,business-unit-jim-2,Bar Jim,Bar.Jim@spryker.com,12345617,"","","",""
+BoB-Hotel-Kudamm,business-unit-kudamm-1,Management Ku'damm,Management.Kudamm@spryker.com,12345617,"","","",""
+BoB-Hotel-Mitte,business-unit-mitte-1,Hotel Mitte,Hotel.Mitte@spryker.com,12345617,"","","",""
+BoB-Hotel-Mitte,business-unit-mitte-2,Service Mitte,Service.Mitte@spryker.com,12345617,"","","",""
+BoB-Hotel-Mitte,business-unit-mitte-3,Cleaning Mitte,Cleaning.Mitte@spryker.com,12345617,"","","",""
+BoB-Regular,business-unit-regular-1,Business unit Regular,Business.unit.Regular@spryker.com,12345617,"","","",""
