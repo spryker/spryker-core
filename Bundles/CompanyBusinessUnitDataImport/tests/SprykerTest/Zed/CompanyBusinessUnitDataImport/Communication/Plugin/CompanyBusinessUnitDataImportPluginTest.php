@@ -71,6 +71,23 @@ class CompanyBusinessUnitDataImportPluginTest extends Unit
     /**
      * @return void
      */
+    public function testImportThrowsExceptionWhenParentBusinessUnitNotFound(): void
+    {
+        $this->tester->ensureDatabaseTableIsEmpty();
+
+        $dataImportConfigurationTransfer = $this->getDataImportConfigurationTransfer('import/company_business_unit_with_invalid_parent.csv');
+        $dataImportConfigurationTransfer->setThrowException(true);
+
+        $companyBusinessUnitDataImportPlugin = new CompanyBusinessUnitDataImportPlugin();
+
+        $this->expectException(DataImportException::class);
+        $this->expectExceptionMessage('Could not find business unit by key "invalid parent"');
+        $companyBusinessUnitDataImportPlugin->import($dataImportConfigurationTransfer);
+    }
+
+    /**
+     * @return void
+     */
     public function testGetImportTypeReturnsTypeOfImporter(): void
     {
         $companyBusinessUnitDataImportPlugin = new CompanyBusinessUnitDataImportPlugin();
