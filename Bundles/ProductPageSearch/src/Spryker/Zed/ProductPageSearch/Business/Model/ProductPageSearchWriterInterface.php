@@ -15,7 +15,7 @@ interface ProductPageSearchWriterInterface
     /**
      * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productPageSearchTransfer
      * @param array $data
-     * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch $productPageSearchEntity
+     * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch|null $productPageSearchEntity
      *
      * @return void
      */

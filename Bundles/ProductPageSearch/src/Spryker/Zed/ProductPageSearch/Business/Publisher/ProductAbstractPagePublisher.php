@@ -234,7 +234,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     /**
      * @param \Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface[] $pageDataExpanderPlugins
      * @param array $productAbstractLocalizedEntity
-     * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch $productAbstractPageSearchEntity
+     * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch|null $productAbstractPageSearchEntity
      * @param string $storeName
      * @param bool $isRefresh
      *

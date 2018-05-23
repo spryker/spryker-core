@@ -179,7 +179,7 @@ class EventQueueConsumer implements EventQueueConsumerInterface
      *
      * @return void
      */
-    protected function logConsumerAction($message, Throwable $throwable = null)
+    protected function logConsumerAction($message, ?Throwable $throwable = null)
     {
         $this->eventLogger->log('[async] ' . $message);
 
