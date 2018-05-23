@@ -23,7 +23,7 @@ class MultiCartDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideBusinessLayerDependencies(Container $container)
+    public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = $this->addQuoteFacade($container);
         $container = $this->addMessengerFacade($container);
@@ -36,7 +36,7 @@ class MultiCartDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideCommunicationLayerDependencies(Container $container)
+    public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = $this->addMessengerFacade($container);
 
@@ -62,7 +62,7 @@ class MultiCartDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addMessengerFacade(Container $container)
+    protected function addMessengerFacade(Container $container): Container
     {
         $container[static::FACADE_MESSENGER] = function (Container $container) {
             return new MultiCartToMessengerFacadeBridge($container->getLocator()->messenger()->facade());

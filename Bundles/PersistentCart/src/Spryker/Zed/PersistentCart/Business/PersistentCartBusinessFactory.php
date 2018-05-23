@@ -105,7 +105,9 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
     {
         return new QuoteWriter(
             $this->getQuoteFacade(),
-            $this->createQuoteResponseExpander()
+            $this->createQuoteResponseExpander(),
+            $this->createQuoteResolver(),
+            $this->createQuoteItemOperation()
         );
     }
 
@@ -170,7 +172,7 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Client\CartExtension\Dependency\Plugin\CartChangeRequestExpanderPluginInterface[]
+     * @return \Spryker\Zed\PersistentCartExtension\Dependency\Plugin\CartChangeRequestExpandPluginInterface[]
      */
     protected function getRemoveItemsRequestExpanderPlugins(): array
     {
