@@ -24,6 +24,7 @@ class ProductOptionStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductOptionStorageWriter(
             $this->getProductOptionFacade(),
+            $this->getStoreFacade(),
             $this->getQueryContainer(),
             $this->getConfig()->isSendingToQueue()
         );
@@ -35,5 +36,13 @@ class ProductOptionStorageBusinessFactory extends AbstractBusinessFactory
     protected function getProductOptionFacade()
     {
         return $this->getProvidedDependency(ProductOptionStorageDependencyProvider::FACADE_PRODUCT_OPTION);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOptionStorage\Dependency\Facade\ProductOptionStorageToStoreFacadeInterface
+     */
+    protected function getStoreFacade()
+    {
+        return $this->getProvidedDependency(ProductOptionStorageDependencyProvider::FACADE_STORE);
     }
 }

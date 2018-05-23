@@ -13,9 +13,9 @@ use Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer;
 use Generated\Shared\Transfer\ProductOptionGroupStorageTransfer;
 use Generated\Shared\Transfer\ProductOptionValueStorageTransfer;
 use Generated\Shared\Transfer\ProductOptionValueStorePricesRequestTransfer;
-use Orm\Zed\Product\Persistence\Base\SpyProductAbstractLocalizedAttributes;
 use Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage;
 use Spryker\Zed\ProductOptionStorage\Dependency\Facade\ProductOptionStorageToProductOptionFacadeInterface;
+use Spryker\Zed\ProductOptionStorage\Dependency\Facade\ProductOptionStorageToStoreFacadeInterface;
 use Spryker\Zed\ProductOptionStorage\Persistence\ProductOptionStorageQueryContainerInterface;
 
 class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
@@ -36,13 +36,25 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
     protected $isSendingToQueue = true;
 
     /**
+     * @var \Spryker\Zed\ProductOptionStorage\Dependency\Facade\ProductOptionStorageToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
+     * @var \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    protected $stores = [];
+
+    /**
      * @param \Spryker\Zed\ProductOptionStorage\Dependency\Facade\ProductOptionStorageToProductOptionFacadeInterface $productOptionFacade
+     * @param \Spryker\Zed\ProductOptionStorage\Dependency\Facade\ProductOptionStorageToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\ProductOptionStorage\Persistence\ProductOptionStorageQueryContainerInterface $queryContainer
      * @param bool $isSendingToQueue
      */
-    public function __construct(ProductOptionStorageToProductOptionFacadeInterface $productOptionFacade, ProductOptionStorageQueryContainerInterface $queryContainer, $isSendingToQueue)
+    public function __construct(ProductOptionStorageToProductOptionFacadeInterface $productOptionFacade, ProductOptionStorageToStoreFacadeInterface $storeFacade, ProductOptionStorageQueryContainerInterface $queryContainer, $isSendingToQueue)
     {
         $this->productOptionFacade = $productOptionFacade;
+        $this->storeFacade = $storeFacade;
         $this->queryContainer = $queryContainer;
         $this->isSendingToQueue = $isSendingToQueue;
     }
@@ -54,20 +66,20 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
      */
     public function publish(array $productAbstractIds)
     {
+        $this->stores = $this->storeFacade->getAllStores();
         $productOptionEntities = $this->findProductOptionAbstractEntities($productAbstractIds);
         $productOptions = [];
         foreach ($productOptionEntities as $productOptionEntity) {
             $productOptions[$productOptionEntity['fk_product_abstract']][] = $productOptionEntity;
         }
 
-        $spyProductAbstractLocalizedAttributeEntities = $this->findProductAbstractLocalizedEntities($productAbstractIds);
         $spyProductAbstractOptionStorageEntities = $this->findProductStorageOptionEntitiesByProductAbstractIds($productAbstractIds);
 
-        if (!$spyProductAbstractLocalizedAttributeEntities) {
+        if (!$productOptionEntities) {
             $this->deleteStorageData($spyProductAbstractOptionStorageEntities);
         }
 
-        $this->storeData($spyProductAbstractLocalizedAttributeEntities, $spyProductAbstractOptionStorageEntities, $productOptions);
+        $this->storeData($spyProductAbstractOptionStorageEntities, $productOptions);
     }
 
     /**
@@ -78,10 +90,8 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
     public function unpublish(array $productAbstractIds)
     {
         $spyProductAbstractOptionStorageEntities = $this->findProductStorageOptionEntitiesByProductAbstractIds($productAbstractIds);
-        foreach ($spyProductAbstractOptionStorageEntities as $spyProductAbstractOptionStorageLocalizedEntities) {
-            foreach ($spyProductAbstractOptionStorageLocalizedEntities as $spyProductAbstractOptionStorageLocalizedEntity) {
-                $spyProductAbstractOptionStorageLocalizedEntity->delete();
-            }
+        foreach ($spyProductAbstractOptionStorageEntities as $productAbstractOptionStorageEntity) {
+            $productAbstractOptionStorageEntity->delete();
         }
     }
 
@@ -92,66 +102,69 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
      */
     protected function deleteStorageData(array $spyProductAbstractOptionStorageEntities)
     {
-        foreach ($spyProductAbstractOptionStorageEntities as $spyProductAbstractOptionStorageLocalizedEntities) {
-            foreach ($spyProductAbstractOptionStorageLocalizedEntities as $spyProductAbstractOptionStorageLocalizedEntity) {
-                $spyProductAbstractOptionStorageLocalizedEntity->delete();
-            }
+        foreach ($spyProductAbstractOptionStorageEntities as $productAbstractOptionStorageEntity) {
+            $productAbstractOptionStorageEntity->delete();
         }
     }
 
     /**
-     * @param array $spyProductAbstractLocalizedEntities
      * @param array $spyProductAbstractOptionStorageEntities
-     * @param array $productOptions
+     * @param array $productAbstractWithOptions
      *
      * @return void
      */
-    protected function storeData(array $spyProductAbstractLocalizedEntities, array $spyProductAbstractOptionStorageEntities, array $productOptions)
+    protected function storeData(array $spyProductAbstractOptionStorageEntities, array $productAbstractWithOptions)
     {
-        foreach ($spyProductAbstractLocalizedEntities as $spyProductAbstractLocalizedEntity) {
-            $idProduct = $spyProductAbstractLocalizedEntity->getFkProductAbstract();
-            $localeName = $spyProductAbstractLocalizedEntity->getLocale()->getLocaleName();
-            if (isset($spyProductAbstractOptionStorageEntities[$idProduct][$localeName])) {
-                $this->storeDataSet($spyProductAbstractLocalizedEntity, $productOptions, $spyProductAbstractOptionStorageEntities[$idProduct][$localeName]);
+        foreach ($productAbstractWithOptions as $idProductAbstract => $productOption) {
+            if (isset($spyProductAbstractOptionStorageEntities[$idProductAbstract])) {
+                $this->storeDataSet($idProductAbstract, $productOption, $spyProductAbstractOptionStorageEntities[$idProductAbstract]);
 
                 continue;
             }
 
-            $this->storeDataSet($spyProductAbstractLocalizedEntity, $productOptions);
+            $this->storeDataSet($idProductAbstract, $productOption);
         }
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity
+     * @internal param SpyProductAbstractLocalizedAttributes $productAbstractLocalizedEntity
+     *
+     * @param int $idProductAbstract
      * @param array $productOptions
-     * @param \Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage|null $spyProductAbstractOptionStorageEntity
+     * @param \Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage[] $productAbstractOptionStorageEntities
      *
      * @return void
      */
-    protected function storeDataSet(SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity, array $productOptions, ?SpyProductAbstractOptionStorage $spyProductAbstractOptionStorageEntity = null)
+    protected function storeDataSet($idProductAbstract, array $productOptions, array $productAbstractOptionStorageEntities = [])
     {
-        if ($spyProductAbstractOptionStorageEntity === null) {
-            $spyProductAbstractOptionStorageEntity = new SpyProductAbstractOptionStorage();
+        $storePrices = [];
+        foreach ($this->stores as $store) {
+            $productAbstractOptionStorageTransfers = $this->getProductOptionGroupStorageTransfers($productOptions, $store->getIdStore());
+            if (!empty($productAbstractOptionStorageTransfers->getArrayCopy())) {
+                $storePrices[$store->getName()] = $productAbstractOptionStorageTransfers;
+            }
         }
 
-        if (empty($productOptions[$spyProductAbstractLocalizedEntity->getFkProductAbstract()])) {
-            if (!$spyProductAbstractOptionStorageEntity->isNew()) {
-                $spyProductAbstractOptionStorageEntity->delete();
+        foreach ($storePrices as $store => $productOptionGroupStorageTransfers) {
+            if (isset($productAbstractOptionStorageEntities[$store])) {
+                $spyProductAbstractOptionStorageEntity = $productAbstractOptionStorageEntities[$store];
+                unset($productAbstractOptionStorageEntities[$store]);
+            } else {
+                $spyProductAbstractOptionStorageEntity = new SpyProductAbstractOptionStorage();
             }
 
-            return;
+            $productAbstractOptionStorageTransfer = new ProductAbstractOptionStorageTransfer();
+            $productAbstractOptionStorageTransfer->setIdProductAbstract($idProductAbstract);
+            $productAbstractOptionStorageTransfer->setProductOptionGroups($productOptionGroupStorageTransfers);
+
+            $spyProductAbstractOptionStorageEntity->setFkProductAbstract($idProductAbstract);
+            $spyProductAbstractOptionStorageEntity->setData($productAbstractOptionStorageTransfer->toArray());
+            $spyProductAbstractOptionStorageEntity->setStore($store);
+            $spyProductAbstractOptionStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
+            $spyProductAbstractOptionStorageEntity->save();
         }
 
-        $productOptionGroupStorageTransfers = $this->getProductOptionGroupStorageTransfers($spyProductAbstractLocalizedEntity, $productOptions);
-        $productAbstractOptionStorageTransfer = new ProductAbstractOptionStorageTransfer();
-        $productAbstractOptionStorageTransfer->setIdProductAbstract($spyProductAbstractLocalizedEntity->getFkProductAbstract());
-        $productAbstractOptionStorageTransfer->setProductOptionGroups($productOptionGroupStorageTransfers);
-
-        $spyProductAbstractOptionStorageEntity->setFkProductAbstract($spyProductAbstractLocalizedEntity->getFkProductAbstract());
-        $spyProductAbstractOptionStorageEntity->setData($productAbstractOptionStorageTransfer->toArray());
-        $spyProductAbstractOptionStorageEntity->setLocale($spyProductAbstractLocalizedEntity->getLocale()->getLocaleName());
-        $spyProductAbstractOptionStorageEntity->setIsSendingToQueue($this->isSendingToQueue);
-        $spyProductAbstractOptionStorageEntity->save();
+        $this->deleteStorageData($productAbstractOptionStorageEntities);
     }
 
     /**
@@ -182,33 +195,41 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
     protected function findProductStorageOptionEntitiesByProductAbstractIds(array $productAbstractIds)
     {
         $productAbstractOptionStorageEntities = $this->queryContainer->queryProductAbstractOptionStorageByIds($productAbstractIds)->find();
-        $productAbstractOptionStorageEntitiesByIdAndLocale = [];
+        $productAbstractOptionStorageEntitiesByIdAndStore = [];
         foreach ($productAbstractOptionStorageEntities as $productAbstractOptionStorageEntity) {
-            $productAbstractOptionStorageEntitiesByIdAndLocale[$productAbstractOptionStorageEntity->getFkProductAbstract()][$productAbstractOptionStorageEntity->getLocale()] = $productAbstractOptionStorageEntity;
+            $productAbstractOptionStorageEntitiesByIdAndStore[$productAbstractOptionStorageEntity->getFkProductAbstract()][$productAbstractOptionStorageEntity->getStore()] = $productAbstractOptionStorageEntity;
         }
 
-        return $productAbstractOptionStorageEntitiesByIdAndLocale;
+        return $productAbstractOptionStorageEntitiesByIdAndStore;
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity
      * @param array $productOptions
+     * @param int $idStore
      *
      * @return array|\ArrayObject
      */
-    protected function getProductOptionGroupStorageTransfers(SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity, array $productOptions)
+    protected function getProductOptionGroupStorageTransfers(array $productOptions, $idStore)
     {
         $productOptionGroupStorageTransfers = new ArrayObject();
-        foreach ($productOptions[$spyProductAbstractLocalizedEntity->getFkProductAbstract()] as $productOption) {
+        foreach ($productOptions as $productOption) {
             $productOptionGroupStorageTransfer = new ProductOptionGroupStorageTransfer();
             $productOptionGroupStorageTransfer->setName($productOption['SpyProductOptionGroup']['name']);
+            $hasPriceValues = false;
             foreach ($productOption['SpyProductOptionGroup']['SpyProductOptionValues'] as $productOptionValue) {
-                $productOptionGroupStorageTransfer->addProductOptionValue((new ProductOptionValueStorageTransfer())->setIdProductOptionValue($productOptionValue['id_product_option_value'])
-                    ->setSku($productOptionValue['sku'])
-                    ->setPrices($this->getPrices($productOptionValue['ProductOptionValuePrices']))
-                    ->setValue($productOptionValue['value']));
+                $prices = $this->getPrices($productOptionValue['ProductOptionValuePrices'], $idStore);
+                if (!empty($prices)) {
+                    $productOptionGroupStorageTransfer->addProductOptionValue((new ProductOptionValueStorageTransfer())->setIdProductOptionValue($productOptionValue['id_product_option_value'])
+                        ->setSku($productOptionValue['sku'])
+                        ->setPrices($prices)
+                        ->setValue($productOptionValue['value']));
+
+                    $hasPriceValues = true;
+                }
             }
-            $productOptionGroupStorageTransfers[] = $productOptionGroupStorageTransfer;
+            if ($hasPriceValues) {
+                $productOptionGroupStorageTransfers[] = $productOptionGroupStorageTransfer;
+            }
         }
 
         return $productOptionGroupStorageTransfers;
@@ -216,15 +237,22 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
 
     /**
      * @param array $prices
+     * @param int $idStore
      *
      * @return array
      */
-    protected function getPrices(array $prices)
+    protected function getPrices(array $prices, $idStore)
     {
         $moneyValueCollection = $this->transformPriceEntityCollectionToMoneyValueTransferCollection($prices);
+        $moneyValueCollectionWithSpecificStore = new ArrayObject();
+        foreach ($moneyValueCollection as $item) {
+            if ($item['fkStore'] === $idStore) {
+                $moneyValueCollectionWithSpecificStore->append($item);
+            }
+        }
 
-        $priceResponse = $this->productOptionFacade->getProductOptionValueStorePrices(
-            (new ProductOptionValueStorePricesRequestTransfer())->setPrices($moneyValueCollection)
+        $priceResponse = $this->productOptionFacade->getAllProductOptionValuePrices(
+            (new ProductOptionValueStorePricesRequestTransfer())->setPrices($moneyValueCollectionWithSpecificStore)
         );
 
         return $priceResponse->getStorePrices();
