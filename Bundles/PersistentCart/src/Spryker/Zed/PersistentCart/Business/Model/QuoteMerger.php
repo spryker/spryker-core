@@ -33,7 +33,7 @@ class QuoteMerger implements QuoteMergerInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function mergeItems(QuoteTransfer $targetQuote, QuoteTransfer $sourceQuote)
+    protected function mergeItems(QuoteTransfer $targetQuote, QuoteTransfer $sourceQuote): QuoteTransfer
     {
         $existingItems = $targetQuote->getItems();
         $cartIndex = $this->createQuoteItemIndex($existingItems);
@@ -41,7 +41,7 @@ class QuoteMerger implements QuoteMergerInterface
         foreach ($sourceQuote->getItems() as $itemTransfer) {
             $itemIdentifier = $this->getItemIdentifier($itemTransfer);
             if (isset($cartIndex[$itemIdentifier])) {
-                $this->increaseExistingItem($existingItems, $cartIndex[$itemIdentifier], $itemTransfer);
+                $this->increaseExistingItem((array)$existingItems, $cartIndex[$itemIdentifier], $itemTransfer);
             } else {
                 $existingItems->append($itemTransfer);
             }
@@ -55,7 +55,7 @@ class QuoteMerger implements QuoteMergerInterface
      *
      * @return array
      */
-    protected function createQuoteItemIndex(ArrayObject $cartItems)
+    protected function createQuoteItemIndex(ArrayObject $cartItems): array
     {
         $cartIndex = [];
         foreach ($cartItems as $key => $itemTransfer) {
@@ -71,7 +71,7 @@ class QuoteMerger implements QuoteMergerInterface
      *
      * @return string
      */
-    protected function getItemIdentifier(ItemTransfer $itemTransfer)
+    protected function getItemIdentifier(ItemTransfer $itemTransfer): string
     {
         return $itemTransfer->getGroupKey() ?: $itemTransfer->getSku();
     }
@@ -83,7 +83,7 @@ class QuoteMerger implements QuoteMergerInterface
      *
      * @return void
      */
-    protected function increaseExistingItem($existingItems, $index, $itemTransfer)
+    protected function increaseExistingItem(array $existingItems, int $index, ItemTransfer $itemTransfer): void
     {
         $existingItemTransfer = $existingItems[$index];
         $changedQuantity = $existingItemTransfer->getQuantity() + $itemTransfer->getQuantity();
