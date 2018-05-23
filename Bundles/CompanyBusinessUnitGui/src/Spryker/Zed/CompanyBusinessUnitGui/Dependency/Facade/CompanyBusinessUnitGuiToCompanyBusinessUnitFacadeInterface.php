@@ -46,4 +46,13 @@ interface CompanyBusinessUnitGuiToCompanyBusinessUnitFacadeInterface
     public function getCompanyBusinessUnitCollection(
         CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer
     ): CompanyBusinessUnitCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
+     */
+    public function delete(
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+    ): CompanyBusinessUnitResponseTransfer;
 }

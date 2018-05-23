@@ -61,6 +61,17 @@ class CompanyBusinessUnitGuiToCompanyBusinessUnitFacadeBridge implements Company
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
+     */
+    public function delete(
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+    ): CompanyBusinessUnitResponseTransfer {
+        return $this->companyBusinessUnitFacade->delete($companyBusinessUnitTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer
