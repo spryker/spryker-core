@@ -86,6 +86,18 @@ class FileManagerQueryContainer extends AbstractQueryContainer implements FileMa
      *
      * {@inheritdoc}
      */
+    public function queryFileType()
+    {
+        $query = $this->getFactory()->createFileTypeQuery();
+
+        return $query;
+    }
+
+    /**
+     * @api
+     *
+     * {@inheritdoc}
+     */
     public function queryFileDirectoryById($idFileDirectory)
     {
         return $this->getFactory()

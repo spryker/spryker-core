@@ -16,6 +16,7 @@ use Spryker\Zed\FileManagerGui\Communication\Form\Tabs\FileFormTabs;
 use Spryker\Zed\FileManagerGui\Communication\Table\FileInfoEditTable;
 use Spryker\Zed\FileManagerGui\Communication\Table\FileInfoViewTable;
 use Spryker\Zed\FileManagerGui\Communication\Table\FileTable;
+use Spryker\Zed\FileManagerGui\Communication\Table\FileTypeSettingsTable;
 use Spryker\Zed\FileManagerGui\FileManagerGuiDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
@@ -61,6 +62,18 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
         return new FileInfoViewTable(
             $this->getFileManagerQueryContainer(),
             $idFile
+        );
+    }
+
+    /**
+     * @param int|null $fileDirectoryId
+     *
+     * @return \Spryker\Zed\FileManagerGui\Communication\Table\FileTable
+     */
+    public function createFileTypeSettingsTable()
+    {
+        return new FileTypeSettingsTable(
+            $this->getFileManagerQueryContainer()
         );
     }
 

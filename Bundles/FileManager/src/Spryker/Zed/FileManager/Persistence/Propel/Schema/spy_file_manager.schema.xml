@@ -81,4 +81,12 @@
         <id-method-parameter value="spy_file_directory_localized_attributes_pk_seq"/>
     </table>
 
+    <table name="spy_file_type" phpName="SpyFileType">
+        <column name="id_file_type" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="extension" type="VARCHAR" size="10" required="true"/>
+        <column name="mime_type" type="VARCHAR" size="255" required="true"/>
+        <column name="is_allowed" type="BOOLEAN" required="true"/>
+        <id-method-parameter value="spy_file_type_pk_seq"/>
+    </table>
+
 </database>

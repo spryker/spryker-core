@@ -1,0 +1,19 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'File types settings' } %}
+
+
+        {% block widget_content %}
+            {{ fileTypeSettings | raw }}
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-file-type.js"></script>
+{% endblock %}

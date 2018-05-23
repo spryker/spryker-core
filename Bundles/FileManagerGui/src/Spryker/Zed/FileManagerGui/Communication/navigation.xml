@@ -21,6 +21,14 @@
                 <action>index</action>
                 <visible>1</visible>
             </list>
+            <settings>
+                <label>File Settings</label>
+                <title>File Settings</title>
+                <bundle>file-manager-gui</bundle>
+                <controller>settings</controller>
+                <action>index</action>
+                <visible>1</visible>
+            </settings>
         </pages>
     </file-manager>
 </config>

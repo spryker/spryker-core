@@ -12,6 +12,7 @@ use Orm\Zed\FileManager\Persistence\SpyFileDirectoryQuery;
 use Orm\Zed\FileManager\Persistence\SpyFileInfoQuery;
 use Orm\Zed\FileManager\Persistence\SpyFileLocalizedAttributesQuery;
 use Orm\Zed\FileManager\Persistence\SpyFileQuery;
+use Orm\Zed\FileManager\Persistence\SpyFileTypeQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -26,6 +27,14 @@ class FileManagerPersistenceFactory extends AbstractPersistenceFactory
     public function createFileQuery()
     {
         return SpyFileQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\FileManager\Persistence\SpyFileTypeQuery
+     */
+    public function createFileTypeQuery()
+    {
+        return SpyFileTypeQuery::create();
     }
 
     /**
