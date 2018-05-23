@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<config>
+    <merchant-gui>
+        <label>Merchants</label>
+        <title>Merchants</title>
+        <icon>fa-file-text-o</icon>
+        <pages>
+            <page>
+                <label>Merchants</label>
+                <title>Merchants</title>
+                <bundle>merchant-gui</bundle>
+                <controller>list-merchant</controller>
+                <action>index</action>
+            </page>
+        </pages>
+    </merchant-gui>
+</config>
