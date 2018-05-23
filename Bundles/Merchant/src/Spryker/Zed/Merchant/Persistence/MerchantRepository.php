@@ -7,8 +7,9 @@
 
 namespace Spryker\Zed\Merchant\Persistence;
 
-use Generated\Shared\Transfer\SpyMerchantEntityTransfer;
+use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
+use Spryker\Zed\Merchant\Business\Exception\MerchantNotFoundException;
 
 /**
  * @method \Spryker\Zed\Merchant\Persistence\MerchantPersistenceFactory getFactory()
@@ -16,17 +17,29 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class MerchantRepository extends AbstractRepository implements MerchantRepositoryInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param int $idMerchant
      *
-     * @return \Generated\Shared\Transfer\SpyMerchantEntityTransfer|null
+     * @throws \Spryker\Zed\Merchant\Business\Exception\MerchantNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\MerchantTransfer
      */
-    public function getMerchantById(int $idMerchant): ?SpyMerchantEntityTransfer
+    public function getMerchantById(int $idMerchant): MerchantTransfer
     {
-        $query = $this->getFactory()->createMerchantQuery()
-            ->filterByIdMerchant($idMerchant);
+        $spyMerchant = $this->getFactory()
+            ->createMerchantQuery()
+            ->filterByIdMerchant($idMerchant)
+            ->findOne();
 
-        return $this->buildQueryFromCriteria($query)->findOne();
+        if (!$spyMerchant) {
+            throw new MerchantNotFoundException();
+        }
+
+        return $this->getFactory()
+            ->createMerchantMapper()
+            ->mapEntityToMerchantTransfer($spyMerchant, new MerchantTransfer());
     }
 }
