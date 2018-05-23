@@ -24,7 +24,7 @@ class BusinessOnBehalfDataImportPlugin extends AbstractPlugin implements DataImp
      */
     public function import(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
-        return $this->getFacade()->import($dataImporterConfigurationTransfer);
+        return $this->getFacade()->importCompanyUser($dataImporterConfigurationTransfer);
     }
 
     /**

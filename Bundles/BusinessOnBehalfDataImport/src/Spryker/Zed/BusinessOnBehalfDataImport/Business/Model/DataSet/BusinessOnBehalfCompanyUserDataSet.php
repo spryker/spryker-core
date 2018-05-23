@@ -6,7 +6,7 @@
  */
 namespace Spryker\Zed\BusinessOnBehalfDataImport\Business\Model\DataSet;
 
-interface BusinessOnBehalfDataSet
+interface BusinessOnBehalfCompanyUserDataSet
 {
     public const BUSINESS_UNIT_KEY = 'business_unit_key';
     public const COMPANY_KEY = 'company_key';

@@ -24,8 +24,8 @@ class BusinessOnBehalfDataImportFacade extends AbstractFacade implements Busines
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
-    public function import(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer): DataImporterReportTransfer
+    public function importCompanyUser(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer): DataImporterReportTransfer
     {
-        return $this->getFactory()->createCompanyBusinessUnitDataImport()->import($dataImporterConfigurationTransfer);
+        return $this->getFactory()->createCompanyUserDataImport()->import($dataImporterConfigurationTransfer);
     }
 }

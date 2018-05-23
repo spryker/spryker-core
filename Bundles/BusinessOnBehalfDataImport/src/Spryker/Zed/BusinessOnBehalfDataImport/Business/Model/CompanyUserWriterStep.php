@@ -7,7 +7,7 @@
 namespace Spryker\Zed\BusinessOnBehalfDataImport\Business\Model;
 
 use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
-use Spryker\Zed\BusinessOnBehalfDataImport\Business\Model\DataSet\BusinessOnBehalfDataSet;
+use Spryker\Zed\BusinessOnBehalfDataImport\Business\Model\DataSet\BusinessOnBehalfCompanyUserDataSet;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
@@ -21,9 +21,9 @@ class CompanyUserWriterStep implements DataImportStepInterface
     public function execute(DataSetInterface $dataSet): void
     {
         $companyUserEntity = SpyCompanyUserQuery::create()
-            ->filterByFkCompany($dataSet[BusinessOnBehalfDataSet::ID_COMPANY])
-            ->filterByFkCompanyBusinessUnit($dataSet[BusinessOnBehalfDataSet::ID_BUSINESS_UNIT])
-            ->filterByFkCustomer($dataSet[BusinessOnBehalfDataSet::ID_CUSTOMER])
+            ->filterByFkCompany($dataSet[BusinessOnBehalfCompanyUserDataSet::ID_COMPANY])
+            ->filterByFkCompanyBusinessUnit($dataSet[BusinessOnBehalfCompanyUserDataSet::ID_BUSINESS_UNIT])
+            ->filterByFkCustomer($dataSet[BusinessOnBehalfCompanyUserDataSet::ID_CUSTOMER])
             ->findOneOrCreate();
 
         $companyUserEntity->save();

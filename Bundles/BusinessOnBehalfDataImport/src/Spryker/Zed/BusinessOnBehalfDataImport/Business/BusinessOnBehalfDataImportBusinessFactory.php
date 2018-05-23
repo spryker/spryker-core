@@ -23,7 +23,7 @@ class BusinessOnBehalfDataImportBusinessFactory extends DataImportBusinessFactor
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
-    public function createCompanyBusinessUnitDataImport(): DataImporterInterface
+    public function createCompanyUserDataImport(): DataImporterInterface
     {
         $dataImporter = $this->getCsvDataImporterFromConfig($this->getConfig()->getBusinessOnBehalfDataImporterConfiguration());
 

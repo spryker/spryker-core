@@ -9,7 +9,7 @@ namespace Spryker\Zed\BusinessOnBehalfDataImport\Business\Model\Step;
 
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
-use Spryker\Zed\BusinessOnBehalfDataImport\Business\Model\DataSet\BusinessOnBehalfDataSet;
+use Spryker\Zed\BusinessOnBehalfDataImport\Business\Model\DataSet\BusinessOnBehalfCompanyUserDataSet;
 use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
@@ -28,9 +28,9 @@ class CustomerReferenceToIdCustomerStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $customerReference = $dataSet[BusinessOnBehalfDataSet::CUSTOMER_REFERENCE];
+        $customerReference = $dataSet[BusinessOnBehalfCompanyUserDataSet::CUSTOMER_REFERENCE];
 
-        $dataSet[BusinessOnBehalfDataSet::ID_CUSTOMER] = $this->getIdCustomer($customerReference);
+        $dataSet[BusinessOnBehalfCompanyUserDataSet::ID_CUSTOMER] = $this->getIdCustomer($customerReference);
     }
 
     /**

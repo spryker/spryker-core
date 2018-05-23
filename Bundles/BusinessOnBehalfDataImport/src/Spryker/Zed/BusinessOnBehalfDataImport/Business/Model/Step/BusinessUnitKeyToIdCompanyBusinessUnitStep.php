@@ -9,7 +9,7 @@ namespace Spryker\Zed\BusinessOnBehalfDataImport\Business\Model\Step;
 
 use Orm\Zed\CompanyBusinessUnit\Persistence\Map\SpyCompanyBusinessUnitTableMap;
 use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
-use Spryker\Zed\BusinessOnBehalfDataImport\Business\Model\DataSet\BusinessOnBehalfDataSet;
+use Spryker\Zed\BusinessOnBehalfDataImport\Business\Model\DataSet\BusinessOnBehalfCompanyUserDataSet;
 use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
@@ -28,9 +28,9 @@ class BusinessUnitKeyToIdCompanyBusinessUnitStep implements DataImportStepInterf
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $businessUnitKey = $dataSet[BusinessOnBehalfDataSet::BUSINESS_UNIT_KEY];
+        $businessUnitKey = $dataSet[BusinessOnBehalfCompanyUserDataSet::BUSINESS_UNIT_KEY];
 
-        $dataSet[BusinessOnBehalfDataSet::ID_BUSINESS_UNIT] = $this->getIdBusinessUnit($businessUnitKey);
+        $dataSet[BusinessOnBehalfCompanyUserDataSet::ID_BUSINESS_UNIT] = $this->getIdBusinessUnit($businessUnitKey);
     }
 
     /**
