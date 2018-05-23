@@ -23,4 +23,14 @@ interface MerchantRelationshipRepositoryInterface
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
      */
     public function getMerchantRelationshipById(int $idMerchantRelationship): MerchantRelationshipTransfer;
+
+    /**
+     * Specification:
+     * - Returns ids of all assigned company business units by merchant relationship id.
+     *
+     * @param int $idMerchantRelationship
+     *
+     * @return int[]
+     */
+    public function getIdAssignedBusinessUnitsByMerchantRelationshipId(int $idMerchantRelationship): array;
 }

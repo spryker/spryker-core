@@ -36,4 +36,14 @@ class MerchantRelationshipReader implements MerchantRelationshipReaderInterface
 
         return $this->repository->getMerchantRelationshipById($merchantRelationshipTransfer->getIdMerchantRelationship());
     }
+
+    /**
+     * @param int $idMerchantRelationship
+     *
+     * @return int[]
+     */
+    public function getIdAssignedBusinessUnitsByMerchantRelationshipId(int $idMerchantRelationship): array
+    {
+        return $this->repository->getIdAssignedBusinessUnitsByMerchantRelationshipId($idMerchantRelationship);
+    }
 }

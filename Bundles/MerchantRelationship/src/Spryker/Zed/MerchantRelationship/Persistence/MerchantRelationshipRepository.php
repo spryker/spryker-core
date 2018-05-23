@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantRelationship\Persistence;
 
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
+use Orm\Zed\MerchantRelationship\Persistence\Map\SpyMerchantRelationshipToCompanyBusinessUnitTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\MerchantRelationship\Business\Exception\MerchantRelationshipNotFoundException;
 
@@ -41,5 +42,23 @@ class MerchantRelationshipRepository extends AbstractRepository implements Merch
         return $this->getFactory()
             ->createMerchantRelationshipMapper()
             ->mapEntityToMerchantRelationshipTransfer($spyMerchantRelation, new MerchantRelationshipTransfer());
+    }
+
+    /**
+     * Specification:
+     * - Returns ids of all assigned company business units by merchant relationship id.
+     *
+     * @param int $idMerchantRelationship
+     *
+     * @return int[]
+     */
+    public function getIdAssignedBusinessUnitsByMerchantRelationshipId(int $idMerchantRelationship): array
+    {
+        return $this->getFactory()
+            ->createMerchantRelationshipToCompanyBusinessUnitQuery()
+            ->filterByFkMerchantRelationship($idMerchantRelationship)
+            ->select([SpyMerchantRelationshipToCompanyBusinessUnitTableMap::COL_FK_COMPANY_BUSINESS_UNIT])
+            ->find()
+            ->toArray();
     }
 }

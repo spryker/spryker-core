@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\MerchantRelationship\Persistence\Mapper;
 
+use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
+use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnit;
 use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationship;
 
 class MerchantRelationshipMapper implements MerchantRelationshipMapperInterface
@@ -39,8 +42,40 @@ class MerchantRelationshipMapper implements MerchantRelationshipMapperInterface
         SpyMerchantRelationship $spyMerchantRelationship,
         MerchantRelationshipTransfer $merchantRelationshipTransfer
     ): MerchantRelationshipTransfer {
-        return $merchantRelationshipTransfer->fromArray(
+        $merchantRelationshipTransfer->fromArray(
             $spyMerchantRelationship->toArray(),
+            true
+        );
+        $merchantRelationshipTransfer->setOwnerCompanyBusinessUnit(
+            $this->mapCompanyBusinessUnitEntityToTransfer($spyMerchantRelationship->getCompanyBusinessUnit(), new CompanyBusinessUnitTransfer())
+        );
+
+        $merchantRelationshipTransfer->setAssigneeCompanyBusinessUnits(new CompanyBusinessUnitCollectionTransfer());
+        foreach ($spyMerchantRelationship->getSpyMerchantRelationshipToCompanyBusinessUnits() as $spyMerchantRelationshipToCompanyBusinessUnits) {
+            $merchantRelationshipTransfer->getAssigneeCompanyBusinessUnits()
+                ->addCompanyBusinessUnit(
+                    $this->mapCompanyBusinessUnitEntityToTransfer(
+                        $spyMerchantRelationshipToCompanyBusinessUnits->getCompanyBusinessUnit(),
+                        new CompanyBusinessUnitTransfer()
+                    )
+                );
+        }
+
+        return $merchantRelationshipTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnit $spyCompanyBusinessUnit
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
+     */
+    protected function mapCompanyBusinessUnitEntityToTransfer(
+        SpyCompanyBusinessUnit $spyCompanyBusinessUnit,
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+    ): CompanyBusinessUnitTransfer {
+        return $companyBusinessUnitTransfer->fromArray(
+            $spyCompanyBusinessUnit->toArray(),
             true
         );
     }

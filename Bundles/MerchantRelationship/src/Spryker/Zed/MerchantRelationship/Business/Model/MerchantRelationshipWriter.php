@@ -18,11 +18,20 @@ class MerchantRelationshipWriter implements MerchantRelationshipWriterInterface
     protected $entityManager;
 
     /**
-     * @param \Spryker\Zed\MerchantRelationship\Persistence\MerchantRelationshipEntityManagerInterface $entityManager
+     * @var \Spryker\Zed\MerchantRelationship\Business\Model\MerchantRelationshipReaderInterface
      */
-    public function __construct(MerchantRelationshipEntityManagerInterface $entityManager)
-    {
+    protected $merchantRelationshipReader;
+
+    /**
+     * @param \Spryker\Zed\MerchantRelationship\Persistence\MerchantRelationshipEntityManagerInterface $entityManager
+     * @param \Spryker\Zed\MerchantRelationship\Business\Model\MerchantRelationshipReaderInterface $merchantRelationshipReader
+     */
+    public function __construct(
+        MerchantRelationshipEntityManagerInterface $entityManager,
+        MerchantRelationshipReaderInterface $merchantRelationshipReader
+    ) {
         $this->entityManager = $entityManager;
+        $this->merchantRelationshipReader = $merchantRelationshipReader;
     }
 
     /**
@@ -35,7 +44,10 @@ class MerchantRelationshipWriter implements MerchantRelationshipWriterInterface
         $merchantRelationTransfer->requireFkMerchant()
             ->requireFkCompanyBusinessUnit();
 
-        return $this->entityManager->saveMerchantRelationship($merchantRelationTransfer);
+        $merchantRelationTransfer = $this->entityManager->saveMerchantRelationship($merchantRelationTransfer);
+        $this->saveAssignedCompanyBusinessUnits($merchantRelationTransfer);
+
+        return $merchantRelationTransfer;
     }
 
     /**
@@ -49,7 +61,10 @@ class MerchantRelationshipWriter implements MerchantRelationshipWriterInterface
             ->requireFkMerchant()
             ->requireFkCompanyBusinessUnit();
 
-        return $this->entityManager->saveMerchantRelationship($merchantRelationTransfer);
+        $merchantRelationTransfer = $this->entityManager->saveMerchantRelationship($merchantRelationTransfer);
+        $this->saveAssignedCompanyBusinessUnits($merchantRelationTransfer);
+
+        return $merchantRelationTransfer;
     }
 
     /**
@@ -62,5 +77,53 @@ class MerchantRelationshipWriter implements MerchantRelationshipWriterInterface
         $merchantRelationTransfer->requireIdMerchantRelationship();
 
         $this->entityManager->deleteMerchantRelationshipById($merchantRelationTransfer->getIdMerchantRelationship());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationTransfer
+     *
+     * @return void
+     */
+    protected function saveAssignedCompanyBusinessUnits(MerchantRelationshipTransfer $merchantRelationTransfer): void
+    {
+        $currentIdAssignedCompanyBusinessUnits = $this->merchantRelationshipReader
+            ->getIdAssignedBusinessUnitsByMerchantRelationshipId($merchantRelationTransfer->getIdMerchantRelationship());
+        $requestedIdAssignedCompanyBusinessUnits = $this->findIdAssignedCompanyBusinessUnits($merchantRelationTransfer);
+
+        $saveIdAssignedCompanyBusinessUnits = array_diff($requestedIdAssignedCompanyBusinessUnits, $currentIdAssignedCompanyBusinessUnits);
+        $deleteIdAssignedCompanyBusinessUnits = array_diff($currentIdAssignedCompanyBusinessUnits, $requestedIdAssignedCompanyBusinessUnits);
+
+        $this->entityManager->addAssignedCompanyBusinessUnits(
+            $saveIdAssignedCompanyBusinessUnits,
+            $merchantRelationTransfer->getIdMerchantRelationship()
+        );
+        $this->entityManager->removeAssignedCompanyBusinessUnits(
+            $deleteIdAssignedCompanyBusinessUnits,
+            $merchantRelationTransfer->getIdMerchantRelationship()
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationTransfer
+     *
+     * @return int[]
+     */
+    protected function findIdAssignedCompanyBusinessUnits($merchantRelationTransfer): array
+    {
+        if (!$merchantRelationTransfer->getAssigneeCompanyBusinessUnits()) {
+            return [];
+        }
+
+        $companyBusinessUnits = $merchantRelationTransfer->getAssigneeCompanyBusinessUnits()->getCompanyBusinessUnits();
+        if (!$companyBusinessUnits) {
+            return [];
+        }
+
+        $ids = [];
+        foreach ($companyBusinessUnits as $companyBusinessUnit) {
+            $ids[] = $companyBusinessUnit->getIdCompanyBusinessUnit();
+        }
+
+        return $ids;
     }
 }

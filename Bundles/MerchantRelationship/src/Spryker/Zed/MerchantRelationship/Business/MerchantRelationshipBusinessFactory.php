@@ -26,7 +26,8 @@ class MerchantRelationshipBusinessFactory extends AbstractBusinessFactory
     public function createMerchantRelationshipWriter(): MerchantRelationshipWriterInterface
     {
         return new MerchantRelationshipWriter(
-            $this->getEntityManager()
+            $this->getEntityManager(),
+            $this->createMerchantRelationshipReader()
         );
     }
 
