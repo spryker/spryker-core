@@ -35,7 +35,7 @@ class ErrorLogger implements ErrorLoggerInterface
     }
 
     /**
-     * @param \Exception|\Throwable $exception
+     * @param \Throwable $exception
      *
      * @return void
      */
@@ -51,7 +51,7 @@ class ErrorLogger implements ErrorLoggerInterface
     }
 
     /**
-     * @param \Exception|\Throwable $exception
+     * @param \Throwable $exception
      *
      * @return string
      */
