@@ -10,6 +10,8 @@ namespace Spryker\Zed\CompanyBusinessUnitGui\Communication\Table;
 use Orm\Zed\CompanyBusinessUnit\Persistence\Map\SpyCompanyBusinessUnitTableMap;
 use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnit;
 use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
+use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Shared\CompanyBusinessUnitGui\CompanyBusinessUnitGuiConstants;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -103,7 +105,10 @@ class CompanyBusinessUnitTable extends AbstractTable
     {
         $result = '';
         if ($spyCompanyBusinessUnit->getSpyCompanyUnitAddressToCompanyBusinessUnitsJoinCompanyUnitAddress()->count() > 0) {
-            $address = $spyCompanyBusinessUnit->getSpyCompanyUnitAddressToCompanyBusinessUnitsJoinCompanyUnitAddress()[0]->getCompanyUnitAddress();
+            $address = $spyCompanyBusinessUnit
+                ->getSpyCompanyUnitAddressToCompanyBusinessUnitsJoinCompanyUnitAddress()[0]
+                ->getCompanyUnitAddress();
+
             $result = sprintf(
                 static::FORMAT_ADDRESS,
                 $address->getCity(),
@@ -124,9 +129,22 @@ class CompanyBusinessUnitTable extends AbstractTable
     {
         $buttons = [];
 
+        $idCompanyBusinessUnit = $spyCompanyBusinessUnit->getIdCompanyBusinessUnit();
+
         $buttons[] = $this->generateEditButton(
-            sprintf(static::URL_COMPANY_BUSINESS_UNIT_EDIT, static::REQUEST_ID_COMPANY_BUSINESS_UNIT, $spyCompanyBusinessUnit->getIdCompanyBusinessUnit()),
+            sprintf(
+                static::URL_COMPANY_BUSINESS_UNIT_EDIT,
+                static::REQUEST_ID_COMPANY_BUSINESS_UNIT,
+                $idCompanyBusinessUnit
+            ),
             'Edit'
+        );
+
+        $buttons[] = $this->generateRemoveButton(
+            Url::generate(CompanyBusinessUnitGuiConstants::URL_COMPANY_BUSINESS_UNIT_DELETE, [
+                CompanyBusinessUnitGuiConstants::REQUEST_ID_COMPANY_BUSINESS_UNIT => $idCompanyBusinessUnit,
+            ]),
+            'Delete'
         );
 
         return implode(' ', $buttons);
