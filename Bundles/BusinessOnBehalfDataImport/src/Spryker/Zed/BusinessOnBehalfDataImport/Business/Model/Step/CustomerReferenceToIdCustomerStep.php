@@ -19,31 +19,43 @@ class CustomerReferenceToIdCustomerStep implements DataImportStepInterface
     /**
      * @var array
      */
-    protected $idCustomerCache = [];
+    protected $idCustomerBuffer = [];
 
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     *
-     * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException
      *
      * @return void
      */
     public function execute(DataSetInterface $dataSet): void
     {
         $customerReference = $dataSet[BusinessOnBehalfDataSet::CUSTOMER_REFERENCE];
-        if (!isset($this->idCustomerCache[$customerReference])) {
-            $customerQuery = SpyCustomerQuery::create();
-            $idCustomer = $customerQuery
-                ->select(SpyCustomerTableMap::COL_ID_CUSTOMER)
-                ->findOneByCustomerReference($customerReference);
 
-            if (!$idCustomer) {
-                throw new EntityNotFoundException(sprintf('Could not find customer by reference "%s"', $customerReference));
-            }
+        $dataSet[BusinessOnBehalfDataSet::ID_CUSTOMER] = $this->getIdCustomer($customerReference);
+    }
 
-            $this->idCustomerCache[$customerReference] = $idCustomer;
+    /**
+     * @param string $customerReference
+     *
+     * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException
+     *
+     * @return int
+     */
+    protected function getIdCustomer(string $customerReference): int
+    {
+        if (isset($this->idCustomerBuffer[$customerReference])) {
+            return $this->idCustomerBuffer[$customerReference];
         }
 
-        $dataSet[BusinessOnBehalfDataSet::ID_CUSTOMER] = $this->idCustomerCache[$customerReference];
+        $idCustomer = SpyCustomerQuery::create()
+            ->select(SpyCustomerTableMap::COL_ID_CUSTOMER)
+            ->findOneByCustomerReference($customerReference);
+
+        if (!$idCustomer) {
+            throw new EntityNotFoundException(sprintf('Could not find customer by reference "%s"', $customerReference));
+        }
+
+        $this->idCustomerBuffer[$customerReference] = $idCustomer;
+
+        return $this->idCustomerBuffer[$customerReference];
     }
 }

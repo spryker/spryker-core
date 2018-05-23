@@ -19,30 +19,43 @@ class BusinessUnitKeyToIdCompanyBusinessUnitStep implements DataImportStepInterf
     /**
      * @var array
      */
-    protected $idBusinessUnitCache = [];
+    protected $idBusinessUnitBuffer = [];
 
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     *
-     * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException
      *
      * @return void
      */
     public function execute(DataSetInterface $dataSet): void
     {
         $businessUnitKey = $dataSet[BusinessOnBehalfDataSet::BUSINESS_UNIT_KEY];
-        if (!isset($this->idBusinessUnitCache[$businessUnitKey])) {
-            $idBusinessUnit = SpyCompanyBusinessUnitQuery::create()
-                ->select(SpyCompanyBusinessUnitTableMap::COL_ID_COMPANY_BUSINESS_UNIT)
-                ->findOneByKey($businessUnitKey);
 
-            if (!$idBusinessUnit) {
-                throw new EntityNotFoundException(sprintf('Could not find company business unit by key "%s"', $businessUnitKey));
-            }
+        $dataSet[BusinessOnBehalfDataSet::ID_BUSINESS_UNIT] = $this->getIdBusinessUnit($businessUnitKey);
+    }
 
-            $this->idBusinessUnitCache[$businessUnitKey] = $idBusinessUnit;
+    /**
+     * @param string $businessUnitKey
+     *
+     * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException
+     *
+     * @return int
+     */
+    protected function getIdBusinessUnit(string $businessUnitKey): int
+    {
+        if (isset($this->idBusinessUnitBuffer[$businessUnitKey])) {
+            return $this->idBusinessUnitBuffer[$businessUnitKey];
         }
 
-        $dataSet[BusinessOnBehalfDataSet::ID_BUSINESS_UNIT] = $this->idBusinessUnitCache[$businessUnitKey];
+        $idBusinessUnit = SpyCompanyBusinessUnitQuery::create()
+            ->select(SpyCompanyBusinessUnitTableMap::COL_ID_COMPANY_BUSINESS_UNIT)
+            ->findOneByKey($businessUnitKey);
+
+        if (!$idBusinessUnit) {
+            throw new EntityNotFoundException(sprintf('Could not find company business unit by key "%s"', $businessUnitKey));
+        }
+
+        $this->idBusinessUnitBuffer[$businessUnitKey] = $idBusinessUnit;
+
+        return $this->idBusinessUnitBuffer[$businessUnitKey];
     }
 }
