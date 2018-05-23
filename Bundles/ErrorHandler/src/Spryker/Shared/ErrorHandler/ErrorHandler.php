@@ -53,8 +53,6 @@ class ErrorHandler
             echo $this->errorRenderer->render($exception);
         } catch (Throwable $internalException) {
             $this->errorLogger->log($internalException);
-        } catch (Exception $internalException) {
-            $this->errorLogger->log($internalException);
         }
 
         if ($exit) {
