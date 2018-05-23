@@ -68,7 +68,11 @@ class ProductConcreteMeasurementUnitStorageWriter implements ProductConcreteMeas
             $this->findMappedProductConcreteMeasurementUnitStorageEntityTransfers($productIds);
 
         foreach ($productIds as $idProduct) {
-            $storageEntitiesWithStore = $this->selectStorageEntityTransfer($mappedProductConcreteMeasurementUnitStorageEntityTransfer, $idProduct);
+            $storageEntitiesWithStore = [];
+
+            if (isset($mappedProductConcreteMeasurementUnitStorageEntityTransfer[$idProduct])) {
+                $storageEntitiesWithStore = $mappedProductConcreteMeasurementUnitStorageEntityTransfer[$idProduct];
+            }
 
             unset($mappedProductConcreteMeasurementUnitStorageEntityTransfer[$idProduct]);
 
@@ -76,21 +80,6 @@ class ProductConcreteMeasurementUnitStorageWriter implements ProductConcreteMeas
         }
 
         $this->deleteNotFoundStorageEntityTransfer($mappedProductConcreteMeasurementUnitStorageEntityTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\SpyProductConcreteMeasurementUnitStorageEntityTransfer[] $spyProductConcreteMeasurementUnitStorageEntityTransfers
-     * @param int $idProduct
-     *
-     * @return \Generated\Shared\Transfer\SpyProductConcreteMeasurementUnitStorageEntityTransfer[]
-     */
-    protected function selectStorageEntityTransfer(array $spyProductConcreteMeasurementUnitStorageEntityTransfers, int $idProduct): array
-    {
-        if (isset($spyProductConcreteMeasurementUnitStorageEntityTransfers[$idProduct])) {
-            return $spyProductConcreteMeasurementUnitStorageEntityTransfers[$idProduct];
-        }
-
-        return [];
     }
 
     /**

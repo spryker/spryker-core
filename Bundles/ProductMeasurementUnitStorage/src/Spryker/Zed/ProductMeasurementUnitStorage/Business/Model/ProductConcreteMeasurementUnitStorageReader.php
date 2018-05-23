@@ -55,7 +55,7 @@ class ProductConcreteMeasurementUnitStorageReader implements ProductConcreteMeas
     /**
      * @param int $idProduct
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteMeasurementSalesUnitTransfer[]|\ArrayObject
+     * @return \Generated\Shared\Transfer\ProductConcreteMeasurementSalesUnitTransfer[]
      */
     protected function getProductConcreteMeasurementSalesUnitTransfers(int $idProduct): array
     {

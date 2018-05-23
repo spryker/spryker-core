@@ -87,9 +87,9 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
         $query = $this->getFactory()
             ->createProductMeasurementSalesUnitQuery()
             ->filterByFkProduct($idProduct)
+            ->joinWithProductMeasurementUnit()
             ->joinWithSpyProductMeasurementSalesUnitStore()
-            ->joinWith('SpyProductMeasurementSalesUnitStore.SpyStore')
-            ->joinWithProductMeasurementUnit();
+            ->joinWith('SpyProductMeasurementSalesUnitStore.SpyStore');
 
         return $this->buildQueryFromCriteria($query)
             ->find();

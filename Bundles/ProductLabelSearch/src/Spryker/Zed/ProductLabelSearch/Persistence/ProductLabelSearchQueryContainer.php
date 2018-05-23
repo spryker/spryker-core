@@ -22,7 +22,7 @@ class ProductLabelSearchQueryContainer extends AbstractQueryContainer implements
      *
      * @param array $productLabelIds
      *
-     * @return \Spryker\Zed\ProductLabel\Persistence\Propel\SpyProductLabelProductAbstractQuery
+     * @return \Spryker\Zed\ProductLabel\Persistence\Propel\SpyProductLabelProductAbstractQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function queryProductLabelByProductLabelIds(array $productLabelIds)
     {

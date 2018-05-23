@@ -17,7 +17,7 @@ use Spryker\Zed\ProductImageStorage\Dependency\Facade\ProductImageStorageToProdu
 use Spryker\Zed\ProductImageStorage\Persistence\ProductImageStorageQueryContainerInterface;
 
 /**
- * @method \Spryker\Zed\ProductImageStorage\Persistence\ProductImageStorageQueryContainerInterface queryContainer
+ * @method \Spryker\Zed\ProductImageStorage\Persistence\ProductImageStorageQueryContainerInterface queryContainer()
  * @method \Spryker\Zed\ProductImageStorage\Communication\ProductImageStorageCommunicationFactory getFactory()
  */
 class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWriterInterface
