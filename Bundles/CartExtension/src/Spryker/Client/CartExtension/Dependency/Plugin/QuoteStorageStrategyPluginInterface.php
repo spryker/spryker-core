@@ -9,7 +9,9 @@ namespace Spryker\Client\CartExtension\Dependency\Plugin;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface QuoteStorageStrategyPluginInterface
@@ -149,7 +151,7 @@ interface QuoteStorageStrategyPluginInterface
 
     /**
      * Specification:
-     *  - Reloads all items in cart anew, it recreates all items transfer, reads new prices, options, bundles.
+     *  - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles.
      *
      * @api
      *
@@ -159,11 +161,24 @@ interface QuoteStorageStrategyPluginInterface
 
     /**
      * Specification:
-     *  - Reloads all items in cart anew, it recreates all items transfer, reads new prices, options, bundles.
+     *  - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles.
      *
      * @api
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function validateQuote();
+
+    /**
+     * Specification:
+     * - Set currency to quote.
+     * - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function setQuoteCurrency(CurrencyTransfer $currencyTransfer): QuoteResponseTransfer;
 }
