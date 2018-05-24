@@ -11,11 +11,13 @@
     {% if form is defined %}
     {{ form_start(form) }}
     {{ form_widget(form) }}
-    <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Run' | trans }}" />
+    {#<input type="submit" name="create" class="btn btn-primary safe-submit" value="{{ 'Create Template' | trans }}" />#}
+    {#<input type="submit" name="run" class="btn btn-primary safe-submit" value="{{ 'Run Spryk' | trans }}" />#}
     {{ form_end(form) }}
     {% else %}
-        <p>Console command to run: {{ consoleCommand }}</p>
-        {#<p>Jira: {{ jira }}</p>#}
+        <p><pre>
+            {{ jiraTemplate }}
+        </pre></p>
     {% endif %}
 {% endblock %}
 

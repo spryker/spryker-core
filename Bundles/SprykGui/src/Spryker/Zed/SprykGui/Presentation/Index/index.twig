@@ -8,10 +8,12 @@
 {% endblock %}
 
 {% block content %}
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Next' | trans }}" />
-    {{ form_end(form) }}
+    {% for application, spryks in sprykDefinitions %}
+        <h2>{{ application }}</h2>
+        {% for spryk, sprykInfo in spryks %}
+            <a href="/spryk-gui/index/build?spryk={{ spryk }}">{{ sprykInfo.humanized }}</a> - {{ sprykInfo.description }}<br />
+        {% endfor %}
+    {% endfor %}
 {% endblock %}
 
 {% block footer_js %}

@@ -18,25 +18,14 @@ use Symfony\Component\HttpFoundation\Request;
 class IndexController extends AbstractController
 {
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return array
      */
-    public function indexAction(Request $request)
+    public function indexAction(): array
     {
-        $sprykForm = $this->getFactory()
-            ->getSprykSelectForm()
-            ->handleRequest($request);
-
-        if ($sprykForm->isSubmitted() && $sprykForm->isValid()) {
-            $data = $sprykForm->getData();
-            $sprykNameToBeBuild = $data['spryk'];
-
-            return $this->redirectResponse('/spryk-gui/index/build?spryk=' . $sprykNameToBeBuild);
-        }
+        $sprykDefinitions = $this->getFacade()->getSprykDefinitions();
 
         return $this->viewResponse([
-            'form' => $sprykForm->createView(),
+            'sprykDefinitions' => $sprykDefinitions,
         ]);
     }
 
@@ -54,9 +43,19 @@ class IndexController extends AbstractController
             ->handleRequest($request);
 
         if ($sprykForm->isSubmitted() && $sprykForm->isValid()) {
-            return $this->viewResponse(
-                $this->getFacade()->buildSprykView($sprykForm->getData())
-            );
+            if ($sprykForm->get('create')->isClicked()) {
+                return $this->viewResponse(
+                    $this->getFacade()->buildSprykView($spryk, $sprykForm->getData())
+                );
+            }
+
+            $runResult = $this->getFacade()->runSpryk($spryk, $sprykForm->getData());
+            if ($runResult) {
+                $this->addSuccessMessage(sprintf('Spryk "%s" executed successfully.', $spryk));
+            }
+            if (!$runResult) {
+                $this->addErrorMessage(sprintf('Spryk "%s" not executed successfully.', $spryk));
+            }
         }
 
         return $this->viewResponse([

@@ -33,11 +33,9 @@ class SprykDataProvider
     }
 
     /**
-     * @param null|string $selectedSpryk
-     *
      * @return array
      */
-    public function getData(?string $selectedSpryk = null): array
+    public function getData(): array
     {
         return [];
     }

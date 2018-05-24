@@ -46,9 +46,9 @@ class SprykSelectForm extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
-     * @return \Symfony\Component\Form\FormBuilderInterface
+     * @return \Spryker\Zed\SprykGui\Communication\Form\SprykSelectForm
      */
-    protected function addSprykSelect(FormBuilderInterface $builder, array $options): FormBuilderInterface
+    protected function addSprykSelect(FormBuilderInterface $builder, array $options): self
     {
         $sprykDefinitions = $options['sprykDefinitions'];
 
@@ -61,6 +61,6 @@ class SprykSelectForm extends AbstractType
             'choices' => $choices,
         ]);
 
-        return $builder;
+        return $this;
     }
 }
