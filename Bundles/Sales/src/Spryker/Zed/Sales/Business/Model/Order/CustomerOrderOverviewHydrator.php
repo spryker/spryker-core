@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
-class CustomerOrderOverviewHydrator implements CustomerOrderOverviewHydratorInterface
+class CustomerOrderOverviewHydrator extends OrderHydrator implements CustomerOrderOverviewHydratorInterface
 {
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity

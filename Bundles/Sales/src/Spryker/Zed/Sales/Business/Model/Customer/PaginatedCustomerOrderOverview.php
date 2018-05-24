@@ -10,42 +10,26 @@ namespace Spryker\Zed\Sales\Business\Model\Customer;
 use ArrayObject;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
-use Orm\Zed\Sales\Persistence\SpySalesOrder;
-use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Spryker\Zed\Sales\Business\Model\Order\CustomerOrderOverviewHydratorInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
-class PaginatedCustomerOrderOverview implements CustomerOrderOverviewInterface
+/**
+ * @property \Spryker\Zed\Sales\Business\Model\Order\CustomerOrderOverviewHydratorInterface orderHydrator
+ */
+class PaginatedCustomerOrderOverview extends PaginatedCustomerOrderReader implements CustomerOrderOverviewInterface
 {
     /**
-     * @var \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
-     */
-    protected $queryContainer;
-
-    /**
-     * @var \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface
-     */
-    protected $omsFacade;
-
-    /**
-     * @var \Spryker\Zed\Sales\Business\Model\Order\CustomerOrderOverviewHydratorInterface
-     */
-    protected $customerOrderOverviewHydrator;
-
-    /**
      * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\Sales\Business\Model\Order\CustomerOrderOverviewHydratorInterface $customerOrderOverviewHydrator
+     * @param \Spryker\Zed\Sales\Business\Model\Order\CustomerOrderOverviewHydratorInterface $orderHydrator
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface $omsFacade
      */
     public function __construct(
         SalesQueryContainerInterface $queryContainer,
-        CustomerOrderOverviewHydratorInterface $customerOrderOverviewHydrator,
+        CustomerOrderOverviewHydratorInterface $orderHydrator,
         SalesToOmsInterface $omsFacade
     ) {
-        $this->queryContainer = $queryContainer;
-        $this->omsFacade = $omsFacade;
-        $this->customerOrderOverviewHydrator = $customerOrderOverviewHydrator;
+        parent::__construct($queryContainer, $orderHydrator, $omsFacade);
     }
 
     /**
@@ -71,68 +55,6 @@ class PaginatedCustomerOrderOverview implements CustomerOrderOverviewInterface
     }
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
-     *
-     * @return bool
-     */
-    protected function excludeOrder(SpySalesOrder $salesOrderEntity): bool
-    {
-        $excludeFromCustomer = $this->omsFacade->isOrderFlaggedExcludeFromCustomer(
-            $salesOrderEntity->getIdSalesOrder()
-        );
-
-        return $excludeFromCustomer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $ordersQuery
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder[]|\Propel\Runtime\Collection\ObjectCollection
-     */
-    protected function getOrderCollection(OrderListTransfer $orderListTransfer, SpySalesOrderQuery $ordersQuery)
-    {
-        if ($orderListTransfer->getPagination() !== null) {
-            return $this->paginateOrderCollection($orderListTransfer, $ordersQuery);
-        }
-
-        return $ordersQuery->find();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $ordersQuery
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder[]|\Propel\Runtime\Collection\Collection
-     */
-    protected function paginateOrderCollection(OrderListTransfer $orderListTransfer, SpySalesOrderQuery $ordersQuery)
-    {
-        $paginationTransfer = $orderListTransfer->getPagination();
-
-        $page = $paginationTransfer
-            ->requirePage()
-            ->getPage();
-
-        $maxPerPage = $paginationTransfer
-            ->requireMaxPerPage()
-            ->getMaxPerPage();
-
-        $paginationModel = $ordersQuery->paginate($page, $maxPerPage);
-
-        $paginationTransfer->setNbResults($paginationModel->getNbResults());
-        $paginationTransfer->setFirstIndex($paginationModel->getFirstIndex());
-        $paginationTransfer->setLastIndex($paginationModel->getLastIndex());
-        $paginationTransfer->setFirstPage($paginationModel->getFirstPage());
-        $paginationTransfer->setLastPage($paginationModel->getLastPage());
-        $paginationTransfer->setNextPage($paginationModel->getNextPage());
-        $paginationTransfer->setPreviousPage($paginationModel->getPreviousPage());
-
-        $orderListTransfer->setPagination($paginationTransfer);
-
-        return $paginationModel->getResults();
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder[]|\Propel\Runtime\Collection\ObjectCollection $orderCollection
      *
@@ -142,15 +64,11 @@ class PaginatedCustomerOrderOverview implements CustomerOrderOverviewInterface
     {
         $orders = new ArrayObject();
         foreach ($orderCollection as $salesOrderEntity) {
-            if ($salesOrderEntity->countItems() === 0) {
+            if ($salesOrderEntity->countItems() === 0 || $this->excludeOrder($salesOrderEntity)) {
                 continue;
             }
 
-            if ($this->excludeOrder($salesOrderEntity)) {
-                continue;
-            }
-
-            $orderTransfer = $this->customerOrderOverviewHydrator->hydrateOrderTransfer($salesOrderEntity);
+            $orderTransfer = $this->orderHydrator->hydrateOrderTransfer($salesOrderEntity);
             $orders->append($orderTransfer);
         }
 

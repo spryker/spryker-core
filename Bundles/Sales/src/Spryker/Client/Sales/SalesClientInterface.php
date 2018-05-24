@@ -39,8 +39,8 @@ interface SalesClientInterface
     /**
      * Specification:
      *  - Returns a list of of orders for the given customer id and (optional) filters, without order items information.
-     *  - Aggregates order totals calls -> SalesAggregator
-     *  - Paginates order list for limited result
+     *  - Aggregates order totals calls -> SalesAggregator.
+     *  - Paginates order list for limited result.
      *
      * @api
      *

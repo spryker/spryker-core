@@ -10,7 +10,7 @@ namespace Spryker\Zed\Sales\Business\Model\Order;
 use Generated\Shared\Transfer\OrderTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
-interface CustomerOrderOverviewHydratorInterface
+interface CustomerOrderOverviewHydratorInterface extends OrderHydratorInterface
 {
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
