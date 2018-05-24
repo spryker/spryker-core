@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantRelationship\Business\Model;
 
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Spryker\Zed\MerchantRelationship\Persistence\MerchantRelationshipEntityManagerInterface;
+use Spryker\Zed\MerchantRelationship\Persistence\MerchantRelationshipRepositoryInterface;
 
 class MerchantRelationshipWriter implements MerchantRelationshipWriterInterface
 {
@@ -18,20 +19,20 @@ class MerchantRelationshipWriter implements MerchantRelationshipWriterInterface
     protected $entityManager;
 
     /**
-     * @var \Spryker\Zed\MerchantRelationship\Business\Model\MerchantRelationshipReaderInterface
+     * @var \Spryker\Zed\MerchantRelationship\Persistence\MerchantRelationshipRepositoryInterface
      */
-    protected $merchantRelationshipReader;
+    protected $repository;
 
     /**
      * @param \Spryker\Zed\MerchantRelationship\Persistence\MerchantRelationshipEntityManagerInterface $entityManager
-     * @param \Spryker\Zed\MerchantRelationship\Business\Model\MerchantRelationshipReaderInterface $merchantRelationshipReader
+     * @param \Spryker\Zed\MerchantRelationship\Persistence\MerchantRelationshipRepositoryInterface $repository
      */
     public function __construct(
         MerchantRelationshipEntityManagerInterface $entityManager,
-        MerchantRelationshipReaderInterface $merchantRelationshipReader
+        MerchantRelationshipRepositoryInterface $repository
     ) {
         $this->entityManager = $entityManager;
-        $this->merchantRelationshipReader = $merchantRelationshipReader;
+        $this->repository = $repository;
     }
 
     /**
@@ -41,7 +42,8 @@ class MerchantRelationshipWriter implements MerchantRelationshipWriterInterface
      */
     public function create(MerchantRelationshipTransfer $merchantRelationTransfer): MerchantRelationshipTransfer
     {
-        $merchantRelationTransfer->requireFkMerchant()
+        $merchantRelationTransfer
+            ->requireFkMerchant()
             ->requireFkCompanyBusinessUnit();
 
         $merchantRelationTransfer = $this->entityManager->saveMerchantRelationship($merchantRelationTransfer);
@@ -86,7 +88,7 @@ class MerchantRelationshipWriter implements MerchantRelationshipWriterInterface
      */
     protected function saveAssignedCompanyBusinessUnits(MerchantRelationshipTransfer $merchantRelationTransfer): void
     {
-        $currentIdAssignedCompanyBusinessUnits = $this->merchantRelationshipReader
+        $currentIdAssignedCompanyBusinessUnits = $this->repository
             ->getIdAssignedBusinessUnitsByMerchantRelationshipId($merchantRelationTransfer->getIdMerchantRelationship());
         $requestedIdAssignedCompanyBusinessUnits = $this->findIdAssignedCompanyBusinessUnits($merchantRelationTransfer);
 

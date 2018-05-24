@@ -27,7 +27,7 @@ class MerchantRelationshipBusinessFactory extends AbstractBusinessFactory
     {
         return new MerchantRelationshipWriter(
             $this->getEntityManager(),
-            $this->createMerchantRelationshipReader()
+            $this->getRepository()
         );
     }
 

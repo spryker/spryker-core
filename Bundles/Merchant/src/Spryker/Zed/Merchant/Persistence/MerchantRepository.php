@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Merchant\Persistence;
 
+use Generated\Shared\Transfer\MerchantCollectionTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\Merchant\Business\Exception\MerchantNotFoundException;
@@ -41,5 +42,32 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
         return $this->getFactory()
             ->createMerchantMapper()
             ->mapEntityToMerchantTransfer($spyMerchant, new MerchantTransfer());
+    }
+
+    /**
+     * Specification:
+     * - Retrieves collection of all merchants
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
+     */
+    public function getMerchants(): MerchantCollectionTransfer
+    {
+        $spyMerchants = $this->getFactory()
+            ->createMerchantQuery()
+            ->orderByName()
+            ->find();
+
+        $merchantsCollection = new MerchantCollectionTransfer();
+        foreach ($spyMerchants as $spyMerchant) {
+            $merchantsCollection->addMerchants(
+                $this->getFactory()
+                ->createMerchantMapper()
+                ->mapEntityToMerchantTransfer($spyMerchant, new MerchantTransfer())
+            );
+        }
+
+        return $merchantsCollection;
     }
 }
