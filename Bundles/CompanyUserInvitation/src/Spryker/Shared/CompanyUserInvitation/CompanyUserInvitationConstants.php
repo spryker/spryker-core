@@ -13,4 +13,6 @@ interface CompanyUserInvitationConstants
     public const INVITATION_STATUS_PENDING = 'pending';
     public const INVITATION_STATUS_ACCEPTED = 'accepted';
     public const INVITATION_STATUS_DELETED = 'deleted';
+    public const ROUTE_INVITATION_ACCEPT = 'invitation/accept';
+    public const INVITATION_HASH = 'hash';
 }

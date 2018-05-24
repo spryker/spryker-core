@@ -14,7 +14,7 @@ interface CompanyUserCreatorInterface
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return mixed
+     * @return void
      */
     public function create(CustomerTransfer $customerTransfer): void;
 }
