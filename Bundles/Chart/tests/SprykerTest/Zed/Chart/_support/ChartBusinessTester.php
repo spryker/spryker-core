@@ -1,6 +1,8 @@
 <?php
 namespace SprykerTest\Zed\Chart;
 
+use Codeception\Actor;
+
 /**
  * Inherited Methods
  * @method void wantToTest($text)
@@ -15,8 +17,8 @@ namespace SprykerTest\Zed\Chart;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
  *
  * @SuppressWarnings(PHPMD)
-*/
-class ChartBusinessTester extends \Codeception\Actor
+ */
+class ChartBusinessTester extends Actor
 {
     use _generated\ChartBusinessTesterActions;
 

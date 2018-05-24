@@ -10,7 +10,6 @@ namespace SprykerTest\Zed\Chart\Business;
 use Codeception\Test\Unit;
 use Spryker\Zed\Chart\Business\ChartFacade;
 use Spryker\Zed\Chart\ChartConfig;
-use Spryker\Zed\Kernel\Container;
 
 /**
  * Auto-generated group annotations
