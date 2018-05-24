@@ -6,9 +6,9 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ContentTypeAccessTransfer;
 use Generated\Shared\Transfer\CustomerAccessTransfer;
 use Orm\Zed\CustomerAccessStorage\Persistence\SpyUnauthenticatedCustomerAccessStorage;
+use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\CustomerAccessStorage\Persistence\CustomerAccessStoragePersistenceFactory;
-use Spryker\Client\Kernel\Container;
 
 /**
  * Auto-generated group annotations

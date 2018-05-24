@@ -8,7 +8,10 @@
 namespace Spryker\Client\CustomerAccessPermission;
 
 use Spryker\Client\CustomerAccessPermission\Exception\PermissionPluginNotFoundException;
+use Spryker\Client\CustomerAccessPermission\Plugin\SeeAddToCartPermissionPlugin;
+use Spryker\Client\CustomerAccessPermission\Plugin\SeeOrderPlaceSubmitPermissionPlugin;
 use Spryker\Client\CustomerAccessPermission\Plugin\SeePricePermissionPlugin;
+use Spryker\Client\CustomerAccessPermission\Plugin\SeeWishlistPermissionPlugin;
 use Spryker\Client\Kernel\AbstractBundleConfig;
 
 class CustomerAccessPermissionConfig extends AbstractBundleConfig
@@ -17,7 +20,10 @@ class CustomerAccessPermissionConfig extends AbstractBundleConfig
      * Constant used to connect zed content type access settings with the content type permission plugin used in yves shop
      */
     protected const CONTENT_TYPE_PERMISSION_PLUGIN = [
-        'price' => SeePricePermissionPlugin::KEY
+        'price' => SeePricePermissionPlugin::KEY,
+        'add-to-cart' => SeeAddToCartPermissionPlugin::KEY,
+        'order-place-submit' => SeeOrderPlaceSubmitPermissionPlugin::KEY,
+        'wishlist' => SeeWishlistPermissionPlugin::KEY,
     ];
 
     protected const MESSAGE_PLUGIN_NOT_FOUND_EXCEPTION = 'Plugin not found';

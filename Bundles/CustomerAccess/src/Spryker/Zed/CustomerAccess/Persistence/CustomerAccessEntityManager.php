@@ -90,7 +90,7 @@ class CustomerAccessEntityManager extends AbstractEntityManager implements Custo
     }
 
     /**
-     * @param ContentTypeAccessTransfer $contentTypeAccessTransfer
+     * @param \Generated\Shared\Transfer\ContentTypeAccessTransfer $contentTypeAccessTransfer
      *
      * @return \Orm\Zed\CustomerAccess\Persistence\SpyUnauthenticatedCustomerAccess
      */
