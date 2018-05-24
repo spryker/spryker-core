@@ -11,6 +11,7 @@ use Codeception\Module;
 use Generated\Shared\DataBuilder\MerchantRelationshipBuilder;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery;
+use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipToCompanyBusinessUnitQuery;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class MerchantRelationshipHelper extends Module
@@ -49,5 +50,26 @@ class MerchantRelationshipHelper extends Module
     protected function getMerchantRelationshipQuery(): SpyMerchantRelationshipQuery
     {
         return SpyMerchantRelationshipQuery::create();
+    }
+
+    /**
+     * @param int $idMerchantRelationship
+     *
+     * @return void
+     */
+    public function assertMerchantRelationshipToCompanyBusinessUnitNotExists(int $idMerchantRelationship): void
+    {
+        $query = $this->getMerchantRelationshipToCompanyBusinessUnitQuery()
+            ->filterByFkMerchantRelationship($idMerchantRelationship);
+
+        $this->assertSame(0, $query->count());
+    }
+
+    /**
+     * @return \Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipToCompanyBusinessUnitQuery
+     */
+    protected function getMerchantRelationshipToCompanyBusinessUnitQuery(): SpyMerchantRelationshipToCompanyBusinessUnitQuery
+    {
+        return SpyMerchantRelationshipToCompanyBusinessUnitQuery::create();
     }
 }
