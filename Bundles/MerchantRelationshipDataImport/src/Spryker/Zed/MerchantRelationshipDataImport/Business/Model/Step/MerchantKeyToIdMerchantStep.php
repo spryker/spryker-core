@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantRelationshipDataImport\Business\Model\Step;
 use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
+use Spryker\Zed\DataImport\Business\Exception\InvalidDataException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\MerchantRelationshipDataImport\Business\Model\DataSet\MerchantRelationshipDataSet;
@@ -25,12 +26,17 @@ class MerchantKeyToIdMerchantStep implements DataImportStepInterface
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
      * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException
+     * @throws \Spryker\Zed\DataImport\Business\Exception\InvalidDataException
      *
      * @return void
      */
     public function execute(DataSetInterface $dataSet)
     {
         $merchantKey = $dataSet[MerchantRelationshipDataSet::MERCHANT_KEY];
+        if (!$merchantKey) {
+            throw new InvalidDataException('"' . MerchantRelationshipDataSet::MERCHANT_KEY . '" is required.');
+        }
+
         if (!isset($this->idMerchantCache[$merchantKey])) {
             $idMerchant = SpyMerchantQuery::create()
                 ->select(SpyMerchantTableMap::COL_ID_MERCHANT)
