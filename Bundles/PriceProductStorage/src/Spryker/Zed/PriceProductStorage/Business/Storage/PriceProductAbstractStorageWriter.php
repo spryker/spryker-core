@@ -212,6 +212,7 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
     protected function getProductAbstractPriceGroups(array $productAbstractIds)
     {
         $priceGroups = [];
+        $priceGroupsCollection = [];
         foreach ($productAbstractIds as $idProductAbstract) {
             $productAbstractPriceProductTransfers = $this->priceProductFacade->findProductAbstractPrices($idProductAbstract);
             foreach ($productAbstractPriceProductTransfers as $priceProductTransfer) {
@@ -220,13 +221,13 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
             }
 
             foreach ($priceGroups[$idProductAbstract] as $storeName => $priceProductTransferCollection) {
-                $priceGroups[$idProductAbstract][$storeName] = $this->priceProductFacade->groupPriceProductCollection(
+                $priceGroupsCollection[$idProductAbstract][$storeName] = $this->priceProductFacade->groupPriceProductCollection(
                     $priceProductTransferCollection
                 );
             }
         }
 
-        return $priceGroups;
+        return $priceGroupsCollection;
     }
 
     /**
