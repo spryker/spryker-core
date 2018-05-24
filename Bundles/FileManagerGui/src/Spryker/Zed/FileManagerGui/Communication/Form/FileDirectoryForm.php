@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @method \Spryker\Zed\FileManagerGui\Communication\FileManagerGuiCommunicationFactory getFactory()
@@ -62,7 +63,15 @@ class FileDirectoryForm extends AbstractType
      */
     protected function addNameField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_NAME, TextType::class);
+        $builder->add(
+            static::FIELD_NAME,
+            TextType::class,
+            [
+                'constraints' => [
+                    new NotBlank(),
+                ],
+            ]
+        );
 
         return $this;
     }

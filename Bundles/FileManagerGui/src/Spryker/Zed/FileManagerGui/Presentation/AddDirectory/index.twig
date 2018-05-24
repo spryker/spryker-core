@@ -14,7 +14,7 @@
     {% embed '@Gui/Partials/widget.twig' %}
 
         {% block widget_content %}
-            {{ form_start(form) }}
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
 
             {{ form_row(form.name) }}
 
