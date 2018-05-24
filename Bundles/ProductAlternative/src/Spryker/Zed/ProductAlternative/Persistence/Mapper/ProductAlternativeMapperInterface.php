@@ -9,24 +9,25 @@ namespace Spryker\Zed\ProductAlternative\Persistence\Mapper;
 
 use Generated\Shared\Transfer\ProductAlternativeTransfer;
 use Generated\Shared\Transfer\SpyProductAlternativeEntityTransfer;
+use Orm\Zed\ProductAlternative\Persistence\SpyProductAlternative;
 
 interface ProductAlternativeMapperInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\SpyProductAlternativeEntityTransfer $productAlternativeEntityTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
-     */
-    public function mapProductAlternativeEntityTransferToEntity(
-        SpyProductAlternativeEntityTransfer $productAlternativeEntityTransfer
-    ): ProductAlternativeTransfer;
-
     /**
      * @param \Generated\Shared\Transfer\ProductAlternativeTransfer $productAlternativeTransfer
      *
      * @return \Generated\Shared\Transfer\SpyProductAlternativeEntityTransfer
      */
-    public function mapProductAlternativeEntityToEntityTransfer(
+    public function mapProductAlternativeTransferToEntityTransfer(
         ProductAlternativeTransfer $productAlternativeTransfer
     ): SpyProductAlternativeEntityTransfer;
+
+    /**
+     * @param \Orm\Zed\ProductAlternative\Persistence\SpyProductAlternative $spyProductAlternative
+     *
+     * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
+     */
+    public function mapSpyProductAlternativeEntityToTransfer(
+        SpyProductAlternative $spyProductAlternative
+    ): ProductAlternativeTransfer;
 }

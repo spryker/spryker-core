@@ -29,7 +29,7 @@ class ProductAlternativeEntityManager extends AbstractEntityManager implements P
         $spyProductAlternativeEntityTransfer = $this
             ->getFactory()
             ->createProductAlternativeMapper()
-            ->mapProductAlternativeEntityToEntityTransfer($productAlternativeTransfer);
+            ->mapProductAlternativeTransferToEntityTransfer($productAlternativeTransfer);
 
         $spyProductAlternativeEntityTransfer->setIdProductAlternative(null);
 
@@ -57,7 +57,7 @@ class ProductAlternativeEntityManager extends AbstractEntityManager implements P
         $spyProductAlternativeEntityTransfer = $this
             ->getFactory()
             ->createProductAlternativeMapper()
-            ->mapProductAlternativeEntityToEntityTransfer($productAlternativeTransfer);
+            ->mapProductAlternativeTransferToEntityTransfer($productAlternativeTransfer);
 
         $this->save($spyProductAlternativeEntityTransfer);
 
