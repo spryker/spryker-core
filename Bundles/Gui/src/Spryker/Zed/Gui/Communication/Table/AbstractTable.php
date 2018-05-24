@@ -830,7 +830,7 @@ abstract class AbstractTable
      * @param bool $separated
      * @param array $options
      *
-     * @return string
+     * @return array
      */
     protected function createButtonGroupItem($title, $url, $separated = false, array $options = [])
     {

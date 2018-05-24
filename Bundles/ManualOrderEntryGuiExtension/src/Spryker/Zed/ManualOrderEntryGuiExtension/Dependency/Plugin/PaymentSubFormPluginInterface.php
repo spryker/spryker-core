@@ -65,11 +65,11 @@ interface PaymentSubFormPluginInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getData($dataTransfer);
+    public function getData($quoteTransfer);
 
     /**
      * Specification:
@@ -77,9 +77,9 @@ interface PaymentSubFormPluginInterface
      *
      * @api
      *
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $dataTransfer
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $quoteTransfer
      *
      * @return array
      */
-    public function getOptions($dataTransfer);
+    public function getOptions($quoteTransfer);
 }

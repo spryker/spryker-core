@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteActivationRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToMessengerFacadeInterface;
-use Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToPersistentCartFacadeInterface;
 use Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToQuoteFacadeInterface;
 
 class QuoteActivator implements QuoteActivatorInterface
@@ -24,27 +23,19 @@ class QuoteActivator implements QuoteActivatorInterface
     protected $quoteFacade;
 
     /**
-     * @var \Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToPersistentCartFacadeInterface
-     */
-    protected $persistentCartFacade;
-
-    /**
      * @var \Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToMessengerFacadeInterface
      */
     protected $messengerFacade;
 
     /**
      * @param \Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToQuoteFacadeInterface $quoteFacade
-     * @param \Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToPersistentCartFacadeInterface $persistentCartFacade
      * @param \Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToMessengerFacadeInterface $messengerFacade
      */
     public function __construct(
         MultiCartToQuoteFacadeInterface $quoteFacade,
-        MultiCartToPersistentCartFacadeInterface $persistentCartFacade,
         MultiCartToMessengerFacadeInterface $messengerFacade
     ) {
         $this->quoteFacade = $quoteFacade;
-        $this->persistentCartFacade = $persistentCartFacade;
         $this->messengerFacade = $messengerFacade;
     }
 

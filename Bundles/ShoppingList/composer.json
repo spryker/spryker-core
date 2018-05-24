@@ -11,7 +11,7 @@
     "spryker/kernel": "^3.0.0",
     "spryker/permission": "^1.1.0",
     "spryker/permission-extension": "^1.0.0",
-    "spryker/persistent-cart": "^0.1.0",
+    "spryker/persistent-cart": "^0.1.0 || ^1.0.0",
     "spryker/price-product": "^1.0.0",
     "spryker/product": "^6.0.0",
     "spryker/propel-orm": "^1.0.0",

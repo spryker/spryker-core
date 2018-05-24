@@ -54,7 +54,12 @@ class CategoryToTouchBridge implements CategoryToTouchInterface
      */
     public function bulkTouchActive($itemType, array $itemIds = [])
     {
-        return $this->touchFacade->bulkTouchActive($itemType, $itemIds);
+        // BC reason
+        if (method_exists($this->touchFacade, 'bulkTouchActive')) {
+            return $this->touchFacade->bulkTouchActive($itemType, $itemIds);
+        }
+
+        return $this->touchFacade->bulkTouchSetActive($itemType, $itemIds);
     }
 
     /**
@@ -67,7 +72,12 @@ class CategoryToTouchBridge implements CategoryToTouchInterface
      */
     public function bulkTouchInactive($itemType, array $itemIds = [])
     {
-        return $this->touchFacade->bulkTouchInactive($itemType, $itemIds);
+        // BC reason
+        if (method_exists($this->touchFacade, 'bulkTouchInactive')) {
+            return $this->touchFacade->bulkTouchInactive($itemType, $itemIds);
+        }
+
+        return $this->touchFacade->bulkTouchSetInActive($itemType, $itemIds);
     }
 
     /**

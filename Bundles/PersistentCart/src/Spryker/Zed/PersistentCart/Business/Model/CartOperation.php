@@ -65,7 +65,8 @@ class CartOperation implements CartOperationInterface
         $persistentCartChangeTransfer->requireCustomer();
         $quoteResponseTransfer = $this->quoteResolver->resolveCustomerQuote(
             (int)$persistentCartChangeTransfer->getIdQuote(),
-            $persistentCartChangeTransfer->getCustomer()
+            $persistentCartChangeTransfer->getCustomer(),
+            $persistentCartChangeTransfer->getQuoteUpdateRequestAttributes()
         );
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer;
@@ -85,7 +86,8 @@ class CartOperation implements CartOperationInterface
         $persistentCartChangeTransfer->requireCustomer();
         $quoteResponseTransfer = $this->quoteResolver->resolveCustomerQuote(
             (int)$persistentCartChangeTransfer->getIdQuote(),
-            $persistentCartChangeTransfer->getCustomer()
+            $persistentCartChangeTransfer->getCustomer(),
+            $persistentCartChangeTransfer->getQuoteUpdateRequestAttributes()
         );
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer;

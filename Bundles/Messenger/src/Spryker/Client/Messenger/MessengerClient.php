@@ -66,7 +66,9 @@ class MessengerClient extends AbstractClient implements MessengerClientInterface
      */
     protected function addToFlashBag($key, $value)
     {
-        $this->getFlashBag()->add($key, $value);
+        /** @var \Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface $flashBag */
+        $flashBag = $this->getFlashBag();
+        $flashBag->add($key, $value);
     }
 
     /**

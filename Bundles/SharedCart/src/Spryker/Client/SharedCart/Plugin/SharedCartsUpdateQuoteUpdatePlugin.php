@@ -53,13 +53,22 @@ class SharedCartsUpdateQuoteUpdatePlugin extends AbstractPlugin implements Quote
     protected function sortQuoteCollectionByName(QuoteCollectionTransfer $quoteCollectionTransfer): QuoteCollectionTransfer
     {
         $quoteTransferList = (array)$quoteCollectionTransfer->getQuotes();
-        usort($quoteTransferList, function (QuoteTransfer $quoteTransferA, QuoteTransfer $quoteTransferB) {
-            return strcmp($quoteTransferA->getName(), $quoteTransferB->getName());
-        });
+        usort($quoteTransferList, [$this, 'compareQuotes']);
         $quoteCollectionTransfer->setQuotes(
             new ArrayObject($quoteTransferList)
         );
 
         return $quoteCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransferA
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransferB
+     *
+     * @return int
+     */
+    protected function compareQuotes(QuoteTransfer $quoteTransferA, QuoteTransfer $quoteTransferB): int
+    {
+        return strcmp($quoteTransferA->getName(), $quoteTransferB->getName());
     }
 }

@@ -107,6 +107,7 @@ class CountryIsoCodeToIdCountryStep implements DataImportStepInterface
             $countryQuery->filterByIso3Code($iso3Code);
         }
 
+        /** @var int $idCountry */
         $idCountry = $countryQuery->findOne();
 
         if (!$idCountry) {
