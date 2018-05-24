@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ProductAlternative\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductAlternative\Business\Model\ProductAlternativeReader;
+use Spryker\Zed\ProductAlternative\Business\Model\ProductAlternativeReaderInterface;
 use Spryker\Zed\ProductAlternative\Business\Model\ProductAlternativeWriter;
 use Spryker\Zed\ProductAlternative\Business\Model\ProductAlternativeWriterInterface;
 
@@ -24,6 +26,16 @@ class ProductAlternativeBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductAlternativeWriter(
             $this->getEntityManager(),
+            $this->getRepository()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductAlternative\Business\Model\ProductAlternativeReaderInterface
+     */
+    public function createProductAlternativeReader(): ProductAlternativeReaderInterface
+    {
+        return new ProductAlternativeReader(
             $this->getRepository()
         );
     }

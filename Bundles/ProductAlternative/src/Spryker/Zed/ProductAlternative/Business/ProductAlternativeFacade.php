@@ -7,19 +7,18 @@
 
 namespace Spryker\Zed\ProductAlternative\Business;
 
-use Generated\Shared\Transfer\SpyProductAlternativeEntityTransfer;
+use Generated\Shared\Transfer\ProductAlternativeCollectionTransfer;
+use Generated\Shared\Transfer\ProductAlternativeResponseTransfer;
+use Generated\Shared\Transfer\ProductAlternativeTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\ProductAlternative\Business\ProductAlternativeBusinessFactory getFactory()
- * @method \Spryker\Zed\ProductAlternative\Persistence\ProductAlternativeEntityManagerInterface getEntityManager()
  */
 class ProductAlternativeFacade extends AbstractFacade implements ProductAlternativeFacadeInterface
 {
     /**
-     * TODO: Replace transfer that is returned to proper one
-     * TODO: Rewrite the logic
-     *
      * {@inheritdoc}
      *
      * @api
@@ -27,9 +26,9 @@ class ProductAlternativeFacade extends AbstractFacade implements ProductAlternat
      * @param int $idProduct
      * @param int $idProductAbstractAlternative
      *
-     * @return \Generated\Shared\Transfer\SpyProductAlternativeEntityTransfer
+     * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
      */
-    public function createProductAbstractAlternative(int $idProduct, int $idProductAbstractAlternative): SpyProductAlternativeEntityTransfer
+    public function createProductAbstractAlternative(int $idProduct, int $idProductAbstractAlternative): ProductAlternativeResponseTransfer
     {
         return $this
             ->getFactory()
@@ -38,9 +37,6 @@ class ProductAlternativeFacade extends AbstractFacade implements ProductAlternat
     }
 
     /**
-     * TODO: Replace transfer that is returned to proper one
-     * TODO: Rewrite the logic
-     *
      * {@inheritdoc}
      *
      * @api
@@ -48,9 +44,9 @@ class ProductAlternativeFacade extends AbstractFacade implements ProductAlternat
      * @param int $idProduct
      * @param int $idProductConcreteAlternative
      *
-     * @return \Generated\Shared\Transfer\SpyProductAlternativeEntityTransfer
+     * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
      */
-    public function createProductConcreteAlternative(int $idProduct, int $idProductConcreteAlternative): SpyProductAlternativeEntityTransfer
+    public function createProductConcreteAlternative(int $idProduct, int $idProductConcreteAlternative): ProductAlternativeResponseTransfer
     {
         return $this
             ->getFactory()
@@ -58,5 +54,37 @@ class ProductAlternativeFacade extends AbstractFacade implements ProductAlternat
             ->createProductConcreteAlternative($idProduct, $idProductConcreteAlternative);
     }
 
-    // TODO: Add methods to get alternative product
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAlternativeCollectionTransfer
+     */
+    public function getProductAlternativesForProductConcrete(ProductConcreteTransfer $productConcreteTransfer): ProductAlternativeCollectionTransfer
+    {
+        return $this
+            ->getFactory()
+            ->createProductAlternativeReader()
+            ->getProductAlternativesForProductConcrete($productConcreteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAlternativeTransfer $productAlternativeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
+     */
+    public function getProductAlternativeByProductAlternativeId(ProductAlternativeTransfer $productAlternativeTransfer): ProductAlternativeTransfer
+    {
+        return $this
+            ->getFactory()
+            ->createProductAlternativeReader()
+            ->getProductAlternativeByProductAlternativeId($productAlternativeTransfer);
+    }
 }
