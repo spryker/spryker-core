@@ -17,6 +17,7 @@ use Spryker\Zed\FileManager\Business\Model\FileReader;
 use Spryker\Zed\FileManager\Business\Model\FileRemover;
 use Spryker\Zed\FileManager\Business\Model\FileRollback;
 use Spryker\Zed\FileManager\Business\Model\FileSaver;
+use Spryker\Zed\FileManager\Business\Model\FileTypeSaver;
 use Spryker\Zed\FileManager\Business\Model\FileVersion;
 use Spryker\Zed\FileManager\Business\Tree\FileDirectoryTreeHierarchyUpdater;
 use Spryker\Zed\FileManager\Business\Tree\FileDirectoryTreeReader;
@@ -171,5 +172,13 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
     public function createFileDirectoryTreeHierarchyUpdater()
     {
         return new FileDirectoryTreeHierarchyUpdater($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\FileManager\Business\Model\FileTypeSaverInterface
+     */
+    public function createFileTypeSaver()
+    {
+        return new FileTypeSaver($this->getQueryContainer());
     }
 }

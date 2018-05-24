@@ -12,6 +12,7 @@ use Spryker\Zed\FileManagerGui\Communication\Form\DataProvider\FileFormDataProvi
 use Spryker\Zed\FileManagerGui\Communication\Form\FileDirectoryForm;
 use Spryker\Zed\FileManagerGui\Communication\Form\FileForm;
 use Spryker\Zed\FileManagerGui\Communication\Form\FileLocalizedAttributesForm;
+use Spryker\Zed\FileManagerGui\Communication\Form\FileTypeForm;
 use Spryker\Zed\FileManagerGui\Communication\Form\Tabs\FileFormTabs;
 use Spryker\Zed\FileManagerGui\Communication\Table\FileInfoEditTable;
 use Spryker\Zed\FileManagerGui\Communication\Table\FileInfoViewTable;
@@ -174,6 +175,16 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
             FileDirectoryForm::class,
             $dataProvider->getData(),
             $dataProvider->getOptions()
+        );
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getFileTypeForm()
+    {
+        return $this->getFormFactory()->create(
+            FileTypeForm::class
         );
     }
 }

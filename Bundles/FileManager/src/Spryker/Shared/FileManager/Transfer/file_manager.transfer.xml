@@ -70,4 +70,13 @@
         <property name="children" type="FileDirectoryTreeNode[]" singular="child" />
     </transfer>
 
+    <transfer name="FileType">
+        <property name="idFileType" type="int" />
+        <property name="isAllowed" type="bool" />
+    </transfer>
+
+    <transfer name="FileTypeCollection">
+        <property name="items" type="FileType[]" singular="fileType"/>
+    </transfer>
+
 </transfers>

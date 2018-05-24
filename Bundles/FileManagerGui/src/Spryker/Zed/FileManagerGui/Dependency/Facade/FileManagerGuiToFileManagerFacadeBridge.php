@@ -10,6 +10,7 @@ namespace Spryker\Zed\FileManagerGui\Dependency\Facade;
 use Generated\Shared\Transfer\FileDirectoryTransfer;
 use Generated\Shared\Transfer\FileDirectoryTreeTransfer;
 use Generated\Shared\Transfer\FileManagerDataTransfer;
+use Generated\Shared\Transfer\FileTypeCollectionTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 
 class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileManagerFacadeInterface
@@ -130,5 +131,17 @@ class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileMan
     public function updateFileDirectoryTreeHierarchy(FileDirectoryTreeTransfer $fileDirectoryTreeTransfer)
     {
         return $this->fileManagerFacade->updateFileDirectoryTreeHierarchy($fileDirectoryTreeTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FileTypeCollectionTransfer $fileTypeCollectionTransfer
+     *
+     * @return void
+     */
+    public function updateFileTypeSettings(FileTypeCollectionTransfer $fileTypeCollectionTransfer)
+    {
+        $this->fileManagerFacade->updateFileTypeSettings($fileTypeCollectionTransfer);
     }
 }
