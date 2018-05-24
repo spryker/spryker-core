@@ -216,23 +216,23 @@ class OrderHydrator implements OrderHydratorInterface
         $itemTransfer->fromArray($orderItemEntity->toArray(), true);
         $itemTransfer->setProcess($orderItemEntity->getProcess()->getName());
 
-        $itemTransfer->setUnitGrossPrice($orderItemEntity->getGrossPrice());
-        $itemTransfer->setUnitNetPrice($orderItemEntity->getNetPrice());
-        $itemTransfer->setUnitPrice($orderItemEntity->getPrice());
+        $itemTransfer->setSumGrossPrice($orderItemEntity->getGrossPrice());
+        $itemTransfer->setSumNetPrice($orderItemEntity->getNetPrice());
+    //    $itemTransfer->setUnitPrice($orderItemEntity->getPrice());
         $itemTransfer->setSumPrice($orderItemEntity->getPrice());
 
-        $itemTransfer->setUnitSubtotalAggregation($orderItemEntity->getSubtotalAggregation());
+        $itemTransfer->setSumSubtotalAggregation($orderItemEntity->getSubtotalAggregation());
 
         $itemTransfer->setRefundableAmount($orderItemEntity->getRefundableAmount());
 
-        $itemTransfer->setUnitDiscountAmountAggregation($orderItemEntity->getDiscountAmountAggregation());
-        $itemTransfer->setUnitDiscountAmountFullAggregation($orderItemEntity->getDiscountAmountFullAggregation());
+        $itemTransfer->setSumDiscountAmountAggregation($orderItemEntity->getDiscountAmountAggregation());
+        $itemTransfer->setSumDiscountAmountFullAggregation($orderItemEntity->getDiscountAmountFullAggregation());
 
-        $itemTransfer->setUnitExpensePriceAggregation($orderItemEntity->getExpensePriceAggregation());
+        $itemTransfer->setSumExpensePriceAggregation($orderItemEntity->getExpensePriceAggregation());
 
-        $itemTransfer->setUnitTaxAmount($orderItemEntity->getTaxAmount());
-        $itemTransfer->setUnitTaxAmountFullAggregation($orderItemEntity->getTaxAmountFullAggregation());
-        $itemTransfer->setUnitPriceToPayAggregation($orderItemEntity->getPriceToPayAggregation());
+        $itemTransfer->setSumTaxAmount($orderItemEntity->getTaxAmount());
+        $itemTransfer->setSumTaxAmountFullAggregation($orderItemEntity->getTaxAmountFullAggregation());
+        $itemTransfer->setSumPriceToPayAggregation($orderItemEntity->getPriceToPayAggregation());
 
         $this->hydrateStateHistory($orderItemEntity, $itemTransfer);
         $this->hydrateCurrentSalesOrderItemState($orderItemEntity, $itemTransfer);

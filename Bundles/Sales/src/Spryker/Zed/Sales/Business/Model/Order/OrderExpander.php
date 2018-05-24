@@ -55,6 +55,7 @@ class OrderExpander implements OrderExpanderInterface
      */
     protected function expandItems(ArrayObject $items)
     {
+        return $items;
         $expandedItems = new ArrayObject();
         foreach ($items as $itemTransfer) {
             $quantity = $itemTransfer->getQuantity();
