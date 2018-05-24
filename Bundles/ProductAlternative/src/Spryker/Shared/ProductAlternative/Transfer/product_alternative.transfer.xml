@@ -10,4 +10,18 @@
         <property name="productAbstractAlternative" type="ProductAbstract"/>
     </transfer>
 
+    <transfer name="ProductAlternativeResponse">
+        <property name="productAlternative" type="ProductAlternative"/>
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="ResponseMessage[]" singular="message"/>
+    </transfer>
+
+    <transfer name="ResponseMessage">
+        <property name="text" type="string"/>
+    </transfer>
+
+    <transfer name="ProductAlternativeCollection">
+        <property name="productAlternatives" type="ProductAlternative[]" singular="productAlternative"/>
+    </transfer>
+
 </transfers>
