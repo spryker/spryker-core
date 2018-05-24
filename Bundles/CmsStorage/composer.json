@@ -5,8 +5,8 @@
   "require": {
     "php": ">=7.1",
     "spryker/cms": "^6.4.0",
-    "spryker/event-behavior": "^0.1.2",
-    "spryker/kernel": "^3.16.0",
+    "spryker/event-behavior": "^1.0.0",
+    "spryker/kernel": "^3.21.0",
     "spryker/locale": "^3.1.0",
     "spryker/synchronization": "^0.2.0"
   },
