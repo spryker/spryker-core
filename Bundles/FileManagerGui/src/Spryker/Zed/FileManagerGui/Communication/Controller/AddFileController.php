@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\FileManagerDataTransfer;
 use Generated\Shared\Transfer\FileTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -33,30 +34,33 @@ class AddFileController extends AbstractController
             ->getFileForm()
             ->handleRequest($request);
 
+        $redirectUrl = Url::generate(
+            $request->get(self::FILE_DIRECTORY_ID) ?
+                '/file-manager-gui/directories-tree' :
+                '/file-manager-gui'
+        )->build();
+
         if ($form->isSubmitted()) {
-            try {
-                $data = $form->getData();
-                $fileManagerDataTransfer = $this->createFileManagerDataTransfer($data);
+            if ($form->isValid()) {
+                try {
+                    $data = $form->getData();
+                    $fileManagerDataTransfer = $this->createFileManagerDataTransfer($data);
 
-                if ($request->get(self::FILE_DIRECTORY_ID)) {
-                    $fileManagerDataTransfer->getFile()->setFkFileDirectory($request->get(self::FILE_DIRECTORY_ID));
+                    if ($request->get(self::FILE_DIRECTORY_ID)) {
+                        $fileManagerDataTransfer->getFile()->setFkFileDirectory($request->get(self::FILE_DIRECTORY_ID));
+                    }
+
+                    $this->getFactory()->getFileManagerFacade()->saveFile($fileManagerDataTransfer);
+
+                    $this->addSuccessMessage('The file was added successfully.');
+                } catch (Exception $exception) {
+                    $this->addErrorMessage($exception->getMessage());
                 }
-
-                $this->getFactory()->getFileManagerFacade()->saveFile($fileManagerDataTransfer);
-
-                $this->addSuccessMessage(
-                    'The file was added successfully.'
-                );
-                if ($request->get(self::FILE_DIRECTORY_ID)) {
-                    $redirectUrl = Url::generate('/file-manager-gui/directories-tree')->build();
-                } else {
-                    $redirectUrl = Url::generate('/file-manager-gui')->build();
-                }
-
-                return $this->redirectResponse($redirectUrl);
-            } catch (Exception $exception) {
-                $this->addErrorMessage($exception->getMessage());
+            } else {
+                $this->addErrors($form);
             }
+
+            return $this->redirectResponse($redirectUrl);
         }
 
         return $this->viewResponse([
@@ -129,5 +133,21 @@ class AddFileController extends AbstractController
         $uploadedFile = $fileTransfer->getFileContent();
 
         return file_get_contents($uploadedFile->getRealPath());
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $form
+     *
+     * @return void
+     */
+    protected function addErrors(FormInterface $form)
+    {
+        $errors = $form->getErrors(true);
+
+        do {
+            $this->addErrorMessage(
+                $errors->current()->getMessage()
+            );
+        } while ($errors->next());
     }
 }
