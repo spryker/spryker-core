@@ -10,7 +10,7 @@ namespace Spryker\Zed\CompanyUserInvitation\Business\Model\Updater;
 use Generated\Shared\Transfer\CompanyUserInvitationTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusRequestTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusResponseTransfer;
-use Spryker\Shared\CompanyUserInvitation\CompanyUserInvitationConstants;
+use Spryker\Shared\CompanyUserInvitation\CompanyUserInvitationConfig;
 use Spryker\Zed\CompanyUserInvitation\Communication\Plugin\Permission\ManageCompanyUserInvitationPermissionPlugin;
 use Spryker\Zed\CompanyUserInvitation\Persistence\CompanyUserInvitationEntityManagerInterface;
 use Spryker\Zed\CompanyUserInvitation\Persistence\CompanyUserInvitationRepositoryInterface;
@@ -69,7 +69,7 @@ class InvitationUpdater implements InvitationUpdaterInterface
             $this->getIdCompanyUserInvitationStatus($companyUserInvitationUpdateStatusRequestTransfer->getStatusKey())
         );
 
-        if ($companyUserInvitationUpdateStatusRequestTransfer->getStatusKey() === CompanyUserInvitationConstants::INVITATION_STATUS_DELETED) {
+        if ($companyUserInvitationUpdateStatusRequestTransfer->getStatusKey() === CompanyUserInvitationConfig::INVITATION_STATUS_DELETED) {
             $this->anonymize($companyUserInvitationTransfer);
         }
 

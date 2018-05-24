@@ -9,7 +9,7 @@ namespace Spryker\Zed\CompanyUserInvitation\Business\Model\Mailer;
 
 use Generated\Shared\Transfer\CompanyUserInvitationTransfer;
 use Generated\Shared\Transfer\MailTransfer;
-use Spryker\Shared\CompanyUserInvitation\CompanyUserInvitationConstants;
+use Spryker\Shared\CompanyUserInvitation\CompanyUserInvitationConfig as CompanyUserInvitationConfig1;
 use Spryker\Zed\CompanyUserInvitation\Communication\Plugin\Mail\CompanyUserInvitationMailTypePlugin;
 use Spryker\Zed\CompanyUserInvitation\CompanyUserInvitationConfig;
 use Spryker\Zed\CompanyUserInvitation\Dependency\Facade\CompanyUserInvitationToMailFacadeInterface;
@@ -64,8 +64,8 @@ class InvitationMailer implements InvitationMailerInterface
         return sprintf(
             '%s/%s?%s=%s',
             $this->config->getBaseUrl(),
-            CompanyUserInvitationConstants::ROUTE_INVITATION_ACCEPT,
-            CompanyUserInvitationConstants::INVITATION_HASH,
+            CompanyUserInvitationConfig1::ROUTE_INVITATION_ACCEPT,
+            CompanyUserInvitationConfig1::INVITATION_HASH,
             $companyUserInvitationTransfer->getHash()
         );
     }

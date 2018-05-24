@@ -10,7 +10,7 @@ namespace Spryker\Zed\CompanyUserInvitation\Business\Model\Hydrator;
 use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationTransfer;
 use Spryker\Service\UtilText\Model\Hash;
-use Spryker\Shared\CompanyUserInvitation\CompanyUserInvitationConstants;
+use Spryker\Shared\CompanyUserInvitation\CompanyUserInvitationConfig;
 use Spryker\Zed\CompanyUserInvitation\Dependency\Facade\CompanyUserInvitationToCompanyBusinessUnitFacadeInterface;
 use Spryker\Zed\CompanyUserInvitation\Dependency\Facade\CompanyUserInvitationToCompanyUserFacadeInterface;
 use Spryker\Zed\CompanyUserInvitation\Dependency\Service\CompanyUserInvitationToUtilTextInterface;
@@ -135,7 +135,7 @@ class InvitationHydrator implements InvitationHydratorInterface
     {
         if (!$this->companyUserInvitationStatusTransfer) {
             $this->companyUserInvitationStatusTransfer = $this->repository->findCompanyUserInvitationStatusByStatusKey(
-                CompanyUserInvitationConstants::INVITATION_STATUS_NEW
+                CompanyUserInvitationConfig::INVITATION_STATUS_NEW
             );
         }
 

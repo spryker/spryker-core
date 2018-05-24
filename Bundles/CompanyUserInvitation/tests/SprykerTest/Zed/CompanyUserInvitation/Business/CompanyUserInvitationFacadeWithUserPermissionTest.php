@@ -17,7 +17,7 @@ use Generated\Shared\Transfer\CompanyUserInvitationSendRequestTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusRequestTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Spryker\Shared\CompanyUserInvitation\CompanyUserInvitationConstants;
+use Spryker\Shared\CompanyUserInvitation\CompanyUserInvitationConfig;
 use Spryker\Zed\CompanyRole\Communication\Plugin\PermissionStoragePlugin;
 use Spryker\Zed\CompanyUserInvitation\Communication\Plugin\Permission\ManageCompanyUserInvitationPermissionPlugin;
 use Spryker\Zed\Permission\PermissionDependencyProvider;
@@ -158,7 +158,7 @@ class CompanyUserInvitationFacadeWithUserPermissionTest extends Test
         $criteriaFilterTransfer = (new CompanyUserInvitationCriteriaFilterTransfer())
             ->setFkCompanyUser($this->companyUserTransfer->getFkCompany())
             ->setFkCompanyUser($this->companyUserTransfer->getIdCompanyUser())
-            ->setCompanyUserInvitationStatusKeyIn([CompanyUserInvitationConstants::INVITATION_STATUS_NEW]);
+            ->setCompanyUserInvitationStatusKeyIn([CompanyUserInvitationConfig::INVITATION_STATUS_NEW]);
         $companyUserInvitationGetCollectionRequestTransfer = (new CompanyUserInvitationGetCollectionRequestTransfer())
             ->setIdCompanyUser($this->companyUserTransfer->getIdCompanyUser())
             ->setCriteriaFilter($criteriaFilterTransfer);
@@ -207,7 +207,7 @@ class CompanyUserInvitationFacadeWithUserPermissionTest extends Test
         $companyUserInvitationTransfer = $this->haveCompanyUserInvitation();
         $companyUserInvitationUpdateStatusRequestTransfer = (new CompanyUserInvitationUpdateStatusRequestTransfer())
             ->setIdCompanyUser($this->companyUserTransfer->getIdCompanyUser())
-            ->setStatusKey(CompanyUserInvitationConstants::INVITATION_STATUS_ACCEPTED)
+            ->setStatusKey(CompanyUserInvitationConfig::INVITATION_STATUS_ACCEPTED)
             ->setCompanyUserInvitation($companyUserInvitationTransfer);
 
         $companyUserInvitationUpdateStatusResponseTransfer = $this->getFacade()

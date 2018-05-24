@@ -8,7 +8,7 @@
 namespace Spryker\Zed\CompanyUserInvitation;
 
 use Spryker\Shared\Application\ApplicationConstants;
-use Spryker\Shared\CompanyUserInvitation\CompanyUserInvitationConstants;
+use Spryker\Shared\CompanyUserInvitation\CompanyUserInvitationConfig as SharedCompanyUserInvitationConfig;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CompanyUserInvitationConfig extends AbstractBundleConfig
@@ -19,10 +19,10 @@ class CompanyUserInvitationConfig extends AbstractBundleConfig
     public function getCompanyUserInvitationStatusKeys(): array
     {
         return [
-            CompanyUserInvitationConstants::INVITATION_STATUS_NEW,
-            CompanyUserInvitationConstants::INVITATION_STATUS_PENDING,
-            CompanyUserInvitationConstants::INVITATION_STATUS_ACCEPTED,
-            CompanyUserInvitationConstants::INVITATION_STATUS_DELETED,
+            SharedCompanyUserInvitationConfig::INVITATION_STATUS_NEW,
+            SharedCompanyUserInvitationConfig::INVITATION_STATUS_PENDING,
+            SharedCompanyUserInvitationConfig::INVITATION_STATUS_ACCEPTED,
+            SharedCompanyUserInvitationConfig::INVITATION_STATUS_DELETED,
         ];
     }
 

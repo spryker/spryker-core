@@ -16,7 +16,7 @@ use Generated\Shared\Transfer\CompanyUserInvitationSendResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusRequestTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Spryker\Shared\CompanyUserInvitation\CompanyUserInvitationConstants;
+use Spryker\Shared\CompanyUserInvitation\CompanyUserInvitationConfig;
 use Spryker\Zed\CompanyUserInvitation\Business\Model\Mailer\InvitationMailerInterface;
 use Spryker\Zed\CompanyUserInvitation\Business\Model\Reader\InvitationReaderInterface;
 use Spryker\Zed\CompanyUserInvitation\Business\Model\Updater\InvitationUpdaterInterface;
@@ -103,7 +103,7 @@ class InvitationSender implements InvitationSenderInterface
 
         $companyUserInvitationCollection = $this->createCompanyUserInvitationCollection(
             $companyUserTransfer,
-            CompanyUserInvitationConstants::INVITATION_STATUS_NEW
+            CompanyUserInvitationConfig::INVITATION_STATUS_NEW
         );
 
         $invitationsTotal = $invitationsFailed = 0;
@@ -135,7 +135,7 @@ class InvitationSender implements InvitationSenderInterface
         $companyUserInvitationUpdateStatusRequestTransfer = (new CompanyUserInvitationUpdateStatusRequestTransfer())
             ->setCompanyUserInvitation($companyUserInvitationTransfer)
             ->setIdCompanyUser($idCompanyUser)
-            ->setStatusKey(CompanyUserInvitationConstants::INVITATION_STATUS_PENDING);
+            ->setStatusKey(CompanyUserInvitationConfig::INVITATION_STATUS_PENDING);
 
         return $this->invitationUpdater->updateStatus($companyUserInvitationUpdateStatusRequestTransfer)->getIsSuccess();
     }

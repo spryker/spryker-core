@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CompanyUserInvitationTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationUpdateStatusRequestTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Spryker\Shared\CompanyUserInvitation\CompanyUserInvitationConstants;
+use Spryker\Shared\CompanyUserInvitation\CompanyUserInvitationConfig;
 use Spryker\Zed\CompanyUserInvitation\Business\Model\Updater\InvitationUpdaterInterface;
 use Spryker\Zed\CompanyUserInvitation\Dependency\Facade\CompanyUserInvitationToCompanyUserFacadeInterface;
 use Spryker\Zed\CompanyUserInvitation\Persistence\CompanyUserInvitationRepositoryInterface;
@@ -88,7 +88,7 @@ class CompanyUserCreator implements CompanyUserCreatorInterface
         return (new CompanyUserInvitationUpdateStatusRequestTransfer())
         ->setIdCompanyUser($companyUserInvitationTransfer->getFkCompanyUser())
         ->setCompanyUserInvitation($companyUserInvitationTransfer)
-        ->setStatusKey(CompanyUserInvitationConstants::INVITATION_STATUS_ACCEPTED);
+        ->setStatusKey(CompanyUserInvitationConfig::INVITATION_STATUS_ACCEPTED);
     }
 
     /**
@@ -112,6 +112,6 @@ class CompanyUserCreator implements CompanyUserCreatorInterface
     protected function isValidCompanyUserInvitationStatus(CompanyUserInvitationTransfer $companyUserInvitationTransfer): bool
     {
         return $companyUserInvitationTransfer->getIdCompanyUserInvitation()
-            && $companyUserInvitationTransfer->getCompanyUserInvitationStatusKey() === CompanyUserInvitationConstants::INVITATION_STATUS_PENDING;
+            && $companyUserInvitationTransfer->getCompanyUserInvitationStatusKey() === CompanyUserInvitationConfig::INVITATION_STATUS_PENDING;
     }
 }
