@@ -18,6 +18,7 @@ use Spryker\Client\MultiCart\Dependency\Client\MultiCartToPersistentCartClientIn
 use Spryker\Client\MultiCart\Dependency\Client\MultiCartToQuoteClientInterface;
 use Spryker\Client\MultiCart\Dependency\Client\MultiCartToSessionClientInterface;
 use Spryker\Client\MultiCart\Dependency\Client\MultiCartToZedRequestClientInterface;
+use Spryker\Client\MultiCart\Dependency\Service\MultiCartToUtilDateTimeServiceInterface;
 use Spryker\Client\MultiCart\QuoteStorageSynchronizer\CustomerLoginQuoteSync;
 use Spryker\Client\MultiCart\QuoteStorageSynchronizer\CustomerLoginQuoteSyncInterface;
 use Spryker\Client\MultiCart\Storage\MultiCartStorage;
@@ -41,7 +42,7 @@ class MultiCartFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\MultiCart\MultiCartConfig
      */
-    public function getMultiCartConfig()
+    public function getMultiCartConfig(): MultiCartConfig
     {
         return $this->getConfig();
     }
@@ -74,7 +75,8 @@ class MultiCartFactory extends AbstractFactory
             $this->createMultiCartZedStub(),
             $this->getPersistentCartClient(),
             $this->getQuoteClient(),
-            $this->getCustomerClient()
+            $this->getCustomerClient(),
+            $this->getZedRequestClient()
         );
     }
 
@@ -87,6 +89,7 @@ class MultiCartFactory extends AbstractFactory
             $this->getPersistentCartClient(),
             $this->getQuoteClient(),
             $this->getCustomerClient(),
+            $this->getDateTimeService(),
             $this->getConfig()
         );
     }
@@ -137,5 +140,13 @@ class MultiCartFactory extends AbstractFactory
     public function getPersistentCartClient(): MultiCartToPersistentCartClientInterface
     {
         return $this->getProvidedDependency(MultiCartDependencyProvider::CLIENT_PERSISTENT_CART);
+    }
+
+    /**
+     * @return \Spryker\Client\MultiCart\Dependency\Service\MultiCartToUtilDateTimeServiceInterface
+     */
+    public function getDateTimeService(): MultiCartToUtilDateTimeServiceInterface
+    {
+        return $this->getProvidedDependency(MultiCartDependencyProvider::SERVICE_DATETIME);
     }
 }

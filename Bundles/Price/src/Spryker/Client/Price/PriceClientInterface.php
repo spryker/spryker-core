@@ -26,6 +26,20 @@ interface PriceClientInterface
 
     /**
      * Specification:
+     *  - Checks if price mode is acceptable.
+     *  - Set price mode to quote.
+     *  - Call price mode update plugins.
+     *
+     * @api
+     *
+     * @param string $priceMode
+     *
+     * @return void
+     */
+    public function switchPriceMode(string $priceMode): void;
+
+    /**
+     * Specification:
      *  - Return identifier for gross price mode pricing. Same identifier is used when persisting prices
      *
      * @api

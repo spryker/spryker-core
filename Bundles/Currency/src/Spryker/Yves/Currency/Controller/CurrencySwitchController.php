@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Yves\Currency\CurrencyFactory getFactory()
+ * @method \Spryker\Client\Currency\CurrencyClientInterface getClient()
  */
 class CurrencySwitchController extends AbstractController
 {
@@ -27,15 +28,7 @@ class CurrencySwitchController extends AbstractController
     public function indexAction(Request $request)
     {
         $currencyIsoCode = $request->get(static::URL_PARAM_CURRENCY_ISO_CODE);
-
-        $currencyPersistence = $this->getFactory()->createCurrencyPersistence();
-        $previousCurrencyIsoCode = $currencyPersistence->getCurrentCurrencyIsoCode();
-
-        $currencyPersistence->setCurrentCurrencyIsoCode($currencyIsoCode);
-
-        $this->getFactory()
-            ->createCurrencyPostChangePluginExecutor()
-            ->execute($currencyIsoCode, $previousCurrencyIsoCode);
+        $this->getClient()->setCurrentCurrencyIsoCode($currencyIsoCode);
 
         return $this->redirectResponseExternal(
             urldecode($request->get(static::URL_PARAM_REFERRER_URL))
