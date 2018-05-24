@@ -285,27 +285,17 @@ class CompanyUser implements CompanyUserInterface
      */
     public function createInitialCompanyUser(CompanyResponseTransfer $companyResponseTransfer): CompanyResponseTransfer
     {
-        $companyResponseTransfer->getCompanyTransfer()->requireIdCompany();
-        $companyResponseTransfer->getCompanyTransfer()->requireInitialUserTransfer();
+        $companyResponseTransfer->getCompanyTransfer()->requireIdCompany()->requireInitialUserTransfer();
 
         $companyTransfer = $companyResponseTransfer->getCompanyTransfer();
-        $companyUserTransfer = $companyTransfer->getInitialUserTransfer();
-        $companyUserTransfer->setFkCompany($companyTransfer->getIdCompany());
+        $companyUserTransfer = $companyTransfer->getInitialUserTransfer()
+            ->setFkCompany($companyTransfer->getIdCompany());
+
         $companyUserResponseTransfer = $this->create($companyUserTransfer);
 
-        $companyResponseTransfer
-            ->getCompanyTransfer()
-            ->setInitialUserTransfer(
-                $companyUserResponseTransfer->getCompanyUser()
-            );
-
-        if ($companyUserResponseTransfer->getIsSuccessful() !== true) {
-            $companyResponseTransfer->setIsSuccessful(false);
-            $this->addMessagesToCompanyResponse(
-                $companyUserResponseTransfer->getMessages(),
-                $companyResponseTransfer
-            );
-        }
+        $companyResponseTransfer->getCompanyTransfer()->setInitialUserTransfer($companyUserResponseTransfer->getCompanyUser());
+        $companyResponseTransfer->setIsSuccessful($companyUserResponseTransfer->getIsSuccessful());
+        $this->addMessagesToCompanyResponse($companyUserResponseTransfer->getMessages(), $companyResponseTransfer);
 
         return $companyResponseTransfer;
     }
