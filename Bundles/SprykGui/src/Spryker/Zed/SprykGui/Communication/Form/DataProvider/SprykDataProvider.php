@@ -7,10 +7,23 @@
 
 namespace Spryker\Zed\SprykGui\Communication\Form\DataProvider;
 
-use Spryker\Spryk\SprykFacade;
+use Spryker\Zed\SprykGui\Dependency\Facade\SprykGuiToSprykFacadeInterface;
 
 class SprykDataProvider
 {
+    /**
+     * @var \Spryker\Zed\SprykGui\Dependency\Facade\SprykGuiToSprykFacadeInterface
+     */
+    protected $sprykFacade;
+
+    /**
+     * @param \Spryker\Zed\SprykGui\Dependency\Facade\SprykGuiToSprykFacadeInterface $sprykFacade
+     */
+    public function __construct(SprykGuiToSprykFacadeInterface $sprykFacade)
+    {
+        $this->sprykFacade = $sprykFacade;
+    }
+
     /**
      * @param null|string $selectedSpryk
      *
@@ -18,8 +31,7 @@ class SprykDataProvider
      */
     public function getOptions(?string $selectedSpryk = null): array
     {
-        $sprykFacade = new SprykFacade();
-        $sprykDefinitions = $sprykFacade->getSprykDefinitions();
+        $sprykDefinitions = $this->sprykFacade->getSprykDefinitions();
 
         $options = [
             'sprykDefinitions' => $sprykDefinitions,

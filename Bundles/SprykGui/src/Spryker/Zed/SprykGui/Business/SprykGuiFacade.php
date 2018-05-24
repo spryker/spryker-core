@@ -17,6 +17,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class SprykGuiFacade extends AbstractFacade implements SprykGuiFacadeInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string $sprykName
@@ -30,6 +32,8 @@ class SprykGuiFacade extends AbstractFacade implements SprykGuiFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return array
@@ -40,6 +44,8 @@ class SprykGuiFacade extends AbstractFacade implements SprykGuiFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param string $sprykName

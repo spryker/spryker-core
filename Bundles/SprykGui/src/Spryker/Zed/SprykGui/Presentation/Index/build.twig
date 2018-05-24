@@ -1,6 +1,6 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set page_title = 'ADD TITLE HERE' %}
+{% set page_title = 'Build Spryk' %}
 {% block head_title page_title %}
 {% block section_title page_title %}
 
@@ -11,10 +11,9 @@
     {% if form is defined %}
     {{ form_start(form) }}
     {{ form_widget(form) }}
-    {#<input type="submit" name="create" class="btn btn-primary safe-submit" value="{{ 'Create Template' | trans }}" />#}
-    {#<input type="submit" name="run" class="btn btn-primary safe-submit" value="{{ 'Run Spryk' | trans }}" />#}
     {{ form_end(form) }}
     {% else %}
+        <h3>Jira Template</h3>
         <p><pre>
             {{ jiraTemplate }}
         </pre></p>

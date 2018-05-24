@@ -10,7 +10,7 @@
   },
   "autoload": {
     "psr-4": {
-      "\\": "src//"
+      "Spryker\\": "src/Spryker/"
     }
   },
   "minimum-stability": "dev",

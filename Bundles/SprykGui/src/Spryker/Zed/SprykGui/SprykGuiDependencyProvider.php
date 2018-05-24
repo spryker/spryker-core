@@ -10,6 +10,7 @@ namespace Spryker\Zed\SprykGui;
 use Spryker\Spryk\SprykFacade;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\SprykGui\Dependency\Facade\SprykGuiToSprykFacadeBridge;
 
 class SprykGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -47,7 +48,11 @@ class SprykGuiDependencyProvider extends AbstractBundleDependencyProvider
     protected function addSprykFacade(Container $container): Container
     {
         $container[static::SPRYK_FACADE] = function () {
-            return new SprykFacade();
+            $sprykGuiToSprykFacadeBridge = new SprykGuiToSprykFacadeBridge(
+                new SprykFacade()
+            );
+
+            return $sprykGuiToSprykFacadeBridge;
         };
 
         return $container;

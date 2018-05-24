@@ -10,29 +10,31 @@ namespace Spryker\Zed\SprykGui\Communication;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\SprykGui\Communication\Form\DataProvider\SprykDataProvider;
 use Spryker\Zed\SprykGui\Communication\Form\SprykForm;
-use Spryker\Zed\SprykGui\Communication\Form\SprykSelectForm;
+use Spryker\Zed\SprykGui\Dependency\Facade\SprykGuiToSprykFacadeInterface;
+use Spryker\Zed\SprykGui\SprykGuiDependencyProvider;
 use Symfony\Component\Form\FormInterface;
 
+/**
+ * @method \Spryker\Zed\SprykGui\SprykGuiConfig getConfig()
+ */
 class SprykGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Symfony\Component\Form\FormInterface
+     * @return \Spryker\Zed\SprykGui\Communication\Form\DataProvider\SprykDataProvider
      */
-    public function getSprykSelectForm(): FormInterface
+    public function createSprykFormDataProvider(): SprykDataProvider
     {
-        return $this->getFormFactory()->create(
-            SprykSelectForm::class,
-            $this->createSprykFormDataProvider()->getData(),
-            $this->createSprykFormDataProvider()->getOptions()
+        return new SprykDataProvider(
+            $this->getSprykFacade()
         );
     }
 
     /**
-     * @return \Spryker\Zed\SprykGui\Communication\Form\DataProvider\SprykDataProvider
+     * @return \Spryker\Zed\SprykGui\Dependency\Facade\SprykGuiToSprykFacadeInterface
      */
-    public function createSprykFormDataProvider()
+    public function getSprykFacade(): SprykGuiToSprykFacadeInterface
     {
-        return new SprykDataProvider();
+        return $this->getProvidedDependency(SprykGuiDependencyProvider::SPRYK_FACADE);
     }
 
     /**
@@ -44,7 +46,7 @@ class SprykGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getFormFactory()->create(
             SprykForm::class,
-            $this->createSprykFormDataProvider()->getData($spryk),
+            $this->createSprykFormDataProvider()->getData(),
             $this->createSprykFormDataProvider()->getOptions($spryk)
         );
     }

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\SprykGui\Business\Model;
 
-use Spryker\Spryk\SprykFacade;
+use Spryker\Zed\SprykGui\Dependency\Facade\SprykGuiToSprykFacadeInterface;
 use Symfony\Component\Process\Process;
 use Zend\Filter\FilterChain;
 use Zend\Filter\Word\CamelCaseToSeparator;
@@ -15,14 +15,14 @@ use Zend\Filter\Word\CamelCaseToSeparator;
 class Spryk implements SprykInterface
 {
     /**
-     * @var \Spryker\Spryk\SprykFacade
+     * @var \Spryker\Zed\SprykGui\Dependency\Facade\SprykGuiToSprykFacadeInterface
      */
     protected $sprykFacade;
 
     /**
-     * @param \Spryker\Spryk\SprykFacade $sprykFacade
+     * @param \Spryker\Zed\SprykGui\Dependency\Facade\SprykGuiToSprykFacadeInterface $sprykFacade
      */
-    public function __construct(SprykFacade $sprykFacade)
+    public function __construct(SprykGuiToSprykFacadeInterface $sprykFacade)
     {
         $this->sprykFacade = $sprykFacade;
     }
@@ -123,16 +123,6 @@ class Spryk implements SprykInterface
         $filterChain->attach(new CamelCaseToSeparator(' '));
 
         return $filterChain;
-    }
-
-    /**
-     * @param string $sprykName
-     *
-     * @return string
-     */
-    protected function removeSprykPrefix(string $sprykName): string
-    {
-        return str_replace(['Add', 'Create'], '', $sprykName);
     }
 
     /**

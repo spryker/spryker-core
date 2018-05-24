@@ -10,6 +10,9 @@ namespace Spryker\Zed\SprykGui\Business;
 interface SprykGuiFacadeInterface
 {
     /**
+     * Specification:
+     * - Builds the template for JIRA.
+     *
      * @api
      *
      * @param string $sprykName
@@ -20,6 +23,9 @@ interface SprykGuiFacadeInterface
     public function buildSprykView(string $sprykName, array $sprykArguments): array;
 
     /**
+     * Specification:
+     * - Returns all SprykDefinitions.
+     *
      * @api
      *
      * @return array
@@ -27,6 +33,9 @@ interface SprykGuiFacadeInterface
     public function getSprykDefinitions(): array;
 
     /**
+     * Specification:
+     * - Builds the commandLin to be executed and executes it.
+     *
      * @api
      *
      * @param string $sprykName

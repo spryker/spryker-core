@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\SprykGui\Business;
 
-use Spryker\Spryk\SprykFacade;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\SprykGui\Business\Model\Spryk;
 use Spryker\Zed\SprykGui\Business\Model\SprykInterface;
+use Spryker\Zed\SprykGui\Dependency\Facade\SprykGuiToSprykFacadeInterface;
 use Spryker\Zed\SprykGui\SprykGuiDependencyProvider;
 
 /**
@@ -32,9 +32,9 @@ class SprykGuiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Spryk\SprykFacade
+     * @return \Spryker\Zed\SprykGui\Dependency\Facade\SprykGuiToSprykFacadeInterface
      */
-    protected function getSprykFacade(): SprykFacade
+    protected function getSprykFacade(): SprykGuiToSprykFacadeInterface
     {
         return $this->getProvidedDependency(SprykGuiDependencyProvider::SPRYK_FACADE);
     }
