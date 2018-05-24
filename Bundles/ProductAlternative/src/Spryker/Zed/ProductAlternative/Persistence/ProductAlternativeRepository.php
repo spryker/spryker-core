@@ -49,7 +49,7 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
      */
-    public function getProductAlternativeById(ProductAlternativeTransfer $productAlternativeTransfer): ProductAlternativeTransfer
+    public function getProductAlternativeByProductAlternativeId(ProductAlternativeTransfer $productAlternativeTransfer): ProductAlternativeTransfer
     {
         $productAlternativeQuery = $this
             ->getFactory()

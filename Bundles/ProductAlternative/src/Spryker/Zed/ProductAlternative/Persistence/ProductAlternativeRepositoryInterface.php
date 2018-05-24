@@ -36,5 +36,5 @@ interface ProductAlternativeRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
      */
-    public function getProductAlternativeById(ProductAlternativeTransfer $productAlternativeTransfer): ProductAlternativeTransfer;
+    public function getProductAlternativeByProductAlternativeId(ProductAlternativeTransfer $productAlternativeTransfer): ProductAlternativeTransfer;
 }
