@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\ProductBarcode\Dependency\Client;
 
-use Generated\Shared\Transfer\BarcodeResponseTransfer;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 interface ProductBarcodeToZedRequestInterface
@@ -19,5 +18,5 @@ interface ProductBarcodeToZedRequestInterface
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\BarcodeResponseTransfer
      */
-    public function call($url, TransferInterface $object, $timeoutInSeconds = null): BarcodeResponseTransfer;
+    public function call($url, TransferInterface $object, $timeoutInSeconds = null);
 }

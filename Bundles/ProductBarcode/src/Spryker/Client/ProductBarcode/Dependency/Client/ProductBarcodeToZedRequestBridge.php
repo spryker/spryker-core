@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\ProductBarcode\Dependency\Client;
 
-use Generated\Shared\Transfer\BarcodeResponseTransfer;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 class ProductBarcodeToZedRequestBridge implements ProductBarcodeToZedRequestInterface
@@ -32,7 +31,7 @@ class ProductBarcodeToZedRequestBridge implements ProductBarcodeToZedRequestInte
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\BarcodeResponseTransfer
      */
-    public function call($url, TransferInterface $object, $timeoutInSeconds = null): BarcodeResponseTransfer
+    public function call($url, TransferInterface $object, $timeoutInSeconds = null)
     {
         return $this->zedRequestClient->call($url, $object, $timeoutInSeconds);
     }
