@@ -9,24 +9,41 @@ namespace Spryker\Client\PersistentCart\Plugin;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteUpdateRequestAttributesTransfer;
+use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
 use Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Shared\Quote\QuoteConfig;
 
 /**
  * @method \Spryker\Client\PersistentCart\PersistentCartFactory getFactory()
+ * @method \Spryker\Client\PersistentCart\PersistentCartClientInterface getClient()()
  */
 class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorageStrategyPluginInterface
 {
     /**
-     * {@inheritdoc}
-     *
-     * @api
+     * @return string
+     */
+    public function getStorageStrategy()
+    {
+        return QuoteConfig::STORAGE_STRATEGY_DATABASE;
+    }
+
+    /**
+     * Specification:
+     *  - Makes zed request with item and customer.
+     *  - Loads customer quote from database.
+     *  - Adds item to quote.
+     *  - Recalculates quote totals.
+     *  - Save updated quote to database.
+     *  - Stores quote in session internally after zed request.
+     *  - Returns update quote.
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param array $params
@@ -47,9 +64,14 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
+     * Specification:
+     *  - Makes zed request with items and customer.
+     *  - Loads customer quote from database.
+     *  - Adds items to quote.
+     *  - Recalculates quote totals.
+     *  - Saves updated quote to database.
+     *  - Stores quote in session internally after zed request.
+     *  - Returns update quote.
      *
      * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      * @param array $params
@@ -74,17 +96,24 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
+     * Specification:
+     *  - Makes zed request with items and customer.
+     *  - Loads customer quote from database.
+     *  - Adds only items, that passed validation.
+     *  - Recalculates quote totals.
+     *  - Save updated quote to database.
+     *  - Stores quote in session internally after zed request.
+     *  - Returns update quote.
      *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param array $params
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function addValidItems(CartChangeTransfer $cartChangeTransfer, array $params = []): QuoteTransfer
     {
         $persistentCartChangeTransfer = $this->createPersistentCartChangeTransfer();
+        $persistentCartChangeTransfer->setIdQuote($cartChangeTransfer->getQuote()->getIdQuote());
 
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             $persistentCartChangeTransfer->addItem($itemTransfer);
@@ -100,9 +129,14 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
+     * Specification:
+     *  - Makes zed request with items and customer.
+     *  - Loads customer quote from database.
+     *  - Removes single item from quote.
+     *  - Recalculates quote totals.
+     *  - Save updated quote to database.
+     *  - Stores quote in session internally after zed request.
+     *  - Returns update quote.
      *
      * @param string $sku
      * @param string|null $groupKey
@@ -123,9 +157,14 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
+     * Specification:
+     *  - Makes zed request with items and customer.
+     *  - Loads customer quote from database.
+     *  - Removes items from quote.
+     *  - Recalculates quote totals.
+     *  - Save updated quote to database.
+     *  - Stores quote in session internally after zed request.
+     *  - Returns update quote.
      *
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
@@ -143,9 +182,14 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
+     * Specification:
+     *  - Makes zed request with items and customer.
+     *  - Loads customer quote from database.
+     *  - Changes quantity for given item.
+     *  - Recalculates quote totals.
+     *  - Save updated quote to database.
+     *  - Stores quote in session internally after zed request.
+     *  - Returns update quote.
      *
      * @param string $sku
      * @param string|null $groupKey
@@ -167,9 +211,14 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
+     * Specification:
+     *  - Makes zed request with items and customer.
+     *  - Loads customer quote from database.
+     *  - Decreases quantity for given item.
+     *  - Recalculates quote totals.
+     *  - Save updated quote to database.
+     *  - Stores quote in session internally after zed request.
+     *  - Returns update quote.
      *
      * @param string $sku
      * @param string|null $groupKey
@@ -191,9 +240,14 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
+     * Specification:
+     *  - Makes zed request with items and customer.
+     *  - Loads customer quote from database.
+     *  - Increases quantity for given item.
+     *  - Recalculates quote totals.
+     *  - Save updated quote to database.
+     *  - Stores quote in session internally after zed request.
+     *  - Returns update quote.
      *
      * @param string $sku
      * @param string|null $groupKey
@@ -215,9 +269,13 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
+     * Specification:
+     *  - Makes zed request.
+     *  - Reloads all items in cart anew, it recreates all items transfer, reads new prices, options, bundles.
+     *  - Recalculates quote totals.
+     *  - Save updated quote to database.
+     *  - Stores quote in session internally after zed request.
+     *  - Returns update quote.
      *
      * @return void
      */
@@ -230,18 +288,15 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
 
     /**
      * Specification:
-     * - Gets quote storage strategy type
+     *  - Makes zed request.
+     *  - Reloads all items in cart anew, it recreates all items transfer, reads new prices, options, bundles.
+     *  - Adds changes as notices to messages.
+     *  - Checks error messages.
+     *  - Recalculates quote totals.
+     *  - Saves updated quote to database.
+     *  - Stores quote in session internally after zed request.
+     *  - Returns update quote.
      *
-     * @api
-     *
-     * @return string
-     */
-    public function getStorageStrategy()
-    {
-        return QuoteConfig::STORAGE_STRATEGY_DATABASE;
-    }
-
-    /**
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function validateQuote()
@@ -249,6 +304,33 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
         $quoteTransfer = $this->getQuoteClient()->getQuote();
         $quoteTransfer->setCustomer($this->getFactory()->getCustomerClient()->getCustomer());
         $quoteResponseTransfer = $this->getZedStub()->validateQuote($quoteTransfer);
+        $this->updateQuote($quoteResponseTransfer);
+        return $quoteResponseTransfer;
+    }
+
+    /**
+     * Specification:
+     *  - Makes zed request.
+     *  - Reloads all items in cart anew, it recreates all items transfer, reads new prices, options, bundles.
+     *  - Recalculates quote totals.
+     *  - Saves updated quote to database.
+     *  - Stores quote in session internally after zed request.
+     *  - Returns update quote.
+     *
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function setQuoteCurrency(CurrencyTransfer $currencyTransfer): QuoteResponseTransfer
+    {
+        $quoteUpdateRequestTransfer = new QuoteUpdateRequestTransfer();
+        $quoteUpdateRequestTransfer->setIdQuote($this->getQuoteClient()->getQuote()->getIdQuote());
+        $quoteUpdateRequestTransfer->setCustomer($this->getFactory()->getCustomerClient()->getCustomer());
+        $quoteUpdateRequestAttributesTransfer = new QuoteUpdateRequestAttributesTransfer();
+        $quoteUpdateRequestAttributesTransfer->setCurrency($currencyTransfer);
+        $quoteUpdateRequestTransfer->setQuoteUpdateRequestAttributes($quoteUpdateRequestAttributesTransfer);
+
+        $quoteResponseTransfer = $this->getZedStub()->updateAndReloadQuote($quoteUpdateRequestTransfer);
         $this->updateQuote($quoteResponseTransfer);
         return $quoteResponseTransfer;
     }

@@ -34,6 +34,20 @@ class PriceClient extends AbstractClient implements PriceClientInterface
      *
      * @api
      *
+     * @return void
+     */
+    public function switchPriceMode(string $priceMode): void
+    {
+        $this->getFactory()
+            ->createPriceModeSwitcher()
+            ->switchPriceMode($priceMode);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return string
      */
     public function getGrossPriceModeIdentifier()

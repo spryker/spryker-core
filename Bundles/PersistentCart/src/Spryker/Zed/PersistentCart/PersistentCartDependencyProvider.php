@@ -29,7 +29,7 @@ class PersistentCartDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideBusinessLayerDependencies(Container $container)
+    public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = $this->addCartFacade($container);
         $container = $this->addMessengerFacade($container);

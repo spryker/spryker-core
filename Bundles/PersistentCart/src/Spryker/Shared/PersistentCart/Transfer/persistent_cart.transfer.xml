@@ -7,6 +7,7 @@
         <property name="customer" type="Customer"/>
         <property name="idQuote" type="int"/>
         <property name="items" type="Item[]" singular="item"/>
+        <property name="quoteUpdateRequestAttributes" type="QuoteUpdateRequestAttributes"/>
     </transfer>
 
     <transfer name="QuoteSyncRequest">
@@ -33,7 +34,16 @@
 
     <transfer name="QuoteUpdateRequestAttributes">
         <property name="currency" type="Currency"/>
+        <property name="priceMode" type="string"/>
         <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="companyUserTransfer" type="CompanyUser"/>
+    </transfer>
+
+    <transfer name="CompanyUser">
+        <property name="idCompanyUser" type="int"/>
     </transfer>
 
 </transfers>
