@@ -75,7 +75,11 @@ class SalesBusinessFactory extends AbstractBusinessFactory
      */
     public function createCustomerOrderOverviewHydrator(): CustomerOrderOverviewHydratorInterface
     {
-        return new CustomerOrderOverviewHydrator();
+        return new CustomerOrderOverviewHydrator(
+            $this->getQueryContainer(),
+            $this->getOmsFacade(),
+            $this->getHydrateOrderPlugins()
+        );
     }
 
     /**
