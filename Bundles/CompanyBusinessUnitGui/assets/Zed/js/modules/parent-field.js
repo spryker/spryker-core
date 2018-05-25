@@ -25,57 +25,40 @@ function CompanyFieldHandler() {
         return $companyField.val();
     }
 
-    /**
-     * @returns {Map<string:string>}
-     */
-    function getBusinessUnitList() {
-        const idCompany = getCompanyId();
-        if (!idCompany) {
-            return {};
-        }
-        const companyUnitMap = $parentField.data('company_unit_map');
-
-        return companyUnitMap[idCompany];
-    }
-
-    function cleanParents() {
-        $parentField
-            .children()
-            .each(function() {
-                const $option = $(this);
-                if (!$option.val()) {
-                    return;
-                }
-                $option.remove();
-            });
-    }
-
     function blinkParentField() {
         $parentField.effect("highlight", {}, 3000);
     }
 
-    function setParentNames() {
-        cleanParents();
-        const parentList = getBusinessUnitList();
-        const fragment = document.createDocumentFragment();
+    function toggleOption() {
+        console.log('toggleOption')
+        const companyId = getCompanyId();
+        const $parentOption = $(this);
+        console.log($parentOption.data('id_company'))
+        console.log(typeof $parentOption.data('id_company'))
+        console.log(companyId)
+        console.log(typeof companyId)
+        console.log($parentOption.data('id_company') === companyId)
 
-        for (const idBusinessUnit in parentList) {
-            if (!parentList.hasOwnProperty(idBusinessUnit)) {
-                continue;
-            }
-            const BusinessUnitName = parentList[idBusinessUnit];
-
-            let opt = document.createElement('option');
-            opt.innerHTML = BusinessUnitName;
-            opt.value = idBusinessUnit;
-            fragment.appendChild(opt);
+        if (!$parentOption.val()) {
+            return;
         }
 
-        $parentField.append(fragment);
+        if ($parentOption.data('id_company') == companyId) {
+            $parentOption.show();
+        } else {
+            $parentOption.hide();
+        }
+    }
+
+    function setParentNames() {
+        $parentField.children().each(toggleOption);
+
         blinkParentField();
     }
 
     function addListenerOnCompany() {
+        setParentNames();
+
         if ($parentField && $companyField) {
             $companyField.change(setParentNames);
         }
@@ -83,9 +66,13 @@ function CompanyFieldHandler() {
 
     return {
         addListenerOnCompany: addListenerOnCompany,
+        $companyField: $companyField,
+        $parentField: $parentField,
+        jQuery: $,
     };
 }
 
 module.exports = {
     initialize: initialize,
+    bm13kk: CompanyFieldHandler,
 };

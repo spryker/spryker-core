@@ -11,5 +11,6 @@ const parentField = require('./parent-field');
 
 $(document).ready( function () {
     parentField.initialize();
+    document.bm13kk = parentField.bm13kk;
 });
 
