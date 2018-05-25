@@ -10,13 +10,11 @@ namespace SprykerTest\Shared\CompanyUser\Helper;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\CompanyUserBuilder;
 use Spryker\Zed\CompanyUser\Business\CompanyUserFacadeInterface;
-use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\DependencyHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class CompanyUserHelper extends Module
 {
-    use DataCleanupHelperTrait;
     use DependencyHelperTrait;
     use LocatorHelperTrait;
 
@@ -32,14 +30,9 @@ class CompanyUserHelper extends Module
 
         $companyUserTransfer->requireCustomer();
 
-        $companyUserTransfer = $companyUserResponseTransfer = $this->getFacade()
-            ->create($companyUserTransfer)->getCompanyUser();
+        $companyUserResponseTransfer = $this->getFacade()->create($companyUserTransfer);
 
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($companyUserTransfer) {
-            $this->getFacade()->delete($companyUserTransfer);
-        });
-
-        return $companyUserTransfer;
+        return $companyUserResponseTransfer->getCompanyUser();
     }
 
     /**

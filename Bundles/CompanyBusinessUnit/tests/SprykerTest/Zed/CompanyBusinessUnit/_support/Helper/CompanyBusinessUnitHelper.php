@@ -7,12 +7,10 @@ use Generated\Shared\DataBuilder\CompanyBuilder;
 use Generated\Shared\DataBuilder\CompanyBusinessUnitBuilder;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
-use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class CompanyBusinessUnitHelper extends Module
 {
-    use DataCleanupHelperTrait;
     use LocatorHelperTrait;
 
     /**
@@ -25,15 +23,9 @@ class CompanyBusinessUnitHelper extends Module
         $companyBusinessUnitTransfer = (new CompanyBusinessUnitBuilder($seedData))->build();
         $companyBusinessUnitTransfer->setIdCompanyBusinessUnit(null);
 
-        $companyBusinessUnitTransfer = $this->getCompanyBusinessUnitFacade()
+        return $this->getCompanyBusinessUnitFacade()
             ->create($companyBusinessUnitTransfer)
             ->getCompanyBusinessUnitTransfer();
-
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($companyBusinessUnitTransfer) {
-            $this->getCompanyBusinessUnitFacade()->delete($companyBusinessUnitTransfer);
-        });
-
-        return $companyBusinessUnitTransfer;
     }
 
     /**

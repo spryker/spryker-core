@@ -11,13 +11,10 @@ use Codeception\Module;
 use Generated\Shared\DataBuilder\CompanyBuilder;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Orm\Zed\Company\Persistence\SpyCompanyQuery;
-use Spryker\Zed\Company\Business\CompanyFacadeInterface;
-use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class CompanyHelper extends Module
 {
-    use DataCleanupHelperTrait;
     use LocatorHelperTrait;
 
     /**
@@ -48,20 +45,6 @@ class CompanyHelper extends Module
         $companyTransfer = (new CompanyBuilder($seedData))->build();
         $companyTransfer->setIdCompany(null);
 
-        $companyTransfer = $this->getLocator()->company()->facade()->create($companyTransfer)->getCompanyTransfer();
-
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($companyTransfer) {
-            $this->getCompanyFacade()->delete($companyTransfer);
-        });
-
-        return $companyTransfer;
-    }
-
-    /**
-     * @return \Spryker\Zed\Company\Business\CompanyFacadeInterface
-     */
-    protected function getCompanyFacade(): CompanyFacadeInterface
-    {
-        return $this->getLocator()->company()->facade();
+        return $this->getLocator()->company()->facade()->create($companyTransfer)->getCompanyTransfer();
     }
 }

@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\CompanyRole\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\CompanyRoleBuilder;
-use Generated\Shared\DataBuilder\CompanyRoleCollectionBuilder;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Spryker\Zed\CompanyRole\Business\CompanyRoleFacadeInterface;
@@ -31,34 +30,21 @@ class CompanyRoleHelper extends Module
     {
         $companyRoleTransfer = (new CompanyRoleBuilder($companyRole))->build();
 
-        $companyRoleTransfer = $this->getCompanyRoleFacade()
+        return $this->getCompanyRoleFacade()
             ->create($companyRoleTransfer)
             ->getCompanyRoleTransfer();
-
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($companyRoleTransfer) {
-            $this->getCompanyRoleFacade()->delete($companyRoleTransfer);
-        });
-
-        return $companyRoleTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     * @return void
      */
-    public function assignCompanyRolesToCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer
+    public function assignCompanyRolesToCompanyUser(CompanyUserTransfer $companyUserTransfer): void
     {
         $companyUserTransfer->requireCompanyRoleCollection();
 
         $this->getCompanyRoleFacade()->saveCompanyUser($companyUserTransfer);
-
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($companyUserTransfer) {
-            $companyUserTransfer->setCompanyRoleCollection((new CompanyRoleCollectionBuilder())->build());
-            $this->getCompanyRoleFacade()->saveCompanyUser($companyUserTransfer);
-        });
-
-        return $companyUserTransfer;
     }
 
     /**
