@@ -30,14 +30,8 @@ function CompanyFieldHandler() {
     }
 
     function toggleOption() {
-        console.log('toggleOption')
         const companyId = getCompanyId();
         const $parentOption = $(this);
-        console.log($parentOption.data('id_company'))
-        console.log(typeof $parentOption.data('id_company'))
-        console.log(companyId)
-        console.log(typeof companyId)
-        console.log($parentOption.data('id_company') === companyId)
 
         if (!$parentOption.val()) {
             return;
@@ -66,13 +60,9 @@ function CompanyFieldHandler() {
 
     return {
         addListenerOnCompany: addListenerOnCompany,
-        $companyField: $companyField,
-        $parentField: $parentField,
-        jQuery: $,
     };
 }
 
 module.exports = {
     initialize: initialize,
-    bm13kk: CompanyFieldHandler,
 };
