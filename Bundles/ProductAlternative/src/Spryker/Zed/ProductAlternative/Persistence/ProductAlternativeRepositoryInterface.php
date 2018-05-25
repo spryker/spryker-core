@@ -10,9 +10,32 @@ namespace Spryker\Zed\ProductAlternative\Persistence;
 use Generated\Shared\Transfer\ProductAlternativeCollectionTransfer;
 use Generated\Shared\Transfer\ProductAlternativeTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Orm\Zed\ProductAlternative\Persistence\SpyProductAlternativeQuery;
 
 interface ProductAlternativeRepositoryInterface
 {
+    /**
+     * Specification:
+     * - Get product alternative query.
+     *
+     * @api
+     *
+     * @return \Orm\Zed\ProductAlternative\Persistence\SpyProductAlternativeQuery
+     */
+    public function queryProductAlternative(): SpyProductAlternativeQuery;
+
+    /**
+     * Specification:
+     * - Get product alternative query filtered by product concrete id (non-alternative).
+     *
+     * @api
+     *
+     * @param int $idProductConcrete
+     *
+     * @return \Orm\Zed\ProductAlternative\Persistence\SpyProductAlternativeQuery
+     */
+    public function queryProductAlternativeByIdProductConcrete(int $idProductConcrete): SpyProductAlternativeQuery;
+
     /**
      * Specification:
      * - Retrieve all alternative concrete products for concrete product with id = $idProduct

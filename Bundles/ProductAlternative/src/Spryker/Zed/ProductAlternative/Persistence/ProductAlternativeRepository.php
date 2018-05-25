@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductAlternative\Persistence;
 use Generated\Shared\Transfer\ProductAlternativeCollectionTransfer;
 use Generated\Shared\Transfer\ProductAlternativeTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Orm\Zed\ProductAlternative\Persistence\SpyProductAlternativeQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -17,6 +18,33 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class ProductAlternativeRepository extends AbstractRepository implements ProductAlternativeRepositoryInterface
 {
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return \Orm\Zed\ProductAlternative\Persistence\SpyProductAlternativeQuery
+     */
+    public function queryProductAlternative(): SpyProductAlternativeQuery
+    {
+        return SpyProductAlternativeQuery::create();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductConcrete
+     *
+     * @return \Orm\Zed\ProductAlternative\Persistence\SpyProductAlternativeQuery
+     */
+    public function queryProductAlternativeByIdProductConcrete(int $idProductConcrete): SpyProductAlternativeQuery
+    {
+        return $this->queryProductAlternative()
+            ->filterByFkProduct($idProductConcrete);
+    }
+
     /**
      * {@inheritdoc}
      *
