@@ -44,8 +44,9 @@ class Distributor implements DistributorInterface
         $calculatedDiscountTransfer = $this->createBaseCalculatedDiscountTransfer($collectedDiscountTransfer->getDiscount());
 
         foreach ($collectedDiscountTransfer->getDiscountableItems() as $discountableItemTransfer) {
-            $singleItemAmountShare = $discountableItemTransfer->getUnitPrice() / $totalAmount;
             $quantity = $this->getDiscountableItemQuantity($discountableItemTransfer);
+            $singleItemAmountShare = $discountableItemTransfer->getUnitPrice() / $totalAmount;
+
             for ($i = 0; $i < $quantity; $i++) {
                 $itemDiscountAmount = ($totalDiscountAmount * $singleItemAmountShare) + $this->roundingError;
                 $itemDiscountAmountRounded = (int)round($itemDiscountAmount);
@@ -58,6 +59,19 @@ class Distributor implements DistributorInterface
 
                 $discountableItemTransfer->getOriginalItemCalculatedDiscounts()->append($distributedDiscountTransfer);
             }
+
+//            $singleItemAmountShare = $discountableItemTransfer->getUnitPrice() * $quantity / $totalAmount;
+//            $itemDiscountAmount = ($totalDiscountAmount * $singleItemAmountShare) + $this->roundingError;
+//
+//            $itemDiscountAmountRounded = (int)round($itemDiscountAmount);
+//            $this->roundingError = $itemDiscountAmount - $itemDiscountAmountRounded;
+//
+//            $distributedDiscountTransfer = clone $calculatedDiscountTransfer;
+//            $distributedDiscountTransfer->setIdDiscount($collectedDiscountTransfer->getDiscount()->getIdDiscount());
+//            $distributedDiscountTransfer->setUnitAmount($itemDiscountAmountRounded);
+//            $distributedDiscountTransfer->setQuantity(1);
+//
+//            $discountableItemTransfer->getOriginalItemCalculatedDiscounts()->append($distributedDiscountTransfer);
         }
     }
 

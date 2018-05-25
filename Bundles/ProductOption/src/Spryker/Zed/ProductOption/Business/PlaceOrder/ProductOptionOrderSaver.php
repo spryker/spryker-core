@@ -70,11 +70,11 @@ class ProductOptionOrderSaver implements ProductOptionOrderSaverInterface
         ItemTransfer $itemTransfer
     ) {
         $salesOrderItemOptionEntity->fromArray($productOptionTransfer->toArray());
-        $salesOrderItemOptionEntity->setGrossPrice($productOptionTransfer->getUnitGrossPrice());
-        $salesOrderItemOptionEntity->setNetPrice($productOptionTransfer->getUnitNetPrice());
-        $salesOrderItemOptionEntity->setTaxAmount($productOptionTransfer->getUnitTaxAmount());
-        $salesOrderItemOptionEntity->setDiscountAmountAggregation($productOptionTransfer->getUnitDiscountAmountAggregation());
-        $salesOrderItemOptionEntity->setPrice($productOptionTransfer->getUnitPrice());
+        $salesOrderItemOptionEntity->setGrossPrice($productOptionTransfer->getSumGrossPrice());
+        $salesOrderItemOptionEntity->setNetPrice($productOptionTransfer->getSumNetPrice());
+        $salesOrderItemOptionEntity->setTaxAmount($productOptionTransfer->getSumTaxAmount());
+        $salesOrderItemOptionEntity->setDiscountAmountAggregation($productOptionTransfer->getSumDiscountAmountAggregation());
+        $salesOrderItemOptionEntity->setPrice($productOptionTransfer->getSumPrice());
 
         $salesOrderItemOptionEntity->setFkSalesOrderItem($itemTransfer->getIdSalesOrderItem());
     }

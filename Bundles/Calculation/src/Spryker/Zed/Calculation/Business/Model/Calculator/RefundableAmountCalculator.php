@@ -34,7 +34,7 @@ class RefundableAmountCalculator implements CalculatorInterface
             $itemTransfer->requireUnitPriceToPayAggregation();
 
             $itemTransfer->setRefundableAmount(
-                $itemTransfer->getUnitPriceToPayAggregation() - $itemTransfer->getCanceledAmount()
+                $itemTransfer->getSumPriceToPayAggregation() - $itemTransfer->getCanceledAmount()
             );
         }
     }
@@ -48,7 +48,7 @@ class RefundableAmountCalculator implements CalculatorInterface
     {
         foreach ($expenses as $expenseTransfer) {
             $expenseTransfer->setRefundableAmount(
-                $expenseTransfer->getUnitPriceToPayAggregation() - $expenseTransfer->getCanceledAmount()
+                $expenseTransfer->getSumPriceToPayAggregation() - $expenseTransfer->getCanceledAmount()
             );
         }
     }
