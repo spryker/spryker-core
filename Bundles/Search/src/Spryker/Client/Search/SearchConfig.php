@@ -12,7 +12,7 @@ use Spryker\Shared\Search\SearchConstants;
 
 class SearchConfig extends AbstractBundleConfig
 {
-    const FACET_NAME_AGGREGATION_SIZE = 10;
+    public const FACET_NAME_AGGREGATION_SIZE = 10;
 
     /**
      * @return string

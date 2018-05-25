@@ -32,7 +32,7 @@ class NumericFacetAggregation extends AbstractFacetAggregation
     /**
      * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
      * @param \Spryker\Client\Search\Model\Elasticsearch\Aggregation\AggregationBuilderInterface $aggregationBuilder
-     * @param int $searchConfig
+     * @param \Spryker\Client\Search\SearchConfig $searchConfig
      */
     public function __construct(FacetConfigTransfer $facetConfigTransfer, AggregationBuilderInterface $aggregationBuilder, SearchConfig $searchConfig)
     {
@@ -65,11 +65,19 @@ class NumericFacetAggregation extends AbstractFacetAggregation
                     $this->facetConfigTransfer->getName()
                 );
         } else {
-            $facetNameAgg = $this->createFacetNameAggregation($fieldName, $this->searchConfig->getFacetNameAggregationSize());
+            $facetNameAgg = $this->createFacetNameAggregation($fieldName, $this->getFacetNameAggregationSize());
         }
 
         $facetNameAgg->addAggregation($facetValueStats);
 
         return $this->createNestedFacetAggregation($nestedFieldName, $facetNameAgg, $fieldName);
+    }
+
+    /**
+     * @return int
+     */
+    protected function getFacetNameAggregationSize(): int
+    {
+        return $this->searchConfig->getFacetNameAggregationSize();
     }
 }

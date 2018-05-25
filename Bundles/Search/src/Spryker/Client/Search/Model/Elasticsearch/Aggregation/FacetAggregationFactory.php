@@ -125,7 +125,11 @@ class FacetAggregationFactory implements FacetAggregationFactoryInterface
      */
     protected function createStringFacetAggregation(FacetConfigTransfer $facetConfigTransfer)
     {
-        return new StringFacetAggregation($facetConfigTransfer, $this->aggregationBuilder);
+        return new StringFacetAggregation(
+            $facetConfigTransfer,
+            $this->aggregationBuilder,
+            $this->searchConfig
+        );
     }
 
     /**

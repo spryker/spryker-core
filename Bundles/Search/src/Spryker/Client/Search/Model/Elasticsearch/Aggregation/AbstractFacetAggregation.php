@@ -40,17 +40,15 @@ abstract class AbstractFacetAggregation implements FacetAggregationInterface
 
     /**
      * @param string $fieldName
-     * @param null|int $size
+     * @param int $size
      *
      * @return \Elastica\Aggregation\AbstractSimpleAggregation
      */
-    protected function createFacetNameAggregation($fieldName, $size = null)
+    protected function createFacetNameAggregation($fieldName, int $size)
     {
         $terms = (new Terms($fieldName . static::NAME_SUFFIX))
-            ->setField($this->addNestedFieldPrefix($fieldName, static::FACET_NAME));
-        if ($size !== null) {
-            $terms->setSize($size);
-        }
+            ->setField($this->addNestedFieldPrefix($fieldName, static::FACET_NAME))
+            ->setSize($size);
 
         return $terms;
     }
