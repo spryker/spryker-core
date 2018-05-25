@@ -16,15 +16,15 @@ use Spryker\Yves\Kernel\Container;
 
 class ChartDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const TWIG_CHART_FUNCTION_PLUGINS = 'TWIG_CHART_FUNCTION_PLUGINS';
-    const CHART_PLUGINS = 'CHART_PLUGINS';
+    public const TWIG_CHART_FUNCTION_PLUGINS = 'TWIG_CHART_FUNCTION_PLUGINS';
+    public const CHART_PLUGINS = 'CHART_PLUGINS';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    public function provideDependencies(Container $container)
+    public function provideDependencies(Container $container): Container
     {
         $container = $this->addTwigChartFunctionPlugins($container);
         $container = $this->addChartPlugins($container);
@@ -37,7 +37,7 @@ class ChartDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addTwigChartFunctionPlugins(Container $container)
+    protected function addTwigChartFunctionPlugins(Container $container): Container
     {
         $container[static::TWIG_CHART_FUNCTION_PLUGINS] = function () {
             return $this->getTwigChartFunctionPlugins();
@@ -51,7 +51,7 @@ class ChartDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addChartPlugins(Container $container)
+    protected function addChartPlugins(Container $container): Container
     {
         $container[static::CHART_PLUGINS] = function () {
             return $this->getChartPlugins();
@@ -63,7 +63,7 @@ class ChartDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Spryker\Shared\Chart\Dependency\Plugin\TwigChartFunctionPluginInterface[]
      */
-    protected function getTwigChartFunctionPlugins()
+    protected function getTwigChartFunctionPlugins(): array
     {
         return [
             new TwigPieChartPlugin(),
@@ -76,7 +76,7 @@ class ChartDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Spryker\Shared\Chart\Dependency\Plugin\ChartPluginInterface[]
      */
-    protected function getChartPlugins()
+    protected function getChartPlugins(): array
     {
         return [];
     }

@@ -12,14 +12,14 @@ use Spryker\Shared\Kernel\AbstractSharedConfig;
 
 class ChartConfig extends AbstractSharedConfig
 {
-    const CHART_TYPE_BAR = 'bar';
-    const CHART_TYPE_PIE = 'pie';
-    const CHART_TYPE_LINE = 'scatter';
+    public const CHART_TYPE_BAR = 'bar';
+    public const CHART_TYPE_PIE = 'pie';
+    public const CHART_TYPE_LINE = 'scatter';
 
     /**
      * @return string[]
      */
-    public function getChartTypes()
+    public function getChartTypes(): array
     {
         return [
             static::CHART_TYPE_BAR,
@@ -31,7 +31,7 @@ class ChartConfig extends AbstractSharedConfig
     /**
      * @return string
      */
-    public function getDefaultChartType()
+    public function getDefaultChartType(): string
     {
         return static::CHART_TYPE_BAR;
     }
@@ -39,7 +39,7 @@ class ChartConfig extends AbstractSharedConfig
     /**
      * @return \Generated\Shared\Transfer\ChartLayoutTransfer
      */
-    public function getDefaultChartLayout()
+    public function getDefaultChartLayout(): ChartLayoutTransfer
     {
         return new ChartLayoutTransfer();
     }

@@ -8,6 +8,7 @@
 namespace Spryker\Shared\Chart\ChartPluginCollection;
 
 use Spryker\Shared\Chart\ChartPluginCollection\Exception\ChartPluginNotFoundException;
+use Spryker\Shared\Chart\Dependency\Plugin\ChartPluginInterface;
 
 class ChartPluginCollection implements ChartPluginCollectionInterface
 {
@@ -31,7 +32,7 @@ class ChartPluginCollection implements ChartPluginCollectionInterface
      *
      * @return \Spryker\Shared\Chart\Dependency\Plugin\ChartPluginInterface
      */
-    public function getChartPluginByName($name)
+    public function getChartPluginByName($name): ChartPluginInterface
     {
         foreach ($this->chartPlugins as $chartPlugin) {
             if ($chartPlugin->getName() === $name) {

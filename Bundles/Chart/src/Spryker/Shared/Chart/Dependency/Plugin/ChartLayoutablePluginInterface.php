@@ -7,6 +7,8 @@
 
 namespace Spryker\Shared\Chart\Dependency\Plugin;
 
+use Generated\Shared\Transfer\ChartLayoutTransfer;
+
 interface ChartLayoutablePluginInterface extends ChartPluginInterface
 {
     /**
@@ -17,5 +19,5 @@ interface ChartLayoutablePluginInterface extends ChartPluginInterface
      *
      * @return \Generated\Shared\Transfer\ChartLayoutTransfer
      */
-    public function getChartLayout();
+    public function getChartLayout(): ChartLayoutTransfer;
 }

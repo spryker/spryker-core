@@ -7,6 +7,7 @@
 
 namespace Spryker\Yves\Chart;
 
+use Generated\Shared\Transfer\ChartLayoutTransfer;
 use Spryker\Yves\Kernel\AbstractBundleConfig;
 
 /**
@@ -17,7 +18,7 @@ class ChartConfig extends AbstractBundleConfig
     /**
      * @return string[]
      */
-    public function getChartTypes()
+    public function getChartTypes(): array
     {
         return $this->getSharedConfig()->getChartTypes();
     }
@@ -25,7 +26,7 @@ class ChartConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getDefaultChartType()
+    public function getDefaultChartType(): string
     {
         return $this->getSharedConfig()->getDefaultChartType();
     }
@@ -33,7 +34,7 @@ class ChartConfig extends AbstractBundleConfig
     /**
      * @return \Generated\Shared\Transfer\ChartLayoutTransfer
      */
-    public function getDefaultChartLayout()
+    public function getDefaultChartLayout(): ChartLayoutTransfer
     {
         return $this->getSharedConfig()->getDefaultChartLayout();
     }

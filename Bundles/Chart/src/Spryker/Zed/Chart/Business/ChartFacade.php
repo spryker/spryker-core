@@ -21,7 +21,7 @@ class ChartFacade extends AbstractFacade implements ChartFacadeInterface
      *
      * @return string[]
      */
-    public function getChartTypes()
+    public function getChartTypes(): array
     {
         return $this->getFactory()
             ->getConfig()
@@ -35,7 +35,7 @@ class ChartFacade extends AbstractFacade implements ChartFacadeInterface
      *
      * @return string
      */
-    public function getDefaultChartType()
+    public function getDefaultChartType(): string
     {
         return $this->getFactory()
             ->getConfig()

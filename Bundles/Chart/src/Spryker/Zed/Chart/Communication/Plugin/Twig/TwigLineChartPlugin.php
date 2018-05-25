@@ -9,7 +9,7 @@ namespace Spryker\Zed\Chart\Communication\Plugin\Twig;
 
 class TwigLineChartPlugin extends AbstractTwigChartPlugin
 {
-    const TWIG_FUNCTION_NAME = 'spyLineChart';
+    const TWIG_FUNCTION_NAME = 'lineChart';
 
     /**
      * @return string

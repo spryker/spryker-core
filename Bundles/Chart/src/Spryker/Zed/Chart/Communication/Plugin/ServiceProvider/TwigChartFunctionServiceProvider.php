@@ -23,7 +23,7 @@ class TwigChartFunctionServiceProvider extends AbstractPlugin implements Service
      *
      * @return void
      */
-    public function register(Application $app)
+    public function register(Application $app): void
     {
         $app['twig'] = $app->share(
             $app->extend('twig', function (\Twig_Environment $twig) {
@@ -37,7 +37,7 @@ class TwigChartFunctionServiceProvider extends AbstractPlugin implements Service
      *
      * @return void
      */
-    public function boot(Application $app)
+    public function boot(Application $app): void
     {
     }
 
@@ -46,7 +46,7 @@ class TwigChartFunctionServiceProvider extends AbstractPlugin implements Service
      *
      * @return \Twig_Environment
      */
-    protected function registerChartTwigFunctions(Twig_Environment $twig)
+    protected function registerChartTwigFunctions(Twig_Environment $twig): Twig_Environment
     {
         foreach ($this->getChartTwigFunctions() as $function) {
             $twig->addFunction($function->getName(), $function);
@@ -58,7 +58,7 @@ class TwigChartFunctionServiceProvider extends AbstractPlugin implements Service
     /**
      * @return array
      */
-    protected function getChartTwigFunctions()
+    protected function getChartTwigFunctions(): array
     {
         $functions = [];
         foreach ($this->getFactory()->getTwigChartFunctionPlugins() as $twigFunctionPlugin) {

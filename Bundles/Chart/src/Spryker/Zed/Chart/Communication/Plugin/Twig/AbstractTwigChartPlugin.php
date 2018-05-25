@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Chart\Communication\Plugin\Twig;
 
 use Spryker\Shared\Chart\Dependency\Plugin\ChartLayoutablePluginInterface;
+use Spryker\Shared\Chart\Dependency\Plugin\ChartPluginInterface;
 use Spryker\Shared\Chart\Dependency\Plugin\TwigChartFunctionPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Twig_Environment;
@@ -19,12 +20,12 @@ use Twig_SimpleFunction;
  */
 abstract class AbstractTwigChartPlugin extends AbstractPlugin implements TwigChartFunctionPluginInterface
 {
-    const TWIG_FUNCTION_NAME = 'spyChart';
+    const TWIG_FUNCTION_NAME = 'chart';
 
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return static::TWIG_FUNCTION_NAME;
     }
@@ -32,7 +33,7 @@ abstract class AbstractTwigChartPlugin extends AbstractPlugin implements TwigCha
     /**
      * @return \Twig_SimpleFunction[]
      */
-    public function getChartFunctions()
+    public function getChartFunctions(): array
     {
         return [
             new Twig_SimpleFunction(
@@ -47,10 +48,14 @@ abstract class AbstractTwigChartPlugin extends AbstractPlugin implements TwigCha
      * @param \Twig_Environment $twig
      * @param string $chartPluginName
      * @param string|null $dataIdentifier
+     * 
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
      *
      * @return string
      */
-    public function renderChart(Twig_Environment $twig, $chartPluginName, $dataIdentifier = null)
+    public function renderChart(Twig_Environment $twig, $chartPluginName, $dataIdentifier = null): string
     {
         $context = $this->getChartContext($chartPluginName, $dataIdentifier);
         $rendered = $twig->render($this->getTemplateName(), $context);
@@ -61,7 +66,7 @@ abstract class AbstractTwigChartPlugin extends AbstractPlugin implements TwigCha
     /**
      * @return string
      */
-    abstract protected function getTemplateName();
+    abstract protected function getTemplateName(): string;
 
     /**
      * @param string $chartPluginName
@@ -69,7 +74,7 @@ abstract class AbstractTwigChartPlugin extends AbstractPlugin implements TwigCha
      *
      * @return array
      */
-    protected function getChartContext($chartPluginName, $dataIdentifier)
+    protected function getChartContext($chartPluginName, $dataIdentifier): array
     {
         $chartPlugin = $this->getChartPluginByName($chartPluginName);
 
@@ -87,7 +92,7 @@ abstract class AbstractTwigChartPlugin extends AbstractPlugin implements TwigCha
     /**
      * @return array
      */
-    protected function getDefaultTwigOptions()
+    protected function getDefaultTwigOptions(): array
     {
         return [
             'is_safe' => ['html'],
@@ -100,7 +105,7 @@ abstract class AbstractTwigChartPlugin extends AbstractPlugin implements TwigCha
      *
      * @return \Spryker\Shared\Chart\Dependency\Plugin\ChartPluginInterface
      */
-    protected function getChartPluginByName($pluginName)
+    protected function getChartPluginByName($pluginName): ChartPluginInterface
     {
         return $this->getFactory()
             ->createChartPluginCollection()

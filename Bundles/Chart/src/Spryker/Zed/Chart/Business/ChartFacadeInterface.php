@@ -17,7 +17,7 @@ interface ChartFacadeInterface
      *
      * @return string[]
      */
-    public function getChartTypes();
+    public function getChartTypes(): array;
 
     /**
      * Specification:
@@ -27,5 +27,5 @@ interface ChartFacadeInterface
      *
      * @return string
      */
-    public function getDefaultChartType();
+    public function getDefaultChartType(): string;
 }

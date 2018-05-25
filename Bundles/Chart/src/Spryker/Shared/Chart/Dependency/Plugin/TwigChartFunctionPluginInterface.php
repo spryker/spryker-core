@@ -14,5 +14,5 @@ interface TwigChartFunctionPluginInterface
      *
      * @return \Twig_SimpleFunction[]
      */
-    public function getChartFunctions();
+    public function getChartFunctions(): array;
 }

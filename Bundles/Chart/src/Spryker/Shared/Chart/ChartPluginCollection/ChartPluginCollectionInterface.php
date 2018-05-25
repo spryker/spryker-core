@@ -7,6 +7,8 @@
 
 namespace Spryker\Shared\Chart\ChartPluginCollection;
 
+use Spryker\Shared\Chart\Dependency\Plugin\ChartPluginInterface;
+
 interface ChartPluginCollectionInterface
 {
     /**
@@ -14,5 +16,5 @@ interface ChartPluginCollectionInterface
      *
      * @return \Spryker\Shared\Chart\Dependency\Plugin\ChartPluginInterface
      */
-    public function getChartPluginByName($name);
+    public function getChartPluginByName($name): ChartPluginInterface;
 }

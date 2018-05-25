@@ -9,7 +9,7 @@ namespace Spryker\Yves\Chart\Plugin\Twig;
 
 class TwigPieChartPlugin extends AbstractTwigChartPlugin
 {
-    const TWIG_FUNCTION_NAME = 'spyPieChart';
+    public const TWIG_FUNCTION_NAME = 'pieChart';
 
     /**
      * @return string

@@ -7,6 +7,8 @@
 
 namespace Spryker\Shared\Chart\Dependency\Plugin;
 
+use Generated\Shared\Transfer\ChartDataTransfer;
+
 interface ChartPluginInterface
 {
     /**
@@ -17,7 +19,7 @@ interface ChartPluginInterface
      *
      * @return string
      */
-    public function getName();
+    public function getName(): string;
 
     /**
      * Specification:
@@ -29,5 +31,7 @@ interface ChartPluginInterface
      *
      * @return \Generated\Shared\Transfer\ChartDataTransfer
      */
-    public function getChartData($dataIdentifier = null);
+    public function getChartData($dataIdentifier = null): ChartDataTransfer;
+
+
 }
