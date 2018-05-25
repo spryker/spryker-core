@@ -15,6 +15,8 @@ use Spryker\Zed\CompanyBusinessUnitGui\Dependency\Facade\CompanyBusinessUnitGuiT
 
 class CompanyBusinessUnitFormDataProvider
 {
+    protected const OPTION_ATTRIBUTE_DATA = 'data-id_company';
+
     /**
      * @var \Spryker\Zed\CompanyBusinessUnitGui\Dependency\Facade\CompanyBusinessUnitGuiToCompanyBusinessUnitFacadeInterface
      */
@@ -61,11 +63,13 @@ class CompanyBusinessUnitFormDataProvider
      */
     public function getOptions(?int $idCompanyBusinessUnit = null): array
     {
+        list($choicesValues, $choicesAttributes) = $this->prepareUnitParentAttributeMap();
+
         return [
             'data_class' => CompanyBusinessUnitTransfer::class,
             CompanyBusinessUnitForm::OPTION_COMPANY_CHOICES => $this->prepareCompanyChoices(),
-            CompanyBusinessUnitForm::OPTION_PARENT_CHOICES => $this->prepareParentChoices($idCompanyBusinessUnit),
-            CompanyBusinessUnitForm::DATA_COMPANY_UNIT_MAP => $this->prepareAllParents(),
+            CompanyBusinessUnitForm::OPTION_PARENT_CHOICES_VALUES => $choicesValues,
+            CompanyBusinessUnitForm::OPTION_PARENT_CHOICES_ATTRIBUTES => $choicesAttributes,
         ];
     }
 
@@ -92,45 +96,23 @@ class CompanyBusinessUnitFormDataProvider
     }
 
     /**
-     * @param int|null $idCompanyBusinessUnit
-     *
-     * @return int[] [business unit name => business unit id]
+     * @return array [[unitKey => idUnit], [unitKey => ['data-id_company' => idCompany]]]
+     *                Where unitKey: "<idUnit> - <unitName>"
      */
-    protected function prepareParentChoices(?int $idCompanyBusinessUnit = null): array
-    {
-        if (!$idCompanyBusinessUnit) {
-            return [];
-        }
-
-        $companyUnitNames = $this->prepareAllParents();
-        foreach ($companyUnitNames as $unitNames) {
-            if (array_key_exists($idCompanyBusinessUnit, $unitNames)) {
-                return array_flip($unitNames);
-            }
-        }
-
-        return [];
-    }
-
-    /**
-     * @return array [idCompany => [idUnit => unitName]]
-     */
-    protected function prepareAllParents(): array
+    protected function prepareUnitParentAttributeMap(): array
     {
         $businessUnitCollection = $this->companyBusinessUnitFacade
             ->getCompanyBusinessUnitCollection(new CompanyBusinessUnitCriteriaFilterTransfer())
             ->getCompanyBusinessUnits();
-        $result = [];
+        $values = [];
+        $attributes = [];
 
         foreach ($businessUnitCollection as $businessUnit) {
-            $idCompany = $businessUnit->getFkCompany();
-            if (!array_key_exists($idCompany, $result)) {
-                $result[$idCompany] = [];
-            }
-
-            $result[$idCompany][$businessUnit->getIdCompanyBusinessUnit()] = $businessUnit->getName();
+            $unitKey = sprintf('%s - %s', $businessUnit->getIdCompanyBusinessUnit(), $businessUnit->getName());
+            $values[$unitKey] = $businessUnit->getIdCompanyBusinessUnit();
+            $attributes[$unitKey] = [static::OPTION_ATTRIBUTE_DATA => $businessUnit->getFkCompany()];
         }
 
-        return $result;
+        return [$values, $attributes];
     }
 }
