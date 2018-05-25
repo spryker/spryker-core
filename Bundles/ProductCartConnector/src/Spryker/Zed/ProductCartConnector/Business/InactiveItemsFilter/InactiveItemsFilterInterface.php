@@ -11,9 +11,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface InactiveItemsFilterInterface
 {
-    public const MESSAGE_PARAM_SKU = '%sku%';
-    public const MESSAGE_INFO_CONCRETE_INACTIVE_PRODUCT_REMOVED = 'product-cart.info.concrete-product-inactive.removed';
-
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *

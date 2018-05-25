@@ -7,33 +7,31 @@
 
 namespace Spryker\Zed\Product\Business\Product\Status;
 
-use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Spryker\Zed\Product\Persistence\ProductRepositoryInterface;
 
 class ProductConcreteStatusChecker implements ProductConcreteStatusCheckerInterface
 {
     /**
-     * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
+     * @var \Spryker\Zed\Product\Persistence\ProductRepositoryInterface
      */
-    protected $productQueryContainer;
+    protected $productRepository;
 
     /**
-     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
+     * @param \Spryker\Zed\Product\Persistence\ProductRepositoryInterface $productRepository
      */
-    public function __construct(ProductQueryContainerInterface $productQueryContainer)
+    public function __construct(ProductRepositoryInterface $productRepository)
     {
-        $this->productQueryContainer = $productQueryContainer;
+        $this->productRepository = $productRepository;
     }
 
     /**
-     * @param string $sku
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return bool
      */
-    public function isActive(string $sku): bool
+    public function isActive(ProductConcreteTransfer $productConcreteTransfer): bool
     {
-        return $this->productQueryContainer
-            ->queryProduct()
-            ->findOneBySku($sku)
-            ->getIsActive();
+        return $this->productRepository->isProductConcreteActive($productConcreteTransfer);
     }
 }

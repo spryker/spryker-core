@@ -19,6 +19,7 @@ use Generated\Shared\Transfer\ShoppingListShareRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Shared\ShoppingList\ShoppingListConfig;
 use Spryker\Zed\Permission\PermissionDependencyProvider;
 use Spryker\Zed\ShoppingList\Communication\Plugin\ReadShoppingListPermissionPlugin;
 use Spryker\Zed\ShoppingList\Communication\Plugin\ShoppingListPermissionStoragePlugin;
@@ -85,11 +86,12 @@ class ShoppingListFacadeTest extends Unit
 
         $this->tester->getLocator()->permission()->facade()->syncPermissionPlugins();
 
-        $this->readOnlyPermissionGroup = $this->tester->haveShoppingListPermissionGroup('READ_ONLY', [
-            WriteShoppingListPermissionPlugin::KEY,
-        ]);
+        $this->readOnlyPermissionGroup = $this->tester
+            ->haveShoppingListPermissionGroup(ShoppingListConfig::PERMISSION_GROUP_READ_ONLY, [
+                WriteShoppingListPermissionPlugin::KEY,
+            ]);
 
-        $this->tester->haveShoppingListPermissionGroup('FULL_ACCESS', [
+        $this->tester->haveShoppingListPermissionGroup(ShoppingListConfig::PERMISSION_GROUP_FULL_ACCESS, [
             ReadShoppingListPermissionPlugin::KEY,
             WriteShoppingListPermissionPlugin::KEY,
         ]);
@@ -157,7 +159,7 @@ class ShoppingListFacadeTest extends Unit
         $shoppingListTransfer = $this->tester->haveShoppingList($this->ownerCompanyUserTransfer);
         $shoppingListShareRequestTransfer = (new ShoppingListShareRequestTransfer())
                 ->setIdCompanyUser($this->otherCompanyUserTransfer->getIdCompanyUser())
-                ->setRequesterId($this->ownerCompanyUserTransfer->getIdCompanyUser())
+                ->setShoppingListOwnerId($this->ownerCompanyUserTransfer->getIdCompanyUser())
                 ->setIdShoppingList($shoppingListTransfer->getIdShoppingList())
                 ->setIdShoppingListPermissionGroup($this->tester->getFacade()->getShoppingListPermissionGroup()->getIdShoppingListPermissionGroup());
 
@@ -186,7 +188,7 @@ class ShoppingListFacadeTest extends Unit
         $shoppingListTransfer = $this->tester->haveShoppingList($this->ownerCompanyUserTransfer);
         $shoppingListShareRequestTransfer = (new ShoppingListShareRequestTransfer())
                 ->setIdCompanyBusinessUnit($this->otherCompanyUserTransfer->getFkCompanyBusinessUnit())
-                ->setRequesterId($this->ownerCompanyUserTransfer->getIdCompanyUser())
+                ->setShoppingListOwnerId($this->ownerCompanyUserTransfer->getIdCompanyUser())
                 ->setIdShoppingList($shoppingListTransfer->getIdShoppingList())
                 ->setIdShoppingListPermissionGroup($this->tester->getFacade()->getShoppingListPermissionGroup()->getIdShoppingListPermissionGroup());
 
@@ -215,7 +217,7 @@ class ShoppingListFacadeTest extends Unit
         $shoppingListTransfer = $this->tester->haveShoppingList($this->ownerCompanyUserTransfer);
         $shoppingListShareRequestTransfer = (new ShoppingListShareRequestTransfer())
                 ->setIdCompanyUser($this->otherCompanyUserTransfer->getIdCompanyUser())
-                ->setRequesterId($this->ownerCompanyUserTransfer->getIdCompanyUser())
+                ->setShoppingListOwnerId($this->ownerCompanyUserTransfer->getIdCompanyUser())
                 ->setIdShoppingList($shoppingListTransfer->getIdShoppingList())
                 ->setIdShoppingListPermissionGroup($this->tester->getFacade()->getShoppingListPermissionGroup()->getIdShoppingListPermissionGroup());
 
@@ -370,7 +372,7 @@ class ShoppingListFacadeTest extends Unit
 
         $shoppingListShareRequestTransfer = (new ShoppingListShareRequestTransfer())
                 ->setIdCompanyUser($this->otherCompanyUserTransfer->getIdCompanyUser())
-                ->setRequesterId($this->ownerCompanyUserTransfer->getIdCompanyUser())
+                ->setShoppingListOwnerId($this->ownerCompanyUserTransfer->getIdCompanyUser())
                 ->setIdShoppingList($shoppingListTransfer->getIdShoppingList())
                 ->setIdShoppingListPermissionGroup($this->tester->getFacade()->getShoppingListPermissionGroup()->getIdShoppingListPermissionGroup());
         $this->tester->getFacade()->shareShoppingListWithCompanyUser($shoppingListShareRequestTransfer);

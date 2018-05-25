@@ -80,7 +80,7 @@
         <property name="idCompanyUser" type="int" />
         <property name="idCompanyBusinessUnit" type="int" />
         <property name="idShoppingListPermissionGroup" type="int" />
-        <property name="requesterId" type="string" />
+        <property name="shoppingListOwnerId" type="int" />
     </transfer>
 
     <transfer name="ShoppingListShareResponse">

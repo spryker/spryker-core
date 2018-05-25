@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Product\Business\Product\Status;
+namespace Spryker\Zed\Product\Persistence;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 
-interface ProductConcreteStatusCheckerInterface
+interface ProductRepositoryInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return bool
      */
-    public function isActive(ProductConcreteTransfer $productConcreteTransfer): bool;
+    public function isProductConcreteActive(ProductConcreteTransfer $productConcreteTransfer): bool;
 }

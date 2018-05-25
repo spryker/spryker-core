@@ -67,12 +67,12 @@ class ProductCartConnectorToProductBridge implements ProductCartConnectorToProdu
     }
 
     /**
-     * @param string $concreteSku
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return bool
      */
-    public function isProductConcreteActive(string $concreteSku): bool
+    public function isProductConcreteActive(ProductConcreteTransfer $productConcreteTransfer): bool
     {
-        return $this->productFacade->isProductConcreteActive($concreteSku);
+        return $this->productFacade->isProductConcreteActive($productConcreteTransfer);
     }
 }

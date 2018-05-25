@@ -173,7 +173,7 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\QuoteItemsExtractorExpanderPluginInterface[]
      */
-    protected function getQuoteItemExpanderPlugins(): array
+    public function getQuoteItemExpanderPlugins(): array
     {
         return $this->getProvidedDependency(ShoppingListDependencyProvider::PLUGINS_QUOTE_ITEM_EXPANDER);
     }

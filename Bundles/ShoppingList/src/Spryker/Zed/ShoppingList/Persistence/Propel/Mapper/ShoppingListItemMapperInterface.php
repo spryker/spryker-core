@@ -34,12 +34,12 @@ interface ShoppingListItemMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
-     * @param \Orm\Zed\ShoppingList\Persistence\SpyShoppingListItem $shoppingListItem
+     * @param \Orm\Zed\ShoppingList\Persistence\SpyShoppingListItem $shoppingListItemEntity
      *
      * @return \Orm\Zed\ShoppingList\Persistence\SpyShoppingListItem
      */
     public function mapTransferToEntity(
         ShoppingListItemTransfer $shoppingListItemTransfer,
-        SpyShoppingListItem $shoppingListItem
+        SpyShoppingListItem $shoppingListItemEntity
     ): SpyShoppingListItem;
 }

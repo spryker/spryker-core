@@ -184,4 +184,12 @@ class ShoppingListStub implements ShoppingListStubInterface
     {
         return $this->zedRequestClient->call('/shopping-list/gateway/share-shopping-list-with-company-user', $shoppingListShareRequestTransfer);
     }
+
+    /**
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     */
+    public function getLastResponseErrorMessages(): array
+    {
+        return $this->zedRequestClient->getLastResponseErrorMessages();
+    }
 }

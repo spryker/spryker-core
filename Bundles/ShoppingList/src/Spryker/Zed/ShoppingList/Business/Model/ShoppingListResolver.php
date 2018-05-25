@@ -104,20 +104,6 @@ class ShoppingListResolver implements ShoppingListResolverInterface
     }
 
     /**
-     * @param string $shoppingListName
-     *
-     * @return void
-     */
-    protected function addCreateSuccessMessage(string $shoppingListName): void
-    {
-        $this->messengerFacade->addSuccessMessage(
-            (new MessageTransfer())
-                ->setValue(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_CREATE_SUCCESS)
-                ->setParameters([static::GLOSSARY_PARAM_NAME => $shoppingListName])
-        );
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListTransfer
@@ -142,5 +128,19 @@ class ShoppingListResolver implements ShoppingListResolverInterface
     protected function saveShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer
     {
         return $this->shoppingListEntityManager->saveShoppingList($shoppingListTransfer);
+    }
+
+    /**
+     * @param string $shoppingListName
+     *
+     * @return void
+     */
+    protected function addCreateSuccessMessage(string $shoppingListName): void
+    {
+        $this->messengerFacade->addSuccessMessage(
+            (new MessageTransfer())
+                ->setValue(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_CREATE_SUCCESS)
+                ->setParameters([static::GLOSSARY_PARAM_NAME => $shoppingListName])
+        );
     }
 }

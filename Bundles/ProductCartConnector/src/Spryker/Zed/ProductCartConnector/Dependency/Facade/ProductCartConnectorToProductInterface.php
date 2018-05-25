@@ -42,9 +42,9 @@ interface ProductCartConnectorToProductInterface
     public function hasProductAbstract($abstractSku);
 
     /**
-     * @param string $concreteSku
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return bool
      */
-    public function isProductConcreteActive(string $concreteSku): bool;
+    public function isProductConcreteActive(ProductConcreteTransfer $productConcreteTransfer): bool;
 }
