@@ -10,8 +10,8 @@ namespace Spryker\Zed\MerchantRelationship\Persistence;
 use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery;
 use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipToCompanyBusinessUnitQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\MerchantRelationship\Persistence\Mapper\MerchantRelationshipMapper;
-use Spryker\Zed\MerchantRelationship\Persistence\Mapper\MerchantRelationshipMapperInterface;
+use Spryker\Zed\MerchantRelationship\Persistence\Propel\Mapper\MerchantRelationshipMapper;
+use Spryker\Zed\MerchantRelationship\Persistence\Propel\Mapper\MerchantRelationshipMapperInterface;
 
 /**
  * @method \Spryker\Zed\MerchantRelationship\MerchantRelationshipConfig getConfig()
@@ -35,7 +35,7 @@ class MerchantRelationshipPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\MerchantRelationship\Persistence\Mapper\MerchantRelationshipMapperInterface
+     * @return \Spryker\Zed\MerchantRelationship\Persistence\Propel\Mapper\MerchantRelationshipMapperInterface
      */
     public function createMerchantRelationshipMapper(): MerchantRelationshipMapperInterface
     {

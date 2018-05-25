@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantRelationship\Business\Model;
 
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
+use Spryker\Zed\MerchantRelationship\Business\KeyGenerator\MerchantRelationshipKeyGeneratorInterface;
 use Spryker\Zed\MerchantRelationship\Persistence\MerchantRelationshipEntityManagerInterface;
 use Spryker\Zed\MerchantRelationship\Persistence\MerchantRelationshipRepositoryInterface;
 
@@ -24,15 +25,23 @@ class MerchantRelationshipWriter implements MerchantRelationshipWriterInterface
     protected $repository;
 
     /**
+     * @var \Spryker\Zed\MerchantRelationship\Business\KeyGenerator\MerchantRelationshipKeyGeneratorInterface
+     */
+    protected $merchantRelationshipKeyGenerator;
+
+    /**
      * @param \Spryker\Zed\MerchantRelationship\Persistence\MerchantRelationshipEntityManagerInterface $entityManager
      * @param \Spryker\Zed\MerchantRelationship\Persistence\MerchantRelationshipRepositoryInterface $repository
+     * @param \Spryker\Zed\MerchantRelationship\Business\KeyGenerator\MerchantRelationshipKeyGeneratorInterface $merchantRelationshipKeyGenerator
      */
     public function __construct(
         MerchantRelationshipEntityManagerInterface $entityManager,
-        MerchantRelationshipRepositoryInterface $repository
+        MerchantRelationshipRepositoryInterface $repository,
+        MerchantRelationshipKeyGeneratorInterface $merchantRelationshipKeyGenerator
     ) {
         $this->entityManager = $entityManager;
         $this->repository = $repository;
+        $this->merchantRelationshipKeyGenerator = $merchantRelationshipKeyGenerator;
     }
 
     /**
@@ -45,6 +54,13 @@ class MerchantRelationshipWriter implements MerchantRelationshipWriterInterface
         $merchantRelationTransfer
             ->requireFkMerchant()
             ->requireFkCompanyBusinessUnit();
+
+        if (empty($merchantRelationTransfer->getMerchantRelationshipKey())) {
+            $merchantRelationTransfer->setMerchantRelationshipKey(
+                $this->merchantRelationshipKeyGenerator
+                    ->generateMerchantRelationshipKey()
+            );
+        }
 
         $merchantRelationTransfer = $this->entityManager->saveMerchantRelationship($merchantRelationTransfer);
         $this->saveAssignedCompanyBusinessUnits($merchantRelationTransfer);

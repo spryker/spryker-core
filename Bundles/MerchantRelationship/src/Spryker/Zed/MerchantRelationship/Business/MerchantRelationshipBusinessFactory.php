@@ -8,6 +8,8 @@
 namespace Spryker\Zed\MerchantRelationship\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\MerchantRelationship\Business\KeyGenerator\MerchantRelationshipKeyGenerator;
+use Spryker\Zed\MerchantRelationship\Business\KeyGenerator\MerchantRelationshipKeyGeneratorInterface;
 use Spryker\Zed\MerchantRelationship\Business\Model\MerchantRelationshipReader;
 use Spryker\Zed\MerchantRelationship\Business\Model\MerchantRelationshipReaderInterface;
 use Spryker\Zed\MerchantRelationship\Business\Model\MerchantRelationshipWriter;
@@ -27,7 +29,8 @@ class MerchantRelationshipBusinessFactory extends AbstractBusinessFactory
     {
         return new MerchantRelationshipWriter(
             $this->getEntityManager(),
-            $this->getRepository()
+            $this->getRepository(),
+            $this->createMerchantRelationshipKeyGenerator()
         );
     }
 
@@ -39,5 +42,13 @@ class MerchantRelationshipBusinessFactory extends AbstractBusinessFactory
         return new MerchantRelationshipReader(
             $this->getRepository()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantRelationship\Business\KeyGenerator\MerchantRelationshipKeyGeneratorInterface
+     */
+    public function createMerchantRelationshipKeyGenerator(): MerchantRelationshipKeyGeneratorInterface
+    {
+        return new MerchantRelationshipKeyGenerator($this->getRepository());
     }
 }

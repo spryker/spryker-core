@@ -33,4 +33,16 @@ interface MerchantRelationshipRepositoryInterface
      * @return int[]
      */
     public function getIdAssignedBusinessUnitsByMerchantRelationshipId(int $idMerchantRelationship): array;
+
+    /**
+     * @param string $candidate
+     *
+     * @return bool
+     */
+    public function hasKey(string $candidate): bool;
+
+    /**
+     * @return int
+     */
+    public function getMaxMerchantRelationshipId(): int;
 }
