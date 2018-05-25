@@ -63,12 +63,12 @@ class ProductAlternativeFacade extends AbstractFacade implements ProductAlternat
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeCollectionTransfer
      */
-    public function getProductAlternativesForProductConcrete(ProductConcreteTransfer $productConcreteTransfer): ProductAlternativeCollectionTransfer
+    public function getProductAlternativesByIdProductConcrete(ProductConcreteTransfer $productConcreteTransfer): ProductAlternativeCollectionTransfer
     {
         return $this
             ->getFactory()
             ->createProductAlternativeReader()
-            ->getProductAlternativesForProductConcrete($productConcreteTransfer);
+            ->getProductAlternativesByIdProductConcrete($productConcreteTransfer);
     }
 
     /**
