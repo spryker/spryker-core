@@ -54,14 +54,14 @@ class MerchantFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCreateMerchantWithEmptyKeyThrowsException(): void
+    public function testCreateMerchantWithEmptyKeyGeneratesKey(): void
     {
         $merchant = (new MerchantTransfer())
             ->setName('Spryker Merchant');
 
-        $this->expectException(RequiredTransferPropertyException::class);
-
         (new MerchantFacade())->createMerchant($merchant);
+
+        $this->assertNotNull($merchant->getMerchantKey());
     }
 
     /**
@@ -97,6 +97,7 @@ class MerchantFacadeTest extends Unit
     public function testCreateMerchantWithNotUniqueKeyThrowsException(): void
     {
         $merchant = $this->tester->haveMerchant();
+
         $newMerchant = (new MerchantTransfer())
             ->setMerchantKey($merchant->getMerchantKey())
             ->setName($merchant->getName());
@@ -195,5 +196,19 @@ class MerchantFacadeTest extends Unit
         $this->expectException(RequiredTransferPropertyException::class);
 
         (new MerchantFacade())->deleteMerchant($merchant);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetMerchantsReturnNotEmptyCollection(): void
+    {
+        $this->tester->ensureDatabaseTableIsEmpty();
+
+        $this->tester->haveMerchant();
+        $this->tester->haveMerchant();
+
+        $merchantCollection = (new MerchantFacade())->getMerchants();
+        $this->assertCount(2, $merchantCollection->getMerchants());
     }
 }
