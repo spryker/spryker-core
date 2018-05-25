@@ -63,4 +63,25 @@ class ProductAlternativeEntityManager extends AbstractEntityManager implements P
 
         return $productAlternativeTransfer;
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAlternativeTransfer $productAlternativeTransfer
+     *
+     * @return void
+     */
+    public function deleteProductAlternative(ProductAlternativeTransfer $productAlternativeTransfer): void
+    {
+        $productAlternativeQuery = $this
+            ->getFactory()
+            ->createProductAlternativeQuery()
+            ->filterByIdProductAlternative(
+                $productAlternativeTransfer->getIdProductAlternative()
+            )->findOne();
+
+        $productAlternativeQuery->delete();
+    }
 }
