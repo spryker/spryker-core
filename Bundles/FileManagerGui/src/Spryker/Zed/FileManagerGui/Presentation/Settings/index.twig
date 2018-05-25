@@ -5,11 +5,11 @@
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'File types settings' } %}
 
         {% block widget_content %}
-            {{ fileTypeSettings | raw }}
+            {{ mimeTypeSettings | raw }}
 
-            {{ form_start(fileTypeForm, {'method': 'POST'}) }}
+            {{ form_start(mimeTypeSettingsForm, {'method': 'POST'}) }}
             <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}"/>
-            {{ form_end(fileTypeForm) }}
+            {{ form_end(mimeTypeSettingsForm) }}
         {% endblock %}
 
     {% endembed %}
@@ -18,5 +18,5 @@
 
 {% block footer_js %}
     {{ parent() }}
-    <script src="/assets/js/spryker-zed-file-type.js"></script>
+    <script src="/assets/js/spryker-zed-mime-type.js"></script>
 {% endblock %}

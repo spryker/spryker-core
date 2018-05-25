@@ -10,8 +10,8 @@ namespace Spryker\Zed\FileManager\Business;
 use Generated\Shared\Transfer\FileDirectoryTransfer;
 use Generated\Shared\Transfer\FileDirectoryTreeTransfer;
 use Generated\Shared\Transfer\FileManagerDataTransfer;
-use Generated\Shared\Transfer\FileTypeCollectionTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\MimeTypeCollectionTransfer;
 
 /**
  * @method \Spryker\Zed\FileManager\Business\FileManagerBusinessFactory getFactory()
@@ -148,13 +148,13 @@ interface FileManagerFacadeInterface
 
     /**
      * Specification:
-     * - Updates file types is_allowed field
+     * - Updates mime types is_allowed field
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\FileTypeCollectionTransfer $fileTypeCollectionTransfer
+     * @param \Generated\Shared\Transfer\MimeTypeCollectionTransfer $mimeTypeCollectionTransfer
      *
      * @return void
      */
-    public function updateFileTypeSettings(FileTypeCollectionTransfer $fileTypeCollectionTransfer);
+    public function updateMimeTypeSettings(MimeTypeCollectionTransfer $mimeTypeCollectionTransfer);
 }

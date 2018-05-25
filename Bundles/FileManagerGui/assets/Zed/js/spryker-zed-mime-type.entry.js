@@ -5,5 +5,5 @@
 
 'use strict';
 
-require('./modules/file-type/main');
+require('./modules/mime-type/main');
 require('../sass/main.scss');

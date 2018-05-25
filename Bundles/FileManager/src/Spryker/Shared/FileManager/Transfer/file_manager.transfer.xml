@@ -70,13 +70,15 @@
         <property name="children" type="FileDirectoryTreeNode[]" singular="child" />
     </transfer>
 
-    <transfer name="FileType">
-        <property name="idFileType" type="int" />
+    <transfer name="MimeType">
+        <property name="idMimeType" type="int" />
+        <property name="name" type="string" />
+        <property name="comment" type="string" />
         <property name="isAllowed" type="bool" />
     </transfer>
 
-    <transfer name="FileTypeCollection">
-        <property name="items" type="FileType[]" singular="fileType"/>
+    <transfer name="MimeTypeCollection">
+        <property name="items" type="MimeType[]" singular="mimeType"/>
     </transfer>
 
 </transfers>

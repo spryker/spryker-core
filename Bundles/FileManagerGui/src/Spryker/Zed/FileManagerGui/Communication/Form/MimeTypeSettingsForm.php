@@ -14,9 +14,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 /**
  * @method \Spryker\Zed\FileManagerGui\Communication\FileManagerGuiCommunicationFactory getFactory()
  */
-class FileTypeForm extends AbstractType
+class MimeTypeSettingsForm extends AbstractType
 {
-    const FIELD_FILE_TYPES = 'fileTypes';
+    const FIELD_MIME_TYPES = 'mimeTypes';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -26,6 +26,6 @@ class FileTypeForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_FILE_TYPES, HiddenType::class);
+        $builder->add(static::FIELD_MIME_TYPES, HiddenType::class);
     }
 }

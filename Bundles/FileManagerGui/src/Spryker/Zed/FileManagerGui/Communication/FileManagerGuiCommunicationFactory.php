@@ -12,12 +12,12 @@ use Spryker\Zed\FileManagerGui\Communication\Form\DataProvider\FileFormDataProvi
 use Spryker\Zed\FileManagerGui\Communication\Form\FileDirectoryForm;
 use Spryker\Zed\FileManagerGui\Communication\Form\FileForm;
 use Spryker\Zed\FileManagerGui\Communication\Form\FileLocalizedAttributesForm;
-use Spryker\Zed\FileManagerGui\Communication\Form\FileTypeForm;
+use Spryker\Zed\FileManagerGui\Communication\Form\MimeTypeSettingsForm;
 use Spryker\Zed\FileManagerGui\Communication\Form\Tabs\FileFormTabs;
 use Spryker\Zed\FileManagerGui\Communication\Table\FileInfoEditTable;
 use Spryker\Zed\FileManagerGui\Communication\Table\FileInfoViewTable;
 use Spryker\Zed\FileManagerGui\Communication\Table\FileTable;
-use Spryker\Zed\FileManagerGui\Communication\Table\FileTypeSettingsTable;
+use Spryker\Zed\FileManagerGui\Communication\Table\MimeTypeSettingsTable;
 use Spryker\Zed\FileManagerGui\FileManagerGuiDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
@@ -67,13 +67,11 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param int|null $fileDirectoryId
-     *
      * @return \Spryker\Zed\FileManagerGui\Communication\Table\FileTable
      */
-    public function createFileTypeSettingsTable()
+    public function createMimeTypeSettingsTable()
     {
-        return new FileTypeSettingsTable(
+        return new MimeTypeSettingsTable(
             $this->getFileManagerQueryContainer()
         );
     }
@@ -181,10 +179,10 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getFileTypeForm()
+    public function getMimeTypeSettingsForm()
     {
         return $this->getFormFactory()->create(
-            FileTypeForm::class
+            MimeTypeSettingsForm::class
         );
     }
 }

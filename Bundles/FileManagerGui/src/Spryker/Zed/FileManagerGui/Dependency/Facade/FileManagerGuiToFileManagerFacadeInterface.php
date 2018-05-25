@@ -10,8 +10,8 @@ namespace Spryker\Zed\FileManagerGui\Dependency\Facade;
 use Generated\Shared\Transfer\FileDirectoryTransfer;
 use Generated\Shared\Transfer\FileDirectoryTreeTransfer;
 use Generated\Shared\Transfer\FileManagerDataTransfer;
-use Generated\Shared\Transfer\FileTypeCollectionTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\MimeTypeCollectionTransfer;
 
 interface FileManagerGuiToFileManagerFacadeInterface
 {
@@ -113,9 +113,9 @@ interface FileManagerGuiToFileManagerFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\FileTypeCollectionTransfer $fileTypeCollectionTransfer
+     * @param \Generated\Shared\Transfer\MimeTypeCollectionTransfer $mimeTypeCollectionTransfer
      *
      * @return void
      */
-    public function updateFileTypeSettings(FileTypeCollectionTransfer $fileTypeCollectionTransfer);
+    public function updateMimeTypeSettings(MimeTypeCollectionTransfer $mimeTypeCollectionTransfer);
 }

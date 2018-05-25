@@ -9,7 +9,6 @@ namespace Spryker\Shared\FileManagerGui;
 
 use Orm\Zed\FileManager\Persistence\Map\SpyFileInfoTableMap;
 use Orm\Zed\FileManager\Persistence\Map\SpyFileTableMap;
-use Orm\Zed\FileManager\Persistence\Map\SpyFileTypeTableMap;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 interface FileManagerGuiConstants
@@ -22,10 +21,6 @@ interface FileManagerGuiConstants
     const COL_FILE_INFO_VERSION_NAME = SpyFileInfoTableMap::COL_VERSION_NAME;
     const COL_FILE_INFO_TYPE = SpyFileInfoTableMap::COL_TYPE;
     const COL_FILE_INFO_CREATED_AT = SpyFileInfoTableMap::COL_CREATED_AT;
-
-    const COL_FILE_TYPE_ID_FILE_TYPE = SpyFileTypeTableMap::COL_ID_FILE_TYPE;
-    const COL_FILE_TYPE_EXTENSION = SpyFileTypeTableMap::COL_EXTENSION;
-    const COL_FILE_TYPE_IS_ALLOWED = SpyFileTypeTableMap::COL_IS_ALLOWED;
 
     const SORT_DESC = TableConfiguration::SORT_DESC;
     const ALLOWED_MIME_TYPES = 'ALLOWED_MIME_TYPES';

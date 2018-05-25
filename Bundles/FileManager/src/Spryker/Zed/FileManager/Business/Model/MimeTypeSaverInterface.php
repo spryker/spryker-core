@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\FileManager\Business\Model;
 
-use Generated\Shared\Transfer\FileTypeCollectionTransfer;
+use Generated\Shared\Transfer\MimeTypeCollectionTransfer;
 
-interface FileTypeSaverInterface
+interface MimeTypeSaverInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\FileTypeCollectionTransfer $fileTypeCollectionTransfer
+     * @param \Generated\Shared\Transfer\MimeTypeCollectionTransfer $mimeTypeCollectionTransfer
      *
      * @return void
      */
-    public function updateIsAllowed(FileTypeCollectionTransfer $fileTypeCollectionTransfer);
+    public function updateIsAllowed(MimeTypeCollectionTransfer $mimeTypeCollectionTransfer);
 }

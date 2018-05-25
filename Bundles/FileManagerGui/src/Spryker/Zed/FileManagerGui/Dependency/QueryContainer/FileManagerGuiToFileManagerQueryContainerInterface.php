@@ -66,7 +66,7 @@ interface FileManagerGuiToFileManagerQueryContainerInterface
     /**
      * @api
      *
-     * @return \Orm\Zed\FileManager\Persistence\SpyFileTypeQuery
+     * @return \Orm\Zed\FileManager\Persistence\SpyMimeTypeQuery
      */
-    public function queryFileType();
+    public function queryMimeType();
 }

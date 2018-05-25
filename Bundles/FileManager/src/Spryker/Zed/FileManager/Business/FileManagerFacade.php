@@ -10,8 +10,8 @@ namespace Spryker\Zed\FileManager\Business;
 use Generated\Shared\Transfer\FileDirectoryTransfer;
 use Generated\Shared\Transfer\FileDirectoryTreeTransfer;
 use Generated\Shared\Transfer\FileManagerDataTransfer;
-use Generated\Shared\Transfer\FileTypeCollectionTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\MimeTypeCollectionTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -130,10 +130,10 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
      *
      * {@inheritdoc}
      */
-    public function updateFileTypeSettings(FileTypeCollectionTransfer $fileTypeCollectionTransfer)
+    public function updateMimeTypeSettings(MimeTypeCollectionTransfer $mimeTypeCollectionTransfer)
     {
         $this->getFactory()
-            ->createFileTypeSaver()
-            ->updateIsAllowed($fileTypeCollectionTransfer);
+            ->createMimeTypeSaver()
+            ->updateIsAllowed($mimeTypeCollectionTransfer);
     }
 }

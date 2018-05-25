@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\FileManagerGui\Communication\Controller;
 
-use Generated\Shared\Transfer\FileTypeCollectionTransfer;
-use Generated\Shared\Transfer\FileTypeTransfer;
-use Spryker\Zed\FileManagerGui\Communication\Form\FileTypeForm;
+use Generated\Shared\Transfer\MimeTypeCollectionTransfer;
+use Generated\Shared\Transfer\MimeTypeTransfer;
+use Spryker\Zed\FileManagerGui\Communication\Form\MimeTypeSettingsForm;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -18,31 +18,31 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class SettingsController extends AbstractController
 {
-    const FORM_DATA_KEY_ID_FILE_TYPE = 'idFileType';
+    const FORM_DATA_KEY_ID_MIME_TYPE = 'idMimeType';
     const FORM_DATA_KEY_IS_ALLOWED = 'isAllowed';
 
     public function indexAction(Request $request)
     {
-        $fileTypeSettingsTable = $this->getFactory()->createFileTypeSettingsTable();
-        $fileTypeForm = $this->getFactory()
-            ->getFileTypeForm()
+        $mimeTypeSettingsTable = $this->getFactory()->createMimeTypeSettingsTable();
+        $mimeTypeSettingsForm = $this->getFactory()
+            ->getMimeTypeSettingsForm()
             ->handleRequest($request);
 
-        if ($fileTypeForm->isSubmitted()) {
-            $formData = $fileTypeForm->getData();
+        if ($mimeTypeSettingsForm->isSubmitted()) {
+            $formData = $mimeTypeSettingsForm->getData();
 
             if ($formData !== null) {
                 $this->getFactory()
                     ->getFileManagerFacade()
-                    ->updateFileTypeSettings(
-                        $this->createFileTypeCollectionTransfer($formData)
+                    ->updateMimeTypeSettings(
+                        $this->createMimeTypeCollectionTransfer($formData)
                     );
             }
         }
 
         return [
-            'fileTypeSettings' => $fileTypeSettingsTable->render(),
-            'fileTypeForm' => $fileTypeForm->createView(),
+            'mimeTypeSettings' => $mimeTypeSettingsTable->render(),
+            'mimeTypeSettingsForm' => $mimeTypeSettingsForm->createView(),
         ];
     }
 
@@ -52,7 +52,7 @@ class SettingsController extends AbstractController
     public function tableAction()
     {
         $table = $this->getFactory()
-            ->createFileTypeSettingsTable();
+            ->createMimeTypeSettingsTable();
 
         return $this->jsonResponse($table->fetchData());
     }
@@ -60,21 +60,21 @@ class SettingsController extends AbstractController
     /**
      * @param array $formData
      *
-     * @return \Generated\Shared\Transfer\FileTypeCollectionTransfer
+     * @return \Generated\Shared\Transfer\MimeTypeCollectionTransfer
      */
-    protected function createFileTypeCollectionTransfer(array $formData)
+    protected function createMimeTypeCollectionTransfer(array $formData)
     {
-        $fileTypeCollectionTransfer = new FileTypeCollectionTransfer();
-        $formData = json_decode($formData[FileTypeForm::FIELD_FILE_TYPES]);
+        $mimeTypeCollectionTransfer = new MimeTypeCollectionTransfer();
+        $formData = json_decode($formData[MimeTypeSettingsForm::FIELD_MIME_TYPES]);
 
-        foreach ($formData as $fileType) {
-            $fileTypeTransfer = new FileTypeTransfer();
-            $fileTypeTransfer->setIdFileType($fileType->{static::FORM_DATA_KEY_ID_FILE_TYPE});
-            $fileTypeTransfer->setIsAllowed($fileType->{static::FORM_DATA_KEY_IS_ALLOWED});
+        foreach ($formData as $mimeType) {
+            $mimeTypeTransfer = new MimeTypeTransfer();
+            $mimeTypeTransfer->setIdMimeType($mimeType->{static::FORM_DATA_KEY_ID_MIME_TYPE});
+            $mimeTypeTransfer->setIsAllowed($mimeType->{static::FORM_DATA_KEY_IS_ALLOWED});
 
-            $fileTypeCollectionTransfer->addFileType($fileTypeTransfer);
+            $mimeTypeCollectionTransfer->addMimeType($mimeTypeTransfer);
         }
 
-        return $fileTypeCollectionTransfer;
+        return $mimeTypeCollectionTransfer;
     }
 }

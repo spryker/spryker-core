@@ -5,15 +5,15 @@
 
 'use strict';
 
-var fileType = {
+var mimeType = {
     storage: [],
-    $storageInput: $('#file_type_form_fileTypes'),
+    $storageInput: $('#mime_type_settings_form_mimeTypes'),
 
-    updateStorage: function (idFileType, isAllowed) {
-        let index = this.getStorageElementIndexByIdFileType(idFileType);
+    updateStorage: function (idMimeType, isAllowed) {
+        let index = this.getStorageElementIndexByIdMimeType(idMimeType);
 
         index === -1 ?
-            this.storage.push({idFileType, isAllowed}) :
+            this.storage.push({idMimeType, isAllowed}) :
             this.storage[index].isAllowed = isAllowed;
 
         this.$storageInput.val(
@@ -21,9 +21,9 @@ var fileType = {
         );
     },
 
-    getStorageElementIndexByIdFileType: function (idFileType) {
+    getStorageElementIndexByIdMimeType: function (idMimeType) {
         var filtered = this.storage.filter(function (object) {
-            return object.idFileType === idFileType;
+            return object.idMimeType === idMimeType;
         });
 
         return filtered.length === 1 ?
@@ -36,11 +36,11 @@ var fileType = {
             return;
         }
 
-        this.storage.map(function (fileType) {
-            var $checkbox = $('#file_type_is_allowed_' + fileType.idFileType);
+        this.storage.map(function (mimeType) {
+            var $checkbox = $('#mime_type_is_allowed_' + mimeType.idMimeType);
 
             if ($checkbox) {
-                $checkbox.prop('checked', fileType.isAllowed);
+                $checkbox.prop('checked', mimeType.isAllowed);
             }
         });
     },
@@ -50,11 +50,11 @@ $(document).ready(function () {
     var $dataTableBody = $('.dataTable > tbody');
 
     $dataTableBody.on('DOMSubtreeModified', function () {
-        fileType.syncWithStorage($(this));
+        mimeType.syncWithStorage($(this));
     });
 
-    $dataTableBody.on('change', 'input.file_type_is_allowed', function () {
-        fileType.updateStorage(
+    $dataTableBody.on('change', 'input.mime_type_is_allowed', function () {
+        mimeType.updateStorage(
             $(this).attr('data-id'),
             $(this).is(':checked')
         );

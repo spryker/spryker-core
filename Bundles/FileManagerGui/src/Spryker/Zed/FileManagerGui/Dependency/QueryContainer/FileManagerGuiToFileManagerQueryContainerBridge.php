@@ -81,10 +81,10 @@ class FileManagerGuiToFileManagerQueryContainerBridge implements FileManagerGuiT
     }
 
     /**
-     * @return \Orm\Zed\FileManager\Persistence\SpyFileTypeQuery
+     * @return \Orm\Zed\FileManager\Persistence\SpyMimeTypeQuery
      */
-    public function queryFileType()
+    public function queryMimeType()
     {
-        return $this->queryContainer->queryFileType();
+        return $this->queryContainer->queryMimeType();
     }
 }

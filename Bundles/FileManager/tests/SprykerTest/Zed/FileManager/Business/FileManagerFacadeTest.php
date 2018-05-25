@@ -15,14 +15,14 @@ use Generated\Shared\Transfer\FileDirectoryTreeTransfer;
 use Generated\Shared\Transfer\FileInfoTransfer;
 use Generated\Shared\Transfer\FileManagerDataTransfer;
 use Generated\Shared\Transfer\FileTransfer;
-use Generated\Shared\Transfer\FileTypeCollectionTransfer;
-use Generated\Shared\Transfer\FileTypeTransfer;
+use Generated\Shared\Transfer\MimeTypeCollectionTransfer;
+use Generated\Shared\Transfer\MimeTypeTransfer;
 use Orm\Zed\FileManager\Persistence\SpyFile;
 use Orm\Zed\FileManager\Persistence\SpyFileDirectory;
 use Orm\Zed\FileManager\Persistence\SpyFileInfo;
 use Orm\Zed\FileManager\Persistence\SpyFileQuery;
-use Orm\Zed\FileManager\Persistence\SpyFileType;
-use Orm\Zed\FileManager\Persistence\SpyFileTypeQuery;
+use Orm\Zed\FileManager\Persistence\SpyMimeType;
+use Orm\Zed\FileManager\Persistence\SpyMimeTypeQuery;
 use Propel\Runtime\Propel;
 use Spryker\Service\FileSystem\FileSystemDependencyProvider;
 use Spryker\Service\FileSystem\FileSystemService;
@@ -114,10 +114,10 @@ class FileManagerFacadeTest extends Unit
     protected function resetDb()
     {
         Propel::getConnection()->exec('TRUNCATE TABLE spy_file CASCADE;');
-        Propel::getConnection()->exec('TRUNCATE TABLE spy_file_type CASCADE;');
+        Propel::getConnection()->exec('TRUNCATE TABLE spy_mime_type CASCADE;');
         Propel::getConnection()->exec('TRUNCATE TABLE spy_file_directory CASCADE;');
         Propel::getConnection()->exec('ALTER SEQUENCE spy_file_pk_seq RESTART WITH 1;');
-        Propel::getConnection()->exec('ALTER SEQUENCE spy_file_type_pk_seq RESTART WITH 1;');
+        Propel::getConnection()->exec('ALTER SEQUENCE spy_mime_type_pk_seq RESTART WITH 1;');
         Propel::getConnection()->exec('ALTER SEQUENCE spy_file_info_pk_seq RESTART WITH 1;');
         Propel::getConnection()->exec('ALTER SEQUENCE spy_file_directory_pk_seq RESTART WITH 1;');
     }
@@ -133,11 +133,10 @@ class FileManagerFacadeTest extends Unit
         $file->save();
         $file->reload();
 
-        $fileType = new SpyFileType();
-        $fileType->setExtension('csv');
-        $fileType->setMimeType('text/plain');
-        $fileType->setIsAllowed(true);
-        $fileType->save();
+        $mimeType = new SpyMimeType();
+        $mimeType->setName('text/plain');
+        $mimeType->setIsAllowed(true);
+        $mimeType->save();
 
         $fileInfo = new SpyFileInfo();
         $fileInfo->setFile($file);
@@ -433,30 +432,30 @@ class FileManagerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateFileTypeSettings()
+    public function testUpdateMimeTypeSettings()
     {
-        $fileType = $this->createFileTypeQuery()->findOneByIdFileType(1);
-        $this->assertEquals(1, $fileType->getIdFileType());
-        $this->assertEquals(true, $fileType->getIsAllowed());
+        $mimeType = $this->createMimeTypeQuery()->findOneByIdMimeType(1);
+        $this->assertEquals(1, $mimeType->getIdMimeType());
+        $this->assertEquals(true, $mimeType->getIsAllowed());
 
-        $fileTypeCollectionTransfer = new FileTypeCollectionTransfer();
-        $fileTypeTransfer = new FileTypeTransfer();
-        $fileTypeTransfer->setIdFileType(1);
-        $fileTypeTransfer->setIsAllowed(false);
-        $fileTypeCollectionTransfer->addFileType($fileTypeTransfer);
+        $mimeTypeCollectionTransfer = new MimeTypeCollectionTransfer();
+        $mimeTypeTransfer = new MimeTypeTransfer();
+        $mimeTypeTransfer->setIdMimeType(1);
+        $mimeTypeTransfer->setIsAllowed(false);
+        $mimeTypeCollectionTransfer->addMimeType($mimeTypeTransfer);
 
-        $this->facade->updateFileTypeSettings($fileTypeCollectionTransfer);
+        $this->facade->updateMimeTypeSettings($mimeTypeCollectionTransfer);
 
-        $fileType = $this->createFileTypeQuery()->findOneByIdFileType(1);
-        $this->assertEquals(1, $fileType->getIdFileType());
-        $this->assertEquals(false, $fileType->getIsAllowed());
+        $mimeType = $this->createMimeTypeQuery()->findOneByIdMimeType(1);
+        $this->assertEquals(1, $mimeType->getIdMimeType());
+        $this->assertEquals(false, $mimeType->getIsAllowed());
     }
 
     /**
-     * @return \Orm\Zed\FileManager\Persistence\SpyFileTypeQuery
+     * @return \Orm\Zed\FileManager\Persistence\SpyMimeTypeQuery
      */
-    protected function createFileTypeQuery()
+    protected function createMimeTypeQuery()
     {
-        return SpyFileTypeQuery::create();
+        return SpyMimeTypeQuery::create();
     }
 }

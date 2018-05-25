@@ -7,14 +7,15 @@
 
 namespace Spryker\Zed\FileManagerGui\Communication\Table;
 
-use Orm\Zed\FileManager\Persistence\Map\SpyFileTypeTableMap;
+use Orm\Zed\FileManager\Persistence\Map\SpyMimeTypeTableMap;
 use Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
-class FileTypeSettingsTable extends AbstractTable
+class MimeTypeSettingsTable extends AbstractTable
 {
-    const TITLE_FILE_TYPE = 'File Type';
+    const TITLE_MIME_TYPE = 'MIME Type';
+    const TITLE_COMMENT = 'Comment';
     const TITLE_IS_ALLOWED = 'Is Allowed';
 
     /**
@@ -38,20 +39,23 @@ class FileTypeSettingsTable extends AbstractTable
     protected function configure(TableConfiguration $config)
     {
         $config->setHeader([
-            SpyFileTypeTableMap::COL_EXTENSION => self::TITLE_FILE_TYPE,
-            SpyFileTypeTableMap::COL_IS_ALLOWED => self::TITLE_IS_ALLOWED,
+            SpyMimeTypeTableMap::COL_NAME => static::TITLE_MIME_TYPE,
+            SpyMimeTypeTableMap::COL_COMMENT => static::TITLE_COMMENT,
+            SpyMimeTypeTableMap::COL_IS_ALLOWED => static::TITLE_IS_ALLOWED,
         ]);
 
         $config->setSortable([
-            SpyFileTypeTableMap::COL_EXTENSION,
+            SpyMimeTypeTableMap::COL_NAME,
+            SpyMimeTypeTableMap::COL_COMMENT,
         ]);
 
         $config->setSearchable([
-            SpyFileTypeTableMap::COL_EXTENSION,
+            SpyMimeTypeTableMap::COL_NAME,
+            SpyMimeTypeTableMap::COL_COMMENT,
         ]);
 
         $config->setRawColumns([
-            SpyFileTypeTableMap::COL_IS_ALLOWED,
+            SpyMimeTypeTableMap::COL_IS_ALLOWED,
         ]);
 
         return $config;
@@ -65,11 +69,11 @@ class FileTypeSettingsTable extends AbstractTable
     protected function prepareData(TableConfiguration $config)
     {
         $data = [];
-        $query = $this->queryContainer->queryFileType();
+        $query = $this->queryContainer->queryMimeType();
         $queryResults = $this->runQuery($query, $config);
 
-        foreach ($queryResults as $fileType) {
-            $data[] = $this->mapResults($fileType);
+        foreach ($queryResults as $mimeType) {
+            $data[] = $this->mapResults($mimeType);
         }
 
         return $data;
@@ -83,8 +87,9 @@ class FileTypeSettingsTable extends AbstractTable
     protected function mapResults(array $item)
     {
         return [
-            SpyFileTypeTableMap::COL_EXTENSION => $item[SpyFileTypeTableMap::COL_EXTENSION],
-            SpyFileTypeTableMap::COL_IS_ALLOWED => $this->addCheckBox($item),
+            SpyMimeTypeTableMap::COL_NAME => $item[SpyMimeTypeTableMap::COL_NAME],
+            SpyMimeTypeTableMap::COL_COMMENT => $item[SpyMimeTypeTableMap::COL_COMMENT],
+            SpyMimeTypeTableMap::COL_IS_ALLOWED => $this->addCheckBox($item),
         ];
     }
 
@@ -96,21 +101,20 @@ class FileTypeSettingsTable extends AbstractTable
     protected function addCheckbox(array $item)
     {
         return sprintf(
-            "<input id='file_type_is_allowed_%s' class='file_type_is_allowed' type='checkbox' data-id='%s' %s/>",
-            $item[SpyFileTypeTableMap::COL_ID_FILE_TYPE],
-            $item[SpyFileTypeTableMap::COL_ID_FILE_TYPE],
-            $item[SpyFileTypeTableMap::COL_IS_ALLOWED] ? "checked='checked'" : ''
+            "<input id='mime_type_is_allowed_%s' class='mime_type_is_allowed' type='checkbox' data-id='%s' %s/>",
+            $item[SpyMimeTypeTableMap::COL_ID_MIME_TYPE],
+            $item[SpyMimeTypeTableMap::COL_ID_MIME_TYPE],
+            $item[SpyMimeTypeTableMap::COL_IS_ALLOWED] ? "checked='checked'" : ''
         );
     }
 
-//
-//    /**
-//     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
-//     *
-//     * @return void
-//     */
-//    protected function setDefaultSortField(TableConfiguration $config)
-//    {
-//        $config->setDefaultSortField(FileManagerGuiConstants::COL_FILE_TYPE_EXTENSION, TableConfiguration::SORT_ASC);
-//    }
+    /**
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
+     *
+     * @return void
+     */
+    protected function setDefaultSortField(TableConfiguration $config)
+    {
+        $config->setDefaultSortField(SpyMimeTypeTableMap::COL_ID_MIME_TYPE, TableConfiguration::SORT_ASC);
+    }
 }

@@ -6,4 +6,4 @@
 'use strict';
 
 require('ZedGui');
-require('./file-type');
+require('./mime-type');
