@@ -7,9 +7,8 @@
 
 namespace Spryker\Zed\ProductAlternative\Business\Model;
 
-use Generated\Shared\Transfer\SpyProductAlternativeEntityTransfer;
+use Generated\Shared\Transfer\ProductAlternativeResponseTransfer;
 use Spryker\Zed\ProductAlternative\Persistence\ProductAlternativeEntityManagerInterface;
-use Spryker\Zed\ProductAlternative\Persistence\ProductAlternativeRepositoryInterface;
 
 class ProductAlternativeWriter implements ProductAlternativeWriterInterface
 {
@@ -19,49 +18,41 @@ class ProductAlternativeWriter implements ProductAlternativeWriterInterface
     protected $productAlternativeEntityManager;
 
     /**
-     * @var \Spryker\Zed\ProductAlternative\Persistence\ProductAlternativeRepositoryInterface
-     */
-    protected $productAlternativeRepository;
-
-    /**
      * @param \Spryker\Zed\ProductAlternative\Persistence\ProductAlternativeEntityManagerInterface $productAlternativeEntityManager
-     * @param \Spryker\Zed\ProductAlternative\Persistence\ProductAlternativeRepositoryInterface $productAlternativeRepository
      */
     public function __construct(
-        ProductAlternativeEntityManagerInterface $productAlternativeEntityManager,
-        ProductAlternativeRepositoryInterface $productAlternativeRepository
+        ProductAlternativeEntityManagerInterface $productAlternativeEntityManager
     ) {
         $this->productAlternativeEntityManager = $productAlternativeEntityManager;
-        $this->productAlternativeRepository = $productAlternativeRepository;
     }
 
     /**
-     * TODO: Replace transfer that is returned to proper one
-     * TODO: Rewrite the logic
-     *
      * @param int $idProduct
      * @param int $idProductAbstractAlternative
      *
-     * @return \Generated\Shared\Transfer\SpyProductAlternativeEntityTransfer
+     * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
      */
-    public function createProductAbstractAlternative(int $idProduct, int $idProductAbstractAlternative): SpyProductAlternativeEntityTransfer
+    public function createProductAbstractAlternative(int $idProduct, int $idProductAbstractAlternative): ProductAlternativeResponseTransfer
     {
-        return new SpyProductAlternativeEntityTransfer();
+        $productAbstractAlternativeTransfer = $this->productAlternativeEntityManager->createProductAbstractAlternative($idProduct, $idProductAbstractAlternative);
+
+        return (new ProductAlternativeResponseTransfer())
+            ->setProductAlternative($productAbstractAlternativeTransfer)
+            ->setIsSuccessful(true);
     }
 
     /**
-     * TODO: Replace transfer that is returned to proper one
-     * TODO: Rewrite the logic
-     *
      * @param int $idProduct
      * @param int $idProductConcreteAlternative
      *
-     * @return \Generated\Shared\Transfer\SpyProductAlternativeEntityTransfer
+     * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
      */
-    public function createProductConcreteAlternative(int $idProduct, int $idProductConcreteAlternative): SpyProductAlternativeEntityTransfer
+    public function createProductConcreteAlternative(int $idProduct, int $idProductConcreteAlternative): ProductAlternativeResponseTransfer
     {
-        return new SpyProductAlternativeEntityTransfer();
-    }
+        $productConcreteAlternativeTransfer = $this->productAlternativeEntityManager->createProductConcreteAlternative($idProduct, $idProductConcreteAlternative);
 
-    // TODO: Add methods to get alternative product
+        return (new ProductAlternativeResponseTransfer())
+            ->setProductAlternative($productConcreteAlternativeTransfer)
+            ->setIsSuccessful(true);
+    }
 }

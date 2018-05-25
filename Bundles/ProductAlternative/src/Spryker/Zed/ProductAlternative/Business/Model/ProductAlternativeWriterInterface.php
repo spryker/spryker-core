@@ -7,29 +7,23 @@
 
 namespace Spryker\Zed\ProductAlternative\Business\Model;
 
-use Generated\Shared\Transfer\SpyProductAlternativeEntityTransfer;
+use Generated\Shared\Transfer\ProductAlternativeResponseTransfer;
 
 interface ProductAlternativeWriterInterface
 {
     /**
-     * TODO: Replace transfer that is returned to proper one
-     * TODO: Review this specification again, when code will be finished
-     *
      * @param int $idProduct
      * @param int $idProductAbstractAlternative
      *
-     * @return \Generated\Shared\Transfer\SpyProductAlternativeEntityTransfer
+     * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
      */
-    public function createProductAbstractAlternative(int $idProduct, int $idProductAbstractAlternative): SpyProductAlternativeEntityTransfer;
+    public function createProductAbstractAlternative(int $idProduct, int $idProductAbstractAlternative): ProductAlternativeResponseTransfer;
 
     /**
-     * TODO: Replace transfer that is returned to proper one
-     * TODO: Review this specification again, when code will be finished
-     *
      * @param int $idProduct
      * @param int $idProductConcreteAlternative
      *
-     * @return \Generated\Shared\Transfer\SpyProductAlternativeEntityTransfer
+     * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
      */
-    public function createProductConcreteAlternative(int $idProduct, int $idProductConcreteAlternative): SpyProductAlternativeEntityTransfer;
+    public function createProductConcreteAlternative(int $idProduct, int $idProductConcreteAlternative): ProductAlternativeResponseTransfer;
 }
