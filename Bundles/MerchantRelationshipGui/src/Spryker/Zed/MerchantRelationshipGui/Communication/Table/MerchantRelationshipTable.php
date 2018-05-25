@@ -51,7 +51,7 @@ class MerchantRelationshipTable extends AbstractTable
      */
     protected function configure(TableConfiguration $config)
     {
-        $url = Url::generate('table', ['id-company' => $this->idCompany,]);
+        $url = Url::generate('table', ['id-company' => $this->idCompany]);
 
         $config->setUrl($url->build());
         $config = $this->setHeader($config);
