@@ -84,6 +84,6 @@ class ShoppingListPermissionInstaller implements ShoppingListPermissionInstaller
      */
     protected function createShoppingListPermissionGroupEntityTransfer(ShoppingListPermissionGroupTransfer $shoppingListPermissionGroupTransfer): SpyShoppingListPermissionGroupEntityTransfer
     {
-        return (new SpyShoppingListPermissionGroupEntityTransfer())->fromArray($shoppingListPermissionGroupTransfer->toArray(), true);
+        return (new SpyShoppingListPermissionGroupEntityTransfer())->fromArray($shoppingListPermissionGroupTransfer->modifiedToArray(), true);
     }
 }

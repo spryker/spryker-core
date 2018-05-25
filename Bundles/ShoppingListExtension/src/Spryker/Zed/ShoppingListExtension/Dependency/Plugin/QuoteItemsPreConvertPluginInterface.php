@@ -10,7 +10,7 @@ namespace Spryker\Zed\ShoppingListExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface QuoteItemsExtractorExpanderPluginInterface
+interface QuoteItemsPreConvertPluginInterface
 {
     /**
      * Specification:

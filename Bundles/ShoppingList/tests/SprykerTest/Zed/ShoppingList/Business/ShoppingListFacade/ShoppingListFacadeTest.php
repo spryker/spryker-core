@@ -38,6 +38,8 @@ use Spryker\Zed\ShoppingList\Communication\Plugin\WriteShoppingListPermissionPlu
  */
 class ShoppingListFacadeTest extends Unit
 {
+    protected const ERROR_DUPLICATE_NAME_SHOPPING_LIST = 'customer.account.shopping_list.error.duplicate_name';
+
     /**
      * @var \SprykerTest\Zed\ShoppingList\ShoppingListBusinessTester
      */
@@ -122,6 +124,66 @@ class ShoppingListFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testCustomerCanCreateShoppingList()
+    {
+        // Arrange
+        $shoppingListTransfer = (new ShoppingListBuilder())->build()
+            ->setIdCompanyUser($this->ownerCompanyUserTransfer->getIdCompanyUser())
+            ->setCustomerReference($this->ownerCompanyUserTransfer->getCustomer()->getCustomerReference());
+
+        // Act
+        $shoppingListTransfer = $this->tester->getFacade()->createShoppingList($shoppingListTransfer)->getShoppingList();
+        $loadedShoppingListTransfer = $this->tester->getFacade()->getShoppingList($shoppingListTransfer);
+
+        // Assert
+        $this->assertNotEmpty($loadedShoppingListTransfer->getIdShoppingList(), 'Customer should have been able to save shopping list to database.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testCustomersShoppingListNameShouldBeUnique()
+    {
+        // Arrange
+        $shoppingListTransfer = $this->tester->haveShoppingList($this->ownerCompanyUserTransfer);
+        $secondShoppingListTransfer = (new ShoppingListBuilder())->build()
+            ->setName($shoppingListTransfer->getName())
+            ->setIdCompanyUser($this->ownerCompanyUserTransfer->getIdCompanyUser())
+            ->setCustomerReference($this->ownerCompanyUserTransfer->getCustomer()->getCustomerReference());
+
+        // Act
+        $shoppingListResponseTransfer = $this->tester->getFacade()->createShoppingList($secondShoppingListTransfer);
+
+        // Assert
+        $this->assertFalse($shoppingListResponseTransfer->getIsSuccess(), 'Customer should not be able to have two shopping lists with same name.');
+        $this->assertArraySubset(
+            [static::ERROR_DUPLICATE_NAME_SHOPPING_LIST],
+            $shoppingListResponseTransfer->getErrors(),
+            'Customer should not be able to have two shopping lists with same name.'
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testCustomersCanRenameShoppinglist()
+    {
+        // Arrange
+        $shoppingListTransfer = $this->tester->haveShoppingList($this->ownerCompanyUserTransfer);
+        $newShoppingListName = 'NEW_' . $shoppingListTransfer->getName();
+        $shoppingListTransfer->setName($newShoppingListName);
+
+        // Act
+        $this->tester->getFacade()->updateShoppingList($shoppingListTransfer);
+        $loadedShoppingListTransfer = $this->tester->getFacade()->getShoppingList($shoppingListTransfer);
+
+        // Assert
+        $this->assertSame($loadedShoppingListTransfer->getName(), $newShoppingListName, 'Owner should have been able to rename.');
+    }
+
+    /**
+     * @return void
+     */
     public function testOwnerCanRemoveShoppingList()
     {
         // Arrange
@@ -172,7 +234,7 @@ class ShoppingListFacadeTest extends Unit
 
         // Assert
         $this->assertTrue($shoppingListResponseTransfer->getIsSuccess(), 'Owner should be able to share his shopping list company user.');
-        $this->assertEquals(
+        $this->assertSame(
             $shoppingListTransfer->getIdShoppingList(),
             $sharedShoppingListTransfer->getIdShoppingList(),
             'Company user should be able to load shopping list shared with him.'
@@ -201,7 +263,7 @@ class ShoppingListFacadeTest extends Unit
 
         // Assert
         $this->assertTrue($shoppingListResponseTransfer->getIsSuccess(), 'Owner should be able to share his shopping list with business unit.');
-        $this->assertEquals(
+        $this->assertSame(
             $shoppingListTransfer->getIdShoppingList(),
             $sharedShoppingListTransfer->getIdShoppingList(),
             'Any user from business unit should be able to load shopping list shared with it.'
@@ -352,7 +414,7 @@ class ShoppingListFacadeTest extends Unit
         $shoppingListItemResponseTransfer = $this->tester->getFacade()->getShoppingListItemCollection($shoppingListItemCollectionTransfer);
 
         // Assert
-        $this->assertEquals(2, $shoppingListItemResponseTransfer->getItems()->count(), 'Customer should be able to load shopping list items by shopping lists.');
+        $this->assertSame(2, $shoppingListItemResponseTransfer->getItems()->count(), 'Customer should be able to load shopping list items by shopping lists.');
     }
 
     /**
@@ -387,7 +449,7 @@ class ShoppingListFacadeTest extends Unit
         $shoppingListItemResponseTransfer = $this->tester->getFacade()->getShoppingListItemCollection($shoppingListItemCollectionTransfer);
 
         // Assert
-        $this->assertEquals(1, $shoppingListItemResponseTransfer->getItems()->count(), 'Customer should be able to load shopping list items from shared shopping lists.');
+        $this->assertSame(1, $shoppingListItemResponseTransfer->getItems()->count(), 'Customer should be able to load shopping list items from shared shopping lists.');
     }
 
     /**

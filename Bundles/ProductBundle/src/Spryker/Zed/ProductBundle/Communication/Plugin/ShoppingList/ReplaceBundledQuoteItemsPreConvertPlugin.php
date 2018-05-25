@@ -10,13 +10,13 @@ namespace Spryker\Zed\ProductBundle\Communication\Plugin\ShoppingList;
 use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ShoppingListExtension\Dependency\Plugin\QuoteItemsExtractorExpanderPluginInterface;
+use Spryker\Zed\ShoppingListExtension\Dependency\Plugin\QuoteItemsPreConvertPluginInterface;
 
 /**
  * @method \Spryker\Zed\ProductBundle\Communication\ProductBundleCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductBundle\Business\ProductBundleFacadeInterface getFacade()
  */
-class ReplaceBundledQuoteItemsExpanderPlugin extends AbstractPlugin implements QuoteItemsExtractorExpanderPluginInterface
+class ReplaceBundledQuoteItemsPreConvertPlugin extends AbstractPlugin implements QuoteItemsPreConvertPluginInterface
 {
     /**
      * Specification:
