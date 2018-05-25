@@ -48,8 +48,9 @@ class MerchantRelationshipRepository extends AbstractRepository implements Merch
     }
 
     /**
-     * Specification:
-     * - Returns ids of all assigned company business units by merchant relationship id.
+     * {@inheritdoc}
+     *
+     * @api
      *
      * @param int $idMerchantRelationship
      *
@@ -66,21 +67,27 @@ class MerchantRelationshipRepository extends AbstractRepository implements Merch
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param string $candidate
      *
      * @return bool
      */
     public function hasKey(string $candidate): bool
     {
-        $count = $this->getFactory()
+        return $this->getFactory()
             ->createMerchantRelationshipQuery()
             ->filterByMerchantRelationshipKey($candidate)
-            ->count();
-
-        return $count > 0;
+            ->exists();
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return int
      */
     public function getMaxMerchantRelationshipId(): int

@@ -82,8 +82,7 @@ class MerchantFacade extends AbstractFacade implements MerchantFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Retrieves collection of all merchants
+     * {@inheritdoc}
      *
      * @api
      *

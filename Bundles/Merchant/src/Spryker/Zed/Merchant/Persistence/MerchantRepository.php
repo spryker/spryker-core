@@ -45,8 +45,7 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
     }
 
     /**
-     * Specification:
-     * - Retrieves collection of all merchants
+     * {@inheritdoc}
      *
      * @api
      *

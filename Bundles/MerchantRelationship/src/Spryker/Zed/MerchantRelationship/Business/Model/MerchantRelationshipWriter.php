@@ -79,6 +79,13 @@ class MerchantRelationshipWriter implements MerchantRelationshipWriterInterface
             ->requireFkMerchant()
             ->requireFkCompanyBusinessUnit();
 
+        if (empty($merchantRelationTransfer->getMerchantRelationshipKey())) {
+            $merchantRelationTransfer->setMerchantRelationshipKey(
+                $this->merchantRelationshipKeyGenerator
+                    ->generateMerchantRelationshipKey()
+            );
+        }
+
         $merchantRelationTransfer = $this->entityManager->saveMerchantRelationship($merchantRelationTransfer);
         $this->saveAssignedCompanyBusinessUnits($merchantRelationTransfer);
 
@@ -106,17 +113,17 @@ class MerchantRelationshipWriter implements MerchantRelationshipWriterInterface
     {
         $currentIdAssignedCompanyBusinessUnits = $this->repository
             ->getIdAssignedBusinessUnitsByMerchantRelationshipId($merchantRelationTransfer->getIdMerchantRelationship());
-        $requestedIdAssignedCompanyBusinessUnits = $this->findIdAssignedCompanyBusinessUnits($merchantRelationTransfer);
+        $requestedIdAssignedCompanyBusinessUnits = $this->getIdAssignedCompanyBusinessUnits($merchantRelationTransfer);
 
-        $saveIdAssignedCompanyBusinessUnits = array_diff($requestedIdAssignedCompanyBusinessUnits, $currentIdAssignedCompanyBusinessUnits);
-        $deleteIdAssignedCompanyBusinessUnits = array_diff($currentIdAssignedCompanyBusinessUnits, $requestedIdAssignedCompanyBusinessUnits);
+        $idAssignedCompanyBusinessUnitsToSave = array_diff($requestedIdAssignedCompanyBusinessUnits, $currentIdAssignedCompanyBusinessUnits);
+        $idAssignedCompanyBusinessUnitsToDelete = array_diff($currentIdAssignedCompanyBusinessUnits, $requestedIdAssignedCompanyBusinessUnits);
 
         $this->entityManager->addAssignedCompanyBusinessUnits(
-            $saveIdAssignedCompanyBusinessUnits,
+            $idAssignedCompanyBusinessUnitsToSave,
             $merchantRelationTransfer->getIdMerchantRelationship()
         );
         $this->entityManager->removeAssignedCompanyBusinessUnits(
-            $deleteIdAssignedCompanyBusinessUnits,
+            $idAssignedCompanyBusinessUnitsToDelete,
             $merchantRelationTransfer->getIdMerchantRelationship()
         );
     }
@@ -126,7 +133,7 @@ class MerchantRelationshipWriter implements MerchantRelationshipWriterInterface
      *
      * @return int[]
      */
-    protected function findIdAssignedCompanyBusinessUnits($merchantRelationTransfer): array
+    protected function getIdAssignedCompanyBusinessUnits($merchantRelationTransfer): array
     {
         if (!$merchantRelationTransfer->getAssigneeCompanyBusinessUnits()) {
             return [];

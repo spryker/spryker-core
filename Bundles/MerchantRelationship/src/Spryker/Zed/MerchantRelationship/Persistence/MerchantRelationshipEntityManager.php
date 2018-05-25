@@ -74,7 +74,8 @@ class MerchantRelationshipEntityManager extends AbstractEntityManager implements
     {
         foreach ($idAssignedCompanyBusinessUnits as $idAssignedCompanyBusinessUnit) {
             $spyMerchantRelationshipToCompanyBusinessUnit = new SpyMerchantRelationshipToCompanyBusinessUnit();
-            $spyMerchantRelationshipToCompanyBusinessUnit->setFkCompanyBusinessUnit($idAssignedCompanyBusinessUnit)
+            $spyMerchantRelationshipToCompanyBusinessUnit
+                ->setFkCompanyBusinessUnit($idAssignedCompanyBusinessUnit)
                 ->setFkMerchantRelationship($idMerchantRelationship)
                 ->save();
         }
@@ -90,7 +91,7 @@ class MerchantRelationshipEntityManager extends AbstractEntityManager implements
      */
     public function removeAssignedCompanyBusinessUnits(array $idAssignedCompanyBusinessUnits, int $idMerchantRelationship): void
     {
-        if (count($idAssignedCompanyBusinessUnits) === 0) {
+        if (empty($idAssignedCompanyBusinessUnits)) {
             return;
         }
 

@@ -85,6 +85,7 @@ class CreateMerchantRelationshipController extends AbstractController
     protected function getCompanyIdFromRequest(Request $request): ?int
     {
         $formData = $request->get('merchant-relationship', []);
+
         return array_key_exists('fk_company', $formData) ? $this->castId($formData['fk_company']) : null;
     }
 }

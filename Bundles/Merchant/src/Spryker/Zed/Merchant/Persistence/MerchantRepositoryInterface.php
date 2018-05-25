@@ -27,7 +27,8 @@ interface MerchantRepositoryInterface
 
     /**
      * Specification:
-     * - Retrieves collection of all merchants
+     * - Retrieves collection of all merchants.
+     * - List of merchants is ordered by merchant name.
      *
      * @api
      *

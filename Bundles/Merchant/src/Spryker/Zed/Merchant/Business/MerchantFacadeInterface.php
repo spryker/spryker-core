@@ -75,7 +75,7 @@ interface MerchantFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves collection of all merchants
+     * - Retrieves collection of all merchants.
      *
      * @api
      *

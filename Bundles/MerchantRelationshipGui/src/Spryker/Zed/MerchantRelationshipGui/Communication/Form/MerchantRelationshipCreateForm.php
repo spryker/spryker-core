@@ -31,6 +31,15 @@ class MerchantRelationshipCreateForm extends AbstractType
     protected const FIELD_FK_COMPANY_BUSINESS_UNIT = 'fk_company_business_unit';
     protected const FIELD_ASSIGNED_COMPANY_BUSINESS_UNIT = 'assigneeCompanyBusinessUnits';
 
+    protected const  COMPANY_FIELD_LABEL = 'Company';
+    protected const  COMPANY_FIELD_PLACEHOLDER = 'Select company';
+    protected const  MERCHANT_FIELD_LABEL = 'Merchant';
+    protected const  MERCHANT_FIELD_PLACEHOLDER = 'Select merchant';
+    protected const  FK_COMPANY_BUSINESS_UNIT_FIELD_LABEL = 'Business unit owner';
+    protected const  FK_COMPANY_BUSINESS_UNIT_FIELD_PLACEHOLDER = 'Select business unit';
+    protected const  ASSIGNED_COMPANY_BUSINESS_UNIT_FIELD_LABEL = 'Assigned business units';
+    protected const  ASSIGNED_COMPANY_BUSINESS_UNIT_FIELD_PLACEHOLDER = 'Select business units';
+
     /**
      * @return string
      */
@@ -80,8 +89,8 @@ class MerchantRelationshipCreateForm extends AbstractType
     protected function addCompanyField(FormBuilderInterface $builder, array $options): self
     {
         $builder->add(static::FIELD_FK_COMPANY, Select2ComboBoxType::class, [
-            'label' => 'Company',
-            'placeholder' => 'Select company',
+            'label' => static::COMPANY_FIELD_LABEL,
+            'placeholder' => static::COMPANY_FIELD_PLACEHOLDER,
             'choices' => array_flip($options[static::OPTION_COMPANY_CHOICES]),
             'mapped' => false,
             'data' => $options[static::OPTION_SELECTED_COMPANY],
@@ -103,8 +112,8 @@ class MerchantRelationshipCreateForm extends AbstractType
     protected function addMerchantField(FormBuilderInterface $builder, array $choices): self
     {
         $builder->add(static::FIELD_FK_MERCHANT, Select2ComboBoxType::class, [
-            'label' => 'Merchant',
-            'placeholder' => 'Select merchant',
+            'label' => static::MERCHANT_FIELD_LABEL,
+            'placeholder' => static::MERCHANT_FIELD_PLACEHOLDER,
             'choices' => array_flip($choices),
             'choices_as_values' => true,
             'constraints' => [
@@ -124,8 +133,8 @@ class MerchantRelationshipCreateForm extends AbstractType
     protected function addOwnerCompanyBusinessUnitField(FormBuilderInterface $builder, array $choices): self
     {
         $builder->add(static::FIELD_FK_COMPANY_BUSINESS_UNIT, Select2ComboBoxType::class, [
-            'label' => 'Business unit owner',
-            'placeholder' => 'Select business unit',
+            'label' => static::FK_COMPANY_BUSINESS_UNIT_FIELD_LABEL,
+            'placeholder' => static::FK_COMPANY_BUSINESS_UNIT_FIELD_PLACEHOLDER,
             'choices' => array_flip($choices),
             'choices_as_values' => true,
             'constraints' => [
@@ -145,8 +154,8 @@ class MerchantRelationshipCreateForm extends AbstractType
     protected function addAssignedCompanyBusinessUnitField(FormBuilderInterface $builder, array $choices): self
     {
         $builder->add(static::FIELD_ASSIGNED_COMPANY_BUSINESS_UNIT, Select2ComboBoxType::class, [
-            'label' => 'Assigned business units',
-            'placeholder' => 'Select business units',
+            'label' => static::ASSIGNED_COMPANY_BUSINESS_UNIT_FIELD_LABEL,
+            'placeholder' => static::ASSIGNED_COMPANY_BUSINESS_UNIT_FIELD_PLACEHOLDER,
             'choices' => array_flip($choices),
             'choices_as_values' => true,
             'multiple' => 'true',
