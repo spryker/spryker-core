@@ -15,10 +15,14 @@ use Generated\Shared\Transfer\FileDirectoryTreeTransfer;
 use Generated\Shared\Transfer\FileInfoTransfer;
 use Generated\Shared\Transfer\FileManagerDataTransfer;
 use Generated\Shared\Transfer\FileTransfer;
+use Generated\Shared\Transfer\FileTypeCollectionTransfer;
+use Generated\Shared\Transfer\FileTypeTransfer;
 use Orm\Zed\FileManager\Persistence\SpyFile;
 use Orm\Zed\FileManager\Persistence\SpyFileDirectory;
 use Orm\Zed\FileManager\Persistence\SpyFileInfo;
 use Orm\Zed\FileManager\Persistence\SpyFileQuery;
+use Orm\Zed\FileManager\Persistence\SpyFileType;
+use Orm\Zed\FileManager\Persistence\SpyFileTypeQuery;
 use Propel\Runtime\Propel;
 use Spryker\Service\FileSystem\FileSystemDependencyProvider;
 use Spryker\Service\FileSystem\FileSystemService;
@@ -110,8 +114,10 @@ class FileManagerFacadeTest extends Unit
     protected function resetDb()
     {
         Propel::getConnection()->exec('TRUNCATE TABLE spy_file CASCADE;');
+        Propel::getConnection()->exec('TRUNCATE TABLE spy_file_type CASCADE;');
         Propel::getConnection()->exec('TRUNCATE TABLE spy_file_directory CASCADE;');
         Propel::getConnection()->exec('ALTER SEQUENCE spy_file_pk_seq RESTART WITH 1;');
+        Propel::getConnection()->exec('ALTER SEQUENCE spy_file_type_pk_seq RESTART WITH 1;');
         Propel::getConnection()->exec('ALTER SEQUENCE spy_file_info_pk_seq RESTART WITH 1;');
         Propel::getConnection()->exec('ALTER SEQUENCE spy_file_directory_pk_seq RESTART WITH 1;');
     }
@@ -126,6 +132,12 @@ class FileManagerFacadeTest extends Unit
         $file->setFileName('customer.txt');
         $file->save();
         $file->reload();
+
+        $fileType = new SpyFileType();
+        $fileType->setExtension('csv');
+        $fileType->setMimeType('text/plain');
+        $fileType->setIsAllowed(true);
+        $fileType->save();
 
         $fileInfo = new SpyFileInfo();
         $fileInfo->setFile($file);
@@ -416,5 +428,35 @@ class FileManagerFacadeTest extends Unit
     public function testDeleteFileDirectory()
     {
         $this->facade->deleteFileDirectory(1);
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateFileTypeSettings()
+    {
+        $fileType = $this->createFileTypeQuery()->findOneByIdFileType(1);
+        $this->assertEquals(1, $fileType->getIdFileType());
+        $this->assertEquals(true, $fileType->getIsAllowed());
+
+        $fileTypeCollectionTransfer = new FileTypeCollectionTransfer();
+        $fileTypeTransfer = new FileTypeTransfer();
+        $fileTypeTransfer->setIdFileType(1);
+        $fileTypeTransfer->setIsAllowed(false);
+        $fileTypeCollectionTransfer->addFileType($fileTypeTransfer);
+
+        $this->facade->updateFileTypeSettings($fileTypeCollectionTransfer);
+
+        $fileType = $this->createFileTypeQuery()->findOneByIdFileType(1);
+        $this->assertEquals(1, $fileType->getIdFileType());
+        $this->assertEquals(false, $fileType->getIsAllowed());
+    }
+
+    /**
+     * @return \Orm\Zed\FileManager\Persistence\SpyFileTypeQuery
+     */
+    protected function createFileTypeQuery()
+    {
+        return SpyFileTypeQuery::create();
     }
 }
