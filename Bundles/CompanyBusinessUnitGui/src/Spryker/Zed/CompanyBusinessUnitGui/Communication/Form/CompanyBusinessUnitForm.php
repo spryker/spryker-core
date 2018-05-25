@@ -101,7 +101,7 @@ class CompanyBusinessUnitForm extends AbstractType
     ): CompanyBusinessUnitForm {
         $builder->add(static::FIELD_FK_PARENT_COMPANY_BUSINESS_UNIT, ChoiceType::class, [
             'label' => 'Parent',
-            'placeholder' => 'Select one',
+            'placeholder' => 'No parent',
             'choices' => $choicesValues,
             'choices_as_values' => true,
             'required' => false,
