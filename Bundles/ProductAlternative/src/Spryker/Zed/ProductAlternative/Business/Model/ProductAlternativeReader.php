@@ -32,7 +32,7 @@ class ProductAlternativeReader implements ProductAlternativeReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeCollectionTransfer
      */
-    public function getProductAlternativesForProductConcrete(ProductConcreteTransfer $productConcreteTransfer): ProductAlternativeCollectionTransfer
+    public function getProductAlternativesByIdProductConcrete(ProductConcreteTransfer $productConcreteTransfer): ProductAlternativeCollectionTransfer
     {
         return $this->productAlternativeRepository
             ->getProductAlternativesForProductConcrete($productConcreteTransfer);

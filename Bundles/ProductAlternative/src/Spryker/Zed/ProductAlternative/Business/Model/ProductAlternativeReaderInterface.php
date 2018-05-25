@@ -18,7 +18,7 @@ interface ProductAlternativeReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeCollectionTransfer
      */
-    public function getProductAlternativesForProductConcrete(ProductConcreteTransfer $productConcreteTransfer): ProductAlternativeCollectionTransfer;
+    public function getProductAlternativesByIdProductConcrete(ProductConcreteTransfer $productConcreteTransfer): ProductAlternativeCollectionTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ProductAlternativeTransfer $productAlternativeTransfer
