@@ -32,6 +32,4 @@ interface ChartPluginInterface
      * @return \Generated\Shared\Transfer\ChartDataTransfer
      */
     public function getChartData($dataIdentifier = null): ChartDataTransfer;
-
-
 }
