@@ -53,6 +53,20 @@ interface ProductAbstractManagerInterface
     /**
      * @param string $sku
      *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
+     */
+    public function findProductAbstractBySku(string $sku): ?ProductAbstractTransfer;
+
+    /**
+     * @param string $localizedName
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
+     */
+    public function findProductAbstractByLocalizedName(string $localizedName): ?ProductAbstractTransfer;
+
+    /**
+     * @param string $sku
+     *
      * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return string

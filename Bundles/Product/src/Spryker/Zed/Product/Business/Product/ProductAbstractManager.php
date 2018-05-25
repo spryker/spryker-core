@@ -237,6 +237,58 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
     }
 
     /**
+     * @param string $sku
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
+     */
+    public function findProductAbstractBySku(string $sku): ?ProductAbstractTransfer
+    {
+        $productAbstractEntity = $this->productQueryContainer
+            ->queryProductAbstractBySku($sku)
+            ->findOne();
+
+        if (!$productAbstractEntity) {
+            return null;
+        }
+
+        $productAbstractTransfer = $this->productTransferMapper
+            ->convertProductAbstract($productAbstractEntity);
+
+        return $this->prepareProductAbstractTransfer($productAbstractTransfer);
+    }
+
+    /**
+     * @param string $localizedName
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
+     */
+    public function findProductAbstractByLocalizedName(string $localizedName): ?ProductAbstractTransfer
+    {
+        $locale = $this->localeFacade
+            ->getCurrentLocale();
+
+        $locale->requireIdLocale();
+
+        $productAbstractEntity = $this->productQueryContainer
+            ->queryProductAbstractWithName(
+                $locale->getIdLocale()
+            )
+            ->useSpyProductAbstractLocalizedAttributesQuery()
+                ->filterByName($localizedName)
+                ->endUse()
+            ->findOne();
+
+        if (!$productAbstractEntity) {
+            return null;
+        }
+
+        $productAbstractTransfer = $this->productTransferMapper
+            ->convertProductAbstract($productAbstractEntity);
+
+        return $this->prepareProductAbstractTransfer($productAbstractTransfer);
+    }
+
+    /**
      * @param int $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\StoreRelationTransfer
@@ -272,6 +324,29 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
         }
 
         return $productConcrete->getSpyProductAbstract()->getSku();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    protected function prepareProductAbstractTransfer(ProductAbstractTransfer $productAbstractTransfer): ProductAbstractTransfer
+    {
+        $productAbstractTransfer = $this
+            ->loadLocalizedAttributes($productAbstractTransfer);
+
+        $idProductAbstract = $productAbstractTransfer
+            ->requireIdProductAbstract()
+            ->getIdProductAbstract();
+
+        $productAbstractTransfer->setStoreRelation(
+            $this->getStoreRelation($idProductAbstract)
+        );
+
+        $productAbstractTransfer = $this->notifyReadObservers($productAbstractTransfer);
+
+        return $productAbstractTransfer;
     }
 
     /**
