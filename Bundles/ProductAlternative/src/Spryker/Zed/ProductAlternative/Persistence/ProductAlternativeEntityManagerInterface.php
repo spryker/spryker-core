@@ -13,15 +13,29 @@ interface ProductAlternativeEntityManagerInterface
 {
     /**
      * Specification:
-     * - Create new product alternative.
+     * - Creates new abstract product alternative for existing product concrete.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductAlternativeTransfer $productAlternativeTransfer
+     * @param int $idProduct
+     * @param int $idProductAbstractAlternative
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
      */
-    public function createProductAlternative(ProductAlternativeTransfer $productAlternativeTransfer): ProductAlternativeTransfer;
+    public function createProductAbstractAlternative(int $idProduct, int $idProductAbstractAlternative): ProductAlternativeTransfer;
+
+    /**
+     * Specification:
+     * - Creates new concrete product alternative for existing product concrete.
+     *
+     * @api
+     *
+     * @param int $idProduct
+     * @param int $idProductConcreteAlternative
+     *
+     * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
+     */
+    public function createProductConcreteAlternative(int $idProduct, int $idProductConcreteAlternative): ProductAlternativeTransfer;
 
     /**
      * Specification:

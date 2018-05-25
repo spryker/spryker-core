@@ -30,4 +30,13 @@ interface ProductAlternativeMapperInterface
     public function mapSpyProductAlternativeEntityToTransfer(
         SpyProductAlternative $spyProductAlternative
     ): ProductAlternativeTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyProductAlternativeEntityTransfer $spyProductAlternativeEntityTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
+     */
+    public function mapSpyProductAlternativeEntityTransferToTransfer(
+        SpyProductAlternativeEntityTransfer $spyProductAlternativeEntityTransfer
+    ): ProductAlternativeTransfer;
 }

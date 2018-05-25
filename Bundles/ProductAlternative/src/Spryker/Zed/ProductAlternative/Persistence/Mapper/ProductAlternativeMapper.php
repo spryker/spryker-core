@@ -36,4 +36,16 @@ class ProductAlternativeMapper implements ProductAlternativeMapperInterface
         return (new ProductAlternativeTransfer())
             ->fromArray($spyProductAlternative->toArray(), true);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyProductAlternativeEntityTransfer $spyProductAlternativeEntityTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
+     */
+    public function mapSpyProductAlternativeEntityTransferToTransfer(
+        SpyProductAlternativeEntityTransfer $spyProductAlternativeEntityTransfer
+    ): ProductAlternativeTransfer {
+        return (new ProductAlternativeTransfer())
+            ->fromArray($spyProductAlternativeEntityTransfer->toArray(), true);
+    }
 }

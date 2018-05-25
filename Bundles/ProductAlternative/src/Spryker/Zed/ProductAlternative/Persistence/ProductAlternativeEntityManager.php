@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductAlternative\Persistence;
 
 use Generated\Shared\Transfer\ProductAlternativeTransfer;
+use Generated\Shared\Transfer\SpyProductAlternativeEntityTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -20,27 +21,37 @@ class ProductAlternativeEntityManager extends AbstractEntityManager implements P
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductAlternativeTransfer $productAlternativeTransfer
+     * @param int $idProduct
+     * @param int $idProductAbstractAlternative
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
      */
-    public function createProductAlternative(ProductAlternativeTransfer $productAlternativeTransfer): ProductAlternativeTransfer
+    public function createProductAbstractAlternative(int $idProduct, int $idProductAbstractAlternative): ProductAlternativeTransfer
     {
-        $spyProductAlternativeEntityTransfer = $this
-            ->getFactory()
-            ->createProductAlternativeMapper()
-            ->mapProductAlternativeTransferToEntityTransfer($productAlternativeTransfer);
+        $spyProductAlternativeEntityTransfer = (new SpyProductAlternativeEntityTransfer())
+            ->setFkProduct($idProduct)
+            ->setFkProductAbstractAlternative($idProductAbstractAlternative);
 
-        $spyProductAlternativeEntityTransfer->setIdProductAlternative(null);
+        return $this->createProductAlternative($spyProductAlternativeEntityTransfer);
+    }
 
-        /** @var \Generated\Shared\Transfer\SpyProductAlternativeEntityTransfer $spyProductAlternativeEntityTransfer */
-        $spyProductAlternativeEntityTransfer = $this->save($spyProductAlternativeEntityTransfer);
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProduct
+     * @param int $idProductConcreteAlternative
+     *
+     * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
+     */
+    public function createProductConcreteAlternative(int $idProduct, int $idProductConcreteAlternative): ProductAlternativeTransfer
+    {
+        $spyProductAlternativeEntityTransfer = (new SpyProductAlternativeEntityTransfer())
+            ->setFkProduct($idProduct)
+            ->setFkProductConcreteAlternative($idProductConcreteAlternative);
 
-        $productAlternativeTransfer->setIdProductAlternative(
-            $spyProductAlternativeEntityTransfer->getIdProductAlternative()
-        );
-
-        return $productAlternativeTransfer;
+        return $this->createProductAlternative($spyProductAlternativeEntityTransfer);
     }
 
     /**
@@ -83,5 +94,29 @@ class ProductAlternativeEntityManager extends AbstractEntityManager implements P
             )->findOne();
 
         $productAlternativeQuery->delete();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyProductAlternativeEntityTransfer $spyProductAlternativeEntityTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
+     */
+    protected function createProductAlternative(SpyProductAlternativeEntityTransfer $spyProductAlternativeEntityTransfer): ProductAlternativeTransfer
+    {
+        $spyProductAlternativeEntityTransfer->setIdProductAlternative(null);
+
+        /** @var \Generated\Shared\Transfer\SpyProductAlternativeEntityTransfer $spyProductAlternativeEntityTransfer */
+        $spyProductAlternativeEntityTransfer = $this->save($spyProductAlternativeEntityTransfer);
+
+        $productAlternativeTransfer = $this
+            ->getFactory()
+            ->createProductAlternativeMapper()
+            ->mapSpyProductAlternativeEntityTransferToTransfer($spyProductAlternativeEntityTransfer);
+
+        $productAlternativeTransfer->setIdProductAlternative(
+            $spyProductAlternativeEntityTransfer->getIdProductAlternative()
+        );
+
+        return $productAlternativeTransfer;
     }
 }
