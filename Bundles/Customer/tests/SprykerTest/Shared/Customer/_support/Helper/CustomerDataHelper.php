@@ -15,13 +15,11 @@ use Spryker\Zed\Customer\Business\CustomerFacadeInterface;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailBridge;
 use Spryker\Zed\Mail\Business\MailFacadeInterface;
-use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\DependencyHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class CustomerDataHelper extends Module
 {
-    use DataCleanupHelperTrait;
     use DependencyHelperTrait;
     use LocatorHelperTrait;
 
@@ -38,10 +36,6 @@ class CustomerDataHelper extends Module
             ->build();
 
         $this->getCustomerFacade()->registerCustomer($customerTransfer);
-
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($customerTransfer) {
-            $this->getCustomerFacade()->deleteCustomer($customerTransfer);
-        });
 
         return $customerTransfer;
     }
