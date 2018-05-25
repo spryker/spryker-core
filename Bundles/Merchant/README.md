@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/merchant.svg)](https://travis-ci.org/spryker/merchant)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/merchant/badge.svg)](https://coveralls.io/github/spryker/merchant)
 
-{{ADD DESCRIPTION HERE}}
+This module has DB structure and facade methods to save/update/remove Merchants.
 
 ## Installation
 

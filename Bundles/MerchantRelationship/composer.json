@@ -4,8 +4,8 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/kernel": "^3.0.0",
     "spryker/company-business-unit": "^1.0.0",
+    "spryker/kernel": "^3.0.0",
     "spryker/merchant": "^1.0.0",
     "spryker/propel-orm": "^1.0.0"
   },
