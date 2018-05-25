@@ -30,7 +30,7 @@ class CompanyBusinessUnitOwnerKeyToIdCompanyBusinessUnitStep implements DataImpo
      *
      * @return void
      */
-    public function execute(DataSetInterface $dataSet)
+    public function execute(DataSetInterface $dataSet): void
     {
         $companyBusinessUnitKey = $dataSet[MerchantRelationshipDataSet::COMPANY_BUSINESS_UNIT_OWNER_KEY];
         if (!$companyBusinessUnitKey) {
