@@ -70,9 +70,7 @@ class Reservation implements ReservationInterface
         $currentStoreReservationAmount = $this->sumReservedProductQuantitiesForSku($sku);
 
         $currentStoreTransfer = $this->storeFacade->getCurrentStore();
-
         $this->saveReservation($sku, $currentStoreTransfer->getIdStore(), $currentStoreReservationAmount);
-
         foreach ($currentStoreTransfer->getStoresWithSharedPersistence() as $storeName) {
             $storeTransfer = $this->storeFacade->getStoreByName($storeName);
             $this->saveReservation($sku, $storeTransfer->getIdStore(), $currentStoreReservationAmount);

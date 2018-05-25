@@ -45,10 +45,10 @@ class Distributor implements DistributorInterface
 
         foreach ($collectedDiscountTransfer->getDiscountableItems() as $discountableItemTransfer) {
             $quantity = $this->getDiscountableItemQuantity($discountableItemTransfer);
-            $lienItemAmountShare = $discountableItemTransfer->getUnitPrice() * $quantity / $totalAmount;
+            $singleItemAmountShare = $discountableItemTransfer->getUnitPrice() / $totalAmount;
 
- //           for ($i = 0; $i < $quantity; $i++) {
-                $itemDiscountAmount = ($totalDiscountAmount * $lienItemAmountShare) + $this->roundingError;
+            for ($i = 0; $i < $quantity; $i++) {
+                $itemDiscountAmount = ($totalDiscountAmount * $singleItemAmountShare) + $this->roundingError;
                 $itemDiscountAmountRounded = (int)round($itemDiscountAmount);
                 $this->roundingError = $itemDiscountAmount - $itemDiscountAmountRounded;
 
@@ -59,7 +59,20 @@ class Distributor implements DistributorInterface
 
                 $discountableItemTransfer->getOriginalItemCalculatedDiscounts()->append($distributedDiscountTransfer);
             }
-   //     }
+
+//            $singleItemAmountShare = $discountableItemTransfer->getUnitPrice() * $quantity / $totalAmount;
+//            $itemDiscountAmount = ($totalDiscountAmount * $singleItemAmountShare) + $this->roundingError;
+//
+//            $itemDiscountAmountRounded = (int)round($itemDiscountAmount);
+//            $this->roundingError = $itemDiscountAmount - $itemDiscountAmountRounded;
+//
+//            $distributedDiscountTransfer = clone $calculatedDiscountTransfer;
+//            $distributedDiscountTransfer->setIdDiscount($collectedDiscountTransfer->getDiscount()->getIdDiscount());
+//            $distributedDiscountTransfer->setUnitAmount($itemDiscountAmountRounded);
+//            $distributedDiscountTransfer->setQuantity(1);
+//
+//            $discountableItemTransfer->getOriginalItemCalculatedDiscounts()->append($distributedDiscountTransfer);
+        }
     }
 
     /**
