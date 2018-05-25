@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Merchant\Persistence\Mapper;
+namespace Spryker\Zed\Merchant\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\MerchantTransfer;
 use Orm\Zed\Merchant\Persistence\SpyMerchant;

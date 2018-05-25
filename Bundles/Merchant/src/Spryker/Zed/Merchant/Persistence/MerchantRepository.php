@@ -42,4 +42,24 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
             ->createMerchantMapper()
             ->mapEntityToMerchantTransfer($spyMerchant, new MerchantTransfer());
     }
+
+    /**
+     * Specification:
+     * - Checks whether merchant key already exists.
+     *
+     * @api
+     *
+     * @param string $key
+     *
+     * @return bool
+     */
+    public function hasKey(string $key): bool
+    {
+        $count = $this->getFactory()
+            ->createMerchantQuery()
+            ->filterByMerchantKey($key)
+            ->count();
+
+        return $count > 0;
+    }
 }
