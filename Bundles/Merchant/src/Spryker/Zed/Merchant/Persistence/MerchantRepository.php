@@ -55,11 +55,9 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
      */
     public function hasKey(string $key): bool
     {
-        $count = $this->getFactory()
+        return $this->getFactory()
             ->createMerchantQuery()
             ->filterByMerchantKey($key)
-            ->count();
-
-        return $count > 0;
+            ->exists();
     }
 }
