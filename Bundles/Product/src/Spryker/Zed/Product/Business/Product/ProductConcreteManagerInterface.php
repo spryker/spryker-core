@@ -52,6 +52,20 @@ interface ProductConcreteManagerInterface
     public function findProductConcreteIdBySku($sku);
 
     /**
+     * @param string $sku
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
+     */
+    public function findProductConcreteBySku(string $sku): ?ProductConcreteTransfer;
+
+    /**
+     * @param string $localizedName
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
+     */
+    public function findProductConcreteByLocalizedName(string $localizedName): ?ProductConcreteTransfer;
+
+    /**
      * @param string $concreteSku
      *
      * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException

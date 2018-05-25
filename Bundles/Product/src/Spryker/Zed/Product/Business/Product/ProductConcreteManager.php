@@ -207,6 +207,56 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     }
 
     /**
+     * @param string $sku
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
+     */
+    public function findProductConcreteBySku(string $sku): ?ProductConcreteTransfer
+    {
+        $productEntity = $this->productQueryContainer
+            ->queryProductConcreteBySku($sku)
+            ->findOne();
+
+        if (!$productEntity) {
+            return null;
+        }
+
+        $productConcreteTransfer = $this->productTransferMapper->convertProduct($productEntity);
+
+        return $this->prepareProductConcreteTransfer($productConcreteTransfer);
+    }
+
+    /**
+     * @param string $localizedName
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
+     */
+    public function findProductConcreteByLocalizedName(string $localizedName): ?ProductConcreteTransfer
+    {
+        $locale = $this->localeFacade
+            ->getCurrentLocale();
+
+        $locale->requireIdLocale();
+
+        $productEntity = $this->productQueryContainer
+            ->queryProductConcreteWithName(
+                $locale->getIdLocale()
+            )
+            ->useSpyProductLocalizedAttributesQuery()
+                ->filterByName($localizedName)
+                ->endUse()
+            ->findOne();
+
+        if (!$productEntity) {
+            return null;
+        }
+
+        $productConcreteTransfer = $this->productTransferMapper->convertProduct($productEntity);
+
+        return $this->prepareProductConcreteTransfer($productConcreteTransfer);
+    }
+
+    /**
      * @param string $concreteSku
      *
      * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
@@ -291,6 +341,19 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
             ->filterByFkProductAbstract($productAbstractTransfer->getIdProductAbstract())
             ->filterByIdProduct($productConcreteTransfer->getIdProductConcrete())
             ->findOne();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    protected function prepareProductConcreteTransfer(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
+    {
+        $productConcreteTransfer = $this
+            ->loadProductData($productConcreteTransfer);
+
+        return $productConcreteTransfer;
     }
 
     /**
