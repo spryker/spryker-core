@@ -139,6 +139,54 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
+     * - Find abstract product by its SKU.
+     *
+     * @api
+     *
+     * @param string $sku
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
+     */
+    public function findProductAbstractBySku(string $sku): ?ProductAbstractTransfer;
+
+    /**
+     * Specification:
+     * - Find abstract product by its localized name.
+     *
+     * @api
+     *
+     * @param string $localizedName
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
+     */
+    public function findProductAbstractByLocalizedName(string $localizedName): ?ProductAbstractTransfer;
+
+    /**
+     * Specification:
+     * - Find concrete product by its SKU.
+     *
+     * @api
+     *
+     * @param string $sku
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
+     */
+    public function findProductConcreteBySku(string $sku): ?ProductConcreteTransfer;
+
+    /**
+     * Specification:
+     * - Find concrete product by its localized name.
+     *
+     * @api
+     *
+     * @param string $localizedName
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
+     */
+    public function findProductConcreteByLocalizedName(string $localizedName): ?ProductConcreteTransfer;
+
+    /**
+     * Specification:
      * - Returns the SKU of an abstract product that belongs to the given SKU of a concrete product.
      * - Throws exception if no abstract product is found.
      *

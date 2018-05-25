@@ -150,6 +150,70 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @param string $sku
      *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
+     */
+    public function findProductAbstractBySku(string $sku): ?ProductAbstractTransfer
+    {
+        return $this->getFactory()
+            ->createProductAbstractManager()
+            ->findProductAbstractBySku($sku);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $localizedName
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
+     */
+    public function findProductAbstractByLocalizedName(string $localizedName): ?ProductAbstractTransfer
+    {
+        return $this->getFactory()
+            ->createProductAbstractManager()
+            ->findProductAbstractByLocalizedName($localizedName);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $sku
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
+     */
+    public function findProductConcreteBySku(string $sku): ?ProductConcreteTransfer
+    {
+        return $this->getFactory()
+            ->createProductConcreteManager()
+            ->findProductConcreteBySku($sku);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $localizedName
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
+     */
+    public function findProductConcreteByLocalizedName(string $localizedName): ?ProductConcreteTransfer
+    {
+        return $this->getFactory()
+            ->createProductConcreteManager()
+            ->findProductConcreteByLocalizedName($localizedName);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $sku
+     *
      * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *
      * @return string
