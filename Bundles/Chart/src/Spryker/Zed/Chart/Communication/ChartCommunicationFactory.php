@@ -22,7 +22,7 @@ class ChartCommunicationFactory extends AbstractCommunicationFactory
      */
     public function getTwigChartFunctionPlugins(): array
     {
-        return $this->getProvidedDependency(ChartDependencyProvider::TWIG_CHART_FUNCTION_PLUGINS);
+        return $this->getProvidedDependency(ChartDependencyProvider::PLUGIN_TWIG_CHART_FUNCTIONS);
     }
 
     /**
@@ -40,6 +40,6 @@ class ChartCommunicationFactory extends AbstractCommunicationFactory
      */
     public function getChartPlugins(): array
     {
-        return $this->getProvidedDependency(ChartDependencyProvider::CHART_PLUGINS);
+        return $this->getProvidedDependency(ChartDependencyProvider::PLUGIN_CHARTS);
     }
 }

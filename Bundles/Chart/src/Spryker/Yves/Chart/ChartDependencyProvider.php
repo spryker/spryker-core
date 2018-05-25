@@ -16,8 +16,8 @@ use Spryker\Yves\Kernel\Container;
 
 class ChartDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const TWIG_CHART_FUNCTION_PLUGINS = 'TWIG_CHART_FUNCTION_PLUGINS';
-    public const CHART_PLUGINS = 'CHART_PLUGINS';
+    public const PLUGIN_TWIG_CHART_FUNCTIONS = 'PLUGIN_TWIG_CHART_FUNCTIONS';
+    public const PLUGIN_CHARTS = 'PLUGIN_CHARTS';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -39,7 +39,7 @@ class ChartDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addTwigChartFunctionPlugins(Container $container): Container
     {
-        $container[static::TWIG_CHART_FUNCTION_PLUGINS] = function () {
+        $container[static::PLUGIN_TWIG_CHART_FUNCTIONS] = function () {
             return $this->getTwigChartFunctionPlugins();
         };
 
@@ -53,7 +53,7 @@ class ChartDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addChartPlugins(Container $container): Container
     {
-        $container[static::CHART_PLUGINS] = function () {
+        $container[static::PLUGIN_CHARTS] = function () {
             return $this->getChartPlugins();
         };
 
