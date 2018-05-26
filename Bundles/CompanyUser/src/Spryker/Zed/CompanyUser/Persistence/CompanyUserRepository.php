@@ -169,4 +169,22 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
             ->createCompanyUserMapper()
             ->mapEntityTransferToCompanyUserTransfer($entityTransfer);
     }
+
+    /**
+     * @param int $idCustomer
+     *
+     * @return int
+     */
+    public function getCountOfActiveCompanyUsersByCustomerId(int $idCustomer): int
+    {
+        $query = $this->getFactory()
+            ->createCompanyUserQuery()
+            ->filterByFkCustomer($idCustomer)
+            ->joinCompany()
+            ->useCompanyQuery()
+                ->filterByIsActive(true)
+            ->endUse();
+
+        return $query->count();
+    }
 }

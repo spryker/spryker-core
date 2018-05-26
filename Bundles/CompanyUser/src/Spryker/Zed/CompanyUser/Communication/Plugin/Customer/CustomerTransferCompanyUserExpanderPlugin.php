@@ -17,7 +17,11 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class CustomerTransferCompanyUserExpanderPlugin extends AbstractPlugin implements CustomerTransferExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * Specification:
+     * - Sets a company user for the given customer.
+     * - Ignores records related to inactive company users and inactive companies.
+     * - Does not set company user if multiple company user accounts were found.
+     * - Does not set company user if it is already set.
      *
      * @api
      *
@@ -37,6 +41,14 @@ class CustomerTransferCompanyUserExpanderPlugin extends AbstractPlugin implement
      */
     protected function addCompanyUserTransfer(CustomerTransfer $customerTransfer): CustomerTransfer
     {
+        if ($customerTransfer->getCompanyUserTransfer() !== null) {
+            return $customerTransfer;
+        }
+
+        if ($this->getFacade()->getCountOfActiveCompanyUsersByCustomerId($customerTransfer) > 1) {
+            return $customerTransfer;
+        }
+
         $companyUserTransfer = $this->getFacade()->findActiveCompanyUserByCustomerId($customerTransfer);
         $customerTransfer->setCompanyUserTransfer($companyUserTransfer);
 

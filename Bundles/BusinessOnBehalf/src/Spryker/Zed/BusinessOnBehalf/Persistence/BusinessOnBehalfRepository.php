@@ -10,7 +10,7 @@ namespace Spryker\Zed\BusinessOnBehalf\Persistence;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
- * @method \Spryker\Zed\BusinessOnBehalf\Persistence\BusinessOnBehalfPersistenceFactory getFactory
+ * @method \Spryker\Zed\BusinessOnBehalf\Persistence\BusinessOnBehalfPersistenceFactory getFactory()
  */
 class BusinessOnBehalfRepository extends AbstractRepository implements BusinessOnBehalfRepositoryInterface
 {
