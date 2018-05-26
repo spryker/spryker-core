@@ -16,6 +16,7 @@
         <property name="fkCompany" type="int"/>
         <property name="fkCustomer" type="int"/>
         <property name="customer" type="Customer"/>
+        <property name="company" type="Company" />
     </transfer>
 
     <transfer name="CompanyUserResponse">
