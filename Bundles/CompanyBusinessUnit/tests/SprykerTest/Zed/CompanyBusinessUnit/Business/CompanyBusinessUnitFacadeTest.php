@@ -143,8 +143,8 @@ class CompanyBusinessUnitFacadeTest extends Test
 
         // Assert
         $this->assertSame(
-            $loadedChildBusinessUnitTransfer->getParentCompanyBusinessUnit()->getFkParentCompanyBusinessUnit(),
-            $businessUnitTransfer->getFkParentCompanyBusinessUnit()
+            $loadedChildBusinessUnitTransfer->getParentCompanyBusinessUnit()->getIdCompanyBusinessUnit(),
+            $businessUnitTransfer->getIdCompanyBusinessUnit()
         );
     }
 
@@ -177,12 +177,14 @@ class CompanyBusinessUnitFacadeTest extends Test
 
         // Assert
         $this->assertSame(
-            $loadedChildBusinessUnitTransfer->getParentCompanyBusinessUnit()->getFkParentCompanyBusinessUnit(),
-            $businessUnitTransfer->getFkParentCompanyBusinessUnit()
+            $loadedChildBusinessUnitTransfer->getParentCompanyBusinessUnit()->getIdCompanyBusinessUnit(),
+            $businessUnitTransfer->getIdCompanyBusinessUnit()
         );
     }
 
     /**
+     * @group Propel
+     *
      * @return void
      */
     public function testParentBusinessUnitRelationCanBeSaved()
@@ -213,7 +215,7 @@ class CompanyBusinessUnitFacadeTest extends Test
 
         // Assert
         $this->assertSame(
-            $loadedChildBusinessUnitTransfer->getParentCompanyBusinessUnit()->getFkParentCompanyBusinessUnit(),
+            $loadedChildBusinessUnitTransfer->getParentCompanyBusinessUnit()->getIdCompanyBusinessUnit(),
             $loadedChildBusinessUnitTransfer->getFkParentCompanyBusinessUnit()
         );
         $this->assertSame(

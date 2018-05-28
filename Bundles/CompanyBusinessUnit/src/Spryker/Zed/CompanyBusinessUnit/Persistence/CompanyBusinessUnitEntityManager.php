@@ -9,6 +9,7 @@ namespace Spryker\Zed\CompanyBusinessUnit\Persistence;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\SpyCompanyBusinessUnitEntityTransfer;
+use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnit;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -30,7 +31,7 @@ class CompanyBusinessUnitEntityManager extends AbstractEntityManager implements 
                 $companyBusinessUnitTransfer,
                 new SpyCompanyBusinessUnitEntityTransfer()
             );
-        $entityTransfer = $this->save($entityTransfer);
+        $entityTransfer = $this->saveBusinessUnit($entityTransfer);
 
         return $this->getFactory()
             ->createCompanyBusinessUnitMapper()
@@ -64,5 +65,29 @@ class CompanyBusinessUnitEntityManager extends AbstractEntityManager implements 
             ->createCompanyBusinessUnitQuery()
             ->filterByFkParentCompanyBusinessUnit($idCompanyBusinessUnit)
             ->update(['FkParentCompanyBusinessUnit' => null]);
+    }
+
+    /**
+     * This method is needed, because persistence mapper has problems mapping circular dependency
+     *
+     * @param \Generated\Shared\Transfer\SpyCompanyBusinessUnitEntityTransfer $businessUnitEntityTransfer
+     *
+     * @return \Generated\Shared\Transfer\SpyCompanyBusinessUnitEntityTransfer
+     */
+    protected function saveBusinessUnit(
+        SpyCompanyBusinessUnitEntityTransfer $businessUnitEntityTransfer
+    ): SpyCompanyBusinessUnitEntityTransfer {
+        $spyBusinessUnit = new SpyCompanyBusinessUnit();
+        $spyBusinessUnit->fromArray($businessUnitEntityTransfer->toArray());
+        if ($businessUnitEntityTransfer->getIdCompanyBusinessUnit()) {
+            $spyBusinessUnit->setNew(false);
+        }
+
+        $spyBusinessUnit->save();
+
+        $savedBusinessUnitEntityTransfer = new SpyCompanyBusinessUnitEntityTransfer();
+        $savedBusinessUnitEntityTransfer->fromArray($spyBusinessUnit->toArray());
+
+        return $savedBusinessUnitEntityTransfer;
     }
 }
