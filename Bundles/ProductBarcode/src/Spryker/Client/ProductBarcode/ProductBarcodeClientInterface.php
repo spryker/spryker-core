@@ -21,10 +21,12 @@ interface ProductBarcodeClientInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param string|null $barcodeGeneratorPlugin
      *
      * @return \Generated\Shared\Transfer\BarcodeResponseTransfer
      */
     public function generateBarcode(
-        ProductConcreteTransfer $productConcreteTransfer
+        ProductConcreteTransfer $productConcreteTransfer,
+        ?string $barcodeGeneratorPlugin = null
     ): BarcodeResponseTransfer;
 }

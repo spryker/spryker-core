@@ -9,11 +9,11 @@ namespace Spryker\Client\ProductBarcode;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
-use Spryker\Client\ProductBarcode\Dependency\Client\ProductBarcodeToZedRequestBridge;
+use Spryker\Client\ProductBarcode\Dependency\Service\ProductBarcodeToBarcodeServiceBridge;
 
 class ProductBarcodeDependencyProvider extends AbstractDependencyProvider
 {
-    public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+    public const SERVICE_BARCODE = 'SERVICE_BARCODE';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -23,7 +23,7 @@ class ProductBarcodeDependencyProvider extends AbstractDependencyProvider
     public function provideServiceLayerDependencies(Container $container): Container
     {
         $container = parent::provideServiceLayerDependencies($container);
-        $container = $this->addZedRequestClient($container);
+        $container = $this->addBarcodeService($container);
 
         return $container;
     }
@@ -33,10 +33,12 @@ class ProductBarcodeDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addZedRequestClient(Container $container): Container
+    protected function addBarcodeService(Container $container): Container
     {
-        $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
-            return new ProductBarcodeToZedRequestBridge($container->getLocator()->zedRequest()->client());
+        $container[static::SERVICE_BARCODE] = function (Container $container) {
+            return new ProductBarcodeToBarcodeServiceBridge(
+                $container->getLocator()->barcode()->service()
+            );
         };
 
         return $container;

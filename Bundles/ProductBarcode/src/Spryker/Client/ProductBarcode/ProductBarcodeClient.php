@@ -22,14 +22,18 @@ class ProductBarcodeClient extends AbstractClient implements ProductBarcodeClien
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param string|null $barcodeGeneratorPlugin
      *
      * @return \Generated\Shared\Transfer\BarcodeResponseTransfer
      */
     public function generateBarcode(
-        ProductConcreteTransfer $productConcreteTransfer
+        ProductConcreteTransfer $productConcreteTransfer,
+        ?string $barcodeGeneratorPlugin = null
     ): BarcodeResponseTransfer {
+        $sku = $productConcreteTransfer->requireSku()->getSku();
+
         return $this->getFactory()
-            ->createProductBarcodeStub()
-            ->generateBarcode($productConcreteTransfer);
+            ->getBarcodeService()
+            ->generateBarcode($sku, $barcodeGeneratorPlugin);
     }
 }

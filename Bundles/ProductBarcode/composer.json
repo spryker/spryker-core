@@ -6,8 +6,7 @@
     "php": ">=7.1",
     "spryker/barcode": "^1.0.0",
     "spryker/kernel": "^3.1.0",
-    "spryker/product": "^6.0.0",
-    "spryker/zed-request": "^3.0.0"
+    "spryker/product": "^6.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

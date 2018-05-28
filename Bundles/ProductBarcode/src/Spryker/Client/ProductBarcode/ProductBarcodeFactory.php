@@ -8,15 +8,15 @@
 namespace Spryker\Client\ProductBarcode;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\ProductBarcode\Zed\ProductBarcodeStub;
+use Spryker\Client\ProductBarcode\Dependency\Service\ProductBarcodeToBarcodeServiceInterface;
 
 class ProductBarcodeFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Client\ProductBarcode\Zed\ProductBarcodeStub
+     * @return \Spryker\Client\ProductBarcode\Dependency\Service\ProductBarcodeToBarcodeServiceInterface
      */
-    public function createProductBarcodeStub()
+    public function getBarcodeService(): ProductBarcodeToBarcodeServiceInterface
     {
-        return new ProductBarcodeStub($this->getProvidedDependency(ProductBarcodeDependencyProvider::CLIENT_ZED_REQUEST));
+        return $this->getProvidedDependency(ProductBarcodeDependencyProvider::SERVICE_BARCODE);
     }
 }
