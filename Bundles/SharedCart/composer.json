@@ -4,28 +4,27 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker/cart": "^5.1.0",
     "spryker/company-user": "^1.0.0",
     "spryker/customer": "^7.0.0",
     "spryker/kernel": "^3.19.0",
     "spryker/messenger": "^3.0.0",
-    "spryker/multi-cart": "^0.1.0",
+    "spryker/multi-cart": "^1.0.0",
     "spryker/permission": "^1.0.0",
     "spryker/permission-extension": "^1.0.0",
-    "spryker/persistent-cart": "^0.1.0",
-    "spryker/persistent-cart-extension": "^1.0.0",
+    "spryker/persistent-cart": "^1.0.0",
+    "spryker/persistent-cart-extension": "^1.0.0 || ^1.1.0",
     "spryker/propel-orm": "^1.6.0",
     "spryker/quote": "^2.0.0",
     "spryker/quote-extension": "^1.0.0",
     "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
-    "spryker/cart": "*",
     "spryker/code-sniffer": "*",
     "spryker/installer": "*",
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/cart": "If you want to use cart plugins.",
     "spryker/installer": "If you want to use SharedCartPermissionInstallerPlugin. Minimum required version: 4.0.0."
   },
   "autoload": {
