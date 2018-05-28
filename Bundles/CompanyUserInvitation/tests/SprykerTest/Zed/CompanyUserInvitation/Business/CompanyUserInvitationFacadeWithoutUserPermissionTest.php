@@ -73,6 +73,8 @@ class CompanyUserInvitationFacadeWithoutUserPermissionTest extends Test
     {
         parent::setUp();
 
+        $this->getFacade()->install();
+
         $this->tester->addDependency(PermissionDependencyProvider::PLUGINS_PERMISSION_STORAGE, [
             new PermissionStoragePlugin(),
         ]);
