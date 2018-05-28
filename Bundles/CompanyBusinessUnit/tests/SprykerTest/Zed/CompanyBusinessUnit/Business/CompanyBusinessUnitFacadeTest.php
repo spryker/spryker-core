@@ -185,6 +185,46 @@ class CompanyBusinessUnitFacadeTest extends Test
     /**
      * @return void
      */
+    public function testParentBusinessUnitRelationCanBeSaved()
+    {
+        // Arrange
+        $idCompany = $this->tester->haveCompany()->getIdCompany();
+        $seedData = [
+            'fkCompany' => $idCompany,
+            'idCompanyBusinessUnit' => null,
+        ];
+        $parentBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnit($seedData);
+        $parentBusinessUnitTransfer = $this->getFacade()
+            ->getCompanyBusinessUnitById($parentBusinessUnitTransfer);
+
+        $seedData = [
+            'fkCompany' => $idCompany,
+            'idCompanyBusinessUnit' => null,
+            'fkParentCompanyBusinessUnit' => $parentBusinessUnitTransfer->getIdCompanyBusinessUnit(),
+        ];
+        $businessUnitTransfer = $this->tester->haveCompanyBusinessUnit($seedData);
+        $businessUnitTransfer = $this->getFacade()
+            ->getCompanyBusinessUnitById($businessUnitTransfer);
+
+        // Act
+        $this->getFacade()->update($businessUnitTransfer);
+        $loadedChildBusinessUnitTransfer = $this->getFacade()
+            ->getCompanyBusinessUnitById($businessUnitTransfer);
+
+        // Assert
+        $this->assertSame(
+            $loadedChildBusinessUnitTransfer->getParentCompanyBusinessUnit()->getFkParentCompanyBusinessUnit(),
+            $loadedChildBusinessUnitTransfer->getFkParentCompanyBusinessUnit()
+        );
+        $this->assertSame(
+            $loadedChildBusinessUnitTransfer->getFkParentCompanyBusinessUnit(),
+            $parentBusinessUnitTransfer->getIdCompanyBusinessUnit()
+        );
+    }
+
+    /**
+     * @return void
+     */
     public function testDeleteShouldClearParentForChildrenBusinessUnit()
     {
         // Arrange
