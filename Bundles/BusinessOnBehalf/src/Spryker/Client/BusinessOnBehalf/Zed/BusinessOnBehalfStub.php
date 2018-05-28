@@ -1,0 +1,38 @@
+<?php
+
+namespace Spryker\Client\BusinessOnBehalf\Zed;
+
+use Generated\Shared\Transfer\CustomerTransfer;
+use Spryker\Client\BusinessOnBehalf\Dependency\Client\BusinessOnBehalfToZedRequestClientInterface;
+
+class BusinessOnBehalfStub implements BusinessOnBehalfStubInterface
+{
+    /**
+     * @var \Spryker\Client\BusinessOnBehalf\Dependency\Client\BusinessOnBehalfToZedRequestClientInterface
+     */
+    protected $zedRequestClient;
+
+    /**
+     * @param \Spryker\Client\BusinessOnBehalf\Dependency\Client\BusinessOnBehalfToZedRequestClientInterface
+     */
+    public function __construct(BusinessOnBehalfToZedRequestClientInterface $zedRequestClient)
+    {
+        $this->zedRequestClient = $zedRequestClient;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
+     */
+    public function findActiveCompanyUsersByCustomerId(CustomerTransfer $customerTransfer): array
+    {
+        /** @var \Generated\Shared\Transfer\CompanyUserTransfer[] $companyUsers */
+        $companyUsers = $this->zedRequestClient->call(
+            '/business-on-behalf/gateway/find-active-company-users-by-customer-id',
+            $customerTransfer
+        );
+
+        return $companyUsers;
+    }
+}

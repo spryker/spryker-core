@@ -95,6 +95,8 @@ interface CompanyUserFacadeInterface
     /**
      * Specification:
      * - Retrieves company user by id
+     * - Hydrates company field
+     * - Hydrates company business unit field
      *
      * @api
      *

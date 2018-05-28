@@ -7,8 +7,12 @@
 
 namespace Spryker\Zed\BusinessOnBehalf\Business;
 
+use Spryker\Zed\BusinessOnBehalf\Business\Model\CompanyUserCollectionFinder;
+use Spryker\Zed\BusinessOnBehalf\Business\Model\CompanyUserCollectionFinderInterface;
 use Spryker\Zed\BusinessOnBehalf\Business\Model\CustomerExpander;
 use Spryker\Zed\BusinessOnBehalf\Business\Model\CustomerExpanderInterface;
+use Spryker\Zed\BusinessOnBehalf\BusinessOnBehalfDependencyProvider;
+use Spryker\Zed\BusinessOnBehalf\Dependency\Facade\CompanyUserToBusinessOnBehalfFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -23,5 +27,24 @@ class BusinessOnBehalfBusinessFactory extends AbstractBusinessFactory
     public function createCustomerExpander(): CustomerExpanderInterface
     {
         return new CustomerExpander($this->getRepository());
+    }
+
+    /**
+     * @return \Spryker\Zed\BusinessOnBehalf\Business\Model\CompanyUserCollectionFinderInterface
+     */
+    public function createCompanyUserCollectionFinder(): CompanyUserCollectionFinderInterface
+    {
+        return new CompanyUserCollectionFinder(
+            $this->getRepository(),
+            $this->getCompanyUserFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\BusinessOnBehalf\Dependency\Facade\CompanyUserToBusinessOnBehalfFacadeInterface
+     */
+    protected function getCompanyUserFacade(): CompanyUserToBusinessOnBehalfFacadeInterface
+    {
+        return $this->getProvidedDependency(BusinessOnBehalfDependencyProvider::FACADE_COMPANY_USER);
     }
 }

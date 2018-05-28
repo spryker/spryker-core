@@ -28,4 +28,18 @@ class BusinessOnBehalfFacade extends AbstractFacade implements BusinessOnBehalfF
     {
         return $this->getFactory()->createCustomerExpander()->expandCustomer($customerTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
+     */
+    public function findActiveCompanyUsersByCustomerId(CustomerTransfer $customerTransfer): array
+    {
+        return $this->getFactory()->createCompanyUserCollectionFinder()->findActiveCompanyUsersByCustomerId($customerTransfer);
+    }
 }

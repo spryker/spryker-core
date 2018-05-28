@@ -10,7 +10,7 @@ namespace Spryker\Zed\BusinessOnBehalf\Persistence;
 interface BusinessOnBehalfRepositoryInterface
 {
     /**
-     * Specification
+     * Specification:
      * - Checks is customer on behalf, i.e. has multiple company user accounts
      *
      * @api
@@ -20,4 +20,14 @@ interface BusinessOnBehalfRepositoryInterface
      * @return bool
      */
     public function isOnBehalfByCustomerId(int $idCustomer): bool;
+
+    /**
+     * Specification:
+     * - Retrieves ids of active company users by customer id
+     *
+     * @param int $idCustomer
+     *
+     * @return int[]
+     */
+    public function findActiveCompanyUserIdsByCustomerId(int $idCustomer): array;
 }

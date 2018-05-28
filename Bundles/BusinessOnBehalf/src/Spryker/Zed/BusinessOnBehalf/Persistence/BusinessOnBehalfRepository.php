@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\BusinessOnBehalf\Persistence;
 
+use Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -29,5 +30,23 @@ class BusinessOnBehalfRepository extends AbstractRepository implements BusinessO
         $query->filterByFkCustomer($idCustomer);
 
         return ($query->count() > 1);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idCustomer
+     *
+     * @return int[]
+     */
+    public function findActiveCompanyUserIdsByCustomerId(int $idCustomer): array
+    {
+        $query = $this->getFactory()->getCompanyUserQuery();
+        $query->filterByFkCustomer($idCustomer);
+        $query->select(SpyCompanyUserTableMap::COL_ID_COMPANY_USER);
+
+        return $query->find()->toArray();
     }
 }
