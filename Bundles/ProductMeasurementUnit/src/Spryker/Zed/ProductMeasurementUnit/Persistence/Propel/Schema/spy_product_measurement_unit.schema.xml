@@ -38,7 +38,7 @@
         </foreign-key>
     </table>
 
-    <table name="spy_product_measurement_sales_unit" idMethod="native" allowPkInsert="true">
+    <table name="spy_product_measurement_sales_unit" idMethod="native" allowPkInsert="true" identifierQuoting="true">
         <column name="id_product_measurement_sales_unit" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="conversion" type="FLOAT" required="false"/>
         <column name="precision" type="INTEGER" required="false"/>

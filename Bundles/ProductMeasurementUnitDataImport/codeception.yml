@@ -1,7 +1,7 @@
-namespace: ProductMeasurementUnit
+namespace: ProductMeasurementUnitDataImport
 actor: Tester
 include:
-  - tests/SprykerTest/Zed/ProductMeasurementUnit
+  - tests/SprykerTest/Zed/ProductMeasurementUnitDataImport
 paths:
     tests: tests
     log: tests/_output

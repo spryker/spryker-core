@@ -1,25 +1,22 @@
 {
-  "name": "spryker/stock",
-  "description": "Stock module",
+  "name": "spryker/product-quantity-data-import",
+  "description": "ProductQuantityDataImport module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/kernel": "^3.17.0",
-    "spryker/product": "^5.0.0 || ^6.0.0",
-    "spryker/propel-orm": "^1.0.0",
-    "spryker/store": "^1.5.0",
-    "spryker/touch": "^3.0.0 || ^4.0.0"
+    "spryker/data-import": "^1.3.0",
+    "spryker/kernel": "^3.20.0",
+    "spryker/product": "^6.0.0",
+    "spryker/product-quantity": "^0.1.1"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/propel": "*",
-    "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Shared\\Stock\\Helper\\": "tests/SprykerTest/Shared/Stock/_support/Helper/"
+      "SprykerTest\\Zed\\ProductQuantityDataImport\\Helper\\": "tests/SprykerTest/Zed/ProductQuantityDataImport/_support/Helper/"
     }
   },
   "autoload-dev": {
@@ -31,7 +28,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "4.0.x-dev"
+      "dev-master": "1.0.x-dev"
     }
   },
   "config": {
