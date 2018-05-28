@@ -10,9 +10,26 @@
 {% block content %}
     {% for application, spryks in sprykDefinitions %}
         <h2>{{ application }}</h2>
-        {% for spryk, sprykInfo in spryks %}
-            <a href="/spryk-gui/index/build?spryk={{ spryk }}">{{ sprykInfo.humanized }}</a> - {{ sprykInfo.description }}<br />
-        {% endfor %}
+        <table class="table">
+            {% for spryk, sprykInfo in spryks %}
+
+
+                {% if sprykInfo.priority == 1 %}
+                    <tr class="bg-info">
+                {% else %}
+                    <tr>
+                {% endif %}
+
+                <td style="width: 33%;"><a href="/spryk-gui/index/build?spryk={{ spryk }}">{{ sprykInfo.humanized }}</a>
+                </td>
+
+                <td style="width: 33%;">{{ sprykInfo.description }}</td>
+                <td><a href="/spryk-gui/index/draw?spryk={{ spryk }}">Draw</a></td>
+                </tr>
+
+
+            {% endfor %}
+        </table>
     {% endfor %}
 {% endblock %}
 

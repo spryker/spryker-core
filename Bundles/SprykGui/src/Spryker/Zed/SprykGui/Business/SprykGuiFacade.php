@@ -43,6 +43,12 @@ class SprykGuiFacade extends AbstractFacade implements SprykGuiFacadeInterface
         return $this->getFactory()->createSpryk()->getSprykDefinitions();
     }
 
+
+    public function drawSpryk($sprykName): string
+    {
+        return $this->getFactory()->createSpryk()->drawSpryk($sprykName);
+    }
+
     /**
      * {@inheritdoc}
      *

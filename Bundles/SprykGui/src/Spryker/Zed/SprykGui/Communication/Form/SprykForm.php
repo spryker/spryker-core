@@ -46,8 +46,8 @@ class SprykForm extends AbstractType
     {
         $this->addMainSpryk($builder, $options);
 //        $this->addOthers($builder, $options);
-        $this->addCreateTemplateButton($builder);
         $this->addRunSprykButton($builder);
+        $this->addCreateTemplateButton($builder);
     }
 
     /**

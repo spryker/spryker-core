@@ -29,4 +29,10 @@ interface SprykInterface
      * @return mixed
      */
     public function runSpryk(string $sprykName, array $sprykArguments);
+
+    /**
+     * @param $sprykName
+     * @return string
+     */
+    public function drawSpryk($sprykName): string;
 }

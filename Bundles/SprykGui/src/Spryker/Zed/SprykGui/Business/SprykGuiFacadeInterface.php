@@ -32,6 +32,9 @@ interface SprykGuiFacadeInterface
      */
     public function getSprykDefinitions(): array;
 
+
+    public function drawSpryk($sprykName): string;
+
     /**
      * Specification:
      * - Builds the commandLin to be executed and executes it.

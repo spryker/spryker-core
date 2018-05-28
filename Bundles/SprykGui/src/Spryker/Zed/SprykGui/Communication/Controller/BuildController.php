@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\SprykGui\Communication\Controller;
 
+use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method \Spryker\Zed\SprykGui\Communication\SprykGuiCommunicationFactory getFactory()
@@ -50,4 +52,40 @@ class BuildController extends AbstractController
             'form' => $sprykForm->createView(),
         ]);
     }
+
+    public function drawAction(Request $request): array
+    {
+        $spryk = $request->query->get('spryk');
+
+        $response = $this->getFacade()->drawSpryk($spryk);
+
+
+        $callback = function () use ($response) {
+            echo $response;
+        };
+
+        return $this->streamedResponse(
+            $callback,
+            Response::HTTP_OK,
+            $this->getStreamedResponseHeaders('svg')
+        );
+
+    }
+
+
+    protected function getStreamedResponseHeaders($format)
+    {
+        $headers = [];
+
+        $formatContentTypes = [
+            'jpg' => 'image/jpeg',
+            'svg' => 'image/svg+xml',
+        ];
+        if (isset($formatContentTypes[$format])) {
+            $headers['content-type'] = $formatContentTypes[$format];
+        }
+
+        return $headers;
+    }
+
 }
