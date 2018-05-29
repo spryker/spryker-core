@@ -65,11 +65,11 @@ class ProductSuggester implements ProductSuggesterInterface
     public function suggestProductSkus(string $productSku, int $limit = ProductConstants::PRODUCT_FILTER_LIMIT_DEFAULT): array
     {
         $abstractProducts = $this->collectFilteredResults(
-            $this->productFacade->filterProductAbstractByLocalizedName($productSku, $limit)
+            $this->productFacade->filterProductAbstractBySku($productSku, $limit)
         );
 
         $concreteProducts = $this->collectFilteredResults(
-            $this->productFacade->filterProductConcreteByLocalizedName($productSku, $limit)
+            $this->productFacade->filterProductConcreteBySku($productSku, $limit)
         );
 
         return array_unique(
