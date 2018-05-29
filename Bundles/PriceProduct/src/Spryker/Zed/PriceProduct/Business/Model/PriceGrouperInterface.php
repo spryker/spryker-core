@@ -21,15 +21,4 @@ interface PriceGrouperInterface
         string $sku,
         ?PriceProductDimensionTransfer $priceProductDimensionTransfer = null
     );
-
-    /**
-     * @param string $sku
-     * @param \Generated\Shared\Transfer\PriceProductDimensionTransfer|null $priceProductDimensionTransfer
-     *
-     * @return array
-     */
-    public function findPricesWithTiersBySkuGrouped(
-        string $sku,
-        ?PriceProductDimensionTransfer $priceProductDimensionTransfer = null
-    ): array;
 }
