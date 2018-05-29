@@ -39,7 +39,7 @@ class ShipmentDataProvider implements FormDataProviderInterface
      *
      * @return array
      */
-    public function getOptions($quoteTransfer)
+    public function getOptions($quoteTransfer): array
     {
         return [
             'data_class' => QuoteTransfer::class,
@@ -54,7 +54,7 @@ class ShipmentDataProvider implements FormDataProviderInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getData($quoteTransfer)
+    public function getData($quoteTransfer): QuoteTransfer
     {
         if ($quoteTransfer->getShipment() === null) {
             $quoteTransfer->setShipment(new ShipmentTransfer());
@@ -71,7 +71,7 @@ class ShipmentDataProvider implements FormDataProviderInterface
      *
      * @return array
      */
-    protected function getShipmentMethodList(QuoteTransfer $quoteTransfer)
+    protected function getShipmentMethodList(QuoteTransfer $quoteTransfer): array
     {
         if (!$quoteTransfer->getStore() || !$quoteTransfer->getCurrency()) {
             return [];

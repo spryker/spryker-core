@@ -29,7 +29,7 @@ class CustomersListType extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addCustomerIdField(
             $builder,
@@ -42,7 +42,7 @@ class CustomersListType extends AbstractType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired(static::OPTION_CUSTOMER_ARRAY);
     }
@@ -53,7 +53,7 @@ class CustomersListType extends AbstractType
      *
      * @return $this
      */
-    protected function addCustomerIdField(FormBuilderInterface $builder, array $customerList)
+    protected function addCustomerIdField(FormBuilderInterface $builder, array $customerList): self
     {
         $builder->add(static::FIELD_CUSTOMER, Select2ComboBoxType::class, [
             'property_path' => QuoteTransfer::CUSTOMER . '.' . CustomerTransfer::ID_CUSTOMER,
@@ -70,7 +70,7 @@ class CustomersListType extends AbstractType
     /**
      * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return static::TYPE_NAME;
     }

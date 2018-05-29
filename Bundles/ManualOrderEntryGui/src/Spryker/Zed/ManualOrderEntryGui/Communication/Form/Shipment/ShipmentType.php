@@ -32,7 +32,7 @@ class ShipmentType extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addStoreField(
             $builder,
@@ -45,7 +45,7 @@ class ShipmentType extends AbstractType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired(static::OPTION_SHIPMENT_METHODS_ARRAY);
@@ -57,7 +57,7 @@ class ShipmentType extends AbstractType
      *
      * @return $this
      */
-    protected function addStoreField(FormBuilderInterface $builder, array $shipmentMethods)
+    protected function addStoreField(FormBuilderInterface $builder, array $shipmentMethods): self
     {
         $builder->add(static::FIELD_SHIPMENT_METHOD, Select2ComboBoxType::class, [
             'property_path' => QuoteTransfer::SHIPMENT . '.' . ShipmentTransfer::METHOD . '.' . ShipmentMethodTransfer::ID_SHIPMENT_METHOD,
@@ -74,7 +74,7 @@ class ShipmentType extends AbstractType
     /**
      * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return static::TYPE_NAME;
     }

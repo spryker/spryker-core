@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\ManualOrderEntry\Business;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\OrderSourceTransfer;
 use Generated\Shared\Transfer\SpySalesOrderEntityTransfer;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * Auto-generated group annotations
@@ -30,7 +31,7 @@ class ManualOrderEntryFacadeTest extends Test
     /**
      * @return void
      */
-    public function testGetOrderSourceByIdShouldReturnTransferObjectForExistingOrderSource()
+    public function testGetOrderSourceByIdShouldReturnTransferObjectForExistingOrderSource(): void
     {
         $idOrderSource = 1;
         $orderSourceTransfer = $this->getFacade()->getOrderSourceById($idOrderSource);
@@ -42,11 +43,12 @@ class ManualOrderEntryFacadeTest extends Test
     /**
      * @return void
      */
-    public function testFindAllOrderSourcesShouldReturnArrayOfTransferObjectsOrderSource()
+    public function testFindAllOrderSourcesShouldReturnArrayOfTransferObjectsOrderSource(): void
     {
         $orderSourceTransfers = $this->getFacade()->getAllOrderSources();
 
         $this->assertNotNull($orderSourceTransfers);
+        $this->assertInternalType('array', $orderSourceTransfers);
         $orderSourceTransfer = array_pop($orderSourceTransfers);
         $this->assertTrue($orderSourceTransfer instanceof OrderSourceTransfer);
     }
@@ -54,7 +56,7 @@ class ManualOrderEntryFacadeTest extends Test
     /**
      * @return void
      */
-    public function testHydrateOrderSourceShouldReturnTransferObjectOrderSource()
+    public function testHydrateOrderSourceShouldReturnTransferObjectOrderSource(): void
     {
         $salesOrderEntityTransfer = $this->tester->createEmptySpySalesOrderEntityTransfer();
         $quoteTransfer = $this->tester->createQuoteTransferWithOrderSource();
@@ -69,7 +71,7 @@ class ManualOrderEntryFacadeTest extends Test
     /**
      * @return \Spryker\Zed\ManualOrderEntry\Business\ManualOrderEntryFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade
      */
-    protected function getFacade()
+    protected function getFacade(): AbstractFacade
     {
         return $this->tester->getFacade();
     }

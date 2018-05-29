@@ -31,7 +31,7 @@ class ItemCollectionType extends AbstractType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired(static::OPTION_ITEM_CLASS_COLLECTION);
         $resolver->setDefined(static::OPTION_ISO_CODE);
@@ -43,7 +43,7 @@ class ItemCollectionType extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this
             ->addItemsField($builder, $options);
@@ -55,7 +55,7 @@ class ItemCollectionType extends AbstractType
      *
      * @return $this
      */
-    protected function addItemsField(FormBuilderInterface $builder, array $options)
+    protected function addItemsField(FormBuilderInterface $builder, array $options): self
     {
         $builder->add(static::FIELD_ITEMS, CollectionType::class, [
             'property_path' => QuoteTransfer::MANUAL_ORDER . '.' . ManualOrderTransfer::ITEMS,
@@ -76,7 +76,7 @@ class ItemCollectionType extends AbstractType
     /**
      * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return static::TYPE_NAME;
     }

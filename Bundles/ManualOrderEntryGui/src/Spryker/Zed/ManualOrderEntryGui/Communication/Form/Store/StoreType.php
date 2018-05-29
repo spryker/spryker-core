@@ -31,7 +31,7 @@ class StoreType extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addStoreField(
             $builder,
@@ -44,7 +44,7 @@ class StoreType extends AbstractType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired(static::OPTION_STORES_ARRAY);
     }
@@ -55,7 +55,7 @@ class StoreType extends AbstractType
      *
      * @return $this
      */
-    protected function addStoreField(FormBuilderInterface $builder, array $storesList)
+    protected function addStoreField(FormBuilderInterface $builder, array $storesList): self
     {
         $builder->add(static::FIELD_STORE, Select2ComboBoxType::class, [
             'property_path' => QuoteTransfer::MANUAL_ORDER . '.' . ManualOrderTransfer::STORE_CURRENCY,
@@ -72,7 +72,7 @@ class StoreType extends AbstractType
     /**
      * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return static::TYPE_NAME;
     }

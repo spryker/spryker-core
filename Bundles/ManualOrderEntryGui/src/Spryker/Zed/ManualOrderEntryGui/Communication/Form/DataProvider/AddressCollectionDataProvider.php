@@ -9,6 +9,7 @@ namespace Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Address\AddressCollectionType;
 use Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToStoreFacadeInterface;
 
@@ -37,7 +38,7 @@ class AddressCollectionDataProvider implements FormDataProviderInterface
      *
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    public function getData($quoteTransfer)
+    public function getData($quoteTransfer): AbstractTransfer
     {
         $this->customerTransfer = $quoteTransfer->getCustomer();
 
@@ -56,7 +57,7 @@ class AddressCollectionDataProvider implements FormDataProviderInterface
      *
      * @return array
      */
-    public function getOptions($quoteTransfer)
+    public function getOptions($quoteTransfer): array
     {
         return [
             'data_class' => QuoteTransfer::class,
@@ -72,7 +73,7 @@ class AddressCollectionDataProvider implements FormDataProviderInterface
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    protected function getShippingAddress(QuoteTransfer $quoteTransfer)
+    protected function getShippingAddress(QuoteTransfer $quoteTransfer): AddressTransfer
     {
         $shippingAddressTransfer = new AddressTransfer();
         if ($quoteTransfer->getShippingAddress() !== null) {
@@ -91,7 +92,7 @@ class AddressCollectionDataProvider implements FormDataProviderInterface
      *
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
-    protected function getBillingAddress(QuoteTransfer $quoteTransfer)
+    protected function getBillingAddress(QuoteTransfer $quoteTransfer): AddressTransfer
     {
         $billingAddressTransfer = new AddressTransfer();
         if ($quoteTransfer->getBillingAddress() !== null) {
@@ -108,7 +109,7 @@ class AddressCollectionDataProvider implements FormDataProviderInterface
     /**
      * @return array
      */
-    protected function getAddressChoices()
+    protected function getAddressChoices(): array
     {
         if ($this->customerTransfer === null) {
             return [];
@@ -140,7 +141,7 @@ class AddressCollectionDataProvider implements FormDataProviderInterface
     /**
      * @return array
      */
-    protected function getAvailableCountries()
+    protected function getAvailableCountries(): array
     {
         $countries = [];
 

@@ -15,6 +15,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class StoreFormHandler implements FormHandlerInterface
 {
+    public const STORE_CURRENCY_DELIMITER = ';';
+
     /**
      * @var \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToCurrencyFacadeInterface
      */
@@ -43,7 +45,7 @@ class StoreFormHandler implements FormHandlerInterface
             return $quoteTransfer;
         }
 
-        list($storeName, $currencyCode) = explode(';', $storeCurrencyString);
+        list($storeName, $currencyCode) = explode(static::STORE_CURRENCY_DELIMITER, $storeCurrencyString);
         $storeWithCurrencyTransfers = $this->currencyFacade->getAllStoresWithCurrencies();
 
         foreach ($storeWithCurrencyTransfers as $storeWithCurrencyTransfer) {
@@ -60,9 +62,9 @@ class StoreFormHandler implements FormHandlerInterface
      *
      * @return bool
      */
-    protected function isValidStoreCurrencyString($storeCurrencyString)
+    protected function isValidStoreCurrencyString($storeCurrencyString): bool
     {
-        return strlen($storeCurrencyString) && strpos($storeCurrencyString, ';') !== false;
+        return strlen($storeCurrencyString) && strpos($storeCurrencyString, static::STORE_CURRENCY_DELIMITER) !== false;
     }
 
     /**
@@ -78,7 +80,7 @@ class StoreFormHandler implements FormHandlerInterface
         StoreWithCurrencyTransfer $storeWithCurrencyTransfer,
         $storeName,
         $currencyCode
-    ) {
+    ): bool {
         $storeTransfer = $storeWithCurrencyTransfer->getStore();
         if ($storeName === $storeTransfer->getName()) {
             $quoteTransfer->setStore($storeTransfer);
@@ -102,7 +104,7 @@ class StoreFormHandler implements FormHandlerInterface
      *
      * @return bool
      */
-    protected function setCurrencyToQuote(QuoteTransfer $quoteTransfer, $currencyCode, CurrencyTransfer $currencyTransfer)
+    protected function setCurrencyToQuote(QuoteTransfer $quoteTransfer, $currencyCode, CurrencyTransfer $currencyTransfer): bool
     {
         if ($currencyCode === $currencyTransfer->getCode()) {
             $quoteTransfer->setCurrency($currencyTransfer);

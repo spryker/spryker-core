@@ -19,7 +19,7 @@ class ManualOrderEntryHelper extends Module
     /**
      * @return \Generated\Shared\Transfer\SpySalesOrderEntityTransfer
      */
-    public function createEmptySpySalesOrderEntityTransfer()
+    public function createEmptySpySalesOrderEntityTransfer(): SpySalesOrderEntityTransfer
     {
         return new SpySalesOrderEntityTransfer();
     }
@@ -27,7 +27,7 @@ class ManualOrderEntryHelper extends Module
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function createQuoteTransferWithOrderSource()
+    public function createQuoteTransferWithOrderSource(): QuoteTransfer
     {
         $quoteTransfer = new QuoteTransfer();
         $orderSourceTransfer = (new OrderSourceTransfer())

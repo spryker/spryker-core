@@ -27,16 +27,17 @@ class ManualOrderEntryRepository extends AbstractRepository implements ManualOrd
      */
     public function getOrderSourceById($idOrderSource): OrderSourceTransfer
     {
-        $query = $this->getFactory()->createOrderSourceQuery()
-            ->filterByIdOrderSource($idOrderSource);
-        $spyOrderSourceEntityTransfer = $this->buildQueryFromCriteria($query)
+        $query = $this->getFactory()->createOrderSourceQuery();
+        $orderSourceEntity = $query->filterByIdOrderSource($idOrderSource)
             ->findOne();
 
-        if (!$spyOrderSourceEntityTransfer) {
+        if (!$orderSourceEntity) {
             throw new OrderSourceNotFoundException();
         }
-        $orderSourceTransfer = new OrderSourceTransfer();
-        $orderSourceTransfer->fromArray($spyOrderSourceEntityTransfer->toArray(), true);
+
+        $orderSourceTransfer = $this->getFactory()
+            ->createOrderSourceMapper()
+            ->mapOrderSource($orderSourceEntity);
 
         return $orderSourceTransfer;
     }
@@ -49,12 +50,13 @@ class ManualOrderEntryRepository extends AbstractRepository implements ManualOrd
     public function findAllOrderSources(): array
     {
         $query = $this->getFactory()->createOrderSourceQuery();
-        $spyOrderSourceEntityTransfers = $this->buildQueryFromCriteria($query)->find();
-        $orderSourceTransfers = [];
+        $orderSourceEntities = $query->find();
 
-        foreach ($spyOrderSourceEntityTransfers as $spyOrderSourceEntityTransfer) {
-            $orderSourceTransfer = new OrderSourceTransfer();
-            $orderSourceTransfer->fromArray($spyOrderSourceEntityTransfer->toArray(), true);
+        $orderSourceTransfers = [];
+        $mapper = $this->getFactory()->createOrderSourceMapper();
+
+        foreach ($orderSourceEntities as $orderSourceEntity) {
+            $orderSourceTransfer = $mapper->mapOrderSource($orderSourceEntity);
 
             $orderSourceTransfers[] = $orderSourceTransfer;
         }

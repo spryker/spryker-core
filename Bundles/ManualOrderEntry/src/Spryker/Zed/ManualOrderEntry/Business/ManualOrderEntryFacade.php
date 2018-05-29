@@ -44,7 +44,7 @@ class ManualOrderEntryFacade extends AbstractFacade implements ManualOrderEntryF
     {
         return $this->getFactory()
             ->createOrderSourceReader()
-            ->getAllOrderSources();
+            ->findAllOrderSources();
     }
 
     /**

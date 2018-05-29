@@ -32,7 +32,7 @@ class ProductCollectionType extends AbstractType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired(static::OPTION_PRODUCT_CLASS_COLLECTION);
     }
@@ -43,7 +43,7 @@ class ProductCollectionType extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this
             ->addProductsEmptyField($builder, $options)
@@ -56,7 +56,7 @@ class ProductCollectionType extends AbstractType
      *
      * @return $this
      */
-    protected function addProductsEmptyField(FormBuilderInterface $builder, array $options)
+    protected function addProductsEmptyField(FormBuilderInterface $builder, array $options): self
     {
         $builder->add(static::FIELD_PRODUCTS, CollectionType::class, [
             'property_path' => QuoteTransfer::MANUAL_ORDER . '.' . ManualOrderTransfer::PRODUCTS,
@@ -79,7 +79,7 @@ class ProductCollectionType extends AbstractType
      *
      * @return $this
      */
-    protected function addIsProductPostedField(FormBuilderInterface $builder, array $options)
+    protected function addIsProductPostedField(FormBuilderInterface $builder, array $options): self
     {
         $builder->add(static::FIELD_IS_PRODUCT_POSTED, HiddenType::class, [
             'property_path' => QuoteTransfer::MANUAL_ORDER . '.' . ManualOrderTransfer::IS_PRODUCT_POSTED,
@@ -92,7 +92,7 @@ class ProductCollectionType extends AbstractType
     /**
      * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return static::TYPE_NAME;
     }

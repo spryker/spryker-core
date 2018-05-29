@@ -10,6 +10,7 @@ namespace Spryker\Zed\ManualOrderEntryGui\Communication;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\ManualOrderEntryGui\Communication\Controller\CreateController;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Address\AddressCollectionType;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Constraint\SkuExists;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Customer\CustomersListType;
@@ -183,7 +184,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     /**
      * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface[]
      */
-    public function getManualOrderEntryFormPlugins()
+    public function getManualOrderEntryFormPlugins(): array
     {
         return $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::PLUGINS_MANUAL_ORDER_ENTRY_FORM);
     }
@@ -195,7 +196,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
      *
      * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface[]
      */
-    public function getManualOrderEntryFilteredFormPlugins($formPlugins, Request $request, $quoteTransfer)
+    public function getManualOrderEntryFilteredFormPlugins($formPlugins, Request $request, $quoteTransfer): array
     {
         return $this->createManualOrderEntryFormPluginFilter()
             ->getFilteredFormPlugins($formPlugins, $request, $quoteTransfer);
@@ -208,7 +209,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
      *
      * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface[]
      */
-    public function getManualOrderEntrySkippedFormPlugins($formPlugins, Request $request, $quoteTransfer)
+    public function getManualOrderEntrySkippedFormPlugins($formPlugins, Request $request, $quoteTransfer): array
     {
         return $this->createManualOrderEntryFormPluginFilter()
             ->getSkippedFormPlugins($formPlugins, $request, $quoteTransfer);
@@ -220,8 +221,8 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     public function createManualOrderEntryFormPluginFilter(): ManualOrderEntryFormPluginFilter
     {
         return new ManualOrderEntryFormPluginFilter(
-            $this->getConfig()->getPreviousStepName(),
-            $this->getConfig()->getNextStepName()
+            CreateController::PREVIOUS_STEP_NAME,
+            CreateController::NEXT_STEP_NAME
         );
     }
 
@@ -258,7 +259,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     /**
      * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\OrderSourceListDataProvider
      */
-    public function createOrderSourceListDataProvider()
+    public function createOrderSourceListDataProvider(): OrderSourceListDataProvider
     {
         return new OrderSourceListDataProvider(
             $this->getManualOrderEntryFacade()
@@ -271,7 +272,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createOrderSourceListForm(Request $request, QuoteTransfer $quoteTransfer)
+    public function createOrderSourceListForm(Request $request, QuoteTransfer $quoteTransfer): FormInterface
     {
         $formDataProvider = $this->createOrderSourceListDataProvider();
 
@@ -497,7 +498,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
     /**
      * @return \Spryker\Zed\ManualOrderEntryGuiExtension\Dependency\Plugin\PaymentSubFormPluginInterface[]
      */
-    public function getPaymentMethodSubFormPlugins()
+    public function getPaymentMethodSubFormPlugins(): array
     {
         return $this->getProvidedDependency(ManualOrderEntryGuiDependencyProvider::PAYMENT_SUB_FORMS);
     }

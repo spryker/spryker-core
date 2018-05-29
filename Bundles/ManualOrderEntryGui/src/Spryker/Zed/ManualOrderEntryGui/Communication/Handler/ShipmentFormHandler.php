@@ -68,21 +68,10 @@ class ShipmentFormHandler implements FormHandlerInterface
         $shipmentExpenseTransfer = new ExpenseTransfer();
         $shipmentExpenseTransfer->fromArray($shipmentMethodTransfer->toArray(), true);
         $shipmentExpenseTransfer->setType(ShipmentConstants::SHIPMENT_EXPENSE_TYPE);
-        $this->setPrice($shipmentExpenseTransfer, $shipmentMethodTransfer->getStoreCurrencyPrice());
+        $shipmentExpenseTransfer->setUnitNetPrice(0);
+        $shipmentExpenseTransfer->setUnitGrossPrice($shipmentMethodTransfer->getStoreCurrencyPrice());
         $shipmentExpenseTransfer->setQuantity(1);
 
         return $shipmentExpenseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ExpenseTransfer $shipmentExpenseTransfer
-     * @param int $price
-     *
-     * @return void
-     */
-    protected function setPrice(ExpenseTransfer $shipmentExpenseTransfer, $price): void
-    {
-        $shipmentExpenseTransfer->setUnitNetPrice(0);
-        $shipmentExpenseTransfer->setUnitGrossPrice($price);
     }
 }

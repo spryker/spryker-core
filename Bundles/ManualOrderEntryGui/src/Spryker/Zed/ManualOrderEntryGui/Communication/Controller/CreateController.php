@@ -27,6 +27,9 @@ class CreateController extends AbstractController
     public const PARAM_TYPE = 'type';
     public const PARAM_REDIRECT_URL = 'redirect-url';
 
+    public const PREVIOUS_STEP_NAME = 'previous-step';
+    public const NEXT_STEP_NAME = 'next-step';
+
     protected const ERROR_MESSAGE_INVALID_DATA_PROVIDED = 'Invalid data provided.';
     protected const SUCCESSFUL_MESSAGE_CUSTOMER_CREATED = 'Customer is registered successfully.';
     protected const SUCCESSFUL_MESSAGE_ORDER_CREATED = 'Order is created successfully.';
@@ -82,8 +85,8 @@ class CreateController extends AbstractController
 
         return $this->viewResponse([
             'forms' => $formsView,
-            'previousStepName' => $this->getFactory()->getConfig()->getPreviousStepName(),
-            'nextStepName' => $this->getFactory()->getConfig()->getNextStepName(),
+            'previousStepName' => static::PREVIOUS_STEP_NAME,
+            'nextStepName' => static::NEXT_STEP_NAME,
             'quoteTransfer' => $quoteTransfer,
             'params' => $request->query->all(),
         ]);
@@ -258,7 +261,7 @@ class CreateController extends AbstractController
         $numberProcessedForms = count($filteredFormPlugins) + count($skippedFormPlugins);
 
         return $allFormsAreValid
-            && count($allFormPlugins)
+            && !empty($allFormPlugins)
             && count($allFormPlugins) === $numberProcessedForms;
     }
 }

@@ -20,7 +20,7 @@ class ItemCollectionDataProvider implements FormDataProviderInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getData($quoteTransfer)
+    public function getData($quoteTransfer): QuoteTransfer
     {
         if ($quoteTransfer->getManualOrder() === null) {
             $quoteTransfer->setManualOrder(new ManualOrderTransfer());
@@ -43,7 +43,7 @@ class ItemCollectionDataProvider implements FormDataProviderInterface
      *
      * @return array
      */
-    public function getOptions($quoteTransfer)
+    public function getOptions($quoteTransfer): array
     {
         return [
             'data_class' => QuoteTransfer::class,

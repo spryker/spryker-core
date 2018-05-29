@@ -58,12 +58,12 @@ class ManualOrderEntryFormPluginFilter
             $isShowNext = $this->isShowNext($request);
             $isFormPreFilled = $this->isFormPreFilled($formPlugin, $quoteTransfer);
 
-            if ($isShowNext || $isPreviousFormPreFilled) {
+            if ($this->isPluginFiltered($isShowNext, $isPreviousFormPreFilled)) {
                 $filteredPlugins[] = $formPlugin;
                 $pluginAdded = true;
             }
 
-            if (!$isFormSubmitted && !$isFormPreFilled) {
+            if ($this->isBreakPluginSearch($isFormSubmitted, $isFormPreFilled)) {
                 break;
             }
 
@@ -89,7 +89,7 @@ class ManualOrderEntryFormPluginFilter
      *
      * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface[]
      */
-    public function getSkippedFormPlugins($formPlugins, Request $request, QuoteTransfer $quoteTransfer)
+    public function getSkippedFormPlugins($formPlugins, Request $request, QuoteTransfer $quoteTransfer): array
     {
         $skippedPlugins = [];
 
@@ -102,7 +102,7 @@ class ManualOrderEntryFormPluginFilter
             $isFormSubmitted = $this->isFormSubmitted($formPlugin, $request);
             $isFormPreFilled = $this->isFormPreFilled($formPlugin, $quoteTransfer);
 
-            if (!$isFormSubmitted && !$isFormPreFilled) {
+            if ($this->isBreakPluginSearch($isFormSubmitted, $isFormPreFilled)) {
                 break;
             }
         }
@@ -192,5 +192,27 @@ class ManualOrderEntryFormPluginFilter
         }
 
         return $filteredPlugins;
+    }
+
+    /**
+     * @param bool $isShowNext
+     * @param bool $isPreviousFormPreFilled
+     *
+     * @return bool
+     */
+    protected function isPluginFiltered(bool $isShowNext, bool $isPreviousFormPreFilled): bool
+    {
+        return $isShowNext || $isPreviousFormPreFilled;
+    }
+
+    /**
+     * @param bool $isFormSubmitted
+     * @param bool $isFormPreFilled
+     *
+     * @return bool
+     */
+    protected function isBreakPluginSearch(bool $isFormSubmitted, bool $isFormPreFilled): bool
+    {
+        return !$isFormSubmitted && !$isFormPreFilled;
     }
 }

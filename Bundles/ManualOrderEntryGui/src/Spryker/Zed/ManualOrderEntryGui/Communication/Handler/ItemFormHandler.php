@@ -47,12 +47,8 @@ class ItemFormHandler implements FormHandlerInterface
      */
     public function handle(QuoteTransfer $quoteTransfer, &$form, Request $request): QuoteTransfer
     {
-        $items = new ArrayObject();
-        $addedSkus = [];
-
-        $this->appendItemsFromManualOrderEntryItems($quoteTransfer, $addedSkus, $items);
-
-        $this->appendItemsFromQuoteItems($quoteTransfer, $items);
+        $items = $this->appendItemsFromManualOrderEntryItems($quoteTransfer);
+        $items = $this->appendItemsFromQuoteItems($quoteTransfer, $items);
 
         $quoteTransfer->setItems($items);
 
@@ -60,7 +56,7 @@ class ItemFormHandler implements FormHandlerInterface
             $quoteTransfer = $this->cartFacade->reloadItems($quoteTransfer);
         }
 
-        $this->updateItems($quoteTransfer);
+        $quoteTransfer = $this->updateItems($quoteTransfer);
 
         return $quoteTransfer;
     }
@@ -68,9 +64,9 @@ class ItemFormHandler implements FormHandlerInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function updateItems(QuoteTransfer $quoteTransfer)
+    protected function updateItems(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         $quoteTransfer->getManualOrder()->setItems(new ArrayObject());
 
@@ -82,39 +78,44 @@ class ItemFormHandler implements FormHandlerInterface
 
             $quoteTransfer->getManualOrder()->addItems($newItemTransfer);
         }
+
+        return $quoteTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param array $addedSkus
-     * @param \ArrayObject $items
      *
-     * @return void
+     * @return \ArrayObject
      */
-    protected function appendItemsFromManualOrderEntryItems(QuoteTransfer $quoteTransfer, $addedSkus, $items): void
+    protected function appendItemsFromManualOrderEntryItems(QuoteTransfer $quoteTransfer): ArrayObject
     {
+        $items = new ArrayObject();
+        $addedSkus = [];
+
         foreach ($quoteTransfer->getManualOrder()->getItems() as $newItemTransfer) {
             if ($newItemTransfer->getQuantity() <= 0
-                || in_array($newItemTransfer->getSku(), $addedSkus)
+                || isset($addedSkus[$newItemTransfer->getSku()])
             ) {
                 continue;
             }
 
-            $addedSkus[] = $newItemTransfer->getSku();
+            $addedSkus[$newItemTransfer->getSku()] = 1;
             $itemTransfer = new ItemTransfer();
             $itemTransfer->fromArray($newItemTransfer->toArray());
 
             $items->append($itemTransfer);
         }
+
+        return $items;
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \ArrayObject $items
      *
-     * @return void
+     * @return \ArrayObject
      */
-    protected function appendItemsFromQuoteItems(QuoteTransfer $quoteTransfer, $items): void
+    protected function appendItemsFromQuoteItems(QuoteTransfer $quoteTransfer, $items): ArrayObject
     {
         foreach ($quoteTransfer->getItems() as $quoteItemTransfer) {
             $skuAdded = false;
@@ -130,5 +131,7 @@ class ItemFormHandler implements FormHandlerInterface
                 $items->append($quoteItemTransfer);
             }
         }
+
+        return $items;
     }
 }
