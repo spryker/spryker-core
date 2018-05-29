@@ -8,7 +8,6 @@
 namespace Spryker\Shared\ErrorHandler;
 
 use ErrorException;
-use Exception;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\ErrorRendererInterface;
 use Throwable;
 

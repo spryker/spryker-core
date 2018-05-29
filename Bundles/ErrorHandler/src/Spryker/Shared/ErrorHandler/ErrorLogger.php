@@ -7,7 +7,6 @@
 
 namespace Spryker\Shared\ErrorHandler;
 
-use Exception;
 use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Shared\NewRelicApi\NewRelicApiTrait;
 use Throwable;
