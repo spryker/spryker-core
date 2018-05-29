@@ -15,8 +15,6 @@ interface ProductOptionStorageClientInterface
      *
      * @api
      *
-     * @deprecated use getProductOptionsForCurrentStore instead
-     *
      * @param int $idAbstractProduct
      * @param int $localeName
      *
