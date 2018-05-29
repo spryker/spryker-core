@@ -74,6 +74,7 @@ class MerchantRelationshipEntityManager extends AbstractEntityManager implements
     public function addAssignedCompanyBusinessUnits(array $assignedCompanyBusinessUnitIds, int $idMerchantRelationship): void
     {
         $entityCollection = new ObjectCollection();
+        $entityCollection->setModel(SpyMerchantRelationshipToCompanyBusinessUnit::class);
         foreach ($assignedCompanyBusinessUnitIds as $idAssignedCompanyBusinessUnit) {
             $spyMerchantRelationshipToCompanyBusinessUnit = new SpyMerchantRelationshipToCompanyBusinessUnit();
             $spyMerchantRelationshipToCompanyBusinessUnit
