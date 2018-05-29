@@ -8,13 +8,14 @@
 namespace Spryker\Zed\PriceProduct\Business\Model\Product;
 
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
-use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductStoreTableMap;
+use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
-use Propel\Runtime\Formatter\ArrayFormatter;
+use Spryker\Zed\PriceProduct\Business\Model\PriceDecision\PriceProductMatcherInterface;
 use Spryker\Zed\PriceProduct\Business\Model\PriceProductCriteriaBuilderInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreFacadeInterface;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface;
+use Spryker\Zed\PriceProduct\Persistence\PriceProductRepositoryInterface;
 
 class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
 {
@@ -44,24 +45,40 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
     protected $storeFacade;
 
     /**
+     * @var \Spryker\Zed\PriceProduct\Persistence\PriceProductRepositoryInterface
+     */
+    protected $priceProductRepository;
+
+    /**
+     * @var \Spryker\Zed\PriceProduct\Business\Model\PriceDecision\PriceProductMatcherInterface
+     */
+    protected $priceProductMatcher;
+
+    /**
      * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface $priceProductQueryContainer
      * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapperInterface $priceProductMapper
      * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\PriceProduct\Business\Model\PriceProductCriteriaBuilderInterface $priceProductCriteriaBuilder
      * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductRepositoryInterface $priceProductRepository
+     * @param \Spryker\Zed\PriceProduct\Business\Model\PriceDecision\PriceProductMatcherInterface $priceProductMatcher
      */
     public function __construct(
         PriceProductQueryContainerInterface $priceProductQueryContainer,
         PriceProductMapperInterface $priceProductMapper,
         PriceProductToProductFacadeInterface $productFacade,
         PriceProductCriteriaBuilderInterface $priceProductCriteriaBuilder,
-        PriceProductToStoreFacadeInterface $storeFacade
+        PriceProductToStoreFacadeInterface $storeFacade,
+        PriceProductRepositoryInterface $priceProductRepository,
+        PriceProductMatcherInterface $priceProductMatcher
     ) {
         $this->priceProductQueryContainer = $priceProductQueryContainer;
         $this->priceProductMapper = $priceProductMapper;
         $this->productFacade = $productFacade;
         $this->priceProductCriteriaBuilder = $priceProductCriteriaBuilder;
         $this->storeFacade = $storeFacade;
+        $this->priceProductRepository = $priceProductRepository;
+        $this->priceProductMatcher = $priceProductMatcher;
     }
 
     /**
@@ -70,36 +87,48 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
      *
      * @return bool
      */
-    public function hasPriceForProductAbstract($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer)
+    public function hasPriceForProductAbstract($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): bool
     {
-        $prices = $this->findPriceForProductAbstract($sku, $priceProductCriteriaTransfer);
-        if (!$prices) {
+        $moneyValueTransfer = $this->findPriceForProductAbstract($sku, $priceProductCriteriaTransfer);
+        if (!$moneyValueTransfer) {
             return false;
         }
 
         if ($priceProductCriteriaTransfer->getPriceMode() === $this->priceProductMapper->getNetPriceModeIdentifier()) {
-            return $prices[PriceProductQueryContainerInterface::COL_NET_PRICE] !== null;
+            return $moneyValueTransfer->getNetAmount() !== null;
         }
 
-        return $prices[PriceProductQueryContainerInterface::COL_GROSS_PRICE] !== null;
+        return $moneyValueTransfer->getGrossAmount() !== null;
     }
 
     /**
      * @param string $sku
+     * @param \Generated\Shared\Transfer\PriceProductDimensionTransfer $priceProductDimensionTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findProductAbstractPricesBySkuForCurrentStore($sku)
-    {
+    public function findProductAbstractPricesBySkuForCurrentStore(
+        $sku,
+        PriceProductDimensionTransfer $priceProductDimensionTransfer
+    ) {
+
         $abstractSku = $this->findAbstractSku($sku);
 
         $idStore = $this->storeFacade->getCurrentStore()->getIdStore();
 
-        $productAbstractPriceEntities = $this->priceProductQueryContainer
-            ->queryPricesForProductAbstractBySkuForStore($abstractSku, $idStore)
-            ->find();
+        $priceProductCriteriaTrasfer = new PriceProductCriteriaTransfer();
+        $priceProductCriteriaTrasfer->fromArray($priceProductDimensionTransfer->toArray(), true);
 
-        return $this->priceProductMapper->mapPriceProductTransferCollection($productAbstractPriceEntities);
+        $priceProductCriteriaTrasfer->setIdStore($idStore)
+            ->setPriceDimension($priceProductDimensionTransfer->getType());
+
+        $priceProductStoreTransferCollection = $this->priceProductRepository
+            ->findProductAbstractPricesBySkuAndCriteria($abstractSku, $priceProductCriteriaTrasfer);
+
+        return $this->priceProductMapper->mapPriceProductStoreEntityTransfersToPriceProduct(
+            $priceProductStoreTransferCollection,
+            $priceProductCriteriaTrasfer
+        );
     }
 
     /**
@@ -121,30 +150,35 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return array|null
+     * @return \Generated\Shared\Transfer\MoneyValueTransfer|null
      */
     public function findPriceForProductAbstract($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer)
     {
-        return $this->priceProductQueryContainer
-            ->queryPriceEntityForProductAbstract($sku, $priceProductCriteriaTransfer)
-            ->withColumn(SpyPriceProductStoreTableMap::COL_GROSS_PRICE, PriceProductQueryContainerInterface::COL_GROSS_PRICE)
-            ->withColumn(SpyPriceProductStoreTableMap::COL_NET_PRICE, PriceProductQueryContainerInterface::COL_NET_PRICE)
-            ->setFormatter(ArrayFormatter::class)
-            ->findOne();
+        $priceProductStoreEntityTransferCollection = $this->priceProductRepository
+            ->findProductAbstractPricesBySkuAndCriteria($sku, $priceProductCriteriaTransfer);
+
+        return $this->priceProductMatcher->matchPriceValue($priceProductStoreEntityTransferCollection, $priceProductCriteriaTransfer);
     }
 
     /**
      * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findProductAbstractPricesById($idProductAbstract)
+    public function findProductAbstractPricesById($idProductAbstract, PriceProductCriteriaTransfer $priceProductCriteriaTransfer)
     {
-        $productAbstractPriceEntities = $this->priceProductQueryContainer
-            ->queryPricesForProductAbstractById($idProductAbstract)
-            ->find();
+        $priceProductCriteriaTransfer->requirePriceDimension();
 
-        return $this->priceProductMapper->mapPriceProductTransferCollection($productAbstractPriceEntities);
+        $priceProductStoreTransferCollection = $this->priceProductRepository->findProductAbstactPricesByIdAndCriteria(
+            $idProductAbstract,
+            $priceProductCriteriaTransfer
+        );
+
+        return $this->priceProductMapper->mapPriceProductStoreEntityTransfersToPriceProduct(
+            $priceProductStoreTransferCollection,
+            $priceProductCriteriaTransfer
+        );
     }
 
     /**

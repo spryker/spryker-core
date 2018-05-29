@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\PriceProduct;
 
-use Spryker\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Client\Kernel\AbstractBundleConfig;
 
 /**
  * @method \Spryker\Shared\PriceProduct\PriceProductConfig getSharedConfig()

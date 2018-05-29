@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\PriceProduct\Business\Model;
 
+use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 
 interface ReaderInterface
@@ -28,18 +30,24 @@ interface ReaderInterface
 
     /**
      * @param string $sku
+     * @param \Generated\Shared\Transfer\PriceProductDimensionTransfer|null $priceProductDimensionTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findPricesBySkuForCurrentStore($sku);
+    public function findPricesBySkuForCurrentStore($sku, ?PriceProductDimensionTransfer $priceProductDimensionTransfer = null);
 
     /**
      * @param int $idProductConcrete
      * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findProductConcretePrices($idProductConcrete, $idProductAbstract);
+    public function findProductConcretePrices(
+        $idProductConcrete,
+        $idProductAbstract,
+        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+    );
 
     /**
      * @param string $sku

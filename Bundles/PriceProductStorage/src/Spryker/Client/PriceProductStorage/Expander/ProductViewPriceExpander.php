@@ -52,9 +52,19 @@ class ProductViewPriceExpander implements ProductViewPriceExpanderInterface
     public function expandProductViewPriceData(ProductViewTransfer $productViewTransfer)
     {
         $productViewPriceData = $this->getProductViewPrices($productViewTransfer);
-        $currentProductPriceTransfer = $this->priceProductClient->resolveProductPrice(
-            $productViewPriceData
-        );
+
+        if ($productViewTransfer->getIdProductConcrete()) {
+            $currentProductPriceTransfer = $this->priceProductClient->resolveProductConcretePriceByPriceDimension(
+                $productViewPriceData,
+                $productViewTransfer->getIdProductAbstract(),
+                $productViewTransfer->getIdProductConcrete()
+            );
+        } else {
+            $currentProductPriceTransfer = $this->priceProductClient->resolveProductAbstractPriceByPriceDimension(
+                $productViewPriceData,
+                $productViewTransfer->getIdProductAbstract()
+            );
+        }
 
         $productViewTransfer->setPrices($currentProductPriceTransfer->getPrices());
         $productViewTransfer->setPrice($currentProductPriceTransfer->getPrice());

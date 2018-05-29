@@ -17,6 +17,14 @@ interface CatalogPriceProductConnectorToPriceProductClientInterface
     public function resolveProductPrice(array $priceMap);
 
     /**
+     * @param array $defaultPriceMap
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
+     */
+    public function resolveProductAbstractPriceByPriceDimension(array $defaultPriceMap, int $idProductAbstract);
+
+    /**
      * @return string
      */
     public function getPriceTypeDefaultName();

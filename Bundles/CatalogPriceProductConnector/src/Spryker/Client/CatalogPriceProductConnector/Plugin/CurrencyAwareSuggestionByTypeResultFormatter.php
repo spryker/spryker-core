@@ -45,7 +45,10 @@ class CurrencyAwareSuggestionByTypeResultFormatter extends AbstractElasticsearch
 
         $priceProductClient = $this->getFactory()->getPriceProductClient();
         foreach ($results['product_abstract'] as &$product) {
-            $currentProductPriceTransfer = $priceProductClient->resolveProductPrice($product['prices']);
+            $currentProductPriceTransfer = $priceProductClient->resolveProductAbstractPriceByPriceDimension(
+                $product['prices'],
+                $product['id_product_abstract']
+            );
             $product['price'] = $currentProductPriceTransfer->getPrice();
             $product['prices'] = $currentProductPriceTransfer->getPrices();
         }

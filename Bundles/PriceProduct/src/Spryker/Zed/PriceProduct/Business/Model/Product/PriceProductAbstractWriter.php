@@ -10,7 +10,9 @@ namespace Spryker\Zed\PriceProduct\Business\Model\Product;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInterface;
+use Spryker\Zed\PriceProduct\Persistence\PriceProductEntityManagerInterface;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface;
+use Spryker\Zed\PriceProduct\PriceProductConfig;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class PriceProductAbstractWriter extends BaseProductPriceWriter implements PriceProductAbstractWriterInterface
@@ -28,23 +30,39 @@ class PriceProductAbstractWriter extends BaseProductPriceWriter implements Price
     protected $priceProductQueryContainer;
 
     /**
-     * @var \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductStoreWriterInterface
+     * @var \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductDefaultWriterInterface
      */
-    protected $priceProductStoreWriter;
+    protected $priceProductDefaultWriter;
+
+    /**
+     * @var array|\Spryker\Zed\PriceProduct\Dependency\Plugin\PriceDimensionAbstractSaverPluginInterface[]
+     */
+    protected $priceDimensionAbstractSaverPlugins;
+
+    /**
+     * @var \Spryker\Zed\PriceProduct\Persistence\PriceProductEntityManagerInterface
+     */
+    protected $priceProductEntityManager;
 
     /**
      * @param \Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInterface $priceTypeReader
      * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface $priceProductQueryContainer
-     * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductStoreWriterInterface $priceProductStoreWriter
+     * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductDefaultWriterInterface $priceProductDefaultWriter
+     * @param \Spryker\Zed\PriceProduct\Dependency\Plugin\PriceDimensionAbstractSaverPluginInterface[] $priceDimensionAbstractSaverPlugins
+     * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductEntityManagerInterface $priceProductEntityManager
      */
     public function __construct(
         PriceProductTypeReaderInterface $priceTypeReader,
         PriceProductQueryContainerInterface $priceProductQueryContainer,
-        PriceProductStoreWriterInterface $priceProductStoreWriter
+        PriceProductDefaultWriterInterface $priceProductDefaultWriter,
+        array $priceDimensionAbstractSaverPlugins,
+        PriceProductEntityManagerInterface $priceProductEntityManager
     ) {
         $this->priceTypeReader = $priceTypeReader;
         $this->priceProductQueryContainer = $priceProductQueryContainer;
-        $this->priceProductStoreWriter = $priceProductStoreWriter;
+        $this->priceProductDefaultWriter = $priceProductDefaultWriter;
+        $this->priceDimensionAbstractSaverPlugins = $priceDimensionAbstractSaverPlugins;
+        $this->priceProductEntityManager = $priceProductEntityManager;
     }
 
     /**
@@ -52,8 +70,10 @@ class PriceProductAbstractWriter extends BaseProductPriceWriter implements Price
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    public function persistProductAbstractPriceCollection(ProductAbstractTransfer $productAbstractTransfer)
-    {
+    public function persistProductAbstractPriceCollection(
+        ProductAbstractTransfer $productAbstractTransfer
+    ): ProductAbstractTransfer {
+
         return $this->handleDatabaseTransaction(function () use ($productAbstractTransfer) {
             return $this->executePersistProductAbstractPriceCollectionTransaction($productAbstractTransfer);
         });
@@ -64,20 +84,26 @@ class PriceProductAbstractWriter extends BaseProductPriceWriter implements Price
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    protected function executePersistProductAbstractPriceCollectionTransaction(ProductAbstractTransfer $productAbstractTransfer)
-    {
+    protected function executePersistProductAbstractPriceCollectionTransaction(
+        ProductAbstractTransfer $productAbstractTransfer
+    ): ProductAbstractTransfer {
+
         $idProductAbstract = $productAbstractTransfer
             ->requireIdProductAbstract()
             ->getIdProductAbstract();
 
         foreach ($productAbstractTransfer->getPrices() as $priceProductTransfer) {
+            $priceProductTransfer->requirePriceDimension();
+
             $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
             if ($this->isEmptyMoneyValue($moneyValueTransfer)) {
                 continue;
             }
 
             $this->persistProductAbstractPriceEntity($priceProductTransfer, $idProductAbstract);
-            $this->priceProductStoreWriter->persistPriceProductStore($priceProductTransfer);
+
+            $priceProductTransfer->setIdProductAbstract($idProductAbstract);
+            $priceProductTransfer = $this->executePriceDimensionAbstractSaverPlugins($priceProductTransfer);
 
             $priceProductTransfer->setIdProductAbstract($productAbstractTransfer->getIdProductAbstract());
         }
@@ -86,14 +112,47 @@ class PriceProductAbstractWriter extends BaseProductPriceWriter implements Price
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function executePriceDimensionAbstractSaverPlugins(
+        PriceProductTransfer $priceProductTransfer
+    ): PriceProductTransfer {
+
+        $priceDimensionType = $priceProductTransfer->getPriceDimension()->getType();
+        if ($priceDimensionType === PriceProductConfig::PRICE_DIMENSION_DEFAULT) {
+            $priceProductDefaultEntityTransfer = $this->priceProductDefaultWriter->persistPriceProductDefault($priceProductTransfer);
+            $priceProductTransfer->getPriceDimension()->setIdPriceProductDefault(
+                $priceProductDefaultEntityTransfer->getIdPriceProductDefault()
+            );
+
+            return $priceProductTransfer;
+        }
+
+        foreach ($this->priceDimensionAbstractSaverPlugins as $priceDimensionAbstractSaverPlugin) {
+            if ($priceDimensionAbstractSaverPlugin->getDimensionName() !== $priceDimensionType) {
+                continue;
+            }
+
+            return $priceDimensionAbstractSaverPlugin->savePrice($priceProductTransfer);
+        }
+
+        return $priceProductTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      * @param int $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
-    protected function persistProductAbstractPriceEntity(PriceProductTransfer $priceTransfer, $idProductAbstract)
-    {
-        $priceTypeEntity = $this->priceTypeReader->getPriceTypeByName($priceTransfer->getPriceType()->getName());
+    protected function persistProductAbstractPriceEntity(
+        PriceProductTransfer $priceProductTransfer,
+        $idProductAbstract
+    ): PriceProductTransfer {
+
+        $priceTypeEntity = $this->priceTypeReader->getPriceTypeByName($priceProductTransfer->getPriceType()->getName());
 
         $priceProductEntity = $this->priceProductQueryContainer
             ->queryPriceProductForAbstractProduct($idProductAbstract, $priceTypeEntity->getIdPriceType())
@@ -102,8 +161,8 @@ class PriceProductAbstractWriter extends BaseProductPriceWriter implements Price
         $priceProductEntity->setFkProductAbstract($idProductAbstract)
             ->save();
 
-        $priceTransfer->setIdPriceProduct($priceProductEntity->getIdPriceProduct());
+        $priceProductTransfer->setIdPriceProduct($priceProductEntity->getIdPriceProduct());
 
-        return $priceTransfer;
+        return $priceProductTransfer;
     }
 }

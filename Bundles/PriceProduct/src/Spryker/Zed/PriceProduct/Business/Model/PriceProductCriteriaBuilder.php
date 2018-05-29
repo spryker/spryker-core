@@ -13,6 +13,7 @@ use Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInte
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyFacadeInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceFacadeInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreFacadeInterface;
+use Spryker\Zed\PriceProduct\PriceProductConfig;
 
 class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterface
 {
@@ -61,7 +62,10 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
      */
     public function buildCriteriaFromFilter(PriceProductFilterTransfer $priceProductFilterTransfer)
     {
-        return (new PriceProductCriteriaTransfer())
+        $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
+            ->fromArray($priceProductFilterTransfer->toArray(), true);
+
+        return $priceProductCriteriaTransfer
             ->setIdCurrency(
                 $this->getCurrencyFromFilter($priceProductFilterTransfer)->getIdCurrency()
             )->setIdStore(
@@ -92,6 +96,9 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
         )
         ->setPriceType(
             $this->priceProductTypeReader->handleDefaultPriceType($priceTypeName)
+        )
+        ->setPriceDimension(
+            PriceProductConfig::PRICE_DIMENSION_DEFAULT
         );
     }
 
@@ -104,7 +111,7 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
     {
         $priceMode = $priceFilterTransfer->getPriceMode();
         if (!$priceMode) {
-            $priceMode = $this->priceFacade->getDefaultPriceMode();
+            return $this->priceFacade->getDefaultPriceMode();
         }
         return $priceMode;
     }

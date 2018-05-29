@@ -14,8 +14,9 @@ use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToPriceClientBridg
 
 class PriceProductDependencyProvider extends AbstractDependencyProvider
 {
-    const CLIENT_PRICE = 'PRICE_CLIENT';
-    const CLIENT_CURRENCY = 'CURRENCY_CLIENT';
+    public const CLIENT_PRICE = 'PRICE_CLIENT';
+    public const CLIENT_CURRENCY = 'CURRENCY_CLIENT';
+    public const PLUGIN_PRICE_DIMENSION = 'PLUGIN_PRICE_DIMENSION';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -26,6 +27,7 @@ class PriceProductDependencyProvider extends AbstractDependencyProvider
     {
         $container = $this->addPriceProductClient($container);
         $container = $this->addCurrencyClient($container);
+        $container = $this->addPriceDimensionPlugins($container);
 
         return $container;
     }
@@ -56,5 +58,27 @@ class PriceProductDependencyProvider extends AbstractDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addPriceDimensionPlugins(Container $container)
+    {
+        $container[static::PLUGIN_PRICE_DIMENSION] = function (Container $container) {
+            return $this->getPriceDimensionPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Client\PriceProduct\Dependency\Plugin\PriceDimensionPluginInterface[]
+     */
+    protected function getPriceDimensionPlugins()
+    {
+        return [];
     }
 }

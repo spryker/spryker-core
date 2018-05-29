@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\PriceProduct\Business\Model\Product;
 
+use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore;
+use Spryker\Zed\PriceProduct\Persistence\PriceProductEntityManagerInterface;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface;
 
 class PriceProductStoreWriter implements PriceProductStoreWriterInterface
@@ -18,41 +21,82 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
     protected $priceProductQueryContainer;
 
     /**
-     * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface $priceProductQueryContainer
+     * @var \Spryker\Zed\PriceProduct\Persistence\PriceProductEntityManagerInterface
      */
-    public function __construct(PriceProductQueryContainerInterface $priceProductQueryContainer)
-    {
+    protected $priceProductEntityManager;
+
+    /**
+     * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface $priceProductQueryContainer
+     * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductEntityManagerInterface $priceProductEntityManager
+     */
+    public function __construct(
+        PriceProductQueryContainerInterface $priceProductQueryContainer,
+        PriceProductEntityManagerInterface $priceProductEntityManager
+    ) {
         $this->priceProductQueryContainer = $priceProductQueryContainer;
+        $this->priceProductEntityManager = $priceProductEntityManager;
     }
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
-     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
-    public function persistPriceProductStore(PriceProductTransfer $priceProductTransfer)
+    public function persistPriceProductStore(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
     {
         $priceProductTransfer->requireMoneyValue();
 
         $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
 
-        $priceProduceStoreEntity = $this->priceProductQueryContainer
-            ->queryPriceProductStoreByProductCurrencyStore(
-                $priceProductTransfer->getIdPriceProduct(),
-                $moneyValueTransfer->getFkCurrency(),
-                $moneyValueTransfer->getFkStore()
-            )->findOneOrCreate();
+        $moneyValueTransfer
+            ->requireFkCurrency()
+            ->requireFkStore();
+
+        $priceProduceStoreEntity = $this->findPriceProductStoreEntity(
+            $priceProductTransfer,
+            $moneyValueTransfer
+        );
 
         $priceProduceStoreEntity->fromArray($moneyValueTransfer->toArray());
 
         $priceProduceStoreEntity
-            ->setFkPriceProduct($priceProductTransfer->getIdPriceProduct())
-            ->setNetPrice($moneyValueTransfer->getNetAmount())
             ->setGrossPrice($moneyValueTransfer->getGrossAmount())
+            ->setNetPrice($moneyValueTransfer->getNetAmount())
+            ->setFkPriceProduct($priceProductTransfer->getIdPriceProduct())
             ->save();
 
         $moneyValueTransfer->setIdEntity($priceProduceStoreEntity->getIdPriceProductStore());
 
-        return $priceProduceStoreEntity;
+        return $priceProductTransfer;
+    }
+
+    /**
+     * @return void
+     */
+    public function deleteOrphanPriceProductStoreEntities(): void
+    {
+        $this->priceProductEntityManager->deleteOrphanPriceProductStoreEntities();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
+     *
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore
+     */
+    protected function findPriceProductStoreEntity(
+        PriceProductTransfer $priceProductTransfer,
+        MoneyValueTransfer $moneyValueTransfer
+    ): SpyPriceProductStore {
+
+        return $this->priceProductQueryContainer
+            ->queryPriceProductStoreByProductCurrencyStore(
+                $priceProductTransfer->getIdPriceProduct(),
+                $moneyValueTransfer->getFkCurrency(),
+                $moneyValueTransfer->getFkStore()
+            )
+            ->filterByNetPrice($moneyValueTransfer->getNetAmount())
+            ->filterByGrossPrice($moneyValueTransfer->getGrossAmount())
+            ->findOneOrCreate();
     }
 }

@@ -14,7 +14,7 @@ class PriceProductConfig extends AbstractSharedConfig
     /**
      * Price mode for price type when its applicable to gross and net price modes.
      */
-    const PRICE_MODE_BOTH = 'BOTH';
+    protected const PRICE_MODE_BOTH = 'BOTH';
 
     /**
      * @return string

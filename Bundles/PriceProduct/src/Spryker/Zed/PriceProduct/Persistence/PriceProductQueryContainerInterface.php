@@ -64,6 +64,15 @@ interface PriceProductQueryContainerInterface
     /**
      * @api
      *
+     * @param int $idPriceProductStore
+     *
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery
+     */
+    public function queryPriceProductStoreById($idPriceProductStore);
+
+    /**
+     * @api
+     *
      * @param string $sku
      * @param int $idStore
      *

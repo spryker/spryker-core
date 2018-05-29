@@ -23,7 +23,8 @@ class PriceProductFactory extends AbstractFactory
         return new ProductPriceResolver(
             $this->getPriceClient(),
             $this->getCurrencyClient(),
-            $this->getConfig()
+            $this->getConfig(),
+            $this->getPriceDimensionPlugins()
         );
     }
 
@@ -41,6 +42,14 @@ class PriceProductFactory extends AbstractFactory
     protected function getCurrencyClient()
     {
         return $this->getProvidedDependency(PriceProductDependencyProvider::CLIENT_CURRENCY);
+    }
+
+    /**
+     * @return \Spryker\Client\PriceProduct\Dependency\Plugin\PriceDimensionPluginInterface[]
+     */
+    protected function getPriceDimensionPlugins()
+    {
+        return $this->getProvidedDependency(PriceProductDependencyProvider::PLUGIN_PRICE_DIMENSION);
     }
 
     /**

@@ -35,4 +35,35 @@ interface PriceProductClientInterface
      * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */
     public function resolveProductPrice(array $priceMap);
+
+    /**
+     * Specification:
+     *  - Finds price from product abstract price dimensions,
+     *  - executes all PriceDimensionPluginInterface plugins
+     *  - overwrites default price if any found
+     *
+     * @api
+     *
+     * @param array $defaultPriceMap
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
+     */
+    public function resolveProductAbstractPriceByPriceDimension(array $defaultPriceMap, int $idProductAbstract);
+
+    /**
+     * Specification:
+     *  - Finds price from product abstract price dimensions,
+     *  - executes all PriceDimensionPluginInterface plugins
+     *  - overwrites default price if any found
+     *
+     * @api
+     *
+     * @param array $defaultPriceMap
+     * @param int $idProductAbstract
+     * @param int $idProductConcrete
+     *
+     * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
+     */
+    public function resolveProductConcretePriceByPriceDimension(array $defaultPriceMap, int $idProductAbstract, int $idProductConcrete);
 }

@@ -15,4 +15,21 @@ interface PriceProductStorageToPriceProductInterface
      * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */
     public function resolveProductPrice(array $priceMap);
+
+    /**
+     * @param array $defaultPriceMap
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
+     */
+    public function resolveProductAbstractPriceByPriceDimension(array $defaultPriceMap, int $idProductAbstract);
+
+    /**
+     * @param array $defaultPriceMap
+     * @param int $idProductAbstract
+     * @param int $idProductConcrete
+     *
+     * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
+     */
+    public function resolveProductConcretePriceByPriceDimension(array $defaultPriceMap, int $idProductAbstract, int $idProductConcrete);
 }

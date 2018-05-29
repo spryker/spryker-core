@@ -7,10 +7,14 @@
 
 namespace Spryker\Zed\PriceProduct\Business;
 
+use Generated\Shared\Transfer\MoneyValueTransfer;
+use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\SpyPriceProductStoreEntityTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -246,14 +250,17 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      * @api
      *
      * @param string $sku
+     * @param \Generated\Shared\Transfer\PriceProductDimensionTransfer|null $priceProductDimensionTransfer
      *
      * @return array
      */
-    public function findPricesBySkuGroupedForCurrentStore($sku)
-    {
+    public function findPricesBySkuGroupedForCurrentStore(
+        $sku,
+        ?PriceProductDimensionTransfer $priceProductDimensionTransfer = null
+    ) {
         return $this->getFactory()
             ->createPriceGrouper()
-            ->findPricesBySkuGroupedForCurrentStore($sku);
+            ->findPricesBySkuGroupedForCurrentStore($sku, $priceProductDimensionTransfer);
     }
 
     /**
@@ -265,11 +272,14 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findProductAbstractPrices($idProductAbstract)
-    {
+    public function findProductAbstractPrices(
+        $idProductAbstract,
+        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+    ) {
+
         return $this->getFactory()
             ->createPriceProductAbstractReader()
-            ->findProductAbstractPricesById($idProductAbstract);
+            ->findProductAbstractPricesById($idProductAbstract, $priceProductCriteriaTransfer);
     }
 
     /**
@@ -282,11 +292,14 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findProductConcretePrices($idProductConcrete, $idProductAbstract)
-    {
+    public function findProductConcretePrices(
+        $idProductConcrete,
+        $idProductAbstract,
+        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+    ) {
         return $this->getFactory()
             ->createReaderModel()
-            ->findProductConcretePrices($idProductConcrete, $idProductAbstract);
+            ->findProductConcretePrices($idProductConcrete, $idProductAbstract, $priceProductCriteriaTransfer);
     }
 
     /**
@@ -318,5 +331,54 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
         return $this->getFactory()
             ->getModuleConfig()
             ->getPriceModeIdentifierForBothType();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param array $priceProductStoreEntityTransferCollection
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MoneyValueTransfer|null
+     */
+    public function matchDefaultPriceValue(
+        array $priceProductStoreEntityTransferCollection,
+        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+    ): ?MoneyValueTransfer {
+        return $this->getFactory()
+            ->createDefaultPriceDecision()
+            ->matchValue($priceProductStoreEntityTransferCollection, $priceProductCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    public function persistPriceProductStore(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
+    {
+        return $this->getFactory()
+            ->createPriceProductStoreWriter()
+            ->persistPriceProductStore($priceProductTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function deleteOrphanPriceProductStoreEntities(): void
+    {
+        $this->getFactory()
+            ->createPriceProductStoreWriter()
+            ->deleteOrphanPriceProductStoreEntities();
     }
 }

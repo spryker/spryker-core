@@ -9,6 +9,8 @@ namespace Spryker\Zed\PriceProduct;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\PriceProduct\Communication\Plugin\DefaultPriceDimensionDecisionPlugin;
+use Spryker\Zed\PriceProduct\Communication\Plugin\DefaultPriceQueryCriteriaPlugin;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyFacadeBridge;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceFacadeBridge;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeBridge;
@@ -17,11 +19,16 @@ use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToTouchFacadeBridge;
 
 class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_TOUCH = 'facade touch';
-    const FACADE_PRODUCT = 'product facade';
-    const FACADE_CURRENCY = 'currency facade';
-    const FACADE_PRICE = 'price facade';
-    const FACADE_STORE = 'store facade';
+    public const FACADE_TOUCH = 'facade touch';
+    public const FACADE_PRODUCT = 'product facade';
+    public const FACADE_CURRENCY = 'currency facade';
+    public const FACADE_PRICE = 'price facade';
+    public const FACADE_STORE = 'store facade';
+
+    public const PLUGIN_PRICE_DIMENSION_QUERY_CRITERIA = 'PLUGIN_PRICE_DIMENSION_QUERY_CRITERIA';
+    public const PLUGIN_PRICE_PRODUCT_DECISION = 'PLUGIN_PRICE_PRODUCT_DECISION';
+    public const PLUGIN_PRICE_DIMENSION_ABSTRACT_SAVER = 'PLUGIN_PRICE_DIMENSION_ABSTRACT_SAVER';
+    public const PLUGIN_PRICE_DIMENSION_CONCRETE_SAVER = 'PLUGIN_PRICE_DIMENSION_CONCRETE_SAVER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -35,6 +42,21 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCurrencyFacade($container);
         $container = $this->addPriceFacade($container);
         $container = $this->addStoreFacade($container);
+        $container = $this->addPriceProductDecisionPlugins($container);
+        $container = $this->addPriceDimensionAbstractSaverPlugins($container);
+        $container = $this->addPriceDimensionConcreteSaverPlugins($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function providePersistenceLayerDependencies(Container $container)
+    {
+        $container = $this->addPriceDimensionQueryCriteriaPlugins($container);
 
         return $container;
     }
@@ -107,5 +129,105 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPriceDimensionQueryCriteriaPlugins(Container $container): Container
+    {
+        $container[static::PLUGIN_PRICE_DIMENSION_QUERY_CRITERIA] = function (Container $container) {
+            return $this->getPriceDimensionQueryCriteriaPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPriceProductDecisionPlugins(Container $container): Container
+    {
+        $container[static::PLUGIN_PRICE_PRODUCT_DECISION] = function (Container $container) {
+            return $this->getPriceProductDecisionPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPriceDimensionAbstractSaverPlugins(Container $container): Container
+    {
+        $container[static::PLUGIN_PRICE_DIMENSION_ABSTRACT_SAVER] = function (Container $container) {
+            return $this->getPriceDimensionAbstractSaverPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPriceDimensionConcreteSaverPlugins(Container $container): Container
+    {
+        $container[static::PLUGIN_PRICE_DIMENSION_CONCRETE_SAVER] = function (Container $container) {
+            return $this->getPriceDimensionConcreteSaverPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * The plugins in this stack will provide additional criteria to main price product query.
+     *
+     * @return \Spryker\Zed\PriceProduct\Dependency\Plugin\PriceDimensionQueryCriteriaPluginInterface[]
+     */
+    protected function getPriceDimensionQueryCriteriaPlugins(): array
+    {
+        return [
+            new DefaultPriceQueryCriteriaPlugin(),
+        ];
+    }
+
+    /**
+     * The plugins in this stack will filter data returned by price query.
+     *
+     * @return \Spryker\Zed\PriceProduct\Dependency\Plugin\PriceProductDecisionPluginInterface[]
+     */
+    protected function getPriceProductDecisionPlugins(): array
+    {
+        return [
+            new DefaultPriceDimensionDecisionPlugin(),
+        ];
+    }
+
+    /**
+     * The plugins are executed when saving abstract product price
+     *
+     * @return \Spryker\Zed\PriceProduct\Dependency\Plugin\PriceDimensionAbstractSaverPluginInterface[]
+     */
+    protected function getPriceDimensionAbstractSaverPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * The plugins are executed when saving concrete product price
+     *
+     * @return \Spryker\Zed\PriceProduct\Dependency\Plugin\PriceDimensionConcreteSaverPluginInterface[]
+     */
+    protected function getPriceDimensionConcreteSaverPlugins(): array
+    {
+        return [];
     }
 }

@@ -33,4 +33,23 @@ class ShoppingListToPriceProductClientBridge implements ShoppingListToPriceProdu
     {
         return $this->priceProductClient->resolveProductPrice($priceMap);
     }
+
+    /**
+     * @param array $defaultPriceMap
+     * @param int $idProductAbstract
+     * @param int $idProductConcrete
+     *
+     * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
+     */
+    public function resolveProductConcretePriceByPriceDimension(
+        array $defaultPriceMap,
+        int $idProductAbstract,
+        int $idProductConcrete
+    ): CurrentProductPriceTransfer {
+        if (!method_exists($this->priceProductClient, 'resolveProductConcretePriceByPriceDimension')) {
+            return $this->priceProductClient->resolveProductPrice($defaultPriceMap);
+        }
+
+        return $this->priceProductClient->resolveProductConcretePriceByPriceDimension($defaultPriceMap, $idProductAbstract, $idProductConcrete);
+    }
 }

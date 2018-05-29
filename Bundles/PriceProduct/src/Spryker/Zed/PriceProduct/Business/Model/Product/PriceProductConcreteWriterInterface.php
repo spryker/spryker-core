@@ -16,5 +16,7 @@ interface PriceProductConcreteWriterInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function persistProductConcretePriceCollection(ProductConcreteTransfer $productConcreteTransfer);
+    public function persistProductConcretePriceCollection(
+        ProductConcreteTransfer $productConcreteTransfer
+    ): ProductConcreteTransfer;
 }

@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\ProductRelation\Dependency\Client;
 
+use Generated\Shared\Transfer\CurrentProductPriceTransfer;
+
 class ProductRelationToPriceProductBridge implements ProductRelationToPriceProductInterface
 {
     /**
@@ -30,5 +32,20 @@ class ProductRelationToPriceProductBridge implements ProductRelationToPriceProdu
     public function resolveProductPrice(array $priceMap)
     {
         return $this->priceProductClient->resolveProductPrice($priceMap);
+    }
+
+    /**
+     * @param array $defaultPriceMap
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
+     */
+    public function resolveProductAbstractPriceByPriceDimension(array $defaultPriceMap, int $idProductAbstract): CurrentProductPriceTransfer
+    {
+        if (!method_exists($this->priceProductClient, 'resolveProductAbstractPriceByPriceDimension')) {
+            return $this->priceProductClient->resolveProductPrice($defaultPriceMap);
+        }
+
+        return $this->priceProductClient->resolveProductAbstractPriceByPriceDimension($defaultPriceMap, $idProductAbstract);
     }
 }

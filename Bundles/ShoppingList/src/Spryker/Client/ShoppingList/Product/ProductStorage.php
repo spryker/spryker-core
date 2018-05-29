@@ -103,7 +103,11 @@ class ProductStorage implements ProductStorageInterface
         $storageProductCollection = $this->productClient->getProductConcreteCollection($productSkuCollection);
 
         foreach ($storageProductCollection as $storageProductTransfer) {
-            $currentPriceTransfer = $this->priceProductClient->resolveProductPrice($storageProductTransfer->getPrices());
+            $currentPriceTransfer = $this->priceProductClient->resolveProductConcretePriceByPriceDimension(
+                $storageProductTransfer->getPrices(),
+                $storageProductTransfer->getIdProductAbstract(),
+                $storageProductTransfer->getIdProductConcrete()
+            );
 
             $storageProductTransfer->setPrice($currentPriceTransfer->getPrice());
             $storageProductTransfer->setPrices($currentPriceTransfer->getPrices());
