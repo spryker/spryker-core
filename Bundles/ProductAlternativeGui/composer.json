@@ -6,6 +6,7 @@
     "php": ">=7.1",
     "spryker/symfony": "^3.0.0",
     "spryker/kernel": "^3.1.0",
+    "spryker/product": "^6.0.0",
     "spryker/product-alternative": "^1.0.0"
   },
   "require-dev": {

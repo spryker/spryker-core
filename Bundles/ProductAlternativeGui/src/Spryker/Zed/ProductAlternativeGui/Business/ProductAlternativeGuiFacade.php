@@ -28,7 +28,7 @@ class ProductAlternativeGuiFacade extends AbstractFacade implements ProductAlter
         return $this
             ->getFactory()
             ->createProductSuggester()
-            ->suggestProductName($productName);
+            ->suggestProductNames($productName);
     }
 
     /**
@@ -45,6 +45,6 @@ class ProductAlternativeGuiFacade extends AbstractFacade implements ProductAlter
         return $this
             ->getFactory()
             ->createProductSuggester()
-            ->suggestProductSku($productSku);
+            ->suggestProductSkus($productSku);
     }
 }

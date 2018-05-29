@@ -7,20 +7,30 @@
 
 namespace Spryker\Zed\ProductAlternativeGui\Business\Model;
 
+use Spryker\Zed\Product\Business\ProductFacadeInterface;
 use Spryker\Zed\ProductAlternativeGui\Dependency\Facade\ProductAlternativeGuiToProductAlternativeFacadeInterface;
 
 class ProductSuggester implements ProductSuggesterInterface
 {
+    /**
+     * @var \Spryker\Zed\Product\Business\ProductFacadeInterface
+     */
+    protected $productFacade;
+
     /**
      * @var \Spryker\Zed\ProductAlternativeGui\Dependency\Facade\ProductAlternativeGuiToProductAlternativeFacadeInterface
      */
     protected $productAlternativeFacade;
 
     /**
+     * @param \Spryker\Zed\Product\Business\ProductFacadeInterface $productFacade
      * @param \Spryker\Zed\ProductAlternativeGui\Dependency\Facade\ProductAlternativeGuiToProductAlternativeFacadeInterface $productAlternativeFacade
      */
-    public function __construct(ProductAlternativeGuiToProductAlternativeFacadeInterface $productAlternativeFacade)
-    {
+    public function __construct(
+        ProductFacadeInterface $productFacade,
+        ProductAlternativeGuiToProductAlternativeFacadeInterface $productAlternativeFacade
+    ) {
+        $this->productFacade = $productFacade;
         $this->productAlternativeFacade = $productAlternativeFacade;
     }
 
@@ -30,7 +40,7 @@ class ProductSuggester implements ProductSuggesterInterface
      *
      * @return string[]
      */
-    public function suggestProductName(string $productName, int $limit = 10): array
+    public function suggestProductNames(string $productName, int $limit = 10): array
     {
         // TODO: Implement suggestProductName() method.
 
@@ -43,7 +53,7 @@ class ProductSuggester implements ProductSuggesterInterface
      *
      * @return string[]
      */
-    public function suggestProductSku(string $productSku, int $limit = 10): array
+    public function suggestProductSkus(string $productSku, int $limit = 10): array
     {
         // TODO: Implement suggestProductSku() method.
 
