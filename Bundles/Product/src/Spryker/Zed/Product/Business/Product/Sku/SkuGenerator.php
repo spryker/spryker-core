@@ -15,7 +15,7 @@ class SkuGenerator implements SkuGeneratorInterface
     protected const SKU_ABSTRACT_SEPARATOR = '-';
     protected const SKU_TYPE_SEPARATOR = '-';
     protected const SKU_VALUE_SEPARATOR = '_';
-    protected const SKU_MAX_LENGTH = 255;
+    public const SKU_MAX_LENGTH = 255;
 
     /**
      * @var \Spryker\Zed\Product\Dependency\Service\ProductToUtilTextInterface
