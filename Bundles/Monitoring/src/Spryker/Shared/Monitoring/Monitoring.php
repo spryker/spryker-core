@@ -32,22 +32,29 @@ class Monitoring implements MonitoringInterface
      */
     public function setError(string $message, $exception): void
     {
+        $this->setApplicationName();
+
         foreach ($this->monitoringExtensionPlugins as $monitoringExtensionPlugin) {
             $monitoringExtensionPlugin->setError($message, $exception);
         }
     }
 
     /**
-     * @param string $application
-     * @param string $store
-     * @param string $environment
+     * @param null|string $application
+     * @param null|string $store
+     * @param null|string $environment
      *
      * @return void
      */
-    public function setAppName(string $application, string $store, string $environment): void
+    public function setApplicationName(?string $application = null, ?string $store = null, ?string $environment = null): void
     {
+        $application = ($application) ? $application : APPLICATION;
+        $store = ($store) ? $store : APPLICATION_STORE;
+        $environment = 'production';
+        ($environment) ? $environment : APPLICATION_ENV;
+
         foreach ($this->monitoringExtensionPlugins as $monitoringExtensionPlugin) {
-            $monitoringExtensionPlugin->setAppName($application, $store, $environment);
+            $monitoringExtensionPlugin->setApplicationName($application, $store, $environment);
         }
     }
 
@@ -58,6 +65,8 @@ class Monitoring implements MonitoringInterface
      */
     public function setTransactionName(string $name): void
     {
+        $this->setApplicationName();
+
         foreach ($this->monitoringExtensionPlugins as $monitoringExtensionPlugin) {
             $monitoringExtensionPlugin->setTransactionName($name);
         }
@@ -68,6 +77,7 @@ class Monitoring implements MonitoringInterface
      */
     public function markStartTransaction(): void
     {
+        $this->setApplicationName();
         foreach ($this->monitoringExtensionPlugins as $monitoringExtensionPlugin) {
             $monitoringExtensionPlugin->markStartTransaction();
         }
@@ -78,6 +88,7 @@ class Monitoring implements MonitoringInterface
      */
     public function markEndOfTransaction(): void
     {
+        $this->setApplicationName();
         foreach ($this->monitoringExtensionPlugins as $monitoringExtensionPlugin) {
             $monitoringExtensionPlugin->markEndOfTransaction();
         }
@@ -88,6 +99,7 @@ class Monitoring implements MonitoringInterface
      */
     public function markIgnoreTransaction(): void
     {
+        $this->setApplicationName();
         foreach ($this->monitoringExtensionPlugins as $monitoringExtensionPlugin) {
             $monitoringExtensionPlugin->markIgnoreTransaction();
         }
@@ -98,6 +110,7 @@ class Monitoring implements MonitoringInterface
      */
     public function markAsConsoleCommand(): void
     {
+        $this->setApplicationName();
         foreach ($this->monitoringExtensionPlugins as $monitoringExtensionPlugin) {
             $monitoringExtensionPlugin->markAsConsoleCommand();
         }
@@ -111,6 +124,7 @@ class Monitoring implements MonitoringInterface
      */
     public function addCustomParameter(string $key, $value): void
     {
+        $this->setApplicationName();
         foreach ($this->monitoringExtensionPlugins as $monitoringExtensionPlugin) {
             $monitoringExtensionPlugin->addCustomParameter($key, $value);
         }
@@ -123,6 +137,7 @@ class Monitoring implements MonitoringInterface
      */
     public function addCustomTracer(string $tracer): void
     {
+        $this->setApplicationName();
         foreach ($this->monitoringExtensionPlugins as $monitoringExtensionPlugin) {
             $monitoringExtensionPlugin->addCustomTracer($tracer);
         }

@@ -9,6 +9,8 @@ namespace Spryker\Shared\ErrorHandler;
 
 use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Shared\NewRelicApi\NewRelicApiTrait;
+use Spryker\Yves\Monitoring\MonitoringFactory;
+use Spryker\Zed\Monitoring\Communication\MonitoringCommunicationFactory;
 use Throwable;
 
 class ErrorLogger implements ErrorLoggerInterface
@@ -42,15 +44,32 @@ class ErrorLogger implements ErrorLoggerInterface
     {
         try {
             $message = $this->buildMessage($exception);
-            $this->createNewRelicApi()->noticeError($message, $exception);
+            $this->createMonitoring()->setError($message, $exception);
             $this->getLogger()->critical($message, ['exception' => $exception]);
         } catch (Throwable $internalException) {
-            $this->createNewRelicApi()->noticeError($internalException->getMessage(), $exception);
+            $this->createMonitoring()->setError($internalException->getMessage(), $exception);
         }
     }
 
     /**
-     * @param \Throwable $exception
+     * @return \Spryker\Shared\MonitoringExtension\MonitoringInterface
+     */
+    protected function createMonitoring()
+    {
+        if (APPLICATION === 'ZED') {
+            $zedMonitoringFactory = new MonitoringCommunicationFactory();
+
+            return $zedMonitoringFactory->createMonitoring();
+        }
+
+        $yvesMonitoringFactory = new MonitoringFactory();
+
+        return $yvesMonitoringFactory->createMonitoring();
+    }
+
+    /**
+     * @param \Exception|\Throwable $exception
+>>>>>>> core-4452 added Monitoring to Shared ErrorHandler
      *
      * @return string
      */

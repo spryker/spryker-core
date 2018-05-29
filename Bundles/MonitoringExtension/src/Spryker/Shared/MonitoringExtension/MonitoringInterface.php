@@ -20,13 +20,13 @@ interface MonitoringInterface
     /**
      * Sets the name of the application, the current store and the environment.
      *
-     * @param string $application
-     * @param string $store
-     * @param string $environment
+     * @param string|null $application
+     * @param string|null $store
+     * @param string|null $environment
      *
      * @return void
      */
-    public function setAppName(string $application, string $store, string $environment): void;
+    public function setApplicationName(?string $application = null, ?string $store = null, ?string $environment = null): void;
 
     /**
      * Name of the transaction (e.g. module/controller/action).
