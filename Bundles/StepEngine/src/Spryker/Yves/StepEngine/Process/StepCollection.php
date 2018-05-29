@@ -144,7 +144,7 @@ class StepCollection implements StepCollectionInterface
      *
      * @return \Spryker\Yves\StepEngine\Dependency\Step\StepInterface
      */
-    public function getPreviousStep(StepInterface $currentStep, AbstractTransfer $dataTransfer = null)
+    public function getPreviousStep(StepInterface $currentStep, ?AbstractTransfer $dataTransfer = null)
     {
         $firstStep = reset($this->steps);
 
@@ -171,7 +171,7 @@ class StepCollection implements StepCollectionInterface
      *
      * @return bool
      */
-    protected function isAccessible(StepInterface $step, AbstractTransfer $dataTransfer = null)
+    protected function isAccessible(StepInterface $step, ?AbstractTransfer $dataTransfer = null)
     {
         if (!$dataTransfer) {
             return true;
@@ -238,7 +238,7 @@ class StepCollection implements StepCollectionInterface
      *
      * @return string
      */
-    public function getPreviousUrl(StepInterface $currentStep, AbstractTransfer $dataTransfer = null)
+    public function getPreviousUrl(StepInterface $currentStep, ?AbstractTransfer $dataTransfer = null)
     {
         $stepRoute = $this->getPreviousStep($currentStep, $dataTransfer)->getStepRoute();
 

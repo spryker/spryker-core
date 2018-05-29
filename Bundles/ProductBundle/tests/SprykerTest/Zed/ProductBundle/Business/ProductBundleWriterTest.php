@@ -109,7 +109,7 @@ class ProductBundleWriterTest extends Unit
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleWriter
      */
-    protected function createProductBundleWriterMock(ProductBundleStockWriterInterface $productBundleStockWriterMock = null)
+    protected function createProductBundleWriterMock(?ProductBundleStockWriterInterface $productBundleStockWriterMock = null)
     {
         $productFacadeMock = $this->createProductFacadeMock();
         $productBundleQueryContainerMock = $this->createProductBundleQueryContainerMock();

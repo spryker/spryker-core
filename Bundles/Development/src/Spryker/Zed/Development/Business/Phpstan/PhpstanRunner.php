@@ -31,12 +31,18 @@ class PhpstanRunner implements PhpstanRunnerInterface
     const CODE_ERROR = 0;
 
     const OPTION_DRY_RUN = 'dry-run';
+    const OPTION_VERBOSE = 'verbose';
     const OPTION_MODULE = 'module';
 
     /**
      * @var \Spryker\Zed\Development\DevelopmentConfig
      */
     protected $config;
+
+    /**
+     * @var int
+     */
+    protected $errorCount = 0;
 
     /**
      * @param \Spryker\Zed\Development\DevelopmentConfig $config
@@ -68,18 +74,28 @@ class PhpstanRunner implements PhpstanRunnerInterface
         if ($module) {
             $paths = $this->getPaths($module);
         } else {
-            $paths[$this->config->getPathToRoot() . 'src' . DIRECTORY_SEPARATOR] = 'phpstan.neon';
+            $paths[$this->config->getPathToRoot()] = $this->config->getPathToRoot();
         }
         if (empty($paths)) {
             throw new RuntimeException('No path found for module ' . $module);
         }
 
-        $result = 0;
+        $resultCode = 0;
+        $count = 0;
+        $total = count($paths);
+        $this->errorCount = 0;
         foreach ($paths as $path => $configFilePath) {
-            $result |= $this->runCommand($path, $configFilePath, $input, $output);
+            $resultCode |= $this->runCommand($path, $configFilePath, $input, $output);
+            $count++;
+            if ($input->getOption(static::OPTION_VERBOSE)) {
+                $output->writeln(sprintf('Finished %s/%s.', $count, $total));
+            }
+        }
+        if ($this->errorCount) {
+            $output->writeln('<error>Total errors found: ' . $this->errorCount . '</error>');
         }
 
-        return (int)$result;
+        return $resultCode;
     }
 
     /**
@@ -94,7 +110,13 @@ class PhpstanRunner implements PhpstanRunnerInterface
     {
         $command = 'php -d memory_limit=%s vendor/bin/phpstan analyze --no-progress -c %s %s -l %s';
 
-        $level = $input->getOption('level') ?: $this->getDefaultLevel($configFilePath);
+        $level = $input->getOption('level') ?: $this->getDefaultLevel($path, $configFilePath);
+
+        if (is_dir($path . 'src')) {
+            $path .= 'src' . DIRECTORY_SEPARATOR;
+        }
+        $configFilePath .= 'phpstan.neon';
+
         $command = sprintf($command, static::MEMORY_LIMIT, $configFilePath, $path, $level);
 
         if ($input->getOption(static::OPTION_DRY_RUN)) {
@@ -106,6 +128,8 @@ class PhpstanRunner implements PhpstanRunnerInterface
 
         $process = $this->getProcess($command);
         $process->run(function ($type, $buffer) use ($output) {
+            $this->addErrors($buffer);
+
             $output->write($buffer);
         });
 
@@ -172,38 +196,25 @@ class PhpstanRunner implements PhpstanRunnerInterface
     }
 
     /**
-     * @param string $name
-     *
-     * @return string
-     */
-    protected function normalizeName($name)
-    {
-        $filterChain = new FilterChain();
-        $filterChain
-            ->attach(new CamelCaseToDash())
-            ->attach(new StringToLower());
-
-        return $filterChain->filter($name);
-    }
-
-    /**
      * @param array $paths
      * @param string $path
      * @param string|null $configFilePath
+     * @param string|null $namespace
      *
      * @return array
      */
-    protected function addPath(array $paths, $path, $configFilePath = null)
+    protected function addPath(array $paths, $path, $configFilePath = null, $namespace = null)
     {
         if (!$configFilePath) {
             $configFilePath = $this->detectConfigFilePath($path);
         }
-
-        if (is_dir($path . 'src')) {
-            $path .= 'src' . DIRECTORY_SEPARATOR;
+        if (!$configFilePath && $namespace) {
+            $pathToModules = $namespace === static::NAMESPACE_SPRYKER_SHOP ? $this->config->getPathToShop() : $this->config->getPathToCore();
+            $vendorPath = dirname($pathToModules) . DIRECTORY_SEPARATOR;
+            $configFilePath = $this->detectConfigFilePath($vendorPath);
         }
 
-        $paths[$path] = $configFilePath ?: 'phpstan.neon';
+        $paths[$path] = $configFilePath ?: $this->config->getPathToRoot();
 
         return $paths;
     }
@@ -216,7 +227,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
     protected function detectConfigFilePath($path)
     {
         if (file_exists($path . 'phpstan.neon')) {
-            return $path . 'phpstan.neon';
+            return $path;
         }
 
         return null;
@@ -246,30 +257,45 @@ class PhpstanRunner implements PhpstanRunnerInterface
             $modules = $this->getCoreModules($corePath);
             foreach ($modules as $module) {
                 $path = $corePath . $module . DIRECTORY_SEPARATOR;
-                $paths = $this->addPath($paths, $path);
+                $paths = $this->addPath($paths, $path, null, $namespace);
             }
 
             return $paths;
         }
 
-        $namespace = $this->normalizeName($namespace);
-        if ($namespace === $this->normalizeName(static::NAMESPACE_SPRYKER) && is_dir($this->config->getPathToCore() . $module)) {
-            $paths = $this->addPath($paths, $this->config->getPathToCore() . $module . DIRECTORY_SEPARATOR);
+        if ($namespace === static::NAMESPACE_SPRYKER && is_dir($this->config->getPathToCore() . $module)) {
+            $paths = $this->addPath($paths, $this->config->getPathToCore() . $module . DIRECTORY_SEPARATOR, null, $namespace);
 
             return $paths;
         }
 
-        if ($namespace === $this->normalizeName(static::NAMESPACE_SPRYKER_SHOP) && is_dir($this->config->getPathToShop() . $module)) {
-            $paths = $this->addPath($paths, $this->config->getPathToShop() . $module . DIRECTORY_SEPARATOR);
+        if ($namespace === static::NAMESPACE_SPRYKER_SHOP && is_dir($this->config->getPathToShop() . $module)) {
+            $paths = $this->addPath($paths, $this->config->getPathToShop() . $module . DIRECTORY_SEPARATOR, null, $namespace);
 
             return $paths;
         }
 
-        $module = $this->normalizeName($module);
-        $path = $this->config->getPathToRoot() . 'vendor' . DIRECTORY_SEPARATOR . $namespace . DIRECTORY_SEPARATOR . $module;
+        $vendor = $this->dasherize($namespace);
+        $module = $this->dasherize($module);
+        $path = $this->config->getPathToRoot() . 'vendor' . DIRECTORY_SEPARATOR . $vendor . DIRECTORY_SEPARATOR . $module;
         $paths = $this->addPath($paths, $path);
 
         return $paths;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return string
+     */
+    protected function dasherize($name)
+    {
+        $filterChain = new FilterChain();
+        $filterChain
+            ->attach(new CamelCaseToDash())
+            ->attach(new StringToLower());
+
+        return $filterChain->filter($name);
     }
 
     /**
@@ -294,16 +320,22 @@ class PhpstanRunner implements PhpstanRunnerInterface
     }
 
     /**
-     * @param string $configFilePath
+     * @param string $path
+     * @param string $fallbackPath
      *
      * @return int
      */
-    protected function getDefaultLevel($configFilePath)
+    protected function getDefaultLevel($path, $fallbackPath)
     {
         $configLevel = $this->config->getPhpstanLevel();
 
-        $directory = dirname($configFilePath) . DIRECTORY_SEPARATOR;
-        $configFile = $directory . 'phpstan.json';
+        if (file_exists($path . 'phpstan.json')) {
+            $configFile = $path . 'phpstan.json';
+        } else {
+            $directory = dirname($fallbackPath) . DIRECTORY_SEPARATOR;
+            $configFile = $directory . 'phpstan.json';
+        }
+
         if (!file_exists($configFile)) {
             return $configLevel;
         }
@@ -312,5 +344,19 @@ class PhpstanRunner implements PhpstanRunnerInterface
         $json = json_decode($content, true);
 
         return $json[static::DEFAULT_LEVEL];
+    }
+
+    /**
+     * @param string $buffer
+     *
+     * @return void
+     */
+    protected function addErrors($buffer)
+    {
+        preg_match('#\[ERROR\] Found (\d+) error#i', $buffer, $matches);
+        if (!$matches) {
+            return;
+        }
+        $this->errorCount += (int)$matches[1];
     }
 }

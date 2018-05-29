@@ -31,7 +31,7 @@ abstract class AbstractSpyProductBundle extends BaseSpyProductBundle
      *
      * @return bool
      */
-    public function preSave(ConnectionInterface $con = null)
+    public function preSave(?ConnectionInterface $con = null)
     {
         //Do no accept connections to already bundled concretes or concretes having bundled items.
         $numberOfBundlesUsing = SpyProductBundleQuery::create()

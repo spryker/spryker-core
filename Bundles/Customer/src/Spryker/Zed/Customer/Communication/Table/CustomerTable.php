@@ -118,7 +118,7 @@ class CustomerTable extends AbstractTable
      *
      * @return string
      */
-    protected function buildLinks(SpyCustomer $customer = null)
+    protected function buildLinks(?SpyCustomer $customer = null)
     {
         if ($customer === null) {
             return '';
@@ -190,9 +190,11 @@ class CustomerTable extends AbstractTable
      */
     protected function prepareQuery()
     {
-        $query = $this->customerQueryContainer->queryCustomers()
-            ->leftJoinBillingAddress()
-            ->withColumn(SpyCustomerAddressTableMap::COL_ZIP_CODE, self::COL_ZIP_CODE)
+        $query = $this->customerQueryContainer
+            ->queryCustomers()
+            ->leftJoinBillingAddress();
+
+        $query->withColumn(SpyCustomerAddressTableMap::COL_ZIP_CODE, self::COL_ZIP_CODE)
             ->withColumn(SpyCustomerAddressTableMap::COL_CITY, self::COL_CITY)
             ->withColumn(SpyCustomerAddressTableMap::COL_FK_COUNTRY, self::COL_FK_COUNTRY);
 

@@ -134,8 +134,8 @@ class DiscountConfiguratorHydrateTest extends Unit
      * @return \Spryker\Zed\Discount\Business\Persistence\DiscountConfiguratorHydrate
      */
     protected function createDiscountConfiguratorHydrate(
-        DiscountQueryContainerInterface $discountQueryContainerMock = null,
-        DiscountEntityMapperInterface $discountEntityMapperMock = null
+        ?DiscountQueryContainerInterface $discountQueryContainerMock = null,
+        ?DiscountEntityMapperInterface $discountEntityMapperMock = null
     ) {
         if (!$discountQueryContainerMock) {
             $discountQueryContainerMock = $this->createDiscountQueryContainerMock();

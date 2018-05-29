@@ -72,21 +72,6 @@ class MapperFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer
-     *
-     * @return \Spryker\Zed\Ratepay\Business\Api\Mapper\PaymentRequestHeadMapper
-     */
-    public function getPaymentRequestHeadMapper(
-        RatepayPaymentRequestTransfer $ratepayPaymentRequestTransfer
-    ) {
-        return new PaymentRequestHeadMapper(
-            $ratepayPaymentRequestTransfer,
-            $this->getConfig(),
-            $this->requestTransfer
-        );
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $paymentData
      *

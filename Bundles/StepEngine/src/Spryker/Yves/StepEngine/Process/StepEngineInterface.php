@@ -18,5 +18,5 @@ interface StepEngineInterface
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function process(Request $request, FormCollectionHandlerInterface $formCollection = null);
+    public function process(Request $request, ?FormCollectionHandlerInterface $formCollection = null);
 }

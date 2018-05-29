@@ -74,7 +74,7 @@ class AbstractPriceProductConcreteStorageListener extends AbstractPlugin
      *
      * @return void
      */
-    protected function storeDataSet($idProductConcrete, array $prices, SpyPriceProductConcreteStorage $spyPriceProductStorageEntity = null)
+    protected function storeDataSet($idProductConcrete, array $prices, ?SpyPriceProductConcreteStorage $spyPriceProductStorageEntity = null)
     {
         if ($spyPriceProductStorageEntity === null) {
             $spyPriceProductStorageEntity = new SpyPriceProductConcreteStorage();

@@ -71,9 +71,9 @@ class CmsPageReaderTest extends CmsMocks
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Cms\Business\Page\CmsPageReader
      */
     protected function createCmsPageReaderMock(
-        CmsPageUrlBuilderInterface $cmsUrlBuilderMock = null,
-        CmsQueryContainerInterface $cmsQueryContainerMock = null,
-        CmsToLocaleInterface $localeFacadeMock = null
+        ?CmsPageUrlBuilderInterface $cmsUrlBuilderMock = null,
+        ?CmsQueryContainerInterface $cmsQueryContainerMock = null,
+        ?CmsToLocaleInterface $localeFacadeMock = null
     ) {
         if ($cmsQueryContainerMock === null) {
             $cmsQueryContainerMock = $this->createCmsQueryContainerMock();

@@ -28,10 +28,13 @@ class ProductReviewStub implements ProductReviewStubInterface
     /**
      * @param \Generated\Shared\Transfer\ProductReviewRequestTransfer $productReviewRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductReviewResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\ProductReviewResponseTransfer
      */
     public function submitCustomerReview(ProductReviewRequestTransfer $productReviewRequestTransfer)
     {
-        return $this->zedRequestClient->call('/product-review/gateway/submit-customer-review', $productReviewRequestTransfer);
+        /** @var \Generated\Shared\Transfer\ProductReviewResponseTransfer $productReviewRequestTransfer */
+        $productReviewRequestTransfer = $this->zedRequestClient->call('/product-review/gateway/submit-customer-review', $productReviewRequestTransfer);
+
+        return $productReviewRequestTransfer;
     }
 }

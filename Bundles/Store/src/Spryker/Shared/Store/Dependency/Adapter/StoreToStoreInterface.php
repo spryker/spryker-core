@@ -70,4 +70,9 @@ interface StoreToStoreInterface
      * @return string[]
      */
     public function getStoresWithSharedPersistence();
+
+    /**
+     * @return array
+     */
+    public function getCountries();
 }

@@ -64,7 +64,13 @@ class DevelopmentConfig extends AbstractBundleConfig
      */
     public function getPathToCore()
     {
-        return $this->getConfig()->get(KernelConstants::SPRYKER_ROOT) . DIRECTORY_SEPARATOR;
+        // Check for deprecated environment config constant.
+        $path = $this->getConfig()->get(KernelConstants::SPRYKER_ROOT);
+        if ($path) {
+            return rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        }
+
+        return $this->getPathToRoot() . 'vendor/spryker/';
     }
 
     /**
@@ -368,6 +374,6 @@ class DevelopmentConfig extends AbstractBundleConfig
      */
     public function getPhpstanLevel()
     {
-        return 1;
+        return 2;
     }
 }

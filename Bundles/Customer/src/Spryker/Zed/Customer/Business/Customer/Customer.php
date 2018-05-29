@@ -35,8 +35,8 @@ use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
 
 class Customer implements CustomerInterface
 {
-    const BCRYPT_FACTOR = 12;
-    const BCRYPT_SALT = '';
+    protected const BCRYPT_FACTOR = 12;
+    protected const BCRYPT_SALT = '';
 
     /**
      * @var \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface
@@ -79,6 +79,11 @@ class Customer implements CustomerInterface
     protected $customerExpander;
 
     /**
+     * @var \Spryker\Zed\CustomerExtension\Dependency\Plugin\PostCustomerRegistrationPluginInterface[]
+     */
+    protected $postCustomerRegistrationPlugins;
+
+    /**
      * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGeneratorInterface $customerReferenceGenerator
      * @param \Spryker\Zed\Customer\CustomerConfig $customerConfig
@@ -87,6 +92,7 @@ class Customer implements CustomerInterface
      * @param \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface $localeQueryContainer
      * @param \Spryker\Shared\Kernel\Store $store
      * @param \Spryker\Zed\Customer\Business\CustomerExpander\CustomerExpanderInterface $customerExpander
+     * @param array $postCustomerRegistrationPlugins
      */
     public function __construct(
         CustomerQueryContainerInterface $queryContainer,
@@ -96,7 +102,8 @@ class Customer implements CustomerInterface
         CustomerToMailInterface $mailFacade,
         LocaleQueryContainerInterface $localeQueryContainer,
         Store $store,
-        CustomerExpanderInterface $customerExpander
+        CustomerExpanderInterface $customerExpander,
+        array $postCustomerRegistrationPlugins = []
     ) {
         $this->queryContainer = $queryContainer;
         $this->customerReferenceGenerator = $customerReferenceGenerator;
@@ -106,6 +113,7 @@ class Customer implements CustomerInterface
         $this->localeQueryContainer = $localeQueryContainer;
         $this->store = $store;
         $this->customerExpander = $customerExpander;
+        $this->postCustomerRegistrationPlugins = $postCustomerRegistrationPlugins;
     }
 
     /**
@@ -210,6 +218,8 @@ class Customer implements CustomerInterface
         if (!$customerResponseTransfer->getIsSuccess()) {
             return $customerResponseTransfer;
         }
+
+        $this->executePostCustomerRegistrationPlugins($customerTransfer);
 
         $this->sendRegistrationToken($customerTransfer);
 
@@ -741,15 +751,9 @@ class Customer implements CustomerInterface
      */
     protected function getEncodedPassword($currentPassword)
     {
-        $newPassword = $currentPassword;
+        $encoder = new BCryptPasswordEncoder(self::BCRYPT_FACTOR);
 
-        if (mb_substr($currentPassword, 0, 2) !== '$2') {
-            $encoder = new BCryptPasswordEncoder(self::BCRYPT_FACTOR);
-
-            $newPassword = $encoder->encodePassword($currentPassword, self::BCRYPT_SALT);
-        }
-
-        return $newPassword;
+        return $encoder->encodePassword($currentPassword, self::BCRYPT_SALT);
     }
 
     /**
@@ -841,5 +845,17 @@ class Customer implements CustomerInterface
         $customerTransfer->setLocale($localeTransfer);
 
         return $customerTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return void
+     */
+    protected function executePostCustomerRegistrationPlugins(CustomerTransfer $customerTransfer)
+    {
+        foreach ($this->postCustomerRegistrationPlugins as $postCustomerRegistrationPlugin) {
+            $postCustomerRegistrationPlugin->execute($customerTransfer);
+        }
     }
 }

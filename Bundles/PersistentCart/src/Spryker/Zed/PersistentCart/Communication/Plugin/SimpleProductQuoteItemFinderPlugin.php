@@ -20,7 +20,7 @@ class SimpleProductQuoteItemFinderPlugin implements QuoteItemFinderPluginInterfa
      *
      * @return \Generated\Shared\Transfer\ItemTransfer|null
      */
-    public function findItem(QuoteTransfer $quoteTransfer, string $sku, string $groupKey = null): ?ItemTransfer
+    public function findItem(QuoteTransfer $quoteTransfer, string $sku, ?string $groupKey = null): ?ItemTransfer
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             if (($itemTransfer->getSku() === $sku && $groupKey === null) ||

@@ -46,6 +46,7 @@ class DependencyInstaller implements DependencyInstallerInterface
             $logger->info(sprintf('Install dependencies in "%s"', $path));
 
             $process = new Process($this->installCommand, $path);
+            $process->setTimeout(null);
             $process->run(function ($type, $buffer) use ($logger) {
                 $logger->info($buffer);
             });

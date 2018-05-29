@@ -61,15 +61,15 @@ class CodeStyleSnifferTest extends Unit
      */
     public function testCheckCodeStyleRunsCommandInCore()
     {
+        $module = 'Spryker.all';
         $options = [
             'ignore' => '',
-            'core' => true,
         ];
 
-        $pathToApplicationRoot = APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . $this->pathToCore;
-        $codeStyleSnifferMock = $this->getCodeStyleSnifferMock($pathToApplicationRoot, $options);
+        $path = APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . $this->pathToCore;
+        $codeStyleSnifferMock = $this->getCodeStyleSnifferMock($path, $options);
 
-        $codeStyleSnifferMock->checkCodeStyle(null, $options);
+        $codeStyleSnifferMock->checkCodeStyle($module, $options);
     }
 
     /**
@@ -77,14 +77,14 @@ class CodeStyleSnifferTest extends Unit
      */
     public function testCheckCodeStyleRunsCommandInCoreModule()
     {
+        $module = 'Spryker.Development';
         $options = [
             'ignore' => '',
-            'core' => true,
         ];
-        $pathToApplicationRoot = APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . $this->pathToCore . 'Development/';
-        $codeStyleSnifferMock = $this->getCodeStyleSnifferMock($pathToApplicationRoot, $options);
+        $path = APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . $this->pathToCore . 'Development/';
+        $codeStyleSnifferMock = $this->getCodeStyleSnifferMock($path, $options);
 
-        $codeStyleSnifferMock->checkCodeStyle('Development', ['core' => true]);
+        $codeStyleSnifferMock->checkCodeStyle($module);
     }
 
     /**

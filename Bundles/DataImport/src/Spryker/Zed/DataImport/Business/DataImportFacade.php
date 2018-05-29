@@ -24,7 +24,7 @@ class DataImportFacade extends AbstractFacade implements DataImportFacadeInterfa
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
-    public function import(DataImporterConfigurationTransfer $dataImporterConfiguration = null)
+    public function import(?DataImporterConfigurationTransfer $dataImporterConfiguration = null)
     {
         return $this->getFactory()->getImporter()->import($dataImporterConfiguration);
     }

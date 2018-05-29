@@ -407,7 +407,7 @@ class ProductFormAdd extends AbstractType
      *
      * @return $this
      */
-    protected function addAttributeAbstractForm(FormBuilderInterface $builder, $name, LocaleTransfer $localeTransfer = null, array $options = [])
+    protected function addAttributeAbstractForm(FormBuilderInterface $builder, $name, ?LocaleTransfer $localeTransfer = null, array $options = [])
     {
         $builder
             ->add($name, CollectionType::class, [
