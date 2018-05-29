@@ -15,7 +15,7 @@ use Spryker\Client\Kernel\AbstractFactory;
 class BusinessOnBehalfFactory extends AbstractFactory
 {
     /**
-     * @return BusinessOnBehalfStubInterface
+     * @return \Spryker\Client\BusinessOnBehalf\Zed\BusinessOnBehalfStubInterface
      */
     public function createZedBusinessOnBehalfStub(): BusinessOnBehalfStubInterface
     {
@@ -23,7 +23,7 @@ class BusinessOnBehalfFactory extends AbstractFactory
     }
 
     /**
-     * @return BusinessOnBehalfToZedRequestClientInterface
+     * @return \Spryker\Client\BusinessOnBehalf\Dependency\Client\BusinessOnBehalfToZedRequestClientInterface
      */
     protected function getZedRequestClient(): BusinessOnBehalfToZedRequestClientInterface
     {
