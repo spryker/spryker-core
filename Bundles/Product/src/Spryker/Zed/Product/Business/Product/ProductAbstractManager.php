@@ -297,10 +297,10 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
 
         $abstractProducts = [];
 
-        /** @var \Orm\Zed\Product\Persistence\SpyProduct $productAbstractEntity */
+        /** @var \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity */
         foreach ($productAbstractEntities as $productAbstractEntity) {
             $abstractProducts[] = [
-                ProductConstants::PRODUCT_FILTER_ABSTRACT_ID_KEY => $productAbstractEntity->getIdProduct(),
+                ProductConstants::PRODUCT_FILTER_ABSTRACT_ID_KEY => $productAbstractEntity->getIdProductAbstract(),
                 ProductConstants::PRODUCT_FILTER_RESULT_KEY => $productAbstractEntity
                     ->getVirtualColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME),
             ];
