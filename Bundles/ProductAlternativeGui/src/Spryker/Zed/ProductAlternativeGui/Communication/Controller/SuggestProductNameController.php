@@ -25,7 +25,7 @@ class SuggestProductNameController extends AbstractController
      */
     public function indexAction(Request $request): JsonResponse
     {
-        $searchName = $request->query->get(static::PARAM_NAME);
+        $searchName = $request->query->get(static::PARAM_NAME) . '%';
         $suggestions = $this
             ->getFacade()
             ->suggestProductNames($searchName);
