@@ -30,7 +30,7 @@ class ProductAlternativeGuiToProductFacadeBridge implements ProductAlternativeGu
      *
      * @return array
      */
-    public function filterProductAbstractBySku(string $sku, int $limit = ProductConstants::PRODUCT_FILTER_LIMIT_DEFAULT): array
+    public function filterProductAbstractBySku(string $sku, int $limit = ProductConstants::FILTERED_PRODUCTS_LIMIT_DEFAULT): array
     {
         return $this->productFacade->filterProductAbstractBySku($sku, $limit);
     }
@@ -41,7 +41,7 @@ class ProductAlternativeGuiToProductFacadeBridge implements ProductAlternativeGu
      *
      * @return array
      */
-    public function filterProductAbstractByLocalizedName(string $localizedName, int $limit = ProductConstants::PRODUCT_FILTER_LIMIT_DEFAULT): array
+    public function filterProductAbstractByLocalizedName(string $localizedName, int $limit = ProductConstants::FILTERED_PRODUCTS_LIMIT_DEFAULT): array
     {
         return $this->productFacade->filterProductAbstractByLocalizedName($localizedName, $limit);
     }
@@ -52,7 +52,7 @@ class ProductAlternativeGuiToProductFacadeBridge implements ProductAlternativeGu
      *
      * @return array
      */
-    public function filterProductConcreteBySku(string $sku, int $limit = ProductConstants::PRODUCT_FILTER_LIMIT_DEFAULT): array
+    public function filterProductConcreteBySku(string $sku, int $limit = ProductConstants::FILTERED_PRODUCTS_LIMIT_DEFAULT): array
     {
         return $this->productFacade->filterProductConcreteBySku($sku, $limit);
     }
@@ -63,7 +63,7 @@ class ProductAlternativeGuiToProductFacadeBridge implements ProductAlternativeGu
      *
      * @return array
      */
-    public function filterProductConcreteByLocalizedName(string $localizedName, int $limit = ProductConstants::PRODUCT_FILTER_LIMIT_DEFAULT): array
+    public function filterProductConcreteByLocalizedName(string $localizedName, int $limit = ProductConstants::FILTERED_PRODUCTS_LIMIT_DEFAULT): array
     {
         return $this->productFacade->filterProductConcreteByLocalizedName($localizedName, $limit);
     }
