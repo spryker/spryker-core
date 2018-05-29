@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\BusinessOnBehalf\Business;
 
+use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -36,9 +37,9 @@ class BusinessOnBehalfFacade extends AbstractFacade implements BusinessOnBehalfF
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
+     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
-    public function findActiveCompanyUsersByCustomerId(CustomerTransfer $customerTransfer): array
+    public function findActiveCompanyUsersByCustomerId(CustomerTransfer $customerTransfer): CompanyUserCollectionTransfer
     {
         return $this->getFactory()->createCompanyUserCollectionFinder()->findActiveCompanyUsersByCustomerId($customerTransfer);
     }

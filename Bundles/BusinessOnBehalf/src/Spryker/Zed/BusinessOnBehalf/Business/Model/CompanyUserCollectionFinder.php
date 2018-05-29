@@ -3,6 +3,7 @@
 
 namespace Spryker\Zed\BusinessOnBehalf\Business\Model;
 
+use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\BusinessOnBehalf\Dependency\Facade\CompanyUserToBusinessOnBehalfFacadeInterface;
 use Spryker\Zed\BusinessOnBehalf\Persistence\BusinessOnBehalfRepositoryInterface;
@@ -32,16 +33,18 @@ class CompanyUserCollectionFinder implements CompanyUserCollectionFinderInterfac
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
+     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
-    public function findActiveCompanyUsersByCustomerId(CustomerTransfer $customerTransfer): array
+    public function findActiveCompanyUsersByCustomerId(CustomerTransfer $customerTransfer): CompanyUserCollectionTransfer
     {
-        $companies = [];
+        $companyCollection = new CompanyUserCollectionTransfer();
         $idsCompanyUser = $this->repository->findActiveCompanyUserIdsByCustomerId($customerTransfer->getIdCustomer());
         foreach ($idsCompanyUser as $idCompanyUser) {
-            $companies[] = $this->companyUserFacade->getCompanyUserById($idCompanyUser);
+            $companyCollection->addCompanyUser(
+                $this->companyUserFacade->getCompanyUserById($idCompanyUser)
+            );
         }
 
-        return $companies;
+        return $companyCollection;
     }
 }
