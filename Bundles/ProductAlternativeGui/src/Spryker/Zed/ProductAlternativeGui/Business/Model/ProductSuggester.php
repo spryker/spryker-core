@@ -7,13 +7,14 @@
 
 namespace Spryker\Zed\ProductAlternativeGui\Business\Model;
 
-use Spryker\Zed\Product\Business\ProductFacadeInterface;
+use Spryker\Shared\Product\ProductConstants;
 use Spryker\Zed\ProductAlternativeGui\Dependency\Facade\ProductAlternativeGuiToProductAlternativeFacadeInterface;
+use Spryker\Zed\ProductAlternativeGui\Dependency\Facade\ProductAlternativeGuiToProductFacadeInterface;
 
 class ProductSuggester implements ProductSuggesterInterface
 {
     /**
-     * @var \Spryker\Zed\Product\Business\ProductFacadeInterface
+     * @var \Spryker\Zed\ProductAlternativeGui\Dependency\Facade\ProductAlternativeGuiToProductFacadeInterface
      */
     protected $productFacade;
 
@@ -23,11 +24,11 @@ class ProductSuggester implements ProductSuggesterInterface
     protected $productAlternativeFacade;
 
     /**
-     * @param \Spryker\Zed\Product\Business\ProductFacadeInterface $productFacade
+     * @param \Spryker\Zed\ProductAlternativeGui\Dependency\Facade\ProductAlternativeGuiToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\ProductAlternativeGui\Dependency\Facade\ProductAlternativeGuiToProductAlternativeFacadeInterface $productAlternativeFacade
      */
     public function __construct(
-        ProductFacadeInterface $productFacade,
+        ProductAlternativeGuiToProductFacadeInterface $productFacade,
         ProductAlternativeGuiToProductAlternativeFacadeInterface $productAlternativeFacade
     ) {
         $this->productFacade = $productFacade;
@@ -40,11 +41,19 @@ class ProductSuggester implements ProductSuggesterInterface
      *
      * @return string[]
      */
-    public function suggestProductNames(string $productName, int $limit = 10): array
+    public function suggestProductNames(string $productName, int $limit = ProductConstants::PRODUCT_FILTER_LIMIT_DEFAULT): array
     {
-        // TODO: Implement suggestProductName() method.
+        $abstractProducts = $this->collectFilteredResults(
+            $this->productFacade->filterProductAbstractByLocalizedName($productName, $limit)
+        );
 
-        return [];
+        $concreteProducts = $this->collectFilteredResults(
+            $this->productFacade->filterProductConcreteByLocalizedName($productName, $limit)
+        );
+
+        return array_unique(
+            array_merge($abstractProducts, $concreteProducts)
+        );
     }
 
     /**
@@ -53,10 +62,34 @@ class ProductSuggester implements ProductSuggesterInterface
      *
      * @return string[]
      */
-    public function suggestProductSkus(string $productSku, int $limit = 10): array
+    public function suggestProductSkus(string $productSku, int $limit = ProductConstants::PRODUCT_FILTER_LIMIT_DEFAULT): array
     {
-        // TODO: Implement suggestProductSku() method.
+        $abstractProducts = $this->collectFilteredResults(
+            $this->productFacade->filterProductAbstractByLocalizedName($productSku, $limit)
+        );
 
-        return [];
+        $concreteProducts = $this->collectFilteredResults(
+            $this->productFacade->filterProductConcreteByLocalizedName($productSku, $limit)
+        );
+
+        return array_unique(
+            array_merge($abstractProducts, $concreteProducts)
+        );
+    }
+
+    /**
+     * @param array $products
+     *
+     * @return array
+     */
+    protected function collectFilteredResults(array $products): array
+    {
+        $results = [];
+
+        foreach ($products as $product) {
+            $results[] = $product[ProductConstants::PRODUCT_FILTER_RESULT_KEY];
+        }
+
+        return $results;
     }
 }
