@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductDiscontinued\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
 use Generated\Shared\Transfer\SpyProductDiscontinuedEntityTransfer;
 use Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinued;
@@ -37,5 +38,24 @@ class ProductDiscontinuedMapper implements ProductDiscontinuedMapperInterface
         $productDiscontinuedEntity->setFkProduct($productDiscontinuedTransfer->getFkProduct());
 
         return $productDiscontinuedEntity;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyProductDiscontinuedEntityTransfer[] $productDiscontinuedEntityTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer
+     */
+    public function mapTransferCollection(array $productDiscontinuedEntityTransfers): ProductDiscontinuedCollectionTransfer
+    {
+        $productDiscontinuedCollectionTransfer = new ProductDiscontinuedCollectionTransfer();
+        foreach ($productDiscontinuedEntityTransfers as $productDiscontinuedEntityTransfer) {
+            $productDiscontinuedCollectionTransfer->addProductDiscontinued(
+                $this->mapProductDiscontinuedTransfer(
+                    $productDiscontinuedEntityTransfer
+                )
+            );
+        }
+
+        return $productDiscontinuedCollectionTransfer;
     }
 }

@@ -7,16 +7,21 @@
 
 namespace Spryker\Zed\ProductDiscontinued\Business;
 
+use Psr\Log\LoggerInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinuedDeactivator\ProductDiscontinuedDeactivator;
+use Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinuedDeactivator\ProductDiscontinuedDeactivatorInterface;
 use Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinuedReader\ProductDiscontinuedReader;
 use Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinuedReader\ProductDiscontinuedReaderInterface;
 use Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinuedWriter\ProductDiscontinuedWriter;
 use Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinuedWriter\ProductDiscontinuedWriterInterface;
+use Spryker\Zed\ProductDiscontinued\Dependency\Facade\ProductDiscontinuedToProductFacadeInterface;
+use Spryker\Zed\ProductDiscontinued\ProductDiscontinuedDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductDiscontinued\ProductDiscontinuedConfig getConfig()
- * @method \Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedEntityManagerInterface getEntityManager()()
- * @method \Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedRepositoryInterface getRepository()()
+ * @method \Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedRepositoryInterface getRepository()
  */
 class ProductDiscontinuedBusinessFactory extends AbstractBusinessFactory
 {
@@ -38,5 +43,23 @@ class ProductDiscontinuedBusinessFactory extends AbstractBusinessFactory
     public function createProductDiscontinuedReader(): ProductDiscontinuedReaderInterface
     {
         return new ProductDiscontinuedReader($this->getRepository());
+    }
+
+    /**
+     * @param null|\Psr\Log\LoggerInterface $logger
+     *
+     * @return \Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinuedDeactivator\ProductDiscontinuedDeactivatorInterface
+     */
+    public function createProductDiscontinuedDeactivator(?LoggerInterface $logger = null): ProductDiscontinuedDeactivatorInterface
+    {
+        return new ProductDiscontinuedDeactivator($this->getRepository(), $this->getProductFacade(), $logger);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductDiscontinued\Dependency\Facade\ProductDiscontinuedToProductFacadeInterface
+     */
+    public function getProductFacade(): ProductDiscontinuedToProductFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductDiscontinuedDependencyProvider::FACADE_PRODUCT);
     }
 }

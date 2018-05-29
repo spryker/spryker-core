@@ -10,6 +10,10 @@
         <property name="discontinuedOn" type="string"/>
     </transfer>
 
+    <transfer name="ProductDiscontinuedCollection">
+        <property name="productDiscontinueds" type="ProductDiscontinued[]" singular="productDiscontinued"/>
+    </transfer>
+
     <transfer name="ProductDiscontinuedRequest">
         <property name="idProduct" type="int"/>
     </transfer>

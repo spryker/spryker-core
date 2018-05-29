@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductDiscontinued\Business;
 
 use Generated\Shared\Transfer\ProductDiscontinuedRequestTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer;
+use Psr\Log\LoggerInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -65,5 +66,21 @@ class ProductDiscontinuedFacade extends AbstractFacade implements ProductDiscont
         return $this->getFactory()
             ->createProductDiscontinuedReader()
             ->findProductDiscontinuedByProductId($productDiscontinuedRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Psr\Log\LoggerInterface|null $logger
+     *
+     * @return void
+     */
+    public function deactivateDiscontinuedProducts(?LoggerInterface $logger = null): void
+    {
+        $this->getFactory()
+            ->createProductDiscontinuedDeactivator($logger)
+            ->deactivate();
     }
 }

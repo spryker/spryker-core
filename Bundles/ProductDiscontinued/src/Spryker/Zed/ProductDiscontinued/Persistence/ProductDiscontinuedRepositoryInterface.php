@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductDiscontinued\Persistence;
 
+use Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
 
 interface ProductDiscontinuedRepositoryInterface
@@ -17,4 +18,9 @@ interface ProductDiscontinuedRepositoryInterface
      * @return \Generated\Shared\Transfer\ProductDiscontinuedTransfer|null
      */
     public function findProductDiscontinuedByProductId(ProductDiscontinuedTransfer $productDiscontinuedTransfer): ?ProductDiscontinuedTransfer;
+
+    /**
+     * @return \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer
+     */
+    public function findProductsToDiactivate(): ProductDiscontinuedCollectionTransfer;
 }

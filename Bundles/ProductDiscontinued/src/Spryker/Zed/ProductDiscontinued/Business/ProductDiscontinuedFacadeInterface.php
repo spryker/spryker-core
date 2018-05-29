@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductDiscontinued\Business;
 
 use Generated\Shared\Transfer\ProductDiscontinuedRequestTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer;
+use Psr\Log\LoggerInterface;
 
 /**
  * @method \Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinuedBusinessFactory getFactory()
@@ -56,4 +57,16 @@ interface ProductDiscontinuedFacadeInterface
     public function findProductDiscontinuedByProductId(
         ProductDiscontinuedRequestTransfer $productDiscontinuedRequestTransfer
     ): ProductDiscontinuedResponseTransfer;
+
+    /**
+     * Specification:
+     * - Deactivates discontinued products when active until date passed.
+     *
+     * @api
+     *
+     * @param \Psr\Log\LoggerInterface|null $logger
+     *
+     * @return void
+     */
+    public function deactivateDiscontinuedProducts(?LoggerInterface $logger = null): void;
 }
