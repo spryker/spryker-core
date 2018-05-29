@@ -1,9 +1,7 @@
 namespace: SprykerTest
 actor: Tester
-
 include:
-    - tests/SprykerTest/Zed/ProductMeasurementUnit
-
+  - tests/SprykerTest/Zed/ProductMeasurementUnit
 paths:
     tests: tests
     log: tests/_output
