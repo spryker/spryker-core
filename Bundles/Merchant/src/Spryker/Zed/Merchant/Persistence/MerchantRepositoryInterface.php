@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Merchant\Persistence;
 
+use Generated\Shared\Transfer\MerchantCollectionTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 
 interface MerchantRepositoryInterface
@@ -23,6 +24,17 @@ interface MerchantRepositoryInterface
      * @return \Generated\Shared\Transfer\MerchantTransfer
      */
     public function getMerchantById(int $idMerchant): MerchantTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves collection of all merchants.
+     * - List of merchants is ordered by merchant name.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
+     */
+    public function getMerchants(): MerchantCollectionTransfer;
 
     /**
      * Specification:

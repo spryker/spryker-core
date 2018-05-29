@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Merchant\Business;
 
+use Generated\Shared\Transfer\MerchantCollectionTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 
 /**
@@ -71,4 +72,14 @@ interface MerchantFacadeInterface
      * @return \Generated\Shared\Transfer\MerchantTransfer
      */
     public function getMerchantById(MerchantTransfer $merchantTransfer): MerchantTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves collection of all merchants.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
+     */
+    public function getMerchants(): MerchantCollectionTransfer;
 }

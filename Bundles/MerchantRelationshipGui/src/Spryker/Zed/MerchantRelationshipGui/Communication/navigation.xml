@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<config>
+    <merchant-gui>
+        <label>Merchants</label>
+        <title>Merchants</title>
+        <icon>fa-file-text-o</icon>
+        <pages>
+            <merchant-relationship>
+                <label>Merchant Relationships</label>
+                <title>Merchant Relationships</title>
+                <bundle>merchant-relationship-gui</bundle>
+                <controller>list-merchant-relationship</controller>
+                <action>index</action>
+                <pages>
+                    <merchant-relationship-create>
+                        <label>Create a Merchant Relationship</label>
+                        <title>Create a Merchant Relationship</title>
+                        <bundle>merchant-relationship-gui</bundle>
+                        <controller>create-merchant-relationship</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </merchant-relationship-create>
+
+                    <merchant-relationship-edit>
+                        <label>Edit Merchant Relationship</label>
+                        <title>Edit Merchant Relationship</title>
+                        <bundle>merchant-relationship-gui</bundle>
+                        <controller>edit-merchant-relationship</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </merchant-relationship-edit>
+                </pages>
+            </merchant-relationship>
+        </pages>
+    </merchant-gui>
+</config>

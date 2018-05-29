@@ -1,5 +1,7 @@
 namespace: MerchantRelationship
 actor: Tester
+include:
+  - tests/SprykerTest/Zed/MerchantRelationship
 paths:
     tests: tests
     log: tests/_output
