@@ -23,7 +23,7 @@ class ProductAlternativeGuiFacade extends AbstractFacade implements ProductAlter
      *
      * @return string[]
      */
-    public function suggestProductName(string $productName): array
+    public function suggestProductNames(string $productName): array
     {
         return $this
             ->getFactory()
@@ -40,7 +40,7 @@ class ProductAlternativeGuiFacade extends AbstractFacade implements ProductAlter
      *
      * @return string[]
      */
-    public function suggestProductSku(string $productSku): array
+    public function suggestProductSkus(string $productSku): array
     {
         return $this
             ->getFactory()
