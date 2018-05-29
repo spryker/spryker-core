@@ -19,10 +19,6 @@
         <foreign-key name="spy_product_discontinued-fk_product" foreignTable="spy_product" phpName="Product">
             <reference local="fk_product" foreign="id_product"/>
         </foreign-key>
-
-        <unique name="spy_product_discontinued-fk_product">
-            <unique-column name="fk_product"/>
-        </unique>
     </table>
 
 </database>
