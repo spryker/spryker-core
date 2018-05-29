@@ -5,7 +5,7 @@
   "require": {
     "php": ">=7.1",
     "spryker/application": "^3.2.0",
-    "spryker/cms": "^5.0.0 || ^6.6.0",
+    "spryker/cms": "^6.6.0",
     "spryker/glossary": "^3.0.0",
     "spryker/gui": "^3.10.0",
     "spryker/kernel": "^3.4.0",
