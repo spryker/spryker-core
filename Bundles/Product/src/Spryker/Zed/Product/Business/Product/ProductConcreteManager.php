@@ -217,7 +217,8 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     public function filterProductConcreteBySku(string $sku, int $limit): array
     {
         $productConcreteEntities = $this->productQueryContainer
-            ->queryProductConcreteBySku($sku)
+            ->queryProduct()
+            ->filterBySku_Like($sku)
             ->limit($limit)
             ->find();
 
@@ -256,7 +257,7 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
                 $locale->getIdLocale()
             )
             ->useSpyProductLocalizedAttributesQuery()
-                ->filterByName($localizedName)
+                ->filterByName_Like($localizedName)
                 ->endUse()
             ->limit($limit)
             ->find();
