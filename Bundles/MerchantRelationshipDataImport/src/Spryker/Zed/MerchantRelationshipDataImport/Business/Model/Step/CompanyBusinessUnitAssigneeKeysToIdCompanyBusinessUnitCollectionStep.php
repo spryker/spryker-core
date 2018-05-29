@@ -31,7 +31,7 @@ class CompanyBusinessUnitAssigneeKeysToIdCompanyBusinessUnitCollectionStep imple
      *
      * @return void
      */
-    public function execute(DataSetInterface $dataSet)
+    public function execute(DataSetInterface $dataSet): void
     {
         if (!$dataSet[MerchantRelationshipDataSet::COMPANY_BUSINESS_UNIT_ASSIGNEE_KEYS]) {
             $dataSet[MerchantRelationshipDataSet::ID_COMPANY_BUSINESS_UNIT_ASSIGNEE_COLLECTION] = [];

@@ -30,7 +30,7 @@ class MerchantKeyToIdMerchantStep implements DataImportStepInterface
      *
      * @return void
      */
-    public function execute(DataSetInterface $dataSet)
+    public function execute(DataSetInterface $dataSet): void
     {
         $merchantKey = $dataSet[MerchantRelationshipDataSet::MERCHANT_KEY];
         if (!$merchantKey) {

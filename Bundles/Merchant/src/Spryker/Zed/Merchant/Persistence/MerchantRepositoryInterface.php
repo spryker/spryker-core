@@ -35,4 +35,16 @@ interface MerchantRepositoryInterface
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
     public function getMerchants(): MerchantCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Checks whether merchant key already exists.
+     *
+     * @api
+     *
+     * @param string $key
+     *
+     * @return bool
+     */
+    public function hasKey(string $key): bool;
 }

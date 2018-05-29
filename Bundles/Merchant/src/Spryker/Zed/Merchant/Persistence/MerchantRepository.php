@@ -70,4 +70,21 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
 
         return $merchantsCollection;
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $key
+     *
+     * @return bool
+     */
+    public function hasKey(string $key): bool
+    {
+        return $this->getFactory()
+            ->createMerchantQuery()
+            ->filterByMerchantKey($key)
+            ->exists();
+    }
 }
