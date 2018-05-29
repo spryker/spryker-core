@@ -27,7 +27,7 @@
             <reference local="fk_merchant" foreign="id_merchant"/>
         </foreign-key>
 
-        <foreign-key name="spy_merchant_relationship-fk_company_business_unit" foreignTable="spy_company_business_unit" phpName="CompanyBusinessUnit">
+        <foreign-key name="spy_merchant_relationship-fk_company_business_unit" foreignTable="spy_company_business_unit" onDelete="CASCADE" phpName="CompanyBusinessUnit">
             <reference local="fk_company_business_unit" foreign="id_company_business_unit"/>
         </foreign-key>
 
