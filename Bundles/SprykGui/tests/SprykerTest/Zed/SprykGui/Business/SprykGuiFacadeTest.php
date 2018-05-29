@@ -39,7 +39,7 @@ class SprykGuiFacadeTest extends Unit
      */
     public function testBuildSprykViewReturnsCommandAndJiraTemplate(): void
     {
-        $userInput['AddZedFacadeMethod'] = [
+        $userInput['AddZedBusinessFacadeMethod'] = [
             'module' => 'FooBar',
             'moduleOrganization' => 'Spryker',
             'method' => 'addFooBar',
@@ -47,7 +47,7 @@ class SprykGuiFacadeTest extends Unit
             'output' => 'bool',
             'comment' => "Specification:\r\n- Line one.\r\n- Line two.",
         ];
-        $sprykView = $this->tester->getFacade()->buildSprykView('AddZedFacadeMethod', $userInput);
+        $sprykView = $this->tester->getFacade()->buildSprykView('AddZedBusinessFacadeMethod', $userInput);
         $this->tester->assertCommandLine($sprykView);
         $this->tester->assertJiraTemplate($sprykView);
     }

@@ -15,26 +15,14 @@ use Symfony\Component\HttpFoundation\Request;
  * @method \Spryker\Zed\SprykGui\Business\SprykGuiFacadeInterface getFacade()
  * @method \Spryker\Zed\SprykGui\Persistence\SprykGuiQueryContainerInterface getQueryContainer()
  */
-class IndexController extends AbstractController
+class BuildController extends AbstractController
 {
-    /**
-     * @return array
-     */
-    public function indexAction(): array
-    {
-        $sprykDefinitions = $this->getFacade()->getSprykDefinitions();
-
-        return $this->viewResponse([
-            'sprykDefinitions' => $sprykDefinitions,
-        ]);
-    }
-
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
      */
-    public function buildAction(Request $request): array
+    public function indexAction(Request $request): array
     {
         $spryk = $request->query->get('spryk');
 

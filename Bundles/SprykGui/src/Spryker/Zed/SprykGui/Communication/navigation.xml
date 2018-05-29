@@ -8,15 +8,16 @@
         <label>Spryks</label>
         <title>Spryks</title>
         <bundle>spryk-gui</bundle>
-        <controller>index</controller>
+        <controller>list</controller>
         <action>index</action>
       </spryk-gui-index>
       <spryk-gui-build>
         <label>Build Spryk</label>
         <title>Build Spryk</title>
         <bundle>spryk-gui</bundle>
-        <controller>index</controller>
-        <action>build</action>
+        <controller>build</controller>
+        <action>index</action>
+        <visible>0</visible>
       </spryk-gui-build>
     </pages>
   </spryk-gui>

@@ -16,24 +16,11 @@ use SprykerTest\Zed\SprykGui\SprykGuiCommunicationTester;
  * @group SprykGui
  * @group Communication
  * @group Controller
- * @group IndexControllerCest
+ * @group BuildControllerCest
  * Add your own group annotations below this line
  */
-class IndexControllerCest
+class BuildControllerCest
 {
-    /**
-     * @param \SprykerTest\Zed\SprykGui\SprykGuiCommunicationTester $i
-     *
-     * @return void
-     */
-    public function listSpryks(SprykGuiCommunicationTester $i)
-    {
-        $i->amOnPage('/spryk-gui');
-        $i->seeResponseCodeIs(200);
-        $i->seeBreadcrumbNavigation('Dashboard / SprykGui / Spryks');
-        $i->see('Spryk', 'h2');
-    }
-
     /**
      * @param \SprykerTest\Zed\SprykGui\SprykGuiCommunicationTester $i
      *
@@ -41,7 +28,7 @@ class IndexControllerCest
      */
     public function openBuildSpryk(SprykGuiCommunicationTester $i)
     {
-        $i->amOnPage('/spryk-gui/index/build?spryk=AddZedFacadeMethod');
+        $i->amOnPage('/spryk-gui/build?spryk=AddZedBusinessFacadeMethod');
         $i->seeResponseCodeIs(200);
         $i->seeBreadcrumbNavigation('Dashboard / SprykGui / Build Spryk');
         $i->see('Spryk', 'h2');
@@ -54,14 +41,14 @@ class IndexControllerCest
      */
     public function createSpryk(SprykGuiCommunicationTester $i)
     {
-        $i->amOnPage('/spryk-gui/index/build?spryk=AddZedFacadeMethod');
+        $i->amOnPage('/spryk-gui/build?spryk=AddZedBusinessFacadeMethod');
         $i->seeResponseCodeIs(200);
         $i->seeBreadcrumbNavigation('Dashboard / SprykGui / Build Spryk');
         $i->see('Spryk', 'h2');
 
         $formData = [
             'spryk_form' => [
-                'AddZedFacadeMethod' => [
+                'AddZedBusinessFacadeMethod' => [
                     'module' => 'FooBar',
                     'moduleOrganization' => 'Spryker',
                     'comment' => "Specification:\r\n- Line one.\r\n- Line two.",

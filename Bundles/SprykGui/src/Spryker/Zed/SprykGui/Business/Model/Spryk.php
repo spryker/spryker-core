@@ -91,6 +91,8 @@ class Spryk implements SprykInterface
                 'humanized' => $this->createHumanizeFilter()->filter($sprykName),
                 'description' => $sprykDefinition['description'],
             ];
+
+            ksort($organized[$application]);
         }
 
         return $organized;
