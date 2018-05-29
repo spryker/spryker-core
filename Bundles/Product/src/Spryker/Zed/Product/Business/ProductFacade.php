@@ -152,9 +152,9 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      * @param string $sku
      * @param int $limit
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
+     * @return array
      */
-    public function filterProductAbstractBySku(string $sku, int $limit = ProductConstants::PRODUCT_LIMIT_SEARCH_DEFAULT): ?ProductAbstractTransfer
+    public function filterProductAbstractBySku(string $sku, int $limit = ProductConstants::PRODUCT_FILTER_LIMIT_DEFAULT): array
     {
         return $this->getFactory()
             ->createProductAbstractManager()
@@ -169,9 +169,9 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      * @param string $localizedName
      * @param int $limit
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
+     * @return array
      */
-    public function filterProductAbstractByLocalizedName(string $localizedName, int $limit = ProductConstants::PRODUCT_LIMIT_SEARCH_DEFAULT): ?ProductAbstractTransfer
+    public function filterProductAbstractByLocalizedName(string $localizedName, int $limit = ProductConstants::PRODUCT_FILTER_LIMIT_DEFAULT): array
     {
         return $this->getFactory()
             ->createProductAbstractManager()
@@ -186,9 +186,9 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      * @param string $sku
      * @param int $id
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
+     * @return array
      */
-    public function filterProductConcreteBySku(string $sku, int $limit = ProductConstants::PRODUCT_LIMIT_SEARCH_DEFAULT): ?ProductConcreteTransfer
+    public function filterProductConcreteBySku(string $sku, int $limit = ProductConstants::PRODUCT_FILTER_LIMIT_DEFAULT): array
     {
         return $this->getFactory()
             ->createProductConcreteManager()
@@ -203,9 +203,9 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      * @param string $localizedName
      * @param int $limit
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
+     * @return array
      */
-    public function filterProductConcreteByLocalizedName(string $localizedName, int $limit = ProductConstants::PRODUCT_LIMIT_SEARCH_DEFAULT): ?ProductConcreteTransfer
+    public function filterProductConcreteByLocalizedName(string $localizedName, int $limit = ProductConstants::PRODUCT_FILTER_LIMIT_DEFAULT): array
     {
         return $this->getFactory()
             ->createProductConcreteManager()
