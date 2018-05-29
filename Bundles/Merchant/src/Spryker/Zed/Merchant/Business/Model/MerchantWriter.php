@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Merchant\Business\Model;
 
 use Generated\Shared\Transfer\MerchantTransfer;
+use Spryker\Zed\Merchant\Business\KeyGenerator\MerchantKeyGeneratorInterface;
 use Spryker\Zed\Merchant\Persistence\MerchantEntityManagerInterface;
 
 class MerchantWriter implements MerchantWriterInterface
@@ -18,11 +19,21 @@ class MerchantWriter implements MerchantWriterInterface
     protected $entityManager;
 
     /**
-     * @param \Spryker\Zed\Merchant\Persistence\MerchantEntityManagerInterface $entityManager
+     * @var \Spryker\Zed\Merchant\Business\KeyGenerator\MerchantKeyGeneratorInterface
+     *
      */
-    public function __construct(MerchantEntityManagerInterface $entityManager)
-    {
+    protected $merchantKeyGenerator;
+
+    /**
+     * @param \Spryker\Zed\Merchant\Persistence\MerchantEntityManagerInterface $entityManager
+     * @param \Spryker\Zed\Merchant\Business\KeyGenerator\MerchantKeyGeneratorInterface $merchantKeyGenerator
+     */
+    public function __construct(
+        MerchantEntityManagerInterface $entityManager,
+        MerchantKeyGeneratorInterface $merchantKeyGenerator
+    ) {
         $this->entityManager = $entityManager;
+        $this->merchantKeyGenerator = $merchantKeyGenerator;
     }
 
     /**
@@ -33,8 +44,13 @@ class MerchantWriter implements MerchantWriterInterface
     public function create(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
         $merchantTransfer
-            ->requireMerchantKey()
             ->requireName();
+
+        if (empty($merchantTransfer->getMerchantKey())) {
+            $merchantTransfer->setMerchantKey(
+                $this->merchantKeyGenerator->generateMerchantKey($merchantTransfer->getName())
+            );
+        }
 
         return $this->entityManager->saveMerchant($merchantTransfer);
     }
@@ -48,8 +64,13 @@ class MerchantWriter implements MerchantWriterInterface
     {
         $merchantTransfer
             ->requireIdMerchant()
-            ->requireMerchantKey()
             ->requireName();
+
+        if (empty($merchantTransfer->getMerchantKey())) {
+            $merchantTransfer->setMerchantKey(
+                $this->merchantKeyGenerator->generateMerchantKey($merchantTransfer->getName())
+            );
+        }
 
         return $this->entityManager->saveMerchant($merchantTransfer);
     }
