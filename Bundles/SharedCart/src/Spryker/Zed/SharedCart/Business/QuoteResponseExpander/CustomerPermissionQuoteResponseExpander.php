@@ -7,8 +7,11 @@
 
 namespace Spryker\Zed\SharedCart\Business\QuoteResponseExpander;
 
+use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToCustomerFacadeInterface;
+use Spryker\Zed\SharedCart\Persistence\SharedCartRepositoryInterface;
 
 class CustomerPermissionQuoteResponseExpander implements QuoteResponseExpanderInterface
 {
@@ -18,11 +21,18 @@ class CustomerPermissionQuoteResponseExpander implements QuoteResponseExpanderIn
     protected $customerFacade;
 
     /**
-     * @param \Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToCustomerFacadeInterface $customerFacade
+     * @var \Spryker\Zed\SharedCart\Persistence\SharedCartRepositoryInterface
      */
-    public function __construct(SharedCartToCustomerFacadeInterface $customerFacade)
+    protected $sharedCartRepository;
+
+    /**
+     * @param \Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToCustomerFacadeInterface $customerFacade
+     * @param \Spryker\Zed\SharedCart\Persistence\SharedCartRepositoryInterface $sharedCartRepository
+     */
+    public function __construct(SharedCartToCustomerFacadeInterface $customerFacade, SharedCartRepositoryInterface $sharedCartRepository)
     {
         $this->customerFacade = $customerFacade;
+        $this->sharedCartRepository = $sharedCartRepository;
     }
 
     /**
@@ -32,11 +42,24 @@ class CustomerPermissionQuoteResponseExpander implements QuoteResponseExpanderIn
      */
     public function expand(QuoteResponseTransfer $quoteResponseTransfer): QuoteResponseTransfer
     {
-        $customerTransfer = $quoteResponseTransfer->getQuoteTransfer()->requireCustomer()->getCustomer();
-        $customerTransfer->setPermissions(null);
-        $permissionCollectionTransfer = $this->customerFacade->getCustomer($customerTransfer)->getPermissions();
-        $quoteResponseTransfer->setCustomerPermissions($permissionCollectionTransfer);
+        $customerTransfer = $quoteResponseTransfer->requireCustomer()->getCustomer();
+        $quoteResponseTransfer->setCustomerPermissions($this->getPermissionCollection($customerTransfer));
 
         return $quoteResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
+     */
+    protected function getPermissionCollection(CustomerTransfer $customerTransfer): PermissionCollectionTransfer
+    {
+        if ($customerTransfer->getCompanyUserTransfer()) {
+            $customerTransfer->setPermissions(null);
+            return $this->customerFacade->getCustomer($customerTransfer)->getPermissions();
+        }
+
+        return $this->sharedCartRepository->findPermissionsByCustomer($customerTransfer->getCustomerReference());
     }
 }

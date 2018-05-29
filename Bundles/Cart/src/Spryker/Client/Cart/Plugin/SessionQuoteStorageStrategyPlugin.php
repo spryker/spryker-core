@@ -9,7 +9,9 @@ namespace Spryker\Client\Cart\Plugin;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
@@ -30,6 +32,12 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
     }
 
     /**
+     * Specification:
+     *  - Adds items.
+     *  - Makes zed request.
+     *  - Stores quote in session internally after zed request.
+     *  - Returns update quote.
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param array $params
      *
@@ -49,6 +57,13 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
     }
 
     /**
+     * Specification:
+     *  - Makes zed request.
+     *  - Adds items to quote.
+     *  - Recalculates quote totals.
+     *  - Stores quote in session internally after zed request.
+     *  - Returns update quote.
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      * @param array $params
      *
@@ -72,6 +87,13 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
     }
 
     /**
+     * Specification:
+     *  - Adds multiple items.
+     *  - Makes zed request.
+     *  - Adds only items, that passed cart validation.
+     *  - Stores quote in session internally after zed request.
+     *  - Returns update quote.
+     *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      * @param array $params
      *
@@ -90,6 +112,12 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
     }
 
     /**
+     * Specification:
+     *  - Removes single items from quote.
+     *  - Makes zed request.
+     *  - Stores quote in session internally after zed request.
+     *  - Returns update quote.
+     *
      * @param string $sku
      * @param string|null $groupKey
      *
@@ -114,6 +142,12 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
     }
 
     /**
+     * Specification:
+     *  - Removes single items from quote.
+     *  - Makes zed request.
+     *  - Stores quote in session internally after zed request.
+     *  - Returns update quote.
+     *
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
@@ -133,6 +167,12 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
     }
 
     /**
+     * Specification:
+     *  - Changes quantity for given item.
+     *  - Makes zed request.
+     *  - Stores quote in session internally after zed request.
+     *  - Returns update quote.
+     *
      * @param string $sku
      * @param string|null $groupKey
      * @param int $quantity
@@ -164,6 +204,12 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
     }
 
     /**
+     * Specification:
+     *  - Decreases quantity for given item.
+     *  - Makes zed request.
+     *  - Stores quote in session internally after zed request.
+     *  - Returns update quote.
+     *
      * @param string $sku
      * @param string|null $groupKey
      * @param int $quantity
@@ -192,6 +238,12 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
     }
 
     /**
+     * Specification:
+     *  - Increases quantity for given item.
+     *  - Makes zed request.
+     *  - Stores quote in session internally after zed request.
+     *  - Returns update quote.
+     *
      * @param string $sku
      * @param string|null $groupKey
      * @param int $quantity
@@ -229,6 +281,12 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
     }
 
     /**
+     * Specification:
+     *  - Makes zed request.
+     *  - Reloads all items in cart anew, it recreates all items transfer, reads new prices, options, bundles.
+     *  - Stores quote in session internally after zed request.
+     *  - Returns update quote.
+     *
      * @return void
      */
     public function reloadItems()
@@ -236,6 +294,55 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
         $quoteTransfer = $this->getQuote();
         $quoteTransfer = $this->getCartZedStub()->reloadItems($quoteTransfer);
         $this->getQuoteClient()->setQuote($quoteTransfer);
+    }
+
+    /**
+     * Specification:
+     *  - Makes zed request.
+     *  - Reloads all items in cart anew, it recreates all items transfer, reads new prices, options, bundles.
+     *  - Adds changes as notices to messages
+     *  - Check error messages
+     *  - Stores quote in session internally after zed request.
+     *  - Returns update quote.
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function validateQuote()
+    {
+        $quoteResponseTransfer = $this->getCartZedStub()->validateQuote($this->getQuote());
+        $this->getQuoteClient()->setQuote($quoteResponseTransfer->getQuoteTransfer());
+
+        return $quoteResponseTransfer;
+    }
+
+    /**
+     * Specification:
+     *  - Sets currency to quote.
+     *  - Makes zed request.
+     *  - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles.
+     *  - Stores quote in session internally after zed request.
+     *  - Returns update quote.
+     *
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function setQuoteCurrency(CurrencyTransfer $currencyTransfer): QuoteResponseTransfer
+    {
+        $quoteTransfer = $this->getQuote();
+        $quoteTransfer->setCurrency($currencyTransfer);
+        if (count($quoteTransfer->getItems())) {
+            $quoteTransfer = $this->getCartZedStub()->reloadItems($quoteTransfer);
+        }
+        $quoteResponseTransfer = new QuoteResponseTransfer();
+        $quoteResponseTransfer->setIsSuccessful(false);
+        $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
+        if (count($this->getFactory()->getZedRequestClient()->getLastResponseErrorMessages()) === 0) {
+            $quoteResponseTransfer->setIsSuccessful(true);
+            $this->getQuoteClient()->setQuote($quoteTransfer);
+        }
+
+        return $quoteResponseTransfer;
     }
 
     /**
@@ -306,16 +413,5 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
     protected function getQuote()
     {
         return $this->getQuoteClient()->getQuote();
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function validateQuote()
-    {
-        $quoteResponseTransfer = $this->getCartZedStub()->validateQuote($this->getQuote());
-        $this->getQuoteClient()->setQuote($quoteResponseTransfer->getQuoteTransfer());
-
-        return $quoteResponseTransfer;
     }
 }

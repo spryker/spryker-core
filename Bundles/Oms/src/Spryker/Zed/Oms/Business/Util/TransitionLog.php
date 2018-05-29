@@ -222,7 +222,7 @@ class TransitionLog implements TransitionLogInterface
 
     /**
      * @param array $params
-     * @param array &$result
+     * @param array $result
      *
      * @return void
      */

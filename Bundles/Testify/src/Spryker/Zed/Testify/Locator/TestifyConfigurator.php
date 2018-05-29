@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Container;
 class TestifyConfigurator implements TestifyConfiguratorInterface
 {
     /**
-     * @var \Spryker\Zed\Kernel\Container
+     * @var \Spryker\Shared\Kernel\ContainerInterface|\Spryker\Zed\Kernel\Container
      */
     protected $container;
 

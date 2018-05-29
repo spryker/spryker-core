@@ -19,7 +19,7 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param \Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer $criteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\QuotePermissionGroupResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\QuotePermissionGroupResponseTransfer
      */
     public function getQuotePermissionGroupsAction(QuotePermissionGroupCriteriaFilterTransfer $criteriaFilterTransfer): QuotePermissionGroupResponseTransfer
     {

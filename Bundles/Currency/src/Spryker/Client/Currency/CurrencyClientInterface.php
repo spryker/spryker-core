@@ -33,4 +33,17 @@ interface CurrencyClientInterface
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
     public function getCurrent();
+
+    /**
+     * Specification:
+     * - Sets selected currency to customer session.
+     * - Calls currency post change plugins.
+     *
+     * @api
+     *
+     * @param string $currencyIsoCode
+     *
+     * @return void
+     */
+    public function setCurrentCurrencyIsoCode(string $currencyIsoCode): void;
 }
