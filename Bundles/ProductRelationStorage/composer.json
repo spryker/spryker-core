@@ -8,7 +8,7 @@
     "spryker/kernel": "^3.21.0",
     "spryker/product": "^5.5.0 || ^6.0.0",
     "spryker/product-relation": "^2.1.0",
-    "spryker/product-storage": "^1.0.0",
+    "spryker/product-storage": "^0.1.0 || ^0.2.0 || ^1.0.0",
     "spryker/storage": "^3.4.0",
     "spryker/synchronization": "^0.2.0"
   },
