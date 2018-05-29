@@ -14,9 +14,9 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\ProductAlternativeGui\Business\ProductAlternativeGuiFacadeInterface getFacade()
  */
-class ProductSkuSuggestionController extends AbstractController
+class SuggestProductNameController extends AbstractController
 {
-    protected const PARAM_SKU = 'sku';
+    protected const PARAM_NAME = 'name';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -25,10 +25,10 @@ class ProductSkuSuggestionController extends AbstractController
      */
     public function indexAction(Request $request): JsonResponse
     {
-        $searchName = $request->query->get(static::PARAM_SKU);
+        $searchName = $request->query->get(static::PARAM_NAME);
         $suggestions = $this
             ->getFacade()
-            ->suggestProductSkus($searchName);
+            ->suggestProductNames($searchName);
 
         return $this->jsonResponse($suggestions);
     }
