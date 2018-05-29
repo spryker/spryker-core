@@ -8,7 +8,7 @@
     "spryker/kernel": "^3.0.0",
     "spryker/log": "^3.0.0",
     "spryker/monolog": "^2.0.0",
-    "spryker/queue": "^1.2.0",
+    "spryker/queue": "^1.1.0",
     "spryker/util-encoding": "^2.0.0"
   },
   "require-dev": {
