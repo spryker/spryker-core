@@ -10,9 +10,11 @@ namespace Spryker\Zed\ProductAlternativeGui;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductAlternativeGui\Dependency\Facade\ProductAlternativeGuiToProductAlternativeFacadeBridge;
+use Spryker\Zed\ProductAlternativeGui\Dependency\Facade\ProductAlternativeGuiToProductFacadeBridge;
 
 class ProductAlternativeGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    public const FACADE_PRODUCT = 'FACADE_PRODUCT';
     public const FACADE_PRODUCT_ALTERNATIVE = 'FACADE_PRODUCT_ALTERNATIVE';
 
     /**
@@ -23,7 +25,24 @@ class ProductAlternativeGuiDependencyProvider extends AbstractBundleDependencyPr
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container = parent::provideBusinessLayerDependencies($container);
+        $container = $this->addProductFacade($container);
         $container = $this->addProductAlternativeFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function addProductFacade(Container $container)
+    {
+        $container[static::FACADE_PRODUCT] = function (Container $container) {
+            return new ProductAlternativeGuiToProductFacadeBridge(
+                $container->getLocator()->product()->facade()
+            );
+        };
 
         return $container;
     }
