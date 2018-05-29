@@ -23,12 +23,12 @@ class ProductAlternativeGuiFacade extends AbstractFacade implements ProductAlter
      *
      * @return string[]
      */
-    public function suggestProductNames(string $productName): array
+    public function suggestProductName(string $productName): array
     {
         return $this
             ->getFactory()
             ->createProductSuggester()
-            ->suggestProductNames($productName);
+            ->suggestProductName($productName);
     }
 
     /**
@@ -40,11 +40,11 @@ class ProductAlternativeGuiFacade extends AbstractFacade implements ProductAlter
      *
      * @return string[]
      */
-    public function suggestProductSkus(string $productSku): array
+    public function suggestProductSku(string $productSku): array
     {
         return $this
             ->getFactory()
             ->createProductSuggester()
-            ->suggestProductSkus($productSku);
+            ->suggestProductSku($productSku);
     }
 }

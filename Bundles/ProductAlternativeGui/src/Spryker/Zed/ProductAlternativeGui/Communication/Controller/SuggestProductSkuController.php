@@ -28,7 +28,7 @@ class SuggestProductSkuController extends AbstractController
         $searchName = $request->query->get(static::PARAM_SKU) . '%';
         $suggestions = $this
             ->getFacade()
-            ->suggestProductSkus($searchName);
+            ->suggestProductSku($searchName);
 
         return $this->jsonResponse($suggestions);
     }

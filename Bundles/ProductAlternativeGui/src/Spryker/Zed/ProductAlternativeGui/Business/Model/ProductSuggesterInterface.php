@@ -15,7 +15,7 @@ interface ProductSuggesterInterface
      *
      * @return string[]
      */
-    public function suggestProductNames(string $productName, int $limit = 10): array;
+    public function suggestProductName(string $productName, int $limit = 10): array;
 
     /**
      * @param string $productSku
@@ -23,5 +23,5 @@ interface ProductSuggesterInterface
      *
      * @return string[]
      */
-    public function suggestProductSkus(string $productSku, int $limit = 10): array;
+    public function suggestProductSku(string $productSku, int $limit = 10): array;
 }

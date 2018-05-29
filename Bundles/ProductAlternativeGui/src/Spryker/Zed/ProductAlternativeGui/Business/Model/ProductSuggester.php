@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductAlternativeGui\Business\Model;
 
 use Spryker\Shared\Product\ProductConstants;
+use Spryker\Shared\ProductAlternativeGui\ProductAlternativeGuiConstants;
 use Spryker\Zed\ProductAlternativeGui\Dependency\Facade\ProductAlternativeGuiToProductAlternativeFacadeInterface;
 use Spryker\Zed\ProductAlternativeGui\Dependency\Facade\ProductAlternativeGuiToProductFacadeInterface;
 
@@ -41,7 +42,7 @@ class ProductSuggester implements ProductSuggesterInterface
      *
      * @return string[]
      */
-    public function suggestProductNames(string $productName, int $limit = ProductConstants::PRODUCT_FILTER_LIMIT_DEFAULT): array
+    public function suggestProductName(string $productName, int $limit = ProductAlternativeGuiConstants::FILTERED_PRODUCTS_LIMIT_DEFAULT): array
     {
         $abstractProducts = $this->collectFilteredResults(
             $this->productFacade->filterProductAbstractByLocalizedName($productName, $limit)
@@ -62,7 +63,7 @@ class ProductSuggester implements ProductSuggesterInterface
      *
      * @return string[]
      */
-    public function suggestProductSkus(string $productSku, int $limit = ProductConstants::PRODUCT_FILTER_LIMIT_DEFAULT): array
+    public function suggestProductSku(string $productSku, int $limit = ProductAlternativeGuiConstants::FILTERED_PRODUCTS_LIMIT_DEFAULT): array
     {
         $abstractProducts = $this->collectFilteredResults(
             $this->productFacade->filterProductAbstractBySku($productSku, $limit)
@@ -87,7 +88,7 @@ class ProductSuggester implements ProductSuggesterInterface
         $results = [];
 
         foreach ($products as $product) {
-            $results[] = $product[ProductConstants::PRODUCT_FILTER_RESULT_KEY];
+            $results[] = $product[ProductConstants::FILTERED_PRODUCTS_RESULT_KEY];
         }
 
         return $results;

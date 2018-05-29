@@ -28,7 +28,7 @@ class SuggestProductNameController extends AbstractController
         $searchName = $request->query->get(static::PARAM_NAME) . '%';
         $suggestions = $this
             ->getFacade()
-            ->suggestProductNames($searchName);
+            ->suggestProductName($searchName);
 
         return $this->jsonResponse($suggestions);
     }
