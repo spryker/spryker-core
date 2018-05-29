@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductAlternativeGui\Dependency\Facade;
 
+use Spryker\Shared\Product\ProductConstants;
+
 class ProductAlternativeGuiToProductFacadeBridge implements ProductAlternativeGuiToProductFacadeInterface
 {
     /**
@@ -22,5 +24,47 @@ class ProductAlternativeGuiToProductFacadeBridge implements ProductAlternativeGu
         $this->productFacade = $productFacade;
     }
 
-    // TODO: Add needed methods
+    /**
+     * @param string $sku
+     * @param int $limit
+     *
+     * @return array
+     */
+    public function filterProductAbstractBySku(string $sku, int $limit = ProductConstants::PRODUCT_FILTER_LIMIT_DEFAULT): array
+    {
+        return $this->productFacade->filterProductAbstractBySku($sku, $limit);
+    }
+
+    /**
+     * @param string $localizedName
+     * @param int $limit
+     *
+     * @return array
+     */
+    public function filterProductAbstractByLocalizedName(string $localizedName, int $limit = ProductConstants::PRODUCT_FILTER_LIMIT_DEFAULT): array
+    {
+        return $this->productFacade->filterProductAbstractByLocalizedName($localizedName, $limit);
+    }
+
+    /**
+     * @param string $sku
+     * @param int $limit
+     *
+     * @return array
+     */
+    public function filterProductConcreteBySku(string $sku, int $limit = ProductConstants::PRODUCT_FILTER_LIMIT_DEFAULT): array
+    {
+        return $this->productFacade->filterProductConcreteBySku($sku, $limit);
+    }
+
+    /**
+     * @param string $localizedName
+     * @param int $limit
+     *
+     * @return array
+     */
+    public function filterProductConcreteByLocalizedName(string $localizedName, int $limit = ProductConstants::PRODUCT_FILTER_LIMIT_DEFAULT): array
+    {
+        return $this->productFacade->filterProductConcreteByLocalizedName($localizedName, $limit);
+    }
 }
