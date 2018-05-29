@@ -58,12 +58,13 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
             ->orderByName()
             ->find();
 
+        $mapper = $this->getFactory()
+            ->createMerchantMapper();
+
         $merchantsCollection = new MerchantCollectionTransfer();
         foreach ($spyMerchants as $spyMerchant) {
             $merchantsCollection->addMerchants(
-                $this->getFactory()
-                ->createMerchantMapper()
-                ->mapEntityToMerchantTransfer($spyMerchant, new MerchantTransfer())
+                $mapper->mapEntityToMerchantTransfer($spyMerchant, new MerchantTransfer())
             );
         }
 

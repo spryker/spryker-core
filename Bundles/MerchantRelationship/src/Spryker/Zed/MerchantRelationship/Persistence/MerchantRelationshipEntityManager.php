@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantRelationship\Persistence;
 
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipToCompanyBusinessUnit;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -65,40 +66,44 @@ class MerchantRelationshipEntityManager extends AbstractEntityManager implements
     /**
      * {@inheritdoc}
      *
-     * @param int[] $idAssignedCompanyBusinessUnits
+     * @param int[] $assignedCompanyBusinessUnitIds
      * @param int $idMerchantRelationship
      *
      * @return void
      */
-    public function addAssignedCompanyBusinessUnits(array $idAssignedCompanyBusinessUnits, int $idMerchantRelationship): void
+    public function addAssignedCompanyBusinessUnits(array $assignedCompanyBusinessUnitIds, int $idMerchantRelationship): void
     {
-        foreach ($idAssignedCompanyBusinessUnits as $idAssignedCompanyBusinessUnit) {
+        $entityCollection = new ObjectCollection();
+        foreach ($assignedCompanyBusinessUnitIds as $idAssignedCompanyBusinessUnit) {
             $spyMerchantRelationshipToCompanyBusinessUnit = new SpyMerchantRelationshipToCompanyBusinessUnit();
             $spyMerchantRelationshipToCompanyBusinessUnit
                 ->setFkCompanyBusinessUnit($idAssignedCompanyBusinessUnit)
-                ->setFkMerchantRelationship($idMerchantRelationship)
-                ->save();
+                ->setFkMerchantRelationship($idMerchantRelationship);
+
+            $entityCollection->append($spyMerchantRelationshipToCompanyBusinessUnit);
         }
+
+        $entityCollection->save();
     }
 
     /**
      * {@inheritdoc}
      *
-     * @param int[] $idAssignedCompanyBusinessUnits
+     * @param int[] $assignedCompanyBusinessUnitIds
      * @param int $idMerchantRelationship
      *
      * @return void
      */
-    public function removeAssignedCompanyBusinessUnits(array $idAssignedCompanyBusinessUnits, int $idMerchantRelationship): void
+    public function removeAssignedCompanyBusinessUnits(array $assignedCompanyBusinessUnitIds, int $idMerchantRelationship): void
     {
-        if (empty($idAssignedCompanyBusinessUnits)) {
+        if (empty($assignedCompanyBusinessUnitIds)) {
             return;
         }
 
         $this->getFactory()
             ->createMerchantRelationshipToCompanyBusinessUnitQuery()
             ->filterByFkMerchantRelationship($idMerchantRelationship)
-            ->filterByFkCompanyBusinessUnit_In($idAssignedCompanyBusinessUnits)
+            ->filterByFkCompanyBusinessUnit_In($assignedCompanyBusinessUnitIds)
             ->delete();
     }
 }
