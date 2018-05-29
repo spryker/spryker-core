@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\FileDirectoryTreeTransfer;
 use Generated\Shared\Transfer\FileManagerDataTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\MimeTypeCollectionTransfer;
+use Generated\Shared\Transfer\MimeTypeTransfer;
 
 class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileManagerFacadeInterface
 {
@@ -143,5 +144,29 @@ class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileMan
     public function updateMimeTypeSettings(MimeTypeCollectionTransfer $mimeTypeCollectionTransfer)
     {
         $this->fileManagerFacade->updateMimeTypeSettings($mimeTypeCollectionTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MimeTypeTransfer $mimeTypeTransfer
+     *
+     * @return \Generated\Shared\Transfer\MimeTypeResponseTransfer
+     */
+    public function saveMimeType(MimeTypeTransfer $mimeTypeTransfer)
+    {
+        return $this->fileManagerFacade->saveMimeType($mimeTypeTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MimeTypeTransfer $mimeTypeTransfer
+     *
+     * @return \Generated\Shared\Transfer\MimeTypeResponseTransfer
+     */
+    public function deleteMimeType(MimeTypeTransfer $mimeTypeTransfer)
+    {
+        return $this->fileManagerFacade->deleteMimeType($mimeTypeTransfer);
     }
 }

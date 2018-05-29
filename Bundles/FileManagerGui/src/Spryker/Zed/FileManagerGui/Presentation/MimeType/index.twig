@@ -1,15 +1,19 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
+{% block action %}
+    {{ createActionButton('/file-manager-gui/mime-type/add', 'Add MIME type' | trans) }}
+{% endblock %}
+
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'File types settings' } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'MIME type settings' } %}
 
         {% block widget_content %}
-            {{ mimeTypeSettings | raw }}
+            {{ table | raw }}
 
-            {{ form_start(mimeTypeSettingsForm, {'method': 'POST'}) }}
+            {{ form_start(form, {'method': 'POST'}) }}
             <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}"/>
-            {{ form_end(mimeTypeSettingsForm) }}
+            {{ form_end(form) }}
         {% endblock %}
 
     {% endembed %}

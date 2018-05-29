@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\FileDirectoryTreeTransfer;
 use Generated\Shared\Transfer\FileManagerDataTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\MimeTypeCollectionTransfer;
+use Generated\Shared\Transfer\MimeTypeTransfer;
 
 /**
  * @method \Spryker\Zed\FileManager\Business\FileManagerBusinessFactory getFactory()
@@ -157,4 +158,28 @@ interface FileManagerFacadeInterface
      * @return void
      */
     public function updateMimeTypeSettings(MimeTypeCollectionTransfer $mimeTypeCollectionTransfer);
+
+    /**
+     * Specification:
+     * - Creates or updates mime type
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MimeTypeTransfer $mimeTypeTransfer
+     *
+     * @return \Generated\Shared\Transfer\MimeTypeResponseTransfer
+     */
+    public function saveMimeType(MimeTypeTransfer $mimeTypeTransfer);
+
+    /**
+     * Specification:
+     * - Deletes mime type
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MimeTypeTransfer $mimeTypeTransfer
+     *
+     * @return \Generated\Shared\Transfer\MimeTypeResponseTransfer
+     */
+    public function deleteMimeType(MimeTypeTransfer $mimeTypeTransfer);
 }

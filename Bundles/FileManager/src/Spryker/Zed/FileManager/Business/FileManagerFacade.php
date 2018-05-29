@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\FileDirectoryTreeTransfer;
 use Generated\Shared\Transfer\FileManagerDataTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\MimeTypeCollectionTransfer;
+use Generated\Shared\Transfer\MimeTypeTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -135,5 +136,29 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
         $this->getFactory()
             ->createMimeTypeSaver()
             ->updateIsAllowed($mimeTypeCollectionTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * {@inheritdoc}
+     */
+    public function saveMimeType(MimeTypeTransfer $mimeTypeTransfer)
+    {
+        return $this->getFactory()
+            ->createMimeTypeSaver()
+            ->saveMimeType($mimeTypeTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * {@inheritdoc}
+     */
+    public function deleteMimeType(MimeTypeTransfer $mimeTypeTransfer)
+    {
+        return $this->getFactory()
+            ->createMimeTypeRemover()
+            ->deleteMimeType($mimeTypeTransfer);
     }
 }

@@ -22,10 +22,10 @@
                 <visible>1</visible>
             </list>
             <settings>
-                <label>File Settings</label>
-                <title>File Settings</title>
+                <label>MIME Type Settings</label>
+                <title>MIME Type Settings</title>
                 <bundle>file-manager-gui</bundle>
-                <controller>settings</controller>
+                <controller>mime-type</controller>
                 <action>index</action>
                 <visible>1</visible>
             </settings>

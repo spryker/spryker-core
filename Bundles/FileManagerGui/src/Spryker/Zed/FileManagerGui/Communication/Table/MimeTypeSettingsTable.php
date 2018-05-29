@@ -8,6 +8,8 @@
 namespace Spryker\Zed\FileManagerGui\Communication\Table;
 
 use Orm\Zed\FileManager\Persistence\Map\SpyMimeTypeTableMap;
+use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Shared\FileManagerGui\FileManagerGuiConstants;
 use Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -17,6 +19,11 @@ class MimeTypeSettingsTable extends AbstractTable
     const TITLE_MIME_TYPE = 'MIME Type';
     const TITLE_COMMENT = 'Comment';
     const TITLE_IS_ALLOWED = 'Is Allowed';
+    const TITLE_ACTION = 'Action';
+
+    const REQUEST_ID_MIME_TYPE = 'id-mime-type';
+    const ROUTE_EDIT = 'mime-type/edit';
+    const ROUTE_DELETE = 'mime-type/delete';
 
     /**
      * @var \Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerInterface
@@ -42,6 +49,7 @@ class MimeTypeSettingsTable extends AbstractTable
             SpyMimeTypeTableMap::COL_NAME => static::TITLE_MIME_TYPE,
             SpyMimeTypeTableMap::COL_COMMENT => static::TITLE_COMMENT,
             SpyMimeTypeTableMap::COL_IS_ALLOWED => static::TITLE_IS_ALLOWED,
+            FileManagerGuiConstants::COL_ACTIONS => FileManagerGuiConstants::COL_ACTIONS,
         ]);
 
         $config->setSortable([
@@ -56,6 +64,7 @@ class MimeTypeSettingsTable extends AbstractTable
 
         $config->setRawColumns([
             SpyMimeTypeTableMap::COL_IS_ALLOWED,
+            FileManagerGuiConstants::COL_ACTIONS,
         ]);
 
         return $config;
@@ -86,10 +95,13 @@ class MimeTypeSettingsTable extends AbstractTable
      */
     protected function mapResults(array $item)
     {
+        $actions = implode(' ', $this->buildLinks($item));
+
         return [
             SpyMimeTypeTableMap::COL_NAME => $item[SpyMimeTypeTableMap::COL_NAME],
             SpyMimeTypeTableMap::COL_COMMENT => $item[SpyMimeTypeTableMap::COL_COMMENT],
             SpyMimeTypeTableMap::COL_IS_ALLOWED => $this->addCheckBox($item),
+            FileManagerGuiConstants::COL_ACTIONS => $actions,
         ];
     }
 
@@ -106,6 +118,31 @@ class MimeTypeSettingsTable extends AbstractTable
             $item[SpyMimeTypeTableMap::COL_ID_MIME_TYPE],
             $item[SpyMimeTypeTableMap::COL_IS_ALLOWED] ? "checked='checked'" : ''
         );
+    }
+
+    /**
+     * @param array $item
+     *
+     * @return array
+     */
+    protected function buildLinks(array $item)
+    {
+        $buttons = [];
+
+        $buttons[] = $this->generateEditButton(
+            Url::generate(static::ROUTE_EDIT, [
+                static::REQUEST_ID_MIME_TYPE => $item[SpyMimeTypeTableMap::COL_ID_MIME_TYPE],
+            ]),
+            'Edit'
+        );
+        $buttons[] = $this->generateRemoveButton(
+            Url::generate(static::ROUTE_DELETE, [
+                static::REQUEST_ID_MIME_TYPE => $item[SpyMimeTypeTableMap::COL_ID_MIME_TYPE],
+            ]),
+            'Delete'
+        );
+
+        return $buttons;
     }
 
     /**

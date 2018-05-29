@@ -18,6 +18,9 @@ class MimeTypeSettingsForm extends AbstractType
 {
     const FIELD_MIME_TYPES = 'mimeTypes';
 
+    const FORM_DATA_KEY_ID_MIME_TYPE = 'idMimeType';
+    const FORM_DATA_KEY_IS_ALLOWED = 'isAllowed';
+
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options

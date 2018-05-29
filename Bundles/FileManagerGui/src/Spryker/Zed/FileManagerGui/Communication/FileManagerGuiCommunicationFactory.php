@@ -9,9 +9,11 @@ namespace Spryker\Zed\FileManagerGui\Communication;
 
 use Spryker\Zed\FileManagerGui\Communication\Form\DataProvider\FileDirectoryFormDataProvider;
 use Spryker\Zed\FileManagerGui\Communication\Form\DataProvider\FileFormDataProvider;
+use Spryker\Zed\FileManagerGui\Communication\Form\DataProvider\MimeTypeFormDataProvider;
 use Spryker\Zed\FileManagerGui\Communication\Form\FileDirectoryForm;
 use Spryker\Zed\FileManagerGui\Communication\Form\FileForm;
 use Spryker\Zed\FileManagerGui\Communication\Form\FileLocalizedAttributesForm;
+use Spryker\Zed\FileManagerGui\Communication\Form\MimeTypeForm;
 use Spryker\Zed\FileManagerGui\Communication\Form\MimeTypeSettingsForm;
 use Spryker\Zed\FileManagerGui\Communication\Form\Tabs\FileFormTabs;
 use Spryker\Zed\FileManagerGui\Communication\Table\FileInfoEditTable;
@@ -173,6 +175,31 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
             FileDirectoryForm::class,
             $dataProvider->getData(),
             $dataProvider->getOptions()
+        );
+    }
+
+    /**
+     * @param int|null $idMimeType
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getMimeTypeForm(int $idMimeType = null)
+    {
+        $dataProvider = $this->createMimeTypeFormDataProvider();
+
+        return $this->getFormFactory()->create(
+            MimeTypeForm::class,
+            $dataProvider->getData($idMimeType)
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\FileManagerGui\Communication\Form\DataProvider\MimeTypeFormDataProvider
+     */
+    public function createMimeTypeFormDataProvider()
+    {
+        return new MimeTypeFormDataProvider(
+            $this->getFileManagerQueryContainer()
         );
     }
 

@@ -1,0 +1,33 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Edit MIME type' | trans %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
+
+{% block action %}
+    {{ backActionButton('/file-manager-gui/mime-type', 'Back to MIME type list' | trans) }}
+{% endblock %}
+
+{% block content %}
+    <div id="spy-file" class="glossary">
+        {% embed '@Gui/Partials/widget.twig' %}
+
+            {% block widget_content %}
+
+                {{ form_start(form) }}
+
+                {{ form_row(form.name) }}
+                {{ form_row(form.comment) }}
+                {{ form_row(form.isAllowed) }}
+
+                <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}"/>
+
+                {{ form_end(form) }}
+
+            {% endblock %}
+
+        {% endembed %}
+
+    </div>
+{% endblock %}

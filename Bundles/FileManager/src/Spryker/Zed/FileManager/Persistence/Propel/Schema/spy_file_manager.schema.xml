@@ -86,6 +86,11 @@
         <column name="name" type="VARCHAR" size="255" required="true"/>
         <column name="comment" type="VARCHAR" size="255" required="false"/>
         <column name="is_allowed" type="BOOLEAN" required="true"/>
+
+        <unique name="spy_mime_type-name">
+            <unique-column name="name"/>
+        </unique>
+
         <id-method-parameter value="spy_mime_type_pk_seq"/>
     </table>
 

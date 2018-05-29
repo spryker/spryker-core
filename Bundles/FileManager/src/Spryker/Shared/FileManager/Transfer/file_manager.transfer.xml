@@ -78,7 +78,12 @@
     </transfer>
 
     <transfer name="MimeTypeCollection">
-        <property name="items" type="MimeType[]" singular="mimeType"/>
+        <property name="items" type="MimeType[]" singular="mimeType" />
+    </transfer>
+
+    <transfer name="MimeTypeResponse">
+        <property name="mimeType" type="MimeType" />
+        <property name="isSuccessful" type="bool" />
     </transfer>
 
 </transfers>
