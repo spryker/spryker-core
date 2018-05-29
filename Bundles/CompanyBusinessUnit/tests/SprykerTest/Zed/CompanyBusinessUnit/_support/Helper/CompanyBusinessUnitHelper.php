@@ -18,7 +18,10 @@ class CompanyBusinessUnitHelper extends Module
     {
         $companyTransfer = (new CompanyBuilder())->build();
 
-        return $this->getLocator()->company()->facade()->create($companyTransfer)->getCompanyTransfer();
+        return $this->getLocator()
+            ->company()
+            ->facade()
+            ->create($companyTransfer)->getCompanyTransfer();
     }
 
     /**
@@ -31,6 +34,9 @@ class CompanyBusinessUnitHelper extends Module
         $companyBusinessUnitTransfer = (new CompanyBusinessUnitBuilder($seedData))->build();
         $companyBusinessUnitTransfer->setIdCompanyBusinessUnit(null);
 
-        return $this->getLocator()->companyBusinessUnit()->facade()->create($companyBusinessUnitTransfer)->getCompanyBusinessUnitTransfer();
+        return $this->getLocator()
+            ->companyBusinessUnit()
+            ->facade()
+            ->create($companyBusinessUnitTransfer)->getCompanyBusinessUnitTransfer();
     }
 }
