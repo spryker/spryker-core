@@ -260,8 +260,8 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
         /** @var \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity */
         foreach ($productAbstractEntities as $productAbstractEntity) {
             $abstractProducts[] = [
-                ProductConstants::PRODUCT_FILTER_ABSTRACT_ID_KEY => $productAbstractEntity->getIdProductAbstract(),
-                ProductConstants::PRODUCT_FILTER_RESULT_KEY => $productAbstractEntity->getSku(),
+                ProductConstants::FILTERED_PRODUCTS_ABSTRACT_ID_KEY => $productAbstractEntity->getIdProductAbstract(),
+                ProductConstants::FILTERED_PRODUCTS_RESULT_KEY => $productAbstractEntity->getSku(),
             ];
         }
 
@@ -300,9 +300,9 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
         /** @var \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity */
         foreach ($productAbstractEntities as $productAbstractEntity) {
             $abstractProducts[] = [
-                ProductConstants::PRODUCT_FILTER_ABSTRACT_ID_KEY => $productAbstractEntity->getIdProductAbstract(),
-                ProductConstants::PRODUCT_FILTER_RESULT_KEY => $productAbstractEntity
-                    ->getVirtualColumn(ProductConstants::PRODUCT_NAME_COLUMN),
+                ProductConstants::FILTERED_PRODUCTS_ABSTRACT_ID_KEY => $productAbstractEntity->getIdProductAbstract(),
+                ProductConstants::FILTERED_PRODUCTS_RESULT_KEY => $productAbstractEntity
+                    ->getVirtualColumn(ProductConstants::FILTERED_PRODUCTS_PRODUCT_NAME_COLUMN),
             ];
         }
 

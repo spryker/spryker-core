@@ -149,7 +149,7 @@ interface ProductFacadeInterface
      *
      * @return array
      */
-    public function filterProductAbstractBySku(string $sku, int $limit = ProductConstants::PRODUCT_FILTER_LIMIT_DEFAULT): array;
+    public function filterProductAbstractBySku(string $sku, int $limit = ProductConstants::FILTERED_PRODUCTS_LIMIT_DEFAULT): array;
 
     /**
      * Specification:
@@ -162,7 +162,7 @@ interface ProductFacadeInterface
      *
      * @return array
      */
-    public function filterProductAbstractByLocalizedName(string $localizedName, int $limit = ProductConstants::PRODUCT_FILTER_LIMIT_DEFAULT): array;
+    public function filterProductAbstractByLocalizedName(string $localizedName, int $limit = ProductConstants::FILTERED_PRODUCTS_LIMIT_DEFAULT): array;
 
     /**
      * Specification:
@@ -175,7 +175,7 @@ interface ProductFacadeInterface
      *
      * @return array
      */
-    public function filterProductConcreteBySku(string $sku, int $limit = ProductConstants::PRODUCT_FILTER_LIMIT_DEFAULT): array;
+    public function filterProductConcreteBySku(string $sku, int $limit = ProductConstants::FILTERED_PRODUCTS_LIMIT_DEFAULT): array;
 
     /**
      * Specification:
@@ -188,7 +188,7 @@ interface ProductFacadeInterface
      *
      * @return array
      */
-    public function filterProductConcreteByLocalizedName(string $localizedName, int $limit = ProductConstants::PRODUCT_FILTER_LIMIT_DEFAULT): array;
+    public function filterProductConcreteByLocalizedName(string $localizedName, int $limit = ProductConstants::FILTERED_PRODUCTS_LIMIT_DEFAULT): array;
 
     /**
      * Specification:
