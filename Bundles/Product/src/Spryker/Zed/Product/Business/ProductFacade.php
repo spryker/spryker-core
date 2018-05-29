@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\RawProductAttributesTransfer;
+use Spryker\Shared\Product\ProductConstants;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -149,14 +150,15 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      * @api
      *
      * @param string $sku
+     * @param int $limit
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
      */
-    public function findProductAbstractBySku(string $sku): ?ProductAbstractTransfer
+    public function filterProductAbstractBySku(string $sku, int $limit = ProductConstants::PRODUCT_LIMIT_SEARCH_DEFAULT): ?ProductAbstractTransfer
     {
         return $this->getFactory()
             ->createProductAbstractManager()
-            ->findProductAbstractBySku($sku);
+            ->filterProductAbstractBySku($sku, $limit);
     }
 
     /**
@@ -165,14 +167,15 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      * @api
      *
      * @param string $localizedName
+     * @param int $limit
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
      */
-    public function findProductAbstractByLocalizedName(string $localizedName): ?ProductAbstractTransfer
+    public function filterProductAbstractByLocalizedName(string $localizedName, int $limit = ProductConstants::PRODUCT_LIMIT_SEARCH_DEFAULT): ?ProductAbstractTransfer
     {
         return $this->getFactory()
             ->createProductAbstractManager()
-            ->findProductAbstractByLocalizedName($localizedName);
+            ->filterProductAbstractByLocalizedName($localizedName, $limit);
     }
 
     /**
@@ -181,14 +184,15 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      * @api
      *
      * @param string $sku
+     * @param int $id
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
      */
-    public function findProductConcreteBySku(string $sku): ?ProductConcreteTransfer
+    public function filterProductConcreteBySku(string $sku, int $limit = ProductConstants::PRODUCT_LIMIT_SEARCH_DEFAULT): ?ProductConcreteTransfer
     {
         return $this->getFactory()
             ->createProductConcreteManager()
-            ->findProductConcreteBySku($sku);
+            ->filterProductConcreteBySku($sku, $limit);
     }
 
     /**
@@ -197,14 +201,15 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      * @api
      *
      * @param string $localizedName
+     * @param int $limit
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
      */
-    public function findProductConcreteByLocalizedName(string $localizedName): ?ProductConcreteTransfer
+    public function filterProductConcreteByLocalizedName(string $localizedName, int $limit = ProductConstants::PRODUCT_LIMIT_SEARCH_DEFAULT): ?ProductConcreteTransfer
     {
         return $this->getFactory()
             ->createProductConcreteManager()
-            ->findProductConcreteByLocalizedName($localizedName);
+            ->filterProductConcreteByLocalizedName($localizedName, $limit);
     }
 
     /**

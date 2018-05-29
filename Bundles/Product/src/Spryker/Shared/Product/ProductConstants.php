@@ -9,4 +9,5 @@ namespace Spryker\Shared\Product;
 
 interface ProductConstants
 {
+    public const PRODUCT_LIMIT_SEARCH_DEFAULT = 10;
 }

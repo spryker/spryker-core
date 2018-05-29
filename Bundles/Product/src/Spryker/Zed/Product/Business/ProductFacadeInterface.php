@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\RawProductAttributesTransfer;
+use Spryker\Shared\Product\ProductConstants;
 
 interface ProductFacadeInterface
 {
@@ -138,52 +139,64 @@ interface ProductFacadeInterface
     public function findProductAbstractById($idProductAbstract);
 
     /**
+     * TODO: Replace return type with correct one.
+     *
      * Specification:
-     * - Find abstract product by its SKU.
+     * - Filters abstract products by specified SKU.
      *
      * @api
      *
      * @param string $sku
+     * @param int $limit
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
      */
-    public function findProductAbstractBySku(string $sku): ?ProductAbstractTransfer;
+    public function filterProductAbstractBySku(string $sku, int $limit = ProductConstants::PRODUCT_LIMIT_SEARCH_DEFAULT): ?ProductAbstractTransfer;
 
     /**
+     * TODO: Replace return type with correct one.
+     *
      * Specification:
-     * - Find abstract product by its localized name.
+     * - Filters abstract products by specified localized name.
      *
      * @api
      *
      * @param string $localizedName
+     * @param int $limit
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
      */
-    public function findProductAbstractByLocalizedName(string $localizedName): ?ProductAbstractTransfer;
+    public function filterProductAbstractByLocalizedName(string $localizedName, int $limit = ProductConstants::PRODUCT_LIMIT_SEARCH_DEFAULT): ?ProductAbstractTransfer;
 
     /**
+     * TODO: Replace return type with correct one.
+     *
      * Specification:
-     * - Find concrete product by its SKU.
+     * - Filters concrete products by specified SKU.
      *
      * @api
      *
      * @param string $sku
+     * @param int $limit
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
      */
-    public function findProductConcreteBySku(string $sku): ?ProductConcreteTransfer;
+    public function filterProductConcreteBySku(string $sku, int $limit = ProductConstants::PRODUCT_LIMIT_SEARCH_DEFAULT): ?ProductConcreteTransfer;
 
     /**
+     * TODO: Replace return type with correct one.
+     *
      * Specification:
-     * - Find concrete product by its localized name.
+     * - Filters concrete products by specified localized name.
      *
      * @api
      *
      * @param string $localizedName
+     * @param int $limit
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
      */
-    public function findProductConcreteByLocalizedName(string $localizedName): ?ProductConcreteTransfer;
+    public function filterProductConcreteByLocalizedName(string $localizedName, int $limit = ProductConstants::PRODUCT_LIMIT_SEARCH_DEFAULT): ?ProductConcreteTransfer;
 
     /**
      * Specification:
