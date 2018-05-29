@@ -10,6 +10,8 @@ namespace Spryker\Zed\Product\Business\Product;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
+use Spryker\Shared\Product\ProductConstants;
 use Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
 use Spryker\Zed\Product\Business\Product\Assertion\ProductAbstractAssertionInterface;
@@ -208,52 +210,73 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
 
     /**
      * @param string $sku
+     * @param int $limit
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
+     * @return array
      */
-    public function findProductConcreteBySku(string $sku): ?ProductConcreteTransfer
+    public function filterProductConcreteBySku(string $sku, int $limit): array
     {
-        $productEntity = $this->productQueryContainer
+        $productConcreteEntities = $this->productQueryContainer
             ->queryProductConcreteBySku($sku)
-            ->findOne();
+            ->limit($limit)
+            ->find();
 
-        if (!$productEntity) {
-            return null;
+        if (count($productConcreteEntities) === 0) {
+            return [];
         }
 
-        $productConcreteTransfer = $this->productTransferMapper->convertProduct($productEntity);
+        $concreteProducts = [];
 
-        return $this->prepareProductConcreteTransfer($productConcreteTransfer);
+        /** @var \Orm\Zed\Product\Persistence\SpyProduct $productConcreteEntity */
+        foreach ($productConcreteEntities as $productConcreteEntity) {
+            $concreteProducts[] = [
+                ProductConstants::PRODUCT_FILTER_CONCRETE_ID_KEY => $productConcreteEntity->getIdProduct(),
+                ProductConstants::PRODUCT_FILTER_RESULT_KEY => $productConcreteEntity->getSku(),
+            ];
+        }
+
+        return $concreteProducts;
     }
 
     /**
      * @param string $localizedName
+     * @param int $limit
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
+     * @return array
      */
-    public function findProductConcreteByLocalizedName(string $localizedName): ?ProductConcreteTransfer
+    public function filterProductConcreteByLocalizedName(string $localizedName, int $limit): array
     {
         $locale = $this->localeFacade
             ->getCurrentLocale();
 
         $locale->requireIdLocale();
 
-        $productEntity = $this->productQueryContainer
+        $productConcreteEntities = $this->productQueryContainer
             ->queryProductConcreteWithName(
                 $locale->getIdLocale()
             )
             ->useSpyProductLocalizedAttributesQuery()
                 ->filterByName($localizedName)
                 ->endUse()
-            ->findOne();
+            ->limit($limit)
+            ->find();
 
-        if (!$productEntity) {
-            return null;
+        if (count($productConcreteEntities) === 0) {
+            return [];
         }
 
-        $productConcreteTransfer = $this->productTransferMapper->convertProduct($productEntity);
+        $concreteProducts = [];
 
-        return $this->prepareProductConcreteTransfer($productConcreteTransfer);
+        /** @var \Orm\Zed\Product\Persistence\SpyProduct $productConcreteEntity */
+        foreach ($productConcreteEntities as $productConcreteEntity) {
+            $concreteProducts[] = [
+                ProductConstants::PRODUCT_FILTER_CONCRETE_ID_KEY => $productConcreteEntity->getIdProduct(),
+                ProductConstants::PRODUCT_FILTER_RESULT_KEY => $productConcreteEntity
+                    ->getVirtualColumn(SpyProductLocalizedAttributesTableMap::COL_NAME),
+            ];
+        }
+
+        return $concreteProducts;
     }
 
     /**
@@ -341,19 +364,6 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
             ->filterByFkProductAbstract($productAbstractTransfer->getIdProductAbstract())
             ->filterByIdProduct($productConcreteTransfer->getIdProductConcrete())
             ->findOne();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
-    protected function prepareProductConcreteTransfer(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
-    {
-        $productConcreteTransfer = $this
-            ->loadProductData($productConcreteTransfer);
-
-        return $productConcreteTransfer;
     }
 
     /**

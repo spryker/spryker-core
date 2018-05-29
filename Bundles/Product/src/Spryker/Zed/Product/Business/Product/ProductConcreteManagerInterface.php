@@ -53,17 +53,19 @@ interface ProductConcreteManagerInterface
 
     /**
      * @param string $sku
+     * @param int $limit
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
+     * @return array
      */
-    public function findProductConcreteBySku(string $sku): ?ProductConcreteTransfer;
+    public function filterProductConcreteBySku(string $sku, int $limit): array;
 
     /**
      * @param string $localizedName
+     * @param int $limit
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
+     * @return array
      */
-    public function findProductConcreteByLocalizedName(string $localizedName): ?ProductConcreteTransfer;
+    public function filterProductConcreteByLocalizedName(string $localizedName, int $limit): array;
 
     /**
      * @param string $concreteSku
