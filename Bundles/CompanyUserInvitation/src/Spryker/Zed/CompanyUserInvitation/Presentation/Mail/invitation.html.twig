@@ -1,0 +1,6 @@
+<div>
+    <div style="text-align: center;">{{ 'mail.company.user.invitation.body.html' | trans({
+            '%name%' : mail.getCompanyUserInvitation.getFirstName,
+            '%invitationLink%' : mail.getInvitationLink,
+        }) | raw }}</div>
+</div>
