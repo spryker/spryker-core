@@ -10,6 +10,8 @@ namespace Spryker\Zed\Product\Business\Product;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
+use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
+use Spryker\Shared\Product\ProductConstants;
 use Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
 use Spryker\Zed\Product\Business\Product\Assertion\ProductAbstractAssertionInterface;
@@ -238,54 +240,73 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
 
     /**
      * @param string $sku
+     * @param int $limit
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
+     * @return array
      */
-    public function findProductAbstractBySku(string $sku): ?ProductAbstractTransfer
+    public function filterProductAbstractBySku(string $sku, int $limit): array
     {
-        $productAbstractEntity = $this->productQueryContainer
+        $productAbstractEntities = $this->productQueryContainer
             ->queryProductAbstractBySku($sku)
-            ->findOne();
+            ->limit($limit)
+            ->find();
 
-        if (!$productAbstractEntity) {
-            return null;
+        if (count($productAbstractEntities) === 0) {
+            return [];
         }
 
-        $productAbstractTransfer = $this->productTransferMapper
-            ->convertProductAbstract($productAbstractEntity);
+        $abstractProducts = [];
 
-        return $this->prepareProductAbstractTransfer($productAbstractTransfer);
+        /** @var \Orm\Zed\Product\Persistence\SpyProduct $productAbstractEntity */
+        foreach ($productAbstractEntities as $productAbstractEntity) {
+            $abstractProducts[] = [
+                ProductConstants::PRODUCT_FILTER_ABSTRACT_ID_KEY => $productAbstractEntity->getIdProduct(),
+                ProductConstants::PRODUCT_FILTER_RESULT_KEY => $productAbstractEntity->getSku(),
+            ];
+        }
+
+        return $abstractProducts;
     }
 
     /**
      * @param string $localizedName
+     * @param int $limit
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
+     * @return array
      */
-    public function findProductAbstractByLocalizedName(string $localizedName): ?ProductAbstractTransfer
+    public function filterProductAbstractByLocalizedName(string $localizedName, int $limit): array
     {
         $locale = $this->localeFacade
             ->getCurrentLocale();
 
         $locale->requireIdLocale();
 
-        $productAbstractEntity = $this->productQueryContainer
+        $productAbstractEntities = $this->productQueryContainer
             ->queryProductAbstractWithName(
                 $locale->getIdLocale()
             )
             ->useSpyProductAbstractLocalizedAttributesQuery()
                 ->filterByName($localizedName)
                 ->endUse()
-            ->findOne();
+            ->limit($limit)
+            ->find();
 
-        if (!$productAbstractEntity) {
-            return null;
+        if (count($productAbstractEntities) === 0) {
+            return [];
         }
 
-        $productAbstractTransfer = $this->productTransferMapper
-            ->convertProductAbstract($productAbstractEntity);
+        $abstractProducts = [];
 
-        return $this->prepareProductAbstractTransfer($productAbstractTransfer);
+        /** @var \Orm\Zed\Product\Persistence\SpyProduct $productAbstractEntity */
+        foreach ($productAbstractEntities as $productAbstractEntity) {
+            $abstractProducts[] = [
+                ProductConstants::PRODUCT_FILTER_ABSTRACT_ID_KEY => $productAbstractEntity->getIdProduct(),
+                ProductConstants::PRODUCT_FILTER_RESULT_KEY => $productAbstractEntity
+                    ->getVirtualColumn(SpyProductLocalizedAttributesTableMap::COL_NAME),
+            ];
+        }
+
+        return $abstractProducts;
     }
 
     /**
@@ -324,29 +345,6 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
         }
 
         return $productConcrete->getSpyProductAbstract()->getSku();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
-     */
-    protected function prepareProductAbstractTransfer(ProductAbstractTransfer $productAbstractTransfer): ProductAbstractTransfer
-    {
-        $productAbstractTransfer = $this
-            ->loadLocalizedAttributes($productAbstractTransfer);
-
-        $idProductAbstract = $productAbstractTransfer
-            ->requireIdProductAbstract()
-            ->getIdProductAbstract();
-
-        $productAbstractTransfer->setStoreRelation(
-            $this->getStoreRelation($idProductAbstract)
-        );
-
-        $productAbstractTransfer = $this->notifyReadObservers($productAbstractTransfer);
-
-        return $productAbstractTransfer;
     }
 
     /**

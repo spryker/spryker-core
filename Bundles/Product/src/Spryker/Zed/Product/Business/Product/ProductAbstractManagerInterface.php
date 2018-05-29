@@ -52,17 +52,19 @@ interface ProductAbstractManagerInterface
 
     /**
      * @param string $sku
+     * @param int $limit
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
+     * @return array
      */
-    public function findProductAbstractBySku(string $sku): ?ProductAbstractTransfer;
+    public function filterProductAbstractBySku(string $sku, int $limit): array;
 
     /**
      * @param string $localizedName
+     * @param int $limit
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
+     * @return array
      */
-    public function findProductAbstractByLocalizedName(string $localizedName): ?ProductAbstractTransfer;
+    public function filterProductAbstractByLocalizedName(string $localizedName, int $limit): array;
 
     /**
      * @param string $sku
