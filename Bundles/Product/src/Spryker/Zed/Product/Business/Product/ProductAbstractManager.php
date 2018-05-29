@@ -10,7 +10,6 @@ namespace Spryker\Zed\Product\Business\Product;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
-use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Spryker\Shared\Product\ProductConstants;
 use Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
@@ -303,7 +302,7 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
             $abstractProducts[] = [
                 ProductConstants::PRODUCT_FILTER_ABSTRACT_ID_KEY => $productAbstractEntity->getIdProductAbstract(),
                 ProductConstants::PRODUCT_FILTER_RESULT_KEY => $productAbstractEntity
-                    ->getVirtualColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME),
+                    ->getVirtualColumn(ProductConstants::PRODUCT_NAME_COLUMN),
             ];
         }
 

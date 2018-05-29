@@ -13,4 +13,5 @@ interface ProductConstants
     public const PRODUCT_FILTER_ABSTRACT_ID_KEY = 'abstract_id';
     public const PRODUCT_FILTER_CONCRETE_ID_KEY = 'concrete_id';
     public const PRODUCT_FILTER_RESULT_KEY = 'result';
+    public const PRODUCT_NAME_COLUMN = 'name';
 }
