@@ -8,15 +8,16 @@
 namespace SprykerTest\Zed\ProductMeasurementUnit\Communication\Plugin\SalesExtension;
 
 use Codeception\Test\Unit;
-use Generated\Shared\DataBuilder\ProductMeasurementSalesUnitBuilder;
-use Generated\Shared\DataBuilder\ProductMeasurementUnitBuilder;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SpyProductMeasurementUnitEntityTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 use Spryker\Zed\ProductMeasurementUnit\Communication\Plugin\SalesExtension\QuantitySalesUnitOrderItemExpanderPreSavePlugin;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductMeasurementUnit
@@ -53,9 +54,28 @@ class QuantitySalesUnitOrderItemExpanderPreSavePluginTest extends Unit
      */
     public function testExpandOrderItemAddsMeasurementUnitInfo(): void
     {
-        //Assign
-        $productMeasurementUnit = (new ProductMeasurementUnitBuilder())->build();
-        $quantitySalesUnitTransfer = (new ProductMeasurementSalesUnitBuilder(['productMeasurementUnit' => $productMeasurementUnit]))->build();
+        // Assign
+        $code = 'MYCODE' . random_int(1, 100);
+        $productTransfer = $this->tester->haveProduct();
+        $productMeasurementUnitTransfer = $this->tester->haveProductMeasurementUnit([
+            SpyProductMeasurementUnitEntityTransfer::CODE => $code,
+        ]);
+        $productMeasurementBaseUnitTransfer = $this->tester->haveProductMeasurementBaseUnit(
+            $productTransfer->getFkProductAbstract(),
+            $productMeasurementUnitTransfer->getIdProductMeasurementUnit()
+        );
+        $productMeasurementBaseUnitTransfer->setProductMeasurementUnit($productMeasurementUnitTransfer);
+
+        $productMeasurementSalesUnitTransfer = $this->tester->haveProductMeasurementSalesUnit(
+            $productTransfer->getIdProductConcrete(),
+            $productMeasurementUnitTransfer->getIdProductMeasurementUnit(),
+            $productMeasurementBaseUnitTransfer->getIdProductMeasurementBaseUnit()
+        );
+
+        $productMeasurementSalesUnitTransfer->setProductMeasurementUnit($productMeasurementUnitTransfer);
+        $productMeasurementSalesUnitTransfer->setProductMeasurementBaseUnit($productMeasurementBaseUnitTransfer);
+
+        $quantitySalesUnitTransfer = (new ProductMeasurementSalesUnitTransfer())->fromArray($productMeasurementSalesUnitTransfer->toArray(), true);
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setQuantitySalesUnit($quantitySalesUnitTransfer);
 
@@ -67,7 +87,8 @@ class QuantitySalesUnitOrderItemExpanderPreSavePluginTest extends Unit
         );
 
         //Assert
-        $this->assertSame($productMeasurementUnit->getName(), $salesOrderItemEntity->getQuantityMeasurementUnitName());
+        $this->assertSame($productMeasurementUnitTransfer->getName(), $salesOrderItemEntity->getQuantityMeasurementUnitName());
+        $this->assertSame($productMeasurementUnitTransfer->getName(), $salesOrderItemEntity->getQuantityBaseMeasurementUnitName());
         $this->assertSame($quantitySalesUnitTransfer->getPrecision(), $salesOrderItemEntity->getQuantityMeasurementUnitPrecision());
         $this->assertSame($quantitySalesUnitTransfer->getConversion(), $salesOrderItemEntity->getQuantityMeasurementUnitConversion());
     }
