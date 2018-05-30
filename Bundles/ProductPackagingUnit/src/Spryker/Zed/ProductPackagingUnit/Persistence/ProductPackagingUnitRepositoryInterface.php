@@ -7,6 +7,16 @@
 
 namespace Spryker\Zed\ProductPackagingUnit\Persistence;
 
+use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
+
 interface ProductPackagingUnitRepositoryInterface
 {
+    /**
+     * @param string $productPackagingUnitTypeName
+     *
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
+     */
+    public function getProductPackagingUnitTypeByName(
+        string $productPackagingUnitTypeName
+    ): ProductPackagingUnitTypeTransfer;
 }

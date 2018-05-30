@@ -5,28 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductPackagingUnit\Business;
+namespace Spryker\Zed\ProductPackagingUnit\Business\Model\Reader;
 
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 
-interface ProductPackagingUnitFacadeInterface
+interface ProductPackagingUnitTypeReaderInterface
 {
     /**
-     * Specification:
-     * - Add infrastructural packaging unit types list to storage.
-     *
-     * @api
-     *
-     * @return void
-     */
-    public function installProductPackagingUnitTypes(): void;
-
-    /**
-     * Specification:
-     *  - Retrieve a product packaging unit type by ProductPackagingUnitTypeTransfer::name in the transfer.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer

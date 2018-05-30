@@ -5,33 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductPackagingUnit\Business;
+namespace Spryker\Zed\ProductPackagingUnit\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
+use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitType;
 
-interface ProductPackagingUnitFacadeInterface
+interface ProductPackagingUnitTypeMapperInterface
 {
     /**
-     * Specification:
-     * - Add infrastructural packaging unit types list to storage.
-     *
-     * @api
-     *
-     * @return void
-     */
-    public function installProductPackagingUnitTypes(): void;
-
-    /**
-     * Specification:
-     *  - Retrieve a product packaging unit type by ProductPackagingUnitTypeTransfer::name in the transfer.
-     *
-     * @api
-     *
+     * @param \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitType $spyProductPackagingUnitType
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
      */
-    public function getProductPackagingUnitTypeByName(
+    public function mapProductPackagingUnitTypeTransfer(
+        SpyProductPackagingUnitType $spyProductPackagingUnitType,
         ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
     ): ProductPackagingUnitTypeTransfer;
 }

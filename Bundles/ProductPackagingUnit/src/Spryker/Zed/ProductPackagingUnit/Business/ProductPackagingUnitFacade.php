@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductPackagingUnit\Business;
 
+use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -14,4 +15,34 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackagingUnitFacadeInterface
 {
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function installProductPackagingUnitTypes(): void
+    {
+        $this->getFactory()
+            ->createProductPackagingUnitTypeInstaller()
+            ->install();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
+     */
+    public function getProductPackagingUnitTypeByName(
+        ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+    ): ProductPackagingUnitTypeTransfer {
+        return $this->getFactory()
+            ->createProductPackagingUnitTypeReader()
+            ->getProductPackagingUnitTypeByName($productPackagingUnitTypeTransfer);
+    }
 }
