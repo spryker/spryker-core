@@ -44,7 +44,7 @@ class ObjectBuilderWithLogger extends PropelObjectBuilder
      *
      * @see \Propel\Generator\Builder\Om\ObjectBuilder::addColumnMutators()
      *
-     * @param string &$script The script will be modified in this method.
+     * @param string $script The script will be modified in this method.
      * @param \Propel\Generator\Model\Column $col The current column.
      *
      * @return void
@@ -319,7 +319,7 @@ class ObjectBuilderWithLogger extends PropelObjectBuilder
      *
      * @see addDelete()
      *
-     * @param string &$script The script will be modified in this method.
+     * @param string $script The script will be modified in this method.
      *
      * @return void
      **/

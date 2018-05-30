@@ -9,7 +9,6 @@ namespace Spryker\Client\ProductImageStorage\Storage;
 
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\ProductImageStorage\Dependency\Service\ProductImageStorageToSynchronizationServiceInterface;
-use Spryker\Shared\Kernel\Store;
 
 class ProductImageStorageKeyGenerator implements ProductImageStorageKeyGeneratorInterface
 {
@@ -19,18 +18,11 @@ class ProductImageStorageKeyGenerator implements ProductImageStorageKeyGenerator
     protected $synchronizationService;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
-     */
-    protected $store;
-
-    /**
      * @param \Spryker\Client\ProductImageStorage\Dependency\Service\ProductImageStorageToSynchronizationServiceInterface $synchronizationService
-     * @param \Spryker\Shared\Kernel\Store $store
      */
-    public function __construct(ProductImageStorageToSynchronizationServiceInterface $synchronizationService, Store $store)
+    public function __construct(ProductImageStorageToSynchronizationServiceInterface $synchronizationService)
     {
         $this->synchronizationService = $synchronizationService;
-        $this->store = $store;
     }
 
     /**
@@ -44,7 +36,6 @@ class ProductImageStorageKeyGenerator implements ProductImageStorageKeyGenerator
     {
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer
-            ->setStore($this->store->getStoreName())
             ->setLocale($locale)
             ->setReference($resourceId);
 

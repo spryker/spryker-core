@@ -27,6 +27,7 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
 {
     const BUNDLE_IDENTIFIER_DELIMITER = '_';
+    protected const GROUP_KEY_DELIMITER = '_';
 
     /**
      * @var \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface
@@ -251,7 +252,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     {
         $itemTransfer->requireSku();
 
-        return $itemTransfer->getSku() . static::BUNDLE_IDENTIFIER_DELIMITER . uniqid(true);
+        return $this->buildGroupKey($itemTransfer) . static::BUNDLE_IDENTIFIER_DELIMITER . uniqid(true);
     }
 
     /**
@@ -410,7 +411,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     /**
      * @param int $idProductConcrete
      *
-     * @return mixed|mixed[]|\Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection|mixed
+     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function findBundledItemsByIdProductConcrete($idProductConcrete)
     {
@@ -429,13 +430,27 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     {
         $options = (array)$itemTransfer->getProductOptions();
         if (count($options) === 0) {
-            $bundleItemTransfer->setGroupKey($bundleItemTransfer->getSku());
+            $bundleItemTransfer->setGroupKey($this->buildGroupKey($bundleItemTransfer));
             return;
         }
 
         $options = $this->sortOptions($options);
-        $groupKey = $itemTransfer->getSku() . '_' . $this->combineOptionParts($options);
+        $groupKey = $this->buildGroupKey($bundleItemTransfer) . static::GROUP_KEY_DELIMITER . $this->combineOptionParts($options);
         $bundleItemTransfer->setGroupKey($groupKey);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return string
+     */
+    protected function buildGroupKey(ItemTransfer $itemTransfer): string
+    {
+        if ($itemTransfer->getGroupKeyPrefix()) {
+            return $itemTransfer->getGroupKeyPrefix() . static::GROUP_KEY_DELIMITER . $itemTransfer->getSku();
+        }
+
+        return $itemTransfer->getSku();
     }
 
     /**

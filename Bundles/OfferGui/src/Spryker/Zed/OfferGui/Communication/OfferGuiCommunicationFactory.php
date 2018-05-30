@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\OfferGui\Communication\Form\DataProvider\OfferDataProvider;
 use Spryker\Zed\OfferGui\Communication\Form\Offer\EditOfferType;
 use Spryker\Zed\OfferGui\Communication\Handler\CreateRequestHandler;
+use Spryker\Zed\OfferGui\Communication\Message\FlashMessageCleaner;
+use Spryker\Zed\OfferGui\Communication\Message\FlashMessageCleanerInterface;
 use Spryker\Zed\OfferGui\Communication\Table\OffersTable;
 use Spryker\Zed\OfferGui\Communication\Table\OffersTableQueryBuilder;
 use Spryker\Zed\OfferGui\Communication\Table\OffersTableQueryBuilderInterface;
@@ -213,5 +215,13 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getPriceFacade(): OfferGuiToPriceFacadeInterface
     {
         return $this->getProvidedDependency(OfferGuiDependencyProvider::FACADE_PRICE);
+    }
+
+    /**
+     * @return \Spryker\Zed\OfferGui\Communication\Message\FlashMessageCleanerInterface
+     */
+    public function createFlashMessageCleaner(): FlashMessageCleanerInterface
+    {
+        return new FlashMessageCleaner($this->getMessengerFacade());
     }
 }

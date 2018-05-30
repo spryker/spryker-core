@@ -123,7 +123,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
     /**
      * @param string $sku
      * @param int $quantity
-     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return int
      */
@@ -137,7 +137,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
     /**
      * @param string $sku
      * @param int $quantity
-     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Orm\Zed\Availability\Persistence\SpyAvailability
      */

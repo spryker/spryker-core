@@ -41,7 +41,7 @@ interface ShoppingListEntityManagerInterface
     /**
      * @param \Generated\Shared\Transfer\SpyShoppingListItemEntityTransfer $shoppingListItemEntityTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\EntityTransferInterface|\Generated\Shared\Transfer\SpyShoppingListItemEntityTransfer
+     * @return \Generated\Shared\Transfer\SpyShoppingListItemEntityTransfer
      */
     public function saveShoppingListItem(SpyShoppingListItemEntityTransfer $shoppingListItemEntityTransfer): SpyShoppingListItemEntityTransfer;
 

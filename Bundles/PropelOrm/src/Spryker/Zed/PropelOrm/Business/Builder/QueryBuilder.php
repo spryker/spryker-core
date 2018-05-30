@@ -139,7 +139,7 @@ SCRIPT;
     /**
      * Adds the filterByCol method for this object.
      *
-     * @param string &$script
+     * @param string $script
      * @param \Propel\Generator\Model\Column $col
      *
      * @return void

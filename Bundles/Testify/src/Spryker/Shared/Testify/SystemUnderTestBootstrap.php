@@ -44,7 +44,7 @@ class SystemUnderTestBootstrap
     ];
 
     /**
-     * @return $this
+     * @return self
      */
     public static function getInstance()
     {
@@ -58,7 +58,7 @@ class SystemUnderTestBootstrap
     /**
      * @param string $application
      *
-     * @return \Symfony\Component\HttpKernel\Kernel
+     * @return \Spryker\Shared\Kernel\Communication\Application
      */
     public function bootstrap($application = self::APPLICATION_ZED)
     {
@@ -105,10 +105,11 @@ class SystemUnderTestBootstrap
     }
 
     /**
-     * @return \Symfony\Component\HttpKernel\Kernel
+     * @return \Spryker\Shared\Kernel\Communication\Application
      */
     protected function bootstrapZed()
     {
+        /** @var \Spryker\Zed\Application\Communication\ZedBootstrap $application */
         $application = $this->getBootstrapClass(TestifyConstants::BOOTSTRAP_CLASS_ZED);
         $locator = KernelLocator::getInstance();
         $this->resetLocator($locator);
@@ -121,10 +122,11 @@ class SystemUnderTestBootstrap
     }
 
     /**
-     * @return \Symfony\Component\HttpKernel\Kernel
+     * @return \Spryker\Shared\Kernel\Communication\Application
      */
     protected function bootstrapYves()
     {
+        /** @var \Pyz\Yves\ShopApplication\YvesBootstrap $application */
         $application = $this->getBootstrapClass(TestifyConstants::BOOTSTRAP_CLASS_YVES);
 
         $locator = Locator::getInstance();
