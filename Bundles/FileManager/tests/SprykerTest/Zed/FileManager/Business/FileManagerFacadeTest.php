@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\FileInfoTransfer;
 use Generated\Shared\Transfer\FileManagerDataTransfer;
 use Generated\Shared\Transfer\FileTransfer;
 use Generated\Shared\Transfer\MimeTypeCollectionTransfer;
+use Generated\Shared\Transfer\MimeTypeResponseTransfer;
 use Generated\Shared\Transfer\MimeTypeTransfer;
 use Orm\Zed\FileManager\Persistence\SpyFile;
 use Orm\Zed\FileManager\Persistence\SpyFileDirectory;
@@ -135,6 +136,7 @@ class FileManagerFacadeTest extends Unit
 
         $mimeType = new SpyMimeType();
         $mimeType->setName('text/plain');
+        $mimeType->setComment('comment');
         $mimeType->setIsAllowed(true);
         $mimeType->save();
 
@@ -432,30 +434,70 @@ class FileManagerFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testSaveMimeType()
+    {
+        $mimeTypeTransfer = $this->findMimeTypeById(1);
+        $mimeTypeTransfer->setName('image/jpeg');
+        $mimeTypeTransfer->setComment('test');
+        $mimeTypeTransfer->setIsAllowed(false);
+
+        $mimeTypeResponseTransfer = $this->facade->saveMimeType($mimeTypeTransfer);
+
+        $this->assertInstanceOf(MimeTypeResponseTransfer::class, $mimeTypeResponseTransfer);
+        $this->assertTrue($mimeTypeResponseTransfer->getIsSuccessful());
+        $this->assertEquals($mimeTypeTransfer, $mimeTypeResponseTransfer->getMimeType());
+        $this->assertEquals($mimeTypeTransfer, $this->findMimeTypeById(1));
+    }
+
+    /**
+     * @return void
+     */
     public function testUpdateMimeTypeSettings()
     {
-        $mimeType = $this->createMimeTypeQuery()->findOneByIdMimeType(1);
-        $this->assertEquals(1, $mimeType->getIdMimeType());
-        $this->assertEquals(true, $mimeType->getIsAllowed());
-
         $mimeTypeCollectionTransfer = new MimeTypeCollectionTransfer();
-        $mimeTypeTransfer = new MimeTypeTransfer();
-        $mimeTypeTransfer->setIdMimeType(1);
+        $mimeTypeTransfer = $this->findMimeTypeById(1);
+
+        $this->assertTrue($mimeTypeTransfer->getIsAllowed());
+
         $mimeTypeTransfer->setIsAllowed(false);
         $mimeTypeCollectionTransfer->addMimeType($mimeTypeTransfer);
 
         $this->facade->updateMimeTypeSettings($mimeTypeCollectionTransfer);
 
-        $mimeType = $this->createMimeTypeQuery()->findOneByIdMimeType(1);
-        $this->assertEquals(1, $mimeType->getIdMimeType());
-        $this->assertEquals(false, $mimeType->getIsAllowed());
+        $mimeTypeTransfer = $this->findMimeTypeById(1);
+        $this->assertFalse($mimeTypeTransfer->getIsAllowed());
     }
 
     /**
-     * @return \Orm\Zed\FileManager\Persistence\SpyMimeTypeQuery
+     * @return void
      */
-    protected function createMimeTypeQuery()
+    public function testDeleteMimeType()
     {
-        return SpyMimeTypeQuery::create();
+        $mimeTypeTransfer = $this->findMimeTypeById(1);
+
+        $mimeTypeResponseTransfer = $this->facade->deleteMimeType($mimeTypeTransfer);
+
+        $this->assertInstanceOf(MimeTypeResponseTransfer::class, $mimeTypeResponseTransfer);
+        $this->assertTrue($mimeTypeResponseTransfer->getIsSuccessful());
+        $this->assertNull($this->findMimeTypeById(1)->getIdMimeType());
+    }
+
+    /**
+     * @param int $idMimeType
+     *
+     * @return \Generated\Shared\Transfer\MimeTypeTransfer
+     */
+    protected function findMimeTypeById(int $idMimeType)
+    {
+        $mimeTypeTransfer = new MimeTypeTransfer();
+        $mimeTypeEntity = SpyMimeTypeQuery::create()->findOneByIdMimeType($idMimeType);
+
+        if ($mimeTypeEntity === null) {
+            return $mimeTypeTransfer;
+        }
+
+        $mimeTypeTransfer->fromArray($mimeTypeEntity->toArray());
+
+        return $mimeTypeTransfer;
     }
 }
