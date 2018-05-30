@@ -247,7 +247,7 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
     {
         $productAbstractEntities = $this->productQueryContainer
             ->queryProductAbstract()
-            ->filterBySku_Like($sku)
+            ->filterBySku_Like('%' . $sku . '%')
             ->limit($limit)
             ->find();
 
@@ -286,7 +286,7 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
                 $locale->getIdLocale()
             )
             ->useSpyProductAbstractLocalizedAttributesQuery()
-                ->filterByName_Like($localizedName)
+                ->filterByName_Like('%' . $localizedName . '%')
                 ->endUse()
             ->limit($limit)
             ->find();
