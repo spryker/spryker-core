@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductAlternativeGui\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductAlternativeGui\Communication\Form\AddProductAlternativeFormType;
-use Spryker\Zed\ProductAlternativeGui\Communication\Form\DataProvider\AddAlternativeFormDataProvider;
+use Spryker\Zed\ProductAlternativeGui\Communication\Form\DataProvider\AddProductAlternativeFormDataProvider;
 use Spryker\Zed\ProductAlternativeGui\Dependency\Facade\ProductAlternativeGuiToProductAlternativeFacadeInterface;
 use Spryker\Zed\ProductAlternativeGui\Dependency\Facade\ProductAlternativeGuiToProductFacadeInterface;
 use Spryker\Zed\ProductAlternativeGui\ProductAlternativeGuiDependencyProvider;
@@ -22,17 +22,17 @@ class ProductAlternativeGuiCommunicationFactory extends AbstractCommunicationFac
     /**
      * @return \Spryker\Zed\ProductAlternativeGui\Communication\Form\AddProductAlternativeFormType
      */
-    public function createAddAlternativeFormType(): AddProductAlternativeFormType
+    public function createAddProductAlternativeFormType(): AddProductAlternativeFormType
     {
         return new AddProductAlternativeFormType();
     }
 
     /**
-     * @return \Spryker\Zed\ProductAlternativeGui\Communication\Form\DataProvider\AddAlternativeFormDataProvider
+     * @return \Spryker\Zed\ProductAlternativeGui\Communication\Form\DataProvider\AddProductAlternativeFormDataProvider
      */
-    public function createAddAlternativeFormDataProvider(): AddAlternativeFormDataProvider
+    public function createAddProductAlternativeFormDataProvider(): AddProductAlternativeFormDataProvider
     {
-        return new AddAlternativeFormDataProvider(
+        return new AddProductAlternativeFormDataProvider(
             $this->getProductFacade(),
             $this->getProductAlternativeFacade()
         );

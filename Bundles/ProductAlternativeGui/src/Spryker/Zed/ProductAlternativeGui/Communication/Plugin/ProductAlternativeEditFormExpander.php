@@ -29,8 +29,8 @@ class ProductAlternativeEditFormExpander extends AbstractPlugin implements Produ
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $formType = $this->getFactory()->createAddAlternativeFormType();
-        $dataProvider = $this->getFactory()->createAddAlternativeFormDataProvider();
+        $formType = $this->getFactory()->createAddProductAlternativeFormType();
+        $dataProvider = $this->getFactory()->createAddProductAlternativeFormDataProvider();
 
         $formType->buildForm(
             $builder,

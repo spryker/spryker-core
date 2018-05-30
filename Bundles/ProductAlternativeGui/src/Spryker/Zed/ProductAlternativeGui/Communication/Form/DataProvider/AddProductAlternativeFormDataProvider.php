@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ProductAlternativeTransfer;
 use Spryker\Zed\ProductAlternativeGui\Dependency\Facade\ProductAlternativeGuiToProductAlternativeFacadeInterface;
 use Spryker\Zed\ProductAlternativeGui\Dependency\Facade\ProductAlternativeGuiToProductFacadeInterface;
 
-class AddAlternativeFormDataProvider
+class AddProductAlternativeFormDataProvider
 {
     /**
      * @var \Spryker\Zed\ProductAlternativeGui\Dependency\Facade\ProductAlternativeGuiToProductFacadeInterface
