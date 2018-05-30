@@ -7,7 +7,7 @@
 
 namespace Spryker\Shared\ErrorHandler;
 
-use Spryker\Service\Kernel\Locator;
+use Spryker\Service\Monitoring\MonitoringService;
 use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Shared\NewRelicApi\NewRelicApiTrait;
 use Throwable;
@@ -51,14 +51,6 @@ class ErrorLogger implements ErrorLoggerInterface
     }
 
     /**
-     * @return \Spryker\Service\Monitoring\MonitoringServiceInterface
-     */
-    protected function createMonitoringService()
-    {
-        return Locator::getInstance()->monitoring()->service();
-    }
-
-    /**
      * @param \Throwable $exception
      *
      * @return string
@@ -72,5 +64,13 @@ class ErrorLogger implements ErrorLoggerInterface
             $exception->getFile(),
             $exception->getLine()
         );
+    }
+
+    /**
+     * @return \Spryker\Service\Monitoring\MonitoringServiceInterface
+     */
+    protected function createMonitoringService()
+    {
+        return new MonitoringService();
     }
 }

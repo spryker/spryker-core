@@ -7,10 +7,12 @@
 
 namespace Spryker\Service\Monitoring;
 
+use Spryker\Service\Kernel\AbstractService;
+
 /**
- * @method \Spryker\Service\Monitoring\MonitoringFactory getFactory()
+ * @method \Spryker\Service\Monitoring\MonitoringServiceFactory getFactory()
  */
-class MonitoringService implements MonitoringServiceInterface
+class MonitoringService extends AbstractService implements MonitoringServiceInterface
 {
     /**
      * {@inheritdoc}

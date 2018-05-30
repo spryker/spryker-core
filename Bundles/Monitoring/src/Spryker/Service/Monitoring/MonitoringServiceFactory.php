@@ -11,7 +11,7 @@ use Spryker\Service\Kernel\AbstractServiceFactory;
 use Spryker\Service\Monitoring\Model\Monitoring;
 use Spryker\Service\Monitoring\Model\MonitoringInterface;
 
-class MonitoringFactory extends AbstractServiceFactory
+class MonitoringServiceFactory extends AbstractServiceFactory
 {
     /**
      * @return \Spryker\Service\Monitoring\Model\MonitoringInterface

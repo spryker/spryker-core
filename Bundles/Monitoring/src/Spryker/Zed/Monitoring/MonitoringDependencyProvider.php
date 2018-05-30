@@ -43,7 +43,7 @@ class MonitoringDependencyProvider extends AbstractBundleDependencyProvider
     protected function addMonitoringService(Container $container)
     {
         $container[static::MONITORING_SERVICE] = function (Container $container) {
-            return $container->getLocator()->monnitoring()->service();
+            return $container->getLocator()->monitoring()->service();
         };
 
         return $container;
