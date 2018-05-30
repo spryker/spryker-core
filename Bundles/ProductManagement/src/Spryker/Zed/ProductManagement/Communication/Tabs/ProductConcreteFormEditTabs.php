@@ -24,6 +24,7 @@ class ProductConcreteFormEditTabs extends ProductFormEditTabs
             ->addPriceAndStockTab($tabsViewTransfer)
             ->addImageTab($tabsViewTransfer)
             ->addAssigneBundledProductsTab($tabsViewTransfer)
+            ->addProductAlternativesTab($tabsViewTransfer)
             ->setFooter($tabsViewTransfer);
 
         return $tabsViewTransfer;
@@ -113,6 +114,24 @@ class ProductConcreteFormEditTabs extends ProductFormEditTabs
             ->setName('bundled')
             ->setTitle('Assign bundled products')
             ->setTemplate('@ProductManagement/Product/_partials/product-bundles-tab.twig');
+
+        $tabsViewTransfer->addTab($tabItemTransfer);
+
+        return $this;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
+     *
+     * @return $this
+     */
+    protected function addProductAlternativesTab(TabsViewTransfer $tabsViewTransfer): self
+    {
+        $tabItemTransfer = new TabItemTransfer();
+        $tabItemTransfer
+            ->setName('alternatives')
+            ->setTitle('Product Alternatives')
+            ->setTemplate('@ProductAlternativeGui/ProductAlternative/_partials/product-alternatives-tab.twig');
 
         $tabsViewTransfer->addTab($tabItemTransfer);
 
