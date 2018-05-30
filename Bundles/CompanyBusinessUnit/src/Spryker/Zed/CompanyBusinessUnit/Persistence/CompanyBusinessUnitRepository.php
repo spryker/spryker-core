@@ -31,6 +31,7 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
             ->createCompanyBusinessUnitQuery()
             ->leftJoinParentCompanyBusinessUnit('parentCompanyBusinessUnit')
             ->with('parentCompanyBusinessUnit')
+            ->innerJoinWithCompany()
             ->filterByIdCompanyBusinessUnit($idCompanyBusinessUnit);
         $entityTransfer = $this->buildQueryFromCriteria($query)->findOne();
 

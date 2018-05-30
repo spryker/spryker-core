@@ -165,8 +165,8 @@ class CompanyBusinessUnitFacadeTest extends Test
 
         // Assert
         $this->assertSame(
-            $loadedChildBusinessUnitTransfer->getParentCompanyBusinessUnit()->getFkParentCompanyBusinessUnit(),
-            $businessUnitTransfer->getFkParentCompanyBusinessUnit()
+            $loadedChildBusinessUnitTransfer->getParentCompanyBusinessUnit()->getIdCompanyBusinessUnit(),
+            $businessUnitTransfer->getIdCompanyBusinessUnit()
         );
     }
 
@@ -199,8 +199,50 @@ class CompanyBusinessUnitFacadeTest extends Test
 
         // Assert
         $this->assertSame(
-            $loadedChildBusinessUnitTransfer->getParentCompanyBusinessUnit()->getFkParentCompanyBusinessUnit(),
-            $businessUnitTransfer->getFkParentCompanyBusinessUnit()
+            $loadedChildBusinessUnitTransfer->getParentCompanyBusinessUnit()->getIdCompanyBusinessUnit(),
+            $businessUnitTransfer->getIdCompanyBusinessUnit()
+        );
+    }
+
+    /**
+     * @group Propel
+     *
+     * @return void
+     */
+    public function testParentBusinessUnitRelationCanBeSaved()
+    {
+        // Arrange
+        $idCompany = $this->tester->haveCompany()->getIdCompany();
+        $seedData = [
+            'fkCompany' => $idCompany,
+            'idCompanyBusinessUnit' => null,
+        ];
+        $parentBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnit($seedData);
+        $parentBusinessUnitTransfer = $this->getFacade()
+            ->getCompanyBusinessUnitById($parentBusinessUnitTransfer);
+
+        $seedData = [
+            'fkCompany' => $idCompany,
+            'idCompanyBusinessUnit' => null,
+            'fkParentCompanyBusinessUnit' => $parentBusinessUnitTransfer->getIdCompanyBusinessUnit(),
+        ];
+        $businessUnitTransfer = $this->tester->haveCompanyBusinessUnit($seedData);
+        $businessUnitTransfer = $this->getFacade()
+            ->getCompanyBusinessUnitById($businessUnitTransfer);
+
+        // Act
+        $this->getFacade()->update($businessUnitTransfer);
+        $loadedChildBusinessUnitTransfer = $this->getFacade()
+            ->getCompanyBusinessUnitById($businessUnitTransfer);
+
+        // Assert
+        $this->assertSame(
+            $loadedChildBusinessUnitTransfer->getParentCompanyBusinessUnit()->getIdCompanyBusinessUnit(),
+            $loadedChildBusinessUnitTransfer->getFkParentCompanyBusinessUnit()
+        );
+        $this->assertSame(
+            $loadedChildBusinessUnitTransfer->getFkParentCompanyBusinessUnit(),
+            $parentBusinessUnitTransfer->getIdCompanyBusinessUnit()
         );
     }
 
