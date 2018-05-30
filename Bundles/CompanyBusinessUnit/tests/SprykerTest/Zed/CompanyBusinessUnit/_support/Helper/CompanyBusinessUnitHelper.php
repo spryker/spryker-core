@@ -7,6 +7,7 @@ use Generated\Shared\DataBuilder\CompanyBuilder;
 use Generated\Shared\DataBuilder\CompanyBusinessUnitBuilder;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
+use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class CompanyBusinessUnitHelper extends Module
@@ -14,16 +15,19 @@ class CompanyBusinessUnitHelper extends Module
     use LocatorHelperTrait;
 
     /**
+     * @param array $seedData
+     *
      * @return \Generated\Shared\Transfer\CompanyTransfer
      */
-    public function getCompany()
+    public function getCompany(array $seedData = []): CompanyTransfer
     {
-        $companyTransfer = (new CompanyBuilder())->build();
+        $companyTransfer = (new CompanyBuilder($seedData))->build();
 
         return $this->getLocator()
             ->company()
             ->facade()
-            ->create($companyTransfer)->getCompanyTransfer();
+            ->create($companyTransfer)
+            ->getCompanyTransfer();
     }
 
     /**
@@ -36,7 +40,7 @@ class CompanyBusinessUnitHelper extends Module
         $companyBusinessUnitTransfer = (new CompanyBusinessUnitBuilder($seedData))->build();
         $companyBusinessUnitTransfer->setIdCompanyBusinessUnit(null);
 
-        return $this-CompanyBusinessUnitFacadeInterface
+        return $this->getCompanyBusinessUnitFacade()
             ->create($companyBusinessUnitTransfer)
             ->getCompanyBusinessUnitTransfer();
     }
