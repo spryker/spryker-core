@@ -44,7 +44,7 @@ class AddAlternativeForm extends AbstractType
     protected function addProductNameAutocompleteField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_PRODUCT_NAME_AUTOCOMPLETE, AutosuggestType::class, [
-            'label' => 'Product Name',
+            'label' => 'Find Product by Name',
             'url' => '/product-alternative-gui/suggest-product-name',
             'attr' => [
                 'placeholder' => 'Type first three letters of an existing product name for suggestions.',
@@ -63,7 +63,7 @@ class AddAlternativeForm extends AbstractType
     protected function addProductSkuAutocompleteField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_PRODUCT_SKU_AUTOCOMPLETE, AutosuggestType::class, [
-            'label' => 'Product SKU',
+            'label' => 'Find Product by SKU',
             'url' => '/product-alternative-gui/suggest-product-sku',
             'attr' => [
                 'placeholder' => 'Type first three letters of an existing product SKU for suggestions.',
