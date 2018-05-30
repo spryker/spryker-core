@@ -8,9 +8,9 @@
 namespace Spryker\Zed\ProductAlternativeGui\Business\Model;
 
 use Spryker\Shared\Product\ProductConstants;
-use Spryker\Shared\ProductAlternativeGui\ProductAlternativeGuiConstants;
 use Spryker\Zed\ProductAlternativeGui\Dependency\Facade\ProductAlternativeGuiToProductAlternativeFacadeInterface;
 use Spryker\Zed\ProductAlternativeGui\Dependency\Facade\ProductAlternativeGuiToProductFacadeInterface;
+use Spryker\Zed\ProductAlternativeGui\ProductAlternativeGuiConfig;
 
 class ProductSuggester implements ProductSuggesterInterface
 {
@@ -25,25 +25,35 @@ class ProductSuggester implements ProductSuggesterInterface
     protected $productAlternativeFacade;
 
     /**
+     * @var \Spryker\Zed\ProductAlternativeGui\ProductAlternativeGuiConfig
+     */
+    protected $config;
+
+    /**
      * @param \Spryker\Zed\ProductAlternativeGui\Dependency\Facade\ProductAlternativeGuiToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\ProductAlternativeGui\Dependency\Facade\ProductAlternativeGuiToProductAlternativeFacadeInterface $productAlternativeFacade
+     * @param \Spryker\Zed\ProductAlternativeGui\ProductAlternativeGuiConfig $config
      */
     public function __construct(
         ProductAlternativeGuiToProductFacadeInterface $productFacade,
-        ProductAlternativeGuiToProductAlternativeFacadeInterface $productAlternativeFacade
+        ProductAlternativeGuiToProductAlternativeFacadeInterface $productAlternativeFacade,
+        ProductAlternativeGuiConfig $config
     ) {
         $this->productFacade = $productFacade;
         $this->productAlternativeFacade = $productAlternativeFacade;
+        $this->config = $config;
     }
 
     /**
      * @param string $productName
-     * @param int $limit
+     * @param null|int $limit
      *
      * @return string[]
      */
-    public function suggestProductName(string $productName, int $limit = ProductAlternativeGuiConstants::FILTERED_PRODUCTS_LIMIT_DEFAULT): array
+    public function suggestProductName(string $productName, ?int $limit = null): array
     {
+        $limit = $limit ?? $this->config->getFilteredProductsLimitDefault();
+
         $abstractProducts = $this->collectFilteredResults(
             $this->productFacade->filterProductAbstractByLocalizedName($productName, $limit)
         );
@@ -59,12 +69,14 @@ class ProductSuggester implements ProductSuggesterInterface
 
     /**
      * @param string $productSku
-     * @param int $limit
+     * @param null|int $limit
      *
      * @return string[]
      */
-    public function suggestProductSku(string $productSku, int $limit = ProductAlternativeGuiConstants::FILTERED_PRODUCTS_LIMIT_DEFAULT): array
+    public function suggestProductSku(string $productSku, ?int $limit = null): array
     {
+        $limit = $limit ?? $this->config->getFilteredProductsLimitDefault();
+
         $abstractProducts = $this->collectFilteredResults(
             $this->productFacade->filterProductAbstractBySku($productSku, $limit)
         );
