@@ -11,6 +11,4 @@ interface FileManagerConstants
 {
     const STORAGE_NAME = 'FILE_MANAGER:STORAGE_NAME';
     const FILE_NAME_VERSION_DELIMITER = '-';
-
-    const URL_PARAM_ID_FILE_INFO = 'id-file-info';
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\FileManagerGui\Communication\Table;
 
+use Orm\Zed\FileManager\Persistence\Map\SpyFileTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Shared\FileManagerGui\FileManagerGuiConstants;
@@ -16,6 +17,10 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class FileTable extends AbstractTable
 {
+    const COL_ID_FILE = SpyFileTableMap::COL_ID_FILE;
+    const COL_FILE_NAME = SpyFileTableMap::COL_FILE_NAME;
+    const COL_ACTIONS = 'Actions';
+
     const REQUEST_ID_FILE = 'id-file';
     const VIEW_TITLE = 'View';
     const EDIT_TITLE = 'Edit';
@@ -93,11 +98,11 @@ class FileTable extends AbstractTable
     protected function mapResults(array $item)
     {
         $actions = implode(' ', $this->buildLinks($item));
-        
+
         return [
-            FileManagerGuiConstants::COL_ID_FILE => $item[FileManagerGuiConstants::COL_ID_FILE],
-            FileManagerGuiConstants::COL_FILE_NAME => $item[FileManagerGuiConstants::COL_FILE_NAME],
-            FileManagerGuiConstants::COL_ACTIONS => $actions,
+            static::COL_ID_FILE => $item[static::COL_ID_FILE],
+            static::COL_FILE_NAME => $item[static::COL_FILE_NAME],
+            static::COL_ACTIONS => $actions,
         ];
     }
 
@@ -109,9 +114,9 @@ class FileTable extends AbstractTable
     protected function setHeaders(TableConfiguration $config)
     {
         $config->setHeader([
-            FileManagerGuiConstants::COL_ID_FILE => '#',
-            FileManagerGuiConstants::COL_FILE_NAME => 'File name',
-            FileManagerGuiConstants::COL_ACTIONS => FileManagerGuiConstants::COL_ACTIONS,
+            static::COL_ID_FILE => '#',
+            static::COL_FILE_NAME => 'File name',
+            static::COL_ACTIONS => static::COL_ACTIONS,
         ]);
     }
 
@@ -123,8 +128,8 @@ class FileTable extends AbstractTable
     protected function setSortableFields(TableConfiguration $config)
     {
         $config->setSortable([
-            FileManagerGuiConstants::COL_ID_FILE,
-            FileManagerGuiConstants::COL_FILE_NAME,
+            static::COL_ID_FILE,
+            static::COL_FILE_NAME,
         ]);
     }
 
@@ -136,8 +141,8 @@ class FileTable extends AbstractTable
     protected function setSearchableFields(TableConfiguration $config)
     {
         $config->setSearchable([
-            FileManagerGuiConstants::COL_ID_FILE,
-            FileManagerGuiConstants::COL_FILE_NAME,
+            static::COL_ID_FILE,
+            static::COL_FILE_NAME,
         ]);
     }
 
@@ -149,7 +154,7 @@ class FileTable extends AbstractTable
     protected function setRawColumns(TableConfiguration $config)
     {
         $config->setRawColumns([
-            FileManagerGuiConstants::COL_ACTIONS,
+            static::COL_ACTIONS,
         ]);
     }
 
@@ -160,7 +165,7 @@ class FileTable extends AbstractTable
      */
     protected function setDefaultSortField(TableConfiguration $config)
     {
-        $config->setDefaultSortField(FileManagerGuiConstants::COL_ID_FILE, FileManagerGuiConstants::SORT_DESC);
+        $config->setDefaultSortField(static::COL_ID_FILE, TableConfiguration::SORT_DESC);
     }
 
     /**
@@ -174,19 +179,19 @@ class FileTable extends AbstractTable
 
         $buttons[] = $this->generateViewButton(
             Url::generate(FileManagerGuiConstants::FILE_MANAGER_GUI_VIEW_URL, [
-                static::REQUEST_ID_FILE => $item[FileManagerGuiConstants::COL_ID_FILE],
+                static::REQUEST_ID_FILE => $item[static::COL_ID_FILE],
             ]),
             static::VIEW_TITLE
         );
         $buttons[] = $this->generateEditButton(
             Url::generate(FileManagerGuiConstants::FILE_MANAGER_GUI_EDIT_URL, [
-                static::REQUEST_ID_FILE => $item[FileManagerGuiConstants::COL_ID_FILE],
+                static::REQUEST_ID_FILE => $item[static::COL_ID_FILE],
             ]),
             static::EDIT_TITLE
         );
         $buttons[] = $this->generateRemoveButton(
             Url::generate(FileManagerGuiConstants::FILE_MANAGER_GUI_DELETE_URL, [
-                static::REQUEST_ID_FILE => $item[FileManagerGuiConstants::COL_ID_FILE],
+                static::REQUEST_ID_FILE => $item[static::COL_ID_FILE],
             ]),
             static::DELETE_TITLE
         );

@@ -237,17 +237,13 @@ class FileSaver implements FileSaverInterface
      */
     protected function getNewFileName(int $idFile, string $versionName, string $fileExtension): string
     {
-        $fileNameVersionDelimiter = $this->config->getFileNameVersionDelimiter();
-
-        $newFileName = sprintf(
+        return sprintf(
             static::FILE_NAME_PATTERN,
             $idFile,
             FileManagerConstants::FILE_NAME_VERSION_DELIMITER,
             $versionName,
             $fileExtension
         );
-
-        return $newFileName;
     }
 
     /**

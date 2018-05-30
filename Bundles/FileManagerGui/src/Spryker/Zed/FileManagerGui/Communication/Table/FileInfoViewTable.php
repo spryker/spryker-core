@@ -8,7 +8,6 @@
 namespace Spryker\Zed\FileManagerGui\Communication\Table;
 
 use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Shared\FileManagerGui\FileManagerGuiConstants;
 
 class FileInfoViewTable extends FileInfoTable
 {
@@ -23,7 +22,7 @@ class FileInfoViewTable extends FileInfoTable
 
         $buttons[] = $this->generateViewButton(
             Url::generate('/file-manager-gui/download-file', [
-                static::REQUEST_ID_FILE_INFO => $item[FileManagerGuiConstants::COL_ID_FILE_INFO],
+                static::REQUEST_ID_FILE_INFO => $item[static::COL_ID_FILE_INFO],
             ]),
             'Download'
         );

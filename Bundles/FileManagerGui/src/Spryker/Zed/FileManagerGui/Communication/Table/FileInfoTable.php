@@ -7,14 +7,20 @@
 
 namespace Spryker\Zed\FileManagerGui\Communication\Table;
 
+use Orm\Zed\FileManager\Persistence\Map\SpyFileInfoTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Spryker\Shared\FileManagerGui\FileManagerGuiConstants;
 use Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 abstract class FileInfoTable extends AbstractTable
 {
+    const COL_ID_FILE_INFO = SpyFileInfoTableMap::COL_ID_FILE_INFO;
+    const COL_FILE_INFO_VERSION_NAME = SpyFileInfoTableMap::COL_VERSION_NAME;
+    const COL_FILE_INFO_TYPE = SpyFileInfoTableMap::COL_TYPE;
+    const COL_FILE_INFO_CREATED_AT = SpyFileInfoTableMap::COL_CREATED_AT;
+    const COL_ACTIONS = 'Actions';
+
     const REQUEST_ID_FILE_INFO = 'id-file-info';
 
     /**
@@ -87,13 +93,13 @@ abstract class FileInfoTable extends AbstractTable
     protected function mapResults(array $item)
     {
         $actions = implode(' ', $this->buildLinks($item));
-        $createdAt = date('Y-m-d H:i:s', strtotime($item[FileManagerGuiConstants::COL_FILE_INFO_CREATED_AT]));
+        $createdAt = date('Y-m-d H:i:s', strtotime($item[static::COL_FILE_INFO_CREATED_AT]));
 
         return [
-            FileManagerGuiConstants::COL_FILE_INFO_VERSION_NAME => $item[FileManagerGuiConstants::COL_FILE_INFO_VERSION_NAME],
-            FileManagerGuiConstants::COL_FILE_INFO_TYPE => $item[FileManagerGuiConstants::COL_FILE_INFO_TYPE],
-            FileManagerGuiConstants::COL_FILE_INFO_CREATED_AT => $createdAt,
-            FileManagerGuiConstants::COL_ACTIONS => $actions,
+            static::COL_FILE_INFO_VERSION_NAME => $item[static::COL_FILE_INFO_VERSION_NAME],
+            static::COL_FILE_INFO_TYPE => $item[static::COL_FILE_INFO_TYPE],
+            static::COL_FILE_INFO_CREATED_AT => $createdAt,
+            static::COL_ACTIONS => $actions,
         ];
     }
 
@@ -105,10 +111,10 @@ abstract class FileInfoTable extends AbstractTable
     protected function setHeaders(TableConfiguration $config)
     {
         $config->setHeader([
-            FileManagerGuiConstants::COL_FILE_INFO_VERSION_NAME => 'Version',
-            FileManagerGuiConstants::COL_FILE_INFO_TYPE => 'File type',
-            FileManagerGuiConstants::COL_FILE_INFO_CREATED_AT => 'Date',
-            FileManagerGuiConstants::COL_ACTIONS => FileManagerGuiConstants::COL_ACTIONS,
+            static::COL_FILE_INFO_VERSION_NAME => 'Version',
+            static::COL_FILE_INFO_TYPE => 'File type',
+            static::COL_FILE_INFO_CREATED_AT => 'Date',
+            static::COL_ACTIONS => static::COL_ACTIONS,
         ]);
     }
 
@@ -120,8 +126,8 @@ abstract class FileInfoTable extends AbstractTable
     protected function setSortableFields(TableConfiguration $config)
     {
         $config->setSortable([
-            FileManagerGuiConstants::COL_FILE_INFO_CREATED_AT,
-            FileManagerGuiConstants::COL_FILE_INFO_VERSION_NAME,
+            static::COL_FILE_INFO_CREATED_AT,
+            static::COL_FILE_INFO_VERSION_NAME,
         ]);
     }
 
@@ -133,8 +139,8 @@ abstract class FileInfoTable extends AbstractTable
     protected function setSearchableFields(TableConfiguration $config)
     {
         $config->setSearchable([
-            FileManagerGuiConstants::COL_FILE_INFO_CREATED_AT,
-            FileManagerGuiConstants::COL_FILE_INFO_VERSION_NAME,
+            static::COL_FILE_INFO_CREATED_AT,
+            static::COL_FILE_INFO_VERSION_NAME,
         ]);
     }
 
@@ -146,7 +152,7 @@ abstract class FileInfoTable extends AbstractTable
     protected function setRawColumns(TableConfiguration $config)
     {
         $config->setRawColumns([
-            FileManagerGuiConstants::COL_ACTIONS,
+            static::COL_ACTIONS,
         ]);
     }
 }

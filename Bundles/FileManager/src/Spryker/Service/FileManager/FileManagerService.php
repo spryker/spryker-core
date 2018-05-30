@@ -8,13 +8,14 @@
 namespace Spryker\Service\FileManager;
 
 use Spryker\Service\Kernel\AbstractService;
-use Spryker\Shared\FileManager\FileManagerConstants;
 
 /**
  * @method \Spryker\Service\FileManager\FileManagerServiceFactory getFactory()
  */
 class FileManagerService extends AbstractService implements FileManagerServiceInterface
 {
+    const URL_PARAM_ID_FILE_INFO = 'id-file-info';
+
     /**
      * @param string $fileName
      *
@@ -32,7 +33,7 @@ class FileManagerService extends AbstractService implements FileManagerServiceIn
      */
     public function getZedUrl(string $fileName)
     {
-        return sprintf('/file-manager/download?%s=%s', FileManagerConstants::URL_PARAM_ID_FILE_INFO, $fileName);
+        return sprintf('/file-manager/download?%s=%s', static::URL_PARAM_ID_FILE_INFO, $fileName);
     }
 
     /**
