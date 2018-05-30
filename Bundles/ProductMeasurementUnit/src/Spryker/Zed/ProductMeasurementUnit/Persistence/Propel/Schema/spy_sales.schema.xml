@@ -9,15 +9,11 @@
         <column name="amount_measurement_unit_name" required="false" type="VARCHAR" size="255" />
         <column name="amount_measurement_unit_precision" required="false" type="INTEGER"/>
         <column name="amount_measurement_unit_conversion" required="false" type="FLOAT"/>
+        <column name="amount_base_measurement_unit_name" required="false" type="VARCHAR" size="255" />
         <column name="quantity_base_measurement_unit_name" required="false" type="VARCHAR" size="255" />
         <column name="quantity_measurement_unit_name" required="false" type="VARCHAR" size="255" />
         <column name="quantity_measurement_unit_precision" required="false" type="INTEGER"/>
         <column name="quantity_measurement_unit_conversion" required="false" type="FLOAT"/>
-    </table>
-
-    <table name="spy_sales_order" phpName="SpySalesOrder">
-        <column name="amount_base_measurement_unit_name" required="false" type="VARCHAR" size="255" />
-        <column name="quantity_base_measurement_unit_name" required="false" type="VARCHAR" size="255" />
     </table>
 
 </database>

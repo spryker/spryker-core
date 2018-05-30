@@ -10,8 +10,8 @@ namespace Spryker\Zed\ProductMeasurementUnit\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductMeasurementUnit\Business\Installer\ProductMeasurementUnitInstaller;
 use Spryker\Zed\ProductMeasurementUnit\Business\Installer\ProductMeasurementUnitInstallerInterface;
-use Spryker\Zed\ProductMeasurementUnit\Business\Model\CartChange;
-use Spryker\Zed\ProductMeasurementUnit\Business\Model\CartChangeInterface;
+use Spryker\Zed\ProductMeasurementUnit\Business\Model\CartChange\CartChangeExpanderExpander;
+use Spryker\Zed\ProductMeasurementUnit\Business\Model\CartChange\CartChangeExpanderInterface;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementBaseUnit\ProductMeasurementBaseUnitReader;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementBaseUnit\ProductMeasurementBaseUnitReaderInterface;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit\ProductMeasurementSalesUnitGroupKeyGenerator;
@@ -26,6 +26,7 @@ use Spryker\Zed\ProductMeasurementUnit\ProductMeasurementUnitDependencyProvider;
 /**
  * @method \Spryker\Zed\ProductMeasurementUnit\ProductMeasurementUnitConfig getConfig()
  * @method \Spryker\Zed\ProductMeasurementUnit\Persistence\ProductMeasurementUnitRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ProductMeasurementUnit\Persistence\ProductMeasurementUnitEntityManagerInterface getEntityManager()
  */
 class ProductMeasurementUnitBusinessFactory extends AbstractBusinessFactory
 {
@@ -73,11 +74,11 @@ class ProductMeasurementUnitBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductMeasurementUnit\Business\Model\CartChangeInterface
+     * @return \Spryker\Zed\ProductMeasurementUnit\Business\Model\CartChange\CartChangeExpanderInterface
      */
-    public function createCartChangeTransferExpander(): CartChangeInterface
+    public function createCartChangeTransferExpander(): CartChangeExpanderInterface
     {
-        return new CartChange(
+        return new CartChangeExpanderExpander(
             $this->createProductMeasurementSalesUnitReader()
         );
     }

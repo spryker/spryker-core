@@ -14,9 +14,9 @@ interface ProductMeasurementUnitEntityManagerInterface
     /**
      * @param \Generated\Shared\Transfer\ProductMeasurementUnitTransfer $productMeasurementUnitTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer
+     * @return void
      */
     public function saveProductMeasurementUnit(
         ProductMeasurementUnitTransfer $productMeasurementUnitTransfer
-    ): ProductMeasurementUnitTransfer;
+    ): void;
 }
