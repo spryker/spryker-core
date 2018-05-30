@@ -7,14 +7,12 @@
 
 namespace Spryker\Zed\ProductMeasurementUnitStorage\Business\Model;
 
-use Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer;
-
 interface ProductConcreteMeasurementUnitStorageReaderInterface
 {
     /**
      * @param int $idProduct
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer[]
      */
-    public function getProductConcreteMeasurementUnitStorageByIdProduct(int $idProduct): ProductConcreteMeasurementUnitStorageTransfer;
+    public function getProductConcreteMeasurementUnitStorageByIdProduct(int $idProduct): array;
 }

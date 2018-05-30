@@ -13,7 +13,7 @@ interface ProductViewExpanderPluginInterface
 {
     /**
      * Specification:
-     * - TODO: fix specification
+     * - Expands and returns the provided ProductView transfer objects.
      *
      * @api
      *

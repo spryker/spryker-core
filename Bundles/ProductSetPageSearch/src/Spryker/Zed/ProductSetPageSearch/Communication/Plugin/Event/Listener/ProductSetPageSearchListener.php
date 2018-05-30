@@ -8,14 +8,16 @@
 namespace Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener;
 
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductSet\Dependency\ProductSetEvents;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\ProductSetPageSearch\Persistence\ProductSetPageSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductSetPageSearch\Communication\ProductSetPageSearchCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductSetPageSearch\Business\ProductSetPageSearchFacadeInterface getFacade()
  */
-class ProductSetPageSearchListener extends AbstractProductSetPageSearchListener implements EventBulkHandlerInterface
+class ProductSetPageSearchListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
@@ -36,9 +38,11 @@ class ProductSetPageSearchListener extends AbstractProductSetPageSearchListener 
             $eventName === ProductSetEvents::ENTITY_SPY_PRODUCT_SET_DATA_DELETE ||
             $eventName === ProductSetEvents::PRODUCT_SET_UNPUBLISH
         ) {
-            $this->unpublish($productSetIds);
-        } else {
-            $this->publish($productSetIds);
+            $this->getFacade()->unpublish($productSetIds);
+
+            return;
         }
+
+        $this->getFacade()->publish($productSetIds);
     }
 }
