@@ -7,13 +7,16 @@
 
 namespace Spryker\Zed\CmsBlockCategoryStorage\Communication\Plugin\Event\Listener;
 
+use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\CmsBlockCategoryStorage\Communication\CmsBlockCategoryStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\CmsBlockCategoryStorage\Persistence\CmsBlockCategoryStorageQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\CmsBlockCategoryStorage\Business\CmsBlockCategoryStorageFacadeInterface getFacade()
  */
-class CmsBlockCategoryPositionStorageListener extends AbstractCmsBlockCategoryStorageListener
+class CmsBlockCategoryPositionStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
@@ -29,6 +32,6 @@ class CmsBlockCategoryPositionStorageListener extends AbstractCmsBlockCategorySt
         $idPosition = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
         $idCategories = $this->getQueryContainer()->queryCategoryIdsByPositionIds($idPosition)->find()->getData();
 
-        $this->publish($idCategories);
+        $this->getFacade()->publish($idCategories);
     }
 }

@@ -19,8 +19,7 @@ class ProductCategoryFilterStorageFactory extends AbstractFactory
     {
         return new ProductCategoryFilterStorageReader(
             $this->getStorageClient(),
-            $this->getSynchronizationService(),
-            $this->getStore()
+            $this->getSynchronizationService()
         );
     }
 
@@ -38,13 +37,5 @@ class ProductCategoryFilterStorageFactory extends AbstractFactory
     protected function getSynchronizationService()
     {
         return $this->getProvidedDependency(ProductCategoryFilterStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    protected function getStore()
-    {
-        return $this->getProvidedDependency(ProductCategoryFilterStorageDependencyProvider::STORE);
     }
 }
