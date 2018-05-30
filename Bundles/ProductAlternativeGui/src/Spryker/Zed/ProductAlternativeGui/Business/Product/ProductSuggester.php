@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductAlternativeGui\Business\Model;
+namespace Spryker\Zed\ProductAlternativeGui\Business\Product;
 
 use Spryker\Shared\Product\ProductConstants;
 use Spryker\Zed\ProductAlternativeGui\Dependency\Facade\ProductAlternativeGuiToProductAlternativeFacadeInterface;

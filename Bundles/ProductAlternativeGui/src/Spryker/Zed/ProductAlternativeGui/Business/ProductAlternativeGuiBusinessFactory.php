@@ -8,8 +8,8 @@
 namespace Spryker\Zed\ProductAlternativeGui\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductAlternativeGui\Business\Model\ProductSuggester;
-use Spryker\Zed\ProductAlternativeGui\Business\Model\ProductSuggesterInterface;
+use Spryker\Zed\ProductAlternativeGui\Business\Product\ProductSuggester;
+use Spryker\Zed\ProductAlternativeGui\Business\Product\ProductSuggesterInterface;
 use Spryker\Zed\ProductAlternativeGui\Dependency\Facade\ProductAlternativeGuiToProductAlternativeFacadeInterface;
 use Spryker\Zed\ProductAlternativeGui\Dependency\Facade\ProductAlternativeGuiToProductFacadeInterface;
 use Spryker\Zed\ProductAlternativeGui\ProductAlternativeGuiDependencyProvider;
@@ -20,7 +20,7 @@ use Spryker\Zed\ProductAlternativeGui\ProductAlternativeGuiDependencyProvider;
 class ProductAlternativeGuiBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\ProductAlternativeGui\Business\Model\ProductSuggesterInterface
+     * @return \Spryker\Zed\ProductAlternativeGui\Business\Product\ProductSuggesterInterface
      */
     public function createProductSuggester(): ProductSuggesterInterface
     {
