@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class SuggestProductNameController extends AbstractController
 {
-    protected const PARAM_NAME = 'name';
+    protected const PARAM_NAME = 'term';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

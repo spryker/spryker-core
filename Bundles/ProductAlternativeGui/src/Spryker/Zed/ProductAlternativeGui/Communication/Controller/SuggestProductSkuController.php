@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class SuggestProductSkuController extends AbstractController
 {
-    protected const PARAM_SKU = 'sku';
+    protected const PARAM_SKU = 'term';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
