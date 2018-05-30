@@ -11,25 +11,13 @@ interface ProductAlternativeGuiFacadeInterface
 {
     /**
      * Specification:
-     * - Suggests product name options.
+     * - Suggests product by name or SKU.
      *
      * @api
      *
-     * @param string $productName
+     * @param string $searchName
      *
      * @return string[]
      */
-    public function suggestProductName(string $productName): array;
-
-    /**
-     * Specification:
-     * - Suggests product SKU options.
-     *
-     * @api
-     *
-     * @param string $productSku
-     *
-     * @return string[]
-     */
-    public function suggestProductSku(string $productSku): array;
+    public function suggestProduct(string $searchName): array;
 }

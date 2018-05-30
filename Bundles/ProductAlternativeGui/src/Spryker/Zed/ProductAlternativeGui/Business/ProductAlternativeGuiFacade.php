@@ -19,32 +19,15 @@ class ProductAlternativeGuiFacade extends AbstractFacade implements ProductAlter
      *
      * @api
      *
-     * @param string $productName
+     * @param string $searchName
      *
      * @return string[]
      */
-    public function suggestProductName(string $productName): array
+    public function suggestProduct(string $searchName): array
     {
         return $this
             ->getFactory()
             ->createProductSuggester()
-            ->suggestProductName($productName);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param string $productSku
-     *
-     * @return string[]
-     */
-    public function suggestProductSku(string $productSku): array
-    {
-        return $this
-            ->getFactory()
-            ->createProductSuggester()
-            ->suggestProductSku($productSku);
+            ->suggestProduct($searchName);
     }
 }

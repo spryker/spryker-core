@@ -45,12 +45,28 @@ class ProductSuggester implements ProductSuggesterInterface
     }
 
     /**
+     * @param string $searchName
+     * @param int|null $limit
+     *
+     * @return array
+     */
+    public function suggestProduct(string $searchName, ?int $limit = null): array
+    {
+        return array_unique(
+            array_merge(
+                $this->suggestProductName($searchName),
+                $this->suggestProductSku($searchName)
+            )
+        );
+    }
+
+    /**
      * @param string $productName
      * @param null|int $limit
      *
      * @return string[]
      */
-    public function suggestProductName(string $productName, ?int $limit = null): array
+    protected function suggestProductName(string $productName, ?int $limit = null): array
     {
         $limit = $limit ?? $this->config->getFilteredProductsLimitDefault();
 
@@ -73,7 +89,7 @@ class ProductSuggester implements ProductSuggesterInterface
      *
      * @return string[]
      */
-    public function suggestProductSku(string $productSku, ?int $limit = null): array
+    protected function suggestProductSku(string $productSku, ?int $limit = null): array
     {
         $limit = $limit ?? $this->config->getFilteredProductsLimitDefault();
 

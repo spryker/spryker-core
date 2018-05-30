@@ -13,8 +13,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class AddProductAlternativeFormType extends AbstractType
 {
-    protected const FIELD_PRODUCT_NAME_AUTOCOMPLETE = 'product-name-autocomplete';
-    protected const FIELD_PRODUCT_SKU_AUTOCOMPLETE = 'product-sku-autocomplete';
+    protected const FIELD_PRODUCT_NAME_OR_SKU_AUTOCOMPLETE = 'product-name-or-sku-autocomplete';
 
     /**
      * @return null|string
@@ -32,8 +31,7 @@ class AddProductAlternativeFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addProductNameAutocompleteField($builder);
-        $this->addProductSkuAutocompleteField($builder);
+        $this->addProductNameOrSkuAutocompleteField($builder);
     }
 
     /**
@@ -41,32 +39,13 @@ class AddProductAlternativeFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addProductNameAutocompleteField(FormBuilderInterface $builder)
+    protected function addProductNameOrSkuAutocompleteField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_PRODUCT_NAME_AUTOCOMPLETE, AutosuggestType::class, [
-            'label' => 'Find Product by Name',
-            'url' => '/product-alternative-gui/suggest-product-name',
+        $builder->add(static::FIELD_PRODUCT_NAME_OR_SKU_AUTOCOMPLETE, AutosuggestType::class, [
+            'label' => 'Find Product by Name or SKU',
+            'url' => '/product-alternative-gui/suggest-product',
             'attr' => [
-                'placeholder' => 'Type first three letters of an existing product name for suggestions.',
-            ],
-            'required' => false,
-        ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addProductSkuAutocompleteField(FormBuilderInterface $builder)
-    {
-        $builder->add(static::FIELD_PRODUCT_SKU_AUTOCOMPLETE, AutosuggestType::class, [
-            'label' => 'Find Product by SKU',
-            'url' => '/product-alternative-gui/suggest-product-sku',
-            'attr' => [
-                'placeholder' => 'Type first three letters of an existing product SKU for suggestions.',
+                'placeholder' => 'Type first three letters of an existing product name or sku for suggestions.',
             ],
             'required' => false,
         ]);

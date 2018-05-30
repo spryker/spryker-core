@@ -10,18 +10,10 @@ namespace Spryker\Zed\ProductAlternativeGui\Business\Product;
 interface ProductSuggesterInterface
 {
     /**
-     * @param string $productName
+     * @param string $searchName
      * @param null|int $limit
      *
      * @return string[]
      */
-    public function suggestProductName(string $productName, ?int $limit = null): array;
-
-    /**
-     * @param string $productSku
-     * @param null|int $limit
-     *
-     * @return string[]
-     */
-    public function suggestProductSku(string $productSku, ?int $limit = null): array;
+    public function suggestProduct(string $searchName, ?int $limit = null): array;
 }
