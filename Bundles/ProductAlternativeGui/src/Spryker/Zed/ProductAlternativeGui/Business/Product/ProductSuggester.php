@@ -7,8 +7,7 @@
 
 namespace Spryker\Zed\ProductAlternativeGui\Business\Product;
 
-use Spryker\Shared\Product\ProductConstants;
-use Spryker\Zed\ProductAlternativeGui\Dependency\Facade\ProductAlternativeGuiToProductAlternativeFacadeInterface;
+use Spryker\Shared\ProductAlternativeGui\ProductAlternativeGuiConstants;
 use Spryker\Zed\ProductAlternativeGui\Dependency\Facade\ProductAlternativeGuiToProductFacadeInterface;
 use Spryker\Zed\ProductAlternativeGui\ProductAlternativeGuiConfig;
 
@@ -20,27 +19,19 @@ class ProductSuggester implements ProductSuggesterInterface
     protected $productFacade;
 
     /**
-     * @var \Spryker\Zed\ProductAlternativeGui\Dependency\Facade\ProductAlternativeGuiToProductAlternativeFacadeInterface
-     */
-    protected $productAlternativeFacade;
-
-    /**
      * @var \Spryker\Zed\ProductAlternativeGui\ProductAlternativeGuiConfig
      */
     protected $config;
 
     /**
      * @param \Spryker\Zed\ProductAlternativeGui\Dependency\Facade\ProductAlternativeGuiToProductFacadeInterface $productFacade
-     * @param \Spryker\Zed\ProductAlternativeGui\Dependency\Facade\ProductAlternativeGuiToProductAlternativeFacadeInterface $productAlternativeFacade
      * @param \Spryker\Zed\ProductAlternativeGui\ProductAlternativeGuiConfig $config
      */
     public function __construct(
         ProductAlternativeGuiToProductFacadeInterface $productFacade,
-        ProductAlternativeGuiToProductAlternativeFacadeInterface $productAlternativeFacade,
         ProductAlternativeGuiConfig $config
     ) {
         $this->productFacade = $productFacade;
-        $this->productAlternativeFacade = $productAlternativeFacade;
         $this->config = $config;
     }
 
@@ -116,7 +107,7 @@ class ProductSuggester implements ProductSuggesterInterface
         $results = [];
 
         foreach ($products as $product) {
-            $results[] = $product[ProductConstants::FILTERED_PRODUCTS_RESULT_KEY];
+            $results[] = $product[ProductAlternativeGuiConstants::FILTERED_PRODUCTS_RESULT_KEY];
         }
 
         return $results;
