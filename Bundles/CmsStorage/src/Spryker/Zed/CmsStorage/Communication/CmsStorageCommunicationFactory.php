@@ -17,42 +17,10 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 class CmsStorageCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\CmsStorage\Dependency\Service\CmsStorageToUtilSanitizeServiceInterface
-     */
-    public function getUtilSanitizeService()
-    {
-        return $this->getProvidedDependency(CmsStorageDependencyProvider::SERVICE_UTIL_SANITIZE);
-    }
-
-    /**
      * @return \Spryker\Zed\CmsStorage\Dependency\Facade\CmsStorageToEventBehaviorFacadeInterface
      */
     public function getEventBehaviorFacade()
     {
         return $this->getProvidedDependency(CmsStorageDependencyProvider::FACADE_EVENT_BEHAVIOR);
-    }
-
-    /**
-     * @return \Spryker\Zed\CmsStorage\Dependency\Facade\CmsStorageToCmsInterface
-     */
-    public function getCmsFacade()
-    {
-        return $this->getProvidedDependency(CmsStorageDependencyProvider::FACADE_CMS);
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    public function getStore()
-    {
-        return $this->getProvidedDependency(CmsStorageDependencyProvider::STORE);
-    }
-
-    /**
-     * @return \Spryker\Zed\Cms\Dependency\Plugin\CmsPageDataExpanderPluginInterface[]
-     */
-    public function getContentWidgetDataExpanderPlugins()
-    {
-        return $this->getProvidedDependency(CmsStorageDependencyProvider::PLUGIN_CONTENT_WIDGET_DATA_EXPANDER);
     }
 }

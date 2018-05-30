@@ -8,14 +8,16 @@
 namespace Spryker\Zed\PriceProductStorage\Communication\Plugin\Event\Listener;
 
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PriceProduct\Dependency\PriceProductEvents;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\PriceProductStorage\Persistence\PriceProductStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\PriceProductStorage\Communication\PriceProductStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\PriceProductStorage\Business\PriceProductStorageFacadeInterface getFacade()
  */
-class PriceProductAbstractPublishStorageListener extends AbstractPriceProductAbstractStorageListener implements EventBulkHandlerInterface
+class PriceProductAbstractPublishStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
@@ -35,11 +37,11 @@ class PriceProductAbstractPublishStorageListener extends AbstractPriceProductAbs
             $eventName === PriceProductEvents::ENTITY_SPY_PRICE_TYPE_DELETE ||
             $eventName === PriceProductEvents::PRICE_ABSTRACT_UNPUBLISH
         ) {
-            $this->unpublish($productAbstractIds);
+            $this->getFacade()->unpublishPriceProductAbstract($productAbstractIds);
 
             return;
         }
 
-        $this->publish($productAbstractIds);
+        $this->getFacade()->publishPriceProductAbstract($productAbstractIds);
     }
 }
