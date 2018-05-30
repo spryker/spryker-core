@@ -5,11 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\MonitoringExtension;
+namespace Spryker\Service\Monitoring;
 
-interface MonitoringInterface
+/**
+ * @uses \Spryker\Service\MonitoringExtension\Dependency\Plugin\MonitoringExtensionPluginInterface
+ */
+interface MonitoringServiceInterface
 {
     /**
+     * Specification:
+     *
+     * @api
+     *
      * @param string $message
      * @param \Exception|\Throwable $exception
      *
@@ -18,7 +25,10 @@ interface MonitoringInterface
     public function setError(string $message, $exception): void;
 
     /**
-     * Sets the name of the application, the current store and the environment.
+     * Specification:
+     * - Sets the name of the application, the current store and the environment.
+     *
+     * @api
      *
      * @param string|null $application
      * @param string|null $store
@@ -29,7 +39,10 @@ interface MonitoringInterface
     public function setApplicationName(?string $application = null, ?string $store = null, ?string $environment = null): void;
 
     /**
-     * Name of the transaction (e.g. module/controller/action).
+     * Specification:
+     * - Name of the transaction (e.g. module/controller/action).
+     *
+     * @api
      *
      * @param string $name
      *
@@ -38,36 +51,52 @@ interface MonitoringInterface
     public function setTransactionName(string $name): void;
 
     /**
-     * Start recording of the current transaction.
+     * Specification:
+     * - Start recording of the current transaction.
+     *
+     * @api
      *
      * @return void
      */
     public function markStartTransaction(): void;
 
     /**
-     * Stop recording the web transaction. This can be used to exclude time consuming operations that happen after
+     * Specification:
+     * - Stop recording the web transaction. This can be used to exclude time consuming operations that happen after
      * the request is completed.
+     *
+     * @api
      *
      * @return void
      */
     public function markEndOfTransaction(): void;
 
     /**
-     * Do not generate metrics for this transaction. This can be used for operations that are not relevant for the
+     * Specification:
+     * - Do not generate metrics for this transaction. This can be used for operations that are not relevant for the
      * statistics (e.g. to exclude the load balancer heartbeat check or very time consuming operations).
+     *
+     * @api
      *
      * @return void
      */
     public function markIgnoreTransaction(): void;
 
     /**
-     * Marks this transaction as a console command (e.g. for cronjobs)
+     * Specification:
+     * - Marks this transaction as a console command (e.g. for cronjobs).
+     *
+     * @api
      *
      * @return void
      */
     public function markAsConsoleCommand(): void;
 
     /**
+     * Specification:
+     *
+     * @api
+     *
      * @param string $key
      * @param mixed $value
      *
@@ -76,6 +105,10 @@ interface MonitoringInterface
     public function addCustomParameter(string $key, $value): void;
 
     /**
+     * Specification:
+     *
+     * @api
+     *
      * @param string $tracer classname::function_name.
      *
      * @return void

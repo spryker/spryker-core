@@ -7,10 +7,9 @@
 
 namespace Spryker\Shared\ErrorHandler;
 
+use Spryker\Service\Kernel\Locator;
 use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Shared\NewRelicApi\NewRelicApiTrait;
-use Spryker\Yves\Monitoring\MonitoringFactory;
-use Spryker\Zed\Monitoring\Communication\MonitoringCommunicationFactory;
 use Throwable;
 
 class ErrorLogger implements ErrorLoggerInterface
@@ -44,36 +43,27 @@ class ErrorLogger implements ErrorLoggerInterface
     {
         try {
             $message = $this->buildMessage($exception);
-            $this->createMonitoring()->setError($message, $exception);
+            $this->createMonitoringService()->setError($message, $exception);
             $this->getLogger()->critical($message, ['exception' => $exception]);
         } catch (Throwable $internalException) {
-            $this->createMonitoring()->setError($internalException->getMessage(), $exception);
+            $this->createMonitoringService()->setError($internalException->getMessage(), $exception);
         }
     }
 
     /**
-     * @return \Spryker\Shared\MonitoringExtension\MonitoringInterface
+     * @return \Spryker\Service\Monitoring\MonitoringServiceInterface
      */
-    protected function createMonitoring()
+    protected function createMonitoringService()
     {
-        if (APPLICATION === 'ZED') {
-            $zedMonitoringFactory = new MonitoringCommunicationFactory();
-
-            return $zedMonitoringFactory->createMonitoring();
-        }
-
-        $yvesMonitoringFactory = new MonitoringFactory();
-
-        return $yvesMonitoringFactory->createMonitoring();
+        return Locator::getInstance()->monitoring()->service();
     }
 
     /**
-     * @param \Exception|\Throwable $exception
->>>>>>> core-4452 added Monitoring to Shared ErrorHandler
+     * @param \Throwable $exception
      *
      * @return string
      */
-    protected function buildMessage($exception)
+    protected function buildMessage(Throwable $exception)
     {
         return sprintf(
             '%s - %s in "%s::%d"',

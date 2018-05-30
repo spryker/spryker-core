@@ -7,7 +7,7 @@
 
 namespace Spryker\Yves\Monitoring;
 
-use Spryker\Shared\Monitoring\Monitoring;
+use Spryker\Service\Monitoring\MonitoringServiceInterface;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Monitoring\Plugin\ControllerListener;
 
@@ -22,28 +22,18 @@ class MonitoringFactory extends AbstractFactory
     public function createControllerListener()
     {
         return new ControllerListener(
-            $this->createMonitoring(),
+            $this->getMonitoringService(),
             $this->getSystem(),
             $this->getConfig()->getIgnorableTransactionRouteNames()
         );
     }
 
     /**
-     * @return \Spryker\Shared\MonitoringExtension\MonitoringInterface
+     * @return \Spryker\Service\Monitoring\MonitoringServiceInterface
      */
-    public function createMonitoring()
+    public function getMonitoringService(): MonitoringServiceInterface
     {
-        return new Monitoring(
-            $this->getMonitoringExtensionPlugins()
-        );
-    }
-
-    /**
-     * @return \Spryker\Yves\MonitoringExtension\Dependency\Plugin\MonitoringExtensionPluginInterface[]
-     */
-    public function getMonitoringExtensionPlugins(): array
-    {
-        return $this->getProvidedDependency(MonitoringDependencyProvider::MONITORING_PLUGINS);
+        return $this->getProvidedDependency(MonitoringDependencyProvider::MONITORING_SERVICE);
     }
 
     /**

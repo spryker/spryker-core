@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Monitoring\Communication\Plugin;
 
-use Spryker\Shared\MonitoringExtension\MonitoringInterface;
+use Spryker\Service\Monitoring\MonitoringServiceInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
@@ -20,16 +20,16 @@ use Symfony\Component\HttpKernel\KernelEvents;
 class GatewayControllerListener extends AbstractPlugin implements EventSubscriberInterface
 {
     /**
-     * @var \Spryker\Shared\MonitoringExtension\MonitoringInterface
+     * @var \Spryker\Service\Monitoring\MonitoringServiceInterface
      */
-    protected $monitoring;
+    protected $monitoringService;
 
     /**
-     * @param \Spryker\Shared\MonitoringExtension\MonitoringInterface $monitoring
+     * @param \Spryker\Service\Monitoring\MonitoringServiceInterface $monitoringService
      */
-    public function __construct(MonitoringInterface $monitoring)
+    public function __construct(MonitoringServiceInterface $monitoringService)
     {
-        $this->monitoring = $monitoring;
+        $this->monitoringService = $monitoringService;
     }
 
     /**
@@ -42,7 +42,7 @@ class GatewayControllerListener extends AbstractPlugin implements EventSubscribe
         $request = $event->getRequest();
 
         if ($request->attributes->has('controller') && $request->attributes->get('controller') === 'gateway') {
-            $this->monitoring->addCustomParameter('Call_from', 'Yves');
+            $this->monitoringService->addCustomParameter('Call_from', 'Yves');
         }
     }
 

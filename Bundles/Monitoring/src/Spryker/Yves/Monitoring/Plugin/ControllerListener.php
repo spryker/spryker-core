@@ -7,7 +7,7 @@
 
 namespace Spryker\Yves\Monitoring\Plugin;
 
-use Spryker\Shared\MonitoringExtension\MonitoringInterface;
+use Spryker\Service\Monitoring\MonitoringServiceInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Spryker\Yves\Monitoring\Dependency\Service\MonitoringToUtilNetworkServiceInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -22,9 +22,9 @@ class ControllerListener extends AbstractPlugin implements EventSubscriberInterf
     const PRIORITY = -255;
 
     /**
-     * @var \Spryker\Shared\MonitoringExtension\MonitoringInterface
+     * @var \Spryker\Service\Monitoring\MonitoringServiceInterface
      */
-    protected $monitoring;
+    protected $monitoringService;
 
     /**
      * @var \Spryker\Yves\Monitoring\Dependency\Service\MonitoringToUtilNetworkServiceInterface
@@ -37,13 +37,13 @@ class ControllerListener extends AbstractPlugin implements EventSubscriberInterf
     protected $ignorableTransactions;
 
     /**
-     * @param \Spryker\Shared\MonitoringExtension\MonitoringInterface $monitoring
+     * @param \Spryker\Service\Monitoring\MonitoringServiceInterface $monitoringService
      * @param \Spryker\Yves\Monitoring\Dependency\Service\MonitoringToUtilNetworkServiceInterface $utilNetworkService
      * @param array $ignorableTransactions
      */
-    public function __construct(MonitoringInterface $monitoring, MonitoringToUtilNetworkServiceInterface $utilNetworkService, array $ignorableTransactions = [])
+    public function __construct(MonitoringServiceInterface $monitoringService, MonitoringToUtilNetworkServiceInterface $utilNetworkService, array $ignorableTransactions = [])
     {
-        $this->monitoring = $monitoring;
+        $this->monitoringService = $monitoringService;
         $this->utilNetworkService = $utilNetworkService;
         $this->ignorableTransactions = $ignorableTransactions;
     }
@@ -64,12 +64,12 @@ class ControllerListener extends AbstractPlugin implements EventSubscriberInterf
         $requestUri = $request->server->get('REQUEST_URI', 'n/a');
         $host = $request->server->get('COMPUTERNAME', $this->utilNetworkService->getHostName());
 
-        $this->monitoring->setTransactionName($transactionName);
-        $this->monitoring->addCustomParameter('request_uri', $requestUri);
-        $this->monitoring->addCustomParameter('host', $host);
+        $this->monitoringService->setTransactionName($transactionName);
+        $this->monitoringService->addCustomParameter('request_uri', $requestUri);
+        $this->monitoringService->addCustomParameter('host', $host);
 
         if ($this->ignoreTransaction($transactionName)) {
-            $this->monitoring->markIgnoreTransaction();
+            $this->monitoringService->markIgnoreTransaction();
         }
     }
 

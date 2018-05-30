@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Monitoring\Communication;
 
-use Spryker\Shared\Monitoring\Monitoring;
+use Spryker\Service\Monitoring\MonitoringServiceInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Monitoring\Communication\Plugin\ControllerListener;
 use Spryker\Zed\Monitoring\Communication\Plugin\GatewayControllerListener;
@@ -24,7 +24,7 @@ class MonitoringCommunicationFactory extends AbstractCommunicationFactory
     public function createGatewayControllerListener()
     {
         return new GatewayControllerListener(
-            $this->createMonitoring()
+            $this->getMonitoringService()
         );
     }
 
@@ -34,7 +34,7 @@ class MonitoringCommunicationFactory extends AbstractCommunicationFactory
     public function createControllerListener()
     {
         return new ControllerListener(
-            $this->createMonitoring(),
+            $this->getMonitoringService(),
             $this->getStoreFacade(),
             $this->getLocaleFacade(),
             $this->getUtilNetworkService(),
@@ -43,13 +43,11 @@ class MonitoringCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Shared\MonitoringExtension\MonitoringInterface
+     * @return \Spryker\Service\Monitoring\MonitoringServiceInterface
      */
-    public function createMonitoring()
+    public function getMonitoringService(): MonitoringServiceInterface
     {
-        return new Monitoring(
-            $this->getProvidedDependency(MonitoringDependencyProvider::MONITORING_PLUGINS)
-        );
+        return $this->getProvidedDependency(MonitoringDependencyProvider::MONITORING_SERVICE);
     }
 
     /**

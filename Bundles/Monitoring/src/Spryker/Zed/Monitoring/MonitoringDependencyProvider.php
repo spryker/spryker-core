@@ -15,7 +15,7 @@ use Spryker\Zed\Monitoring\Dependency\Service\MonitoringToUtilNetworkServiceBrid
 
 class MonitoringDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const MONITORING_PLUGINS = 'monitoring plugins';
+    const MONITORING_SERVICE = 'monitoring service';
     const FACADE_STORE = 'store facade';
     const FACADE_LOCALE = 'locale facade';
     const SERVICE_UTIL_NETWORK = 'util network service';
@@ -27,7 +27,7 @@ class MonitoringDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container = $this->addMonitoringPlugins($container);
+        $container = $this->addMonitoringService($container);
         $container = $this->addStoreFacade($container);
         $container = $this->addLocaleFacade($container);
         $container = $this->addUtilNetworkService($container);
@@ -36,25 +36,17 @@ class MonitoringDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
+     * @param \Spryker\Yves\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Kernel\Container
+     * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addMonitoringPlugins(Container $container)
+    protected function addMonitoringService(Container $container)
     {
-        $container[static::MONITORING_PLUGINS] = function () {
-            return $this->getMonitoringPlugins();
+        $container[static::MONITORING_SERVICE] = function (Container $container) {
+            return $container->getLocator()->monnitoring()->service();
         };
 
         return $container;
-    }
-
-    /**
-     * @return \Spryker\Zed\MonitoringExtension\Dependency\Plugin\MonitoringExtensionPluginInterface[]
-     */
-    protected function getMonitoringPlugins(): array
-    {
-        return [];
     }
 
     /**

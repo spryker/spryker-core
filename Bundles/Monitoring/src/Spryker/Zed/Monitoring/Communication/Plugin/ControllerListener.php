@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Monitoring\Communication\Plugin;
 
-use Spryker\Shared\MonitoringExtension\MonitoringInterface;
+use Spryker\Service\Monitoring\MonitoringServiceInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Monitoring\Dependency\Facade\MonitoringToLocaleFacadeInterface;
 use Spryker\Zed\Monitoring\Dependency\Facade\MonitoringToStoreFacadeInterface;
@@ -26,9 +26,9 @@ class ControllerListener extends AbstractPlugin implements EventSubscriberInterf
     const PRIORITY = -255;
 
     /**
-     * @var \Spryker\Shared\MonitoringExtension\MonitoringInterface
+     * @var \Spryker\Service\Monitoring\MonitoringServiceInterface
      */
-    protected $monitoring;
+    protected $monitoringService;
 
     /**
      * @var \Spryker\Zed\Monitoring\Dependency\Facade\MonitoringToStoreFacadeInterface
@@ -51,20 +51,20 @@ class ControllerListener extends AbstractPlugin implements EventSubscriberInterf
     protected $ignorableTransactions;
 
     /**
-     * @param \Spryker\Shared\MonitoringExtension\MonitoringInterface $monitoring
+     * @param \Spryker\Service\Monitoring\MonitoringServiceInterface $monitoringService
      * @param \Spryker\Zed\Monitoring\Dependency\Facade\MonitoringToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\Monitoring\Dependency\Facade\MonitoringToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\Monitoring\Dependency\Service\MonitoringToUtilNetworkServiceInterface $utilNetworkService
      * @param array $ignorableTransactions
      */
     public function __construct(
-        MonitoringInterface $monitoring,
+        MonitoringServiceInterface $monitoringService,
         MonitoringToStoreFacadeInterface $storeFacade,
         MonitoringToLocaleFacadeInterface $localeFacade,
         MonitoringToUtilNetworkServiceInterface $utilNetworkService,
         array $ignorableTransactions = []
     ) {
-        $this->monitoring = $monitoring;
+        $this->monitoringService = $monitoringService;
         $this->storeFacade = $storeFacade;
         $this->localeFacade = $localeFacade;
         $this->utilNetworkService = $utilNetworkService;
@@ -87,14 +87,14 @@ class ControllerListener extends AbstractPlugin implements EventSubscriberInterf
         $requestUri = $request->server->get('REQUEST_URI', 'n/a');
         $host = $request->server->get('COMPUTERNAME', $this->utilNetworkService->getHostName());
 
-        $this->monitoring->setTransactionName($transactionName);
-        $this->monitoring->addCustomParameter('request_uri', $requestUri);
-        $this->monitoring->addCustomParameter('host', $host);
-        $this->monitoring->addCustomParameter('store', $this->storeFacade->getStore()->getName());
-        $this->monitoring->addCustomParameter('locale', $this->localeFacade->getCurrentLocale()->getLocaleName());
+        $this->monitoringService->setTransactionName($transactionName);
+        $this->monitoringService->addCustomParameter('request_uri', $requestUri);
+        $this->monitoringService->addCustomParameter('host', $host);
+        $this->monitoringService->addCustomParameter('store', $this->storeFacade->getStore()->getName());
+        $this->monitoringService->addCustomParameter('locale', $this->localeFacade->getCurrentLocale()->getLocaleName());
 
         if ($this->ignoreTransaction($transactionName)) {
-            $this->monitoring->markIgnoreTransaction();
+            $this->monitoringService->markIgnoreTransaction();
         }
     }
 

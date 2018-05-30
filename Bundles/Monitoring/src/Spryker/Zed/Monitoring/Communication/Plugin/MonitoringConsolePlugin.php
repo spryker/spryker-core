@@ -29,7 +29,7 @@ class MonitoringConsolePlugin extends AbstractPlugin implements EventSubscriberI
     {
         $transactionName = $this->getTransactionName($event);
         $hostName = $this->getFactory()->getUtilNetworkService()->getHostName();
-        $monitoring = $this->getFactory()->createMonitoring();
+        $monitoring = $this->getFactory()->getMonitoringService();
 
         $monitoring->markAsConsoleCommand();
         $monitoring->setTransactionName($transactionName);
