@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductAlternativeGui\Business;
 
+use Generated\Shared\Transfer\ProductAlternativeResponseTransfer;
+
 interface ProductAlternativeGuiFacadeInterface
 {
     /**
@@ -20,4 +22,17 @@ interface ProductAlternativeGuiFacadeInterface
      * @return string[]
      */
     public function suggestProduct(string $searchName): array;
+
+    /**
+     * Specification:
+     * - Creates alternative product accordingly to $searchName.
+     * - $searchName can be abstract/concrete product name or SKU.
+     *
+     * @api
+     *
+     * @param string $searchName
+     *
+     * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
+     */
+    public function createProductAlternative(string $searchName): ProductAlternativeResponseTransfer;
 }

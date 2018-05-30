@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductAlternativeGui\Business;
 
+use Generated\Shared\Transfer\ProductAlternativeResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -29,5 +30,22 @@ class ProductAlternativeGuiFacade extends AbstractFacade implements ProductAlter
             ->getFactory()
             ->createProductSuggester()
             ->suggestProduct($searchName);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $searchName
+     *
+     * @return array
+     */
+    public function createProductAlternative(string $searchName): ProductAlternativeResponseTransfer
+    {
+        return $this
+            ->getFactory()
+            ->createProductAlternativeCreator()
+            ->createProductAlternative($searchName);
     }
 }
