@@ -8,10 +8,10 @@
 namespace Spryker\Zed\ProductAlternative\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductAlternative\Business\Model\ProductAlternativeReader;
-use Spryker\Zed\ProductAlternative\Business\Model\ProductAlternativeReaderInterface;
-use Spryker\Zed\ProductAlternative\Business\Model\ProductAlternativeWriter;
-use Spryker\Zed\ProductAlternative\Business\Model\ProductAlternativeWriterInterface;
+use Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeReader;
+use Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeReaderInterface;
+use Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeWriter;
+use Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeWriterInterface;
 
 /**
  * @method \Spryker\Zed\ProductAlternative\Persistence\ProductAlternativeEntityManagerInterface getEntityManager()
@@ -20,7 +20,7 @@ use Spryker\Zed\ProductAlternative\Business\Model\ProductAlternativeWriterInterf
 class ProductAlternativeBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\ProductAlternative\Business\Model\ProductAlternativeWriterInterface
+     * @return \Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeWriterInterface
      */
     public function createProductAlternativeWriter(): ProductAlternativeWriterInterface
     {
@@ -30,7 +30,7 @@ class ProductAlternativeBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductAlternative\Business\Model\ProductAlternativeReaderInterface
+     * @return \Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeReaderInterface
      */
     public function createProductAlternativeReader(): ProductAlternativeReaderInterface
     {

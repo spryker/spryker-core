@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductAlternative\Business\Model;
+namespace Spryker\Zed\ProductAlternative\Business\ProductAlternative;
 
 use Generated\Shared\Transfer\ProductAlternativeResponseTransfer;
 use Spryker\Zed\ProductAlternative\Persistence\ProductAlternativeEntityManagerInterface;
