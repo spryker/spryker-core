@@ -23,7 +23,6 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @method \Spryker\Zed\FileManagerGui\Communication\FileManagerGuiCommunicationFactory getFactory()
- * @method \Spryker\Zed\FileManagerGui\FileManagerGuiConfig getConfig()
  */
 class FileForm extends AbstractType
 {
@@ -125,7 +124,7 @@ class FileForm extends AbstractType
             'required' => empty($formData[static::FIELD_ID_FILE]),
             'constraints' => [
                 new File([
-                    'maxSize' => $this->getConfig()->getMaxSize(),
+                    'maxSize' => FileManagerGuiConstants::DEFAULT_MAX_FILE_SIZE,
                     'mimeTypes' => $options[static::OPTION_ALLOWED_MIME_TYPES],
                     'mimeTypesMessage' => FileManagerGuiConstants::ERROR_MIME_TYPE_MESSAGE,
                 ]),

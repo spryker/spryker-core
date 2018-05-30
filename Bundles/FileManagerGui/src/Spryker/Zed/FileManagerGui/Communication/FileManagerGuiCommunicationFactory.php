@@ -24,7 +24,6 @@ use Spryker\Zed\FileManagerGui\FileManagerGuiDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
- * @method \Spryker\Zed\FileManagerGui\FileManagerGuiConfig getConfig()
  * @method \Spryker\Zed\FileManagerGui\Persistence\FileManagerGuiQueryContainerInterface getQueryContainer()
  */
 class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory

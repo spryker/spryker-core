@@ -13,7 +13,6 @@ use Orm\Zed\FileManager\Persistence\SpyFileDirectoryQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
- * @method \Spryker\Zed\FileManagerGui\FileManagerGuiConfig getConfig()
  * @method \Spryker\Zed\FileManagerGui\Persistence\FileManagerGuiQueryContainerInterface getQueryContainer()
  */
 class FileManagerGuiPersistenceFactory extends AbstractPersistenceFactory

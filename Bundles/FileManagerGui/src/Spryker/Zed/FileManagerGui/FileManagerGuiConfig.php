@@ -12,13 +12,4 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class FileManagerGuiConfig extends AbstractBundleConfig
 {
-    const DEFAULT_PROCESS_LOCATION = APPLICATION_ROOT_DIR . '/config/Zed/oms';
-
-    /**
-     * @return string
-     */
-    public function getMaxSize(): string
-    {
-        return $this->get(FileManagerGuiConstants::MAX_FILE_SIZE, FileManagerGuiConstants::DEFAULT_MAX_FILE_SIZE);
-    }
 }
