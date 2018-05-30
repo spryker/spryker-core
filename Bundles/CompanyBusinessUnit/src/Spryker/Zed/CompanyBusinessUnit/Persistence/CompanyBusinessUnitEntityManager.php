@@ -9,7 +9,6 @@ namespace Spryker\Zed\CompanyBusinessUnit\Persistence;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\SpyCompanyBusinessUnitEntityTransfer;
-use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnit;
 use Spryker\Zed\CompanyBusinessUnit\Persistence\Mapper\CompanyBusinessUnitMapperInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
@@ -30,7 +29,7 @@ class CompanyBusinessUnitEntityManager extends AbstractEntityManager implements 
             $companyBusinessUnitTransfer,
             new SpyCompanyBusinessUnitEntityTransfer()
         );
-        $entityTransfer = $this->saveCompanyBusinessUnitEntityTransfer($entityTransfer);
+        $entityTransfer = $this->save($entityTransfer);
 
         return $this->getMapper()->mapEntityTransferToBusinessUnitTransfer(
             $entityTransfer,
@@ -62,45 +61,6 @@ class CompanyBusinessUnitEntityManager extends AbstractEntityManager implements 
             ->createCompanyBusinessUnitQuery()
             ->filterByFkParentCompanyBusinessUnit($idCompanyBusinessUnit)
             ->update(['FkParentCompanyBusinessUnit' => null]);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\SpyCompanyBusinessUnitEntityTransfer $businessUnitEntityTransfer
-     *
-     * @return \Generated\Shared\Transfer\SpyCompanyBusinessUnitEntityTransfer
-     */
-    protected function saveCompanyBusinessUnitEntityTransfer(
-        SpyCompanyBusinessUnitEntityTransfer $businessUnitEntityTransfer
-    ): SpyCompanyBusinessUnitEntityTransfer {
-        if ($businessUnitEntityTransfer->getFkParentCompanyBusinessUnit()) {
-            return $this->saveBusinessUnitWithParent($businessUnitEntityTransfer);
-        }
-
-        return $this->save($businessUnitEntityTransfer);
-    }
-
-    /**
-     * This method is needed, because persistence mapper has problems mapping circular dependency.
-     *
-     * @param \Generated\Shared\Transfer\SpyCompanyBusinessUnitEntityTransfer $businessUnitEntityTransfer
-     *
-     * @return \Generated\Shared\Transfer\SpyCompanyBusinessUnitEntityTransfer
-     */
-    protected function saveBusinessUnitWithParent(
-        SpyCompanyBusinessUnitEntityTransfer $businessUnitEntityTransfer
-    ): SpyCompanyBusinessUnitEntityTransfer {
-        $spyBusinessUnit = new SpyCompanyBusinessUnit();
-        $spyBusinessUnit->fromArray($businessUnitEntityTransfer->toArray());
-        if ($businessUnitEntityTransfer->getIdCompanyBusinessUnit()) {
-            $spyBusinessUnit->setNew(false);
-        }
-
-        $spyBusinessUnit->save();
-
-        $savedBusinessUnitEntityTransfer = new SpyCompanyBusinessUnitEntityTransfer();
-        $savedBusinessUnitEntityTransfer->fromArray($spyBusinessUnit->toArray());
-
-        return $savedBusinessUnitEntityTransfer;
     }
 
     /**
