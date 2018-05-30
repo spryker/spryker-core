@@ -145,7 +145,7 @@ class ShoppingListFacadeTest extends Unit
     public function testCustomersShoppingListNameShouldBeUnique()
     {
         // Arrange
-        $shoppingListTransfer = $this->tester->haveShoppingList($this->ownerCompanyUserTransfer);
+        $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
         $secondShoppingListTransfer = (new ShoppingListBuilder())->build()
             ->setName($shoppingListTransfer->getName())
             ->setIdCompanyUser($this->ownerCompanyUserTransfer->getIdCompanyUser())
@@ -169,7 +169,7 @@ class ShoppingListFacadeTest extends Unit
     public function testCustomersCanRenameShoppinglist()
     {
         // Arrange
-        $shoppingListTransfer = $this->tester->haveShoppingList($this->ownerCompanyUserTransfer);
+        $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
         $newShoppingListName = 'NEW_' . $shoppingListTransfer->getName();
         $shoppingListTransfer->setName($newShoppingListName);
 
@@ -187,7 +187,7 @@ class ShoppingListFacadeTest extends Unit
     public function testOwnerCanRemoveShoppingList()
     {
         // Arrange
-        $shoppingListTransfer = $this->tester->haveShoppingList($this->ownerCompanyUserTransfer);
+        $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
 
         // Act
         $shoppingListResponseTransfer = $this->tester->getFacade()->removeShoppingList($shoppingListTransfer);
@@ -202,7 +202,7 @@ class ShoppingListFacadeTest extends Unit
     public function testOnlyOwnerCanRemoveShoppingList()
     {
         // Arrange
-        $shoppingListTransfer = $this->tester->haveShoppingList($this->ownerCompanyUserTransfer);
+        $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
         $shoppingListTransfer->setIdCompanyUser($this->otherCompanyUserTransfer->getIdCompanyUser());
 
         // Act
@@ -218,7 +218,7 @@ class ShoppingListFacadeTest extends Unit
     public function testCustomerCanShareShoppingListWithCompanyUser()
     {
         // Arrange
-        $shoppingListTransfer = $this->tester->haveShoppingList($this->ownerCompanyUserTransfer);
+        $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
         $shoppingListShareRequestTransfer = (new ShoppingListShareRequestTransfer())
                 ->setIdCompanyUser($this->otherCompanyUserTransfer->getIdCompanyUser())
                 ->setShoppingListOwnerId($this->ownerCompanyUserTransfer->getIdCompanyUser())
@@ -247,7 +247,7 @@ class ShoppingListFacadeTest extends Unit
     public function testCustomerCanShareShoppingListWithBusinnessUnit()
     {
         // Arrange
-        $shoppingListTransfer = $this->tester->haveShoppingList($this->ownerCompanyUserTransfer);
+        $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
         $shoppingListShareRequestTransfer = (new ShoppingListShareRequestTransfer())
                 ->setIdCompanyBusinessUnit($this->otherCompanyUserTransfer->getFkCompanyBusinessUnit())
                 ->setShoppingListOwnerId($this->ownerCompanyUserTransfer->getIdCompanyUser())
@@ -276,7 +276,7 @@ class ShoppingListFacadeTest extends Unit
     public function testCustomerCanNotRemoveSharedShoppingList()
     {
         // Arrange
-        $shoppingListTransfer = $this->tester->haveShoppingList($this->ownerCompanyUserTransfer);
+        $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
         $shoppingListShareRequestTransfer = (new ShoppingListShareRequestTransfer())
                 ->setIdCompanyUser($this->otherCompanyUserTransfer->getIdCompanyUser())
                 ->setShoppingListOwnerId($this->ownerCompanyUserTransfer->getIdCompanyUser())
@@ -300,7 +300,7 @@ class ShoppingListFacadeTest extends Unit
     public function testOwnerCanAddItemToShoppingList()
     {
         // Arrange
-        $shoppingListTransfer = $this->tester->haveShoppingList($this->ownerCompanyUserTransfer);
+        $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
         $shoppingListItemTransfer = $this->tester->buildShoppingListItem([
             ShoppingListItemTransfer::ID_COMPANY_USER => $this->ownerCompanyUserTransfer->getIdCompanyUser(),
             ShoppingListItemTransfer::FK_SHOPPING_LIST => $shoppingListTransfer->getIdShoppingList(),
@@ -321,7 +321,7 @@ class ShoppingListFacadeTest extends Unit
     public function testCustomerCanNotAddItemToSharedShoppingList()
     {
         // Arrange
-        $shoppingListTransfer = $this->tester->haveShoppingList($this->ownerCompanyUserTransfer);
+        $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
         $shoppingListItemTransfer = $this->tester->buildShoppingListItem([
             ShoppingListItemTransfer::ID_COMPANY_USER => $this->otherCompanyUserTransfer->getIdCompanyUser(),
             ShoppingListItemTransfer::FK_SHOPPING_LIST => $shoppingListTransfer->getIdShoppingList(),
@@ -342,7 +342,7 @@ class ShoppingListFacadeTest extends Unit
     public function testOwnerCanRemoveItemFromShoppingList()
     {
         // Arrange
-        $shoppingListTransfer = $this->tester->haveShoppingList($this->ownerCompanyUserTransfer);
+        $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
         $shoppingListItemTransfer = $this->tester->buildShoppingListItem([
             ShoppingListItemTransfer::ID_COMPANY_USER => $this->ownerCompanyUserTransfer->getIdCompanyUser(),
             ShoppingListItemTransfer::FK_SHOPPING_LIST => $shoppingListTransfer->getIdShoppingList(),
@@ -388,7 +388,7 @@ class ShoppingListFacadeTest extends Unit
     public function testOwnerCanGetListOfShoppingListItems()
     {
         // Arrange
-        $fistShoppingListTransfer = $this->tester->haveShoppingList($this->ownerCompanyUserTransfer);
+        $fistShoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
         $shoppingListItemTransfer = $this->tester->buildShoppingListItem([
             ShoppingListItemTransfer::ID_COMPANY_USER => $this->ownerCompanyUserTransfer->getIdCompanyUser(),
             ShoppingListItemTransfer::FK_SHOPPING_LIST => $fistShoppingListTransfer->getIdShoppingList(),
@@ -397,7 +397,7 @@ class ShoppingListFacadeTest extends Unit
         ]);
         $this->tester->getFacade()->addItem($shoppingListItemTransfer);
 
-        $secondShoppingListTransfer = $this->tester->haveShoppingList($this->ownerCompanyUserTransfer);
+        $secondShoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
         $shoppingListItemTransfer = $this->tester->buildShoppingListItem([
             ShoppingListItemTransfer::ID_COMPANY_USER => $this->ownerCompanyUserTransfer->getIdCompanyUser(),
             ShoppingListItemTransfer::FK_SHOPPING_LIST => $secondShoppingListTransfer->getIdShoppingList(),
@@ -423,7 +423,7 @@ class ShoppingListFacadeTest extends Unit
     public function testCustomerCanGetItemListOfSharedShoppingList()
     {
         // Arrange
-        $shoppingListTransfer = $this->tester->haveShoppingList($this->ownerCompanyUserTransfer);
+        $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
         $shoppingListItemTransfer = $this->tester->buildShoppingListItem([
             ShoppingListItemTransfer::ID_COMPANY_USER => $this->ownerCompanyUserTransfer->getIdCompanyUser(),
             ShoppingListItemTransfer::FK_SHOPPING_LIST => $shoppingListTransfer->getIdShoppingList(),
@@ -458,7 +458,7 @@ class ShoppingListFacadeTest extends Unit
     public function testOnlyConcreteProductCanBeAddedToShoppingList()
     {
         // Arrange
-        $shoppingListTransfer = $this->tester->haveShoppingList($this->ownerCompanyUserTransfer);
+        $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
         $shoppingListItemTransfer = $this->tester->buildShoppingListItem([
             ShoppingListItemTransfer::ID_COMPANY_USER => $this->ownerCompanyUserTransfer->getIdCompanyUser(),
             ShoppingListItemTransfer::FK_SHOPPING_LIST => $shoppingListTransfer->getIdShoppingList(),
