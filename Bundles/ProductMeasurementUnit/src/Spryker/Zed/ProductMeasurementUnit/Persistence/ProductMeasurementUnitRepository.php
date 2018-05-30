@@ -42,21 +42,21 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
             ->joinProductAbstract()
             ->useProductAbstractQuery()
                 ->joinSpyProduct()
-                ->useSpyProductQuery()
-                    ->filterByIdProduct($idProduct)
-                ->endUse()
+                    ->useSpyProductQuery()
+                        ->filterByIdProduct($idProduct)
+                    ->endUse()
             ->endUse()
             ->joinWithProductMeasurementUnit();
 
-        $productMeasurementBaseUnitEntityTransfer = $this->buildQueryFromCriteria($query)->findOne();
-        if (!$productMeasurementBaseUnitEntityTransfer) {
+        $productMeasurementBaseUnitEntity = $query->findOne();
+        if (!$productMeasurementBaseUnitEntity) {
             throw new EntityNotFoundException(sprintf(static::ERROR_NO_BASE_UNIT_FOR_ID_PRODUCT, $idProduct));
         }
 
         return $this->getFactory()
             ->createProductMeasurementUnitMapper()
             ->mapProductMeasurementBaseUnitTransfer(
-                $productMeasurementBaseUnitEntityTransfer,
+                $productMeasurementBaseUnitEntity,
                 new ProductMeasurementBaseUnitTransfer()
             );
     }
@@ -76,15 +76,15 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
             ->joinWithProductMeasurementUnit()
             ->joinWithProductMeasurementBaseUnit();
 
-        $productMeasurementSalesUnitEntityTransfer = $this->buildQueryFromCriteria($query)->findOne();
-        if (!$productMeasurementSalesUnitEntityTransfer) {
+        $productMeasurementSalesUnitEntity = $query->findOne();
+        if (!$productMeasurementSalesUnitEntity) {
             throw new EntityNotFoundException(sprintf(static::ERROR_NO_SALES_UNIT_BY_ID, $idProductMeasurementSalesUnit));
         }
 
         return $this->getFactory()
             ->createProductMeasurementUnitMapper()
             ->mapProductMeasurementSalesUnitTransfer(
-                $productMeasurementSalesUnitEntityTransfer,
+                $productMeasurementSalesUnitEntity,
                 new ProductMeasurementSalesUnitTransfer()
             );
     }
@@ -102,12 +102,12 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
             ->joinWithProductMeasurementUnit()
             ->joinWithProductMeasurementBaseUnit();
 
-        $productMeasurementSalesUnitEntityTransfers = $this->buildQueryFromCriteria($query)->find();
+        $productMeasurementSalesUnitEntityCollection = $query->find();
         $productMeasurementSalesUnitTransfers = [];
         $mapper = $this->getFactory()->createProductMeasurementUnitMapper();
-        foreach ($productMeasurementSalesUnitEntityTransfers as $productMeasurementSalesUnitEntityTransfer) {
+        foreach ($productMeasurementSalesUnitEntityCollection as $productMeasurementSalesUnitEntity) {
             $productMeasurementSalesUnitTransfers[] = $mapper->mapProductMeasurementSalesUnitTransfer(
-                $productMeasurementSalesUnitEntityTransfer,
+                $productMeasurementSalesUnitEntity,
                 new ProductMeasurementSalesUnitTransfer()
             );
         }
@@ -129,7 +129,7 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
             ->filterByIdProductMeasurementBaseUnit($idProductMeasurementBaseUnit)
             ->joinWithProductMeasurementUnit();
 
-        $productMeasurementBaseUnitEntity = $this->buildQueryFromCriteria($query)->findOne();
+        $productMeasurementBaseUnitEntity = $query->findOne();
         if (!$productMeasurementBaseUnitEntity) {
             throw new EntityNotFoundException(sprintf(static::ERROR_NO_BASE_UNIT_BY_ID, $idProductMeasurementBaseUnit));
         }
@@ -157,13 +157,13 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
             ->createProductMeasurementUnitQuery()
             ->filterByIdProductMeasurementUnit_In($productMeasurementUnitIds);
 
-        $productMeasurementUnitEntityTransfers = $this->buildQueryFromCriteria($query)->find();
+        $productMeasurementUnitEntityCollection = $query->find();
 
         $productMeasurementUnitTransfers = [];
         $mapper = $this->getFactory()->createProductMeasurementUnitMapper();
-        foreach ($productMeasurementUnitEntityTransfers as $productMeasurementUnitEntityTransfer) {
+        foreach ($productMeasurementUnitEntityCollection as $productMeasurementUnitEntity) {
             $productMeasurementUnitTransfers[] = $mapper->mapProductMeasurementUnitTransfer(
-                $productMeasurementUnitEntityTransfer,
+                $productMeasurementUnitEntity,
                 new ProductMeasurementUnitTransfer()
             );
         }
