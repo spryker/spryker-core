@@ -100,7 +100,9 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
             ->createProductMeasurementSalesUnitQuery()
             ->filterByFkProduct($idProduct)
             ->joinWithProductMeasurementUnit()
-            ->joinWithProductMeasurementBaseUnit();
+            ->joinWithProductMeasurementBaseUnit()
+            ->joinWithSpyProductMeasurementSalesUnitStore()
+            ->joinWith('SpyProductMeasurementSalesUnitStore.SpyStore');
 
         $productMeasurementSalesUnitEntityCollection = $query->find();
         $productMeasurementSalesUnitTransfers = [];

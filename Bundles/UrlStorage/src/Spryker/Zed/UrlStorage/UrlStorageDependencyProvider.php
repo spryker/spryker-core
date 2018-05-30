@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\UrlStorage;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\UrlStorage\Dependency\Facade\UrlStorageToEventBehaviorFacadeBridge;
@@ -20,8 +19,6 @@ class UrlStorageDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
 
-    const STORE = 'STORE';
-
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -29,9 +26,19 @@ class UrlStorageDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $this->addUtilSanitizeService($container);
         $this->addEventBehaviorFacade($container);
-        $this->addStore($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideBusinessLayerDependencies(Container $container)
+    {
+        $this->addUtilSanitizeService($container);
 
         return $container;
     }
@@ -69,18 +76,6 @@ class UrlStorageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
             return new UrlStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
-        };
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return void
-     */
-    protected function addStore(Container $container)
-    {
-        $container[static::STORE] = function (Container $container) {
-            return Store::getInstance();
         };
     }
 

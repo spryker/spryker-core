@@ -10,9 +10,24 @@ namespace Spryker\Zed\PriceProductStorage\Dependency\Facade;
 interface PriceProductStorageToPriceProductFacadeInterface
 {
     /**
-     * @param string $sku
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function findProductAbstractPrices($idProductAbstract);
+
+    /**
+     * @param int $idProductConcrete
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function findProductConcretePrices($idProductConcrete, $idProductAbstract);
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
      * @return array
      */
-    public function findPricesBySkuGroupedForCurrentStore($sku);
+    public function groupPriceProductCollection(array $priceProductTransfers);
 }

@@ -8,14 +8,16 @@
 namespace Spryker\Zed\UrlStorage\Communication\Plugin\Event\Listener;
 
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 use Spryker\Zed\Url\Dependency\UrlEvents;
 
 /**
  * @method \Spryker\Zed\UrlStorage\Persistence\UrlStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\UrlStorage\Communication\UrlStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\UrlStorage\Business\UrlStorageFacadeInterface getFacade()
  */
-class UrlStorageListener extends AbstractUrlStorageListener implements EventBulkHandlerInterface
+class UrlStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
@@ -35,11 +37,11 @@ class UrlStorageListener extends AbstractUrlStorageListener implements EventBulk
         if ($eventName === UrlEvents::ENTITY_SPY_URL_DELETE ||
             $eventName === UrlEvents::URL_UNPUBLISH
         ) {
-            $this->unpublish($urlIds);
+            $this->getFacade()->unpublishUrl($urlIds);
 
             return;
         }
 
-        $this->publish($urlIds);
+        $this->getFacade()->publishUrl($urlIds);
     }
 }
