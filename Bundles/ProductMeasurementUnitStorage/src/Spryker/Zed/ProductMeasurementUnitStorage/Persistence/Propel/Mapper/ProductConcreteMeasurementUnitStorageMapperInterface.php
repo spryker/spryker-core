@@ -14,12 +14,12 @@ interface ProductConcreteMeasurementUnitStorageMapperInterface
 {
     /**
      * @param \Orm\Zed\ProductMeasurementUnitStorage\Persistence\SpyProductConcreteMeasurementUnitStorage $spyProductConcreteMeasurementUnitStorageEntity
-     * @param \Generated\Shared\Transfer\SpyProductConcreteMeasurementUnitStorageEntityTransfer $productConcreteMeasurementUnitStorageEntity
+     * @param \Generated\Shared\Transfer\SpyProductConcreteMeasurementUnitStorageEntityTransfer $productConcreteMeasurementUnitStorageEntityTransfer
      *
      * @return \Orm\Zed\ProductMeasurementUnitStorage\Persistence\SpyProductConcreteMeasurementUnitStorage
      */
     public function hydrateSpyProductMeasurementUnitStorageEntity(
         SpyProductConcreteMeasurementUnitStorage $spyProductConcreteMeasurementUnitStorageEntity,
-        SpyProductConcreteMeasurementUnitStorageEntityTransfer $productConcreteMeasurementUnitStorageEntity
+        SpyProductConcreteMeasurementUnitStorageEntityTransfer $productConcreteMeasurementUnitStorageEntityTransfer
     ): SpyProductConcreteMeasurementUnitStorage;
 }

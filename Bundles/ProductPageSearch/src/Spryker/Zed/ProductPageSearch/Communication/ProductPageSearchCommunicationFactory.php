@@ -89,6 +89,14 @@ class ProductPageSearchCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToStoreFacadeInterface
+     */
+    public function getStoreFacade()
+    {
+        return $this->getProvidedDependency(ProductPageSearchDependencyProvider::FACADE_STORE);
+    }
+
+    /**
      * @return \Spryker\Zed\ProductPageSearch\Dependency\Client\ProductPageSearchToCatalogPriceProductConnectorClientInterface
      */
     public function getCatalogPriceProductConnectorClient()
