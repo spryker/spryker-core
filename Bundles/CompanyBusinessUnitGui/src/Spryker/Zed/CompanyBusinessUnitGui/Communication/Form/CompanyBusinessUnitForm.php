@@ -23,8 +23,12 @@ use Symfony\Component\Validator\Constraints\Required;
 class CompanyBusinessUnitForm extends AbstractType
 {
     public const OPTION_COMPANY_CHOICES = 'company_choices';
+    public const OPTION_PARENT_CHOICES = 'parent_choices';
+    public const DATA_COMPANY_UNIT_MAP = 'data-company_unit_map';
+
     protected const FIELD_ID_COMPANY_BUSINESS_UNIT = 'id_company_business_unit';
     protected const FIELD_FK_COMPANY = 'fk_company';
+    protected const FIELD_FK_PARENT_COMPANY_BUSINESS_UNIT = 'fk_parent_company_business_unit';
     protected const FIELD_NAME = 'name';
     protected const FIELD_IBAN = 'iban';
     protected const FIELD_BIC = 'bic';
@@ -45,6 +49,8 @@ class CompanyBusinessUnitForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired(static::OPTION_COMPANY_CHOICES);
+        $resolver->setRequired(static::OPTION_PARENT_CHOICES);
+        $resolver->setRequired(static::DATA_COMPANY_UNIT_MAP);
     }
 
     /**
@@ -58,11 +64,15 @@ class CompanyBusinessUnitForm extends AbstractType
         $this
             ->addCompanyField($builder, $options[static::OPTION_COMPANY_CHOICES])
             ->addIdCompanyBusinessUnitField($builder)
+            ->addParentNameField(
+                $builder,
+                $options[static::OPTION_PARENT_CHOICES],
+                $options[static::DATA_COMPANY_UNIT_MAP]
+            )
             ->addNameField($builder)
             ->addIbanField($builder)
             ->addBicField($builder)
             ->addPluginForms($builder);
-        ;
     }
 
     /**
@@ -73,6 +83,32 @@ class CompanyBusinessUnitForm extends AbstractType
     protected function addIdCompanyBusinessUnitField(FormBuilderInterface $builder): CompanyBusinessUnitForm
     {
         $builder->add(static::FIELD_ID_COMPANY_BUSINESS_UNIT, HiddenType::class);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $choices
+     * @param array $companyUnitMap
+     *
+     * @return \Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyBusinessUnitForm
+     */
+    protected function addParentNameField(
+        FormBuilderInterface $builder,
+        array $choices,
+        array $companyUnitMap
+    ): CompanyBusinessUnitForm {
+        $builder->add(static::FIELD_FK_PARENT_COMPANY_BUSINESS_UNIT, ChoiceType::class, [
+            'label' => 'Parent',
+            'placeholder' => 'Select one',
+            'choices' => $choices,
+            'choices_as_values' => true,
+            'required' => false,
+            'attr' => [
+                static::DATA_COMPANY_UNIT_MAP => json_encode($companyUnitMap),
+            ],
+        ]);
 
         return $this;
     }
@@ -141,7 +177,7 @@ class CompanyBusinessUnitForm extends AbstractType
         $builder->add(static::FIELD_FK_COMPANY, ChoiceType::class, [
             'label' => 'Company',
             'placeholder' => 'Select one',
-            'choices' => array_flip($choices),
+            'choices' => $choices,
             'choices_as_values' => true,
             'constraints' => [
                 new NotBlank(),

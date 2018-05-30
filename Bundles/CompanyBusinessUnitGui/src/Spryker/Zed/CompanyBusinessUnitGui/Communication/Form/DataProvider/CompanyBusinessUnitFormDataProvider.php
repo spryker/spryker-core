@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\DataProvider;
 
+use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyBusinessUnitForm;
 use Spryker\Zed\CompanyBusinessUnitGui\Dependency\Facade\CompanyBusinessUnitGuiToCompanyBusinessUnitFacadeInterface;
@@ -63,6 +64,8 @@ class CompanyBusinessUnitFormDataProvider
         return [
             'data_class' => CompanyBusinessUnitTransfer::class,
             CompanyBusinessUnitForm::OPTION_COMPANY_CHOICES => $this->prepareCompanyChoices(),
+            CompanyBusinessUnitForm::OPTION_PARENT_CHOICES => $this->prepareParentChoices($idCompanyBusinessUnit),
+            CompanyBusinessUnitForm::DATA_COMPANY_UNIT_MAP => $this->prepareAllParents(),
         ];
     }
 
@@ -75,14 +78,57 @@ class CompanyBusinessUnitFormDataProvider
     }
 
     /**
-     * @return array
+     * @return int[] [company name => company id]
      */
     protected function prepareCompanyChoices(): array
     {
         $result = [];
 
         foreach ($this->companyFacade->getCompanies()->getCompanies() as $company) {
-            $result[$company->getIdCompany()] = $company->getName();
+            $result[$company->getName()] = $company->getIdCompany();
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param int|null $idCompanyBusinessUnit
+     *
+     * @return int[] [business unit name => business unit id]
+     */
+    protected function prepareParentChoices(?int $idCompanyBusinessUnit = null): array
+    {
+        if (!$idCompanyBusinessUnit) {
+            return [];
+        }
+
+        $companyUnitNames = $this->prepareAllParents();
+        foreach ($companyUnitNames as $unitNames) {
+            if (array_key_exists($idCompanyBusinessUnit, $unitNames)) {
+                return array_flip($unitNames);
+            }
+        }
+
+        return [];
+    }
+
+    /**
+     * @return array [idCompany => [idUnit => unitName]]
+     */
+    protected function prepareAllParents(): array
+    {
+        $businessUnitCollection = $this->companyBusinessUnitFacade
+            ->getCompanyBusinessUnitCollection(new CompanyBusinessUnitCriteriaFilterTransfer())
+            ->getCompanyBusinessUnits();
+        $result = [];
+
+        foreach ($businessUnitCollection as $businessUnit) {
+            $idCompany = $businessUnit->getFkCompany();
+            if (!array_key_exists($idCompany, $result)) {
+                $result[$idCompany] = [];
+            }
+
+            $result[$idCompany][$businessUnit->getIdCompanyBusinessUnit()] = $businessUnit->getName();
         }
 
         return $result;
