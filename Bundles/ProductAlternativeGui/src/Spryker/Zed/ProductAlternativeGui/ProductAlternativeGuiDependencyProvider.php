@@ -36,6 +36,20 @@ class ProductAlternativeGuiDependencyProvider extends AbstractBundleDependencyPr
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    public function provideCommunicationLayerDependencies(Container $container)
+    {
+        $container = parent::provideCommunicationLayerDependencies($container);
+        $container = $this->addProductFacade($container);
+        $container = $this->addProductAlternativeFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     public function addProductFacade(Container $container)
     {
         $container[static::FACADE_PRODUCT] = function (Container $container) {

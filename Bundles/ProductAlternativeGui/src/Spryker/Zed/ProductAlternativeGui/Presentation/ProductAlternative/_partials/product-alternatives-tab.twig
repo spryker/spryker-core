@@ -1,1 +1,12 @@
-Test
+<div class="well">
+    {% filter trans|raw %}
+        <h3>Product alternatives</h3>
+        <p>Below are the product alternatives listed.</p>
+    {% endfilter %}
+</div>
+
+<div class="form-group col-md-2">
+    {{ form_label(form) }}
+    {{ form_errors(form) }}
+    {{ form_widget(form) }}
+</div>

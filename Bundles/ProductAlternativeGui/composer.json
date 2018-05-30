@@ -8,6 +8,7 @@
     "spryker/kernel": "^3.1.0",
     "spryker/product": "^6.0.0",
     "spryker/product-alternative": "^1.0.0",
+    "spryker/product-management-extension": "^1.0.0",
     "spryker/gui": "^3.0.0"
   },
   "require-dev": {
