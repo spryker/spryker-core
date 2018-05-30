@@ -173,6 +173,36 @@ class CompanyBusinessUnitFacadeTest extends Test
     /**
      * @return void
      */
+    public function testBusinessUnitCanBeUpdated()
+    {
+        // Arrange
+        $companyTransfer = $this->tester->haveCompany();
+        $seedData = [
+            'fkCompany' => $companyTransfer->getIdCompany(),
+            'idCompanyBusinessUnit' => null,
+        ];
+        $businessUnitTransfer = $this->tester->haveCompanyBusinessUnit($seedData);
+        $businessUnitTransfer->setCompany($companyTransfer);
+
+        // Act
+        $this->getFacade()->update($businessUnitTransfer);
+        $loadedChildBusinessUnitTransfer = $this->getFacade()
+            ->getCompanyBusinessUnitById($businessUnitTransfer);
+
+        // Assert
+        $this->assertSame(
+            $loadedChildBusinessUnitTransfer->getIdCompanyBusinessUnit(),
+            $businessUnitTransfer->getIdCompanyBusinessUnit()
+        );
+        $this->assertSame(
+            $loadedChildBusinessUnitTransfer->getFkCompany(),
+            $businessUnitTransfer->getFkCompany()
+        );
+    }
+
+    /**
+     * @return void
+     */
     public function testBusinessUnitRelationCanAddedToExistingUnit()
     {
         // Arrange
