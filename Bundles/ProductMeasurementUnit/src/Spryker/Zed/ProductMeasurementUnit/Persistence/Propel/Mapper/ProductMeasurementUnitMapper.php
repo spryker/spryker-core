@@ -34,7 +34,6 @@ class ProductMeasurementUnitMapper implements ProductMeasurementUnitMapperInterf
         $productMeasurementUnitTransfer = $this->mapProductMeasurementUnitTransfer(
             $productMeasurementSalesUnitEntity->getProductMeasurementUnit(),
             new ProductMeasurementUnitTransfer()
-
         );
 
         $productMeasurementBaseUnitTransfer = $this->mapProductMeasurementBaseUnitTransfer(
