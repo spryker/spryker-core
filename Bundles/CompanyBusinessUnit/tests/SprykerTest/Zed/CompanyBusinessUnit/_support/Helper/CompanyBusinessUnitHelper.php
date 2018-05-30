@@ -17,17 +17,16 @@ class CompanyBusinessUnitHelper extends Module
     /**
      * @param array $seedData
      *
-     * @return \Generated\Shared\Transfer\CompanyTransfer
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
      */
-    public function getCompany(array $seedData = []): CompanyTransfer
+    public function haveCompanyBusinessUnit(array $seedData = []): CompanyBusinessUnitTransfer
     {
-        $companyTransfer = (new CompanyBuilder($seedData))->build();
+        $companyBusinessUnitTransfer = (new CompanyBusinessUnitBuilder($seedData))->build();
+        $companyBusinessUnitTransfer->setIdCompanyBusinessUnit(null);
 
-        return $this->getLocator()
-            ->company()
-            ->facade()
-            ->create($companyTransfer)
-            ->getCompanyTransfer();
+        return $this->getCompanyBusinessUnitFacade()
+            ->create($companyBusinessUnitTransfer)
+            ->getCompanyBusinessUnitTransfer();
     }
 
     /**
@@ -35,8 +34,13 @@ class CompanyBusinessUnitHelper extends Module
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
      */
-    public function haveCompanyBusinessUnit(array $seedData = []): CompanyBusinessUnitTransfer
+    public function haveCompanyBusinessUnitWithCompany(array $seedData = []): CompanyBusinessUnitTransfer
     {
+        $company = $this->haveCompany();
+        if (empty($seedData['fkCompany'])) {
+            $seedData['fkCompany'] = $company->getIdCompany();
+        }
+
         $companyBusinessUnitTransfer = (new CompanyBusinessUnitBuilder($seedData))->build();
         $companyBusinessUnitTransfer->setIdCompanyBusinessUnit(null);
 
@@ -51,5 +55,21 @@ class CompanyBusinessUnitHelper extends Module
     protected function getCompanyBusinessUnitFacade(): CompanyBusinessUnitFacadeInterface
     {
         return $this->getLocator()->companyBusinessUnit()->facade();
+    }
+
+    /**
+     * @param array $seedData
+     *
+     * @return \Generated\Shared\Transfer\CompanyTransfer
+     */
+    protected function haveCompany(array $seedData = []): CompanyTransfer
+    {
+        $companyTransfer = (new CompanyBuilder($seedData))->build();
+
+        return $this->getLocator()
+            ->company()
+            ->facade()
+            ->create($companyTransfer)
+            ->getCompanyTransfer();
     }
 }
