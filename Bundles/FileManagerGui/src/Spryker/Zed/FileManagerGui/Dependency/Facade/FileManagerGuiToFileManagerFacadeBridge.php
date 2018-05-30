@@ -169,4 +169,14 @@ class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileMan
     {
         return $this->fileManagerFacade->deleteMimeType($mimeTypeTransfer);
     }
+
+    /**
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\MimeTypeCollectionTransfer
+     */
+    public function findAllowedMimeTypes()
+    {
+        return $this->fileManagerFacade->findAllowedMimeTypes();
+    }
 }

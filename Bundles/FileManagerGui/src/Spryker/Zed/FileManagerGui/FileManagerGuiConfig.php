@@ -15,14 +15,6 @@ class FileManagerGuiConfig extends AbstractBundleConfig
     const DEFAULT_PROCESS_LOCATION = APPLICATION_ROOT_DIR . '/config/Zed/oms';
 
     /**
-     * @return string[]
-     */
-    public function getAllowedMimeTypes(): array
-    {
-        return $this->get(FileManagerGuiConstants::ALLOWED_MIME_TYPES, []);
-    }
-
-    /**
      * @return string
      */
     public function getMaxSize(): string

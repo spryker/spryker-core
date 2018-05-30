@@ -161,4 +161,16 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
             ->createMimeTypeRemover()
             ->deleteMimeType($mimeTypeTransfer);
     }
+
+    /**
+     * @api
+     *
+     * {@inheritdoc}
+     */
+    public function findAllowedMimeTypes()
+    {
+        return $this->getFactory()
+            ->createMimeTypeReader()
+            ->findAllowedMimeTypes();
+    }
 }

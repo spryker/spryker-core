@@ -35,6 +35,7 @@ class FileForm extends AbstractType
 
     const OPTION_DATA_CLASS = 'data_class';
     const OPTION_AVAILABLE_LOCALES = 'option_available_locales';
+    const OPTION_ALLOWED_MIME_TYPES = 'option_allowed_mime_types';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -49,7 +50,7 @@ class FileForm extends AbstractType
             ->addIdFileField($builder)
             ->addUseRealNameOption($builder)
             ->addFileLocalizedAttributesForm($builder, $options)
-            ->addFileContentField($builder);
+            ->addFileContentField($builder, $options);
     }
 
     /**
@@ -60,6 +61,7 @@ class FileForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setRequired(static::OPTION_AVAILABLE_LOCALES);
+        $resolver->setRequired(static::OPTION_ALLOWED_MIME_TYPES);
 
         $resolver->setDefaults([
             static::OPTION_DATA_CLASS => FileTransfer::class,
@@ -112,10 +114,11 @@ class FileForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
      * @return $this
      */
-    protected function addFileContentField(FormBuilderInterface $builder)
+    protected function addFileContentField(FormBuilderInterface $builder, array $options)
     {
         $formData = $builder->getData();
         $builder->add(static::FIELD_FILE_CONTENT, FileType::class, [
@@ -123,7 +126,7 @@ class FileForm extends AbstractType
             'constraints' => [
                 new File([
                     'maxSize' => $this->getConfig()->getMaxSize(),
-                    'mimeTypes' => $this->getConfig()->getAllowedMimeTypes(),
+                    'mimeTypes' => $options[static::OPTION_ALLOWED_MIME_TYPES],
                     'mimeTypesMessage' => FileManagerGuiConstants::ERROR_MIME_TYPE_MESSAGE,
                 ]),
             ],

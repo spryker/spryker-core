@@ -18,6 +18,7 @@ use Spryker\Zed\FileManager\Business\Model\FileRemover;
 use Spryker\Zed\FileManager\Business\Model\FileRollback;
 use Spryker\Zed\FileManager\Business\Model\FileSaver;
 use Spryker\Zed\FileManager\Business\Model\FileVersion;
+use Spryker\Zed\FileManager\Business\Model\MimeTypeReader;
 use Spryker\Zed\FileManager\Business\Model\MimeTypeRemover;
 use Spryker\Zed\FileManager\Business\Model\MimeTypeSaver;
 use Spryker\Zed\FileManager\Business\Tree\FileDirectoryTreeHierarchyUpdater;
@@ -189,5 +190,13 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
     public function createMimeTypeRemover()
     {
         return new MimeTypeRemover($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\FileManager\Business\Model\MimeTypeReaderInterface
+     */
+    public function createMimeTypeReader()
+    {
+        return new MimeTypeReader($this->getQueryContainer());
     }
 }

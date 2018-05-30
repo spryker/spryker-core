@@ -143,4 +143,14 @@ interface FileManagerGuiToFileManagerFacadeInterface
      * @return \Generated\Shared\Transfer\MimeTypeResponseTransfer
      */
     public function deleteMimeType(MimeTypeTransfer $mimeTypeTransfer);
+
+    /**
+     * Specification:
+     * - Finds allowed mime types
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\MimeTypeCollectionTransfer
+     */
+    public function findAllowedMimeTypes();
 }
