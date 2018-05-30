@@ -9,7 +9,7 @@ namespace SprykerTest\Zed\ManualOrderEntry\Business;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\OrderSourceTransfer;
 use Generated\Shared\Transfer\SpySalesOrderEntityTransfer;
-use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\ManualOrderEntry\Business\ManualOrderEntryFacadeInterface;
 
 /**
  * Auto-generated group annotations
@@ -69,10 +69,15 @@ class ManualOrderEntryFacadeTest extends Test
     }
 
     /**
-     * @return \Spryker\Zed\ManualOrderEntry\Business\ManualOrderEntryFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade
+     * @return \Spryker\Zed\ManualOrderEntry\Business\ManualOrderEntryFacadeInterface
      */
-    protected function getFacade(): AbstractFacade
+    protected function getFacade(): ManualOrderEntryFacadeInterface
     {
-        return $this->tester->getFacade();
+        /**
+         * @var \Spryker\Zed\ManualOrderEntry\Business\ManualOrderEntryFacadeInterface
+         */
+        $facade = $this->tester->getFacade();
+
+        return $facade;
     }
 }

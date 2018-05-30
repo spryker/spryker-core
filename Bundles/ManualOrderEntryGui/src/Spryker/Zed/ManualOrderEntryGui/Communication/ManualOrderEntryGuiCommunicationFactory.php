@@ -196,7 +196,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
      *
      * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface[]
      */
-    public function getManualOrderEntryFilteredFormPlugins($formPlugins, Request $request, $quoteTransfer): array
+    public function getManualOrderEntryFilteredFormPlugins($formPlugins, Request $request, QuoteTransfer $quoteTransfer): array
     {
         return $this->createManualOrderEntryFormPluginFilter()
             ->getFilteredFormPlugins($formPlugins, $request, $quoteTransfer);
@@ -209,7 +209,7 @@ class ManualOrderEntryGuiCommunicationFactory extends AbstractCommunicationFacto
      *
      * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface[]
      */
-    public function getManualOrderEntrySkippedFormPlugins($formPlugins, Request $request, $quoteTransfer): array
+    public function getManualOrderEntrySkippedFormPlugins($formPlugins, Request $request, QuoteTransfer $quoteTransfer): array
     {
         return $this->createManualOrderEntryFormPluginFilter()
             ->getSkippedFormPlugins($formPlugins, $request, $quoteTransfer);

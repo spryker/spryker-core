@@ -17,7 +17,7 @@ class OrderSourceMapper implements OrderSourceMapperInterface
      *
      * @return \Generated\Shared\Transfer\OrderSourceTransfer
      */
-    public function mapOrderSource(SpyOrderSource $orderSourceEntity): OrderSourceTransfer
+    public function mapOrderSourceEntityToTransfer(SpyOrderSource $orderSourceEntity): OrderSourceTransfer
     {
         $orderSourceTransfer = new OrderSourceTransfer();
         $orderSourceTransfer->fromArray($orderSourceEntity->toArray(), true);

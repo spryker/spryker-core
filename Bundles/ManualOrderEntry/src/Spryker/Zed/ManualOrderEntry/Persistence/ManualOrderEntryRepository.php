@@ -35,11 +35,9 @@ class ManualOrderEntryRepository extends AbstractRepository implements ManualOrd
             throw new OrderSourceNotFoundException();
         }
 
-        $orderSourceTransfer = $this->getFactory()
+        return $this->getFactory()
             ->createOrderSourceMapper()
-            ->mapOrderSource($orderSourceEntity);
-
-        return $orderSourceTransfer;
+            ->mapOrderSourceEntityToTransfer($orderSourceEntity);
     }
 
     /**
@@ -49,14 +47,15 @@ class ManualOrderEntryRepository extends AbstractRepository implements ManualOrd
      */
     public function findAllOrderSources(): array
     {
-        $query = $this->getFactory()->createOrderSourceQuery();
-        $orderSourceEntities = $query->find();
+        $orderSourceEntities = $this->getFactory()
+            ->createOrderSourceQuery()
+            ->find();
 
         $orderSourceTransfers = [];
         $mapper = $this->getFactory()->createOrderSourceMapper();
 
         foreach ($orderSourceEntities as $orderSourceEntity) {
-            $orderSourceTransfer = $mapper->mapOrderSource($orderSourceEntity);
+            $orderSourceTransfer = $mapper->mapOrderSourceEntityToTransfer($orderSourceEntity);
 
             $orderSourceTransfers[] = $orderSourceTransfer;
         }

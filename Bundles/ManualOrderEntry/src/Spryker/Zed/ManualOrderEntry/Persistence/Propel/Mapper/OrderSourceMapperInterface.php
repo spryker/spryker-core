@@ -17,5 +17,5 @@ interface OrderSourceMapperInterface
      *
      * @return \Generated\Shared\Transfer\OrderSourceTransfer
      */
-    public function mapOrderSource(SpyOrderSource $orderSourceEntity): OrderSourceTransfer;
+    public function mapOrderSourceEntityToTransfer(SpyOrderSource $orderSourceEntity): OrderSourceTransfer;
 }

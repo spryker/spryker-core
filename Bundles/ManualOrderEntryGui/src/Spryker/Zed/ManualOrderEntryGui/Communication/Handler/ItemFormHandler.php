@@ -115,7 +115,7 @@ class ItemFormHandler implements FormHandlerInterface
      *
      * @return \ArrayObject
      */
-    protected function appendItemsFromQuoteItems(QuoteTransfer $quoteTransfer, $items): ArrayObject
+    protected function appendItemsFromQuoteItems(QuoteTransfer $quoteTransfer, ArrayObject $items): ArrayObject
     {
         foreach ($quoteTransfer->getItems() as $quoteItemTransfer) {
             $skuAdded = false;
