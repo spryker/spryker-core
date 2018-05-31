@@ -9,9 +9,9 @@ namespace Spryker\Zed\ProductMeasurementUnit\Persistence\Propel\Mapper;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ProductMeasurementBaseUnitTransfer;
-use Generated\Shared\Transfer\ProductMeasurementSalesUnitStoreTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementBaseUnit;
 use Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementSalesUnit;
@@ -42,7 +42,14 @@ class ProductMeasurementUnitMapper implements ProductMeasurementUnitMapperInterf
             )
         );
 
-        return $this->hydrateStoresToProductMeasurementSalesUnitTransfer($productMeasurementSalesUnitEntity, $productMeasurementSalesUnitTransfer);
+        $productMeasurementSalesUnitTransfer->setStoreRelation(
+            $this->mapProductMeasurementSalesUnitStoreRelationTransfer(
+                $productMeasurementSalesUnitEntity,
+                new StoreRelationTransfer()
+            )
+        );
+
+        return $productMeasurementSalesUnitTransfer;
     }
 
     /**
@@ -81,31 +88,32 @@ class ProductMeasurementUnitMapper implements ProductMeasurementUnitMapperInterf
 
     /**
      * @param \Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementSalesUnit $productMeasurementSalesUnitEntity
-     * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer
+     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer
+     * @return \Generated\Shared\Transfer\StoreRelationTransfer
      */
-    protected function hydrateStoresToProductMeasurementSalesUnitTransfer(
+    protected function mapProductMeasurementSalesUnitStoreRelationTransfer(
         SpyProductMeasurementSalesUnit $productMeasurementSalesUnitEntity,
-        ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer
-    ): ProductMeasurementSalesUnitTransfer {
-        $spyProductMeasurementSalesUnitStores = $productMeasurementSalesUnitEntity->getSpyProductMeasurementSalesUnitStores();
+        StoreRelationTransfer $storeRelationTransfer
+    ): StoreRelationTransfer {
+        $storeRelationTransfer->setIdEntity($productMeasurementSalesUnitEntity->getIdProductMeasurementSalesUnit());
 
-        $productMeasurementSalesUnitStoreTransfers = new ArrayObject();
-        foreach ($spyProductMeasurementSalesUnitStores as $spyProductMeasurementSalesUnitStore) {
-            $productMeasurementSalesUnitStoreTransfer = (new ProductMeasurementSalesUnitStoreTransfer())->fromArray(
-                $spyProductMeasurementSalesUnitStore->toArray(),
+        $idStores = [];
+        $storeTransfers = [];
+        foreach ($productMeasurementSalesUnitEntity->getSpyProductMeasurementSalesUnitStores() as $spyProductMeasurementSalesUnitStore) {
+            $storeTransfer = (new StoreTransfer())->fromArray(
+                $spyProductMeasurementSalesUnitStore->getSpyStore()->toArray(),
                 true
             );
 
-            $productMeasurementSalesUnitStoreTransfer->setStore(
-                (new StoreTransfer())->fromArray($spyProductMeasurementSalesUnitStore->getSpyStore()->toArray(), true)
-            );
-            $productMeasurementSalesUnitStoreTransfers->append($productMeasurementSalesUnitStoreTransfer);
+            $idStores[] = $storeTransfer->getIdStore();
+            $storeTransfers[] = $storeTransfer;
         }
 
-        $productMeasurementSalesUnitTransfer->setStores($productMeasurementSalesUnitStoreTransfers);
+        $storeRelationTransfer
+            ->setIdStores($idStores)
+            ->setStores(new ArrayObject($storeTransfers));
 
-        return $productMeasurementSalesUnitTransfer;
+        return $storeRelationTransfer;
     }
 }

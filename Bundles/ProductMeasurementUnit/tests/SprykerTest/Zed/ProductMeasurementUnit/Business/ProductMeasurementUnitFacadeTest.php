@@ -136,51 +136,6 @@ class ProductMeasurementUnitFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetBaseUnitByIdProductReturnsCorrespondingBaseUnit()
-    {
-        // Assign
-        $code = 'MYCODE' . random_int(1, 100);
-        $productTransfer = $this->tester->haveProduct();
-        $productMeasurementUnitTransfer = $this->tester->haveProductMeasurementUnit([
-            SpyProductMeasurementUnitEntityTransfer::CODE => $code,
-        ]);
-        $productMeasurementBaseUnitTransfer = $this->tester->haveProductMeasurementBaseUnit(
-            $productTransfer->getFkProductAbstract(),
-            $productMeasurementUnitTransfer->getIdProductMeasurementUnit()
-        );
-        $expectedIdBaseUnit = $productMeasurementBaseUnitTransfer->getIdProductMeasurementBaseUnit();
-
-        // Act
-        $productMeasurementBaseUnitTransfer = $this->productMeasurementUnitFacade->getBaseUnitByIdProduct($productTransfer->getIdProductConcrete());
-        $actualIdBaseUnit = $productMeasurementBaseUnitTransfer->getIdProductMeasurementBaseUnit();
-
-        // Assert
-        $this->assertSame($expectedIdBaseUnit, $actualIdBaseUnit);
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetProductMeasurementUnitCodeMapReturnsCodes()
-    {
-        // Assign
-        $code = 'MYCODE' . random_int(1, 100);
-        $productMeasurementUnitTransfer = $this->tester->haveProductMeasurementUnit([
-            SpyProductMeasurementUnitEntityTransfer::CODE => $code,
-        ]);
-        $expectedCode = $code;
-        $expectedId = $productMeasurementUnitTransfer->getIdProductMeasurementUnit();
-
-        // Act
-        $codeMap = $this->productMeasurementUnitFacade->getProductMeasurementUnitCodeMap();
-
-        // Assert
-        $this->assertSame($expectedCode, $codeMap[$expectedId]);
-    }
-
-    /**
-     * @return void
-     */
     public function testFindProductMeasurementUnitEntitiesReturnsProductMeasurementUnitEntities()
     {
         // Assign

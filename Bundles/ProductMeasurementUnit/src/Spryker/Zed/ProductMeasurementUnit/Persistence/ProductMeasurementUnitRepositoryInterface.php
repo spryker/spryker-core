@@ -13,13 +13,6 @@ use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 interface ProductMeasurementUnitRepositoryInterface
 {
     /**
-     * @param int $idProduct
-     *
-     * @return \Generated\Shared\Transfer\ProductMeasurementBaseUnitTransfer
-     */
-    public function getProductMeasurementBaseUnitTransferByIdProduct(int $idProduct): ProductMeasurementBaseUnitTransfer;
-
-    /**
      * @param int $idProductMeasurementSalesUnit
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer
@@ -46,9 +39,4 @@ interface ProductMeasurementUnitRepositoryInterface
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
      */
     public function findProductMeasurementUnitTransfers(array $productMeasurementUnitIds): array;
-
-    /**
-     * @return string[] Keys are product measurement unit IDs, values are product measurement unit codes.
-     */
-    public function getProductMeasurementUnitCodeMap(): array;
 }

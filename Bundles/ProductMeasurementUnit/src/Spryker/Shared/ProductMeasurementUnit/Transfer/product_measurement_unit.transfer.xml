@@ -29,14 +29,18 @@
         <property name="productMeasurementBaseUnit" type="ProductMeasurementBaseUnit" />
         <property name="productMeasurementUnit" type="ProductMeasurementUnit" />
         <property name="value" type="int" />
-        <property name="stores" type="ProductMeasurementSalesUnitStore[]" />
+        <property name="storeRelation" type="StoreRelation" />
     </transfer>
 
-    <transfer name="ProductMeasurementSalesUnitStore">
-        <property name="idProductMeasurementSalesUnitStore" type="int" />
-        <property name="fkProductMeasurementSalesUnit" type="int" />
-        <property name="fkStore" type="int" />
-        <property name="store" type="Store" />
+    <transfer name="StoreRelation">
+        <property name="idEntity" type="int" />
+        <property name="idStores" type="int[]" />
+        <property name="stores" type="Store[]" />
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int" />
+        <property name="name" type="string" />
     </transfer>
 
     <transfer name="Item">

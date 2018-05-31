@@ -26,42 +26,8 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
     protected const COL_CODE = 'code';
 
     /**
-     * @uses SpyProductAbstractQuery
-     * @uses SpyProductQuery
+     * @uses SpyStoreQuery
      *
-     * @param int $idProduct
-     *
-     * @throws \Propel\Runtime\Exception\EntityNotFoundException
-     *
-     * @return \Generated\Shared\Transfer\ProductMeasurementBaseUnitTransfer
-     */
-    public function getProductMeasurementBaseUnitTransferByIdProduct(int $idProduct): ProductMeasurementBaseUnitTransfer
-    {
-        $query = $this->getFactory()
-            ->createProductMeasurementBaseUnitQuery()
-            ->joinProductAbstract()
-            ->useProductAbstractQuery()
-                ->joinSpyProduct()
-                    ->useSpyProductQuery()
-                        ->filterByIdProduct($idProduct)
-                    ->endUse()
-            ->endUse()
-            ->joinWithProductMeasurementUnit();
-
-        $productMeasurementBaseUnitEntity = $query->findOne();
-        if (!$productMeasurementBaseUnitEntity) {
-            throw new EntityNotFoundException(sprintf(static::ERROR_NO_BASE_UNIT_FOR_ID_PRODUCT, $idProduct));
-        }
-
-        return $this->getFactory()
-            ->createProductMeasurementUnitMapper()
-            ->mapProductMeasurementBaseUnitTransfer(
-                $productMeasurementBaseUnitEntity,
-                new ProductMeasurementBaseUnitTransfer()
-            );
-    }
-
-    /**
      * @param int $idProductMeasurementSalesUnit
      *
      * @throws \Propel\Runtime\Exception\EntityNotFoundException
@@ -73,10 +39,18 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
         $query = $this->getFactory()
             ->createProductMeasurementSalesUnitQuery()
             ->filterByIdProductMeasurementSalesUnit($idProductMeasurementSalesUnit)
-            ->joinWithProductMeasurementUnit()
-            ->joinWithProductMeasurementBaseUnit();
+            ->joinWithProductMeasurementBaseUnit()
+            ->joinWith('ProductMeasurementUnit salesUnitMeasurementUnit')
+            ->joinWith('ProductMeasurementBaseUnit.ProductMeasurementUnit baseUnitMeasurementUnit')
+            ->leftJoinWithSpyProductMeasurementSalesUnitStore()
+            ->leftJoinWith('SpyProductMeasurementSalesUnitStore.SpyStore');
 
-        $productMeasurementSalesUnitEntity = $query->findOne();
+        $productMeasurementSalesUnitEntityCollection = $query->find();
+        if (!$productMeasurementSalesUnitEntityCollection) {
+            throw new EntityNotFoundException(sprintf(static::ERROR_NO_SALES_UNIT_BY_ID, $idProductMeasurementSalesUnit));
+        }
+
+        $productMeasurementSalesUnitEntity = $productMeasurementSalesUnitEntityCollection->getFirst();
         if (!$productMeasurementSalesUnitEntity) {
             throw new EntityNotFoundException(sprintf(static::ERROR_NO_SALES_UNIT_BY_ID, $idProductMeasurementSalesUnit));
         }
@@ -90,6 +64,8 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
     }
 
     /**
+     * @uses SpyStoreQuery
+     *
      * @param int $idProduct
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
@@ -102,8 +78,8 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
             ->joinWithProductMeasurementBaseUnit()
             ->joinWith('ProductMeasurementUnit salesUnitMeasurementUnit')
             ->joinWith('ProductMeasurementBaseUnit.ProductMeasurementUnit baseUnitMeasurementUnit')
-            ->joinWithSpyProductMeasurementSalesUnitStore()
-            ->joinWith('SpyProductMeasurementSalesUnitStore.SpyStore');
+            ->leftJoinWithSpyProductMeasurementSalesUnitStore()
+            ->leftJoinWith('SpyProductMeasurementSalesUnitStore.SpyStore');
 
         $productMeasurementSalesUnitEntityCollection = $query->find();
         $productMeasurementSalesUnitTransfers = [];
@@ -172,16 +148,5 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
         }
 
         return $productMeasurementUnitTransfers;
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getProductMeasurementUnitCodeMap(): array
-    {
-        return $this->getFactory()
-            ->createProductMeasurementUnitQuery()
-            ->find()
-            ->toKeyValue(static::COL_ID_PRODUCT_MEASUREMENT_UNIT, static::COL_CODE);
     }
 }

@@ -9,23 +9,10 @@ namespace Spryker\Zed\ProductMeasurementUnit\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ProductMeasurementBaseUnitTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface ProductMeasurementUnitFacadeInterface
 {
-    /**
-     * Specification:
-     * - Retrieves a product measurement base unit for a given product concrete.
-     *
-     * @api
-     *
-     * @param int $idProduct
-     *
-     * @return \Generated\Shared\Transfer\ProductMeasurementBaseUnitTransfer
-     */
-    public function getBaseUnitByIdProduct(int $idProduct): ProductMeasurementBaseUnitTransfer;
-
     /**
      * Specification:
      * - Retrieves all product measurement sales units related to a given product concrete.
@@ -74,16 +61,6 @@ interface ProductMeasurementUnitFacadeInterface
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
     public function expandCartChangeWithQuantitySalesUnit(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
-
-    /**
-     * Specification:
-     * - Retrieves a list of all product measurement unit codes, mapped by their own ID.
-     *
-     * @api
-     *
-     * @return string[]
-     */
-    public function getProductMeasurementUnitCodeMap(): array;
 
     /**
      * Specification:

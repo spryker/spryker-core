@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ProductMeasurementUnitStorage\Dependency\Facade;
 
-use Generated\Shared\Transfer\ProductMeasurementBaseUnitTransfer;
-
 class ProductMeasurementUnitStorageToProductMeasurementUnitFacadeBridge implements ProductMeasurementUnitStorageToProductMeasurementUnitFacadeInterface
 {
     /**
@@ -27,29 +25,11 @@ class ProductMeasurementUnitStorageToProductMeasurementUnitFacadeBridge implemen
     /**
      * @param int $idProduct
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementBaseUnitTransfer
-     */
-    public function getBaseUnitByIdProduct(int $idProduct): ProductMeasurementBaseUnitTransfer
-    {
-        return $this->productMeasurementUnitFacade->getBaseUnitByIdProduct($idProduct);
-    }
-
-    /**
-     * @param int $idProduct
-     *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
      */
     public function getSalesUnitsByIdProduct(int $idProduct): array
     {
         return $this->productMeasurementUnitFacade->getSalesUnitsByIdProduct($idProduct);
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getProductMeasurementUnitCodeMap(): array
-    {
-        return $this->productMeasurementUnitFacade->getProductMeasurementUnitCodeMap();
     }
 
     /**

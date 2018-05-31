@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductMeasurementUnit\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ProductMeasurementBaseUnitTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -58,22 +57,6 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
      *
      * @param int $idProduct
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementBaseUnitTransfer
-     */
-    public function getBaseUnitByIdProduct(int $idProduct): ProductMeasurementBaseUnitTransfer
-    {
-        return $this->getFactory()
-            ->createProductMeasurementBaseUnitReader()
-            ->getProductMeasurementBaseUnitTransferByIdProduct($idProduct);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param int $idProduct
-     *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
      */
     public function getSalesUnitsByIdProduct(int $idProduct): array
@@ -81,18 +64,6 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
         return $this->getFactory()
             ->createProductMeasurementSalesUnitReader()
             ->getProductMeasurementSalesUnitTransfersByIdProduct($idProduct);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @return string[] Keys are product measurement unit IDs, values are product measurement unit codes.
-     */
-    public function getProductMeasurementUnitCodeMap(): array
-    {
-        return $this->getRepository()->getProductMeasurementUnitCodeMap();
     }
 
     /**
