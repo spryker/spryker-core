@@ -17,34 +17,10 @@ use Spryker\Zed\NavigationStorage\NavigationStorageDependencyProvider;
 class NavigationStorageCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\NavigationStorage\Dependency\Service\NavigationStorageToUtilSanitizeServiceInterface
-     */
-    public function getUtilSanitizeService()
-    {
-        return $this->getProvidedDependency(NavigationStorageDependencyProvider::SERVICE_UTIL_SANITIZE);
-    }
-
-    /**
      * @return \Spryker\Zed\NavigationStorage\Dependency\Facade\NavigationStorageToEventBehaviorFacadeInterface
      */
     public function getEventBehaviorFacade()
     {
         return $this->getProvidedDependency(NavigationStorageDependencyProvider::FACADE_EVENT_BEHAVIOR);
-    }
-
-    /**
-     * @return \Spryker\Zed\NavigationStorage\Dependency\Facade\NavigationStorageToNavigationInterface
-     */
-    public function getNavigationFacade()
-    {
-        return $this->getProvidedDependency(NavigationStorageDependencyProvider::FACADE_NAVIGATION);
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    public function getStore()
-    {
-        return $this->getProvidedDependency(NavigationStorageDependencyProvider::STORE);
     }
 }

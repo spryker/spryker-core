@@ -22,7 +22,7 @@ class CompanyHelper extends Module
      *
      * @return \Generated\Shared\Transfer\CompanyTransfer|null
      */
-    public function findCompanyById(int $idCompany)
+    public function findCompanyById(int $idCompany): ?CompanyTransfer
     {
         $entity = SpyCompanyQuery::create()
             ->filterByIdCompany($idCompany)
@@ -40,7 +40,7 @@ class CompanyHelper extends Module
      *
      * @return \Generated\Shared\Transfer\CompanyTransfer
      */
-    public function haveCompany(array $seedData = [])
+    public function haveCompany(array $seedData = []): CompanyTransfer
     {
         $companyTransfer = (new CompanyBuilder($seedData))->build();
         $companyTransfer->setIdCompany(null);

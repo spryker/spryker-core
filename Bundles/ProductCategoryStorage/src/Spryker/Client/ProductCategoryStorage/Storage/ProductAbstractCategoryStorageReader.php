@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\ProductCategoryStorage\Dependency\Client\ProductCategoryStorageToStorageClientInterface;
 use Spryker\Client\ProductCategoryStorage\Dependency\Service\ProductCategoryStorageToSynchronizationServiceInterface;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\ProductCategoryStorage\ProductCategoryStorageConfig;
 
 class ProductAbstractCategoryStorageReader implements ProductAbstractCategoryStorageReaderInterface
@@ -64,11 +63,8 @@ class ProductAbstractCategoryStorageReader implements ProductAbstractCategorySto
      */
     protected function generateKey($idProductAbstract, $locale)
     {
-        $store = Store::getInstance()->getStoreName();
-
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer
-            ->setStore($store)
             ->setLocale($locale)
             ->setReference($idProductAbstract);
 
