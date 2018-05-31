@@ -20,7 +20,6 @@ class UrlStorageFactory extends AbstractFactory
         return new UrlStorageReader(
             $this->getStorageClient(),
             $this->getSynchronizationService(),
-            $this->getStore(),
             $this->getUrlStorageResourceMapperPlugins()
         );
     }
@@ -47,13 +46,5 @@ class UrlStorageFactory extends AbstractFactory
     public function getUrlStorageResourceMapperPlugins()
     {
         return $this->getProvidedDependency(UrlStorageDependencyProvider::PLUGINS_URL_STORAGE_RESOURCE_MAPPER);
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    public function getStore()
-    {
-        return $this->getProvidedDependency(UrlStorageDependencyProvider::STORE);
     }
 }

@@ -9,13 +9,18 @@ namespace Spryker\Zed\CmsStorage\Communication\Plugin\Event\Listener;
 
 use Orm\Zed\Cms\Persistence\Map\SpyCmsVersionTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\CmsStorage\Communication\CmsStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\CmsStorage\Persistence\CmsStorageQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\CmsStorage\Business\CmsStorageFacadeInterface getFacade()
  */
-class CmsPageVersionStorageListener extends AbstractCmsPageStorageListener implements EventBulkHandlerInterface
+class CmsPageVersionStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
+    use DatabaseTransactionHandlerTrait;
+
     /**
      * @param array $eventTransfers
      * @param string $eventName
@@ -27,6 +32,6 @@ class CmsPageVersionStorageListener extends AbstractCmsPageStorageListener imple
         $this->preventTransaction();
         $cmsPageIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventTransfers, SpyCmsVersionTableMap::COL_FK_CMS_PAGE);
 
-        $this->publish($cmsPageIds);
+        $this->getFacade()->publish($cmsPageIds);
     }
 }
