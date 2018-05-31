@@ -59,13 +59,13 @@ class ProductConcreteMeasurementUnitStorageReader implements ProductConcreteMeas
      */
     protected function getProductConcreteMeasurementSalesUnitTransfers(int $idProduct): array
     {
-        $productMeasurementSalesUnitEntities = $this->productMeasurementUnitFacade->getSalesUnitsByIdProduct($idProduct);
+        $productMeasurementSalesUnitTransfers = $this->productMeasurementUnitFacade->getSalesUnitsByIdProduct($idProduct);
         $productMeasurementSalesUnitEntitiesStorePair = [];
-        foreach ($productMeasurementSalesUnitEntities as $productMeasurementSalesUnitEntity) {
-            foreach ($productMeasurementSalesUnitEntity->getSpyProductMeasurementSalesUnitStores() as $spyProductMeasurementSalesUnitStore) {
-                $productMeasurementSalesUnitEntitiesStorePair[$spyProductMeasurementSalesUnitStore->getSpyStore()->getName()][] = (new ProductConcreteMeasurementSalesUnitTransfer())
-                    ->fromArray($productMeasurementSalesUnitEntity->toArray(), true)
-                    ->setIdProductMeasurementUnit($productMeasurementSalesUnitEntity->getFkProductMeasurementUnit());
+        foreach ($productMeasurementSalesUnitTransfers as $productMeasurementSalesUnitTransfer) {
+            foreach ($productMeasurementSalesUnitTransfer->getStores() as $productMeasurementSalesUnitStoreTransfer) {
+                $productMeasurementSalesUnitEntitiesStorePair[$productMeasurementSalesUnitStoreTransfer->getStore()->getName()][] = (new ProductConcreteMeasurementSalesUnitTransfer())
+                    ->fromArray($productMeasurementSalesUnitTransfer->toArray(), true)
+                    ->setIdProductMeasurementUnit($productMeasurementSalesUnitTransfer->getFkProductMeasurementUnit());
             }
         }
 
