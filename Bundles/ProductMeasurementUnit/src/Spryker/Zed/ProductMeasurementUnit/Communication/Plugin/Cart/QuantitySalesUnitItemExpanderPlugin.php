@@ -28,6 +28,6 @@ class QuantitySalesUnitItemExpanderPlugin extends AbstractPlugin implements Item
      */
     public function expandItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
-        return $this->getFacade()->expandQuantitySalesUnit($cartChangeTransfer);
+        return $this->getFacade()->expandCartChangeWithQuantitySalesUnit($cartChangeTransfer);
     }
 }

@@ -241,7 +241,7 @@ class ProductMeasurementUnitFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testExpandQuantitySalesUnitExpandsTransferWithQuantitySalesUnit()
+    public function testExpandCartChangeWithQuantitySalesUnitExpandsCartChangeWithQuantitySalesUnit()
     {
         // Assign
         $code = 'MYCODE' . random_int(1, 100);
@@ -269,7 +269,7 @@ class ProductMeasurementUnitFacadeTest extends Unit
         );
 
         //Act
-        $cartChangeTransfer = $this->productMeasurementUnitFacade->expandQuantitySalesUnit($cartChangeTransfer);
+        $cartChangeTransfer = $this->productMeasurementUnitFacade->expandCartChangeWithQuantitySalesUnit($cartChangeTransfer);
 
         //Assert
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
