@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductAlternativeGui\Communication\Controller;
 
-use Generated\Shared\Transfer\ProductAlternativeTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -24,9 +23,9 @@ class CreateController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Generated\Shared\Transfer\ProductAlternativeTransfer|null
+     * @return array
      */
-    public function indexAction(Request $request): ?ProductAlternativeTransfer
+    public function indexAction(Request $request): array
     {
         $searchText = $request->query->get(static::FIELD_PRODUCT_NAME_OR_SKU_AUTOCOMPLETE);
 
@@ -38,11 +37,15 @@ class CreateController extends AbstractController
         if ($productAlternativeResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::MESSAGE_PRODUCT_ALTERNATIVE_CREATE_SUCCESS);
 
-            return $productAlternativeResponseTransfer->getProductAlternative();
+            return [
+                'productAlternative' => $productAlternativeResponseTransfer
+                    ->getProductAlternative()
+                    ->toArray(),
+            ];
         }
 
         $this->addErrorMessage(static::MESSAGE_PRODUCT_ALTERNATIVE_CREATE_ERROR);
 
-        return null;
+        return [];
     }
 }
