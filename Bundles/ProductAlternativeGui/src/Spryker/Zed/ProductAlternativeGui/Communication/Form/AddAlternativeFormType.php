@@ -45,7 +45,7 @@ class AddAlternativeFormType extends AbstractType
             'label' => 'Find Product by Name or SKU',
             'url' => '/product-alternative-gui/suggest',
             'attr' => [
-                'placeholder' => 'Type first three letters of an existing product name or sku for suggestions.',
+                'placeholder' => 'Type three letters of product name or sku for suggestions.',
             ],
             'required' => false,
         ]);
