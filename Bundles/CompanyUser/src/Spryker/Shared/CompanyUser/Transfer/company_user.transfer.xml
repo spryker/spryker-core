@@ -14,8 +14,10 @@
     <transfer name="CompanyUser">
         <property name="idCompanyUser" type="int"/>
         <property name="fkCompany" type="int"/>
+        <property name="company" type="Company" />
         <property name="fkCustomer" type="int"/>
         <property name="customer" type="Customer"/>
+        <property name="isDefault" type="bool" />
     </transfer>
 
     <transfer name="CompanyUserResponse">

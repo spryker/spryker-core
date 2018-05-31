@@ -106,6 +106,8 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
         $query = $this->getFactory()
             ->createCompanyUserQuery()
             ->joinWithCustomer()
+            ->joinWithCompany()
+            ->joinWithCompanyBusinessUnit()
             ->filterByIdCompanyUser($idCompanyUser);
         $entityTransfer = $this->buildQueryFromCriteria($query)->findOne();
 
@@ -168,5 +170,23 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
         return $this->getFactory()
             ->createCompanyUserMapper()
             ->mapEntityTransferToCompanyUserTransfer($entityTransfer);
+    }
+
+    /**
+     * @param int $idCustomer
+     *
+     * @return int
+     */
+    public function getCountOfActiveCompanyUsersByCustomerId(int $idCustomer): int
+    {
+        $query = $this->getFactory()
+            ->createCompanyUserQuery()
+            ->filterByFkCustomer($idCustomer)
+            ->joinCompany()
+            ->useCompanyQuery()
+                ->filterByIsActive(true)
+            ->endUse();
+
+        return $query->count();
     }
 }
