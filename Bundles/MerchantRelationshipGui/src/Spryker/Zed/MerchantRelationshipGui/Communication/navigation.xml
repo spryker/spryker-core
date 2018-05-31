@@ -6,8 +6,8 @@
         <icon>fa-file-text-o</icon>
         <pages>
             <merchant-relationship>
-                <label>Merchant Relation</label>
-                <title>Merchant Relation</title>
+                <label>Merchant Relations</label>
+                <title>Merchant Relations</title>
                 <bundle>merchant-relationship-gui</bundle>
                 <controller>list-merchant-relationship</controller>
                 <action>index</action>
