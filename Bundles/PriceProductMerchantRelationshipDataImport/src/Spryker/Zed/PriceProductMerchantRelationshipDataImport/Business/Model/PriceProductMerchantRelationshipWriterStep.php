@@ -16,7 +16,7 @@ use Orm\Zed\PriceProduct\Persistence\SpyPriceTypeQuery;
 use Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationshipQuery;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\PriceProductMerchantRelationshipDataImport\Business\Model\DataSet\PriceProductMerchantRelationshipDataSet;
+use Spryker\Zed\PriceProductMerchantRelationshipDataImport\Business\Model\DataSet\PriceProductMerchantRelationshipDataSetInterface;
 
 class PriceProductMerchantRelationshipWriterStep implements DataImportStepInterface
 {
@@ -49,7 +49,7 @@ class PriceProductMerchantRelationshipWriterStep implements DataImportStepInterf
     protected function getProductPriceEntity(DataSetInterface $dataSet): SpyPriceProduct
     {
         $priceTypeEntity = SpyPriceTypeQuery::create()
-            ->filterByName($dataSet[PriceProductMerchantRelationshipDataSet::PRICE_TYPE])
+            ->filterByName($dataSet[PriceProductMerchantRelationshipDataSetInterface::PRICE_TYPE])
             ->findOneOrCreate();
 
         if ($priceTypeEntity->isNew() || $priceTypeEntity->isModified()) {
@@ -60,10 +60,10 @@ class PriceProductMerchantRelationshipWriterStep implements DataImportStepInterf
         $query = SpyPriceProductQuery::create();
         $query->filterByFkPriceType($priceTypeEntity->getIdPriceType());
 
-        if (!empty($dataSet[PriceProductMerchantRelationshipDataSet::ID_PRODUCT_ABSTRACT])) {
-            $query->filterByFkProductAbstract($dataSet[PriceProductMerchantRelationshipDataSet::ID_PRODUCT_ABSTRACT]);
+        if (!empty($dataSet[PriceProductMerchantRelationshipDataSetInterface::ID_PRODUCT_ABSTRACT])) {
+            $query->filterByFkProductAbstract($dataSet[PriceProductMerchantRelationshipDataSetInterface::ID_PRODUCT_ABSTRACT]);
         } else {
-            $query->filterByFkProduct($dataSet[PriceProductMerchantRelationshipDataSet::ID_PRODUCT_CONCRETE]);
+            $query->filterByFkProduct($dataSet[PriceProductMerchantRelationshipDataSetInterface::ID_PRODUCT_CONCRETE]);
         }
         $productPriceEntity = $query->findOneOrCreate();
         $productPriceEntity->save();
@@ -83,10 +83,10 @@ class PriceProductMerchantRelationshipWriterStep implements DataImportStepInterf
     ): SpyPriceProductStore {
         $priceProductStoreEntity = SpyPriceProductStoreQuery::create()
             ->usePriceProductMerchantRelationshipQuery()
-                ->filterByFkMerchantRelationship($dataSet[PriceProductMerchantRelationshipDataSet::ID_MERCHANT_RELATIONSHIP])
+                ->filterByFkMerchantRelationship($dataSet[PriceProductMerchantRelationshipDataSetInterface::ID_MERCHANT_RELATIONSHIP])
             ->endUse()
-            ->filterByFkStore($dataSet[PriceProductMerchantRelationshipDataSet::ID_STORE])
-            ->filterByFkCurrency($dataSet[PriceProductMerchantRelationshipDataSet::ID_CURRENCY])
+            ->filterByFkStore($dataSet[PriceProductMerchantRelationshipDataSetInterface::ID_STORE])
+            ->filterByFkCurrency($dataSet[PriceProductMerchantRelationshipDataSetInterface::ID_CURRENCY])
             ->filterByFkPriceProduct($idProductPriceEntity)
             ->findOne();
 
@@ -95,8 +95,8 @@ class PriceProductMerchantRelationshipWriterStep implements DataImportStepInterf
         }
 
         $priceProductStoreEntity = SpyPriceProductStoreQuery::create()
-            ->filterByFkStore($dataSet[PriceProductMerchantRelationshipDataSet::ID_STORE])
-            ->filterByFkCurrency($dataSet[PriceProductMerchantRelationshipDataSet::ID_CURRENCY])
+            ->filterByFkStore($dataSet[PriceProductMerchantRelationshipDataSetInterface::ID_STORE])
+            ->filterByFkCurrency($dataSet[PriceProductMerchantRelationshipDataSetInterface::ID_CURRENCY])
             ->filterByFkPriceProduct($idProductPriceEntity)
             ->findOneOrCreate();
 
@@ -114,13 +114,13 @@ class PriceProductMerchantRelationshipWriterStep implements DataImportStepInterf
     protected function savePriceProductMerchantRelationship(DataSetInterface $dataSet, string $idPriceProductStore): void
     {
         $priceProductMerchantRelationshipQuery = SpyPriceProductMerchantRelationshipQuery::create()
-            ->filterByFkMerchantRelationship($dataSet[PriceProductMerchantRelationshipDataSet::ID_MERCHANT_RELATIONSHIP])
+            ->filterByFkMerchantRelationship($dataSet[PriceProductMerchantRelationshipDataSetInterface::ID_MERCHANT_RELATIONSHIP])
             ->filterByFkPriceProductStore($idPriceProductStore);
 
-        if (!empty($dataSet[PriceProductMerchantRelationshipDataSet::ID_PRODUCT_ABSTRACT])) {
-            $priceProductMerchantRelationshipQuery->filterByFkProductAbstract($dataSet[PriceProductMerchantRelationshipDataSet::ID_PRODUCT_ABSTRACT]);
+        if (!empty($dataSet[PriceProductMerchantRelationshipDataSetInterface::ID_PRODUCT_ABSTRACT])) {
+            $priceProductMerchantRelationshipQuery->filterByFkProductAbstract($dataSet[PriceProductMerchantRelationshipDataSetInterface::ID_PRODUCT_ABSTRACT]);
         } else {
-            $priceProductMerchantRelationshipQuery->filterByFkProduct($dataSet[PriceProductMerchantRelationshipDataSet::ID_PRODUCT_CONCRETE]);
+            $priceProductMerchantRelationshipQuery->filterByFkProduct($dataSet[PriceProductMerchantRelationshipDataSetInterface::ID_PRODUCT_CONCRETE]);
         }
 
         $priceProductMerchantRelationshipEntity = $priceProductMerchantRelationshipQuery->findOneOrCreate();

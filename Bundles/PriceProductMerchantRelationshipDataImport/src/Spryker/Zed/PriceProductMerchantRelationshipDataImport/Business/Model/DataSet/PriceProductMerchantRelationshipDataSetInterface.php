@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationshipDataImport\Business\Model\DataSet;
 
-interface PriceProductMerchantRelationshipDataSet
+interface PriceProductMerchantRelationshipDataSetInterface
 {
     public const MERCHANT_RELATIONSHIP_KEY = 'merchant_relation_key';
     public const ABSTRACT_SKU = 'abstract_sku';

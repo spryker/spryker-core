@@ -12,7 +12,7 @@ use Orm\Zed\Currency\Persistence\SpyCurrencyQuery;
 use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\PriceProductMerchantRelationshipDataImport\Business\Model\DataSet\PriceProductMerchantRelationshipDataSet;
+use Spryker\Zed\PriceProductMerchantRelationshipDataImport\Business\Model\DataSet\PriceProductMerchantRelationshipDataSetInterface;
 
 class CurrencyToIdCurrencyStep implements DataImportStepInterface
 {
@@ -30,7 +30,7 @@ class CurrencyToIdCurrencyStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $currencyCode = $dataSet[PriceProductMerchantRelationshipDataSet::CURRENCY];
+        $currencyCode = $dataSet[PriceProductMerchantRelationshipDataSetInterface::CURRENCY];
         if (!isset($this->idCurrencyCache[$currencyCode])) {
             $idCurrency = SpyCurrencyQuery::create()
                 ->select(SpyCurrencyTableMap::COL_ID_CURRENCY)
@@ -43,6 +43,6 @@ class CurrencyToIdCurrencyStep implements DataImportStepInterface
             $this->idCurrencyCache[$currencyCode] = $idCurrency;
         }
 
-        $dataSet[PriceProductMerchantRelationshipDataSet::ID_CURRENCY] = $this->idCurrencyCache[$currencyCode];
+        $dataSet[PriceProductMerchantRelationshipDataSetInterface::ID_CURRENCY] = $this->idCurrencyCache[$currencyCode];
     }
 }

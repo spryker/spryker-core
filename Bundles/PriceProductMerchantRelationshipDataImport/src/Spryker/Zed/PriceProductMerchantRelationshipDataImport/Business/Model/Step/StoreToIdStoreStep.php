@@ -12,7 +12,7 @@ use Orm\Zed\Store\Persistence\SpyStoreQuery;
 use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\PriceProductMerchantRelationshipDataImport\Business\Model\DataSet\PriceProductMerchantRelationshipDataSet;
+use Spryker\Zed\PriceProductMerchantRelationshipDataImport\Business\Model\DataSet\PriceProductMerchantRelationshipDataSetInterface;
 
 class StoreToIdStoreStep implements DataImportStepInterface
 {
@@ -30,7 +30,7 @@ class StoreToIdStoreStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $storeName = $dataSet[PriceProductMerchantRelationshipDataSet::STORE];
+        $storeName = $dataSet[PriceProductMerchantRelationshipDataSetInterface::STORE];
         if (!isset($this->idStoreCache[$storeName])) {
             $idCurrency = SpyStoreQuery::create()
                 ->select(SpyStoreTableMap::COL_ID_STORE)
@@ -43,6 +43,6 @@ class StoreToIdStoreStep implements DataImportStepInterface
             $this->idStoreCache[$storeName] = $idCurrency;
         }
 
-        $dataSet[PriceProductMerchantRelationshipDataSet::ID_STORE] = $this->idStoreCache[$storeName];
+        $dataSet[PriceProductMerchantRelationshipDataSetInterface::ID_STORE] = $this->idStoreCache[$storeName];
     }
 }

@@ -13,7 +13,7 @@ use Spryker\Zed\DataImport\Business\Exception\DataKeyNotFoundInDataSetException;
 use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\PriceProductMerchantRelationshipDataImport\Business\Model\DataSet\PriceProductMerchantRelationshipDataSet;
+use Spryker\Zed\PriceProductMerchantRelationshipDataImport\Business\Model\DataSet\PriceProductMerchantRelationshipDataSetInterface;
 
 class ProductSkuToIdProductStep implements DataImportStepInterface
 {
@@ -31,23 +31,23 @@ class ProductSkuToIdProductStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        if (empty($dataSet[PriceProductMerchantRelationshipDataSet::ABSTRACT_SKU]) && empty($dataSet[PriceProductMerchantRelationshipDataSet::CONCRETE_SKU])) {
+        if (empty($dataSet[PriceProductMerchantRelationshipDataSetInterface::ABSTRACT_SKU]) && empty($dataSet[PriceProductMerchantRelationshipDataSetInterface::CONCRETE_SKU])) {
             throw new DataKeyNotFoundInDataSetException(sprintf(
                 'One of "%s" or "%s" must be in the data set. Given: "%s"',
-                PriceProductMerchantRelationshipDataSet::ABSTRACT_SKU,
-                PriceProductMerchantRelationshipDataSet::CONCRETE_SKU,
+                PriceProductMerchantRelationshipDataSetInterface::ABSTRACT_SKU,
+                PriceProductMerchantRelationshipDataSetInterface::CONCRETE_SKU,
                 implode(', ', array_keys($dataSet->getArrayCopy()))
             ));
         }
 
-        $productAbstractSku = $dataSet[PriceProductMerchantRelationshipDataSet::ABSTRACT_SKU];
+        $productAbstractSku = $dataSet[PriceProductMerchantRelationshipDataSetInterface::ABSTRACT_SKU];
         if (!empty($productAbstractSku)) {
-            $dataSet[PriceProductMerchantRelationshipDataSet::ID_PRODUCT_ABSTRACT] = $this->resolveIdProductByAbstractSku($productAbstractSku);
+            $dataSet[PriceProductMerchantRelationshipDataSetInterface::ID_PRODUCT_ABSTRACT] = $this->resolveIdProductByAbstractSku($productAbstractSku);
         }
 
-        $productConcreteSku = $dataSet[PriceProductMerchantRelationshipDataSet::CONCRETE_SKU];
+        $productConcreteSku = $dataSet[PriceProductMerchantRelationshipDataSetInterface::CONCRETE_SKU];
         if (!empty($productConcreteSku)) {
-            $dataSet[PriceProductMerchantRelationshipDataSet::ID_PRODUCT_CONCRETE] = $this->resolveIdProductByConcreteSku($productConcreteSku);
+            $dataSet[PriceProductMerchantRelationshipDataSetInterface::ID_PRODUCT_CONCRETE] = $this->resolveIdProductByConcreteSku($productConcreteSku);
         }
     }
 

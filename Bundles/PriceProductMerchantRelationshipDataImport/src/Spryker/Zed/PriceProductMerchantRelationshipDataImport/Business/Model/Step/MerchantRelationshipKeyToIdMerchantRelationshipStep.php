@@ -12,7 +12,7 @@ use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery;
 use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\PriceProductMerchantRelationshipDataImport\Business\Model\DataSet\PriceProductMerchantRelationshipDataSet;
+use Spryker\Zed\PriceProductMerchantRelationshipDataImport\Business\Model\DataSet\PriceProductMerchantRelationshipDataSetInterface;
 
 class MerchantRelationshipKeyToIdMerchantRelationshipStep implements DataImportStepInterface
 {
@@ -30,7 +30,7 @@ class MerchantRelationshipKeyToIdMerchantRelationshipStep implements DataImportS
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $merchantRelationshipKey = $dataSet[PriceProductMerchantRelationshipDataSet::MERCHANT_RELATIONSHIP_KEY];
+        $merchantRelationshipKey = $dataSet[PriceProductMerchantRelationshipDataSetInterface::MERCHANT_RELATIONSHIP_KEY];
         if (!isset($this->idMerchantRelationshipCache[$merchantRelationshipKey])) {
             $idMerchantRelationship = SpyMerchantRelationshipQuery::create()
                 ->select(SpyMerchantRelationshipTableMap::COL_ID_MERCHANT_RELATIONSHIP)
@@ -43,6 +43,6 @@ class MerchantRelationshipKeyToIdMerchantRelationshipStep implements DataImportS
             $this->idMerchantRelationshipCache[$merchantRelationshipKey] = $idMerchantRelationship;
         }
 
-        $dataSet[PriceProductMerchantRelationshipDataSet::ID_MERCHANT_RELATIONSHIP] = $this->idMerchantRelationshipCache[$merchantRelationshipKey];
+        $dataSet[PriceProductMerchantRelationshipDataSetInterface::ID_MERCHANT_RELATIONSHIP] = $this->idMerchantRelationshipCache[$merchantRelationshipKey];
     }
 }
