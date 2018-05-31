@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\ProductAlternativeGui\Business\ProductAlternativeGuiFacadeInterface getFacade()
  */
-class SuggestProductController extends AbstractController
+class SuggestController extends AbstractController
 {
     protected const PARAM_NAME = 'term';
 

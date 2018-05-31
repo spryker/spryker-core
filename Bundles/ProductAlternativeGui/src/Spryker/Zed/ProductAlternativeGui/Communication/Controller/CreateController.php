@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\ProductAlternativeGui\Business\ProductAlternativeGuiFacadeInterface getFacade()
  */
-class CreateProductAlternativeController extends AbstractController
+class CreateController extends AbstractController
 {
     protected const FIELD_PRODUCT_NAME_OR_SKU_AUTOCOMPLETE = 'product-name-or-sku-autocomplete';
 

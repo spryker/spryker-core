@@ -8,8 +8,8 @@
 namespace Spryker\Zed\ProductAlternativeGui\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\ProductAlternativeGui\Communication\Form\AddProductAlternativeFormType;
-use Spryker\Zed\ProductAlternativeGui\Communication\Form\DataProvider\AddProductAlternativeFormDataProvider;
+use Spryker\Zed\ProductAlternativeGui\Communication\Form\AddAlternativeFormType;
+use Spryker\Zed\ProductAlternativeGui\Communication\Form\DataProvider\AddAlternativeFormDataProvider;
 use Spryker\Zed\ProductAlternativeGui\Dependency\Facade\ProductAlternativeGuiToProductAlternativeFacadeInterface;
 use Spryker\Zed\ProductAlternativeGui\Dependency\Facade\ProductAlternativeGuiToProductFacadeInterface;
 use Spryker\Zed\ProductAlternativeGui\ProductAlternativeGuiDependencyProvider;
@@ -20,19 +20,19 @@ use Spryker\Zed\ProductAlternativeGui\ProductAlternativeGuiDependencyProvider;
 class ProductAlternativeGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\ProductAlternativeGui\Communication\Form\AddProductAlternativeFormType
+     * @return \Spryker\Zed\ProductAlternativeGui\Communication\Form\AddAlternativeFormType
      */
-    public function createAddProductAlternativeFormType(): AddProductAlternativeFormType
+    public function createAddProductAlternativeFormType(): AddAlternativeFormType
     {
-        return new AddProductAlternativeFormType();
+        return new AddAlternativeFormType();
     }
 
     /**
-     * @return \Spryker\Zed\ProductAlternativeGui\Communication\Form\DataProvider\AddProductAlternativeFormDataProvider
+     * @return \Spryker\Zed\ProductAlternativeGui\Communication\Form\DataProvider\AddAlternativeFormDataProvider
      */
-    public function createAddProductAlternativeFormDataProvider(): AddProductAlternativeFormDataProvider
+    public function createAddProductAlternativeFormDataProvider(): AddAlternativeFormDataProvider
     {
-        return new AddProductAlternativeFormDataProvider(
+        return new AddAlternativeFormDataProvider(
             $this->getProductFacade(),
             $this->getProductAlternativeFacade()
         );
