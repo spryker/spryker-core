@@ -58,7 +58,7 @@ class ProductSkuToIdProductStep implements DataImportStepInterface
      *
      * @return int
      */
-    protected function resolveIdProductByConcreteSku($sku)
+    protected function resolveIdProductByConcreteSku(string $sku): int
     {
         if (!isset($this->idProductCache[$sku])) {
             $productEntity = SpyProductQuery::create()
@@ -81,7 +81,7 @@ class ProductSkuToIdProductStep implements DataImportStepInterface
      *
      * @return int
      */
-    protected function resolveIdProductByAbstractSku($sku)
+    protected function resolveIdProductByAbstractSku(string $sku): int
     {
         if (!isset($this->idProductCache[$sku])) {
             $productAbstractEntity = SpyProductAbstractQuery::create()
