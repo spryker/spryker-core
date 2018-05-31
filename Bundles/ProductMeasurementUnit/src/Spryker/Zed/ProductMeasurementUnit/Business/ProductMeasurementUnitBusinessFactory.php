@@ -20,6 +20,7 @@ use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUni
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit\ProductMeasurementSalesUnitReaderInterface;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit\ProductMeasurementSalesUnitValue;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit\ProductMeasurementSalesUnitValueInterface;
+use Spryker\Zed\ProductMeasurementUnit\Dependency\Facade\ProductMeasurementUnitToEventFacadeInterface;
 use Spryker\Zed\ProductMeasurementUnit\Dependency\Service\ProductMeasurementUnitToUtilMeasurementUnitConversionServiceInterface;
 use Spryker\Zed\ProductMeasurementUnit\ProductMeasurementUnitDependencyProvider;
 
@@ -74,6 +75,14 @@ class ProductMeasurementUnitBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductMeasurementUnit\Dependency\Facade\ProductMeasurementUnitToEventFacadeInterface
+     */
+    public function getEventFacade(): ProductMeasurementUnitToEventFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductMeasurementUnitDependencyProvider::FACADE_EVENT);
+    }
+
+    /**
      * @return \Spryker\Zed\ProductMeasurementUnit\Business\Model\CartChange\CartChangeExpanderInterface
      */
     public function createCartChangeExpander(): CartChangeExpanderInterface
@@ -90,7 +99,8 @@ class ProductMeasurementUnitBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductMeasurementUnitInstaller(
             $this->getConfig(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
+            $this->getEventFacade()
         );
     }
 }

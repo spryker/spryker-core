@@ -18,11 +18,11 @@ class ProductMeasurementUnitEntityManager extends AbstractEntityManager implemen
     /**
      * @param \Generated\Shared\Transfer\ProductMeasurementUnitTransfer $productMeasurementUnitTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer
      */
     public function saveProductMeasurementUnit(
         ProductMeasurementUnitTransfer $productMeasurementUnitTransfer
-    ): void {
+    ): ProductMeasurementUnitTransfer {
         $productMeasurementUnitEntity = $this->getFactory()
             ->createProductMeasurementUnitQuery()
             ->filterByCode($productMeasurementUnitTransfer->getCode())
@@ -30,5 +30,8 @@ class ProductMeasurementUnitEntityManager extends AbstractEntityManager implemen
 
         $productMeasurementUnitEntity->fromArray($productMeasurementUnitTransfer->modifiedToArray());
         $productMeasurementUnitEntity->save();
+        $productMeasurementUnitTransfer->fromArray($productMeasurementUnitEntity->toArray(), true);
+
+        return $productMeasurementUnitTransfer;
     }
 }
