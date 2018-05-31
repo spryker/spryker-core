@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductPageSearch;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\PageDataExpander\PricePageDataExpanderPlugin;
@@ -23,6 +22,7 @@ use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToPriceProd
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductBridge;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductSearchBridge;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchBridge;
+use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToStoreFacadeBridge;
 use Spryker\Zed\ProductPageSearch\Dependency\QueryContainer\ProductPageSearchToCategoryQueryContainerBridge;
 use Spryker\Zed\ProductPageSearch\Dependency\QueryContainer\ProductPageSearchToProductCategoryQueryContainerBridge;
 use Spryker\Zed\ProductPageSearch\Dependency\QueryContainer\ProductPageSearchToProductImageQueryContainerBridge;
@@ -41,6 +41,7 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
     const SERVICE_UTIL_ENCODING = 'util encoding service';
     const CLIENT_CATALOG_PRICE_PRODUCT_CONNECTOR = 'CLIENT_CATALOG_PRICE_PRODUCT_CONNECTOR';
     const FACADE_PRODUCT = 'FACADE_PRODUCT';
+    const FACADE_STORE = 'FACADE_STORE';
     const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';
     const FACADE_PRODUCT_SEARCH = 'FACADE_PRODUCT_SEARCH';
     const FACADE_SEARCH = 'FACADE_SEARCH';
@@ -49,7 +50,6 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
     const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     const PLUGIN_PRODUCT_PAGE_DATA_EXPANDER = 'PLUGIN_PRODUCT_PAGE_DATA_EXPANDER';
     const PLUGIN_PRODUCT_PAGE_MAP_EXPANDER = 'PLUGIN_PRODUCT_PAGE_MAP_EXPANDER';
-    const STORE = 'STORE';
     const PLUGIN_PRODUCT_PRICE_PAGE_DATA = 'PLUGIN_PRODUCT_PRICE_PAGE_DATA';
     const PLUGIN_PRODUCT_CATEGORY_PAGE_DATA = 'PLUGIN_PRODUCT_CATEGORY_PAGE_DATA';
     const PLUGIN_PRODUCT_IMAGE_PAGE_DATA = 'PLUGIN_PRODUCT_IMAGE_PAGE_DATA';
@@ -79,6 +79,10 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
 
         $container[self::FACADE_PRICE_PRODUCT] = function (Container $container) {
             return new ProductPageSearchToPriceProductBridge($container->getLocator()->priceProduct()->facade());
+        };
+
+        $container[self::FACADE_STORE] = function (Container $container) {
+            return new ProductPageSearchToStoreFacadeBridge($container->getLocator()->store()->facade());
         };
 
         $container[self::FACADE_CATEGORY] = function (Container $container) {
@@ -121,10 +125,6 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
 
         $container[self::FACADE_SEARCH] = function (Container $container) {
             return new ProductPageSearchToSearchBridge($container->getLocator()->search()->facade());
-        };
-
-        $container[static::STORE] = function (Container $container) {
-            return Store::getInstance();
         };
 
         $container[static::PLUGIN_PRODUCT_PAGE_DATA_EXPANDER] = function (Container $container) {

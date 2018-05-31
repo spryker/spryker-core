@@ -10,13 +10,18 @@ namespace Spryker\Zed\CmsBlockStorage\Communication\Plugin\Event\Listener;
 use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockGlossaryKeyMappingTableMap;
 use Spryker\Zed\CmsBlock\Dependency\CmsBlockEvents;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\CmsBlockStorage\Communication\CmsBlockStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\CmsBlockStorage\Persistence\CmsBlockStorageQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\CmsBlockStorage\Business\CmsBlockStorageFacadeInterface getFacade()
  */
-class CmsBlockGlossaryKeyMappingBlockStorageListener extends AbstractCmsBlockStorageListener implements EventBulkHandlerInterface
+class CmsBlockGlossaryKeyMappingBlockStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
+    use DatabaseTransactionHandlerTrait;
+
     /**
      * @param array $eventTransfers
      * @param string $eventName
@@ -29,12 +34,12 @@ class CmsBlockGlossaryKeyMappingBlockStorageListener extends AbstractCmsBlockSto
         $cmsBlockIds = $this->findCmsBlockIds($eventTransfers);
 
         if ($eventName === CmsBlockEvents::ENTITY_SPY_CMS_BLOCK_GLOSSARY_KEY_MAPPING_DELETE) {
-            $this->unpublish($cmsBlockIds);
+            $this->getFacade()->unpublish($cmsBlockIds);
 
             return;
         }
 
-        $this->publish($cmsBlockIds);
+        $this->getFacade()->publish($cmsBlockIds);
     }
 
     /**

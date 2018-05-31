@@ -96,9 +96,13 @@ class ProductAbstractStoreRelationWriter implements ProductAbstractStoreRelation
             return;
         }
 
-        $this->productQueryContainer
+        $productAbstractStoreEntities = $this->productQueryContainer
             ->queryProductAbstractStoresByFkProductAbstractAndFkStores($idProductAbstract, $idStores)
-            ->delete();
+            ->find();
+
+        foreach ($productAbstractStoreEntities as $productAbstractStoreEntity) {
+            $productAbstractStoreEntity->delete();
+        }
     }
 
     /**

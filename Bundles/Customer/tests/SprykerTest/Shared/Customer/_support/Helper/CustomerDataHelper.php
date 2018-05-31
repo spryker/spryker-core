@@ -10,6 +10,8 @@ namespace SprykerTest\Shared\Customer\Helper;
 use Codeception\Module;
 use Codeception\Util\Stub;
 use Generated\Shared\DataBuilder\CustomerBuilder;
+use Generated\Shared\Transfer\CustomerTransfer;
+use Spryker\Zed\Customer\Business\CustomerFacadeInterface;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailBridge;
 use Spryker\Zed\Mail\Business\MailFacadeInterface;
@@ -26,7 +28,7 @@ class CustomerDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function haveCustomer(array $override = [])
+    public function haveCustomer(array $override = []): CustomerTransfer
     {
         $customerTransfer = (new CustomerBuilder($override))
             ->withBillingAddress()
@@ -41,7 +43,7 @@ class CustomerDataHelper extends Module
     /**
      * @return \Spryker\Zed\Customer\Business\CustomerFacadeInterface
      */
-    private function getCustomerFacade()
+    private function getCustomerFacade(): CustomerFacadeInterface
     {
         $customerToMailBridge = new CustomerToMailBridge($this->getMailFacadeMock());
         $this->getDependencyHelper()->setDependency(CustomerDependencyProvider::FACADE_MAIL, $customerToMailBridge);
