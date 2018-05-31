@@ -26,8 +26,9 @@ class IndexController extends AbstractController
         foreach ($plugins as $plugin) {
             $pluginNames[] = $plugin->getName();
         }
+
         return [
-            'pluginNames' => $plugins,
+            'pluginNames' => $pluginNames,
         ];
     }
 }

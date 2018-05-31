@@ -18,10 +18,10 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\ChartOrder\Communication\ChartOrderCommunicationFactory getFactory()
  * @method \Spryker\Zed\ChartOrder\Business\ChartOrderFacadeInterface getFacade()
  */
-class CountOrderChartPlugin extends AbstractPlugin implements ChartPluginInterface
+class StatusOrderChartPlugin extends AbstractPlugin implements ChartPluginInterface
 {
-    const NAME = 'count-orders';
-    const TITLE = 'Count orders statistic';
+    const NAME = 'status-orders';
+    const TITLE = 'Status orders statistic';
 
     /**
      * {@inheritdoc}
@@ -68,7 +68,7 @@ class CountOrderChartPlugin extends AbstractPlugin implements ChartPluginInterfa
     protected function getChartDataTraceTransfer()
     {
         $trace = new ChartDataTraceTransfer();
-        $trace->setType(ChartConfig::CHART_TYPE_BAR);
+        $trace->setType(ChartConfig::CHART_TYPE_PIE);
         $trace->setLabels([1, 2, 3]);
         $trace->setValues([1, 2, 3]);
 

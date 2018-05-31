@@ -6,6 +6,10 @@
 
 {% block content %}
     {% for pluginName in pluginNames %}
-        {{ chart(pluginName, pluginName) }}
+        <div class="row">
+            <div class="col-lg-12">
+                {{ chart(pluginName, pluginName, pluginName) }}
+            </div>
+        </div>
     {% endfor %}
 {% endblock %}
