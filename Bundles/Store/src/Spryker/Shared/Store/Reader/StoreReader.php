@@ -34,6 +34,7 @@ class StoreReader implements StoreReaderInterface
     {
         $storeTransfer = (new StoreTransfer())
             ->setName($storeName)
+            ->setQueuePools($this->store->getQueuePools())
             ->setSelectedCurrencyIsoCode($this->store->getCurrentStoreSelectedCurrencyIsoCode())
             ->setDefaultCurrencyIsoCode($this->store->getDefaultCurrencyFor($storeName))
             ->setAvailableCurrencyIsoCodes($this->store->getAvailableCurrenciesFor($storeName))

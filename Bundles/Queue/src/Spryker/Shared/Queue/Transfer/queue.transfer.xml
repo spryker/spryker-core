@@ -5,6 +5,8 @@
 
     <transfer name="QueueSendMessage">
         <property name="body" type="string" />
+        <property name="queuePoolName" type="string" />
+        <property name="storeName" type="string" />
     </transfer>
 
     <transfer name="QueueReceiveMessage">

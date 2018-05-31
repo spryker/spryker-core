@@ -9,13 +9,18 @@ namespace Spryker\Zed\CmsBlockStorage\Communication\Plugin\Event\Listener;
 
 use Spryker\Zed\CmsBlock\Dependency\CmsBlockEvents;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\CmsBlockStorage\Communication\CmsBlockStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\CmsBlockStorage\Persistence\CmsBlockStorageQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\CmsBlockStorage\Business\CmsBlockStorageFacadeInterface getFacade()
  */
-class CmsBlockStorageListener extends AbstractCmsBlockStorageListener implements EventBulkHandlerInterface
+class CmsBlockStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
+    use DatabaseTransactionHandlerTrait;
+
     /**
      * @param array $eventTransfers
      * @param string $eventName
@@ -30,11 +35,11 @@ class CmsBlockStorageListener extends AbstractCmsBlockStorageListener implements
         if ($eventName === CmsBlockEvents::ENTITY_SPY_CMS_BLOCK_DELETE ||
             $eventName === CmsBlockEvents::CMS_BLOCK_UNPUBLISH
         ) {
-            $this->unpublish($cmsBlockIds);
+            $this->getFacade()->unpublish($cmsBlockIds);
 
             return;
         }
 
-        $this->publish($cmsBlockIds);
+        $this->getFacade()->publish($cmsBlockIds);
     }
 }

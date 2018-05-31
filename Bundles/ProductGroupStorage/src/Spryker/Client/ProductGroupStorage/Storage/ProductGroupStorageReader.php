@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductAbstractGroupStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\ProductGroupStorage\Dependency\Client\ProductGroupStorageToStorageClientInterface;
 use Spryker\Client\ProductGroupStorage\Dependency\Service\ProductGroupStorageToSynchronizationServiceInterface;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\ProductGroupStorage\ProductGroupStorageConstants;
 
 class ProductGroupStorageReader implements ProductGroupStorageReaderInterface
@@ -27,23 +26,15 @@ class ProductGroupStorageReader implements ProductGroupStorageReaderInterface
     protected $synchronizationService;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
-     */
-    protected $store;
-
-    /**
      * @param \Spryker\Client\ProductGroupStorage\Dependency\Client\ProductGroupStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\ProductGroupStorage\Dependency\Service\ProductGroupStorageToSynchronizationServiceInterface $synchronizationService
-     * @param \Spryker\Shared\Kernel\Store $store
      */
     public function __construct(
         ProductGroupStorageToStorageClientInterface $storageClient,
-        ProductGroupStorageToSynchronizationServiceInterface $synchronizationService,
-        Store $store
+        ProductGroupStorageToSynchronizationServiceInterface $synchronizationService
     ) {
         $this->storageClient = $storageClient;
         $this->synchronizationService = $synchronizationService;
-        $this->store = $store;
     }
 
     /**
@@ -55,8 +46,7 @@ class ProductGroupStorageReader implements ProductGroupStorageReaderInterface
     {
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer
-            ->setReference($idProductAbstract)
-            ->setStore($this->store->getStoreName());
+            ->setReference($idProductAbstract);
 
         $key = $this->synchronizationService
             ->getStorageKeyBuilder(ProductGroupStorageConstants::PRODUCT_GROUP_RESOURCE_NAME)
