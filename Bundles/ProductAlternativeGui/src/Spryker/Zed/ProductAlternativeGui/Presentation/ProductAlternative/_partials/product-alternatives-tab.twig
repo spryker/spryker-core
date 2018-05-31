@@ -11,12 +11,38 @@
     {{ form_widget(form['searchtext-autocomplete']) }}
 </div>
 
-{# TODO: Replace section below with better solution. #}
-{% for productAlternative in form.vars.data.productAlternatives %}
-    <div>
-        <div>{{ productAlternative.idProductAlternative }}</div>
-        <div>{{ productAlternative.idProduct }}</div>
-        <div>{{ productAlternative.idProductConcreteAlternative }}</div>
-        <div>{{ productAlternative.idProductAbstractAlternative }}</div>
-    </div>
-{% endfor %}
+{# TODO: Probably, markup below should be replaced with Table class usage. #}
+
+<div id="items" class="col-sm-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>ID Product</th>
+            <th>ID Product Concrete Alternative</th>
+            <th>ID Product Abstract Alternative</th>
+            <th>Actions</th>
+        </tr>
+        {% for productAlternative in form.vars.data.productAlternatives %}
+            <tr>
+                <td>{{ productAlternative.idProductAlternative }}</td>
+                <td>{{ productAlternative.idProduct }}</td>
+                <td>{{ productAlternative.idProductConcreteAlternative ?: '-' }}</td>
+                <td>{{ productAlternative.idProductAbstractAlternative ?: '-' }}</td>
+                <td>
+                    <button class="btn btn-danger">Delete</button>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<style>
+    #items table {
+        border: 1px solid #000000;
+        text-align: center;
+    }
+
+    #items table td, th {
+        padding: 5px 10px;
+    }
+</style>
