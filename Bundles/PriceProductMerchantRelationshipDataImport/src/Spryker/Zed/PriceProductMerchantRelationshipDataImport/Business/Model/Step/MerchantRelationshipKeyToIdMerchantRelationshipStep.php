@@ -37,7 +37,7 @@ class MerchantRelationshipKeyToIdMerchantRelationshipStep implements DataImportS
                 ->findOneByMerchantRelationshipKey($merchantRelationshipKey);
 
             if (!$idMerchantRelationship) {
-                throw new EntityNotFoundException(sprintf('Could not find Business Unit by key "%s"', $merchantRelationshipKey));
+                throw new EntityNotFoundException(sprintf('Could not find Merchant Relationship by key "%s"', $merchantRelationshipKey));
             }
 
             $this->idMerchantRelationshipCache[$merchantRelationshipKey] = $idMerchantRelationship;
