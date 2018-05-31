@@ -10,3 +10,13 @@
     {{ form_errors(form['searchtext-autocomplete']) }}
     {{ form_widget(form['searchtext-autocomplete']) }}
 </div>
+
+{# TODO: Replace section below with better solution. #}
+{% for productAlternative in form.vars.data.productAlternatives %}
+    <div>
+        <div>{{ productAlternative.idProductAlternative }}</div>
+        <div>{{ productAlternative.idProduct }}</div>
+        <div>{{ productAlternative.idProductConcreteAlternative }}</div>
+        <div>{{ productAlternative.idProductAbstractAlternative }}</div>
+    </div>
+{% endfor %}

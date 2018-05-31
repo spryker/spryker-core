@@ -5,9 +5,9 @@
 
     <transfer name="ProductAlternative">
         <property name="idProductAlternative" type="int"/>
-        <property name="product" type="ProductConcrete"/>
-        <property name="productConcreteAlternative" type="ProductConcrete"/>
-        <property name="productAbstractAlternative" type="ProductAbstract"/>
+        <property name="idProduct" type="int"/>
+        <property name="idProductConcreteAlternative" type="int"/>
+        <property name="idProductAbstractAlternative" type="int"/>
     </transfer>
 
     <transfer name="ProductAlternativeResponse">
