@@ -44,17 +44,26 @@ class CompanyUserMapper implements CompanyUserMapperInterface
         $companyUserTransfer = (new CompanyUserTransfer())->fromArray($companyUserEntityTransfer->modifiedToArray(), true);
 
         if ($companyUserEntityTransfer->getCustomer()) {
-            $customerTransfer = (new CustomerTransfer())->fromArray($companyUserEntityTransfer->getCustomer()->modifiedToArray(), true);
+            $customerTransfer = (new CustomerTransfer())->fromArray(
+                $companyUserEntityTransfer->getCustomer()->modifiedToArray(),
+                true
+            );
             $companyUserTransfer->setCustomer($customerTransfer);
         }
 
         if ($companyUserEntityTransfer->getCompany()) {
-            $companyTransfer = (new CompanyTransfer())->fromArray($companyUserEntityTransfer->getCompany()->modifiedToArray(), true);
+            $companyTransfer = (new CompanyTransfer())->fromArray(
+                $companyUserEntityTransfer->getCompany()->modifiedToArray(),
+                true
+            );
             $companyUserTransfer->setCompany($companyTransfer);
         }
 
         if ($companyUserEntityTransfer->getCompanyBusinessUnit()) {
-            $companyBusinessUnitTransfer = (new CompanyBusinessUnitTransfer())->fromArray($companyUserEntityTransfer->getCompanyBusinessUnit()->modifiedToArray(), true);
+            $companyBusinessUnitTransfer = (new CompanyBusinessUnitTransfer())->fromArray(
+                $companyUserEntityTransfer->getCompanyBusinessUnit()->modifiedToArray(),
+                true
+            );
             $companyUserTransfer->setCompanyBusinessUnit($companyBusinessUnitTransfer);
         }
 

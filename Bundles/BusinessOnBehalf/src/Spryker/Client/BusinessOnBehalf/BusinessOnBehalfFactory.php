@@ -25,7 +25,7 @@ class BusinessOnBehalfFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\BusinessOnBehalf\Dependency\Client\BusinessOnBehalfToZedRequestClientInterface
      */
-    protected function getZedRequestClient(): BusinessOnBehalfToZedRequestClientInterface
+    public function getZedRequestClient(): BusinessOnBehalfToZedRequestClientInterface
     {
         return $this->getProvidedDependency(BusinessOnBehalfDependencyProvider::CLIENT_ZED_REQUEST);
     }

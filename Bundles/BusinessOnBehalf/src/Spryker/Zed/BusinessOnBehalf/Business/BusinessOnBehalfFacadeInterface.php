@@ -14,11 +14,10 @@ interface BusinessOnBehalfFacadeInterface
 {
     /**
      * Specification:
-     *
      * - Sets IsOnBehalf property as true when the provided customer has multiple company users connected.
      * - Sets IsOnBehalf property as false otherwise.
      * - Uses provided customer ID to find company users.
-     * - Ignores Company user/Customer activity flags
+     * - Ignores Company user/Customer activity flags.
      *
      * @api
      *
@@ -30,11 +29,10 @@ interface BusinessOnBehalfFacadeInterface
 
     /**
      * Specification:
-     *
      * - Retrieves a collection of active company users related to the provided customer.
      * - Uses customer ID to find company users.
      * - Hydrates company transfer to company user transfer.
-     * - Hydrates company business unit transfer to company user transfer
+     * - Hydrates company business unit transfer to company user transfer.
      *
      * @api
      *

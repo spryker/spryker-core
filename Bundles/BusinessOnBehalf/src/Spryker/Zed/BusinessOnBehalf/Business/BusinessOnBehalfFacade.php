@@ -41,6 +41,8 @@ class BusinessOnBehalfFacade extends AbstractFacade implements BusinessOnBehalfF
      */
     public function findActiveCompanyUsersByCustomerId(CustomerTransfer $customerTransfer): CompanyUserCollectionTransfer
     {
-        return $this->getFactory()->createCompanyUserCollectionFinder()->findActiveCompanyUsersByCustomerId($customerTransfer);
+        return $this->getFactory()
+            ->createCompanyUserCollectionFinder()
+            ->findActiveCompanyUsersByCustomerId($customerTransfer);
     }
 }

@@ -3,10 +3,18 @@
   "description": "BusinessOnBehalf module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
+    "spryker/company-user": "^1.0.0",
+    "spryker/kernel": "^3.0.0",
+    "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/customer": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/customer": "Customer ^1.0.0 so customer has idCustomer field."
   },
   "autoload": {
     "psr-4": {
