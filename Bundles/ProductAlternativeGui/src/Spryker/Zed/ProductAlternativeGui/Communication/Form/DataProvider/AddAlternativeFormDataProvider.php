@@ -10,6 +10,10 @@ namespace Spryker\Zed\ProductAlternativeGui\Communication\Form\DataProvider;
 class AddAlternativeFormDataProvider
 {
     /**
+     * TODO: Update this data provider or delete it completely.
+     */
+
+    /**
      * @return array
      */
     public function getOptions(): array

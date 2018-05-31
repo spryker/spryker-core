@@ -13,7 +13,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class AddAlternativeForm extends AbstractType
 {
+    /**
+     * TODO: This field is not used for now; maybe this will be changed.
+     */
     public const OPTION_VALUES_ALTERNATIVE_PRODUCTS = 'OPTION_VALUES_ALTERNATIVE_PRODUCTS';
+
     protected const FIELD_PRODUCT_NAME_OR_SKU_AUTOCOMPLETE = 'searchtext-autocomplete';
 
     /**
