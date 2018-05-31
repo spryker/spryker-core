@@ -8,7 +8,6 @@
 namespace Spryker\Client\ProductBarcode;
 
 use Generated\Shared\Transfer\BarcodeResponseTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -21,17 +20,15 @@ class ProductBarcodeClient extends AbstractClient implements ProductBarcodeClien
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param string $sku
      * @param string|null $barcodeGeneratorPlugin
      *
      * @return \Generated\Shared\Transfer\BarcodeResponseTransfer
      */
-    public function generateBarcode(
-        ProductConcreteTransfer $productConcreteTransfer,
+    public function generateBarcodeBySku(
+        string $sku,
         ?string $barcodeGeneratorPlugin = null
     ): BarcodeResponseTransfer {
-        $sku = $productConcreteTransfer->requireSku()->getSku();
-
         return $this->getFactory()
             ->getBarcodeService()
             ->generateBarcode($sku, $barcodeGeneratorPlugin);
