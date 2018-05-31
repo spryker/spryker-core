@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductMeasurementUnit\Business\Model\CartChange;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit\ProductMeasurementSalesUnitReaderInterface;
 
-class CartChangeExpanderExpander implements CartChangeExpanderInterface
+class CartChangeExpander implements CartChangeExpanderInterface
 {
     /**
      * @var \Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit\ProductMeasurementSalesUnitReaderInterface

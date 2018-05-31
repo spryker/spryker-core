@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductMeasurementUnit\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductMeasurementUnit\Business\Installer\ProductMeasurementUnitInstaller;
 use Spryker\Zed\ProductMeasurementUnit\Business\Installer\ProductMeasurementUnitInstallerInterface;
-use Spryker\Zed\ProductMeasurementUnit\Business\Model\CartChange\CartChangeExpanderExpander;
+use Spryker\Zed\ProductMeasurementUnit\Business\Model\CartChange\CartChangeExpander;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\CartChange\CartChangeExpanderInterface;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementBaseUnit\ProductMeasurementBaseUnitReader;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementBaseUnit\ProductMeasurementBaseUnitReaderInterface;
@@ -76,9 +76,9 @@ class ProductMeasurementUnitBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductMeasurementUnit\Business\Model\CartChange\CartChangeExpanderInterface
      */
-    public function createCartChangeTransferExpander(): CartChangeExpanderInterface
+    public function createCartChangeExpander(): CartChangeExpanderInterface
     {
-        return new CartChangeExpanderExpander(
+        return new CartChangeExpander(
             $this->createProductMeasurementSalesUnitReader()
         );
     }
