@@ -29,7 +29,7 @@ class BusinessOnBehalfRepository extends AbstractRepository implements BusinessO
         $query = $this->getFactory()->getCompanyUserQuery();
         $query->filterByFkCustomer($idCustomer);
 
-        return $query->exists();
+        return ($query->count() > 1);
     }
 
     /**
