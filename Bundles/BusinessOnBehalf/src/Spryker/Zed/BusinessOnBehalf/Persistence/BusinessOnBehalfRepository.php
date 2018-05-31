@@ -44,7 +44,11 @@ class BusinessOnBehalfRepository extends AbstractRepository implements BusinessO
     public function findActiveCompanyUserIdsByCustomerId(int $idCustomer): array
     {
         $query = $this->getFactory()->getCompanyUserQuery();
-        $query->filterByFkCustomer($idCustomer);
+        $query->filterByFkCustomer($idCustomer)
+            ->joinCompany()
+            ->useCompanyQuery()
+                ->filterByIsActive(true)
+            ->endUse();
         $query->select(SpyCompanyUserTableMap::COL_ID_COMPANY_USER);
 
         return $query->find()->toArray();
