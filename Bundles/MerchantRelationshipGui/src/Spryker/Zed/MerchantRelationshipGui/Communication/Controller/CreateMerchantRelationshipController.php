@@ -20,7 +20,7 @@ class CreateMerchantRelationshipController extends AbstractController
     protected const PARAM_REDIRECT_URL = 'redirect-url';
     public const PARAM_SUBMIT_PERSIST = 'submit-persist';
 
-    protected const MESSAGE_MERCHANT_RELATION_CREATE_SUCCESS = 'Merchant relation has been created.';
+    protected const MESSAGE_MERCHANT_RELATION_CREATE_SUCCESS = 'Merchant relation created successfully.';
     protected const MESSAGE_MERCHANT_RELATION_CREATE_ERROR = 'Merchant relation has not been created.';
 
     /**

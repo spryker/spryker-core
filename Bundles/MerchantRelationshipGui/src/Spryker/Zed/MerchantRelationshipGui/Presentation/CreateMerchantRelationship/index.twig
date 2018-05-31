@@ -1,8 +1,9 @@
 {% extends '@Gui/layout/layout.twig' %}
 
-{% set widget_title = 'Create Merchant Relation' %}
+{% set widget_title = 'Create Merchant Relation' | trans %}
 
 {% block head_title widget_title %}
+{% block section_title widget_title %}
 
 {% block action %}
     {{ backActionButton(url('/merchant-relationship-gui/list-merchant-relationship'), 'Back to Merchant relation' | trans) }}
