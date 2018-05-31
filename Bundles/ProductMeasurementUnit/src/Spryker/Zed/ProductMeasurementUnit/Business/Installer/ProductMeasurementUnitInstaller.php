@@ -34,11 +34,6 @@ class ProductMeasurementUnitInstaller implements ProductMeasurementUnitInstaller
     protected $eventFacade;
 
     /**
-     * @var array
-     */
-    protected $savedEntityIds = [];
-
-    /**
      * @param \Spryker\Zed\ProductMeasurementUnit\ProductMeasurementUnitConfig $config
      * @param \Spryker\Zed\ProductMeasurementUnit\Persistence\ProductMeasurementUnitEntityManagerInterface $entityManager
      * @param \Spryker\Zed\ProductMeasurementUnit\Dependency\Facade\ProductMeasurementUnitToEventFacadeInterface $eventFacade
@@ -61,8 +56,6 @@ class ProductMeasurementUnitInstaller implements ProductMeasurementUnitInstaller
         $this->getTransactionHandler()->handleTransaction(function () {
             $this->executeInstallTransaction();
         });
-
-        $this->publishMeasurementUnits();
     }
 
     /**
@@ -72,20 +65,25 @@ class ProductMeasurementUnitInstaller implements ProductMeasurementUnitInstaller
     {
         $productInfrastructuralMeasurementUnits = $this->config->getInfrastructuralMeasurementUnits();
 
+        $savedEntityIds = [];
         foreach ($productInfrastructuralMeasurementUnits as $productMeasurementUnitTransfer) {
             $savedProductMeasurementUnitTransfer = $this->entityManager->saveProductMeasurementUnit($productMeasurementUnitTransfer);
-            $this->savedEntityIds[] = $savedProductMeasurementUnitTransfer->getIdProductMeasurementUnit();
+            $savedEntityIds[] = $savedProductMeasurementUnitTransfer->getIdProductMeasurementUnit();
         }
+
+        $this->publishMeasurementUnits($savedEntityIds);
     }
 
     /**
+     * @param array $savedEntityIds
+     *
      * @return void
      */
-    protected function publishMeasurementUnits(): void
+    protected function publishMeasurementUnits(array $savedEntityIds): void
     {
-        $this->savedEntityIds = array_unique($this->savedEntityIds);
+        $savedEntityIds = array_unique($savedEntityIds);
 
-        foreach ($this->savedEntityIds as $savedEntityId) {
+        foreach ($savedEntityIds as $savedEntityId) {
             $this->eventFacade->trigger(
                 ProductMeasurementUnitEvents::PRODUCT_MEASUREMENT_UNIT_PUBLISH,
                 (new EventEntityTransfer())->setId($savedEntityId)
