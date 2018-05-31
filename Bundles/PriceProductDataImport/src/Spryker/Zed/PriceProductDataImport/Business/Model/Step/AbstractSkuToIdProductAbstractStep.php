@@ -13,7 +13,7 @@ use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\PriceProductDataImport\Business\Model\DataSet\PriceProductDataSet;
 
-class AbstractSkuToIdAbstractProductStep implements DataImportStepInterface
+class AbstractSkuToIdProductAbstractStep implements DataImportStepInterface
 {
     /**
      * @var array

@@ -26,7 +26,7 @@ class PriceProductDataImportHelper extends Module
     public function assertDatabaseTableContainsData(): void
     {
         $priceProductQuery = $this->getPriceProductStoreQuery();
-        $this->assertTrue(($priceProductQuery->count() > 0), 'Expected at least one entry in the database table but database table is empty.');
+        $this->assertTrue($priceProductQuery->exists(), 'Expected at least one entry in the database table but database table is empty.');
     }
 
     /**

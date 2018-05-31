@@ -10,7 +10,7 @@ namespace Spryker\Zed\PriceProductDataImport\Business;
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\PriceProductDataImport\Business\Model\PriceProductWriterStep;
-use Spryker\Zed\PriceProductDataImport\Business\Model\Step\AbstractSkuToIdAbstractProductStep;
+use Spryker\Zed\PriceProductDataImport\Business\Model\Step\AbstractSkuToIdProductAbstractStep;
 use Spryker\Zed\PriceProductDataImport\Business\Model\Step\ConcreteSkuToIdProductStep;
 use Spryker\Zed\PriceProductDataImport\Business\Model\Step\CurrencyToIdCurrencyStep;
 use Spryker\Zed\PriceProductDataImport\Business\Model\Step\PreparePriceDataStep;
@@ -22,14 +22,14 @@ use Spryker\Zed\PriceProductDataImport\Business\Model\Step\StoreToIdStoreStep;
 class PriceProductDataImportBusinessFactory extends DataImportBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerAwareInterface
      */
     public function createPriceProductDataImport()
     {
         $dataImporter = $this->getCsvDataImporterFromConfig($this->getConfig()->getPriceProductDataImporterConfiguration());
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
-        $dataSetStepBroker->addStep($this->createAbstractSkuToIdAbstractProductStep());
+        $dataSetStepBroker->addStep($this->createAbstractSkuToIdProductAbstractStep());
         $dataSetStepBroker->addStep($this->createConcreteSkuToIdProductStep());
         $dataSetStepBroker->addStep($this->createStoreToIdStoreStep());
         $dataSetStepBroker->addStep($this->createCurrencyToIdCurrencyStep());
@@ -44,9 +44,9 @@ class PriceProductDataImportBusinessFactory extends DataImportBusinessFactory
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    protected function createAbstractSkuToIdAbstractProductStep(): DataImportStepInterface
+    protected function createAbstractSkuToIdProductAbstractStep(): DataImportStepInterface
     {
-        return new AbstractSkuToIdAbstractProductStep();
+        return new AbstractSkuToIdProductAbstractStep();
     }
 
     /**

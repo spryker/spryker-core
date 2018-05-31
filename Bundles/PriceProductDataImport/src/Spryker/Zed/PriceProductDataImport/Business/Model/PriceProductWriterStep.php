@@ -40,8 +40,8 @@ class PriceProductWriterStep extends PublishAwareStep implements DataImportStepI
             $priceTypeEntity->save();
         }
 
-        $query = SpyPriceProductQuery::create();
-        $query->filterByFkPriceType($priceTypeEntity->getIdPriceType());
+        $priceProductQuery = SpyPriceProductQuery::create();
+        $priceProductQuery->filterByFkPriceType($priceTypeEntity->getIdPriceType());
 
         if (empty($dataSet[PriceProductDataSet::KEY_ABSTRACT_SKU]) && empty($dataSet[PriceProductDataSet::KEY_CONCRETE_SKU])) {
             throw new DataKeyNotFoundInDataSetException(sprintf(
@@ -53,15 +53,15 @@ class PriceProductWriterStep extends PublishAwareStep implements DataImportStepI
         }
 
         if (!empty($dataSet[PriceProductDataSet::KEY_ABSTRACT_SKU])) {
-            $query->filterByFkProductAbstract($dataSet[PriceProductDataSet::ID_PRODUCT_ABSTRACT]);
+            $priceProductQuery->filterByFkProductAbstract($dataSet[PriceProductDataSet::ID_PRODUCT_ABSTRACT]);
             $this->addPublishEvents(PriceProductEvents::PRICE_ABSTRACT_PUBLISH, $dataSet[PriceProductDataSet::ID_PRODUCT_ABSTRACT]);
             $this->addPublishEvents(ProductEvents::PRODUCT_ABSTRACT_PUBLISH, $dataSet[PriceProductDataSet::ID_PRODUCT_ABSTRACT]);
         } else {
             $this->addPublishEvents(PriceProductEvents::PRICE_CONCRETE_PUBLISH, $dataSet[PriceProductDataSet::ID_PRODUCT_CONCRETE]);
-            $query->filterByFkProduct($dataSet[PriceProductDataSet::ID_PRODUCT_CONCRETE]);
+            $priceProductQuery->filterByFkProduct($dataSet[PriceProductDataSet::ID_PRODUCT_CONCRETE]);
         }
 
-        $productPriceEntity = $query->findOneOrCreate();
+        $productPriceEntity = $priceProductQuery->findOneOrCreate();
         $productPriceEntity->save();
 
         $priceProductStoreEntity = SpyPriceProductStoreQuery::create()

@@ -2,7 +2,6 @@ parameters:
     bootstrap: %rootDir%/../../../phpstan-bootstrap.php
     ignoreErrors:
     - '#Propel\\Runtime\\ActiveQuery\\ModelCriteria#'
-    - '#Spryker\\Zed\\PriceProductDataImport\\Business\\PriceProductDataImportBusinessFactory::createPriceProductDataImport()#'
 
 services:
     -

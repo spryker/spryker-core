@@ -46,9 +46,10 @@ class PreparePriceDataStep implements DataImportStepInterface
             return;
         }
         foreach ($dataSet as $key => $value) {
-            if ($this->isPriceDataKey($key)) {
-                $this->priceDataKeysCache[$key] = $this->getPriceDataKey($key);
+            if (!$this->isPriceDataKey($key)) {
+                continue;
             }
+            $this->priceDataKeysCache[$key] = $this->getPriceDataKey($key);
         }
         $this->isDataKeysCachePrepared = true;
     }
