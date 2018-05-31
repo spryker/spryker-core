@@ -21,7 +21,8 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class MerchantRelationshipCreateForm extends AbstractType
 {
-    public const OPTION_SELECTED_COMPANY = 'idCompany';
+    public const OPTION_SELECTED_COMPANY = 'id_company';
+    public const OPTION_IS_PERSISTENCE_FORM = 'is_persistence_form';
     public const OPTION_COMPANY_CHOICES = 'company_choices';
     public const OPTION_MERCHANT_CHOICES = 'merchant_choices';
     public const OPTION_ASSIGNED_COMPANY_BUSINESS_UNIT_CHOICES = 'assignee_company_business_unit_choices';
@@ -59,6 +60,7 @@ class MerchantRelationshipCreateForm extends AbstractType
         $resolver->setRequired(static::OPTION_SELECTED_COMPANY);
         $resolver->setRequired(static::OPTION_MERCHANT_CHOICES);
         $resolver->setRequired(static::OPTION_ASSIGNED_COMPANY_BUSINESS_UNIT_CHOICES);
+        $resolver->setRequired(static::OPTION_IS_PERSISTENCE_FORM);
     }
 
     /**
@@ -75,7 +77,7 @@ class MerchantRelationshipCreateForm extends AbstractType
 
         if ($options[static::OPTION_SELECTED_COMPANY]) {
             $this
-                ->addOwnerCompanyBusinessUnitField($builder, $options[static::OPTION_ASSIGNED_COMPANY_BUSINESS_UNIT_CHOICES])
+                ->addOwnerCompanyBusinessUnitField($builder, $options)
                 ->addAssignedCompanyBusinessUnitField($builder, $options[static::OPTION_ASSIGNED_COMPANY_BUSINESS_UNIT_CHOICES]);
         }
     }
@@ -126,20 +128,24 @@ class MerchantRelationshipCreateForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $choices
+     * @param array $options
      *
      * @return $this
      */
-    protected function addOwnerCompanyBusinessUnitField(FormBuilderInterface $builder, array $choices): self
+    protected function addOwnerCompanyBusinessUnitField(FormBuilderInterface $builder, array $options): self
     {
+        $constraints = [];
+        if ($options[static::OPTION_IS_PERSISTENCE_FORM]) {
+            $constraints = [new NotBlank()];
+        }
+
         $builder->add(static::FIELD_FK_COMPANY_BUSINESS_UNIT, Select2ComboBoxType::class, [
             'label' => static::FK_COMPANY_BUSINESS_UNIT_FIELD_LABEL,
             'placeholder' => static::FK_COMPANY_BUSINESS_UNIT_FIELD_PLACEHOLDER,
-            'choices' => array_flip($choices),
+            'choices' => array_flip($options[static::OPTION_ASSIGNED_COMPANY_BUSINESS_UNIT_CHOICES]),
             'choices_as_values' => true,
-            'constraints' => [
-                new NotBlank(),
-            ],
+            'required' => $options[static::OPTION_IS_PERSISTENCE_FORM],
+            'constraints' => $constraints,
         ]);
 
         return $this;
@@ -158,10 +164,8 @@ class MerchantRelationshipCreateForm extends AbstractType
             'placeholder' => static::ASSIGNED_COMPANY_BUSINESS_UNIT_FIELD_PLACEHOLDER,
             'choices' => array_flip($choices),
             'choices_as_values' => true,
+            'required' => false,
             'multiple' => 'true',
-            'constraints' => [
-                new NotBlank(),
-            ],
         ]);
 
         $this->addModelTransformer($builder);

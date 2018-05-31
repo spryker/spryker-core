@@ -39,7 +39,7 @@ class EditMerchantRelationshipController extends AbstractController
         $merchantRelationshipForm = $this->getFactory()
             ->getMerchantRelationshipEditForm(
                 $merchantRelationshipTransfer,
-                $dataProvider->getOptions($idCompany)
+                $dataProvider->getOptions(true, $idCompany)
             )
             ->handleRequest($request);
 
