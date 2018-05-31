@@ -3,10 +3,16 @@
   "description": "ChartOrder module",
   "license": "proprietary",
   "require": {
+    "spryker/kernel": "^3.0.0",
+    "spryker/sales": "^7.0.0 || ^8.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/chart": "*"
+  },
+  "suggest": {
+    "spryker/chart": "Use dependency for implement chart plugin"
   },
   "autoload": {
     "psr-4": {

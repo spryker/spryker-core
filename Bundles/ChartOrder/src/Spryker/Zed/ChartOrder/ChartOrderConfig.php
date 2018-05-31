@@ -6,9 +6,9 @@
  */
 
 namespace Spryker\Zed\ChartOrder;
+
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ChartOrderConfig extends AbstractBundleConfig
 {
-
 }

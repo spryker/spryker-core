@@ -30,6 +30,7 @@ class CountOrderChartPlugin extends AbstractPlugin implements ChartPluginInterfa
     {
         return static::NAME;
     }
+
     /**
      * {@inheritdoc}
      *

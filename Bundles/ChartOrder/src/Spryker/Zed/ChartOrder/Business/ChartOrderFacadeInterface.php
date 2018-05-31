@@ -9,5 +9,4 @@ namespace Spryker\Zed\ChartOrder\Business;
 
 interface ChartOrderFacadeInterface
 {
-
 }

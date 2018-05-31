@@ -3,10 +3,12 @@
   "description": "Dashboard module",
   "license": "proprietary",
   "require": {
+    "spryker/kernel": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/twig": "*"
   },
   "autoload": {
     "psr-4": {

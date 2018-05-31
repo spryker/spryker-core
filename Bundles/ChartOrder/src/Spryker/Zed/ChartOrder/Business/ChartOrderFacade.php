@@ -14,5 +14,4 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ChartOrderFacade extends AbstractFacade implements ChartOrderFacadeInterface
 {
-
 }

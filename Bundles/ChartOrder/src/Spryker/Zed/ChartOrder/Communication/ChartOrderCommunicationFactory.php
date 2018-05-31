@@ -7,9 +7,6 @@
 
 namespace Spryker\Zed\ChartOrder\Communication;
 
-use Spryker\Shared\Chart\ChartPluginCollection\ChartPluginCollection;
-use Spryker\Shared\Chart\ChartPluginCollection\ChartPluginCollectionInterface;
-use Spryker\Zed\Chart\ChartDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
@@ -17,5 +14,4 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class ChartOrderCommunicationFactory extends AbstractCommunicationFactory
 {
-
 }
