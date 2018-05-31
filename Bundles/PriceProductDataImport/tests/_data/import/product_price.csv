@@ -1,0 +1,18 @@
+abstract_sku,concrete_sku,price_type,store,currency,value_net,value_gross
+001,,DEFAULT,DE,EUR,8999,9999
+002,,DEFAULT,DE,EUR,8999,9999
+003,,DEFAULT,DE,EUR,5850,6500
+004,,DEFAULT,DE,EUR,6300,7000
+193,,DEFAULT,DE,EUR,16195,17994,"[{""quanity"":5,""net_price"":150,""gross_price"":165}, {""quanity"":10,""net_price"":145,""gross_price"":158}, {""quanity"":20,""net_price"":140,""gross_price"":152}]"
+194,,DEFAULT,AT,EUR,20780,23089,"[{""quanity"":5,""net_price"":265,""gross_price"":295}, {""quanity"":10,""net_price"":275,""gross_price"":310}, {""quanity"":20,""net_price"":285,""gross_price"":320}]"
+054,,ORIGINAL,AT,EUR,1440,1600,
+056,,ORIGINAL,AT,EUR,25200,28000,
+059,,ORIGINAL,AT,EUR,28800,32000,
+,059_24245592,ORIGINAL,AT,EUR,25200,28000,
+,059_26175504,ORIGINAL,AT,EUR,32400,36000,
+,059_26027598,ORIGINAL,AT,EUR,28800,32000,
+063,,ORIGINAL,AT,EUR,14400,16000,
+068,,ORIGINAL,AT,EUR,6480,7200,
+072,,ORIGINAL,AT,EUR,30240,33600,
+,072_19618271,ORIGINAL,AT,EUR,12240,13600,
+,072_21927455,ORIGINAL,AT,EUR,10080,11200,
