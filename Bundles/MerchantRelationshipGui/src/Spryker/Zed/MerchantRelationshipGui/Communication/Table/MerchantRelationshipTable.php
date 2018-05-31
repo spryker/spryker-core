@@ -65,6 +65,8 @@ class MerchantRelationshipTable extends AbstractTable
 
         $config->setSearchable([
             MerchantRelationshipTableConstants::COL_ID_MERCHANT_RELATIONSHIP,
+            SpyMerchantTableMap::COL_NAME,
+            SpyCompanyBusinessUnitTableMap::COL_NAME,
         ]);
 
         $config->addRawColumn(MerchantRelationshipTableConstants::COL_ACTIONS);
