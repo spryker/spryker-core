@@ -30,7 +30,7 @@ class BuildControllerCest
     {
         $i->amOnPage('/spryk-gui/build?spryk=AddZedBusinessFacadeMethod');
         $i->seeResponseCodeIs(200);
-        $i->seeBreadcrumbNavigation('Dashboard / SprykGui / Build Spryk');
+        $i->seeBreadcrumbNavigation('Dashboard / SprykGui / Spryks / Build Spryk');
         $i->see('Spryk', 'h2');
     }
 
@@ -43,7 +43,7 @@ class BuildControllerCest
     {
         $i->amOnPage('/spryk-gui/build?spryk=AddZedBusinessFacadeMethod');
         $i->seeResponseCodeIs(200);
-        $i->seeBreadcrumbNavigation('Dashboard / SprykGui / Build Spryk');
+        $i->seeBreadcrumbNavigation('Dashboard / SprykGui / Spryks / Build Spryk');
         $i->see('Spryk', 'h2');
 
         $formData = [
