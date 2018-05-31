@@ -234,4 +234,18 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
             ->createProductOptionValuePriceReader()
             ->getStorePrices($storePricesRequestTransfer);
     }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductOptionValueStorePricesRequestTransfer $storePricesRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOptionValueStorePricesResponseTransfer
+     */
+    public function getAllProductOptionValuePrices(ProductOptionValueStorePricesRequestTransfer $storePricesRequestTransfer)
+    {
+        return $this->getFactory()
+            ->createProductOptionValuePriceReader()
+            ->getAllPrices($storePricesRequestTransfer);
+    }
 }
