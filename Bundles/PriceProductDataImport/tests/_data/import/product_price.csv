@@ -1,8 +1,4 @@
-abstract_sku,concrete_sku,price_type,store,currency,value_net,value_gross
-001,,DEFAULT,DE,EUR,8999,9999
-002,,DEFAULT,DE,EUR,8999,9999
-003,,DEFAULT,DE,EUR,5850,6500
-004,,DEFAULT,DE,EUR,6300,7000
+abstract_sku,concrete_sku,price_type,store,currency,value_net,value_gross,price_data.volume_prices
 193,,DEFAULT,DE,EUR,16195,17994,"[{""quanity"":5,""net_price"":150,""gross_price"":165}, {""quanity"":10,""net_price"":145,""gross_price"":158}, {""quanity"":20,""net_price"":140,""gross_price"":152}]"
 194,,DEFAULT,AT,EUR,20780,23089,"[{""quanity"":5,""net_price"":265,""gross_price"":295}, {""quanity"":10,""net_price"":275,""gross_price"":310}, {""quanity"":20,""net_price"":285,""gross_price"":320}]"
 054,,ORIGINAL,AT,EUR,1440,1600,
