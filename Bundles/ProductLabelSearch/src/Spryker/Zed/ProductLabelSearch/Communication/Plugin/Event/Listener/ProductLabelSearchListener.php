@@ -7,15 +7,14 @@
 
 namespace Spryker\Zed\ProductLabelSearch\Communication\Plugin\Event\Listener;
 
-use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelProductAbstractTableMap;
 use Spryker\Shared\ProductLabelSearch\ProductLabelSearchConfig;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ProductLabel\Persistence\Propel\SpyProductLabelProductAbstractQuery;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\ProductLabelSearch\Communication\ProductLabelSearchCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductLabelSearch\Persistence\ProductLabelSearchQueryContainerInterface getQueryContainer()
  */
 class ProductLabelSearchListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
@@ -33,13 +32,7 @@ class ProductLabelSearchListener extends AbstractPlugin implements EventBulkHand
     {
         $this->preventTransaction();
         $productLabelIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
-        //TODO move this to QueryContainer
-        $productAbstractIds = SpyProductLabelProductAbstractQuery::create()
-            ->filterByFkProductLabel_In($productLabelIds)
-            ->withColumn(SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT, 'fkProductAbstract')
-            ->select(['fkProductAbstract'])
-            ->find()
-            ->getData();
+        $productAbstractIds = $this->getQueryContainer()->queryProductLabelByProductLabelIds($productLabelIds)->find()->getData();
 
         $this->getFactory()->getProductPageSearchFacade()->refresh($productAbstractIds, [ProductLabelSearchConfig::PLUGIN_PRODUCT_LABEL_DATA]);
     }
