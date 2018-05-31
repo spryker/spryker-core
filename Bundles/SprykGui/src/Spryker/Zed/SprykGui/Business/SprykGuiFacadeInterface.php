@@ -32,8 +32,17 @@ interface SprykGuiFacadeInterface
      */
     public function getSprykDefinitions(): array;
 
-
-    public function drawSpryk($sprykName): string;
+    /**
+     * Specification:
+     * - Renders a rph for the given Spryk name.
+     *
+     * @api
+     *
+     * @param string $sprykName
+     *
+     * @return string
+     */
+    public function drawSpryk(string $sprykName): string;
 
     /**
      * Specification:
@@ -44,7 +53,7 @@ interface SprykGuiFacadeInterface
      * @param string $sprykName
      * @param array $sprykArguments
      *
-     * @return bool
+     * @return string
      */
-    public function runSpryk(string $sprykName, array $sprykArguments): bool;
+    public function runSpryk(string $sprykName, array $sprykArguments): string;
 }

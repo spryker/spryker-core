@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\SprykGui\Business;
 
+use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\SprykGui\Business\Model\Graph\GraphBuilder;
+use Spryker\Zed\SprykGui\Business\Model\Graph\GraphBuilderInterface;
 use Spryker\Zed\SprykGui\Business\Model\Spryk;
 use Spryker\Zed\SprykGui\Business\Model\SprykInterface;
 use Spryker\Zed\SprykGui\Dependency\Facade\SprykGuiToSprykFacadeInterface;
@@ -27,15 +30,35 @@ class SprykGuiBusinessFactory extends AbstractBusinessFactory
     public function createSpryk(): SprykInterface
     {
         return new Spryk(
-            $this->getSprykFacade()
+            $this->getSprykFacade(),
+            $this->createGraphBuilder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\SprykGui\Business\Model\Graph\GraphBuilderInterface
+     */
+    public function createGraphBuilder(): GraphBuilderInterface
+    {
+        return new GraphBuilder(
+            $this->getSprykFacade(),
+            $this->getGraphPlugin()
         );
     }
 
     /**
      * @return \Spryker\Zed\SprykGui\Dependency\Facade\SprykGuiToSprykFacadeInterface
      */
-    protected function getSprykFacade(): SprykGuiToSprykFacadeInterface
+    public function getSprykFacade(): SprykGuiToSprykFacadeInterface
     {
         return $this->getProvidedDependency(SprykGuiDependencyProvider::SPRYK_FACADE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Graph\Communication\Plugin\GraphPlugin
+     */
+    public function getGraphPlugin(): GraphPlugin
+    {
+        return $this->getProvidedDependency(SprykGuiDependencyProvider::PLUGIN_GRAPH);
     }
 }

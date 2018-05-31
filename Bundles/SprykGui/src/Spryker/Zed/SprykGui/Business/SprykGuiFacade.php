@@ -43,8 +43,16 @@ class SprykGuiFacade extends AbstractFacade implements SprykGuiFacadeInterface
         return $this->getFactory()->createSpryk()->getSprykDefinitions();
     }
 
-
-    public function drawSpryk($sprykName): string
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $sprykName
+     *
+     * @return string
+     */
+    public function drawSpryk(string $sprykName): string
     {
         return $this->getFactory()->createSpryk()->drawSpryk($sprykName);
     }
@@ -57,9 +65,9 @@ class SprykGuiFacade extends AbstractFacade implements SprykGuiFacadeInterface
      * @param string $sprykName
      * @param array $sprykArguments
      *
-     * @return bool
+     * @return string
      */
-    public function runSpryk(string $sprykName, array $sprykArguments): bool
+    public function runSpryk(string $sprykName, array $sprykArguments): string
     {
         return $this->getFactory()->createSpryk()->runSpryk($sprykName, $sprykArguments);
     }

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SprykGui\Communication\Form;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -45,9 +46,78 @@ class SprykForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addMainSpryk($builder, $options);
+//        $this->addOptionalSpryks($builder, $options);
 //        $this->addOthers($builder, $options);
         $this->addRunSprykButton($builder);
         $this->addCreateTemplateButton($builder);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormBuilderInterface
+     */
+    protected function addMainSpryk(FormBuilderInterface $builder, array $options): FormBuilderInterface
+    {
+        $sprykName = $this->getSprykToBuild($options);
+        $sprykDefinition = $this->getSprykDefinitionByName($sprykName, $options);
+
+        $mainSprykForm = $builder->getFormFactory()->createNamedBuilder($sprykName);
+
+        $this->addArgumentsToForm($sprykDefinition, $mainSprykForm, $options);
+
+        $builder->add($mainSprykForm);
+
+        return $builder;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormBuilderInterface
+     */
+    protected function addOptionalSpryks(FormBuilderInterface $builder, array $options): FormBuilderInterface
+    {
+        $sprykName = $this->getSprykToBuild($options);
+        $sprykDefinition = $this->getSprykDefinitionByName($sprykName, $options);
+
+        $optionalSprykNames = $this->getOptionalSpryks($sprykDefinition);
+
+        if (count($optionalSprykNames) > 0) {
+            $builder->add('include-optional', ChoiceType::class, [
+                'choices' => $optionalSprykNames,
+                'multiple' => true,
+                'required' => false,
+            ]);
+        }
+
+        return $builder;
+    }
+
+    /**
+     * @param array $sprykDefinition
+     *
+     * @return array
+     */
+    protected function getOptionalSpryks(array $sprykDefinition): array
+    {
+        $optionalSprykNames = [];
+        if (isset($sprykDefinition['postSpryks'])) {
+            foreach ($sprykDefinition['postSpryks'] as $postSpryk) {
+                if (is_array($postSpryk)) {
+                    $sprykName = array_keys($postSpryk)[0];
+                    $sprykDefinition = $postSpryk[$sprykName];
+
+                    if (isset($sprykDefinition['isOptional'])) {
+                        $optionalSprykNames[$sprykName] = $sprykName;
+                    }
+                }
+            }
+        }
+
+        return $optionalSprykNames;
     }
 
     /**
@@ -146,26 +216,6 @@ class SprykForm extends AbstractType
         foreach ($sprykDefinition['postSpryks'] as $sprykName) {
             $this->buildSprykList($sprykName, $options);
         }
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     *
-     * @return \Symfony\Component\Form\FormBuilderInterface
-     */
-    protected function addMainSpryk(FormBuilderInterface $builder, array $options): FormBuilderInterface
-    {
-        $sprykName = $this->getSprykToBuild($options);
-        $sprykDefinition = $this->getSprykDefinitionByName($sprykName, $options);
-
-        $mainSprykForm = $builder->getFormFactory()->createNamedBuilder($sprykName);
-
-        $this->addArgumentsToForm($sprykDefinition, $mainSprykForm, $options);
-
-        $builder->add($mainSprykForm);
-
-        return $builder;
     }
 
     /**

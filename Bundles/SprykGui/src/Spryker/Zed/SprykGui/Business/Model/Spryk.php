@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\SprykGui\Business\Model;
 
-use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
+use Spryker\Zed\SprykGui\Business\Model\Graph\GraphBuilderInterface;
 use Spryker\Zed\SprykGui\Dependency\Facade\SprykGuiToSprykFacadeInterface;
 use Symfony\Component\Process\Process;
 use Zend\Filter\FilterChain;
@@ -21,11 +21,18 @@ class Spryk implements SprykInterface
     protected $sprykFacade;
 
     /**
-     * @param \Spryker\Zed\SprykGui\Dependency\Facade\SprykGuiToSprykFacadeInterface $sprykFacade
+     * @var \Spryker\Zed\SprykGui\Business\Model\Graph\GraphBuilderInterface
      */
-    public function __construct(SprykGuiToSprykFacadeInterface $sprykFacade)
+    protected $graphBuilder;
+
+    /**
+     * @param \Spryker\Zed\SprykGui\Dependency\Facade\SprykGuiToSprykFacadeInterface $sprykFacade
+     * @param \Spryker\Zed\SprykGui\Business\Model\Graph\GraphBuilderInterface $graphBuilder
+     */
+    public function __construct(SprykGuiToSprykFacadeInterface $sprykFacade, GraphBuilderInterface $graphBuilder)
     {
         $this->sprykFacade = $sprykFacade;
+        $this->graphBuilder = $graphBuilder;
     }
 
     /**
@@ -59,69 +66,30 @@ class Spryk implements SprykInterface
      * @param string $sprykName
      * @param array $sprykArguments
      *
-     * @return bool
+     * @return string
      */
-    public function runSpryk(string $sprykName, array $sprykArguments): bool
+    public function runSpryk(string $sprykName, array $sprykArguments): string
     {
         $commandLine = $this->getCommandLine($sprykName, $sprykArguments);
         $process = new Process($commandLine, APPLICATION_ROOT_DIR);
         $process->run();
 
         if ($process->isSuccessful()) {
-            return true;
+            return $process->getOutput();
         }
 
-        return true;
+        return $process->getErrorOutput();
     }
 
     /**
-     * @param $sprykName
+     * @param string $sprykName
+     *
      * @return string
      */
-    public function drawSpryk($sprykName): string
+    public function drawSpryk(string $sprykName): string
     {
-        $sprykDefinitions = $this->sprykFacade->getSprykDefinitions();
-
-        $graph = new GraphPlugin(); // TODO
-        $graph->init('spryks');
-        $graph->addNode($sprykName);
-
-        $this->addEdge($sprykDefinitions, $graph, $sprykName);
-
-        $response = $graph->render('svg');
-        return $response;
-
-
+        return $this->graphBuilder->drawSpryk($sprykName);
     }
-
-
-    /**
-     * @param $sprykDefinitions
-     * @param $graph
-     * @param $sprykName
-     * @param array $existingSpryks
-     */
-    protected function addEdge($sprykDefinitions, GraphPlugin $graph, $sprykName, $existingSpryks = []): void
-    {
-        $existingSpryks[] = $sprykName;
-
-        $sprykDefinition = $sprykDefinitions[$sprykName];
-
-        $tmp = ['preSpryks' => 'blue', 'postSpryks' => 'red'];
-        foreach ($tmp as $subSpryks => $color) {
-            if (isset($sprykDefinition[$subSpryks])) {
-                foreach ($sprykDefinition[$subSpryks] as $subSprykName) {
-
-                    $graph->addNode($subSprykName);
-                    $graph->addEdge($sprykName, $subSprykName, ['color' => $color]);
-                    if (!in_array($subSprykName, $existingSpryks)) {
-                        $this->addEdge($sprykDefinitions, $graph, $subSprykName, $existingSpryks);
-                    }
-                }
-            }
-        }
-    }
-
 
     /**
      * @param array $sprykDefinitions
@@ -140,7 +108,7 @@ class Spryk implements SprykInterface
             $organized[$application][$sprykName] = [
                 'humanized' => $this->createHumanizeFilter()->filter($sprykName),
                 'description' => $sprykDefinition['description'],
-                'priority' => isset($sprykDefinition['priority'])?$sprykDefinition['priority']:''
+                'priority' => isset($sprykDefinition['priority'])?$sprykDefinition['priority']:'',
             ];
 
             ksort($organized[$application]);
@@ -199,6 +167,11 @@ class Spryk implements SprykInterface
      */
     protected function buildArgumentString(array $sprykArguments)
     {
+        $includeOptionalSpryks = [];
+        if (isset($sprykArguments['include-optional'])) {
+            $includeOptionalSpryks = $sprykArguments['include-optional'];
+            unset($sprykArguments['include-optional']);
+        }
         $addedArguments = [];
         $argumentString = '';
         $sprykDefinitions = $this->sprykFacade->getSprykDefinitions();
@@ -237,6 +210,10 @@ class Spryk implements SprykInterface
             }
         }
 
+        foreach ($includeOptionalSpryks as $includeOptionalSpryk) {
+            $argumentString .= sprintf(' --include-optional=%s', $includeOptionalSpryk);
+        }
+
         return $argumentString;
     }
 
@@ -249,6 +226,9 @@ class Spryk implements SprykInterface
      */
     protected function getJiraTemplate(string $sprykName, string $commandLine, array $sprykArguments): string
     {
+        if (isset($sprykArguments['include-optional'])) {
+            unset($sprykArguments['include-optional']);
+        }
         $jiraTemplate = PHP_EOL . sprintf('{code:title=%s|theme=Midnight|linenumbers=true|collapse=true}', $sprykName) . PHP_EOL;
         $jiraTemplate .= $commandLine . PHP_EOL . PHP_EOL;
 

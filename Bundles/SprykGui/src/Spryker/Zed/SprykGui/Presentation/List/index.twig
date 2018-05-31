@@ -11,24 +11,13 @@
     {% for application, spryks in sprykDefinitions %}
         <h2>{{ application }}</h2>
         <table class="table">
-            {% for spryk, sprykInfo in spryks %}
-
-
-                {% if sprykInfo.priority == 1 %}
-                    <tr class="bg-info">
-                {% else %}
-                    <tr>
-                {% endif %}
-
-                <td style="width: 33%;"><a href="/spryk-gui/index/build?spryk={{ spryk }}">{{ sprykInfo.humanized }}</a>
-                </td>
-
-                <td style="width: 33%;">{{ sprykInfo.description }}</td>
-                <td><a href="/spryk-gui/index/draw?spryk={{ spryk }}">Draw</a></td>
-                </tr>
-
-
-            {% endfor %}
+        {% for spryk, sprykInfo in spryks %}
+            <tr{% if sprykInfo.priority == 1 %} class="bg-info"{% endif %}>
+                <td style="width: 40%;"><a href="/spryk-gui/build?spryk={{ spryk }}">{{ sprykInfo.humanized }}</a></td>
+                <td style="width: 50%;">{{ sprykInfo.description }}</td>
+                <td><a href="/spryk-gui/graph?spryk={{ spryk }}">Show graph</a></td>
+            </tr>
+        {% endfor %}
         </table>
     {% endfor %}
 {% endblock %}
