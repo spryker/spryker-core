@@ -39,7 +39,7 @@ class FileDirectoryTreeReader implements FileDirectoryTreeReaderInterface
      *
      * @return \Generated\Shared\Transfer\FileDirectoryTreeTransfer
      */
-    public function findFileDirectoryTree(LocaleTransfer $localeTransfer = null)
+    public function findFileDirectoryTree(?LocaleTransfer $localeTransfer = null)
     {
         $this->assertLocaleForRead($localeTransfer);
 
@@ -51,7 +51,7 @@ class FileDirectoryTreeReader implements FileDirectoryTreeReaderInterface
      *
      * @return void
      */
-    protected function assertLocaleForRead(LocaleTransfer $localeTransfer = null)
+    protected function assertLocaleForRead(?LocaleTransfer $localeTransfer = null)
     {
         if (!$localeTransfer) {
             return;
@@ -65,7 +65,7 @@ class FileDirectoryTreeReader implements FileDirectoryTreeReaderInterface
      *
      * @return \Generated\Shared\Transfer\FileDirectoryTreeTransfer
      */
-    protected function createDirectoryTreeTransfer(LocaleTransfer $localeTransfer = null)
+    protected function createDirectoryTreeTransfer(?LocaleTransfer $localeTransfer = null)
     {
         $fileDirectoryTreeTransfer = new FileDirectoryTreeTransfer();
 
@@ -105,7 +105,7 @@ class FileDirectoryTreeReader implements FileDirectoryTreeReaderInterface
      *
      * @return \Generated\Shared\Transfer\FileDirectoryTreeNodeTransfer
      */
-    protected function getFileDirectoryTreeNodeRecursively(SpyFileDirectory $spyFileDirectory, LocaleTransfer $localeTransfer = null)
+    protected function getFileDirectoryTreeNodeRecursively(SpyFileDirectory $spyFileDirectory, ?LocaleTransfer $localeTransfer = null)
     {
         $fileDirectoryTreeNodeTransfer = new FileDirectoryTreeNodeTransfer();
 
@@ -127,7 +127,7 @@ class FileDirectoryTreeReader implements FileDirectoryTreeReaderInterface
      *
      * @return \Generated\Shared\Transfer\FileDirectoryTransfer
      */
-    protected function mapFileDirectoryEntityToTransfer(SpyFileDirectory $fileDirectory, LocaleTransfer $localeTransfer = null)
+    protected function mapFileDirectoryEntityToTransfer(SpyFileDirectory $fileDirectory, ?LocaleTransfer $localeTransfer = null)
     {
         $fileDirectoryTransfer = new FileDirectoryTransfer();
         $fileDirectoryTransfer->fromArray($fileDirectory->toArray(), true);
@@ -147,7 +147,7 @@ class FileDirectoryTreeReader implements FileDirectoryTreeReaderInterface
      *
      * @return \Orm\Zed\FileManager\Persistence\SpyFileDirectoryLocalizedAttributes[]|\Propel\Runtime\Collection\ObjectCollection
      */
-    protected function findLocalizedAttributes(SpyFileDirectory $fileDirectory, LocaleTransfer $localeTransfer = null)
+    protected function findLocalizedAttributes(SpyFileDirectory $fileDirectory, ?LocaleTransfer $localeTransfer = null)
     {
         $criteria = $this->createLocalizedAttributeFilterCriteria($localeTransfer);
 
@@ -159,7 +159,7 @@ class FileDirectoryTreeReader implements FileDirectoryTreeReaderInterface
      *
      * @return \Propel\Runtime\ActiveQuery\Criteria
      */
-    protected function createLocalizedAttributeFilterCriteria(LocaleTransfer $localeTransfer = null)
+    protected function createLocalizedAttributeFilterCriteria(?LocaleTransfer $localeTransfer = null)
     {
         $criteria = new Criteria();
 

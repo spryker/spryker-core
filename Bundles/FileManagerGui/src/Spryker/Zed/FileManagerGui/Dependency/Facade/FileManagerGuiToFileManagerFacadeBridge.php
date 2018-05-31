@@ -117,7 +117,7 @@ class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileMan
      *
      * @return \Generated\Shared\Transfer\FileManagerDataTransfer
      */
-    public function findFileDirectoryTree(LocaleTransfer $localeTransfer = null)
+    public function findFileDirectoryTree(?LocaleTransfer $localeTransfer = null)
     {
         return $this->fileManagerFacade->findFileDirectoryTree($localeTransfer);
     }

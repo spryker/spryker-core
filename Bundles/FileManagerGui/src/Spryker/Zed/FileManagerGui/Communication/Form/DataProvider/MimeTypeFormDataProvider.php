@@ -30,7 +30,7 @@ class MimeTypeFormDataProvider
      *
      * @return \Generated\Shared\Transfer\MimeTypeTransfer
      */
-    public function getData(int $idMimeType = null)
+    public function getData(?int $idMimeType = null)
     {
         $mimeTypeTransfer = new MimeTypeTransfer();
 

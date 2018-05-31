@@ -161,7 +161,7 @@ class FileForm extends AbstractType
      *
      * @return $this
      */
-    protected function addFileLocalizedAttributesForm(FormBuilderInterface $builder, array $options = null)
+    protected function addFileLocalizedAttributesForm(FormBuilderInterface $builder, ?array $options = null)
     {
         $builder->add(static::FILE_LOCALIZED_ATTRIBUTES, CollectionType::class, [
             'entry_type' => FileLocalizedAttributesForm::class,

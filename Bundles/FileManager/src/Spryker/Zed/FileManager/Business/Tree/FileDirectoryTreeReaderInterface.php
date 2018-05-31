@@ -16,5 +16,5 @@ interface FileDirectoryTreeReaderInterface
      *
      * @return \Generated\Shared\Transfer\FileDirectoryTreeTransfer
      */
-    public function findFileDirectoryTree(LocaleTransfer $localeTransfer = null);
+    public function findFileDirectoryTree(?LocaleTransfer $localeTransfer = null);
 }

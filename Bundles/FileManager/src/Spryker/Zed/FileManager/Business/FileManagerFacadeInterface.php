@@ -132,7 +132,7 @@ interface FileManagerFacadeInterface
      *
      * @return \Generated\Shared\Transfer\FileManagerDataTransfer
      */
-    public function findFileDirectoryTree(LocaleTransfer $localeTransfer = null);
+    public function findFileDirectoryTree(?LocaleTransfer $localeTransfer = null);
 
     /**
      * Specification:

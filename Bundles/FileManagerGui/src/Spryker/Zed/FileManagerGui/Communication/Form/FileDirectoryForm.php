@@ -82,7 +82,7 @@ class FileDirectoryForm extends AbstractType
      *
      * @return $this
      */
-    protected function addFileDirectoryLocalizedAttributesForms(FormBuilderInterface $builder, array $options = null)
+    protected function addFileDirectoryLocalizedAttributesForms(FormBuilderInterface $builder, ?array $options = null)
     {
         $builder->add(static::FIELD_FILE_DIRECTORY_LOCALIZED_ATTRIBUTES, CollectionType::class, [
             'entry_type' => FileDirectoryLocalizedAttributesForm::class,

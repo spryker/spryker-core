@@ -43,7 +43,7 @@ interface FileManagerGuiToFileManagerQueryContainerInterface
      *
      * @return \Orm\Zed\FileManager\Persistence\SpyFileInfoQuery
      */
-    public function queryFileInfoByIdFile(int $idFile = null);
+    public function queryFileInfoByIdFile(?int $idFile = null);
 
     /**
      * @api

@@ -166,7 +166,7 @@ class FileSaver implements FileSaverInterface
      *
      * @return void
      */
-    protected function addFileInfoToFile(SpyFile $file, SpyFileInfo $fileInfo = null)
+    protected function addFileInfoToFile(SpyFile $file, ?SpyFileInfo $fileInfo = null)
     {
         if ($fileInfo !== null) {
             $file->addSpyFileInfo($fileInfo);
@@ -180,7 +180,7 @@ class FileSaver implements FileSaverInterface
      *
      * @return void
      */
-    protected function saveContent(FileManagerDataTransfer $fileManagerDataTransfer, SpyFile $file, SpyFileInfo $fileInfo = null)
+    protected function saveContent(FileManagerDataTransfer $fileManagerDataTransfer, SpyFile $file, ?SpyFileInfo $fileInfo = null)
     {
         if ($fileManagerDataTransfer->getContent() !== null || $fileInfo !== null) {
             $fileTransfer = new FileTransfer();

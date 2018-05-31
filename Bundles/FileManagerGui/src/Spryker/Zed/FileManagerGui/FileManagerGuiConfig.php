@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\FileManagerGui;
 
-use Spryker\Shared\FileManagerGui\FileManagerGuiConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class FileManagerGuiConfig extends AbstractBundleConfig
