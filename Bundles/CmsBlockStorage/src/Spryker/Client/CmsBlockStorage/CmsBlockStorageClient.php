@@ -21,14 +21,15 @@ class CmsBlockStorageClient extends AbstractClient implements CmsBlockStorageCli
      *
      * @param string[] $blockNames
      * @param string $localeName
+     * @param string $storeName
      *
      * @return array
      */
-    public function findBlocksByNames($blockNames, $localeName)
+    public function findBlocksByNames($blockNames, $localeName, $storeName)
     {
         return $this->getFactory()
             ->createCmsBlockStorage()
-            ->getBlocksByNames($blockNames, $localeName);
+            ->getBlocksByNames($blockNames, $localeName, $storeName);
     }
 
     /**
