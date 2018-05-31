@@ -44,6 +44,9 @@ class PriceProductMerchantRelationshipDataImportPluginTest extends Unit
     public function testImportImportsData(): void
     {
         $this->tester->ensureDatabaseTableIsEmpty();
+        $this->tester->assertDatabaseTableIsEmpty();
+
+        $this->createRelatedData();
 
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
         $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/price_product_merchant_relationship.csv');
@@ -58,5 +61,34 @@ class PriceProductMerchantRelationshipDataImportPluginTest extends Unit
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
 
         $this->tester->assertDatabaseTableContainsData();
+    }
+
+    /**
+     * @return void
+     */
+    protected function createRelatedData(): void
+    {
+        $idMerchant = $this->tester->haveMerchant()->getIdMerchant();
+
+        $this->createMerchantRelationship($idMerchant, 'mr-test-001');
+        $this->createMerchantRelationship($idMerchant, 'mr-test-002');
+        $this->createMerchantRelationship($idMerchant, 'mr-test-003');
+    }
+
+    /**
+     * @param int|string $idMerchant
+     * @param string $key
+     *
+     * @return void
+     */
+    protected function createMerchantRelationship(int $idMerchant, string $key): void
+    {
+        $companyBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnit();
+
+        $this->tester->haveMerchantRelationship([
+            'merchantRelationshipKey' => $key,
+            'fkMerchant' => $idMerchant,
+            'fkCompanyBusinessUnit' => $companyBusinessUnitTransfer->getIdCompanyBusinessUnit(),
+        ]);
     }
 }

@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\PriceProductMerchantRelationshipDataImport\Helper;
 
 use Codeception\Module;
-use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
+use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery;
 use Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationshipQuery;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
@@ -21,8 +21,8 @@ class PriceProductMerchantRelationshipDataImportHelper extends Module
      */
     public function ensureDatabaseTableIsEmpty(): void
     {
-        $priceProductQuery = $this->getPriceProductMerchantRelationshipQuery();
-        $priceProductQuery->deleteAll();
+        $this->getPriceProductMerchantRelationshipQuery()->deleteAll();
+        $this->getMerchantRelationshipQuery()->deleteAll();
     }
 
     /**
@@ -49,5 +49,13 @@ class PriceProductMerchantRelationshipDataImportHelper extends Module
     protected function getPriceProductMerchantRelationshipQuery(): SpyPriceProductMerchantRelationshipQuery
     {
         return SpyPriceProductMerchantRelationshipQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery
+     */
+    protected function getMerchantRelationshipQuery(): SpyMerchantRelationshipQuery
+    {
+        return SpyMerchantRelationshipQuery::create();
     }
 }
