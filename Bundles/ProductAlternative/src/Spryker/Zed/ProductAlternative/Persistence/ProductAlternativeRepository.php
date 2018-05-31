@@ -60,12 +60,23 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
             ->getFactory()
             ->createProductAlternativeQuery();
 
-        $alternativeProducts = $productAlternativeQuery
+        $productAlternatives = $productAlternativeQuery
             ->filterByFkProduct(
                 $productConcreteTransfer->getIdProductConcrete()
             )->find();
 
-        return $this->hydrateProductAlternativeCollectionWithProductAlternatives($alternativeProducts->toArray());
+        $mapper = $this
+            ->getFactory()
+            ->createProductAlternativeMapper();
+
+        $mappedProductAlternatives = [];
+
+        /** @var \Orm\Zed\ProductAlternative\Persistence\SpyProductAlternative $productAlternative */
+        foreach ($productAlternatives as $productAlternative) {
+            $mappedProductAlternatives[] = $mapper->mapSpyProductAlternativeEntityToTransfer($productAlternative);
+        }
+
+        return $this->hydrateProductAlternativeCollectionWithProductAlternatives($mappedProductAlternatives);
     }
 
     /**
