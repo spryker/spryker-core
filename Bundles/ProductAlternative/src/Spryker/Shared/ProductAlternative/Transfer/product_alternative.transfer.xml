@@ -16,10 +16,6 @@
         <property name="messages" type="ResponseMessage[]" singular="message"/>
     </transfer>
 
-    <transfer name="ProductConcreteTransfer">
-        <property name="alternativeProducts" type="ProductAlternative[]"/>
-    </transfer>
-
     <transfer name="ResponseMessage">
         <property name="text" type="string"/>
     </transfer>
