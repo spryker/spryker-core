@@ -17,6 +17,7 @@ use Spryker\Zed\Search\Dependency\Plugin\NamedPageMapInterface;
 /**
  * @method \Spryker\Zed\ProductSetPageSearch\Persistence\ProductSetPageSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductSetPageSearch\Communication\ProductSetPageSearchCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductSetPageSearch\Business\ProductSetPageSearchFacadeInterface getFacade()
  */
 class ProductSetPageMapPlugin extends AbstractPlugin implements NamedPageMapInterface
 {

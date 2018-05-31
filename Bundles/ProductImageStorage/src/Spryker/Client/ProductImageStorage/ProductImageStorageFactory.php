@@ -44,7 +44,7 @@ class ProductImageStorageFactory extends AbstractFactory
      */
     protected function createProductImageStorageKeyGenerator()
     {
-        return new ProductImageStorageKeyGenerator($this->getSynchronizationService(), $this->getStore());
+        return new ProductImageStorageKeyGenerator($this->getSynchronizationService());
     }
 
     /**
@@ -61,13 +61,5 @@ class ProductImageStorageFactory extends AbstractFactory
     protected function getSynchronizationService()
     {
         return $this->getProvidedDependency(ProductImageStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    protected function getStore()
-    {
-        return $this->getProvidedDependency(ProductImageStorageDependencyProvider::STORE);
     }
 }

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\ProductSetStorage\Dependency\Client\ProductSetStorageToStorageClientInterface;
 use Spryker\Client\ProductSetStorage\Dependency\Service\ProductSetStorageToSynchronizationServiceInterface;
 use Spryker\Client\ProductSetStorage\Mapper\ProductSetStorageMapperInterface;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\ProductSetStorage\ProductSetStorageConstants;
 
 class ProductSetStorageReader implements ProductSetStorageReaderInterface
@@ -27,11 +26,6 @@ class ProductSetStorageReader implements ProductSetStorageReaderInterface
     protected $synchronizationService;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
-     */
-    protected $store;
-
-    /**
      * @var \Spryker\Client\ProductSetStorage\Mapper\ProductSetStorageMapperInterface
      */
     protected $productSetStorageMapper;
@@ -39,18 +33,15 @@ class ProductSetStorageReader implements ProductSetStorageReaderInterface
     /**
      * @param \Spryker\Client\ProductSetStorage\Dependency\Client\ProductSetStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\ProductSetStorage\Dependency\Service\ProductSetStorageToSynchronizationServiceInterface $synchronizationService
-     * @param \Spryker\Shared\Kernel\Store $store
      * @param \Spryker\Client\ProductSetStorage\Mapper\ProductSetStorageMapperInterface $productSetStorageMapper
      */
     public function __construct(
         ProductSetStorageToStorageClientInterface $storageClient,
         ProductSetStorageToSynchronizationServiceInterface $synchronizationService,
-        Store $store,
         ProductSetStorageMapperInterface $productSetStorageMapper
     ) {
         $this->storageClient = $storageClient;
         $this->synchronizationService = $synchronizationService;
-        $this->store = $store;
         $this->productSetStorageMapper = $productSetStorageMapper;
     }
 
@@ -65,8 +56,7 @@ class ProductSetStorageReader implements ProductSetStorageReaderInterface
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer
             ->setReference($idProductAbstract)
-            ->setLocale($localeName)
-            ->setStore($this->store->getStoreName());
+            ->setLocale($localeName);
 
         $key = $this->synchronizationService
             ->getStorageKeyBuilder(ProductSetStorageConstants::PRODUCT_SET_RESOURCE_NAME)
