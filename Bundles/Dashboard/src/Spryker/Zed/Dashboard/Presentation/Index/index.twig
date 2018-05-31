@@ -1,0 +1,11 @@
+{% extends '@Sales/Layout/layout.twig' %}
+
+{% block section_title %}
+    {{ 'Dashboard' | trans }}
+{% endblock %}
+
+{% block content %}
+    {% for pluginName in pluginNames %}
+        {{ chart(pluginName, pluginName) }}
+    {% endfor %}
+{% endblock %}
