@@ -15,7 +15,7 @@ use Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteForm
  * @method \Spryker\Zed\ProductAlternativeGui\Communication\ProductAlternativeGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductAlternativeGui\Business\ProductAlternativeGuiFacadeInterface getFacade()
  */
-class ProductAlternativeEditDataProvider extends AbstractPlugin implements ProductConcreteFormEditDataProviderExpanderPluginInterface
+class ProductConcreteFormEditDataProviderExpanderPlugin extends AbstractPlugin implements ProductConcreteFormEditDataProviderExpanderPluginInterface
 {
     /**
      * {@inheritdoc}

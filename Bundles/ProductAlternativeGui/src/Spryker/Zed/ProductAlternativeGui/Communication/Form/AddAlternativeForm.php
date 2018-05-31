@@ -11,8 +11,9 @@ use Spryker\Zed\Gui\Communication\Form\Type\AutosuggestType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class AddAlternativeFormType extends AbstractType
+class AddAlternativeForm extends AbstractType
 {
+    public const OPTION_VALUES_ALTERNATIVE_PRODUCTS = 'OPTION_VALUES_ALTERNATIVE_PRODUCTS';
     protected const FIELD_PRODUCT_NAME_OR_SKU_AUTOCOMPLETE = 'searchtext-autocomplete';
 
     /**

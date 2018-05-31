@@ -15,7 +15,7 @@ use Symfony\Component\Form\FormBuilderInterface;
  * @method \Spryker\Zed\ProductAlternativeGui\Communication\ProductAlternativeGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductAlternativeGui\Business\ProductAlternativeGuiFacadeInterface getFacade()
  */
-class ProductAlternativeEditFormExpander extends AbstractPlugin implements ProductConcreteEditFormExpanderPluginInterface
+class ProductConcreteEditFormExpanderPlugin extends AbstractPlugin implements ProductConcreteEditFormExpanderPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -29,8 +29,8 @@ class ProductAlternativeEditFormExpander extends AbstractPlugin implements Produ
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $formType = $this->getFactory()->createAddProductAlternativeFormType();
-        $dataProvider = $this->getFactory()->createAddProductAlternativeFormDataProvider();
+        $formType = $this->getFactory()->createAddAlternativeForm();
+        $dataProvider = $this->getFactory()->createAddAlternativeFormDataProvider();
 
         $formType->buildForm(
             $builder,
