@@ -18,9 +18,9 @@ interface PriceProductMerchantRelationshipDataSetInterface
     public const PRICE_NET = 'price_net';
     public const PRICE_GROSS = 'price_gross';
 
-    public const ID_MERCHANT_RELATIONSHIP = 'idMerchantRelationship';
-    public const ID_PRODUCT_ABSTRACT = 'idProductAbstract';
-    public const ID_PRODUCT_CONCRETE = 'idProduct';
-    public const ID_CURRENCY = 'idCurrency';
-    public const ID_STORE = 'idStore';
+    public const ID_MERCHANT_RELATIONSHIP = 'id_merchant_relationship';
+    public const ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    public const ID_PRODUCT_CONCRETE = 'id_product';
+    public const ID_CURRENCY = 'id_currency';
+    public const ID_STORE = 'id_store';
 }
