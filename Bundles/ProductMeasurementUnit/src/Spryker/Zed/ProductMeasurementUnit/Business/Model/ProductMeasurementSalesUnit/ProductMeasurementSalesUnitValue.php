@@ -79,7 +79,7 @@ class ProductMeasurementSalesUnitValue implements ProductMeasurementSalesUnitVal
     public function calculateSalesUnitValueInQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getQuantitySalesUnit() === null) {
+            if (!$itemTransfer->getQuantitySalesUnit()) {
                 continue;
             }
 

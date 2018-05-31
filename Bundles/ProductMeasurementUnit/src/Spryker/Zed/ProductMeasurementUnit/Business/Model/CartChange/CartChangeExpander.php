@@ -34,7 +34,7 @@ class CartChangeExpander implements CartChangeExpanderInterface
     public function expandWithQuantitySalesUnit(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getQuantitySalesUnit() === null) {
+            if (!$itemTransfer->getQuantitySalesUnit()) {
                 continue;
             }
 
