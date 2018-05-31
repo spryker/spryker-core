@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationshipDataImport\Business\Model\Step;
 
-use Orm\Zed\ManualOrderEntry\Persistence\Map\SpyMerchantRelationshipTableMap;
+use Orm\Zed\MerchantRelationship\Persistence\Map\SpyMerchantRelationshipTableMap;
 use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery;
 use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
