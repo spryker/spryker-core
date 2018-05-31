@@ -1,18 +1,18 @@
 {% extends '@Gui/layout/layout.twig' %}
 
-{% set widget_title = 'Overview of Merchant relationship' | trans %}
+{% set widget_title = 'Overview of Merchant relation' | trans %}
 
 {% block head_title widget_title %}
 {% block section_title widget_title %}
 
 {% block action %}
-    {{ createActionButton('/merchant-relationship-gui/create-merchant-relationship', 'Add Merchant relationship' | trans) }}
+    {{ createActionButton('/merchant-relationship-gui/create-merchant-relationship', 'Add Merchant relation' | trans) }}
 {% endblock %}
 
 {% block content %}
     {% embed '@Gui/Partials/widget.twig' %}
         {% block widget_title -%}
-            <h5>{{ 'List of Merchant relationship' | trans}}</h5>
+            <h5>{{ 'List of Merchant relation' | trans}}</h5>
         {%- endblock %}
         {% block widget_content %}
             <div class="row">

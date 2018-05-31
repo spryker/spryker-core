@@ -60,10 +60,13 @@ class MerchantRelationshipTable extends AbstractTable
         $config->setSortable([
             MerchantRelationshipTableConstants::COL_ID_MERCHANT_RELATIONSHIP,
             MerchantRelationshipTableConstants::COL_MERCHANT_NAME,
+            MerchantRelationshipTableConstants::COL_BUSINESS_UNIT_OWNER,
         ]);
 
         $config->setSearchable([
             MerchantRelationshipTableConstants::COL_ID_MERCHANT_RELATIONSHIP,
+            SpyMerchantTableMap::COL_NAME,
+            SpyCompanyBusinessUnitTableMap::COL_NAME,
         ]);
 
         $config->addRawColumn(MerchantRelationshipTableConstants::COL_ACTIONS);

@@ -16,7 +16,8 @@ use Spryker\Zed\MerchantRelationshipGui\Dependency\Facade\MerchantRelationshipGu
 
 class MerchantRelationshipFormDataProvider
 {
-    public const OPTION_SELECTED_COMPANY = 'idCompany';
+    public const OPTION_SELECTED_COMPANY = 'id_company';
+    public const OPTION_IS_PERSISTENCE_FORM = 'is_persistence_form';
     public const OPTION_COMPANY_CHOICES = 'company_choices';
     public const OPTION_MERCHANT_CHOICES = 'merchant_choices';
     public const OPTION_ASSIGNED_COMPANY_BUSINESS_UNIT_CHOICES = 'assignee_company_business_unit_choices';
@@ -77,11 +78,12 @@ class MerchantRelationshipFormDataProvider
     }
 
     /**
+     * @param bool $isPersistenceForm
      * @param int|null $idCompany
      *
      * @return array
      */
-    public function getOptions(?int $idCompany = null): array
+    public function getOptions(bool $isPersistenceForm, ?int $idCompany = null): array
     {
         return [
             'data_class' => MerchantRelationshipTransfer::class,
@@ -89,6 +91,7 @@ class MerchantRelationshipFormDataProvider
             static::OPTION_COMPANY_CHOICES => $this->getCompanyChoices(),
             static::OPTION_MERCHANT_CHOICES => $this->getMerchantChoices(),
             static::OPTION_SELECTED_COMPANY => $idCompany,
+            static::OPTION_IS_PERSISTENCE_FORM => $isPersistenceForm,
         ];
     }
 
