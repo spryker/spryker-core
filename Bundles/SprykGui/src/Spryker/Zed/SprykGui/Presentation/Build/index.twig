@@ -8,6 +8,14 @@
 {% endblock %}
 
 {% block content %}
+
+    {% if messages %}
+        <div class="alert alert-info">
+            {% for message in messages %}
+                {{ message }}<br />
+            {% endfor %}
+        </div>
+    {% endif %}
     {% if form is defined %}
     {{ form_start(form) }}
     {{ form_widget(form) }}

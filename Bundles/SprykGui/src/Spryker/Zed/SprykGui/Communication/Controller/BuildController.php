@@ -30,6 +30,7 @@ class BuildController extends AbstractController
             ->getSprykForm($spryk)
             ->handleRequest($request);
 
+        $messages = [];
         if ($sprykForm->isSubmitted() && $sprykForm->isValid()) {
             if ($sprykForm->get('create')->isClicked()) {
                 return $this->viewResponse(
@@ -41,16 +42,12 @@ class BuildController extends AbstractController
             if ($runResult) {
                 $this->addSuccessMessage(sprintf('Spryk "%s" executed successfully.', $spryk));
                 $messages = explode("\n", rtrim($runResult, "\n"));
-                if (count($messages) > 1) {
-                    $this->addInfoMessage(nl2br($runResult));
-//                    foreach ($messages as $message) {
-//                    }
-                }
             }
         }
 
         return $this->viewResponse([
             'form' => $sprykForm->createView(),
+            'messages' => $messages,
         ]);
     }
 }
