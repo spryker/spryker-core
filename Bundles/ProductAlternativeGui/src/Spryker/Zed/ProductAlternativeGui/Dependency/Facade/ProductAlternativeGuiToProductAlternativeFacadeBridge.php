@@ -37,7 +37,7 @@ class ProductAlternativeGuiToProductAlternativeFacadeBridge implements ProductAl
      */
     public function createProductAbstractAlternative(int $idProduct, int $idProductAbstractAlternative): ProductAlternativeResponseTransfer
     {
-        return $this->createProductAbstractAlternative($idProduct, $idProductAbstractAlternative);
+        return $this->productAlternativeFacade->createProductAbstractAlternative($idProduct, $idProductAbstractAlternative);
     }
 
     /**
@@ -48,7 +48,7 @@ class ProductAlternativeGuiToProductAlternativeFacadeBridge implements ProductAl
      */
     public function createProductConcreteAlternative(int $idProduct, int $idProductConcreteAlternative): ProductAlternativeResponseTransfer
     {
-        return $this->createProductConcreteAlternative($idProduct, $idProductConcreteAlternative);
+        return $this->productAlternativeFacade->createProductConcreteAlternative($idProduct, $idProductConcreteAlternative);
     }
 
     /**
@@ -58,7 +58,7 @@ class ProductAlternativeGuiToProductAlternativeFacadeBridge implements ProductAl
      */
     public function getProductAlternativesByIdProductConcrete(ProductConcreteTransfer $productConcreteTransfer): ProductAlternativeCollectionTransfer
     {
-        return $this->getProductAlternativesByIdProductConcrete($productConcreteTransfer);
+        return $this->productAlternativeFacade->getProductAlternativesByIdProductConcrete($productConcreteTransfer);
     }
 
     /**

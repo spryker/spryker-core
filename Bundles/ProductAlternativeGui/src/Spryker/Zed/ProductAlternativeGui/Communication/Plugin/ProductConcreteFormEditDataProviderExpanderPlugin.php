@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductAlternativeGui\Communication\Plugin;
 
+use Generated\Shared\Transfer\ProductAlternativeCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteFormEditDataProviderExpanderPluginInterface;
@@ -34,6 +35,6 @@ class ProductConcreteFormEditDataProviderExpanderPlugin extends AbstractPlugin i
             ->getProductAlternativeFacade()
             ->getProductAlternativesByIdProductConcrete($productConcrete);
 
-        $formData[ProductConcreteTransfer::ALTERNATIVE_PRODUCTS] = $productAlternatives->getProductAlternatives();
+        $formData[ProductAlternativeCollectionTransfer::PRODUCT_ALTERNATIVES] = $productAlternatives->getProductAlternatives();
     }
 }

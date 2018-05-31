@@ -61,11 +61,11 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
             ->createProductAlternativeQuery();
 
         $alternativeProducts = $productAlternativeQuery
-            ->filterByIdProductAlternative(
+            ->filterByFkProduct(
                 $productConcreteTransfer->getIdProductConcrete()
             )->find();
 
-        return $this->hydrateProductAlternativeCollectionWithProductAlternatives($alternativeProducts);
+        return $this->hydrateProductAlternativeCollectionWithProductAlternatives($alternativeProducts->toArray());
     }
 
     /**
