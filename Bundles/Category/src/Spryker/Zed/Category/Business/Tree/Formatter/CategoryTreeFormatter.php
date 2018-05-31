@@ -92,7 +92,7 @@ class CategoryTreeFormatter
     }
 
     /**
-     * @return \Spryker\Zed\Category\Business\Tree\Formatter\CategoryTreeFormatter
+     * @return $this
      */
     protected function structureArray()
     {
