@@ -32,10 +32,7 @@ class ProductAlternativeGuiCommunicationFactory extends AbstractCommunicationFac
      */
     public function createAddProductAlternativeFormDataProvider(): AddAlternativeFormDataProvider
     {
-        return new AddAlternativeFormDataProvider(
-            $this->getProductFacade(),
-            $this->getProductAlternativeFacade()
-        );
+        return new AddAlternativeFormDataProvider();
     }
 
     /**

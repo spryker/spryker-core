@@ -32,9 +32,7 @@ class ProductAlternativeEditDataProvider extends AbstractPlugin implements Produ
         $productAlternatives = $this
             ->getFactory()
             ->getProductAlternativeFacade()
-            ->getProductAlternativesByIdProductConcrete(
-                $productConcrete
-            );
+            ->getProductAlternativesByIdProductConcrete($productConcrete);
 
         $formData[ProductConcreteTransfer::ALTERNATIVE_PRODUCTS] = $productAlternatives->getProductAlternatives();
     }
