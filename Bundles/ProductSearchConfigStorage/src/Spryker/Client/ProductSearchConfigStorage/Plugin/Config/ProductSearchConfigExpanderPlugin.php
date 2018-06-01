@@ -41,7 +41,6 @@ class ProductSearchConfigExpanderPlugin extends AbstractPlugin implements Search
     protected function getKey()
     {
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
-        $synchronizationDataTransfer->setStore($this->getFactory()->getStore()->getStoreName());
 
         return $this->getFactory()
             ->getSynchronizationService()

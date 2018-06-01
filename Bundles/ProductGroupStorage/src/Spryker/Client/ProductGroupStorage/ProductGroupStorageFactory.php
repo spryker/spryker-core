@@ -19,8 +19,7 @@ class ProductGroupStorageFactory extends AbstractFactory
     {
         return new ProductGroupStorageReader(
             $this->getStorageClient(),
-            $this->getSynchronizationService(),
-            $this->getStore()
+            $this->getSynchronizationService()
         );
     }
 
@@ -38,13 +37,5 @@ class ProductGroupStorageFactory extends AbstractFactory
     public function getSynchronizationService()
     {
         return $this->getProvidedDependency(ProductGroupStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    public function getStore()
-    {
-        return $this->getProvidedDependency(ProductGroupStorageDependencyProvider::STORE);
     }
 }

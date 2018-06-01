@@ -80,9 +80,13 @@ class CmsBlockStoreRelationWriter implements CmsBlockStoreRelationWriterInterfac
             return;
         }
 
-        $this->cmsBlockQueryContainer
+        $cmsBlockStoreEntities = $this->cmsBlockQueryContainer
             ->queryCmsBlockStoreByFkCmsBlockAndFkStores($idCmsBlock, $idStores)
-            ->delete();
+            ->find();
+
+        foreach ($cmsBlockStoreEntities as $cmsBlockStoreEntity) {
+            $cmsBlockStoreEntity->delete();
+        }
     }
 
     /**

@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\ProductPackagingUnit\Business;
 
-use Codeception\TestCase\Test;
+use Generated\Shared\DataBuilder\ProductPackagingUnitTypeBuilder;
 
 /**
  * Auto-generated group annotations
@@ -20,12 +20,33 @@ use Codeception\TestCase\Test;
  * @group ProductPackagingUnitFacadeTest
  * Add your own group annotations below this line
  */
-class ProductPackagingUnitFacadeTest extends Test
+class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
 {
     /**
      * @var \SprykerTest\Zed\ProductPackagingUnit\ProductPackagingUnitBusinessTester
      */
     protected $tester;
+
+    /**
+     * @return void
+     */
+    public function testInstallProductPackagingUnitTypesShouldPersistInfrastructuralPackagingUnitTypes(): void
+    {
+        // Assign
+        $productPackagingUnitTypeTransfer = (new ProductPackagingUnitTypeBuilder())->build();
+        $config = $this->createProductPackagingUnitConfigMock();
+        $config->method('getInfrastructuralPackagingUnitTypes')
+            ->willReturn([$productPackagingUnitTypeTransfer]);
+        $factory = $this->createProductPackagingUnitBusinessFactoryMock($config);
+        $facade = $this->createProductPackagingUnitFacadeMock($factory);
+
+        // Action
+        $facade->installProductPackagingUnitTypes();
+
+        // Assert
+        $productPackagingUnitTypeTransfer = $facade->getProductPackagingUnitTypeByName($productPackagingUnitTypeTransfer);
+        $this->assertNotNull($productPackagingUnitTypeTransfer->getIdProductPackagingUnitType());
+    }
 
     /**
      * @return \Spryker\Zed\ProductPackagingUnit\Business\ProductPackagingUnitFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade

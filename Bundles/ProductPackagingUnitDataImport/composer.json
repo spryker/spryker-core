@@ -1,5 +1,5 @@
 {
-  "name": "spryker/product-packaging-unit-import",
+  "name": "spryker/product-packaging-unit-data-import",
   "description": "ProductPackagingUnitDataImport module",
   "license": "proprietary",
   "require": {
@@ -11,7 +11,11 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/installer": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/installer": "If you want to use Installer plugins."
   },
   "autoload": {
     "psr-4": {

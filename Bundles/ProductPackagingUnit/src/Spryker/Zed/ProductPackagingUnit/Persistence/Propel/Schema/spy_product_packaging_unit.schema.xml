@@ -57,7 +57,7 @@
 
         <behavior name="timestampable"/>
 
-        <foreign-key name="spy_product_packaging_unit_amount-fk_product_packaging_unit" foreignTable="spy_product_packaging_unit" phpName="ProductPackagingUnit">
+        <foreign-key name="spy_product_packaging_unit_amount-fk_product_packaging_unit" foreignTable="spy_product_packaging_unit" phpName="ProductPackagingUnit" onDelete="cascade">
             <reference local="fk_product_packaging_unit" foreign="id_product_packaging_unit"/>
         </foreign-key>
 
@@ -68,4 +68,29 @@
         <id-method-parameter value="spy_product_packaging_unit_amount_pk_seq"/>
     </table>
 
+
+    <table name="spy_product_packaging_lead_product" isCrossRef="true">
+        <column name="id_product_packaging_lead_product" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
+        <column name="fk_product_abstract" required="true" type="INTEGER"/>
+        <column name="fk_product" required="true" type="INTEGER"/>
+
+        <foreign-key name="spy_product_packaging_lead_product-fk_product_abstract" foreignTable="spy_product_abstract">
+            <reference local="fk_product_abstract" foreign="id_product_abstract"/>
+        </foreign-key>
+
+        <foreign-key name="spy_product_packaging_lead_product-fk_product" foreignTable="spy_product">
+            <reference local="fk_product" foreign="id_product"/>
+        </foreign-key>
+
+        <unique name="spy_product_packaging_lead_product-unique-fk_product_abstract">
+            <unique-column name="fk_product_abstract"/>
+        </unique>
+
+        <unique name="spy_product_packaging_lead_product-unique-fk_product">
+            <unique-column name="fk_product"/>
+        </unique>
+
+        <behavior name="timestampable"/>
+
+        <id-method-parameter value="spy_product_packaging_lead_product_pk_seq"/></table>
 </database>

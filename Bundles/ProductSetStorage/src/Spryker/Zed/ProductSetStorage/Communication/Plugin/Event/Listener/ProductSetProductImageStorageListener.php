@@ -8,13 +8,15 @@
 namespace Spryker\Zed\ProductSetStorage\Communication\Plugin\Event\Listener;
 
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\ProductSetStorage\Persistence\ProductSetStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductSetStorage\Communication\ProductSetStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductSetStorage\Business\ProductSetStorageFacadeInterface getFacade()
  */
-class ProductSetProductImageStorageListener extends AbstractProductSetStorageListener implements EventBulkHandlerInterface
+class ProductSetProductImageStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
@@ -32,6 +34,6 @@ class ProductSetProductImageStorageListener extends AbstractProductSetStorageLis
         $productImageIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
         $productSetIds = $this->getQueryContainer()->queryProductSetIdsByProductImageIds($productImageIds)->find()->getData();
 
-        $this->publish($productSetIds);
+        $this->getFacade()->publish($productSetIds);
     }
 }
