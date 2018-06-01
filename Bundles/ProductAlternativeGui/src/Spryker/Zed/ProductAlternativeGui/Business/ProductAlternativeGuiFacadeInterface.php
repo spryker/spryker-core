@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductAlternativeGui\Business;
 
-use Generated\Shared\Transfer\ProductAlternativeResponseTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface ProductAlternativeGuiFacadeInterface
 {
@@ -25,14 +25,13 @@ interface ProductAlternativeGuiFacadeInterface
 
     /**
      * Specification:
-     * - Creates alternative product accordingly to $searchName.
-     * - $searchName can be abstract/concrete product name or SKU.
+     * - Persists product alternatives stored in product concrete transfer.
      *
      * @api
      *
-     * @param string $searchName
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function createProductAlternative(string $searchName): ProductAlternativeResponseTransfer;
+    public function persistProductAlternatives(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
 }

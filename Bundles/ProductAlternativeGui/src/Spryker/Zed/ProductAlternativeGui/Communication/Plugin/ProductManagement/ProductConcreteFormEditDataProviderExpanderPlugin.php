@@ -5,9 +5,8 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductAlternativeGui\Communication\Plugin;
+namespace Spryker\Zed\ProductAlternativeGui\Communication\Plugin\ProductManagement;
 
-use Generated\Shared\Transfer\ProductAlternativeCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteFormEditDataProviderExpanderPluginInterface;
@@ -35,6 +34,6 @@ class ProductConcreteFormEditDataProviderExpanderPlugin extends AbstractPlugin i
             ->getProductAlternativeFacade()
             ->getProductAlternativesByIdProductConcrete($productConcrete);
 
-        $formData[ProductAlternativeCollectionTransfer::PRODUCT_ALTERNATIVES] = $productAlternatives->getProductAlternatives();
+        $formData[ProductConcreteTransfer::PRODUCT_ALTERNATIVES] = $productAlternatives->getProductAlternatives();
     }
 }

@@ -24,4 +24,8 @@
         <property name="productAlternatives" type="ProductAlternative[]" singular="productAlternative"/>
     </transfer>
 
+    <transfer name="ProductConcrete">
+        <property name="productAlternatives" type="ProductAlternative[]" singular="productAlternative"/>
+    </transfer>
+
 </transfers>

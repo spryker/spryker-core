@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductAlternative\Business\ProductAlternative;
 
 use Generated\Shared\Transfer\ProductAlternativeResponseTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\ProductAlternative\Persistence\ProductAlternativeEntityManagerInterface;
 
 class ProductAlternativeWriter implements ProductAlternativeWriterInterface
@@ -54,5 +55,17 @@ class ProductAlternativeWriter implements ProductAlternativeWriterInterface
         return (new ProductAlternativeResponseTransfer())
             ->setProductAlternative($productConcreteAlternativeTransfer)
             ->setIsSuccessful(true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function persistProductAlternatives(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
+    {
+        // TODO: Implement persistProductAlternatives() method.
+
+        return new ProductConcreteTransfer();
     }
 }

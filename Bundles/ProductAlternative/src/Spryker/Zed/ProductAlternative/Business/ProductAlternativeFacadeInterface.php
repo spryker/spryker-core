@@ -70,4 +70,16 @@ interface ProductAlternativeFacadeInterface
      * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
      */
     public function getProductAlternativeByIdProductAlternative(ProductAlternativeTransfer $productAlternativeTransfer): ProductAlternativeTransfer;
+
+    /**
+     * Specification:
+     * - Persists product alternatives stored in product concrete transfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function persistProductAlternatives(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
 }

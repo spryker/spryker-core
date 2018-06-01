@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductAlternativeGui\Business;
 
-use Generated\Shared\Transfer\ProductAlternativeResponseTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -33,19 +33,17 @@ class ProductAlternativeGuiFacade extends AbstractFacade implements ProductAlter
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @api
      *
-     * @param string $searchName
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function createProductAlternative(string $searchName): ProductAlternativeResponseTransfer
+    public function persistProductAlternatives(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
         return $this
             ->getFactory()
             ->createProductAlternativeCreator()
-            ->createProductAlternative($searchName);
+            ->persistProductAlternatives($productConcreteTransfer);
     }
 }

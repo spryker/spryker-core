@@ -87,4 +87,21 @@ class ProductAlternativeFacade extends AbstractFacade implements ProductAlternat
             ->createProductAlternativeReader()
             ->getProductAlternativeByIdProductAlternative($productAlternativeTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function persistProductAlternatives(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
+    {
+        return $this
+            ->getFactory()
+            ->createProductAlternativeWriter()
+            ->persistProductAlternatives($productConcreteTransfer);
+    }
 }

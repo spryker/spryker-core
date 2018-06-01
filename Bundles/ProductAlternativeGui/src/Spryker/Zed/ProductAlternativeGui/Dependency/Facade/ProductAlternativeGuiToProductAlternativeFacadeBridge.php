@@ -8,15 +8,12 @@
 namespace Spryker\Zed\ProductAlternativeGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\ProductAlternativeCollectionTransfer;
-use Generated\Shared\Transfer\ProductAlternativeResponseTransfer;
 use Generated\Shared\Transfer\ProductAlternativeTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 class ProductAlternativeGuiToProductAlternativeFacadeBridge implements ProductAlternativeGuiToProductAlternativeFacadeInterface
 {
     /**
-     * TODO: Remove unused facade methods in future.
-     *
      * @var \Spryker\Zed\ProductAlternative\Business\ProductAlternativeFacadeInterface
      */
     protected $productAlternativeFacade;
@@ -27,28 +24,6 @@ class ProductAlternativeGuiToProductAlternativeFacadeBridge implements ProductAl
     public function __construct($productAlternativeFacade)
     {
         $this->productAlternativeFacade = $productAlternativeFacade;
-    }
-
-    /**
-     * @param int $idProduct
-     * @param int $idProductAbstractAlternative
-     *
-     * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
-     */
-    public function createProductAbstractAlternative(int $idProduct, int $idProductAbstractAlternative): ProductAlternativeResponseTransfer
-    {
-        return $this->productAlternativeFacade->createProductAbstractAlternative($idProduct, $idProductAbstractAlternative);
-    }
-
-    /**
-     * @param int $idProduct
-     * @param int $idProductConcreteAlternative
-     *
-     * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
-     */
-    public function createProductConcreteAlternative(int $idProduct, int $idProductConcreteAlternative): ProductAlternativeResponseTransfer
-    {
-        return $this->productAlternativeFacade->createProductConcreteAlternative($idProduct, $idProductConcreteAlternative);
     }
 
     /**
@@ -69,5 +44,15 @@ class ProductAlternativeGuiToProductAlternativeFacadeBridge implements ProductAl
     public function getProductAlternativeByIdProductAlternative(ProductAlternativeTransfer $productAlternativeTransfer): ProductAlternativeTransfer
     {
         return $this->productAlternativeFacade->getProductAlternativeByIdProductAlternative($productAlternativeTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function persistProductAlternatives(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
+    {
+        return $this->productAlternativeFacade->persistProductAlternatives($productConcreteTransfer);
     }
 }

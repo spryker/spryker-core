@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\ProductAlternativeGui\Business\ProductAlternative;
 
-use Generated\Shared\Transfer\ProductAlternativeResponseTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface ProductAlternativeCreatorInterface
 {
     /**
-     * @param string $searchName
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function createProductAlternative(string $searchName): ProductAlternativeResponseTransfer;
+    public function persistProductAlternatives(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
 }
