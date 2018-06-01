@@ -48,9 +48,9 @@ class CompanyUserInvitationMailTypePlugin extends AbstractPlugin implements Mail
     /**
      * @param \Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface $mailBuilder
      *
-     * @return \Spryker\Zed\CompanyUserInvitation\Communication\Plugin\Mail\CompanyUserInvitationMailTypePlugin
+     * @return $this
      */
-    protected function setSubject(MailBuilderInterface $mailBuilder): CompanyUserInvitationMailTypePlugin
+    protected function setSubject(MailBuilderInterface $mailBuilder): self
     {
         $mailBuilder->setSubject('mail.company.user.invitation.subject');
 
@@ -60,9 +60,9 @@ class CompanyUserInvitationMailTypePlugin extends AbstractPlugin implements Mail
     /**
      * @param \Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface $mailBuilder
      *
-     * @return \Spryker\Zed\CompanyUserInvitation\Communication\Plugin\Mail\CompanyUserInvitationMailTypePlugin
+     * @return $this
      */
-    protected function setHtmlTemplate(MailBuilderInterface $mailBuilder): CompanyUserInvitationMailTypePlugin
+    protected function setHtmlTemplate(MailBuilderInterface $mailBuilder): self
     {
         $mailBuilder->setHtmlTemplate(static::HTML_TEMPLATE);
 
@@ -72,9 +72,9 @@ class CompanyUserInvitationMailTypePlugin extends AbstractPlugin implements Mail
     /**
      * @param \Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface $mailBuilder
      *
-     * @return \Spryker\Zed\CompanyUserInvitation\Communication\Plugin\Mail\CompanyUserInvitationMailTypePlugin
+     * @return $this
      */
-    protected function setTextTemplate(MailBuilderInterface $mailBuilder): CompanyUserInvitationMailTypePlugin
+    protected function setTextTemplate(MailBuilderInterface $mailBuilder): self
     {
         $mailBuilder->setTextTemplate(static::TEXT_TEMPLATE);
 
@@ -84,9 +84,9 @@ class CompanyUserInvitationMailTypePlugin extends AbstractPlugin implements Mail
     /**
      * @param \Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface $mailBuilder
      *
-     * @return \Spryker\Zed\CompanyUserInvitation\Communication\Plugin\Mail\CompanyUserInvitationMailTypePlugin
+     * @return $this
      */
-    protected function setSender(MailBuilderInterface $mailBuilder): CompanyUserInvitationMailTypePlugin
+    protected function setSender(MailBuilderInterface $mailBuilder): self
     {
         $mailBuilder->setSender('mail.sender.email', 'mail.sender.name');
 
@@ -96,9 +96,9 @@ class CompanyUserInvitationMailTypePlugin extends AbstractPlugin implements Mail
     /**
      * @param \Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface $mailBuilder
      *
-     * @return \Spryker\Zed\CompanyUserInvitation\Communication\Plugin\Mail\CompanyUserInvitationMailTypePlugin
+     * @return $this
      */
-    protected function setRecipient(MailBuilderInterface $mailBuilder): CompanyUserInvitationMailTypePlugin
+    protected function setRecipient(MailBuilderInterface $mailBuilder): self
     {
         $mailTransfer = $mailBuilder->getMailTransfer()->getCompanyUserInvitation();
         $mailBuilder->addRecipient(
