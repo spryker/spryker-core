@@ -24,4 +24,11 @@ interface ProductDiscontinuedEntityManagerInterface
      * @return void
      */
     public function deleteProductDiscontinuedByProductId(ProductDiscontinuedTransfer $productDiscontinuedTransfer): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductDiscontinuedTransfer $productDiscontinuedTransfer
+     *
+     * @return void
+     */
+    public function deleteProductDiscontinued(ProductDiscontinuedTransfer $productDiscontinuedTransfer): void;
 }

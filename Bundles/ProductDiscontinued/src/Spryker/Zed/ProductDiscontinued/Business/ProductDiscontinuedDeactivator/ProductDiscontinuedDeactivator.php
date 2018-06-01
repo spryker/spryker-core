@@ -7,12 +7,17 @@
 
 namespace Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinuedDeactivator;
 
+use Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer;
 use Psr\Log\LoggerInterface;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\ProductDiscontinued\Dependency\Facade\ProductDiscontinuedToProductFacadeInterface;
+use Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedEntityManagerInterface;
 use Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedRepositoryInterface;
 
 class ProductDiscontinuedDeactivator implements ProductDiscontinuedDeactivatorInterface
 {
+    use TransactionTrait;
+
     /**
      * @var \Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedRepositoryInterface
      */
@@ -29,20 +34,28 @@ class ProductDiscontinuedDeactivator implements ProductDiscontinuedDeactivatorIn
     protected $logger;
 
     /**
+     * @var \Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedEntityManagerInterface
+     */
+    protected $productDiscontinuedEntityManager;
+
+    /**
      * ProductDiscontinuedDeactivator constructor.
      *
      * @param \Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedRepositoryInterface $productDiscontinuedRepository
+     * @param \Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedEntityManagerInterface $productDiscontinuedEntityManager
      * @param \Spryker\Zed\ProductDiscontinued\Dependency\Facade\ProductDiscontinuedToProductFacadeInterface $productFacade
      * @param \Psr\Log\LoggerInterface|null $logger
      */
     public function __construct(
         ProductDiscontinuedRepositoryInterface $productDiscontinuedRepository,
+        ProductDiscontinuedEntityManagerInterface $productDiscontinuedEntityManager,
         ProductDiscontinuedToProductFacadeInterface $productFacade,
         ?LoggerInterface $logger = null
     ) {
         $this->productDiscontinuedRepository = $productDiscontinuedRepository;
         $this->productFacade = $productFacade;
         $this->logger = $logger;
+        $this->productDiscontinuedEntityManager = $productDiscontinuedEntityManager;
     }
 
     /**
@@ -50,15 +63,29 @@ class ProductDiscontinuedDeactivator implements ProductDiscontinuedDeactivatorIn
      */
     public function deactivate(): void
     {
-        $productDiscontinuedCollectionTransfer = $this->productDiscontinuedRepository->findProductsToDiactivate();
+        $productDiscontinuedCollectionTransfer = $this->productDiscontinuedRepository->findProductsToDeactivate();
         if (!$productDiscontinuedCollectionTransfer->getProductDiscontinueds()->count()) {
             return;
         }
 
         $this->addStartMessage($productDiscontinuedCollectionTransfer->getProductDiscontinueds()->count());
+
+        $this->getTransactionHandler()->handleTransaction(function () use ($productDiscontinuedCollectionTransfer) {
+            $this->executeDeactivateTransaction($productDiscontinuedCollectionTransfer);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer $productDiscontinuedCollectionTransfer
+     *
+     * @return void
+     */
+    protected function executeDeactivateTransaction(ProductDiscontinuedCollectionTransfer $productDiscontinuedCollectionTransfer): void
+    {
         foreach ($productDiscontinuedCollectionTransfer->getProductDiscontinueds() as $productDiscontinuedTransfer) {
             $productDiscontinuedTransfer->getFkProduct();
             $this->productFacade->deactivateProductConcrete($productDiscontinuedTransfer->getFkProduct());
+            $this->productDiscontinuedEntityManager->deleteProductDiscontinued($productDiscontinuedTransfer);
             $this->addProductDeactivatedMessage($productDiscontinuedTransfer->getFkProduct());
         }
     }

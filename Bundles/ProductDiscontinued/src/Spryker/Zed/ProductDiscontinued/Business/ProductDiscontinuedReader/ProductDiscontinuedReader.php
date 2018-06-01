@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinuedReader;
 
+use Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer;
+use Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedRequestTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
@@ -44,5 +46,16 @@ class ProductDiscontinuedReader implements ProductDiscontinuedReaderInterface
         return (new ProductDiscontinuedResponseTransfer())
             ->setProductDiscontinued($productDiscontinuedTransfer)
             ->setIsSuccessful((bool)$productDiscontinuedTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer $criteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer
+     */
+    public function findProductDiscontinuedCollection(
+        ProductDiscontinuedCriteriaFilterTransfer $criteriaFilterTransfer
+    ): ProductDiscontinuedCollectionTransfer {
+        return $this->productDiscontinuedRepository->findProductDiscontinuedCollection($criteriaFilterTransfer);
     }
 }

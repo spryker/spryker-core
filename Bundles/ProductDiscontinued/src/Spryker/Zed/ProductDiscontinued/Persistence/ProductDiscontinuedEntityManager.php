@@ -46,6 +46,21 @@ class ProductDiscontinuedEntityManager extends AbstractEntityManager implements 
         $this->getFactory()
             ->createProductDiscontinuedQuery()
             ->filterByFkProduct($productDiscontinuedTransfer->getFkProduct())
+            ->findOne()
+            ->delete();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductDiscontinuedTransfer $productDiscontinuedTransfer
+     *
+     * @return void
+     */
+    public function deleteProductDiscontinued(ProductDiscontinuedTransfer $productDiscontinuedTransfer): void
+    {
+        $this->getFactory()
+            ->createProductDiscontinuedQuery()
+            ->filterByIdProductDiscontinued($productDiscontinuedTransfer->getIdProductDiscontinued())
+            ->findOne()
             ->delete();
     }
 }

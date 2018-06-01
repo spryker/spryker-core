@@ -5,24 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinuedReader;
+namespace Spryker\Zed\ProductDiscontinuedStorage\Dependency\Facade;
 
 use Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer;
-use Generated\Shared\Transfer\ProductDiscontinuedRequestTransfer;
-use Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer;
 
-interface ProductDiscontinuedReaderInterface
+interface ProductDiscontinuedStorageToProductDiscontinuedFacadeInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\ProductDiscontinuedRequestTransfer $productDiscontinuedRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer
-     */
-    public function findProductDiscontinuedByProductId(
-        ProductDiscontinuedRequestTransfer $productDiscontinuedRequestTransfer
-    ): ProductDiscontinuedResponseTransfer;
-
     /**
      * @param \Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer $criteriaFilterTransfer
      *

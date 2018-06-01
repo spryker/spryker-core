@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductDiscontinued\Persistence;
 
 use Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer;
+use Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
@@ -42,14 +43,39 @@ class ProductDiscontinuedRepository extends AbstractRepository implements Produc
     /**
      * @return \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer
      */
-    public function findProductsToDiactivate(): ProductDiscontinuedCollectionTransfer
+    public function findProductsToDeactivate(): ProductDiscontinuedCollectionTransfer
     {
         $productDiscontinuedQuery = $this->getFactory()
             ->createProductDiscontinuedQuery()
-            ->filterByActiveUntil(['max' => time()], Criteria::LESS_THAN)
-            ->useProductQuery()
-                ->filterByIsActive(true)
-            ->endUse();
+            ->filterByActiveUntil(['max' => time()], Criteria::LESS_THAN);
+        $productDiscontinuedEntityTransfer = $this->buildQueryFromCriteria($productDiscontinuedQuery)->find();
+
+        if ($productDiscontinuedEntityTransfer) {
+            return $this->getFactory()
+                ->createProductDiscontinuedMapper()
+                ->mapTransferCollection($productDiscontinuedEntityTransfer);
+        }
+
+        return new ProductDiscontinuedCollectionTransfer();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer $criteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer
+     */
+    public function findProductDiscontinuedCollection(
+        ProductDiscontinuedCriteriaFilterTransfer $criteriaFilterTransfer
+    ): ProductDiscontinuedCollectionTransfer {
+        $productDiscontinuedQuery = $this->getFactory()
+            ->createProductDiscontinuedQuery()
+            ->leftJoinWithProduct();
+
+        if ($criteriaFilterTransfer->getIds()) {
+            $productDiscontinuedQuery
+                ->filterByIdProductDiscontinued_In($criteriaFilterTransfer->getIds());
+        }
+
         $productDiscontinuedEntityTransfer = $this->buildQueryFromCriteria($productDiscontinuedQuery)->find();
 
         if ($productDiscontinuedEntityTransfer) {

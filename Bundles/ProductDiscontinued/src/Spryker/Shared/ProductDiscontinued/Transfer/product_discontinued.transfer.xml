@@ -6,6 +6,7 @@
     <transfer name="ProductDiscontinued">
         <property name="idProductDiscontinued" type="int"/>
         <property name="fkProduct" type="int"/>
+        <property name="sku" type="string"/>
         <property name="activeUntil" type="string"/>
         <property name="discontinuedOn" type="string"/>
     </transfer>
@@ -25,6 +26,10 @@
 
     <transfer name="ProductConcrete">
         <property name="productDiscontinued" type="ProductDiscontinued"/>
+    </transfer>
+
+    <transfer name="ProductDiscontinuedCriteriaFilter">
+        <property name="ids" type="array"/>
     </transfer>
 
 </transfers>

@@ -10,11 +10,13 @@ namespace Spryker\Zed\ProductDiscontinuedDataImport\Business\Model;
 use DateTime;
 use Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinuedQuery;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
+use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
+use Spryker\Zed\ProductDiscontinued\Dependency\ProductDiscontinuedEvents;
 use Spryker\Zed\ProductDiscontinued\ProductDiscontinuedConfig;
 use Spryker\Zed\ProductDiscontinuedDataImport\Business\Model\DataSet\ProductDiscontinuedDataSet;
 
-class ProductDiscontinuedWriterStep implements DataImportStepInterface
+class ProductDiscontinuedWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
@@ -30,6 +32,11 @@ class ProductDiscontinuedWriterStep implements DataImportStepInterface
         $productDiscontinuedEntity->setActiveUntil($this->getActiveUntilDate());
 
         $productDiscontinuedEntity->save();
+
+        $this->addPublishEvents(
+            ProductDiscontinuedEvents::PRODUCT_DISCONTINUED_PUBLISH,
+            $productDiscontinuedEntity->getIdProductDiscontinued()
+        );
     }
 
     /**

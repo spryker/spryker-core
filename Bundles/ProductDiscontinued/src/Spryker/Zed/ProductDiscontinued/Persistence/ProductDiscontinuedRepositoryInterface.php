@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductDiscontinued\Persistence;
 
 use Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer;
+use Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
 
 interface ProductDiscontinuedRepositoryInterface
@@ -22,5 +23,14 @@ interface ProductDiscontinuedRepositoryInterface
     /**
      * @return \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer
      */
-    public function findProductsToDiactivate(): ProductDiscontinuedCollectionTransfer;
+    public function findProductsToDeactivate(): ProductDiscontinuedCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer $criteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer
+     */
+    public function findProductDiscontinuedCollection(
+        ProductDiscontinuedCriteriaFilterTransfer $criteriaFilterTransfer
+    ): ProductDiscontinuedCollectionTransfer;
 }

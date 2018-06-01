@@ -2,10 +2,10 @@
 
 {% if discontinued is not empty %}
     <div class="form-group">
-        <a href="{{ url('/product-discontinued-gui/index/undiscontinue', {'id-product-concrete': idProduct}) }}" class="btn btn-outline btn-primary">{{ 'Discontinued' | trans }}</a>
+        <a href="{{ url('/product-discontinued-gui/index/undiscontinue', {'id-product-concrete': idProduct}) }}" class="btn btn-outline btn-remove">{{ 'Discontinued' | trans }}</a>
     </div>
     <div class="form-group">
-        {{ 'Discontinued at:' | trans }}
+        {{ 'Will be deactivated on:' | trans }}
         <span class="badge"><strong>{{ discontinued.activeUntil | date('F d, Y') }}</strong></span>
     </div>
     <div class="form-group">
@@ -13,5 +13,5 @@
         <span class="badge"><strong>{{ date(discontinued.activeUntil|date).diff(date('now'|date('Y-m-d')) ).days }}</strong></span>
     </div>
 {% else %}
-    <a href="{{ url('/product-discontinued-gui/index/discontinue', {'id-product-concrete': idProduct}) }}" class="btn btn-outline btn-remove">{{ 'Discontinue' | trans }}</a>
+    <a href="{{ url('/product-discontinued-gui/index/discontinue', {'id-product-concrete': idProduct}) }}" class="btn btn-outline safe-submit btn-back">{{ 'Discontinue' | trans }}</a>
 {% endif %}

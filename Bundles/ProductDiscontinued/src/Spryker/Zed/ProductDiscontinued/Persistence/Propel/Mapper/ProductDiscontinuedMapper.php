@@ -21,7 +21,15 @@ class ProductDiscontinuedMapper implements ProductDiscontinuedMapperInterface
      */
     public function mapProductDiscontinuedTransfer(SpyProductDiscontinuedEntityTransfer $productDiscontinuedEntityTransfer): ProductDiscontinuedTransfer
     {
-        return (new ProductDiscontinuedTransfer())->fromArray($productDiscontinuedEntityTransfer->toArray(), true);
+        $productDiscontinuedTransfer = (new ProductDiscontinuedTransfer())
+            ->fromArray($productDiscontinuedEntityTransfer->toArray(), true);
+        if ($productDiscontinuedEntityTransfer->getProduct()) {
+            $productDiscontinuedTransfer->setSku(
+                $productDiscontinuedEntityTransfer->getProduct()->getSku()
+            );
+        }
+
+        return $productDiscontinuedTransfer;
     }
 
     /**
