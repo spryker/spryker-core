@@ -123,7 +123,7 @@ class SprykForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return \Spryker\Zed\SprykGui\Communication\Form\SprykForm
+     * @return $this
      */
     protected function addCreateTemplateButton(FormBuilderInterface $builder): self
     {
@@ -140,7 +140,7 @@ class SprykForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return \Spryker\Zed\SprykGui\Communication\Form\SprykForm
+     * @return $this
      */
     protected function addRunSprykButton(FormBuilderInterface $builder): self
     {
