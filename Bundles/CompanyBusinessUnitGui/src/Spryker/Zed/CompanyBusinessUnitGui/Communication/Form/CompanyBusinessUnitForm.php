@@ -68,9 +68,9 @@ class CompanyBusinessUnitForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return \Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyBusinessUnitForm
+     * @return $this
      */
-    protected function addIdCompanyBusinessUnitField(FormBuilderInterface $builder): CompanyBusinessUnitForm
+    protected function addIdCompanyBusinessUnitField(FormBuilderInterface $builder): self
     {
         $builder->add(static::FIELD_ID_COMPANY_BUSINESS_UNIT, HiddenType::class);
 
@@ -80,9 +80,9 @@ class CompanyBusinessUnitForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return \Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyBusinessUnitForm
+     * @return $this
      */
-    protected function addNameField(FormBuilderInterface $builder): CompanyBusinessUnitForm
+    protected function addNameField(FormBuilderInterface $builder): self
     {
         $builder->add(static::FIELD_NAME, TextType::class, [
             'label' => 'Name',
@@ -95,9 +95,9 @@ class CompanyBusinessUnitForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return \Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyBusinessUnitForm
+     * @return $this
      */
-    protected function addIbanField(FormBuilderInterface $builder): CompanyBusinessUnitForm
+    protected function addIbanField(FormBuilderInterface $builder): self
     {
         $builder->add(static::FIELD_IBAN, TextType::class, [
             'label' => 'IBAN',
@@ -114,9 +114,9 @@ class CompanyBusinessUnitForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return \Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyBusinessUnitForm
+     * @return $this
      */
-    protected function addBicField(FormBuilderInterface $builder): CompanyBusinessUnitForm
+    protected function addBicField(FormBuilderInterface $builder): self
     {
         $builder->add(static::FIELD_BIC, TextType::class, [
             'label' => 'BIC',
@@ -134,9 +134,9 @@ class CompanyBusinessUnitForm extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $choices
      *
-     * @return \Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyBusinessUnitForm
+     * @return $this
      */
-    protected function addCompanyField(FormBuilderInterface $builder, array $choices): CompanyBusinessUnitForm
+    protected function addCompanyField(FormBuilderInterface $builder, array $choices): self
     {
         $builder->add(static::FIELD_FK_COMPANY, ChoiceType::class, [
             'label' => 'Company',
@@ -166,7 +166,7 @@ class CompanyBusinessUnitForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return \Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyBusinessUnitForm
+     * @return $this
      */
     protected function addPluginForms(FormBuilderInterface $builder): AbstractType
     {
