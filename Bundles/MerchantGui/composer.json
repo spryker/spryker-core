@@ -7,7 +7,6 @@
     "spryker/gui": "^3.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/merchant": "^1.0.0",
-    "spryker/propel-orm": "^1.0.0",
     "spryker/symfony": "^3.0.0",
     "spryker/util-text": "^1.1.0"
   },
@@ -18,11 +17,6 @@
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",
