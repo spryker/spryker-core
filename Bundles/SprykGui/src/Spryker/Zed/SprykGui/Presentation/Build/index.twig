@@ -9,7 +9,7 @@
 
 {% block content %}
 
-    {% if messages %}
+    {% if messages is defined %}
         <div class="alert alert-info">
             {% for message in messages %}
                 {{ message }}<br />
