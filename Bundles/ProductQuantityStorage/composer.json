@@ -6,7 +6,7 @@
     "php": ">=7.1",
     "spryker/event-behavior": "^1.0.0",
     "spryker/kernel": "^3.21.0",
-    "spryker/product-quantity": "^0.1.0 || ^1.0.0",
+    "spryker/product-quantity": "^1.0.0",
     "spryker/storage": "^3.0.0",
     "spryker/synchronization": "^0.2.0"
   },
