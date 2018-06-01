@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductAlternative\Business\ProductAlternative;
 
-use Generated\Shared\Transfer\ProductAlternativeResponseTransfer;
+use Generated\Shared\Transfer\ProductAlternativeTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface ProductAlternativeWriterInterface
@@ -16,17 +16,17 @@ interface ProductAlternativeWriterInterface
      * @param int $idProduct
      * @param int $idProductAbstractAlternative
      *
-     * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
+     * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
      */
-    public function createProductAbstractAlternative(int $idProduct, int $idProductAbstractAlternative): ProductAlternativeResponseTransfer;
+    public function createProductAbstractAlternative(int $idProduct, int $idProductAbstractAlternative): ProductAlternativeTransfer;
 
     /**
      * @param int $idProduct
      * @param int $idProductConcreteAlternative
      *
-     * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
+     * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
      */
-    public function createProductConcreteAlternative(int $idProduct, int $idProductConcreteAlternative): ProductAlternativeResponseTransfer;
+    public function createProductConcreteAlternative(int $idProduct, int $idProductConcreteAlternative): ProductAlternativeTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer

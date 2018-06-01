@@ -21,6 +21,8 @@ class CreateController extends AbstractController
     protected const MESSAGE_PRODUCT_ALTERNATIVE_CREATE_ERROR = 'Product Alternative has not been created.';
 
     /**
+     * TODO: Rework or delete.
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array

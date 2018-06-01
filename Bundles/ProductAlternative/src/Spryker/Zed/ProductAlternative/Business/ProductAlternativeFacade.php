@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductAlternative\Business;
 
 use Generated\Shared\Transfer\ProductAlternativeCollectionTransfer;
-use Generated\Shared\Transfer\ProductAlternativeResponseTransfer;
 use Generated\Shared\Transfer\ProductAlternativeTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -26,9 +25,9 @@ class ProductAlternativeFacade extends AbstractFacade implements ProductAlternat
      * @param int $idProduct
      * @param int $idProductAbstractAlternative
      *
-     * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
+     * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
      */
-    public function createProductAbstractAlternative(int $idProduct, int $idProductAbstractAlternative): ProductAlternativeResponseTransfer
+    public function createProductAbstractAlternative(int $idProduct, int $idProductAbstractAlternative): ProductAlternativeTransfer
     {
         return $this
             ->getFactory()
@@ -44,9 +43,9 @@ class ProductAlternativeFacade extends AbstractFacade implements ProductAlternat
      * @param int $idProduct
      * @param int $idProductConcreteAlternative
      *
-     * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
+     * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
      */
-    public function createProductConcreteAlternative(int $idProduct, int $idProductConcreteAlternative): ProductAlternativeResponseTransfer
+    public function createProductConcreteAlternative(int $idProduct, int $idProductConcreteAlternative): ProductAlternativeTransfer
     {
         return $this
             ->getFactory()
