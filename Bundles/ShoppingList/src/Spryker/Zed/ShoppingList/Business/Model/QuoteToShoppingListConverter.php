@@ -124,7 +124,7 @@ class QuoteToShoppingListConverter implements QuoteToShoppingListConverterInterf
         ItemCollectionTransfer $itemCollectionTransfer,
         ShoppingListTransfer $shoppingListTransfer
     ): void {
-        foreach ($itemCollectionTransfer as $item) {
+        foreach ($itemCollectionTransfer->getItems() as $item) {
             $shoppingListItemTransfer = (new ShoppingListItemTransfer())
                 ->setFkShoppingList($shoppingListTransfer->getIdShoppingList())
                 ->setQuantity($item->getQuantity())
