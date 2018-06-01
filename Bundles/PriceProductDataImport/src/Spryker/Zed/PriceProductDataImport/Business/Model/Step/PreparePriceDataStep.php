@@ -11,6 +11,7 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\PriceProductDataImport\Business\Exception\InvalidPriceDataKeyException;
 use Spryker\Zed\PriceProductDataImport\Business\Model\DataSet\PriceProductDataSet;
 use Spryker\Zed\PriceProductDataImport\Dependency\Facade\PriceProductDataImportToPriceProductFacadeInterface;
+use Spryker\Zed\PriceProductDataImport\Dependency\Service\PriceProductDataImportToUtilEncodingServiceInterface;
 
 class PreparePriceDataStep implements DataImportStepInterface
 {
@@ -30,11 +31,20 @@ class PreparePriceDataStep implements DataImportStepInterface
     protected $priceProductFacade;
 
     /**
-     * @param \Spryker\Zed\PriceProductDataImport\Dependency\Facade\PriceProductDataImportToPriceProductFacadeInterface $priceProductFacade
+     * @var \Spryker\Zed\PriceProductDataImport\Dependency\Service\PriceProductDataImportToUtilEncodingServiceInterface
      */
-    public function __construct(PriceProductDataImportToPriceProductFacadeInterface $priceProductFacade)
-    {
+    protected $utilEncodingService;
+
+    /**
+     * @param \Spryker\Zed\PriceProductDataImport\Dependency\Facade\PriceProductDataImportToPriceProductFacadeInterface $priceProductFacade
+     * @param \Spryker\Zed\PriceProductDataImport\Dependency\Service\PriceProductDataImportToUtilEncodingServiceInterface $utilEncodingService
+     */
+    public function __construct(
+        PriceProductDataImportToPriceProductFacadeInterface $priceProductFacade,
+        PriceProductDataImportToUtilEncodingServiceInterface $utilEncodingService
+    ) {
         $this->priceProductFacade = $priceProductFacade;
+        $this->utilEncodingService = $utilEncodingService;
     }
 
     /**
@@ -123,7 +133,7 @@ class PreparePriceDataStep implements DataImportStepInterface
             return null;
         }
 
-        return json_encode($priceData);
+        return $this->utilEncodingService->encodeJson($priceData);
     }
 
     /**
@@ -139,7 +149,7 @@ class PreparePriceDataStep implements DataImportStepInterface
             return $priceData;
         }
 
-        $priceData[$key] = json_decode($value, true);
+        $priceData[$key] = $this->utilEncodingService->decodeJson($value, true);
 
         return $priceData;
     }

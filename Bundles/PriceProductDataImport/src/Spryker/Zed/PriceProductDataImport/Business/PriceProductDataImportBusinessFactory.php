@@ -16,6 +16,7 @@ use Spryker\Zed\PriceProductDataImport\Business\Model\Step\CurrencyToIdCurrencyS
 use Spryker\Zed\PriceProductDataImport\Business\Model\Step\PreparePriceDataStep;
 use Spryker\Zed\PriceProductDataImport\Business\Model\Step\StoreToIdStoreStep;
 use Spryker\Zed\PriceProductDataImport\Dependency\Facade\PriceProductDataImportToPriceProductFacadeInterface;
+use Spryker\Zed\PriceProductDataImport\Dependency\Service\PriceProductDataImportToUtilEncodingServiceInterface;
 use Spryker\Zed\PriceProductDataImport\PriceProductDataImportDependencyProvider;
 
 /**
@@ -80,7 +81,10 @@ class PriceProductDataImportBusinessFactory extends DataImportBusinessFactory
      */
     public function createPreparePriceDataStep(): DataImportStepInterface
     {
-        return new PreparePriceDataStep($this->getPriceProductFacade());
+        return new PreparePriceDataStep(
+            $this->getPriceProductFacade(),
+            $this->getUtilEncodingService()
+        );
     }
 
     /**
@@ -89,5 +93,13 @@ class PriceProductDataImportBusinessFactory extends DataImportBusinessFactory
     public function getPriceProductFacade(): PriceProductDataImportToPriceProductFacadeInterface
     {
         return $this->getProvidedDependency(PriceProductDataImportDependencyProvider::FACADE_PRICE_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductDataImport\Dependency\Service\PriceProductDataImportToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): PriceProductDataImportToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(PriceProductDataImportDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }

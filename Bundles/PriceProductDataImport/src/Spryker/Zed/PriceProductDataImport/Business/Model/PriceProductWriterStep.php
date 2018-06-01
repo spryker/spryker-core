@@ -20,8 +20,6 @@ use Spryker\Zed\Product\Dependency\ProductEvents;
 
 class PriceProductWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
-    const BULK_SIZE = 100;
-
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
