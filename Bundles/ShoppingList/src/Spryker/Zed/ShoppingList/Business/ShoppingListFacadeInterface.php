@@ -27,6 +27,7 @@ interface ShoppingListFacadeInterface
     /**
      * Specification:
      * - Create new shopping list entity if it does not exist.
+     * - Add create shopping list success message.
      *
      * @api
      *
@@ -63,6 +64,7 @@ interface ShoppingListFacadeInterface
     /**
      * Specification:
      *  - Add item to shopping list.
+     *  - Add create shopping list success message if shopping list created.
      *
      * @api
      *

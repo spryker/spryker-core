@@ -6,6 +6,7 @@ use Codeception\Actor;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\ShoppingListTransfer;
 
 /**
  * Inherited Methods
@@ -47,7 +48,7 @@ class ShoppingListBusinessTester extends Actor
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
      */
-    public function createCompanyBusinessUnit($companyTransfer): CompanyBusinessUnitTransfer
+    public function createCompanyBusinessUnit(CompanyTransfer $companyTransfer): CompanyBusinessUnitTransfer
     {
         return $this->haveCompanyBusinessUnit(
             [
@@ -57,5 +58,18 @@ class ShoppingListBusinessTester extends Actor
                 CompanyBusinessUnitTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
             ]
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer
+     */
+    public function createShoppingList(CompanyUserTransfer $companyUserTransfer): ShoppingListTransfer
+    {
+        return $this->haveShoppingList([
+            ShoppingListTransfer::CUSTOMER_REFERENCE => $companyUserTransfer->getCustomer()->getCustomerReference(),
+            ShoppingListTransfer::ID_COMPANY_USER => $companyUserTransfer->getIdCompanyUser(),
+        ]);
     }
 }

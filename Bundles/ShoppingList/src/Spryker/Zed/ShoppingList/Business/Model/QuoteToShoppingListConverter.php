@@ -36,7 +36,7 @@ class QuoteToShoppingListConverter implements QuoteToShoppingListConverterInterf
     protected $shoppingListEntityManager;
 
     /**
-     * @var \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\QuoteItemsExtractorExpanderPluginInterface[]
+     * @var \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\QuoteItemsPreConvertPluginInterface[]
      */
     protected $quoteItemExpanderPlugins;
 
@@ -44,7 +44,7 @@ class QuoteToShoppingListConverter implements QuoteToShoppingListConverterInterf
      * @param \Spryker\Zed\ShoppingList\Business\Model\ShoppingListResolverInterface $shoppingListResolver
      * @param \Spryker\Zed\ShoppingList\Persistence\ShoppingListEntityManagerInterface $shoppingListEntityManager
      * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToPersistentCartFacadeInterface $persistentCartFacade
-     * @param \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\QuoteItemsExtractorExpanderPluginInterface[] $quoteItemExpanderPlugins
+     * @param \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\QuoteItemsPreConvertPluginInterface[] $quoteItemExpanderPlugins
      */
     public function __construct(
         ShoppingListResolverInterface $shoppingListResolver,
@@ -124,7 +124,7 @@ class QuoteToShoppingListConverter implements QuoteToShoppingListConverterInterf
         ItemCollectionTransfer $itemCollectionTransfer,
         ShoppingListTransfer $shoppingListTransfer
     ): void {
-        foreach ($itemCollectionTransfer as $item) {
+        foreach ($itemCollectionTransfer->getItems() as $item) {
             $shoppingListItemTransfer = (new ShoppingListItemTransfer())
                 ->setFkShoppingList($shoppingListTransfer->getIdShoppingList())
                 ->setQuantity($item->getQuantity())

@@ -22,7 +22,7 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
     use PermissionAwareTrait;
 
     protected const GLOSSARY_PARAM_SKU = '%sku%';
-    protected const GLOSARRY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_ADD_SUCCESS = 'customer.account.shopping_list.item.add.success';
+    protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_ADD_SUCCESS = 'customer.account.shopping_list.item.add.success';
     protected const GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_ADD_FAILED = 'customer.account.shopping_list.item.add.failed';
 
     /**
@@ -82,10 +82,7 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
             return $shoppingListItemTransfer;
         }
 
-        $shoppingListTransfer = (new ShoppingListTransfer())
-            ->setIdShoppingList($shoppingListItemTransfer->getFkShoppingList())
-            ->setIdCompanyUser($shoppingListItemTransfer->getIdCompanyUser())
-            ->setCustomerReference($shoppingListItemTransfer->getCustomerReference());
+        $shoppingListTransfer = $this->createShoppingListTransfer($shoppingListItemTransfer);
         $shoppingListTransfer = $this->resolveShoppingList($shoppingListTransfer);
         $shoppingListItemTransfer->setFkShoppingList($shoppingListTransfer->getIdShoppingList());
 
@@ -93,7 +90,7 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
         if (!$shoppingListItemTransfer->getIdShoppingListItem()) {
             $this->messengerFacade->addSuccessMessage(
                 (new MessageTransfer())
-                    ->setValue(static::GLOSARRY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_ADD_SUCCESS)
+                    ->setValue(static::GLOSSARY_KEY_CUSTOMER_ACCOUNT_SHOPPING_LIST_ITEM_ADD_SUCCESS)
                     ->setParameters([static::GLOSSARY_PARAM_SKU => $shoppingListItemTransfer->getSku()])
             );
         }
@@ -167,6 +164,19 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
         }
 
         return true;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer
+     */
+    protected function createShoppingListTransfer(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListTransfer
+    {
+        return (new ShoppingListTransfer())
+            ->setIdShoppingList($shoppingListItemTransfer->getFkShoppingList())
+            ->setIdCompanyUser($shoppingListItemTransfer->getIdCompanyUser())
+            ->setCustomerReference($shoppingListItemTransfer->getCustomerReference());
     }
 
     /**

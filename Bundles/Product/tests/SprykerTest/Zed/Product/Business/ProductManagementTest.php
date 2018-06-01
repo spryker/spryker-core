@@ -135,7 +135,7 @@ class ProductManagementTest extends FacadeTestAbstract
         $this->setupDefaultProducts();
 
         // Act
-        $isActive = $this->productFacade->isProductConcreteActive($this->productConcreteTransfer->getSku());
+        $isActive = $this->productFacade->isProductConcreteActive($this->productConcreteTransfer);
 
         // Assert
         $this->assertTrue($isActive);
@@ -151,7 +151,7 @@ class ProductManagementTest extends FacadeTestAbstract
         $this->setupDefaultProducts();
 
         // Act
-        $isActive = $this->productFacade->isProductConcreteActive($this->productConcreteTransfer->getSku());
+        $isActive = $this->productFacade->isProductConcreteActive($this->productConcreteTransfer);
 
         // Assert
         $this->assertFalse($isActive);

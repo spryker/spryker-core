@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface;
 
 class ProductValidator implements ProductValidatorInterface
@@ -83,18 +84,23 @@ class ProductValidator implements ProductValidatorInterface
      */
     protected function productStatusCheck(ItemTransfer $itemTransfer, CartPreCheckResponseTransfer $responseTransfer): void
     {
-        $isValid = $this->productFacade->isProductConcreteActive($itemTransfer->getSku());
-
-        if ($isValid) {
+        if ($this->isProductConcreteActive($itemTransfer->getSku())) {
             return;
         }
 
-        $message = $this->createViolationMessage(static::MESSAGE_ERROR_CONCRETE_PRODUCT_INACTIVE);
-        $message->setParameters([
-            static::MESSAGE_PARAM_SKU => $itemTransfer->getSku(),
-        ]);
+        $responseTransfer->addMessage($this->createItemInactiveErrorMessage($itemTransfer->getSku()));
+    }
 
-        $responseTransfer->addMessage($message);
+    /**
+     * @param string $concreteSku
+     *
+     * @return bool
+     */
+    protected function isProductConcreteActive(string $concreteSku): bool
+    {
+        return $this->productFacade->isProductConcreteActive(
+            (new ProductConcreteTransfer())->setSku($concreteSku)
+        );
     }
 
     /**
@@ -117,6 +123,20 @@ class ProductValidator implements ProductValidatorInterface
         ]);
 
         $responseTransfer->addMessage($message);
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @return \Generated\Shared\Transfer\MessageTransfer
+     */
+    protected function createItemInactiveErrorMessage(string $sku): MessageTransfer
+    {
+        return (new MessageTransfer())
+            ->setValue(static::MESSAGE_ERROR_CONCRETE_PRODUCT_INACTIVE)
+            ->setParameters([
+                static::MESSAGE_PARAM_SKU => $sku,
+            ]);
     }
 
     /**

@@ -92,9 +92,8 @@ class ShoppingListReader implements ShoppingListReaderInterface
         $shoppingListOverviewRequestTransfer->requireShoppingList();
         $shoppingListOverviewRequestTransfer->getShoppingList()->requireIdShoppingList();
 
-        $shoppingListOverviewResponseTransfer = $this->buildShoppingListOverviewResponseTransfer(
-            $shoppingListOverviewRequestTransfer->getShoppingList()
-        );
+        $shoppingListOverviewResponseTransfer = (new ShoppingListOverviewResponseTransfer())
+            ->setShoppingList($shoppingListOverviewRequestTransfer->getShoppingList());
 
         $shoppingListTransfer = $this->getShoppingList($shoppingListOverviewRequestTransfer->getShoppingList());
 
@@ -258,17 +257,6 @@ class ShoppingListReader implements ShoppingListReaderInterface
         $permissionCollectionTransfer = $permissionCollectionTransfer->addPermission($permissionTransfer);
 
         return $permissionCollectionTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingList
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer
-     */
-    protected function buildShoppingListOverviewResponseTransfer(ShoppingListTransfer $shoppingList): ShoppingListOverviewResponseTransfer
-    {
-        return (new ShoppingListOverviewResponseTransfer())
-            ->setShoppingList($shoppingList);
     }
 
     /**

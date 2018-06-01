@@ -10,7 +10,6 @@ namespace SprykerTest\Shared\ShoppingList\Helper;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\ShoppingListBuilder;
 use Generated\Shared\DataBuilder\ShoppingListItemBuilder;
-use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
@@ -24,16 +23,13 @@ class ShoppingListHelper extends Module
     use LocatorHelperTrait;
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      * @param array $seed
      *
      * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */
-    public function haveShoppingList(CompanyUserTransfer $companyUserTransfer, array $seed = []): ShoppingListTransfer
+    public function haveShoppingList(array $seed = []): ShoppingListTransfer
     {
-        $shoppingListTransfer = (new ShoppingListBuilder($seed))->build()
-            ->setIdCompanyUser($companyUserTransfer->getIdCompanyUser())
-            ->setCustomerReference($companyUserTransfer->getCustomer()->getCustomerReference());
+        $shoppingListTransfer = (new ShoppingListBuilder($seed))->build();
 
         return $this->getLocator()->shoppingList()->facade()->createShoppingList($shoppingListTransfer)->getShoppingList();
     }

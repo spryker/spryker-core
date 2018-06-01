@@ -44,7 +44,10 @@ class ShoppingListStub implements ShoppingListStubInterface
      */
     public function createShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
     {
-        return $this->zedRequestClient->call('/shopping-list/gateway/create-shopping-list', $shoppingListTransfer);
+        /** @var \Generated\Shared\Transfer\ShoppingListResponseTransfer $shoppingListResponseTransfer */
+        $shoppingListResponseTransfer = $this->zedRequestClient->call('/shopping-list/gateway/create-shopping-list', $shoppingListTransfer);
+
+        return $shoppingListResponseTransfer;
     }
 
     /**
@@ -54,7 +57,10 @@ class ShoppingListStub implements ShoppingListStubInterface
      */
     public function updateShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
     {
-        return $this->zedRequestClient->call('/shopping-list/gateway/update-shopping-list', $shoppingListTransfer);
+        /** @var \Generated\Shared\Transfer\ShoppingListResponseTransfer $shoppingListResponseTransfer */
+        $shoppingListResponseTransfer = $this->zedRequestClient->call('/shopping-list/gateway/update-shopping-list', $shoppingListTransfer);
+
+        return $shoppingListResponseTransfer;
     }
 
     /**
@@ -64,7 +70,10 @@ class ShoppingListStub implements ShoppingListStubInterface
      */
     public function removeShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
     {
-        return $this->zedRequestClient->call('/shopping-list/gateway/remove-shopping-list', $shoppingListTransfer);
+        /** @var \Generated\Shared\Transfer\ShoppingListResponseTransfer $shoppingListResponseTransfer */
+        $shoppingListResponseTransfer = $this->zedRequestClient->call('/shopping-list/gateway/remove-shopping-list', $shoppingListTransfer);
+
+        return $shoppingListResponseTransfer;
     }
 
     /**
@@ -74,7 +83,10 @@ class ShoppingListStub implements ShoppingListStubInterface
      */
     public function addItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
     {
-        return $this->zedRequestClient->call('/shopping-list/gateway/add-item', $shoppingListItemTransfer);
+        /** @var \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer */
+        $shoppingListItemTransfer = $this->zedRequestClient->call('/shopping-list/gateway/add-item', $shoppingListItemTransfer);
+
+        return $shoppingListItemTransfer;
     }
 
     /**
@@ -84,7 +96,13 @@ class ShoppingListStub implements ShoppingListStubInterface
      */
     public function removeItemById(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemResponseTransfer
     {
-        return $this->zedRequestClient->call('/shopping-list/gateway/remove-item-by-id', $shoppingListItemTransfer);
+        /** @var \Generated\Shared\Transfer\ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer */
+        $shoppingListItemResponseTransfer = $this->zedRequestClient->call(
+            '/shopping-list/gateway/remove-item-by-id',
+            $shoppingListItemTransfer
+        );
+
+        return $shoppingListItemResponseTransfer;
     }
 
     /**
@@ -94,7 +112,10 @@ class ShoppingListStub implements ShoppingListStubInterface
      */
     public function getShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer
     {
-        return $this->zedRequestClient->call('/shopping-list/gateway/get-shopping-list', $shoppingListTransfer);
+        /** @var \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer */
+        $shoppingListTransfer = $this->zedRequestClient->call('/shopping-list/gateway/get-shopping-list', $shoppingListTransfer);
+
+        return $shoppingListTransfer;
     }
 
     /**
@@ -104,7 +125,13 @@ class ShoppingListStub implements ShoppingListStubInterface
      */
     public function getShoppingListOverview(ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer): ShoppingListOverviewResponseTransfer
     {
-        return $this->zedRequestClient->call('/shopping-list/gateway/get-shopping-list-overview', $shoppingListOverviewRequestTransfer);
+        /** @var \Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer $shoppingListOverviewResponseTransfer */
+        $shoppingListOverviewResponseTransfer = $this->zedRequestClient->call(
+            '/shopping-list/gateway/get-shopping-list-overview',
+            $shoppingListOverviewRequestTransfer
+        );
+
+        return $shoppingListOverviewResponseTransfer;
     }
 
     /**
@@ -114,7 +141,13 @@ class ShoppingListStub implements ShoppingListStubInterface
      */
     public function getCustomerShoppingListCollection(CustomerTransfer $customerTransfer): ShoppingListCollectionTransfer
     {
-        return $this->zedRequestClient->call('/shopping-list/gateway/get-customer-shopping-list-collection', $customerTransfer);
+        /** @var \Generated\Shared\Transfer\ShoppingListCollectionTransfer $shoppingListCollectionTransfer */
+        $shoppingListCollectionTransfer = $this->zedRequestClient->call(
+            '/shopping-list/gateway/get-customer-shopping-list-collection',
+            $customerTransfer
+        );
+
+        return $shoppingListCollectionTransfer;
     }
 
     /**
@@ -124,7 +157,13 @@ class ShoppingListStub implements ShoppingListStubInterface
      */
     public function getShoppingListItemCollection(ShoppingListCollectionTransfer $shoppingListCollectionTransfer): ShoppingListItemCollectionTransfer
     {
-        return $this->zedRequestClient->call('/shopping-list/gateway/get-shopping-list-item-collection', $shoppingListCollectionTransfer);
+        /** @var \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer */
+        $shoppingListItemCollectionTransfer = $this->zedRequestClient->call(
+            '/shopping-list/gateway/get-shopping-list-item-collection',
+            $shoppingListCollectionTransfer
+        );
+
+        return $shoppingListItemCollectionTransfer;
     }
 
     /**
@@ -134,7 +173,13 @@ class ShoppingListStub implements ShoppingListStubInterface
      */
     public function getShoppingListItemCollectionTransfer(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ShoppingListItemCollectionTransfer
     {
-        return $this->zedRequestClient->call('/shopping-list/gateway/get-shopping-list-item-collection-transfer', $shoppingListItemCollectionTransfer);
+        /** @var \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer */
+        $shoppingListItemCollectionTransfer = $this->zedRequestClient->call(
+            '/shopping-list/gateway/get-shopping-list-item-collection-transfer',
+            $shoppingListItemCollectionTransfer
+        );
+
+        return $shoppingListItemCollectionTransfer;
     }
 
     /**
@@ -144,7 +189,13 @@ class ShoppingListStub implements ShoppingListStubInterface
      */
     public function updateShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
     {
-        return $this->zedRequestClient->call('/shopping-list/gateway/update-shopping-list-item', $shoppingListItemTransfer);
+        /** @var \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer */
+        $shoppingListItemTransfer = $this->zedRequestClient->call(
+            '/shopping-list/gateway/update-shopping-list-item',
+            $shoppingListItemTransfer
+        );
+
+        return $shoppingListItemTransfer;
     }
 
     /**
@@ -154,7 +205,13 @@ class ShoppingListStub implements ShoppingListStubInterface
      */
     public function createShoppingListFromQuote(ShoppingListFromCartRequestTransfer $shoppingListFromCartRequestTransfer): ShoppingListTransfer
     {
-        return $this->zedRequestClient->call('/shopping-list/gateway/create-shopping-list-from-quote', $shoppingListFromCartRequestTransfer);
+        /** @var \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer */
+        $shoppingListTransfer = $this->zedRequestClient->call(
+            '/shopping-list/gateway/create-shopping-list-from-quote',
+            $shoppingListFromCartRequestTransfer
+        );
+
+        return $shoppingListTransfer;
     }
 
     /**
@@ -162,7 +219,13 @@ class ShoppingListStub implements ShoppingListStubInterface
      */
     public function getShoppingListPermissionGroup(): ShoppingListPermissionGroupTransfer
     {
-        return $this->zedRequestClient->call('/shopping-list/gateway/get-shopping-list-permission-group', new ShoppingListPermissionGroupTransfer());
+        /** @var \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer $shoppingListPermissionGroupTransfer */
+        $shoppingListPermissionGroupTransfer = $this->zedRequestClient->call(
+            '/shopping-list/gateway/get-shopping-list-permission-group',
+            new ShoppingListPermissionGroupTransfer()
+        );
+
+        return $shoppingListPermissionGroupTransfer;
     }
 
     /**
@@ -172,7 +235,13 @@ class ShoppingListStub implements ShoppingListStubInterface
      */
     public function shareShoppingListWithCompanyBusinessUnit(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ShoppingListShareResponseTransfer
     {
-        return $this->zedRequestClient->call('/shopping-list/gateway/share-shopping-list-with-company-business-unit', $shoppingListShareRequestTransfer);
+        /** @var \Generated\Shared\Transfer\ShoppingListShareResponseTransfer $shoppingListShareResponseTransfer */
+        $shoppingListShareResponseTransfer = $this->zedRequestClient->call(
+            '/shopping-list/gateway/share-shopping-list-with-company-business-unit',
+            $shoppingListShareRequestTransfer
+        );
+
+        return $shoppingListShareResponseTransfer;
     }
 
     /**
@@ -182,6 +251,20 @@ class ShoppingListStub implements ShoppingListStubInterface
      */
     public function shareShoppingListWithCompanyUser(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ShoppingListShareResponseTransfer
     {
-        return $this->zedRequestClient->call('/shopping-list/gateway/share-shopping-list-with-company-user', $shoppingListShareRequestTransfer);
+        /** @var \Generated\Shared\Transfer\ShoppingListShareResponseTransfer $shoppingListShareResponseTransfer */
+        $shoppingListShareResponseTransfer = $this->zedRequestClient->call(
+            '/shopping-list/gateway/share-shopping-list-with-company-user',
+            $shoppingListShareRequestTransfer
+        );
+
+        return $shoppingListShareResponseTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     */
+    public function getLastResponseErrorMessages(): array
+    {
+        return $this->zedRequestClient->getLastResponseErrorMessages();
     }
 }

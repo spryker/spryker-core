@@ -112,7 +112,7 @@ class ShoppingListWriter implements ShoppingListWriterInterface
     {
         $shoppingListTransfer = $this->shoppingListRepository->findShoppingListById($shoppingListTransfer);
 
-        if (!$this->checkWritePermission($shoppingListTransfer)) {
+        if (!$shoppingListTransfer || !$this->checkWritePermission($shoppingListTransfer)) {
             return (new ShoppingListResponseTransfer())->setIsSuccess(false);
         }
 

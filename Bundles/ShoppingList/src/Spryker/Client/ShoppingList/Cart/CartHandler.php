@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\ShoppingListAddToCartRequestCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListAddToCartRequestTransfer;
 use Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToCartClientInterface;
 use Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToMessengerClientInterface;
-use Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToZedRequestClientInterface;
 use Spryker\Client\ShoppingList\Zed\ShoppingListStubInterface;
 
 class CartHandler implements CartHandlerInterface
@@ -30,11 +29,6 @@ class CartHandler implements CartHandlerInterface
     protected $shoppingListStub;
 
     /**
-     * @var \Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToZedRequestClientInterface
-     */
-    protected $zedRequestClient;
-
-    /**
      * @var \Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToMessengerClientInterface
      */
     protected $messengerClient;
@@ -42,18 +36,15 @@ class CartHandler implements CartHandlerInterface
     /**
      * @param \Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToCartClientInterface $cartClient
      * @param \Spryker\Client\ShoppingList\Zed\ShoppingListStubInterface $shoppingListStub
-     * @param \Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToZedRequestClientInterface $zedRequestClient
      * @param \Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToMessengerClientInterface $messengerClient
      */
     public function __construct(
         ShoppingListToCartClientInterface $cartClient,
         ShoppingListStubInterface $shoppingListStub,
-        ShoppingListToZedRequestClientInterface $zedRequestClient,
         ShoppingListToMessengerClientInterface $messengerClient
     ) {
         $this->cartClient = $cartClient;
         $this->shoppingListStub = $shoppingListStub;
-        $this->zedRequestClient = $zedRequestClient;
         $this->messengerClient = $messengerClient;
     }
 
@@ -156,7 +147,7 @@ class CartHandler implements CartHandlerInterface
      */
     protected function addErrorMessages(): void
     {
-        foreach ($this->zedRequestClient->getLastResponseErrorMessages() as $messageTransfer) {
+        foreach ($this->shoppingListStub->getLastResponseErrorMessages() as $messageTransfer) {
             $this->messengerClient->addErrorMessage($messageTransfer->getValue());
         }
     }

@@ -621,15 +621,15 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Returns true if concrete products is active.
+     * - Returns true if concrete product is active.
      *
      * @api
      *
-     * @param string $concreteSku
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return bool
      */
-    public function isProductConcreteActive(string $concreteSku): bool;
+    public function isProductConcreteActive(ProductConcreteTransfer $productConcreteTransfer): bool;
 
     /**
      * Specification:

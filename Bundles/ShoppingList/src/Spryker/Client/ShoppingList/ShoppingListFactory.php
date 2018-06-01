@@ -60,7 +60,6 @@ class ShoppingListFactory extends AbstractFactory
         return new CartHandler(
             $this->getCartClient(),
             $this->createShoppingListStub(),
-            $this->getZedRequestClient(),
             $this->getMessengerClient()
         );
     }

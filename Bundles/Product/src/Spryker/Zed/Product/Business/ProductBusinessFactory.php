@@ -49,6 +49,7 @@ use Spryker\Zed\Product\ProductDependencyProvider;
 /**
  * @method \Spryker\Zed\Product\ProductConfig getConfig()
  * @method \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Product\Persistence\ProductRepositoryInterface getRepository()
  */
 class ProductBusinessFactory extends AbstractBusinessFactory
 {
@@ -171,7 +172,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductConcreteStatusChecker(): ProductConcreteStatusCheckerInterface
     {
-        return new ProductConcreteStatusChecker($this->getQueryContainer());
+        return new ProductConcreteStatusChecker($this->getRepository());
     }
 
     /**

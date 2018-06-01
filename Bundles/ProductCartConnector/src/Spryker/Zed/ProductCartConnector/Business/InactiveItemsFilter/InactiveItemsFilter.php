@@ -8,12 +8,16 @@
 namespace Spryker\Zed\ProductCartConnector\Business\InactiveItemsFilter;
 
 use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToMessengerFacadeInterface;
 use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface;
 
 class InactiveItemsFilter implements InactiveItemsFilterInterface
 {
+    protected const MESSAGE_PARAM_SKU = '%sku%';
+    protected const MESSAGE_INFO_CONCRETE_INACTIVE_PRODUCT_REMOVED = 'product-cart.info.concrete-product-inactive.removed';
+
     /**
      * @var \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface
      */
@@ -44,13 +48,25 @@ class InactiveItemsFilter implements InactiveItemsFilterInterface
     public function filterInactiveItems(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         foreach ($quoteTransfer->getItems() as $key => $itemTransfer) {
-            if (!$this->productFacade->isProductConcreteActive($itemTransfer->getSku())) {
+            if (!$this->isProductConcreteActive($itemTransfer->getSku())) {
                 $quoteTransfer->getItems()->offsetUnset($key);
                 $this->addFilterMessage($itemTransfer->getSku());
             }
         }
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param string $concreteSku
+     *
+     * @return bool
+     */
+    protected function isProductConcreteActive(string $concreteSku): bool
+    {
+        return $this->productFacade->isProductConcreteActive(
+            (new ProductConcreteTransfer())->setSku($concreteSku)
+        );
     }
 
     /**

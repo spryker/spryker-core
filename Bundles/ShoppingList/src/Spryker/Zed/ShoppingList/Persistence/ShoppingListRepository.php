@@ -21,7 +21,7 @@ use Orm\Zed\ShoppingList\Persistence\Map\SpyShoppingListItemTableMap;
 use Orm\Zed\ShoppingList\Persistence\Map\SpyShoppingListTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
-use Spryker\Zed\ShoppingList\Persistence\Propel\Mapper\ShoppingListMapperInterface;
+use Spryker\Zed\ShoppingList\Persistence\Propel\Mapper\ShoppingListMapper;
 
 /**
  * @method \Spryker\Zed\ShoppingList\Persistence\ShoppingListPersistenceFactory getFactory()
@@ -185,14 +185,14 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
      *
      * @return bool
      */
-    public function isShoppingListSharedToCompanyBusinessUnit(int $idShoppingList, int $idCompanyBusinessUnit): bool
+    public function isShoppingListSharedWithCompanyBusinessUnit(int $idShoppingList, int $idCompanyBusinessUnit): bool
     {
         $shoppingListCompanyBusinessUnitEntityQuery = $this->getFactory()
             ->createShoppingListCompanyBusinessUnitQuery()
             ->filterByFkShoppingList($idShoppingList)
             ->filterByFkCompanyBusinessUnit($idCompanyBusinessUnit);
 
-        return (bool)$this->buildQueryFromCriteria($shoppingListCompanyBusinessUnitEntityQuery)->count();
+        return $this->buildQueryFromCriteria($shoppingListCompanyBusinessUnitEntityQuery)->exists();
     }
 
     /**
@@ -201,14 +201,14 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
      *
      * @return bool
      */
-    public function isShoppingListSharedToCompanyUser(int $idShoppingList, int $idCompanyUser): bool
+    public function isShoppingListSharedWithCompanyUser(int $idShoppingList, int $idCompanyUser): bool
     {
         $shoppingListCompanyUserEntityQuery = $this->getFactory()
             ->createShoppingListCompanyUserQuery()
             ->filterByFkShoppingList($idShoppingList)
             ->filterByFkCompanyUser($idCompanyUser);
 
-        return (bool)$this->buildQueryFromCriteria($shoppingListCompanyUserEntityQuery)->count();
+        return $this->buildQueryFromCriteria($shoppingListCompanyUserEntityQuery)->exists();
     }
 
     /**
@@ -251,8 +251,8 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
         $shoppingListsQuery = $this->getFactory()
             ->createShoppingListQuery()
             ->addJoin(SpyShoppingListTableMap::COL_CUSTOMER_REFERENCE, SpyCustomerTableMap::COL_CUSTOMER_REFERENCE, Criteria::LEFT_JOIN)
-            ->withColumn(SpyCustomerTableMap::COL_FIRST_NAME, ShoppingListMapperInterface::FIELD_FIRST_NAME)
-            ->withColumn(SpyCustomerTableMap::COL_LAST_NAME, ShoppingListMapperInterface::FIELD_LAST_NAME)
+            ->withColumn(SpyCustomerTableMap::COL_FIRST_NAME, ShoppingListMapper::FIELD_FIRST_NAME)
+            ->withColumn(SpyCustomerTableMap::COL_LAST_NAME, ShoppingListMapper::FIELD_LAST_NAME)
             ->useSpyShoppingListCompanyUserQuery()
             ->filterByFkCompanyUser($idCompanyUser)
             ->endUse()
@@ -275,8 +275,8 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
         $shoppingListQuery = $this->getFactory()
             ->createShoppingListQuery()
             ->addJoin(SpyShoppingListTableMap::COL_CUSTOMER_REFERENCE, SpyCustomerTableMap::COL_CUSTOMER_REFERENCE, Criteria::LEFT_JOIN)
-            ->withColumn(SpyCustomerTableMap::COL_FIRST_NAME, ShoppingListMapperInterface::FIELD_FIRST_NAME)
-            ->withColumn(SpyCustomerTableMap::COL_LAST_NAME, ShoppingListMapperInterface::FIELD_LAST_NAME)
+            ->withColumn(SpyCustomerTableMap::COL_FIRST_NAME, ShoppingListMapper::FIELD_FIRST_NAME)
+            ->withColumn(SpyCustomerTableMap::COL_LAST_NAME, ShoppingListMapper::FIELD_LAST_NAME)
             ->useSpyShoppingListCompanyBusinessUnitQuery()
             ->filterByFkCompanyBusinessUnit($idCompanyBusinessUnit)
             ->endUse()
@@ -299,8 +299,8 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
         return $this->getFactory()
             ->createShoppingListQuery()
             ->addJoin(SpyShoppingListTableMap::COL_CUSTOMER_REFERENCE, SpyCustomerTableMap::COL_CUSTOMER_REFERENCE, Criteria::LEFT_JOIN)
-            ->withColumn(SpyCustomerTableMap::COL_FIRST_NAME, ShoppingListMapperInterface::FIELD_FIRST_NAME)
-            ->withColumn(SpyCustomerTableMap::COL_LAST_NAME, ShoppingListMapperInterface::FIELD_LAST_NAME)
+            ->withColumn(SpyCustomerTableMap::COL_FIRST_NAME, ShoppingListMapper::FIELD_FIRST_NAME)
+            ->withColumn(SpyCustomerTableMap::COL_LAST_NAME, ShoppingListMapper::FIELD_LAST_NAME)
             ->filterByCustomerReference($customerReference)
             ->orderByIdShoppingList()
             ->leftJoinWithSpyShoppingListItem();
