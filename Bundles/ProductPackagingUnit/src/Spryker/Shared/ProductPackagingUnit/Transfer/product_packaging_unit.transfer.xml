@@ -3,4 +3,18 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
+    <transfer name="ProductPackagingUnitType">
+        <property name="name" type="string" />
+    </transfer>
+
+    <transfer name="ProductPackagingUnit">
+        <property name="idProductPackagingUnit" type="int" />
+        <property name="type" type="ProductPackagingUnitType" />
+        <property name="isVariable" type="bool" />
+        <property name="defaultAmount" type="int" />
+        <property name="amountMin" type="int" />
+        <property name="amountMax" type="int" />
+        <property name="amountInterval" type="int" />
+    </transfer>
+
 </transfers>
