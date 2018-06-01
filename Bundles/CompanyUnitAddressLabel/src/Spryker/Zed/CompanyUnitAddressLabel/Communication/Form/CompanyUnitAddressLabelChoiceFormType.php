@@ -25,7 +25,7 @@ class CompanyUnitAddressLabelChoiceFormType extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
-     * @return \Spryker\Zed\CompanyUnitAddressLabel\Communication\Form\CompanyUnitAddressLabelChoiceFormType
+     * @return $this
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
