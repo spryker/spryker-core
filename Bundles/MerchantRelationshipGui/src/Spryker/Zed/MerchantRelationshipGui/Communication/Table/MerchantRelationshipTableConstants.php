@@ -13,6 +13,7 @@ interface MerchantRelationshipTableConstants
 {
     public const COL_ID_MERCHANT_RELATIONSHIP = SpyMerchantRelationshipTableMap::COL_ID_MERCHANT_RELATIONSHIP;
     public const COL_MERCHANT_NAME = 'merchant_name';
+    public const COL_MERCHANT_ID = 'merchant_id';
     public const COL_BUSINESS_UNIT_OWNER = 'business_unit_owner';
     public const COL_ASSIGNED_BUSINESS_UNITS = 'asssigned_business_units';
     public const COL_ACTIONS = 'actions';

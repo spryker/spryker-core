@@ -14,6 +14,9 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInt
 interface ProductPageMapExpanderInterface
 {
     /**
+     * Specification:
+     * - Expands and returns the provided ProductPageMap transfer objects data.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer

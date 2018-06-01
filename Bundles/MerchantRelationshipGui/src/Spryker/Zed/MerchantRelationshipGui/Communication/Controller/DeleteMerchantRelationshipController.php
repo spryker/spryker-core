@@ -20,7 +20,7 @@ class DeleteMerchantRelationshipController extends AbstractController
 {
     public const URL_PARAM_REDIRECT_URL = 'redirect-url';
 
-    protected const MESSAGE_MERCHANT_RELATIONSHIP_DELETE_SUCCESS = 'Merchant relationship has been deleted.';
+    protected const MESSAGE_MERCHANT_RELATIONSHIP_DELETE_SUCCESS = 'Merchant relation deleted successfully.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

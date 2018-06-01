@@ -24,7 +24,7 @@ class MerchantRelationshipEditForm extends MerchantRelationshipCreateForm
         $this
             ->addMerchantDisabledField($builder, $options[static::OPTION_MERCHANT_CHOICES])
             ->addCompanyDisabledField($builder, $options)
-            ->addOwnerCompanyBusinessUnitField($builder, $options[static::OPTION_ASSIGNED_COMPANY_BUSINESS_UNIT_CHOICES])
+            ->addOwnerCompanyBusinessUnitField($builder, $options)
             ->addAssignedCompanyBusinessUnitField($builder, $options[static::OPTION_ASSIGNED_COMPANY_BUSINESS_UNIT_CHOICES]);
     }
 

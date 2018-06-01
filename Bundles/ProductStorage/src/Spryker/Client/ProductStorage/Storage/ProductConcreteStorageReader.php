@@ -10,7 +10,6 @@ namespace Spryker\Client\ProductStorage\Storage;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientInterface;
 use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceInterface;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\ProductStorage\ProductStorageConstants;
 
 class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterface
@@ -26,23 +25,15 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
     protected $storageClient;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
-     */
-    protected $store;
-
-    /**
      * @param \Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceInterface $synchronizationService
-     * @param \Spryker\Shared\Kernel\Store $store
      */
     public function __construct(
         ProductStorageToStorageClientInterface $storageClient,
-        ProductStorageToSynchronizationServiceInterface $synchronizationService,
-        Store $store
+        ProductStorageToSynchronizationServiceInterface $synchronizationService
     ) {
         $this->storageClient = $storageClient;
         $this->synchronizationService = $synchronizationService;
-        $this->store = $store;
     }
 
     /**
@@ -55,7 +46,6 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
     {
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer
-            ->setStore($this->store->getStoreName())
             ->setLocale($localeName)
             ->setReference($idProductConcrete);
 

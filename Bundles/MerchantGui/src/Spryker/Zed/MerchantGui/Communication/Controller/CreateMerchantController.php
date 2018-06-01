@@ -19,7 +19,7 @@ class CreateMerchantController extends AbstractController
 {
     protected const PARAM_REDIRECT_URL = 'redirect-url';
 
-    protected const MESSAGE_MERCHANT_CREATE_SUCCESS = 'Merchant has been created.';
+    protected const MESSAGE_MERCHANT_CREATE_SUCCESS = 'Merchant created successfully.';
     protected const MESSAGE_MERCHANT_CREATE_ERROR = 'Merchant has not been created.';
 
     /**

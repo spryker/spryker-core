@@ -207,4 +207,18 @@ interface ProductOptionFacadeInterface
      * @return \Generated\Shared\Transfer\ProductOptionValueStorePricesResponseTransfer
      */
     public function getProductOptionValueStorePrices(ProductOptionValueStorePricesRequestTransfer $storePricesRequestTransfer);
+
+    /**
+     * Specification:
+     * - Selects prices for all stores
+     * - The returned price map contains the net and gross amounts per currency.
+     * - Uses "default store" (fkStore=NULL) currency prices when a store does not specify the prices in a currency.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductOptionValueStorePricesRequestTransfer $storePricesRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOptionValueStorePricesResponseTransfer
+     */
+    public function getAllProductOptionValuePrices(ProductOptionValueStorePricesRequestTransfer $storePricesRequestTransfer);
 }

@@ -15,8 +15,9 @@ interface EventQueueProducerInterface
      * @param string $eventName
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $eventTransfer
      * @param string $listener
+     * @param string|null $queuePoolName
      *
      * @return void
      */
-    public function enqueueListener($eventName, TransferInterface $eventTransfer, $listener);
+    public function enqueueListener($eventName, TransferInterface $eventTransfer, $listener, $queuePoolName = null);
 }
