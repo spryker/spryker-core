@@ -11,7 +11,7 @@ use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 use Spryker\Zed\DataImport\Business\Exception\InvalidDataException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\MerchantDataImport\Business\Model\DataSet\MerchantDataSet;
+use Spryker\Zed\MerchantDataImport\Business\Model\DataSet\MerchantDataSetInterface;
 
 class MerchantWriterStep implements DataImportStepInterface
 {
@@ -25,11 +25,11 @@ class MerchantWriterStep implements DataImportStepInterface
         $this->validateDataSet($dataSet);
 
         $merchantEntity = SpyMerchantQuery::create()
-            ->filterByMerchantKey($dataSet[MerchantDataSet::MERCHANT_KEY])
+            ->filterByMerchantKey($dataSet[MerchantDataSetInterface::MERCHANT_KEY])
             ->findOneOrCreate();
 
         $merchantEntity
-            ->setName($dataSet[MerchantDataSet::NAME])
+            ->setName($dataSet[MerchantDataSetInterface::NAME])
             ->save();
     }
 
@@ -42,12 +42,12 @@ class MerchantWriterStep implements DataImportStepInterface
      */
     protected function validateDataSet(DataSetInterface $dataSet): void
     {
-        if (!$dataSet[MerchantDataSet::MERCHANT_KEY]) {
-            throw new InvalidDataException('"' . MerchantDataSet::MERCHANT_KEY . '" is required.');
+        if (!$dataSet[MerchantDataSetInterface::MERCHANT_KEY]) {
+            throw new InvalidDataException('"' . MerchantDataSetInterface::MERCHANT_KEY . '" is required.');
         }
 
-        if (!$dataSet[MerchantDataSet::NAME]) {
-            throw new InvalidDataException('"' . MerchantDataSet::NAME . '" is required.');
+        if (!$dataSet[MerchantDataSetInterface::NAME]) {
+            throw new InvalidDataException('"' . MerchantDataSetInterface::NAME . '" is required.');
         }
     }
 }

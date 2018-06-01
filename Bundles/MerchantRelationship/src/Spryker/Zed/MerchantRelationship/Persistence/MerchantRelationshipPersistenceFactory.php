@@ -21,7 +21,7 @@ class MerchantRelationshipPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery
      */
-    public function createMerchantRelationshipQuery()
+    public function createMerchantRelationshipQuery(): SpyMerchantRelationshipQuery
     {
         return SpyMerchantRelationshipQuery::create();
     }
@@ -29,7 +29,7 @@ class MerchantRelationshipPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipToCompanyBusinessUnitQuery
      */
-    public function createMerchantRelationshipToCompanyBusinessUnitQuery()
+    public function createMerchantRelationshipToCompanyBusinessUnitQuery(): SpyMerchantRelationshipToCompanyBusinessUnitQuery
     {
         return SpyMerchantRelationshipToCompanyBusinessUnitQuery::create();
     }
@@ -37,7 +37,7 @@ class MerchantRelationshipPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Spryker\Zed\MerchantRelationship\Persistence\Propel\Mapper\MerchantRelationshipMapperInterface
      */
-    public function createMerchantRelationshipMapper(): MerchantRelationshipMapperInterface
+    public function createPropelMerchantRelationshipMapper(): MerchantRelationshipMapperInterface
     {
         return new MerchantRelationshipMapper();
     }

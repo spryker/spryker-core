@@ -13,7 +13,7 @@ use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\DataImport\Business\Exception\InvalidDataException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\MerchantRelationshipDataImport\Business\Model\DataSet\MerchantRelationshipDataSet;
+use Spryker\Zed\MerchantRelationshipDataImport\Business\Model\DataSet\MerchantRelationshipDataSetInterface;
 
 class MerchantKeyToIdMerchantStep implements DataImportStepInterface
 {
@@ -32,9 +32,9 @@ class MerchantKeyToIdMerchantStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $merchantKey = $dataSet[MerchantRelationshipDataSet::MERCHANT_KEY];
+        $merchantKey = $dataSet[MerchantRelationshipDataSetInterface::MERCHANT_KEY];
         if (!$merchantKey) {
-            throw new InvalidDataException('"' . MerchantRelationshipDataSet::MERCHANT_KEY . '" is required.');
+            throw new InvalidDataException('"' . MerchantRelationshipDataSetInterface::MERCHANT_KEY . '" is required.');
         }
 
         if (!isset($this->idMerchantCache[$merchantKey])) {
@@ -49,6 +49,6 @@ class MerchantKeyToIdMerchantStep implements DataImportStepInterface
             $this->idMerchantCache[$merchantKey] = $idMerchant;
         }
 
-        $dataSet[MerchantRelationshipDataSet::ID_MERCHANT] = $this->idMerchantCache[$merchantKey];
+        $dataSet[MerchantRelationshipDataSetInterface::ID_MERCHANT] = $this->idMerchantCache[$merchantKey];
     }
 }

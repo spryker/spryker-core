@@ -10,7 +10,6 @@ namespace Spryker\Zed\Merchant\Persistence;
 use Generated\Shared\Transfer\MerchantCollectionTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
-use Spryker\Zed\Merchant\Business\Exception\MerchantNotFoundException;
 
 /**
  * @method \Spryker\Zed\Merchant\Persistence\MerchantPersistenceFactory getFactory()
@@ -24,11 +23,9 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
      *
      * @param int $idMerchant
      *
-     * @throws \Spryker\Zed\Merchant\Business\Exception\MerchantNotFoundException
-     *
-     * @return \Generated\Shared\Transfer\MerchantTransfer
+     * @return \Generated\Shared\Transfer\MerchantTransfer|null
      */
-    public function getMerchantById(int $idMerchant): MerchantTransfer
+    public function getMerchantById(int $idMerchant): ?MerchantTransfer
     {
         $spyMerchant = $this->getFactory()
             ->createMerchantQuery()
@@ -36,11 +33,11 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
             ->findOne();
 
         if (!$spyMerchant) {
-            throw new MerchantNotFoundException();
+            return null;
         }
 
         return $this->getFactory()
-            ->createMerchantMapper()
+            ->createPropelMerchantMapper()
             ->mapEntityToMerchantTransfer($spyMerchant, new MerchantTransfer());
     }
 
@@ -59,16 +56,16 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
             ->find();
 
         $mapper = $this->getFactory()
-            ->createMerchantMapper();
+            ->createPropelMerchantMapper();
 
-        $merchantsCollection = new MerchantCollectionTransfer();
+        $merchantCollectionTransfer = new MerchantCollectionTransfer();
         foreach ($spyMerchants as $spyMerchant) {
-            $merchantsCollection->addMerchants(
+            $merchantCollectionTransfer->addMerchants(
                 $mapper->mapEntityToMerchantTransfer($spyMerchant, new MerchantTransfer())
             );
         }
 
-        return $merchantsCollection;
+        return $merchantCollectionTransfer;
     }
 
     /**

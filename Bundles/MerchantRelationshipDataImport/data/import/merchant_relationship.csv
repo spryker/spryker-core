@@ -1,4 +1,4 @@
-merchant_relation_key,mechant_key,company_business_unit_owner_key,company_business_unit_assignee_keys
+merchant_relation_key,merchant_key,company_business_unit_owner_key,company_business_unit_assignee_keys
 mr-001,kudu-merchant-1,test-business-unit-1,"test-business-unit-2"
 mr-002,oryx-merchant-1,test-business-unit-1,"test-business-unit-1;test-business-unit-2"
 mr-003,oryx-merchant-1,test-business-unit-2,"test-business-unit-1"

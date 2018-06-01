@@ -15,15 +15,15 @@ interface MerchantRepositoryInterface
     /**
      * Specification:
      * - Returns a MerchantTransfer by merchant id.
-     * - Throws an exception in case a record is not found.
+     * - Returns null in case a record is not found.
      *
      * @api
      *
      * @param int $idMerchant
      *
-     * @return \Generated\Shared\Transfer\MerchantTransfer
+     * @return \Generated\Shared\Transfer\MerchantTransfer|null
      */
-    public function getMerchantById(int $idMerchant): MerchantTransfer;
+    public function getMerchantById(int $idMerchant): ?MerchantTransfer;
 
     /**
      * Specification:
