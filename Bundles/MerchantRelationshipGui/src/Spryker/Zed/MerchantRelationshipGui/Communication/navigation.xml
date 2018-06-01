@@ -13,8 +13,8 @@
                 <action>index</action>
                 <pages>
                     <merchant-relationship-create>
-                        <label>Create a Merchant Relation</label>
-                        <title>Create a Merchant Relation</title>
+                        <label>Create Merchant Relation</label>
+                        <title>Create Merchant Relation</title>
                         <bundle>merchant-relationship-gui</bundle>
                         <controller>create-merchant-relationship</controller>
                         <action>index</action>

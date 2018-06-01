@@ -67,7 +67,7 @@ class MerchantRelationshipFormDataProvider
      */
     public function getData(?int $idMerchantRelationship = null): MerchantRelationshipTransfer
     {
-        $merchantRelationshipTransfer = $this->createMerchantRelationshipTransfer();
+        $merchantRelationshipTransfer = new MerchantRelationshipTransfer();
         if (!$idMerchantRelationship) {
             return $merchantRelationshipTransfer;
         }
@@ -93,14 +93,6 @@ class MerchantRelationshipFormDataProvider
             static::OPTION_SELECTED_COMPANY => $idCompany,
             static::OPTION_IS_PERSISTENCE_FORM => $isPersistenceForm,
         ];
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
-     */
-    protected function createMerchantRelationshipTransfer(): MerchantRelationshipTransfer
-    {
-        return new MerchantRelationshipTransfer();
     }
 
     /**
