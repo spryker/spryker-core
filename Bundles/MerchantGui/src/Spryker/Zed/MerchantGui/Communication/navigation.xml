@@ -13,8 +13,8 @@
                 <action>index</action>
                 <pages>
                     <merchant-create>
-                        <label>Create a Merchant</label>
-                        <title>Create a Merchant</title>
+                        <label>Create Merchant</label>
+                        <title>Create Merchant</title>
                         <bundle>merchant-gui</bundle>
                         <controller>create-merchant</controller>
                         <action>index</action>
