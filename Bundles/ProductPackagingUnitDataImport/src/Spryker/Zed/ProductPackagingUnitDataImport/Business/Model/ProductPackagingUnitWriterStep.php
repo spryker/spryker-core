@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\ProductPackagingUnitDataImport\Business\Model;
 
-use Orm\Zed\Product\Persistence\SpyProductAbstract;
-use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
+use Exception;
 use Orm\Zed\Product\Persistence\SpyProductPackagingLeadProductQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnit;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitAmount;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitQuery;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitTypeQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\ProductPackagingUnitDataImport\Business\Model\DataSet\ProductPackagingUnitDataSet;
@@ -28,17 +28,17 @@ class ProductPackagingUnitWriterStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $productPackagingUnitEntity = SpyProductPackagingUnitQuery::create()
+        $productPackagingUnitEntity = $this->getProductPackagingUnitQuery()
             ->useProductQuery()
                 ->filterBySku($dataSet[ProductPackagingUnitDataSet::CONCRETE_SKU])
             ->endUse()
-            ->useProductPackagingUnitTypeQuery()
+            ->useProductPackagingUnitTypeQuery(null, Criteria::LEFT_JOIN)
                 ->filterByName($dataSet[ProductPackagingUnitDataSet::TYPE_NAME])
             ->endUse()
             ->findOneOrCreate();
 
         $productPackagingUnitEntity
-            ->setHasLeadProduct(boolval($dataSet[ProductPackagingUnitDataSet::HAS_LEAD_PRODUCT]));
+            ->setHasLeadProduct((bool)$dataSet[ProductPackagingUnitDataSet::HAS_LEAD_PRODUCT]);
 
         if ($productPackagingUnitEntity->isNew()) {
             $productPackagingUnitEntity
@@ -60,15 +60,19 @@ class ProductPackagingUnitWriterStep implements DataImportStepInterface
      */
     protected function persistLeadProduct(DataSetInterface $dataSet, SpyProductPackagingUnit $productPackagingUnitEntity): void
     {
-        if (boolval($dataSet[ProductPackagingUnitDataSet::IS_LEAD_PRODUCT])) {
-            $productPackagingLeadProdductEntity = SpyProductPackagingLeadProductQuery::create()
-                ->filterByFkProductAbstract($this->getProductAbstractIdByConcreteSku($dataSet[ProductPackagingUnitDataSet::CONCRETE_SKU]))
-                ->findOneOrCreate();
+        $shouldpersistLeadProduct = (bool)$dataSet[ProductPackagingUnitDataSet::IS_LEAD_PRODUCT];
 
-            $productPackagingLeadProdductEntity
-                ->setFkProduct($productPackagingUnitEntity->getFkProduct())
-                ->save();
+        if (!$shouldpersistLeadProduct) {
+            return;
         }
+
+        $productPackagingLeadProductEntity = SpyProductPackagingLeadProductQuery::create()
+            ->filterByFkProductAbstract($this->getProductAbstractIdByConcreteSku($dataSet[ProductPackagingUnitDataSet::CONCRETE_SKU]))
+            ->findOneOrCreate();
+
+        $productPackagingLeadProductEntity
+            ->setFkProduct($productPackagingUnitEntity->getFkProduct())
+            ->save();
     }
 
     /**
@@ -79,45 +83,47 @@ class ProductPackagingUnitWriterStep implements DataImportStepInterface
      */
     protected function persistAmount(DataSetInterface $dataSet, SpyProductPackagingUnit $productPackagingUnitEntity): void
     {
-        if (
-            (int)$dataSet[ProductPackagingUnitDataSet::DEFAULT_AMOUNT] > 1 &&
+        $shouldpersistAmount = (int)$dataSet[ProductPackagingUnitDataSet::DEFAULT_AMOUNT] > 1 &&
             (int)$dataSet[ProductPackagingUnitDataSet::AMOUNT_MIN] > 1 &&
             (int)$dataSet[ProductPackagingUnitDataSet::AMOUNT_MAX] > 1 &&
-            (int)$dataSet[ProductPackagingUnitDataSet::AMOUNT_INTERVAL] > 1
-        ) {
-            $productPackagingUnitAmountEntity = $productPackagingUnitEntity->getSpyProductPackagingUnitAmounts()->getFirst();
+            (int)$dataSet[ProductPackagingUnitDataSet::AMOUNT_INTERVAL] > 1;
 
-            if ($productPackagingUnitAmountEntity === null()) {
-                $productPackagingUnitAmountEntity = new SpyProductPackagingUnitAmount();
-                $productPackagingUnitAmountEntity
-                    ->setFkProductPackagingUnit($productPackagingUnitEntity->getIdProductPackagingUnit());
-            }
-
-            $productPackagingUnitAmountEntity
-                ->setIsVariable(boolval($dataSet[ProductPackagingUnitDataSet::IS_VARIABLE]))
-                ->setDefaultAmount((int)$dataSet[ProductPackagingUnitDataSet::DEFAULT_AMOUNT])
-                ->setAmountMin((int)$dataSet[ProductPackagingUnitDataSet::AMOUNT_MIN])
-                ->setAmountMax((int)$dataSet[ProductPackagingUnitDataSet::AMOUNT_MAX])
-                ->setAmountInterval((int)$dataSet[ProductPackagingUnitDataSet::AMOUNT_INTERVAL])
-                ->save();
+        if (!$shouldpersistAmount) {
+            return;
         }
+
+        $productPackagingUnitAmountEntity = $productPackagingUnitEntity->getSpyProductPackagingUnitAmounts()->getFirst();
+
+        if ($productPackagingUnitAmountEntity === null) {
+            $productPackagingUnitAmountEntity = new SpyProductPackagingUnitAmount();
+            $productPackagingUnitAmountEntity
+                ->setFkProductPackagingUnit($productPackagingUnitEntity->getIdProductPackagingUnit());
+        }
+
+        $productPackagingUnitAmountEntity
+            ->setIsVariable((bool)$dataSet[ProductPackagingUnitDataSet::IS_VARIABLE])
+            ->setDefaultAmount((int)$dataSet[ProductPackagingUnitDataSet::DEFAULT_AMOUNT])
+            ->setAmountMin((int)$dataSet[ProductPackagingUnitDataSet::AMOUNT_MIN])
+            ->setAmountMax((int)$dataSet[ProductPackagingUnitDataSet::AMOUNT_MAX])
+            ->setAmountInterval((int)$dataSet[ProductPackagingUnitDataSet::AMOUNT_INTERVAL])
+            ->save();
     }
 
     /**
      * @param string $name
      *
+     * @throws \Exception
+     *
      * @return int
      */
-    protected function getproductPackagingUnitTypeIdByname(string $name)
+    protected function getproductPackagingUnitTypeIdByname(string $name): int
     {
         $productPackagingUnitTypeEntity = SpyProductPackagingUnitTypeQuery::create()
-            ->filterByName($dataSet[ProductPackagingUnitDataSet::TYPE_NAME])
+            ->filterByName($name)
             ->findOneOrCreate();
-        
+
         if ($productPackagingUnitTypeEntity->isNew()) {
-            $productPackagingUnitTypeEntity
-                ->setName($dataSet[ProductPackagingUnitDataSet::TYPE_NAME])
-                ->save();
+            throw new Exception('Product Packaging Unit Type not found');
         }
 
         return $productPackagingUnitTypeEntity->getIdProductPackagingUnitType();
@@ -128,7 +134,7 @@ class ProductPackagingUnitWriterStep implements DataImportStepInterface
      *
      * @return int
      */
-    protected function getProductIdByConcreteSku(string $sku)
+    protected function getProductIdByConcreteSku(string $sku): int
     {
         return SpyProductQuery::create()
             ->filterBySku($sku)
@@ -141,11 +147,19 @@ class ProductPackagingUnitWriterStep implements DataImportStepInterface
      *
      * @return int
      */
-    protected function getProductAbstractIdByConcreteSku(string $sku)
+    protected function getProductAbstractIdByConcreteSku(string $sku): int
     {
         return SpyProductQuery::create()
             ->filterBySku($sku)
             ->findOne()
             ->getFkProductAbstract();
+    }
+
+    /**
+     * @return \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitQuery
+     */
+    protected function getProductPackagingUnitQuery(): SpyProductPackagingUnitQuery
+    {
+        return SpyProductPackagingUnitQuery::create();
     }
 }

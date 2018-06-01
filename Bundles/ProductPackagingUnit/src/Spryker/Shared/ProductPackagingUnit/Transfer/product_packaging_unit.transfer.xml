@@ -10,7 +10,11 @@
 
     <transfer name="ProductPackagingUnit">
         <property name="idProductPackagingUnit" type="int" />
-        <property name="type" type="ProductPackagingUnitType" />
+        <property name="productPackagingUnitType" type="ProductPackagingUnitType" />
+        <property name="productPackagingUnitAmount" type="ProductPackagingUnitAmount" />
+    </transfer>
+
+    <transfer name="ProductPackagingUnitAmount">
         <property name="isVariable" type="bool" />
         <property name="defaultAmount" type="int" />
         <property name="amountMin" type="int" />

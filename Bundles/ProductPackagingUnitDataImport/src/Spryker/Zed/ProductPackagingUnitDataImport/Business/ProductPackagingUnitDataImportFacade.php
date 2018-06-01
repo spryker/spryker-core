@@ -16,7 +16,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ProductPackagingUnitDataImportFacade extends AbstractFacade implements ProductPackagingUnitDataImportFacadeInterface
 {
-
     /**
      * {@inheritdoc}
      *
@@ -26,7 +25,7 @@ class ProductPackagingUnitDataImportFacade extends AbstractFacade implements Pro
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
-    public function importTypes(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
+    public function importProductPackagingUnitTypes(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
         return $this->getFactory()->createProductPackagingUnitTypeDataImport()->import($dataImporterConfigurationTransfer);
     }
@@ -40,7 +39,7 @@ class ProductPackagingUnitDataImportFacade extends AbstractFacade implements Pro
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
-    public function importAmounts(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
+    public function importProductPackagingUnits(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
         return $this->getFactory()->createProductPackagingUnitDataImport()->import($dataImporterConfigurationTransfer);
     }

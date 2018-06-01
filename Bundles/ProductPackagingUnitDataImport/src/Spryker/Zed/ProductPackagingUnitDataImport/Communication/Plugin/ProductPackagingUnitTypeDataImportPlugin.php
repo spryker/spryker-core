@@ -26,7 +26,7 @@ class ProductPackagingUnitTypeDataImportPlugin extends AbstractPlugin implements
     public function import(
         ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
     ): DataImporterReportTransfer {
-        return $this->getFacade()->importTypes($dataImporterConfigurationTransfer);
+        return $this->getFacade()->importProductPackagingUnitTypes($dataImporterConfigurationTransfer);
     }
 
     /**

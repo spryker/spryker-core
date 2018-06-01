@@ -10,8 +10,7 @@ namespace Spryker\Zed\ProductPackagingUnitDataImport\Business\Model;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitTypeQuery;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\ProductPackagingUnitDataImport\Business\Model\DataSet\ProductPackagingUnitDataSet;
-
+use Spryker\Zed\ProductPackagingUnitDataImport\Business\Model\DataSet\ProductPackagingUnitTypeDataSet;
 
 class ProductPackagingUnitTypeWriterStep implements DataImportStepInterface
 {
@@ -22,12 +21,20 @@ class ProductPackagingUnitTypeWriterStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $productPackagingUnitTypeEntity = SpyProductPackagingUnitTypeQuery::create()
-            ->filterByName($dataSet[ProductPackagingUnitDataSet::TYPE_NAME])
+        $productPackagingUnitTypeEntity = $this->getProductPackagingUnitTypeQuery()
+            ->filterByName($dataSet[ProductPackagingUnitTypeDataSet::NAME])
             ->findOneOrCreate();
 
-        $productPackagingUnitTypeEntity
-            ->setName($dataSet[ProductPackagingUnitDataSet::TYPE_NAME])
-            ->save();
+        if ($productPackagingUnitTypeEntity->isNew()) {
+            $productPackagingUnitTypeEntity->save();
+        }
+    }
+
+    /**
+     * @return \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitTypeQuery
+     */
+    protected function getProductPackagingUnitTypeQuery(): SpyProductPackagingUnitTypeQuery
+    {
+        return SpyProductPackagingUnitTypeQuery::create();
     }
 }
