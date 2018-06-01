@@ -15,6 +15,8 @@ use Spryker\Zed\PriceProductDataImport\Business\Model\Step\ConcreteSkuToIdProduc
 use Spryker\Zed\PriceProductDataImport\Business\Model\Step\CurrencyToIdCurrencyStep;
 use Spryker\Zed\PriceProductDataImport\Business\Model\Step\PreparePriceDataStep;
 use Spryker\Zed\PriceProductDataImport\Business\Model\Step\StoreToIdStoreStep;
+use Spryker\Zed\PriceProductDataImport\Dependency\Facade\PriceProductDataImportToPriceProductFacadeInterface;
+use Spryker\Zed\PriceProductDataImport\PriceProductDataImportDependencyProvider;
 
 /**
  * @method \Spryker\Zed\PriceProductDataImport\PriceProductDataImportConfig getConfig()
@@ -44,7 +46,7 @@ class PriceProductDataImportBusinessFactory extends DataImportBusinessFactory
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    protected function createAbstractSkuToIdProductAbstractStep(): DataImportStepInterface
+    public function createAbstractSkuToIdProductAbstractStep(): DataImportStepInterface
     {
         return new AbstractSkuToIdProductAbstractStep();
     }
@@ -52,7 +54,7 @@ class PriceProductDataImportBusinessFactory extends DataImportBusinessFactory
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    protected function createConcreteSkuToIdProductStep(): DataImportStepInterface
+    public function createConcreteSkuToIdProductStep(): DataImportStepInterface
     {
         return new ConcreteSkuToIdProductStep();
     }
@@ -60,7 +62,7 @@ class PriceProductDataImportBusinessFactory extends DataImportBusinessFactory
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    protected function createStoreToIdStoreStep(): DataImportStepInterface
+    public function createStoreToIdStoreStep(): DataImportStepInterface
     {
         return new StoreToIdStoreStep();
     }
@@ -68,7 +70,7 @@ class PriceProductDataImportBusinessFactory extends DataImportBusinessFactory
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    protected function createCurrencyToIdCurrencyStep(): DataImportStepInterface
+    public function createCurrencyToIdCurrencyStep(): DataImportStepInterface
     {
         return new CurrencyToIdCurrencyStep();
     }
@@ -76,8 +78,16 @@ class PriceProductDataImportBusinessFactory extends DataImportBusinessFactory
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    protected function createPreparePriceDataStep(): DataImportStepInterface
+    public function createPreparePriceDataStep(): DataImportStepInterface
     {
-        return new PreparePriceDataStep();
+        return new PreparePriceDataStep($this->getPriceProductFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductDataImport\Dependency\Facade\PriceProductDataImportToPriceProductFacadeInterface
+     */
+    public function getPriceProductFacade(): PriceProductDataImportToPriceProductFacadeInterface
+    {
+        return $this->getProvidedDependency(PriceProductDataImportDependencyProvider::FACADE_PRICE_PRODUCT);
     }
 }

@@ -305,4 +305,16 @@ interface PriceProductFacadeInterface
      * @return string
      */
     public function getPriceModeIdentifierForBothType();
+
+    /**
+     * Specification:
+     *  - Generates checksum hash for price data field.
+     *
+     * @api
+     *
+     * @param string $priceData
+     *
+     * @return string
+     */
+    public function generatePriceDataChecksum(string $priceData): string;
 }

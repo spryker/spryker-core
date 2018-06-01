@@ -10,6 +10,7 @@ use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\PriceProductDataImport\Business\Exception\InvalidPriceDataKeyException;
 use Spryker\Zed\PriceProductDataImport\Business\Model\DataSet\PriceProductDataSet;
+use Spryker\Zed\PriceProductDataImport\Dependency\Facade\PriceProductDataImportToPriceProductFacadeInterface;
 
 class PreparePriceDataStep implements DataImportStepInterface
 {
@@ -24,6 +25,19 @@ class PreparePriceDataStep implements DataImportStepInterface
     protected $isDataKeysCachePrepared = false;
 
     /**
+     * @var \Spryker\Zed\PriceProductDataImport\Dependency\Facade\PriceProductDataImportToPriceProductFacadeInterface
+     */
+    protected $priceProductFacade;
+
+    /**
+     * @param \Spryker\Zed\PriceProductDataImport\Dependency\Facade\PriceProductDataImportToPriceProductFacadeInterface $priceProductFacade
+     */
+    public function __construct(PriceProductDataImportToPriceProductFacadeInterface $priceProductFacade)
+    {
+        $this->priceProductFacade = $priceProductFacade;
+    }
+
+    /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
      * @return void
@@ -32,7 +46,13 @@ class PreparePriceDataStep implements DataImportStepInterface
     {
         $this->preparePriceDataKeysCache($dataSet);
         $dataSet[PriceProductDataSet::KEY_PRICE_DATA] = $this->getPriceData($dataSet);
-        $dataSet[PriceProductDataSet::KEY_PRICE_DATA_CHECKSUM] = $this->getPriceDataChecksum($dataSet[PriceProductDataSet::KEY_PRICE_DATA]);
+        if ($dataSet[PriceProductDataSet::KEY_PRICE_DATA] === null) {
+            $dataSet[PriceProductDataSet::KEY_PRICE_DATA_CHECKSUM] = null;
+
+            return;
+        }
+        $dataSet[PriceProductDataSet::KEY_PRICE_DATA_CHECKSUM] = $this->priceProductFacade
+            ->generatePriceDataChecksum($dataSet[PriceProductDataSet::KEY_PRICE_DATA]);
     }
 
     /**
@@ -89,14 +109,18 @@ class PreparePriceDataStep implements DataImportStepInterface
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
-     * @return string
+     * @return null|string
      */
-    protected function getPriceData(DataSetInterface $dataSet): string
+    protected function getPriceData(DataSetInterface $dataSet): ?string
     {
         $priceData = [];
 
         foreach ($this->priceDataKeysCache as $dataSetKey => $priceDataKey) {
             $priceData = $this->addPriceDataValue($priceData, $priceDataKey, $dataSet[$dataSetKey]);
+        }
+
+        if (empty($priceData)) {
+            return null;
         }
 
         return json_encode($priceData);
@@ -112,23 +136,11 @@ class PreparePriceDataStep implements DataImportStepInterface
     protected function addPriceDataValue(array $priceData, string $key, string $value): array
     {
         if (empty($value)) {
-            $priceData[$key] = [];
-
             return $priceData;
         }
 
         $priceData[$key] = json_decode($value, true);
 
         return $priceData;
-    }
-
-    /**
-     * @param string $priceData
-     *
-     * @return string
-     */
-    protected function getPriceDataChecksum(string $priceData): string
-    {
-        return hash('crc32b', $priceData);
     }
 }
