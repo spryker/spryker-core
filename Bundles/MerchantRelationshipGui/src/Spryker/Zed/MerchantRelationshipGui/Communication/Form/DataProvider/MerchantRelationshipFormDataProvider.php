@@ -67,14 +67,14 @@ class MerchantRelationshipFormDataProvider
      */
     public function getData(?int $idMerchantRelationship = null): MerchantRelationshipTransfer
     {
-        $merchantRelationship = $this->createMerchantRelationshipTransfer();
+        $merchantRelationshipTransfer = $this->createMerchantRelationshipTransfer();
         if (!$idMerchantRelationship) {
-            return $merchantRelationship;
+            return $merchantRelationshipTransfer;
         }
 
-        $merchantRelationship->setIdMerchantRelationship($idMerchantRelationship);
+        $merchantRelationshipTransfer->setIdMerchantRelationship($idMerchantRelationship);
 
-        return $this->merchantRelationshipFacade->getMerchantRelationshipById($merchantRelationship);
+        return $this->merchantRelationshipFacade->getMerchantRelationshipById($merchantRelationshipTransfer);
     }
 
     /**

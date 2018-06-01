@@ -216,15 +216,15 @@ class MerchantRelationshipCreateForm extends AbstractType
     private function getAssignedBusinessUnitReverseTransformer(): callable
     {
         return function ($data): CompanyBusinessUnitCollectionTransfer {
-            $businessUnitCollection = new CompanyBusinessUnitCollectionTransfer();
+            $companyBusinessUnitCollectionTransfer = new CompanyBusinessUnitCollectionTransfer();
             foreach ($data as $id) {
-                $businessUnitCollection->addCompanyBusinessUnit(
+                $companyBusinessUnitCollectionTransfer->addCompanyBusinessUnit(
                     (new CompanyBusinessUnitTransfer())
                         ->setIdCompanyBusinessUnit($id)
                 );
             }
 
-            return $businessUnitCollection;
+            return $companyBusinessUnitCollectionTransfer;
         };
     }
 }

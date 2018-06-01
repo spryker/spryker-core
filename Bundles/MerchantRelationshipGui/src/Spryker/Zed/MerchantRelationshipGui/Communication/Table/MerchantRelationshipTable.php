@@ -49,7 +49,7 @@ class MerchantRelationshipTable extends AbstractTable
      *
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
-    protected function configure(TableConfiguration $config)
+    protected function configure(TableConfiguration $config): TableConfiguration
     {
         $url = Url::generate('table', ['id-company' => $this->idCompany]);
 

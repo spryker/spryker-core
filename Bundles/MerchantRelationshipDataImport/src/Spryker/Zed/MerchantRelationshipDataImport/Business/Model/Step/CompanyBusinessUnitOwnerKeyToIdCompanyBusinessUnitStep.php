@@ -13,7 +13,7 @@ use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\DataImport\Business\Exception\InvalidDataException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\MerchantRelationshipDataImport\Business\Model\DataSet\MerchantRelationshipDataSet;
+use Spryker\Zed\MerchantRelationshipDataImport\Business\Model\DataSet\MerchantRelationshipDataSetInterface;
 
 class CompanyBusinessUnitOwnerKeyToIdCompanyBusinessUnitStep implements DataImportStepInterface
 {
@@ -32,9 +32,9 @@ class CompanyBusinessUnitOwnerKeyToIdCompanyBusinessUnitStep implements DataImpo
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $companyBusinessUnitKey = $dataSet[MerchantRelationshipDataSet::COMPANY_BUSINESS_UNIT_OWNER_KEY];
+        $companyBusinessUnitKey = $dataSet[MerchantRelationshipDataSetInterface::COMPANY_BUSINESS_UNIT_OWNER_KEY];
         if (!$companyBusinessUnitKey) {
-            throw new InvalidDataException('"' . MerchantRelationshipDataSet::COMPANY_BUSINESS_UNIT_OWNER_KEY . '" is required.');
+            throw new InvalidDataException('"' . MerchantRelationshipDataSetInterface::COMPANY_BUSINESS_UNIT_OWNER_KEY . '" is required.');
         }
 
         if (!isset($this->idCompanyBusinessUnitCache[$companyBusinessUnitKey])) {
@@ -49,6 +49,6 @@ class CompanyBusinessUnitOwnerKeyToIdCompanyBusinessUnitStep implements DataImpo
             $this->idCompanyBusinessUnitCache[$companyBusinessUnitKey] = $idCompanyBusinessUnit;
         }
 
-        $dataSet[MerchantRelationshipDataSet::ID_COMPANY_BUSINESS_UNIT] = $this->idCompanyBusinessUnitCache[$companyBusinessUnitKey];
+        $dataSet[MerchantRelationshipDataSetInterface::ID_COMPANY_BUSINESS_UNIT] = $this->idCompanyBusinessUnitCache[$companyBusinessUnitKey];
     }
 }

@@ -14,15 +14,15 @@ interface MerchantRelationshipRepositoryInterface
     /**
      * Specification:
      * - Returns a MerchantRelationshipTransfer by merchant relationship id.
-     * - Throws an exception in case a record is not found.
+     * - Returns null in case a record is not found.
      *
      * @api
      *
      * @param int $idMerchantRelationship
      *
-     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer|null
      */
-    public function getMerchantRelationshipById(int $idMerchantRelationship): MerchantRelationshipTransfer;
+    public function getMerchantRelationshipById(int $idMerchantRelationship): ?MerchantRelationshipTransfer;
 
     /**
      * Specification:

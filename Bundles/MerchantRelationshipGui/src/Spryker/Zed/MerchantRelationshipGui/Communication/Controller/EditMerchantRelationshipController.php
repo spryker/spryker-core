@@ -35,7 +35,7 @@ class EditMerchantRelationshipController extends AbstractController
 
         $dataProvider = $this->getFactory()->createMerchantRelationshipFormDataProvider();
         $merchantRelationshipTransfer = $dataProvider->getData($idMerchantRelationship);
-        $idCompany = $this->getCompanyIdFromTransfer($merchantRelationshipTransfer);
+        $idCompany = $this->getIdCompanyFromTransfer($merchantRelationshipTransfer);
         $merchantRelationshipForm = $this->getFactory()
             ->getMerchantRelationshipEditForm(
                 $merchantRelationshipTransfer,
@@ -81,7 +81,7 @@ class EditMerchantRelationshipController extends AbstractController
      *
      * @return int|null
      */
-    protected function getCompanyIdFromTransfer(MerchantRelationshipTransfer $merchantRelationshipTransfer): ?int
+    protected function getIdCompanyFromTransfer(MerchantRelationshipTransfer $merchantRelationshipTransfer): ?int
     {
         if ($merchantRelationshipTransfer->getOwnerCompanyBusinessUnit()) {
             return $merchantRelationshipTransfer->getOwnerCompanyBusinessUnit()->getFkCompany();

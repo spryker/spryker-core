@@ -12,7 +12,7 @@ use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
 use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\MerchantRelationshipDataImport\Business\Model\DataSet\MerchantRelationshipDataSet;
+use Spryker\Zed\MerchantRelationshipDataImport\Business\Model\DataSet\MerchantRelationshipDataSetInterface;
 
 class CompanyBusinessUnitAssigneeKeysToIdCompanyBusinessUnitCollectionStep implements DataImportStepInterface
 {
@@ -33,15 +33,15 @@ class CompanyBusinessUnitAssigneeKeysToIdCompanyBusinessUnitCollectionStep imple
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        if (!$dataSet[MerchantRelationshipDataSet::COMPANY_BUSINESS_UNIT_ASSIGNEE_KEYS]) {
-            $dataSet[MerchantRelationshipDataSet::ID_COMPANY_BUSINESS_UNIT_ASSIGNEE_COLLECTION] = [];
+        if (!$dataSet[MerchantRelationshipDataSetInterface::COMPANY_BUSINESS_UNIT_ASSIGNEE_KEYS]) {
+            $dataSet[MerchantRelationshipDataSetInterface::ID_COMPANY_BUSINESS_UNIT_ASSIGNEE_COLLECTION] = [];
 
             return;
         }
 
         $companyBusinessUnitKeys = explode(
             $this->getAssigneeDelimiter(),
-            $dataSet[MerchantRelationshipDataSet::COMPANY_BUSINESS_UNIT_ASSIGNEE_KEYS]
+            $dataSet[MerchantRelationshipDataSetInterface::COMPANY_BUSINESS_UNIT_ASSIGNEE_KEYS]
         );
 
         $companyBusinessUnitAssignee = [];
@@ -49,7 +49,7 @@ class CompanyBusinessUnitAssigneeKeysToIdCompanyBusinessUnitCollectionStep imple
             $companyBusinessUnitAssignee[] = $this->findIdCompanyBusinessUnit($companyBusinessUnitKey);
         }
 
-        $dataSet[MerchantRelationshipDataSet::ID_COMPANY_BUSINESS_UNIT_ASSIGNEE_COLLECTION] = $companyBusinessUnitAssignee;
+        $dataSet[MerchantRelationshipDataSetInterface::ID_COMPANY_BUSINESS_UNIT_ASSIGNEE_COLLECTION] = $companyBusinessUnitAssignee;
     }
 
     /**

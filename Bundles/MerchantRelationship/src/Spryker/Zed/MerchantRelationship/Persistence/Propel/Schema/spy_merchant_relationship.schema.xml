@@ -6,7 +6,7 @@
 
     <table name="spy_merchant_relationship" phpName="SpyMerchantRelationship">
         <column name="id_merchant_relationship" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
-        <column name="merchant_relationship_key" type="VARCHAR" size="255" description="For DataImport as identifier for existing entities. It should never be changed."/>
+        <column name="merchant_relationship_key" type="VARCHAR" size="255" description="Identifier for existing entities. It should never be changed."/>
         <column name="fk_merchant" required="true" type="INTEGER"/>
         <column name="fk_company_business_unit" required="true" type="INTEGER"/>
 
