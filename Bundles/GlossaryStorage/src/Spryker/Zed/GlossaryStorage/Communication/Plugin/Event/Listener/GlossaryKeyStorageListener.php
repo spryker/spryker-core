@@ -7,14 +7,17 @@
 
 namespace Spryker\Zed\GlossaryStorage\Communication\Plugin\Event\Listener;
 
+use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Glossary\Dependency\GlossaryEvents;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\GlossaryStorage\Communication\GlossaryStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\GlossaryStorage\Business\GlossaryStorageFacadeInterface getFacade()
  */
-class GlossaryKeyStorageListener extends AbstractGlossaryTranslationStorageListener
+class GlossaryKeyStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
@@ -34,9 +37,11 @@ class GlossaryKeyStorageListener extends AbstractGlossaryTranslationStorageListe
         if ($eventName === GlossaryEvents::ENTITY_SPY_GLOSSARY_KEY_DELETE ||
             $eventName === GlossaryEvents::GLOSSARY_KEY_UNPUBLISH
         ) {
-            $this->unpublish($glossaryKeyIds);
-        } else {
-            $this->publish($glossaryKeyIds);
+            $this->getFacade()->unpublish($glossaryKeyIds);
+
+            return;
         }
+
+        $this->getFacade()->publish($glossaryKeyIds);
     }
 }

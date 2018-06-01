@@ -1,0 +1,54 @@
+{
+  "name": "spryker/company-user-invitation",
+  "description": "CompanyUserInvitation module",
+  "license": "proprietary",
+  "require": {
+    "league/csv": "^8.1.0",
+    "php": ">=7.1",
+    "spryker/application": "^3.9.0",
+    "spryker/company-business-unit": "^1.1.0",
+    "spryker/company-user": "^1.0.0",
+    "spryker/customer-extension": "1.0.0",
+    "spryker/kernel": "^3.8.0",
+    "spryker/mail": "^4.0.2",
+    "spryker/permission-extension": "^1.0.0",
+    "spryker/propel-orm": "^1.6.1",
+    "spryker/util-text": "^1.2.1",
+    "spryker/zed-request": "^3.4.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/customer": "*",
+    "spryker/installer": "*",
+    "spryker/silex": "*",
+    "spryker/testify": "*",
+    "spryker/twig": "*"
+  },
+  "suggest": {
+    "spryker/installer": "You need to have Installer to set up values for invitation statuses",
+    "spryker/silex": "You need to have Silex installed to use the Config Profiler",
+    "spryker/twig": "You need to have Twig installed to use the Config Profiler",
+    "spryker/customer": "You need to have Customer installed create company users after registration"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Zed\\CompanyUserInvitation\\Helper\\": "tests/SprykerTest/Zed/CompanyUserInvitation/_support/Helper/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "3.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

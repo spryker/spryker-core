@@ -9,13 +9,15 @@ namespace Spryker\Zed\ProductStorage\Communication\Plugin\Event\Listener;
 
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductStorage\Communication\ProductStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductStorage\Business\ProductStorageFacadeInterface getFacade()
  */
-class ProductAbstractLocalizedAttributesStorageListener extends AbstractProductAbstractStorageListener implements EventBulkHandlerInterface
+class ProductAbstractLocalizedAttributesStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
@@ -35,6 +37,6 @@ class ProductAbstractLocalizedAttributesStorageListener extends AbstractProductA
             SpyProductAbstractLocalizedAttributesTableMap::COL_FK_PRODUCT_ABSTRACT
         );
 
-        $this->publish($productAbstractIds);
+        $this->getFacade()->publishAbstractProducts($productAbstractIds);
     }
 }
