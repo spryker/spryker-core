@@ -65,6 +65,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
     public const PRODUCT_CONCRETE_EDIT_FORM_EXPANDER_PLUGINS = 'PRODUCT_CONCRETE_EDIT_FORM_EXPANDER_PLUGINS';
     public const PRODUCT_CONCRETE_FORM_EDIT_DATA_PROVIDER_EXPANDER_PLUGINS = 'PRODUCT_CONCRETE_FORM_EDIT_DATA_PROVIDER_EXPANDER_PLUGINS';
     public const PRODUCT_FORM_TRANSFER_MAPPER_EXPANDER_PLUGINS = 'PRODUCT_FORM_TRANSFER_MAPPER_EXPANDER_PLUGINS';
+    public const PLUGINS_PRODUCT_CONCRETE_FORM_EDIT_TABS_EXPANDER = 'PLUGINS_PRODUCT_CONCRETE_FORM_EDIT_TABS_EXPANDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -227,6 +228,7 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addProductConcreteEditFormExpanderPlugins($container);
         $container = $this->addProductConcreteFormEditDataProviderExpanderPlugins($container);
         $container = $this->addProductFormTransferMapperExpanderPlugins($container);
+        $container = $this->addProductConcreteFormEditTabsExpanderPlugins($container);
 
         return $container;
     }
@@ -406,6 +408,28 @@ class ProductManagementDependencyProvider extends AbstractBundleDependencyProvid
      * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteFormEditDataProviderExpanderPluginInterface[]
      */
     protected function getProductFormTransferMapperExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductConcreteFormEditTabsExpanderPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_PRODUCT_CONCRETE_FORM_EDIT_TABS_EXPANDER] = function (Container $container) {
+            return $this->getProductConcreteFormEditTabsExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteFormEditTabsExpanderPluginInterface[]
+     */
+    protected function getProductConcreteFormEditTabsExpanderPlugins(): array
     {
         return [];
     }
