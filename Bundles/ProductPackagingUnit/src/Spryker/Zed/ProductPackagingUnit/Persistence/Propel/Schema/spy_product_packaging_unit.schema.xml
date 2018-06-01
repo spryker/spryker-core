@@ -5,6 +5,7 @@
         <column name="id_product_packaging_unit" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_product" type="INTEGER" required="true"/>
         <column name="fk_product_packaging_unit_type" type="INTEGER" required="true"/>
+        <column name="has_lead_product" type="BOOLEAN" required="false"/>
 
         <behavior name="timestampable"/>
 
@@ -25,6 +26,11 @@
         </index>
 
         <id-method-parameter value="spy_product_packaging_unit_pk_seq"/>
+
+        <unique name="spy_product_packaging_unit-fk_product-fk_product_packaging_unit_type">
+            <unique-column name="fk_product"/>
+            <unique-column name="fk_product_packaging_unit_type"/>
+        </unique>
     </table>
 
     <table name="spy_product_packaging_unit_type" phpName="SpyProductPackagingUnitType">
