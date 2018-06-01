@@ -5,21 +5,24 @@
   "require": {
     "php": ">=7.1",
     "spryker/cart-extension": "^1.2.0",
+    "spryker/event": "^2.0.0",
     "spryker/kernel": "^3.17.0",
     "spryker/persistent-cart-extension": "^1.0.0",
     "spryker/product": "^6.0.0",
     "spryker/propel-orm": "^1.6.0",
     "spryker/sales-extension": "^1.1.0",
     "spryker/store": "^1.0.0",
-    "spryker/util-measurement-unit-conversion": "^0.1.0"
+    "spryker/util-measurement-unit-conversion": "^0.1.0 || ^1.0.0"
   },
   "require-dev": {
     "spryker/cart": "*",
     "spryker/code-sniffer": "*",
+    "spryker/installer": "*",
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/cart": "If you want to use cart plugins: ^4.0.0"
+    "spryker/cart": "If you want to use cart plugins: ^4.0.0",
+    "spryker/installer": "If you want to use ProductMeasurementUnitInstallerPlugin. Minimum required version: ^4.0.0."
   },
   "autoload": {
     "psr-4": {
