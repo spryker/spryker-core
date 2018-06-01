@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\ProductMeasurementUnitStorage\Business;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\SpyProductMeasurementUnitEntityTransfer;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 
