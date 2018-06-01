@@ -21,7 +21,7 @@
                 <select id="company-select" class="form-control">
                     <option value="">{{ 'Select Company' | trans}}</option>
                     {%  for company in companies  %}
-                        <option value="{{ company.idCompany }}" {{ (company.idCompany == selectedCompany) ? 'selected' : '' }} >{{ company.name }}</option>
+                        <option value="{{ company.idCompany }}" {{ (company.idCompany == idCompany) ? 'selected' : '' }} >{{ company.name }}</option>
                     {% endfor %}
                 </select>
             </div>
