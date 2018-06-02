@@ -8,7 +8,7 @@
     "spryker/application": "^3.9.0",
     "spryker/company-business-unit": "^1.1.0",
     "spryker/company-user": "^1.0.0",
-    "spryker/customer-extension": "1.0.0",
+    "spryker/customer-extension": "^1.0.0",
     "spryker/kernel": "^3.8.0",
     "spryker/mail": "^4.0.2",
     "spryker/permission-extension": "^1.0.0",

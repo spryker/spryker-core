@@ -7,21 +7,21 @@
 
 namespace Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit;
 
-use Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer;
+use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 
 interface ProductMeasurementSalesUnitReaderInterface
 {
     /**
      * @param int $idProductMeasurementSalesUnit
      *
-     * @return \Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer
      */
-    public function getProductMeasurementSalesUnitEntity(int $idProductMeasurementSalesUnit): SpyProductMeasurementSalesUnitEntityTransfer;
+    public function getProductMeasurementSalesUnitTransfer(int $idProductMeasurementSalesUnit): ProductMeasurementSalesUnitTransfer;
 
     /**
      * @param int $idProduct
      *
-     * @return \Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer[]
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
      */
-    public function getProductMeasurementSalesUnitEntitiesByIdProduct(int $idProduct): array;
+    public function getProductMeasurementSalesUnitTransfersByIdProduct(int $idProduct): array;
 }
