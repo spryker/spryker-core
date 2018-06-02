@@ -8,6 +8,7 @@
 namespace Spryker\Client\BusinessOnBehalf\Zed;
 
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Client\BusinessOnBehalf\Dependency\Client\BusinessOnBehalfToZedRequestClientInterface;
 
@@ -40,5 +41,21 @@ class BusinessOnBehalfStub implements BusinessOnBehalfStubInterface
         );
 
         return $companyUserCollection;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     */
+    public function setDefaultCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer
+    {
+        /** @var \Generated\Shared\Transfer\CompanyUserTransfer $companyUser */
+        $companyUserTransfer = $this->zedRequestClient->call(
+            '/business-on-behalf/gateway/set-default-company-user',
+            $companyUserTransfer
+        );
+
+        return $companyUserTransfer;
     }
 }

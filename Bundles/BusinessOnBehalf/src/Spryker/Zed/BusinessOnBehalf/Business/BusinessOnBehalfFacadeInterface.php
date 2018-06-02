@@ -8,6 +8,7 @@
 namespace Spryker\Zed\BusinessOnBehalf\Business;
 
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
 interface BusinessOnBehalfFacadeInterface
@@ -41,4 +42,17 @@ interface BusinessOnBehalfFacadeInterface
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
     public function findActiveCompanyUsersByCustomerId(CustomerTransfer $customerTransfer): CompanyUserCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Deselects default company user is_default option.
+     * - Makes sent company user to be a default one.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     */
+    public function setDefaultCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer;
 }

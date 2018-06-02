@@ -8,6 +8,7 @@
 namespace Spryker\Client\BusinessOnBehalf;
 
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
 interface BusinessOnBehalfClientInterface
@@ -27,4 +28,13 @@ interface BusinessOnBehalfClientInterface
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
     public function findActiveCompanyUsersByCustomerId(CustomerTransfer $customerTransfer): CompanyUserCollectionTransfer;
+
+    /**
+     * @uses CompanyUser
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     */
+    public function setDefaultCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer;
 }

@@ -11,12 +11,14 @@ use Spryker\Zed\BusinessOnBehalf\Business\Model\CompanyUserCollectionFinder;
 use Spryker\Zed\BusinessOnBehalf\Business\Model\CompanyUserCollectionFinderInterface;
 use Spryker\Zed\BusinessOnBehalf\Business\Model\CustomerExpander;
 use Spryker\Zed\BusinessOnBehalf\Business\Model\CustomerExpanderInterface;
+use Spryker\Zed\BusinessOnBehalf\Business\Model\IsDefaultCompanyUserUpdater;
 use Spryker\Zed\BusinessOnBehalf\BusinessOnBehalfDependencyProvider;
 use Spryker\Zed\BusinessOnBehalf\Dependency\Facade\CompanyUserToBusinessOnBehalfFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\BusinessOnBehalf\Persistence\BusinessOnBehalfRepositoryInterface getRepository()
+ * @method \Spryker\Zed\BusinessOnBehalf\Persistence\BusinessOnBehalfEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\BusinessOnBehalf\BusinessOnBehalfConfig getConfig()
  */
 class BusinessOnBehalfBusinessFactory extends AbstractBusinessFactory
@@ -40,10 +42,17 @@ class BusinessOnBehalfBusinessFactory extends AbstractBusinessFactory
         );
     }
 
+    public function createIsDefaultCompanyUserUpdater()
+    {
+        return new IsDefaultCompanyUserUpdater(
+            $this->getEntityManager()
+        );
+    }
+
     /**
      * @return \Spryker\Zed\BusinessOnBehalf\Dependency\Facade\CompanyUserToBusinessOnBehalfFacadeInterface
      */
-    protected function getCompanyUserFacade(): CompanyUserToBusinessOnBehalfFacadeInterface
+    public function getCompanyUserFacade(): CompanyUserToBusinessOnBehalfFacadeInterface
     {
         return $this->getProvidedDependency(BusinessOnBehalfDependencyProvider::FACADE_COMPANY_USER);
     }

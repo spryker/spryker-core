@@ -20,6 +20,8 @@ class BusinessOnBehalfRepository extends AbstractRepository implements BusinessO
      *
      * @api
      *
+     * @uses CompanyUser
+     *
      * @param int $idCustomer
      *
      * @return bool
@@ -36,6 +38,8 @@ class BusinessOnBehalfRepository extends AbstractRepository implements BusinessO
      * {@inheritdoc}
      *
      * @api
+     *
+     * @uses CompanyUser
      *
      * @param int $idCustomer
      *
