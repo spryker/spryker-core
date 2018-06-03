@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPreSavePluginInterface;
 
-class ProductMeasurementSalesUnitOrderItemExpanderPreSavePlugin implements OrderItemExpanderPreSavePluginInterface
+class QuantitySalesUnitOrderItemExpanderPreSavePlugin implements OrderItemExpanderPreSavePluginInterface
 {
     /**
      * {@inheritdoc}
@@ -31,7 +31,18 @@ class ProductMeasurementSalesUnitOrderItemExpanderPreSavePlugin implements Order
             return $salesOrderItemEntity;
         }
 
-        $salesOrderItemEntity->setQuantityMeasurementUnitName($itemTransfer->getQuantitySalesUnit()->getProductMeasurementUnit()->getName());
+        $quantityBaseMeasurementUnitName = $itemTransfer->getQuantitySalesUnit()
+            ->getProductMeasurementBaseUnit()
+            ->getProductMeasurementUnit()
+            ->getName();
+
+        $quantityMeasurementUnitName = $itemTransfer->getQuantitySalesUnit()
+            ->getProductMeasurementUnit()
+            ->getName();
+
+        $salesOrderItemEntity->setQuantityBaseMeasurementUnitName($quantityBaseMeasurementUnitName);
+        $salesOrderItemEntity->setQuantityMeasurementUnitName($quantityMeasurementUnitName);
+
         $salesOrderItemEntity->setQuantityMeasurementUnitPrecision($itemTransfer->getQuantitySalesUnit()->getPrecision());
         $salesOrderItemEntity->setQuantityMeasurementUnitConversion($itemTransfer->getQuantitySalesUnit()->getConversion());
 
