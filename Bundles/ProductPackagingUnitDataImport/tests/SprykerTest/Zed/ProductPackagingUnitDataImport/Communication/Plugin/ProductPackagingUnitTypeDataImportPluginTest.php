@@ -2,6 +2,7 @@
 namespace SprykerTest\Zed\ProductPackagingUnitDataImport\Communication\Plugin;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Spryker\Zed\ProductPackagingUnitDataImport\Communication\Plugin\ProductPackagingUnitTypeDataImportPlugin;
@@ -15,6 +16,7 @@ use Spryker\Zed\ProductPackagingUnitDataImport\ProductPackagingUnitDataImportCon
  * @group Communication
  * @group Plugin
  * @group ProductPackagingUnitTypeDataImportPluginTest
+ * Add your own group annotations below this line
  */
 class ProductPackagingUnitTypeDataImportPluginTest extends Unit
 {
@@ -28,8 +30,9 @@ class ProductPackagingUnitTypeDataImportPluginTest extends Unit
      */
     public function testImportImportsData(): void
     {
-        $this->tester->ensureDatabaseTableIsEmpty();
-        $this->tester->assertDatabaseTableIsEmpty();
+        $this->tester->truncateProductPackagingUnits();
+        $this->tester->truncateProductPackagingUnitTypes();
+        $this->tester->assertProductPackagingUnitTypeTableIsEmtpy();
 
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
         $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/product_packaging_unit_type.csv');
@@ -41,8 +44,9 @@ class ProductPackagingUnitTypeDataImportPluginTest extends Unit
         $dataImporterReportTransfer = $dataImportPlugin->import($dataImportConfigurationTransfer);
 
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
+        $this->assertTrue($dataImporterReportTransfer->getIsSuccess());
 
-        $this->tester->assertDatabaseTableContainsData();
+        $this->tester->assertProductPackagingUnitTypeTableHasRecords();
     }
 
     /**

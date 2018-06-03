@@ -2,8 +2,11 @@
 namespace SprykerTest\Zed\ProductPackagingUnitDataImport\Communication\Plugin;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
+use Generated\Shared\Transfer\SpyProductEntityTransfer;
+use Generated\Shared\Transfer\SpyProductPackagingUnitTypeEntityTransfer;
 use Spryker\Zed\ProductPackagingUnitDataImport\Communication\Plugin\ProductPackagingUnitDataImportPlugin;
 use Spryker\Zed\ProductPackagingUnitDataImport\ProductPackagingUnitDataImportConfig;
 
@@ -15,9 +18,13 @@ use Spryker\Zed\ProductPackagingUnitDataImport\ProductPackagingUnitDataImportCon
  * @group Communication
  * @group Plugin
  * @group ProductPackagingUnitDataImportPluginTest
+ * Add your own group annotations below this line
  */
 class ProductPackagingUnitDataImportPluginTest extends Unit
 {
+    protected const PRODUCT_SKU = 'test_concrete_sku_1';
+    protected const PACKAGING_TYPE = 'box';
+
     /**
      * @var \SprykerTest\Zed\ProductPackagingUnitDataImport\ProductPackagingUnitDataImportCommunicationTester
      */
@@ -28,8 +35,13 @@ class ProductPackagingUnitDataImportPluginTest extends Unit
      */
     public function testImportImportsData(): void
     {
-        $this->tester->ensureDatabaseTableIsEmpty();
-        $this->tester->assertDatabaseTableIsEmpty();
+        $this->tester->truncateProductPackagingUnitTypes();
+        $this->tester->truncateProductPackagingUnits();
+        $this->tester->assertProductPackagingUnitTableIsEmtpy();
+        $this->tester->assertProductPackagingUnitTypeTableIsEmtpy();
+
+        $this->tester->haveProductPackagingUnitType([SpyProductPackagingUnitTypeEntityTransfer::NAME => static::PACKAGING_TYPE]);
+        $this->tester->haveProduct([SpyProductEntityTransfer::SKU => static::PRODUCT_SKU]);
 
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
         $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/product_packaging_unit.csv');
@@ -41,8 +53,9 @@ class ProductPackagingUnitDataImportPluginTest extends Unit
         $dataImporterReportTransfer = $dataImportPlugin->import($dataImportConfigurationTransfer);
 
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
+        $this->assertTrue($dataImporterReportTransfer->getIsSuccess());
 
-        $this->tester->assertDatabaseTableContainsData();
+        $this->tester->assertProductPackagingUnitTableHasRecords();
     }
 
     /**

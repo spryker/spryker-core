@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductPackagingUnitDataImport\Business\Model;
 
-use Exception;
 use Orm\Zed\Product\Persistence\SpyProductPackagingLeadProductQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnit;
@@ -17,6 +16,7 @@ use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitTypeQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
+use Spryker\Zed\ProductPackagingUnitDataImport\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\ProductPackagingUnitDataImport\Business\Model\DataSet\ProductPackagingUnitDataSet;
 
 class ProductPackagingUnitWriterStep implements DataImportStepInterface
@@ -35,7 +35,11 @@ class ProductPackagingUnitWriterStep implements DataImportStepInterface
             ->useProductPackagingUnitTypeQuery(null, Criteria::LEFT_JOIN)
                 ->filterByName($dataSet[ProductPackagingUnitDataSet::TYPE_NAME])
             ->endUse()
-            ->findOneOrCreate();
+            ->findOne();
+
+        if ($productPackagingUnitEntity === null) {
+            $productPackagingUnitEntity = new SpyProductPackagingUnit();
+        }
 
         $productPackagingUnitEntity
             ->setHasLeadProduct((bool)$dataSet[ProductPackagingUnitDataSet::HAS_LEAD_PRODUCT]);
@@ -112,7 +116,7 @@ class ProductPackagingUnitWriterStep implements DataImportStepInterface
     /**
      * @param string $name
      *
-     * @throws \Exception
+     * @throws \Spryker\Zed\ProductPackagingUnitDataImport\Business\Exception\EntityNotFoundException
      *
      * @return int
      */
@@ -123,7 +127,7 @@ class ProductPackagingUnitWriterStep implements DataImportStepInterface
             ->findOneOrCreate();
 
         if ($productPackagingUnitTypeEntity->isNew()) {
-            throw new Exception('Product Packaging Unit Type not found');
+            throw new EntityNotFoundException(sprintf("Product Packaging Unit Type '%s' not found", $name));
         }
 
         return $productPackagingUnitTypeEntity->getIdProductPackagingUnitType();
@@ -132,14 +136,22 @@ class ProductPackagingUnitWriterStep implements DataImportStepInterface
     /**
      * @param string $sku
      *
+     * @throws \Spryker\Zed\ProductPackagingUnitDataImport\Business\Exception\EntityNotFoundException
+     *
      * @return int
      */
     protected function getProductIdByConcreteSku(string $sku): int
     {
-        return SpyProductQuery::create()
+
+        $productEntity = SpyProductQuery::create()
             ->filterBySku($sku)
-            ->findOne()
-            ->getIdProduct();
+            ->findOne();
+
+        if ($productEntity === null) {
+            throw new EntityNotFoundException(sprintf("Concrete Product with sku '%s' not found", $sku));
+        }
+
+        return $productEntity->getIdProduct();
     }
 
     /**

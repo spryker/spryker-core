@@ -23,7 +23,8 @@ class ProductPackagingUnitDataImportConfig extends DataImportConfig
     {
         return $this->buildImporterConfiguration(
             implode(DIRECTORY_SEPARATOR, [$this->getModuleDataImportDirectory(), 'product_packaging_unit.csv']),
-            static::IMPORT_TYPE_PRODUCT_PACKAGING_UNIT);
+            static::IMPORT_TYPE_PRODUCT_PACKAGING_UNIT
+        );
     }
 
     /**
@@ -33,7 +34,8 @@ class ProductPackagingUnitDataImportConfig extends DataImportConfig
     {
         return $this->buildImporterConfiguration(
             implode(DIRECTORY_SEPARATOR, [$this->getModuleDataImportDirectory(), 'product_packaging_unit_type.csv']),
-            static::IMPORT_TYPE_PRODUCT_PACKAGING_UNIT_TYPE);
+            static::IMPORT_TYPE_PRODUCT_PACKAGING_UNIT_TYPE
+        );
     }
 
     /**
