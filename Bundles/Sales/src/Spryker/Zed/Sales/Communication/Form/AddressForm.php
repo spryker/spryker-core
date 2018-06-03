@@ -116,7 +116,7 @@ class AddressForm extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $choices
      *
-     * @return \Spryker\Zed\Sales\Communication\Form\AddressForm
+     * @return $this
      */
     protected function addSalutationField(FormBuilderInterface $builder, array $choices)
     {

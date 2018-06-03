@@ -48,9 +48,9 @@ class CompanyForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return \Spryker\Zed\CompanyGui\Communication\Form\CompanyForm
+     * @return $this
      */
-    protected function addIdCompanyField(FormBuilderInterface $builder): CompanyForm
+    protected function addIdCompanyField(FormBuilderInterface $builder): self
     {
         $builder->add(static::FIELD_ID_COMPANY, HiddenType::class);
 
@@ -60,9 +60,9 @@ class CompanyForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return \Spryker\Zed\CompanyGui\Communication\Form\CompanyForm
+     * @return $this
      */
-    protected function addNameField(FormBuilderInterface $builder): CompanyForm
+    protected function addNameField(FormBuilderInterface $builder): self
     {
         $builder->add(static::FIELD_NAME, TextType::class, [
             'label' => 'Name',
