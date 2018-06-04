@@ -6,5 +6,8 @@
     <transfer name="DatasetFilename">
         <property name="filename" type="string"/>
     </transfer>
+    <transfer name="DatasetFilePath">
+        <property name="filePath" type="string"/>
+    </transfer>
 
 </transfers>

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Dataset\Communication\Controller;
 
+use Exception;
+use Generated\Shared\Transfer\DatasetFilePathTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Dataset\Business\Exception\DatasetParseException;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
@@ -16,12 +18,11 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\Dataset\Business\DatasetFacade getFacade()
  * @method \Spryker\Zed\Dataset\Communication\DatasetCommunicationFactory getFactory()
- * @method \Spryker\Zed\Dataset\Persistence\DatasetQueryContainer getQueryContainer()
  */
 
 class AddController extends AbstractController
 {
-    const MESSAGE_DATASET_PARSE_ERROR = 'Not valid file';
+    const MESSAGE_DATASET_PARSE_ERROR = 'Something wrong';
     const DATSET_LIST_URL = '/dataset';
 
     /**
@@ -33,17 +34,21 @@ class AddController extends AbstractController
     {
         $form = $this->getFactory()->createDatasetForm()->handleRequest($request);
 
-        if ($form->isValid()) {
-            $saveRequestTransfer = $form->getData();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $datasetEntityTransfer = $form->getData();
             $file = $form->get('contentFile')->getData();
-            $filePath = ($file instanceof UploadedFile) ? $file->getRealPath() : null;
+            $filePathTransfer = new DatasetFilePathTransfer();
+            if ($file instanceof UploadedFile) {
+                $filePathTransfer->setFilePath($file->getRealPath());
+            }
             try {
-                $this->getFacade()->save($saveRequestTransfer, $filePath);
-
+                $this->getFacade()->save($datasetEntityTransfer, $filePathTransfer);
                 $redirectUrl = Url::generate(static::DATSET_LIST_URL)->build();
 
                 return $this->redirectResponse($redirectUrl);
             } catch (DatasetParseException $e) {
+                $this->addErrorMessage($e->getMessage());
+            } catch (Exception $e) {
                 $this->addErrorMessage(static::MESSAGE_DATASET_PARSE_ERROR);
             }
         }

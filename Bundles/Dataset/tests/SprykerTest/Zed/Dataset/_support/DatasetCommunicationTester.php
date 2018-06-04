@@ -21,8 +21,4 @@ use Codeception\Actor;
 class DatasetCommunicationTester extends Actor
 {
     use _generated\DatasetCommunicationTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 }

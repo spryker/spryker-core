@@ -115,12 +115,4 @@ class DatasetLocalizedAttributesForm extends AbstractType
 
         return $this;
     }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'dataset_attributes';
-    }
 }

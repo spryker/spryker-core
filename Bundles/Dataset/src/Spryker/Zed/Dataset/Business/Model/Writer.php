@@ -8,10 +8,10 @@
 namespace Spryker\Zed\Dataset\Business\Model;
 
 use Generated\Shared\Transfer\SpyDatasetEntityTransfer;
-use League\Csv\Writer;
+use League\Csv\Writer as CsvWriter;
 use SplTempFileObject;
 
-class WriterManager implements WriterManagerInterface
+class Writer implements WriterInterface
 {
     /**
      * @var \Spryker\Zed\Dataset\Business\Model\DatasetFinderInterface
@@ -31,7 +31,7 @@ class WriterManager implements WriterManagerInterface
      *
      * @return string
      */
-    public function getDatasetContentBy(SpyDatasetEntityTransfer $datasetTransfer)
+    public function exportToCsv(SpyDatasetEntityTransfer $datasetTransfer)
     {
         $writer = $this->getWriter();
         $this->insertDataByTransfer($writer, $datasetTransfer);
@@ -45,7 +45,7 @@ class WriterManager implements WriterManagerInterface
      *
      * @return void
      */
-    protected function insertDataByTransfer(Writer $writer, SpyDatasetEntityTransfer $datasetTransfer)
+    protected function insertDataByTransfer(CsvWriter $writer, SpyDatasetEntityTransfer $datasetTransfer)
     {
         $rowValues = [];
         $headerUnique = [];
@@ -73,6 +73,6 @@ class WriterManager implements WriterManagerInterface
      */
     protected function getWriter()
     {
-        return Writer::createFromFileObject(new SplTempFileObject());
+        return CsvWriter::createFromFileObject(new SplTempFileObject());
     }
 }

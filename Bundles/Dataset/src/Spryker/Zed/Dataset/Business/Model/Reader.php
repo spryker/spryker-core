@@ -9,15 +9,15 @@ namespace Spryker\Zed\Dataset\Business\Model;
 
 use ArrayObject;
 use Exception;
+use Generated\Shared\Transfer\DatasetFilePathTransfer;
 use Generated\Shared\Transfer\SpyDatasetColumnEntityTransfer;
 use Generated\Shared\Transfer\SpyDatasetRowColumnValueEntityTransfer;
 use Generated\Shared\Transfer\SpyDatasetRowEntityTransfer;
-use League\Csv\CharsetConverter;
-use League\Csv\Reader;
+use League\Csv\Reader as CsvReader;
 use Spryker\Zed\Dataset\Business\Exception\DatasetParseException;
 use Spryker\Zed\Dataset\Business\Exception\DatasetParseFormatException;
 
-class ReaderManager implements ReaderManagerInterface
+class Reader implements ReaderInterface
 {
     const OPEN_MODE = 'r';
     const HEADER_OFFSET = 0;
@@ -27,27 +27,26 @@ class ReaderManager implements ReaderManagerInterface
     const UTF_8 = 'utf-8';
 
     /**
-     * @param string $filePath
+     * @param \Generated\Shared\Transfer\DatasetFilePathTransfer $filePathTransfer
      *
      * @throws \Spryker\Zed\Dataset\Business\Exception\DatasetParseException
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\SpyDatasetRowColumnValueEntityTransfer[]
      */
-    public function convertFileToDataTransfers($filePath)
+    public function convertFileToDataTransfers(DatasetFilePathTransfer $filePathTransfer)
     {
-        /** @var \League\Csv\Reader $result */
-        $result = $this->getReader($filePath);
+        $reader = $this->getReader($filePathTransfer);
         $datasetRowColumnValueTransfers = new ArrayObject();
-        $datasetColumnValueTransfers = $this->getDatasetColumnTransfers($result);
+        $datasetColumnValueTransfers = $this->getDatasetColumnTransfers($reader);
 
-        foreach ($result as $row) {
+        foreach ($reader as $row) {
             $rowTitle = array_shift($row);
             $values = array_values($row);
             $datasetRowValueTransfer = $this->getDatasetRowEntityTransfer($rowTitle);
 
             foreach ($values as $key => $value) {
                 if ($value === null) {
-                    throw new DatasetParseException();
+                    throw new DatasetParseException("Values can't be empty.");
                 }
                 $datasetRowColumnValueTransfers->append($this->getDatasetRowColumnValueEntityTransfer(
                     $datasetColumnValueTransfers[$key],
@@ -61,27 +60,33 @@ class ReaderManager implements ReaderManagerInterface
     }
 
     /**
-     * @param string $filePath
+     * @param \Generated\Shared\Transfer\DatasetFilePathTransfer $filePathTransfer
      *
      * @throws \Spryker\Zed\Dataset\Business\Exception\DatasetParseException
      *
      * @return \League\Csv\Reader
      */
-    protected function getReader($filePath)
+    protected function getReader(DatasetFilePathTransfer $filePathTransfer)
     {
         try {
             /** @var \League\Csv\Reader $csv */
-            $csv = Reader::createFromPath($filePath, static::OPEN_MODE);
+            $csv = $this->createCsvReader($filePathTransfer);
             $csv->setHeaderOffset(static::HEADER_OFFSET);
         } catch (Exception $e) {
-            throw new DatasetParseException();
-        }
-        $inputBom = $csv->getInputBOM();
-        if ($inputBom === Reader::BOM_UTF16_LE || $inputBom === Reader::BOM_UTF16_BE) {
-            CharsetConverter::addTo($csv, static::UTF_16, static::UTF_8);
+            throw new DatasetParseException('Not valid csv file');
         }
 
         return $csv;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DatasetFilePathTransfer $filePathTransfer
+     *
+     * @return \League\Csv\Reader
+     */
+    protected function createCsvReader(DatasetFilePathTransfer $filePathTransfer)
+    {
+        return CsvReader::createFromPath($filePathTransfer->getFilePath(), static::OPEN_MODE);
     }
 
     /**
@@ -91,11 +96,11 @@ class ReaderManager implements ReaderManagerInterface
      *
      * @return \Generated\Shared\Transfer\SpyDatasetColumnEntityTransfer[]
      */
-    protected function getDatasetColumnTransfers(Reader $result)
+    protected function getDatasetColumnTransfers(CsvReader $reader)
     {
-        $columns = $result->getHeader();
+        $columns = $reader->getHeader();
         if (count($columns) <= static::MIN_COLUMNS || !empty($columns[static::FIRST_HEADER_KEY])) {
-            throw new DatasetParseFormatException();
+            throw new DatasetParseFormatException("First title column must be empty and document can't be empty");
         }
         unset($columns[static::FIRST_HEADER_KEY]);
 

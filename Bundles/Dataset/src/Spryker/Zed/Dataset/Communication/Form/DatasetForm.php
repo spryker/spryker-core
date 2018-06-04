@@ -24,9 +24,9 @@ use Symfony\Component\Validator\Constraints\Required;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
+ * @method \Spryker\Zed\Dataset\DatasetConfig getConfig()
  * @method \Spryker\Zed\Dataset\Business\DatasetFacadeInterface getFacade()
  * @method \Spryker\Zed\Dataset\Communication\DatasetCommunicationFactory getFactory()
- * @method \Spryker\Zed\Dataset\Persistence\DatasetQueryContainerInterface getQueryContainer()
  */
 class DatasetForm extends AbstractType
 {
@@ -40,14 +40,6 @@ class DatasetForm extends AbstractType
     const OPTION_AVAILABLE_LOCALES = 'option_available_locales';
     const DATASET_HAS_DATA = 'datasetHasData';
     const GROUP_UNIQUE_DATASET_NAME_CHECK = 'unique_dataset_name_check';
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'dataset';
-    }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -155,7 +147,7 @@ class DatasetForm extends AbstractType
      *
      * @return $this
      */
-    protected function addDatasetLocalizedAttributesForm(FormBuilderInterface $builder, array $options = null)
+    protected function addDatasetLocalizedAttributesForm(FormBuilderInterface $builder, ?array $options = null)
     {
         $builder->add(static::DATASET_LOCALIZED_ATTRIBUTES, CollectionType::class, [
             'entry_type' => $this->getFactory()->getDatasetLocalizedAttributesForm(),
@@ -174,14 +166,14 @@ class DatasetForm extends AbstractType
      *
      * @return $this
      */
-    protected function addDatasetContentField(FormBuilderInterface $builder, array $options = null)
+    protected function addDatasetContentField(FormBuilderInterface $builder, ?array $options = null)
     {
         $builder->add(static::DATASET_FILE_CONTENT, FileType::class, [
             'required' => empty($options[static::DATASET_HAS_DATA]),
             'mapped' => false,
             'constraints' => [
                 new File([
-                    'maxSize' => '1M',
+                    'maxSize' => $this->getConfig()->getMaxFileSize(),
                     'mimeTypes' => [
                         'text/csv',
                         'text/x-csv',

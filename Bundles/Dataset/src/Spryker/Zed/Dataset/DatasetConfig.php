@@ -11,4 +11,12 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class DatasetConfig extends AbstractBundleConfig
 {
+    public const DEFAULT_SIZE = '1M';
+    public const DATASET_FILE_SIZE = 'DATASET_FILE_SIZE';
+
+    public function getMaxFileSize()
+    {
+        return $path = $this->getConfig()->hasValue(static::DATASET_FILE_SIZE) ?
+            $this->getConfig()->get(static::DATASET_FILE_SIZE) : static::DEFAULT_SIZE;
+    }
 }

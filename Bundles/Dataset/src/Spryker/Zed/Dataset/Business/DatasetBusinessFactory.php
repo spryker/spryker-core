@@ -7,20 +7,17 @@
 
 namespace Spryker\Zed\Dataset\Business;
 
-use Spryker\Zed\Dataset\Business\Model\DatasetColumnSaver;
 use Spryker\Zed\Dataset\Business\Model\DatasetFinder;
-use Spryker\Zed\Dataset\Business\Model\DatasetLocalizedAttributesSaver;
-use Spryker\Zed\Dataset\Business\Model\DatasetRowColumnValueSaver;
-use Spryker\Zed\Dataset\Business\Model\DatasetRowSaver;
 use Spryker\Zed\Dataset\Business\Model\DatasetSaver;
-use Spryker\Zed\Dataset\Business\Model\DownloaderManager;
-use Spryker\Zed\Dataset\Business\Model\ReaderManager;
-use Spryker\Zed\Dataset\Business\Model\WriterManager;
+use Spryker\Zed\Dataset\Business\Model\Downloader;
+use Spryker\Zed\Dataset\Business\Model\Reader;
+use Spryker\Zed\Dataset\Business\Model\Writer;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
+ * @method \Spryker\Zed\Dataset\Persistence\DatasetRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Dataset\Persistence\DatasetEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\Dataset\DatasetConfig getConfig()
- * @method \Spryker\Zed\Dataset\Persistence\DatasetQueryContainerInterface getQueryContainer()
  */
 class DatasetBusinessFactory extends AbstractBusinessFactory
 {
@@ -29,7 +26,10 @@ class DatasetBusinessFactory extends AbstractBusinessFactory
      */
     public function createDatasetFinder()
     {
-        return new DatasetFinder($this->getQueryContainer());
+        return new DatasetFinder(
+            $this->getRepository(),
+            $this->getEntityManager()
+        );
     }
 
     /**
@@ -38,66 +38,32 @@ class DatasetBusinessFactory extends AbstractBusinessFactory
     public function createDatasetSaver()
     {
         return new DatasetSaver(
-            $this->createDatasetFinder(),
-            $this->createDatasetLocalizedAttributesSaver(),
-            $this->createDatasetRowColumnValueSaver(),
-            $this->createReaderManager()
+            $this->getEntityManager(),
+            $this->createReader()
         );
     }
 
     /**
-     * @return \Spryker\Zed\Dataset\Business\Model\DatasetLocalizedAttributesSaverInterface
+     * @return \Spryker\Zed\Dataset\Business\Model\ReaderInterface
      */
-    public function createDatasetLocalizedAttributesSaver()
+    public function createReader()
     {
-        return new DatasetLocalizedAttributesSaver();
+        return new Reader();
     }
 
     /**
-     * @return \Spryker\Zed\Dataset\Business\Model\DatasetColumnSaverInterface
+     * @return \Spryker\Zed\Dataset\Business\Model\WriterInterface
      */
-    public function createDatasetColumnSaver()
+    public function createWriter()
     {
-        return new DatasetColumnSaver($this->createDatasetFinder());
+        return new Writer($this->createDatasetFinder());
     }
 
     /**
-     * @return \Spryker\Zed\Dataset\Business\Model\DatasetRowSaverInterface
+     * @return \Spryker\Zed\Dataset\Business\Model\DownloaderInterface
      */
-    public function createDatasetRowSaver()
+    public function createDownloader()
     {
-        return new DatasetRowSaver($this->createDatasetFinder());
-    }
-
-    /**
-     * @return \Spryker\Zed\Dataset\Business\Model\DatasetRowColumnValueSaverInterface
-     */
-    public function createDatasetRowColumnValueSaver()
-    {
-        return new DatasetRowColumnValueSaver($this->createDatasetColumnSaver(), $this->createDatasetRowSaver());
-    }
-
-    /**
-     * @return \Spryker\Zed\Dataset\Business\Model\ReaderManagerInterface
-     */
-    public function createReaderManager()
-    {
-        return new ReaderManager();
-    }
-
-    /**
-     * @return \Spryker\Zed\Dataset\Business\Model\WriterManagerInterface
-     */
-    public function createWriterManager()
-    {
-        return new WriterManager($this->createDatasetFinder());
-    }
-
-    /**
-     * @return \Spryker\Zed\Dataset\Business\Model\DownloaderManagerInterface
-     */
-    public function createDownloaderManager()
-    {
-        return new DownloaderManager();
+        return new Downloader();
     }
 }

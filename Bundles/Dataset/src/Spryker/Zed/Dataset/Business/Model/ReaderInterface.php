@@ -7,14 +7,16 @@
 
 namespace Spryker\Zed\Dataset\Business\Model;
 
-interface ReaderManagerInterface
+use Generated\Shared\Transfer\DatasetFilePathTransfer;
+
+interface ReaderInterface
 {
     /**
-     * @param string $filePath
+     * @param \Generated\Shared\Transfer\DatasetFilePathTransfer $filePathTransfer
      *
      * @throws \Spryker\Zed\Dataset\Business\Exception\DatasetParseException
      *
      * @return \Generated\Shared\Transfer\SpyDatasetRowColumnValueEntityTransfer[]
      */
-    public function convertFileToDataTransfers($filePath);
+    public function convertFileToDataTransfers(DatasetFilePathTransfer $filePathTransfer);
 }

@@ -16,7 +16,6 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 /**
  * @method \Spryker\Zed\Dataset\Business\DatasetFacadeInterface getFacade()
  * @method \Spryker\Zed\Dataset\Communication\DatasetCommunicationFactory getFactory()
- * @method \Spryker\Zed\Dataset\Persistence\DatasetQueryContainerInterface getQueryContainer()
  */
 class DownloadController extends AbstractController
 {
@@ -34,7 +33,7 @@ class DownloadController extends AbstractController
     public function indexAction(Request $request)
     {
         $idDataset = $this->castId($request->query->get(static::URL_PARAM_ID_DATASET));
-        $datasetTransfer = $this->getFacade()->getDatasetTransferById($idDataset);
+        $datasetTransfer = $this->getFacade()->getDatasetModelById($idDataset);
 
         return $this->createResponse($datasetTransfer);
     }
@@ -46,7 +45,7 @@ class DownloadController extends AbstractController
      */
     protected function createResponse(SpyDatasetEntityTransfer $datasetTransfer)
     {
-        $content = $this->getFacade()->getDatasetContent($datasetTransfer);
+        $content = $this->getFacade()->exportToCsv($datasetTransfer);
         $response = new Response($content);
         $disposition = $response->headers->makeDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,

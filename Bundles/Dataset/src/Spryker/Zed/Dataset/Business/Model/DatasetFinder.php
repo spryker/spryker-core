@@ -7,29 +7,29 @@
 
 namespace Spryker\Zed\Dataset\Business\Model;
 
-use Generated\Shared\Transfer\SpyDatasetColumnEntityTransfer;
-use Generated\Shared\Transfer\SpyDatasetEntityTransfer;
-use Generated\Shared\Transfer\SpyDatasetLocalizedAttributesEntityTransfer;
-use Generated\Shared\Transfer\SpyDatasetRowColumnValueEntityTransfer;
-use Generated\Shared\Transfer\SpyDatasetRowEntityTransfer;
-use Orm\Zed\Dataset\Persistence\SpyDataset;
-use Orm\Zed\Dataset\Persistence\SpyDatasetRowColumnValue;
-use Spryker\Zed\Dataset\Business\Exception\DatasetNotFoundException;
-use Spryker\Zed\Dataset\Persistence\DatasetQueryContainerInterface;
+use Spryker\Zed\Dataset\Persistence\DatasetEntityManagerInterface;
+use Spryker\Zed\Dataset\Persistence\DatasetRepositoryInterface;
 
 class DatasetFinder implements DatasetFinderInterface
 {
     /**
-     * @var \Spryker\Zed\Dataset\Persistence\DatasetQueryContainerInterface
+     * @var \Spryker\Zed\Dataset\Persistence\DatasetRepositoryInterface
      */
-    protected $datasetQueryContainer;
+    protected $repository;
 
     /**
-     * @param \Spryker\Zed\Dataset\Persistence\DatasetQueryContainerInterface $datasetQueryContainer
+     * @var \Spryker\Zed\Dataset\Persistence\DatasetEntityManagerInterface
      */
-    public function __construct(DatasetQueryContainerInterface $datasetQueryContainer)
+    protected $entityManager;
+
+    /**
+     * @param \Spryker\Zed\Dataset\Persistence\DatasetRepositoryInterface $repository
+     * @param \Spryker\Zed\Dataset\Persistence\DatasetEntityManagerInterface $entityManager
+     */
+    public function __construct(DatasetRepositoryInterface $repository, DatasetEntityManagerInterface $entityManager)
     {
-        $this->datasetQueryContainer = $datasetQueryContainer;
+        $this->repository = $repository;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -39,7 +39,7 @@ class DatasetFinder implements DatasetFinderInterface
      */
     public function delete($idDataset)
     {
-        $this->datasetQueryContainer->queryDatasetById($idDataset)->findOne()->delete();
+        $this->entityManager->delete($idDataset);
     }
 
     /**
@@ -49,9 +49,7 @@ class DatasetFinder implements DatasetFinderInterface
      */
     public function hasDatasetName($name)
     {
-        $query = $this->datasetQueryContainer->queryDatasetByName($name);
-
-        return $query->count() > 0;
+        return $this->repository->hasDatasetName($name);
     }
 
     /**
@@ -61,7 +59,7 @@ class DatasetFinder implements DatasetFinderInterface
      */
     public function activateById($idDataset)
     {
-        $this->updateIsActiveByIdTransaction($idDataset, true);
+        $this->entityManager->updateIsActiveByIdDataset($idDataset, true);
     }
 
     /**
@@ -71,190 +69,26 @@ class DatasetFinder implements DatasetFinderInterface
      */
     public function deactivateById($idDataset)
     {
-        $this->updateIsActiveByIdTransaction($idDataset, false);
-    }
-
-    /**
-     * @param int $idDataset
-     * @param bool $isActive
-     *
-     * @return void
-     */
-    protected function updateIsActiveByIdTransaction($idDataset, $isActive)
-    {
-        $dataset = $this->getDatasetId($idDataset);
-        $dataset->setIsActive($isActive);
-        $dataset->save();
+        $this->entityManager->updateIsActiveByIdDataset($idDataset, false);
     }
 
     /**
      * @param int $idDataset
      *
-     * @throws \Spryker\Zed\Dataset\Business\Exception\DatasetNotFoundException
-     *
-     * @return \Orm\Zed\Dataset\Persistence\SpyDataset
+     * @return \Generated\Shared\Transfer\SpyDatasetEntityTransfer
      */
-    public function getDatasetId($idDataset)
+    public function getDatasetModelById($idDataset)
     {
-        $dataset = $this->datasetQueryContainer->queryDatasetById($idDataset)->findOne();
-
-        if (!$dataset) {
-            throw new DatasetNotFoundException();
-        }
-
-        return $dataset;
+        return $this->repository->getDatasetByIdWithRelation($idDataset);
     }
 
     /**
      * @param string $datasetName
      *
-     * @throws \Spryker\Zed\Dataset\Business\Exception\DatasetNotFoundException
-     *
-     * @return \Orm\Zed\Dataset\Persistence\SpyDataset
-     */
-    public function getDatasetName($datasetName)
-    {
-        $dataset = $this->datasetQueryContainer->queryDatasetByName($datasetName)->findOne();
-
-        if (!$dataset) {
-            throw new DatasetNotFoundException();
-        }
-
-        return $dataset;
-    }
-
-    /**
-     * @param string $title
-     *
-     * @return \Orm\Zed\Dataset\Persistence\SpyDataset
-     */
-    public function getDatasetRowByTitle($title)
-    {
-        return $this->datasetQueryContainer->queryDatasetRowByTitle($title)->findOne();
-    }
-
-    /**
-     * @param string $title
-     *
-     * @return \Orm\Zed\Dataset\Persistence\SpyDataset
-     */
-    public function getDatasetColumnByTitle($title)
-    {
-        return $this->datasetQueryContainer->queryDatasetColumnByTitle($title)->findOne();
-    }
-
-    /**
-     * @param int $idDataset
-     *
-     * @throws \Spryker\Zed\Dataset\Business\Exception\DatasetNotFoundException
-     *
      * @return \Generated\Shared\Transfer\SpyDatasetEntityTransfer
      */
-    public function getDatasetTransferById($idDataset)
+    public function getDatasetModelByName($datasetName)
     {
-        $datasetEntity = $this->datasetQueryContainer->queryDatasetByIdWithRelation($idDataset)->find()->getFirst();
-        if ($datasetEntity === null) {
-            throw new DatasetNotFoundException();
-        }
-        $datasetTransfer = $this->getResponseDatasetTransfer($datasetEntity);
-
-        return $datasetTransfer;
-    }
-
-    /**
-     * @param string $datasetName
-     *
-     * @throws \Spryker\Zed\Dataset\Business\Exception\DatasetNotFoundException
-     *
-     * @return \Generated\Shared\Transfer\SpyDatasetEntityTransfer
-     */
-    public function getDatasetTransferByName($datasetName)
-    {
-        $datasetEntity = $this->datasetQueryContainer->queryDatasetByNameWithRelation($datasetName)->find()->getFirst();
-        if ($datasetEntity === null) {
-            throw new DatasetNotFoundException();
-        }
-        $datasetTransfer = $this->getResponseDatasetTransfer($datasetEntity);
-
-        return $datasetTransfer;
-    }
-
-    /**
-     * @param \Orm\Zed\Dataset\Persistence\SpyDataset $datasetEntity
-     *
-     * @return \Generated\Shared\Transfer\SpyDatasetEntityTransfer
-     */
-    protected function getResponseDatasetTransfer(SpyDataset $datasetEntity)
-    {
-        $datasetTransfer = new SpyDatasetEntityTransfer();
-        $datasetTransfer->fromArray($datasetEntity->toArray(), true);
-        $this->appendDatasetRowColTransfers($datasetEntity, $datasetTransfer);
-        $this->appendDatasetLocalizedAttributesTransfers($datasetEntity, $datasetTransfer);
-
-        return $datasetTransfer;
-    }
-
-    /**
-     * @param \Orm\Zed\Dataset\Persistence\SpyDataset $datasetEntity
-     * @param \Generated\Shared\Transfer\SpyDatasetEntityTransfer $datasetTransfer
-     *
-     * @return void
-     */
-    protected function appendDatasetLocalizedAttributesTransfers(
-        SpyDataset $datasetEntity,
-        SpyDatasetEntityTransfer $datasetTransfer
-    ) {
-        foreach ($datasetEntity->getSpyDatasetLocalizedAttributess() as $datasetLocalizedAttribute) {
-            $datasetLocalizedAttributeTransfer = new SpyDatasetLocalizedAttributesEntityTransfer();
-            $datasetLocalizedAttributeTransfer->fromArray($datasetLocalizedAttribute->toArray());
-            $datasetTransfer->addSpyDatasetLocalizedAttributess($datasetLocalizedAttributeTransfer);
-        }
-    }
-
-    /**
-     * @param \Orm\Zed\Dataset\Persistence\SpyDataset $datasetEntity
-     * @param \Generated\Shared\Transfer\SpyDatasetEntityTransfer $datasetTransfer
-     *
-     * @return void
-     */
-    protected function appendDatasetRowColTransfers(
-        SpyDataset $datasetEntity,
-        SpyDatasetEntityTransfer $datasetTransfer
-    ) {
-        foreach ($datasetEntity->getSpyDatasetRowColumnValues() as $datasetRowColumnValue) {
-            $datasetRowColumnValueEntityTransfer = new SpyDatasetRowColumnValueEntityTransfer();
-            $datasetRowEntityTransfer = $this->createDatasetRowTransfer($datasetRowColumnValue);
-            $datasetColumnEntityTransfer = $this->createDatasetColTransfer($datasetRowColumnValue);
-            $datasetRowColumnValueEntityTransfer->fromArray($datasetRowColumnValue->toArray());
-            $datasetRowColumnValueEntityTransfer->setSpyDatasetRow($datasetRowEntityTransfer);
-            $datasetRowColumnValueEntityTransfer->setSpyDatasetColumn($datasetColumnEntityTransfer);
-            $datasetTransfer->addSpyDatasetRowColumnValues($datasetRowColumnValueEntityTransfer);
-        }
-    }
-
-    /**
-     * @param \Orm\Zed\Dataset\Persistence\SpyDatasetRowColumnValue $datasetRowColumnValueEntity
-     *
-     * @return \Generated\Shared\Transfer\SpyDatasetRowEntityTransfer
-     */
-    protected function createDatasetRowTransfer(SpyDatasetRowColumnValue $datasetRowColumnValueEntity)
-    {
-        $datasetRowEntityTransfer = new SpyDatasetRowEntityTransfer();
-        $datasetRowEntityTransfer->fromArray($datasetRowColumnValueEntity->getSpyDatasetRow()->toArray());
-
-        return $datasetRowEntityTransfer;
-    }
-
-    /**
-     * @param \Orm\Zed\Dataset\Persistence\SpyDatasetRowColumnValue $datasetRowColumnValueEntity
-     *
-     * @return \Generated\Shared\Transfer\SpyDatasetColumnEntityTransfer
-     */
-    protected function createDatasetColTransfer(SpyDatasetRowColumnValue $datasetRowColumnValueEntity)
-    {
-        $datasetColumnEntityTransfer = new SpyDatasetColumnEntityTransfer();
-        $datasetColumnEntityTransfer->fromArray($datasetRowColumnValueEntity->getSpyDatasetColumn()->toArray());
-
-        return $datasetColumnEntityTransfer;
+        return $this->repository->getDatasetByNameWithRelation($datasetName);
     }
 }
