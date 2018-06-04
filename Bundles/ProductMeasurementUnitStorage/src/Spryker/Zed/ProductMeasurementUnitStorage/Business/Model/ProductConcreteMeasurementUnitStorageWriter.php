@@ -78,46 +78,44 @@ class ProductConcreteMeasurementUnitStorageWriter implements ProductConcreteMeas
 
             $this->saveStorageEntityTransfer($idProduct, $storageEntitiesWithStore);
         }
-
-        $this->deleteNotFoundStorageEntityTransfer($mappedProductConcreteMeasurementUnitStorageEntityTransfer);
     }
 
     /**
      * @param int $idProduct
-     * @param \Generated\Shared\Transfer\SpyProductConcreteMeasurementUnitStorageEntityTransfer[] $storageEntityTransfers
+     * @param \Generated\Shared\Transfer\SpyProductConcreteMeasurementUnitStorageEntityTransfer[] $storageEntityTransfers Keys are store names
      *
      * @return void
      */
     protected function saveStorageEntityTransfer(int $idProduct, array $storageEntityTransfers): void
     {
-        $measurementsUnitData = $this->getMeasurementsUnitData($idProduct);
-        foreach ($measurementsUnitData as $store => $data) {
-            if (!isset($storageEntityTransfers[$store])) {
-                $storageEntityTransfers[$store] = new SpyProductConcreteMeasurementUnitStorageEntityTransfer();
+        $productConcreteMeasurementUnitStorageData = $this->generateProductConcreteMeasurementUnitStorageTransfersByIdProduct($idProduct);
+        foreach ($productConcreteMeasurementUnitStorageData as $storeName => $storageData) {
+            if (!isset($storageEntityTransfers[$storeName])) {
+                $storageEntityTransfers[$storeName] = new SpyProductConcreteMeasurementUnitStorageEntityTransfer();
             }
 
-            $storageEntityTransfers[$store]
+            $storageEntityTransfers[$storeName]
                 ->setFkProduct($idProduct)
-                ->setStore($store)
-                ->setData($data);
+                ->setStore($storeName)
+                ->setData($storageData);
 
-            $this->productMeasurementUnitStorageEntityManager->saveProductConcreteMeasurementUnitStorageEntity($storageEntityTransfers[$store]);
-            unset($storageEntityTransfers[$store]);
+            $this->productMeasurementUnitStorageEntityManager->saveProductConcreteMeasurementUnitStorageEntity($storageEntityTransfers[$storeName]);
+            unset($storageEntityTransfers[$storeName]);
         }
 
-        $this->deleteNotFoundStorageEntityTransfer($storageEntityTransfers);
+        $this->deleteNotFoundStorageEntityTransfers($storageEntityTransfers);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyProductConcreteMeasurementUnitStorageEntityTransfer[] $spyProductConcreteMeasurementUnitStorageEntityTransfers
+     * @param \Orm\Zed\ProductMeasurementUnitStorage\Persistence\SpyProductConcreteMeasurementUnitStorage[] $productConcreteMeasurementUnitStorageEntityTransfers Keys are store names
      *
      * @return void
      */
-    protected function deleteNotFoundStorageEntityTransfer(array $spyProductConcreteMeasurementUnitStorageEntityTransfers): void
+    protected function deleteNotFoundStorageEntityTransfers(array $productConcreteMeasurementUnitStorageEntityTransfers): void
     {
-        foreach ($spyProductConcreteMeasurementUnitStorageEntityTransfers as $productConcreteMeasurementUnitStorageEntity) {
+        foreach ($productConcreteMeasurementUnitStorageEntityTransfers as $productConcreteMeasurementUnitStorageEntityTransfer) {
             $this->productMeasurementUnitStorageEntityManager->deleteProductConcreteMeasurementUnitStorage(
-                $productConcreteMeasurementUnitStorageEntity->getIdProductConcreteMeasurementUnitStorage()
+                $productConcreteMeasurementUnitStorageEntityTransfer->getIdProductConcreteMeasurementUnitStorage()
             );
         }
     }
@@ -125,50 +123,28 @@ class ProductConcreteMeasurementUnitStorageWriter implements ProductConcreteMeas
     /**
      * @param int $idProduct
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer[]
+     * @return \Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer[] Keys are store names
      */
-    protected function getMeasurementsUnitData(int $idProduct): array
+    protected function generateProductConcreteMeasurementUnitStorageTransfersByIdProduct(int $idProduct): array
     {
-        return $this->productConcreteMeasurementUnitStorageReader->getProductConcreteMeasurementUnitStorageByIdProduct($idProduct);
+        return $this->productConcreteMeasurementUnitStorageReader->generateProductConcreteMeasurementUnitStorageTransfersByIdProduct($idProduct);
     }
 
     /**
      * @param int[] $productIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductConcreteMeasurementUnitStorageEntityTransfer[] Keys are product IDs
+     * @return array First level keys are product IDs, second level keys are store names, values are storage entities
      */
     protected function findMappedProductConcreteMeasurementUnitStorageEntityTransfers(array $productIds): array
     {
         $productConcreteMeasurementUnitStorageEntityTransfers = $this->productMeasurementUnitStorageRepository
             ->findProductConcreteMeasurementUnitStorageEntities($productIds);
 
-        $mappedProductConcreteMeasurementUnitStorageEntitiesTransfer = [];
-        foreach ($productConcreteMeasurementUnitStorageEntityTransfers as $unitStorageEntityTransfer) {
-            $mappedProductConcreteMeasurementUnitStorageEntitiesTransfer[$unitStorageEntityTransfer->getFkProduct()][$unitStorageEntityTransfer->getStore()] = $unitStorageEntityTransfer;
+        $mappedProductConcreteMeasurementUnitStorageEntityTransfers = [];
+        foreach ($productConcreteMeasurementUnitStorageEntityTransfers as $productConcreteMeasurementUnitStorageEntityTransfer) {
+            $mappedProductConcreteMeasurementUnitStorageEntityTransfers[$productConcreteMeasurementUnitStorageEntityTransfer->getFkProduct()][$productConcreteMeasurementUnitStorageEntityTransfer->getStore()] = $productConcreteMeasurementUnitStorageEntityTransfer;
         }
 
-        return $mappedProductConcreteMeasurementUnitStorageEntitiesTransfer;
-    }
-
-    /**
-     * @param int $idProductMeasurementUnit
-     *
-     * @return string
-     */
-    protected function getProductMeasurementUnitCodeById(int $idProductMeasurementUnit): string
-    {
-        if (!static::$productMeasurementUnitCodeBuffer) {
-            $this->loadProductMeasurementUnitCodes();
-        }
-
-        return static::$productMeasurementUnitCodeBuffer[$idProductMeasurementUnit];
-    }
-
-    /**
-     * @return void
-     */
-    protected function loadProductMeasurementUnitCodes(): void
-    {
-        static::$productMeasurementUnitCodeBuffer = $this->productMeasurementUnitFacade->getProductMeasurementUnitCodeMap();
+        return $mappedProductConcreteMeasurementUnitStorageEntityTransfers;
     }
 }
