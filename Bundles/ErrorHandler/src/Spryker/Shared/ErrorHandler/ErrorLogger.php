@@ -7,7 +7,6 @@
 
 namespace Spryker\Shared\ErrorHandler;
 
-use Exception;
 use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Shared\NewRelicApi\NewRelicApiTrait;
 use Throwable;
@@ -35,7 +34,7 @@ class ErrorLogger implements ErrorLoggerInterface
     }
 
     /**
-     * @param \Exception|\Throwable $exception
+     * @param \Throwable $exception
      *
      * @return void
      */
@@ -47,13 +46,11 @@ class ErrorLogger implements ErrorLoggerInterface
             $this->getLogger()->critical($message, ['exception' => $exception]);
         } catch (Throwable $internalException) {
             $this->createNewRelicApi()->noticeError($internalException->getMessage(), $exception);
-        } catch (Exception $internalException) {
-            $this->createNewRelicApi()->noticeError($internalException->getMessage(), $exception);
         }
     }
 
     /**
-     * @param \Exception|\Throwable $exception
+     * @param \Throwable $exception
      *
      * @return string
      */

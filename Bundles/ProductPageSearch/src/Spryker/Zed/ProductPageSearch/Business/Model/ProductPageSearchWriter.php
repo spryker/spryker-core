@@ -23,11 +23,18 @@ class ProductPageSearchWriter implements ProductPageSearchWriterInterface
     protected $utilEncoding;
 
     /**
-     * @param \Spryker\Zed\ProductPageSearch\Dependency\Service\ProductPageSearchToUtilEncodingInterface $utilEncoding
+     * @var bool
      */
-    public function __construct(ProductPageSearchToUtilEncodingInterface $utilEncoding)
+    protected $isSendingToQueue = true;
+
+    /**
+     * @param \Spryker\Zed\ProductPageSearch\Dependency\Service\ProductPageSearchToUtilEncodingInterface $utilEncoding
+     * @param bool $isSendingToQueue
+     */
+    public function __construct(ProductPageSearchToUtilEncodingInterface $utilEncoding, $isSendingToQueue)
     {
         $this->utilEncoding = $utilEncoding;
+        $this->isSendingToQueue = $isSendingToQueue;
     }
 
     /**
@@ -37,12 +44,8 @@ class ProductPageSearchWriter implements ProductPageSearchWriterInterface
      *
      * @return void
      */
-    public function save(ProductPageSearchTransfer $productPageSearchTransfer, array $data, ?SpyProductAbstractPageSearch $productPageSearchEntity = null)
+    public function save(ProductPageSearchTransfer $productPageSearchTransfer, array $data, ?SpyProductAbstractPageSearch $productPageSearchEntity)
     {
-        if ($productPageSearchEntity === null) {
-            $productPageSearchEntity = new SpyProductAbstractPageSearch();
-        }
-
         $this->saveEntity($productPageSearchEntity, $productPageSearchTransfer, $data);
     }
 
@@ -60,6 +63,7 @@ class ProductPageSearchWriter implements ProductPageSearchWriterInterface
         $productPageSearchEntity->setData($data);
         $productPageSearchEntity->setStore($productPageSearchTransfer->getStore());
         $productPageSearchEntity->setLocale($productPageSearchTransfer->getLocale());
+        $productPageSearchEntity->setIsSendingToQueue($this->isSendingToQueue);
         $productPageSearchEntity->save();
     }
 }

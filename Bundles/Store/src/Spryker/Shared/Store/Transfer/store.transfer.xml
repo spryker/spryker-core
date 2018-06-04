@@ -10,6 +10,7 @@
         <property name="defaultCurrencyIsoCode" type="string" />
         <property name="availableCurrencyIsoCodes" type="array" singular="availableCurrencyIsoCode" />
         <property name="availableLocaleIsoCodes" type="array" singular="availableLocaleCode" />
+        <property name="queuePools" type="array" />
         <property name="storesWithSharedPersistence" type="array" singular="storeWithSharedPersistence" />
     </transfer>
 
