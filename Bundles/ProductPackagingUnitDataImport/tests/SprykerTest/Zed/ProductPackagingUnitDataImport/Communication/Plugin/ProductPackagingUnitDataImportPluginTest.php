@@ -35,8 +35,8 @@ class ProductPackagingUnitDataImportPluginTest extends Unit
      */
     public function testImportImportsData(): void
     {
-        $this->tester->truncateProductPackagingUnitTypes();
         $this->tester->truncateProductPackagingUnits();
+        $this->tester->truncateProductPackagingUnitTypes();
         $this->tester->assertProductPackagingUnitTableIsEmtpy();
         $this->tester->assertProductPackagingUnitTypeTableIsEmtpy();
 
