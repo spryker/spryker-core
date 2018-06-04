@@ -7,9 +7,6 @@
 
 namespace Spryker\Zed\ManualOrderEntryGuiExtension\Dependency\Plugin;
 
-use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Kernel\Communication\Form\AbstractType;
-
 interface PaymentSubFormPluginInterface
 {
     /**
@@ -20,7 +17,7 @@ interface PaymentSubFormPluginInterface
      *
      * @return \Spryker\Zed\Kernel\Communication\Form\AbstractType
      */
-    public function createSubForm(): AbstractType;
+    public function createSubForm();
 
     /**
      * Specification:
@@ -30,7 +27,7 @@ interface PaymentSubFormPluginInterface
      *
      * @return string
      */
-    public function getPropertyPath(): string;
+    public function getPropertyPath();
 
     /**
      * Specification:
@@ -40,7 +37,7 @@ interface PaymentSubFormPluginInterface
      *
      * @return string
      */
-    public function getName(): string;
+    public function getName();
 
     /**
      * Specification:
@@ -50,7 +47,7 @@ interface PaymentSubFormPluginInterface
      *
      * @return string
      */
-    public function getPaymentProvider(): string;
+    public function getPaymentProvider();
 
     /**
      * Specification:
@@ -60,7 +57,7 @@ interface PaymentSubFormPluginInterface
      *
      * @return string
      */
-    public function getPaymentMethod(): string;
+    public function getPaymentMethod();
 
     /**
      * Specification:
@@ -72,7 +69,7 @@ interface PaymentSubFormPluginInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getData(QuoteTransfer $quoteTransfer): QuoteTransfer;
+    public function getData($quoteTransfer);
 
     /**
      * Specification:
@@ -84,5 +81,5 @@ interface PaymentSubFormPluginInterface
      *
      * @return array
      */
-    public function getOptions(QuoteTransfer $quoteTransfer): array;
+    public function getOptions($quoteTransfer);
 }

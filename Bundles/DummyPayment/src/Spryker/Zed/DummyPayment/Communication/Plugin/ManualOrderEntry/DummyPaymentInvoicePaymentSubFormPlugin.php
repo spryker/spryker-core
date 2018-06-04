@@ -66,7 +66,7 @@ class DummyPaymentInvoicePaymentSubFormPlugin extends AbstractPlugin implements 
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getData(QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function getData($quoteTransfer): QuoteTransfer
     {
         return $this->getFactory()->createInvoiceFormDataProvider()->getData($quoteTransfer);
     }
@@ -76,7 +76,7 @@ class DummyPaymentInvoicePaymentSubFormPlugin extends AbstractPlugin implements 
      *
      * @return array
      */
-    public function getOptions(QuoteTransfer $quoteTransfer): array
+    public function getOptions($quoteTransfer): array
     {
         return $this->getFactory()->createInvoiceFormDataProvider()->getOptions($quoteTransfer);
     }
