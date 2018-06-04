@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\BusinessOnBehalf;
 
 use Codeception\Actor;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 /**
  * Inherited Methods
@@ -28,7 +29,18 @@ class BusinessOnBehalfBusinessTester extends Actor
 {
     use _generated\BusinessOnBehalfBusinessTesterActions;
 
-   /**
-    * Define custom actions here
-    */
+    /**
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $expected
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $actual
+     * @param string $message
+     *
+     * @return void
+     */
+    public function assertTransferEquals(AbstractTransfer $expected, AbstractTransfer $actual, string $message = '')
+    {
+        $expectedArray = $expected->toArray();
+        $actualArray = $actual->toArray();
+
+        $this->assertEquals($expectedArray, $actualArray, $message);
+    }
 }
