@@ -1,9 +1,15 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace SprykerTest\Zed\BusinessOnBehalf\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
 /**
@@ -44,9 +50,9 @@ class BusinessOnBehalfFacadeTest extends Unit
     public function setUp()
     {
         parent::setUp();
-        $this->customer = $this->tester->haveCustomer(['isOnBehalf' => null]);
-        $this->activeCompany = $this->tester->haveCompany(['isActive' => true]);
-        $this->inactiveCompany = $this->tester->haveCompany(['isActive' => false]);
+        $this->customer = $this->tester->haveCustomer([CustomerTransfer::IS_ON_BEHALF => null]);
+        $this->activeCompany = $this->tester->haveActiveCompany();
+        $this->inactiveCompany = $this->tester->haveInactiveCompany();
     }
 
     /**
@@ -59,8 +65,8 @@ class BusinessOnBehalfFacadeTest extends Unit
         $expectedCustomer->setIsOnBehalf(true);
 
         $companyUserSeed = [
-            'fkCompany' => $this->activeCompany->getIdCompany(),
-            'customer' => $this->customer,
+            CompanyUserTransfer::FK_COMPANY => $this->activeCompany->getIdCompany(),
+            CompanyUserTransfer::CUSTOMER => $this->customer,
         ];
         $this->tester->haveCompanyUsers(2, $companyUserSeed);
 
@@ -96,16 +102,16 @@ class BusinessOnBehalfFacadeTest extends Unit
     {
         //Arrange
         $expectedCompanyUserAmount = 1;
-        $activeCompany = $this->tester->haveCompany(['isActive' => true]);
-        $inactiveCompany = $this->tester->haveCompany(['isActive' => false]);
+        $activeCompany = $this->tester->haveActiveCompany();
+        $inactiveCompany = $this->tester->haveInactiveCompany();
 
         $seedDataWithActiveCompany = [
-            'fkCompany' => $activeCompany->getIdCompany(),
-            'customer' => $this->customer,
+            CompanyUserTransfer::FK_COMPANY => $activeCompany->getIdCompany(),
+            CompanyUserTransfer::CUSTOMER => $this->customer,
         ];
         $seedDataWithInactiveCompany = [
-            'fkCompany' => $inactiveCompany->getIdCompany(),
-            'customer' => $this->customer,
+            CompanyUserTransfer::FK_COMPANY => $inactiveCompany->getIdCompany(),
+            CompanyUserTransfer::CUSTOMER => $this->customer,
         ];
         $this->tester->haveCompanyUser($seedDataWithActiveCompany);
         $this->tester->haveCompanyUser($seedDataWithInactiveCompany);
