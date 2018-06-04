@@ -7,11 +7,18 @@
     "phpdocumentor/graphviz": "^1.0.4",
     "everon/criteria-builder": "^1.1.5",
     "moneyphp/money": "^3.0.0",
-    "fzaninotto/faker": "^1.6"
+    "fzaninotto/faker": "^1.6",
+    "spryker/spryk": "dev-master as 1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "dev-master"
   },
+  "repositories": [
+    {
+      "type": "git",
+      "url": "git@github.com:spryker/spryk.git"
+    }
+  ],
   "minimum-stability": "dev",
   "prefer-stable": true,
   "config": {
