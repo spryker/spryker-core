@@ -90,7 +90,7 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
         return $this->getFormFactory()->create(
             FileForm::class,
             $dataProvider->getData($idFile),
-            $dataProvider->getOptions($idFile)
+            $dataProvider->getOptions()
         );
     }
 

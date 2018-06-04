@@ -105,7 +105,7 @@ class MimeTypeSettingsTable extends AbstractTable
         return [
             static::COL_NAME => $item[static::COL_NAME],
             static::COL_COMMENT => $item[static::COL_COMMENT],
-            static::COL_IS_ALLOWED => $this->addCheckBox($item),
+            static::COL_IS_ALLOWED => $this->addCheckbox($item),
             static::COL_ACTIONS => $actions,
         ];
     }

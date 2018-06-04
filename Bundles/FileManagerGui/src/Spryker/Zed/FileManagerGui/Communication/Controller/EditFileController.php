@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\FileTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\FileManagerGui\Communication\Form\FileForm;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -111,7 +112,11 @@ class EditFileController extends AbstractController
     protected function setFileName(FileTransfer $fileTransfer)
     {
         if (!$fileTransfer->getFileName()) {
-            $fileTransfer->setFileName($fileTransfer->getFileContent()->getClientOriginalName());
+            $uploadedFile = $fileTransfer->getFileContent();
+
+            if ($uploadedFile instanceof UploadedFile) {
+                $fileTransfer->setFileName($uploadedFile->getClientOriginalName());
+            }
         }
 
         return $fileTransfer;

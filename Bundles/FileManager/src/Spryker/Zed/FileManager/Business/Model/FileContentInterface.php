@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\FileTransfer;
 interface FileContentInterface
 {
     /**
-     * @param \Generated\Transfer\FileTransfer $fileTransfer
+     * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
      *
      * @return void
      */

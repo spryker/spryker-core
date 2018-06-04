@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\FileManager\Persistence;
 
+use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
+
 /**
  * @method \Spryker\Zed\FileManager\Persistence\FileManagerPersistenceFactory getFactory()
  */
-interface FileManagerQueryContainerInterface
+interface FileManagerQueryContainerInterface extends QueryContainerInterface
 {
     /**
      * @api
@@ -53,7 +55,7 @@ interface FileManagerQueryContainerInterface
      *
      * @param int $idFileInfo
      *
-     * @return \Orm\Zed\FileManager\Persistence\SpyFileInfoQuery
+     * FileReader.php@return \Orm\Zed\FileManager\Persistence\SpyFileInfoQuery
      */
     public function queryFileInfo($idFileInfo);
 
@@ -63,6 +65,22 @@ interface FileManagerQueryContainerInterface
      * @return \Orm\Zed\FileManager\Persistence\SpyFileQuery
      */
     public function queryFiles();
+
+    /**
+     * @api
+     *
+     * @param int $fkParentFileDirectoryNode
+     *
+     * @return \Orm\Zed\FileManager\Persistence\SpyFileDirectoryQuery
+     */
+    public function queryFileDirectoriesByFkParentFileDirectory($fkParentFileDirectoryNode);
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\FileManager\Persistence\SpyFileDirectoryQuery
+     */
+    public function queryRootFileDirectories();
 
     /**
      * @api

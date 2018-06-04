@@ -1,1 +1,3 @@
-{{ file.fileName }}
+{% if file %}
+    <a href="{{ url('files/versions', {'id-file' : file.fkFile}) }}">{{ file.fileName }}</a>
+{% endif %}FileManagerStorageClient

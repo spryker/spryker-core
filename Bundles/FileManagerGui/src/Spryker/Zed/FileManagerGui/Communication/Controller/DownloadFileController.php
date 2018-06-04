@@ -8,6 +8,8 @@
 namespace Spryker\Zed\FileManagerGui\Communication\Controller;
 
 use Generated\Shared\Transfer\FileManagerDataTransfer;
+use Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,6 +23,7 @@ class DownloadFileController extends AbstractController
     const URL_PARAM_ID_FILE_INFO = 'id-file-info';
     const CONTENT_DISPOSITION = 'Content-Disposition';
     const CONTENT_TYPE = 'Content-Type';
+    const MESSAGE_FILE_UNAVAILABLE = 'File was not found';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
