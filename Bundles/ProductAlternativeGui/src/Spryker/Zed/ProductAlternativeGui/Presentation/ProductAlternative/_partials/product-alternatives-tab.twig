@@ -10,47 +10,19 @@
 </div>
 
 <div class="form-group col-sm-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
-    {{ form_label(form['searchtext-autocomplete']) }}
-    {{ form_errors(form['searchtext-autocomplete']) }}
-    {{ form_widget(form['searchtext-autocomplete']) }}
+    {% include '@ProductAlternativeGui/ProductAlternative/blocks/product-alternatives-form.twig' %}
 </div>
-
-{# TODO: Finish data rendering table when form will be configured. #}
 
 <div id="items" class="col-sm-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-    <table border="1">
-        <tr>
-            <th>ID</th>
-            <th>SKU</th>
-            <th>Name</th>
-            <th>Categories</th>
-            <th>Status</th>
-            <th>Actions</th>
-        </tr>
-        {% for productAlternative in productAlternatives %}
-            <tr>
-                <td>{{ productAlternative.idProductAlternative }}</td>
-                <td>{{ productAlternative.idProduct }}</td>
-                <td>{{ productAlternative.idProductConcreteAlternative ?: '-' }}</td>
-                <td>{{ productAlternative.idProductAbstractAlternative ?: '-' }}</td>
-                <td>-</td>
-                <td>
-                    <button class="btn btn-default">
-                        <a href="{{- productAbstractAlternativeDeleteLink|format(idProduct, productAlternative.idProductAlternative) -}}">Delete</a>
-                    </button>
-                </td>
-            </tr>
-        {% endfor %}
-    </table>
+    <div>
+        {% include '@ProductAlternativeGui/ProductAlternative/blocks/product-alternatives-abstract-table.twig' %}
+    </div>
+
+    <hr/>
+
+    <div>
+        {% include '@ProductAlternativeGui/ProductAlternative/blocks/product-alternatives-concrete-table.twig' %}
+    </div>
 </div>
 
-<style>
-    #items table {
-        border: 1px solid #000000;
-        text-align: center;
-    }
-
-    #items table td, th {
-        padding: 5px 10px;
-    }
-</style>
+{% include '@ProductAlternativeGui/ProductAlternative/blocks/product-alternatives-table-styles.twig' %}

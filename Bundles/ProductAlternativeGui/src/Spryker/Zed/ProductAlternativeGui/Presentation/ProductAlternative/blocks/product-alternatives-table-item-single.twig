@@ -1,0 +1,10 @@
+<td>{{ productAlternative.idProductAlternative ?: '-' }}</td>
+<td>{{ productAlternative.idProduct ?: '-' }}</td>
+<td>{{ productAlternative.idProductConcreteAlternative ?: '-' }}</td>
+<td>{{ productAlternative.idProductAbstractAlternative ?: '-' }}</td>
+<td>-</td>
+<td>
+    <button class="btn btn-default">
+        <a href="{{- productAbstractAlternativeDeleteLink|format(idProduct, productAlternative.idProductAlternative) -}}">Delete</a>
+    </button>
+</td>

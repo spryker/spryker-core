@@ -1,0 +1,13 @@
+<h4>Product Abstract Alternatives</h4>
+<table border="1">
+    <tr>
+        {% include '@ProductAlternativeGui/ProductAlternative/blocks/product-alternatives-table-headers.twig' %}
+    </tr>
+    {% for productAlternative in productAlternatives %}
+        {% if productAlternative.idProductAbstractAlternative is not null %}
+            <tr>
+                {% include '@ProductAlternativeGui/ProductAlternative/blocks/product-alternatives-table-item-single.twig' %}
+            </tr>
+        {% endif %}
+    {% endfor %}
+</table>
