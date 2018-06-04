@@ -15,6 +15,7 @@
     </transfer>
 
     <transfer name="ProductPackagingUnitAmount">
+        <property name="idProductPackagingUnitAmount" type="int" />
         <property name="isVariable" type="bool" />
         <property name="defaultAmount" type="int" />
         <property name="amountMin" type="int" />
