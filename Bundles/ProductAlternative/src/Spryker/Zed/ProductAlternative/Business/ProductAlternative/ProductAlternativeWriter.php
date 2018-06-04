@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\ProductAlternative\Business\ProductAlternative;
 
+use Generated\Shared\Transfer\ProductAlternativeResponseTransfer;
 use Generated\Shared\Transfer\ProductAlternativeTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ResponseMessageTransfer;
 use Spryker\Zed\ProductAlternative\Business\Exception\ProductAlternativeHasNoBaseProductException;
 use Spryker\Zed\ProductAlternative\Business\Exception\ProductAlternativeIsNotDefinedException;
 use Spryker\Zed\ProductAlternative\Persistence\ProductAlternativeEntityManagerInterface;
@@ -41,22 +43,28 @@ class ProductAlternativeWriter implements ProductAlternativeWriterInterface
      * @param int $idProduct
      * @param int $idProductAbstractAlternative
      *
-     * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
+     * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
      */
-    public function createProductAbstractAlternative(int $idProduct, int $idProductAbstractAlternative): ProductAlternativeTransfer
+    public function createProductAbstractAlternativeResponse(int $idProduct, int $idProductAbstractAlternative): ProductAlternativeResponseTransfer
     {
-        return $this->productAlternativeEntityManager->createProductAbstractAlternative($idProduct, $idProductAbstractAlternative);
+        return (new ProductAlternativeResponseTransfer())
+            ->setProductAlternative(
+                $this->createProductAbstractAlternative($idProduct, $idProductAbstractAlternative)
+            )->setIsSuccessful(true);
     }
 
     /**
      * @param int $idProduct
-     * @param int $idProductConcreteAlternative
+     * @param int $idProductAbstractAlternative
      *
-     * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
+     * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
      */
-    public function createProductConcreteAlternative(int $idProduct, int $idProductConcreteAlternative): ProductAlternativeTransfer
+    public function createProductConcreteAlternativeResponse(int $idProduct, int $idProductAbstractAlternative): ProductAlternativeResponseTransfer
     {
-        return $this->productAlternativeEntityManager->createProductConcreteAlternative($idProduct, $idProductConcreteAlternative);
+        return (new ProductAlternativeResponseTransfer())
+            ->setProductAlternative(
+                $this->createProductConcreteAlternative($idProduct, $idProductAbstractAlternative)
+            )->setIsSuccessful(true);
     }
 
     /**
@@ -110,12 +118,116 @@ class ProductAlternativeWriter implements ProductAlternativeWriterInterface
     }
 
     /**
+     * @param int $idBaseProduct
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
+     */
+    public function deleteProductAbstractAlternativeResponse(int $idBaseProduct, int $idProductAbstract): ProductAlternativeResponseTransfer
+    {
+        $productAlternative = $this->productAlternativeReader
+            ->getProductAbstractAlternative(
+                $idBaseProduct,
+                $idProductAbstract
+            );
+
+        return $this->handleProductAlternativeDeletion($productAlternative);
+    }
+
+    /**
+     * @param int $idBaseProduct
+     * @param int $idProductConcrete
+     *
+     * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
+     */
+    public function deleteProductConcreteAlternativeResponse(int $idBaseProduct, int $idProductConcrete): ProductAlternativeResponseTransfer
+    {
+        $productAlternative = $this->productAlternativeReader
+            ->getProductConcreteAlternative(
+                $idBaseProduct,
+                $idProductConcrete
+            );
+
+        return $this->handleProductAlternativeDeletion($productAlternative);
+    }
+
+    /**
+     * @param int $idProduct
+     * @param int $idProductAbstractAlternative
+     *
+     * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
+     */
+    protected function createProductAbstractAlternative(int $idProduct, int $idProductAbstractAlternative): ProductAlternativeTransfer
+    {
+        return $this->productAlternativeEntityManager
+            ->createProductAbstractAlternative(
+                $idProduct,
+                $idProductAbstractAlternative
+            );
+    }
+
+    /**
+     * @param int $idProduct
+     * @param int $idProductConcreteAlternative
+     *
+     * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
+     */
+    protected function createProductConcreteAlternative(int $idProduct, int $idProductConcreteAlternative): ProductAlternativeTransfer
+    {
+        return $this->productAlternativeEntityManager
+            ->createProductConcreteAlternative(
+                $idProduct,
+                $idProductConcreteAlternative
+            );
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductAlternativeTransfer $productAlternativeTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
      */
     protected function updateProductAlternative(ProductAlternativeTransfer $productAlternativeTransfer): ProductAlternativeTransfer
     {
-        return $this->productAlternativeEntityManager->updateProductAlternative($productAlternativeTransfer);
+        return $this->productAlternativeEntityManager
+            ->updateProductAlternative($productAlternativeTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAlternativeTransfer|null $productAlternativeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
+     */
+    protected function handleProductAlternativeDeletion(?ProductAlternativeTransfer $productAlternativeTransfer): ProductAlternativeResponseTransfer
+    {
+        $productAlternativeResponseTransfer = new ProductAlternativeResponseTransfer();
+        $responseMessageTransfer = new ResponseMessageTransfer();
+
+        if ($productAlternativeTransfer) {
+            $idProductAlternative = $productAlternativeTransfer
+                ->getIdProductAlternative();
+
+            $this->productAlternativeEntityManager
+                ->deleteProductAlternative($productAlternativeTransfer);
+
+            $responseMessageTransfer
+                ->setText("Product alternative with id = $idProductAlternative successfully removed.");
+
+            return $productAlternativeResponseTransfer
+                ->setIsSuccessful(true)
+                ->setMessages([
+                    $responseMessageTransfer,
+                ]);
+        }
+
+        $responseMessageTransfer
+            ->setText(
+                'Unable to remove product alternative: Product alternative was not found.'
+            );
+
+        return $productAlternativeResponseTransfer
+            ->setIsSuccessful(false)
+            ->setMessages([
+                $responseMessageTransfer,
+            ]);
     }
 }

@@ -9,21 +9,36 @@ namespace Spryker\Zed\ProductAlternative\Business\ProductAlternative;
 
 use Generated\Shared\Transfer\ProductAlternativeCollectionTransfer;
 use Generated\Shared\Transfer\ProductAlternativeTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface ProductAlternativeReaderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param int $idProductConcrete
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeCollectionTransfer
      */
-    public function getProductAlternativesByIdProductConcrete(ProductConcreteTransfer $productConcreteTransfer): ProductAlternativeCollectionTransfer;
+    public function getProductAlternativesByIdProductConcrete(int $idProductConcrete): ProductAlternativeCollectionTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\ProductAlternativeTransfer $productAlternativeTransfer
+     * @param int $idProductAlternative
      *
-     * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
+     * @return null|\Generated\Shared\Transfer\ProductAlternativeTransfer
      */
-    public function getProductAlternativeByIdProductAlternative(ProductAlternativeTransfer $productAlternativeTransfer): ProductAlternativeTransfer;
+    public function getProductAlternativeByIdProductAlternative(int $idProductAlternative): ?ProductAlternativeTransfer;
+
+    /**
+     * @param int $idBaseProduct
+     * @param int $idProductAbstract
+     *
+     * @return null|\Generated\Shared\Transfer\ProductAlternativeTransfer
+     */
+    public function getProductAbstractAlternative(int $idBaseProduct, int $idProductAbstract): ?ProductAlternativeTransfer;
+
+    /**
+     * @param int $idBaseProduct
+     * @param int $idProductConcrete
+     *
+     * @return null|\Generated\Shared\Transfer\ProductAlternativeTransfer
+     */
+    public function getProductConcreteAlternative(int $idBaseProduct, int $idProductConcrete): ?ProductAlternativeTransfer;
 }

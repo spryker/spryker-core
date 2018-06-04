@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductAlternative\Business\ProductAlternative;
 
-use Generated\Shared\Transfer\ProductAlternativeTransfer;
+use Generated\Shared\Transfer\ProductAlternativeResponseTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface ProductAlternativeWriterInterface
@@ -16,17 +16,17 @@ interface ProductAlternativeWriterInterface
      * @param int $idProduct
      * @param int $idProductAbstractAlternative
      *
-     * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
+     * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
      */
-    public function createProductAbstractAlternative(int $idProduct, int $idProductAbstractAlternative): ProductAlternativeTransfer;
+    public function createProductAbstractAlternativeResponse(int $idProduct, int $idProductAbstractAlternative): ProductAlternativeResponseTransfer;
 
     /**
      * @param int $idProduct
      * @param int $idProductConcreteAlternative
      *
-     * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
+     * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
      */
-    public function createProductConcreteAlternative(int $idProduct, int $idProductConcreteAlternative): ProductAlternativeTransfer;
+    public function createProductConcreteAlternativeResponse(int $idProduct, int $idProductConcreteAlternative): ProductAlternativeResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
@@ -34,4 +34,20 @@ interface ProductAlternativeWriterInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function persistProductAlternatives(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
+
+    /**
+     * @param int $idBaseProduct
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
+     */
+    public function deleteProductAbstractAlternativeResponse(int $idBaseProduct, int $idProductAbstract): ProductAlternativeResponseTransfer;
+
+    /**
+     * @param int $idBaseProduct
+     * @param int $idProductConcrete
+     *
+     * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
+     */
+    public function deleteProductConcreteAlternativeResponse(int $idBaseProduct, int $idProductConcrete): ProductAlternativeResponseTransfer;
 }

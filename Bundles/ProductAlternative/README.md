@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/product-alternative.svg)](https://travis-ci.org/spryker/product-alternative)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/product-alternative/badge.svg)](https://coveralls.io/github/spryker/product-alternative)
 
-ProductAlternative module handles adding and removing attachment of alternative products to concrete products.
+ProductAlternative module manages adding and removing product alternatives for concrete products.
 
 ## Installation
 

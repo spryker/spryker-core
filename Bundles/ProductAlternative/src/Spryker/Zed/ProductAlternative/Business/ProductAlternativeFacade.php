@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductAlternative\Business;
 
 use Generated\Shared\Transfer\ProductAlternativeCollectionTransfer;
+use Generated\Shared\Transfer\ProductAlternativeResponseTransfer;
 use Generated\Shared\Transfer\ProductAlternativeTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -22,17 +23,17 @@ class ProductAlternativeFacade extends AbstractFacade implements ProductAlternat
      *
      * @api
      *
-     * @param int $idProduct
+     * @param int $idProductAbstract
      * @param int $idProductAbstractAlternative
      *
-     * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
+     * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
      */
-    public function createProductAbstractAlternative(int $idProduct, int $idProductAbstractAlternative): ProductAlternativeTransfer
+    public function createProductAbstractAlternative(int $idProductAbstract, int $idProductAbstractAlternative): ProductAlternativeResponseTransfer
     {
         return $this
             ->getFactory()
             ->createProductAlternativeWriter()
-            ->createProductAbstractAlternative($idProduct, $idProductAbstractAlternative);
+            ->createProductAbstractAlternativeResponse($idProductAbstract, $idProductAbstractAlternative);
     }
 
     /**
@@ -40,17 +41,17 @@ class ProductAlternativeFacade extends AbstractFacade implements ProductAlternat
      *
      * @api
      *
-     * @param int $idProduct
+     * @param int $idProductConcrete
      * @param int $idProductConcreteAlternative
      *
-     * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
+     * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
      */
-    public function createProductConcreteAlternative(int $idProduct, int $idProductConcreteAlternative): ProductAlternativeTransfer
+    public function createProductConcreteAlternative(int $idProductConcrete, int $idProductConcreteAlternative): ProductAlternativeResponseTransfer
     {
         return $this
             ->getFactory()
             ->createProductAlternativeWriter()
-            ->createProductConcreteAlternative($idProduct, $idProductConcreteAlternative);
+            ->createProductConcreteAlternativeResponse($idProductConcrete, $idProductConcreteAlternative);
     }
 
     /**
@@ -58,16 +59,16 @@ class ProductAlternativeFacade extends AbstractFacade implements ProductAlternat
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param int $idProductConcrete
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeCollectionTransfer
      */
-    public function getProductAlternativesByIdProductConcrete(ProductConcreteTransfer $productConcreteTransfer): ProductAlternativeCollectionTransfer
+    public function getProductAlternativesByIdProductConcrete(int $idProductConcrete): ProductAlternativeCollectionTransfer
     {
         return $this
             ->getFactory()
             ->createProductAlternativeReader()
-            ->getProductAlternativesByIdProductConcrete($productConcreteTransfer);
+            ->getProductAlternativesByIdProductConcrete($idProductConcrete);
     }
 
     /**
@@ -75,16 +76,16 @@ class ProductAlternativeFacade extends AbstractFacade implements ProductAlternat
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductAlternativeTransfer $productAlternativeTransfer
+     * @param int $idProductAlternative
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
      */
-    public function getProductAlternativeByIdProductAlternative(ProductAlternativeTransfer $productAlternativeTransfer): ProductAlternativeTransfer
+    public function getProductAlternativeByIdProductAlternative(int $idProductAlternative): ProductAlternativeTransfer
     {
         return $this
             ->getFactory()
             ->createProductAlternativeReader()
-            ->getProductAlternativeByIdProductAlternative($productAlternativeTransfer);
+            ->getProductAlternativeByIdProductAlternative($idProductAlternative);
     }
 
     /**
@@ -102,5 +103,41 @@ class ProductAlternativeFacade extends AbstractFacade implements ProductAlternat
             ->getFactory()
             ->createProductAlternativeWriter()
             ->persistProductAlternatives($productConcreteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idBaseProduct
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
+     */
+    public function deleteProductAbstractAlternative(int $idBaseProduct, int $idProductAbstract): ProductAlternativeResponseTransfer
+    {
+        return $this
+            ->getFactory()
+            ->createProductAlternativeWriter()
+            ->deleteProductAbstractAlternativeResponse($idBaseProduct, $idProductAbstract);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idBaseProduct
+     * @param int $idProductConcrete
+     *
+     * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
+     */
+    public function deleteProductConcreteAlternative(int $idBaseProduct, int $idProductConcrete): ProductAlternativeResponseTransfer
+    {
+        return $this
+            ->getFactory()
+            ->createProductAlternativeWriter()
+            ->deleteProductConcreteAlternativeResponse($idBaseProduct, $idProductConcrete);
     }
 }

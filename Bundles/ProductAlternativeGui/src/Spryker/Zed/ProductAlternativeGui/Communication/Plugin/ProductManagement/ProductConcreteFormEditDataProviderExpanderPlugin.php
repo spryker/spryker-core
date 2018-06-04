@@ -32,7 +32,9 @@ class ProductConcreteFormEditDataProviderExpanderPlugin extends AbstractPlugin i
         $productAlternatives = $this
             ->getFactory()
             ->getProductAlternativeFacade()
-            ->getProductAlternativesByIdProductConcrete($productConcrete);
+            ->getProductAlternativesByIdProductConcrete(
+                $productConcrete->getIdProductConcrete()
+            );
 
         $formData[ProductConcreteTransfer::PRODUCT_ALTERNATIVES] = $productAlternatives->getProductAlternatives();
     }

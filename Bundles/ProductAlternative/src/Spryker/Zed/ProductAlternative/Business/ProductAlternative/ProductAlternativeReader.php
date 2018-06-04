@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductAlternative\Business\ProductAlternative;
 
 use Generated\Shared\Transfer\ProductAlternativeCollectionTransfer;
 use Generated\Shared\Transfer\ProductAlternativeTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\ProductAlternative\Persistence\ProductAlternativeRepositoryInterface;
 
 class ProductAlternativeReader implements ProductAlternativeReaderInterface
@@ -28,24 +27,48 @@ class ProductAlternativeReader implements ProductAlternativeReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param int $idProductConcrete
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeCollectionTransfer
      */
-    public function getProductAlternativesByIdProductConcrete(ProductConcreteTransfer $productConcreteTransfer): ProductAlternativeCollectionTransfer
+    public function getProductAlternativesByIdProductConcrete(int $idProductConcrete): ProductAlternativeCollectionTransfer
     {
         return $this->productAlternativeRepository
-            ->getProductAlternativesForProductConcrete($productConcreteTransfer);
+            ->getProductAlternativesForProductConcrete($idProductConcrete);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductAlternativeTransfer $productAlternativeTransfer
+     * @param int $idProductAlternative
      *
-     * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
+     * @return null|\Generated\Shared\Transfer\ProductAlternativeTransfer
      */
-    public function getProductAlternativeByIdProductAlternative(ProductAlternativeTransfer $productAlternativeTransfer): ProductAlternativeTransfer
+    public function getProductAlternativeByIdProductAlternative(int $idProductAlternative): ?ProductAlternativeTransfer
     {
         return $this->productAlternativeRepository
-            ->getProductAlternativeByIdProductAlternative($productAlternativeTransfer);
+            ->getProductAlternativeByIdProductAlternative($idProductAlternative);
+    }
+
+    /**
+     * @param int $idBaseProduct
+     * @param int $idProductAbstract
+     *
+     * @return null|\Generated\Shared\Transfer\ProductAlternativeTransfer
+     */
+    public function getProductAbstractAlternative(int $idBaseProduct, int $idProductAbstract): ?ProductAlternativeTransfer
+    {
+        return $this->productAlternativeRepository
+            ->getProductAbstractAlternative($idBaseProduct, $idProductAbstract);
+    }
+
+    /**
+     * @param int $idBaseProduct
+     * @param int $idProductConcrete
+     *
+     * @return null|\Generated\Shared\Transfer\ProductAlternativeTransfer
+     */
+    public function getProductConcreteAlternative(int $idBaseProduct, int $idProductConcrete): ?ProductAlternativeTransfer
+    {
+        return $this->productAlternativeRepository
+            ->getProductConcreteAlternative($idBaseProduct, $idProductConcrete);
     }
 }

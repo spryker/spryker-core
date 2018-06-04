@@ -27,23 +27,23 @@ class ProductAlternativeGuiToProductAlternativeFacadeBridge implements ProductAl
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param int $idProductConcrete
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeCollectionTransfer
      */
-    public function getProductAlternativesByIdProductConcrete(ProductConcreteTransfer $productConcreteTransfer): ProductAlternativeCollectionTransfer
+    public function getProductAlternativesByIdProductConcrete(int $idProductConcrete): ProductAlternativeCollectionTransfer
     {
-        return $this->productAlternativeFacade->getProductAlternativesByIdProductConcrete($productConcreteTransfer);
+        return $this->productAlternativeFacade->getProductAlternativesByIdProductConcrete($idProductConcrete);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductAlternativeTransfer $productAlternativeTransfer
+     * @param int $idProductAlternative
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
      */
-    public function getProductAlternativeByIdProductAlternative(ProductAlternativeTransfer $productAlternativeTransfer): ProductAlternativeTransfer
+    public function getProductAlternativeByIdProductAlternative(int $idProductAlternative): ProductAlternativeTransfer
     {
-        return $this->productAlternativeFacade->getProductAlternativeByIdProductAlternative($productAlternativeTransfer);
+        return $this->productAlternativeFacade->getProductAlternativeByIdProductAlternative($idProductAlternative);
     }
 
     /**

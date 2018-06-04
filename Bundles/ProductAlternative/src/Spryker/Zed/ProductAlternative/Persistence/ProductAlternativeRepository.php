@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductAlternative\Persistence;
 
 use Generated\Shared\Transfer\ProductAlternativeCollectionTransfer;
 use Generated\Shared\Transfer\ProductAlternativeTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Orm\Zed\ProductAlternative\Persistence\SpyProductAlternativeQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -50,11 +49,11 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param int $idProductConcrete
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeCollectionTransfer
      */
-    public function getProductAlternativesForProductConcrete(ProductConcreteTransfer $productConcreteTransfer): ProductAlternativeCollectionTransfer
+    public function getProductAlternativesForProductConcrete(int $idProductConcrete): ProductAlternativeCollectionTransfer
     {
         $productAlternativeQuery = $this
             ->getFactory()
@@ -62,7 +61,7 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
 
         $productAlternatives = $productAlternativeQuery
             ->filterByFkProduct(
-                $productConcreteTransfer->getIdProductConcrete()
+                $idProductConcrete
             )->find();
 
         $mapper = $this
@@ -84,11 +83,11 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductAlternativeTransfer $productAlternativeTransfer
+     * @param int $idProductAlternative
      *
-     * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
+     * @return null|\Generated\Shared\Transfer\ProductAlternativeTransfer
      */
-    public function getProductAlternativeByIdProductAlternative(ProductAlternativeTransfer $productAlternativeTransfer): ProductAlternativeTransfer
+    public function getProductAlternativeByIdProductAlternative(int $idProductAlternative): ?ProductAlternativeTransfer
     {
         $productAlternativeQuery = $this
             ->getFactory()
@@ -96,8 +95,72 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
 
         $alternativeProduct = $productAlternativeQuery
             ->filterByIdProductAlternative(
-                $productAlternativeTransfer->getIdProductAlternative()
+                $idProductAlternative
             )->findOne();
+
+        if (!$alternativeProduct) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createProductAlternativeMapper()
+            ->mapSpyProductAlternativeEntityToTransfer($alternativeProduct);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idBaseProduct
+     * @param int $idProductAbstract
+     *
+     * @return null|\Generated\Shared\Transfer\ProductAlternativeTransfer
+     */
+    public function getProductAbstractAlternative(int $idBaseProduct, int $idProductAbstract): ?ProductAlternativeTransfer
+    {
+        $productAlternativeQuery = $this
+            ->getFactory()
+            ->createProductAlternativeQuery();
+
+        $alternativeProduct = $productAlternativeQuery
+            ->filterByFkProduct($idBaseProduct)
+            ->filterByFkProductAbstractAlternative($idProductAbstract)
+            ->findOne();
+
+        if (!$alternativeProduct) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createProductAlternativeMapper()
+            ->mapSpyProductAlternativeEntityToTransfer($alternativeProduct);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idBaseProduct
+     * @param int $idProductConcrete
+     *
+     * @return null|\Generated\Shared\Transfer\ProductAlternativeTransfer
+     */
+    public function getProductConcreteAlternative(int $idBaseProduct, int $idProductConcrete): ?ProductAlternativeTransfer
+    {
+        $productAlternativeQuery = $this
+            ->getFactory()
+            ->createProductAlternativeQuery();
+
+        $alternativeProduct = $productAlternativeQuery
+            ->filterByFkProduct($idBaseProduct)
+            ->filterByFkProductConcreteAlternative($idProductConcrete)
+            ->findOne();
+
+        if (!$alternativeProduct) {
+            return null;
+        }
 
         return $this->getFactory()
             ->createProductAlternativeMapper()
