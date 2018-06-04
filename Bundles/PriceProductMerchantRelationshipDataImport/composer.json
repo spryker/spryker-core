@@ -9,7 +9,7 @@
     "spryker/kernel": "^3.0.0",
     "spryker/merchant-relationship": "^1.0.0",
     "spryker/price-product": "^1.0.0",
-    "spryker/price-product-merchant-relationship": "^1.0.0",
+    "spryker/price-product-merchant-relationship": "dev-beta/customer-specific-prices-and-volume-prices",
     "spryker/product": "^6.0.0",
     "spryker/store": "^1.0.0"
   },
@@ -36,5 +36,11 @@
   },
   "config": {
     "sort-packages": true
-  }
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/spryker/price-product-merchant-relationship"
+    }
+  ]
 }
