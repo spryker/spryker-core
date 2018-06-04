@@ -25,7 +25,8 @@ class ProductAlternativeBusinessFactory extends AbstractBusinessFactory
     public function createProductAlternativeWriter(): ProductAlternativeWriterInterface
     {
         return new ProductAlternativeWriter(
-            $this->getEntityManager()
+            $this->getEntityManager(),
+            $this->createProductAlternativeReader()
         );
     }
 

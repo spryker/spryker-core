@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductAlternativeGui\Business;
 
+use Generated\Shared\Transfer\ProductAlternativeResponseTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -33,6 +34,8 @@ class ProductAlternativeGuiFacade extends AbstractFacade implements ProductAlter
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
@@ -43,7 +46,49 @@ class ProductAlternativeGuiFacade extends AbstractFacade implements ProductAlter
     {
         return $this
             ->getFactory()
-            ->createProductAlternativeCreator()
+            ->createProductAlternativeManager()
             ->persistProductAlternatives($productConcreteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idBaseProduct
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
+     */
+    public function deleteProductAbstractAlternative(int $idBaseProduct, int $idProductAbstract): ProductAlternativeResponseTransfer
+    {
+        return $this
+            ->getFactory()
+            ->createProductAlternativeManager()
+            ->deleteProductAbstractAlternative(
+                $idBaseProduct,
+                $idProductAbstract
+            );
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idBaseProduct
+     * @param int $idProductConcrete
+     *
+     * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
+     */
+    public function deleteProductConcreteAlternative(int $idBaseProduct, int $idProductConcrete): ProductAlternativeResponseTransfer
+    {
+        return $this
+            ->getFactory()
+            ->createProductAlternativeManager()
+            ->deleteProductConcreteAlternative(
+                $idBaseProduct,
+                $idProductConcrete
+            );
     }
 }

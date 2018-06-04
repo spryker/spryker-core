@@ -7,10 +7,11 @@
 
 namespace Spryker\Zed\ProductAlternativeGui\Business\ProductAlternative;
 
+use Generated\Shared\Transfer\ProductAlternativeResponseTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\ProductAlternativeGui\Dependency\Facade\ProductAlternativeGuiToProductAlternativeFacadeInterface;
 
-class ProductAlternativeCreator implements ProductAlternativeCreatorInterface
+class ProductAlternativeManager implements ProductAlternativeManagerInterface
 {
     /**
      * @var \Spryker\Zed\ProductAlternativeGui\Dependency\Facade\ProductAlternativeGuiToProductAlternativeFacadeInterface
@@ -34,5 +35,29 @@ class ProductAlternativeCreator implements ProductAlternativeCreatorInterface
     public function persistProductAlternatives(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
         return $this->productAlternativeFacade->persistProductAlternatives($productConcreteTransfer);
+    }
+
+    /**
+     * @param int $idBaseProduct
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
+     */
+    public function deleteProductAbstractAlternative(int $idBaseProduct, int $idProductAbstract): ProductAlternativeResponseTransfer
+    {
+        return $this->productAlternativeFacade
+            ->deleteProductAbstractAlternative($idBaseProduct, $idProductAbstract);
+    }
+
+    /**
+     * @param int $idBaseProduct
+     * @param int $idProductConcrete
+     *
+     * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
+     */
+    public function deleteProductConcreteAlternative(int $idBaseProduct, int $idProductConcrete): ProductAlternativeResponseTransfer
+    {
+        return $this->productAlternativeFacade
+            ->deleteProductConcreteAlternative($idBaseProduct, $idProductConcrete);
     }
 }

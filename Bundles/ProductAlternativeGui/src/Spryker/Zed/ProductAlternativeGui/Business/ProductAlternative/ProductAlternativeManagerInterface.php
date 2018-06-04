@@ -5,31 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductAlternativeGui\Business;
+namespace Spryker\Zed\ProductAlternativeGui\Business\ProductAlternative;
 
 use Generated\Shared\Transfer\ProductAlternativeResponseTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 
-interface ProductAlternativeGuiFacadeInterface
+interface ProductAlternativeManagerInterface
 {
     /**
-     * Specification:
-     * - Suggests product by name or SKU.
-     *
-     * @api
-     *
-     * @param string $searchName
-     *
-     * @return string[]
-     */
-    public function suggestProduct(string $searchName): array;
-
-    /**
-     * Specification:
-     * - Persists product alternatives stored in product concrete transfer.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
@@ -37,11 +20,6 @@ interface ProductAlternativeGuiFacadeInterface
     public function persistProductAlternatives(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
 
     /**
-     * Specification:
-     * - Deletes abstract product alternative.
-     *
-     * @api
-     *
      * @param int $idBaseProduct
      * @param int $idProductAbstract
      *
@@ -50,11 +28,6 @@ interface ProductAlternativeGuiFacadeInterface
     public function deleteProductAbstractAlternative(int $idBaseProduct, int $idProductAbstract): ProductAlternativeResponseTransfer;
 
     /**
-     * Specification:
-     * - Deletes concrete product alternative.
-     *
-     * @api
-     *
      * @param int $idBaseProduct
      * @param int $idProductConcrete
      *

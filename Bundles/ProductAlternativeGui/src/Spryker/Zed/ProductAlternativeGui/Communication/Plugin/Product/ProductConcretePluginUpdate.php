@@ -8,13 +8,14 @@
 namespace Spryker\Zed\ProductAlternativeGui\Communication\Plugin\Product;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginUpdateInterface;
 
 /**
  * @method \Spryker\Zed\ProductAlternativeGui\Business\ProductAlternativeGuiFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductAlternativeGui\Communication\ProductAlternativeGuiCommunicationFactory getFactory()
  */
-class ProductConcretePluginUpdate implements ProductConcretePluginUpdateInterface
+class ProductConcretePluginUpdate extends AbstractPlugin implements ProductConcretePluginUpdateInterface
 {
     /**
      * {@inheritdoc}
@@ -29,6 +30,8 @@ class ProductConcretePluginUpdate implements ProductConcretePluginUpdateInterfac
      */
     public function update(ProductConcreteTransfer $productConcreteTransfer)
     {
-        return $this->getFacade()->persistProductAlternatives($productConcreteTransfer);
+        return $this
+            ->getFacade()
+            ->persistProductAlternatives($productConcreteTransfer);
     }
 }

@@ -10,8 +10,8 @@ namespace Spryker\Zed\ProductAlternativeGui\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductAlternativeGui\Business\Product\ProductSuggester;
 use Spryker\Zed\ProductAlternativeGui\Business\Product\ProductSuggesterInterface;
-use Spryker\Zed\ProductAlternativeGui\Business\ProductAlternative\ProductAlternativeCreator;
-use Spryker\Zed\ProductAlternativeGui\Business\ProductAlternative\ProductAlternativeCreatorInterface;
+use Spryker\Zed\ProductAlternativeGui\Business\ProductAlternative\ProductAlternativeManager;
+use Spryker\Zed\ProductAlternativeGui\Business\ProductAlternative\ProductAlternativeManagerInterface;
 use Spryker\Zed\ProductAlternativeGui\Dependency\Facade\ProductAlternativeGuiToProductAlternativeFacadeInterface;
 use Spryker\Zed\ProductAlternativeGui\Dependency\Facade\ProductAlternativeGuiToProductFacadeInterface;
 use Spryker\Zed\ProductAlternativeGui\ProductAlternativeGuiDependencyProvider;
@@ -33,11 +33,11 @@ class ProductAlternativeGuiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductAlternativeGui\Business\ProductAlternative\ProductAlternativeCreatorInterface
+     * @return \Spryker\Zed\ProductAlternativeGui\Business\ProductAlternative\ProductAlternativeManagerInterface
      */
-    public function createProductAlternativeCreator(): ProductAlternativeCreatorInterface
+    public function createProductAlternativeManager(): ProductAlternativeManagerInterface
     {
-        return new ProductAlternativeCreator(
+        return new ProductAlternativeManager(
             $this->getProductAlternativeFacade()
         );
     }

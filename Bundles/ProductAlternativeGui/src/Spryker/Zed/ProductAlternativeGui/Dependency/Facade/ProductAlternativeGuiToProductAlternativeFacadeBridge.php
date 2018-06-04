@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductAlternativeGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\ProductAlternativeCollectionTransfer;
+use Generated\Shared\Transfer\ProductAlternativeResponseTransfer;
 use Generated\Shared\Transfer\ProductAlternativeTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 
@@ -33,7 +34,8 @@ class ProductAlternativeGuiToProductAlternativeFacadeBridge implements ProductAl
      */
     public function getProductAlternativesByIdProductConcrete(int $idProductConcrete): ProductAlternativeCollectionTransfer
     {
-        return $this->productAlternativeFacade->getProductAlternativesByIdProductConcrete($idProductConcrete);
+        return $this->productAlternativeFacade
+            ->getProductAlternativesByIdProductConcrete($idProductConcrete);
     }
 
     /**
@@ -43,7 +45,68 @@ class ProductAlternativeGuiToProductAlternativeFacadeBridge implements ProductAl
      */
     public function getProductAlternativeByIdProductAlternative(int $idProductAlternative): ProductAlternativeTransfer
     {
-        return $this->productAlternativeFacade->getProductAlternativeByIdProductAlternative($idProductAlternative);
+        return $this->productAlternativeFacade
+            ->getProductAlternativeByIdProductAlternative($idProductAlternative);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     * @param int $idProductAbstractAlternative
+     *
+     * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
+     */
+    public function createProductAbstractAlternative(int $idProductAbstract, int $idProductAbstractAlternative): ProductAlternativeResponseTransfer
+    {
+        return $this->productAlternativeFacade
+            ->createProductAbstractAlternative(
+                $idProductAbstract,
+                $idProductAbstractAlternative
+            );
+    }
+
+    /**
+     * @param int $idProductConcrete
+     * @param int $idProductConcreteAlternative
+     *
+     * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
+     */
+    public function createProductConcreteAlternative(int $idProductConcrete, int $idProductConcreteAlternative): ProductAlternativeResponseTransfer
+    {
+        return $this->productAlternativeFacade
+            ->createProductConcreteAlternative(
+                $idProductConcrete,
+                $idProductConcreteAlternative
+            );
+    }
+
+    /**
+     * @param int $idBaseProduct
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
+     */
+    public function deleteProductAbstractAlternative(int $idBaseProduct, int $idProductAbstract): ProductAlternativeResponseTransfer
+    {
+        return $this->productAlternativeFacade
+            ->deleteProductAbstractAlternative(
+                $idBaseProduct,
+                $idProductAbstract
+            );
+    }
+
+    /**
+     * @param int $idBaseProduct
+     * @param int $idProductConcrete
+     *
+     * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
+     */
+    public function deleteProductConcreteAlternative(int $idBaseProduct, int $idProductConcrete): ProductAlternativeResponseTransfer
+    {
+        return $this->productAlternativeFacade
+            ->deleteProductConcreteAlternative(
+                $idBaseProduct,
+                $idProductConcrete
+            );
     }
 
     /**
@@ -53,6 +116,7 @@ class ProductAlternativeGuiToProductAlternativeFacadeBridge implements ProductAl
      */
     public function persistProductAlternatives(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
-        return $this->productAlternativeFacade->persistProductAlternatives($productConcreteTransfer);
+        return $this->productAlternativeFacade
+            ->persistProductAlternatives($productConcreteTransfer);
     }
 }

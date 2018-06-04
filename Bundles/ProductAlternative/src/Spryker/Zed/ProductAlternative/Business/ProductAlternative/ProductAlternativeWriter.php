@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductAlternative\Business\ProductAlternative;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ProductAlternativeResponseTransfer;
 use Generated\Shared\Transfer\ProductAlternativeTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -226,8 +227,8 @@ class ProductAlternativeWriter implements ProductAlternativeWriterInterface
 
         return $productAlternativeResponseTransfer
             ->setIsSuccessful(false)
-            ->setMessages([
+            ->setMessages(new ArrayObject([
                 $responseMessageTransfer,
-            ]);
+            ]));
     }
 }

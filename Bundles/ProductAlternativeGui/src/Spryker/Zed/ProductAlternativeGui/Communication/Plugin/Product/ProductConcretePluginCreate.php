@@ -30,8 +30,8 @@ class ProductConcretePluginCreate extends AbstractPlugin implements ProductConcr
      */
     public function create(ProductConcreteTransfer $productConcreteTransfer)
     {
-        $this->getFacade()->persistProductAlternatives($productConcreteTransfer);
-
-        return $productConcreteTransfer;
+        return $this
+            ->getFacade()
+            ->persistProductAlternatives($productConcreteTransfer);
     }
 }
