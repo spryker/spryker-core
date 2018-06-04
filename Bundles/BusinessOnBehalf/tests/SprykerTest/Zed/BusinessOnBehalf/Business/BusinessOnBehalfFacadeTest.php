@@ -68,7 +68,7 @@ class BusinessOnBehalfFacadeTest extends Unit
             CompanyUserTransfer::FK_COMPANY => $this->activeCompany->getIdCompany(),
             CompanyUserTransfer::CUSTOMER => $this->customer,
         ];
-        $this->tester->haveCompanyUsers(2, $companyUserSeed);
+        $this->haveCompanyUsers(2, $companyUserSeed);
 
         //Act
         $actualCustomer = $this->tester->getFacade()->expandCustomerWithIsOnBehalf($this->customer);
@@ -122,5 +122,22 @@ class BusinessOnBehalfFacadeTest extends Unit
         //Assert
         $this->tester->assertInstanceOf(CompanyUserCollectionTransfer::class, $actualCompanyUserCollection);
         $this->tester->assertCount($expectedCompanyUserAmount, $actualCompanyUserCollection->getCompanyUsers());
+    }
+
+    /**
+     * @param int $amount
+     * @param array $seed
+     *
+     * @return array
+     */
+    public function haveCompanyUsers(int $amount, array $seed = [])
+    {
+        $companyUsers = [];
+
+        for ($i = 0; $i < $amount; $i++) {
+            $companyUsers[] = $this->tester->haveCompanyUser($seed);
+        }
+
+        return $companyUsers;
     }
 }

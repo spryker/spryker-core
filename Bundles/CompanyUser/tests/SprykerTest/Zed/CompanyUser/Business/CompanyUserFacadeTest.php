@@ -8,6 +8,8 @@
 namespace SprykerTest\Zed\CompanyUser\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 
 /**
  * Auto-generated group annotations
@@ -38,12 +40,12 @@ class CompanyUserFacadeTest extends Unit
         $inactiveCompany = $this->tester->haveCompany(['isActive' => false]);
 
         $seedDataWithActiveCompany = [
-            'customer' => $customer,
-            'fkCompany' => $activeCompany->getIdCompany(),
+            CompanyUserTransfer::CUSTOMER => $customer,
+            CompanyUserTransfer::FK_COMPANY => $activeCompany->getIdCompany(),
         ];
         $seedDataWithInactiveCompany = [
-            'customer' => $customer,
-            'fkCompany' => $inactiveCompany->getIdCompany(),
+            CompanyUserTransfer::CUSTOMER => $customer,
+            CompanyUserTransfer::FK_COMPANY => $inactiveCompany->getIdCompany(),
         ];
         $this->tester->haveCompanyUser($seedDataWithActiveCompany);
         $this->tester->haveCompanyUser($seedDataWithInactiveCompany);
