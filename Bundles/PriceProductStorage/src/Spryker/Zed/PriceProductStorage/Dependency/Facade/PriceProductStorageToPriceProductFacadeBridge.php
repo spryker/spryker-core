@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\PriceProductStorage\Dependency\Facade;
 
-class PriceProductStorageToPriceProductFacadeBridge
+class PriceProductStorageToPriceProductFacadeBridge implements PriceProductStorageToPriceProductFacadeInterface
 {
     /**
      * @var \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface
@@ -23,12 +23,33 @@ class PriceProductStorageToPriceProductFacadeBridge
     }
 
     /**
-     * @param string $sku
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function findProductAbstractPrices($idProductAbstract)
+    {
+        return $this->priceProductFacade->findProductAbstractPrices($idProductAbstract);
+    }
+
+    /**
+     * @param int $idProductConcrete
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function findProductConcretePrices($idProductConcrete, $idProductAbstract)
+    {
+        return $this->priceProductFacade->findProductConcretePrices($idProductConcrete, $idProductAbstract);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
      * @return array
      */
-    public function findPricesBySkuGroupedForCurrentStore($sku)
+    public function groupPriceProductCollection(array $priceProductTransfers)
     {
-        return $this->priceProductFacade->findPricesBySkuGroupedForCurrentStore($sku);
+        return $this->priceProductFacade->groupPriceProductCollection($priceProductTransfers);
     }
 }

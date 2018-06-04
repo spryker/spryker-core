@@ -26,7 +26,7 @@ class ProductReviewStorageFactory extends AbstractFactory
      */
     protected function createProductReviewStorageKeyGenerator()
     {
-        return new ProductReviewStorageKeyGenerator($this->getSynchronizationService(), $this->getStore());
+        return new ProductReviewStorageKeyGenerator($this->getSynchronizationService());
     }
 
     /**
@@ -43,13 +43,5 @@ class ProductReviewStorageFactory extends AbstractFactory
     protected function getSynchronizationService()
     {
         return $this->getProvidedDependency(ProductReviewStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    protected function getStore()
-    {
-        return $this->getProvidedDependency(ProductReviewStorageDependencyProvider::STORE);
     }
 }
