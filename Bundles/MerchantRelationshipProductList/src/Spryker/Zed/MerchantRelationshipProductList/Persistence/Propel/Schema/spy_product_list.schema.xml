@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<database
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        name="zed"
+        xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
+        namespace="Orm\Zed\ProductList\Persistence"
+        package="src.Orm.Zed.ProductList.Persistence">
+
+    <table name="spy_product_list">
+        <column name="fk_merchant_relationship" type="INTEGER" required="true"/>
+
+        <foreign-key name="spy_product_list-fk_merchant_relationship" foreignTable="spy_merchant_relationship">
+            <reference local="fk_merchant_relationship" foreign="id_merchant_relationship"/>
+        </foreign-key>
+
+        <index name="spy_product_list-fk_merchant_relationship">
+            <index-column name="fk_merchant_relationship"/>
+        </index>
+    </table>
+
+</database>
