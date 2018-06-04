@@ -9,13 +9,15 @@ namespace Spryker\Zed\ProductOptionStorage\Communication\Plugin\Event\Listener;
 
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionValuePriceTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\ProductOptionStorage\Persistence\ProductOptionStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductOptionStorage\Communication\ProductOptionStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductOptionStorage\Business\ProductOptionStorageFacadeInterface getFacade()
  */
-class ProductOptionValuePriceStorageListener extends AbstractProductOptionStorageListener implements EventBulkHandlerInterface
+class ProductOptionValuePriceStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
@@ -39,6 +41,6 @@ class ProductOptionValuePriceStorageListener extends AbstractProductOptionStorag
             ->find()
             ->getData();
 
-        $this->publish($productAbstractIds);
+        $this->getFacade()->publish($productAbstractIds);
     }
 }

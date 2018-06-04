@@ -38,9 +38,6 @@ class ProductSetPageSearchQueryContainer extends AbstractQueryContainer implemen
             ->joinWithSpyLocale()
             ->joinWithSpyProductSet()
             ->joinWith('SpyProductSet.SpyProductAbstractSet')
-            ->joinWith('SpyProductSet.SpyProductImageSet')
-            ->joinWith('SpyProductImageSet.SpyProductImageSetToProductImage')
-            ->joinWith('SpyProductImageSetToProductImage.SpyProductImage')
             ->filterByFkProductSet_In($productSetIds)
             ->addJoin(
                 SpyProductSetTableMap::COL_ID_PRODUCT_SET,

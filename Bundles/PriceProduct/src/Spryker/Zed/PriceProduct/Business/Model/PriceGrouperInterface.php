@@ -15,4 +15,11 @@ interface PriceGrouperInterface
      * @return array
      */
     public function findPricesBySkuGroupedForCurrentStore($sku);
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     *
+     * @return array
+     */
+    public function groupPriceProduct(array $priceProductTransfers);
 }

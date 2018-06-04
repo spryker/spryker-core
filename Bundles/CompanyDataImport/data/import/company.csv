@@ -1,2 +1,4 @@
-name,key,is_active,status
-Test Company,test-company,true,approved
+key,name,is_active,status
+test-company,Hotel Tommy,true,approved
+trial-company,Trial,true,approved
+proof-company,Proof,true,approved

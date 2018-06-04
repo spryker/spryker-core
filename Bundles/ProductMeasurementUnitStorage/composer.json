@@ -4,9 +4,9 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/event-behavior": "^0.1.0",
-    "spryker/kernel": "^3.17.0",
-    "spryker/product-measurement-unit": "^0.1.0",
+    "spryker/event-behavior": "^1.0.0",
+    "spryker/kernel": "^3.21.0",
+    "spryker/product-measurement-unit": "^1.0.0",
     "spryker/storage": "^3.0.0",
     "spryker/synchronization": "^0.2.0"
   },
