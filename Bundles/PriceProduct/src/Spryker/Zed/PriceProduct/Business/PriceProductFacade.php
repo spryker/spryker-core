@@ -339,11 +339,11 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      *
      * @api
      *
-     * @param string $priceData
+     * @param array $priceData
      *
      * @return string
      */
-    public function generatePriceDataChecksum(string $priceData): string
+    public function generatePriceDataChecksum(array $priceData): string
     {
         return $this->getFactory()
             ->createPriceDataChecksumGenerator()

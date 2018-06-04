@@ -55,14 +55,16 @@ class PreparePriceDataStep implements DataImportStepInterface
     public function execute(DataSetInterface $dataSet)
     {
         $this->preparePriceDataKeysCache($dataSet);
-        $dataSet[PriceProductDataSet::KEY_PRICE_DATA] = $this->getPriceData($dataSet);
-        if ($dataSet[PriceProductDataSet::KEY_PRICE_DATA] === null) {
+        $priceData = $this->getPriceData($dataSet);
+        if ($priceData === null) {
+            $dataSet[PriceProductDataSet::KEY_PRICE_DATA] = null;
             $dataSet[PriceProductDataSet::KEY_PRICE_DATA_CHECKSUM] = null;
 
             return;
         }
+        $dataSet[PriceProductDataSet::KEY_PRICE_DATA] = $this->utilEncodingService->encodeJson($priceData);
         $dataSet[PriceProductDataSet::KEY_PRICE_DATA_CHECKSUM] = $this->priceProductFacade
-            ->generatePriceDataChecksum($dataSet[PriceProductDataSet::KEY_PRICE_DATA]);
+            ->generatePriceDataChecksum($priceData);
     }
 
     /**
@@ -119,9 +121,9 @@ class PreparePriceDataStep implements DataImportStepInterface
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
-     * @return null|string
+     * @return null|array
      */
-    protected function getPriceData(DataSetInterface $dataSet): ?string
+    protected function getPriceData(DataSetInterface $dataSet): ?array
     {
         $priceData = [];
 
@@ -133,7 +135,7 @@ class PreparePriceDataStep implements DataImportStepInterface
             return null;
         }
 
-        return $this->utilEncodingService->encodeJson($priceData);
+        return $priceData;
     }
 
     /**

@@ -9,9 +9,9 @@ namespace Spryker\Zed\PriceProductDataImport\Dependency\Facade;
 interface PriceProductDataImportToPriceProductFacadeInterface
 {
     /**
-     * @param string $priceData
+     * @param array $priceData
      *
      * @return string
      */
-    public function generatePriceDataChecksum(string $priceData): string;
+    public function generatePriceDataChecksum(array $priceData): string;
 }
