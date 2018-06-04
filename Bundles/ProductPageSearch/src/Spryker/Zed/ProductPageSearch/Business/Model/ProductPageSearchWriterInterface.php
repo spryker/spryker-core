@@ -19,5 +19,5 @@ interface ProductPageSearchWriterInterface
      *
      * @return void
      */
-    public function save(ProductPageSearchTransfer $productPageSearchTransfer, array $data, ?SpyProductAbstractPageSearch $productPageSearchEntity = null);
+    public function save(ProductPageSearchTransfer $productPageSearchTransfer, array $data, ?SpyProductAbstractPageSearch $productPageSearchEntity);
 }

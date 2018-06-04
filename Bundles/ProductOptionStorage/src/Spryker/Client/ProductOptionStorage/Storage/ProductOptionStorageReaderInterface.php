@@ -16,4 +16,11 @@ interface ProductOptionStorageReaderInterface
      * @return \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer
      */
     public function getProductOptions($idProductAbstract, $locale);
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer
+     */
+    public function getProductOptionsForCurrentStore($idProductAbstract);
 }

@@ -112,7 +112,7 @@ class GroupForm extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $choices
      *
-     * @return \Spryker\Zed\Acl\Communication\Form\GroupForm
+     * @return $this
      */
     protected function addRolesField(FormBuilderInterface $builder, array $choices)
     {
