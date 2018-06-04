@@ -1,11 +1,20 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\BusinessOnBehalf\Communication\Plugin;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\Customer\Dependency\Plugin\CustomerTransferExpanderPluginInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
-class CustomerDefaultCompanyUserExpanderPlugin implements CustomerTransferExpanderPluginInterface
+/**
+ * @method \Spryker\Zed\BusinessOnBehalf\Business\BusinessOnBehalfFacadeInterface getFacade()
+ */
+class CustomerDefaultCompanyUserExpanderPlugin extends AbstractPlugin implements CustomerTransferExpanderPluginInterface
 {
     /**
      * Specification
@@ -19,10 +28,6 @@ class CustomerDefaultCompanyUserExpanderPlugin implements CustomerTransferExpand
      */
     public function expandTransfer(CustomerTransfer $customerTransfer)
     {
-        if ($customerTransfer->getCompanyUserTransfer()) {
-            return $customerTransfer;
-        }
-
         return $this->getFacade()->setDefaultCompanyUserToCustomer($customerTransfer);
     }
 }

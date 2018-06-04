@@ -7,11 +7,14 @@
 
 namespace Spryker\Zed\BusinessOnBehalf\Business;
 
+use Spryker\Zed\BusinessOnBehalf\Business\CustomerHydrator\CustomerHydrator;
+use Spryker\Zed\BusinessOnBehalf\Business\CustomerHydrator\CustomerHydratorInterface;
 use Spryker\Zed\BusinessOnBehalf\Business\Model\CompanyUserCollectionFinder;
 use Spryker\Zed\BusinessOnBehalf\Business\Model\CompanyUserCollectionFinderInterface;
 use Spryker\Zed\BusinessOnBehalf\Business\Model\CustomerExpander;
 use Spryker\Zed\BusinessOnBehalf\Business\Model\CustomerExpanderInterface;
 use Spryker\Zed\BusinessOnBehalf\Business\Model\IsDefaultCompanyUserUpdater;
+use Spryker\Zed\BusinessOnBehalf\Business\Model\IsDefaultCompanyUserUpdaterInterface;
 use Spryker\Zed\BusinessOnBehalf\BusinessOnBehalfDependencyProvider;
 use Spryker\Zed\BusinessOnBehalf\Dependency\Facade\CompanyUserToBusinessOnBehalfFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -42,10 +45,24 @@ class BusinessOnBehalfBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    public function createIsDefaultCompanyUserUpdater()
+    /**
+     * @return \Spryker\Zed\BusinessOnBehalf\Business\Model\IsDefaultCompanyUserUpdaterInterface
+     */
+    public function createIsDefaultCompanyUserUpdater(): IsDefaultCompanyUserUpdaterInterface
     {
         return new IsDefaultCompanyUserUpdater(
             $this->getEntityManager()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\BusinessOnBehalf\Business\CustomerHydrator\CustomerHydratorInterface
+     */
+    public function createCustomerHydrator(): CustomerHydratorInterface
+    {
+        return new CustomerHydrator(
+            $this->getRepository(),
+            $this->getCompanyUserFacade()
         );
     }
 

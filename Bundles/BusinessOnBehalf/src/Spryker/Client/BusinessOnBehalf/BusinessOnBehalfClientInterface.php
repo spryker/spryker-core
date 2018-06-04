@@ -30,6 +30,8 @@ interface BusinessOnBehalfClientInterface
     public function findActiveCompanyUsersByCustomerId(CustomerTransfer $customerTransfer): CompanyUserCollectionTransfer;
 
     /**
+     * @api
+     *
      * @uses CompanyUser
      *
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer

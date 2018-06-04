@@ -9,7 +9,6 @@ namespace Spryker\Zed\BusinessOnBehalf\Persistence;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -49,7 +48,7 @@ class BusinessOnBehalfEntityManager extends AbstractRepository implements Busine
     protected function deselectExistingIsDefaultFlag(CustomerTransfer $customerTransfer): void
     {
         $query = $this->getFactory()->getCompanyUserQuery();
-        $defaultCompanyUsers = $query->filterByFkCompany($customerTransfer->getIdCustomer())
+        $defaultCompanyUsers = $query->filterByFkCustomer($customerTransfer->getIdCustomer())
             ->filterByIsDefault(true)
             ->find();
 
