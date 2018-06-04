@@ -1,5 +1,9 @@
 namespace: BusinessOnBehalf
 actor: Tester
+
+include:
+    - tests/SprykerTest/Zed/BusinessOnBehalf
+
 paths:
     tests: tests
     log: tests/_output
