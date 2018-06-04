@@ -3,8 +3,8 @@
   "description": "Dataset module",
   "license": "proprietary",
   "require": {
-    "league/csv": "^9.1",
     "php": ">=7.1",
+    "spryker/csv": "*",
     "spryker/gui": "^3.13.0",
     "spryker/kernel": "^3.16.0",
     "spryker/locale": "^3.1.0",
