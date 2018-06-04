@@ -52,6 +52,6 @@ class BusinessOnBehalfEntityManager extends AbstractEntityManager implements Bus
             ->getCompanyUserQuery()
             ->filterByFkCustomer($customerTransfer->getIdCustomer())
             ->filterByIsDefault(true)
-            ->update([SpyCompanyUserTableMap::COL_IS_DEFAULT => null]);
+            ->update(['IsDefault' => null]);
     }
 }
