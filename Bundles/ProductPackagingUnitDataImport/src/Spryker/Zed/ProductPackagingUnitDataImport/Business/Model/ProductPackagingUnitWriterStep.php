@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductPackagingUnitDataImport\Business\Model;
 
+use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductPackagingLeadProductQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnit;
@@ -21,6 +22,18 @@ use Spryker\Zed\ProductPackagingUnitDataImport\Business\Model\DataSet\ProductPac
 
 class ProductPackagingUnitWriterStep implements DataImportStepInterface
 {
+    const PRODUCT_CONCRETE_HEAP_LIMIT = 100;
+
+    /**
+     * @var array
+     */
+    protected static $productConcreteEntities = [];
+
+    /**
+     * @var int
+     */
+    protected static $productConcreteHeapCurrentSize = 0;
+
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
@@ -50,7 +63,7 @@ class ProductPackagingUnitWriterStep implements DataImportStepInterface
 
         if ($productPackagingUnitEntity->isNew()) {
             $productPackagingUnitEntity
-                ->setFkProduct($this->getProductIdByConcreteSku($dataSet[ProductPackagingUnitDataSet::CONCRETE_SKU]))
+                ->setFkProduct($this->getProductConcreteIdByConcreteSku($dataSet[ProductPackagingUnitDataSet::CONCRETE_SKU]))
                 ->setFkProductPackagingUnitType($this->getproductPackagingUnitTypeIdByname($dataSet[ProductPackagingUnitDataSet::TYPE_NAME]));
         }
 
@@ -193,17 +206,10 @@ class ProductPackagingUnitWriterStep implements DataImportStepInterface
      *
      * @return int
      */
-    protected function getProductIdByConcreteSku(string $sku): int
+    protected function getProductConcreteIdByConcreteSku(string $sku): int
     {
-        $productEntity = SpyProductQuery::create()
-            ->filterBySku($sku)
-            ->findOne();
-
-        if ($productEntity === null) {
-            throw new EntityNotFoundException(sprintf("Concrete Product with sku '%s' not found", $sku));
-        }
-
-        return $productEntity->getIdProduct();
+        return $this->getConcreteProductBySku($sku)
+            ->getIdProduct();
     }
 
     /**
@@ -213,10 +219,47 @@ class ProductPackagingUnitWriterStep implements DataImportStepInterface
      */
     protected function getProductAbstractIdByConcreteSku(string $sku): int
     {
-        return SpyProductQuery::create()
-            ->filterBySku($sku)
-            ->findOne()
+        return $this->getConcreteProductBySku($sku)
             ->getFkProductAbstract();
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProduct
+     */
+    protected function getConcreteProductBySku(string $sku): SpyProduct
+    {
+        if (array_key_exists($sku, static::$productConcreteEntities)) {
+            return static::$productConcreteEntities[$sku];
+        }
+
+        $productEntity = SpyProductQuery::create()
+            ->filterBySku($sku)
+            ->findOne();
+
+        if ($productEntity === null) {
+            throw new EntityNotFoundException(sprintf("Concrete Product with sku '%s' not found", $sku));
+        }
+
+        $this->cacheProductConcrete($productEntity);
+
+        return $productEntity;
+    }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProduct $productEntity
+     *
+     * @return void
+     */
+    protected function cacheProductConcrete(SpyProduct $productEntity): void
+    {
+        if (static::$productConcreteHeapCurrentSize >= static::PRODUCT_CONCRETE_HEAP_LIMIT) {
+            static::$productConcreteEntities = [];
+        }
+
+        static::$productConcreteHeapCurrentSize++;
+        static::$productConcreteEntities[$productEntity->getSku()] = $productEntity;
     }
 
     /**
