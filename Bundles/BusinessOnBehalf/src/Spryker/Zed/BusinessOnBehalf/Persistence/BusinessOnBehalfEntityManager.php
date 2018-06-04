@@ -9,12 +9,13 @@ namespace Spryker\Zed\BusinessOnBehalf\Persistence;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Spryker\Zed\Kernel\Persistence\AbstractRepository;
+use Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap;
+use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
  * @method \Spryker\Zed\BusinessOnBehalf\Persistence\BusinessOnBehalfPersistenceFactory getFactory()
  */
-class BusinessOnBehalfEntityManager extends AbstractRepository implements BusinessOnBehalfEntityManagerInterface
+class BusinessOnBehalfEntityManager extends AbstractEntityManager implements BusinessOnBehalfEntityManagerInterface
 {
     /**
      * @uses CompanyUser
@@ -25,7 +26,7 @@ class BusinessOnBehalfEntityManager extends AbstractRepository implements Busine
      */
     public function setDefaultCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer
     {
-        $this->deselectExistingIsDefaultFlag($companyUserTransfer->requireCustomer()->getCustomer());
+        $this->cleanupExistingIsDefaultFlag($companyUserTransfer->requireCustomer()->getCustomer());
 
         $query = $this->getFactory()->getCompanyUserQuery();
         $defaultCompanyUser = $query->filterByIdCompanyUser($companyUserTransfer->getIdCompanyUser())
@@ -45,15 +46,12 @@ class BusinessOnBehalfEntityManager extends AbstractRepository implements Busine
      *
      * @return void
      */
-    protected function deselectExistingIsDefaultFlag(CustomerTransfer $customerTransfer): void
+    protected function cleanupExistingIsDefaultFlag(CustomerTransfer $customerTransfer): void
     {
-        $query = $this->getFactory()->getCompanyUserQuery();
-        $defaultCompanyUsers = $query->filterByFkCustomer($customerTransfer->getIdCustomer())
+        $this->getFactory()
+            ->getCompanyUserQuery()
+            ->filterByFkCustomer($customerTransfer->getIdCustomer())
             ->filterByIsDefault(true)
-            ->find();
-
-        foreach ($defaultCompanyUsers as $defaultCompanyUser) {
-            $defaultCompanyUser->setIsDefault(null)->save();
-        }
+            ->update([SpyCompanyUserTableMap::COL_IS_DEFAULT => null]);
     }
 }

@@ -12,8 +12,6 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 interface BusinessOnBehalfEntityManagerInterface
 {
     /**
-     * @uses CompanyUser
-     *
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer

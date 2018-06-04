@@ -15,7 +15,6 @@ interface BusinessOnBehalfClientInterface
 {
     /**
      * Specification:
-     *
      * - Retrieves a collection of active company users related to the provided customer.
      * - Uses customer ID to find company users.
      * - Hydrates company transfer to company user transfer.
@@ -30,9 +29,11 @@ interface BusinessOnBehalfClientInterface
     public function findActiveCompanyUsersByCustomerId(CustomerTransfer $customerTransfer): CompanyUserCollectionTransfer;
 
     /**
-     * @api
+     * Specification:
+     *  - Sets is_default to true for provided company user
+     *  - Removes is_default flag for all other company/business unit pairs of a customer
      *
-     * @uses CompanyUser
+     * @api
      *
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
