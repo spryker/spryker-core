@@ -13,16 +13,16 @@ use Generated\Shared\Transfer\SpyLocaleEntityTransfer;
 use Orm\Zed\Dataset\Persistence\SpyDataset;
 use Spryker\Zed\Dataset\Communication\Form\DatasetForm;
 use Spryker\Zed\Dataset\Dependency\Facade\DatasetToLocaleFacadeInterface;
-use Spryker\Zed\Dataset\Persistence\DatasetQueryContainerInterface;
+use Spryker\Zed\Dataset\Persistence\DatasetRepositoryInterface;
 
 class DatasetFormDataProvider
 {
     const FK_LOCALE_KEY = 'fkLocale';
 
     /**
-     * @var \Spryker\Zed\Dataset\Persistence\DatasetQueryContainerInterface
+     * @var \Spryker\Zed\Dataset\Persistence\DatasetRepositoryInterface
      */
-    protected $queryContainer;
+    protected $repository;
 
     /**
      * @var \Spryker\Zed\Dataset\Dependency\Facade\DatasetToLocaleFacadeInterface
@@ -30,14 +30,14 @@ class DatasetFormDataProvider
     protected $localeFacade;
 
     /**
-     * @param \Spryker\Zed\Dataset\Persistence\DatasetQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Dataset\Persistence\DatasetRepositoryInterface $repository
      * @param \Spryker\Zed\Dataset\Dependency\Facade\DatasetToLocaleFacadeInterface $localeFacade
      */
     public function __construct(
-        DatasetQueryContainerInterface $queryContainer,
+        DatasetRepositoryInterface $repository,
         DatasetToLocaleFacadeInterface $localeFacade
     ) {
-        $this->queryContainer = $queryContainer;
+        $this->repository = $repository;
         $this->localeFacade = $localeFacade;
     }
 
@@ -49,12 +49,9 @@ class DatasetFormDataProvider
     public function getData($idDataset = null)
     {
         if ($idDataset === null) {
-            return $this->createEmptyspyDatasetTransfer();
+            return $this->createSpyDatasetTransfer();
         }
-        $dataset = $this->queryContainer->queryDatasetById($idDataset)->findOne();
-        $datasetTransfer = $this->createEmptyspyDatasetTransfer();
-        $this->addSpyDatasetLocalizedAttributeTransfers($dataset, $datasetTransfer);
-        $datasetTransfer->fromArray($dataset->toArray(), true);
+        $datasetTransfer = $this->repository->getDatasetByIdWithRelation($idDataset);
 
         return $datasetTransfer;
     }
@@ -68,27 +65,8 @@ class DatasetFormDataProvider
     {
         return [
             DatasetForm::OPTION_AVAILABLE_LOCALES => $this->getAvailableLocales(),
-            DatasetForm::DATASET_HAS_DATA => $this->hasDatasetData($idDataset),
+            DatasetForm::DATASET_HAS_DATA => $this->repository->hasDatasetData($idDataset),
         ];
-    }
-
-    /**
-     * @param int $idDataset
-     *
-     * @return bool
-     */
-    protected function hasDatasetData($idDataset)
-    {
-        if ($idDataset === null) {
-            return false;
-        }
-        $dataset = $this->queryContainer->queryDataseWithValuesById($idDataset)->find()->getFirst();
-
-        if ($dataset->getSpyDatasetRowColumnValues()->count()) {
-            return true;
-        }
-
-        return false;
     }
 
     /**
@@ -102,14 +80,14 @@ class DatasetFormDataProvider
     /**
      * @return \Generated\Shared\Transfer\SpyDatasetEntityTransfer
      */
-    protected function createEmptyspyDatasetTransfer()
+    protected function createSpyDatasetTransfer()
     {
         $datasetTransfer = new SpyDatasetEntityTransfer();
         foreach ($this->getAvailableLocales() as $locale) {
-            $spyLocalEntityTransfer = new SpyLocaleEntityTransfer();
-            $spyLocalEntityTransfer->fromArray($locale->toArray());
+            $localEntityTransfer = new SpyLocaleEntityTransfer();
+            $localEntityTransfer->fromArray($locale->toArray());
             $datasetLocalizedAttributeTransfer = new SpyDatasetLocalizedAttributesEntityTransfer();
-            $datasetLocalizedAttributeTransfer->setLocale($spyLocalEntityTransfer);
+            $datasetLocalizedAttributeTransfer->setLocale($localEntityTransfer);
             $datasetTransfer->addSpyDatasetLocalizedAttributess($datasetLocalizedAttributeTransfer);
         }
 
@@ -126,9 +104,6 @@ class DatasetFormDataProvider
         SpyDataset $dataset,
         SpyDatasetEntityTransfer $datasetTransfer
     ) {
-        /**
-         * @var \Orm\Zed\Dataset\Persistence\SpyDatasetLocalizedAttributes[] $savedLocalizedAttributes
-         */
         $savedLocalizedAttributes = $dataset->getSpyDatasetLocalizedAttributess()
             ->toKeyIndex(static::FK_LOCALE_KEY);
         foreach ($datasetTransfer->getSpyDatasetLocalizedAttributess() as $datasetLocalizedAttributeTransfer) {

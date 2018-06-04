@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Dataset\Business;
 
+use Generated\Shared\Transfer\DatasetFilePathTransfer;
 use Generated\Shared\Transfer\SpyDatasetEntityTransfer;
 
 interface DatasetFacadeInterface
@@ -55,12 +56,12 @@ interface DatasetFacadeInterface
      *
      * @api
      *
-     * @param null|\Generated\Shared\Transfer\SpyDatasetEntityTransfer $saveRequestTransfer
-     * @param string $filePath
+     * @param \Generated\Shared\Transfer\SpyDatasetEntityTransfer $datasetEntityTransfer
+     * @param \Generated\Shared\Transfer\DatasetFilePathTransfer $filePathTransfer
      *
      * @return void
      */
-    public function save(SpyDatasetEntityTransfer $saveRequestTransfer, $filePath);
+    public function save(SpyDatasetEntityTransfer $datasetEntityTransfer, DatasetFilePathTransfer $filePathTransfer);
 
     /**
      * Specification:
@@ -69,11 +70,11 @@ interface DatasetFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SpyDatasetEntityTransfer $saveRequestTransfer
+     * @param \Generated\Shared\Transfer\SpyDatasetEntityTransfer $datasetEntityTransfer
      *
      * @return void
      */
-    public function saveDataset(SpyDatasetEntityTransfer $saveRequestTransfer);
+    public function saveDataset(SpyDatasetEntityTransfer $datasetEntityTransfer);
 
     /**
      * Specification:
@@ -85,7 +86,7 @@ interface DatasetFacadeInterface
      *
      * @return string
      */
-    public function getDatasetContent(SpyDatasetEntityTransfer $datasetTransfer);
+    public function exportToCsv(SpyDatasetEntityTransfer $datasetTransfer);
 
     /**
      * Specification:
@@ -97,7 +98,7 @@ interface DatasetFacadeInterface
      *
      * @return \Generated\Shared\Transfer\SpyDatasetEntityTransfer
      */
-    public function getDatasetTransferById($idDataset);
+    public function getDatasetModelById($idDataset);
 
     /**
      * Specification:
@@ -109,7 +110,7 @@ interface DatasetFacadeInterface
      *
      * @return \Generated\Shared\Transfer\SpyDatasetEntityTransfer
      */
-    public function getDatasetTransferByName($datasetName);
+    public function getDatasetModelByName($datasetName);
 
     /**
      * Specification:

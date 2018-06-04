@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Dataset\Communication\Controller;
 
+use Exception;
+use Generated\Shared\Transfer\DatasetFilePathTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Dataset\Business\Exception\DatasetParseException;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
@@ -16,13 +18,12 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\Dataset\Business\DatasetFacade getFacade()
  * @method \Spryker\Zed\Dataset\Communication\DatasetCommunicationFactory getFactory()
- * @method \Spryker\Zed\Dataset\Persistence\DatasetQueryContainer getQueryContainer()
  */
 
 class EditController extends AbstractController
 {
     const URL_PARAM_ID_DATASET = 'id-dataset';
-    const MESSAGE_DATASET_PARSE_ERROR = 'Not valid file';
+    const MESSAGE_DATASET_PARSE_ERROR = 'Something wrong';
     const DATSET_LIST_URL = '/dataset';
 
     /**
@@ -35,16 +36,18 @@ class EditController extends AbstractController
         $idDataset = $this->castId($request->query->get(static::URL_PARAM_ID_DATASET));
         $form = $this->getFactory()->createDatasetForm($idDataset)->handleRequest($request);
 
-        if ($form->isValid()) {
-            $saveRequestTransfer = $form->getData();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $datasetEntityTransfer = $form->getData();
             $file = $form->get('contentFile')->getData();
             try {
-                $this->saveDataset($saveRequestTransfer, $file);
+                $this->saveDataset($datasetEntityTransfer, $file);
                 $redirectUrl = Url::generate(static::DATSET_LIST_URL)->build();
 
                 return $this->redirectResponse($redirectUrl);
             } catch (DatasetParseException $e) {
-                $this->addErrorMessage(static::MESSAGE_DATASET_PARSE_ERROR);
+                $this->addErrorMessage($e->getMessage());
+            } catch (Exception $e) {
+                $this->addErrorMessage($e->getMessage());
             }
         }
 
@@ -56,19 +59,21 @@ class EditController extends AbstractController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyDatasetEntityTransfer $saveRequestTransfer
+     * @param \Generated\Shared\Transfer\SpyDatasetEntityTransfer $datasetEntityTransfer
      * @param string $file
      *
      * @return void
      */
-    protected function saveDataset($saveRequestTransfer, $file)
+    protected function saveDataset($datasetEntityTransfer, $file)
     {
         if ($file instanceof UploadedFile) {
-            $this->getFacade()->save($saveRequestTransfer, $file->getRealPath());
+            $filePathTransfer = new DatasetFilePathTransfer();
+            $filePathTransfer->setFilePath($file->getRealPath());
+            $this->getFacade()->save($datasetEntityTransfer, $filePathTransfer);
 
             return;
         }
 
-        $this->getFacade()->saveDataset($saveRequestTransfer);
+        $this->getFacade()->saveDataset($datasetEntityTransfer);
     }
 }

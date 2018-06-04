@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Dataset\Business\Model;
 
-interface DownloaderManagerInterface
+interface DownloaderInterface
 {
     /**
      * @param string $datasetName

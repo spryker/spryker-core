@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Dataset\Business\Model;
+namespace Spryker\Zed\Dataset\Persistence;
 
-interface DatasetFinderInterface
+interface DatasetRepositoryInterface
 {
     /**
      * @param int $idDataset
      *
-     * @return void
+     * @return bool
      */
-    public function delete($idDataset);
+    public function hasDatasetData($idDataset);
 
     /**
      * @param string $name
@@ -26,28 +26,14 @@ interface DatasetFinderInterface
     /**
      * @param int $idDataset
      *
-     * @return void
-     */
-    public function activateById($idDataset);
-
-    /**
-     * @param int $idDataset
-     *
-     * @return void
-     */
-    public function deactivateById($idDataset);
-
-    /**
-     * @param int $idDataset
-     *
      * @return \Generated\Shared\Transfer\SpyDatasetEntityTransfer
      */
-    public function getDatasetModelById($idDataset);
+    public function getDatasetByIdWithRelation($idDataset);
 
     /**
      * @param string $datasetName
      *
      * @return \Generated\Shared\Transfer\SpyDatasetEntityTransfer
      */
-    public function getDatasetModelByName($datasetName);
+    public function getDatasetByNameWithRelation($datasetName);
 }

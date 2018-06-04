@@ -8,8 +8,9 @@
 namespace Spryker\Zed\Dataset\Communication\Table;
 
 use Orm\Zed\Dataset\Persistence\Map\SpyDatasetTableMap;
+use Orm\Zed\Dataset\Persistence\SpyDatasetQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Zed\Dataset\Persistence\DatasetQueryContainerInterface;
+use Spryker\Zed\Dataset\Persistence\DatasetRepositoryInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -29,16 +30,23 @@ class DatasetTable extends AbstractTable
     const DATASET_DELETE_URL = '/dataset/delete';
 
     /**
-     * @var \Spryker\Zed\Dataset\Persistence\DatasetQueryContainerInterface
+     * @var \Spryker\Zed\Dataset\Persistence\DatasetRepositoryInterface
      */
-    protected $queryContainer;
+    protected $repository;
 
     /**
-     * @param \Spryker\Zed\Dataset\Persistence\DatasetQueryContainerInterface $queryContainer
+     * @var \Orm\Zed\Dataset\Persistence\SpyDatasetQuery
      */
-    public function __construct(DatasetQueryContainerInterface $queryContainer)
+    protected $datasetQuery;
+
+    /**
+     * @param \Spryker\Zed\Dataset\Persistence\DatasetRepositoryInterface $repository
+     * @param \Orm\Zed\Dataset\Persistence\SpyDatasetQuery $datasetQuery
+     */
+    public function __construct(DatasetRepositoryInterface $repository, SpyDatasetQuery $datasetQuery)
     {
-        $this->queryContainer = $queryContainer;
+        $this->repository = $repository;
+        $this->datasetQuery = $datasetQuery;
     }
 
     /**
@@ -66,8 +74,7 @@ class DatasetTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config)
     {
-        $query = $this->queryContainer->queryDataset();
-        $queryResults = $this->runQuery($query, $config);
+        $queryResults = $this->runQuery($this->datasetQuery, $config);
         $results = [];
         foreach ($queryResults as $item) {
             $results[] = $this->mapResults($item);

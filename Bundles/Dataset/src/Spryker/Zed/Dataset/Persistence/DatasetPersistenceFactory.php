@@ -12,11 +12,12 @@ use Orm\Zed\Dataset\Persistence\SpyDatasetLocalizedAttributesQuery;
 use Orm\Zed\Dataset\Persistence\SpyDatasetQuery;
 use Orm\Zed\Dataset\Persistence\SpyDatasetRowColumnValueQuery;
 use Orm\Zed\Dataset\Persistence\SpyDatasetRowQuery;
+use Spryker\Zed\Dataset\Persistence\Mapper\DatasetMapper;
+use Spryker\Zed\Dataset\Persistence\Mapper\DatasetMapperInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\Dataset\DatasetConfig getConfig()
- * @method \Spryker\Zed\Dataset\Persistence\DatasetQueryContainerInterface getQueryContainer()
  */
 class DatasetPersistenceFactory extends AbstractPersistenceFactory
 {
@@ -58,5 +59,13 @@ class DatasetPersistenceFactory extends AbstractPersistenceFactory
     public function createSpyDatasetLocalizedAttributesQuery()
     {
         return SpyDatasetLocalizedAttributesQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\Dataset\Persistence\Mapper\DatasetMapperInterface
+     */
+    public function createDatasetMapper(): DatasetMapperInterface
+    {
+        return new DatasetMapper();
     }
 }

@@ -15,7 +15,6 @@ use Spryker\Zed\Dataset\DatasetDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
- * @method \Spryker\Zed\Dataset\Persistence\DatasetQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Dataset\DatasetConfig getConfig()
  */
 class DatasetCommunicationFactory extends AbstractCommunicationFactory
@@ -25,7 +24,7 @@ class DatasetCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createDatasetTable()
     {
-        return new DatasetTable($this->getQueryContainer());
+        return new DatasetTable($this->getRepository(), $this->getDatasetQuery());
     }
 
     /**
@@ -57,7 +56,7 @@ class DatasetCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createDatasetFormDataProvider()
     {
-        return new DatasetFormDataProvider($this->getQueryContainer(), $this->getLocaleFacade());
+        return new DatasetFormDataProvider($this->getRepository(), $this->getLocaleFacade());
     }
 
     /**
@@ -66,5 +65,13 @@ class DatasetCommunicationFactory extends AbstractCommunicationFactory
     public function getLocaleFacade()
     {
         return $this->getProvidedDependency(DatasetDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @return \Orm\Zed\Dataset\Persistence\SpyDatasetQuery
+     */
+    public function getDatasetQuery()
+    {
+        return $this->getProvidedDependency(DatasetDependencyProvider::PROPEL_DATASET_QUERY);
     }
 }

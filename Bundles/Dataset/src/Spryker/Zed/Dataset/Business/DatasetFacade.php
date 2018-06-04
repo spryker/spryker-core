@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Dataset\Business;
 
+use Generated\Shared\Transfer\DatasetFilePathTransfer;
 use Generated\Shared\Transfer\SpyDatasetEntityTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -62,14 +63,14 @@ class DatasetFacade extends AbstractFacade implements DatasetFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SpyDatasetEntityTransfer $saveRequestTransfer
-     * @param string $filePath
+     * @param \Generated\Shared\Transfer\SpyDatasetEntityTransfer $datasetEntityTransfer
+     * @param \Generated\Shared\Transfer\DatasetFilePathTransfer $filePathTransfer
      *
      * @return void
      */
-    public function save(SpyDatasetEntityTransfer $saveRequestTransfer, $filePath)
+    public function save(SpyDatasetEntityTransfer $datasetEntityTransfer, DatasetFilePathTransfer $filePathTransfer)
     {
-        $this->getFactory()->createDatasetSaver()->save($saveRequestTransfer, $filePath);
+        $this->getFactory()->createDatasetSaver()->save($datasetEntityTransfer, $filePathTransfer);
     }
 
     /**
@@ -77,13 +78,13 @@ class DatasetFacade extends AbstractFacade implements DatasetFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SpyDatasetEntityTransfer $saveRequestTransfer
+     * @param \Generated\Shared\Transfer\SpyDatasetEntityTransfer $datasetEntityTransfer
      *
      * @return void
      */
-    public function saveDataset(SpyDatasetEntityTransfer $saveRequestTransfer)
+    public function saveDataset(SpyDatasetEntityTransfer $datasetEntityTransfer)
     {
-        $this->getFactory()->createDatasetSaver()->save($saveRequestTransfer);
+        $this->getFactory()->createDatasetSaver()->save($datasetEntityTransfer);
     }
 
     /**
@@ -95,9 +96,9 @@ class DatasetFacade extends AbstractFacade implements DatasetFacadeInterface
      *
      * @return string
      */
-    public function getDatasetContent(SpyDatasetEntityTransfer $datasetTransfer)
+    public function exportToCsv(SpyDatasetEntityTransfer $datasetTransfer)
     {
-        return $this->getFactory()->createWriterManager()->getDatasetContentBy($datasetTransfer);
+        return $this->getFactory()->createWriter()->exportToCsv($datasetTransfer);
     }
 
     /**
@@ -109,9 +110,9 @@ class DatasetFacade extends AbstractFacade implements DatasetFacadeInterface
      *
      * @return \Generated\Shared\Transfer\SpyDatasetEntityTransfer
      */
-    public function getDatasetTransferById($idDataset)
+    public function getDatasetModelById($idDataset)
     {
-        return $this->getFactory()->createDatasetFinder()->getDatasetTransferById($idDataset);
+        return $this->getFactory()->createDatasetFinder()->getDatasetModelById($idDataset);
     }
 
     /**
@@ -123,9 +124,9 @@ class DatasetFacade extends AbstractFacade implements DatasetFacadeInterface
      *
      * @return \Generated\Shared\Transfer\SpyDatasetEntityTransfer
      */
-    public function getDatasetTransferByName($datasetName)
+    public function getDatasetModelByName($datasetName)
     {
-        return $this->getFactory()->createDatasetFinder()->getDatasetTransferByName($datasetName);
+        return $this->getFactory()->createDatasetFinder()->getDatasetModelByName($datasetName);
     }
 
     /**
@@ -153,6 +154,6 @@ class DatasetFacade extends AbstractFacade implements DatasetFacadeInterface
      */
     public function getFilenameByDatasetName($datasetName)
     {
-        return $this->getFactory()->createDownloaderManager()->getFilenameByDatasetName($datasetName);
+        return $this->getFactory()->createDownloader()->getFilenameByDatasetName($datasetName);
     }
 }

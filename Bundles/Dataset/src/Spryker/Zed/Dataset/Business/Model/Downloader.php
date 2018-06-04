@@ -9,7 +9,7 @@ namespace Spryker\Zed\Dataset\Business\Model;
 
 use Generated\Shared\Transfer\DatasetFilenameTransfer;
 
-class DownloaderManager implements DownloaderManagerInterface
+class Downloader implements DownloaderInterface
 {
     const DEFAULT_NAME = 'dataset';
 
