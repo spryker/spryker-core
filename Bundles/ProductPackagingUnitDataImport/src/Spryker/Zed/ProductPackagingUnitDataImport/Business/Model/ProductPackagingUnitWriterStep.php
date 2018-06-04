@@ -28,6 +28,8 @@ class ProductPackagingUnitWriterStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
+        $dataSet = $this->normalizeDataSet($dataSet);
+
         $productPackagingUnitEntity = $this->getProductPackagingUnitQuery()
             ->useProductQuery()
                 ->filterBySku($dataSet[ProductPackagingUnitDataSet::CONCRETE_SKU])
@@ -41,6 +43,8 @@ class ProductPackagingUnitWriterStep implements DataImportStepInterface
             $productPackagingUnitEntity = new SpyProductPackagingUnit();
         }
 
+        $this->persistLeadProduct($dataSet, $productPackagingUnitEntity);
+
         $productPackagingUnitEntity
             ->setHasLeadProduct((bool)$dataSet[ProductPackagingUnitDataSet::HAS_LEAD_PRODUCT]);
 
@@ -52,7 +56,6 @@ class ProductPackagingUnitWriterStep implements DataImportStepInterface
 
         $productPackagingUnitEntity->save();
 
-        $this->persistLeadProduct($dataSet, $productPackagingUnitEntity);
         $this->persistAmount($dataSet, $productPackagingUnitEntity);
     }
 
@@ -64,9 +67,7 @@ class ProductPackagingUnitWriterStep implements DataImportStepInterface
      */
     protected function persistLeadProduct(DataSetInterface $dataSet, SpyProductPackagingUnit $productPackagingUnitEntity): void
     {
-        $shouldpersistLeadProduct = (bool)$dataSet[ProductPackagingUnitDataSet::IS_LEAD_PRODUCT];
-
-        if (!$shouldpersistLeadProduct) {
+        if (!$dataSet[ProductPackagingUnitDataSet::IS_LEAD_PRODUCT]) {
             return;
         }
 
@@ -81,18 +82,70 @@ class ProductPackagingUnitWriterStep implements DataImportStepInterface
 
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
+     *
+     * @return \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
+     */
+    protected function normalizeDataSet(DataSetInterface $dataSet): DataSetInterface
+    {
+        $dataSet[ProductPackagingUnitDataSet::IS_LEAD_PRODUCT] = (bool)$dataSet[ProductPackagingUnitDataSet::IS_LEAD_PRODUCT];
+        $dataSet[ProductPackagingUnitDataSet::HAS_LEAD_PRODUCT] = (bool)$dataSet[ProductPackagingUnitDataSet::HAS_LEAD_PRODUCT];
+
+        if ($dataSet[ProductPackagingUnitDataSet::IS_LEAD_PRODUCT]) {
+            $dataSet[ProductPackagingUnitDataSet::HAS_LEAD_PRODUCT] = false;
+        }
+
+        $dataSet = $this->normalizeAmount($dataSet);
+
+        return $dataSet;
+    }
+
+    /**
+     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
+     *
+     * @return \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
+     */
+    protected function normalizeAmount(DataSetInterface $dataSet): DataSetInterface
+    {
+        $isVariable = (bool)$dataSet[ProductPackagingUnitDataSet::IS_VARIABLE];
+
+        $dataSet[ProductPackagingUnitDataSet::IS_VARIABLE] = $isVariable;
+        $dataSet[ProductPackagingUnitDataSet::DEFAULT_AMOUNT] = (int)$dataSet[ProductPackagingUnitDataSet::DEFAULT_AMOUNT];
+        $dataSet[ProductPackagingUnitDataSet::AMOUNT_MIN] = (int)$dataSet[ProductPackagingUnitDataSet::AMOUNT_MIN];
+        $dataSet[ProductPackagingUnitDataSet::AMOUNT_MAX] = (int)$dataSet[ProductPackagingUnitDataSet::AMOUNT_MAX];
+        $dataSet[ProductPackagingUnitDataSet::AMOUNT_INTERVAL] = (int)$dataSet[ProductPackagingUnitDataSet::AMOUNT_INTERVAL];
+
+        if ($isVariable && $dataSet[ProductPackagingUnitDataSet::AMOUNT_INTERVAL] === 0) {
+            $dataSet[ProductPackagingUnitDataSet::AMOUNT_INTERVAL] = 1;
+        }
+
+        if ($isVariable && $dataSet[ProductPackagingUnitDataSet::AMOUNT_MIN] === 0) {
+            $dataSet[ProductPackagingUnitDataSet::AMOUNT_MIN] = $dataSet[ProductPackagingUnitDataSet::AMOUNT_INTERVAL];
+        }
+
+        if (!$isVariable) {
+            $dataSet[ProductPackagingUnitDataSet::DEFAULT_AMOUNT] = null;
+            $dataSet[ProductPackagingUnitDataSet::AMOUNT_MIN] = null;
+            $dataSet[ProductPackagingUnitDataSet::AMOUNT_MAX] = null;
+            $dataSet[ProductPackagingUnitDataSet::AMOUNT_INTERVAL] = null;
+        }
+
+        return $dataSet;
+    }
+
+    /**
+     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      * @param \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnit $productPackagingUnitEntity
      *
      * @return void
      */
     protected function persistAmount(DataSetInterface $dataSet, SpyProductPackagingUnit $productPackagingUnitEntity): void
     {
-        $shouldpersistAmount = (int)$dataSet[ProductPackagingUnitDataSet::DEFAULT_AMOUNT] > 1 &&
-            (int)$dataSet[ProductPackagingUnitDataSet::AMOUNT_MIN] > 1 &&
-            (int)$dataSet[ProductPackagingUnitDataSet::AMOUNT_MAX] > 1 &&
-            (int)$dataSet[ProductPackagingUnitDataSet::AMOUNT_INTERVAL] > 1;
+        $haveAmount = $dataSet[ProductPackagingUnitDataSet::DEFAULT_AMOUNT] > 1 &&
+            $dataSet[ProductPackagingUnitDataSet::AMOUNT_MIN] > 1 &&
+            $dataSet[ProductPackagingUnitDataSet::AMOUNT_MAX] > 1 &&
+            $dataSet[ProductPackagingUnitDataSet::AMOUNT_INTERVAL] > 1;
 
-        if (!$shouldpersistAmount) {
+        if (!$haveAmount || $dataSet[ProductPackagingUnitDataSet::IS_LEAD_PRODUCT]) {
             return;
         }
 
@@ -105,11 +158,11 @@ class ProductPackagingUnitWriterStep implements DataImportStepInterface
         }
 
         $productPackagingUnitAmountEntity
-            ->setIsVariable((bool)$dataSet[ProductPackagingUnitDataSet::IS_VARIABLE])
-            ->setDefaultAmount((int)$dataSet[ProductPackagingUnitDataSet::DEFAULT_AMOUNT])
-            ->setAmountMin((int)$dataSet[ProductPackagingUnitDataSet::AMOUNT_MIN])
-            ->setAmountMax((int)$dataSet[ProductPackagingUnitDataSet::AMOUNT_MAX])
-            ->setAmountInterval((int)$dataSet[ProductPackagingUnitDataSet::AMOUNT_INTERVAL])
+            ->setIsVariable($dataSet[ProductPackagingUnitDataSet::IS_VARIABLE])
+            ->setDefaultAmount($dataSet[ProductPackagingUnitDataSet::DEFAULT_AMOUNT])
+            ->setAmountMin($dataSet[ProductPackagingUnitDataSet::AMOUNT_MIN])
+            ->setAmountMax($dataSet[ProductPackagingUnitDataSet::AMOUNT_MAX])
+            ->setAmountInterval($dataSet[ProductPackagingUnitDataSet::AMOUNT_INTERVAL])
             ->save();
     }
 
@@ -142,7 +195,6 @@ class ProductPackagingUnitWriterStep implements DataImportStepInterface
      */
     protected function getProductIdByConcreteSku(string $sku): int
     {
-
         $productEntity = SpyProductQuery::create()
             ->filterBySku($sku)
             ->findOne();
