@@ -90,7 +90,7 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * @param \League\Csv\Reader $result
+     * @param \League\Csv\Reader $reader
      *
      * @throws \Spryker\Zed\Dataset\Business\Exception\DatasetParseFormatException
      *

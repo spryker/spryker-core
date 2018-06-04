@@ -1,7 +1,7 @@
 {
   "name": "spryker/csv",
   "require": {
-    "league/csv": "^8.1.0"
+    "league/csv": "^9.1"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

@@ -201,7 +201,7 @@ class DatasetEntityManager extends AbstractEntityManager implements DatasetEntit
     }
 
     /**
-     * @param $idDataset
+     * @param int $idDataset
      *
      * @return \Orm\Zed\Dataset\Persistence\SpyDataset
      */
