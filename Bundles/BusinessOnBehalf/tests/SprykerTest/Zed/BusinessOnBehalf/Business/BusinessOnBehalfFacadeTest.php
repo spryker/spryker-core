@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Spryker\Zed\CompanyUser\Business\CompanyUserFacadeInterface;
 
 /**
  * Auto-generated group annotations
@@ -123,6 +124,80 @@ class BusinessOnBehalfFacadeTest extends Unit
         $this->tester->assertInstanceOf(CompanyUserCollectionTransfer::class, $actualCompanyUserCollection);
         $this->tester->assertCount($expectedCompanyUserAmount, $actualCompanyUserCollection->getCompanyUsers());
     }
+    
+    /**
+     * @return void
+     */
+    public function testSetDefaultCompanyUserPersistsData(): void
+    {
+        //Arrange
+        $company = $this->tester->haveCompany(['isActive' => true]);
+        $seedDataWithCompany = [
+            'fkCompany' => $company->getIdCompany(),
+            'customer' => $this->customer,
+        ];
+        $companyUser = $this->tester->haveCompanyUser($seedDataWithCompany);
+
+        //Act
+        $this->tester->getFacade()->setDefaultCompanyUser($companyUser);
+        $companyUserFromDataBase = $this->getCompanyUserFacade()->getCompanyUserById($companyUser->getIdCompanyUser());
+
+        //Assert
+        $this->assertTrue($companyUserFromDataBase->getIsDefault());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSetDefaultCompanyUserToCustomerIfCompanyUserDefault(): void
+    {
+        //Arrange
+        $company = $this->tester->haveCompany(['isActive' => true]);
+        $seedData = [
+            'isDefault' => true,
+            'fkCompany' => $company->getIdCompany(),
+            'customer' => $this->customer,
+        ];
+        $this->tester->haveCompanyUser($seedData);
+
+        //Act
+        $customerTransfer = $this->tester->getFacade()->setDefaultCompanyUserToCustomer($this->customer);
+
+        //Assert
+        $this->assertSame(
+            $this->customer->getCompanyUserTransfer()->getIdCompanyUser(),
+            $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testSetDefaultCompanyUserToCustomerIfCompanyUserNotDefault(): void
+    {
+        //Arrange
+        $company = $this->tester->haveCompany(['isActive' => true]);
+        $seedData = [
+            'isDefault' => false,
+            'fkCompany' => $company->getIdCompany(),
+            'customer' => $this->customer,
+        ];
+        $this->tester->haveCompanyUser($seedData);
+
+        //Act
+        $customerTransfer = $this->tester->getFacade()->setDefaultCompanyUserToCustomer($this->customer);
+
+        //Assert
+        $this->assertNull($customerTransfer->getCompanyUserTransfer());
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUser\Business\CompanyUserFacadeInterface
+     */
+    protected function getCompanyUserFacade(): CompanyUserFacadeInterface
+    {
+        return $this->tester->getLocator()->companyUser()->facade();
+    }
 
     /**
      * @param int $amount
@@ -130,7 +205,7 @@ class BusinessOnBehalfFacadeTest extends Unit
      *
      * @return array
      */
-    public function haveCompanyUsers(int $amount, array $seed = [])
+    protected function haveCompanyUsers(int $amount, array $seed = [])
     {
         $companyUsers = [];
 
