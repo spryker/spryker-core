@@ -25,7 +25,7 @@ class ProductPackagingUnitTypeDataImportHelper extends Module
     public function assertProductPackagingUnitTypeTableIsEmtpy(): void
     {
         $query = $this->getProductPackagingUnitTypeQuery();
-        $this->assertEquals(0, $query->count(), 'Found at least one entry in the database table but database table `product_packaging_unit_type` was expected to be empty.');
+        $this->assertFalse($query->exists(), 'Found at least one entry in the database table but database table `product_packaging_unit_type` was expected to be empty.');
     }
 
     /**
@@ -34,7 +34,7 @@ class ProductPackagingUnitTypeDataImportHelper extends Module
     public function assertProductPackagingUnitTypeTableHasRecords(): void
     {
         $query = $this->getProductPackagingUnitTypeQuery();
-        $this->assertTrue($query->count() > 0, 'Expected at least one entry in the database table `product_packaging_unit_type` but database table is empty.');
+        $this->assertTrue($query->exists(), 'Expected at least one entry in the database table `product_packaging_unit_type` but database table is empty.');
     }
 
     /**

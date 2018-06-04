@@ -15,24 +15,26 @@ use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitAmount;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitQuery;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitTypeQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\ProductPackagingUnitDataImport\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\ProductPackagingUnitDataImport\Business\Model\DataSet\ProductPackagingUnitDataSet;
 
 class ProductPackagingUnitWriterStep implements DataImportStepInterface
 {
-    const PRODUCT_CONCRETE_HEAP_LIMIT = 100;
+    protected const PRODUCTS_HEAP_LIMIT = 500;
+    protected const CONCRETE_PRODUCT_ID = 'CONCRETE_PRODUCT_ID';
+    protected const ABSTRACT_PRODUCT_ID = 'ABSTRACT_PRODUCT_ID';
 
     /**
      * @var array
      */
-    protected static $productConcreteEntities = [];
+    protected static $productsHeap = [];
 
     /**
      * @var int
      */
-    protected static $productConcreteHeapCurrentSize = 0;
+    protected static $productsHeapSize = 0;
 
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
@@ -182,7 +184,7 @@ class ProductPackagingUnitWriterStep implements DataImportStepInterface
     /**
      * @param string $name
      *
-     * @throws \Spryker\Zed\ProductPackagingUnitDataImport\Business\Exception\EntityNotFoundException
+     * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException
      *
      * @return int
      */
@@ -202,14 +204,13 @@ class ProductPackagingUnitWriterStep implements DataImportStepInterface
     /**
      * @param string $sku
      *
-     * @throws \Spryker\Zed\ProductPackagingUnitDataImport\Business\Exception\EntityNotFoundException
-     *
      * @return int
      */
     protected function getProductConcreteIdByConcreteSku(string $sku): int
     {
-        return $this->getConcreteProductBySku($sku)
-            ->getIdProduct();
+        $this->getProductConcreteBySku($sku);
+
+        return static::$productsHeap[$sku][static::CONCRETE_PRODUCT_ID];
     }
 
     /**
@@ -219,19 +220,22 @@ class ProductPackagingUnitWriterStep implements DataImportStepInterface
      */
     protected function getProductAbstractIdByConcreteSku(string $sku): int
     {
-        return $this->getConcreteProductBySku($sku)
-            ->getFkProductAbstract();
+        $this->getProductConcreteBySku($sku);
+
+        return static::$productsHeap[$sku][static::ABSTRACT_PRODUCT_ID];
     }
 
     /**
      * @param string $sku
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProduct
+     * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException
+     *
+     * @return void
      */
-    protected function getConcreteProductBySku(string $sku): SpyProduct
+    protected function getProductConcreteBySku(string $sku): void
     {
-        if (array_key_exists($sku, static::$productConcreteEntities)) {
-            return static::$productConcreteEntities[$sku];
+        if (isset(static::$productsHeap[$sku])) {
+            return;
         }
 
         $productEntity = SpyProductQuery::create()
@@ -243,8 +247,6 @@ class ProductPackagingUnitWriterStep implements DataImportStepInterface
         }
 
         $this->cacheProductConcrete($productEntity);
-
-        return $productEntity;
     }
 
     /**
@@ -254,12 +256,16 @@ class ProductPackagingUnitWriterStep implements DataImportStepInterface
      */
     protected function cacheProductConcrete(SpyProduct $productEntity): void
     {
-        if (static::$productConcreteHeapCurrentSize >= static::PRODUCT_CONCRETE_HEAP_LIMIT) {
-            static::$productConcreteEntities = [];
+        if (static::$productsHeapSize >= static::PRODUCTS_HEAP_LIMIT) {
+            static::$productsHeapSize = 0;
+            static::$productsHeap = [];
         }
 
-        static::$productConcreteHeapCurrentSize++;
-        static::$productConcreteEntities[$productEntity->getSku()] = $productEntity;
+        static::$productsHeapSize++;
+        static::$productsHeap[$productEntity->getSku()] = [
+            static::CONCRETE_PRODUCT_ID => $productEntity->getIdProduct(),
+            static::ABSTRACT_PRODUCT_ID => $productEntity->getFkProductAbstract(),
+        ];
     }
 
     /**
