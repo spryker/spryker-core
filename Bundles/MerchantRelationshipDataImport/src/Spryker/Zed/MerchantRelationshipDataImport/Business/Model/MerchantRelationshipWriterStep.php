@@ -12,7 +12,7 @@ use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipToCompanyBus
 use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipToCompanyBusinessUnitQuery;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\MerchantRelationshipDataImport\Business\Model\DataSet\MerchantRelationshipDataSet;
+use Spryker\Zed\MerchantRelationshipDataImport\Business\Model\DataSet\MerchantRelationshipDataSetInterface;
 
 class MerchantRelationshipWriterStep implements DataImportStepInterface
 {
@@ -24,12 +24,12 @@ class MerchantRelationshipWriterStep implements DataImportStepInterface
     public function execute(DataSetInterface $dataSet): void
     {
         $merchantRelationshipEntity = SpyMerchantRelationshipQuery::create()
-            ->filterByMerchantRelationshipKey($dataSet[MerchantRelationshipDataSet::MERCHANT_RELATIONSHIP_KEY])
+            ->filterByMerchantRelationshipKey($dataSet[MerchantRelationshipDataSetInterface::MERCHANT_RELATIONSHIP_KEY])
             ->findOneOrCreate();
 
         $merchantRelationshipEntity
-            ->setFkMerchant($dataSet[MerchantRelationshipDataSet::ID_MERCHANT])
-            ->setFkCompanyBusinessUnit($dataSet[MerchantRelationshipDataSet::ID_COMPANY_BUSINESS_UNIT])
+            ->setFkMerchant($dataSet[MerchantRelationshipDataSetInterface::ID_MERCHANT])
+            ->setFkCompanyBusinessUnit($dataSet[MerchantRelationshipDataSetInterface::ID_COMPANY_BUSINESS_UNIT])
             ->save();
 
         $this->saveMerchantRelationshipToCompanyBusinessUnit($dataSet, $merchantRelationshipEntity->getPrimaryKey());
@@ -47,7 +47,7 @@ class MerchantRelationshipWriterStep implements DataImportStepInterface
             ->filterByFkMerchantRelationship($idMerchantRelationship)
             ->deleteAll();
 
-        foreach ($dataSet[MerchantRelationshipDataSet::ID_COMPANY_BUSINESS_UNIT_ASSIGNEE_COLLECTION] as $idCompanyBusinessUnit) {
+        foreach ($dataSet[MerchantRelationshipDataSetInterface::ID_COMPANY_BUSINESS_UNIT_ASSIGNEE_COLLECTION] as $idCompanyBusinessUnit) {
             (new SpyMerchantRelationshipToCompanyBusinessUnit())
                 ->setFkMerchantRelationship($idMerchantRelationship)
                 ->setFkCompanyBusinessUnit($idCompanyBusinessUnit)

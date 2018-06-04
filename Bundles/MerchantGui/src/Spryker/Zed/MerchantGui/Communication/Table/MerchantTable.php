@@ -34,7 +34,7 @@ class MerchantTable extends AbstractTable
      *
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
-    protected function configure(TableConfiguration $config)
+    protected function configure(TableConfiguration $config): TableConfiguration
     {
         $config = $this->setHeader($config);
         $config = $this->setHeader($config);
@@ -79,7 +79,7 @@ class MerchantTable extends AbstractTable
      *
      * @return array
      */
-    protected function prepareData(TableConfiguration $config)
+    protected function prepareData(TableConfiguration $config): array
     {
         $queryResults = $this->runQuery($this->merchantQuery, $config);
         $results = [];
@@ -102,7 +102,7 @@ class MerchantTable extends AbstractTable
      *
      * @return string
      */
-    protected function buildLinks(array $item)
+    protected function buildLinks(array $item): string
     {
         $buttons = [];
 

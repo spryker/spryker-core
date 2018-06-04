@@ -53,7 +53,7 @@ class MerchantRelationshipEntityManager extends AbstractEntityManager implements
             ->findOneOrCreate();
 
         $spyMerchantRelationship = $this->getFactory()
-            ->createMerchantRelationshipMapper()
+            ->createPropelMerchantRelationshipMapper()
             ->mapMerchantRelationshipTransferToEntity($merchantRelationshipTransfer, $spyMerchantRelationship);
 
         $spyMerchantRelationship->save();

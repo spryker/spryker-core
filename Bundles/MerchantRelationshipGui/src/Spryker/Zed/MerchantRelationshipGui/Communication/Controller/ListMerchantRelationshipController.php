@@ -34,7 +34,7 @@ class ListMerchantRelationshipController extends AbstractController
 
         return $this->viewResponse([
             'companies' => $companies->getCompanies(),
-            'selectedCompany' => $idCompany,
+            'idCompany' => $idCompany,
             'merchantRelationships' => $merchantRelationshipTable->render(),
         ]);
     }

@@ -20,7 +20,7 @@ class DeleteMerchantController extends AbstractController
 {
     public const URL_PARAM_REDIRECT_URL = 'redirect-url';
 
-    protected const MESSAGE_MERCHANT_DELETE_SUCCESS = 'Merchant has been deleted.';
+    protected const MESSAGE_MERCHANT_DELETE_SUCCESS = 'Merchant deleted successfully.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

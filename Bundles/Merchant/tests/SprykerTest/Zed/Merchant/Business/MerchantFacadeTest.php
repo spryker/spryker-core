@@ -26,29 +26,15 @@ class MerchantFacadeTest extends Unit
     /**
      * @return void
      */
-    protected function _before()
-    {
-    }
-
-    /**
-     * @return void
-     */
-    protected function _after()
-    {
-    }
-
-    /**
-     * @return void
-     */
     public function testCreateMerchant(): void
     {
-        $merchant = (new MerchantTransfer())
+        $merchantTransfer = (new MerchantTransfer())
             ->setMerchantKey('spryker-test-1')
             ->setName('Spryker Merchant');
 
-        (new MerchantFacade())->createMerchant($merchant);
+        (new MerchantFacade())->createMerchant($merchantTransfer);
 
-        $this->assertNotNull($merchant->getIdMerchant());
+        $this->assertNotNull($merchantTransfer->getIdMerchant());
     }
 
     /**
@@ -56,12 +42,12 @@ class MerchantFacadeTest extends Unit
      */
     public function testCreateMerchantWithEmptyKeyGeneratesKey(): void
     {
-        $merchant = (new MerchantTransfer())
+        $merchantTransfer = (new MerchantTransfer())
             ->setName('Spryker Merchant');
 
-        (new MerchantFacade())->createMerchant($merchant);
+        (new MerchantFacade())->createMerchant($merchantTransfer);
 
-        $this->assertNotNull($merchant->getMerchantKey());
+        $this->assertNotNull($merchantTransfer->getMerchantKey());
     }
 
     /**
@@ -69,12 +55,12 @@ class MerchantFacadeTest extends Unit
      */
     public function testCreateMerchantWithEmptyNameThrowsException(): void
     {
-        $merchant = (new MerchantTransfer())
+        $merchantTransfer = (new MerchantTransfer())
             ->setMerchantKey('spryker-test-1');
 
         $this->expectException(RequiredTransferPropertyException::class);
 
-        (new MerchantFacade())->createMerchant($merchant);
+        (new MerchantFacade())->createMerchant($merchantTransfer);
     }
 
     /**
@@ -82,13 +68,13 @@ class MerchantFacadeTest extends Unit
      */
     public function testCreateMerchantWithNotUniqueName(): void
     {
-        $merchant = $this->tester->haveMerchant();
-        $newMerchant = (new MerchantTransfer())
-            ->setMerchantKey($merchant->getMerchantKey() . '-1')
-            ->setName($merchant->getName());
+        $merchantTransfer = $this->tester->haveMerchant();
+        $newMerchantTransfer = (new MerchantTransfer())
+            ->setMerchantKey($merchantTransfer->getMerchantKey() . '-1')
+            ->setName($merchantTransfer->getName());
 
-        (new MerchantFacade())->createMerchant($newMerchant);
-        $this->assertNotNull($newMerchant->getIdMerchant());
+        (new MerchantFacade())->createMerchant($newMerchantTransfer);
+        $this->assertNotNull($newMerchantTransfer->getIdMerchant());
     }
 
     /**
@@ -96,15 +82,15 @@ class MerchantFacadeTest extends Unit
      */
     public function testCreateMerchantWithNotUniqueKeyThrowsException(): void
     {
-        $merchant = $this->tester->haveMerchant();
+        $merchantTransfer = $this->tester->haveMerchant();
 
-        $newMerchant = (new MerchantTransfer())
-            ->setMerchantKey($merchant->getMerchantKey())
-            ->setName($merchant->getName());
+        $newMerchantTransfer = (new MerchantTransfer())
+            ->setMerchantKey($merchantTransfer->getMerchantKey())
+            ->setName($merchantTransfer->getName());
 
         $this->expectException(Exception::class);
 
-        (new MerchantFacade())->createMerchant($newMerchant);
+        (new MerchantFacade())->createMerchant($newMerchantTransfer);
     }
 
     /**
@@ -112,17 +98,17 @@ class MerchantFacadeTest extends Unit
      */
     public function testUpdateMerchant(): void
     {
-        $merchant = $this->tester->haveMerchant([
+        $merchantTransfer = $this->tester->haveMerchant([
             'one-key',
             'One Company',
         ]);
 
-        $expectedIdMerchant = $merchant->getIdMerchant();
-        $merchant
+        $expectedIdMerchant = $merchantTransfer->getIdMerchant();
+        $merchantTransfer
             ->setMerchantKey('second-key')
             ->setName('Second Company');
 
-        $updatedMerchant = (new MerchantFacade())->updateMerchant($merchant);
+        $updatedMerchant = (new MerchantFacade())->updateMerchant($merchantTransfer);
 
         $this->assertSame($expectedIdMerchant, $updatedMerchant->getIdMerchant());
         $this->assertEquals('second-key', $updatedMerchant->getMerchantKey());
@@ -134,15 +120,15 @@ class MerchantFacadeTest extends Unit
      */
     public function testUpdateMerchantWithoutDataThrowsException(): void
     {
-        $merchant = $this->tester->haveMerchant();
-        $merchant
+        $merchantTransfer = $this->tester->haveMerchant();
+        $merchantTransfer
             ->setIdMerchant(null)
             ->setMerchantKey(null)
             ->setName(null);
 
         $this->expectException(RequiredTransferPropertyException::class);
 
-        (new MerchantFacade())->updateMerchant($merchant);
+        (new MerchantFacade())->updateMerchant($merchantTransfer);
     }
 
     /**
@@ -150,13 +136,13 @@ class MerchantFacadeTest extends Unit
      */
     public function testUpdateMerchantWithWrongIdThrowsException(): void
     {
-        $merchant = $this->tester->haveMerchant();
-        $merchant
-            ->setIdMerchant($merchant->getIdMerchant() + 1);
+        $merchantTransfer = $this->tester->haveMerchant();
+        $merchantTransfer
+            ->setIdMerchant($merchantTransfer->getIdMerchant() + 1);
 
         $this->expectException(Exception::class);
 
-        (new MerchantFacade())->updateMerchant($merchant);
+        (new MerchantFacade())->updateMerchant($merchantTransfer);
     }
 
     /**
@@ -166,10 +152,10 @@ class MerchantFacadeTest extends Unit
     {
         $expectedMerchant = $this->tester->haveMerchant();
 
-        $merchant = (new MerchantTransfer())
+        $merchantTransfer = (new MerchantTransfer())
             ->setIdMerchant($expectedMerchant->getIdMerchant());
 
-        $actualMerchant = (new MerchantFacade())->getMerchantById($merchant);
+        $actualMerchant = (new MerchantFacade())->getMerchantById($merchantTransfer);
 
         $this->assertEquals($expectedMerchant, $actualMerchant);
     }
@@ -179,11 +165,11 @@ class MerchantFacadeTest extends Unit
      */
     public function testDeleteMerchant(): void
     {
-        $merchant = $this->tester->haveMerchant();
+        $merchantTransfer = $this->tester->haveMerchant();
 
-        (new MerchantFacade())->deleteMerchant($merchant);
+        (new MerchantFacade())->deleteMerchant($merchantTransfer);
 
-        $this->tester->assertMerchantNotExists($merchant->getIdMerchant());
+        $this->tester->assertMerchantNotExists($merchantTransfer->getIdMerchant());
     }
 
     /**
@@ -191,11 +177,11 @@ class MerchantFacadeTest extends Unit
      */
     public function testDeleteMerchantWithoutThrowsException(): void
     {
-        $merchant = new MerchantTransfer();
+        $merchantTransfer = new MerchantTransfer();
 
         $this->expectException(RequiredTransferPropertyException::class);
 
-        (new MerchantFacade())->deleteMerchant($merchant);
+        (new MerchantFacade())->deleteMerchant($merchantTransfer);
     }
 
     /**
@@ -208,7 +194,7 @@ class MerchantFacadeTest extends Unit
         $this->tester->haveMerchant();
         $this->tester->haveMerchant();
 
-        $merchantCollection = (new MerchantFacade())->getMerchants();
-        $this->assertCount(2, $merchantCollection->getMerchants());
+        $merchantTransferCollection = (new MerchantFacade())->getMerchants();
+        $this->assertCount(2, $merchantTransferCollection->getMerchants());
     }
 }

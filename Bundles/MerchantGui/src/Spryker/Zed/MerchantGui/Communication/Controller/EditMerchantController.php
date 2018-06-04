@@ -20,7 +20,7 @@ class EditMerchantController extends AbstractController
 {
     public const URL_PARAM_REDIRECT_URL = 'redirect-url';
 
-    protected const MESSAGE_MERCHANT_UPDATE_SUCCESS = 'Merchant has been updated.';
+    protected const MESSAGE_MERCHANT_UPDATE_SUCCESS = 'Merchant updated successfully.';
     protected const MESSAGE_MERCHANT_NOT_FOUND = 'Merchant is not found.';
 
     /**

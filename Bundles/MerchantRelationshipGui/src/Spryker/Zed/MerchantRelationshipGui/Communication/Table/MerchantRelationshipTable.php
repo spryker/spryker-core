@@ -49,7 +49,7 @@ class MerchantRelationshipTable extends AbstractTable
      *
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
-    protected function configure(TableConfiguration $config)
+    protected function configure(TableConfiguration $config): TableConfiguration
     {
         $url = Url::generate('table', ['id-company' => $this->idCompany]);
 
@@ -60,10 +60,13 @@ class MerchantRelationshipTable extends AbstractTable
         $config->setSortable([
             MerchantRelationshipTableConstants::COL_ID_MERCHANT_RELATIONSHIP,
             MerchantRelationshipTableConstants::COL_MERCHANT_NAME,
+            MerchantRelationshipTableConstants::COL_BUSINESS_UNIT_OWNER,
         ]);
 
         $config->setSearchable([
             MerchantRelationshipTableConstants::COL_ID_MERCHANT_RELATIONSHIP,
+            SpyMerchantTableMap::COL_NAME,
+            SpyCompanyBusinessUnitTableMap::COL_NAME,
         ]);
 
         $config->addRawColumn(MerchantRelationshipTableConstants::COL_ACTIONS);
@@ -106,7 +109,7 @@ class MerchantRelationshipTable extends AbstractTable
         foreach ($queryResults as $item) {
             $rowData = [
                 MerchantRelationshipTableConstants::COL_ID_MERCHANT_RELATIONSHIP => $item[SpyMerchantRelationshipTableMap::COL_ID_MERCHANT_RELATIONSHIP],
-                MerchantRelationshipTableConstants::COL_MERCHANT_NAME => $item[MerchantRelationshipTableConstants::COL_MERCHANT_NAME],
+                MerchantRelationshipTableConstants::COL_MERCHANT_NAME => $this->formatMerchantName($item),
                 MerchantRelationshipTableConstants::COL_BUSINESS_UNIT_OWNER => $item[MerchantRelationshipTableConstants::COL_BUSINESS_UNIT_OWNER],
                 MerchantRelationshipTableConstants::COL_ASSIGNED_BUSINESS_UNITS => $item[MerchantRelationshipTableConstants::COL_ASSIGNED_BUSINESS_UNITS],
                 MerchantRelationshipTableConstants::COL_ACTIONS => $this->buildLinks($item),
@@ -153,6 +156,7 @@ class MerchantRelationshipTable extends AbstractTable
                 ->leftJoinCompanyBusinessUnit('assignedBusinessUnits')
                 ->withColumn("STRING_AGG( DISTINCT assignedBusinessUnits.name, '; ')", MerchantRelationshipTableConstants::COL_ASSIGNED_BUSINESS_UNITS)
             ->endUse()
+            ->withColumn(SpyMerchantTableMap::COL_ID_MERCHANT, MerchantRelationshipTableConstants::COL_MERCHANT_ID)
             ->withColumn(SpyMerchantTableMap::COL_NAME, MerchantRelationshipTableConstants::COL_MERCHANT_NAME)
             ->withColumn(SpyCompanyBusinessUnitTableMap::COL_NAME, MerchantRelationshipTableConstants::COL_BUSINESS_UNIT_OWNER);
 
@@ -161,5 +165,19 @@ class MerchantRelationshipTable extends AbstractTable
         }
 
         return $query;
+    }
+
+    /**
+     * @param array $item
+     *
+     * @return string
+     */
+    protected function formatMerchantName(array $item): string
+    {
+        return sprintf(
+            '%d - %s',
+            $item[MerchantRelationshipTableConstants::COL_MERCHANT_ID],
+            $item[MerchantRelationshipTableConstants::COL_MERCHANT_NAME]
+        );
     }
 }

@@ -45,7 +45,7 @@ class MerchantEntityManager extends AbstractEntityManager implements MerchantEnt
             ->findOneOrCreate();
 
         $spyMerchant = $this->getFactory()
-            ->createMerchantMapper()
+            ->createPropelMerchantMapper()
             ->mapMerchantTransferToEntity($merchantTransfer, $spyMerchant);
 
         $spyMerchant->save();
