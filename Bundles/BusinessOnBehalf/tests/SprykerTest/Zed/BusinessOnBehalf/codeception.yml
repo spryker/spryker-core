@@ -26,3 +26,4 @@ suites:
                  - \SprykerTest\Zed\Company\Helper\CompanyHelper
                  - \SprykerTest\Shared\Customer\Helper\CustomerDataHelper
                  - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                 
