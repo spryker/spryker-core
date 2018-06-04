@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\BusinessOnBehalf\Persistence;
 
+use Generated\Shared\Transfer\CompanyUserTransfer;
+
 interface BusinessOnBehalfRepositoryInterface
 {
     /**
@@ -30,4 +32,11 @@ interface BusinessOnBehalfRepositoryInterface
      * @return int[]
      */
     public function findActiveCompanyUserIdsByCustomerId(int $idCustomer): array;
+
+    /**
+     * @param int $idCustomer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     */
+    public function findDefaultCompanyUserByCustomerId(int $idCustomer): ?CompanyUserTransfer;
 }

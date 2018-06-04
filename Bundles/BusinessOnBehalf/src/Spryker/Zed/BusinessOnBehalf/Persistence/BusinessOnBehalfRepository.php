@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\BusinessOnBehalf\Persistence;
 
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -19,6 +20,8 @@ class BusinessOnBehalfRepository extends AbstractRepository implements BusinessO
      * {@inheritdoc}
      *
      * @api
+     *
+     * @uses CompanyUser
      *
      * @param int $idCustomer
      *
@@ -37,6 +40,8 @@ class BusinessOnBehalfRepository extends AbstractRepository implements BusinessO
      *
      * @api
      *
+     * @uses CompanyUser
+     *
      * @param int $idCustomer
      *
      * @return int[]
@@ -52,5 +57,23 @@ class BusinessOnBehalfRepository extends AbstractRepository implements BusinessO
         $query->select(SpyCompanyUserTableMap::COL_ID_COMPANY_USER);
 
         return $query->find()->toArray();
+    }
+
+    /**
+     * @param int $idCustomer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
+     */
+    public function findDefaultCompanyUserByCustomerId(int $idCustomer): ?CompanyUserTransfer
+    {
+        $query = $this->getFactory()->getCompanyUserQuery();
+        $spyCompanyUser = $query->filterByFkCustomer($idCustomer)
+            ->filterByIsDefault(true)
+            ->findOne();
+        if (!$spyCompanyUser) {
+            return null;
+        }
+
+        return (new CompanyUserTransfer())->fromArray($spyCompanyUser->toArray());
     }
 }
