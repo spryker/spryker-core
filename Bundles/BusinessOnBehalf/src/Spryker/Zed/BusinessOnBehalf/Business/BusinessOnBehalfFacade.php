@@ -62,4 +62,20 @@ class BusinessOnBehalfFacade extends AbstractFacade implements BusinessOnBehalfF
             ->createIsDefaultCompanyUserUpdater()
             ->setDefaultCompanyUser($companyUserTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function setDefaultCompanyUserToCustomer(CustomerTransfer $customerTransfer): CustomerTransfer
+    {
+        return $this->getFactory()
+            ->createCustomerHydrator()
+            ->hydrateCustomerWithCompanyUser($customerTransfer);
+    }
 }
