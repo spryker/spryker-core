@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\ProductMeasurementUnit\Business\ProductMeasurementUnitFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductMeasurementUnit\Communication\ProductMeasurementUnitCommunicationFactory getFactory()
  */
-class ProductMeasurementSalesUnitGroupKeyItemExpanderPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
+class QuantitySalesUnitGroupKeyItemExpanderPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -30,7 +30,7 @@ class ProductMeasurementSalesUnitGroupKeyItemExpanderPlugin extends AbstractPlug
     {
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             $itemTransfer->setGroupKey(
-                $this->getFacade()->expandItemGroupKeyWithSalesUnit($itemTransfer)
+                $this->getFacade()->expandItemGroupKeyWithQuantitySalesUnit($itemTransfer)
             );
         }
 

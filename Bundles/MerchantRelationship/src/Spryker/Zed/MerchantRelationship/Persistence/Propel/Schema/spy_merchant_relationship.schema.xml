@@ -40,16 +40,16 @@
         <column name="fk_merchant_relationship" required="true" type="INTEGER"/>
         <column name="fk_company_business_unit" required="true" type="INTEGER"/>
 
-        <unique name="spy_merchant_relationship-merchant_fk_merchant_relationship_fk_company_business_unit">
+        <unique name="spy_merchant_rel-merchant_fk_merchant_rel_fk_company_bu">
             <unique-column name="fk_merchant_relationship"/>
             <unique-column name="fk_company_business_unit"/>
         </unique>
 
-        <foreign-key name="spy_merchant_relationship_to_company_business_unit-fk_merchant_relationship" foreignTable="spy_merchant_relationship" onDelete="CASCADE" phpName="MerchantRelationship">
+        <foreign-key name="spy_merchant_rel_to_company_bu-fk_merchant_rel" foreignTable="spy_merchant_relationship" onDelete="CASCADE" phpName="MerchantRelationship">
             <reference local="fk_merchant_relationship" foreign="id_merchant_relationship"/>
         </foreign-key>
 
-        <foreign-key name="spy_merchant_relationship_to_company_business_unit-fk_company_business_unit" foreignTable="spy_company_business_unit"  onDelete="CASCADE" phpName="CompanyBusinessUnit">
+        <foreign-key name="spy_merchant_rel_to_company_bu-fk_company_bu" foreignTable="spy_company_business_unit"  onDelete="CASCADE" phpName="CompanyBusinessUnit">
             <reference local="fk_company_business_unit" foreign="id_company_business_unit"/>
         </foreign-key>
 
