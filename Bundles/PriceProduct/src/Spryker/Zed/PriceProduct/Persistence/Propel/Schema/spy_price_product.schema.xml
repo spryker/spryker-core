@@ -58,11 +58,14 @@
         <column name="fk_store" type="INTEGER" />
         <column name="net_price" type="INTEGER" />
         <column name="gross_price" type="INTEGER" />
+        <column name="price_data" required="false" type="LONGVARCHAR"/>
+        <column name="price_data_checksum" required="false" type="VARCHAR"/>
 
-        <index name="spy_price_product_store-index-fk_pr_pro-fk_cur-fk_st-prices">
+        <index name="spy_price_product_store-index-fk_pr_pro-fk_cur-fk_st">
             <index-column name="fk_currency" />
             <index-column name="fk_store" />
             <index-column name="fk_price_product" />
+            <index-column name="price_data_checksum" />
             <index-column name="net_price" />
             <index-column name="gross_price" />
         </index>

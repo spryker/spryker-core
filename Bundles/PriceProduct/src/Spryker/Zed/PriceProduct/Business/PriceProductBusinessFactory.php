@@ -10,6 +10,8 @@ namespace Spryker\Zed\PriceProduct\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\PriceProduct\Business\Internal\Install;
 use Spryker\Zed\PriceProduct\Business\Model\BulkWriter;
+use Spryker\Zed\PriceProduct\Business\Model\PriceData\PriceDataChecksumGenerator;
+use Spryker\Zed\PriceProduct\Business\Model\PriceData\PriceDataChecksumGeneratorInterface;
 use Spryker\Zed\PriceProduct\Business\Model\PriceGrouper;
 use Spryker\Zed\PriceProduct\Business\Model\PriceProductCriteriaBuilder;
 use Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeMapper;
@@ -193,6 +195,14 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->createPriceProductStoreWriter()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProduct\Business\Model\PriceData\PriceDataChecksumGeneratorInterface
+     */
+    public function createPriceDataChecksumGenerator(): PriceDataChecksumGeneratorInterface
+    {
+        return new PriceDataChecksumGenerator();
     }
 
     /**
