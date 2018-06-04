@@ -6,10 +6,11 @@
 'use strict';
 
 require('ZedGui');
+
 var merchantRelationshipTable;
 
 /**
- * @param {string} selector
+ * @param {string} selector - jQuery selector.
  */
 function initialize(selector) {
     merchantRelationshipTable = $(selector).DataTable();
@@ -32,12 +33,11 @@ function changeCompany(e) {
  * @return {string}
  */
 function createListUrl(companyId) {
-    var url = '/merchant-relationship-gui/list-merchant-relationship';
     var parameters = {};
     if (companyId.length > 0) {
         parameters['id-company'] = companyId;
     }
-    var finalUrl = url + '?' + $.param(parameters);
+    var finalUrl = window.location.pathname + '?' + $.param(parameters);
 
     return decodeURIComponent(finalUrl);
 }

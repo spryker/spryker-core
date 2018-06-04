@@ -20,7 +20,7 @@ class MerchantPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\Merchant\Persistence\SpyMerchantQuery
      */
-    public function createMerchantQuery()
+    public function createMerchantQuery(): SpyMerchantQuery
     {
         return SpyMerchantQuery::create();
     }
@@ -28,7 +28,7 @@ class MerchantPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Spryker\Zed\Merchant\Persistence\Propel\Mapper\MerchantMapperInterface
      */
-    public function createMerchantMapper(): MerchantMapperInterface
+    public function createPropelMerchantMapper(): MerchantMapperInterface
     {
         return new MerchantMapper();
     }

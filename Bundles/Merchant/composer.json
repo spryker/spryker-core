@@ -5,7 +5,6 @@
   "require": {
     "php": ">=7.1",
     "spryker/kernel": "^3.0.0",
-    "spryker/propel-orm": "^1.0.0",
     "spryker/util-text": "^1.0.0"
   },
   "require-dev": {
@@ -14,7 +13,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Zed\\Merchant\\Helper\\": "tests/SprykerTest/Zed/Merchant/_support/Helper/"
     }
   },
   "autoload-dev": {

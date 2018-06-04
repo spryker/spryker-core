@@ -28,20 +28,6 @@ class MerchantRelationshipFacadeTest extends Unit
     /**
      * @return void
      */
-    protected function _before()
-    {
-    }
-
-    /**
-     * @return void
-     */
-    protected function _after()
-    {
-    }
-
-    /**
-     * @return void
-     */
     public function testCreateMerchantRelationship(): void
     {
         $merchantRelationship = $this->haveMerchantRelationship('mr-test');
@@ -203,7 +189,7 @@ class MerchantRelationshipFacadeTest extends Unit
         $companyBusinessUnitSeed = $companyBusinessUnitOwnerKey ? ['key' => $companyBusinessUnitOwnerKey] : [];
         $companyBusinessUnitOwner = $this->tester->haveCompanyBusinessUnit($companyBusinessUnitSeed);
 
-        $assigneeCompanyBusinessUnitCollection = new CompanyBusinessUnitCollectionTransfer();
+        $assigneeCompanyBusinessUnitCollectionTransfer = new CompanyBusinessUnitCollectionTransfer();
         if ($assigneeCompanyBusinessUnitKeys) {
             $companyBusinessUnits = new ArrayObject();
             foreach ($assigneeCompanyBusinessUnitKeys as $businessUnitKey) {
@@ -215,7 +201,7 @@ class MerchantRelationshipFacadeTest extends Unit
                 $companyBusinessUnit = $this->tester->haveCompanyBusinessUnit(['key' => $businessUnitKey]);
                 $companyBusinessUnits->append($companyBusinessUnit);
             }
-            $assigneeCompanyBusinessUnitCollection->setCompanyBusinessUnits($companyBusinessUnits);
+            $assigneeCompanyBusinessUnitCollectionTransfer->setCompanyBusinessUnits($companyBusinessUnits);
         }
 
         return $this->tester->haveMerchantRelationship([
@@ -223,7 +209,7 @@ class MerchantRelationshipFacadeTest extends Unit
             'fkCompanyBusinessUnit' => $companyBusinessUnitOwner->getIdCompanyBusinessUnit(),
             'merchantRelationshipKey' => $merchantRelationshipKey,
             'ownerCompanyBusinessUnit' => $companyBusinessUnitOwner,
-            'assigneeCompanyBusinessUnits' => $assigneeCompanyBusinessUnitCollection,
+            'assigneeCompanyBusinessUnits' => $assigneeCompanyBusinessUnitCollectionTransfer,
         ]);
     }
 }

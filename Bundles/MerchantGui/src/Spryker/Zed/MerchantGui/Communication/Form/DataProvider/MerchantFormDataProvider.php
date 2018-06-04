@@ -32,14 +32,14 @@ class MerchantFormDataProvider
      */
     public function getData(?int $idMerchant = null): MerchantTransfer
     {
-        $merchant = $this->createMerchantTransfer();
+        $merchantTransfer = new MerchantTransfer();
         if (!$idMerchant) {
-            return $merchant;
+            return $merchantTransfer;
         }
 
-        $merchant->setIdMerchant($idMerchant);
+        $merchantTransfer->setIdMerchant($idMerchant);
 
-        return $this->merchantFacade->getMerchantById($merchant);
+        return $this->merchantFacade->getMerchantById($merchantTransfer);
     }
 
     /**
@@ -50,13 +50,5 @@ class MerchantFormDataProvider
         return [
             'data_class' => MerchantTransfer::class,
         ];
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\MerchantTransfer
-     */
-    protected function createMerchantTransfer(): MerchantTransfer
-    {
-        return new MerchantTransfer();
     }
 }

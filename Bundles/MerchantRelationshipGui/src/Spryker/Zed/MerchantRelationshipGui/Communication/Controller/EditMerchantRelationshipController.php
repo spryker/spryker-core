@@ -21,8 +21,8 @@ class EditMerchantRelationshipController extends AbstractController
 {
     public const URL_PARAM_REDIRECT_URL = 'redirect-url';
 
-    protected const MESSAGE_MERCHANT_RELATIONSHIP_UPDATE_SUCCESS = 'Merchant relationship has been updated.';
-    protected const MESSAGE_MERCHANT_RELATIONSHIP_NOT_FOUND = 'Merchant relationship is not found.';
+    protected const MESSAGE_MERCHANT_RELATIONSHIP_UPDATE_SUCCESS = 'Merchant relation updated successfully.';
+    protected const MESSAGE_MERCHANT_RELATIONSHIP_NOT_FOUND = 'Merchant relation is not found.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -35,11 +35,11 @@ class EditMerchantRelationshipController extends AbstractController
 
         $dataProvider = $this->getFactory()->createMerchantRelationshipFormDataProvider();
         $merchantRelationshipTransfer = $dataProvider->getData($idMerchantRelationship);
-        $idCompany = $this->getCompanyIdFromTransfer($merchantRelationshipTransfer);
+        $idCompany = $this->getIdCompanyFromTransfer($merchantRelationshipTransfer);
         $merchantRelationshipForm = $this->getFactory()
             ->getMerchantRelationshipEditForm(
                 $merchantRelationshipTransfer,
-                $dataProvider->getOptions($idCompany)
+                $dataProvider->getOptions(true, $idCompany)
             )
             ->handleRequest($request);
 
@@ -49,6 +49,7 @@ class EditMerchantRelationshipController extends AbstractController
 
         return $this->viewResponse([
             'form' => $merchantRelationshipForm->createView(),
+            'merchantRelationshipTransfer' => $merchantRelationshipTransfer,
         ]);
     }
 
@@ -80,7 +81,7 @@ class EditMerchantRelationshipController extends AbstractController
      *
      * @return int|null
      */
-    protected function getCompanyIdFromTransfer(MerchantRelationshipTransfer $merchantRelationshipTransfer): ?int
+    protected function getIdCompanyFromTransfer(MerchantRelationshipTransfer $merchantRelationshipTransfer): ?int
     {
         if ($merchantRelationshipTransfer->getOwnerCompanyBusinessUnit()) {
             return $merchantRelationshipTransfer->getOwnerCompanyBusinessUnit()->getFkCompany();
