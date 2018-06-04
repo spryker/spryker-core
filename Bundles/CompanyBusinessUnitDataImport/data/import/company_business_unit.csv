@@ -1,10 +1,17 @@
 company_key,business_unit_key,name,email,phone,external_url,iban,bic
-test-company,test-business-unit-1,Hotel Tommy Berlin,test+test-business-unit-1@spryker.com,1234567890,,test iban,test bic
-test-company,test-business-unit-2,Hotel Tommy London,test+test-business-unit-2@spryker.com,1234567890,,,
-test-company,test-business-unit-3,Hotel Tommy Zürich,test+test-business-unit-3@spryker.com,1234567890,,,
-trial-company,trial-bus-unit-1,Trial Management unit,trial-bus-unit-1@spryker.com,1234567890,,,
-trial-company,trial-bus-unit-2,Trial Buying unit,trial-bus-unit-2@spryker.com,1234567890,,,
-trial-company,trial-bus-unit-3,Trial Delivery unit,trial-bus-unit-3@spryker.com,1234567890,,,
-proof-company,proof-bus-unit-1,Proof Restaurant,proof-bus-unit-1@spryker.com,1234567890,,,
-proof-company,proof-bus-unit-2,Proof Bar,proof-bus-unit-2@spryker.com,1234567890,,,
-proof-company,proof-bus-unit-3,Proof Cleaning,proof-bus-unit-3@spryker.com,1234567890,,,
+test-company,test-business-unit-1,Hotel Tommy Berlin,test+test-business-unit-1@spryker.com,1234567890,,test iban,test bic,""
+test-company,test-business-unit-2,Hotel Tommy London,test+test-business-unit-2@spryker.com,1234567890,,,""
+test-company,test-business-unit-3,Hotel Tommy Zürich,test+test-business-unit-3@spryker.com,1234567890,,,""
+trial-company,trial-bus-unit-1,Trial Management unit,trial-bus-unit-1@spryker.com,1234567890,,,""
+trial-company,trial-bus-unit-2,Trial Buying unit,trial-bus-unit-2@spryker.com,1234567890,,,""
+trial-company,trial-bus-unit-3,Trial Delivery unit,trial-bus-unit-3@spryker.com,1234567890,,,""
+proof-company,proof-bus-unit-1,Proof Restaurant,proof-bus-unit-1@spryker.com,1234567890,,,""
+proof-company,proof-bus-unit-2,Proof Bar,proof-bus-unit-2@spryker.com,1234567890,,,""
+proof-company,proof-bus-unit-3,Proof Cleaning,proof-bus-unit-3@spryker.com,1234567890,,,""
+BoB-Hotel-Jim,business-unit-jim-1,Restaurant Jim,Restaurant.Jim@spryker.com,12345617,"","","",""
+BoB-Hotel-Jim,business-unit-jim-2,Bar Jim,Bar.Jim@spryker.com,12345617,"","","",""
+BoB-Hotel-Kudamm,business-unit-kudamm-1,Management Ku'damm,Management.Kudamm@spryker.com,12345617,"","","",""
+BoB-Hotel-Mitte,business-unit-mitte-1,Hotel Mitte,Hotel.Mitte@spryker.com,12345617,"","","",""
+BoB-Hotel-Mitte,business-unit-mitte-2,Service Mitte,Service.Mitte@spryker.com,12345617,"","","",""
+BoB-Hotel-Mitte,business-unit-mitte-3,Cleaning Mitte,Cleaning.Mitte@spryker.com,12345617,"","","",""
+BoB-Regular,business-unit-regular-1,Business unit Regular,Business.unit.Regular@spryker.com,12345617,"","","",""
