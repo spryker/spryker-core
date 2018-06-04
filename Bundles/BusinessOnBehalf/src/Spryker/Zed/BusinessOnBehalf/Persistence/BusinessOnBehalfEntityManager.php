@@ -9,7 +9,6 @@ namespace Spryker\Zed\BusinessOnBehalf\Persistence;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -36,7 +35,7 @@ class BusinessOnBehalfEntityManager extends AbstractEntityManager implements Bus
             $defaultCompanyUser->setIsDefault(true)->save();
         }
 
-        return $companyUserTransfer;
+        return $companyUserTransfer->fromArray($defaultCompanyUser->toArray(), true);
     }
 
     /**

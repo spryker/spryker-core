@@ -8,8 +8,6 @@
 namespace SprykerTest\Zed\BusinessOnBehalf\Helper;
 
 use Codeception\Module;
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
-use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class BusinessOnBehalfDataHelper extends Module
 {

@@ -137,6 +137,7 @@ class BusinessOnBehalfFacadeTest extends Unit
             'customer' => $this->customer,
         ];
         $companyUser = $this->tester->haveCompanyUser($seedDataWithCompany);
+        $companyUser->setCustomer($this->customer);
 
         //Act
         $this->tester->getFacade()->setDefaultCompanyUser($companyUser);
