@@ -38,13 +38,13 @@ interface ProductQuantityFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves product quantity entities by provided product IDs.
+     * - Retrieves product quantity transfers by provided product IDs.
      *
      * @api
      *
      * @param int[] $productIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductQuantityEntityTransfer[]
+     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
      */
-    public function findProductQuantityEntitiesByProductIds(array $productIds): array;
+    public function findProductQuantityTransfersByProductIds(array $productIds): array;
 }

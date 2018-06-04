@@ -25,13 +25,20 @@ class EventListenerContext implements EventListenerContextInterface
     protected $isHandledInQueue;
 
     /**
+     * @var string|null
+     */
+    protected $queuePoolName;
+
+    /**
      * @param \Spryker\Zed\Event\Dependency\Plugin\EventBaseHandlerInterface $eventHandler
      * @param bool $isHandledInQueue
+     * @param string|null $queuePoolName
      */
-    public function __construct(EventBaseHandlerInterface $eventHandler, $isHandledInQueue)
+    public function __construct(EventBaseHandlerInterface $eventHandler, $isHandledInQueue, $queuePoolName = null)
     {
         $this->eventHandler = $eventHandler;
         $this->isHandledInQueue = $isHandledInQueue;
+        $this->queuePoolName = $queuePoolName;
     }
 
     /**
@@ -40,6 +47,14 @@ class EventListenerContext implements EventListenerContextInterface
     public function isHandledInQueue()
     {
         return $this->isHandledInQueue;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getQueuePoolName()
+    {
+        return $this->queuePoolName;
     }
 
     /**
