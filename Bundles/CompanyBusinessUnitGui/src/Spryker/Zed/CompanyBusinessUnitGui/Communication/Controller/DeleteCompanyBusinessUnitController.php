@@ -9,7 +9,6 @@ namespace Spryker\Zed\CompanyBusinessUnitGui\Communication\Controller;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Shared\CompanyBusinessUnitGui\CompanyBusinessUnitGuiConstants;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,6 +18,15 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DeleteCompanyBusinessUnitController extends AbstractController
 {
+    /**
+     * @see CompanyBusinessUnitForm::FIELD_ID_COMPANY_BUSINESS_UNIT
+     */
+    protected const URL_PARAM_ID_COMPANY_BUSINESS_UNIT = 'id-company-business-unit';
+    /**
+     * @see ListCompanyBusinessUnitController::indexAction()
+     */
+    protected const URL_BUSINESS_UNIT_LIST = '/company-business-unit-gui/list-company-business-unit';
+
     protected const MESSAGE_COMPANY_BUSINESS_UNIT_DELETE_SUCCESS = 'Company Business Unit "%s" was deleted.';
     protected const MESSAGE_COMPANY_BUSINESS_UNIT_DELETE_ERROR = 'You can not delete a business unit while it contains users';
 
@@ -29,10 +37,10 @@ class DeleteCompanyBusinessUnitController extends AbstractController
      */
     public function indexAction(Request $request): RedirectResponse
     {
-        $redirectUrl = Url::generate(CompanyBusinessUnitGuiConstants::REDIRECT_URL_DEFAULT)->build();
+        $redirectUrl = Url::generate(static::URL_BUSINESS_UNIT_LIST)->build();
 
         $idCompanyBusinessUnit = $this->castId(
-            $request->query->get(CompanyBusinessUnitGuiConstants::REQUEST_ID_COMPANY_BUSINESS_UNIT)
+            $request->query->get(static::URL_PARAM_ID_COMPANY_BUSINESS_UNIT)
         );
 
         $companyBusinessUnitTransfer = new CompanyBusinessUnitTransfer();

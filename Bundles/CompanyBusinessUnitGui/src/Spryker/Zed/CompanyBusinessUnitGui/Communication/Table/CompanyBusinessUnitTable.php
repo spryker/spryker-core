@@ -12,7 +12,6 @@ use Orm\Zed\CompanyBusinessUnit\Persistence\Map\SpyCompanyBusinessUnitTableMap;
 use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnit;
 use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Shared\CompanyBusinessUnitGui\CompanyBusinessUnitGuiConstants;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -31,8 +30,18 @@ class CompanyBusinessUnitTable extends AbstractTable
     protected const COL_ACTIONS = 'actions';
 
     protected const TABLE_PARENT_UNIT = 'parent';
-    protected const REQUEST_ID_COMPANY_BUSINESS_UNIT = 'id-company-business-unit';
-    protected const URL_COMPANY_BUSINESS_UNIT_EDIT = '/company-business-unit-gui/edit-company-business-unit/index?%s=%d';
+    /**
+     * @see CompanyBusinessUnitForm::FIELD_ID_COMPANY_BUSINESS_UNIT
+     */
+    protected const URL_PARAM_ID_COMPANY_BUSINESS_UNIT = 'id-company-business-unit';
+    /**
+     * @see EditCompanyBusinessUnitController::indexAction()
+     */
+    protected const URL_COMPANY_BUSINESS_UNIT_EDIT = '/company-business-unit-gui/edit-company-business-unit';
+    /**
+     * @see DeleteCompanyBusinessUnitController::indexAction()
+     */
+    protected const URL_COMPANY_BUSINESS_UNIT_DELETE = '/company-business-unit-gui/delete-company-business-unit';
     protected const FORMAT_ADDRESS = '%s, %s, %s';
 
     /**
@@ -149,21 +158,18 @@ class CompanyBusinessUnitTable extends AbstractTable
     protected function buildLinks(SpyCompanyBusinessUnit $spyCompanyBusinessUnit): string
     {
         $buttons = [];
-
         $idCompanyBusinessUnit = $spyCompanyBusinessUnit->getIdCompanyBusinessUnit();
 
         $buttons[] = $this->generateEditButton(
-            sprintf(
-                static::URL_COMPANY_BUSINESS_UNIT_EDIT,
-                static::REQUEST_ID_COMPANY_BUSINESS_UNIT,
-                $idCompanyBusinessUnit
-            ),
+            Url::generate(static::URL_COMPANY_BUSINESS_UNIT_EDIT, [
+                static::URL_PARAM_ID_COMPANY_BUSINESS_UNIT => $idCompanyBusinessUnit,
+            ]),
             'Edit'
         );
 
         $buttons[] = $this->generateRemoveButton(
-            Url::generate(CompanyBusinessUnitGuiConstants::URL_COMPANY_BUSINESS_UNIT_DELETE, [
-                CompanyBusinessUnitGuiConstants::REQUEST_ID_COMPANY_BUSINESS_UNIT => $idCompanyBusinessUnit,
+            Url::generate(static::URL_COMPANY_BUSINESS_UNIT_DELETE, [
+                static::URL_PARAM_ID_COMPANY_BUSINESS_UNIT => $idCompanyBusinessUnit,
             ]),
             'Delete'
         );

@@ -15,9 +15,15 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditCompanyBusinessUnitController extends AbstractController
 {
+    /**
+     * @see CompanyBusinessUnitForm::FIELD_ID_COMPANY_BUSINESS_UNIT
+     */
     protected const URL_PARAM_ID_COMPANY_BUSINESS_UNIT = 'id-company-business-unit';
     protected const URL_PARAM_REDIRECT_URL = 'redirect-url';
-    protected const REDIRECT_URL_DEFAULT = '/company-business-unit-gui/list-company-business-unit';
+    /**
+     * @see ListCompanyBusinessUnitController::indexAction()
+     */
+    protected const URL_BUSINESS_UNIT_LIST = '/company-business-unit-gui/list-company-business-unit';
 
     protected const MESSAGE_COMPANY_BUSINESS_UNIT_UPDATE_SUCCESS = 'Company Business Unit has been updated.';
     protected const MESSAGE_COMPANY_BUSINESS_UNIT_UPDATE_ERROR = 'Company Business Unit has not been updated.';
@@ -30,7 +36,7 @@ class EditCompanyBusinessUnitController extends AbstractController
     public function indexAction(Request $request)
     {
         $idCompanyBusinessUnit = $this->castId($request->query->get(static::URL_PARAM_ID_COMPANY_BUSINESS_UNIT));
-        $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL, static::REDIRECT_URL_DEFAULT);
+        $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL, static::URL_BUSINESS_UNIT_LIST);
 
         $dataProvider = $this->getFactory()->createCompanyBusinessUnitFormDataProvider();
         $form = $this->getFactory()
