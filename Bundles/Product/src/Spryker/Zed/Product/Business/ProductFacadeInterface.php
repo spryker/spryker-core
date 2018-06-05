@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\RawProductAttributesTransfer;
-use Spryker\Shared\Product\ProductConstants;
 
 interface ProductFacadeInterface
 {
@@ -140,55 +139,27 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Filters abstract products by specified SKU.
+     * - Suggests product abstract by name or SKU.
      *
      * @api
      *
-     * @param string $sku
-     * @param int $limit
+     * @param string $searchName
      *
-     * @return array
+     * @return string[]
      */
-    public function filterProductAbstractBySku(string $sku, int $limit = ProductConstants::FILTERED_PRODUCTS_LIMIT_DEFAULT): array;
+    public function suggestProductAbstract(string $searchName): array;
 
     /**
      * Specification:
-     * - Filters abstract products by specified localized name.
+     * - Suggests product concrete by name or SKU.
      *
      * @api
      *
-     * @param string $localizedName
-     * @param int $limit
+     * @param string $searchName
      *
-     * @return array
+     * @return string[]
      */
-    public function filterProductAbstractByLocalizedName(string $localizedName, int $limit = ProductConstants::FILTERED_PRODUCTS_LIMIT_DEFAULT): array;
-
-    /**
-     * Specification:
-     * - Filters concrete products by specified SKU.
-     *
-     * @api
-     *
-     * @param string $sku
-     * @param int $limit
-     *
-     * @return array
-     */
-    public function filterProductConcreteBySku(string $sku, int $limit = ProductConstants::FILTERED_PRODUCTS_LIMIT_DEFAULT): array;
-
-    /**
-     * Specification:
-     * - Filters concrete products by specified localized name.
-     *
-     * @api
-     *
-     * @param string $localizedName
-     * @param int $limit
-     *
-     * @return array
-     */
-    public function filterProductConcreteByLocalizedName(string $localizedName, int $limit = ProductConstants::FILTERED_PRODUCTS_LIMIT_DEFAULT): array;
+    public function suggestProductConcrete(string $searchName): array;
 
     /**
      * Specification:

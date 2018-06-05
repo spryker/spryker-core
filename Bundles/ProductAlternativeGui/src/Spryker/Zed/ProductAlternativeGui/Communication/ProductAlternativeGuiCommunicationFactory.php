@@ -14,9 +14,6 @@ use Spryker\Zed\ProductAlternativeGui\Dependency\Facade\ProductAlternativeGuiToP
 use Spryker\Zed\ProductAlternativeGui\Dependency\Facade\ProductAlternativeGuiToProductFacadeInterface;
 use Spryker\Zed\ProductAlternativeGui\ProductAlternativeGuiDependencyProvider;
 
-/**
- * @method \Spryker\Zed\ProductAlternativeGui\ProductAlternativeGuiConfig getConfig()
- */
 class ProductAlternativeGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**

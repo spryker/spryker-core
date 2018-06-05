@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ProductAlternativeGui\Dependency\Facade;
 
-use Spryker\Shared\Product\ProductConstants;
-
 class ProductAlternativeGuiToProductFacadeBridge implements ProductAlternativeGuiToProductFacadeInterface
 {
     /**
@@ -25,46 +23,24 @@ class ProductAlternativeGuiToProductFacadeBridge implements ProductAlternativeGu
     }
 
     /**
-     * @param string $sku
-     * @param int $limit
+     * @param string $searchName
      *
-     * @return array
+     * @return string[]
      */
-    public function filterProductAbstractBySku(string $sku, int $limit = ProductConstants::FILTERED_PRODUCTS_LIMIT_DEFAULT): array
+    public function suggestProductAbstract(string $searchName): array
     {
-        return $this->productFacade->filterProductAbstractBySku($sku, $limit);
+        return $this->productFacade
+            ->suggestProductAbstract($searchName);
     }
 
     /**
-     * @param string $localizedName
-     * @param int $limit
+     * @param string $searchName
      *
-     * @return array
+     * @return string[]
      */
-    public function filterProductAbstractByLocalizedName(string $localizedName, int $limit = ProductConstants::FILTERED_PRODUCTS_LIMIT_DEFAULT): array
+    public function suggestProductConcrete(string $searchName): array
     {
-        return $this->productFacade->filterProductAbstractByLocalizedName($localizedName, $limit);
-    }
-
-    /**
-     * @param string $sku
-     * @param int $limit
-     *
-     * @return array
-     */
-    public function filterProductConcreteBySku(string $sku, int $limit = ProductConstants::FILTERED_PRODUCTS_LIMIT_DEFAULT): array
-    {
-        return $this->productFacade->filterProductConcreteBySku($sku, $limit);
-    }
-
-    /**
-     * @param string $localizedName
-     * @param int $limit
-     *
-     * @return array
-     */
-    public function filterProductConcreteByLocalizedName(string $localizedName, int $limit = ProductConstants::FILTERED_PRODUCTS_LIMIT_DEFAULT): array
-    {
-        return $this->productFacade->filterProductConcreteByLocalizedName($localizedName, $limit);
+        return $this->productFacade
+            ->suggestProductConcrete($searchName);
     }
 }

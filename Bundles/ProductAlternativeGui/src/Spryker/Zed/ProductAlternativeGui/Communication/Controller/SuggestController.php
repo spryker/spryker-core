@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Spryker\Zed\ProductAlternativeGui\Business\ProductAlternativeGuiFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductAlternativeGui\Communication\ProductAlternativeGuiCommunicationFactory getFactory()
  */
 class SuggestController extends AbstractController
 {
@@ -26,10 +26,19 @@ class SuggestController extends AbstractController
     public function indexAction(Request $request): JsonResponse
     {
         $searchName = $request->query->get(static::PARAM_NAME);
-        $suggestions = $this
-            ->getFacade()
-            ->suggestProduct($searchName);
 
-        return $this->jsonResponse($suggestions);
+        $productAbstractSuggestions = $this
+            ->getFactory()
+            ->getProductFacade()
+            ->suggestProductAbstract($searchName);
+
+        $productConcreteSuggestions = $this
+            ->getFactory()
+            ->getProductFacade()
+            ->suggestProductConcrete($searchName);
+
+        return $this->jsonResponse(
+            array_merge($productAbstractSuggestions, $productConcreteSuggestions)
+        );
     }
 }

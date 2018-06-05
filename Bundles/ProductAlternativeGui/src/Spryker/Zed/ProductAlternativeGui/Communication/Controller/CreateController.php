@@ -11,7 +11,7 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Spryker\Zed\ProductAlternativeGui\Business\ProductAlternativeGuiFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductAlternativeGui\Communication\ProductAlternativeGuiCommunicationFactory getFactory()
  */
 class CreateController extends AbstractController
 {
@@ -31,9 +31,14 @@ class CreateController extends AbstractController
     {
         $searchText = $request->query->get(static::FIELD_PRODUCT_NAME_OR_SKU_AUTOCOMPLETE);
 
+        /**
+         * TODO: It's okay that code below has an error; this controller might not needed.
+         */
+
         /** @var \Generated\Shared\Transfer\ProductAlternativeResponseTransfer $productAlternativeResponseTransfer */
         $productAlternativeResponseTransfer = $this
-            ->getFacade()
+            ->getFactory()
+            ->getProductAlternativeFacade()
             ->createProductAlternative($searchText);
 
         if ($productAlternativeResponseTransfer->getIsSuccessful()) {

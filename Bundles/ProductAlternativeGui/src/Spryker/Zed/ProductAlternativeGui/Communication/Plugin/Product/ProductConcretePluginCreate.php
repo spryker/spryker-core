@@ -12,8 +12,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginCreateInterface;
 
 /**
- * @method \Spryker\Zed\ProductAlternativeGui\Business\ProductAlternativeGuiFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductAlternativeGui\Communication\ProductAlternativeGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductAlternativeGui\Business\ProductAlternativeGuiFacadeInterface getFacade()
  */
 class ProductConcretePluginCreate extends AbstractPlugin implements ProductConcretePluginCreateInterface
 {
@@ -31,7 +31,8 @@ class ProductConcretePluginCreate extends AbstractPlugin implements ProductConcr
     public function create(ProductConcreteTransfer $productConcreteTransfer)
     {
         return $this
-            ->getFacade()
+            ->getFactory()
+            ->getProductAlternativeFacade()
             ->persistProductAlternatives($productConcreteTransfer);
     }
 }

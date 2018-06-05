@@ -12,8 +12,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginUpdateInterface;
 
 /**
- * @method \Spryker\Zed\ProductAlternativeGui\Business\ProductAlternativeGuiFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductAlternativeGui\Communication\ProductAlternativeGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductAlternativeGui\Business\ProductAlternativeGuiFacadeInterface getFacade()
  */
 class ProductConcretePluginUpdate extends AbstractPlugin implements ProductConcretePluginUpdateInterface
 {
@@ -31,7 +31,8 @@ class ProductConcretePluginUpdate extends AbstractPlugin implements ProductConcr
     public function update(ProductConcreteTransfer $productConcreteTransfer)
     {
         return $this
-            ->getFacade()
+            ->getFactory()
+            ->getProductAlternativeFacade()
             ->persistProductAlternatives($productConcreteTransfer);
     }
 }

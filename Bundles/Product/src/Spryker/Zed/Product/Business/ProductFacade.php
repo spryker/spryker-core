@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\RawProductAttributesTransfer;
-use Spryker\Shared\Product\ProductConstants;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -149,16 +148,15 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @api
      *
-     * @param string $sku
-     * @param int $limit
+     * @param string $searchName
      *
-     * @return array
+     * @return string[]
      */
-    public function filterProductAbstractBySku(string $sku, int $limit = ProductConstants::FILTERED_PRODUCTS_LIMIT_DEFAULT): array
+    public function suggestProductAbstract(string $searchName): array
     {
         return $this->getFactory()
-            ->createProductAbstractManager()
-            ->filterProductAbstractBySku($sku, $limit);
+            ->createProductAbstractSuggester()
+            ->suggestProductAbstract($searchName);
     }
 
     /**
@@ -166,50 +164,15 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @api
      *
-     * @param string $localizedName
-     * @param int $limit
+     * @param string $searchName
      *
-     * @return array
+     * @return string[]
      */
-    public function filterProductAbstractByLocalizedName(string $localizedName, int $limit = ProductConstants::FILTERED_PRODUCTS_LIMIT_DEFAULT): array
+    public function suggestProductConcrete(string $searchName): array
     {
         return $this->getFactory()
-            ->createProductAbstractManager()
-            ->filterProductAbstractByLocalizedName($localizedName, $limit);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param string $sku
-     * @param int $id
-     *
-     * @return array
-     */
-    public function filterProductConcreteBySku(string $sku, int $limit = ProductConstants::FILTERED_PRODUCTS_LIMIT_DEFAULT): array
-    {
-        return $this->getFactory()
-            ->createProductConcreteManager()
-            ->filterProductConcreteBySku($sku, $limit);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param string $localizedName
-     * @param int $limit
-     *
-     * @return array
-     */
-    public function filterProductConcreteByLocalizedName(string $localizedName, int $limit = ProductConstants::FILTERED_PRODUCTS_LIMIT_DEFAULT): array
-    {
-        return $this->getFactory()
-            ->createProductConcreteManager()
-            ->filterProductConcreteByLocalizedName($localizedName, $limit);
+            ->createProductConcreteSuggester()
+            ->suggestProductConcrete($searchName);
     }
 
     /**

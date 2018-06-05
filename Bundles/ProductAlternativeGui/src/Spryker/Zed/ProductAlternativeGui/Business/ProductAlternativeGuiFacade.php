@@ -21,23 +21,6 @@ class ProductAlternativeGuiFacade extends AbstractFacade implements ProductAlter
      *
      * @api
      *
-     * @param string $searchName
-     *
-     * @return string[]
-     */
-    public function suggestProduct(string $searchName): array
-    {
-        return $this
-            ->getFactory()
-            ->createProductSuggester()
-            ->suggestProduct($searchName);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
@@ -46,7 +29,7 @@ class ProductAlternativeGuiFacade extends AbstractFacade implements ProductAlter
     {
         return $this
             ->getFactory()
-            ->createProductAlternativeManager()
+            ->getProductAlternativeFacade()
             ->persistProductAlternatives($productConcreteTransfer);
     }
 
@@ -64,7 +47,7 @@ class ProductAlternativeGuiFacade extends AbstractFacade implements ProductAlter
     {
         return $this
             ->getFactory()
-            ->createProductAlternativeManager()
+            ->getProductAlternativeFacade()
             ->deleteProductAbstractAlternative(
                 $idBaseProduct,
                 $idProductAbstract
@@ -85,7 +68,7 @@ class ProductAlternativeGuiFacade extends AbstractFacade implements ProductAlter
     {
         return $this
             ->getFactory()
-            ->createProductAlternativeManager()
+            ->getProductAlternativeFacade()
             ->deleteProductConcreteAlternative(
                 $idBaseProduct,
                 $idProductConcrete

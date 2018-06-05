@@ -14,18 +14,6 @@ interface ProductAlternativeGuiFacadeInterface
 {
     /**
      * Specification:
-     * - Suggests product by name or SKU.
-     *
-     * @api
-     *
-     * @param string $searchName
-     *
-     * @return string[]
-     */
-    public function suggestProduct(string $searchName): array;
-
-    /**
-     * Specification:
      * - Persists product alternatives stored in product concrete transfer.
      *
      * @api

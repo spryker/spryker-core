@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductAlternativeGui\Business\Product;
+namespace Spryker\Zed\Product\Business\Product\Suggest;
 
-interface ProductSuggesterInterface
+interface ProductConcreteSuggesterInterface
 {
     /**
      * @param string $searchName
@@ -15,5 +15,5 @@ interface ProductSuggesterInterface
      *
      * @return string[]
      */
-    public function suggestProduct(string $searchName, ?int $limit = null): array;
+    public function suggestProductConcrete(string $searchName, ?int $limit = null): array;
 }

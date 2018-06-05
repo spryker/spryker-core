@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Spryker\Zed\ProductAlternativeGui\Business\ProductAlternativeGuiFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductAlternativeGui\Communication\ProductAlternativeGuiCommunicationFactory getFactory()
  */
 class DeleteController extends AbstractController
 {
@@ -37,7 +37,8 @@ class DeleteController extends AbstractController
 
         /** @var \Generated\Shared\Transfer\ProductAlternativeResponseTransfer $productAlternativeResponseTransfer */
         $productAlternativeResponseTransfer = $this
-            ->getFacade()
+            ->getFactory()
+            ->getProductAlternativeFacade()
             ->deleteProductAbstractAlternative(
                 $idProduct,
                 $idProductAbstractAlternative
@@ -58,7 +59,8 @@ class DeleteController extends AbstractController
 
         /** @var \Generated\Shared\Transfer\ProductAlternativeResponseTransfer $productAlternativeResponseTransfer */
         $productAlternativeResponseTransfer = $this
-            ->getFacade()
+            ->getFactory()
+            ->getProductAlternativeFacade()
             ->deleteProductConcreteAlternative(
                 $idProduct,
                 $idProductConcreteAlternative
