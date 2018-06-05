@@ -1,5 +1,5 @@
 <?php
-namespace SprykerTest\Zed\ProductPackagingUnitDataImport\Communication\Plugin;
+namespace SprykerTest\Zed\ProductPackagingUnitDataImport\Communication\Plugin\DataImport;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
@@ -7,7 +7,7 @@ use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Generated\Shared\Transfer\SpyProductEntityTransfer;
 use Generated\Shared\Transfer\SpyProductPackagingUnitTypeEntityTransfer;
-use Spryker\Zed\ProductPackagingUnitDataImport\Communication\Plugin\ProductPackagingUnitDataImportPlugin;
+use Spryker\Zed\ProductPackagingUnitDataImport\Communication\Plugin\DataImport\ProductPackagingUnitDataImportPlugin;
 use Spryker\Zed\ProductPackagingUnitDataImport\ProductPackagingUnitDataImportConfig;
 
 /**
@@ -17,6 +17,7 @@ use Spryker\Zed\ProductPackagingUnitDataImport\ProductPackagingUnitDataImportCon
  * @group ProductPackagingUnitDataImport
  * @group Communication
  * @group Plugin
+ * @group DataImport
  * @group ProductPackagingUnitDataImportPluginTest
  * Add your own group annotations below this line
  */

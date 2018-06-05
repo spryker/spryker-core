@@ -8,8 +8,8 @@
 namespace Spryker\Zed\ProductPackagingUnitDataImport\Business;
 
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
-use Spryker\Zed\ProductPackagingUnitDataImport\Business\Model\ProductPackagingUnitTypeWriterStep;
-use Spryker\Zed\ProductPackagingUnitDataImport\Business\Model\ProductPackagingUnitWriterStep;
+use Spryker\Zed\ProductPackagingUnitDataImport\Business\Model\ProductPackagingUnit\ProductPackagingUnitWriterStep;
+use Spryker\Zed\ProductPackagingUnitDataImport\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeWriterStep;
 
 /**
  * @method \Spryker\Zed\ProductPackagingUnitDataImport\ProductPackagingUnitDataImportConfig getConfig()

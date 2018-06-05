@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductPackagingUnitDataImport\Communication\Plugin;
+namespace Spryker\Zed\ProductPackagingUnitDataImport\Communication\Plugin\DataImport;
 
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
@@ -16,7 +16,7 @@ use Spryker\Zed\ProductPackagingUnitDataImport\ProductPackagingUnitDataImportCon
 /**
  * @method \Spryker\Zed\ProductPackagingUnitDataImport\Business\ProductPackagingUnitDataImportFacadeInterface getFacade()
  */
-class ProductPackagingUnitTypeDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
+class ProductPackagingUnitDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
     /**
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
@@ -26,7 +26,7 @@ class ProductPackagingUnitTypeDataImportPlugin extends AbstractPlugin implements
     public function import(
         ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
     ): DataImporterReportTransfer {
-        return $this->getFacade()->importProductPackagingUnitTypes($dataImporterConfigurationTransfer);
+        return $this->getFacade()->importProductPackagingUnits($dataImporterConfigurationTransfer);
     }
 
     /**
@@ -34,6 +34,6 @@ class ProductPackagingUnitTypeDataImportPlugin extends AbstractPlugin implements
      */
     public function getImportType(): string
     {
-        return ProductPackagingUnitDataImportConfig::IMPORT_TYPE_PRODUCT_PACKAGING_UNIT_TYPE;
+        return ProductPackagingUnitDataImportConfig::IMPORT_TYPE_PRODUCT_PACKAGING_UNIT;
     }
 }
