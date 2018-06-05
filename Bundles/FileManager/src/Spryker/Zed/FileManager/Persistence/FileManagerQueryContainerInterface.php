@@ -55,7 +55,7 @@ interface FileManagerQueryContainerInterface extends QueryContainerInterface
      *
      * @param int $idFileInfo
      *
-     * FileReader.php@return \Orm\Zed\FileManager\Persistence\SpyFileInfoQuery
+     * @return \Orm\Zed\FileManager\Persistence\SpyFileInfoQuery
      */
     public function queryFileInfo($idFileInfo);
 

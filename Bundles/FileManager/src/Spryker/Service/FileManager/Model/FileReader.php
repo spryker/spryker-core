@@ -110,7 +110,6 @@ class FileReader implements FileReaderInterface
      */
     protected function createFileInfoTransfer(FileSystemQueryTransfer $fileSystemQueryTransfer)
     {
-        dump('asdasd'); die;
         $fileInfoTransfer = new FileInfoTransfer();
         $fileInfoTransfer->setType($this->fileSystem->getMimeType($fileSystemQueryTransfer));
 
