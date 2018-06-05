@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\TabItemTransfer;
 use Generated\Shared\Transfer\TabsViewTransfer;
 use Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteFormEditTabsExpanderPluginInterface;
 
+/**
+ * @method \Spryker\Zed\ProductAlternativeGui\Communication\ProductAlternativeGuiCommunicationFactory getFactory()
+ */
 class ProductConcreteFormEditTabsExpanderPlugin implements ProductConcreteFormEditTabsExpanderPluginInterface
 {
     /**
