@@ -167,7 +167,7 @@ class CompanyBusinessUnitFacadeTest extends Test
     /**
      * @return void
      */
-    public function testBusinessUnitRelationCanAddedToExistingUnit()
+    public function testBusinessUnitRelationCanBeAddedToExistingUnit()
     {
         // Arrange
         $businessUnitTransfer = $this->tester->haveCompanyBusinessUnitWithCompany();
