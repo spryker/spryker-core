@@ -13,7 +13,7 @@ interface ProductPackagingUnitFacadeInterface
 {
     /**
      * Specification:
-     * - Add infrastructural packaging unit types list to storage.
+     * - Add infrastructural packaging unit type list to persistence.
      *
      * @api
      *
