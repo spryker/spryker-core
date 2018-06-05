@@ -141,17 +141,18 @@ abstract class AbstractFileManagerListener extends AbstractPlugin implements Eve
      */
     protected function mapToFileManagerStorageTransfer(SpyFile $fileEntity, LocaleTransfer $locale)
     {
-        $localizedAttributes = $fileEntity->getLocalizedAttributes();
+        $latestFileInfo = $fileEntity->getSpyFileInfos()->getLast();
+        $localizedAttributes = $fileEntity->getSpyFileLocalizedAttributess()->toKeyIndex(static::FK_LOCALE);
 
         $fileStorageTransfer = new FileManagerStorageTransfer();
         $fileStorageTransfer->fromArray($fileEntity->toArray(), true);
         $fileStorageTransfer->setLocale($locale->getLocaleName());
-        $fileStorageTransfer->setType($fileEntity->getFileInfo()->getType());
-        $fileStorageTransfer->setVersion($fileEntity->getFileInfo()->getVersion());
+        $fileStorageTransfer->setType($latestFileInfo->getType());
+        $fileStorageTransfer->setVersion($latestFileInfo->getVersion());
         $fileStorageTransfer->setVersions($this->getFileVersions($fileEntity));
-        $fileStorageTransfer->setSize($fileEntity->getFileInfo()->getSize());
-        $fileStorageTransfer->setStorageName($fileEntity->getFileInfo()->getStorageName());
-        $fileStorageTransfer->setStorageFileName($fileEntity->getFileInfo()->getStorageFileName());
+        $fileStorageTransfer->setSize($latestFileInfo->getSize());
+        $fileStorageTransfer->setStorageName($latestFileInfo->getStorageName());
+        $fileStorageTransfer->setStorageFileName($latestFileInfo->getStorageFileName());
         $fileStorageTransfer->setFkFile($fileEntity->getIdFile());
 
         $this->mapLocalizedAttributes($fileStorageTransfer, $localizedAttributes, $locale);
@@ -206,13 +207,6 @@ abstract class AbstractFileManagerListener extends AbstractPlugin implements Eve
         $files = $this->getQueryContainer()
             ->queryFilesByIds($fileIds)
             ->find();
-
-        foreach ($files as $file) {
-            $latestFileInfo = $file->getSpyFileInfos()->getLast();
-            $localizedAttributes = $file->getSpyFileLocalizedAttributess()->toKeyIndex(static::FK_LOCALE);
-            $file->setVirtualColumn('fileInfo', $latestFileInfo);
-            $file->setVirtualColumn('localizedAttributes', $localizedAttributes);
-        }
 
         return $files;
     }
