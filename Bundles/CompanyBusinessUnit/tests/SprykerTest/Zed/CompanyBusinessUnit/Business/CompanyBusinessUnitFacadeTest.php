@@ -263,7 +263,7 @@ class CompanyBusinessUnitFacadeTest extends Test
     }
 
     /**
-     * @return \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade
+     * @return \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface
      */
     protected function getFacade(): CompanyBusinessUnitFacadeInterface
     {
