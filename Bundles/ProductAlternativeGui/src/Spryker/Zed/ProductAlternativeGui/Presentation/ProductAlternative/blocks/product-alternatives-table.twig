@@ -1,0 +1,11 @@
+<h4>Product Abstract Alternatives</h4>
+<table class="table table-bordered table-striped table-sm">
+    <tr>
+        {% include '@ProductAlternativeGui/ProductAlternative/blocks/product-alternatives-table-headers.twig' %}
+    </tr>
+    {% for productAlternative in productAlternatives %}
+        <tr>
+            {% include '@ProductAlternativeGui/ProductAlternative/blocks/product-alternatives-table-item-single.twig' %}
+        </tr>
+    {% endfor %}
+</table>
