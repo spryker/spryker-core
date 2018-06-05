@@ -28,4 +28,16 @@
         <property name="productAlternatives" type="ProductAlternative[]" singular="productAlternative"/>
     </transfer>
 
+    <transfer name="ProductAlternativeTableItem">
+        <property name="idProductAlternative" type="int"/>
+        <property name="name" type="string"/>
+        <property name="sku" type="string"/>
+        <property name="categories" type="string[]" singular="category"/>
+        <property name="status" type="bool"/>
+    </transfer>
+
+    <transfer name="ProductAlternativeTable">
+        <property name="productAlternatives" type="ProductAlternativeTableItem[]" singular="productAlternative"/>
+    </transfer>
+
 </transfers>
