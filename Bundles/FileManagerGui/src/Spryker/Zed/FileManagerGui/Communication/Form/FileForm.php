@@ -149,6 +149,7 @@ class FileForm extends AbstractType
                     'checked' => 'checked',
                 ],
                 'required' => false,
+                'label' => 'Use file name',
             ]);
         }
 
