@@ -12,7 +12,7 @@
     </transfer>
 
     <transfer name="ProductAlternativeTable">
-        <property name="productAlternatives" type="ProductAlternativeTableItem[]" singular="productAlternative"/>
+        <property name="productAlternativeTableItems" type="ProductAlternativeTableItem[]" singular="productAlternativeTableItem"/>
     </transfer>
 
 </transfers>
