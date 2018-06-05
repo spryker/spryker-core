@@ -31,7 +31,8 @@ class BusinessOnBehalfEntityManager extends AbstractEntityManager implements Bus
         $defaultCompanyUser = $query->filterByIdCompanyUser($companyUserTransfer->getIdCompanyUser())
             ->filterByFkCustomer($companyUserTransfer->getCustomer()->getIdCustomer())
             ->findOne();
-        if ($defaultCompanyUser) {
+
+        if ($defaultCompanyUser && $companyUserTransfer->getIsDefault()) {
             $defaultCompanyUser->setIsDefault(true)->save();
         }
 
