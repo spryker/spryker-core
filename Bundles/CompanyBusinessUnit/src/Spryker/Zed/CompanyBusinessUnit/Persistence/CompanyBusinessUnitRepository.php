@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Spryker\Zed\CompanyBusinessUnit\Persistence\Propel\AbstractSpyCompanyBusinessUnitQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -19,6 +20,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class CompanyBusinessUnitRepository extends AbstractRepository implements CompanyBusinessUnitRepositoryInterface
 {
+    protected const TABLE_JOIN_UNIT_PARENT = 'parentCompanyBusinessUnit';
+
     /**
      * @param int $idCompanyBusinessUnit
      *
@@ -27,11 +30,7 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
     public function getCompanyBusinessUnitById(
         int $idCompanyBusinessUnit
     ): CompanyBusinessUnitTransfer {
-        $query = $this->getFactory()
-            ->createCompanyBusinessUnitQuery()
-            ->leftJoinParentCompanyBusinessUnit('parentCompanyBusinessUnit')
-            ->with('parentCompanyBusinessUnit')
-            ->innerJoinWithCompany()
+        $query = $this->getQuery()
             ->filterByIdCompanyBusinessUnit($idCompanyBusinessUnit);
         $entityTransfer = $this->buildQueryFromCriteria($query)->findOne();
 
@@ -48,10 +47,7 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
     public function getCompanyBusinessUnitCollection(
         CompanyBusinessUnitCriteriaFilterTransfer $criteriaFilterTransfer
     ): CompanyBusinessUnitCollectionTransfer {
-        $query = $this->getFactory()
-            ->createCompanyBusinessUnitQuery()
-            ->leftJoinParentCompanyBusinessUnit('parentCompanyBusinessUnit')
-            ->with('parentCompanyBusinessUnit');
+        $query = $this->getQuery();
 
         if ($criteriaFilterTransfer->getIdCompany()) {
             $query
@@ -59,8 +55,9 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
         }
 
         if ($criteriaFilterTransfer->getIdCompanyUser() !== null) {
-            $query->useCompanyUserQuery()
-                ->filterByIdCompanyUser($criteriaFilterTransfer->getIdCompanyUser())
+            $query
+                ->useCompanyUserQuery()
+                    ->filterByIdCompanyUser($criteriaFilterTransfer->getIdCompanyUser())
                 ->endUse();
         }
 
@@ -92,14 +89,14 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
      */
     public function hasUsers(int $idCompanyBusinessUnit): bool
     {
-        $spyCompanyBusinessUnit = $this->getFactory()
+        $existsSpyCompanyBusinessUnit = $this->getFactory()
             ->createCompanyBusinessUnitQuery()
             ->useCompanyUserQuery()
                 ->filterByFkCompanyBusinessUnit($idCompanyBusinessUnit)
             ->endUse()
-            ->findOne();
+            ->exists();
 
-        return ($spyCompanyBusinessUnit !== null);
+        return $existsSpyCompanyBusinessUnit;
     }
 
     /**
@@ -109,10 +106,7 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
      */
     public function findDefaultBusinessUnitByCompanyId(int $idCompany): ?CompanyBusinessUnitTransfer
     {
-        $query = $this->getFactory()
-            ->createCompanyBusinessUnitQuery()
-            ->leftJoinParentCompanyBusinessUnit('parentCompanyBusinessUnit')
-            ->with('parentCompanyBusinessUnit')
+        $query = $this->getQuery()
             ->filterByFkCompany($idCompany);
 
         $entityTransfer = $this->buildQueryFromCriteria($query)->findOne();
@@ -130,28 +124,40 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
      */
     protected function getPaginatedCollection(ModelCriteria $query, ?PaginationTransfer $paginationTransfer = null)
     {
-        if ($paginationTransfer !== null) {
-            $page = $paginationTransfer
-                ->requirePage()
-                ->getPage();
-
-            $maxPerPage = $paginationTransfer
-                ->requireMaxPerPage()
-                ->getMaxPerPage();
-
-            $paginationModel = $query->paginate($page, $maxPerPage);
-
-            $paginationTransfer->setNbResults($paginationModel->getNbResults());
-            $paginationTransfer->setFirstIndex($paginationModel->getFirstIndex());
-            $paginationTransfer->setLastIndex($paginationModel->getLastIndex());
-            $paginationTransfer->setFirstPage($paginationModel->getFirstPage());
-            $paginationTransfer->setLastPage($paginationModel->getLastPage());
-            $paginationTransfer->setNextPage($paginationModel->getNextPage());
-            $paginationTransfer->setPreviousPage($paginationModel->getPreviousPage());
-
-            return $paginationModel->getResults();
+        if ($paginationTransfer === null) {
+            return $query->find();
         }
 
-        return $query->find();
+        $page = $paginationTransfer
+            ->requirePage()
+            ->getPage();
+
+        $maxPerPage = $paginationTransfer
+            ->requireMaxPerPage()
+            ->getMaxPerPage();
+
+        $paginationModel = $query->paginate($page, $maxPerPage);
+
+        $paginationTransfer->setNbResults($paginationModel->getNbResults());
+        $paginationTransfer->setFirstIndex($paginationModel->getFirstIndex());
+        $paginationTransfer->setLastIndex($paginationModel->getLastIndex());
+        $paginationTransfer->setFirstPage($paginationModel->getFirstPage());
+        $paginationTransfer->setLastPage($paginationModel->getLastPage());
+        $paginationTransfer->setNextPage($paginationModel->getNextPage());
+        $paginationTransfer->setPreviousPage($paginationModel->getPreviousPage());
+
+        return $paginationModel->getResults();
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyBusinessUnit\Persistence\Propel\AbstractSpyCompanyBusinessUnitQuery
+     */
+    protected function getQuery(): AbstractSpyCompanyBusinessUnitQuery
+    {
+        return $this->getFactory()
+            ->createCompanyBusinessUnitQuery()
+            ->leftJoinParentCompanyBusinessUnit(static::TABLE_JOIN_UNIT_PARENT)
+            ->with(static::TABLE_JOIN_UNIT_PARENT)
+            ->innerJoinWithCompany();
     }
 }
