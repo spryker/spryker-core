@@ -40,8 +40,10 @@ class ProductPackagingUnitDataImportPluginTest extends Unit
     {
         $this->tester->truncateProductPackagingUnits();
         $this->tester->truncateProductPackagingUnitTypes();
+        $this->tester->truncateProductPackagingLeadProducts();
         $this->tester->assertProductPackagingUnitTableIsEmtpy();
         $this->tester->assertProductPackagingUnitTypeTableIsEmtpy();
+        $this->tester->assertProductPackagingLeadProductTableIsEmtpy();
 
         $this->tester->haveProductPackagingUnitType([SpyProductPackagingUnitTypeEntityTransfer::NAME => static::PACKAGING_TYPE_DEFAULT]);
         $this->tester->haveProductPackagingUnitType([SpyProductPackagingUnitTypeEntityTransfer::NAME => static::PACKAGING_TYPE]);
@@ -61,6 +63,7 @@ class ProductPackagingUnitDataImportPluginTest extends Unit
         $this->assertTrue($dataImporterReportTransfer->getIsSuccess());
 
         $this->tester->assertProductPackagingUnitTableHasRecords();
+        $this->tester->assertProductPackagingLeadProductTableHasRecords();
     }
 
     /**

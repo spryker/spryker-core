@@ -26,9 +26,25 @@ class ProductPackagingUnitDataImportHelper extends Module
     /**
      * @return void
      */
+    public function truncateProductPackagingLeadProducts(): void
+    {
+        $this->getProductPackagingLeadProductQuery()
+            ->deleteAll();
+    }
+
+    /**
+     * @return void
+     */
     public function assertProductPackagingUnitTableIsEmtpy(): void
     {
         $this->assertFalse($this->getProductPackagingUnitQuery()->exists(), sprintf(static::ERROR_MESSAGE_FOUND, SpyProductPackagingUnitTableMap::TABLE_NAME));
+    }
+
+    /**
+     * @return void
+     */
+    public function assertProductPackagingLeadProductTableIsEmtpy(): void
+    {
         $this->assertFalse($this->getProductPackagingLeadProductQuery()->exists(), sprintf(static::ERROR_MESSAGE_FOUND, SpyProductPackagingLeadProductTableMap::TABLE_NAME));
     }
 
@@ -38,6 +54,13 @@ class ProductPackagingUnitDataImportHelper extends Module
     public function assertProductPackagingUnitTableHasRecords(): void
     {
         $this->assertTrue($this->getProductPackagingUnitQuery()->exists(), sprintf(static::ERROR_MESSAGE_EXPECTED, SpyProductPackagingUnitTableMap::TABLE_NAME));
+    }
+
+    /**
+     * @return void
+     */
+    public function assertProductPackagingLeadProductTableHasRecords(): void
+    {
         $this->assertTrue($this->getProductPackagingLeadProductQuery()->exists(), sprintf(static::ERROR_MESSAGE_EXPECTED, SpyProductPackagingLeadProductTableMap::TABLE_NAME));
     }
 
