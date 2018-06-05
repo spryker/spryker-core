@@ -29,7 +29,7 @@ class CompanyBusinessUnitEditForm extends CompanyBusinessUnitForm
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return \Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyBusinessUnitEditForm
+     * @return $this
      */
     protected function addPluginForms(FormBuilderInterface $builder): AbstractType
     {
