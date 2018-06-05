@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\Sales\Business;
 
+use ArrayObject;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -252,5 +254,21 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
         return $this->getFactory()
             ->createOrderExpander()
             ->expandSalesOrder($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return null|\ArrayObject
+     */
+    public function expandOrderItem(ItemTransfer $itemTransfer): ?ArrayObject
+    {
+        return $this->getFactory()
+            ->createOrderItemExpander()
+            ->expandOrderItem($itemTransfer);
     }
 }

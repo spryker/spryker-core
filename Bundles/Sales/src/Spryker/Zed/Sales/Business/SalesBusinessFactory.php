@@ -15,6 +15,7 @@ use Spryker\Zed\Sales\Business\Model\Customer\CustomerOrderReader;
 use Spryker\Zed\Sales\Business\Model\Customer\PaginatedCustomerOrderReader;
 use Spryker\Zed\Sales\Business\Model\Order\OrderExpander;
 use Spryker\Zed\Sales\Business\Model\Order\OrderHydrator;
+use Spryker\Zed\Sales\Business\Model\Order\OrderItemExpander;
 use Spryker\Zed\Sales\Business\Model\Order\OrderReader;
 use Spryker\Zed\Sales\Business\Model\Order\OrderReferenceGenerator;
 use Spryker\Zed\Sales\Business\Model\Order\OrderSaver;
@@ -165,7 +166,18 @@ class SalesBusinessFactory extends AbstractBusinessFactory
      */
     public function createOrderExpander()
     {
-        return new OrderExpander($this->getCalculationFacade());
+        return new OrderExpander(
+            $this->getCalculationFacade(),
+            $this->getSalesOrderItemExpanderPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Model\Order\OrderItemExpanderInterface
+     */
+    public function createOrderItemExpander()
+    {
+        return new OrderItemExpander();
     }
 
     /**
@@ -256,5 +268,13 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function createOrderItemMapper()
     {
         return new SalesOrderItemMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\SalesOrderItemExpanderPluginInterface[]
+     */
+    protected function getSalesOrderItemExpanderPlugins()
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::SALES_ORDER_ITEM_EXPANDER_PLUGINS);
     }
 }

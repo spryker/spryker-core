@@ -10,7 +10,6 @@ namespace Spryker\Zed\Sales\Business\Model\Order;
 use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCalculationInterface;
 
@@ -22,11 +21,18 @@ class OrderExpander implements OrderExpanderInterface
     protected $calculationFacade;
 
     /**
-     * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToCalculationInterface $calculationFacade
+     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\SalesOrderItemExpanderPluginInterface[]
      */
-    public function __construct(SalesToCalculationInterface $calculationFacade)
+    protected $salesOrderItemExpanderPlugins;
+
+    /**
+     * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToCalculationInterface $calculationFacade
+     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\SalesOrderItemExpanderPluginInterface[] $salesOrderItemExpanderPlugins
+     */
+    public function __construct(SalesToCalculationInterface $calculationFacade, array $salesOrderItemExpanderPlugins)
     {
         $this->calculationFacade = $calculationFacade;
+        $this->salesOrderItemExpanderPlugins = $salesOrderItemExpanderPlugins;
     }
 
     /**
@@ -57,38 +63,37 @@ class OrderExpander implements OrderExpanderInterface
     {
         $expandedItems = new ArrayObject();
         foreach ($items as $itemTransfer) {
-            $quantity = $itemTransfer->getQuantity();
-            for ($i = 1; $quantity >= $i; $i++) {
-                $expandedItemTransfer = new ItemTransfer();
-                $expandedItemTransfer->fromArray($itemTransfer->toArray(), true);
-                $expandedItemTransfer->setQuantity(1);
-
-                $expandedProductOptions = new ArrayObject();
-                foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
-                    $expandedProductOptions->append($this->copyProductOptionTransfer($productOptionTransfer));
-                }
-
-                $expandedItemTransfer->setProductOptions($expandedProductOptions);
-                $expandedItems->append($expandedItemTransfer);
-            }
+            $expandedItems = $this->expandItemsPerPlugin($expandedItems, $itemTransfer);
         }
 
         return $expandedItems;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOptionTransfer $productOptionTransfer
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $expandedItems
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductOptionTransfer
+     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
      */
-    protected function copyProductOptionTransfer(ProductOptionTransfer $productOptionTransfer)
+    protected function expandItemsPerPlugin(ArrayObject $expandedItems, ItemTransfer $itemTransfer)
     {
-        $expandedProductOptionTransfer = new ProductOptionTransfer();
-        $expandedProductOptionTransfer->fromArray($productOptionTransfer->toArray(), true);
-        $expandedProductOptionTransfer->setQuantity(1);
-        $expandedProductOptionTransfer->setIdProductOptionValue(null);
+        foreach ($this->salesOrderItemExpanderPlugins as $salesOrderItemExpanderPlugin) {
+            $expandedOrderItems = $salesOrderItemExpanderPlugin->expandOrderItem($itemTransfer);
 
-        return $expandedProductOptionTransfer;
+            if ($expandedOrderItems == null) {
+                continue;
+            }
+
+            foreach ($expandedOrderItems as $expandedOrderItem) {
+                $expandedItems->append($expandedOrderItem);
+            }
+
+            return $expandedItems;
+        }
+
+        $expandedItems->append($itemTransfer);
+
+        return $expandedItems;
     }
 
     /**

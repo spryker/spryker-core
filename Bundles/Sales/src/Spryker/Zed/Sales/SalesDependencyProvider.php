@@ -10,6 +10,7 @@ namespace Spryker\Zed\Sales;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Sales\Communication\Plugin\Checkout\SalesOrderItemExpanderPlugin;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCalculationBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerBridge;
@@ -35,6 +36,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     const ORDER_EXPANDER_PRE_SAVE_PLUGINS = 'ORDER_EXPANDER_PRE_SAVE_PLUGINS';
     const HYDRATE_ORDER_PLUGINS = 'HYDRATE_ORDER_PLUGINS';
     const ORDER_ITEM_EXPANDER_PRE_SAVE_PLUGINS = 'ORDER_ITEM_EXPANDER_PRE_SAVE_PLUGINS';
+    const SALES_ORDER_ITEM_EXPANDER_PLUGINS = 'SALES_ORDER_ITEM_EXPANDER_PLUGINS';
     const UI_SALES_TABLE_PLUGINS = 'UI_SALES_TABLE_PLUGINS';
 
     /**
@@ -60,6 +62,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCalculationFacade($container);
         $container = $this->addCustomerFacade($container);
         $container = $this->addOrderItemExpanderPreSavePlugins($container);
+        $container = $this->addSalesOrderItemExpanderPlugins($container);
 
         return $container;
     }
@@ -120,6 +123,20 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::ORDER_ITEM_EXPANDER_PRE_SAVE_PLUGINS] = function (Container $container) {
             return $this->getOrderItemExpanderPreSavePlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSalesOrderItemExpanderPlugins(Container $container)
+    {
+        $container[static::SALES_ORDER_ITEM_EXPANDER_PLUGINS] = function (Container $container) {
+            return $this->getSalesOrderItemExpanderPlugins();
         };
 
         return $container;
@@ -315,6 +332,16 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     protected function getOrderItemExpanderPreSavePlugins()
     {
          return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\SalesOrderItemExpanderPluginInterface[]
+     */
+    protected function getSalesOrderItemExpanderPlugins()
+    {
+        return [
+            new SalesOrderItemExpanderPlugin(),
+        ];
     }
 
     /**

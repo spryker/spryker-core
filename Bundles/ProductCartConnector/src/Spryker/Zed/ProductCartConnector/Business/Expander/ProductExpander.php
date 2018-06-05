@@ -86,6 +86,7 @@ class ProductExpander implements ProductExpanderInterface
             ->setIdProductAbstract($productConcreteTransfer->getFkProductAbstract())
             ->setAbstractSku($productConcreteTransfer->getAbstractSku())
             ->setConcreteAttributes($productConcreteTransfer->getAttributes())
-            ->setName($localizedProductName);
+            ->setName($localizedProductName)
+            ->setIsQuantitySplittable($productConcreteTransfer->getIsQuantitySplittable());
     }
 }
