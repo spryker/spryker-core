@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\PriceProductStorage;
+namespace Spryker\Client\ProductPackagingUnitStorage;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
-use Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToPriceProductBridge;
-use Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToStorageBridge;
-use Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToStoreClientBridge;
-use Spryker\Client\PriceProductStorage\Dependency\Service\PriceProductStorageToSynchronizationServiceBridge;
+use Spryker\Client\ProductPackagingUnitStorage\Dependency\Client\PriceProductStorageToPriceProductBridge;
+use Spryker\Client\ProductPackagingUnitStorage\Dependency\Client\PriceProductStorageToStorageBridge;
+use Spryker\Client\ProductPackagingUnitStorage\Dependency\Client\PriceProductStorageToStoreClientBridge;
+use Spryker\Client\ProductPackagingUnitStorage\Dependency\Service\PriceProductStorageToSynchronizationServiceBridge;
 
 class PriceProductStorageDependencyProvider extends AbstractDependencyProvider
 {

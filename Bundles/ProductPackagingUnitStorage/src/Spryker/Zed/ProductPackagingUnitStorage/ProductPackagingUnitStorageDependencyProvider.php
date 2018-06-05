@@ -15,7 +15,7 @@ use Spryker\Zed\ProductPackagingUnitStorage\Dependency\Facade\PriceProductStorag
 use Spryker\Zed\ProductPackagingUnitStorage\Dependency\QueryContainer\PriceProductStorageToPriceProductQueryContainerBridge;
 use Spryker\Zed\ProductPackagingUnitStorage\Dependency\QueryContainer\PriceProductStorageToProductQueryContainerBridge;
 
-class PriceProductStorageDependencyProvider extends AbstractBundleDependencyProvider
+class ProductPackagingUnitStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
     const QUERY_CONTAINER_PRICE_PRODUCT = 'QUERY_CONTAINER_PRICE_PRODUCT';
     const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';

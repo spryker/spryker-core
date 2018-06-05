@@ -11,10 +11,10 @@ use Generated\Shared\Transfer\PriceProductStorageTransfer;
 use Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyPriceProductConcreteStorage;
 use Spryker\Zed\ProductPackagingUnitStorage\Dependency\Facade\PriceProductStorageToPriceProductFacadeInterface;
 use Spryker\Zed\ProductPackagingUnitStorage\Dependency\Facade\PriceProductStorageToStoreFacadeInterface;
-use Spryker\Zed\ProductPackagingUnitStorage\Persistence\PriceProductStorageQueryContainer;
-use Spryker\Zed\ProductPackagingUnitStorage\Persistence\PriceProductStorageQueryContainerInterface;
+use Spryker\Zed\ProductPackagingUnitStorage\Persistence\ProductPackagingUnitStorageQueryContainer;
+use Spryker\Zed\ProductPackagingUnitStorage\Persistence\ProductPackagingUnitStorageQueryContainerInterface;
 
-class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWriterInterface
+class ProductAbstractPackagingStorageWriter implements ProductAbstractPackagingStorageWriterInterface
 {
     /**
      * @var \Spryker\Zed\ProductPackagingUnitStorage\Dependency\Facade\PriceProductStorageToPriceProductFacadeInterface
@@ -27,7 +27,7 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
     protected $storeFacade;
 
     /**
-     * @var \Spryker\Zed\ProductPackagingUnitStorage\Persistence\PriceProductStorageQueryContainerInterface
+     * @var \Spryker\Zed\ProductPackagingUnitStorage\Persistence\ProductPackagingUnitStorageQueryContainerInterface
      */
     protected $queryContainer;
 
@@ -44,13 +44,13 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
     /**
      * @param \Spryker\Zed\ProductPackagingUnitStorage\Dependency\Facade\PriceProductStorageToPriceProductFacadeInterface $priceProductFacade
      * @param \Spryker\Zed\ProductPackagingUnitStorage\Dependency\Facade\PriceProductStorageToStoreFacadeInterface $storeFacade
-     * @param \Spryker\Zed\ProductPackagingUnitStorage\Persistence\PriceProductStorageQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\ProductPackagingUnitStorage\Persistence\ProductPackagingUnitStorageQueryContainerInterface $queryContainer
      * @param bool $isSendingToQueue
      */
     public function __construct(
         PriceProductStorageToPriceProductFacadeInterface $priceProductFacade,
         PriceProductStorageToStoreFacadeInterface $storeFacade,
-        PriceProductStorageQueryContainerInterface $queryContainer,
+        ProductPackagingUnitStorageQueryContainerInterface $queryContainer,
         $isSendingToQueue
     ) {
         $this->priceProductFacade = $priceProductFacade;
@@ -243,7 +243,7 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
         return $this->queryContainer
             ->queryProductAbstractIdsByProductConcreteIds($productConcreteIds)
             ->find()
-            ->toKeyValue(PriceProductStorageQueryContainer::ID_PRODUCT_CONCRETE, PriceProductStorageQueryContainer::ID_PRODUCT_ABSTRACT);
+            ->toKeyValue(ProductPackagingUnitStorageQueryContainer::ID_PRODUCT_CONCRETE, ProductPackagingUnitStorageQueryContainer::ID_PRODUCT_ABSTRACT);
     }
 
     /**

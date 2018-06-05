@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\PriceProductStorage\Dependency\Client;
+namespace Spryker\Client\ProductPackagingUnitStorage\Dependency\Client;
 
 class PriceProductStorageToStorageBridge implements PriceProductStorageToStorageInterface
 {

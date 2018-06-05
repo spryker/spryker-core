@@ -9,7 +9,7 @@ namespace Spryker\Client\ProductPackagingUnitStorage\Storage;
 
 use Generated\Shared\Transfer\PriceProductStorageTransfer;
 use Spryker\Client\ProductPackagingUnitStorage\Dependency\Client\PriceProductStorageToStorageInterface;
-use Spryker\Shared\ProductPackagingUnitStorage\PriceProductStorageConstants;
+use Spryker\Shared\ProductPackagingUnitStorage\ProductPackagingUnitStorageConstants;
 
 class PriceConcreteStorageReader implements PriceConcreteStorageReaderInterface
 {
@@ -40,7 +40,7 @@ class PriceConcreteStorageReader implements PriceConcreteStorageReaderInterface
      */
     public function findPriceConcreteStorageTransfer($idProductConcrete)
     {
-        $key = $this->priceStorageKeyGenerator->generateKey(PriceProductStorageConstants::PRICE_CONCRETE_RESOURCE_NAME, $idProductConcrete);
+        $key = $this->priceStorageKeyGenerator->generateKey(ProductPackagingUnitStorageConstants::PRICE_CONCRETE_RESOURCE_NAME, $idProductConcrete);
 
         return $this->findPriceProductStorageTransfer($key);
     }

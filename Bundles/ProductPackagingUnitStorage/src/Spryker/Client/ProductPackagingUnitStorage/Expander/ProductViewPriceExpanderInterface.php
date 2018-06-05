@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\PriceProductStorage\Expander;
+namespace Spryker\Client\ProductPackagingUnitStorage\Expander;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
 

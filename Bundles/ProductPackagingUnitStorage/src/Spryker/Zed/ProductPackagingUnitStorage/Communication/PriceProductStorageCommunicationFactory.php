@@ -8,11 +8,11 @@
 namespace Spryker\Zed\ProductPackagingUnitStorage\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\ProductPackagingUnitStorage\PriceProductStorageDependencyProvider;
+use Spryker\Zed\ProductPackagingUnitStorage\ProductPackagingUnitStorageDependencyProvider;
 
 /**
- * @method \Spryker\Zed\ProductPackagingUnitStorage\Persistence\PriceProductStorageQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\ProductPackagingUnitStorage\PriceProductStorageConfig getConfig()
+ * @method \Spryker\Zed\ProductPackagingUnitStorage\Persistence\ProductPackagingUnitStorageQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductPackagingUnitStorage\ProductPackagingUnitStorageConfig getConfig()
  */
 class PriceProductStorageCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -21,6 +21,6 @@ class PriceProductStorageCommunicationFactory extends AbstractCommunicationFacto
      */
     public function getEventBehaviorFacade()
     {
-        return $this->getProvidedDependency(PriceProductStorageDependencyProvider::FACADE_EVENT_BEHAVIOR);
+        return $this->getProvidedDependency(ProductPackagingUnitStorageDependencyProvider::FACADE_EVENT_BEHAVIOR);
     }
 }

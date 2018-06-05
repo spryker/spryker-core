@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PriceProductStorage\Persistence;
+namespace Spryker\Zed\ProductPackagingUnitStorage\Persistence;
 
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
-interface PriceProductStorageQueryContainerInterface extends QueryContainerInterface
+interface ProductPackagingUnitStorageQueryContainerInterface extends QueryContainerInterface
 {
     /**
      * @api
@@ -25,7 +25,7 @@ interface PriceProductStorageQueryContainerInterface extends QueryContainerInter
      *
      * @param array $productAbstractIds
      *
-     * @return \Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductAbstractStorageQuery
+     * @return \Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyPriceProductAbstractStorageQuery
      */
     public function queryPriceAbstractStorageByPriceAbstractIds(array $productAbstractIds);
 
@@ -43,7 +43,7 @@ interface PriceProductStorageQueryContainerInterface extends QueryContainerInter
      *
      * @param array $priceTypeIds
      *
-     * @return \Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductAbstractStorageQuery
+     * @return \Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyPriceProductAbstractStorageQuery
      */
     public function queryAllProductIdsByPriceTypeIds(array $priceTypeIds);
 
@@ -79,7 +79,7 @@ interface PriceProductStorageQueryContainerInterface extends QueryContainerInter
      *
      * @param array $productConcreteIds
      *
-     * @return \Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductConcreteStorageQuery
+     * @return \Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyPriceProductConcreteStorageQuery
      */
     public function queryPriceConcreteStorageByProductIds(array $productConcreteIds);
 }

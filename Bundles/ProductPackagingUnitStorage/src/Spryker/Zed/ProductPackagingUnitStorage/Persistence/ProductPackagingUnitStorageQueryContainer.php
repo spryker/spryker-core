@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PriceProductStorage\Persistence;
+namespace Spryker\Zed\ProductPackagingUnitStorage\Persistence;
 
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
@@ -14,9 +14,9 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
- * @method \Spryker\Zed\PriceProductStorage\Persistence\PriceProductStoragePersistenceFactory getFactory()
+ * @method \Spryker\Zed\ProductPackagingUnitStorage\Persistence\ProductPackagingUnitStoragePersistenceFactory getFactory()
  */
-class PriceProductStorageQueryContainer extends AbstractQueryContainer implements PriceProductStorageQueryContainerInterface
+class ProductPackagingUnitStorageQueryContainer extends AbstractQueryContainer implements ProductPackagingUnitStorageQueryContainerInterface
 {
     const ID_PRODUCT_ABSTRACT = 'idProductAbstract';
     const ID_PRODUCT_CONCRETE = 'idProductConcrete';
@@ -48,7 +48,7 @@ class PriceProductStorageQueryContainer extends AbstractQueryContainer implement
      *
      * @param array $productAbstractIds
      *
-     * @return \Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductAbstractStorageQuery
+     * @return \Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyPriceProductAbstractStorageQuery
      */
     public function queryPriceAbstractStorageByPriceAbstractIds(array $productAbstractIds)
     {
@@ -62,7 +62,7 @@ class PriceProductStorageQueryContainer extends AbstractQueryContainer implement
      *
      * @param array $priceTypeIds
      *
-     * @return \Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductAbstractStorageQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyPriceProductAbstractStorageQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function queryAllProductAbstractIdsByPriceTypeIds(array $priceTypeIds)
     {
@@ -79,7 +79,7 @@ class PriceProductStorageQueryContainer extends AbstractQueryContainer implement
      *
      * @param array $priceTypeIds
      *
-     * @return \Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductAbstractStorageQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyPriceProductAbstractStorageQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function queryAllProductIdsByPriceTypeIds(array $priceTypeIds)
     {
@@ -151,7 +151,7 @@ class PriceProductStorageQueryContainer extends AbstractQueryContainer implement
      *
      * @param array $productConcreteIds
      *
-     * @return \Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductConcreteStorageQuery
+     * @return \Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyPriceProductConcreteStorageQuery
      */
     public function queryPriceConcreteStorageByProductIds(array $productConcreteIds)
     {

@@ -22,7 +22,7 @@ use Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Event\Listener\
 
 /**
  * @method \Spryker\Zed\ProductPackagingUnitStorage\Communication\PriceProductStorageCommunicationFactory getFactory()
- * @method \Spryker\Zed\ProductPackagingUnitStorage\Business\PriceProductStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductPackagingUnitStorage\Business\ProductPackagingUnitStorageFacadeInterface getFacade()
  */
 class PriceProductStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {

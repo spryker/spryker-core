@@ -13,9 +13,9 @@ use Spryker\Zed\PriceProduct\Dependency\PriceProductEvents;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
- * @method \Spryker\Zed\ProductPackagingUnitStorage\Persistence\PriceProductStorageQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductPackagingUnitStorage\Persistence\ProductPackagingUnitStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductPackagingUnitStorage\Communication\PriceProductStorageCommunicationFactory getFactory()
- * @method \Spryker\Zed\ProductPackagingUnitStorage\Business\PriceProductStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductPackagingUnitStorage\Business\ProductPackagingUnitStorageFacadeInterface getFacade()
  */
 class PriceProductConcretePublishStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
@@ -42,6 +42,6 @@ class PriceProductConcretePublishStorageListener extends AbstractPlugin implemen
 
             return;
         }
-        $this->getFacade()->publishPriceProductConcrete($concreteIds);
+        $this->getFacade()->publishProductAbstractPackaging($concreteIds);
     }
 }

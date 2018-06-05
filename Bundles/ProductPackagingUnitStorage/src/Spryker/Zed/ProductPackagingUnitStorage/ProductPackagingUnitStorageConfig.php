@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductPackagingUnitStorage;
 
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
-class PriceProductStorageConfig extends AbstractBundleConfig
+class ProductPackagingUnitStorageConfig extends AbstractBundleConfig
 {
     /**
      * @return bool

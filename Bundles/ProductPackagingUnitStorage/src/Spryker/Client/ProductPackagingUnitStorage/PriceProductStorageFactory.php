@@ -5,18 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\PriceProductStorage;
+namespace Spryker\Client\ProductPackagingUnitStorage;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\PriceProductStorage\Expander\ProductViewPriceExpander;
-use Spryker\Client\PriceProductStorage\Storage\PriceAbstractStorageReader;
-use Spryker\Client\PriceProductStorage\Storage\PriceConcreteStorageReader;
-use Spryker\Client\PriceProductStorage\Storage\PriceProductStorageKeyGenerator;
+use Spryker\Client\ProductPackagingUnitStorage\Expander\ProductViewPriceExpander;
+use Spryker\Client\ProductPackagingUnitStorage\Storage\PriceAbstractStorageReader;
+use Spryker\Client\ProductPackagingUnitStorage\Storage\PriceConcreteStorageReader;
+use Spryker\Client\ProductPackagingUnitStorage\Storage\PriceProductStorageKeyGenerator;
 
 class PriceProductStorageFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Client\PriceProductStorage\Expander\ProductViewPriceExpanderInterface
+     * @return \Spryker\Client\ProductPackagingUnitStorage\Expander\ProductViewPriceExpanderInterface
      */
     public function createProductViewPriceExpander()
     {
@@ -24,7 +24,7 @@ class PriceProductStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\PriceProductStorage\Storage\PriceAbstractStorageReaderInterface
+     * @return \Spryker\Client\ProductPackagingUnitStorage\Storage\PriceAbstractStorageReaderInterface
      */
     protected function createPriceAbstractStorageReader()
     {
@@ -32,7 +32,7 @@ class PriceProductStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\PriceProductStorage\Storage\PriceConcreteStorageReaderInterface
+     * @return \Spryker\Client\ProductPackagingUnitStorage\Storage\PriceConcreteStorageReaderInterface
      */
     protected function createPriceConcreteStorageReader()
     {
@@ -40,7 +40,7 @@ class PriceProductStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToStorageInterface
+     * @return \Spryker\Client\ProductPackagingUnitStorage\Dependency\Client\PriceProductStorageToStorageInterface
      */
     protected function getStorage()
     {
@@ -48,7 +48,7 @@ class PriceProductStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToPriceProductInterface
+     * @return \Spryker\Client\ProductPackagingUnitStorage\Dependency\Client\PriceProductStorageToPriceProductInterface
      */
     protected function getPriceProductClient()
     {
@@ -56,7 +56,7 @@ class PriceProductStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToStoreClientInterface
+     * @return \Spryker\Client\ProductPackagingUnitStorage\Dependency\Client\PriceProductStorageToStoreClientInterface
      */
     protected function getStoreClient()
     {
@@ -64,7 +64,7 @@ class PriceProductStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\PriceProductStorage\Storage\PriceProductStorageKeyGeneratorInterface
+     * @return \Spryker\Client\ProductPackagingUnitStorage\Storage\PriceProductStorageKeyGeneratorInterface
      */
     protected function createPriceProductStorageKeyGenerator()
     {
@@ -72,7 +72,7 @@ class PriceProductStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\PriceProductStorage\Dependency\Service\PriceProductStorageToSynchronizationServiceBridge
+     * @return \Spryker\Client\ProductPackagingUnitStorage\Dependency\Service\PriceProductStorageToSynchronizationServiceBridge
      */
     protected function getSynchronizationService()
     {

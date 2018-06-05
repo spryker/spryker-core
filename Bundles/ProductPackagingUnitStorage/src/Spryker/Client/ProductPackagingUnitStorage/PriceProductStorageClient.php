@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\PriceProductStorage;
+namespace Spryker\Client\ProductPackagingUnitStorage;
 
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
- * @method \Spryker\Client\PriceProductStorage\PriceProductStorageFactory getFactory()
+ * @method \Spryker\Client\ProductPackagingUnitStorage\PriceProductStorageFactory getFactory()
  */
 class PriceProductStorageClient extends AbstractClient implements PriceProductStorageClientInterface
 {

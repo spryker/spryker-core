@@ -14,9 +14,9 @@ use Spryker\Zed\PriceProduct\Dependency\PriceProductEvents;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
- * @method \Spryker\Zed\PriceProductStorage\Persistence\PriceProductStorageQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\PriceProductStorage\Communication\PriceProductStorageCommunicationFactory getFactory()
- * @method \Spryker\Zed\PriceProductStorage\Business\PriceProductStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductPackagingUnitStorage\Persistence\ProductPackagingUnitStorageQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductPackagingUnitStorage\Communication\PriceProductStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductPackagingUnitStorage\Business\PriceProductStorageFacadeInterface getFacade()
  */
 class PriceProductAbstractStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {

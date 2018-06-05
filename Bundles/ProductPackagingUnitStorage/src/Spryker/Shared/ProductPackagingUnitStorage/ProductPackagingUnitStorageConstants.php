@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\PriceProductStorage;
+namespace Spryker\Shared\ProductPackagingUnitStorage;
 
-class PriceProductStorageConstants
+class ProductPackagingUnitStorageConstants
 {
     /**
      * Specification:

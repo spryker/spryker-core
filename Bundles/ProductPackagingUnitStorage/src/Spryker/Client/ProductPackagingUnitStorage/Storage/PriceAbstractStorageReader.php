@@ -9,7 +9,7 @@ namespace Spryker\Client\ProductPackagingUnitStorage\Storage;
 
 use Generated\Shared\Transfer\PriceProductStorageTransfer;
 use Spryker\Client\ProductPackagingUnitStorage\Dependency\Client\PriceProductStorageToStorageInterface;
-use Spryker\Shared\ProductPackagingUnitStorage\PriceProductStorageConstants;
+use Spryker\Shared\ProductPackagingUnitStorage\ProductPackagingUnitStorageConstants;
 
 class PriceAbstractStorageReader implements PriceAbstractStorageReaderInterface
 {
@@ -40,7 +40,7 @@ class PriceAbstractStorageReader implements PriceAbstractStorageReaderInterface
      */
     public function findPriceAbstractStorageTransfer($idProductAbstract)
     {
-        $key = $this->priceStorageKeyGenerator->generateKey(PriceProductStorageConstants::PRICE_ABSTRACT_RESOURCE_NAME, $idProductAbstract);
+        $key = $this->priceStorageKeyGenerator->generateKey(ProductPackagingUnitStorageConstants::PRICE_ABSTRACT_RESOURCE_NAME, $idProductAbstract);
 
         return $this->findPriceProductStorageTransfer($key);
     }

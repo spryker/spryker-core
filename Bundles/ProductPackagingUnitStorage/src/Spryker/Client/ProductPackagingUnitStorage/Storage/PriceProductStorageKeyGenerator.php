@@ -5,27 +5,27 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\PriceProductStorage\Storage;
+namespace Spryker\Client\ProductPackagingUnitStorage\Storage;
 
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
-use Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToStoreClientInterface;
-use Spryker\Client\PriceProductStorage\Dependency\Service\PriceProductStorageToSynchronizationServiceInterface;
+use Spryker\Client\ProductPackagingUnitStorage\Dependency\Client\PriceProductStorageToStoreClientInterface;
+use Spryker\Client\ProductPackagingUnitStorage\Dependency\Service\PriceProductStorageToSynchronizationServiceInterface;
 
 class PriceProductStorageKeyGenerator implements PriceProductStorageKeyGeneratorInterface
 {
     /**
-     * @var \Spryker\Client\PriceProductStorage\Dependency\Service\PriceProductStorageToSynchronizationServiceInterface
+     * @var \Spryker\Client\ProductPackagingUnitStorage\Dependency\Service\PriceProductStorageToSynchronizationServiceInterface
      */
     protected $synchronizationService;
 
     /**
-     * @var \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToStoreClientInterface
+     * @var \Spryker\Client\ProductPackagingUnitStorage\Dependency\Client\PriceProductStorageToStoreClientInterface
      */
     protected $storeClient;
 
     /**
-     * @param \Spryker\Client\PriceProductStorage\Dependency\Service\PriceProductStorageToSynchronizationServiceInterface $synchronizationService
-     * @param \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToStoreClientInterface $storeClient
+     * @param \Spryker\Client\ProductPackagingUnitStorage\Dependency\Service\PriceProductStorageToSynchronizationServiceInterface $synchronizationService
+     * @param \Spryker\Client\ProductPackagingUnitStorage\Dependency\Client\PriceProductStorageToStoreClientInterface $storeClient
      */
     public function __construct(
         PriceProductStorageToSynchronizationServiceInterface $synchronizationService,

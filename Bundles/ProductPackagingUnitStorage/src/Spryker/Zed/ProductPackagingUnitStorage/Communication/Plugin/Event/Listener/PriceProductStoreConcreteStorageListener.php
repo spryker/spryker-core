@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PriceProductStorage\Communication\Plugin\Event\Listener;
+namespace Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Event\Listener;
 
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductStoreTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
@@ -13,9 +13,9 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
- * @method \Spryker\Zed\PriceProductStorage\Persistence\PriceProductStorageQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\PriceProductStorage\Communication\PriceProductStorageCommunicationFactory getFactory()
- * @method \Spryker\Zed\PriceProductStorage\Business\PriceProductStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductPackagingUnitStorage\Persistence\ProductPackagingUnitStorageQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductPackagingUnitStorage\Communication\PriceProductStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductPackagingUnitStorage\Business\PriceProductStorageFacadeInterface getFacade()
  */
 class PriceProductStoreConcreteStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
