@@ -15,7 +15,7 @@ class CompanyBusinessUnitAssigner implements CompanyBusinessUnitAssignerInterfac
     /**
      * @var \Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitRepositoryInterface
      */
-    public $repository;
+    protected $repository;
 
     /**
      * @param \Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitRepositoryInterface $repository
