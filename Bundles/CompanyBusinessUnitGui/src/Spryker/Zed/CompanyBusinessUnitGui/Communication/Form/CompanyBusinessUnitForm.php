@@ -26,12 +26,12 @@ class CompanyBusinessUnitForm extends AbstractType
     public const OPTION_PARENT_CHOICES_VALUES = 'parent_choices_values';
     public const OPTION_PARENT_CHOICES_ATTRIBUTES = 'parent_choices_attributes';
 
-    protected const FIELD_ID_COMPANY_BUSINESS_UNIT = 'id_company_business_unit';
-    protected const FIELD_FK_COMPANY = 'fk_company';
-    protected const FIELD_FK_PARENT_COMPANY_BUSINESS_UNIT = 'fk_parent_company_business_unit';
-    protected const FIELD_NAME = 'name';
-    protected const FIELD_IBAN = 'iban';
-    protected const FIELD_BIC = 'bic';
+    public const FIELD_ID_COMPANY_BUSINESS_UNIT = 'id_company_business_unit';
+    public const FIELD_FK_COMPANY = 'fk_company';
+    public const FIELD_FK_PARENT_COMPANY_BUSINESS_UNIT = 'fk_parent_company_business_unit';
+    public const FIELD_NAME = 'name';
+    public const FIELD_IBAN = 'iban';
+    public const FIELD_BIC = 'bic';
 
     /**
      * @return string
