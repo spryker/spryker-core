@@ -27,8 +27,8 @@ class DeleteCompanyBusinessUnitController extends AbstractController
      */
     protected const URL_BUSINESS_UNIT_LIST = '/company-business-unit-gui/list-company-business-unit';
 
-    protected const MESSAGE_COMPANY_BUSINESS_UNIT_DELETE_SUCCESS = 'Company Business Unit "%s" was deleted.';
-    protected const MESSAGE_COMPANY_BUSINESS_UNIT_DELETE_ERROR = 'You can not delete a business unit while it contains users';
+    protected const MESSAGE_COMPANY_BUSINESS_UNIT_DELETE_SUCCESS = 'Company Business Unit "%d" was deleted.';
+    protected const MESSAGE_COMPANY_BUSINESS_UNIT_DELETE_ERROR = 'You can not delete a business unit "%d" while it contains users';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -46,20 +46,15 @@ class DeleteCompanyBusinessUnitController extends AbstractController
         $companyBusinessUnitTransfer = new CompanyBusinessUnitTransfer();
         $companyBusinessUnitTransfer->setIdCompanyBusinessUnit($idCompanyBusinessUnit);
 
-        $companyBusinessUnit = $this
-            ->getFactory()
-            ->getCompanyBusinessUnitFacade()
-            ->getCompanyBusinessUnitById($companyBusinessUnitTransfer);
-
         $companyBusinessUnitResponseTransfer = $this
             ->getFactory()
             ->getCompanyBusinessUnitFacade()
-            ->delete($companyBusinessUnit);
+            ->delete($companyBusinessUnitTransfer);
 
         if ($companyBusinessUnitResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(sprintf(
                 static::MESSAGE_COMPANY_BUSINESS_UNIT_DELETE_SUCCESS,
-                $companyBusinessUnit->getName()
+                $idCompanyBusinessUnit
             ));
 
             return $this->redirectResponse($redirectUrl);
@@ -67,7 +62,7 @@ class DeleteCompanyBusinessUnitController extends AbstractController
 
         $this->addErrorMessage(sprintf(
             static::MESSAGE_COMPANY_BUSINESS_UNIT_DELETE_ERROR,
-            $companyBusinessUnit->getName()
+            $idCompanyBusinessUnit
         ));
 
         return $this->redirectResponse($redirectUrl);
