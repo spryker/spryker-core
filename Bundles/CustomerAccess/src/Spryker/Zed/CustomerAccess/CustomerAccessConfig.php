@@ -31,7 +31,7 @@ class CustomerAccessConfig extends AbstractBundleConfig
      *
      * @return bool
      */
-    public function getDefaultContentTypeAccess(): bool
+    public function getContentTypeAccessForInstaller(): bool
     {
         return false;
     }

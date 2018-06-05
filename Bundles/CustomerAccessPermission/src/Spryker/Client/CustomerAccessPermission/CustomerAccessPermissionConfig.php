@@ -43,4 +43,14 @@ class CustomerAccessPermissionConfig extends AbstractBundleConfig
 
         return static::CONTENT_TYPE_PERMISSION_PLUGIN[$contentType];
     }
+
+    /**
+     * @param string $contentType
+     *
+     * @return bool
+     */
+    public function hasPluginToSeeContentType(string $contentType): bool
+    {
+        return array_key_exists($contentType, static::CONTENT_TYPE_PERMISSION_PLUGIN);
+    }
 }

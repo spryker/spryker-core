@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\CustomerAccessPermission\Dependency\Client;
 
+use Generated\Shared\Transfer\CustomerAccessTransfer;
+
 class CustomerAccessPermissionPermissionToCustomerAccessStorageClientBridge implements CustomerAccessPermissionToCustomerAccessStorageClientInterface
 {
     /**
@@ -25,7 +27,7 @@ class CustomerAccessPermissionPermissionToCustomerAccessStorageClientBridge impl
     /**
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
-    public function getUnauthenticatedCustomerAccess()
+    public function getUnauthenticatedCustomerAccess(): CustomerAccessTransfer
     {
         return $this->customerAccessStorageClient->getUnauthenticatedCustomerAccess();
     }
@@ -33,7 +35,7 @@ class CustomerAccessPermissionPermissionToCustomerAccessStorageClientBridge impl
     /**
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
-    public function getAuthenticatedCustomerAccess()
+    public function getAuthenticatedCustomerAccess(): CustomerAccessTransfer
     {
         return $this->customerAccessStorageClient->getAuthenticatedCustomerAccess();
     }

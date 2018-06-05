@@ -63,12 +63,14 @@ class CustomerAccess implements CustomerAccessInterface
         $permissionCollectionTransfer = new PermissionCollectionTransfer();
 
         foreach ($customerAccessTransfer->getContentTypeAccess() as $contentTypeAccess) {
-            $permission = new PermissionTransfer();
-            $permission->setKey(
-                $this->customerAccessConfig->getPluginNameToSeeContentType($contentTypeAccess->getContentType())
-            );
+            if ($this->customerAccessConfig->hasPluginToSeeContentType($contentTypeAccess->getContentType())) {
+                $permission = new PermissionTransfer();
+                $permission->setKey(
+                    $this->customerAccessConfig->getPluginNameToSeeContentType($contentTypeAccess->getContentType())
+                );
 
-            $permissionCollectionTransfer->addPermission($permission);
+                $permissionCollectionTransfer->addPermission($permission);
+            }
         }
 
         return $permissionCollectionTransfer;

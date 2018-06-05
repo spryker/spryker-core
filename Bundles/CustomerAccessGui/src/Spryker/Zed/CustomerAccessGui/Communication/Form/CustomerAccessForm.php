@@ -63,7 +63,7 @@ class CustomerAccessForm extends AbstractType
         ]);
 
         $builder
-            ->get(self::FIELD_CONTENT_TYPE_ACCESS)
+            ->get(static::FIELD_CONTENT_TYPE_ACCESS)
             ->addModelTransformer(new CallbackTransformer(function ($customerAccess) {
                 if ($customerAccess) {
                     return (array)$customerAccess;
