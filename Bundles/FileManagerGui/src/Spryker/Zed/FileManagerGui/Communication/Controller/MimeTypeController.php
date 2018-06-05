@@ -44,7 +44,7 @@ class MimeTypeController extends AbstractController
         if ($form->isSubmitted()) {
             $formData = $form->getData();
 
-            if ($formData !== null) {
+            if ($formData[MimeTypeSettingsForm::FIELD_MIME_TYPES] !== null) {
                 $this->getFactory()
                     ->getFileManagerFacade()
                     ->updateMimeTypeSettings(
