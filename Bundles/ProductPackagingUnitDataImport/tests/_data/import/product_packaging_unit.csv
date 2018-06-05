@@ -1,3 +1,3 @@
 concrete_sku,is_lead_product,has_lead_product,packaging_unit_type_name,default_amount,is_variable,amount_min,amount_max,amount_interval
-test_concrete_sku_1,1,0,item,5,1,3,5,2
-test_concrete_sku_2,0,1,box,5,1,3,5,2
+concrete_sku_example_1,1,0,item,5,1,3,5,2
+concrete_sku_example_2,0,1,box,5,1,3,5,2

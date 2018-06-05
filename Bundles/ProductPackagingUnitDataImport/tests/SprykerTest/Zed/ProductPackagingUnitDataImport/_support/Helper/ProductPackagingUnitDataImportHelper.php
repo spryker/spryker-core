@@ -65,6 +65,20 @@ class ProductPackagingUnitDataImportHelper extends Module
     }
 
     /**
+     * @param int $productAbstractId
+     *
+     * @return void
+     */
+    public function cleanupProductPackagingLeadProduct(int $productAbstractId): void
+    {
+        $this->debug(sprintf('Deleting product packaging unit lead product for AbstractProduct: %s', $productAbstractId));
+
+        $this->getProductPackagingLeadProductQuery()
+            ->findByFkProductAbstract($productAbstractId)
+            ->delete();
+    }
+
+    /**
      * @return \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitQuery
      */
     protected function getProductPackagingUnitQuery(): SpyProductPackagingUnitQuery
