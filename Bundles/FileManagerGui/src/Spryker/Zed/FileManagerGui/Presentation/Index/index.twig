@@ -1,9 +1,5 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% block action %}
-    {{ createActionButton('/file-manager-gui/add-file', 'Add file' | trans) }}
-{% endblock %}
-
 {% block content %}
 
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Files list' } %}
