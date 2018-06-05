@@ -1,11 +1,19 @@
 <?php
+
 namespace SprykerTest\Zed\ProductPackagingUnitDataImport\Helper;
 
 use Codeception\Module;
+use Orm\Zed\ProductPackagingUnit\Persistence\Map\SpyProductPackagingLeadProductTableMap;
+use Orm\Zed\ProductPackagingUnit\Persistence\Map\SpyProductPackagingUnitTableMap;
+use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingLeadProductQuery;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitQuery;
 
 class ProductPackagingUnitDataImportHelper extends Module
 {
+    protected const ERROR_MESSAGE_FOUND = 'Found at least one entry in the database table but database table `%s` was expected to be empty.';
+
+    protected const ERROR_MESSAGE_EXPECTED = 'Expected at least one entry in the database table `%s` but database` table is empty.';
+
     /**
      * @return void
      */
@@ -20,8 +28,8 @@ class ProductPackagingUnitDataImportHelper extends Module
      */
     public function assertProductPackagingUnitTableIsEmtpy(): void
     {
-        $query = $this->getProductPackagingUnitQuery();
-        $this->assertFalse($query->exists(), 'Found at least one entry in the database table but database table `product_packaging_unit` was expected to be empty.');
+        $this->assertFalse($this->getProductPackagingUnitQuery()->exists(), sprintf(static::ERROR_MESSAGE_FOUND, SpyProductPackagingUnitTableMap::TABLE_NAME));
+        $this->assertFalse($this->getProductPackagingLeadProductQuery()->exists(), sprintf(static::ERROR_MESSAGE_FOUND, SpyProductPackagingLeadProductTableMap::TABLE_NAME));
     }
 
     /**
@@ -29,8 +37,8 @@ class ProductPackagingUnitDataImportHelper extends Module
      */
     public function assertProductPackagingUnitTableHasRecords(): void
     {
-        $query = $this->getProductPackagingUnitQuery();
-        $this->assertTrue($query->exists(), 'Expected at least one entry in the database table `product_packaging_unit` but database` table is empty.');
+        $this->assertTrue($this->getProductPackagingUnitQuery()->exists(), sprintf(static::ERROR_MESSAGE_EXPECTED, SpyProductPackagingUnitTableMap::TABLE_NAME));
+        $this->assertTrue($this->getProductPackagingLeadProductQuery()->exists(), sprintf(static::ERROR_MESSAGE_EXPECTED, SpyProductPackagingLeadProductTableMap::TABLE_NAME));
     }
 
     /**
@@ -39,5 +47,13 @@ class ProductPackagingUnitDataImportHelper extends Module
     protected function getProductPackagingUnitQuery(): SpyProductPackagingUnitQuery
     {
         return SpyProductPackagingUnitQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingLeadProductQuery
+     */
+    protected function getProductPackagingLeadProductQuery(): SpyProductPackagingLeadProductQuery
+    {
+        return SpyProductPackagingLeadProductQuery::create();
     }
 }

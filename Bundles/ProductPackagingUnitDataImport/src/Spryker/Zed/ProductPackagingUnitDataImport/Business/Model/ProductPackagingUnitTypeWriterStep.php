@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductPackagingUnitDataImport\Business\Model;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitTypeQuery;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\ProductPackagingUnitDataImport\Business\Model\DataSet\ProductPackagingUnitTypeDataSet;
+use Spryker\Zed\ProductPackagingUnitDataImport\Business\Model\DataSet\ProductPackagingUnitTypeDataSetInterface;
 
 class ProductPackagingUnitTypeWriterStep implements DataImportStepInterface
 {
@@ -22,7 +22,7 @@ class ProductPackagingUnitTypeWriterStep implements DataImportStepInterface
     public function execute(DataSetInterface $dataSet): void
     {
         $productPackagingUnitTypeEntity = $this->getProductPackagingUnitTypeQuery()
-            ->filterByName($dataSet[ProductPackagingUnitTypeDataSet::NAME])
+            ->filterByName($dataSet[ProductPackagingUnitTypeDataSetInterface::NAME])
             ->findOneOrCreate();
 
         if ($productPackagingUnitTypeEntity->isNew()) {

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductPackagingUnitDataImport\Business\Model\DataSet;
 
-interface ProductPackagingUnitDataSet
+interface ProductPackagingUnitDataSetInterface
 {
     public const CONCRETE_SKU = 'concrete_sku';
     public const IS_LEAD_PRODUCT = 'is_lead_product';

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductPackagingUnitDataImport\Business\Model\DataSet;
 
-interface ProductPackagingUnitTypeDataSet
+interface ProductPackagingUnitTypeDataSetInterface
 {
     public const NAME = 'name';
 }

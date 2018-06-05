@@ -36,7 +36,7 @@
 
         <id-method-parameter value="spy_product_packaging_unit_type_pk_seq"/>
 
-        <unique name="spy_product_packaging_unit_type-name">
+        <unique name="spy_product_packaging_unit_type-unique-name">
             <unique-column name="name"/>
         </unique>
     </table>
@@ -56,16 +56,16 @@
             <reference local="fk_product_packaging_unit" foreign="id_product_packaging_unit"/>
         </foreign-key>
 
-        <index name="spy_product_packaging_unit_amount-fk_product_packaging_unit">
-            <index-column name="fk_product_packaging_unit"/>
-        </index>
+        <unique name="spy_product_packaging_unit_amount-unique-fk_product_packaging_unit">
+            <unique-column name="fk_product_packaging_unit"/>
+        </unique>
 
         <id-method-parameter value="spy_product_packaging_unit_amount_pk_seq"/>
     </table>
 
 
-    <table name="spy_product_packaging_lead_product" isCrossRef="true">
-        <column name="id_product_packaging_lead_product" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
+    <table name="spy_product_packaging_lead_product" phpName="SpyProductPackagingLeadProduct">
+        <column name="id_product_packaging_lead_product" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_product_abstract" required="true" type="INTEGER"/>
         <column name="fk_product" required="true" type="INTEGER"/>
 

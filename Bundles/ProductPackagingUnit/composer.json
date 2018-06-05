@@ -13,7 +13,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/installer": "If you want to use Installer plugins."
+    "spryker/installer": "If you want to use Installer plugins: ^4.0.0."
   },
   "autoload": {
     "psr-4": {

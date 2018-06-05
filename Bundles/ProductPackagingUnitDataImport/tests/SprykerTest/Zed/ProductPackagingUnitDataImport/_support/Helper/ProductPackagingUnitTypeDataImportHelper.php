@@ -3,12 +3,17 @@ namespace SprykerTest\Zed\ProductPackagingUnitDataImport\Helper;
 
 use Codeception\Module;
 use Generated\Shared\Transfer\SpyProductPackagingUnitTypeEntityTransfer;
+use Orm\Zed\ProductPackagingUnit\Persistence\Map\SpyProductPackagingUnitTypeTableMap;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitTypeQuery;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 
 class ProductPackagingUnitTypeDataImportHelper extends Module
 {
     use DataCleanupHelperTrait;
+
+    protected const ERROR_MESSAGE_FOUND = 'Found at least one entry in the database table but database table `%s` was expected to be empty.';
+
+    protected const ERROR_MESSAGE_EXPECTED = 'Expected at least one entry in the database table `%s` but database` table is empty.';
 
     /**
      * @return void
@@ -24,8 +29,7 @@ class ProductPackagingUnitTypeDataImportHelper extends Module
      */
     public function assertProductPackagingUnitTypeTableIsEmtpy(): void
     {
-        $query = $this->getProductPackagingUnitTypeQuery();
-        $this->assertFalse($query->exists(), 'Found at least one entry in the database table but database table `product_packaging_unit_type` was expected to be empty.');
+        $this->assertFalse($this->getProductPackagingUnitTypeQuery()->exists(), sprintf(static::ERROR_MESSAGE_FOUND, SpyProductPackagingUnitTypeTableMap::TABLE_NAME));
     }
 
     /**
@@ -33,8 +37,7 @@ class ProductPackagingUnitTypeDataImportHelper extends Module
      */
     public function assertProductPackagingUnitTypeTableHasRecords(): void
     {
-        $query = $this->getProductPackagingUnitTypeQuery();
-        $this->assertTrue($query->exists(), 'Expected at least one entry in the database table `product_packaging_unit_type` but database table is empty.');
+        $this->assertTrue($this->getProductPackagingUnitTypeQuery()->exists(), sprintf(static::ERROR_MESSAGE_EXPECTED, SpyProductPackagingUnitTypeTableMap::TABLE_NAME));
     }
 
     /**
