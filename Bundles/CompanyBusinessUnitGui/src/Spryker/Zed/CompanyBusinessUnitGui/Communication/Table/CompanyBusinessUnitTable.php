@@ -136,7 +136,7 @@ class CompanyBusinessUnitTable extends AbstractTable
         $result = '';
         $spyCompanyUnitAddress = $spyCompanyBusinessUnit
             ->getSpyCompanyUnitAddressToCompanyBusinessUnitsJoinCompanyUnitAddress();
-        if ($spyCompanyUnitAddress->count() > 0) {
+        if (!$spyCompanyUnitAddress->isEmpty()) {
             $address = $spyCompanyUnitAddress[0]->getCompanyUnitAddress();
 
             $result = sprintf(
