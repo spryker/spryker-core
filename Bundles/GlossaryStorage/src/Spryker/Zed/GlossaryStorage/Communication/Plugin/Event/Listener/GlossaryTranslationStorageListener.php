@@ -8,13 +8,16 @@
 namespace Spryker\Zed\GlossaryStorage\Communication\Plugin\Event\Listener;
 
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
+use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\GlossaryStorage\Communication\GlossaryStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\GlossaryStorage\Business\GlossaryStorageFacadeInterface getFacade()
  */
-class GlossaryTranslationStorageListener extends AbstractGlossaryTranslationStorageListener
+class GlossaryTranslationStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
@@ -31,6 +34,6 @@ class GlossaryTranslationStorageListener extends AbstractGlossaryTranslationStor
         $this->preventTransaction();
         $glossaryKeyIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventTransfers, SpyGlossaryTranslationTableMap::COL_FK_GLOSSARY_KEY);
 
-        $this->publish($glossaryKeyIds);
+        $this->getFacade()->publish($glossaryKeyIds);
     }
 }

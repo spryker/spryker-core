@@ -24,7 +24,7 @@ class OffersTable extends AbstractTable
     protected const URL_OFFER_GUI_EDIT = '/offer-gui/edit/';
     protected const URL_OFFER_GUI_VIEW_DETAILS = '/offer-gui/view/details';
     protected const URL_OFFER_GUI_PRINT_VERSION = '/offer-gui/view/print-version';
-    protected const URL_OFFER_GUI_SUGGEST = '/offer-gui/copy';
+    protected const URL_OFFER_GUI_SUGGEST = '/offer-gui/create';
     protected const URL_OFFER_GUI_PLACE_ORDER = '/offer-gui/place-order/';
     protected const URL_PARAM_ID_OFFER = 'id-offer';
 

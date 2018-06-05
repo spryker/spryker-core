@@ -8,8 +8,8 @@
 namespace Spryker\Client\PriceProductStorage\Storage;
 
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
+use Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToStoreClientInterface;
 use Spryker\Client\PriceProductStorage\Dependency\Service\PriceProductStorageToSynchronizationServiceInterface;
-use Spryker\Shared\Kernel\Store;
 
 class PriceProductStorageKeyGenerator implements PriceProductStorageKeyGeneratorInterface
 {
@@ -19,18 +19,20 @@ class PriceProductStorageKeyGenerator implements PriceProductStorageKeyGenerator
     protected $synchronizationService;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
+     * @var \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToStoreClientInterface
      */
-    protected $store;
+    protected $storeClient;
 
     /**
      * @param \Spryker\Client\PriceProductStorage\Dependency\Service\PriceProductStorageToSynchronizationServiceInterface $synchronizationService
-     * @param \Spryker\Shared\Kernel\Store $store
+     * @param \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToStoreClientInterface $storeClient
      */
-    public function __construct(PriceProductStorageToSynchronizationServiceInterface $synchronizationService, Store $store)
-    {
+    public function __construct(
+        PriceProductStorageToSynchronizationServiceInterface $synchronizationService,
+        PriceProductStorageToStoreClientInterface $storeClient
+    ) {
         $this->synchronizationService = $synchronizationService;
-        $this->store = $store;
+        $this->storeClient = $storeClient;
     }
 
     /**
@@ -43,8 +45,8 @@ class PriceProductStorageKeyGenerator implements PriceProductStorageKeyGenerator
     {
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer
-            ->setStore($this->store->getStoreName())
-            ->setReference($resourceId);
+            ->setReference($resourceId)
+            ->setStore($this->storeClient->getCurrentStore()->getName());
 
         return $this->synchronizationService->getStorageKeyBuilder($resourceName)->generateKey($synchronizationDataTransfer);
     }
