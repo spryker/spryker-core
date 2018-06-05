@@ -16,10 +16,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class ProductPackagingUnitEntityManager extends AbstractEntityManager implements ProductPackagingUnitEntityManagerInterface
 {
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
@@ -34,6 +30,7 @@ class ProductPackagingUnitEntityManager extends AbstractEntityManager implements
 
         $productPackagingUnitTypeEntity->fromArray($productPackagingUnitTypeTransfer->modifiedToArray());
         $productPackagingUnitTypeEntity->save();
+
         $productPackagingUnitTypeTransfer->fromArray($productPackagingUnitTypeEntity->toArray(), true);
 
         return $productPackagingUnitTypeTransfer;

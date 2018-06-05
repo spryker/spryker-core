@@ -8,4 +8,19 @@
         <property name="name" type="string"/>
     </transfer>
 
+    <transfer name="ProductPackagingUnit">
+        <property name="idProductPackagingUnit" type="int" />
+        <property name="productPackagingUnitType" type="ProductPackagingUnitType" />
+        <property name="productPackagingUnitAmount" type="ProductPackagingUnitAmount" />
+    </transfer>
+
+    <transfer name="ProductPackagingUnitAmount">
+        <property name="idProductPackagingUnitAmount" type="int" />
+        <property name="isVariable" type="bool" />
+        <property name="defaultAmount" type="int" />
+        <property name="amountMin" type="int" />
+        <property name="amountMax" type="int" />
+        <property name="amountInterval" type="int" />
+    </transfer>
+
 </transfers>
