@@ -15,9 +15,6 @@
     "spryker/installer": "*",
     "spryker/testify": "*"
   },
-  "suggest": {
-    "spryker/installer": "If you want to use Installer plugins: ^4.0.0."
-  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
