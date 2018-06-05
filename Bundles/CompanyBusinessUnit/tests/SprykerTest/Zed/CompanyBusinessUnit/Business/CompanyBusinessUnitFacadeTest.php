@@ -112,7 +112,7 @@ class CompanyBusinessUnitFacadeTest extends Test
     /**
      * @return void
      */
-    public function testBusinessUnitCanHaveParentBusinessUnit()
+    public function testBusinessUnitParentIsSaved()
     {
         $businessUnitTransfer = $this->tester->haveCompanyBusinessUnitWithCompany();
 
