@@ -8,6 +8,7 @@
 namespace Spryker\Zed\BusinessOnBehalf\Business\Model;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 
 interface IsDefaultCompanyUserUpdaterInterface
 {
@@ -17,4 +18,11 @@ interface IsDefaultCompanyUserUpdaterInterface
      * @return \Generated\Shared\Transfer\CompanyUserTransfer
      */
     public function setDefaultCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function unsetDefaultCompanyUserByCustomer(CustomerTransfer $customerTransfer): CustomerTransfer;
 }

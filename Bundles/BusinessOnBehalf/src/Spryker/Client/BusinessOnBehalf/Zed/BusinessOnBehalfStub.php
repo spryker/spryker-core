@@ -58,4 +58,20 @@ class BusinessOnBehalfStub implements BusinessOnBehalfStubInterface
 
         return $companyUserTransfer;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function unsetDefaultCompanyUser(CustomerTransfer $customerTransfer): CustomerTransfer
+    {
+        /** @var \Generated\Shared\Transfer\CompanyUserTransfer $companyUser */
+        $companyUserTransfer = $this->zedRequestClient->call(
+            '/business-on-behalf/gateway/unset-default-company-user',
+            $customerTransfer
+        );
+
+        return $customerTransfer;
+    }
 }
