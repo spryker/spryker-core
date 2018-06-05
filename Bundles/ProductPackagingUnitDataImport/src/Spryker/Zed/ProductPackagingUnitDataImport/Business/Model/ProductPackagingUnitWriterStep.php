@@ -29,12 +29,31 @@ class ProductPackagingUnitWriterStep implements DataImportStepInterface
     /**
      * @var array
      */
+    protected static $productPackagingUnitTypeHeap = [];
+
+    /**
+     * @var array
+     */
     protected static $productsHeap = [];
 
     /**
      * @var int
      */
     protected static $productsHeapSize = 0;
+
+    /**
+     * ProductPackagingUnitWriterStep constructor.
+     */
+    public function __construct()
+    {
+        $productPackagingUnitTypeEntities = SpyProductPackagingUnitTypeQuery::create()->find();
+
+        foreach ($productPackagingUnitTypeEntities as $packagingUnitTypeEntity) {
+            static::$productPackagingUnitTypeHeap[$packagingUnitTypeEntity->getName()] = $packagingUnitTypeEntity->getIdProductPackagingUnitType();
+        }
+
+        unset($productPackagingUnitTypeEntities);
+    }
 
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
@@ -57,15 +76,15 @@ class ProductPackagingUnitWriterStep implements DataImportStepInterface
         if ($productPackagingUnitEntity === null) {
             $productPackagingUnitEntity = new SpyProductPackagingUnit();
         }
-
-        $this->persistLeadProduct($dataSet, $productPackagingUnitEntity);
+        $productConcreteId = $this->getProductConcreteIdByConcreteSku($dataSet[ProductPackagingUnitDataSetInterface::CONCRETE_SKU]);
+        $this->persistLeadProduct($dataSet, $productConcreteId);
 
         $productPackagingUnitEntity
-            ->setHasLeadProduct((bool)$dataSet[ProductPackagingUnitDataSetInterface::HAS_LEAD_PRODUCT]);
+            ->setHasLeadProduct($dataSet[ProductPackagingUnitDataSetInterface::HAS_LEAD_PRODUCT]);
 
         if ($productPackagingUnitEntity->isNew()) {
             $productPackagingUnitEntity
-                ->setFkProduct($this->getProductConcreteIdByConcreteSku($dataSet[ProductPackagingUnitDataSetInterface::CONCRETE_SKU]))
+                ->setFkProduct($productConcreteId)
                 ->setFkProductPackagingUnitType($this->getproductPackagingUnitTypeIdByname($dataSet[ProductPackagingUnitDataSetInterface::TYPE_NAME]));
         }
 
@@ -76,11 +95,11 @@ class ProductPackagingUnitWriterStep implements DataImportStepInterface
 
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     * @param \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnit $productPackagingUnitEntity
+     * @param int $productConcreteId
      *
      * @return void
      */
-    protected function persistLeadProduct(DataSetInterface $dataSet, SpyProductPackagingUnit $productPackagingUnitEntity): void
+    protected function persistLeadProduct(DataSetInterface $dataSet, int $productConcreteId): void
     {
         if (!$dataSet[ProductPackagingUnitDataSetInterface::IS_LEAD_PRODUCT]) {
             return;
@@ -91,7 +110,7 @@ class ProductPackagingUnitWriterStep implements DataImportStepInterface
             ->findOneOrCreate();
 
         $productPackagingLeadProductEntity
-            ->setFkProduct($productPackagingUnitEntity->getFkProduct())
+            ->setFkProduct($productConcreteId)
             ->save();
     }
 
@@ -190,15 +209,11 @@ class ProductPackagingUnitWriterStep implements DataImportStepInterface
      */
     protected function getproductPackagingUnitTypeIdByname(string $name): int
     {
-        $productPackagingUnitTypeEntity = SpyProductPackagingUnitTypeQuery::create()
-            ->filterByName($name)
-            ->findOneOrCreate();
-
-        if ($productPackagingUnitTypeEntity->isNew()) {
-            throw new EntityNotFoundException(sprintf("Product Packaging Unit Type '%s' not found", $name));
+        if (isset(static::$productPackagingUnitTypeHeap[$name])) {
+            return static::$productPackagingUnitTypeHeap[$name];
         }
 
-        return $productPackagingUnitTypeEntity->getIdProductPackagingUnitType();
+        throw new EntityNotFoundException(sprintf("Product Packaging Unit Type '%s' not found", $name));
     }
 
     /**
