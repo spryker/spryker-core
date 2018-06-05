@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ProductAlternative\Persistence\Mapper\ProductAlternativeMapper;
 use Spryker\Zed\ProductAlternative\Persistence\Mapper\ProductAlternativeMapperInterface;
 
+/**
+ * @method \Spryker\Zed\ProductAlternative\Persistence\ProductAlternativeRepositoryInterface getRepository()
+ */
 class ProductAlternativePersistenceFactory extends AbstractPersistenceFactory
 {
     /**
