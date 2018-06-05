@@ -5,7 +5,7 @@
   "require": {
     "php": ">=7.1",
     "spryker/company": "^1.0.0",
-    "spryker/company-business-unit": "^1.0.0",
+    "spryker/company-business-unit": "^1.4.0",
     "spryker/data-import": "^1.2.0",
     "spryker/kernel": "^3.0.0"
   },
