@@ -27,9 +27,14 @@ use Spryker\Zed\DataImport\Business\Exception\DataImportException;
  */
 class CompanyBusinessUnitDataImportPluginTest extends Unit
 {
-    /**
-     * @var \SprykerTest\Zed\CompanyBusinessUnitDataImport\CompanyBusinessUnitDataImportCommunicationTester
-     */
+    protected const EXCEPTION_MESSAGE = 'Could not find company by key "invalid company"';
+    protected const IMPORT_COMPANY_BUSINESS_UNIT_CSV = 'import/company_business_unit.csv';
+    protected const IMPORT_COMPANY_BUSINESS_UNIT_WITH_INVALID_COMPANY_CSV = 'import/company_business_unit_with_invalid_company.csv';
+    protected const IMPORT_COMPANY_BUSINESS_UNIT_WITH_INVALID_PARENT_CSV = 'import/company_business_unit_with_invalid_parent.csv';
+
+        /**
+         * @var \SprykerTest\Zed\CompanyBusinessUnitDataImport\CompanyBusinessUnitDataImportCommunicationTester
+         */
     protected $tester;
 
     /**
@@ -40,7 +45,9 @@ class CompanyBusinessUnitDataImportPluginTest extends Unit
         $this->tester->ensureDatabaseTableIsEmpty();
         $this->tester->haveCompany(['key' => 'spryker']);
 
-        $dataImportConfigurationTransfer = $this->getDataImportConfigurationTransfer('import/company_business_unit.csv');
+        $dataImportConfigurationTransfer = $this->getDataImportConfigurationTransfer(
+            self::IMPORT_COMPANY_BUSINESS_UNIT_CSV
+        );
         $dataImportConfigurationTransfer->setThrowException(true);
 
         $companyBusinessUnitDataImportPlugin = new CompanyBusinessUnitDataImportPlugin();
@@ -58,13 +65,15 @@ class CompanyBusinessUnitDataImportPluginTest extends Unit
     {
         $this->tester->ensureDatabaseTableIsEmpty();
 
-        $dataImportConfigurationTransfer = $this->getDataImportConfigurationTransfer('import/company_business_unit_with_invalid_company.csv');
+        $dataImportConfigurationTransfer = $this->getDataImportConfigurationTransfer(
+            self::IMPORT_COMPANY_BUSINESS_UNIT_WITH_INVALID_COMPANY_CSV
+        );
         $dataImportConfigurationTransfer->setThrowException(true);
 
         $companyBusinessUnitDataImportPlugin = new CompanyBusinessUnitDataImportPlugin();
 
         $this->expectException(DataImportException::class);
-        $this->expectExceptionMessage('Could not find company by key "invalid company"');
+        $this->expectExceptionMessage(static::EXCEPTION_MESSAGE);
         $companyBusinessUnitDataImportPlugin->import($dataImportConfigurationTransfer);
     }
 
@@ -75,7 +84,9 @@ class CompanyBusinessUnitDataImportPluginTest extends Unit
     {
         $this->tester->ensureDatabaseTableIsEmpty();
 
-        $dataImportConfigurationTransfer = $this->getDataImportConfigurationTransfer('import/company_business_unit_with_invalid_parent.csv');
+        $dataImportConfigurationTransfer = $this->getDataImportConfigurationTransfer(
+            self::IMPORT_COMPANY_BUSINESS_UNIT_WITH_INVALID_PARENT_CSV
+        );
         $dataImportConfigurationTransfer->setThrowException(true);
 
         $companyBusinessUnitDataImportPlugin = new CompanyBusinessUnitDataImportPlugin();
@@ -91,7 +102,10 @@ class CompanyBusinessUnitDataImportPluginTest extends Unit
     public function testGetImportTypeReturnsTypeOfImporter(): void
     {
         $companyBusinessUnitDataImportPlugin = new CompanyBusinessUnitDataImportPlugin();
-        $this->assertSame(CompanyBusinessUnitDataImportConfig::IMPORT_TYPE_COMPANY_BUSINESS_UNIT, $companyBusinessUnitDataImportPlugin->getImportType());
+        $this->assertSame(
+            CompanyBusinessUnitDataImportConfig::IMPORT_TYPE_COMPANY_BUSINESS_UNIT,
+            $companyBusinessUnitDataImportPlugin->getImportType()
+        );
     }
 
     /**
