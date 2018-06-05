@@ -1,14 +1,15 @@
 {
   "name": "spryker/csv",
+  "description": "Csv module",
+  "license": "proprietary",
   "require": {
-    "league/csv": "^9.1"
+    "league/csv": "^9.1",
+    "php": ">=7.1"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
-  "description": "Csv module",
-  "license": "proprietary",
   "minimum-stability": "dev",
   "prefer-stable": true,
   "extra": {
