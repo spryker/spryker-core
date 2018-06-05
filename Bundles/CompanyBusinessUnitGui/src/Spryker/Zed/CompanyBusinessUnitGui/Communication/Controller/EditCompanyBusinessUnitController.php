@@ -18,8 +18,8 @@ class EditCompanyBusinessUnitController extends AbstractController
     /**
      * @see CompanyBusinessUnitForm::FIELD_ID_COMPANY_BUSINESS_UNIT
      */
-    protected const URL_PARAM_ID_COMPANY_BUSINESS_UNIT = 'id-company-business-unit';
-    protected const URL_PARAM_REDIRECT_URL = 'redirect-url';
+    protected const PARAM_ID_COMPANY_BUSINESS_UNIT = 'id-company-business-unit';
+    protected const PARAM_REDIRECT_URL = 'redirect-url';
     /**
      * @see ListCompanyBusinessUnitController::indexAction()
      */
@@ -35,8 +35,8 @@ class EditCompanyBusinessUnitController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idCompanyBusinessUnit = $this->castId($request->query->get(static::URL_PARAM_ID_COMPANY_BUSINESS_UNIT));
-        $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL, static::URL_BUSINESS_UNIT_LIST);
+        $idCompanyBusinessUnit = $this->castId($request->query->get(static::PARAM_ID_COMPANY_BUSINESS_UNIT));
+        $redirectUrl = $request->query->get(static::PARAM_REDIRECT_URL, static::URL_BUSINESS_UNIT_LIST);
 
         $dataProvider = $this->getFactory()->createCompanyBusinessUnitFormDataProvider();
         $form = $this->getFactory()

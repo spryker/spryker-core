@@ -21,7 +21,7 @@ class DeleteCompanyBusinessUnitController extends AbstractController
     /**
      * @see CompanyBusinessUnitForm::FIELD_ID_COMPANY_BUSINESS_UNIT
      */
-    protected const URL_PARAM_ID_COMPANY_BUSINESS_UNIT = 'id-company-business-unit';
+    protected const PARAM_ID_COMPANY_BUSINESS_UNIT = 'id-company-business-unit';
     /**
      * @see ListCompanyBusinessUnitController::indexAction()
      */
@@ -40,7 +40,7 @@ class DeleteCompanyBusinessUnitController extends AbstractController
         $redirectUrl = Url::generate(static::URL_BUSINESS_UNIT_LIST)->build();
 
         $idCompanyBusinessUnit = $this->castId(
-            $request->query->get(static::URL_PARAM_ID_COMPANY_BUSINESS_UNIT)
+            $request->query->get(static::PARAM_ID_COMPANY_BUSINESS_UNIT)
         );
 
         $companyBusinessUnitTransfer = new CompanyBusinessUnitTransfer();

@@ -33,7 +33,7 @@ class CompanyBusinessUnitTable extends AbstractTable
     /**
      * @see CompanyBusinessUnitForm::FIELD_ID_COMPANY_BUSINESS_UNIT
      */
-    protected const URL_PARAM_ID_COMPANY_BUSINESS_UNIT = 'id-company-business-unit';
+    protected const PARAM_ID_COMPANY_BUSINESS_UNIT = 'id-company-business-unit';
     /**
      * @see EditCompanyBusinessUnitController::indexAction()
      */
@@ -162,14 +162,14 @@ class CompanyBusinessUnitTable extends AbstractTable
 
         $buttons[] = $this->generateEditButton(
             Url::generate(static::URL_COMPANY_BUSINESS_UNIT_EDIT, [
-                static::URL_PARAM_ID_COMPANY_BUSINESS_UNIT => $idCompanyBusinessUnit,
+                static::PARAM_ID_COMPANY_BUSINESS_UNIT => $idCompanyBusinessUnit,
             ]),
             'Edit'
         );
 
         $buttons[] = $this->generateRemoveButton(
             Url::generate(static::URL_COMPANY_BUSINESS_UNIT_DELETE, [
-                static::URL_PARAM_ID_COMPANY_BUSINESS_UNIT => $idCompanyBusinessUnit,
+                static::PARAM_ID_COMPANY_BUSINESS_UNIT => $idCompanyBusinessUnit,
             ]),
             'Delete'
         );

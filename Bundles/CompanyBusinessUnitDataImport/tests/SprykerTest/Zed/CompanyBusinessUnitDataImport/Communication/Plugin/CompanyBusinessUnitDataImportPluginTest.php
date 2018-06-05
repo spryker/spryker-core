@@ -27,7 +27,7 @@ use Spryker\Zed\DataImport\Business\Exception\DataImportException;
  */
 class CompanyBusinessUnitDataImportPluginTest extends Unit
 {
-    protected const EXCEPTION_MESSAGE = 'Could not find company by key "invalid company"';
+    protected const EXCEPTION_DATA_IMPORT_COMPANY_NO_FOUND_MESSAGE = 'Could not find company by key "invalid company"';
     protected const IMPORT_COMPANY_BUSINESS_UNIT_CSV = 'import/company_business_unit.csv';
     protected const IMPORT_COMPANY_BUSINESS_UNIT_WITH_INVALID_COMPANY_CSV = 'import/company_business_unit_with_invalid_company.csv';
     protected const IMPORT_COMPANY_BUSINESS_UNIT_WITH_INVALID_PARENT_CSV = 'import/company_business_unit_with_invalid_parent.csv';
@@ -73,7 +73,7 @@ class CompanyBusinessUnitDataImportPluginTest extends Unit
         $companyBusinessUnitDataImportPlugin = new CompanyBusinessUnitDataImportPlugin();
 
         $this->expectException(DataImportException::class);
-        $this->expectExceptionMessage(static::EXCEPTION_MESSAGE);
+        $this->expectExceptionMessage(static::EXCEPTION_DATA_IMPORT_COMPANY_NO_FOUND_MESSAGE);
         $companyBusinessUnitDataImportPlugin->import($dataImportConfigurationTransfer);
     }
 

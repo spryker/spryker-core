@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Propel\Runtime\Util\PropelModelPager;
 use Spryker\Zed\CompanyBusinessUnit\Persistence\Propel\AbstractSpyCompanyBusinessUnitQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -20,7 +21,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class CompanyBusinessUnitRepository extends AbstractRepository implements CompanyBusinessUnitRepositoryInterface
 {
-    protected const TABLE_JOIN_UNIT_PARENT = 'parentCompanyBusinessUnit';
+    protected const TABLE_JOIN_PARENT_BUSINESS_UNIT = 'parentCompanyBusinessUnit';
 
     /**
      * @param int $idCompanyBusinessUnit
@@ -30,7 +31,7 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
     public function getCompanyBusinessUnitById(
         int $idCompanyBusinessUnit
     ): CompanyBusinessUnitTransfer {
-        $query = $this->getQuery()
+        $query = $this->getSpyCompanyBusinessUnitQuery()
             ->filterByIdCompanyBusinessUnit($idCompanyBusinessUnit);
         $entityTransfer = $this->buildQueryFromCriteria($query)->findOne();
 
@@ -47,7 +48,7 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
     public function getCompanyBusinessUnitCollection(
         CompanyBusinessUnitCriteriaFilterTransfer $criteriaFilterTransfer
     ): CompanyBusinessUnitCollectionTransfer {
-        $query = $this->getQuery();
+        $query = $this->getSpyCompanyBusinessUnitQuery();
 
         if ($criteriaFilterTransfer->getIdCompany()) {
             $query
@@ -106,7 +107,7 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
      */
     public function findDefaultBusinessUnitByCompanyId(int $idCompany): ?CompanyBusinessUnitTransfer
     {
-        $query = $this->getQuery()
+        $query = $this->getSpyCompanyBusinessUnitQuery()
             ->filterByFkCompany($idCompany);
 
         $entityTransfer = $this->buildQueryFromCriteria($query)->findOne();
@@ -131,20 +132,11 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
         $page = $paginationTransfer
             ->requirePage()
             ->getPage();
-
         $maxPerPage = $paginationTransfer
             ->requireMaxPerPage()
             ->getMaxPerPage();
-
         $paginationModel = $query->paginate($page, $maxPerPage);
-
-        $paginationTransfer->setNbResults($paginationModel->getNbResults());
-        $paginationTransfer->setFirstIndex($paginationModel->getFirstIndex());
-        $paginationTransfer->setLastIndex($paginationModel->getLastIndex());
-        $paginationTransfer->setFirstPage($paginationModel->getFirstPage());
-        $paginationTransfer->setLastPage($paginationModel->getLastPage());
-        $paginationTransfer->setNextPage($paginationModel->getNextPage());
-        $paginationTransfer->setPreviousPage($paginationModel->getPreviousPage());
+        $this->mapPaginationModel($paginationTransfer, $paginationModel);
 
         return $paginationModel->getResults();
     }
@@ -152,12 +144,30 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
     /**
      * @return \Spryker\Zed\CompanyBusinessUnit\Persistence\Propel\AbstractSpyCompanyBusinessUnitQuery
      */
-    protected function getQuery(): AbstractSpyCompanyBusinessUnitQuery
+    protected function getSpyCompanyBusinessUnitQuery(): AbstractSpyCompanyBusinessUnitQuery
     {
         return $this->getFactory()
             ->createCompanyBusinessUnitQuery()
-            ->leftJoinParentCompanyBusinessUnit(static::TABLE_JOIN_UNIT_PARENT)
-            ->with(static::TABLE_JOIN_UNIT_PARENT)
+            ->leftJoinParentCompanyBusinessUnit(static::TABLE_JOIN_PARENT_BUSINESS_UNIT)
+            ->with(static::TABLE_JOIN_PARENT_BUSINESS_UNIT)
             ->innerJoinWithCompany();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
+     * @param \Propel\Runtime\Util\PropelModelPager $paginationModel
+     *
+     * @return void
+     */
+    protected function mapPaginationModel(PaginationTransfer $paginationTransfer, PropelModelPager $paginationModel): void
+    {
+        $paginationTransfer
+            ->setNbResults($paginationModel->getNbResults())
+            ->setFirstIndex($paginationModel->getFirstIndex())
+            ->setLastIndex($paginationModel->getLastIndex())
+            ->setFirstPage($paginationModel->getFirstPage())
+            ->setLastPage($paginationModel->getLastPage())
+            ->setNextPage($paginationModel->getNextPage())
+            ->setPreviousPage($paginationModel->getPreviousPage());
     }
 }
