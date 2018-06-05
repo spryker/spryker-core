@@ -131,7 +131,8 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
     {
         return new ZedNavigationCollectorCacheDecorator(
             $this->createNavigationCollector(),
-            $this->createNavigationCache()
+            $this->createNavigationCache(),
+            $this->getConfig()->isNavigationCacheEnabled()
         );
     }
 

@@ -19,6 +19,8 @@ class ZedNavigationCache implements ZedNavigationCacheInterface
     protected $cacheFile;
 
     /**
+     * @deprecated
+     *
      * @var bool
      */
     protected $isEnabled;
@@ -41,6 +43,8 @@ class ZedNavigationCache implements ZedNavigationCacheInterface
     }
 
     /**
+     * @deprecated
+     *
      * @return bool
      */
     public function isEnabled()
@@ -77,5 +81,19 @@ class ZedNavigationCache implements ZedNavigationCacheInterface
         }
 
         return $this->utilEncodingService->decodeJson($content, true);
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasContent(): bool
+    {
+        clearstatcache(false, $this->cacheFile);
+        if (!file_exists($this->cacheFile)) {
+            return false;
+        }
+        $content = file_get_contents($this->cacheFile);
+
+        return !empty($content);
     }
 }
