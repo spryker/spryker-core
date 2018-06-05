@@ -23,8 +23,8 @@ use Spryker\Zed\ProductPackagingUnitDataImport\ProductPackagingUnitDataImportCon
  */
 class ProductPackagingUnitDataImportPluginTest extends Unit
 {
-    protected const PRODUCT_SKU_1 = 'test_concrete_sku_1';
-    protected const PRODUCT_SKU_2 = 'test_concrete_sku_2';
+    protected const PRODUCT_SKU_1 = 'concrete_sku_example_1';
+    protected const PRODUCT_SKU_2 = 'concrete_sku_example_2';
     protected const PACKAGING_TYPE_DEFAULT = 'item';
     protected const PACKAGING_TYPE = 'box';
 
@@ -47,8 +47,8 @@ class ProductPackagingUnitDataImportPluginTest extends Unit
 
         $this->tester->haveProductPackagingUnitType([SpyProductPackagingUnitTypeEntityTransfer::NAME => static::PACKAGING_TYPE_DEFAULT]);
         $this->tester->haveProductPackagingUnitType([SpyProductPackagingUnitTypeEntityTransfer::NAME => static::PACKAGING_TYPE]);
-        $this->tester->haveProduct([SpyProductEntityTransfer::SKU => static::PRODUCT_SKU_1]);
-        $this->tester->haveProduct([SpyProductEntityTransfer::SKU => static::PRODUCT_SKU_2]);
+        $productConcreteTransfer1 = $this->tester->haveProduct([SpyProductEntityTransfer::SKU => static::PRODUCT_SKU_1]);
+        $productConcreteTransfer2 = $this->tester->haveProduct([SpyProductEntityTransfer::SKU => static::PRODUCT_SKU_2]);
 
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
         $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/product_packaging_unit.csv');
@@ -64,6 +64,8 @@ class ProductPackagingUnitDataImportPluginTest extends Unit
 
         $this->tester->assertProductPackagingUnitTableHasRecords();
         $this->tester->assertProductPackagingLeadProductTableHasRecords();
+        $this->tester->cleanupProductPackagingLeadProduct($productConcreteTransfer1->getFkProductAbstract());
+        $this->tester->cleanupProductPackagingLeadProduct($productConcreteTransfer2->getFkProductAbstract());
     }
 
     /**
