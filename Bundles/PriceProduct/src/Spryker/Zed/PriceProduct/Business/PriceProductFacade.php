@@ -264,6 +264,20 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
     }
 
     /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     *
+     * @return array
+     */
+    public function groupPriceProductCollection(array $priceProductTransfers)
+    {
+        return $this->getFactory()
+            ->createPriceGrouper()
+            ->groupPriceProduct($priceProductTransfers);
+    }
+
+    /**
      * {@inheritdoc}
      *
      * @api

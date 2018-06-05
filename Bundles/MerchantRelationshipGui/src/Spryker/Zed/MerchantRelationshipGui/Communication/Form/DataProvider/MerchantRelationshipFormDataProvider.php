@@ -16,7 +16,8 @@ use Spryker\Zed\MerchantRelationshipGui\Dependency\Facade\MerchantRelationshipGu
 
 class MerchantRelationshipFormDataProvider
 {
-    public const OPTION_SELECTED_COMPANY = 'idCompany';
+    public const OPTION_SELECTED_COMPANY = 'id_company';
+    public const OPTION_IS_PERSISTENCE_FORM = 'is_persistence_form';
     public const OPTION_COMPANY_CHOICES = 'company_choices';
     public const OPTION_MERCHANT_CHOICES = 'merchant_choices';
     public const OPTION_ASSIGNED_COMPANY_BUSINESS_UNIT_CHOICES = 'assignee_company_business_unit_choices';
@@ -66,22 +67,23 @@ class MerchantRelationshipFormDataProvider
      */
     public function getData(?int $idMerchantRelationship = null): MerchantRelationshipTransfer
     {
-        $merchantRelationship = $this->createMerchantRelationshipTransfer();
+        $merchantRelationshipTransfer = new MerchantRelationshipTransfer();
         if (!$idMerchantRelationship) {
-            return $merchantRelationship;
+            return $merchantRelationshipTransfer;
         }
 
-        $merchantRelationship->setIdMerchantRelationship($idMerchantRelationship);
+        $merchantRelationshipTransfer->setIdMerchantRelationship($idMerchantRelationship);
 
-        return $this->merchantRelationshipFacade->getMerchantRelationshipById($merchantRelationship);
+        return $this->merchantRelationshipFacade->getMerchantRelationshipById($merchantRelationshipTransfer);
     }
 
     /**
+     * @param bool $isPersistenceForm
      * @param int|null $idCompany
      *
      * @return array
      */
-    public function getOptions(?int $idCompany = null): array
+    public function getOptions(bool $isPersistenceForm, ?int $idCompany = null): array
     {
         return [
             'data_class' => MerchantRelationshipTransfer::class,
@@ -89,15 +91,8 @@ class MerchantRelationshipFormDataProvider
             static::OPTION_COMPANY_CHOICES => $this->getCompanyChoices(),
             static::OPTION_MERCHANT_CHOICES => $this->getMerchantChoices(),
             static::OPTION_SELECTED_COMPANY => $idCompany,
+            static::OPTION_IS_PERSISTENCE_FORM => $isPersistenceForm,
         ];
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
-     */
-    protected function createMerchantRelationshipTransfer(): MerchantRelationshipTransfer
-    {
-        return new MerchantRelationshipTransfer();
     }
 
     /**
@@ -145,7 +140,11 @@ class MerchantRelationshipFormDataProvider
         $choices = [];
 
         foreach ($this->merchantFacade->getMerchants()->getMerchants() as $merchant) {
-            $choices[$merchant->getIdMerchant()] = $merchant->getName();
+            $choices[$merchant->getIdMerchant()] = sprintf(
+                '%d - %s',
+                $merchant->getIdMerchant(),
+                $merchant->getName()
+            );
         }
 
         return $choices;

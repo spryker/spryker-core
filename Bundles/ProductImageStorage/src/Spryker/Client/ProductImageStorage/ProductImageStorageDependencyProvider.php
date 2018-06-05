@@ -11,13 +11,11 @@ use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\ProductImageStorage\Dependency\Client\ProductImageStorageToStorageBridge;
 use Spryker\Client\ProductImageStorage\Dependency\Service\ProductImageStorageToSynchronizationServiceBridge;
-use Spryker\Shared\Kernel\Store;
 
 class ProductImageStorageDependencyProvider extends AbstractDependencyProvider
 {
     const CLIENT_STORAGE = 'CLIENT_STORAGE';
     const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
-    const STORE = 'STORE';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -28,7 +26,6 @@ class ProductImageStorageDependencyProvider extends AbstractDependencyProvider
     {
         $container = $this->addStorageClient($container);
         $container = $this->addSynchronizationService($container);
-        $container = $this->addStore($container);
 
         return $container;
     }
@@ -56,20 +53,6 @@ class ProductImageStorageDependencyProvider extends AbstractDependencyProvider
     {
         $container[self::SERVICE_SYNCHRONIZATION] = function (Container $container) {
             return new ProductImageStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Client\Kernel\Container $container
-     *
-     * @return \Spryker\Client\Kernel\Container
-     */
-    protected function addStore(Container $container): Container
-    {
-        $container[self::STORE] = function () {
-            return Store::getInstance();
         };
 
         return $container;

@@ -7,6 +7,16 @@
 
 namespace Spryker\Zed\ProductMeasurementUnit\Persistence;
 
+use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
+
 interface ProductMeasurementUnitEntityManagerInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\ProductMeasurementUnitTransfer $productMeasurementUnitTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer
+     */
+    public function saveProductMeasurementUnit(
+        ProductMeasurementUnitTransfer $productMeasurementUnitTransfer
+    ): ProductMeasurementUnitTransfer;
 }

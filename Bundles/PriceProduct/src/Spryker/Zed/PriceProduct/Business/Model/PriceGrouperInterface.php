@@ -21,4 +21,11 @@ interface PriceGrouperInterface
         string $sku,
         ?PriceProductDimensionTransfer $priceProductDimensionTransfer = null
     );
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     *
+     * @return array
+     */
+    public function groupPriceProduct(array $priceProductTransfers);
 }

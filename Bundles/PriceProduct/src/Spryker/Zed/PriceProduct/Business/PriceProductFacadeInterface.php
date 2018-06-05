@@ -240,6 +240,28 @@ interface PriceProductFacadeInterface
 
     /**
      * Specification:
+     * - Groups provided transfers by currency, price mode and price type.
+     *
+     * Example:
+     *   $result = [
+     *      'EUR' => [
+     *        'GROSS_MODE' => [
+     *           'DEFAULT' => 1000,
+     *           'ORIGINAL' => 2000,
+     *        ],
+     *     ]
+     *  ];
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     *
+     * @return array
+     */
+    public function groupPriceProductCollection(array $priceProductTransfers);
+
+    /**
+     * Specification:
      * - Reads abstract product prices from database.
      *
      * @api

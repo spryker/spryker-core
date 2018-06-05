@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Orm\Zed\MerchantRelationship\Persistence\Map\SpyMerchantRelationshipTableMap;
 use Orm\Zed\MerchantRelationship\Persistence\Map\SpyMerchantRelationshipToCompanyBusinessUnitTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
-use Spryker\Zed\MerchantRelationship\Business\Exception\MerchantRelationshipNotFoundException;
 
 /**
  * @method \Spryker\Zed\MerchantRelationship\Persistence\MerchantRelationshipPersistenceFactory getFactory()
@@ -29,9 +28,9 @@ class MerchantRelationshipRepository extends AbstractRepository implements Merch
      *
      * @throws \Spryker\Zed\MerchantRelationship\Business\Exception\MerchantRelationshipNotFoundException
      *
-     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer|null
      */
-    public function getMerchantRelationshipById(int $idMerchantRelationship): MerchantRelationshipTransfer
+    public function getMerchantRelationshipById(int $idMerchantRelationship): ?MerchantRelationshipTransfer
     {
         $spyMerchantRelation = $this->getFactory()
             ->createMerchantRelationshipQuery()
@@ -39,11 +38,11 @@ class MerchantRelationshipRepository extends AbstractRepository implements Merch
             ->findOne();
 
         if (!$spyMerchantRelation) {
-            throw new MerchantRelationshipNotFoundException();
+            return null;
         }
 
         return $this->getFactory()
-            ->createMerchantRelationshipMapper()
+            ->createPropelMerchantRelationshipMapper()
             ->mapEntityToMerchantRelationshipTransfer($spyMerchantRelation, new MerchantRelationshipTransfer());
     }
 

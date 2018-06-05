@@ -6,15 +6,15 @@
         <icon>fa-file-text-o</icon>
         <pages>
             <merchant-relationship>
-                <label>Merchant Relationships</label>
-                <title>Merchant Relationships</title>
+                <label>Merchant Relations</label>
+                <title>Merchant Relations</title>
                 <bundle>merchant-relationship-gui</bundle>
                 <controller>list-merchant-relationship</controller>
                 <action>index</action>
                 <pages>
                     <merchant-relationship-create>
-                        <label>Create a Merchant Relationship</label>
-                        <title>Create a Merchant Relationship</title>
+                        <label>Create Merchant Relation</label>
+                        <title>Create Merchant Relation</title>
                         <bundle>merchant-relationship-gui</bundle>
                         <controller>create-merchant-relationship</controller>
                         <action>index</action>
@@ -22,8 +22,8 @@
                     </merchant-relationship-create>
 
                     <merchant-relationship-edit>
-                        <label>Edit Merchant Relationship</label>
-                        <title>Edit Merchant Relationship</title>
+                        <label>Edit Merchant Relation</label>
+                        <title>Edit Merchant Relation</title>
                         <bundle>merchant-relationship-gui</bundle>
                         <controller>edit-merchant-relationship</controller>
                         <action>index</action>

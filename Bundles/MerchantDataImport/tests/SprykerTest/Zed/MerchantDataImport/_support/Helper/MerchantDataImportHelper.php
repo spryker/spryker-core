@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\MerchantDataImport\Helper;
 
 use Codeception\Module;
+use Orm\Zed\Merchant\Persistence\SpyMerchant;
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
@@ -55,7 +56,7 @@ class MerchantDataImportHelper extends Module
      *
      * @return \Orm\Zed\Merchant\Persistence\SpyMerchant
      */
-    public function findMerchantByKey(string $key)
+    public function findMerchantByKey(string $key): SpyMerchant
     {
         return $this->getMerchantQuery()
             ->filterByKey($key)

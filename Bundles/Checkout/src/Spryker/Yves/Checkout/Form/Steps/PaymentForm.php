@@ -98,7 +98,7 @@ class PaymentForm extends AbstractType
      * @param \Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface[] $paymentMethodSubForms
      * @param array $options
      *
-     * @return \Spryker\Yves\Checkout\Form\Steps\PaymentForm
+     * @return $this
      */
     protected function addPaymentMethodSubForms(FormBuilderInterface $builder, array $paymentMethodSubForms, array $options)
     {

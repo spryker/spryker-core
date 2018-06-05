@@ -54,6 +54,16 @@ class PriceGrouper implements PriceGrouperInterface
 
         $priceProductTransfers = $this->priceReader->findPricesBySkuForCurrentStore($sku, $priceProductDimensionTransfer);
 
+        return $this->groupPriceProduct($priceProductTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     *
+     * @return array
+     */
+    public function groupPriceProduct(array $priceProductTransfers)
+    {
         $prices = [];
         foreach ($priceProductTransfers as $priceProductTransfer) {
             $prices = $this->groupPriceByCurrencyAndStore($priceProductTransfer, $prices);
