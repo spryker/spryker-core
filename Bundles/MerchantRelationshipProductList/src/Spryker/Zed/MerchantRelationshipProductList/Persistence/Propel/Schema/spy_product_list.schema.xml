@@ -7,7 +7,7 @@
         package="src.Orm.Zed.ProductList.Persistence">
 
     <table name="spy_product_list">
-        <column name="fk_merchant_relationship" type="INTEGER" required="true"/>
+        <column name="fk_merchant_relationship" type="INTEGER"/>
 
         <foreign-key name="spy_product_list-fk_merchant_relationship" foreignTable="spy_merchant_relationship">
             <reference local="fk_merchant_relationship" foreign="id_merchant_relationship"/>

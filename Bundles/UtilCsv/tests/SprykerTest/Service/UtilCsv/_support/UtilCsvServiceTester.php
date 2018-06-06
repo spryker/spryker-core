@@ -1,6 +1,8 @@
 <?php
 namespace SprykerTest\Service\UtilCsv;
 
+use Codeception\Actor;
+
 /**
  * Inherited Methods
  * @method void wantToTest($text)
@@ -15,8 +17,8 @@ namespace SprykerTest\Service\UtilCsv;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
  *
  * @SuppressWarnings(PHPMD)
-*/
-class UtilCsvServiceTester extends \Codeception\Actor
+ */
+class UtilCsvServiceTester extends Actor
 {
     use _generated\UtilCsvServiceTesterActions;
 

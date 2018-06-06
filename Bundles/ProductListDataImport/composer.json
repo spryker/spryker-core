@@ -4,8 +4,10 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker/category": "^3.0.0 || ^4.0.0",
     "spryker/data-import": "^1.3.0",
     "spryker/kernel": "^3.20.0",
+    "spryker/product": "^5.0.0 || ^6.0.0",
     "spryker/product-list": "^1.0.0"
   },
   "require-dev": {
@@ -14,13 +16,13 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Zed\\ProductListDataImport\\Helper\\": "tests/SprykerTest/Zed/ProductListDataImport/_support/Helper/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/",
-      "SprykerTest\\Zed\\ProductListDataImport\\Helper\\": "tests/SprykerTest/Zed/ProductListDataImport/_support/Helper/"
+      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",

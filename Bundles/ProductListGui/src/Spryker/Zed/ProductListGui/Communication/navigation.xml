@@ -1,3 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
+    <product>
+        <pages>
+            <products>
+                <pages>
+                    <product-list>
+                        <label>Product Lists</label>
+                        <title>Product Lists</title>
+                        <bundle>product-list</bundle>
+                        <controller>list-product-list</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </product-list>
+                </pages>
+            </products>
+        </pages>
+    </product>
 </config>

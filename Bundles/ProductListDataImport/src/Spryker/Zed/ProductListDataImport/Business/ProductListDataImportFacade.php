@@ -27,6 +27,40 @@ class ProductListDataImportFacade extends AbstractFacade implements ProductListD
      */
     public function importProductList(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
-        // TODO: Implement importProductList() method.
+        return $this->getFactory()
+            ->getProductListDataImport()
+            ->import($dataImporterConfigurationTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\DataImporterReportTransfer
+     */
+    public function importProductListCategory(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
+    {
+        return $this->getFactory()
+            ->getProductListCategoryDataImport()
+            ->import($dataImporterConfigurationTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\DataImporterReportTransfer
+     */
+    public function importProductListProductConcrete(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
+    {
+        return $this->getFactory()
+            ->getProductListProductConcreteDataImport()
+            ->import($dataImporterConfigurationTransfer);
     }
 }

@@ -1,0 +1,3 @@
+product_list_key,name,type
+test-01,Test Product White List,whitelist
+test-02,Test Product Black List,blacklist

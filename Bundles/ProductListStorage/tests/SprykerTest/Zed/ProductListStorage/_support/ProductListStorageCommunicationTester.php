@@ -7,6 +7,8 @@
 
 namespace SprykerTest\Zed\ProductListStorage;
 
+use Codeception\Actor;
+
 /**
  * Inherited Methods
  * @method void wantToTest($text)
@@ -22,7 +24,7 @@ namespace SprykerTest\Zed\ProductListStorage;
  *
  * @SuppressWarnings(PHPMD)
  */
-class ProductListStorageCommunicationTester extends \Codeception\Actor
+class ProductListStorageCommunicationTester extends Actor
 {
     use _generated\ProductListStorageCommunicationTesterActions;
 

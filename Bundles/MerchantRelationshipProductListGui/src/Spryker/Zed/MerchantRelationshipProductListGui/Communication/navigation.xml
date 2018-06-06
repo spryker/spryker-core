@@ -1,3 +1,22 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0"?>
 <config>
+    <merchant-gui>
+        <label>Merchants</label>
+        <title>Merchants</title>
+        <icon>fa-file-text-o</icon>
+        <pages>
+            <merchant-relationship>
+                <pages>
+                    <merchant-relationship-product-list>
+                        <label>Merchant Product Lists</label>
+                        <title>Merchant Product Lists</title>
+                        <bundle>merchant-relationship-product-list-gui</bundle>
+                        <controller>list-merchant-relationship-product-list</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </merchant-relationship-product-list>
+                </pages>
+            </merchant-relationship>
+        </pages>
+    </merchant-gui>
 </config>
