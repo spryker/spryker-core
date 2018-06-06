@@ -41,8 +41,8 @@ class CompanyBusinessUnitHelper extends Module
     public function haveCompanyBusinessUnitWithCompany(array $seedData = []): CompanyBusinessUnitTransfer
     {
         $company = $this->haveCompany();
-        if (empty($seedData['fkCompany'])) {
-            $seedData['fkCompany'] = $company->getIdCompany();
+        if (empty($seedData[CompanyBusinessUnitTransfer::FK_COMPANY])) {
+            $seedData[CompanyBusinessUnitTransfer::FK_COMPANY] = $company->getIdCompany();
         }
 
         $companyBusinessUnitTransfer = (new CompanyBusinessUnitBuilder($seedData))->build();
