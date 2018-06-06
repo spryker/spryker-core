@@ -20,6 +20,10 @@ class CompanyBusinessUnitHelper extends Module
      */
     public function haveCompanyBusinessUnit(array $seedData = []): CompanyBusinessUnitTransfer
     {
+        if (!isset($seedData['fkCompany'])) {
+            $seedData['fkCompany'] = $this->getCompany()->getIdCompany();
+        }
+
         $companyBusinessUnitTransfer = (new CompanyBusinessUnitBuilder($seedData))->build();
         $companyBusinessUnitTransfer->setIdCompanyBusinessUnit(null);
 

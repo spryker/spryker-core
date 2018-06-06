@@ -5,8 +5,8 @@ use ArrayObject;
 use Codeception\Actor;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductQuantityTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\SpyProductQuantityEntityTransfer;
 
 /**
  * Inherited Methods
@@ -52,9 +52,9 @@ class ProductQuantityBusinessTester extends Actor
     public function createProductWithSpecificProductQuantity($min, $max, $interval)
     {
         $productQuantityOverride = [
-            SpyProductQuantityEntityTransfer::QUANTITY_INTERVAL => $interval,
-            SpyProductQuantityEntityTransfer::QUANTITY_MIN => $min,
-            SpyProductQuantityEntityTransfer::QUANTITY_MAX => $max,
+            ProductQuantityTransfer::QUANTITY_INTERVAL => $interval,
+            ProductQuantityTransfer::QUANTITY_MIN => $min,
+            ProductQuantityTransfer::QUANTITY_MAX => $max,
         ];
 
         $productTransfer = $this->haveProduct();
