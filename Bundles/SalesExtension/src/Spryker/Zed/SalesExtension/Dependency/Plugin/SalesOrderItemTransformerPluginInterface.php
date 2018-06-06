@@ -10,8 +10,20 @@ namespace Spryker\Zed\SalesExtension\Dependency\Plugin;
 use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 
-interface SalesOrderItemExpanderPluginInterface
+interface SalesOrderItemTransformerPluginInterface
 {
+    /**
+     * Specification:
+     *  - Returns true if plugin is applicable.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return bool
+     */
+    public function isApplicable(ItemTransfer $itemTransfer): bool;
+
     /**
      * Specification:
      *  - Gets item from order and expands it if needed.
@@ -20,7 +32,7 @@ interface SalesOrderItemExpanderPluginInterface
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return null|\ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function expandOrderItem(ItemTransfer $itemTransfer): ?ArrayObject;
+    public function transformOrderItem(ItemTransfer $itemTransfer): ArrayObject;
 }

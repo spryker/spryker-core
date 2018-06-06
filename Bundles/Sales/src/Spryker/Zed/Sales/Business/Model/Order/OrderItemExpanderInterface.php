@@ -17,5 +17,5 @@ interface OrderItemExpanderInterface
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function expandOrderItem(ItemTransfer $itemTransfer): ArrayObject;
+    public function transformOrderItem(ItemTransfer $itemTransfer): ArrayObject;
 }

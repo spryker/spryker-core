@@ -8,8 +8,10 @@
 namespace Spryker\Zed\SalesQuantity\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\SalesQuantity\Business\Model\Order\OrderItemExpander;
-use Spryker\Zed\SalesQuantity\Business\Model\Order\OrderItemExpanderInterface;
+use Spryker\Zed\SalesQuantity\Business\Model\Cart\Expander\ProductExpander;
+use Spryker\Zed\SalesQuantity\Business\Model\Order\OrderItemTransformer;
+use Spryker\Zed\SalesQuantity\Business\Model\Order\OrderItemTransformerInterface;
+use Spryker\Zed\SalesQuantity\SalesQuantityDependencyProvider;
 
 /**
  * @method \Spryker\Zed\SalesQuantity\SalesQuantityConfig getConfig()
@@ -17,10 +19,28 @@ use Spryker\Zed\SalesQuantity\Business\Model\Order\OrderItemExpanderInterface;
 class SalesQuantityBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\SalesQuantity\Business\Model\Order\OrderItemExpanderInterface
+     * @return \Spryker\Zed\SalesQuantity\Business\Model\Order\OrderItemTransformerInterface
      */
-    public function createOrderItemExpander(): OrderItemExpanderInterface
+    public function createOrderItemTransformer(): OrderItemTransformerInterface
     {
-        return new OrderItemExpander();
+        return new OrderItemTransformer();
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesQuantity\Business\Model\Cart\Expander\ProductExpanderInterface
+     */
+    public function createProductExpander()
+    {
+        return new ProductExpander(
+            $this->getProductFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesQuantity\Dependency\Facade\SalesQuantityToProductInterface
+     */
+    public function getProductFacade()
+    {
+        return $this->getProvidedDependency(SalesQuantityDependencyProvider::FACADE_PRODUCT);
     }
 }

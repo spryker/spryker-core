@@ -18,26 +18,26 @@ class OrderItemExpander implements OrderItemExpanderInterface
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function expandOrderItem(ItemTransfer $itemTransfer): ArrayObject
+    public function transformOrderItem(ItemTransfer $itemTransfer): ArrayObject
     {
-        $expandedItems = new ArrayObject();
+        $transformedItems = new ArrayObject();
 
         $quantity = $itemTransfer->getQuantity();
         for ($i = 1; $quantity >= $i; $i++) {
-            $expandedItemTransfer = new ItemTransfer();
-            $expandedItemTransfer->fromArray($itemTransfer->toArray(), true);
-            $expandedItemTransfer->setQuantity(1);
+            $transformedItemTransfer = new ItemTransfer();
+            $transformedItemTransfer->fromArray($itemTransfer->toArray(), true);
+            $transformedItemTransfer->setQuantity(1);
 
-            $expandedProductOptions = new ArrayObject();
+            $transformedProductOptions = new ArrayObject();
             foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
-                $expandedProductOptions->append($this->copyProductOptionTransfer($productOptionTransfer));
+                $transformedProductOptions->append($this->copyProductOptionTransfer($productOptionTransfer));
             }
 
-            $expandedItemTransfer->setProductOptions($expandedProductOptions);
-            $expandedItems->append($expandedItemTransfer);
+            $transformedItemTransfer->setProductOptions($transformedProductOptions);
+            $transformedItems->append($transformedItemTransfer);
         }
 
-        return $expandedItems;
+        return $transformedItems;
     }
 
     /**
@@ -47,11 +47,11 @@ class OrderItemExpander implements OrderItemExpanderInterface
      */
     protected function copyProductOptionTransfer(ProductOptionTransfer $productOptionTransfer): ProductOptionTransfer
     {
-        $expandedProductOptionTransfer = new ProductOptionTransfer();
-        $expandedProductOptionTransfer->fromArray($productOptionTransfer->toArray(), true);
-        $expandedProductOptionTransfer->setQuantity(1);
-        $expandedProductOptionTransfer->setIdProductOptionValue(null);
+        $transformedProductOptionTransfer = new ProductOptionTransfer();
+        $transformedProductOptionTransfer->fromArray($productOptionTransfer->toArray(), true);
+        $transformedProductOptionTransfer->setQuantity(1);
+        $transformedProductOptionTransfer->setIdProductOptionValue(null);
 
-        return $expandedProductOptionTransfer;
+        return $transformedProductOptionTransfer;
     }
 }

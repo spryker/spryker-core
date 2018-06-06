@@ -272,7 +272,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\SalesOrderItemExpanderPluginInterface[]
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\SalesOrderItemTransformerPluginInterface[]
      */
     public function getSalesOrderItemExpanderPlugins(): array
     {

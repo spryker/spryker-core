@@ -186,7 +186,8 @@ interface SalesFacadeInterface
     /**
      *
      * Specification:
-     *  - Applies plugins to order items and recalculates order transfer with new values.
+     * - Transforms provided cart items according configured cart item transformer strategies.
+     * - Recalculates order transfer with new values.
      *
      * @api
      *
@@ -199,7 +200,7 @@ interface SalesFacadeInterface
 
     /**
      * Specification:
-     *  - Expands order items by quantity 1.
+     *  - Explodes order items by quantity.
      *
      * @api
      *
@@ -207,5 +208,5 @@ interface SalesFacadeInterface
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function expandOrderItem(ItemTransfer $itemTransfer): ArrayObject;
+    public function transformOrderItem(ItemTransfer $itemTransfer): ArrayObject;
 }

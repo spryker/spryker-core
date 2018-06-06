@@ -10,19 +10,15 @@ namespace Spryker\Zed\SalesQuantity\Business\Model\Order;
 use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 
-class OrderItemExpander implements OrderItemExpanderInterface
+class OrderItemTransformer implements OrderItemTransformerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return null|\ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function expandOrderItem(ItemTransfer $itemTransfer): ?ArrayObject
+    public function transformOrderItem(ItemTransfer $itemTransfer): ArrayObject
     {
-        if ($itemTransfer->getIsQuantitySplittable()) {
-            return null;
-        }
-
         return new ArrayObject([$itemTransfer]);
     }
 }

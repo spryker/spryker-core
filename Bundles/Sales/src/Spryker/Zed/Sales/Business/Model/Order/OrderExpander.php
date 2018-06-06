@@ -21,18 +21,18 @@ class OrderExpander implements OrderExpanderInterface
     protected $calculationFacade;
 
     /**
-     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\SalesOrderItemExpanderPluginInterface[]
+     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\SalesOrderItemTransformerPluginInterface[]
      */
-    protected $salesOrderItemExpanderPlugins;
+    protected $salesOrderItemTransformerPlugins;
 
     /**
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToCalculationInterface $calculationFacade
-     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\SalesOrderItemExpanderPluginInterface[] $salesOrderItemExpanderPlugins
+     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\SalesOrderItemTransformerPluginInterface[] $salesOrderItemTransformerPlugins
      */
-    public function __construct(SalesToCalculationInterface $calculationFacade, array $salesOrderItemExpanderPlugins)
+    public function __construct(SalesToCalculationInterface $calculationFacade, array $salesOrderItemTransformerPlugins)
     {
         $this->calculationFacade = $calculationFacade;
-        $this->salesOrderItemExpanderPlugins = $salesOrderItemExpanderPlugins;
+        $this->salesOrderItemTransformerPlugins = $salesOrderItemTransformerPlugins;
     }
 
     /**
@@ -44,7 +44,7 @@ class OrderExpander implements OrderExpanderInterface
     {
         $orderTransfer = new OrderTransfer();
         $orderTransfer->fromArray($quoteTransfer->toArray(), true);
-        $orderTransfer->setItems($this->expandItems($quoteTransfer->getItems()));
+        $orderTransfer->setItems($this->transformItems($quoteTransfer->getItems()));
 
         $this->groupOrderDiscountsByGroupKey($orderTransfer->getItems());
         $orderTransfer = $this->calculationFacade->recalculateOrder($orderTransfer);
@@ -59,41 +59,41 @@ class OrderExpander implements OrderExpanderInterface
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
      */
-    protected function expandItems(ArrayObject $items)
+    protected function transformItems(ArrayObject $items)
     {
-        $expandedItems = new ArrayObject();
+        $transformedItems = new ArrayObject();
         foreach ($items as $itemTransfer) {
-            $expandedItems = $this->expandItemsPerPlugin($expandedItems, $itemTransfer);
+            $transformedItems = $this->transformItemsPerPlugin($transformedItems, $itemTransfer);
         }
 
-        return $expandedItems;
+        return $transformedItems;
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $expandedItems
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $transformedItems
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
      */
-    protected function expandItemsPerPlugin(ArrayObject $expandedItems, ItemTransfer $itemTransfer): ArrayObject
+    protected function transformItemsPerPlugin(ArrayObject $transformedItems, ItemTransfer $itemTransfer): ArrayObject
     {
-        foreach ($this->salesOrderItemExpanderPlugins as $salesOrderItemExpanderPlugin) {
-            $expandedOrderItems = $salesOrderItemExpanderPlugin->expandOrderItem($itemTransfer);
-
-            if ($expandedOrderItems == null) {
+        foreach ($this->salesOrderItemTransformerPlugins as $salesOrderItemTransformerPlugin) {
+            if (!$salesOrderItemTransformerPlugin->isApplicable($itemTransfer)) {
                 continue;
             }
 
-            foreach ($expandedOrderItems as $expandedOrderItem) {
-                $expandedItems->append($expandedOrderItem);
+            $transformedOrderItems = $salesOrderItemTransformerPlugin->transformOrderItem($itemTransfer);
+
+            foreach ($transformedOrderItems as $transformedOrderItem) {
+                $transformedItems->append($transformedOrderItem);
             }
 
-            return $expandedItems;
+            return $transformedItems;
         }
 
-        $expandedItems->append($itemTransfer);
+        $transformedItems->append($itemTransfer);
 
-        return $expandedItems;
+        return $transformedItems;
     }
 
     /**

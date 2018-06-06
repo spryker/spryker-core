@@ -10,7 +10,7 @@ namespace Spryker\Zed\Sales;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Sales\Communication\Plugin\Checkout\SalesOrderItemExpanderPlugin;
+use Spryker\Zed\Sales\Communication\Plugin\SalesExtension\SalesOrderItemTransformerPlugin;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCalculationBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerBridge;
@@ -335,15 +335,13 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * Specification:
-     * - BC default plugin is set up.
-     *
-     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\SalesOrderItemExpanderPluginInterface[]
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\SalesOrderItemTransformerPluginInterface[]
      */
     public function getSalesOrderItemExpanderPlugins(): array
     {
+        // BC default plugin
         return [
-            new SalesOrderItemExpanderPlugin(),
+            new SalesOrderItemTransformerPlugin(),
         ];
     }
 
