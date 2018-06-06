@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductAlternativeGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\ProductAlternativeCollectionTransfer;
+use Generated\Shared\Transfer\ProductAlternativeListTransfer;
 use Generated\Shared\Transfer\ProductAlternativeResponseTransfer;
 use Generated\Shared\Transfer\ProductAlternativeTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -43,6 +44,13 @@ interface ProductAlternativeGuiToProductAlternativeFacadeInterface
      * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
      */
     public function getProductAlternativeByIdProductAlternative(int $idProductAlternative): ProductAlternativeTransfer;
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return \Generated\Shared\Transfer\ProductAlternativeListTransfer
+     */
+    public function getProductAlternativeListByIdProductConcrete(int $idProductConcrete): ProductAlternativeListTransfer;
 
     /**
      * @param int $idBaseProduct

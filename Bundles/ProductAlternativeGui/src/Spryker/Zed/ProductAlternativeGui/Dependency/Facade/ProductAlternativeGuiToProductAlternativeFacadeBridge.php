@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductAlternativeGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\ProductAlternativeCollectionTransfer;
+use Generated\Shared\Transfer\ProductAlternativeListTransfer;
 use Generated\Shared\Transfer\ProductAlternativeResponseTransfer;
 use Generated\Shared\Transfer\ProductAlternativeTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -47,6 +48,17 @@ class ProductAlternativeGuiToProductAlternativeFacadeBridge implements ProductAl
     {
         return $this->productAlternativeFacade
             ->getProductAlternativeByIdProductAlternative($idProductAlternative);
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return \Generated\Shared\Transfer\ProductAlternativeListTransfer
+     */
+    public function getProductAlternativeListByIdProductConcrete(int $idProductConcrete): ProductAlternativeListTransfer
+    {
+        return $this->productAlternativeFacade
+            ->getProductAlternativeListByIdProductConcrete($idProductConcrete);
     }
 
     /**
