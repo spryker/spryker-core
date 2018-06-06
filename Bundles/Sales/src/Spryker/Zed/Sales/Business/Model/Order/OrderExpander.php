@@ -75,7 +75,7 @@ class OrderExpander implements OrderExpanderInterface
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
      */
-    protected function expandItemsPerPlugin(ArrayObject $expandedItems, ItemTransfer $itemTransfer)
+    protected function expandItemsPerPlugin(ArrayObject $expandedItems, ItemTransfer $itemTransfer): ArrayObject
     {
         foreach ($this->salesOrderItemExpanderPlugins as $salesOrderItemExpanderPlugin) {
             $expandedOrderItems = $salesOrderItemExpanderPlugin->expandOrderItem($itemTransfer);
