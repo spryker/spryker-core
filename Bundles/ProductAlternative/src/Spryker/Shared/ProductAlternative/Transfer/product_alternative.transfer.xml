@@ -28,4 +28,17 @@
         <property name="productAlternatives" type="ProductAlternative[]" singular="productAlternative"/>
     </transfer>
 
+    <transfer name="ProductAlternativeListItem">
+        <property name="idProductAlternative" type="int"/>
+        <property name="name" type="string"/>
+        <property name="sku" type="string"/>
+        <property name="categories" type="string[]" singular="category"/>
+        <property name="status" type="bool"/>
+        <property name="type" type="string"/>
+    </transfer>
+
+    <transfer name="ProductAlternativeList">
+        <property name="productAlternatives" type="ProductAlternativeListItem[]" singular="productAlternative"/>
+    </transfer>
+
 </transfers>
