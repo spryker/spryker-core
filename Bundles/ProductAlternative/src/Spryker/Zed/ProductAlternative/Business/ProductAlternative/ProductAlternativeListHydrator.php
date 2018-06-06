@@ -5,24 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductAlternative\Business\ProductAlternativeTable;
+namespace Spryker\Zed\ProductAlternative\Business\ProductAlternative;
 
-use Generated\Shared\Transfer\ProductAlternativeCollectionTransfer;
-use Generated\Shared\Transfer\ProductAlternativeTableItemTransfer;
-use Generated\Shared\Transfer\ProductAlternativeTableTransfer;
-use Generated\Shared\Transfer\ProductAlternativeTransfer;
+use Generated\Shared\Transfer\ProductAlternativeListItemTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
-use Spryker\Zed\ProductAlternative\Business\Exception\ProductAlternativeIsNotDefinedException;
 use Spryker\Zed\ProductAlternative\Dependency\Facade\ProductAlternativeToLocaleFacadeInterface;
 use Spryker\Zed\ProductAlternative\Dependency\QueryContainer\ProductAlternativeToProductCategoryQueryContainerInterface;
 use Spryker\Zed\ProductAlternative\Dependency\QueryContainer\ProductAlternativeToProductQueryContainerInterface;
 
-class ProductAlternativeTableHydrator implements ProductAlternativeTableHydratorInterface
+class ProductAlternativeListHydrator implements ProductAlternativeListHydratorInterface
 {
     protected const COL_NAME = 'name';
     protected const COL_SKU = 'sku';
@@ -46,13 +42,13 @@ class ProductAlternativeTableHydrator implements ProductAlternativeTableHydrator
 
     /**
      * @param \Spryker\Zed\ProductAlternative\Dependency\QueryContainer\ProductAlternativeToProductQueryContainerInterface $productQueryContainer
-     * @param \Spryker\Zed\ProductAlternative\Dependency\Facade\ProductAlternativeToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\ProductAlternative\Dependency\QueryContainer\ProductAlternativeToProductCategoryQueryContainerInterface $productCategoryQueryContainer
+     * @param \Spryker\Zed\ProductAlternative\Dependency\Facade\ProductAlternativeToLocaleFacadeInterface $localeFacade
      */
     public function __construct(
         ProductAlternativeToProductQueryContainerInterface $productQueryContainer,
-        ProductAlternativeToLocaleFacadeInterface $localeFacade,
-        ProductAlternativeToProductCategoryQueryContainerInterface $productCategoryQueryContainer
+        ProductAlternativeToProductCategoryQueryContainerInterface $productCategoryQueryContainer,
+        ProductAlternativeToLocaleFacadeInterface $localeFacade
     ) {
         $this->productQueryContainer = $productQueryContainer;
         $this->productCategoryQueryContainer = $productCategoryQueryContainer;
@@ -60,83 +56,73 @@ class ProductAlternativeTableHydrator implements ProductAlternativeTableHydrator
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductAlternativeCollectionTransfer $productAlternativeCollectionTransfer
+     * @param int $idProductAbstractAlternative
+     * @param \Generated\Shared\Transfer\ProductAlternativeListItemTransfer $productAlternativeListItemTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductAlternativeTableTransfer
+     * @return \Generated\Shared\Transfer\ProductAlternativeListItemTransfer
      */
-    public function hydrateProductAlternativeTable(ProductAlternativeCollectionTransfer $productAlternativeCollectionTransfer): ProductAlternativeTableTransfer
-    {
-        $productAlternativeTableTransfer = new ProductAlternativeTableTransfer();
-
-        /** @var \Generated\Shared\Transfer\ProductAlternativeTransfer $productAlternativeTransfer */
-        foreach ($productAlternativeCollectionTransfer->getProductAlternatives() as $productAlternativeTransfer) {
-            $productAlternativeTableTransfer->addProductAlternativeTableItem(
-                $this->resolveProductTypeHydration($productAlternativeTransfer)
+    public function hydrateProductAbstractListItem(
+        int $idProductAbstractAlternative,
+        ProductAlternativeListItemTransfer $productAlternativeListItemTransfer
+    ): ProductAlternativeListItemTransfer {
+        $productAlternativeListItemTransfer = $this
+            ->hydrateListItemWithProductAbstractAlternativeData(
+                $idProductAbstractAlternative,
+                $productAlternativeListItemTransfer
             );
-        }
 
-        return $productAlternativeTableTransfer;
+        $productAlternativeListItemTransfer = $this
+            ->hydrateListItemWithProductAbstractCategoryData(
+                $idProductAbstractAlternative,
+                $productAlternativeListItemTransfer
+            );
+
+        return $productAlternativeListItemTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductAlternativeTransfer $productAlternativeTransfer
+     * @param int $idProductConcreteAlternative
+     * @param \Generated\Shared\Transfer\ProductAlternativeListItemTransfer $productAlternativeListItemTransfer
      *
-     * @throws \Spryker\Zed\ProductAlternative\Business\Exception\ProductAlternativeIsNotDefinedException
-     *
-     * @return \Generated\Shared\Transfer\ProductAlternativeTableItemTransfer
+     * @return \Generated\Shared\Transfer\ProductAlternativeListItemTransfer
      */
-    protected function resolveProductTypeHydration(ProductAlternativeTransfer $productAlternativeTransfer): ProductAlternativeTableItemTransfer
-    {
-        $productAlternativeTransfer->requireIdProduct();
-
-        $idProductConcrete = $productAlternativeTransfer
-            ->getIdProductConcreteAlternative();
-
-        if ($idProductConcrete) {
-            return $this->hydrateTableItemWithProductConcreteAlternativeData(
-                $idProductConcrete,
-                new ProductAlternativeTableItemTransfer()
+    public function hydrateProductConcreteListItem(
+        int $idProductConcreteAlternative,
+        ProductAlternativeListItemTransfer $productAlternativeListItemTransfer
+    ): ProductAlternativeListItemTransfer {
+        $productAlternativeListItemTransfer = $this
+            ->hydrateListItemWithProductConcreteAlternativeData(
+                $idProductConcreteAlternative,
+                $productAlternativeListItemTransfer
             );
-        }
 
-        $idProductAbstract = $productAlternativeTransfer
-            ->getIdProductAbstractAlternative();
-
-        if ($idProductAbstract) {
-            return $this->hydrateTableItemWithProductAbstractAlternativeData(
-                $idProductAbstract,
-                new ProductAlternativeTableItemTransfer()
+        $productAlternativeListItemTransfer = $this
+            ->hydrateListItemWithProductConcreteCategoryData(
+                $idProductConcreteAlternative,
+                $productAlternativeListItemTransfer
             );
-        }
 
-        throw new ProductAlternativeIsNotDefinedException(
-            'You must set an id of abstract or concrete product alternative.'
-        );
+        return $productAlternativeListItemTransfer;
     }
 
     /**
      * @param int $idProductAbstractAlternative
-     * @param \Generated\Shared\Transfer\ProductAlternativeTableItemTransfer $productAlternativeTableItemTransfer
+     * @param \Generated\Shared\Transfer\ProductAlternativeListItemTransfer $productAlternativeListItemTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductAlternativeTableItemTransfer
+     * @return \Generated\Shared\Transfer\ProductAlternativeListItemTransfer
      */
-    protected function hydrateTableItemWithProductAbstractAlternativeData(
+    protected function hydrateListItemWithProductAbstractAlternativeData(
         int $idProductAbstractAlternative,
-        ProductAlternativeTableItemTransfer $productAlternativeTableItemTransfer
-    ): ProductAlternativeTableItemTransfer {
+        ProductAlternativeListItemTransfer $productAlternativeListItemTransfer
+    ): ProductAlternativeListItemTransfer {
         $productAbstractAlternative = $this
             ->getProductAbstractData($idProductAbstractAlternative);
 
         if (!$productAbstractAlternative) {
-            return $productAlternativeTableItemTransfer;
+            return $productAlternativeListItemTransfer;
         }
 
-        $productAlternativeTableItemTransfer = $this->hydrateTableItemWithProductAbstractCategoryData(
-            $idProductAbstractAlternative,
-            $productAlternativeTableItemTransfer
-        );
-
-        return $productAlternativeTableItemTransfer
+        return $productAlternativeListItemTransfer
             ->setName($productAbstractAlternative->getVirtualColumn(static::COL_NAME))
             ->setSku($productAbstractAlternative->getSku())
             ->setStatus(
@@ -146,27 +132,22 @@ class ProductAlternativeTableHydrator implements ProductAlternativeTableHydrator
 
     /**
      * @param int $idProductConcreteAlternative
-     * @param \Generated\Shared\Transfer\ProductAlternativeTableItemTransfer $productAlternativeTableItemTransfer
+     * @param \Generated\Shared\Transfer\ProductAlternativeListItemTransfer $productAlternativeListItemTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductAlternativeTableItemTransfer
+     * @return \Generated\Shared\Transfer\ProductAlternativeListItemTransfer
      */
-    protected function hydrateTableItemWithProductConcreteAlternativeData(
+    protected function hydrateListItemWithProductConcreteAlternativeData(
         int $idProductConcreteAlternative,
-        ProductAlternativeTableItemTransfer $productAlternativeTableItemTransfer
-    ): ProductAlternativeTableItemTransfer {
+        ProductAlternativeListItemTransfer $productAlternativeListItemTransfer
+    ): ProductAlternativeListItemTransfer {
         $productConcreteAlternative = $this
             ->getProductConcreteData($idProductConcreteAlternative);
 
         if (!$productConcreteAlternative) {
-            return $productAlternativeTableItemTransfer;
+            return $productAlternativeListItemTransfer;
         }
 
-        $productAlternativeTableItemTransfer = $this->hydrateTableItemWithProductConcreteCategoryData(
-            $idProductConcreteAlternative,
-            $productAlternativeTableItemTransfer
-        );
-
-        return $productAlternativeTableItemTransfer
+        return $productAlternativeListItemTransfer
             ->setName($productConcreteAlternative->getVirtualColumn(static::COL_NAME))
             ->setSku($productConcreteAlternative->getSku())
             ->setStatus($productConcreteAlternative->getIsActive());
@@ -174,43 +155,43 @@ class ProductAlternativeTableHydrator implements ProductAlternativeTableHydrator
 
     /**
      * @param int $idProductAbstractAlternative
-     * @param \Generated\Shared\Transfer\ProductAlternativeTableItemTransfer $productAlternativeTableItemTransfer
+     * @param \Generated\Shared\Transfer\ProductAlternativeListItemTransfer $ProductAlternativeListItemTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductAlternativeTableItemTransfer
+     * @return \Generated\Shared\Transfer\ProductAlternativeListItemTransfer
      */
-    protected function hydrateTableItemWithProductAbstractCategoryData(
+    protected function hydrateListItemWithProductAbstractCategoryData(
         int $idProductAbstractAlternative,
-        ProductAlternativeTableItemTransfer $productAlternativeTableItemTransfer
-    ): ProductAlternativeTableItemTransfer {
+        ProductAlternativeListItemTransfer $ProductAlternativeListItemTransfer
+    ): ProductAlternativeListItemTransfer {
         $productAbstractCategories = $this
             ->getProductAbstractCategories($idProductAbstractAlternative);
 
         if (empty($productAbstractCategories)) {
-            return $productAlternativeTableItemTransfer;
+            return $ProductAlternativeListItemTransfer;
         }
 
-        return $productAlternativeTableItemTransfer
+        return $ProductAlternativeListItemTransfer
             ->setCategories($productAbstractCategories);
     }
 
     /**
      * @param int $idProductConcreteAlternative
-     * @param \Generated\Shared\Transfer\ProductAlternativeTableItemTransfer $productAlternativeTableItemTransfer
+     * @param \Generated\Shared\Transfer\ProductAlternativeListItemTransfer $ProductAlternativeListItemTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductAlternativeTableItemTransfer
+     * @return \Generated\Shared\Transfer\ProductAlternativeListItemTransfer
      */
-    protected function hydrateTableItemWithProductConcreteCategoryData(
+    protected function hydrateListItemWithProductConcreteCategoryData(
         int $idProductConcreteAlternative,
-        ProductAlternativeTableItemTransfer $productAlternativeTableItemTransfer
-    ): ProductAlternativeTableItemTransfer {
+        ProductAlternativeListItemTransfer $ProductAlternativeListItemTransfer
+    ): ProductAlternativeListItemTransfer {
         $productConcreteCategories = $this
             ->getProductConcreteCategories($idProductConcreteAlternative);
 
         if (empty($productConcreteCategories)) {
-            return $productAlternativeTableItemTransfer;
+            return $ProductAlternativeListItemTransfer;
         }
 
-        return $productAlternativeTableItemTransfer
+        return $ProductAlternativeListItemTransfer
             ->setCategories($productConcreteCategories);
     }
 
