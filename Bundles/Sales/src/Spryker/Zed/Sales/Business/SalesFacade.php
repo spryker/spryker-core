@@ -268,7 +268,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     public function transformOrderItem(ItemTransfer $itemTransfer): ArrayObject
     {
         return $this->getFactory()
-            ->createOrderItemExpander()
+            ->createOrderItemTransformer()
             ->transformOrderItem($itemTransfer);
     }
 }

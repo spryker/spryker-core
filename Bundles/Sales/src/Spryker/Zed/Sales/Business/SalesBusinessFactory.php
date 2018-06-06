@@ -15,8 +15,8 @@ use Spryker\Zed\Sales\Business\Model\Customer\CustomerOrderReader;
 use Spryker\Zed\Sales\Business\Model\Customer\PaginatedCustomerOrderReader;
 use Spryker\Zed\Sales\Business\Model\Order\OrderExpander;
 use Spryker\Zed\Sales\Business\Model\Order\OrderHydrator;
-use Spryker\Zed\Sales\Business\Model\Order\OrderItemExpander;
-use Spryker\Zed\Sales\Business\Model\Order\OrderItemExpanderInterface;
+use Spryker\Zed\Sales\Business\Model\Order\OrderItemTransformer;
+use Spryker\Zed\Sales\Business\Model\Order\OrderItemTransformerInterface;
 use Spryker\Zed\Sales\Business\Model\Order\OrderReader;
 use Spryker\Zed\Sales\Business\Model\Order\OrderReferenceGenerator;
 use Spryker\Zed\Sales\Business\Model\Order\OrderSaver;
@@ -169,16 +169,16 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     {
         return new OrderExpander(
             $this->getCalculationFacade(),
-            $this->getSalesOrderItemExpanderPlugins()
+            $this->getSalesOrderItemTransformerPlugins()
         );
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Business\Model\Order\OrderItemExpanderInterface
+     * @return \Spryker\Zed\Sales\Business\Model\Order\OrderItemTransformerInterface
      */
-    public function createOrderItemExpander(): OrderItemExpanderInterface
+    public function createOrderItemTransformer(): OrderItemTransformerInterface
     {
-        return new OrderItemExpander();
+        return new OrderItemTransformer();
     }
 
     /**
@@ -274,8 +274,8 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\SalesOrderItemTransformerPluginInterface[]
      */
-    public function getSalesOrderItemExpanderPlugins(): array
+    public function getSalesOrderItemTransformerPlugins(): array
     {
-        return $this->getProvidedDependency(SalesDependencyProvider::SALES_ORDER_ITEM_EXPANDER_PLUGINS);
+        return $this->getProvidedDependency(SalesDependencyProvider::SALES_ORDER_ITEM_TRANSFORMER_PLUGINS);
     }
 }
