@@ -12,7 +12,7 @@
     </transfer>
 
     <transfer name="ProductDiscontinuedCollection">
-        <property name="productDiscontinueds" type="ProductDiscontinued[]" singular="productDiscontinued"/>
+        <property name="discontinueds" type="ProductDiscontinued[]" singular="discontinued"/>
     </transfer>
 
     <transfer name="ProductDiscontinuedRequest">

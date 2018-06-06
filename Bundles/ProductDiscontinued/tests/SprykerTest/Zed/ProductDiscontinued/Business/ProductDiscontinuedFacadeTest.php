@@ -119,7 +119,7 @@ class ProductDiscontinuedFacadeTest extends Unit
         $productDiscontinuedCollectionTransfer = $this->tester->getFacade()->findProductDiscontinuedCollection($productDiscontinuedCriteriaFilterTransfer);
 
         // Assert
-        $this->assertCount(1, $productDiscontinuedCollectionTransfer->getProductDiscontinueds());
+        $this->assertCount(1, $productDiscontinuedCollectionTransfer->getDiscontinueds());
     }
 
     /**

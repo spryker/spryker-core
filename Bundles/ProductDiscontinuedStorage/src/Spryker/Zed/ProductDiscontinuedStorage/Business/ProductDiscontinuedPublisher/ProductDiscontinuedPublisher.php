@@ -72,7 +72,7 @@ class ProductDiscontinuedPublisher implements ProductDiscontinuedPublisherInterf
         array $productDiscontinuedStorageEntityTransfers
     ): void {
         $indexProductDiscontinuedStorageEntityTransfers = $this->indexProductDiscontinuedStorageEntities($productDiscontinuedStorageEntityTransfers);
-        foreach ($productDiscontinuedCollectionTransfer->getProductDiscontinueds() as $productDiscontinuedTransfer) {
+        foreach ($productDiscontinuedCollectionTransfer->getDiscontinueds() as $productDiscontinuedTransfer) {
             if (isset($indexProductDiscontinuedStorageEntityTransfers[$productDiscontinuedTransfer->getIdProductDiscontinued()])) {
                 $this->storeDataSet($productDiscontinuedTransfer, $indexProductDiscontinuedStorageEntityTransfers[$productDiscontinuedTransfer->getIdProductDiscontinued()]);
 

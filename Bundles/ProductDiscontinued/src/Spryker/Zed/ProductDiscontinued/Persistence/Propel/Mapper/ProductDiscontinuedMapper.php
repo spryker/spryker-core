@@ -56,7 +56,7 @@ class ProductDiscontinuedMapper implements ProductDiscontinuedMapperInterface
     {
         $productDiscontinuedCollectionTransfer = new ProductDiscontinuedCollectionTransfer();
         foreach ($productDiscontinuedEntityTransfers as $productDiscontinuedEntityTransfer) {
-            $productDiscontinuedCollectionTransfer->addProductDiscontinued(
+            $productDiscontinuedCollectionTransfer->addDiscontinued(
                 $this->mapProductDiscontinuedTransfer(
                     $productDiscontinuedEntityTransfer
                 )
