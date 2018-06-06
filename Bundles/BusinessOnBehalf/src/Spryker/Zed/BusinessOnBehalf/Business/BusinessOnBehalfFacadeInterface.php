@@ -58,7 +58,7 @@ interface BusinessOnBehalfFacadeInterface
 
     /**
      * Specification:
-     * - Remove all is_default flags for customer.
+     * - Removes company user default flags for the provided customer.
      *
      * @api
      *

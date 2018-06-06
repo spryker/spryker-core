@@ -64,8 +64,7 @@ class BusinessOnBehalfFacade extends AbstractFacade implements BusinessOnBehalfF
     }
 
     /**
-     * Specification:
-     * - Remove all is_default flags for customer.
+     * {@inheritdoc}
      *
      * @api
      *

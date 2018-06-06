@@ -43,8 +43,8 @@ interface BusinessOnBehalfClientInterface
 
     /**
      * Specification:
-     *  - Removes all isDefault flags from company users that belong to a provided customer
-     *  - Returns customer with company user set to null
+     *  - Removes all isDefault flags from company users that belong to the provided customer
+     *  - Returns customer transfer object with company user set as null
      *
      * @api
      *
