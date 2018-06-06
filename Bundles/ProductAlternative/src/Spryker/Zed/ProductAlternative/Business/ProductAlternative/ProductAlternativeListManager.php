@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductAlternative\Business\ProductAlternative;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ProductAlternativeCollectionTransfer;
 use Generated\Shared\Transfer\ProductAlternativeListItemTransfer;
 use Generated\Shared\Transfer\ProductAlternativeListTransfer;
@@ -71,7 +72,32 @@ class ProductAlternativeListManager implements ProductAlternativeListManagerInte
             );
         }
 
+        $this->sortProductAlternativeList($productAlternativeListTransfer);
+
         return $productAlternativeListTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAlternativeListTransfer $productAlternativeListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAlternativeListTransfer
+     */
+    protected function sortProductAlternativeList(ProductAlternativeListTransfer $productAlternativeListTransfer): ProductAlternativeListTransfer
+    {
+        $sortedProductAlternativeList = $productAlternativeListTransfer
+            ->getProductAlternatives()
+            ->getArrayCopy();
+
+        usort(
+            $sortedProductAlternativeList,
+            function (ProductAlternativeListItemTransfer $a, ProductAlternativeListItemTransfer $b) {
+                return strcmp($a->getType(), $b->getType());
+            }
+        );
+
+        return $productAlternativeListTransfer->setProductAlternatives(
+            new ArrayObject($sortedProductAlternativeList)
+        );
     }
 
     /**
@@ -89,7 +115,9 @@ class ProductAlternativeListManager implements ProductAlternativeListManagerInte
             ->getIdProductAbstractAlternative();
 
         $productAlternativeListItemTransfer = (new ProductAlternativeListItemTransfer())
-            ->setIdProductAlternative($productAlternativeTransfer->getIdProductAbstractAlternative());
+            ->setIdProductAlternative(
+                $productAlternativeTransfer->getIdProductAlternative()
+            );
 
         if ($idProductAbstract) {
             return $this
