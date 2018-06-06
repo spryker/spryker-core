@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductAlternative\Business\ProductAlternative;
 
-use ArrayObject;
 use Generated\Shared\Transfer\ProductAlternativeResponseTransfer;
 use Generated\Shared\Transfer\ProductAlternativeTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -18,6 +17,9 @@ use Spryker\Zed\ProductAlternative\Persistence\ProductAlternativeEntityManagerIn
 
 class ProductAlternativeWriter implements ProductAlternativeWriterInterface
 {
+    protected const STATUS_REMOVE_PRODUCT_ALTERNATIVE_SUCCESS = 'Product alternative with id = %d successfully removed.';
+    protected const STATUS_REMOVE_PRODUCT_ALTERNATIVE_ERROR = 'Unable to remove product alternative: Product alternative was not found.';
+
     /**
      * @var \Spryker\Zed\ProductAlternative\Persistence\ProductAlternativeEntityManagerInterface
      */
@@ -211,24 +213,22 @@ class ProductAlternativeWriter implements ProductAlternativeWriterInterface
                 ->deleteProductAlternative($productAlternativeTransfer);
 
             $responseMessageTransfer
-                ->setText("Product alternative with id = $idProductAlternative successfully removed.");
+                ->setText(
+                    sprintf(static::STATUS_REMOVE_PRODUCT_ALTERNATIVE_SUCCESS, $idProductAlternative)
+                );
 
             return $productAlternativeResponseTransfer
                 ->setIsSuccessful(true)
-                ->setMessages([
-                    $responseMessageTransfer,
-                ]);
+                ->addMessage($responseMessageTransfer);
         }
 
         $responseMessageTransfer
             ->setText(
-                'Unable to remove product alternative: Product alternative was not found.'
+                static::STATUS_REMOVE_PRODUCT_ALTERNATIVE_ERROR
             );
 
         return $productAlternativeResponseTransfer
             ->setIsSuccessful(false)
-            ->setMessages(new ArrayObject([
-                $responseMessageTransfer,
-            ]));
+            ->addMessage($responseMessageTransfer);
     }
 }
