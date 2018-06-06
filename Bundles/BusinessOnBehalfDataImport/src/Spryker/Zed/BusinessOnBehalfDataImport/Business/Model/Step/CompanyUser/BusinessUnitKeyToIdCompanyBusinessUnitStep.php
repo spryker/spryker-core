@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\BusinessOnBehalfDataImport\Business\Model\Step;
+namespace Spryker\Zed\BusinessOnBehalfDataImport\Business\Model\Step\CompanyUser;
 
 use Orm\Zed\CompanyBusinessUnit\Persistence\Map\SpyCompanyBusinessUnitTableMap;
 use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
-use Spryker\Zed\BusinessOnBehalfDataImport\Business\Model\DataSet\BusinessOnBehalfCompanyUserDataSet;
+use Spryker\Zed\BusinessOnBehalfDataImport\Business\Model\DataSet\BusinessOnBehalfCompanyUserDataSetInterface;
 use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
@@ -17,7 +17,7 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 class BusinessUnitKeyToIdCompanyBusinessUnitStep implements DataImportStepInterface
 {
     /**
-     * @var array
+     * @var int[] Keys are business unit keys.
      */
     protected $idBusinessUnitBuffer = [];
 
@@ -28,12 +28,14 @@ class BusinessUnitKeyToIdCompanyBusinessUnitStep implements DataImportStepInterf
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $businessUnitKey = $dataSet[BusinessOnBehalfCompanyUserDataSet::BUSINESS_UNIT_KEY];
+        $businessUnitKey = $dataSet[BusinessOnBehalfCompanyUserDataSetInterface::COLUMN_BUSINESS_UNIT_KEY];
 
-        $dataSet[BusinessOnBehalfCompanyUserDataSet::ID_BUSINESS_UNIT] = $this->getIdBusinessUnit($businessUnitKey);
+        $dataSet[BusinessOnBehalfCompanyUserDataSetInterface::COLUMN_ID_BUSINESS_UNIT] = $this->getIdBusinessUnit($businessUnitKey);
     }
 
     /**
+     * @uses SpyCompanyBusinessUnitQuery
+     *
      * @param string $businessUnitKey
      *
      * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException
