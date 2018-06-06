@@ -1,14 +1,21 @@
-{% set productAlternativesIsEmptyMessage = 'Alternative products are not defined for this concrete product.' %}
-
 {% if productAlternatives is not empty %}
     <table class="table table-bordered table-striped table-sm">
 
         <tr>
-            {% include '@ProductAlternativeGui/ProductAlternative/blocks/product-alternatives-table-headers.twig' %}
+            {% filter trans|raw %}
+                <th>ID</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>SKU</th>
+                <th>Categories</th>
+                <th>Status</th>
+                <th>Actions</th>
+            {% endfilter %}
         </tr>
+
         {% for productAlternative in productAlternatives %}
             <tr>
-                {% include '@ProductAlternativeGui/ProductAlternative/blocks/product-alternatives-table-item-single.twig' %}
+                {% include '@ProductAlternativeGui/ProductAlternative/blocks/product-alternatives-table-single-item.twig' %}
             </tr>
         {% endfor %}
 
