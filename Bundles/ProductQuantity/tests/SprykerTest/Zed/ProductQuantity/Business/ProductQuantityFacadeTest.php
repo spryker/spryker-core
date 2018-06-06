@@ -248,7 +248,7 @@ class ProductQuantityFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindProductQuantityEntitiesByProductIdsFindsAllExistingEntities()
+    public function testFindProductQuantityTransfersByProductIdsFindsAllExistingItems()
     {
         // Assign
         $productIds = [
@@ -258,8 +258,8 @@ class ProductQuantityFacadeTest extends Unit
         $expectedCount = count($productIds);
 
         // Act
-        $productQuantityEntities = $this->productQuantityFacade->findProductQuantityEntitiesByProductIds($productIds);
-        $actualCount = count($productQuantityEntities);
+        $productQuantityTransfers = $this->productQuantityFacade->findProductQuantityTransfersByProductIds($productIds);
+        $actualCount = count($productQuantityTransfers);
 
         // Assert
         $this->assertSame($expectedCount, $actualCount);
@@ -268,15 +268,15 @@ class ProductQuantityFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindProductQuantityEntitiesByProductIdsReturnsEmptyArrayWhenProductsWereNotFound()
+    public function testFindProductQuantityTransfersByProductIdsReturnsEmptyArrayWhenProductsWereNotFound()
     {
         // Assign
         $dummyProductIds = [999999991, 999999992];
         $expectedCount = 0;
 
         // Act
-        $productQuantityEntities = $this->productQuantityFacade->findProductQuantityEntitiesByProductIds($dummyProductIds);
-        $actualCount = count($productQuantityEntities);
+        $productQuantityTransfers = $this->productQuantityFacade->findProductQuantityTransfersByProductIds($dummyProductIds);
+        $actualCount = count($productQuantityTransfers);
 
         // Assert
         $this->assertSame($expectedCount, $actualCount);

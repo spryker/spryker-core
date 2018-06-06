@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductAbstractLabelStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\ProductLabelStorage\Dependency\Client\ProductLabelStorageToStorageClientInterface;
 use Spryker\Client\ProductLabelStorage\Dependency\Service\ProductLabelStorageToSynchronizationServiceInterface;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\ProductLabelStorage\ProductLabelStorageConfig;
 
 class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
@@ -32,26 +31,18 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
     protected $labelDictionaryReader;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
-     */
-    protected $store;
-
-    /**
      * @param \Spryker\Client\ProductLabelStorage\Dependency\Client\ProductLabelStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\ProductLabelStorage\Dependency\Service\ProductLabelStorageToSynchronizationServiceInterface $synchronizationService
      * @param \Spryker\Client\ProductLabelStorage\Storage\LabelDictionaryReaderInterface $labelDictionaryReader
-     * @param \Spryker\Shared\Kernel\Store $store
      */
     public function __construct(
         ProductLabelStorageToStorageClientInterface $storageClient,
         ProductLabelStorageToSynchronizationServiceInterface $synchronizationService,
-        LabelDictionaryReaderInterface $labelDictionaryReader,
-        Store $store
+        LabelDictionaryReaderInterface $labelDictionaryReader
     ) {
         $this->storageClient = $storageClient;
         $this->labelDictionaryReader = $labelDictionaryReader;
         $this->synchronizationService = $synchronizationService;
-        $this->store = $store;
     }
 
     /**
@@ -80,7 +71,6 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
     {
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer
-            ->setStore($this->store->getStoreName())
             ->setReference($idProductAbstract);
 
         $storageKey = $this->synchronizationService

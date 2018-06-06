@@ -178,6 +178,31 @@ class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInte
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ProductOptionValueStorePricesRequestTransfer $storePricesRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOptionValueStorePricesResponseTransfer
+     */
+    public function getAllPrices(ProductOptionValueStorePricesRequestTransfer $storePricesRequestTransfer)
+    {
+        $storePrices = [];
+        $defaultStorePrices = [];
+
+        foreach ($storePricesRequestTransfer->getPrices() as $moneyValueTransfer) {
+            if ($moneyValueTransfer->getFkStore() === null) {
+                $defaultStorePrices = $this->addPrice($defaultStorePrices, $moneyValueTransfer);
+
+                continue;
+            }
+
+            $storePrices = $this->addPrice($storePrices, $moneyValueTransfer);
+        }
+
+        $storePrices = $this->applyDefaultStorePrices($storePrices, $defaultStorePrices);
+
+        return (new ProductOptionValueStorePricesResponseTransfer())->setStorePrices($storePrices);
+    }
+
+    /**
      * @param array $storePrices
      * @param array $defaultStorePrices
      *

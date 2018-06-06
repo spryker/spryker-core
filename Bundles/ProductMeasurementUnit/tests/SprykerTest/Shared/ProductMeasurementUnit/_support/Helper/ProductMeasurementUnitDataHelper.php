@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\SpyProductMeasurementUnitEntityTransfer;
 use Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementBaseUnitQuery;
 use Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementSalesUnit;
 use Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementSalesUnitQuery;
+use Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementSalesUnitStore;
 use Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementUnitQuery;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
@@ -92,21 +93,37 @@ class ProductMeasurementUnitDataHelper extends Module
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer $salesUnitEntity
+     * @param \Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer $salesUnitEntityTransfer
      *
      * @return \Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer
      */
-    protected function storeSalesUnit(SpyProductMeasurementSalesUnitEntityTransfer $salesUnitEntity)
+    protected function storeSalesUnit(SpyProductMeasurementSalesUnitEntityTransfer $salesUnitEntityTransfer)
     {
         $spySalesUnitEntity = new SpyProductMeasurementSalesUnit();
-        $spySalesUnitEntity->fromArray($salesUnitEntity->modifiedToArray());
+        $spySalesUnitEntity->fromArray($salesUnitEntityTransfer->modifiedToArray());
         $spySalesUnitEntity->save();
 
-        $this->debug(sprintf('Inserted sales unit for product: %d', $salesUnitEntity->getFkProduct()));
+        $this->debug(sprintf('Inserted sales unit for product: %d', $salesUnitEntityTransfer->getFkProduct()));
 
-        $salesUnitEntity->fromArray($spySalesUnitEntity->toArray(), true);
+        $salesUnitEntityTransfer->fromArray($spySalesUnitEntity->toArray(), true);
+        $this->storeSalesUnitStore($salesUnitEntityTransfer);
 
-        return $salesUnitEntity;
+        return $salesUnitEntityTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer $salesUnitEntityTransfer
+     *
+     * @return \Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer
+     */
+    protected function storeSalesUnitStore(SpyProductMeasurementSalesUnitEntityTransfer $salesUnitEntityTransfer)
+    {
+        $productMeasurementSalesUnitStore = new SpyProductMeasurementSalesUnitStore();
+        $productMeasurementSalesUnitStore->setFkProductMeasurementSalesUnit($salesUnitEntityTransfer->getIdProductMeasurementSalesUnit());
+        $productMeasurementSalesUnitStore->setFkStore(1);
+        $productMeasurementSalesUnitStore->save();
+
+        $this->debug(sprintf('Inserted sales unit store for product: %d', $salesUnitEntityTransfer->getFkProduct()));
     }
 
     /**
