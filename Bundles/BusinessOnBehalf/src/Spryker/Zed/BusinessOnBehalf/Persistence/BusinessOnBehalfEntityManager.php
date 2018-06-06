@@ -47,7 +47,6 @@ class BusinessOnBehalfEntityManager extends AbstractEntityManager implements Bus
     public function unsetDefaultCompanyUserByCustomer(CustomerTransfer $customerTransfer): CustomerTransfer
     {
         $this->cleanupExistingIsDefaultFlag($customerTransfer);
-        $customerTransfer->setCompanyUserTransfer(null);
 
         return $customerTransfer;
     }

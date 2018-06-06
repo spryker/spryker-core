@@ -43,6 +43,8 @@ class IsDefaultCompanyUserUpdater implements IsDefaultCompanyUserUpdaterInterfac
      */
     public function unsetDefaultCompanyUserByCustomer(CustomerTransfer $customerTransfer): CustomerTransfer
     {
-        return $this->entityManager->unsetDefaultCompanyUserByCustomer($customerTransfer);
+        $customerTransfer = $this->entityManager->unsetDefaultCompanyUserByCustomer($customerTransfer);
+
+        return $customerTransfer;
     }
 }
