@@ -25,6 +25,9 @@ class ProductAlternativeListHydrator implements ProductAlternativeListHydratorIn
     protected const COL_STATUS = 'status';
     protected const COL_CATEGORY = 'category';
 
+    protected const FIELD_PRODUCT_TYPE_ABSTRACT = 'Abstract';
+    protected const FIELD_PRODUCT_TYPE_CONCRETE = 'Concrete';
+
     /**
      * @var \Spryker\Zed\ProductAlternative\Dependency\QueryContainer\ProductAlternativeToProductQueryContainerInterface
      */
@@ -123,6 +126,7 @@ class ProductAlternativeListHydrator implements ProductAlternativeListHydratorIn
         }
 
         return $productAlternativeListItemTransfer
+            ->setType(static::FIELD_PRODUCT_TYPE_ABSTRACT)
             ->setName($productAbstractAlternative->getVirtualColumn(static::COL_NAME))
             ->setSku($productAbstractAlternative->getSku())
             ->setStatus(
@@ -148,6 +152,7 @@ class ProductAlternativeListHydrator implements ProductAlternativeListHydratorIn
         }
 
         return $productAlternativeListItemTransfer
+            ->setType(static::FIELD_PRODUCT_TYPE_CONCRETE)
             ->setName($productConcreteAlternative->getVirtualColumn(static::COL_NAME))
             ->setSku($productConcreteAlternative->getSku())
             ->setStatus($productConcreteAlternative->getIsActive());
@@ -209,7 +214,8 @@ class ProductAlternativeListHydrator implements ProductAlternativeListHydratorIn
             ->innerJoinSpyCategory()
             ->withColumn(SpyCategoryTableMap::COL_CATEGORY_KEY, static::COL_CATEGORY)
             ->select(static::COL_CATEGORY)
-            ->find();
+            ->find()
+            ->toArray();
     }
 
     /**
@@ -224,7 +230,6 @@ class ProductAlternativeListHydrator implements ProductAlternativeListHydratorIn
             ->queryProduct()
             ->filterByIdProduct($idProductConcrete)
             ->innerJoinSpyProductAbstract()
-            ->withColumn(SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT)
             ->select(SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT)
             ->findOne();
 

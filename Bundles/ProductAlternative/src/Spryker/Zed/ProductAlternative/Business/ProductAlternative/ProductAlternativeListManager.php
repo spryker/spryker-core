@@ -88,12 +88,15 @@ class ProductAlternativeListManager implements ProductAlternativeListManagerInte
         $idProductAbstract = $productAlternativeTransfer
             ->getIdProductAbstractAlternative();
 
+        $productAlternativeListItemTransfer = (new ProductAlternativeListItemTransfer())
+            ->setIdProductAlternative($productAlternativeTransfer->getIdProductAbstractAlternative());
+
         if ($idProductAbstract) {
             return $this
                 ->productAlternativeListHydrator
                 ->hydrateProductAbstractListItem(
                     $idProductAbstract,
-                    new ProductAlternativeListItemTransfer()
+                    $productAlternativeListItemTransfer
                 );
         }
 
@@ -105,7 +108,7 @@ class ProductAlternativeListManager implements ProductAlternativeListManagerInte
                 ->productAlternativeListHydrator
                 ->hydrateProductConcreteListItem(
                     $idProductConcrete,
-                    new ProductAlternativeListItemTransfer()
+                    $productAlternativeListItemTransfer
                 );
         }
 
