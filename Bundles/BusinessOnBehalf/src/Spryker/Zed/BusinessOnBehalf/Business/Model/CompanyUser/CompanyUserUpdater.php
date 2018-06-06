@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\BusinessOnBehalf\Business\Model;
+namespace Spryker\Zed\BusinessOnBehalf\Business\Model\CompanyUser;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\BusinessOnBehalf\Persistence\BusinessOnBehalfEntityManagerInterface;
 
-class IsDefaultCompanyUserUpdater implements IsDefaultCompanyUserUpdaterInterface
+class CompanyUserUpdater implements CompanyUserUpdaterInterface
 {
     /**
      * @var \Spryker\Zed\BusinessOnBehalf\Persistence\BusinessOnBehalfEntityManagerInterface

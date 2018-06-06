@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\BusinessOnBehalf\Business\Model;
+namespace Spryker\Zed\BusinessOnBehalf\Business\Model\CompanyUser;
 
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Spryker\Zed\BusinessOnBehalf\Dependency\Facade\CompanyUserToBusinessOnBehalfFacadeInterface;
+use Spryker\Zed\BusinessOnBehalf\Dependency\Facade\BusinessOnBehalfToCompanyUserFacadeBridge;
 use Spryker\Zed\BusinessOnBehalf\Persistence\BusinessOnBehalfRepositoryInterface;
 
 class CompanyUserCollectionFinder implements CompanyUserCollectionFinderInterface
@@ -20,15 +20,15 @@ class CompanyUserCollectionFinder implements CompanyUserCollectionFinderInterfac
     protected $repository;
 
     /**
-     * @var \Spryker\Zed\BusinessOnBehalf\Dependency\Facade\CompanyUserToBusinessOnBehalfFacadeInterface
+     * @var \Spryker\Zed\BusinessOnBehalf\Dependency\Facade\BusinessOnBehalfToCompanyUserFacadeBridge
      */
     protected $companyUserFacade;
 
     /**
      * @param \Spryker\Zed\BusinessOnBehalf\Persistence\BusinessOnBehalfRepositoryInterface $repository
-     * @param \Spryker\Zed\BusinessOnBehalf\Dependency\Facade\CompanyUserToBusinessOnBehalfFacadeInterface $companyUserFacade
+     * @param \Spryker\Zed\BusinessOnBehalf\Dependency\Facade\BusinessOnBehalfToCompanyUserFacadeBridge $companyUserFacade
      */
-    public function __construct(BusinessOnBehalfRepositoryInterface $repository, CompanyUserToBusinessOnBehalfFacadeInterface $companyUserFacade)
+    public function __construct(BusinessOnBehalfRepositoryInterface $repository, BusinessOnBehalfToCompanyUserFacadeBridge $companyUserFacade)
     {
         $this->repository = $repository;
         $this->companyUserFacade = $companyUserFacade;
@@ -41,9 +41,10 @@ class CompanyUserCollectionFinder implements CompanyUserCollectionFinderInterfac
      */
     public function findActiveCompanyUsersByCustomerId(CustomerTransfer $customerTransfer): CompanyUserCollectionTransfer
     {
+        $customerTransfer->requireIdCustomer();
         $companyCollection = new CompanyUserCollectionTransfer();
-        $idsCompanyUser = $this->repository->findActiveCompanyUserIdsByCustomerId($customerTransfer->getIdCustomer());
-        foreach ($idsCompanyUser as $idCompanyUser) {
+        $idCompanyUsers = $this->repository->findActiveCompanyUserIdsByCustomerId($customerTransfer->getIdCustomer());
+        foreach ($idCompanyUsers as $idCompanyUser) {
             $companyCollection->addCompanyUser(
                 $this->companyUserFacade->getCompanyUserById($idCompanyUser)
             );

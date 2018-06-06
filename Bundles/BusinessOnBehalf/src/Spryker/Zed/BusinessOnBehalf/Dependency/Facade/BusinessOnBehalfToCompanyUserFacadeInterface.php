@@ -9,7 +9,7 @@ namespace Spryker\Zed\BusinessOnBehalf\Dependency\Facade;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
 
-interface CompanyUserToBusinessOnBehalfFacadeInterface
+interface BusinessOnBehalfToCompanyUserFacadeInterface
 {
     /**
      * @param int $idCompanyUser

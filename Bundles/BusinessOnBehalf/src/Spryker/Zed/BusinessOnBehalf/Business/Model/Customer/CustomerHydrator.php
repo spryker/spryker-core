@@ -5,10 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\BusinessOnBehalf\Business\CustomerHydrator;
+namespace Spryker\Zed\BusinessOnBehalf\Business\Model\Customer;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use Spryker\Zed\BusinessOnBehalf\Dependency\Facade\CompanyUserToBusinessOnBehalfFacadeInterface;
+use Spryker\Zed\BusinessOnBehalf\Dependency\Facade\BusinessOnBehalfToCompanyUserFacadeBridge;
 use Spryker\Zed\BusinessOnBehalf\Persistence\BusinessOnBehalfRepositoryInterface;
 
 class CustomerHydrator implements CustomerHydratorInterface
@@ -19,17 +19,17 @@ class CustomerHydrator implements CustomerHydratorInterface
     protected $businessOnBehalfRepository;
 
     /**
-     * @var \Spryker\Zed\BusinessOnBehalf\Dependency\Facade\CompanyUserToBusinessOnBehalfFacadeInterface
+     * @var \Spryker\Zed\BusinessOnBehalf\Dependency\Facade\BusinessOnBehalfToCompanyUserFacadeBridge
      */
     protected $companyUserFacade;
 
     /**
      * @param \Spryker\Zed\BusinessOnBehalf\Persistence\BusinessOnBehalfRepositoryInterface $businessOnBehalfRepository
-     * @param \Spryker\Zed\BusinessOnBehalf\Dependency\Facade\CompanyUserToBusinessOnBehalfFacadeInterface $companyUserFacade
+     * @param \Spryker\Zed\BusinessOnBehalf\Dependency\Facade\BusinessOnBehalfToCompanyUserFacadeBridge $companyUserFacade
      */
     public function __construct(
         BusinessOnBehalfRepositoryInterface $businessOnBehalfRepository,
-        CompanyUserToBusinessOnBehalfFacadeInterface $companyUserFacade
+        BusinessOnBehalfToCompanyUserFacadeBridge $companyUserFacade
     ) {
         $this->businessOnBehalfRepository = $businessOnBehalfRepository;
         $this->companyUserFacade = $companyUserFacade;
@@ -45,6 +45,7 @@ class CustomerHydrator implements CustomerHydratorInterface
         if ($customerTransfer->getCompanyUserTransfer()) {
             return $customerTransfer;
         }
+        $customerTransfer->requireIdCustomer();
         $defaultCompanyUser = $this->businessOnBehalfRepository
             ->findDefaultCompanyUserByCustomerId($customerTransfer->getIdCustomer());
         if ($defaultCompanyUser) {

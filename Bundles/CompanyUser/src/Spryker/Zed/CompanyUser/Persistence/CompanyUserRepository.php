@@ -44,6 +44,8 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
     }
 
     /**
+     * @uses SpyCompanyQuery
+     *
      * @param int $idCustomer
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
@@ -70,6 +72,8 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
     }
 
     /**
+     * @uses SpyCustomerQuery
+     *
      * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $criteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
@@ -97,6 +101,9 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
     }
 
     /**
+     * @uses SpyCustomerQuery
+     * @uses SpyCompanyQuery
+     *
      * @param int $idCompanyUser
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer
@@ -107,7 +114,6 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
             ->createCompanyUserQuery()
             ->leftJoinWithCustomer()
             ->leftJoinWithCompany()
-            ->leftJoinWithCompanyBusinessUnit()
             ->filterByIdCompanyUser($idCompanyUser);
 
         $entityTransfer = $this->buildQueryFromCriteria($query)->findOne();
@@ -151,6 +157,8 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
     }
 
     /**
+     * @uses SpyCustomerQuery
+     *
      * @param int $idCompany
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer
@@ -174,11 +182,13 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
     }
 
     /**
+     * @uses SpyCompanyQuery
+     *
      * @param int $idCustomer
      *
      * @return int
      */
-    public function getCountOfActiveCompanyUsersByCustomerId(int $idCustomer): int
+    public function countActiveCompanyUsersByIdCustomer(int $idCustomer): int
     {
         $query = $this->getFactory()
             ->createCompanyUserQuery()

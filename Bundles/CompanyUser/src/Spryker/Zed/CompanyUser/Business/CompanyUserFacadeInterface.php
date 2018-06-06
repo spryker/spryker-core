@@ -96,7 +96,6 @@ interface CompanyUserFacadeInterface
      * Specification:
      * - Retrieves company user by id
      * - Hydrates company field
-     * - Hydrates company business unit field
      *
      * @api
      *
@@ -129,5 +128,5 @@ interface CompanyUserFacadeInterface
      *
      * @return int
      */
-    public function getCountOfActiveCompanyUsersByCustomerId(CustomerTransfer $customerTransfer): int;
+    public function countActiveCompanyUsersByIdCustomer(CustomerTransfer $customerTransfer): int;
 }

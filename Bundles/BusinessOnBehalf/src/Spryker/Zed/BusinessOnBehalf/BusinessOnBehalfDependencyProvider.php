@@ -8,13 +8,13 @@
 namespace Spryker\Zed\BusinessOnBehalf;
 
 use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
-use Spryker\Zed\BusinessOnBehalf\Dependency\Facade\CompanyUserToBusinessOnBehalfFacadeBridge;
+use Spryker\Zed\BusinessOnBehalf\Dependency\Facade\BusinessOnBehalfToCompanyUserFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
 class BusinessOnBehalfDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const QUERY_COMPANY_USER = 'QUERY_COMPANY_USER';
+    public const PROPEL_QUERY_COMPANY_USER = 'PROPEL_QUERY_COMPANY_USER';
     public const FACADE_COMPANY_USER = 'FACADE_COMPANY_USER';
 
     /**
@@ -48,7 +48,7 @@ class BusinessOnBehalfDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addCompanyUserQuery(Container $container): Container
     {
-        $container[static::QUERY_COMPANY_USER] = function (Container $container) {
+        $container[static::PROPEL_QUERY_COMPANY_USER] = function (Container $container) {
             return SpyCompanyUserQuery::create();
         };
 
@@ -63,7 +63,7 @@ class BusinessOnBehalfDependencyProvider extends AbstractBundleDependencyProvide
     protected function addCompanyUserFacade(Container $container): Container
     {
         $container[static::FACADE_COMPANY_USER] = function (Container $container) {
-            return new CompanyUserToBusinessOnBehalfFacadeBridge($container->getLocator()->companyUser()->facade());
+            return new BusinessOnBehalfToCompanyUserFacadeBridge($container->getLocator()->companyUser()->facade());
         };
 
         return $container;

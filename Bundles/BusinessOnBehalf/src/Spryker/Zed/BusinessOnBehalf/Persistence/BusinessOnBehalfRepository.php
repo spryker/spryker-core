@@ -32,7 +32,7 @@ class BusinessOnBehalfRepository extends AbstractRepository implements BusinessO
         $query = $this->getFactory()->getCompanyUserQuery();
         $query->filterByFkCustomer($idCustomer);
 
-        return ($query->count() > 1);
+        return count($query->select([SpyCompanyUserTableMap::COL_ID_COMPANY_USER])->find()) > 1;
     }
 
     /**
@@ -40,6 +40,7 @@ class BusinessOnBehalfRepository extends AbstractRepository implements BusinessO
      *
      * @api
      *
+     * @uses Company
      * @uses CompanyUser
      *
      * @param int $idCustomer
@@ -60,6 +61,8 @@ class BusinessOnBehalfRepository extends AbstractRepository implements BusinessO
     }
 
     /**
+     * @uses CompanyUser
+     *
      * @param int $idCustomer
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer|null

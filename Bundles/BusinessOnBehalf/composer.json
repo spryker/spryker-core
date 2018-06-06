@@ -14,7 +14,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/customer": "Customer ^1.0.0 so customer has idCustomer field."
+    "spryker/customer": "If you want to have idCustomer in Customer."
   },
   "autoload": {
     "psr-4": {

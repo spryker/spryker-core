@@ -43,6 +43,13 @@ interface CompanyUserInterface
     public function findCompanyUserByCustomerId(int $idCustomer): ?CompanyUserTransfer;
 
     /**
+     * @param int $idCompanyUser
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     */
+    public function getCompanyUserById(int $idCompanyUser): CompanyUserTransfer;
+
+    /**
      * @param int $idCustomer
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer|null

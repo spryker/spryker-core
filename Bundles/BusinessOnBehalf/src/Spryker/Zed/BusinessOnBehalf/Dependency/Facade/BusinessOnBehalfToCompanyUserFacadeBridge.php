@@ -9,7 +9,7 @@ namespace Spryker\Zed\BusinessOnBehalf\Dependency\Facade;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
 
-class CompanyUserToBusinessOnBehalfFacadeBridge implements CompanyUserToBusinessOnBehalfFacadeInterface
+class BusinessOnBehalfToCompanyUserFacadeBridge implements BusinessOnBehalfToCompanyUserFacadeInterface
 {
     /**
      * @var \Spryker\Zed\CompanyUser\Business\CompanyUserFacadeInterface

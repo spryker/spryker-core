@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CompanyUser\Persistence\Mapper;
 
 use ArrayObject;
-use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
@@ -57,14 +56,6 @@ class CompanyUserMapper implements CompanyUserMapperInterface
                 true
             );
             $companyUserTransfer->setCompany($companyTransfer);
-        }
-
-        if ($companyUserEntityTransfer->getCompanyBusinessUnit()) {
-            $companyBusinessUnitTransfer = (new CompanyBusinessUnitTransfer())->fromArray(
-                $companyUserEntityTransfer->getCompanyBusinessUnit()->modifiedToArray(),
-                true
-            );
-            $companyUserTransfer->setCompanyBusinessUnit($companyBusinessUnitTransfer);
         }
 
         return $companyUserTransfer;

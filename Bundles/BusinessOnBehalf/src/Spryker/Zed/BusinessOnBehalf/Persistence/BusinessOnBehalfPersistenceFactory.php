@@ -21,6 +21,6 @@ class BusinessOnBehalfPersistenceFactory extends AbstractPersistenceFactory
      */
     public function getCompanyUserQuery(): SpyCompanyUserQuery
     {
-        return $this->getProvidedDependency(BusinessOnBehalfDependencyProvider::QUERY_COMPANY_USER);
+        return $this->getProvidedDependency(BusinessOnBehalfDependencyProvider::PROPEL_QUERY_COMPANY_USER);
     }
 }

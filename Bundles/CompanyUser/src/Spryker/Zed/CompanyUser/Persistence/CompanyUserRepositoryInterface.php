@@ -53,5 +53,5 @@ interface CompanyUserRepositoryInterface
      *
      * @return int
      */
-    public function getCountOfActiveCompanyUsersByCustomerId(int $idCustomer): int;
+    public function countActiveCompanyUsersByIdCustomer(int $idCustomer): int;
 }

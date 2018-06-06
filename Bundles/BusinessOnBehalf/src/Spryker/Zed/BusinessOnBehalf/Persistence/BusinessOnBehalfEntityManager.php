@@ -25,14 +25,15 @@ class BusinessOnBehalfEntityManager extends AbstractEntityManager implements Bus
      */
     public function setDefaultCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer
     {
-        $this->cleanupExistingIsDefaultFlag($companyUserTransfer->requireCustomer()->getCustomer());
+        $companyUserTransfer->requireCustomer();
+        $this->cleanupExistingIsDefaultFlag($companyUserTransfer->getCustomer());
 
         $query = $this->getFactory()->getCompanyUserQuery();
         $defaultCompanyUser = $query->filterByIdCompanyUser($companyUserTransfer->getIdCompanyUser())
             ->filterByFkCustomer($companyUserTransfer->getCustomer()->getIdCustomer())
             ->findOne();
 
-        if ($defaultCompanyUser && $companyUserTransfer->getIsDefault()) {
+        if ($defaultCompanyUser) {
             $defaultCompanyUser->setIsDefault(true)->save();
         }
 
@@ -60,6 +61,7 @@ class BusinessOnBehalfEntityManager extends AbstractEntityManager implements Bus
      */
     protected function cleanupExistingIsDefaultFlag(CustomerTransfer $customerTransfer): void
     {
+        $customerTransfer->requireIdCustomer();
         $this->getFactory()
             ->getCompanyUserQuery()
             ->filterByFkCustomer($customerTransfer->getIdCustomer())

@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\CompanyUser\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
 
 /**
  * Auto-generated group annotations
@@ -31,7 +30,7 @@ class CompanyUserFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetCountOfActiveCompanyUsersByCustomerId(): void
+    public function testCountActiveCompanyUsersByIdCustomerCountsActiveCompanyUsersOnly(): void
     {
         //Arrange
         $expectedCompanyUserAmount = 1;

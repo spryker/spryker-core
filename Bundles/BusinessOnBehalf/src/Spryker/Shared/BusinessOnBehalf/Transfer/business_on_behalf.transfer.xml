@@ -11,5 +11,6 @@
     <transfer name="CompanyUser">
         <property name="companyBusinessUnit" type="CompanyBusinessUnit" />
         <property name="company" type="Company" />
+        <property name="isDefault" type="bool" />
     </transfer>
 </transfers>

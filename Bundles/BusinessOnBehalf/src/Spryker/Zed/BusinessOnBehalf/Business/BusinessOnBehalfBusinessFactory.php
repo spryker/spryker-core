@@ -7,16 +7,16 @@
 
 namespace Spryker\Zed\BusinessOnBehalf\Business;
 
-use Spryker\Zed\BusinessOnBehalf\Business\CustomerHydrator\CustomerHydrator;
-use Spryker\Zed\BusinessOnBehalf\Business\CustomerHydrator\CustomerHydratorInterface;
-use Spryker\Zed\BusinessOnBehalf\Business\Model\CompanyUserCollectionFinder;
-use Spryker\Zed\BusinessOnBehalf\Business\Model\CompanyUserCollectionFinderInterface;
-use Spryker\Zed\BusinessOnBehalf\Business\Model\CustomerExpander;
-use Spryker\Zed\BusinessOnBehalf\Business\Model\CustomerExpanderInterface;
-use Spryker\Zed\BusinessOnBehalf\Business\Model\IsDefaultCompanyUserUpdater;
-use Spryker\Zed\BusinessOnBehalf\Business\Model\IsDefaultCompanyUserUpdaterInterface;
+use Spryker\Zed\BusinessOnBehalf\Business\Model\CompanyUser\CompanyUserCollectionFinder;
+use Spryker\Zed\BusinessOnBehalf\Business\Model\CompanyUser\CompanyUserCollectionFinderInterface;
+use Spryker\Zed\BusinessOnBehalf\Business\Model\CompanyUser\CompanyUserUpdater;
+use Spryker\Zed\BusinessOnBehalf\Business\Model\CompanyUser\CompanyUserUpdaterInterface;
+use Spryker\Zed\BusinessOnBehalf\Business\Model\Customer\CustomerExpander;
+use Spryker\Zed\BusinessOnBehalf\Business\Model\Customer\CustomerExpanderInterface;
+use Spryker\Zed\BusinessOnBehalf\Business\Model\Customer\CustomerHydrator;
+use Spryker\Zed\BusinessOnBehalf\Business\Model\Customer\CustomerHydratorInterface;
 use Spryker\Zed\BusinessOnBehalf\BusinessOnBehalfDependencyProvider;
-use Spryker\Zed\BusinessOnBehalf\Dependency\Facade\CompanyUserToBusinessOnBehalfFacadeInterface;
+use Spryker\Zed\BusinessOnBehalf\Dependency\Facade\BusinessOnBehalfToCompanyUserFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -27,7 +27,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 class BusinessOnBehalfBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\BusinessOnBehalf\Business\Model\CustomerExpanderInterface
+     * @return \Spryker\Zed\BusinessOnBehalf\Business\Model\Customer\CustomerExpanderInterface
      */
     public function createCustomerExpander(): CustomerExpanderInterface
     {
@@ -35,7 +35,7 @@ class BusinessOnBehalfBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\BusinessOnBehalf\Business\Model\CompanyUserCollectionFinderInterface
+     * @return \Spryker\Zed\BusinessOnBehalf\Business\Model\CompanyUser\CompanyUserCollectionFinderInterface
      */
     public function createCompanyUserCollectionFinder(): CompanyUserCollectionFinderInterface
     {
@@ -46,17 +46,17 @@ class BusinessOnBehalfBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\BusinessOnBehalf\Business\Model\IsDefaultCompanyUserUpdaterInterface
+     * @return \Spryker\Zed\BusinessOnBehalf\Business\Model\CompanyUser\CompanyUserUpdaterInterface
      */
-    public function createIsDefaultCompanyUserUpdater(): IsDefaultCompanyUserUpdaterInterface
+    public function createIsDefaultCompanyUserUpdater(): CompanyUserUpdaterInterface
     {
-        return new IsDefaultCompanyUserUpdater(
+        return new CompanyUserUpdater(
             $this->getEntityManager()
         );
     }
 
     /**
-     * @return \Spryker\Zed\BusinessOnBehalf\Business\CustomerHydrator\CustomerHydratorInterface
+     * @return \Spryker\Zed\BusinessOnBehalf\Business\Model\Customer\CustomerHydratorInterface
      */
     public function createCustomerHydrator(): CustomerHydratorInterface
     {
@@ -67,9 +67,9 @@ class BusinessOnBehalfBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\BusinessOnBehalf\Dependency\Facade\CompanyUserToBusinessOnBehalfFacadeInterface
+     * @return \Spryker\Zed\BusinessOnBehalf\Dependency\Facade\BusinessOnBehalfToCompanyUserFacadeInterface
      */
-    public function getCompanyUserFacade(): CompanyUserToBusinessOnBehalfFacadeInterface
+    public function getCompanyUserFacade(): BusinessOnBehalfToCompanyUserFacadeInterface
     {
         return $this->getProvidedDependency(BusinessOnBehalfDependencyProvider::FACADE_COMPANY_USER);
     }

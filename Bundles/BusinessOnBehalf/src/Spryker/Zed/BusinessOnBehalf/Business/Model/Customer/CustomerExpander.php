@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\BusinessOnBehalf\Business\Model;
+namespace Spryker\Zed\BusinessOnBehalf\Business\Model\Customer;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\BusinessOnBehalf\Persistence\BusinessOnBehalfRepositoryInterface;
@@ -32,7 +32,11 @@ class CustomerExpander implements CustomerExpanderInterface
      */
     public function expandCustomer(CustomerTransfer $customerTransfer): CustomerTransfer
     {
-        $customerTransfer->setIsOnBehalf($this->repository->isOnBehalfByCustomerId($customerTransfer->getIdCustomer()));
+        $customerTransfer->setIsOnBehalf(
+            $this->repository->isOnBehalfByCustomerId(
+                $customerTransfer->requireIdCustomer()->getIdCustomer()
+            )
+        );
 
         return $customerTransfer;
     }

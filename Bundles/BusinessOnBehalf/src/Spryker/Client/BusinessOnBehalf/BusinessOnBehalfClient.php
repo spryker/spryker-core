@@ -36,8 +36,6 @@ class BusinessOnBehalfClient extends AbstractClient implements BusinessOnBehalfC
      *
      * @api
      *
-     * @uses CompanyUser
-     *
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer

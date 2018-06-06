@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\BusinessOnBehalf\Communication\Plugin;
+namespace Spryker\Zed\BusinessOnBehalf\Communication\Plugin\Customer;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\Customer\Dependency\Plugin\CustomerTransferExpanderPluginInterface;
@@ -17,8 +17,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class CustomerDefaultCompanyUserExpanderPlugin extends AbstractPlugin implements CustomerTransferExpanderPluginInterface
 {
     /**
-     * Specification
-     * - Expands the provided customer transfer object's data and returns the modified object.
+     * {@inheritdoc}
      *
      * @api
      *
