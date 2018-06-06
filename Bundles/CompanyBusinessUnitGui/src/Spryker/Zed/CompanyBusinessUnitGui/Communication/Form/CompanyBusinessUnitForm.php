@@ -92,13 +92,13 @@ class CompanyBusinessUnitForm extends AbstractType
      * @param string[] $choicesValues [unitKey => idUnit]
      * @param array[] $choicesAttributes [unitKey => ['data-id_company' => idCompany]
      *
-     * @return \Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyBusinessUnitForm
+     * @return $this
      */
     protected function addParentNameField(
         FormBuilderInterface $builder,
         array $choicesValues,
         array $choicesAttributes
-    ): CompanyBusinessUnitForm {
+    ): self {
         $builder->add(static::FIELD_FK_PARENT_COMPANY_BUSINESS_UNIT, ChoiceType::class, [
             'label' => 'Parent',
             'placeholder' => 'No parent',
