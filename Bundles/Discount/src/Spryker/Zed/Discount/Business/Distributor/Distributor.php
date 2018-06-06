@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Discount\Business\Distributor;
 
-use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
 use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
@@ -15,9 +14,17 @@ use Generated\Shared\Transfer\DiscountTransfer;
 class Distributor implements DistributorInterface
 {
     /**
-     * @var float
+     * @var \Spryker\Zed\DiscountExtension\Dependency\Plugin\Distributor\DiscountableItemExpanderStrategyPluginInterface[]
      */
-    protected $roundingError = 0.0;
+    protected $discountableItemExpanderStrategyPlugins;
+
+    /**
+     * @param \Spryker\Zed\DiscountExtension\Dependency\Plugin\Distributor\DiscountableItemExpanderStrategyPluginInterface[] $discountableItemExpanderStrategyPlugins
+     */
+    public function __construct(array $discountableItemExpanderStrategyPlugins)
+    {
+        $this->discountableItemExpanderStrategyPlugins = $discountableItemExpanderStrategyPlugins;
+    }
 
     /**
      * @param \Generated\Shared\Transfer\CollectedDiscountTransfer $collectedDiscountTransfer
@@ -41,23 +48,31 @@ class Distributor implements DistributorInterface
             $totalDiscountAmount = $totalAmount;
         }
 
-        $calculatedDiscountTransfer = $this->createBaseCalculatedDiscountTransfer($collectedDiscountTransfer->getDiscount());
-
         foreach ($collectedDiscountTransfer->getDiscountableItems() as $discountableItemTransfer) {
-            $singleItemAmountShare = $discountableItemTransfer->getUnitPrice() / $totalAmount;
-            $quantity = $this->getDiscountableItemQuantity($discountableItemTransfer);
-            for ($i = 0; $i < $quantity; $i++) {
-                $itemDiscountAmount = ($totalDiscountAmount * $singleItemAmountShare) + $this->roundingError;
-                $itemDiscountAmountRounded = (int)round($itemDiscountAmount);
-                $this->roundingError = $itemDiscountAmount - $itemDiscountAmountRounded;
+            $this->expandItemsPerPlugin($discountableItemTransfer, $collectedDiscountTransfer->getDiscount(), $totalDiscountAmount, $totalAmount);
+        }
+    }
 
-                $distributedDiscountTransfer = clone $calculatedDiscountTransfer;
-                $distributedDiscountTransfer->setIdDiscount($collectedDiscountTransfer->getDiscount()->getIdDiscount());
-                $distributedDiscountTransfer->setUnitAmount($itemDiscountAmountRounded);
-                $distributedDiscountTransfer->setQuantity(1);
+    /**
+     * @param \Generated\Shared\Transfer\DiscountableItemTransfer $discountableItemTransfer
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
+     * @param int $totalDiscountAmount
+     * @param int $totalAmount
+     *
+     * @return void
+     */
+    protected function expandItemsPerPlugin(DiscountableItemTransfer $discountableItemTransfer, DiscountTransfer $discountTransfer, $totalDiscountAmount, $totalAmount)
+    {
+        $quantity = $this->getDiscountableItemQuantity($discountableItemTransfer);
 
-                $discountableItemTransfer->getOriginalItemCalculatedDiscounts()->append($distributedDiscountTransfer);
+        foreach ($this->discountableItemExpanderStrategyPlugins as $discountableItemExpanderStrategyPlugin) {
+            if (!$discountableItemExpanderStrategyPlugin->isApplicable($discountableItemTransfer)) {
+                continue;
             }
+
+            $discountableItemExpanderStrategyPlugin->expandDiscountableItem($discountableItemTransfer, $discountTransfer, $totalDiscountAmount, $totalAmount, $quantity);
+
+            return;
         }
     }
 
@@ -90,18 +105,5 @@ class Distributor implements DistributorInterface
         }
 
         return $quantity;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
-     *
-     * @return \Generated\Shared\Transfer\CalculatedDiscountTransfer
-     */
-    protected function createBaseCalculatedDiscountTransfer(DiscountTransfer $discountTransfer)
-    {
-        $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
-        $calculatedDiscountTransfer->fromArray($discountTransfer->toArray(), true);
-
-        return $calculatedDiscountTransfer;
     }
 }
