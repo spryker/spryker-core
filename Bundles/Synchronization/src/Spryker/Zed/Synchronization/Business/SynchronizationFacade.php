@@ -45,9 +45,7 @@ class SynchronizationFacade extends AbstractFacade implements SynchronizationFac
     }
 
     /**
-     * Specification:
-     * - Writes json encoded data to search
-     * - Will not write if the data is outdated compare to search timestamp
+     * {@inheritdoc}
      *
      * @api
      *
@@ -62,9 +60,7 @@ class SynchronizationFacade extends AbstractFacade implements SynchronizationFac
     }
 
     /**
-     * Specification:
-     * - Deletes all data keys from search
-     * - Will not delete if the data is outdated compare to search timestamp
+     * {@inheritdoc}
      *
      * @api
      *
@@ -76,5 +72,20 @@ class SynchronizationFacade extends AbstractFacade implements SynchronizationFac
     public function searchDelete(array $data, $queueName)
     {
         $this->getFactory()->createSearchManager()->delete($data, $queueName);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string[] $resources
+     * @param int[] $ids
+     *
+     * @return void
+     */
+    public function exportSynchronizedData(array $resources, array $ids = [])
+    {
+        $this->getFactory()->createExporter()->exportSynchronizedData($resources, $ids);
     }
 }

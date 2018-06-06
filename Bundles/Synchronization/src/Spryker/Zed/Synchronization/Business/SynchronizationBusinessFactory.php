@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Synchronization\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Synchronization\Business\Export\Exporter;
 use Spryker\Zed\Synchronization\Business\Model\Search\SynchronizationSearch;
 use Spryker\Zed\Synchronization\Business\Model\Storage\SynchronizationStorage;
 use Spryker\Zed\Synchronization\Business\Model\Validation\OutdatedValidator;
@@ -42,9 +43,17 @@ class SynchronizationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Synchronization\Business\Export\Exporter
+     */
+    public function createExporter()
+    {
+        return new Exporter($this->getSynchronizationDataPlugins());
+    }
+
+    /**
      * @return \Spryker\Zed\Synchronization\Business\Model\Validation\OutdatedValidatorInterface
      */
-    public function createOutdatedValidator()
+    protected function createOutdatedValidator()
     {
         return new OutdatedValidator(
             $this->getConfig()
@@ -54,7 +63,7 @@ class SynchronizationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToStorageInterface
      */
-    public function getStorageClient()
+    protected function getStorageClient()
     {
         return $this->getProvidedDependency(SynchronizationDependencyProvider::CLIENT_STORAGE);
     }
@@ -62,7 +71,7 @@ class SynchronizationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToSearchInterface
      */
-    public function getSearchClient()
+    protected function getSearchClient()
     {
         return $this->getProvidedDependency(SynchronizationDependencyProvider::CLIENT_SEARCH);
     }
@@ -70,8 +79,16 @@ class SynchronizationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingInterface
      */
-    public function getUtilEncodingService()
+    protected function getUtilEncodingService()
     {
         return $this->getProvidedDependency(SynchronizationDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface[]
+     */
+    protected function getSynchronizationDataPlugins()
+    {
+        return $this->getProvidedDependency(SynchronizationDependencyProvider::SYNCHRONIZATION_DATA_PLUGINS);
     }
 }

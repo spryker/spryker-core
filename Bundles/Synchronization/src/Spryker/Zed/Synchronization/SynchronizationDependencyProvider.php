@@ -18,6 +18,7 @@ class SynchronizationDependencyProvider extends AbstractBundleDependencyProvider
     const CLIENT_STORAGE = 'CLIENT_STORAGE';
     const CLIENT_SEARCH = 'CLIENT_SEARCH';
     const SERVICE_UTIL_ENCODING = 'UTIL_ENCODING_SERVICE';
+    const SYNCHRONIZATION_DATA_PLUGINS = 'SYNCHRONIZATION_DATA_PLUGINS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -29,6 +30,7 @@ class SynchronizationDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addStorageClient($container);
         $container = $this->addSearchClient($container);
         $container = $this->addUtilEncodingService($container);
+        $container = $this->addSynchronizationDataPlugins($container);
 
         return $container;
     }
@@ -85,5 +87,27 @@ class SynchronizationDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSynchronizationDataPlugins($container)
+    {
+        $container[self::SYNCHRONIZATION_DATA_PLUGINS] = function (Container $container) {
+            return $this->getSynchronizationDataPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface[]
+     */
+    protected function getSynchronizationDataPlugins()
+    {
+        return [];
     }
 }
