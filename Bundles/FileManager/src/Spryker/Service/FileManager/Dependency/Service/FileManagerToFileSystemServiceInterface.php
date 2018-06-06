@@ -29,4 +29,13 @@ interface FileManagerToFileSystemServiceInterface
      * @return mixed
      */
     public function readStream(FileSystemStreamTransfer $fileSystemStreamTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
+     *
+     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     *
+     * @return string
+     */
+    public function getMimeType(FileSystemQueryTransfer $fileSystemQueryTransfer);
 }

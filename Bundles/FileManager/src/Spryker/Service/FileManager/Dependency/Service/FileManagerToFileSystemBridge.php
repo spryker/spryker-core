@@ -44,4 +44,14 @@ class FileManagerToFileSystemBridge implements FileManagerToFileSystemServiceInt
     {
         return $this->fileSystemService->readStream($fileSystemStreamTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
+     *
+     * @return string
+     */
+    public function getMimeType(FileSystemQueryTransfer $fileSystemQueryTransfer)
+    {
+        return $this->fileSystemService->getMimeType($fileSystemQueryTransfer);
+    }
 }
