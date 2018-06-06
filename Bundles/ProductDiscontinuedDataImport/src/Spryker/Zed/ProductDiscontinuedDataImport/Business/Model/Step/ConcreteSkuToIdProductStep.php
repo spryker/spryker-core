@@ -12,7 +12,7 @@ use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\ProductDiscontinuedDataImport\Business\Model\DataSet\ProductDiscontinuedDataSet;
+use Spryker\Zed\ProductDiscontinuedDataImport\Business\Model\DataSet\ProductDiscontinuedDataSetInterface;
 
 class ConcreteSkuToIdProductStep implements DataImportStepInterface
 {
@@ -30,7 +30,7 @@ class ConcreteSkuToIdProductStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet)
     {
-        $concreteSku = $dataSet[ProductDiscontinuedDataSet::KEY_CONCRETE_SKU];
+        $concreteSku = $dataSet[ProductDiscontinuedDataSetInterface::KEY_CONCRETE_SKU];
         if (!isset($this->idProductCache[$concreteSku])) {
             $productQuery = SpyProductQuery::create();
             $idProduct = $productQuery
@@ -44,6 +44,6 @@ class ConcreteSkuToIdProductStep implements DataImportStepInterface
             $this->idProductCache[$concreteSku] = $idProduct;
         }
 
-        $dataSet[ProductDiscontinuedDataSet::ID_PRODUCT] = $this->idProductCache[$concreteSku];
+        $dataSet[ProductDiscontinuedDataSetInterface::ID_PRODUCT] = $this->idProductCache[$concreteSku];
     }
 }

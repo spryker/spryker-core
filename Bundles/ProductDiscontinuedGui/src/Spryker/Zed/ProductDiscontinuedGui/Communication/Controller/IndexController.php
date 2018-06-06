@@ -18,10 +18,10 @@ class IndexController extends AbstractController
 {
     public const PARAM_ID_PRODUCT_CONCRETE = 'id-product-concrete';
 
-    protected const MESSAGE_PRODUCT_DISCONTINUED_SUCCESS = 'Product has been discontinued.';
-    protected const MESSAGE_PRODUCT_DISCONTINUED_ERROR = 'Product can not be discontinued.';
-    protected const MESSAGE_PRODUCT_UNDISCONTINUED_SUCCESS = 'Product has been undiscontinued.';
-    protected const MESSAGE_PRODUCT_UNDISCONTINUED_ERROR = 'Product can not be undiscontinued.';
+    protected const MESSAGE_PRODUCT_DISCONTINUED_SUCCESS = 'Product has been marked as discontinued.';
+    protected const MESSAGE_PRODUCT_DISCONTINUED_ERROR = 'Product can not be marked as  discontinued.';
+    protected const MESSAGE_PRODUCT_UNDISCONTINUED_SUCCESS = 'Product has been unmarked as discontinued.';
+    protected const MESSAGE_PRODUCT_UNDISCONTINUED_ERROR = 'Product can not be unmarked as discontinued.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -37,7 +37,7 @@ class IndexController extends AbstractController
 
         $productDiscontinuedResponseTransfer = $this->getFactory()
             ->getProductDiscontinuedFacade()
-            ->discontinueProduct($productDiscontinuedRequestTransfer);
+            ->markProductAsDiscontinued($productDiscontinuedRequestTransfer);
 
         if ($productDiscontinuedResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::MESSAGE_PRODUCT_DISCONTINUED_SUCCESS);
@@ -63,7 +63,7 @@ class IndexController extends AbstractController
 
         $productDiscontinuedResponseTransfer = $this->getFactory()
             ->getProductDiscontinuedFacade()
-            ->undiscontinueProduct($productDiscontinuedRequestTransfer);
+            ->unmarkProductAsDiscontinued($productDiscontinuedRequestTransfer);
 
         if ($productDiscontinuedResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::MESSAGE_PRODUCT_UNDISCONTINUED_SUCCESS);

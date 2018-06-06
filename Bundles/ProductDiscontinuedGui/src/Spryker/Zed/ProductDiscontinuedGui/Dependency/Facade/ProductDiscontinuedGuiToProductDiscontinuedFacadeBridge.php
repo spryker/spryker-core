@@ -30,10 +30,10 @@ class ProductDiscontinuedGuiToProductDiscontinuedFacadeBridge implements Product
      *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer
      */
-    public function undiscontinueProduct(
+    public function unmarkProductAsDiscontinued(
         ProductDiscontinuedRequestTransfer $productDiscontinuedRequestTransfer
     ): ProductDiscontinuedResponseTransfer {
-        return $this->productDiscontinuedFacade->undiscontinueProduct($productDiscontinuedRequestTransfer);
+        return $this->productDiscontinuedFacade->unmarkProductAsDiscontinued($productDiscontinuedRequestTransfer);
     }
 
     /**
@@ -41,10 +41,10 @@ class ProductDiscontinuedGuiToProductDiscontinuedFacadeBridge implements Product
      *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer
      */
-    public function discontinueProduct(
+    public function markProductAsDiscontinued(
         ProductDiscontinuedRequestTransfer $productDiscontinuedRequestTransfer
     ): ProductDiscontinuedResponseTransfer {
-        return $this->productDiscontinuedFacade->discontinueProduct($productDiscontinuedRequestTransfer);
+        return $this->productDiscontinuedFacade->markProductAsDiscontinued($productDiscontinuedRequestTransfer);
     }
 
     /**

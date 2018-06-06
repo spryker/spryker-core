@@ -1,4 +1,4 @@
-namespace: SprykerTest
+namespace: ProductMeasurementUnitDataImport
 actor: Tester
 include:
   - tests/SprykerTest/Zed/ProductMeasurementUnitDataImport
@@ -16,7 +16,6 @@ settings:
     log: true
 coverage:
     enabled: true
-    remote: false
     whitelist:
         include:
             - 'src/*.php'

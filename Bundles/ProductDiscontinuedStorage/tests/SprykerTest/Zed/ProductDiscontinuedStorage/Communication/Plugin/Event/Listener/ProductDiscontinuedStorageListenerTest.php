@@ -72,7 +72,7 @@ class ProductDiscontinuedStorageListenerTest extends Unit
         $productConcrete = $this->tester->haveProduct();
         $productDiscontinuedRequestTransfer = (new ProductDiscontinuedRequestTransfer())
             ->setIdProduct($productConcrete->getIdProductConcrete());
-        $this->productDiscontinuedTransfer = $this->tester->getProductDiscontinuedFacade()->discontinueProduct(
+        $this->productDiscontinuedTransfer = $this->tester->getProductDiscontinuedFacade()->markProductAsDiscontinued(
             $productDiscontinuedRequestTransfer
         )
             ->getProductDiscontinued();

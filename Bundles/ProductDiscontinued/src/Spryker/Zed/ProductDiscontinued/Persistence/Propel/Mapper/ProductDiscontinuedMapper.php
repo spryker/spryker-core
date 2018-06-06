@@ -43,7 +43,6 @@ class ProductDiscontinuedMapper implements ProductDiscontinuedMapperInterface
         SpyProductDiscontinued $productDiscontinuedEntity
     ): SpyProductDiscontinued {
         $productDiscontinuedEntity->fromArray($productDiscontinuedTransfer->toArray());
-        $productDiscontinuedEntity->setFkProduct($productDiscontinuedTransfer->getFkProduct());
 
         return $productDiscontinuedEntity;
     }

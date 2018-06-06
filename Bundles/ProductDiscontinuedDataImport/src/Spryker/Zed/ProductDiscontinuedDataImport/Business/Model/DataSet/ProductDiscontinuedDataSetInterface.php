@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductDiscontinuedDataImport\Business\Model\DataSet;
 
-interface ProductDiscontinuedDataSet
+interface ProductDiscontinuedDataSetInterface
 {
     public const KEY_CONCRETE_SKU = 'sku_concrete';
     public const ID_PRODUCT = 'fkProduct';

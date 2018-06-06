@@ -83,7 +83,6 @@ class ProductDiscontinuedDeactivator implements ProductDiscontinuedDeactivatorIn
     protected function executeDeactivateTransaction(ProductDiscontinuedCollectionTransfer $productDiscontinuedCollectionTransfer): void
     {
         foreach ($productDiscontinuedCollectionTransfer->getProductDiscontinueds() as $productDiscontinuedTransfer) {
-            $productDiscontinuedTransfer->getFkProduct();
             $this->productFacade->deactivateProductConcrete($productDiscontinuedTransfer->getFkProduct());
             $this->productDiscontinuedEntityManager->deleteProductDiscontinued($productDiscontinuedTransfer);
             $this->addProductDeactivatedMessage($productDiscontinuedTransfer->getFkProduct());

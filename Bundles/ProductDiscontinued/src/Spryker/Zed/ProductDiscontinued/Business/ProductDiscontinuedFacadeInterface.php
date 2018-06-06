@@ -28,7 +28,7 @@ interface ProductDiscontinuedFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer
      */
-    public function discontinueProduct(
+    public function markProductAsDiscontinued(
         ProductDiscontinuedRequestTransfer $productDiscontinuedRequestTransfer
     ): ProductDiscontinuedResponseTransfer;
 
@@ -42,7 +42,7 @@ interface ProductDiscontinuedFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer
      */
-    public function undiscontinueProduct(
+    public function unmarkProductAsDiscontinued(
         ProductDiscontinuedRequestTransfer $productDiscontinuedRequestTransfer
     ): ProductDiscontinuedResponseTransfer;
 

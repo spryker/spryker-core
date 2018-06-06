@@ -14,7 +14,7 @@ use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\ProductDiscontinued\Dependency\ProductDiscontinuedEvents;
 use Spryker\Zed\ProductDiscontinued\ProductDiscontinuedConfig;
-use Spryker\Zed\ProductDiscontinuedDataImport\Business\Model\DataSet\ProductDiscontinuedDataSet;
+use Spryker\Zed\ProductDiscontinuedDataImport\Business\Model\DataSet\ProductDiscontinuedDataSetInterface;
 
 class ProductDiscontinuedWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
@@ -26,7 +26,7 @@ class ProductDiscontinuedWriterStep extends PublishAwareStep implements DataImpo
     public function execute(DataSetInterface $dataSet)
     {
         $productDiscontinuedEntity = SpyProductDiscontinuedQuery::create()
-            ->filterByFkProduct($dataSet[ProductDiscontinuedDataSet::ID_PRODUCT])
+            ->filterByFkProduct($dataSet[ProductDiscontinuedDataSetInterface::ID_PRODUCT])
             ->findOneOrCreate();
 
         $productDiscontinuedEntity->setActiveUntil($this->getActiveUntilDate());
