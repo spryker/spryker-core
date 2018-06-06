@@ -25,9 +25,9 @@ class SalesOrderItemExpanderPlugin extends AbstractPlugin implements SalesOrderI
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return null|\ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function expandOrderItem(ItemTransfer $itemTransfer): ?ArrayObject
+    public function expandOrderItem(ItemTransfer $itemTransfer): ArrayObject
     {
         return $this->getFacade()->expandOrderItem($itemTransfer);
     }

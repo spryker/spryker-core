@@ -20,7 +20,7 @@ interface SalesOrderItemExpanderPluginInterface
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return null|\ArrayObject
+     * @return null|\ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
      */
     public function expandOrderItem(ItemTransfer $itemTransfer): ?ArrayObject;
 }

@@ -205,7 +205,7 @@ interface SalesFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return null|\ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function expandOrderItem(ItemTransfer $itemTransfer): ?ArrayObject;
+    public function expandOrderItem(ItemTransfer $itemTransfer): ArrayObject;
 }

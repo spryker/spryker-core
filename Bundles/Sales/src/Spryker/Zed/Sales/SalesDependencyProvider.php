@@ -335,6 +335,9 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * Specification:
+     * - BC default plugin is set up.
+     *
      * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\SalesOrderItemExpanderPluginInterface[]
      */
     protected function getSalesOrderItemExpanderPlugins()
