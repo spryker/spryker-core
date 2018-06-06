@@ -20,7 +20,7 @@ class OrderItemExpander implements OrderItemExpanderInterface
      */
     public function expandOrderItem(ItemTransfer $itemTransfer): ArrayObject
     {
-        $expandedItems = new ArrayObject;
+        $expandedItems = new ArrayObject();
 
         $quantity = $itemTransfer->getQuantity();
         for ($i = 1; $quantity >= $i; $i++) {
@@ -45,7 +45,7 @@ class OrderItemExpander implements OrderItemExpanderInterface
      *
      * @return \Generated\Shared\Transfer\ProductOptionTransfer
      */
-    protected function copyProductOptionTransfer(ProductOptionTransfer $productOptionTransfer)
+    protected function copyProductOptionTransfer(ProductOptionTransfer $productOptionTransfer): ProductOptionTransfer
     {
         $expandedProductOptionTransfer = new ProductOptionTransfer();
         $expandedProductOptionTransfer->fromArray($productOptionTransfer->toArray(), true);

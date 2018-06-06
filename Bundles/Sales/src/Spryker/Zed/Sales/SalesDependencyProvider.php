@@ -133,7 +133,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addSalesOrderItemExpanderPlugins(Container $container)
+    protected function addSalesOrderItemExpanderPlugins(Container $container): Container
     {
         $container[static::SALES_ORDER_ITEM_EXPANDER_PLUGINS] = function (Container $container) {
             return $this->getSalesOrderItemExpanderPlugins();
@@ -340,7 +340,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\SalesOrderItemExpanderPluginInterface[]
      */
-    protected function getSalesOrderItemExpanderPlugins()
+    public function getSalesOrderItemExpanderPlugins(): array
     {
         return [
             new SalesOrderItemExpanderPlugin(),

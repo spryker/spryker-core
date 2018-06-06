@@ -9,6 +9,7 @@ namespace Spryker\Zed\SalesQuantity\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\SalesQuantity\Business\Model\Order\OrderItemExpander;
+use Spryker\Zed\SalesQuantity\Business\Model\Order\OrderItemExpanderInterface;
 
 /**
  * @method \Spryker\Zed\SalesQuantity\SalesQuantityConfig getConfig()
@@ -18,7 +19,7 @@ class SalesQuantityBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\SalesQuantity\Business\Model\Order\OrderItemExpanderInterface
      */
-    public function createOrderItemExpander()
+    public function createOrderItemExpander(): OrderItemExpanderInterface
     {
         return new OrderItemExpander();
     }
