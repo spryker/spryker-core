@@ -186,7 +186,7 @@ interface SalesFacadeInterface
     /**
      *
      * Specification:
-     *  - Expands order by quantity 1 recalculates order transfer with new values if needed.
+     *  - Applies plugins to order items and recalculates order transfer with new values.
      *
      * @api
      *
@@ -199,7 +199,7 @@ interface SalesFacadeInterface
 
     /**
      * Specification:
-     *  - Expands order by quantity 1 recalculates order transfer with new values
+     *  - Expands order items by quantity 1.
      *
      * @api
      *

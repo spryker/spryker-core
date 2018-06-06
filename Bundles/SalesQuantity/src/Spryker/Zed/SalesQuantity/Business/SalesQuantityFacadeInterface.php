@@ -15,7 +15,7 @@ interface SalesQuantityFacadeInterface
 {
     /**
      * Specification:
-     *  - Avoids to expand order by quantity 1 recalculates order transfer with new values if needed.
+     *  - Returns product as it is depends on 'isQuantitySplittable' property.
      *
      * @api
      *
