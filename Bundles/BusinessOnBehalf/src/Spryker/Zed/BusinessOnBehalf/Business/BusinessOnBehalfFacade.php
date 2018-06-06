@@ -59,7 +59,7 @@ class BusinessOnBehalfFacade extends AbstractFacade implements BusinessOnBehalfF
     public function setDefaultCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer
     {
         return $this->getFactory()
-            ->createIsDefaultCompanyUserUpdater()
+            ->createCompanyUserUpdater()
             ->setDefaultCompanyUser($companyUserTransfer);
     }
 
@@ -75,7 +75,7 @@ class BusinessOnBehalfFacade extends AbstractFacade implements BusinessOnBehalfF
     public function unsetDefaultCompanyUserByCustomer(CustomerTransfer $customerTransfer): CustomerTransfer
     {
         return $this->getFactory()
-            ->createIsDefaultCompanyUserUpdater()
+            ->createCompanyUserUpdater()
             ->unsetDefaultCompanyUserByCustomer($customerTransfer);
     }
 

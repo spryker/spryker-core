@@ -48,7 +48,7 @@ class BusinessOnBehalfBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\BusinessOnBehalf\Business\Model\CompanyUser\CompanyUserUpdaterInterface
      */
-    public function createIsDefaultCompanyUserUpdater(): CompanyUserUpdaterInterface
+    public function createCompanyUserUpdater(): CompanyUserUpdaterInterface
     {
         return new CompanyUserUpdater(
             $this->getEntityManager()

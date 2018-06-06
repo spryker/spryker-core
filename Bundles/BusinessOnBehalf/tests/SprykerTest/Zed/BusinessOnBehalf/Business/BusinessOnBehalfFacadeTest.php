@@ -193,6 +193,35 @@ class BusinessOnBehalfFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testUnsetDefaultCompanyUserByCustomer(): void
+    {
+        //Arrange
+        $company = $this->tester->haveCompany(['isActive' => true]);
+        $seedData = [
+            'isDefault' => true,
+            'fkCompany' => $company->getIdCompany(),
+            'customer' => $this->customer,
+        ];
+        $testDefaultCompanyUser = $this->tester->haveCompanyUser($seedData);
+        $seedData = [
+            'fkCompany' => $company->getIdCompany(),
+            'customer' => $this->customer,
+        ];
+        $testCompanyUser = $this->tester->haveCompanyUser($seedData);
+
+        //Act
+        $this->tester->getFacade()->unsetDefaultCompanyUserByCustomer($this->customer);
+        $defaultCompanyUserFromDataBase = $this->getCompanyUserFacade()->getCompanyUserById($testDefaultCompanyUser->getIdCompanyUser());
+        $companyUserFromDataBase = $this->getCompanyUserFacade()->getCompanyUserById($testCompanyUser->getIdCompanyUser());
+
+        //Assert
+        $this->assertNull($defaultCompanyUserFromDataBase->getIsDefault());
+        $this->assertNull($companyUserFromDataBase->getIsDefault());
+    }
+
+    /**
      * @return \Spryker\Zed\CompanyUser\Business\CompanyUserFacadeInterface
      */
     protected function getCompanyUserFacade(): CompanyUserFacadeInterface

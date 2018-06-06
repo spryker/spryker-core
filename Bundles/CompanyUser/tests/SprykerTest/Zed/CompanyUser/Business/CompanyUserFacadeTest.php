@@ -50,7 +50,7 @@ class CompanyUserFacadeTest extends Unit
         $this->tester->haveCompanyUser($seedDataWithInactiveCompany);
 
         //Act
-        $actualCompanyUserAmount = $this->tester->getFacade()->getCountOfActiveCompanyUsersByCustomerId($customer);
+        $actualCompanyUserAmount = $this->tester->getFacade()->countActiveCompanyUsersByIdCustomer($customer);
 
         //Assert
         $this->tester->assertEquals($expectedCompanyUserAmount, $actualCompanyUserAmount);
