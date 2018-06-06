@@ -16,7 +16,7 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\SalesOrderItemTransformerPlugin
  * @method \Spryker\Zed\Sales\Business\SalesFacadeInterface getFacade()
  * @method \Spryker\Zed\Sales\Communication\SalesCommunicationFactory getFactory()
  */
-class SalesOrderItemTransformerPlugin extends AbstractPlugin implements SalesOrderItemTransformerPluginInterface
+class SingleQuantityBasedOrderItemTransformerPlugin extends AbstractPlugin implements SalesOrderItemTransformerPluginInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
