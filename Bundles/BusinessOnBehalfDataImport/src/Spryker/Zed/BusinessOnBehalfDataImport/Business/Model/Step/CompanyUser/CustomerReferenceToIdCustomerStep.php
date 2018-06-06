@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\BusinessOnBehalfDataImport\Business\Model\Step;
+namespace Spryker\Zed\BusinessOnBehalfDataImport\Business\Model\Step\CompanyUser;
 
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
-use Spryker\Zed\BusinessOnBehalfDataImport\Business\Model\DataSet\BusinessOnBehalfCompanyUserDataSet;
+use Spryker\Zed\BusinessOnBehalfDataImport\Business\Model\DataSet\BusinessOnBehalfCompanyUserDataSetInterface;
 use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
@@ -17,7 +17,7 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 class CustomerReferenceToIdCustomerStep implements DataImportStepInterface
 {
     /**
-     * @var array
+     * @var int[] Keys are customer references
      */
     protected $idCustomerBuffer = [];
 
@@ -28,12 +28,14 @@ class CustomerReferenceToIdCustomerStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $customerReference = $dataSet[BusinessOnBehalfCompanyUserDataSet::CUSTOMER_REFERENCE];
+        $customerReference = $dataSet[BusinessOnBehalfCompanyUserDataSetInterface::COLUMN_CUSTOMER_REFERENCE];
 
-        $dataSet[BusinessOnBehalfCompanyUserDataSet::ID_CUSTOMER] = $this->getIdCustomer($customerReference);
+        $dataSet[BusinessOnBehalfCompanyUserDataSetInterface::COLUMN_ID_CUSTOMER] = $this->getIdCustomer($customerReference);
     }
 
     /**
+     * @uses SpyCustomerQuery
+     *
      * @param string $customerReference
      *
      * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException

@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\BusinessOnBehalfDataImport\Business;
 
-use Spryker\Zed\BusinessOnBehalfDataImport\Business\Model\CompanyUserWriterStep;
-use Spryker\Zed\BusinessOnBehalfDataImport\Business\Model\Step\BusinessUnitKeyToIdCompanyBusinessUnitStep;
-use Spryker\Zed\BusinessOnBehalfDataImport\Business\Model\Step\CompanyKeyToIdCompanyStep;
-use Spryker\Zed\BusinessOnBehalfDataImport\Business\Model\Step\CustomerReferenceToIdCustomerStep;
+use Spryker\Zed\BusinessOnBehalfDataImport\Business\Model\Step\CompanyUser\BusinessUnitKeyToIdCompanyBusinessUnitStep;
+use Spryker\Zed\BusinessOnBehalfDataImport\Business\Model\Step\CompanyUser\CompanyKeyToIdCompanyStep;
+use Spryker\Zed\BusinessOnBehalfDataImport\Business\Model\Step\CompanyUser\CompanyUserWriterStep;
+use Spryker\Zed\BusinessOnBehalfDataImport\Business\Model\Step\CompanyUser\CustomerReferenceToIdCustomerStep;
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
@@ -64,7 +64,7 @@ class BusinessOnBehalfDataImportBusinessFactory extends DataImportBusinessFactor
     }
 
     /**
-     * @return \Spryker\Zed\BusinessOnBehalfDataImport\Business\Model\Step\CustomerReferenceToIdCustomerStep
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
     protected function createCustomerReferenceToIdCustomerStep(): DataImportStepInterface
     {
