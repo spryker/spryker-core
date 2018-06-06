@@ -1,8 +1,13 @@
 <td>{{ productAlternative.idProductAlternative ?: '-' }}</td>
-<td>{{ productAlternative.idProduct ?: '-' }}</td>
-<td>{{ productAlternative.idProductConcreteAlternative ?: '-' }}</td>
-<td>{{ productAlternative.idProductAbstractAlternative ?: '-' }}</td>
-<td>-</td>
+<td>{{ productAlternative.type ?: '-' }}</td>
+<td>{{ productAlternative.sku ?: '-' }}</td>
+<td>{{ productAlternative.name ?: '-' }}</td>
+<td>
+    {% for category in productAlternative.categories %}
+        <p>{{ category }}</p>
+    {% endfor %}
+</td>
+<td>{{ productAlternative.status ?: '-' }}</td>
 <td>
     <button class="btn btn-default">
         <a href="{{- productAbstractAlternativeDeleteLink|format(idProduct, productAlternative.idProductAlternative) -}}">Delete</a>
