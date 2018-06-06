@@ -8,6 +8,7 @@
 namespace Spryker\Zed\BusinessOnBehalf\Business\Model;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\BusinessOnBehalf\Persistence\BusinessOnBehalfEntityManagerInterface;
 
 class IsDefaultCompanyUserUpdater implements IsDefaultCompanyUserUpdaterInterface
@@ -33,5 +34,17 @@ class IsDefaultCompanyUserUpdater implements IsDefaultCompanyUserUpdaterInterfac
     public function setDefaultCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer
     {
         return $this->entityManager->setDefaultCompanyUser($companyUserTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function unsetDefaultCompanyUserByCustomer(CustomerTransfer $customerTransfer): CustomerTransfer
+    {
+        $customerTransfer = $this->entityManager->unsetDefaultCompanyUserByCustomer($customerTransfer);
+
+        return $customerTransfer;
     }
 }

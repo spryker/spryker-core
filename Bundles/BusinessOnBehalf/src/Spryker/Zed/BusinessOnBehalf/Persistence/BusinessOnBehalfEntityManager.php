@@ -40,6 +40,18 @@ class BusinessOnBehalfEntityManager extends AbstractEntityManager implements Bus
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function unsetDefaultCompanyUserByCustomer(CustomerTransfer $customerTransfer): CustomerTransfer
+    {
+        $this->cleanupExistingIsDefaultFlag($customerTransfer);
+
+        return $customerTransfer;
+    }
+
+    /**
      * @uses CompanyUser
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer

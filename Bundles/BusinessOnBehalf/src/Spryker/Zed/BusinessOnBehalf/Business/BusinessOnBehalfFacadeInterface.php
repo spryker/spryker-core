@@ -58,6 +58,18 @@ interface BusinessOnBehalfFacadeInterface
 
     /**
      * Specification:
+     * - Removes company user default flags for the provided customer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function unsetDefaultCompanyUserByCustomer(CustomerTransfer $customerTransfer): CustomerTransfer;
+
+    /**
+     * Specification:
      * - Finds a company user by idCustomer and is_default = true
      * - Doesn't set anything when a default record does not exist
      * - Doesn't set anything when CustomerTransfer::companyUserTransfer is not null

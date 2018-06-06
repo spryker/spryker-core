@@ -8,6 +8,7 @@
 namespace Spryker\Zed\BusinessOnBehalf\Persistence;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 
 interface BusinessOnBehalfEntityManagerInterface
 {
@@ -17,4 +18,11 @@ interface BusinessOnBehalfEntityManagerInterface
      * @return \Generated\Shared\Transfer\CompanyUserTransfer
      */
     public function setDefaultCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function unsetDefaultCompanyUserByCustomer(CustomerTransfer $customerTransfer): CustomerTransfer;
 }

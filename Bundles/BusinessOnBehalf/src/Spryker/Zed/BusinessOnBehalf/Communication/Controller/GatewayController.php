@@ -36,4 +36,14 @@ class GatewayController extends AbstractGatewayController
     {
         return $this->getFacade()->setDefaultCompanyUser($companyUserTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function unsetDefaultCompanyUserAction(CustomerTransfer $customerTransfer): CustomerTransfer
+    {
+        return $this->getFacade()->unsetDefaultCompanyUserByCustomer($customerTransfer);
+    }
 }

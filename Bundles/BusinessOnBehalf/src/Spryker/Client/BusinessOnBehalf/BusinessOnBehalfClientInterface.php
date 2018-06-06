@@ -40,4 +40,17 @@ interface BusinessOnBehalfClientInterface
      * @return \Generated\Shared\Transfer\CompanyUserTransfer
      */
     public function setDefaultCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer;
+
+    /**
+     * Specification:
+     *  - Removes all isDefault flags from company users that belong to the provided customer
+     *  - Returns customer transfer object with company user set as null
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function unsetDefaultCompanyUser(CustomerTransfer $customerTransfer): CustomerTransfer;
 }

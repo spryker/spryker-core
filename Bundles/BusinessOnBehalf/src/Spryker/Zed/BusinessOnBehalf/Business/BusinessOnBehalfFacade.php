@@ -72,6 +72,22 @@ class BusinessOnBehalfFacade extends AbstractFacade implements BusinessOnBehalfF
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
+    public function unsetDefaultCompanyUserByCustomer(CustomerTransfer $customerTransfer): CustomerTransfer
+    {
+        return $this->getFactory()
+            ->createIsDefaultCompanyUserUpdater()
+            ->unsetDefaultCompanyUserByCustomer($customerTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
     public function setDefaultCompanyUserToCustomer(CustomerTransfer $customerTransfer): CustomerTransfer
     {
         return $this->getFactory()
