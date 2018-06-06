@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductDiscontinued\Persistence;
 
 use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
-use Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinued;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -24,10 +23,14 @@ class ProductDiscontinuedEntityManager extends AbstractEntityManager implements 
     public function saveProductDiscontinued(ProductDiscontinuedTransfer $productDiscontinuedTransfer): ProductDiscontinuedTransfer
     {
         $productDiscontinuedEntity = $this->getFactory()
+            ->createProductDiscontinuedQuery()
+            ->filterByIdProductDiscontinued($productDiscontinuedTransfer->getIdProductDiscontinued())
+            ->findOneOrCreate();
+        $productDiscontinuedEntity = $this->getFactory()
             ->createProductDiscontinuedMapper()
             ->mapTransferToEntity(
                 $productDiscontinuedTransfer,
-                new SpyProductDiscontinued()
+                $productDiscontinuedEntity
             );
 
         $productDiscontinuedEntity->save();

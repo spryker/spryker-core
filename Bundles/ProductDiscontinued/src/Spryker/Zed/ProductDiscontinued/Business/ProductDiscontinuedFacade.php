@@ -45,7 +45,7 @@ class ProductDiscontinuedFacade extends AbstractFacade implements ProductDiscont
      *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer
      */
-    public function removeProductDiscontinuedFlag(
+    public function undiscontinueProduct(
         ProductDiscontinuedRequestTransfer $productDiscontinuedRequestTransfer
     ): ProductDiscontinuedResponseTransfer {
         return $this->getFactory()

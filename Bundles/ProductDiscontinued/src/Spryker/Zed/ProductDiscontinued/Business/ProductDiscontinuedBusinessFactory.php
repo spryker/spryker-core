@@ -52,7 +52,12 @@ class ProductDiscontinuedBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductDiscontinuedDeactivator(?LoggerInterface $logger = null): ProductDiscontinuedDeactivatorInterface
     {
-        return new ProductDiscontinuedDeactivator($this->getRepository(), $this->getProductFacade(), $logger);
+        return new ProductDiscontinuedDeactivator(
+            $this->getRepository(),
+            $this->getEntityManager(),
+            $this->getProductFacade(),
+            $logger
+        );
     }
 
     /**

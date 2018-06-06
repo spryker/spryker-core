@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/product-discontinued-storage.svg)](https://travis-ci.org/spryker/product-discontinued-storage)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/product-discontinued-storage/badge.svg)](https://coveralls.io/github/spryker/product-discontinued-storage)
 
-{{ADD DESCRIPTION HERE}}
+Main responsible module for dealing with discontinued products on the memory storage level.
 
 ## Installation
 

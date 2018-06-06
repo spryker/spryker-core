@@ -17,7 +17,7 @@ interface ProductDiscontinuedGuiToProductDiscontinuedFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer
      */
-    public function removeProductDiscontinuedFlag(
+    public function undiscontinueProduct(
         ProductDiscontinuedRequestTransfer $productDiscontinuedRequestTransfer
     ): ProductDiscontinuedResponseTransfer;
 

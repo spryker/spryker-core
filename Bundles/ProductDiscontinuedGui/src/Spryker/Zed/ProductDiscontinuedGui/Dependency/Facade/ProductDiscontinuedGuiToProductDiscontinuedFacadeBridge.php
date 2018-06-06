@@ -30,10 +30,10 @@ class ProductDiscontinuedGuiToProductDiscontinuedFacadeBridge implements Product
      *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer
      */
-    public function removeProductDiscontinuedFlag(
+    public function undiscontinueProduct(
         ProductDiscontinuedRequestTransfer $productDiscontinuedRequestTransfer
     ): ProductDiscontinuedResponseTransfer {
-        return $this->productDiscontinuedFacade->removeProductDiscontinuedFlag($productDiscontinuedRequestTransfer);
+        return $this->productDiscontinuedFacade->undiscontinueProduct($productDiscontinuedRequestTransfer);
     }
 
     /**

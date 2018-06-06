@@ -63,7 +63,7 @@ class IndexController extends AbstractController
 
         $productDiscontinuedResponseTransfer = $this->getFactory()
             ->getProductDiscontinuedFacade()
-            ->removeProductDiscontinuedFlag($productDiscontinuedRequestTransfer);
+            ->undiscontinueProduct($productDiscontinuedRequestTransfer);
 
         if ($productDiscontinuedResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::MESSAGE_PRODUCT_UNDISCONTINUED_SUCCESS);
