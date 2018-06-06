@@ -8,10 +8,18 @@
 namespace Spryker\Zed\ProductAlternative\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeListHydrator;
+use Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeListHydratorInterface;
+use Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeListManager;
+use Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeListManagerInterface;
 use Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeReader;
 use Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeReaderInterface;
 use Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeWriter;
 use Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeWriterInterface;
+use Spryker\Zed\ProductAlternative\Dependency\Facade\ProductAlternativeToLocaleFacadeInterface;
+use Spryker\Zed\ProductAlternative\Dependency\QueryContainer\ProductAlternativeToProductCategoryQueryContainerInterface;
+use Spryker\Zed\ProductAlternative\Dependency\QueryContainer\ProductAlternativeToProductQueryContainerInterface;
+use Spryker\Zed\ProductAlternative\ProductAlternativeDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductAlternative\Persistence\ProductAlternativeEntityManagerInterface getEntityManager()
@@ -38,5 +46,52 @@ class ProductAlternativeBusinessFactory extends AbstractBusinessFactory
         return new ProductAlternativeReader(
             $this->getRepository()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeListHydratorInterface
+     */
+    public function createProductAlternativeListHydrator(): ProductAlternativeListHydratorInterface
+    {
+        return new ProductAlternativeListHydrator(
+            $this->getProductQueryContainer(),
+            $this->getProductCategoryQueryContainer(),
+            $this->getLocaleFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeListManagerInterface
+     */
+    public function createProductAlternativeListManager(): ProductAlternativeListManagerInterface
+    {
+        return new ProductAlternativeListManager(
+            $this->createProductAlternativeListHydrator(),
+            $this->createProductAlternativeReader()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductAlternative\Dependency\QueryContainer\ProductAlternativeToProductQueryContainerInterface
+     */
+    public function getProductQueryContainer(): ProductAlternativeToProductQueryContainerInterface
+    {
+        return $this->getProvidedDependency(ProductAlternativeDependencyProvider::QUERY_CONTAINER_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductAlternative\Dependency\QueryContainer\ProductAlternativeToProductCategoryQueryContainerInterface
+     */
+    public function getProductCategoryQueryContainer(): ProductAlternativeToProductCategoryQueryContainerInterface
+    {
+        return $this->getProvidedDependency(ProductAlternativeDependencyProvider::QUERY_CONTAINER_PRODUCT_CATEGORY);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductAlternative\Dependency\Facade\ProductAlternativeToLocaleFacadeInterface
+     */
+    public function getLocaleFacade(): ProductAlternativeToLocaleFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductAlternativeDependencyProvider::FACADE_LOCALE);
     }
 }
