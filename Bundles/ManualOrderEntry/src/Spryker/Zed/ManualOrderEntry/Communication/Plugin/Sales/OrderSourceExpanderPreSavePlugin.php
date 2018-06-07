@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ManualOrderEntry\Communication\Plugin;
+namespace Spryker\Zed\ManualOrderEntry\Communication\Plugin\Sales;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpySalesOrderEntityTransfer;
@@ -18,8 +18,7 @@ use Spryker\Zed\Sales\Dependency\Plugin\OrderExpanderPreSavePluginInterface;
 class OrderSourceExpanderPreSavePlugin extends AbstractPlugin implements OrderExpanderPreSavePluginInterface
 {
     /**
-     * Specification:
-     *   - Its a plugin which hydrates SpySalesOrderEntityTransfer before order created
+     * {@inerhitdoc}
      *
      * @api
      *
