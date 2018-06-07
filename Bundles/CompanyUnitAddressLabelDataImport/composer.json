@@ -1,7 +1,7 @@
 {
   "name": "spryker/company-unit-address-label-data-import",
   "description": "CompanyUnitAddressLabelDataImport module",
-  "license": "proprietary",
+  "license": "MIT",
   "require": {
     "php": ">=7.1",
     "spryker/company-unit-address": "^1.0.0",
