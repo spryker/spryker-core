@@ -46,4 +46,14 @@ class SalesStatisticsFacadeTest extends Unit
 
         $this->assertInstanceOf(SalesStatisticTransfer::class, $salesStatisticTransfer);
     }
+
+    /**
+     * @return void
+     */
+    public function testTopOrderStatistic()
+    {
+        $salesStatisticTransfer = $this->tester->getLocator()->salesStatistics()->facade()->getTopOrderStatistic(2);
+
+        $this->assertInstanceOf(SalesStatisticTransfer::class, $salesStatisticTransfer);
+    }
 }
