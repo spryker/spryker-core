@@ -5,23 +5,35 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ChartOrder\Communication\Plugin;
+namespace Spryker\Zed\SalesStatistics\Communication\Plugin;
 
 use Generated\Shared\Transfer\ChartDataTraceTransfer;
 use Generated\Shared\Transfer\ChartDataTransfer;
 use Generated\Shared\Transfer\ChartLayoutTransfer;
 use Spryker\Shared\Chart\ChartConfig;
 use Spryker\Shared\Chart\Dependency\Plugin\ChartPluginInterface;
+use Spryker\Shared\Dashboard\Dependency\Plugin\DashboardPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\ChartOrder\Communication\ChartOrderCommunicationFactory getFactory()
- * @method \Spryker\Zed\ChartOrder\Business\ChartOrderFacadeInterface getFacade()
+ * @method \Spryker\Zed\SalesStatistics\Communication\SalesStatisticsCommunicationFactory getFactory()
+ * @method \Spryker\Zed\SalesStatistics\Business\SalesStatisticsFacadeInterface getFacade()
  */
-class StatusOrderChartPlugin extends AbstractPlugin implements ChartPluginInterface
+class StatusOrderPluginChart extends AbstractPlugin implements ChartPluginInterface, DashboardPluginInterface
 {
     const NAME = 'status-orders';
     const TITLE = 'Status orders statistic';
+
+    /**
+     * @return string
+     */
+    public function render(): string
+    {
+        return $this->getFactory()
+            ->getTwigEnvironment()
+            ->createTemplate("{{chart('" . static::NAME . "', '" . static::NAME . "')}}")
+            ->render([]);
+    }
 
     /**
      * {@inheritdoc}
@@ -67,10 +79,12 @@ class StatusOrderChartPlugin extends AbstractPlugin implements ChartPluginInterf
      */
     protected function getChartDataTraceTransfer()
     {
+        $result = $this->getFacade()->getStatusOrderStatistic();
+
         $trace = new ChartDataTraceTransfer();
         $trace->setType(ChartConfig::CHART_TYPE_PIE);
-        $trace->setLabels([1, 2, 3]);
-        $trace->setValues([1, 2, 3]);
+        $trace->setLabels($result->getLabels());
+        $trace->setValues($result->getValues());
 
         return $trace;
     }

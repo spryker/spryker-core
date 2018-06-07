@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\Container;
 
 class DashboardDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const PLUGIN_CHART_NAMES = 'PLUGIN_CHART_NAMES';
+    public const PLUGIN_RENDER_DASHBOARD = 'PLUGIN_RENDER_DASHBOARD';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -21,7 +21,7 @@ class DashboardDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container = $this->addChartPlugins($container);
+        $container = $this->addRenderDashboardPlugins($container);
 
         return $container;
     }
@@ -31,19 +31,19 @@ class DashboardDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addChartPlugins(Container $container): Container
+    protected function addRenderDashboardPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_CHART_NAMES] = function () {
-            return $this->getPluginChartNames();
+        $container[static::PLUGIN_RENDER_DASHBOARD] = function () {
+            return $this->getDashboardPlugins();
         };
 
         return $container;
     }
 
     /**
-     * @return \Spryker\Shared\Chart\Dependency\Plugin\ChartPluginInterface[]
+     * @return \Spryker\Shared\Dashboard\Dependency\Plugin\DashboardPluginInterface[]
      */
-    protected function getPluginChartNames(): array
+    protected function getDashboardPlugins(): array
     {
         return [];
     }

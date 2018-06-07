@@ -1,4 +1,4 @@
-namespace: ChartOrder
+namespace: SalesStatistics
 actor: Tester
 paths:
     tests: tests

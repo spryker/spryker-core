@@ -1,18 +1,22 @@
 {
   "name": "spryker/chart-order",
-  "description": "ChartOrder module",
+  "description": "SalesStatistics module",
   "license": "proprietary",
   "require": {
     "spryker/kernel": "^3.0.0",
-    "spryker/sales": "^7.0.0 || ^8.0.0"
+    "spryker/sales": "^7.0.0 || ^8.0.0",
+    "spryker/twig": "*",
+    "spryker/oms": "^6.0.0 || ^7.0.0 || ^8.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/testify": "*",
-    "spryker/chart": "*"
+    "spryker/chart": "*",
+    "spryker/dashboard": "^1.0.0"
   },
   "suggest": {
-    "spryker/chart": "Use dependency for implement chart plugin"
+    "spryker/chart": "Use dependency for implement chart plugin",
+    "spryker/dashboard": "Use dependency for implement chart plugin"
   },
   "autoload": {
     "psr-4": {

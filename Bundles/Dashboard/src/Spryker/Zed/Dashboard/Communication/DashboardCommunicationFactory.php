@@ -13,10 +13,10 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 class DashboardCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Shared\Chart\Dependency\Plugin\ChartPluginInterface[]
+     * @return \Spryker\Shared\Dashboard\Dependency\Plugin\DashboardPluginInterface[]
      */
     public function getDateFormatterService(): array
     {
-        return $this->getProvidedDependency(DashboardDependencyProvider::PLUGIN_CHART_NAMES);
+        return $this->getProvidedDependency(DashboardDependencyProvider::PLUGIN_RENDER_DASHBOARD);
     }
 }

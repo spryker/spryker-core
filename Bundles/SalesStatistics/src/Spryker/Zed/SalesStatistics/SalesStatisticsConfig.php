@@ -5,10 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ChartOrder;
+namespace Spryker\Zed\SalesStatistics;
 
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
-class ChartOrderConfig extends AbstractBundleConfig
+class SalesStatisticsConfig extends AbstractBundleConfig
 {
 }

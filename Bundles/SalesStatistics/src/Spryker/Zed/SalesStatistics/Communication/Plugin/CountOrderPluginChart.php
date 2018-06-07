@@ -5,26 +5,46 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ChartOrder\Communication\Plugin;
+namespace Spryker\Zed\SalesStatistics\Communication\Plugin;
 
 use Generated\Shared\Transfer\ChartDataTraceTransfer;
 use Generated\Shared\Transfer\ChartDataTransfer;
-use Generated\Shared\Transfer\ChartLayoutTransfer;
 use Spryker\Shared\Chart\ChartConfig;
 use Spryker\Shared\Chart\Dependency\Plugin\ChartPluginInterface;
+use Spryker\Shared\Dashboard\Dependency\Plugin\DashboardPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\ChartOrder\Communication\ChartOrderCommunicationFactory getFactory()
- * @method \Spryker\Zed\ChartOrder\Business\ChartOrderFacadeInterface getFacade()
+ * @method \Spryker\Zed\SalesStatistics\Communication\SalesStatisticsCommunicationFactory getFactory()
+ * @method \Spryker\Zed\SalesStatistics\Business\SalesStatisticsFacadeInterface getFacade()
  */
-class CountOrderChartPlugin extends AbstractPlugin implements ChartPluginInterface
+class CountOrderPluginChart extends AbstractPlugin implements ChartPluginInterface, DashboardPluginInterface
 {
-    const NAME = 'count-orders';
-    const TITLE = 'Count orders statistic';
+    public const NAME = 'count-orders';
+    public const TITLE = 'Count orders statistic';
+    public const DAYS = 7;
 
     /**
-     * {@inheritdoc}
+     * Specification:
+     * - Returns rendered content.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function render(): string
+    {
+        return $this->getFactory()
+            ->getTwigEnvironment()
+            ->createTemplate(
+                sprintf("{{ chart('%s','%s') }}", static::NAME, static::NAME)
+            )
+            ->render([]);
+    }
+
+    /**
+     * Specification:
+     * - Returns a plugin name.
      *
      * @api
      *
@@ -55,22 +75,16 @@ class CountOrderChartPlugin extends AbstractPlugin implements ChartPluginInterfa
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ChartLayoutTransfer
-     */
-    public function getChartLayout(): ChartLayoutTransfer
-    {
-        return new ChartLayoutTransfer();
-    }
-
-    /**
      * @return \Generated\Shared\Transfer\ChartDataTraceTransfer
      */
     protected function getChartDataTraceTransfer()
     {
+        $salesStatisticTransfer = $this->getFacade()->getOrderStatisticByCountDay(static::DAYS);
+
         $trace = new ChartDataTraceTransfer();
         $trace->setType(ChartConfig::CHART_TYPE_BAR);
-        $trace->setLabels([1, 2, 3]);
-        $trace->setValues([1, 2, 3]);
+        $trace->setLabels($salesStatisticTransfer->getLabels());
+        $trace->setValues($salesStatisticTransfer->getValues());
 
         return $trace;
     }

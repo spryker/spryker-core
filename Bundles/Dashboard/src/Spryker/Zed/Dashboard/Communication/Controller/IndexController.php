@@ -20,15 +20,14 @@ class IndexController extends AbstractController
     public function indexAction()
     {
         $plugins = $this->getFactory()->getDateFormatterService();
-        
-        $pluginNames = [];
 
+        $pluginContents = [];
         foreach ($plugins as $plugin) {
-            $pluginNames[] = $plugin->getName();
+            $pluginContents[] = $plugin->render();
         }
 
         return [
-            'pluginNames' => $pluginNames,
+            'pluginContents' => $pluginContents,
         ];
     }
 }

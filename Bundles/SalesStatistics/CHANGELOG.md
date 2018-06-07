@@ -1,3 +1,3 @@
-# ChartOrder Changelog
+# SalesStatistics Changelog
 
 [Release Changelog](https://github.com/spryker/chart-order/releases)
