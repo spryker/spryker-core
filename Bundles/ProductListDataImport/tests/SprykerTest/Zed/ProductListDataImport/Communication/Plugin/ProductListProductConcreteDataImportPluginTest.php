@@ -8,14 +8,14 @@
 namespace SprykerTest\Zed\ProductListDataImport\Communication\Plugin;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
-use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
+use Spryker\Zed\DataImport\Business\Exception\DataImportException;
 use Spryker\Zed\ProductListDataImport\Communication\Plugin\ProductListProductConcreteDataImportPlugin;
 use Spryker\Zed\ProductListDataImport\ProductListDataImportConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductListDataImport
@@ -40,21 +40,80 @@ class ProductListProductConcreteDataImportPluginTest extends Unit
         $this->tester->ensureProductListTableIsEmpty();
         $this->tester->haveProductLists();
 
-        $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
-        $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/product_list_to_concrete_product.csv');
-
-        $dataImportConfigurationTransfer = new DataImporterConfigurationTransfer();
-        $dataImportConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfigurationTransfer);
-
-        $productListProductConcreteDataImportPlugin = new ProductListProductConcreteDataImportPlugin();
-
         // Act
-        $dataImporterReportTransfer = $productListProductConcreteDataImportPlugin->import($dataImportConfigurationTransfer);
+        $productListProductConcreteDataImportPlugin = new ProductListProductConcreteDataImportPlugin();
+        $dataImporterReportTransfer = $productListProductConcreteDataImportPlugin->import(
+            $this->tester->getDataImporterReaderConfigurationTransfer('import/product_list_to_concrete_product.csv')
+        );
 
         // Assert
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
 
         $this->tester->assertProductListConcreteProductTableContainsRecords();
+    }
+
+    /**
+     * @return void
+     */
+    public function testImportThrowsExceptionWhenProductListKeyIsNotDefined(): void
+    {
+        // Assign
+        $dataImportConfigurationTransfer = $this->tester->getDataImporterReaderConfigurationTransfer('import/product_list_to_concrete_product_without_product_list_key.csv');
+        $dataImportConfigurationTransfer->setThrowException(true);
+        // Assert
+        $this->expectException(DataImportException::class);
+        $this->expectExceptionMessage('"product_list_key" is required.');
+        //Act
+        $merchantRelationshipProductListDataImportPlugin = new ProductListProductConcreteDataImportPlugin();
+        $merchantRelationshipProductListDataImportPlugin->import($dataImportConfigurationTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testImportThrowsExceptionWhenProductListIsNotFound(): void
+    {
+        // Assign
+        $dataImportConfigurationTransfer = $this->tester->getDataImporterReaderConfigurationTransfer('import/product_list_to_concrete_product_with_invalid_product_list_key.csv');
+        $dataImportConfigurationTransfer->setThrowException(true);
+        // Assert
+        $this->expectException(DataImportException::class);
+        $this->expectExceptionMessage('Could not find Product List by key "not-existing-product-list-key"');
+        //Act
+        $merchantRelationshipProductListDataImportPlugin = new ProductListProductConcreteDataImportPlugin();
+        $merchantRelationshipProductListDataImportPlugin->import($dataImportConfigurationTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testImportThrowsExceptionWhenProductConcreteSkuIsNotDefined(): void
+    {
+        // Assign
+        $dataImportConfigurationTransfer = $this->tester->getDataImporterReaderConfigurationTransfer('import/product_list_to_concrete_product_without_concrete_sku.csv');
+        $dataImportConfigurationTransfer->setThrowException(true);
+        // Assert
+        $this->expectException(DataImportException::class);
+        $this->expectExceptionMessage('"concrete_sku" is required.');
+        //Act
+        $merchantRelationshipProductListDataImportPlugin = new ProductListProductConcreteDataImportPlugin();
+        $merchantRelationshipProductListDataImportPlugin->import($dataImportConfigurationTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testImportThrowsExceptionWhenProductConcreteIsNotFound(): void
+    {
+        // Assign
+        $dataImportConfigurationTransfer = $this->tester->getDataImporterReaderConfigurationTransfer('import/product_list_to_concrete_product_with_invalid_concrete_sku.csv');
+        $dataImportConfigurationTransfer->setThrowException(true);
+        // Assert
+        $this->expectException(DataImportException::class);
+        $this->expectExceptionMessage('Could not find Product Concrete by sku "invalid-concrete-sku"');
+        //Act
+        $merchantRelationshipProductListDataImportPlugin = new ProductListProductConcreteDataImportPlugin();
+        $merchantRelationshipProductListDataImportPlugin->import($dataImportConfigurationTransfer);
     }
 
     /**

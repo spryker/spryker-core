@@ -28,7 +28,7 @@ class ProductListDataImportFacade extends AbstractFacade implements ProductListD
     public function importProductList(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
         return $this->getFactory()
-            ->getProductListDataImport()
+            ->createProductListDataImport()
             ->import($dataImporterConfigurationTransfer);
     }
 
@@ -44,7 +44,7 @@ class ProductListDataImportFacade extends AbstractFacade implements ProductListD
     public function importProductListCategory(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
         return $this->getFactory()
-            ->getProductListCategoryDataImport()
+            ->createProductListCategoryDataImport()
             ->import($dataImporterConfigurationTransfer);
     }
 
@@ -60,7 +60,7 @@ class ProductListDataImportFacade extends AbstractFacade implements ProductListD
     public function importProductListProductConcrete(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
         return $this->getFactory()
-            ->getProductListProductConcreteDataImport()
+            ->createProductListProductConcreteDataImport()
             ->import($dataImporterConfigurationTransfer);
     }
 }

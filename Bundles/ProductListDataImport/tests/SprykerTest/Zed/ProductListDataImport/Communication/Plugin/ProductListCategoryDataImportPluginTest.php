@@ -8,14 +8,14 @@
 namespace SprykerTest\Zed\ProductListDataImport\Communication\Plugin;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
-use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
+use Spryker\Zed\DataImport\Business\Exception\DataImportException;
 use Spryker\Zed\ProductListDataImport\Communication\Plugin\ProductListCategoryDataImportPlugin;
 use Spryker\Zed\ProductListDataImport\ProductListDataImportConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductListDataImport
@@ -40,21 +40,80 @@ class ProductListCategoryDataImportPluginTest extends Unit
         $this->tester->ensureProductListCategoryTableIsEmpty();
         $this->tester->haveProductLists();
 
-        $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
-        $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/product_list_to_category.csv');
-
-        $dataImportConfigurationTransfer = new DataImporterConfigurationTransfer();
-        $dataImportConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfigurationTransfer);
-
-        $productListCategoryDataImportPlugin = new ProductListCategoryDataImportPlugin();
-
         // Act
-        $dataImporterReportTransfer = $productListCategoryDataImportPlugin->import($dataImportConfigurationTransfer);
+        $productListCategoryDataImportPlugin = new ProductListCategoryDataImportPlugin();
+        $dataImporterReportTransfer = $productListCategoryDataImportPlugin->import(
+            $this->tester->getDataImporterReaderConfigurationTransfer('import/product_list_to_category.csv')
+        );
 
         // Assert
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
 
         $this->tester->assertProductListCategoryTableContainsRecords();
+    }
+
+    /**
+     * @return void
+     */
+    public function testImportThrowsExceptionWhenCategoryKeyIsNotDefined(): void
+    {
+        // Assign
+        $dataImportConfigurationTransfer = $this->tester->getDataImporterReaderConfigurationTransfer('import/product_list_to_category_without_category_key.csv');
+        $dataImportConfigurationTransfer->setThrowException(true);
+        // Assert
+        $this->expectException(DataImportException::class);
+        $this->expectExceptionMessage('"category_key" is required.');
+        //Act
+        $merchantRelationshipProductListDataImportPlugin = new ProductListCategoryDataImportPlugin();
+        $merchantRelationshipProductListDataImportPlugin->import($dataImportConfigurationTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testImportThrowsExceptionWhenCategoryIsNotFound(): void
+    {
+        // Assign
+        $dataImportConfigurationTransfer = $this->tester->getDataImporterReaderConfigurationTransfer('import/product_list_to_category_with_invalid_category_key.csv');
+        $dataImportConfigurationTransfer->setThrowException(true);
+        // Assert
+        $this->expectException(DataImportException::class);
+        $this->expectExceptionMessage('Could not find Category by key "not-existing-category-key"');
+        //Act
+        $merchantRelationshipProductListDataImportPlugin = new ProductListCategoryDataImportPlugin();
+        $merchantRelationshipProductListDataImportPlugin->import($dataImportConfigurationTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testImportThrowsExceptionWhenProductListKeyIsNotDefined(): void
+    {
+        // Assign
+        $dataImportConfigurationTransfer = $this->tester->getDataImporterReaderConfigurationTransfer('import/product_list_to_category_without_product_list_key.csv');
+        $dataImportConfigurationTransfer->setThrowException(true);
+        // Assert
+        $this->expectException(DataImportException::class);
+        $this->expectExceptionMessage('"product_list_key" is required.');
+        //Act
+        $merchantRelationshipProductListDataImportPlugin = new ProductListCategoryDataImportPlugin();
+        $merchantRelationshipProductListDataImportPlugin->import($dataImportConfigurationTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testImportThrowsExceptionWhenProductListIsNotFound(): void
+    {
+        // Assign
+        $dataImportConfigurationTransfer = $this->tester->getDataImporterReaderConfigurationTransfer('import/product_list_to_category_with_invalid_product_list_key.csv');
+        $dataImportConfigurationTransfer->setThrowException(true);
+        // Assert
+        $this->expectException(DataImportException::class);
+        $this->expectExceptionMessage('Could not find Product List by key "not-existing-product-list-key"');
+        //Act
+        $merchantRelationshipProductListDataImportPlugin = new ProductListCategoryDataImportPlugin();
+        $merchantRelationshipProductListDataImportPlugin->import($dataImportConfigurationTransfer);
     }
 
     /**

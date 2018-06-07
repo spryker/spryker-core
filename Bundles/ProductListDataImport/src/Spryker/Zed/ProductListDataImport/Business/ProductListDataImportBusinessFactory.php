@@ -9,9 +9,12 @@ namespace Spryker\Zed\ProductListDataImport\Business;
 
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
-use Spryker\Zed\ProductListDataImport\Business\Model\Step\ProductListToCategoryWriterStep;
-use Spryker\Zed\ProductListDataImport\Business\Model\Step\ProductListToProductConcreteWriterStep;
-use Spryker\Zed\ProductListDataImport\Business\Model\Step\ProductListWriterStep;
+use Spryker\Zed\ProductListDataImport\Business\Model\ProductListToCategoryWriterStep;
+use Spryker\Zed\ProductListDataImport\Business\Model\ProductListToProductConcreteWriterStep;
+use Spryker\Zed\ProductListDataImport\Business\Model\ProductListWriterStep;
+use Spryker\Zed\ProductListDataImport\Business\Model\Step\CategoryKeyToIdCategoryStep;
+use Spryker\Zed\ProductListDataImport\Business\Model\Step\ProductConcreteSkuToIdProductConcreteStep;
+use Spryker\Zed\ProductListDataImport\Business\Model\Step\ProductListKeyToIdProductListStep;
 
 /**
  * @method \Spryker\Zed\ProductListDataImport\ProductListDataImportConfig getConfig()
@@ -21,14 +24,14 @@ class ProductListDataImportBusinessFactory extends DataImportBusinessFactory
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerAwareInterface
      */
-    public function getProductListDataImport()
+    public function createProductListDataImport()
     {
         $dataImporter = $this->getCsvDataImporterFromConfig(
             $this->getConfig()->getProductListDataImporterConfiguration()
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
-        $dataSetStepBroker->addStep($this->createProductListWriterStep());
+        $dataSetStepBroker->addStep(new ProductListWriterStep());
 
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
 
@@ -38,14 +41,16 @@ class ProductListDataImportBusinessFactory extends DataImportBusinessFactory
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerAwareInterface
      */
-    public function getProductListCategoryDataImport()
+    public function createProductListCategoryDataImport()
     {
         $dataImporter = $this->getCsvDataImporterFromConfig(
             $this->getConfig()->getProductListCategoryDataImporterConfiguration()
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
-        $dataSetStepBroker->addStep($this->createProductListToCategoryWriterStep());
+        $dataSetStepBroker->addStep($this->createProductListKeyToIdProductListStep())
+            ->addStep($this->createCategoryKeyToIdCategoryStep())
+            ->addStep(new ProductListToCategoryWriterStep());
 
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
 
@@ -55,14 +60,17 @@ class ProductListDataImportBusinessFactory extends DataImportBusinessFactory
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerAwareInterface
      */
-    public function getProductListProductConcreteDataImport()
+    public function createProductListProductConcreteDataImport()
     {
         $dataImporter = $this->getCsvDataImporterFromConfig(
             $this->getConfig()->getProductListProductConcreteDataImporterConfiguration()
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
-        $dataSetStepBroker->addStep($this->createProductListToProductConcreteWriterStep());
+        $dataSetStepBroker
+            ->addStep($this->createProductListKeyToIdProductListStep())
+            ->addStep($this->createProductConcreteSkuToIdProductConcreteStep())
+            ->addStep(new ProductListToProductConcreteWriterStep());
 
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
 
@@ -72,24 +80,24 @@ class ProductListDataImportBusinessFactory extends DataImportBusinessFactory
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    public function createProductListWriterStep(): DataImportStepInterface
+    public function createProductConcreteSkuToIdProductConcreteStep(): DataImportStepInterface
     {
-        return new ProductListWriterStep();
+        return new ProductConcreteSkuToIdProductConcreteStep();
     }
 
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    public function createProductListToCategoryWriterStep(): DataImportStepInterface
+    public function createProductListKeyToIdProductListStep(): DataImportStepInterface
     {
-        return new ProductListToCategoryWriterStep();
+        return new ProductListKeyToIdProductListStep();
     }
 
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    public function createProductListToProductConcreteWriterStep(): DataImportStepInterface
+    public function createCategoryKeyToIdCategoryStep(): DataImportStepInterface
     {
-        return new ProductListToProductConcreteWriterStep();
+        return new CategoryKeyToIdCategoryStep();
     }
 }

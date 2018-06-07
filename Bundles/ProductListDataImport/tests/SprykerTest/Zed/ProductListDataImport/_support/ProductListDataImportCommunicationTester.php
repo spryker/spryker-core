@@ -8,6 +8,8 @@
 namespace SprykerTest\Zed\ProductListDataImport;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
+use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 
 /**
  * Inherited Methods
@@ -31,4 +33,19 @@ class ProductListDataImportCommunicationTester extends Actor
     /**
      * Define custom actions here
      */
+
+    /**
+     * @param string $filePath
+     *
+     * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
+     */
+    public function getDataImporterReaderConfigurationTransfer(string $filePath): DataImporterConfigurationTransfer
+    {
+        $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
+        $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . $filePath);
+        $dataImportConfigurationTransfer = new DataImporterConfigurationTransfer();
+        $dataImportConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfigurationTransfer);
+
+        return $dataImportConfigurationTransfer;
+    }
 }

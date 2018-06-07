@@ -8,9 +8,8 @@
 namespace SprykerTest\Zed\ProductListDataImport\Communication\Plugin;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
-use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
+use Spryker\Zed\DataImport\Business\Exception\DataImportException;
 use Spryker\Zed\ProductListDataImport\Communication\Plugin\ProductListDataImportPlugin;
 use Spryker\Zed\ProductListDataImport\ProductListDataImportConfig;
 
@@ -40,20 +39,32 @@ class ProductListDataImportPluginTest extends Unit
         // Assign
         $this->tester->ensureProductListTableIsEmpty();
 
-        $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
-        $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/product_list.csv');
-
-        $dataImportConfigurationTransfer = new DataImporterConfigurationTransfer();
-        $dataImportConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfigurationTransfer);
-
-        $productListDataImportPlugin = new ProductListDataImportPlugin();
         // Act
-        $dataImporterReportTransfer = $productListDataImportPlugin->import($dataImportConfigurationTransfer);
+        $productListDataImportPlugin = new ProductListDataImportPlugin();
+        $dataImporterReportTransfer = $productListDataImportPlugin->import(
+            $this->tester->getDataImporterReaderConfigurationTransfer('import/product_list.csv')
+        );
 
         // Assert
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
 
         $this->tester->assertProductListTableContainsRecords();
+    }
+
+    /**
+     * @return void
+     */
+    public function testImportThrowsExceptionWhenProductListKeyIsNotDefined(): void
+    {
+        // Assign
+        $dataImportConfigurationTransfer = $this->tester->getDataImporterReaderConfigurationTransfer('import/product_list_without_product_list_key.csv');
+        $dataImportConfigurationTransfer->setThrowException(true);
+        // Assert
+        $this->expectException(DataImportException::class);
+        $this->expectExceptionMessage('"product_list_key" is required.');
+        //Act
+        $merchantRelationshipProductListDataImportPlugin = new ProductListDataImportPlugin();
+        $merchantRelationshipProductListDataImportPlugin->import($dataImportConfigurationTransfer);
     }
 
     /**

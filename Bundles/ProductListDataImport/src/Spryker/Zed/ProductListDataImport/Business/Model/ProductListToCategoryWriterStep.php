@@ -1,17 +1,18 @@
 <?php
+
 /**
  * MIT License
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductListDataImport\Business\Model\Step;
+namespace Spryker\Zed\ProductListDataImport\Business\Model;
 
-use Orm\Zed\ProductList\Persistence\SpyProductListQuery;
+use Orm\Zed\ProductList\Persistence\SpyProductListCategoryQuery;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\ProductListDataImport\Business\Model\DataSet\ProductListDataSetInterface;
 
-class ProductListWriterStep implements DataImportStepInterface
+class ProductListToCategoryWriterStep implements DataImportStepInterface
 {
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
@@ -20,7 +21,7 @@ class ProductListWriterStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $this->saveProductList($dataSet);
+        $this->saveProductListCategory($dataSet);
     }
 
     /**
@@ -28,15 +29,15 @@ class ProductListWriterStep implements DataImportStepInterface
      *
      * @return void
      */
-    protected function saveProductList(DataSetInterface $dataSet): void
+    protected function saveProductListCategory(DataSetInterface $dataSet): void
     {
-        $productListEntity = SpyProductListQuery::create()
-            ->filterByKey($dataSet[ProductListDataSetInterface::PRODUCT_LIST_KEY])
+        $productListCategoryEntity = SpyProductListCategoryQuery::create()
+            ->filterByFkProductList($dataSet[ProductListDataSetInterface::ID_PRODUCT_LIST])
+            ->filterByFkCategory($dataSet[ProductListDataSetInterface::ID_CATEGORY])
             ->findOneOrCreate();
 
-        $productListEntity->setKey($dataSet[ProductListDataSetInterface::PRODUCT_LIST_KEY])
-            ->setTitle($dataSet[ProductListDataSetInterface::PRODUCT_LIST_NAME])
-            ->setType($dataSet[ProductListDataSetInterface::PRODUCT_LIST_TYPE])
+        $productListCategoryEntity->setFkProductList($dataSet[ProductListDataSetInterface::ID_PRODUCT_LIST])
+            ->setFkCategory($dataSet[ProductListDataSetInterface::ID_CATEGORY])
             ->save();
     }
 }
