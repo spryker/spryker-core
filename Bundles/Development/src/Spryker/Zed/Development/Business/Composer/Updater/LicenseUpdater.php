@@ -35,12 +35,12 @@ class LicenseUpdater implements UpdaterInterface
         $modulePath = dirname($composerJsonFile->getPathname());
         $license = static::LICENSE_TYPE_PROPRIETARY;
 
-        $isMITLicense = (new Finder())->files()
+        $isMitLicense = (new Finder())->files()
             ->in($modulePath)->depth(static::LICENSE_FILE_DEPTH)
             ->name(static::LICENSE_FILE_NAME)->contains(static::MIT_LICENSE)
             ->hasResults();
 
-        if ($isMITLicense) {
+        if ($isMitLicense) {
             $license = static::LICENSE_TYPE_MIT;
         }
 
