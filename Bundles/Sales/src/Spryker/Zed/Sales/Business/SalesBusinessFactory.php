@@ -13,10 +13,10 @@ use Spryker\Zed\Sales\Business\Model\Comment\OrderCommentReader;
 use Spryker\Zed\Sales\Business\Model\Comment\OrderCommentSaver;
 use Spryker\Zed\Sales\Business\Model\Customer\CustomerOrderReader;
 use Spryker\Zed\Sales\Business\Model\Customer\PaginatedCustomerOrderReader;
+use Spryker\Zed\Sales\Business\Model\Order\Item\ItemTransformer;
+use Spryker\Zed\Sales\Business\Model\Order\Item\ItemTransformerInterface;
 use Spryker\Zed\Sales\Business\Model\Order\OrderExpander;
 use Spryker\Zed\Sales\Business\Model\Order\OrderHydrator;
-use Spryker\Zed\Sales\Business\Model\Order\OrderItemExpander;
-use Spryker\Zed\Sales\Business\Model\Order\OrderItemExpanderInterface;
 use Spryker\Zed\Sales\Business\Model\Order\OrderReader;
 use Spryker\Zed\Sales\Business\Model\Order\OrderReferenceGenerator;
 use Spryker\Zed\Sales\Business\Model\Order\OrderSaver;
@@ -169,16 +169,16 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     {
         return new OrderExpander(
             $this->getCalculationFacade(),
-            $this->getSalesOrderItemExpanderPlugins()
+            $this->getSalesItemTransformerStrategyPlugins()
         );
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Business\Model\Order\OrderItemExpanderInterface
+     * @return \Spryker\Zed\Sales\Business\Model\Order\Item\ItemTransformerInterface
      */
-    public function createOrderItemExpander(): OrderItemExpanderInterface
+    public function createItemTransformer(): ItemTransformerInterface
     {
-        return new OrderItemExpander();
+        return new ItemTransformer();
     }
 
     /**
@@ -272,10 +272,10 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\SalesOrderItemExpanderPluginInterface[]
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\SalesItemTransformerStrategyPluginInterface[]
      */
-    public function getSalesOrderItemExpanderPlugins(): array
+    public function getSalesItemTransformerStrategyPlugins(): array
     {
-        return $this->getProvidedDependency(SalesDependencyProvider::SALES_ORDER_ITEM_EXPANDER_PLUGINS);
+        return $this->getProvidedDependency(SalesDependencyProvider::SALES_ITEM_TRANSFORMER_STRATEGY_PLUGINS);
     }
 }

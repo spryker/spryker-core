@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Sales\Business\Model\Order;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -21,18 +22,18 @@ class OrderExpander implements OrderExpanderInterface
     protected $calculationFacade;
 
     /**
-     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\SalesOrderItemExpanderPluginInterface[]
+     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\SalesItemTransformerStrategyPluginInterface[]
      */
-    protected $salesOrderItemExpanderPlugins;
+    protected $salesItemTransformerStrategyPlugins;
 
     /**
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToCalculationInterface $calculationFacade
-     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\SalesOrderItemExpanderPluginInterface[] $salesOrderItemExpanderPlugins
+     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\SalesItemTransformerStrategyPluginInterface[] $salesItemTransformerStrategyPlugins
      */
-    public function __construct(SalesToCalculationInterface $calculationFacade, array $salesOrderItemExpanderPlugins)
+    public function __construct(SalesToCalculationInterface $calculationFacade, array $salesItemTransformerStrategyPlugins)
     {
         $this->calculationFacade = $calculationFacade;
-        $this->salesOrderItemExpanderPlugins = $salesOrderItemExpanderPlugins;
+        $this->salesItemTransformerStrategyPlugins = $salesItemTransformerStrategyPlugins;
     }
 
     /**
@@ -44,7 +45,7 @@ class OrderExpander implements OrderExpanderInterface
     {
         $orderTransfer = new OrderTransfer();
         $orderTransfer->fromArray($quoteTransfer->toArray(), true);
-        $orderTransfer->setItems($this->expandItems($quoteTransfer->getItems()));
+        $orderTransfer->setItems($this->transformItems($quoteTransfer->getItems()));
 
         $this->groupOrderDiscountsByGroupKey($orderTransfer->getItems());
         $orderTransfer = $this->calculationFacade->recalculateOrder($orderTransfer);
@@ -59,65 +60,55 @@ class OrderExpander implements OrderExpanderInterface
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
      */
-    protected function expandItems(ArrayObject $items)
+    protected function transformItems(ArrayObject $items): ArrayObject
     {
-        $expandedItems = new ArrayObject();
+        $transformedItemTransferArray = [];
         foreach ($items as $itemTransfer) {
-            $expandedItems = $this->expandItemsPerPlugin($expandedItems, $itemTransfer);
+            $transformedItemTransferCollection = $this->transformItemTransferPerStrategyPlugin($itemTransfer);
+            $transformedItemTransferArray = array_merge($transformedItemTransferArray, $transformedItemTransferCollection->getItems()->getArrayCopy());
         }
 
-        return $expandedItems;
+        return new ArrayObject($transformedItemTransferArray);
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $expandedItems
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     * @return \Generated\Shared\Transfer\ItemCollectionTransfer
      */
-    protected function expandItemsPerPlugin(ArrayObject $expandedItems, ItemTransfer $itemTransfer): ArrayObject
+    protected function transformItemTransferPerStrategyPlugin(ItemTransfer $itemTransfer): ItemCollectionTransfer
     {
-        foreach ($this->salesOrderItemExpanderPlugins as $salesOrderItemExpanderPlugin) {
-            $expandedOrderItems = $salesOrderItemExpanderPlugin->expandOrderItem($itemTransfer);
-
-            if ($expandedOrderItems == null) {
-                continue;
+        foreach ($this->salesItemTransformerStrategyPlugins as $salesItemTransformerStrategyPlugin) {
+            if ($salesItemTransformerStrategyPlugin->isApplicable($itemTransfer)) {
+                return $salesItemTransformerStrategyPlugin->transformItem($itemTransfer);
             }
-
-            foreach ($expandedOrderItems as $expandedOrderItem) {
-                $expandedItems->append($expandedOrderItem);
-            }
-
-            return $expandedItems;
         }
 
-        $expandedItems->append($itemTransfer);
-
-        return $expandedItems;
+        return (new ItemCollectionTransfer())->addItem($itemTransfer);
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $orderItemCollection
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemCollection
      *
      * @return void
      */
-    protected function groupOrderDiscountsByGroupKey(ArrayObject $orderItemCollection)
+    protected function groupOrderDiscountsByGroupKey(ArrayObject $itemCollection)
     {
         $calculatedItemDiscountsByGroupKey = [];
         $optionCalculatedDiscountsByGroupKey = [];
-        foreach ($orderItemCollection as $orderItemTransfer) {
-            if (!isset($calculatedItemDiscountsByGroupKey[$orderItemTransfer->getGroupKey()])) {
-                $calculatedItemDiscountsByGroupKey[$orderItemTransfer->getGroupKey()] = (array)$orderItemTransfer->getCalculatedDiscounts();
+        foreach ($itemCollection as $itemTransfer) {
+            if (!isset($calculatedItemDiscountsByGroupKey[$itemTransfer->getGroupKey()])) {
+                $calculatedItemDiscountsByGroupKey[$itemTransfer->getGroupKey()] = (array)$itemTransfer->getCalculatedDiscounts();
             }
-            $orderItemTransfer->setCalculatedDiscounts(
-                $this->getGroupedCalculatedDiscounts($calculatedItemDiscountsByGroupKey, $orderItemTransfer->getGroupKey())
+            $itemTransfer->setCalculatedDiscounts(
+                $this->getGroupedCalculatedDiscounts($calculatedItemDiscountsByGroupKey, $itemTransfer->getGroupKey())
             );
-            foreach ($orderItemTransfer->getProductOptions() as $productOptionTransfer) {
-                if (!isset($optionCalculatedDiscountsByGroupKey[$orderItemTransfer->getGroupKey()])) {
-                    $optionCalculatedDiscountsByGroupKey[$orderItemTransfer->getGroupKey()] = (array)$productOptionTransfer->getCalculatedDiscounts();
+            foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
+                if (!isset($optionCalculatedDiscountsByGroupKey[$itemTransfer->getGroupKey()])) {
+                    $optionCalculatedDiscountsByGroupKey[$itemTransfer->getGroupKey()] = (array)$productOptionTransfer->getCalculatedDiscounts();
                 }
                 $productOptionTransfer->setCalculatedDiscounts(
-                    $this->getGroupedCalculatedDiscounts($optionCalculatedDiscountsByGroupKey, $orderItemTransfer->getGroupKey())
+                    $this->getGroupedCalculatedDiscounts($optionCalculatedDiscountsByGroupKey, $itemTransfer->getGroupKey())
                 );
             }
         }

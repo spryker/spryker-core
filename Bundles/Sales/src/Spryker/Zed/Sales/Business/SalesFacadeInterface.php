@@ -5,10 +5,10 @@
  */
 namespace Spryker\Zed\Sales\Business;
 
-use ArrayObject;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
+use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -186,7 +186,8 @@ interface SalesFacadeInterface
     /**
      *
      * Specification:
-     *  - Applies plugins to order items and recalculates order transfer with new values.
+     * - Transforms provided cart items according configured cart item transformer strategies.
+     * - Recalculates order transfer with new values.
      *
      * @api
      *
@@ -199,13 +200,15 @@ interface SalesFacadeInterface
 
     /**
      * Specification:
-     *  - Expands order items by quantity 1.
+     * - Explodes items by quantity.
+     * - Adds exploded items to the item collection.
+     * - Returns item collection.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     * @return \Generated\Shared\Transfer\ItemCollectionTransfer
      */
-    public function expandOrderItem(ItemTransfer $itemTransfer): ArrayObject;
+    public function transformItem(ItemTransfer $itemTransfer): ItemCollectionTransfer;
 }

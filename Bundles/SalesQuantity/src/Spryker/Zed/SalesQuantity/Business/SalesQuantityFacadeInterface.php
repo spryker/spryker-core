@@ -5,7 +5,8 @@
  */
 namespace Spryker\Zed\SalesQuantity\Business;
 
-use ArrayObject;
+use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 
 /**
@@ -15,13 +16,28 @@ interface SalesQuantityFacadeInterface
 {
     /**
      * Specification:
-     *  - Returns product as it is depends on 'isQuantitySplittable' property.
+     * - Adds item to item collection.
+     * - Returns item collection.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return null|\ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     * @return \Generated\Shared\Transfer\ItemCollectionTransfer
      */
-    public function expandOrderItem(ItemTransfer $itemTransfer): ?ArrayObject;
+    public function transformItem(ItemTransfer $itemTransfer): ItemCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Reads a persisted concrete product from database.
+     * - Expands the items of the CartChangeTransfer with a specific concrete product's data.
+     * - Returns the expanded CartChangeTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function expandItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
 }
