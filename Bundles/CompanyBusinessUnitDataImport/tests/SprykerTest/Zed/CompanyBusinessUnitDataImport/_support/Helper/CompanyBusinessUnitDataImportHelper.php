@@ -18,7 +18,7 @@ class CompanyBusinessUnitDataImportHelper extends Module
     public function ensureDatabaseTableIsEmpty(): void
     {
         $this->getCompanyBusinessUnitQuery()
-            ->delete();
+            ->deleteAll();
     }
 
     /**
