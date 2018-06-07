@@ -11,14 +11,14 @@
                         <tr>
                             <th>{{ orderItem.name }}</th>
                             <th></th>
-                            <td class="text-right">{{ orderItem.unitPrice | money(true, order.currencyIsoCode)  }}</td>
+                            <td class="text-right">{{ orderItem.sumPrice | money(true, order.currencyIsoCode)  }}</td>
                             <th></th>
                         </tr>
                         {% for orderItemOption in orderItem.productOptions %}
                             <tr>
                                 <td> + <span class="label">{{ 'Option' | trans }}</span> {{ orderItemOption.value }}</td>
                                 <td></td>
-                                <td class="text-right">{{ orderItemOption.unitPrice | money(true, order.currencyIsoCode) }}</td>
+                                <td class="text-right">{{ orderItemOption.sumPrice | money(true, order.currencyIsoCode) }}</td>
                                 <td></td>
                             </tr>
                         {% endfor %}
@@ -29,21 +29,21 @@
                             <tr>
                                 <th>{{ orderItem.name }}</th>
                                 <th></th>
-                                <td class="text-right">{{ orderItem.unitPrice | money(true, order.currencyIsoCode)  }}</td>
+                                <td class="text-right">{{ orderItem.sumPrice | money(true, order.currencyIsoCode)  }}</td>
                                 <th></th>
                             </tr>
                             {% for bundledItem in order.items if bundledItem.relatedBundleItemIdentifier == orderItem.bundleItemIdentifier %}
                                 <tr>
                                     <th></th>
                                     <th>{{ bundledItem.name }}</th>
-                                    <td class="text-right">{{ bundledItem.unitPrice | money(true, order.currencyIsoCode)  }}</td>
+                                    <td class="text-right">{{ bundledItem.sumPrice | money(true, order.currencyIsoCode)  }}</td>
                                     <td></td>
                                 </tr>
                                 {% for orderItemOption in bundledItem.productOptions %}
                                     <tr>
                                         <td></td>
                                         <td> + {{ orderItemOption.value }}</td>
-                                        <td class="text-right">{{ orderItemOption.unitPrice | money(true, order.currencyIsoCode)  }}</td>
+                                        <td class="text-right">{{ orderItemOption.sumPrice | money(true, order.currencyIsoCode)  }}</td>
                                         <td></td>
                                     </tr>
                                 {% endfor %}
@@ -61,7 +61,7 @@
                         <tr>
                             <td>{{ 'Shipment' | trans }} -  {{ expense.name }}</td>
                             <td></td>
-                            <td class="text-right">{{ expense.unitPrice | money(true, order.currencyIsoCode)  }}</td>
+                            <td class="text-right">{{ expense.sumPrice | money(true, order.currencyIsoCode)  }}</td>
                             <td></td>
                         </tr>
                     {% endfor %}

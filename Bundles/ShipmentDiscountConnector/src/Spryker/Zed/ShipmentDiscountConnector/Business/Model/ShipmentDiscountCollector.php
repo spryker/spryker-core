@@ -80,9 +80,9 @@ class ShipmentDiscountCollector implements ShipmentDiscountCollectorInterface
     private function getPrice(ExpenseTransfer $expenseTransfer, $priceMode)
     {
         if ($priceMode === 'NET_MODE') {
-            return $expenseTransfer->getUnitNetPrice();
+            return $expenseTransfer->getSumNetPrice();
         } else {
-            return $expenseTransfer->getUnitGrossPrice();
+            return $expenseTransfer->getSumGrossPrice();
         }
     }
 }

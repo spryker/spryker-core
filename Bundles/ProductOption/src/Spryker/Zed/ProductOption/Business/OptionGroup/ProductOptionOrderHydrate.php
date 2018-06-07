@@ -50,6 +50,7 @@ class ProductOptionOrderHydrate implements ProductOptionOrderHydrateInterface
             }
 
             $itemTransfer->setUnitProductOptionPriceAggregation($salesOrderItemEntity->getProductOptionPriceAggregation());
+            $itemTransfer->setSumProductOptionPriceAggregation($salesOrderItemEntity->getProductOptionPriceAggregation());
 
             foreach ($salesOrderItemEntity->getOptions() as $orderItemOptionEntity) {
                 $productOptionsTransfer = $this->hydrateProductOptionTransfer($orderItemOptionEntity);
@@ -86,6 +87,13 @@ class ProductOptionOrderHydrate implements ProductOptionOrderHydrateInterface
     {
         $productOptionsTransfer = new ProductOptionTransfer();
         $productOptionsTransfer->setQuantity(1);
+
+        $productOptionsTransfer->setSumPrice($orderItemOptionEntity->getPrice());
+        $productOptionsTransfer->setSumGrossPrice($orderItemOptionEntity->getGrossPrice());
+        $productOptionsTransfer->setSumNetPrice($orderItemOptionEntity->getNetPrice());
+        $productOptionsTransfer->setSumDiscountAmountAggregation($orderItemOptionEntity->getDiscountAmountAggregation());
+        $productOptionsTransfer->setSumTaxAmount($orderItemOptionEntity->getTaxAmount());
+
         $productOptionsTransfer->setUnitPrice($orderItemOptionEntity->getPrice());
         $productOptionsTransfer->setUnitGrossPrice($orderItemOptionEntity->getGrossPrice());
         $productOptionsTransfer->setUnitNetPrice($orderItemOptionEntity->getNetPrice());

@@ -40,7 +40,7 @@ class OrderTaxTotalCalculator implements CalculatorInterface
     {
         $totalTaxAmount = 0;
         foreach ($items as $itemTransfer) {
-            $totalTaxAmount += $itemTransfer->getUnitTaxAmountFullAggregation() - $itemTransfer->getTaxAmountAfterCancellation();
+            $totalTaxAmount += $itemTransfer->getSumTaxAmountFullAggregation() - $itemTransfer->getTaxAmountAfterCancellation();
         }
         return $totalTaxAmount;
     }
@@ -54,7 +54,7 @@ class OrderTaxTotalCalculator implements CalculatorInterface
     {
         $totalTaxAmount = 0;
         foreach ($expenses as $expenseTransfer) {
-            $totalTaxAmount += $expenseTransfer->getUnitTaxAmount() - $expenseTransfer->getTaxAmountAfterCancellation();
+            $totalTaxAmount += $expenseTransfer->getSumTaxAmount() - $expenseTransfer->getTaxAmountAfterCancellation();
         }
         return $totalTaxAmount;
     }

@@ -1,7 +1,7 @@
 
 {% set numberOfItemAdditions = orderItem.productOptions | length + 1  %}
-{% set subtotal = group ? bundleItem.unitSubtotalAggregation : orderItem.unitSubtotalAggregation %}
-{% set priceToPay = group ? bundleItem.unitPriceToPayAggregation : orderItem.unitPriceToPayAggregation %}
+{% set subtotal = group ? bundleItem.sumSubtotalAggregation : orderItem.sumSubtotalAggregation %}
+{% set priceToPay = group ? bundleItem.sumPriceToPayAggregation : orderItem.sumPriceToPayAggregation %}
 {% set image = image %}
 
 <td class="item-checker"><input type="checkbox" name="order-item" value="{{ orderItem.idSalesOrderItem }}" class="item-check" /></td>
@@ -38,8 +38,11 @@
   {% endif %}
 </td>
 <td>
+    {{ orderItem.quantity }}
+</td>
+<td>
     <div>
-      {% embed '@Sales/Detail/boxes/discounted-price.twig' with {subtotal: orderItem.unitPrice, priceToPay: orderItem.unitPrice - orderItem.unitDiscountAmountFullAggregation | default(0)} %} {% endembed %}
+      {% embed '@Sales/Detail/boxes/discounted-price.twig' with {subtotal: orderItem.sumPrice, priceToPay: orderItem.sumPrice - orderItem.sumDiscountAmountFullAggregation | default(0)} %} {% endembed %}
     </div>
     <div class="tax-info">incl. {{ orderItem.taxRate|default(0) }} % tax </div>
 </td>
