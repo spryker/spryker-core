@@ -24,7 +24,7 @@ class BusinessOnBehalfDependencyProvider extends AbstractBundleDependencyProvide
      */
     public function providePersistenceLayerDependencies(Container $container)
     {
-        $container = $this->addCompanyUserQuery($container);
+        $container = $this->addCompanyUserPropelQuery($container);
 
         return $container;
     }
@@ -46,7 +46,7 @@ class BusinessOnBehalfDependencyProvider extends AbstractBundleDependencyProvide
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCompanyUserQuery(Container $container): Container
+    protected function addCompanyUserPropelQuery(Container $container): Container
     {
         $container[static::PROPEL_QUERY_COMPANY_USER] = function (Container $container) {
             return SpyCompanyUserQuery::create();

@@ -42,6 +42,7 @@ class CompanyUserReader implements CompanyUserReaderInterface
     public function findActiveCompanyUsersByCustomerId(CustomerTransfer $customerTransfer): CompanyUserCollectionTransfer
     {
         $customerTransfer->requireIdCustomer();
+
         $companyCollection = new CompanyUserCollectionTransfer();
         $idCompanyUsers = $this->repository->findActiveCompanyUserIdsByCustomerId($customerTransfer->getIdCustomer());
         foreach ($idCompanyUsers as $idCompanyUser) {

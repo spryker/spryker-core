@@ -32,9 +32,11 @@ class CustomerExpander implements CustomerExpanderInterface
      */
     public function expandCustomer(CustomerTransfer $customerTransfer): CustomerTransfer
     {
+        $customerTransfer->requireIdCustomer();
+
         $customerTransfer->setIsOnBehalf(
             $this->repository->isOnBehalfByCustomerId(
-                $customerTransfer->requireIdCustomer()->getIdCustomer()
+                $customerTransfer->getIdCustomer()
             )
         );
 

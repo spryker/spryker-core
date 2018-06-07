@@ -45,9 +45,9 @@ class CustomerHydrator implements CustomerHydratorInterface
         if ($customerTransfer->getCompanyUserTransfer()) {
             return $customerTransfer;
         }
+
         $customerTransfer->requireIdCustomer();
-        $defaultCompanyUser = $this->businessOnBehalfRepository
-            ->findDefaultCompanyUserByCustomerId($customerTransfer->getIdCustomer());
+        $defaultCompanyUser = $this->businessOnBehalfRepository->findDefaultCompanyUserByCustomerId($customerTransfer->getIdCustomer());
         if ($defaultCompanyUser) {
             $defaultCompanyUser = $this->companyUserFacade->getCompanyUserById($defaultCompanyUser->getIdCompanyUser());
         }

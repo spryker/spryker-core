@@ -17,10 +17,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class BusinessOnBehalfRepository extends AbstractRepository implements BusinessOnBehalfRepositoryInterface
 {
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @uses \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery
      * @uses \Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap
      *
@@ -33,14 +29,10 @@ class BusinessOnBehalfRepository extends AbstractRepository implements BusinessO
         $query = $this->getFactory()->getCompanyUserQuery();
         $query->filterByFkCustomer($idCustomer);
 
-        return count($query->select([SpyCompanyUserTableMap::COL_ID_COMPANY_USER])->find()) > 1;
+        return $query->count() > 1;
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @uses \Orm\Zed\Company\Persistence\SpyCompanyQuery
      * @uses \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery
      * @uses \Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap
@@ -71,10 +63,12 @@ class BusinessOnBehalfRepository extends AbstractRepository implements BusinessO
      */
     public function findDefaultCompanyUserByCustomerId(int $idCustomer): ?CompanyUserTransfer
     {
-        $query = $this->getFactory()->getCompanyUserQuery();
-        $spyCompanyUser = $query->filterByFkCustomer($idCustomer)
+        $spyCompanyUser = $this->getFactory()
+            ->getCompanyUserQuery()
+            ->filterByFkCustomer($idCustomer)
             ->filterByIsDefault(true)
             ->findOne();
+
         if (!$spyCompanyUser) {
             return null;
         }

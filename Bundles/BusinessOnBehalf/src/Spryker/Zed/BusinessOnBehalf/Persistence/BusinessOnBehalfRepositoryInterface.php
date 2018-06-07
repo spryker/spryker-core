@@ -12,11 +12,6 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 interface BusinessOnBehalfRepositoryInterface
 {
     /**
-     * Specification:
-     * - Checks is customer on behalf, i.e. has multiple company user accounts
-     *
-     * @api
-     *
      * @param int $idCustomer
      *
      * @return bool
@@ -24,9 +19,6 @@ interface BusinessOnBehalfRepositoryInterface
     public function isOnBehalfByCustomerId(int $idCustomer): bool;
 
     /**
-     * Specification:
-     * - Retrieves ids of active company users by customer id
-     *
      * @param int $idCustomer
      *
      * @return int[]
