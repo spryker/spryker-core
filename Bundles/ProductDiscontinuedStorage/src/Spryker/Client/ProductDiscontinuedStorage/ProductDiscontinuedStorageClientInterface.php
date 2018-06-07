@@ -1,0 +1,29 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Client\ProductDiscontinuedStorage;
+
+use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
+
+/**
+ * @method \Spryker\Client\ProductDiscontinuedStorage\ProductDiscontinuedStorageFactory getFactory()
+ */
+interface ProductDiscontinuedStorageClientInterface
+{
+    /**
+     * Specification:
+     * - Finds a product discontinued within Storage with a given concrete product sku.
+     * - Returns null if product discontinued was not found.
+     *
+     * @api
+     *
+     * @param string $concreteSku
+     *
+     * @return \Generated\Shared\Transfer\ProductDiscontinuedTransfer|null
+     */
+    public function findProductDiscontinuedStorage(string $concreteSku): ?ProductDiscontinuedTransfer;
+}
