@@ -36,10 +36,6 @@ class StatusOrderPluginChart extends AbstractPlugin implements ChartPluginInterf
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return string
      */
     public function getName(): string
@@ -48,10 +44,6 @@ class StatusOrderPluginChart extends AbstractPlugin implements ChartPluginInterf
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param string|null $dataIdentifier
      *
      * @return \Generated\Shared\Transfer\ChartDataTransfer

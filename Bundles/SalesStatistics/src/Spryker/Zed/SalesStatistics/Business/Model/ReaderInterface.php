@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\SalesStatistics\Business\Model;
 
-
 use Generated\Shared\Transfer\SalesStatisticTransfer;
 
 interface ReaderInterface

@@ -27,10 +27,6 @@ class TopOrdersPluginChart extends AbstractPlugin implements ChartPluginInterfac
     public const TITLE = 'Top Orders';
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return string
      */
     public function render(): string
@@ -42,10 +38,6 @@ class TopOrdersPluginChart extends AbstractPlugin implements ChartPluginInterfac
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return string
      */
     public function getName(): string
@@ -54,10 +46,6 @@ class TopOrdersPluginChart extends AbstractPlugin implements ChartPluginInterfac
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param string|null $dataIdentifier
      *
      * @return \Generated\Shared\Transfer\ChartDataTransfer

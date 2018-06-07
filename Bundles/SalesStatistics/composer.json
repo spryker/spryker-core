@@ -6,7 +6,8 @@
     "spryker/kernel": "^3.0.0",
     "spryker/sales": "^7.0.0 || ^8.0.0",
     "spryker/twig": "*",
-    "spryker/oms": "^6.0.0 || ^7.0.0 || ^8.0.0"
+    "spryker/oms": "^6.0.0 || ^7.0.0 || ^8.0.0",
+    "spryker/PropelOrm": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
