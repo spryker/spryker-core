@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\SalesQuantity\Dependency\Facade;
 
+use Generated\Shared\Transfer\ProductConcreteTransfer;
+
 class SalesQuantityToProductBridge implements SalesQuantityToProductInterface
 {
     /**
@@ -27,7 +29,7 @@ class SalesQuantityToProductBridge implements SalesQuantityToProductInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function getProductConcrete($concreteSku)
+    public function getProductConcrete($concreteSku): ProductConcreteTransfer
     {
         return $this->productFacade->getProductConcrete($concreteSku);
     }
