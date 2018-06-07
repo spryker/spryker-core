@@ -4,7 +4,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Discount\Communication\Plugin\Distributor;
+namespace Spryker\Zed\Discount\Communication\Plugin\DiscountExtension;
 
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\DiscountableItemTransfer;
