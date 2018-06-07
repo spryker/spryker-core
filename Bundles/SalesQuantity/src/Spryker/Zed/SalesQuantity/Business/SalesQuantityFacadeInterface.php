@@ -5,8 +5,8 @@
  */
 namespace Spryker\Zed\SalesQuantity\Business;
 
-use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 
 /**
@@ -22,9 +22,9 @@ interface SalesQuantityFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     * @return \Generated\Shared\Transfer\ItemCollectionTransfer
      */
-    public function transformItem(ItemTransfer $itemTransfer): ArrayObject;
+    public function transformItem(ItemTransfer $itemTransfer): ItemCollectionTransfer;
 
     /**
      * @api

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Sales\Business\Model\Order\Item;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 
@@ -16,11 +17,11 @@ class ItemTransformer implements ItemTransformerInterface
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     * @return \Generated\Shared\Transfer\ItemCollectionTransfer
      */
-    public function transformItem(ItemTransfer $itemTransfer): ArrayObject
+    public function transformItem(ItemTransfer $itemTransfer): ItemCollectionTransfer
     {
-        $transformedItems = new ArrayObject();
+        $transformedItemsCollection = new ItemCollectionTransfer();
 
         $quantity = $itemTransfer->getQuantity();
         for ($i = 1; $quantity >= $i; $i++) {
@@ -34,10 +35,10 @@ class ItemTransformer implements ItemTransformerInterface
             }
 
             $transformedItemTransfer->setProductOptions($transformedProductOptions);
-            $transformedItems->append($transformedItemTransfer);
+            $transformedItemsCollection->addItem($transformedItemTransfer);
         }
 
-        return $transformedItems;
+        return $transformedItemsCollection;
     }
 
     /**

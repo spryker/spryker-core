@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\SalesQuantity\Business;
 
-use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -24,9 +24,9 @@ class SalesQuantityFacade extends AbstractFacade implements SalesQuantityFacadeI
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     * @return \Generated\Shared\Transfer\ItemCollectionTransfer
      */
-    public function transformItem(ItemTransfer $itemTransfer): ArrayObject
+    public function transformItem(ItemTransfer $itemTransfer): ItemCollectionTransfer
     {
         return $this->getFactory()
             ->createItemTransformer()
