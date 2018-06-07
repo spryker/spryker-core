@@ -60,6 +60,32 @@ class EventQueueProducer implements EventQueueProducerInterface
     }
 
     /**
+     * //TODO extract the methods and reuse it
+     *
+     * @param string $eventName
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $eventTransfers
+     * @param string $listener
+     *
+     * @return void
+     */
+    public function enqueueListenerBulk($eventName, array $eventTransfers, $listener)
+    {
+        $messageTransfers = [];
+        foreach ($eventTransfers as $eventTransfer) {
+            $messageTransfer = new QueueSendMessageTransfer();
+            $messageTransfer->setBody(
+                $this->utilEncodingService->encodeJson(
+                    $this->mapQueueMessageBody($eventTransfer, $listener, $eventName)
+                )
+            );
+            $messageTransfers[] = $messageTransfer;
+        }
+
+
+        $this->queueClient->sendMessages(EventConstants::EVENT_QUEUE, $messageTransfers);
+    }
+
+    /**
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $eventTransfer
      * @param string $listenerClassName
      * @param string $eventName

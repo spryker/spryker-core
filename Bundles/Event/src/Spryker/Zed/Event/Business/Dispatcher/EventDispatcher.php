@@ -73,6 +73,28 @@ class EventDispatcher implements EventDispatcherInterface
     }
 
     /**
+     * //TODO please refactor this
+     * @param string $eventName
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $eventTransfers
+     *
+     * @return void
+     */
+    public function triggerBulk($eventName, array $eventTransfers)
+    {
+        foreach ($this->extractEventListeners($eventName) as $eventListener) {
+            if ($eventListener->isHandledInQueue()) {
+                $this->eventQueueProducer->enqueueListenerBulk($eventName, $eventTransfers, $eventListener->getListenerName());
+                $this->logEventHandleBulk($eventName, $eventTransfers, $eventListener);
+            } elseif ($eventListener instanceof EventHandlerInterface) {
+                foreach ($eventTransfers as $eventTransfer) {
+                    $eventListener->handle($eventTransfer, $eventName);
+                    $this->logEventHandle($eventName, $eventTransfer, $eventListener);
+                }
+            }
+        }
+    }
+
+    /**
      * @param string $eventName
      *
      * @return \SplPriorityQueue|\Spryker\Zed\Event\Business\Dispatcher\EventListenerContextInterface[]
@@ -107,6 +129,32 @@ class EventDispatcher implements EventDispatcherInterface
                 $this->utilEncodingService->encodeJson($eventTransfer->toArray())
             )
         );
+    }
+
+    /**
+     * //TODO extract the methods and reuse it
+     * @param string $eventName
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $eventTransfers
+     * @param \Spryker\Zed\Event\Business\Dispatcher\EventListenerContextInterface $eventListener
+     *
+     * @return void
+     */
+    protected function logEventHandleBulk(
+        $eventName,
+        array $eventTransfers,
+        EventListenerContextInterface $eventListener
+    ) {
+        foreach ($eventTransfers as $eventTransfer) {
+            $this->eventLogger->log(
+                sprintf(
+                    $this->createHandleMessage($eventListener),
+                    $eventName,
+                    $eventListener->getListenerName(),
+                    get_class($eventTransfer),
+                    $this->utilEncodingService->encodeJson($eventTransfer->toArray())
+                )
+            );
+        }
     }
 
     /**

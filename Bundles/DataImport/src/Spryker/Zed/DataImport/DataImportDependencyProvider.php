@@ -23,6 +23,7 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
     const DATA_IMPORTER_PLUGINS = 'IMPORTER_PLUGINS';
     const DATA_IMPORT_BEFORE_HOOK_PLUGINS = 'DATA_IMPORT_BEFORE_HOOK_PLUGINS';
     const DATA_IMPORT_AFTER_HOOK_PLUGINS = 'DATA_IMPORT_AFTER_HOOK_PLUGINS';
+    const DATA_IMPORT_DEFAULT_WRITER_PLUGINS = 'DATA_IMPORT_DEFAULT_WRITER_PLUGINS';
     const STORE = 'store';
 
     /**
@@ -39,6 +40,7 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addStore($container);
         $container = $this->addDataImportBeforeImportHookPlugins($container);
         $container = $this->addDataImportAfterImportHookPlugins($container);
+        $container = $this->addDataImportDefaultWriterPlugins($container);
 
         return $container;
     }
@@ -167,6 +169,28 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
      * @return array
      */
     protected function getDataImportAfterImportHookPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addDataImportDefaultWriterPlugins(Container $container): Container
+    {
+        $container[static::DATA_IMPORT_DEFAULT_WRITER_PLUGINS] = function () {
+            return $this->getDataImportDefaultWriterPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Dependency\Plugin\DataImportWriterPluginInterface|\Spryker\Zed\DataImport\Dependency\Plugin\DataImportFlushPluginInterface[]
+     */
+    protected function getDataImportDefaultWriterPlugins(): array
     {
         return [];
     }
