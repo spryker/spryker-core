@@ -10,15 +10,37 @@
         <property name="defaultPrecision" type="int" />
     </transfer>
 
+    <transfer name="ProductMeasurementBaseUnit">
+        <property name="idProductMeasurementBaseUnit" type="int" />
+        <property name="fkProductMeasurementUnit" type="int" />
+        <property name="fkProductAbstract" type="int" />
+        <property name="productMeasurementUnit" type="ProductMeasurementUnit" />
+        <property name="productAbstract" type="ProductAbstract" />
+    </transfer>
+
     <transfer name="ProductMeasurementSalesUnit">
         <property name="idProductMeasurementSalesUnit" type="int" />
-        <property name="fkProductMeasurementBaseUnit" type="int" />
         <property name="conversion" type="float" />
         <property name="precision" type="int" />
         <property name="isDisplayed" type="bool" />
         <property name="isDefault" type="bool" />
+        <property name="fkProductMeasurementUnit" type="int" />
+        <property name="fkProductMeasurementBaseUnit" type="int" />
+        <property name="productMeasurementBaseUnit" type="ProductMeasurementBaseUnit" />
         <property name="productMeasurementUnit" type="ProductMeasurementUnit" />
         <property name="value" type="int" />
+        <property name="storeRelation" type="StoreRelation" />
+    </transfer>
+
+    <transfer name="StoreRelation">
+        <property name="idEntity" type="int" />
+        <property name="idStores" type="int[]" />
+        <property name="stores" type="Store[]" />
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int" />
+        <property name="name" type="string" />
     </transfer>
 
     <transfer name="Item">

@@ -31,41 +31,83 @@ class ProductConcreteMeasurementUnitStorageReader implements ProductConcreteMeas
     /**
      * @param int $idProduct
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer[] Keys are store names
      */
-    public function getProductConcreteMeasurementUnitStorageByIdProduct(int $idProduct): ProductConcreteMeasurementUnitStorageTransfer
+    public function generateProductConcreteMeasurementUnitStorageTransfersByIdProduct(int $idProduct): array
     {
-        $productMeasurementBaseUnitEntity = $this->productMeasurementUnitFacade->getBaseUnitByIdProduct($idProduct);
+        $productMeasurementSalesUnitTransfers = $this->productMeasurementUnitFacade->getSalesUnitsByIdProduct($idProduct);
 
-        $productConcreteMeasurementUnitStorageTransfer = (new ProductConcreteMeasurementUnitStorageTransfer())
-            ->setBaseUnit(
-                (new ProductConcreteMeasurementBaseUnitTransfer())
-                    ->fromArray($productMeasurementBaseUnitEntity->toArray(), true)
-                    ->setIdProductMeasurementUnit($productMeasurementBaseUnitEntity->getFkProductMeasurementUnit())
-            )
-            ->setSalesUnits($this->getProductConcreteMeasurementSalesUnitTransfers($idProduct));
+        $relatedStoreNames = $this->extractRelatedStoreNames($productMeasurementSalesUnitTransfers);
+        $productConcreteMeasurementBaseUnitTransfer = $this->extractProductConcreteMeasurementBaseUnitTransfer($productMeasurementSalesUnitTransfers);
+        $mappedProductConcreteMeasurementSalesUnitTransfers = $this->extractProductConcreteMeasurementSalesUnitTransfersByStoreName($productMeasurementSalesUnitTransfers);
 
-        return $productConcreteMeasurementUnitStorageTransfer;
+        $productConcreteMeasurementUnitStorageTransfers = [];
+        foreach ($relatedStoreNames as $storeName) {
+            $productConcreteMeasurementUnitStorageTransfer = (new ProductConcreteMeasurementUnitStorageTransfer())
+                ->setBaseUnit($productConcreteMeasurementBaseUnitTransfer)
+                ->setSalesUnits(new ArrayObject($mappedProductConcreteMeasurementSalesUnitTransfers[$storeName]));
+
+            $productConcreteMeasurementUnitStorageTransfers[$storeName] = $productConcreteMeasurementUnitStorageTransfer;
+        }
+
+        return $productConcreteMeasurementUnitStorageTransfers;
     }
 
     /**
-     * @param int $idProduct
+     * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[] $productMeasurementSalesUnitTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteMeasurementSalesUnitTransfer[]|\ArrayObject
+     * @return array First level keys are store names, second level keys are numeric, values are ProductConcreteMeasurementSalesUnitTransfers
      */
-    protected function getProductConcreteMeasurementSalesUnitTransfers(int $idProduct): ArrayObject
+    protected function extractProductConcreteMeasurementSalesUnitTransfersByStoreName(array $productMeasurementSalesUnitTransfers): array
     {
-        $productMeasurementSalesUnitEntities = $this->productMeasurementUnitFacade->getSalesUnitsByIdProduct($idProduct);
-
-        $productConcreteSalesUnitTransfers = new ArrayObject();
-        foreach ($productMeasurementSalesUnitEntities as $productMeasurementSalesUnitEntity) {
-            $productConcreteSalesUnitTransfers->append(
-                (new ProductConcreteMeasurementSalesUnitTransfer())
-                    ->fromArray($productMeasurementSalesUnitEntity->toArray(), true)
-                    ->setIdProductMeasurementUnit($productMeasurementSalesUnitEntity->getFkProductMeasurementUnit())
-            );
+        $mappedProductConcreteMeasurementSalesUnitTransfers = [];
+        foreach ($productMeasurementSalesUnitTransfers as $productMeasurementSalesUnitTransfer) {
+            foreach ($productMeasurementSalesUnitTransfer->getStoreRelation()->getStores() as $storeTransfer) {
+                $mappedProductConcreteMeasurementSalesUnitTransfers[$storeTransfer->getName()][] = (new ProductConcreteMeasurementSalesUnitTransfer())
+                    ->fromArray($productMeasurementSalesUnitTransfer->toArray(), true)
+                    ->setIdProductMeasurementUnit($productMeasurementSalesUnitTransfer->getFkProductMeasurementUnit());
+            }
         }
 
-        return $productConcreteSalesUnitTransfers;
+        return $mappedProductConcreteMeasurementSalesUnitTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[] $productMeasurementSalesUnitTransfers
+     *
+     * @return null|\Generated\Shared\Transfer\ProductConcreteMeasurementBaseUnitTransfer
+     */
+    protected function extractProductConcreteMeasurementBaseUnitTransfer(array $productMeasurementSalesUnitTransfers): ?ProductConcreteMeasurementBaseUnitTransfer
+    {
+        foreach ($productMeasurementSalesUnitTransfers as $productMeasurementSalesUnitTransfer) {
+            $productConcreteMeasurementBaseUnitTransfer = (new ProductConcreteMeasurementBaseUnitTransfer())
+                ->fromArray($productMeasurementSalesUnitTransfer->getProductMeasurementBaseUnit()->toArray(), true)
+                ->setIdProductMeasurementUnit($productMeasurementSalesUnitTransfer->getProductMeasurementBaseUnit()->getFkProductMeasurementUnit());
+
+            return $productConcreteMeasurementBaseUnitTransfer;
+        }
+
+        return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[] $productMeasurementSalesUnitTransfers
+     *
+     * @return string[]
+     */
+    protected function extractRelatedStoreNames(array $productMeasurementSalesUnitTransfers): array
+    {
+        $relatedStores = [];
+        foreach ($productMeasurementSalesUnitTransfers as $productMeasurementSalesUnitTransfer) {
+            foreach ($productMeasurementSalesUnitTransfer->getStoreRelation()->getStores() as $storeTransfer) {
+                if (in_array($storeTransfer->getName(), $relatedStores, true)) {
+                    continue;
+                }
+
+                $relatedStores[] = $storeTransfer->getName();
+            }
+        }
+
+        return $relatedStores;
     }
 }

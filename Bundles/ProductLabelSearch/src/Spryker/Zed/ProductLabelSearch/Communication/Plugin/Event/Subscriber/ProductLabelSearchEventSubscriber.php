@@ -28,14 +28,73 @@ class ProductLabelSearchEventSubscriber extends AbstractPlugin implements EventS
      */
     public function getSubscribedEvents(EventCollectionInterface $eventCollection)
     {
-        $eventCollection
-            ->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_CREATE, new ProductLabelProductAbstractSearchListener())
-            ->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_UPDATE, new ProductLabelProductAbstractSearchListener())
-            ->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_DELETE, new ProductLabelProductAbstractSearchListener())
-            ->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_CREATE, new ProductLabelSearchListener())
-            ->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_UPDATE, new ProductLabelSearchListener())
-            ->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_DELETE, new ProductLabelSearchListener());
+        $this->addProductLabelProductAbstractCreateSearchListener($eventCollection);
+        $this->addProductLabelProductAbstractUpdateSearchListener($eventCollection);
+        $this->addProductLabelProductAbstractDeleteSearchListener($eventCollection);
+        $this->addProductLabelCreateSearchListener($eventCollection);
+        $this->addProductLabelUpdateSearchListener($eventCollection);
+        $this->addProductLabelDeleteSearchListener($eventCollection);
 
         return $eventCollection;
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductLabelProductAbstractCreateSearchListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_CREATE, new ProductLabelProductAbstractSearchListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductLabelProductAbstractUpdateSearchListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_UPDATE, new ProductLabelProductAbstractSearchListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductLabelProductAbstractDeleteSearchListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_DELETE, new ProductLabelProductAbstractSearchListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductLabelCreateSearchListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_CREATE, new ProductLabelSearchListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductLabelUpdateSearchListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_UPDATE, new ProductLabelSearchListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductLabelDeleteSearchListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_DELETE, new ProductLabelSearchListener());
     }
 }
