@@ -7,10 +7,7 @@
 
 namespace Spryker\Zed\ProductPackagingUnitStorage\Persistence;
 
-use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
-use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
-use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -18,145 +15,62 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductPackagingUnitStorageQueryContainer extends AbstractQueryContainer implements ProductPackagingUnitStorageQueryContainerInterface
 {
-    const ID_PRODUCT_ABSTRACT = 'idProductAbstract';
-    const ID_PRODUCT_CONCRETE = 'idProductConcrete';
-    const SKU = 'sku';
-
     /**
      * @api
      *
-     * @param array $productAbstractIds
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
-     */
-    public function queryProductAbstractSkuByIds(array $productAbstractIds)
-    {
-        return $this->getFactory()
-            ->getProductQueryContainer()
-            ->queryProductAbstract()
-            ->filterByIdProductAbstract_In($productAbstractIds)
-            ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, static::ID_PRODUCT_ABSTRACT)
-            ->withColumn(SpyProductAbstractTableMap::COL_SKU, static::SKU)
-            ->select([
-                static::ID_PRODUCT_ABSTRACT,
-                static::SKU,
-            ]);
-    }
-
-    /**
-     * @api
-     *
-     * @param array $productAbstractIds
-     *
-     * @return \Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyPriceProductAbstractStorageQuery
-     */
-    public function queryPriceAbstractStorageByPriceAbstractIds(array $productAbstractIds)
-    {
-        return $this->getFactory()
-            ->createSpyPriceAbstractStorageQuery()
-            ->filterByFkProductAbstract_In($productAbstractIds);
-    }
-
-    /**
-     * @api
-     *
-     * @param array $priceTypeIds
-     *
-     * @return \Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyPriceProductAbstractStorageQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
-     */
-    public function queryAllProductAbstractIdsByPriceTypeIds(array $priceTypeIds)
-    {
-        return $this->getFactory()
-            ->getPriceProductQueryContainer()
-            ->queryPriceProduct()
-            ->select([SpyPriceProductTableMap::COL_FK_PRODUCT_ABSTRACT])
-            ->addAnd(SpyPriceProductTableMap::COL_FK_PRODUCT_ABSTRACT, null, Criteria::NOT_EQUAL)
-            ->filterByFkPriceType_In($priceTypeIds);
-    }
-
-    /**
-     * @api
-     *
-     * @param array $priceTypeIds
-     *
-     * @return \Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyPriceProductAbstractStorageQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
-     */
-    public function queryAllProductIdsByPriceTypeIds(array $priceTypeIds)
-    {
-        return $this->getFactory()
-            ->getPriceProductQueryContainer()
-            ->queryPriceProduct()
-            ->select([SpyPriceProductTableMap::COL_FK_PRODUCT])
-            ->addAnd(SpyPriceProductTableMap::COL_FK_PRODUCT, null, Criteria::NOT_EQUAL)
-            ->filterByFkPriceType_In($priceTypeIds);
-    }
-
-    /**
-     * @api
-     *
-     * @param array $priceProductIds
-     *
-     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
-     */
-    public function queryAllProductIdsByPriceProductIds(array $priceProductIds)
-    {
-        return $this->getFactory()
-            ->getPriceProductQueryContainer()
-            ->queryPriceProduct()
-            ->select([SpyPriceProductTableMap::COL_FK_PRODUCT])
-            ->addAnd(SpyPriceProductTableMap::COL_FK_PRODUCT, null, Criteria::NOT_EQUAL)
-            ->filterByIdPriceProduct_In($priceProductIds);
-    }
-
-    /**
-     * @api
-     *
-     * @param array $priceProductIds
-     *
-     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
-     */
-    public function queryAllProductAbstractIdsByPriceProductIds(array $priceProductIds)
-    {
-        return $this->getFactory()
-            ->getPriceProductQueryContainer()
-            ->queryPriceProduct()
-            ->select([SpyPriceProductTableMap::COL_FK_PRODUCT_ABSTRACT])
-            ->addAnd(SpyPriceProductTableMap::COL_FK_PRODUCT_ABSTRACT, null, Criteria::NOT_EQUAL)
-            ->filterByIdPriceProduct_In($priceProductIds);
-    }
-
-    /**
-     * @api
-     *
-     * @param array $productConcreteIds
+     * @param int $productAbstractId
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
-    public function queryProductAbstractIdsByProductConcreteIds(array $productConcreteIds)
+    public function queryLeadProductByAbstractId(int $productAbstractId)
     {
         return $this->getFactory()
             ->getProductQueryContainer()
             ->queryProduct()
-            ->filterByIdProduct_In($productConcreteIds)
-            ->withColumn(SpyProductTableMap::COL_ID_PRODUCT, static::ID_PRODUCT_CONCRETE)
-            ->withColumn(SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT, static::ID_PRODUCT_ABSTRACT)
-            ->select([
-                static::ID_PRODUCT_CONCRETE,
-                static::ID_PRODUCT_ABSTRACT,
-            ]);
+            ->filterByFkProductAbstract($productAbstractId)
+            ->innerJoinSpyProductPackagingLeadProduct()
+            ->where(sprintf(
+                "%s = %s",
+                SpyProductTableMap::COL_HAS_LEAD_PRODUCT,
+                1
+            ));
     }
 
     /**
      * @api
      *
-     * @param array $productConcreteIds
+     * @param int $productAbstractId
      *
-     * @return \Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyPriceProductConcreteStorageQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
-    public function queryPriceConcreteStorageByProductIds(array $productConcreteIds)
+    public function queryPackageProductsByAbstractId(int $productAbstractId)
     {
         return $this->getFactory()
-            ->createSpyPriceConcreteStorageQuery()
-            ->filterByFkProduct_In($productConcreteIds);
+            ->getProductQueryContainer()
+            ->queryProduct()
+            ->filterByFkProductAbstract($productAbstractId)
+            ->where(sprintf(
+                "%s = %s",
+                SpyProductTableMap::COL_HAS_LEAD_PRODUCT,
+                0
+            ))
+            ->useSpyProductPackagingUnitQuery()
+                ->innerJoinProductPackagingUnitType()
+                ->joinSpyProductPackagingUnitAmount()
+            ->endUse();
+    }
+
+    /**
+     * @api
+     *
+     * @param array $productAbstractIds
+     *
+     * @return \Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyProductAbstractPackagingStorageQuery
+     */
+    public function queryProductAbstractPackagingStorageByProductAbstractIds(array $productAbstractIds)
+    {
+        return $this->getFactory()
+            ->createSpyProductAbstractPackagingStorageQuery()
+            ->filterByFkProductAbstract_In($productAbstractIds);
     }
 }

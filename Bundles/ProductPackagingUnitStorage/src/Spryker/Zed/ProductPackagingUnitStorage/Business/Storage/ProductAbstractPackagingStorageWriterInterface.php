@@ -10,16 +10,16 @@ namespace Spryker\Zed\ProductPackagingUnitStorage\Business\Storage;
 interface ProductAbstractPackagingStorageWriterInterface
 {
     /**
-     * @param array $productConcreteIds
+     * @param array $productAbstractIds
      *
      * @return void
      */
-    public function publish(array $productConcreteIds);
+    public function publish(array $productAbstractIds);
 
     /**
-     * @param array $productConcreteIds
+     * @param array $productAbstractIds
      *
      * @return void
      */
-    public function unpublish(array $productConcreteIds);
+    public function unpublish(array $productAbstractIds);
 }

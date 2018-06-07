@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\ProductPackagingUnitStorage\Dependency\Client;
 
-class PriceProductStorageToStorageBridge implements PriceProductStorageToStorageInterface
+class ProductPackagingUnitStorageToStorageBridge implements ProductPackagingUnitStorageToStorageInterface
 {
     /**
      * @var \Spryker\Client\Storage\StorageClientInterface

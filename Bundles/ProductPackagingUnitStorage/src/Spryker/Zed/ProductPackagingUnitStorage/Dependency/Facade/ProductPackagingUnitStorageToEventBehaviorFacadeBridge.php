@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductPackagingUnitStorage\Dependency\Facade;
 
-class PriceProductStorageToEventBehaviorFacadeBridge implements PriceProductStorageToEventBehaviorFacadeInterface
+class ProductPackagingUnitStorageToEventBehaviorFacadeBridge implements ProductPackagingUnitStorageToEventBehaviorFacadeInterface
 {
     /**
      * @var \Spryker\Zed\EventBehavior\Business\EventBehaviorFacadeInterface

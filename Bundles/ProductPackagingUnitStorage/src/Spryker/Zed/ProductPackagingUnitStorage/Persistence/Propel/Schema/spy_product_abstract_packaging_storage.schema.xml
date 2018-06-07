@@ -13,10 +13,9 @@
         </index>
         <id-method-parameter value="spy_product_abstract_packaging_storage_pk_seq"/>
         <behavior name="synchronization">
-            <parameter name="resource" value="price_product_abstract"/>
-            <parameter name="store" required="false" />
+            <parameter name="resource" value="product_abstract_packaging"/>
             <parameter name="key_suffix_column" value="fk_product_abstract"/>
-            <parameter name="queue_group" value="sync.storage.price"/>
+            <parameter name="queue_group" value="sync.storage.product"/>
         </behavior>
         <behavior name="timestampable"/>
     </table>

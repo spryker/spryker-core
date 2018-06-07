@@ -3,10 +3,22 @@
   "description": "ProductPackagingUnitStorage module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
+    "spryker/event-behavior": "^1.0.0",
+    "spryker/kernel": "^3.21.0",
+    "spryker/product": "^6.0.0",
+    "spryker/storage": "^3.4.0",
+    "spryker/synchronization": "^0.2.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/event": "*",
+    "spryker/product-packaging-unit": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0",
+    "spryker/product-packaging-unit": ""
   },
   "autoload": {
     "psr-4": {

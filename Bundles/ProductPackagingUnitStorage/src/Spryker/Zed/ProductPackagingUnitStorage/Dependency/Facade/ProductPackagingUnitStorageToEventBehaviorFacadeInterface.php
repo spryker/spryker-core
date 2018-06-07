@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductPackagingUnitStorage\Dependency\Facade;
 
-interface PriceProductStorageToEventBehaviorFacadeInterface
+interface ProductPackagingUnitStorageToEventBehaviorFacadeInterface
 {
     /**
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers

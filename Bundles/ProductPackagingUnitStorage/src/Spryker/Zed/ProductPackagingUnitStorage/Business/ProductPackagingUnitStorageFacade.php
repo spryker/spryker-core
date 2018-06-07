@@ -19,12 +19,30 @@ class ProductPackagingUnitStorageFacade extends AbstractFacade implements Produc
      *
      * @api
      *
-     * @param array $productConcreteIds
+     * @param array $productAbstractIds
      *
      * @return void
      */
-    public function publishProductAbstractPackaging(array $productConcreteIds)
+    public function publishProductAbstractPackaging(array $productAbstractIds)
     {
-        $this->getFactory()->createProductAbstractPackagingStorageWriter()->publish($productConcreteIds);
+        $this->getFactory()
+            ->createProductAbstractPackagingStorageWriter()
+            ->publish($productAbstractIds);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param array $productAbstractIds
+     *
+     * @return void
+     */
+    public function unpublishProductAbstractPackaging(array $productAbstractIds)
+    {
+        $this->getFactory()
+            ->createProductAbstractPackagingStorageWriter()
+            ->unpublish($productAbstractIds);
     }
 }

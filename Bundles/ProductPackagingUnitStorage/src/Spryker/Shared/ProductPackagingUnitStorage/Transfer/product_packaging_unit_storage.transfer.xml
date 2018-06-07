@@ -3,9 +3,8 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
-    <transfer name="ProductConcretePackaging">
+    <transfer name="ProductConcretePackagingStorage">
         <property name="idProduct" type="int"/>
-        <property name="idProductAbstract" type="int"/>
         <property name="name" type="string"/>
         <property name="defaultAmount" type="int"/>
         <property name="isVariable" type="bool"/>
@@ -14,10 +13,10 @@
         <property name="amountInterval" type="int"/>
     </transfer>
 
-    <transfer name="ProductAbstractPackaging">
+    <transfer name="ProductAbstractPackagingStorage">
         <property name="idProductAbstract" type="int"/>
         <property name="leadProduct" type="int"/>
-        <property name="types" type="ProductConcretePackaging[]"/>
+        <property name="types" type="ProductConcretePackagingStorage[]"/>
     </transfer>
 
 </transfers>

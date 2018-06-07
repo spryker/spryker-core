@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\ProductPackagingUnitStorage\Dependency\Service;
 
-interface PriceProductStorageToSynchronizationServiceInterface
+interface ProductPackagingUnitStorageToSynchronizationServiceInterface
 {
     /**
      * @param string $resourceName

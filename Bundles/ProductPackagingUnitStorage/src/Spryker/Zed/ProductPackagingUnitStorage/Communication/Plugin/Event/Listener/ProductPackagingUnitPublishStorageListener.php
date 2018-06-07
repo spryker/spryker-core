@@ -9,18 +9,15 @@ namespace Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Event\Lis
 
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\PriceProduct\Dependency\PriceProductEvents;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
+use Spryker\Zed\ProductPackagingUnit\Dependency\ProductPackagingUnitEvents;
 
 /**
  * @method \Spryker\Zed\ProductPackagingUnitStorage\Persistence\ProductPackagingUnitStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductPackagingUnitStorage\Communication\PriceProductStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductPackagingUnitStorage\Business\ProductPackagingUnitStorageFacadeInterface getFacade()
  */
-class PriceProductConcretePublishStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
+class ProductPackagingUnitPublishStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
-    use DatabaseTransactionHandlerTrait;
-
     /**
      * @api
      *
@@ -31,17 +28,18 @@ class PriceProductConcretePublishStorageListener extends AbstractPlugin implemen
      */
     public function handleBulk(array $eventTransfers, $eventName)
     {
-        $this->preventTransaction();
-        $concreteIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
+        $productAbstractIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
-        if ($eventName === PriceProductEvents::ENTITY_SPY_PRICE_TYPE_DELETE ||
-            $eventName === PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_DELETE ||
-            $eventName === PriceProductEvents::PRICE_CONCRETE_UNPUBLISH
+        if ($eventName === ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_UNIT_TYPE_DELETE
+//            ||
+//            $eventName === PriceProductEvents::ENTITY_SPY_PRICE_TYPE_DELETE ||
+//            $eventName === PriceProductEvents::PRICE_ABSTRACT_UNPUBLISH
         ) {
-            $this->getFacade()->unpublishPriceProductConcrete($concreteIds);
+            $this->getFacade()->unpublishProductAbstractPackaging($productAbstractIds);
 
             return;
         }
-        $this->getFacade()->publishProductAbstractPackaging($concreteIds);
+
+        $this->getFacade()->publishProductAbstractPackaging($productAbstractIds);
     }
 }

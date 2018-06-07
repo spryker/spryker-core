@@ -17,7 +17,7 @@ use Spryker\Zed\ProductPackagingUnitStorage\ProductPackagingUnitStorageDependenc
 class PriceProductStorageCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\ProductPackagingUnitStorage\Dependency\Facade\PriceProductStorageToEventBehaviorFacadeInterface
+     * @return \Spryker\Zed\ProductPackagingUnitStorage\Dependency\Facade\ProductPackagingUnitStorageToEventBehaviorFacadeInterface
      */
     public function getEventBehaviorFacade()
     {

@@ -7,12 +7,13 @@
 
 namespace Spryker\Client\ProductPackagingUnitStorage\Storage;
 
-interface PriceAbstractStorageReaderInterface
+interface ProductPackagingUnitStorageKeyGeneratorInterface
 {
     /**
-     * @param int $idProductAbstract
+     * @param string $resourceName
+     * @param int $resourceId
      *
-     * @return \Generated\Shared\Transfer\PriceProductStorageTransfer|null
+     * @return string
      */
-    public function findPriceAbstractStorageTransfer($idProductAbstract);
+    public function generateKey($resourceName, $resourceId);
 }

@@ -7,8 +7,7 @@
 
 namespace Spryker\Zed\ProductPackagingUnitStorage\Persistence;
 
-use Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyPriceProductAbstractStorageQuery;
-use Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyPriceProductConcreteStorageQuery;
+use Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyProductAbstractPackagingStorageQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ProductPackagingUnitStorage\ProductPackagingUnitStorageDependencyProvider;
 
@@ -19,31 +18,15 @@ use Spryker\Zed\ProductPackagingUnitStorage\ProductPackagingUnitStorageDependenc
 class ProductPackagingUnitStoragePersistenceFactory extends AbstractPersistenceFactory
 {
     /**
-     * @return \Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyPriceProductAbstractStorageQuery
+     * @return \Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyProductAbstractPackagingStorageQuery
      */
-    public function createSpyPriceAbstractStorageQuery()
+    public function createSpyProductAbstractPackagingStorageQuery()
     {
-        return SpyPriceProductAbstractStorageQuery::create();
+        return SpyProductAbstractPackagingStorageQuery::create();
     }
 
     /**
-     * @return \Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyPriceProductConcreteStorageQuery
-     */
-    public function createSpyPriceConcreteStorageQuery()
-    {
-        return SpyPriceProductConcreteStorageQuery::create();
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductPackagingUnitStorage\Dependency\QueryContainer\PriceProductStorageToPriceProductQueryContainerInterface
-     */
-    public function getPriceProductQueryContainer()
-    {
-        return $this->getProvidedDependency(ProductPackagingUnitStorageDependencyProvider::QUERY_CONTAINER_PRICE_PRODUCT);
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductPackagingUnitStorage\Dependency\QueryContainer\PriceProductStorageToProductQueryContainerInterface
+     * @return \Spryker\Zed\ProductPackagingUnitStorage\Dependency\QueryContainer\ProductPackagingUnitStorageToProductQueryContainerInterface
      */
     public function getProductQueryContainer()
     {

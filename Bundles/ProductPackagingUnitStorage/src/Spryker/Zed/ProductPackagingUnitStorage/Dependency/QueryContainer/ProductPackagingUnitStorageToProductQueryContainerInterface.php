@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductPackagingUnitStorage\Dependency\QueryContainer;
 
-interface PriceProductStorageToProductQueryContainerInterface
+interface ProductPackagingUnitStorageToProductQueryContainerInterface
 {
     /**
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery

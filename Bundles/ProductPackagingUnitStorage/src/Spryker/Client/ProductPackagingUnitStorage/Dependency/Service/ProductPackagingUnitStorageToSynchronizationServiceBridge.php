@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\ProductPackagingUnitStorage\Dependency\Service;
 
-class PriceProductStorageToSynchronizationServiceBridge implements PriceProductStorageToSynchronizationServiceInterface
+class ProductPackagingUnitStorageToSynchronizationServiceBridge implements ProductPackagingUnitStorageToSynchronizationServiceInterface
 {
     /**
      * @var \Spryker\Service\Synchronization\SynchronizationServiceInterface

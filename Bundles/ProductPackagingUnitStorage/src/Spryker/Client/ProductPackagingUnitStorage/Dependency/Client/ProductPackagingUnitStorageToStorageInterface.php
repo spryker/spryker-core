@@ -7,12 +7,12 @@
 
 namespace Spryker\Client\ProductPackagingUnitStorage\Dependency\Client;
 
-interface PriceProductStorageToPriceProductInterface
+interface ProductPackagingUnitStorageToStorageInterface
 {
     /**
-     * @param array $priceMap
+     * @param string $key
      *
-     * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
+     * @return array
      */
-    public function resolveProductPrice(array $priceMap);
+    public function get($key);
 }

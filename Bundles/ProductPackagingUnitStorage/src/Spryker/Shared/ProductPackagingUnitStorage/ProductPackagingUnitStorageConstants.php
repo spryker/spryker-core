@@ -15,7 +15,7 @@ class ProductPackagingUnitStorageConstants
      *
      * @api
      */
-    const PRICE_SYNC_STORAGE_QUEUE = 'sync.storage.price';
+    const PRODUCT_PACKAGING_UNIT_SYNC_STORAGE_QUEUE = 'sync.storage.product';
 
     /**
      * Specification:
@@ -23,7 +23,7 @@ class ProductPackagingUnitStorageConstants
      *
      * @api
      */
-    const PRICE_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.price.error';
+    const PRODUCT_PACKAGING_UNIT_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.product.error';
 
     /**
      * Specification:
@@ -31,13 +31,5 @@ class ProductPackagingUnitStorageConstants
      *
      * @api
      */
-    const PRICE_ABSTRACT_RESOURCE_NAME = 'price_product_abstract';
-
-    /**
-     * Specification:
-     * - Resource name, this will use for key generating
-     *
-     * @api
-     */
-    const PRICE_CONCRETE_RESOURCE_NAME = 'price_product_concrete';
+    const PRODUCT_PACKAGING_UNIT_RESOURCE_NAME = 'product_abstract_packaging';
 }
