@@ -37,7 +37,7 @@ class ItemExpander implements ItemExpanderInterface
     {
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             $productConcreteTransfer = $this->productFacade->getProductConcrete($itemTransfer->getSku());
-
+            $this->assertProductConcreteTransfer($productConcreteTransfer);
             $this->expandItemWithProductConcrete($productConcreteTransfer, $itemTransfer);
         }
 
@@ -53,5 +53,16 @@ class ItemExpander implements ItemExpanderInterface
     protected function expandItemWithProductConcrete(ProductConcreteTransfer $productConcreteTransfer, ItemTransfer $itemTransfer)
     {
         $itemTransfer->setIsQuantitySplittable($productConcreteTransfer->getIsQuantitySplittable());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return void
+     */
+    protected function assertProductConcreteTransfer(ProductConcreteTransfer $productConcreteTransfer)
+    {
+        $productConcreteTransfer
+            ->requireSku();
     }
 }
