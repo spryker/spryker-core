@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\ZedNavigation\Business\Model\Collector\Decorator;
 
 use Codeception\Test\Unit;
-use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Zed\ZedNavigation\Business\Model\Cache\ZedNavigationCacheInterface;
 use Spryker\Zed\ZedNavigation\Business\Model\Collector\Decorator\ZedNavigationCollectorCacheDecorator;
 use Spryker\Zed\ZedNavigation\Business\Model\Collector\ZedNavigationCollectorInterface;
@@ -35,12 +34,12 @@ class ZedNavigationCollectorCacheDecoratorTest extends Unit
         //prepare
         $expectedNavigation = ['key' => 'value'];
 
-        $navigationCacheMock = $this->haveZedNavigationCache();
+        $navigationCacheMock = $this->getZedNavigationCacheMock();
         $navigationCacheMock
             ->expects($this->never())
             ->method('getNavigation');
 
-        $navigationCollectorMock = $this->haveZedNavigationCollector();
+        $navigationCollectorMock = $this->getZedNavigationCollectorMock();
         $navigationCollectorMock
             ->expects($this->once())
             ->method('getNavigation')
@@ -70,13 +69,13 @@ class ZedNavigationCollectorCacheDecoratorTest extends Unit
         //prepare
         $expectedNavigation = ['key' => 'value'];
 
-        $navigationCacheMock = $this->haveZedNavigationCache();
+        $navigationCacheMock = $this->getZedNavigationCacheMock();
         $navigationCacheMock
             ->expects($this->once())
             ->method('getNavigation')
             ->will($this->returnValue($expectedNavigation));
 
-        $navigationCollectorMock = $this->haveZedNavigationCollector();
+        $navigationCollectorMock = $this->getZedNavigationCollectorMock();
         $navigationCollectorMock
             ->expects($this->never())
             ->method('getNavigation');
@@ -98,9 +97,48 @@ class ZedNavigationCollectorCacheDecoratorTest extends Unit
     }
 
     /**
-     * @return ZedNavigationCollectorInterface|MockObject
+     * @return void
      */
-    protected function haveZedNavigationCollector(): ZedNavigationCollectorInterface
+    public function testReturnsCollectedNavigationWhenCacheIsEnabledButCacheDoesNotExists()
+    {
+        //prepare
+        $expectedNavigation = ['key' => 'value'];
+
+        $navigationCacheMock = $this->getZedNavigationCacheMock();
+        $navigationCacheMock
+            ->expects($this->once())
+            ->method('getNavigation')
+            ->will($this->returnValue($expectedNavigation));
+        $navigationCacheMock
+            ->expects($this->once())
+            ->method('setNavigation')
+            ->with($this->equalTo($expectedNavigation));
+
+        $navigationCollectorMock = $this->getZedNavigationCollectorMock();
+        $navigationCollectorMock
+            ->expects($this->never())
+            ->method('getNavigation');
+
+        $navigationCollectorCacheDecorator = new ZedNavigationCollectorCacheDecorator(
+            $navigationCollectorMock,
+            $navigationCacheMock,
+            true
+        );
+
+        //act
+        $navigation = $navigationCollectorCacheDecorator->getNavigation();
+
+        //assert
+        $this->assertSame(
+            $expectedNavigation,
+            $navigation
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ZedNavigation\Business\Model\Collector\ZedNavigationCollectorInterface|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function getZedNavigationCollectorMock(): ZedNavigationCollectorInterface
     {
         return $this
             ->getMockBuilder(ZedNavigationCollectorInterface::class)
@@ -109,9 +147,9 @@ class ZedNavigationCollectorCacheDecoratorTest extends Unit
     }
 
     /**
-     * @return ZedNavigationCacheInterface|MockObject
+     * @return \Spryker\Zed\ZedNavigation\Business\Model\Cache\ZedNavigationCacheInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function haveZedNavigationCache(): ZedNavigationCacheInterface
+    protected function getZedNavigationCacheMock(): ZedNavigationCacheInterface
     {
         return $this
             ->getMockBuilder(ZedNavigationCacheInterface::class)
