@@ -13,7 +13,7 @@ interface BusinessOnBehalfDataImportFacadeInterface
 {
     /**
      * Specification:
-     * - Imports company user data from csv
+     * - Imports company users into persistence.
      *
      * @api
      *

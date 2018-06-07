@@ -1,18 +1,17 @@
 <?php
 
 /**
- * Copyright © 2018-present Spryker Systems GmbH. All rights reserved.
+ * MIT License
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
-
-namespace SprykerTest\Zed\BusinessOnBehalfDataImport\Communication\Plugin;
+namespace SprykerTest\Zed\BusinessOnBehalfDataImport\Communication\Plugin\DataImport;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Spryker\Zed\BusinessOnBehalfDataImport\BusinessOnBehalfDataImportConfig;
-use Spryker\Zed\BusinessOnBehalfDataImport\Communication\Plugin\BusinessOnBehalfDataImportPlugin;
+use Spryker\Zed\BusinessOnBehalfDataImport\Communication\Plugin\DataImport\BusinessOnBehalfCompanyUserDataImportPlugin;
 
 /**
  * Auto-generated group annotations
@@ -21,13 +20,14 @@ use Spryker\Zed\BusinessOnBehalfDataImport\Communication\Plugin\BusinessOnBehalf
  * @group BusinessOnBehalfDataImport
  * @group Communication
  * @group Plugin
- * @group BusinessOnBehalfDataImportPluginTest
+ * @group DataImport
+ * @group BusinessOnBehalfCompanyUserDataImportPluginTest
  * Add your own group annotations below this line
  *
  * @group DataImport
  * @group CompanyUser
  */
-class BusinessOnBehalfDataImportPluginTest extends Unit
+class BusinessOnBehalfCompanyUserDataImportPluginTest extends Unit
 {
     protected const COMPANY_KEY = 'test-company';
     protected const BUSINESS_UNIT_KEY = 'test-business-unit';
@@ -59,8 +59,8 @@ class BusinessOnBehalfDataImportPluginTest extends Unit
         $dataImportConfigurationTransfer = new DataImporterConfigurationTransfer();
         $dataImportConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfigurationTransfer);
 
-        $businessOnBehalfDataImportPlugin = new BusinessOnBehalfDataImportPlugin();
-        $dataImporterReportTransfer = $businessOnBehalfDataImportPlugin->import($dataImportConfigurationTransfer);
+        $businessOnBehalfCompanyUserDataImportPlugin = new BusinessOnBehalfCompanyUserDataImportPlugin();
+        $dataImporterReportTransfer = $businessOnBehalfCompanyUserDataImportPlugin->import($dataImportConfigurationTransfer);
 
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
 
@@ -73,8 +73,8 @@ class BusinessOnBehalfDataImportPluginTest extends Unit
      */
     public function testGetImportTypeReturnsTypeOfImporter(): void
     {
-        $businessOnBehalfDataImportPlugin = new BusinessOnBehalfDataImportPlugin();
-        $this->assertSame(BusinessOnBehalfDataImportConfig::IMPORT_TYPE_COMPANY_USER, $businessOnBehalfDataImportPlugin->getImportType());
+        $businessOnBehalfCompanyUserDataImportPlugin = new BusinessOnBehalfCompanyUserDataImportPlugin();
+        $this->assertSame(BusinessOnBehalfDataImportConfig::IMPORT_TYPE_COMPANY_USER, $businessOnBehalfCompanyUserDataImportPlugin->getImportType());
     }
 
     /**
