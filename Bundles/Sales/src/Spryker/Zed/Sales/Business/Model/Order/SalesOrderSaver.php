@@ -327,6 +327,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
     ) {
         $processEntity = $this->getProcessEntity($quoteTransfer, $itemTransfer);
         $initialStateEntity = $this->omsFacade->getInitialStateEntity();
+
         $salesOrderItemEntity->fromArray($itemTransfer->toArray());
         $salesOrderItemEntity->setFkSalesOrder($salesOrderEntity->getIdSalesOrder());
         $salesOrderItemEntity->setFkOmsOrderItemState($initialStateEntity->getIdOmsOrderItemState());

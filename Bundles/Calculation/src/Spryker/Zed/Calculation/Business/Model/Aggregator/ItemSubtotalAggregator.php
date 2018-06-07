@@ -31,7 +31,6 @@ class ItemSubtotalAggregator implements CalculatorInterface
      */
     protected function calculateProductOptionTotalSumPrice(ItemTransfer $itemTransfer)
     {
-        $itemTransfer = $itemTransfer;
         $productOptionSumPrice = 0;
         foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
             $productOptionSumPrice += $productOptionTransfer->getSumPrice();
@@ -80,6 +79,6 @@ class ItemSubtotalAggregator implements CalculatorInterface
      */
     protected function assertSumAggregationCalculationRequirements($itemTransfer)
     {
-//        $itemTransfer->requireSumPrice()->requireUnitPrice();
+        $itemTransfer->requireSumPrice()->requireUnitPrice();
     }
 }
