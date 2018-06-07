@@ -40,6 +40,25 @@ class EventQueueProducer implements EventQueueProducerInterface
 
     /**
      * @param string $eventName
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $eventTransfers
+     * @param string $listener
+     * @param string|null $queuePoolName
+     *
+     * @return void
+     */
+    public function enqueueListenerBulk($eventName, array $eventTransfers, $listener, $queuePoolName = null)
+    {
+        $messageTransfers = [];
+        foreach ($eventTransfers as $eventTransfer) {
+            $messageTransfers[] = $this->createQueueMessageTransfer($eventName, $eventTransfer, $listener, $queuePoolName);
+            ;
+        }
+
+        $this->queueClient->sendMessages(EventConstants::EVENT_QUEUE, $messageTransfers);
+    }
+
+    /**
+     * @param string $eventName
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $eventTransfer
      * @param string $listener
      * @param string|null $queuePoolName
@@ -47,6 +66,21 @@ class EventQueueProducer implements EventQueueProducerInterface
      * @return void
      */
     public function enqueueListener($eventName, TransferInterface $eventTransfer, $listener, $queuePoolName = null)
+    {
+        $messageTransfer = $this->createQueueMessageTransfer($eventName, $eventTransfer, $listener, $queuePoolName);
+
+        $this->queueClient->sendMessage(EventConstants::EVENT_QUEUE, $messageTransfer);
+    }
+
+    /**
+     * @param string $eventName
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $eventTransfer
+     * @param string $listener
+     * @param string|null $queuePoolName
+     *
+     * @return \Generated\Shared\Transfer\QueueSendMessageTransfer
+     */
+    protected function createQueueMessageTransfer($eventName, TransferInterface $eventTransfer, $listener, $queuePoolName = null)
     {
         $messageTransfer = new QueueSendMessageTransfer();
         $messageTransfer->setQueuePoolName($queuePoolName);
@@ -56,33 +90,7 @@ class EventQueueProducer implements EventQueueProducerInterface
             )
         );
 
-        $this->queueClient->sendMessage(EventConstants::EVENT_QUEUE, $messageTransfer);
-    }
-
-    /**
-     * //TODO extract the methods and reuse it
-     *
-     * @param string $eventName
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $eventTransfers
-     * @param string $listener
-     *
-     * @return void
-     */
-    public function enqueueListenerBulk($eventName, array $eventTransfers, $listener)
-    {
-        $messageTransfers = [];
-        foreach ($eventTransfers as $eventTransfer) {
-            $messageTransfer = new QueueSendMessageTransfer();
-            $messageTransfer->setBody(
-                $this->utilEncodingService->encodeJson(
-                    $this->mapQueueMessageBody($eventTransfer, $listener, $eventName)
-                )
-            );
-            $messageTransfers[] = $messageTransfer;
-        }
-
-
-        $this->queueClient->sendMessages(EventConstants::EVENT_QUEUE, $messageTransfers);
+        return $messageTransfer;
     }
 
     /**

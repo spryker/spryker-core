@@ -73,7 +73,6 @@ class EventDispatcher implements EventDispatcherInterface
     }
 
     /**
-     * //TODO please refactor this
      * @param string $eventName
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $eventTransfers
      *
@@ -83,7 +82,7 @@ class EventDispatcher implements EventDispatcherInterface
     {
         foreach ($this->extractEventListeners($eventName) as $eventListener) {
             if ($eventListener->isHandledInQueue()) {
-                $this->eventQueueProducer->enqueueListenerBulk($eventName, $eventTransfers, $eventListener->getListenerName());
+                $this->eventQueueProducer->enqueueListenerBulk($eventName, $eventTransfers, $eventListener->getListenerName(), $eventListener->getQueuePoolName());
                 $this->logEventHandleBulk($eventName, $eventTransfers, $eventListener);
             } elseif ($eventListener instanceof EventHandlerInterface) {
                 foreach ($eventTransfers as $eventTransfer) {
@@ -110,6 +109,23 @@ class EventDispatcher implements EventDispatcherInterface
 
     /**
      * @param string $eventName
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $eventTransfers
+     * @param \Spryker\Zed\Event\Business\Dispatcher\EventListenerContextInterface $eventListener
+     *
+     * @return void
+     */
+    protected function logEventHandleBulk(
+        $eventName,
+        array $eventTransfers,
+        EventListenerContextInterface $eventListener
+    ) {
+        foreach ($eventTransfers as $eventTransfer) {
+            $this->logEventHandle($eventName, $eventTransfer, $eventListener);
+        }
+    }
+
+    /**
+     * @param string $eventName
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $eventTransfer
      * @param \Spryker\Zed\Event\Business\Dispatcher\EventListenerContextInterface $eventListener
      *
@@ -129,32 +145,6 @@ class EventDispatcher implements EventDispatcherInterface
                 $this->utilEncodingService->encodeJson($eventTransfer->toArray())
             )
         );
-    }
-
-    /**
-     * //TODO extract the methods and reuse it
-     * @param string $eventName
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $eventTransfers
-     * @param \Spryker\Zed\Event\Business\Dispatcher\EventListenerContextInterface $eventListener
-     *
-     * @return void
-     */
-    protected function logEventHandleBulk(
-        $eventName,
-        array $eventTransfers,
-        EventListenerContextInterface $eventListener
-    ) {
-        foreach ($eventTransfers as $eventTransfer) {
-            $this->eventLogger->log(
-                sprintf(
-                    $this->createHandleMessage($eventListener),
-                    $eventName,
-                    $eventListener->getListenerName(),
-                    get_class($eventTransfer),
-                    $this->utilEncodingService->encodeJson($eventTransfer->toArray())
-                )
-            );
-        }
     }
 
     /**
