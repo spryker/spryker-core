@@ -112,8 +112,8 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
     {
         $query = $this->getFactory()
             ->createCompanyUserQuery()
-            ->leftJoinWithCustomer()
-            ->leftJoinWithCompany()
+            ->joinWithCustomer()
+            ->joinWithCompany()
             ->filterByIdCompanyUser($idCompanyUser);
 
         $entityTransfer = $this->buildQueryFromCriteria($query)->findOne();
