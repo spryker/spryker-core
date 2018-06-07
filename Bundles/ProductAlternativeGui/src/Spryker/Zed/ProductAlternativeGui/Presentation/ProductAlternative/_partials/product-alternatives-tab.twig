@@ -19,3 +19,32 @@
         {% include '@ProductAlternativeGui/ProductAlternative/blocks/product-alternatives-table.twig' %}
     </div>
 </div>
+
+{# TODO: Resolve script itself and its location. #}
+<script>
+    let suggestInput = document.getElementById('product_concrete_form_edit_searchtext-autocomplete');
+
+    suggestInput.addEventListener('change', (event) => {
+        let suggestValue = event.target.value;
+
+        addProductAlternative(suggestValue);
+    });
+
+    function addProductAlternative(suggestValue) {
+        let alternativesBlock = document.querySelector('form #product_concrete_form_edit_product_alternatives');
+        let savedAlternatives = getSavedAlternatives(alternativesBlock.children);
+
+        if (savedAlternatives.indexOf(suggestValue) < 0) {
+            alternativesBlock.innerHTML += '<input type="text" value="' + suggestValue + '"/>';
+        }
+    }
+
+    function getSavedAlternatives(alternativeChilds) {
+        let savedAlternatives = [];
+        for (let i = 0; i < alternativeChilds.length; i++) {
+            savedAlternatives[savedAlternatives.length] = alternativeChilds[i].value;
+        }
+
+        return savedAlternatives;
+    }
+</script>

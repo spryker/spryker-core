@@ -7,13 +7,15 @@
 
 namespace Spryker\Zed\ProductAlternativeGui\Communication\Form;
 
-use Spryker\Zed\Gui\Communication\Form\Type\AutosuggestType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class AddAlternativeForm extends AbstractType
+class ProductAlternativeCollectionForm extends AbstractType
 {
-    protected const FIELD_PRODUCT_NAME_OR_SKU_AUTOCOMPLETE = 'searchtext-autocomplete';
+    public const FIELD_ID_PRODUCT = 'idProduct';
+    public const FIELD_SUGGEST = 'suggest';
 
     /**
      * @return null|string
@@ -31,7 +33,9 @@ class AddAlternativeForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addProductNameOrSkuAutocompleteField($builder);
+        $this
+            ->addIdProductField($builder)
+            ->addSuggestField($builder);
     }
 
     /**
@@ -39,15 +43,24 @@ class AddAlternativeForm extends AbstractType
      *
      * @return $this
      */
-    protected function addProductNameOrSkuAutocompleteField(FormBuilderInterface $builder)
+    protected function addIdProductField(FormBuilderInterface $builder): self
     {
-        $builder->add(static::FIELD_PRODUCT_NAME_OR_SKU_AUTOCOMPLETE, AutosuggestType::class, [
-            'label' => 'Add Product Alternative by Name or SKU',
-            'url' => '/product-alternative-gui/suggest',
-            'attr' => [
-                'placeholder' => 'Type three letters of name or sku for suggestions.',
-            ],
-            'required' => false,
+        $builder->add(static::FIELD_ID_PRODUCT, NumberType::class, [
+            'label' => false,
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addSuggestField(FormBuilderInterface $builder): self
+    {
+        $builder->add(static::FIELD_SUGGEST, TextType::class, [
+            'label' => false,
         ]);
 
         return $this;

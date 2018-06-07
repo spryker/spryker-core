@@ -8,8 +8,8 @@
 namespace Spryker\Zed\ProductAlternativeGui\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\ProductAlternativeGui\Communication\Form\AddAlternativeForm;
-use Spryker\Zed\ProductAlternativeGui\Communication\Form\DataProvider\AddAlternativeFormDataProvider;
+use Spryker\Zed\ProductAlternativeGui\Communication\Form\AddProductAlternativeForm;
+use Spryker\Zed\ProductAlternativeGui\Communication\Form\DataProvider\AddProductAlternativeFormDataProvider;
 use Spryker\Zed\ProductAlternativeGui\Dependency\Facade\ProductAlternativeGuiToProductAlternativeFacadeInterface;
 use Spryker\Zed\ProductAlternativeGui\Dependency\Facade\ProductAlternativeGuiToProductFacadeInterface;
 use Spryker\Zed\ProductAlternativeGui\ProductAlternativeGuiDependencyProvider;
@@ -17,19 +17,19 @@ use Spryker\Zed\ProductAlternativeGui\ProductAlternativeGuiDependencyProvider;
 class ProductAlternativeGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\ProductAlternativeGui\Communication\Form\AddAlternativeForm
+     * @return \Spryker\Zed\ProductAlternativeGui\Communication\Form\AddProductAlternativeForm
      */
-    public function createAddAlternativeForm(): AddAlternativeForm
+    public function createAddProductAlternativeForm(): AddProductAlternativeForm
     {
-        return new AddAlternativeForm();
+        return new AddProductAlternativeForm();
     }
 
     /**
-     * @return \Spryker\Zed\ProductAlternativeGui\Communication\Form\DataProvider\AddAlternativeFormDataProvider
+     * @return \Spryker\Zed\ProductAlternativeGui\Communication\Form\DataProvider\AddProductAlternativeFormDataProvider
      */
-    public function createAddAlternativeFormDataProvider(): AddAlternativeFormDataProvider
+    public function createAddProductAlternativeFormDataProvider(): AddProductAlternativeFormDataProvider
     {
-        return new AddAlternativeFormDataProvider();
+        return new AddProductAlternativeFormDataProvider();
     }
 
     /**

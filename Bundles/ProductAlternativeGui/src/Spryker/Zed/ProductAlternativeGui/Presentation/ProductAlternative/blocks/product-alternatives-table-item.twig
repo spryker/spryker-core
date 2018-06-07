@@ -1,6 +1,9 @@
 {% set TYPE_PRODUCT_ABSTRACT = 'Abstract'|trans %}
 {% set TYPE_PRODUCT_CONCRETE = 'Concrete'|trans %}
 
+{% set LINK_DELETE_PRODUCT_ABSTRACT = '/product-alternative-gui/delete/delete-abstract?id-product=%d&id-product-alternative=%d' %}
+{% set LINK_DELETE_PRODUCT_CONCRETE = '/product-alternative-gui/delete/delete-concrete?id-product=%d&id-product-alternative=%d' %}
+
 <td>{{ productAlternative.idProductAlternative }}</td>
 <td>{{ productAlternative.name }}</td>
 <td>{{ productAlternative.sku }}</td>
@@ -19,28 +22,18 @@
 </td>
 <td>
     {% if productAlternative.type == TYPE_PRODUCT_ABSTRACT %}
-        <form name="delete_abstract_form" method="post" action="/product-alternative-gui/delete/delete-abstract"
-              class="form-inline">
-            <input type="hidden" name="_method" value="DELETE">
-            <input type="hidden" name="id-product"/>
-            <input type="hidden" name="id-abstract-alternative"/>
-            <button type="submit" class="safe-submit btn btn-xs btn-outline btn-danger">
-                <i class="fa fa-trash"></i>
-                Delete
-            </button>
-        </form>
+        <a class="safe-submit btn btn-xs btn-outline btn-danger"
+           href="{{ LINK_DELETE_PRODUCT_ABSTRACT|format(idProduct, productAlternative.idProductAlternative) }}">
+            <i class="fa fa-trash"></i>
+            Delete
+        </a>
     {% endif %}
 
     {% if productAlternative.type == TYPE_PRODUCT_CONCRETE %}
-        <form name="delete_concrete_form" method="post" action="/product-alternative-gui/delete/delete-concrete"
-              class="form-inline">
-            <input type="hidden" name="_method" value="DELETE">
-            <input type="hidden" name="id-product"/>
-            <input type="hidden" name="id-concrete-alternative"/>
-            <button type="submit" class="safe-submit btn btn-xs btn-outline btn-danger">
-                <i class="fa fa-trash"></i>
-                Delete
-            </button>
-        </form>
+        <a class="safe-submit btn btn-xs btn-outline btn-danger"
+           href="{{ LINK_DELETE_PRODUCT_CONCRETE|format(idProduct, productAlternative.idProductAlternative) }}">
+            <i class="fa fa-trash"></i>
+            Delete
+        </a>
     {% endif %}
 </td>

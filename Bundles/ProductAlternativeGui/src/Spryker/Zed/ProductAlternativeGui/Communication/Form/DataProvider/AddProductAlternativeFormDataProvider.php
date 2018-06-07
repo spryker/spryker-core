@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductAlternativeGui\Communication\Form\DataProvider;
 
-class AddAlternativeFormDataProvider
+class AddProductAlternativeFormDataProvider
 {
     /**
      * TODO: Update this data provider or delete it completely.
