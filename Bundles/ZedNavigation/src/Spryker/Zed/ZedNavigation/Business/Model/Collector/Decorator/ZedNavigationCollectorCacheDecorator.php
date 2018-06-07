@@ -10,6 +10,7 @@ namespace Spryker\Zed\ZedNavigation\Business\Model\Collector\Decorator;
 use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Zed\ZedNavigation\Business\Model\Cache\ZedNavigationCacheInterface;
 use Spryker\Zed\ZedNavigation\Business\Model\Collector\ZedNavigationCollectorInterface;
+use Spryker\Zed\ZedNavigation\ZedNavigationConfig;
 
 class ZedNavigationCollectorCacheDecorator implements ZedNavigationCollectorInterface
 {
@@ -28,23 +29,23 @@ class ZedNavigationCollectorCacheDecorator implements ZedNavigationCollectorInte
     private $navigationCache;
 
     /**
-     * @var bool
+     * @var \Spryker\Zed\ZedNavigation\ZedNavigationConfig
      */
-    protected $isCacheEnabled;
+    private $config;
 
     /**
      * @param \Spryker\Zed\ZedNavigation\Business\Model\Collector\ZedNavigationCollectorInterface $navigationCollector
      * @param \Spryker\Zed\ZedNavigation\Business\Model\Cache\ZedNavigationCacheInterface $navigationCache
-     * @param bool $isCacheEnabled
+     * @param \Spryker\Zed\ZedNavigation\ZedNavigationConfig $config
      */
     public function __construct(
         ZedNavigationCollectorInterface $navigationCollector,
         ZedNavigationCacheInterface $navigationCache,
-        bool $isCacheEnabled
+        ZedNavigationConfig $config
     ) {
         $this->navigationCollector = $navigationCollector;
         $this->navigationCache = $navigationCache;
-        $this->isCacheEnabled = $isCacheEnabled;
+        $this->config = $config;
     }
 
     /**
@@ -52,7 +53,7 @@ class ZedNavigationCollectorCacheDecorator implements ZedNavigationCollectorInte
      */
     public function getNavigation()
     {
-        if (!$this->isCacheEnabled) {
+        if (!$this->config->isNavigationCacheEnabled()) {
             return $this->navigationCollector->getNavigation();
         }
 

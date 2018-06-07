@@ -19,7 +19,7 @@ class ZedNavigationCache implements ZedNavigationCacheInterface
     protected $cacheFile;
 
     /**
-     * @deprecated
+     * @deprecated Use settings in ZedNavigationCollectorCacheDecorator. Or any class, that use this one.
      *
      * @var bool
      */
@@ -43,7 +43,7 @@ class ZedNavigationCache implements ZedNavigationCacheInterface
     }
 
     /**
-     * @deprecated
+     * @deprecated Use settings in ZedNavigationCollectorCacheDecorator. Or any class, that use this one.
      *
      * @return bool
      */
@@ -92,8 +92,8 @@ class ZedNavigationCache implements ZedNavigationCacheInterface
         if (!file_exists($this->cacheFile)) {
             return false;
         }
-        $content = file_get_contents($this->cacheFile);
+        $cacheFileSized = filesize($this->cacheFile);
 
-        return !empty($content);
+        return !empty($cacheFileSized);
     }
 }
