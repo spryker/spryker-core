@@ -44,7 +44,7 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
     }
 
     /**
-     * @uses SpyCompanyQuery
+     * @uses \Orm\Zed\Company\Persistence\SpyCompanyQuery
      *
      * @param int $idCustomer
      *
@@ -72,7 +72,7 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
     }
 
     /**
-     * @uses SpyCustomerQuery
+     * @uses \Orm\Zed\Customer\Persistence\SpyCustomerQuery
      *
      * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $criteriaFilterTransfer
      *
@@ -101,8 +101,8 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
     }
 
     /**
-     * @uses SpyCustomerQuery
-     * @uses SpyCompanyQuery
+     * @uses \Orm\Zed\Customer\Persistence\SpyCustomerQuery
+     * @uses \Orm\Zed\Company\Persistence\SpyCompanyQuery
      *
      * @param int $idCompanyUser
      *
@@ -157,7 +157,7 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
     }
 
     /**
-     * @uses SpyCustomerQuery
+     * @uses \Orm\Zed\Customer\Persistence\SpyCustomerQuery
      *
      * @param int $idCompany
      *
@@ -182,7 +182,7 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
     }
 
     /**
-     * @uses SpyCompanyQuery
+     * @uses \Orm\Zed\Company\Persistence\SpyCompanyQuery
      *
      * @param int $idCustomer
      *

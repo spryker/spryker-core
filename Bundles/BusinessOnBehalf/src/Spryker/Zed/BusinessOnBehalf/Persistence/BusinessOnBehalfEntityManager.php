@@ -17,7 +17,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class BusinessOnBehalfEntityManager extends AbstractEntityManager implements BusinessOnBehalfEntityManagerInterface
 {
     /**
-     * @uses CompanyUser
+     * @uses \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery
      *
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
@@ -53,7 +53,7 @@ class BusinessOnBehalfEntityManager extends AbstractEntityManager implements Bus
     }
 
     /**
-     * @uses CompanyUser
+     * @uses \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
@@ -66,6 +66,6 @@ class BusinessOnBehalfEntityManager extends AbstractEntityManager implements Bus
             ->getCompanyUserQuery()
             ->filterByFkCustomer($customerTransfer->getIdCustomer())
             ->filterByIsDefault(true)
-            ->update(['IsDefault' => null]);
+            ->update(['IsDefault' => false]);
     }
 }

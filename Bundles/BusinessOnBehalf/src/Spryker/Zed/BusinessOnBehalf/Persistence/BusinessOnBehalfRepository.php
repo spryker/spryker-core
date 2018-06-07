@@ -21,7 +21,8 @@ class BusinessOnBehalfRepository extends AbstractRepository implements BusinessO
      *
      * @api
      *
-     * @uses CompanyUser
+     * @uses \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery
+     * @uses \Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap
      *
      * @param int $idCustomer
      *
@@ -40,8 +41,9 @@ class BusinessOnBehalfRepository extends AbstractRepository implements BusinessO
      *
      * @api
      *
-     * @uses Company
-     * @uses CompanyUser
+     * @uses \Orm\Zed\Company\Persistence\SpyCompanyQuery
+     * @uses \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery
+     * @uses \Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap
      *
      * @param int $idCustomer
      *
@@ -61,7 +63,7 @@ class BusinessOnBehalfRepository extends AbstractRepository implements BusinessO
     }
 
     /**
-     * @uses CompanyUser
+     * @uses \Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery
      *
      * @param int $idCustomer
      *
