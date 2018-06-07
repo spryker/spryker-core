@@ -10,7 +10,7 @@ namespace Spryker\Zed\SalesStatistics\Business\Model;
 use Generated\Shared\Transfer\SalesStatisticTransfer;
 use Spryker\Zed\SalesStatistics\Persistence\SalesStatisticsRepositoryInterface;
 
-class Reader
+class Reader implements ReaderInterface
 {
     /**
      * @var \Spryker\Zed\SalesStatistics\Persistence\SalesStatisticsRepositoryInterface
@@ -30,7 +30,7 @@ class Reader
      *
      * @return \Generated\Shared\Transfer\SalesStatisticTransfer
      */
-    public function getOrderCountStatisticByDays($days): SalesStatisticTransfer
+    public function getOrderCountStatisticByDays(int $days): SalesStatisticTransfer
     {
         return $this->repository->getOrderCountStatisticByDays($days);
     }
@@ -41,5 +41,15 @@ class Reader
     public function getStatusOrderStatistic(): SalesStatisticTransfer
     {
         return $this->repository->getStatusOrderStatistic();
+    }
+
+    /**
+     * @param int $countProduct
+     *
+     * @return \Generated\Shared\Transfer\SalesStatisticTransfer
+     */
+    public function getTopOrderStatistic(int $countProduct): SalesStatisticTransfer
+    {
+        return $this->repository->getTopOrderStatistic($countProduct);
     }
 }

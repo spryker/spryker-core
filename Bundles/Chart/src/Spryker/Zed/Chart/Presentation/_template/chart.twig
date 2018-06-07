@@ -6,12 +6,18 @@
         {% set isPie = (trace.type == 'pie') %}
         {% set xLabels = isPie ? 'labels' : 'x' %}
         {% set yValues = isPie ? 'values' : 'y' %}
-        chartData.push({
-            name: '{{ trace.name }}',
-            type: '{{ trace.type | default('bar') }}',
-            {{ xLabels }}: {{ trace.labels | json_encode | raw }},
-            {{ yValues }}: {{ trace.values | json_encode | raw }}
-        });
+        {% set dataTrace = {
+            name: (trace.name),
+            type: (trace.type | default('bar')),
+            (xLabels): (trace.labels),
+            (yValues): (trace.values)
+        } %}
+        {% if trace.options is not empty %}
+            {% for option in trace.options %}
+                    {% set dataTrace = dataTrace|merge(option) %}
+            {% endfor %}
+        {% endif %}
+        chartData.push({{ dataTrace | json_encode | raw }});
     {% endfor %}
     /*]]>*/</script>
 

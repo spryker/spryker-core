@@ -5,11 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SalesStatistics\Persistence;
+namespace Spryker\Zed\SalesStatistics\Business\Model;
+
 
 use Generated\Shared\Transfer\SalesStatisticTransfer;
 
-interface SalesStatisticsRepositoryInterface
+interface ReaderInterface
 {
     /**
      * @param int $days

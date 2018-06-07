@@ -48,4 +48,22 @@ class SalesStatisticsMapper implements SalesStatisticsMapperInterface
 
         return $chartDataTraceTransfer;
     }
+
+    /**
+     * @param array $statistic
+     *
+     * @return \Generated\Shared\Transfer\SalesStatisticTransfer
+     */
+    public function mapTopOrderStatisticToEntityTransfer(array $statistic): SalesStatisticTransfer
+    {
+        $chartDataTraceTransfer = new SalesStatisticTransfer();
+        if ($statistic) {
+            foreach ($statistic as $statisticItem) {
+                $chartDataTraceTransfer->addLabels($statisticItem[SalesStatisticsRepository::ITEM_NAME]);
+                $chartDataTraceTransfer->addValues($statisticItem[SalesStatisticsRepository::COUNT]);
+            }
+        }
+
+        return $chartDataTraceTransfer;
+    }
 }

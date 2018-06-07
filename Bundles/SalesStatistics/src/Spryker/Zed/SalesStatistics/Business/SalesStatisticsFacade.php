@@ -36,4 +36,16 @@ class SalesStatisticsFacade extends AbstractFacade implements SalesStatisticsFac
     {
         return $this->getFactory()->createReader()->getStatusOrderStatistic();
     }
+
+    /**
+     * @api
+     *
+     * @param int $countProduct
+     *
+     * @return \Generated\Shared\Transfer\SalesStatisticTransfer
+     */
+    public function getTopOrderStatistic(int $countProduct): SalesStatisticTransfer
+    {
+        return $this->getFactory()->createReader()->getTopOrderStatistic($countProduct);
+    }
 }

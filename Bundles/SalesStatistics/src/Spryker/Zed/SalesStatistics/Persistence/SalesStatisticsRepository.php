@@ -12,6 +12,7 @@ use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateTableMap;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
  * @method \Spryker\Zed\SalesStatistics\Persistence\SalesStatisticsPersistenceFactory getFactory()
@@ -22,13 +23,14 @@ class SalesStatisticsRepository extends AbstractRepository implements SalesStati
     public const DATE = 'date';
     public const STATUS_NAME = 'status_name';
     public const TOTAL = 'total';
+    public const ITEM_NAME = 'item_name';
 
     /**
      * @param int $day
      *
      * @return \Generated\Shared\Transfer\SalesStatisticTransfer
      */
-    public function getOrderCountStatisticByDays($day): SalesStatisticTransfer
+    public function getOrderCountStatisticByDays(int $day): SalesStatisticTransfer
     {
         $dateInterval = date('Y-m-d H:i:s.u', strtotime(sprintf('-%d days', $day)));
 
@@ -51,11 +53,30 @@ class SalesStatisticsRepository extends AbstractRepository implements SalesStati
         $result = $this->getFactory()->createSalesOrderItemQuery()
             ->joinWithState()
             ->select([static::STATUS_NAME, static::TOTAL])
-            ->withColumn('SUM(' . SpySalesOrderItemTableMap::COL_PRICE_TO_PAY_AGGREGATION . ')', static::TOTAL)
             ->withColumn(SpyOmsOrderItemStateTableMap::COL_NAME, static::STATUS_NAME)
+            ->withColumn('SUM(' . SpySalesOrderItemTableMap::COL_PRICE_TO_PAY_AGGREGATION . ')', static::TOTAL)
             ->groupBy(SpyOmsOrderItemStateTableMap::COL_ID_OMS_ORDER_ITEM_STATE)
             ->find()->toArray();
 
         return $this->getFactory()->createSalesStatisticsMapper()->mapStatusOrderStatisticToEntityTransfer($result);
+    }
+
+    /**
+     * @param int $countProduct
+     *
+     * @return \Generated\Shared\Transfer\SalesStatisticTransfer
+     */
+    public function getTopOrderStatistic(int $countProduct): SalesStatisticTransfer
+    {
+        $result = $this->getFactory()->createSalesOrderItemQuery()
+            ->select([static::ITEM_NAME, static::COUNT])
+            ->withColumn('COUNT(' . SpySalesOrderItemTableMap::COL_NAME . ')', static::COUNT)
+            ->withColumn(SpySalesOrderItemTableMap::COL_NAME, static::ITEM_NAME)
+            ->groupBy(SpySalesOrderItemTableMap::COL_NAME)
+            ->limit($countProduct)
+            ->orderBy(static::COUNT, Criteria::DESC)
+            ->find()->toArray();
+
+        return $this->getFactory()->createSalesStatisticsMapper()->mapTopOrderStatisticToEntityTransfer($result);
     }
 }

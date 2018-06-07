@@ -26,4 +26,13 @@ interface SalesStatisticsFacadeInterface
      * @return \Generated\Shared\Transfer\SalesStatisticTransfer
      */
     public function getStatusOrderStatistic(): SalesStatisticTransfer;
+
+    /**
+     * @api
+     *
+     * @param int $countProduct
+     *
+     * @return \Generated\Shared\Transfer\SalesStatisticTransfer
+     */
+    public function getTopOrderStatistic(int $countProduct): SalesStatisticTransfer;
 }
