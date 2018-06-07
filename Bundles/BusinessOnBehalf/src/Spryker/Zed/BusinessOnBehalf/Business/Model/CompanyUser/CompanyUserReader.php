@@ -9,10 +9,10 @@ namespace Spryker\Zed\BusinessOnBehalf\Business\Model\CompanyUser;
 
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Spryker\Zed\BusinessOnBehalf\Dependency\Facade\BusinessOnBehalfToCompanyUserFacadeBridge;
+use Spryker\Zed\BusinessOnBehalf\Dependency\Facade\BusinessOnBehalfToCompanyUserFacadeInterface;
 use Spryker\Zed\BusinessOnBehalf\Persistence\BusinessOnBehalfRepositoryInterface;
 
-class CompanyUserCollectionFinder implements CompanyUserCollectionFinderInterface
+class CompanyUserReader implements CompanyUserReaderInterface
 {
     /**
      * @var \Spryker\Zed\BusinessOnBehalf\Persistence\BusinessOnBehalfRepositoryInterface
@@ -20,15 +20,15 @@ class CompanyUserCollectionFinder implements CompanyUserCollectionFinderInterfac
     protected $repository;
 
     /**
-     * @var \Spryker\Zed\BusinessOnBehalf\Dependency\Facade\BusinessOnBehalfToCompanyUserFacadeBridge
+     * @var \Spryker\Zed\BusinessOnBehalf\Dependency\Facade\BusinessOnBehalfToCompanyUserFacadeInterface
      */
     protected $companyUserFacade;
 
     /**
      * @param \Spryker\Zed\BusinessOnBehalf\Persistence\BusinessOnBehalfRepositoryInterface $repository
-     * @param \Spryker\Zed\BusinessOnBehalf\Dependency\Facade\BusinessOnBehalfToCompanyUserFacadeBridge $companyUserFacade
+     * @param \Spryker\Zed\BusinessOnBehalf\Dependency\Facade\BusinessOnBehalfToCompanyUserFacadeInterface $companyUserFacade
      */
-    public function __construct(BusinessOnBehalfRepositoryInterface $repository, BusinessOnBehalfToCompanyUserFacadeBridge $companyUserFacade)
+    public function __construct(BusinessOnBehalfRepositoryInterface $repository, BusinessOnBehalfToCompanyUserFacadeInterface $companyUserFacade)
     {
         $this->repository = $repository;
         $this->companyUserFacade = $companyUserFacade;

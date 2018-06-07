@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\BusinessOnBehalf\Persistence\BusinessOnBehalfEntityManagerInterface;
 
-class CompanyUserUpdater implements CompanyUserUpdaterInterface
+class CompanyUserWriter implements CompanyUserWriterInterface
 {
     /**
      * @var \Spryker\Zed\BusinessOnBehalf\Persistence\BusinessOnBehalfEntityManagerInterface

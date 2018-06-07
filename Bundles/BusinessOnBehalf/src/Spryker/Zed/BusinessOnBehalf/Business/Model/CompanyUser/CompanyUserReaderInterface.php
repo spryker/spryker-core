@@ -10,7 +10,7 @@ namespace Spryker\Zed\BusinessOnBehalf\Business\Model\CompanyUser;
 use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
-interface CompanyUserCollectionFinderInterface
+interface CompanyUserReaderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer

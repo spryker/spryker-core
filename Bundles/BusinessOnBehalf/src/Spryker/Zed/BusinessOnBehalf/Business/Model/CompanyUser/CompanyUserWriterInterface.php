@@ -10,7 +10,7 @@ namespace Spryker\Zed\BusinessOnBehalf\Business\Model\CompanyUser;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
-interface CompanyUserUpdaterInterface
+interface CompanyUserWriterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer

@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\BusinessOnBehalf\Business;
 
-use Spryker\Zed\BusinessOnBehalf\Business\Model\CompanyUser\CompanyUserCollectionFinder;
-use Spryker\Zed\BusinessOnBehalf\Business\Model\CompanyUser\CompanyUserCollectionFinderInterface;
-use Spryker\Zed\BusinessOnBehalf\Business\Model\CompanyUser\CompanyUserUpdater;
-use Spryker\Zed\BusinessOnBehalf\Business\Model\CompanyUser\CompanyUserUpdaterInterface;
+use Spryker\Zed\BusinessOnBehalf\Business\Model\CompanyUser\CompanyUserReader;
+use Spryker\Zed\BusinessOnBehalf\Business\Model\CompanyUser\CompanyUserReaderInterface;
+use Spryker\Zed\BusinessOnBehalf\Business\Model\CompanyUser\CompanyUserWriter;
+use Spryker\Zed\BusinessOnBehalf\Business\Model\CompanyUser\CompanyUserWriterInterface;
 use Spryker\Zed\BusinessOnBehalf\Business\Model\Customer\CustomerExpander;
 use Spryker\Zed\BusinessOnBehalf\Business\Model\Customer\CustomerExpanderInterface;
 use Spryker\Zed\BusinessOnBehalf\Business\Model\Customer\CustomerHydrator;
@@ -35,22 +35,22 @@ class BusinessOnBehalfBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\BusinessOnBehalf\Business\Model\CompanyUser\CompanyUserCollectionFinderInterface
+     * @return \Spryker\Zed\BusinessOnBehalf\Business\Model\CompanyUser\CompanyUserReaderInterface
      */
-    public function createCompanyUserCollectionFinder(): CompanyUserCollectionFinderInterface
+    public function createCompanyUserReader(): CompanyUserReaderInterface
     {
-        return new CompanyUserCollectionFinder(
+        return new CompanyUserReader(
             $this->getRepository(),
             $this->getCompanyUserFacade()
         );
     }
 
     /**
-     * @return \Spryker\Zed\BusinessOnBehalf\Business\Model\CompanyUser\CompanyUserUpdaterInterface
+     * @return \Spryker\Zed\BusinessOnBehalf\Business\Model\CompanyUser\CompanyUserWriterInterface
      */
-    public function createCompanyUserUpdater(): CompanyUserUpdaterInterface
+    public function createCompanyUserWriter(): CompanyUserWriterInterface
     {
-        return new CompanyUserUpdater(
+        return new CompanyUserWriter(
             $this->getEntityManager()
         );
     }

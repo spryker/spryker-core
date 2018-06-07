@@ -8,7 +8,7 @@
 namespace Spryker\Zed\BusinessOnBehalf\Business\Model\Customer;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use Spryker\Zed\BusinessOnBehalf\Dependency\Facade\BusinessOnBehalfToCompanyUserFacadeBridge;
+use Spryker\Zed\BusinessOnBehalf\Dependency\Facade\BusinessOnBehalfToCompanyUserFacadeInterface;
 use Spryker\Zed\BusinessOnBehalf\Persistence\BusinessOnBehalfRepositoryInterface;
 
 class CustomerHydrator implements CustomerHydratorInterface
@@ -19,17 +19,17 @@ class CustomerHydrator implements CustomerHydratorInterface
     protected $businessOnBehalfRepository;
 
     /**
-     * @var \Spryker\Zed\BusinessOnBehalf\Dependency\Facade\BusinessOnBehalfToCompanyUserFacadeBridge
+     * @var \Spryker\Zed\BusinessOnBehalf\Dependency\Facade\BusinessOnBehalfToCompanyUserFacadeInterface
      */
     protected $companyUserFacade;
 
     /**
      * @param \Spryker\Zed\BusinessOnBehalf\Persistence\BusinessOnBehalfRepositoryInterface $businessOnBehalfRepository
-     * @param \Spryker\Zed\BusinessOnBehalf\Dependency\Facade\BusinessOnBehalfToCompanyUserFacadeBridge $companyUserFacade
+     * @param \Spryker\Zed\BusinessOnBehalf\Dependency\Facade\BusinessOnBehalfToCompanyUserFacadeInterface $companyUserFacade
      */
     public function __construct(
         BusinessOnBehalfRepositoryInterface $businessOnBehalfRepository,
-        BusinessOnBehalfToCompanyUserFacadeBridge $companyUserFacade
+        BusinessOnBehalfToCompanyUserFacadeInterface $companyUserFacade
     ) {
         $this->businessOnBehalfRepository = $businessOnBehalfRepository;
         $this->companyUserFacade = $companyUserFacade;
