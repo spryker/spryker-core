@@ -10,6 +10,8 @@ namespace Spryker\Zed\Discount\Business\Distributor;
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
 use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
+use Spryker\Zed\Discount\Exception\MissingDiscountableItemTransformerStrategyPluginException;
+use Spryker\Zed\DiscountExtension\Dependency\Plugin\Distributor\DiscountableItemTransformerStrategyPluginInterface;
 
 class Distributor implements DistributorInterface
 {
@@ -59,6 +61,8 @@ class Distributor implements DistributorInterface
      * @param int $totalDiscountAmount
      * @param int $totalAmount
      *
+     * @throws \Spryker\Zed\Discount\Exception\MissingDiscountableItemTransformerStrategyPluginException
+     *
      * @return void
      */
     protected function transformItemsPerStrategyPlugin(DiscountableItemTransfer $discountableItemTransfer, DiscountTransfer $discountTransfer, $totalDiscountAmount, $totalAmount)
@@ -66,14 +70,21 @@ class Distributor implements DistributorInterface
         $quantity = $this->getDiscountableItemQuantity($discountableItemTransfer);
 
         foreach ($this->discountableItemTransformerStrategyPlugins as $discountableItemTransformerStrategyPlugin) {
-            if (!$discountableItemTransformerStrategyPlugin->isApplicable($discountableItemTransfer)) {
-                continue;
+            if ($discountableItemTransformerStrategyPlugin->isApplicable($discountableItemTransfer)) {
+                $discountableItemTransformerStrategyPlugin->transformDiscountableItem($discountableItemTransfer, $discountTransfer, $totalDiscountAmount, $totalAmount, $quantity);
+
+                return;
             }
-
-            $discountableItemTransformerStrategyPlugin->transformDiscountableItem($discountableItemTransfer, $discountTransfer, $totalDiscountAmount, $totalAmount, $quantity);
-
-            return;
         }
+
+        throw new MissingDiscountableItemTransformerStrategyPluginException(
+            sprintf(
+                'Missing instance of %s! You need to configure Distributor ' .
+                'in your own DiscountDependencyProvider::getDiscountableItemTransformerStrategyPlugins() ' .
+                'to be able to calculate discounts correctly.',
+                DiscountableItemTransformerStrategyPluginInterface::class
+            )
+        );
     }
 
     /**
