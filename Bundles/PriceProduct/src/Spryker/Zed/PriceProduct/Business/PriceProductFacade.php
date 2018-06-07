@@ -352,6 +352,22 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      *
      * @api
      *
+     * @param array $priceData
+     *
+     * @return string
+     */
+    public function generatePriceDataChecksum(array $priceData): string
+    {
+        return $this->getFactory()
+            ->createPriceDataChecksumGenerator()
+            ->generatePriceDataChecksum($priceData);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param array $priceProductStoreEntityTransferCollection
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *

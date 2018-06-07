@@ -322,6 +322,18 @@ interface PriceProductFacadeInterface
 
     /**
      * Specification:
+     *  - Generates checksum hash for price data field.
+     *
+     * @api
+     *
+     * @param array $priceData
+     *
+     * @return string
+     */
+    public function generatePriceDataChecksum(array $priceData): string;
+
+    /**
+     * Specification:
      *  - Matches and returns default product price
      *
      * @api
