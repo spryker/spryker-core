@@ -38,10 +38,9 @@ class OrderSourceListFormPlugin extends AbstractPlugin implements ManualOrderEnt
      */
     public function handleData(QuoteTransfer $quoteTransfer, &$form, Request $request): QuoteTransfer
     {
-        $orderSourceTransfer = $this->getFactory()->getManualOrderEntryFacade()->getOrderSourceById(
-            $quoteTransfer->getOrderSource()->getIdOrderSource()
-        );
-        $quoteTransfer->setOrderSource($orderSourceTransfer);
+        $quoteTransfer = $this->getFactory()
+            ->createOrderSourceFormHandler()
+            ->handle($quoteTransfer, $form, $request);
 
         return $quoteTransfer;
     }
@@ -60,6 +59,17 @@ class OrderSourceListFormPlugin extends AbstractPlugin implements ManualOrderEnt
      * @return bool
      */
     public function isFormPreFilled(QuoteTransfer $quoteTransfer): bool
+    {
+        return false;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isFormSkipped(Request $request, QuoteTransfer $quoteTransfer): bool
     {
         return false;
     }
