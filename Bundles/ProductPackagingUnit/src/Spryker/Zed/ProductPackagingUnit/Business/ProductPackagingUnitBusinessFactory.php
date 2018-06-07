@@ -8,18 +8,20 @@
 namespace Spryker\Zed\ProductPackagingUnit\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductPackagingUnit\Business\Installer\ProductPackagingUnitTypeInstaller;
-use Spryker\Zed\ProductPackagingUnit\Business\Installer\ProductPackagingUnitTypeInstallerInterface;
-use Spryker\Zed\ProductPackagingUnit\Business\Model\Reader\ProductPackagingUnitTypeReader;
-use Spryker\Zed\ProductPackagingUnit\Business\Model\Reader\ProductPackagingUnitTypeReaderInterface;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\Installer\ProductPackagingUnitTypeInstaller;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\Installer\ProductPackagingUnitTypeInstallerInterface;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeReader;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeReaderInterface;
 
 /**
+ * @method \Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface getRepository()
  * @method \Spryker\Zed\ProductPackagingUnit\ProductPackagingUnitConfig getConfig()
  */
 class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\ProductPackagingUnit\Business\Installer\ProductPackagingUnitTypeInstallerInterface
+     * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\Installer\ProductPackagingUnitTypeInstallerInterface
      */
     public function createProductPackagingUnitTypeInstaller(): ProductPackagingUnitTypeInstallerInterface
     {
@@ -30,7 +32,7 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\Reader\ProductPackagingUnitTypeReaderInterface
+     * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeReaderInterface
      */
     public function createProductPackagingUnitTypeReader(): ProductPackagingUnitTypeReaderInterface
     {
