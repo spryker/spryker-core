@@ -14,7 +14,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\BusinessOnBehalf\Business\BusinessOnBehalfFacadeInterface getFacade()
  */
-class CustomerDefaultCompanyUserExpanderPlugin extends AbstractPlugin implements CustomerTransferExpanderPluginInterface
+class DefaultCompanyUserCustomerTransferExpanderPlugin extends AbstractPlugin implements CustomerTransferExpanderPluginInterface
 {
     /**
      * {@inheritdoc}
