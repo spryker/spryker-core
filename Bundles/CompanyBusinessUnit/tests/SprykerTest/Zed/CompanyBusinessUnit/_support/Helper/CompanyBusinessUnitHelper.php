@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace SprykerTest\Zed\CompanyBusinessUnit\Helper;
 
 use Codeception\Module;
@@ -20,6 +25,10 @@ class CompanyBusinessUnitHelper extends Module
      */
     public function haveCompanyBusinessUnit(array $seedData = []): CompanyBusinessUnitTransfer
     {
+        if (!isset($seedData['fkCompany'])) {
+            $seedData['fkCompany'] = $this->getCompany()->getIdCompany();
+        }
+
         $companyBusinessUnitTransfer = (new CompanyBusinessUnitBuilder($seedData))->build();
         $companyBusinessUnitTransfer->setIdCompanyBusinessUnit(null);
 
