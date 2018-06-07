@@ -28,6 +28,6 @@ class MerchantRelationshipProductListDataImportFacade extends AbstractFacade imp
     public function importMerchantRelationshipProductList(
         ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
     ): DataImporterReportTransfer {
-        // TODO: Implement importMerchantRelationshipProductList() method.
+        return $this->getFactory()->createMerchantRelationshipProductListDataImport()->import($dataImporterConfigurationTransfer);
     }
 }
