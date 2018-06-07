@@ -40,60 +40,47 @@ class ZedNavigationCacheTest extends Unit
         }
     }
 
-    /**
-     * @return string
-     */
-    private function getCacheFile()
-    {
-        $pathToFile = __DIR__ . DIRECTORY_SEPARATOR . 'navigation.cache';
-
-        if (!file_exists($pathToFile)) {
-            touch($pathToFile);
-        }
-
-        return $pathToFile;
-    }
-
-    /**
-     * @return void
-     */
-    public function testIsNavigationCacheEnabledMustReturnFalseIfItIsNotEnabled()
-    {
-        $isEnabled = false;
-        $navigationCache = new ZedNavigationCache('', $isEnabled, $this->getUtilEncodingService());
-
-        $this->assertFalse($navigationCache->isEnabled());
-    }
-
-    /**
-     * @return void
-     */
-    public function testIsNavigationCacheEnabledMustReturnTrueIfEnabled()
-    {
-        $isEnabled = true;
-        $navigationCache = new ZedNavigationCache(__FILE__, $isEnabled, $this->getUtilEncodingService());
-
-        $this->assertTrue($navigationCache->isEnabled());
-    }
-
-    /**
-     * @return void
-     */
-    public function testSetMustSerializeGivenNavigationDataIntoFile()
-    {
-        $cacheFile = $this->getCacheFile();
-        $isEnabled = true;
-        $navigationCache = new ZedNavigationCache($cacheFile, $isEnabled, $this->getUtilEncodingService());
-        $navigationData = ['foo' => 'bar'];
-        $navigationCache->setNavigation($navigationData);
-
-        $this->assertTrue($navigationCache->isEnabled());
-    }
+    //@TODO to decorator
+//    /**
+//     * @return void
+//     */
+//    public function testIsNavigationCacheEnabledMustReturnFalseIfItIsNotEnabled()
+//    {
+//        $isEnabled = false;
+//        $navigationCache = new ZedNavigationCache('', $isEnabled, $this->getUtilEncodingService());
+//
+//        $this->assertFalse($navigationCache->isEnabled());
+//    }
+//
+//    /**
+//     * @return void
+//     */
+//    public function testIsNavigationCacheEnabledMustReturnTrueIfEnabled()
+//    {
+//        $isEnabled = true;
+//        $navigationCache = new ZedNavigationCache(__FILE__, $isEnabled, $this->getUtilEncodingService());
+//
+//        $this->assertTrue($navigationCache->isEnabled());
+//    }
+//
+//    /**
+//     * @return void
+//     */
+//    public function testSetMustSerializeGivenNavigationDataIntoFile()
+//    {
+//        $cacheFile = $this->getCacheFile();
+//        $isEnabled = true;
+//        $navigationCache = new ZedNavigationCache($cacheFile, $isEnabled, $this->getUtilEncodingService());
+//        $navigationData = ['foo' => 'bar'];
+//        $navigationCache->setNavigation($navigationData);
+//
+//        $this->assertTrue($navigationCache->isEnabled());
+//    }
 
     /**
      * @return void
      */
-    public function testGetMustReturnUnSerializedNavigationDataFromFile()
+    public function testGetMustReturnUnSerializedNavigationDataFromFile(): void
     {
         $cacheFile = $this->getCacheFile();
         $isEnabled = true;
@@ -163,5 +150,19 @@ class ZedNavigationCacheTest extends Unit
         );
 
         return $navigationToUtilEncodingBridge;
+    }
+
+    /**
+     * @return string
+     */
+    private function getCacheFile()
+    {
+        $pathToFile = __DIR__ . DIRECTORY_SEPARATOR . 'navigation.cache';
+
+        if (!file_exists($pathToFile)) {
+            touch($pathToFile);
+        }
+
+        return $pathToFile;
     }
 }
