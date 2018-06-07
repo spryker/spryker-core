@@ -19,14 +19,22 @@
             <action>index</action>
             <visible>0</visible>
           </spryk-gui-draw>
-          <spryk-gui-build>
+          <spryk-gui-module-select>
             <label>Build Spryk</label>
             <title>Build Spryk</title>
             <bundle>spryk-gui</bundle>
             <controller>build</controller>
             <action>index</action>
             <visible>0</visible>
-          </spryk-gui-build>
+          </spryk-gui-module-select>
+          <spryk-gui-build-spryk-details>
+            <label>Build Spryk</label>
+            <title>Build Spryk</title>
+            <bundle>spryk-gui</bundle>
+            <controller>build</controller>
+            <action>spryk-details</action>
+            <visible>0</visible>
+          </spryk-gui-build-spryk-details>
         </pages>
       </spryk-gui-index>
 

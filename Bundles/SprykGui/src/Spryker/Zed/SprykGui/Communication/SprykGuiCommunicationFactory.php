@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\SprykGui\Communication;
 
+use Generated\Shared\Transfer\ModuleTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\SprykGui\Communication\Form\DataProvider\SprykDataProvider;
-use Spryker\Zed\SprykGui\Communication\Form\SprykForm;
+use Spryker\Zed\SprykGui\Communication\Form\SprykDetailsForm;
+use Spryker\Zed\SprykGui\Communication\Form\SprykMainForm;
 use Spryker\Zed\SprykGui\Dependency\Facade\SprykGuiToSprykFacadeInterface;
 use Spryker\Zed\SprykGui\SprykGuiDependencyProvider;
 use Symfony\Component\Form\FormInterface;
@@ -45,9 +47,27 @@ class SprykGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getSprykForm(string $spryk): FormInterface
     {
         return $this->getFormFactory()->create(
-            SprykForm::class,
-            $this->createSprykFormDataProvider()->getData(),
+            SprykMainForm::class,
+            null,
             $this->createSprykFormDataProvider()->getOptions($spryk)
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
+     * @param string $spryk
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getSprykDetailsForm(ModuleTransfer $moduleTransfer, string $spryk): FormInterface
+    {
+        return $this->getFormFactory()->create(
+            SprykDetailsForm::class,
+            null,
+            [
+                'moduleInformation' => $moduleTransfer,
+                'spryk' => $spryk,
+            ]
         );
     }
 }

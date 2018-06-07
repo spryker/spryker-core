@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SprykGui\Business\Model;
 
+use Generated\Shared\Transfer\ArgumentTransfer;
 use Spryker\Zed\SprykGui\Business\Model\Graph\GraphBuilderInterface;
 use Spryker\Zed\SprykGui\Dependency\Facade\SprykGuiToSprykFacadeInterface;
 use Symfony\Component\Process\Process;
@@ -183,6 +184,18 @@ class Spryk implements SprykInterface
                 }
 
                 $userInput = $userArguments[$argumentName];
+                if ($argumentName === 'constructorArguments') {
+                    $argumentString .= sprintf(' --%s=%s', $argumentName, escapeshellarg($this->buildFromArguments($userInput)));
+                    foreach ($userInput['arguments'] as $userArgumentDefinition) {
+                        $argumentTransfer = $this->getArgumentTransferFromDefinition($userArgumentDefinition);
+                        $argumentMetaTransfer = $argumentTransfer->getArgumentMeta();
+
+                        $argumentString .= sprintf(' --dependencyMethods=%s', escapeshellarg($argumentMetaTransfer->getMethod()));
+                    }
+
+                    continue;
+                }
+
                 if (isset($addedArguments[$argumentName]) && ($userInput !== $addedArguments[$argumentName])) {
                     $argumentName = sprintf('%s.%s', $sprykName, $argumentName);
                 }
@@ -218,6 +231,38 @@ class Spryk implements SprykInterface
     }
 
     /**
+     * @param array $argumentDefinition
+     *
+     * @return \Generated\Shared\Transfer\ArgumentTransfer
+     */
+    protected function getArgumentTransferFromDefinition(array $argumentDefinition): ArgumentTransfer
+    {
+        return $argumentDefinition['argument'];
+    }
+
+    /**
+     * @param array $userInput
+     *
+     * @return string
+     */
+    protected function buildFromArguments(array $userInput)
+    {
+        $argumentData = [];
+        foreach ($userInput as $arguments) {
+            foreach ($arguments as $argument) {
+                $argumentString = '';
+                $pattern = '%s %s';
+                if ($argument['isOptional']) {
+                    $pattern = '?%s %s = null';
+                }
+                $argumentData[] = sprintf($pattern, $argument['argument']->getType(), $argument['variable']);
+            }
+        }
+
+        return implode(', ', $argumentData);
+    }
+
+    /**
      * @param string $sprykName
      * @param string $commandLine
      * @param array $sprykArguments
@@ -243,6 +288,20 @@ class Spryk implements SprykInterface
                 }
 
                 $userInput = $userArguments[$argumentName];
+                if ($argumentName === 'constructorArguments') {
+                    $jiraTemplate .= sprintf('"%s"', $argumentName) . PHP_EOL;
+                    $jiraTemplate .= sprintf('// %s', $this->buildFromArguments($userInput)) . PHP_EOL . PHP_EOL;
+
+                    foreach ($userInput['arguments'] as $userArgumentDefinition) {
+                        $argumentTransfer = $this->getArgumentTransferFromDefinition($userArgumentDefinition);
+                        $argumentMetaTransfer = $argumentTransfer->getArgumentMeta();
+
+                        $jiraTemplate .= '"factoryDependencyMethod"' . PHP_EOL;
+                        $jiraTemplate .= sprintf('// %s', $argumentMetaTransfer->getMethod()) . PHP_EOL . PHP_EOL;
+                    }
+
+                    continue;
+                }
                 if (isset($addedArguments[$argumentName]) && ($userInput !== $addedArguments[$argumentName])) {
                     $argumentName = sprintf('%s.%s', $sprykName, $argumentName);
                 }

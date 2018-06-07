@@ -31,11 +31,7 @@ class SprykDataProvider
      */
     public function getOptions(?string $selectedSpryk = null): array
     {
-        $sprykDefinitions = $this->sprykFacade->getSprykDefinitions();
-
-        $options = [
-            'sprykDefinitions' => $sprykDefinitions,
-        ];
+        $options = [];
 
         if ($selectedSpryk) {
             $options['spryk'] = $selectedSpryk;

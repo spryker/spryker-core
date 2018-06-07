@@ -41,13 +41,13 @@ class BuildControllerCest
      */
     public function createSpryk(SprykGuiCommunicationTester $i)
     {
-        $i->amOnPage('/spryk-gui/build?spryk=AddZedBusinessFacadeMethod');
+        $i->amOnPage('/spryk-gui/build/spryk-details?spryk=AddZedBusinessFacadeMethod&module=FooBar&moduleOrganization=Spryker');
         $i->seeResponseCodeIs(200);
         $i->seeBreadcrumbNavigation('Dashboard / SprykGui / Spryks / Build Spryk');
         $i->see('Spryk', 'h2');
 
         $formData = [
-            'spryk_form' => [
+            'spryk_details_form' => [
                 'AddZedBusinessFacadeMethod' => [
                     'module' => 'FooBar',
                     'moduleOrganization' => 'Spryker',
@@ -59,7 +59,7 @@ class BuildControllerCest
                 'create' => '',
             ],
         ];
-        $i->submitForm(['name' => 'spryk_form'], $formData);
+        $i->submitForm(['name' => 'spryk_details_form'], $formData);
 
         $i->see('Jira Template', 'h3');
     }

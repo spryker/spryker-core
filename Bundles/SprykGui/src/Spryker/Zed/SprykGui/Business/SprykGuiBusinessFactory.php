@@ -9,10 +9,17 @@ namespace Spryker\Zed\SprykGui\Business;
 
 use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\SprykGui\Business\Finder\AccessibleTransfer\AccessibleTransferFinder;
+use Spryker\Zed\SprykGui\Business\Finder\AccessibleTransfer\AccessibleTransferFinderInterface;
+use Spryker\Zed\SprykGui\Business\Finder\Factory\FactoryInfoFinder;
+use Spryker\Zed\SprykGui\Business\Finder\Factory\FactoryInfoFinderInterface;
+use Spryker\Zed\SprykGui\Business\Finder\Module\ModuleFinder;
+use Spryker\Zed\SprykGui\Business\Finder\Module\ModuleFinderInterface;
 use Spryker\Zed\SprykGui\Business\Model\Graph\GraphBuilder;
 use Spryker\Zed\SprykGui\Business\Model\Graph\GraphBuilderInterface;
 use Spryker\Zed\SprykGui\Business\Model\Spryk;
 use Spryker\Zed\SprykGui\Business\Model\SprykInterface;
+use Spryker\Zed\SprykGui\Dependency\Client\SprykGuiToSessionClientInterface;
 use Spryker\Zed\SprykGui\Dependency\Facade\SprykGuiToSprykFacadeInterface;
 use Spryker\Zed\SprykGui\SprykGuiDependencyProvider;
 
@@ -60,5 +67,37 @@ class SprykGuiBusinessFactory extends AbstractBusinessFactory
     public function getGraphPlugin(): GraphPlugin
     {
         return $this->getProvidedDependency(SprykGuiDependencyProvider::PLUGIN_GRAPH);
+    }
+
+    /**
+     * @return \Spryker\Zed\SprykGui\Business\Finder\Module\ModuleFinderInterface
+     */
+    public function createModuleFinder(): ModuleFinderInterface
+    {
+        return new ModuleFinder($this->getSessionClient());
+    }
+
+    /**
+     * @return \Spryker\Zed\SprykGui\Dependency\Client\SprykGuiToSessionClientInterface
+     */
+    public function getSessionClient(): SprykGuiToSessionClientInterface
+    {
+        return $this->getProvidedDependency(SprykGuiDependencyProvider::SESSION_CLIENT);
+    }
+
+    /**
+     * @return \Spryker\Zed\SprykGui\Business\Finder\AccessibleTransfer\AccessibleTransferFinderInterface
+     */
+    public function createAccessibleTransferFinder(): AccessibleTransferFinderInterface
+    {
+        return new AccessibleTransferFinder();
+    }
+
+    /**
+     * @return \Spryker\Zed\SprykGui\Business\Finder\Factory\FactoryInfoFinderInterface
+     */
+    public function createFactoryInformationFinder(): FactoryInfoFinderInterface
+    {
+        return new FactoryInfoFinder();
     }
 }

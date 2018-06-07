@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\SprykGui\Business;
 
+use Generated\Shared\Transfer\AccessibleTransferCollection;
+use Generated\Shared\Transfer\ClassInformationTransfer;
+use Generated\Shared\Transfer\ModuleCollectionTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -70,5 +73,45 @@ class SprykGuiFacade extends AbstractFacade implements SprykGuiFacadeInterface
     public function runSpryk(string $sprykName, array $sprykArguments): string
     {
         return $this->getFactory()->createSpryk()->runSpryk($sprykName, $sprykArguments);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\ModuleCollectionTransfer
+     */
+    public function getModuleDetails(): ModuleCollectionTransfer
+    {
+        return $this->getFactory()->createModuleFinder()->findModules();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $module
+     *
+     * @return \Generated\Shared\Transfer\AccessibleTransferCollection
+     */
+    public function getAccessibleTransfers(string $module): AccessibleTransferCollection
+    {
+        return $this->getFactory()->createAccessibleTransferFinder()->findAccessibleTransfers($module);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $className
+     *
+     * @return \Generated\Shared\Transfer\ClassInformationTransfer
+     */
+    public function getFactoryInformation(string $className): ClassInformationTransfer
+    {
+        return $this->getFactory()->createFactoryInformationFinder()->findFactoryInformation($className);
     }
 }
