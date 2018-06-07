@@ -1,0 +1,46 @@
+{% set TYPE_PRODUCT_ABSTRACT = 'Abstract'|trans %}
+{% set TYPE_PRODUCT_CONCRETE = 'Concrete'|trans %}
+
+<td>{{ productAlternative.idProductAlternative }}</td>
+<td>{{ productAlternative.name }}</td>
+<td>{{ productAlternative.sku }}</td>
+<td>
+    {% for category in productAlternative.categories %}
+        <p>{{ category }}</p>
+    {% endfor %}
+</td>
+<td>{{ productAlternative.type }}</td>
+<td>
+    {% if productAlternative.status %}
+        <span class="label label-info">Active</span>
+    {% else %}
+        <span class="label label-danger">Inactive</span>
+    {% endif %}
+</td>
+<td>
+    {% if productAlternative.type == TYPE_PRODUCT_ABSTRACT %}
+        <form name="delete_abstract_form" method="post" action="/product-alternative-gui/delete/delete-abstract"
+              class="form-inline">
+            <input type="hidden" name="_method" value="DELETE">
+            <input type="hidden" name="id-product"/>
+            <input type="hidden" name="id-abstract-alternative"/>
+            <button type="submit" class="safe-submit btn btn-xs btn-outline btn-danger">
+                <i class="fa fa-trash"></i>
+                Delete
+            </button>
+        </form>
+    {% endif %}
+
+    {% if productAlternative.type == TYPE_PRODUCT_CONCRETE %}
+        <form name="delete_concrete_form" method="post" action="/product-alternative-gui/delete/delete-concrete"
+              class="form-inline">
+            <input type="hidden" name="_method" value="DELETE">
+            <input type="hidden" name="id-product"/>
+            <input type="hidden" name="id-concrete-alternative"/>
+            <button type="submit" class="safe-submit btn btn-xs btn-outline btn-danger">
+                <i class="fa fa-trash"></i>
+                Delete
+            </button>
+        </form>
+    {% endif %}
+</td>
