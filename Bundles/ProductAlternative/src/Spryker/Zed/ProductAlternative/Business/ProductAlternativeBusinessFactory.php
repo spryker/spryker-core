@@ -12,6 +12,8 @@ use Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativ
 use Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeListHydratorInterface;
 use Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeListManager;
 use Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeListManagerInterface;
+use Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeListSorter;
+use Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeListSorterInterface;
 use Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeReader;
 use Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeReaderInterface;
 use Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeWriter;
@@ -61,13 +63,22 @@ class ProductAlternativeBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeListSorterInterface
+     */
+    public function createProductAlternativeListSorter(): ProductAlternativeListSorterInterface
+    {
+        return new ProductAlternativeListSorter();
+    }
+
+    /**
      * @return \Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeListManagerInterface
      */
     public function createProductAlternativeListManager(): ProductAlternativeListManagerInterface
     {
         return new ProductAlternativeListManager(
             $this->createProductAlternativeListHydrator(),
-            $this->createProductAlternativeReader()
+            $this->createProductAlternativeReader(),
+            $this->createProductAlternativeListSorter()
         );
     }
 
