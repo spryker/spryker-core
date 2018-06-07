@@ -11,6 +11,8 @@ use Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementBaseUnitQuer
 use Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementSalesUnitQuery;
 use Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementUnitQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\ProductMeasurementUnit\Persistence\Propel\Mapper\ProductMeasurementUnitMapper;
+use Spryker\Zed\ProductMeasurementUnit\Persistence\Propel\Mapper\ProductMeasurementUnitMapperInterface;
 
 /**
  * @method \Spryker\Zed\ProductMeasurementUnit\ProductMeasurementUnitConfig getConfig()
@@ -39,5 +41,13 @@ class ProductMeasurementUnitPersistenceFactory extends AbstractPersistenceFactor
     public function createProductMeasurementUnitQuery(): SpyProductMeasurementUnitQuery
     {
         return SpyProductMeasurementUnitQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMeasurementUnit\Persistence\Propel\Mapper\ProductMeasurementUnitMapperInterface
+     */
+    public function createProductMeasurementUnitMapper(): ProductMeasurementUnitMapperInterface
+    {
+        return new ProductMeasurementUnitMapper();
     }
 }
