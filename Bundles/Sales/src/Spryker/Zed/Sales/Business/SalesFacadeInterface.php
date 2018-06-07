@@ -208,5 +208,5 @@ interface SalesFacadeInterface
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function transformOrderItem(ItemTransfer $itemTransfer): ArrayObject;
+    public function transformItem(ItemTransfer $itemTransfer): ArrayObject;
 }

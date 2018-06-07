@@ -21,18 +21,18 @@ class OrderExpander implements OrderExpanderInterface
     protected $calculationFacade;
 
     /**
-     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\SalesOrderItemTransformerPluginInterface[]
+     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\SalesItemTransformerPluginInterface[]
      */
-    protected $salesOrderItemTransformerPlugins;
+    protected $salesItemTransformerPlugins;
 
     /**
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToCalculationInterface $calculationFacade
-     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\SalesOrderItemTransformerPluginInterface[] $salesOrderItemTransformerPlugins
+     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\SalesItemTransformerPluginInterface[] $salesItemTransformerPlugins
      */
-    public function __construct(SalesToCalculationInterface $calculationFacade, array $salesOrderItemTransformerPlugins)
+    public function __construct(SalesToCalculationInterface $calculationFacade, array $salesItemTransformerPlugins)
     {
         $this->calculationFacade = $calculationFacade;
-        $this->salesOrderItemTransformerPlugins = $salesOrderItemTransformerPlugins;
+        $this->salesItemTransformerPlugins = $salesItemTransformerPlugins;
     }
 
     /**
@@ -77,15 +77,15 @@ class OrderExpander implements OrderExpanderInterface
      */
     protected function transformItemsPerPlugin(ArrayObject $transformedItems, ItemTransfer $itemTransfer): ArrayObject
     {
-        foreach ($this->salesOrderItemTransformerPlugins as $salesOrderItemTransformerPlugin) {
-            if (!$salesOrderItemTransformerPlugin->isApplicable($itemTransfer)) {
+        foreach ($this->salesItemTransformerPlugins as $salesItemTransformerPlugin) {
+            if (!$salesItemTransformerPlugin->isApplicable($itemTransfer)) {
                 continue;
             }
 
-            $transformedOrderItems = $salesOrderItemTransformerPlugin->transformOrderItem($itemTransfer);
+            $newTransformedItems = $salesItemTransformerPlugin->transformItem($itemTransfer);
 
-            foreach ($transformedOrderItems as $transformedOrderItem) {
-                $transformedItems->append($transformedOrderItem);
+            foreach ($newTransformedItems as $newTransformedItem) {
+                $transformedItems->append($newTransformedItem);
             }
 
             return $transformedItems;
@@ -97,27 +97,27 @@ class OrderExpander implements OrderExpanderInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $orderItemCollection
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemCollection
      *
      * @return void
      */
-    protected function groupOrderDiscountsByGroupKey(ArrayObject $orderItemCollection)
+    protected function groupOrderDiscountsByGroupKey(ArrayObject $itemCollection)
     {
         $calculatedItemDiscountsByGroupKey = [];
         $optionCalculatedDiscountsByGroupKey = [];
-        foreach ($orderItemCollection as $orderItemTransfer) {
-            if (!isset($calculatedItemDiscountsByGroupKey[$orderItemTransfer->getGroupKey()])) {
-                $calculatedItemDiscountsByGroupKey[$orderItemTransfer->getGroupKey()] = (array)$orderItemTransfer->getCalculatedDiscounts();
+        foreach ($itemCollection as $itemTransfer) {
+            if (!isset($calculatedItemDiscountsByGroupKey[$itemTransfer->getGroupKey()])) {
+                $calculatedItemDiscountsByGroupKey[$itemTransfer->getGroupKey()] = (array)$itemTransfer->getCalculatedDiscounts();
             }
-            $orderItemTransfer->setCalculatedDiscounts(
-                $this->getGroupedCalculatedDiscounts($calculatedItemDiscountsByGroupKey, $orderItemTransfer->getGroupKey())
+            $itemTransfer->setCalculatedDiscounts(
+                $this->getGroupedCalculatedDiscounts($calculatedItemDiscountsByGroupKey, $itemTransfer->getGroupKey())
             );
-            foreach ($orderItemTransfer->getProductOptions() as $productOptionTransfer) {
-                if (!isset($optionCalculatedDiscountsByGroupKey[$orderItemTransfer->getGroupKey()])) {
-                    $optionCalculatedDiscountsByGroupKey[$orderItemTransfer->getGroupKey()] = (array)$productOptionTransfer->getCalculatedDiscounts();
+            foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
+                if (!isset($optionCalculatedDiscountsByGroupKey[$itemTransfer->getGroupKey()])) {
+                    $optionCalculatedDiscountsByGroupKey[$itemTransfer->getGroupKey()] = (array)$productOptionTransfer->getCalculatedDiscounts();
                 }
                 $productOptionTransfer->setCalculatedDiscounts(
-                    $this->getGroupedCalculatedDiscounts($optionCalculatedDiscountsByGroupKey, $orderItemTransfer->getGroupKey())
+                    $this->getGroupedCalculatedDiscounts($optionCalculatedDiscountsByGroupKey, $itemTransfer->getGroupKey())
                 );
             }
         }

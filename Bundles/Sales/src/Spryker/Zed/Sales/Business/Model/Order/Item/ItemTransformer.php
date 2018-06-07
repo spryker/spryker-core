@@ -5,20 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Sales\Business\Model\Order;
+namespace Spryker\Zed\Sales\Business\Model\Order\Item;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 
-class OrderItemTransformer implements OrderItemTransformerInterface
+class ItemTransformer implements ItemTransformerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function transformOrderItem(ItemTransfer $itemTransfer): ArrayObject
+    public function transformItem(ItemTransfer $itemTransfer): ArrayObject
     {
         $transformedItems = new ArrayObject();
 

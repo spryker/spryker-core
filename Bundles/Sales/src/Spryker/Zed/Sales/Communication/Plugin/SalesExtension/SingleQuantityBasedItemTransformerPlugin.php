@@ -5,17 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SalesQuantity\Communication\Plugin\SalesExtension;
+namespace Spryker\Zed\Sales\Communication\Plugin\SalesExtension;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\SalesExtension\Dependency\Plugin\SalesOrderItemTransformerPluginInterface;
+use Spryker\Zed\SalesExtension\Dependency\Plugin\SalesItemTransformerPluginInterface;
 
 /**
- * @method \Spryker\Zed\SalesQuantity\Business\SalesQuantityFacadeInterface getFacade()
+ * @method \Spryker\Zed\Sales\Business\SalesFacadeInterface getFacade()
+ * @method \Spryker\Zed\Sales\Communication\SalesCommunicationFactory getFactory()
  */
-class NonSplittableOrderItemTransformerPlugin extends AbstractPlugin implements SalesOrderItemTransformerPluginInterface
+class SingleQuantityBasedItemTransformerPlugin extends AbstractPlugin implements SalesItemTransformerPluginInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
@@ -24,7 +25,7 @@ class NonSplittableOrderItemTransformerPlugin extends AbstractPlugin implements 
      */
     public function isApplicable(ItemTransfer $itemTransfer): bool
     {
-        return !$itemTransfer->getIsQuantitySplittable();
+        return true;
     }
 
     /**
@@ -36,8 +37,8 @@ class NonSplittableOrderItemTransformerPlugin extends AbstractPlugin implements 
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function transformOrderItem(ItemTransfer $itemTransfer): ArrayObject
+    public function transformItem(ItemTransfer $itemTransfer): ArrayObject
     {
-        return $this->getFacade()->transformOrderItem($itemTransfer);
+        return $this->getFacade()->transformItem($itemTransfer);
     }
 }

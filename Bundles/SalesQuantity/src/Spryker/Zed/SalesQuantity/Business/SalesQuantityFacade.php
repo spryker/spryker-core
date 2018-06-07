@@ -26,11 +26,11 @@ class SalesQuantityFacade extends AbstractFacade implements SalesQuantityFacadeI
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function transformOrderItem(ItemTransfer $itemTransfer): ArrayObject
+    public function transformItem(ItemTransfer $itemTransfer): ArrayObject
     {
         return $this->getFactory()
-            ->createOrderItemTransformer()
-            ->transformOrderItem($itemTransfer);
+            ->createItemTransformer()
+            ->transformItem($itemTransfer);
     }
 
     /**
@@ -43,7 +43,7 @@ class SalesQuantityFacade extends AbstractFacade implements SalesQuantityFacadeI
     public function expandItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         return $this->getFactory()
-            ->createProductExpander()
+            ->createItemExpander()
             ->expandItems($cartChangeTransfer);
     }
 }

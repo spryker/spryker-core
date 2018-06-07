@@ -10,7 +10,7 @@ namespace Spryker\Zed\SalesExtension\Dependency\Plugin;
 use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 
-interface SalesOrderItemTransformerPluginInterface
+interface SalesItemTransformerPluginInterface
 {
     /**
      * Specification:
@@ -34,5 +34,5 @@ interface SalesOrderItemTransformerPluginInterface
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function transformOrderItem(ItemTransfer $itemTransfer): ArrayObject;
+    public function transformItem(ItemTransfer $itemTransfer): ArrayObject;
 }

@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\SalesQuantity\Dependency\Facade\SalesQuantityToProductInterface;
 
-class ProductExpander implements ProductExpanderInterface
+class ItemExpander implements ItemExpanderInterface
 {
     /**
      * @var \Spryker\Zed\SalesQuantity\Dependency\Facade\SalesQuantityToProductInterface

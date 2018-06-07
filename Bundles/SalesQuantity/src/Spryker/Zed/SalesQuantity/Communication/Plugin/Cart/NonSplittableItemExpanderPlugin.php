@@ -14,7 +14,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\SalesQuantity\Business\SalesQuantityFacadeInterface getFacade()
  */
-class NonSplittableProductCartPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
+class NonSplittableItemExpanderPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
