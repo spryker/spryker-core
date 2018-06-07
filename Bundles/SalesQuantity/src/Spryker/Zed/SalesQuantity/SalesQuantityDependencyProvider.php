@@ -22,6 +22,18 @@ class SalesQuantityDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
+        $container = $this->addProductFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductFacade(Container $container)
+    {
         $container[self::FACADE_PRODUCT] = function (Container $container) {
             return new SalesQuantityToProductBridge($container->getLocator()->product()->facade());
         };

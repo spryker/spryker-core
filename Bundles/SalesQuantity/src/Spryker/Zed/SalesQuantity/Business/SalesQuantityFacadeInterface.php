@@ -16,7 +16,8 @@ interface SalesQuantityFacadeInterface
 {
     /**
      * Specification:
-     *  - Returns product as it is depends on 'isQuantitySplittable' property.
+     * - Adds item to item collection.
+     * - Returns item collection.
      *
      * @api
      *
@@ -27,6 +28,11 @@ interface SalesQuantityFacadeInterface
     public function transformItem(ItemTransfer $itemTransfer): ItemCollectionTransfer;
 
     /**
+     * Specification:
+     * - Reads a persisted concrete product from database.
+     * - Expands the items of the CartChangeTransfer with a specific concrete product's data.
+     * - Returns the expanded CartChangeTransfer.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
