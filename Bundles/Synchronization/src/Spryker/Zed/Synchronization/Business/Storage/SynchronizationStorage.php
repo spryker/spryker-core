@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Synchronization\Business\Model\Storage;
+namespace Spryker\Zed\Synchronization\Business\Storage;
 
-use Spryker\Zed\Synchronization\Business\Model\SynchronizationInterface;
-use Spryker\Zed\Synchronization\Business\Model\Validation\OutdatedValidatorInterface;
-use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToStorageInterface;
-use Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingInterface;
+use Spryker\Zed\Synchronization\Business\SynchronizationInterface;
+use Spryker\Zed\Synchronization\Business\Validation\OutdatedValidatorInterface;
+use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToStorageClientInterface;
+use Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingServiceInterface;
 
 class SynchronizationStorage implements SynchronizationInterface
 {
@@ -18,26 +18,26 @@ class SynchronizationStorage implements SynchronizationInterface
     const VALUE = 'value';
 
     /**
-     * @var \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToStorageInterface
+     * @var \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToStorageClientInterface
      */
     protected $storageClient;
 
     /**
-     * @var \Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingInterface
+     * @var \Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingServiceInterface
      */
     protected $utilEncodingService;
 
     /**
-     * @var \Spryker\Zed\Synchronization\Business\Model\Validation\OutdatedValidatorInterface
+     * @var \Spryker\Zed\Synchronization\Business\Validation\OutdatedValidatorInterface
      */
     protected $outdatedValidator;
 
     /**
-     * @param \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToStorageInterface $storageClient
-     * @param \Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingInterface $utilEncodingService
-     * @param \Spryker\Zed\Synchronization\Business\Model\Validation\OutdatedValidatorInterface $outdatedValidator
+     * @param \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToStorageClientInterface $storageClient
+     * @param \Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingServiceInterface $utilEncodingService
+     * @param \Spryker\Zed\Synchronization\Business\Validation\OutdatedValidatorInterface $outdatedValidator
      */
-    public function __construct(SynchronizationToStorageInterface $storageClient, SynchronizationToUtilEncodingInterface $utilEncodingService, OutdatedValidatorInterface $outdatedValidator)
+    public function __construct(SynchronizationToStorageClientInterface $storageClient, SynchronizationToUtilEncodingServiceInterface $utilEncodingService, OutdatedValidatorInterface $outdatedValidator)
     {
         $this->storageClient = $storageClient;
         $this->utilEncodingService = $utilEncodingService;

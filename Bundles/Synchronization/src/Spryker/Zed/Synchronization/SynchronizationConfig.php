@@ -15,6 +15,7 @@ class SynchronizationConfig extends AbstractBundleConfig
 {
     const DEFAULT_SYNC_STORAGE_QUEUE_MESSAGE_CHUNK_SIZE = 10000;
     const DEFAULT_SYNC_SEARCH_QUEUE_MESSAGE_CHUNK_SIZE = 10000;
+    const EXPORT_MESSAGE_CHUNK_SIZE = 1000;
 
     /**
      * @param string $queueName
@@ -52,5 +53,13 @@ class SynchronizationConfig extends AbstractBundleConfig
     public function getSyncSearchQueueMessageChunkSize()
     {
         return static::DEFAULT_SYNC_SEARCH_QUEUE_MESSAGE_CHUNK_SIZE;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSyncExportChunkSize()
+    {
+        return static::EXPORT_MESSAGE_CHUNK_SIZE;
     }
 }

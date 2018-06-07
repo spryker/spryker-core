@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Synchronization\Business\Model\Search;
+namespace Spryker\Zed\Synchronization\Business\Search;
 
 use Elastica\Exception\NotFoundException;
-use Spryker\Zed\Synchronization\Business\Model\SynchronizationInterface;
-use Spryker\Zed\Synchronization\Business\Model\Validation\OutdatedValidatorInterface;
-use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToSearchInterface;
+use Spryker\Zed\Synchronization\Business\SynchronizationInterface;
+use Spryker\Zed\Synchronization\Business\Validation\OutdatedValidatorInterface;
+use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToSearchClientInterface;
 
 class SynchronizationSearch implements SynchronizationInterface
 {
@@ -21,20 +21,20 @@ class SynchronizationSearch implements SynchronizationInterface
     const TIMESTAMP = '_timestamp';
 
     /**
-     * @var \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToSearchInterface
+     * @var \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToSearchClientInterface
      */
     protected $searchClient;
 
     /**
-     * @var \Spryker\Zed\Synchronization\Business\Model\Validation\OutdatedValidatorInterface
+     * @var \Spryker\Zed\Synchronization\Business\Validation\OutdatedValidatorInterface
      */
     protected $outdatedValidator;
 
     /**
-     * @param \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToSearchInterface $searchClient
-     * @param \Spryker\Zed\Synchronization\Business\Model\Validation\OutdatedValidatorInterface $outdatedValidator
+     * @param \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToSearchClientInterface $searchClient
+     * @param \Spryker\Zed\Synchronization\Business\Validation\OutdatedValidatorInterface $outdatedValidator
      */
-    public function __construct(SynchronizationToSearchInterface $searchClient, OutdatedValidatorInterface $outdatedValidator)
+    public function __construct(SynchronizationToSearchClientInterface $searchClient, OutdatedValidatorInterface $outdatedValidator)
     {
         $this->searchClient = $searchClient;
         $this->outdatedValidator = $outdatedValidator;

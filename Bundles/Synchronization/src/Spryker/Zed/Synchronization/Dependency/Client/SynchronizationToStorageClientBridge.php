@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Synchronization\Dependency\Client;
 
-class SynchronizationToStorageBridge implements SynchronizationToStorageInterface
+class SynchronizationToStorageClientBridge implements SynchronizationToStorageClientInterface
 {
     /**
      * @var \Spryker\Client\Storage\StorageClientInterface

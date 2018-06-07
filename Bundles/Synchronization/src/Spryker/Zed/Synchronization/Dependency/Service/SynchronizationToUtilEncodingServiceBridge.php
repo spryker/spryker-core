@@ -6,7 +6,7 @@
 
 namespace Spryker\Zed\Synchronization\Dependency\Service;
 
-class SynchronizationToUtilEncodingBridge implements SynchronizationToUtilEncodingInterface
+class SynchronizationToUtilEncodingServiceBridge implements SynchronizationToUtilEncodingServiceInterface
 {
     /**
      * @var \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface

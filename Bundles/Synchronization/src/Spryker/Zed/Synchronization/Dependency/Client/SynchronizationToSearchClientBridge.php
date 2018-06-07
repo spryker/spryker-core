@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Synchronization\Dependency\Client;
 
-class SynchronizationToSearchBridge implements SynchronizationToSearchInterface
+class SynchronizationToSearchClientBridge implements SynchronizationToSearchClientInterface
 {
     /**
      * @var \Spryker\Client\Search\SearchClientInterface

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Synchronization\Dependency\Client;
 
-interface SynchronizationToStorageInterface
+interface SynchronizationToStorageClientInterface
 {
     /**
      * @param string $key

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Synchronization\Dependency\Client;
 
-interface SynchronizationToSearchInterface
+interface SynchronizationToSearchClientInterface
 {
     /**
      * @param string $key

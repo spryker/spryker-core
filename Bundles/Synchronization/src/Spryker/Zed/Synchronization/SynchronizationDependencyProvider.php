@@ -9,14 +9,16 @@ namespace Spryker\Zed\Synchronization;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToSearchBridge;
-use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToStorageBridge;
-use Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingBridge;
+use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToQueueClientBridge;
+use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToSearchClientBridge;
+use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToStorageClientBridge;
+use Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingServiceBridge;
 
 class SynchronizationDependencyProvider extends AbstractBundleDependencyProvider
 {
     const CLIENT_STORAGE = 'CLIENT_STORAGE';
     const CLIENT_SEARCH = 'CLIENT_SEARCH';
+    const CLIENT_QUEUE = 'CLIENT_QUEUE';
     const SERVICE_UTIL_ENCODING = 'UTIL_ENCODING_SERVICE';
     const SYNCHRONIZATION_DATA_PLUGINS = 'SYNCHRONIZATION_DATA_PLUGINS';
 
@@ -29,6 +31,7 @@ class SynchronizationDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addStorageClient($container);
         $container = $this->addSearchClient($container);
+        $container = $this->addQueueClient($container);
         $container = $this->addUtilEncodingService($container);
         $container = $this->addSynchronizationDataPlugins($container);
 
@@ -55,7 +58,7 @@ class SynchronizationDependencyProvider extends AbstractBundleDependencyProvider
     protected function addStorageClient(Container $container)
     {
         $container[self::CLIENT_STORAGE] = function (Container $container) {
-            return new SynchronizationToStorageBridge($container->getLocator()->storage()->client());
+            return new SynchronizationToStorageClientBridge($container->getLocator()->storage()->client());
         };
 
         return $container;
@@ -69,7 +72,21 @@ class SynchronizationDependencyProvider extends AbstractBundleDependencyProvider
     protected function addSearchClient(Container $container)
     {
         $container[self::CLIENT_SEARCH] = function (Container $container) {
-            return new SynchronizationToSearchBridge($container->getLocator()->search()->client());
+            return new SynchronizationToSearchClientBridge($container->getLocator()->search()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addQueueClient(Container $container)
+    {
+        $container[self::CLIENT_QUEUE] = function (Container $container) {
+            return new SynchronizationToQueueClientBridge($container->getLocator()->queue()->client());
         };
 
         return $container;
@@ -83,7 +100,7 @@ class SynchronizationDependencyProvider extends AbstractBundleDependencyProvider
     protected function addUtilEncodingService(Container $container)
     {
         $container[self::SERVICE_UTIL_ENCODING] = function (Container $container) {
-            return new SynchronizationToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
+            return new SynchronizationToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
         };
 
         return $container;

@@ -12,9 +12,9 @@ use Elastica\Exception\NotFoundException;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Synchronization\Business\SynchronizationBusinessFactory;
 use Spryker\Zed\Synchronization\Business\SynchronizationFacade;
-use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToSearchInterface;
-use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToStorageInterface;
-use Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingInterface;
+use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToSearchClientInterface;
+use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToStorageClientInterface;
+use Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingServiceInterface;
 use Spryker\Zed\Synchronization\SynchronizationDependencyProvider;
 
 /**
@@ -183,7 +183,7 @@ class SynchronizationFacadeTest extends Unit
      */
     protected function createStorageClientBridge()
     {
-        return $this->getMockBuilder(SynchronizationToStorageInterface::class)
+        return $this->getMockBuilder(SynchronizationToStorageClientInterface::class)
             ->disableOriginalConstructor()
             ->setMethods([
                 'set',
@@ -198,7 +198,7 @@ class SynchronizationFacadeTest extends Unit
      */
     protected function createSearchClientBridge()
     {
-        return $this->getMockBuilder(SynchronizationToSearchInterface::class)
+        return $this->getMockBuilder(SynchronizationToSearchClientInterface::class)
             ->disableOriginalConstructor()
             ->setMethods([
                 'write',
@@ -213,7 +213,7 @@ class SynchronizationFacadeTest extends Unit
      */
     protected function createUtilEncodingServiceBridge()
     {
-        return $this->getMockBuilder(SynchronizationToUtilEncodingInterface::class)
+        return $this->getMockBuilder(SynchronizationToUtilEncodingServiceInterface::class)
             ->disableOriginalConstructor()
             ->setMethods([
                 'encodeJson',

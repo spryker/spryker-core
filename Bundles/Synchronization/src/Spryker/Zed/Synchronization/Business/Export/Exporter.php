@@ -7,34 +7,50 @@
 
 namespace Spryker\Zed\Synchronization\Business\Export;
 
-use Generated\Shared\Transfer\QueueSendMessageTransfer;
+use Generated\Shared\Transfer\SynchronizationQueueMessageTransfer;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
-use Spryker\Client\Queue\QueueClient;
-use Spryker\Zed\Synchronization\Business\Exception\SynchronizationQueuePoolNotFoundException;
+use Spryker\Zed\Synchronization\Business\Message\QueueMessageCreatorInterface;
+use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToQueueClientInterface;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface;
 
 class Exporter implements ExporterInterface
 {
+    /**
+     * @var \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToQueueClientInterface
+     */
+    protected $queueClient;
+
+    /**
+     * @var \Spryker\Zed\Synchronization\Business\Message\QueueMessageCreatorInterface
+     */
+    protected $queueMessageCreator;
+
     /**
      * @var \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface[]
      */
     protected $synchronizationDataPlugins;
 
     /**
-     * @var \Spryker\Client\Queue\QueueClientInterface
+     * @var int
      */
-    protected $queueClient;
+    protected $chunkSize;
 
     /**
+     * @param \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToQueueClientInterface $queueClient
+     * @param \Spryker\Zed\Synchronization\Business\Message\QueueMessageCreatorInterface $synchronizationQueueMessageCreator
      * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface[] $synchronizationDataPlugins
+     * @param int $chunkSize
      */
-    public function __construct(array $synchronizationDataPlugins)
-    {
+    public function __construct(
+        SynchronizationToQueueClientInterface $queueClient,
+        QueueMessageCreatorInterface $synchronizationQueueMessageCreator,
+        array $synchronizationDataPlugins,
+        $chunkSize = 100
+    ) {
+        $this->queueClient = $queueClient;
+        $this->queueMessageCreator = $synchronizationQueueMessageCreator;
         $this->synchronizationDataPlugins = $synchronizationDataPlugins;
-        /*
-         *  TODO fix this
-         */
-        $this->queueClient = new QueueClient();
+        $this->chunkSize = $chunkSize;
     }
 
     /**
@@ -49,8 +65,32 @@ class Exporter implements ExporterInterface
         $plugins = $this->getEffectivePlugins($resources);
 
         foreach ($plugins as $plugin) {
-            $synchronizationEntities = $plugin->queryData($ids)->find()->getData();
+            $this->exportData($ids, $plugin);
+        }
+    }
+
+    /**
+     * @param array $ids
+     * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface $plugin
+     *
+     * @return void
+     */
+    protected function exportData(array $ids, SynchronizationDataPluginInterface $plugin)
+    {
+        $query = $plugin->queryData($ids);
+        $count = $query->count();
+        $loops = $count / $this->chunkSize;
+        $offset = 0;
+
+        for ($i = 0; $i < $loops; $i++) {
+            $synchronizationEntities = $plugin->queryData($ids)
+                ->offset($offset)
+                ->limit($this->chunkSize)
+                ->find()
+                ->getData();
+
             $this->syncData($plugin, $synchronizationEntities);
+            $offset += $this->chunkSize;
         }
     }
 
@@ -62,18 +102,19 @@ class Exporter implements ExporterInterface
      */
     protected function syncData(SynchronizationDataPluginInterface $plugin, array $synchronizationEntities)
     {
+        $queueSendTransfers = [];
         foreach ($synchronizationEntities as $synchronizedEntity) {
             $store = $this->getStore($plugin->hasStore(), $synchronizedEntity);
-            $message = $this->createMessageBody(
-                $synchronizedEntity->getData(),
-                $synchronizedEntity->getKey(),
-                $plugin->getResourceName(),
-                $plugin->getParams()
-            );
+            $syncQueueMessage = (new SynchronizationQueueMessageTransfer())
+                ->setKey($synchronizedEntity->getKey())
+                ->setValue($synchronizedEntity->getData())
+                ->setResource($plugin->getResourceName())
+                ->setParams($plugin->getParams());
 
-            $queueSendTransfer = $this->createQueueSendMessageTransfer($message, $store, $plugin->getSynchronizationQueuePoolName());
-            $this->queueClient->sendMessage($plugin->getQueueName(), $queueSendTransfer);
+            $queueSendTransfers[] = $this->queueMessageCreator->createQueueMessage($syncQueueMessage, $store, $plugin->getSynchronizationQueuePoolName());
         }
+
+        $this->queueClient->sendMessages($plugin->getQueueName(), $queueSendTransfers);
     }
 
     /**
@@ -108,56 +149,6 @@ class Exporter implements ExporterInterface
         }
 
         $this->synchronizationDataPlugins = $mappedDataPlugins;
-    }
-
-    /**
-     * @param array $message
-     * @param string|null $store
-     * @param string|null $queuePoolName
-     *
-     * @throws \Spryker\Zed\Synchronization\Business\Exception\SynchronizationQueuePoolNotFoundException
-     *
-     * @return \Generated\Shared\Transfer\QueueSendMessageTransfer
-     */
-    protected function createQueueSendMessageTransfer(array $message, $store = null, $queuePoolName = null)
-    {
-        $queueSendTransfer = new QueueSendMessageTransfer();
-        $queueSendTransfer->setBody(json_encode($message));
-
-        if ($store) {
-            $queueSendTransfer->setStoreName($store);
-
-            return $queueSendTransfer;
-        }
-
-        if (!$queuePoolName) {
-            throw new SynchronizationQueuePoolNotFoundException('You must either have store column or `SynchronizationQueuePoolName` in schema.xml defined');
-        }
-        $queueSendTransfer->setQueuePoolName($queuePoolName);
-
-        return $queueSendTransfer;
-    }
-
-    /**
-     * @param array $data
-     * @param string $key
-     * @param string $resource
-     * @param array $params
-     *
-     * @return array
-     */
-    protected function createMessageBody(array $data, $key, $resource, array $params = [])
-    {
-        $message = [
-            'write' => [
-                'key' => $key,
-                'value' => $data,
-                'resource' => $resource,
-                'params' => $params,
-            ],
-        ];
-
-        return $message;
     }
 
     /**

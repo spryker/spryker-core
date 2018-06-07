@@ -9,4 +9,11 @@
         <property name="locale" type="string"/>
     </transfer>
 
+    <transfer name="SynchronizationQueueMessage">
+        <property name="key" type="string"/>
+        <property name="value" type="array"/>
+        <property name="resource" type="string"/>
+        <property name="params" type="array"/>
+    </transfer>
+
 </transfers>

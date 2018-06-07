@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Synchronization\Business\Model\Validation;
+namespace Spryker\Zed\Synchronization\Business\Validation;
 
 use Spryker\Zed\Synchronization\SynchronizationConfig;
 
