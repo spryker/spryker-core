@@ -24,7 +24,7 @@ use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\SkuDecisionRulePlugin
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\SubTotalDecisionRulePlugin;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\TimeDecisionRulePlugin;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\TotalQuantityDecisionRulePlugin;
-use Spryker\Zed\Discount\Communication\Plugin\Distributor\DiscountableItemTransformerStrategyPlugin;
+use Spryker\Zed\Discount\Communication\Plugin\Distributor\SingleQuantityBasedDiscountableItemTransformerStrategyPlugin;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToCurrencyBridge;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerBridge;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMoneyBridge;
@@ -121,7 +121,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     {
         // BC default plugin
         return [
-            new DiscountableItemTransformerStrategyPlugin(),
+            new SingleQuantityBasedDiscountableItemTransformerStrategyPlugin(),
         ];
     }
 
