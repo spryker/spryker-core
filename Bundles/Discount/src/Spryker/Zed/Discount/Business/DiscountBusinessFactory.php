@@ -114,7 +114,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
      */
     public function createDistributor(): DistributorInterface
     {
-        return new Distributor($this->getDiscountableItemExpanderStrategyPlugins());
+        return new Distributor($this->getDiscountableItemTransformerStrategyPlugins());
     }
 
     /**
@@ -145,11 +145,11 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\DiscountExtension\Dependency\Plugin\Distributor\DiscountableItemExpanderStrategyPluginInterface[]
+     * @return \Spryker\Zed\DiscountExtension\Dependency\Plugin\Distributor\DiscountableItemTransformerStrategyPluginInterface[]
      */
-    public function getDiscountableItemExpanderStrategyPlugins(): array
+    public function getDiscountableItemTransformerStrategyPlugins(): array
     {
-        return $this->getProvidedDependency(DiscountDependencyProvider::PLUGIN_DISCOUNTABLE_ITEM_EXPANDER_STRATEGY);
+        return $this->getProvidedDependency(DiscountDependencyProvider::PLUGIN_DISCOUNTABLE_ITEM_TRANSFORMER_STRATEGY);
     }
 
     /**

@@ -10,7 +10,7 @@ namespace Spryker\Zed\DiscountExtension\Dependency\Plugin\Distributor;
 use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 
-interface DiscountableItemExpanderStrategyPluginInterface
+interface DiscountableItemTransformerStrategyPluginInterface
 {
     /**
      * Specification:
@@ -26,7 +26,7 @@ interface DiscountableItemExpanderStrategyPluginInterface
 
     /**
      * Specification:
-     * - Expands
+     * - Transforms discountable item according to selected strategy.
      *
      * @api
      *
@@ -38,5 +38,5 @@ interface DiscountableItemExpanderStrategyPluginInterface
      *
      * @return void
      */
-    public function expandDiscountableItem(DiscountableItemTransfer $discountableItemTransfer, DiscountTransfer $discountTransfer, $totalDiscountAmount, $totalAmount, $quantity);
+    public function transformDiscountableItem(DiscountableItemTransfer $discountableItemTransfer, DiscountTransfer $discountTransfer, $totalDiscountAmount, $totalAmount, $quantity);
 }

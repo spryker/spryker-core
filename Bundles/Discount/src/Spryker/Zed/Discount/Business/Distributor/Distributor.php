@@ -14,16 +14,16 @@ use Generated\Shared\Transfer\DiscountTransfer;
 class Distributor implements DistributorInterface
 {
     /**
-     * @var \Spryker\Zed\DiscountExtension\Dependency\Plugin\Distributor\DiscountableItemExpanderStrategyPluginInterface[]
+     * @var \Spryker\Zed\DiscountExtension\Dependency\Plugin\Distributor\DiscountableItemTransformerStrategyPluginInterface[]
      */
-    protected $discountableItemExpanderStrategyPlugins;
+    protected $discountableItemTransformerStrategyPlugins;
 
     /**
-     * @param \Spryker\Zed\DiscountExtension\Dependency\Plugin\Distributor\DiscountableItemExpanderStrategyPluginInterface[] $discountableItemExpanderStrategyPlugins
+     * @param \Spryker\Zed\DiscountExtension\Dependency\Plugin\Distributor\DiscountableItemTransformerStrategyPluginInterface[] $discountableItemTransformerStrategyPlugins
      */
-    public function __construct(array $discountableItemExpanderStrategyPlugins)
+    public function __construct(array $discountableItemTransformerStrategyPlugins)
     {
-        $this->discountableItemExpanderStrategyPlugins = $discountableItemExpanderStrategyPlugins;
+        $this->discountableItemTransformerStrategyPlugins = $discountableItemTransformerStrategyPlugins;
     }
 
     /**
@@ -49,7 +49,7 @@ class Distributor implements DistributorInterface
         }
 
         foreach ($collectedDiscountTransfer->getDiscountableItems() as $discountableItemTransfer) {
-            $this->expandItemsPerPlugin($discountableItemTransfer, $collectedDiscountTransfer->getDiscount(), $totalDiscountAmount, $totalAmount);
+            $this->transformItemsPerStrategyPlugin($discountableItemTransfer, $collectedDiscountTransfer->getDiscount(), $totalDiscountAmount, $totalAmount);
         }
     }
 
@@ -61,16 +61,16 @@ class Distributor implements DistributorInterface
      *
      * @return void
      */
-    protected function expandItemsPerPlugin(DiscountableItemTransfer $discountableItemTransfer, DiscountTransfer $discountTransfer, $totalDiscountAmount, $totalAmount)
+    protected function transformItemsPerStrategyPlugin(DiscountableItemTransfer $discountableItemTransfer, DiscountTransfer $discountTransfer, $totalDiscountAmount, $totalAmount)
     {
         $quantity = $this->getDiscountableItemQuantity($discountableItemTransfer);
 
-        foreach ($this->discountableItemExpanderStrategyPlugins as $discountableItemExpanderStrategyPlugin) {
-            if (!$discountableItemExpanderStrategyPlugin->isApplicable($discountableItemTransfer)) {
+        foreach ($this->discountableItemTransformerStrategyPlugins as $discountableItemTransformerStrategyPlugin) {
+            if (!$discountableItemTransformerStrategyPlugin->isApplicable($discountableItemTransfer)) {
                 continue;
             }
 
-            $discountableItemExpanderStrategyPlugin->expandDiscountableItem($discountableItemTransfer, $discountTransfer, $totalDiscountAmount, $totalAmount, $quantity);
+            $discountableItemTransformerStrategyPlugin->transformDiscountableItem($discountableItemTransfer, $discountTransfer, $totalDiscountAmount, $totalAmount, $quantity);
 
             return;
         }

@@ -24,7 +24,7 @@ use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\SkuDecisionRulePlugin
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\SubTotalDecisionRulePlugin;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\TimeDecisionRulePlugin;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\TotalQuantityDecisionRulePlugin;
-use Spryker\Zed\Discount\Communication\Plugin\Distributor\DiscountableItemExpanderStrategyPlugin;
+use Spryker\Zed\Discount\Communication\Plugin\Distributor\DiscountableItemTransformerStrategyPlugin;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToCurrencyBridge;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerBridge;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMoneyBridge;
@@ -52,7 +52,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     const PLUGIN_DISCOUNT_FORM_DATA_PROVIDER_EXPANDER = 'PLUGIN_DISCOUNT_FORM_DATA_PROVIDER_EXPANDER';
     const PLUGIN_DISCOUNT_VIEW_BLOCK_PROVIDER = 'PLUGIN_DISCOUNT_VIEW_BLOCK_PROVIDER';
     const PLUGIN_DISCOUNT_APPLICABLE_FILTER_PLUGINS = 'PLUGIN_DISCOUNT_APPLICABLE_FILTER_PLUGINS';
-    const PLUGIN_DISCOUNTABLE_ITEM_EXPANDER_STRATEGY = 'PLUGIN_DISCOUNTABLE_ITEM_EXPANDER_STRATEGY';
+    const PLUGIN_DISCOUNTABLE_ITEM_TRANSFORMER_STRATEGY = 'PLUGIN_DISCOUNTABLE_ITEM_TRANSFORMER_STRATEGY';
     const DECISION_RULE_PLUGINS = 'DECISION_RULE_PLUGINS';
     const CALCULATOR_PLUGINS = 'CALCULATOR_PLUGINS';
     const COLLECTOR_PLUGINS = 'COLLECTOR_PLUGINS';
@@ -115,15 +115,13 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * Specification:
-     * - BC default plugin is set up.
-     *
-     * @return \Spryker\Zed\DiscountExtension\Dependency\Plugin\Distributor\DiscountableItemExpanderStrategyPluginInterface[]
+     * @return \Spryker\Zed\DiscountExtension\Dependency\Plugin\Distributor\DiscountableItemTransformerStrategyPluginInterface[]
      */
-    protected function getDiscountableItemExpanderStrategyPlugins(): array
+    protected function getDiscountableItemTransformerStrategyPlugins(): array
     {
+        // BC default plugin
         return [
-            new DiscountableItemExpanderStrategyPlugin(),
+            new DiscountableItemTransformerStrategyPlugin(),
         ];
     }
 
@@ -486,8 +484,8 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addDiscountableItemExpanderStrategyPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_DISCOUNTABLE_ITEM_EXPANDER_STRATEGY] = function () {
-            return $this->getDiscountableItemExpanderStrategyPlugins();
+        $container[static::PLUGIN_DISCOUNTABLE_ITEM_TRANSFORMER_STRATEGY] = function () {
+            return $this->getDiscountableItemTransformerStrategyPlugins();
         };
         return $container;
     }
