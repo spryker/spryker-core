@@ -34,6 +34,8 @@ class SalesQuantityFacade extends AbstractFacade implements SalesQuantityFacadeI
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer

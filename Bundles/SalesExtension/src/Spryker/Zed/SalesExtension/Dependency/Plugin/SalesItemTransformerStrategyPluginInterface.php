@@ -26,7 +26,7 @@ interface SalesItemTransformerStrategyPluginInterface
 
     /**
      * Specification:
-     *  - Gets item from order and expands it if needed.
+     *  - Transforms item according to selected strategy.
      *
      * @api
      *

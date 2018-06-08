@@ -200,7 +200,9 @@ interface SalesFacadeInterface
 
     /**
      * Specification:
-     *  - Explodes order items by quantity.
+     * - Explodes items by quantity.
+     * - Adds exploded items to the item collection.
+     * - Returns item collection.
      *
      * @api
      *

@@ -6,6 +6,8 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/discount-extension": "^1.0.0",
+    "spryker/sales-extension": "^1.0.0",
     "spryker/testify": "*"
   },
   "autoload": {
