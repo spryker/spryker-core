@@ -93,13 +93,6 @@ class ProductOptionOrderHydrate implements ProductOptionOrderHydrateInterface
         $productOptionsTransfer->setSumNetPrice($orderItemOptionEntity->getNetPrice());
         $productOptionsTransfer->setSumDiscountAmountAggregation($orderItemOptionEntity->getDiscountAmountAggregation());
         $productOptionsTransfer->setSumTaxAmount($orderItemOptionEntity->getTaxAmount());
-
-        $productOptionsTransfer->setUnitPrice($orderItemOptionEntity->getPrice());
-        $productOptionsTransfer->setUnitGrossPrice($orderItemOptionEntity->getGrossPrice());
-        $productOptionsTransfer->setUnitNetPrice($orderItemOptionEntity->getNetPrice());
-        $productOptionsTransfer->setUnitDiscountAmountAggregation($orderItemOptionEntity->getDiscountAmountAggregation());
-        $productOptionsTransfer->setUnitTaxAmount($orderItemOptionEntity->getTaxAmount());
-
         $productOptionsTransfer->fromArray($orderItemOptionEntity->toArray(), true);
 
         $idProductOptionsValue = $this->getIdProductOptionValue($orderItemOptionEntity);

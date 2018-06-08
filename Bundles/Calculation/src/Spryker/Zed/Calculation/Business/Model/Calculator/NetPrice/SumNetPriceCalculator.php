@@ -34,7 +34,9 @@ class SumNetPriceCalculator implements CalculatorInterface
     protected function calculateSumGrossPriceForExpenses(ArrayObject $expenses)
     {
         foreach ($expenses as $expenseTransfer) {
-            $expenseTransfer->setSumNetPrice($expenseTransfer->getUnitNetPrice() * $expenseTransfer->getQuantity());
+            if ($expenseTransfer->getUnitNetPrice()) {
+                $expenseTransfer->setSumNetPrice($expenseTransfer->getUnitNetPrice() * $expenseTransfer->getQuantity());
+            }
         }
     }
 
@@ -48,7 +50,6 @@ class SumNetPriceCalculator implements CalculatorInterface
         $this->assertItemRequirements($itemTransfer);
 
         if (!$itemTransfer->getUnitNetPrice()) {
-            $itemTransfer->setSumNetPrice(0);
             return;
         }
 
@@ -86,7 +87,9 @@ class SumNetPriceCalculator implements CalculatorInterface
             $this->addCalculatedItemNetAmounts($itemTransfer);
             foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
                 $this->assertProductOptionPriceCalculationRequirements($productOptionTransfer);
-                $productOptionTransfer->setSumNetPrice($productOptionTransfer->getUnitNetPrice() * $productOptionTransfer->getQuantity());
+                if ($productOptionTransfer->getUnitNetPrice()) {
+                    $productOptionTransfer->setSumNetPrice($productOptionTransfer->getUnitNetPrice() * $productOptionTransfer->getQuantity());
+                }
             }
         }
     }

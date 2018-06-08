@@ -35,6 +35,7 @@ class PriceNetCalculator implements CalculatorInterface
         foreach ($items as $itemTransfer) {
             $itemTransfer->setUnitPrice($itemTransfer->getUnitNetPrice());
             $itemTransfer->setSumPrice($itemTransfer->getSumNetPrice());
+            $itemTransfer->setSumGrossPrice($itemTransfer->getSumNetPrice());
 
             $this->recalculateProductOptionPrices($itemTransfer);
         }
@@ -50,6 +51,7 @@ class PriceNetCalculator implements CalculatorInterface
         foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
             $productOptionTransfer->setUnitPrice($productOptionTransfer->getUnitNetPrice());
             $productOptionTransfer->setSumPrice($productOptionTransfer->getSumNetPrice());
+            $productOptionTransfer->setSumGrossPrice($productOptionTransfer->getSumNetPrice());
         }
     }
 
@@ -63,6 +65,7 @@ class PriceNetCalculator implements CalculatorInterface
         foreach ($expenses as $expenseTransfer) {
             $expenseTransfer->setUnitPrice($expenseTransfer->getUnitNetPrice());
             $expenseTransfer->setSumPrice($expenseTransfer->getSumNetPrice());
+            $expenseTransfer->setSumGrossPrice($expenseTransfer->getSumNetPrice());
         }
     }
 }

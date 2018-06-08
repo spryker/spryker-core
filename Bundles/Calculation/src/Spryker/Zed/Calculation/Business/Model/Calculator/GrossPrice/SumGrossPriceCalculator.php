@@ -34,7 +34,9 @@ class SumGrossPriceCalculator implements CalculatorInterface
     protected function calculateSumGrossPriceForExpenses(ArrayObject $expenses)
     {
         foreach ($expenses as $expenseTransfer) {
-            $expenseTransfer->setSumGrossPrice($expenseTransfer->getUnitGrossPrice() * $expenseTransfer->getQuantity());
+            if ($expenseTransfer->getUnitGrossPrice()) {
+                $expenseTransfer->setSumGrossPrice($expenseTransfer->getUnitGrossPrice() * $expenseTransfer->getQuantity());
+            }
         }
     }
 
@@ -48,7 +50,6 @@ class SumGrossPriceCalculator implements CalculatorInterface
         $this->assertItemRequirements($itemTransfer);
 
         if (!$itemTransfer->getUnitGrossPrice()) {
-            $itemTransfer->setSumGrossPrice(0);
             return;
         }
 
@@ -86,7 +87,9 @@ class SumGrossPriceCalculator implements CalculatorInterface
             $this->addCalculatedItemGrossAmounts($itemTransfer);
             foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
                 $this->assertProductOptionPriceCalculationRequirements($productOptionTransfer);
-                $productOptionTransfer->setSumGrossPrice($productOptionTransfer->getUnitGrossPrice() * $productOptionTransfer->getQuantity());
+                if ($productOptionTransfer->getUnitGrossPrice()) {
+                    $productOptionTransfer->setSumGrossPrice($productOptionTransfer->getUnitGrossPrice() * $productOptionTransfer->getQuantity());
+                }
             }
         }
     }
