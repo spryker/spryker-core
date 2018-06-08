@@ -10,6 +10,7 @@ namespace Spryker\Zed\FileManager\Business\Model;
 use Generated\Shared\Transfer\FileSystemDeleteDirectoryTransfer;
 use Generated\Shared\Transfer\FileSystemQueryTransfer;
 use Generated\Shared\Transfer\FileSystemRenameTransfer;
+use Orm\Zed\FileManager\Persistence\SpyFileDirectory;
 use Spryker\Zed\FileManager\Dependency\Service\FileManagerToFileSystemServiceInterface;
 use Spryker\Zed\FileManager\FileManagerConfig;
 use Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface;
@@ -69,21 +70,9 @@ class FileDirectoryRemover implements FileDirectoryRemoverInterface
 
         return $this->handleDatabaseTransaction(
             function () use ($fileDirectory, $fileParentDirectory) {
-                foreach ($fileDirectory->getSpyFiles() as $file) {
-                    foreach ($file->getSpyFileInfos() as $fileInfo) {
-                        $fileSystemRenameTransfer = new FileSystemRenameTransfer();
-                        $fileSystemRenameTransfer->setFileSystemName($this->config->getStorageName());
-                        $fileSystemRenameTransfer->setPath($fileInfo->getStorageFileName());
-                        $fileInfo->getFile()->setFileDirectory($fileParentDirectory);
-                        $newPath = $this->fileLoader->buildFilename($fileInfo);
-                        $fileSystemRenameTransfer->setNewPath($newPath);
-                        $fileInfo->setStorageFileName($newPath);
-
-                        $this->fileSystemService->rename($fileSystemRenameTransfer);
-                    }
-                    $file->setFileDirectory($fileParentDirectory);
-                    $file->save();
-                }
+                $fileParentDirectory === null ?
+                    $this->deleteDirectoryFiles($fileDirectory) :
+                    $this->moveDirectoryFiles($fileDirectory, $fileParentDirectory);
 
                 $fileSystemDeleteDirectoryTransfer = new FileSystemDeleteDirectoryTransfer();
                 $fileSystemDeleteDirectoryTransfer->setFileSystemName($this->config->getStorageName());
@@ -101,5 +90,43 @@ class FileDirectoryRemover implements FileDirectoryRemoverInterface
             },
             $this->fileManagerQueryContainer->getConnection()
         );
+    }
+
+    /**
+     * @param \Orm\Zed\FileManager\Persistence\SpyFileDirectory $fileDirectory
+     *
+     * @return void
+     */
+    protected function deleteDirectoryFiles(SpyFileDirectory $fileDirectory)
+    {
+        foreach ($fileDirectory->getSpyFiles() as $file) {
+            $file->delete();
+        }
+    }
+
+    /**
+     * @param \Orm\Zed\FileManager\Persistence\SpyFileDirectory $fileDirectory
+     * @param \Orm\Zed\FileManager\Persistence\SpyFileDirectory $fileParentDirectory
+     *
+     * @return void
+     */
+    protected function moveDirectoryFiles(SpyFileDirectory $fileDirectory, SpyFileDirectory $fileParentDirectory)
+    {
+        foreach ($fileDirectory->getSpyFiles() as $file) {
+            foreach ($file->getSpyFileInfos() as $fileInfo) {
+                $fileSystemRenameTransfer = new FileSystemRenameTransfer();
+                $fileSystemRenameTransfer->setFileSystemName($this->config->getStorageName());
+                $fileSystemRenameTransfer->setPath($fileInfo->getStorageFileName());
+                $fileInfo->getFile()->setFileDirectory($fileParentDirectory);
+                $newPath = $this->fileLoader->buildFilename($fileInfo);
+                $fileSystemRenameTransfer->setNewPath($newPath);
+                $fileInfo->setStorageFileName($newPath);
+
+                $this->fileSystemService->rename($fileSystemRenameTransfer);
+            }
+
+            $file->setFileDirectory($fileParentDirectory);
+            $file->save();
+        }
     }
 }
