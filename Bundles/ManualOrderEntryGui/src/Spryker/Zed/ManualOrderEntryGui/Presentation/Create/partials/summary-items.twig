@@ -12,9 +12,9 @@
     <tr>
         <td>{{ item.name }}</td>
         <td>{{ item.sku }}</td>
-        <td>{{ item.unitGrossPrice | money }}</td>
+        <td>{{ item.unitGrossPrice | money(true, quoteTransfer.currency.code) }}</td>
         <td>{{ item.quantity }}</td>
-        <td>{{ item.sumGrossPrice | money }}</td>
+        <td>{{ item.sumGrossPrice | money(true, quoteTransfer.currency.code) }}</td>
     </tr>
 {% endfor %}
 </table>

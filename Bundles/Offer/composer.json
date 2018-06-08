@@ -20,7 +20,7 @@
     "spryker/calculation": "*",
     "spryker/checkout": "*",
     "spryker/code-sniffer": "*",
-    "spryker/oms": "^8.0.0",
+    "spryker/oms": "*",
     "spryker/testify": "*"
   },
   "suggest": {

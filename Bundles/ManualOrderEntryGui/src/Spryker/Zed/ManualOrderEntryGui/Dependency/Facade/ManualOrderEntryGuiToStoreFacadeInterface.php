@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ManualOrderEntryGui\Dependency\Service;
+namespace Spryker\Zed\ManualOrderEntryGui\Dependency\Facade;
 
-interface ManualOrderEntryGuiToStoreInterface
+interface ManualOrderEntryGuiToStoreFacadeInterface
 {
     /**
      * @return array
