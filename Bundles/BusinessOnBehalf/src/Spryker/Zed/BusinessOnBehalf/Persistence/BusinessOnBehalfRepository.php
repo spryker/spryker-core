@@ -48,7 +48,8 @@ class BusinessOnBehalfRepository extends AbstractRepository implements BusinessO
             ->joinCompany()
             ->useCompanyQuery()
                 ->filterByIsActive(true)
-            ->endUse();
+            ->endUse()
+            ->orderByIdCompanyUser();
         $query->select(SpyCompanyUserTableMap::COL_ID_COMPANY_USER);
 
         return $query->find()->toArray();
