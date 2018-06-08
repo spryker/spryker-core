@@ -39,7 +39,7 @@ function initialize() {
     initJsTree();
 
     // Enable save order button on tree change
-    $(document).bind('dnd_stop.vakata', function() {
+    $(document).bind('dnd_stop.vakata', function () {
         $treeOrderSaveBtn.removeAttr('disabled');
     });
 }
@@ -48,7 +48,7 @@ function initialize() {
  * @returns {Function}
  */
 function createTreeLoadHandler() {
-    return function(response) {
+    return function (response) {
         $treeContent.html(response);
 
         initJsTree();
@@ -76,7 +76,7 @@ function initJsTree() {
         'plugins': ['wholerow', 'dnd', 'search'],
         'types': config.fileDirectoryTreeNodeTypes,
         'dnd': {
-            'is_draggable': function(items) {
+            'is_draggable': function (items) {
                 var idFileDirectoryNode = items[0].data.idFileDirectoryNode;
                 return !!idFileDirectoryNode;
             }
@@ -84,12 +84,14 @@ function initJsTree() {
     }).on("changed.jstree", function (e, data) {
         var $filesList = $('#file-directory-files-list'),
             $filesTable = $filesList.find('table').first(),
-            $deleteDirectoryButton = $('#delete-directory-link');
+            $deleteDirectoryButton = $('#delete-directory-link'),
+            $deleteDirectoryConfirmationButton = $('#delete-directory-confirmation-link');
 
         $('#add-file-link').attr('href', '/file-manager-gui/add-file?file-directory-id=' + data.node.data.idFileDirectoryNode);
 
         if (typeof data.node.data.idFileDirectoryNode === 'undefined') {
             $deleteDirectoryButton.removeAttr('href');
+            $deleteDirectoryButton.removeAttr('data-id-parent');
             $deleteDirectoryButton.attr('disabled', true);
             $filesList.hide()
             return;
@@ -98,17 +100,26 @@ function initJsTree() {
         $filesList.show();
         $filesTable.DataTable().ajax.url('/file-manager-gui/files/table?file-directory-id=' + data.node.data.idFileDirectoryNode).load();
         $deleteDirectoryButton.removeAttr('disabled');
+        $deleteDirectoryConfirmationButton.attr('href', '/file-manager-gui/delete-directory?id-directory=' + data.node.data.idFileDirectoryNode);
         $deleteDirectoryButton.attr('href', '/file-manager-gui/delete-directory?id-directory=' + data.node.data.idFileDirectoryNode);
+        $deleteDirectoryButton.attr('data-id-parent', data.node.data.idParentFileDirectoryNode);
     });
 
     $treeProgressBar.removeClass('hidden');
 }
 
+$('#delete-directory-link').on('click', function (event) {
+    if (!$(this).attr('data-id-parent')) {
+        event.preventDefault();
+        $('#directory-deleting-confirmation-modal').modal('show');
+    }
+});
+
 /**
  * @return {void}
  */
 function onTreeSearchKeyup() {
-    if(treeSearchTimeout) {
+    if (treeSearchTimeout) {
         clearTimeout(treeSearchTimeout);
     }
     treeSearchTimeout = setTimeout(function () {
@@ -119,7 +130,7 @@ function onTreeSearchKeyup() {
 /**
  * @return {void}
  */
-function onTreeSaveOrderClick(){
+function onTreeSaveOrderClick() {
     $treeUpdateProgressBar.removeClass('hidden');
 
     var jstreeData = $('#file-directory-tree').jstree(true).get_json();
@@ -132,7 +143,7 @@ function onTreeSaveOrderClick(){
         }
     };
 
-    $.post(config.fileDirectoryTreeHierarchyUpdateUrl, params, function(response) {
+    $.post(config.fileDirectoryTreeHierarchyUpdateUrl, params, function (response) {
         window.sweetAlert({
             title: response.success ? "Success" : "Error",
             text: response.message,
@@ -140,7 +151,7 @@ function onTreeSaveOrderClick(){
         });
 
         $treeOrderSaveBtn.attr('disabled', 'disabled');
-    }).always(function() {
+    }).always(function () {
         $treeUpdateProgressBar.addClass('hidden');
     });
 }
@@ -153,7 +164,7 @@ function onTreeSaveOrderClick(){
 function getFileDirectoryNodesRecursively(jstreeNode) {
     var nodes = [];
 
-    $.each(jstreeNode.children, function(i, childNode) {
+    $.each(jstreeNode.children, function (i, childNode) {
         var fileDirectoryNode = {
             'file_directory': {
                 'id_file_directory': childNode.data.idFileDirectoryNode,

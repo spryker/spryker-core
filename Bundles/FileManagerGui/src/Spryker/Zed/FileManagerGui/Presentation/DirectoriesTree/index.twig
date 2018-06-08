@@ -28,10 +28,11 @@
                 </ul>
             </div>
             <div>
-                <input type="button" id="file-directory-tree-save-btn" class="btn btn-primary pull-left m-r-sm" value="{{ 'Save order' | trans }}" disabled="disabled" />
+                <input type="button" id="file-directory-tree-save-btn" class="btn btn-primary pull-left m-r-sm"
+                       value="{{ 'Save order' | trans }}" disabled="disabled"/>
                 {% include '@FileManagerGui/_partials/progressbar.twig' with {
-                idProgressbar: 'file-directory-tree-update-loader',
-                fileDirectoryProgressbarClass: 'progress-inline'
+                    idProgressbar: 'file-directory-tree-update-loader',
+                    fileDirectoryProgressbarClass: 'progress-inline'
                 } %}
             </div>
         </div>
@@ -40,13 +41,15 @@
             <div id="file-directory-files-list">
             </div>
         </div>
+
+        {% include '@FileManagerGui/DirectoriesTree/_partials/directory-deleting-confirmation-modal.twig' %}
     </div>
 
 {% endblock %}
 
 {% block head_css %}
     {{ parent() }}
-    <link rel="stylesheet" href="/assets/css/spryker-zed-file-directory.css" />
+    <link rel="stylesheet" href="/assets/css/spryker-zed-file-directory.css"/>
 {% endblock %}
 
 {% block footer_js %}
