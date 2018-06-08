@@ -35,8 +35,10 @@
         let savedAlternatives = getSavedAlternatives(alternativesBlock.children);
 
         if (savedAlternatives.indexOf(suggestValue) < 0) {
-            alternativesBlock.innerHTML += '<input type="text" value="' + suggestValue + '"/>';
+            alternativesBlock.innerHTML += '<input type="text" name="suggest" value="' + suggestValue + '"/>';
         }
+
+        console.log(alternativesBlock);
     }
 
     function getSavedAlternatives(alternativeChilds) {
