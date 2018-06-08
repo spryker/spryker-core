@@ -1,10 +1,10 @@
 {% set TYPE_PRODUCT_ABSTRACT = 'Abstract'|trans %}
 {% set TYPE_PRODUCT_CONCRETE = 'Concrete'|trans %}
 
-{% set LINK_DELETE_PRODUCT_ABSTRACT = '/product-alternative-gui/delete/delete-abstract?id-product-alternative=%d' %}
-{% set LINK_DELETE_PRODUCT_CONCRETE = '/product-alternative-gui/delete/delete-concrete?id-product-alternative=%d' %}
+{% set LINK_DELETE_PRODUCT_ABSTRACT = '/product-alternative-gui/delete/delete-abstract?id-product-alternative=%d&id-product=%d&id-product-abstract=%d' %}
+{% set LINK_DELETE_PRODUCT_CONCRETE = '/product-alternative-gui/delete/delete-concrete?id-product-alternative=%d&id-product=%d&id-product-abstract=%d' %}
 
-<td>{{ productAlternative.idProductAlternative }}</td>
+<td>{{ productAlternative.idProduct }}</td>
 <td>{{ productAlternative.name }}</td>
 <td>{{ productAlternative.sku }}</td>
 <td>
@@ -23,7 +23,7 @@
 <td>
     {% if productAlternative.type == TYPE_PRODUCT_ABSTRACT %}
         <a class="safe-submit btn btn-xs btn-outline btn-danger"
-           href="{{ LINK_DELETE_PRODUCT_ABSTRACT|format(idProduct, productAlternative.idProductAlternative) }}">
+           href="{{ LINK_DELETE_PRODUCT_ABSTRACT|format(productAlternative.idProductAlternative, idProduct, idProductAbstract) }}">
             <i class="fa fa-trash"></i>
             Delete
         </a>
@@ -31,7 +31,7 @@
 
     {% if productAlternative.type == TYPE_PRODUCT_CONCRETE %}
         <a class="safe-submit btn btn-xs btn-outline btn-danger"
-           href="{{ LINK_DELETE_PRODUCT_CONCRETE|format(idProduct, productAlternative.idProductAlternative) }}">
+           href="{{ LINK_DELETE_PRODUCT_CONCRETE|format(productAlternative.idProductAlternative, idProduct, idProductAbstract) }}">
             <i class="fa fa-trash"></i>
             Delete
         </a>
