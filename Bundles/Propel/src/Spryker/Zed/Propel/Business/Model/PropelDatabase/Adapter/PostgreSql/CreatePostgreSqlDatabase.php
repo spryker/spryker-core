@@ -16,7 +16,7 @@ use Symfony\Component\Process\Process;
 
 class CreatePostgreSqlDatabase implements CreateDatabaseInterface
 {
-    protected const SHELL_CHARACTER = '$';
+    protected const SHELL_CHARACTERS_PATTERN = '/\$|`/i';
     /**
      * @return void
      */
@@ -142,11 +142,10 @@ class CreatePostgreSqlDatabase implements CreateDatabaseInterface
     protected function getConfigValue(string $key)
     {
         $value = Config::get($key);
-        if (mb_strpos($value, static::SHELL_CHARACTER) !== false) {
+        if (preg_match(static::SHELL_CHARACTERS_PATTERN, $value)) {
             throw new UnSupportedCharactersInConfigurationValueException(sprintf(
-                'Configuration value for key "%s" contains unsupported characters (\'%s\') that is forbidden by security reason.',
-                $key,
-                static::SHELL_CHARACTER
+                'Configuration value for key "%s" contains unsupported characters (\'$\',\'`\') that is forbidden by security reason.',
+                $key
             ));
         }
 
