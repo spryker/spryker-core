@@ -140,7 +140,7 @@ class SalesFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testTransformItemShouldSplitPerItem()
+    public function testTransformItemShouldSplitPerItem(): void
     {
         $quantity = 5;
 

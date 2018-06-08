@@ -19,6 +19,7 @@ suites:
             enabled:
                 - \SprykerTest\Shared\Testify\Helper\Environment
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
 
     Communication:
         path: Communication

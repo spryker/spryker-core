@@ -17,7 +17,6 @@ use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
-use Spryker\Zed\SalesQuantity\Business\SalesQuantityFacade;
 
 /**
  * Auto-generated group annotations
@@ -33,36 +32,25 @@ class SalesQuantityFacadeTest extends Unit
 {
     protected const ABSTRACT_PRODUCT_SKU = 'ABSTRACT_PRODUCT_SKU';
     protected const CONCRETE_PRODUCT_SKU = 'CONCRETE_PRODUCT_SKU';
+    protected const QUANTITY = 5;
 
     /**
-     * @var \Spryker\Zed\SalesQuantity\Business\SalesQuantityFacadeInterface
+     * @var \SprykerTest\Zed\SalesQuantity\SalesQuantityBusinessTester
      */
-    private $salesQuantityFacade;
-
-    /**
-     * @return void
-     */
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        $this->salesQuantityFacade = new SalesQuantityFacade();
-    }
+    protected $tester;
 
     /**
      * @return void
      */
     public function testTransformItemShouldNotSplitItemsPerQuantity(): void
     {
-        $quantity = 5;
-
-        $itemTransfer = (new ItemTransfer())->setQuantity($quantity);
-        $itemCollectionTransfer = $this->salesQuantityFacade->transformItem($itemTransfer);
+        $itemTransfer = (new ItemTransfer())->setQuantity(static::QUANTITY);
+        $itemCollectionTransfer = $this->tester->getFacade()->transformItem($itemTransfer);
 
         $this->assertSame($itemCollectionTransfer->getItems()->count(), 1);
 
         foreach ($itemCollectionTransfer->getItems() as $itemTransfer) {
-            $this->assertSame($itemTransfer->getQuantity(), $quantity);
+            $this->assertSame($itemTransfer->getQuantity(), static::QUANTITY);
         }
     }
 
@@ -75,7 +63,7 @@ class SalesQuantityFacadeTest extends Unit
         $item = (new ItemTransfer())->setSku(static::CONCRETE_PRODUCT_SKU);
         $cartChangeTransfer = (new CartChangeTransfer())->setItems(new ArrayObject($item));
 
-        $resultCartChangeTransfer = $this->salesQuantityFacade->expandItems($cartChangeTransfer);
+        $resultCartChangeTransfer = $this->tester->getFacade()->expandItems($cartChangeTransfer);
 
         foreach ($resultCartChangeTransfer->getItems() as $itemTransfer) {
             $this->assertSame($itemTransfer->getIsQuantitySplittable(), true);
@@ -83,7 +71,7 @@ class SalesQuantityFacadeTest extends Unit
 
         $this->setData(false);
 
-        $resultCartChangeTransfer = $this->salesQuantityFacade->expandItems($cartChangeTransfer);
+        $resultCartChangeTransfer = $this->tester->getFacade()->expandItems($cartChangeTransfer);
 
         foreach ($resultCartChangeTransfer->getItems() as $itemTransfer) {
             $this->assertSame($itemTransfer->getIsQuantitySplittable(), false);
@@ -95,14 +83,13 @@ class SalesQuantityFacadeTest extends Unit
      */
     public function testTransformDiscountableItemShouldBeUsedNonSplitTransformation(): void
     {
-        $quantity = 5;
         $discountableItemTransfer = (new DiscountableItemTransfer())->setUnitPrice(100)
-            ->setQuantity($quantity);
+            ->setQuantity(static::QUANTITY);
         $discountTransfer = (new DiscountTransfer())->setIdDiscount(1);
         $totalDiscountAmount = 10;
         $totalAmount = 100;
 
-        $this->salesQuantityFacade->transformDiscountableItem($discountableItemTransfer, $discountTransfer, $totalDiscountAmount, $totalAmount, $quantity);
+        $this->tester->getFacade()->transformDiscountableItem($discountableItemTransfer, $discountTransfer, $totalDiscountAmount, $totalAmount, static::QUANTITY);
 
         $this->assertSame($discountableItemTransfer->getOriginalItemCalculatedDiscounts()->count(), 1);
 
