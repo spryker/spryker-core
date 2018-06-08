@@ -50,7 +50,7 @@ class ItemExpander implements ItemExpanderInterface
      *
      * @return void
      */
-    protected function expandItemWithProductConcrete(ProductConcreteTransfer $productConcreteTransfer, ItemTransfer $itemTransfer)
+    protected function expandItemWithProductConcrete(ProductConcreteTransfer $productConcreteTransfer, ItemTransfer $itemTransfer): void
     {
         $itemTransfer->setIsQuantitySplittable($productConcreteTransfer->getIsQuantitySplittable());
     }
@@ -60,7 +60,7 @@ class ItemExpander implements ItemExpanderInterface
      *
      * @return void
      */
-    protected function assertProductConcreteTransfer(ProductConcreteTransfer $productConcreteTransfer)
+    protected function assertProductConcreteTransfer(ProductConcreteTransfer $productConcreteTransfer): void
     {
         $productConcreteTransfer
             ->requireSku();
