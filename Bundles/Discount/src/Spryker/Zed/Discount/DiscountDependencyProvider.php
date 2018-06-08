@@ -487,6 +487,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::PLUGIN_DISCOUNTABLE_ITEM_TRANSFORMER_STRATEGY] = function () {
             return $this->getDiscountableItemTransformerStrategyPlugins();
         };
+
         return $container;
     }
 
