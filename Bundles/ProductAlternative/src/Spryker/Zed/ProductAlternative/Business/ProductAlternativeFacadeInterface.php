@@ -99,7 +99,7 @@ interface ProductAlternativeFacadeInterface
 
     /**
      * Specification:
-     * - Persists product alternatives stored in product concrete transfer.
+     * - Persists product alternative stored in product concrete transfer.
      *
      * @api
      *
@@ -107,5 +107,5 @@ interface ProductAlternativeFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function persistProductAlternatives(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
+    public function persistProductAlternative(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
 }

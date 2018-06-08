@@ -24,8 +24,14 @@
         <property name="productAlternatives" type="ProductAlternative[]" singular="productAlternative"/>
     </transfer>
 
+    <transfer name="ProductAlternativeToPersist">
+        <property name="idProduct" type="int"/>
+        <property name="suggest" type="string"/>
+    </transfer>
+
     <transfer name="ProductConcrete">
         <property name="productAlternatives" type="ProductAlternative[]" singular="productAlternative"/>
+        <property name="productAlternativeToPersist" type="ProductAlternativeToPersist"/>
     </transfer>
 
     <transfer name="ProductAlternativeListItem">

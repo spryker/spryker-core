@@ -78,4 +78,10 @@
         <property name="stores" type="Store[]" />
     </transfer>
 
+    <transfer name="ProductSuggestionDetails">
+        <property name="isSuccessful" type="bool"/>
+        <property name="idProductAbstract" type="int"/>
+        <property name="idProductConcrete" type="int"/>
+    </transfer>
+
 </transfers>

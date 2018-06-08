@@ -32,5 +32,5 @@ interface ProductAlternativeGuiToProductAlternativeFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function persistProductAlternatives(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
+    public function persistProductAlternative(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
 }

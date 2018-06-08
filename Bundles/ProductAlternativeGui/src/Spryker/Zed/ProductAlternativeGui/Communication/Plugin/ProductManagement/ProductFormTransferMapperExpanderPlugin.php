@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\ProductAlternativeGui\Communication\Plugin\ProductManagement;
 
+use Generated\Shared\Transfer\ProductAlternativeToPersistTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\ProductAlternativeGui\Communication\Form\AddProductAlternativeForm;
 use Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductFormTransferMapperExpanderPluginInterface;
 
 /**
@@ -28,7 +30,11 @@ class ProductFormTransferMapperExpanderPlugin extends AbstractPlugin implements 
      */
     public function map(ProductConcreteTransfer $productConcrete, array $formData): ProductConcreteTransfer
     {
-        $productConcrete->setProductAlternatives($formData[ProductConcreteTransfer::PRODUCT_ALTERNATIVES]);
+        $productAlternativeToPersist = (new ProductAlternativeToPersistTransfer())
+            ->setIdProduct($productConcrete->getIdProductConcrete())
+            ->setSuggest($formData[AddProductAlternativeForm::FIELD_PRODUCT_NAME_OR_SKU_AUTOCOMPLETE]);
+
+        $productConcrete->setProductAlternativeToPersist($productAlternativeToPersist);
 
         return $productConcrete;
     }

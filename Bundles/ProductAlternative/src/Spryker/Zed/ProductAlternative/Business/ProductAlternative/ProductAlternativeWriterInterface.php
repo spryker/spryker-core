@@ -33,7 +33,7 @@ interface ProductAlternativeWriterInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function persistProductAlternatives(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
+    public function persistProductAlternative(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
 
     /**
      * @param int $idProductAlternative

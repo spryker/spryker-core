@@ -55,9 +55,9 @@ class ProductAlternativeGuiToProductAlternativeFacadeBridge implements ProductAl
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function persistProductAlternatives(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
+    public function persistProductAlternative(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
         return $this->productAlternativeFacade
-            ->persistProductAlternatives($productConcreteTransfer);
+            ->persistProductAlternative($productConcreteTransfer);
     }
 }
