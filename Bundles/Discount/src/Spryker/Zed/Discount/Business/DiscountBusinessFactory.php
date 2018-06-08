@@ -28,6 +28,8 @@ use Spryker\Zed\Discount\Business\DecisionRule\PriceModeDecisionRule;
 use Spryker\Zed\Discount\Business\DecisionRule\SubTotalDecisionRule;
 use Spryker\Zed\Discount\Business\DecisionRule\TimeDecisionRule;
 use Spryker\Zed\Discount\Business\DecisionRule\TotalQuantityDecisionRule;
+use Spryker\Zed\Discount\Business\Distributor\DiscountableItem\DiscountableItemTransformer;
+use Spryker\Zed\Discount\Business\Distributor\DiscountableItem\DiscountableItemTransformerInterface;
 use Spryker\Zed\Discount\Business\Distributor\Distributor;
 use Spryker\Zed\Discount\Business\Distributor\DistributorInterface;
 use Spryker\Zed\Discount\Business\Filter\DiscountableItemFilter;
@@ -625,5 +627,13 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     public function createQuoteChangeObserver(): QuoteChangeObserverInterface
     {
         return new QuoteChangeObserver($this->getMessengerFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\Distributor\DiscountableItem\DiscountableItemTransformerInterface
+     */
+    public function createDiscountableItemTransformer(): DiscountableItemTransformerInterface
+    {
+        return new DiscountableItemTransformer();
     }
 }

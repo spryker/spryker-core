@@ -9,6 +9,8 @@ namespace Spryker\Zed\SalesQuantity\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\SalesQuantity\Business\Model\Cart\Expander\ItemExpander;
+use Spryker\Zed\SalesQuantity\Business\Model\Distributor\DiscountableItem\DiscountableItemTransformer;
+use Spryker\Zed\SalesQuantity\Business\Model\Distributor\DiscountableItem\DiscountableItemTransformerInterface;
 use Spryker\Zed\SalesQuantity\Business\Model\Order\Item\ItemTransformer;
 use Spryker\Zed\SalesQuantity\Business\Model\Order\Item\ItemTransformerInterface;
 use Spryker\Zed\SalesQuantity\SalesQuantityDependencyProvider;
@@ -42,5 +44,13 @@ class SalesQuantityBusinessFactory extends AbstractBusinessFactory
     public function getProductFacade()
     {
         return $this->getProvidedDependency(SalesQuantityDependencyProvider::FACADE_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesQuantity\Business\Model\Distributor\DiscountableItem\DiscountableItemTransformerInterface
+     */
+    public function createDiscountableItemTransformer(): DiscountableItemTransformerInterface
+    {
+        return new DiscountableItemTransformer();
     }
 }

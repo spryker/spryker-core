@@ -6,7 +6,6 @@
 
 namespace Spryker\Zed\SalesQuantity\Communication\Plugin\DiscountExtension;
 
-use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Spryker\Zed\DiscountExtension\Dependency\Plugin\Distributor\DiscountableItemTransformerStrategyPluginInterface;
@@ -49,31 +48,7 @@ class NonSplittableDiscountableItemTransformerStrategyPlugin extends AbstractPlu
         int $totalAmount,
         int $quantity
     ): void {
-        $calculatedDiscountTransfer = $this->createBaseCalculatedDiscountTransfer($discountTransfer);
-        $singleItemAmountShare = $discountableItemTransfer->getUnitPrice() * $quantity / $totalAmount;
-
-        $itemDiscountAmount = ($totalDiscountAmount * $singleItemAmountShare) + $this->roundingError;
-        $itemDiscountAmountRounded = (int)round($itemDiscountAmount);
-        $this->roundingError = $itemDiscountAmount - $itemDiscountAmountRounded;
-
-        $distributedDiscountTransfer = clone $calculatedDiscountTransfer;
-        $distributedDiscountTransfer->setIdDiscount($discountTransfer->getIdDiscount());
-        $distributedDiscountTransfer->setUnitAmount($itemDiscountAmountRounded);
-        $distributedDiscountTransfer->setQuantity(1);
-
-        $discountableItemTransfer->getOriginalItemCalculatedDiscounts()->append($distributedDiscountTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
-     *
-     * @return \Generated\Shared\Transfer\CalculatedDiscountTransfer
-     */
-    protected function createBaseCalculatedDiscountTransfer(DiscountTransfer $discountTransfer): CalculatedDiscountTransfer
-    {
-        $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
-        $calculatedDiscountTransfer->fromArray($discountTransfer->toArray(), true);
-
-        return $calculatedDiscountTransfer;
+        $this->getFacade()
+            ->transformDiscountableItem($discountableItemTransfer, $discountTransfer, $totalDiscountAmount, $totalAmount, $quantity);
     }
 }
