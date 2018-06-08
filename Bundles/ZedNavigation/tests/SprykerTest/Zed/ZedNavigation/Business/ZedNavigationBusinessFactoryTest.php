@@ -7,9 +7,7 @@
 
 namespace SprykerTest\Zed\ZedNavigation\Business;
 
-use Codeception\Test\Unit;
 use Spryker\Zed\ZedNavigation\Business\Model\ZedNavigationBuilder;
-use Spryker\Zed\ZedNavigation\Business\ZedNavigationBusinessFactory;
 
 /**
  * Auto-generated group annotations
@@ -20,16 +18,8 @@ use Spryker\Zed\ZedNavigation\Business\ZedNavigationBusinessFactory;
  * @group ZedNavigationBusinessFactoryTest
  * Add your own group annotations below this line
  */
-class ZedNavigationBusinessFactoryTest extends Unit
+class ZedNavigationBusinessFactoryTest extends ZedNavigationBusinessTester
 {
-    /**
-     * @return \Spryker\Zed\ZedNavigation\Business\ZedNavigationBusinessFactory
-     */
-    private function getFactory()
-    {
-        return new ZedNavigationBusinessFactory();
-    }
-
     /**
      * @return void
      */

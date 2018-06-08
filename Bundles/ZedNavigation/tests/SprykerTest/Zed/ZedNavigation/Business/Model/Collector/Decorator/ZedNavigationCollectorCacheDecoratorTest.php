@@ -7,11 +7,8 @@
 
 namespace SprykerTest\Zed\ZedNavigation\Business\Model\Collector\Decorator;
 
-use Codeception\Test\Unit;
-use Spryker\Zed\ZedNavigation\Business\Model\Cache\ZedNavigationCacheInterface;
 use Spryker\Zed\ZedNavigation\Business\Model\Collector\Decorator\ZedNavigationCollectorCacheDecorator;
-use Spryker\Zed\ZedNavigation\Business\Model\Collector\ZedNavigationCollectorInterface;
-use Spryker\Zed\ZedNavigation\ZedNavigationConfig;
+use SprykerTest\Zed\ZedNavigation\Business\ZedNavigationBusinessTester;
 
 /**
  * Auto-generated group annotations
@@ -25,7 +22,7 @@ use Spryker\Zed\ZedNavigation\ZedNavigationConfig;
  * @group ZedNavigationCollectorCacheDecoratorTest
  * Add your own group annotations below this line
  */
-class ZedNavigationCollectorCacheDecoratorTest extends Unit
+class ZedNavigationCollectorCacheDecoratorTest extends ZedNavigationBusinessTester
 {
     /**
      * @return void

@@ -7,10 +7,8 @@
 
 namespace SprykerTest\Zed\ZedNavigation\Business\Model\Cache;
 
-use Codeception\Test\Unit;
 use Spryker\Zed\ZedNavigation\Business\Model\Cache\ZedNavigationCacheBuilder;
-use Spryker\Zed\ZedNavigation\Business\Model\Cache\ZedNavigationCacheInterface;
-use Spryker\Zed\ZedNavigation\Business\Model\Collector\ZedNavigationCollectorInterface;
+use SprykerTest\Zed\ZedNavigation\Business\ZedNavigationBusinessTester;
 
 /**
  * Auto-generated group annotations
@@ -23,23 +21,26 @@ use Spryker\Zed\ZedNavigation\Business\Model\Collector\ZedNavigationCollectorInt
  * @group ZedNavigationCacheBuilderTest
  * Add your own group annotations below this line
  */
-class ZedNavigationCacheBuilderTest extends Unit
+class ZedNavigationCacheBuilderTest extends ZedNavigationBusinessTester
 {
     /**
      * @return void
      */
     public function testWriteNavigationCacheMustReadNavigationFromCollectorAndPassItToTheCache()
     {
-        $navigationCacheMock = $this->getMockBuilder(ZedNavigationCacheInterface::class)->setMethods(['isEnabled', 'setNavigation', 'getNavigation'])->getMock();
+        //prepare
+        $navigationCacheMock = $this->getZedNavigationCacheMock();
+        $navigationCollectorMock = $this->getZedNavigationCollectorMock();
+        $navigationCacheBuilder = new ZedNavigationCacheBuilder($navigationCollectorMock, $navigationCacheMock);
+
+        //assert
         $navigationCacheMock->expects($this->once())
             ->method('setNavigation');
-
-        $navigationCollectorMock = $this->getMockBuilder(ZedNavigationCollectorInterface::class)->setMethods(['getNavigation'])->getMock();
         $navigationCollectorMock->expects($this->once())
             ->method('getNavigation')
             ->will($this->returnValue([]));
 
-        $navigationCacheBuilder = new ZedNavigationCacheBuilder($navigationCollectorMock, $navigationCacheMock);
+        //act
         $navigationCacheBuilder->writeNavigationCache();
     }
 }
