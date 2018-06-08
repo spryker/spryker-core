@@ -11,6 +11,7 @@
         <property name="amountMin" type="int"/>
         <property name="amountMax" type="int"/>
         <property name="amountInterval" type="int"/>
+        <property name="hasLeadProduct" type="bool"/>
     </transfer>
 
     <transfer name="ProductAbstractPackagingStorage">

@@ -14,7 +14,7 @@ use Spryker\Zed\ProductPackagingUnit\Dependency\ProductPackagingUnitEvents;
 use Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Event\Listener\ProductPackagingUnitPublishStorageListener;
 
 /**
- * @method \Spryker\Zed\ProductPackagingUnitStorage\Communication\PriceProductStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductPackagingUnitStorage\Communication\ProductPackagingUnitStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductPackagingUnitStorage\Business\ProductPackagingUnitStorageFacadeInterface getFacade()
  */
 class ProductPackagingUnitStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
@@ -41,8 +41,19 @@ class ProductPackagingUnitStorageEventSubscriber extends AbstractPlugin implemen
      */
     protected function addPriceProductAbstractPublishStorageListener(EventCollectionInterface $eventCollection)
     {
+        $eventCollection->addListenerQueued(ProductPackagingUnitEvents::PRODUCT_PACKAGING_UNIT_PUBLISH, new ProductPackagingUnitPublishStorageListener());
+
         $eventCollection->addListenerQueued(ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_UNIT_TYPE_CREATE, new ProductPackagingUnitPublishStorageListener());
         $eventCollection->addListenerQueued(ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_UNIT_TYPE_UPDATE, new ProductPackagingUnitPublishStorageListener());
+
+        $eventCollection->addListenerQueued(ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_UNIT_CREATE, new ProductPackagingUnitPublishStorageListener());
+        $eventCollection->addListenerQueued(ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_UNIT_UPDATE, new ProductPackagingUnitPublishStorageListener());
+
+        $eventCollection->addListenerQueued(ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_UNIT_AMOUNT_CREATE, new ProductPackagingUnitPublishStorageListener());
+        $eventCollection->addListenerQueued(ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_UNIT_AMOUNT_UPDATE, new ProductPackagingUnitPublishStorageListener());
+
+        $eventCollection->addListenerQueued(ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_LEAD_PRODUCT_CREATE, new ProductPackagingUnitPublishStorageListener());
+        $eventCollection->addListenerQueued(ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_LEAD_PRODUCT_UPDATE, new ProductPackagingUnitPublishStorageListener());
     }
 
     /**
@@ -52,6 +63,14 @@ class ProductPackagingUnitStorageEventSubscriber extends AbstractPlugin implemen
      */
     protected function addPriceProductAbstractUnpublishStorageListener(EventCollectionInterface $eventCollection)
     {
+        $eventCollection->addListenerQueued(ProductPackagingUnitEvents::PRODUCT_PACKAGING_UNIT_UNPUBLISH, new ProductPackagingUnitPublishStorageListener());
+
         $eventCollection->addListenerQueued(ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_UNIT_TYPE_DELETE, new ProductPackagingUnitPublishStorageListener());
+
+        $eventCollection->addListenerQueued(ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_UNIT_DELETE, new ProductPackagingUnitPublishStorageListener());
+
+        $eventCollection->addListenerQueued(ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_UNIT_AMOUNT_DELETE, new ProductPackagingUnitPublishStorageListener());
+
+        $eventCollection->addListenerQueued(ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_LEAD_PRODUCT_DELETE, new ProductPackagingUnitPublishStorageListener());
     }
 }

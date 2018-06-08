@@ -23,4 +23,8 @@
         <property name="amountInterval" type="int" />
     </transfer>
 
+    <transfer name="ProductPackagingLeadProduct">
+        <property name="idProductAbstract" type="int"/>
+        <property name="idProduct" type="int"/>
+    </transfer>
 </transfers>

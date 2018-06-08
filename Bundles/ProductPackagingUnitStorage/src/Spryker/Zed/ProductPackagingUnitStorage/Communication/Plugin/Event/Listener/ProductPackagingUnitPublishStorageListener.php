@@ -13,7 +13,7 @@ use Spryker\Zed\ProductPackagingUnit\Dependency\ProductPackagingUnitEvents;
 
 /**
  * @method \Spryker\Zed\ProductPackagingUnitStorage\Persistence\ProductPackagingUnitStorageQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\ProductPackagingUnitStorage\Communication\PriceProductStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductPackagingUnitStorage\Communication\ProductPackagingUnitStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductPackagingUnitStorage\Business\ProductPackagingUnitStorageFacadeInterface getFacade()
  */
 class ProductPackagingUnitPublishStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
@@ -31,9 +31,10 @@ class ProductPackagingUnitPublishStorageListener extends AbstractPlugin implemen
         $productAbstractIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
         if ($eventName === ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_UNIT_TYPE_DELETE
-//            ||
-//            $eventName === PriceProductEvents::ENTITY_SPY_PRICE_TYPE_DELETE ||
-//            $eventName === PriceProductEvents::PRICE_ABSTRACT_UNPUBLISH
+            || $eventName === ProductPackagingUnitEvents::PRODUCT_PACKAGING_UNIT_UNPUBLISH
+            || $eventName === ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_UNIT_DELETE
+            || $eventName === ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_UNIT_AMOUNT_DELETE
+            || $eventName === ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_LEAD_PRODUCT_DELETE
         ) {
             $this->getFacade()->unpublishProductAbstractPackaging($productAbstractIds);
 

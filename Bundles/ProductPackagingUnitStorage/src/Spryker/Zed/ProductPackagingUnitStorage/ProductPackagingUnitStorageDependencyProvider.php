@@ -10,11 +10,13 @@ namespace Spryker\Zed\ProductPackagingUnitStorage;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductPackagingUnitStorage\Dependency\Facade\ProductPackagingUnitStorageToEventBehaviorFacadeBridge;
+use Spryker\Zed\ProductPackagingUnitStorage\Dependency\Facade\ProductPackagingUnitStorageToProductPackagingUnitFacadeBridge;
 use Spryker\Zed\ProductPackagingUnitStorage\Dependency\QueryContainer\ProductPackagingUnitStorageToProductQueryContainerBridge;
 
 class ProductPackagingUnitStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
     const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
+    const FACADE_PRODUCT_PACKAGING_UNIT = 'FACADE_PRODUCT_PACKAGING_UNIT';
     const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
 
     /**
@@ -50,6 +52,10 @@ class ProductPackagingUnitStorageDependencyProvider extends AbstractBundleDepend
     {
         $container[static::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
             return new ProductPackagingUnitStorageToProductQueryContainerBridge($container->getLocator()->product()->queryContainer());
+        };
+
+        $container[static::FACADE_PRODUCT_PACKAGING_UNIT] = function (Container $container) {
+            return new ProductPackagingUnitStorageToProductPackagingUnitFacadeBridge($container->getLocator()->productPackagingUnit()->facade());
         };
 
         return $container;

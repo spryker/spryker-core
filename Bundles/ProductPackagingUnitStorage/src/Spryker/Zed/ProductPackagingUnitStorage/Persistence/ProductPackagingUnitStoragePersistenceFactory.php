@@ -26,6 +26,14 @@ class ProductPackagingUnitStoragePersistenceFactory extends AbstractPersistenceF
     }
 
     /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Business\ProductPackagingUnitFacadeInterface
+     */
+    public function getProductPackagingUnitFacade()
+    {
+        return $this->getProvidedDependency(ProductPackagingUnitStorageDependencyProvider::FACADE_PRODUCT_PACKAGING_UNIT);
+    }
+
+    /**
      * @return \Spryker\Zed\ProductPackagingUnitStorage\Dependency\QueryContainer\ProductPackagingUnitStorageToProductQueryContainerInterface
      */
     public function getProductQueryContainer()

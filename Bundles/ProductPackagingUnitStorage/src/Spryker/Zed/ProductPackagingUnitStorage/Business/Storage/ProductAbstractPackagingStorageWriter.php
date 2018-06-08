@@ -7,9 +7,6 @@
 
 namespace Spryker\Zed\ProductPackagingUnitStorage\Business\Storage;
 
-use Generated\Shared\Transfer\ProductAbstractPackagingStorageTransfer;
-use Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer;
-use Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyProductAbstractPackagingStorage;
 use Spryker\Zed\ProductPackagingUnitStorage\Persistence\ProductPackagingUnitStorageQueryContainerInterface;
 
 class ProductAbstractPackagingStorageWriter implements ProductAbstractPackagingStorageWriterInterface
@@ -53,11 +50,10 @@ class ProductAbstractPackagingStorageWriter implements ProductAbstractPackagingS
     public function unpublish(array $productAbstractIds)
     {
         $productAbstractPackagingStorageEntities = $this->queryContainer
-            ->queryProductAbstractPackagingStorageByProductAbstractIds($productAbstractIds)
-            ->find();
+            ->queryProductAbstractPackagingStorageByProductAbstractIds($productAbstractIds);
 
         foreach ($productAbstractPackagingStorageEntities as $productAbstractPackagingStorageEntity) {
-            $productAbstractPackagingStorageEntity->delete();
+            $this->queryContainer->deleteProductAbstractPackagingStorage($productAbstractPackagingStorageEntity);
         }
     }
 
@@ -69,10 +65,7 @@ class ProductAbstractPackagingStorageWriter implements ProductAbstractPackagingS
     protected function storeData(array $productAbstractPackagingTransfers)
     {
         foreach ($productAbstractPackagingTransfers as $productAbstractPackagingTransfer) {
-            $storageEntity = new SpyProductAbstractPackagingStorage();
-            $storageEntity->setFkProductAbstract($productAbstractPackagingTransfer->getIdProductAbstract());
-            $storageEntity->setData($productAbstractPackagingTransfer->toArray());
-            $storageEntity->save();
+            $this->queryContainer->createProductAbstractPackagingStorage($productAbstractPackagingTransfer);
         }
     }
 
@@ -86,49 +79,10 @@ class ProductAbstractPackagingStorageWriter implements ProductAbstractPackagingS
         $productAbstractPackagingTransfers = [];
 
         foreach ($productAbstractIds as $productAbstractId) {
-            $leadProductEntity = $this->queryContainer
-                ->queryLeadProductByAbstractId($productAbstractId)
-                ->findOne();
-            $packageProductConcreteEntities = $this->queryContainer
-                ->queryPackageProductsByAbstractId($productAbstractId)
-                ->find();
-
-            $productAbstractPackagingTransfers[] = $this->mapProductAbstractPackagingTransfer(
-                $productAbstractId,
-                $leadProductEntity,
-                $packageProductConcreteEntities
-            );
+            $productAbstractPackagingTransfers[] = $this->queryContainer
+                ->getProductAbstractPackagingTransferByProductAbstractId($productAbstractId);
         }
 
         return $productAbstractPackagingTransfers;
-    }
-
-    /**
-     * @param int $productAbstractId
-     * @param \Orm\Zed\Product\Persistence\SpyProduct $leadProductEntity
-     * @param \Orm\Zed\Product\Persistence\SpyProduct[] $packageProductConcreteEntities
-     *
-     * @return string
-     */
-    protected function mapProductAbstractPackagingTransfer(int $productAbstractId, $leadProductEntity, $packageProductConcreteEntities)
-    {
-        $productAbstractPackagingStorageTransfer = (new ProductAbstractPackagingStorageTransfer())
-            ->setIdProductAbstract($productAbstractId)
-            ->setLeadProduct($leadProductEntity->getIdProduct());
-        $productAbstractPackagingTypes = [];
-
-        foreach ($packageProductConcreteEntities as $packageProductConcreteEntity) {
-            $productAbstractPackagingTypes[] = (new ProductConcretePackagingStorageTransfer())
-                ->setIdProduct($packageProductConcreteEntity->getIdProduct())
-                ->setName($packageProductConcreteEntity->getIdProduct())
-                ->setDefaultAmount($packageProductConcreteEntity->getIdProduct())
-                ->setIsVariable($packageProductConcreteEntity->getIdProduct())
-                ->setAmountMin($packageProductConcreteEntity->getIdProduct())
-                ->setAmountMax($packageProductConcreteEntity->getIdProduct())
-                ->setAmountInterval($packageProductConcreteEntity->getIdProduct());
-        }
-        $productAbstractPackagingStorageTransfer->setTypes($productAbstractPackagingTypes);
-
-        return $productAbstractPackagingStorageTransfer;
     }
 }
