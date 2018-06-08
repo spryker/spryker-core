@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\CompanyBusinessUnitDataImport\Helper;
 
 use Codeception\Module;
+use Orm\Zed\CompanyBusinessUnit\Persistence\Map\SpyCompanyBusinessUnitTableMap;
 use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
 
 class CompanyBusinessUnitDataImportHelper extends Module
@@ -17,6 +18,8 @@ class CompanyBusinessUnitDataImportHelper extends Module
      */
     public function ensureDatabaseTableIsEmpty(): void
     {
+        $this->getCompanyBusinessUnitQuery()
+            ->update([SpyCompanyBusinessUnitTableMap::COL_FK_COMPANY => null]);
         $this->getCompanyBusinessUnitQuery()
             ->deleteAll();
     }
