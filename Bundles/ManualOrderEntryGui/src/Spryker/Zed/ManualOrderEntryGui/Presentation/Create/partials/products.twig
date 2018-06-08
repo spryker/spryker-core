@@ -1,14 +1,14 @@
 
-{% if form.manualOrderProducts|length > 0 %}
+{% if form.products|length > 0 %}
     <div class="form-group">
         <label class="control-label required">Select Products</label>
 
         <table class="manualOrderProducts"
                id="product-fields-list"
-               data-prototype-sku="{{ form_row(form.manualOrderProducts.vars.prototype.sku) | e }}"
-               data-prototype-quantity="{{ form_row(form.manualOrderProducts.vars.prototype.quantity) | e }}"
+               data-prototype-sku="{{ form_row(form.products.vars.prototype.sku) | e }}"
+               data-prototype-quantity="{{ form_row(form.products.vars.prototype.quantity) | e }}"
         >
-            {% for product in form.manualOrderProducts %}
+            {% for product in form.products %}
                 <tr>
                     <td>{{ form_row(product.sku) }}</td>
                     <td>{{ form_row(product.quantity) }}</td>
