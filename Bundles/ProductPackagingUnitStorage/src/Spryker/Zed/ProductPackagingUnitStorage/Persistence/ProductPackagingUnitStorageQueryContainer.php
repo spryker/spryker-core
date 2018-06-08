@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductPackagingUnitStorage\Persistence;
 
-use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Orm\Zed\ProductPackagingUnit\Persistence\Map\SpyProductPackagingUnitTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -29,11 +29,13 @@ class ProductPackagingUnitStorageQueryContainer extends AbstractQueryContainer i
             ->queryProduct()
             ->filterByFkProductAbstract($productAbstractId)
             ->innerJoinSpyProductPackagingLeadProduct()
-            ->where(sprintf(
-                "%s = %s",
-                SpyProductTableMap::COL_HAS_LEAD_PRODUCT,
-                1
-            ));
+            ->useSpyProductPackagingUnitQuery()
+                ->where(sprintf(
+                    "%s = %s",
+                    SpyProductPackagingUnitTableMap::COL_HAS_LEAD_PRODUCT,
+                    1
+                ))
+            ->endUse();
     }
 
     /**
@@ -49,12 +51,12 @@ class ProductPackagingUnitStorageQueryContainer extends AbstractQueryContainer i
             ->getProductQueryContainer()
             ->queryProduct()
             ->filterByFkProductAbstract($productAbstractId)
-            ->where(sprintf(
-                "%s = %s",
-                SpyProductTableMap::COL_HAS_LEAD_PRODUCT,
-                0
-            ))
             ->useSpyProductPackagingUnitQuery()
+                ->where(sprintf(
+                    "%s = %s",
+                    SpyProductPackagingUnitTableMap::COL_HAS_LEAD_PRODUCT,
+                    0
+                ))
                 ->innerJoinProductPackagingUnitType()
                 ->joinSpyProductPackagingUnitAmount()
             ->endUse();
