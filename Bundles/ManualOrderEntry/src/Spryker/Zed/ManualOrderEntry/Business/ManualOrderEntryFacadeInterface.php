@@ -40,7 +40,7 @@ interface ManualOrderEntryFacadeInterface
 
     /**
      * Specification:
-     *   - Adds OrderSource to SpySalesOrderEntityTransfer
+     * - Adds OrderSource to SpySalesOrderEntityTransfer
      *
      * @api
      *
