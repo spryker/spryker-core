@@ -50,7 +50,7 @@ class ProductAlternativeListSorter implements ProductAlternativeListSorterInterf
         usort(
             $productAlternativeListItems,
             function (ProductAlternativeListItemTransfer $a, ProductAlternativeListItemTransfer $b) {
-                return $a->getIdProductAlternative() - $b->getIdProductAlternative();
+                return $a->getIdProduct() - $b->getIdProduct();
             }
         );
 
