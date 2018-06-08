@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\MethodInformationTransfer;
 use Generated\Shared\Transfer\ReturnTypeTransfer;
 use Roave\BetterReflection\BetterReflection;
 use Roave\BetterReflection\Reflection\ReflectionMethod;
+use Roave\BetterReflection\Reflector\Exception\IdentifierNotFound;
 
 class FactoryInfoFinder implements FactoryInfoFinderInterface
 {
@@ -54,10 +55,14 @@ class FactoryInfoFinder implements FactoryInfoFinderInterface
      */
     public function findFactoryInformation(string $className): ClassInformationTransfer
     {
+        $classInformationTransfer = new ClassInformationTransfer();
+        if (!$this->canReflect($className)) {
+            return $classInformationTransfer;
+        }
+
         $betterReflection = new BetterReflection();
         $reflectedClass = $betterReflection->classReflector()->reflect($className);
 
-        $classInformationTransfer = new ClassInformationTransfer();
         $classInformationTransfer->setName($className);
 
         foreach ($reflectedClass->getMethods() as $method) {
@@ -74,6 +79,23 @@ class FactoryInfoFinder implements FactoryInfoFinderInterface
         }
 
         return $classInformationTransfer;
+    }
+
+    /**
+     * @param string $className
+     *
+     * @return bool
+     */
+    protected function canReflect(string $className): bool
+    {
+        try {
+            $betterReflection = new BetterReflection();
+            $betterReflection->classReflector()->reflect($className);
+
+            return true;
+        } catch (IdentifierNotFound $exception) {
+            return false;
+        }
     }
 
     /**

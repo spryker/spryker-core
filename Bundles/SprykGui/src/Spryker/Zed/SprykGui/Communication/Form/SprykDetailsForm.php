@@ -10,6 +10,7 @@ namespace Spryker\Zed\SprykGui\Communication\Form;
 use Generated\Shared\Transfer\ModuleTransfer;
 use Spryker\Spryk\SprykFacade;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Spryker\Zed\SprykGui\Communication\Form\Type\NewModuleType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -21,6 +22,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class SprykDetailsForm extends AbstractType
 {
+    protected const SPRYK = 'spryk';
+    protected const MODULE = 'module';
+
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
@@ -29,8 +33,8 @@ class SprykDetailsForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setRequired([
-            'spryk',
-            'moduleInformation',
+            static::SPRYK,
+//            static::MODULE,
         ]);
     }
 
@@ -42,7 +46,18 @@ class SprykDetailsForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addMainSpryk($builder, $options);
+        $sprykDefinition = $this->getFacade()->getSprykDefinitionByName($options[static::SPRYK]);
+
+        if (isset($sprykDefinition['arguments']['module']['type'])) {
+            $builder->add(static::MODULE, NewModuleType::class, ['sprykDefinition' => $sprykDefinition]);
+
+            $this->addRunSprykButton($builder);
+            $this->addCreateTemplateButton($builder);
+
+            return;
+        }
+
+        $this->addSprykDetails($builder, $options);
     }
 
     /**
@@ -51,11 +66,11 @@ class SprykDetailsForm extends AbstractType
      *
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    protected function addMainSpryk(FormBuilderInterface $builder, array $options): FormBuilderInterface
+    protected function addSprykDetails(FormBuilderInterface $builder, array $options): FormBuilderInterface
     {
-        $sprykDefinition = $this->getSprykDefinition($options['spryk']);
+        $sprykDefinition = $this->getSprykDefinition($options[static::SPRYK]);
 
-        $sprykSubForm = $builder->getFormFactory()->createNamedBuilder($options['spryk']);
+        $sprykSubForm = $builder->getFormFactory()->createNamedBuilder($options[static::SPRYK]);
 
         $this->addArgumentsToForm($sprykDefinition, $sprykSubForm, $options);
 
@@ -93,7 +108,7 @@ class SprykDetailsForm extends AbstractType
                 continue;
             }
 
-            $value = $this->getValue($argumentName, $moduleTransfer, (array)$argumentDefinition);
+//            $value = $this->getValue($argumentName, $moduleTransfer, (array)$argumentDefinition);
 
             $type = TextType::class;
             if (isset($argumentDefinition['multiline'])) {
@@ -101,7 +116,7 @@ class SprykDetailsForm extends AbstractType
             }
 
             $typeOptions = [
-                'data' => $value,
+//                'data' => $value,
                 'attr' => [
                     'class' => $argumentName,
                 ],
@@ -121,7 +136,7 @@ class SprykDetailsForm extends AbstractType
      */
     protected function getModuleTransfer(array $options): ModuleTransfer
     {
-        return $options['moduleInformation'];
+        return $options[static::MODULE];
     }
 
     /**

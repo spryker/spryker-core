@@ -23,7 +23,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ZedBusinessDependencyType extends AbstractType
 {
-    const MODULE_INFORMATION = 'moduleInformation';
+    protected const MODULE = 'module';
+    protected const SPRYK = 'spryk';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -33,8 +34,8 @@ class ZedBusinessDependencyType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setRequired([
-            static::MODULE_INFORMATION,
-            'spryk',
+            static::MODULE,
+            static::SPRYK,
         ]);
     }
 
@@ -49,6 +50,10 @@ class ZedBusinessDependencyType extends AbstractType
         $moduleTransfer = $this->getModuleTransfer($options);
         $className = sprintf('\%1$s\Zed\%2$s\Business\%2$sBusinessFactory', $moduleTransfer->getOrganization(), $moduleTransfer->getName());
         $factoryInformation = $this->getFacade()->getFactoryInformation($className);
+
+        if ($factoryInformation->getMethods()->count() === 0) {
+            return;
+        }
 
         $methods = $factoryInformation->getMethods();
 
@@ -104,7 +109,7 @@ class ZedBusinessDependencyType extends AbstractType
      */
     protected function getModuleTransfer(array $options): ModuleTransfer
     {
-        return $options[static::MODULE_INFORMATION];
+        return $options[static::MODULE];
     }
 
     /**

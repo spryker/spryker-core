@@ -82,7 +82,7 @@ class SprykGuiFacade extends AbstractFacade implements SprykGuiFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ModuleCollectionTransfer
      */
-    public function getModuleDetails(): ModuleCollectionTransfer
+    public function getModules(): ModuleCollectionTransfer
     {
         return $this->getFactory()->createModuleFinder()->findModules();
     }
@@ -113,5 +113,19 @@ class SprykGuiFacade extends AbstractFacade implements SprykGuiFacadeInterface
     public function getFactoryInformation(string $className): ClassInformationTransfer
     {
         return $this->getFactory()->createFactoryInformationFinder()->findFactoryInformation($className);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $spryk
+     *
+     * @return array
+     */
+    public function getSprykDefinitionByName(string $spryk): array
+    {
+        return $this->getFactory()->createSpryk()->getSprykDefinitionByName($spryk);
     }
 }

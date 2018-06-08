@@ -28,12 +28,12 @@ class BuildController extends AbstractController
         $spryk = $request->query->get('spryk');
 
         $sprykForm = $this->getFactory()
-            ->getSprykForm($spryk)
+            ->getSprykMainForm($spryk)
             ->handleRequest($request);
 
         $messages = [];
         if ($sprykForm->isSubmitted() && $sprykForm->isValid()) {
-            $moduleTransfer = $sprykForm->get('moduleInformation')->getData();
+            $moduleTransfer = $sprykForm->get('module')->getData();
 
             return $this->redirectResponse(sprintf('/spryk-gui/build/spryk-details?spryk=%s&module=%s&moduleOrganization=%s', $spryk, $moduleTransfer->getName(), $moduleTransfer->getOrganization()));
         }

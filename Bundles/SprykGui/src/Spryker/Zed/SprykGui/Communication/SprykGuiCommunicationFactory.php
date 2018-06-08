@@ -44,11 +44,11 @@ class SprykGuiCommunicationFactory extends AbstractCommunicationFactory
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getSprykForm(string $spryk): FormInterface
+    public function getSprykMainForm(string $spryk): FormInterface
     {
         return $this->getFormFactory()->create(
             SprykMainForm::class,
-            null,
+            $this->createSprykFormDataProvider()->getData($spryk),
             $this->createSprykFormDataProvider()->getOptions($spryk)
         );
     }
@@ -63,9 +63,9 @@ class SprykGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getFormFactory()->create(
             SprykDetailsForm::class,
-            null,
+            $this->createSprykFormDataProvider()->getData($spryk, $moduleTransfer),
             [
-                'moduleInformation' => $moduleTransfer,
+            //                'module' => $moduleTransfer,
                 'spryk' => $spryk,
             ]
         );

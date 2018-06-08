@@ -70,7 +70,7 @@ interface SprykGuiFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ModuleCollectionTransfer
      */
-    public function getModuleDetails(): ModuleCollectionTransfer;
+    public function getModules(): ModuleCollectionTransfer;
 
     /**
      * Specification
@@ -95,4 +95,16 @@ interface SprykGuiFacadeInterface
      * @return \Generated\Shared\Transfer\ClassInformationTransfer
      */
     public function getFactoryInformation(string $className): ClassInformationTransfer;
+
+    /**
+     * Specification:
+     * - Returns an array with the Spryk definition.
+     *
+     * @api
+     *
+     * @param string $spryk
+     *
+     * @return array
+     */
+    public function getSprykDefinitionByName(string $spryk): array;
 }

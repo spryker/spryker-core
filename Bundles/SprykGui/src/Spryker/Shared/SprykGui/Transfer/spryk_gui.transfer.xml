@@ -5,12 +5,20 @@
 
     <transfer name="Module">
         <property name="name" type="string" />
-        <property name="organization" type="string"/>
-        <property name="rootPath" type="string"/>
+        <property name="organization" type="Organization"/>
     </transfer>
 
     <transfer name="ModuleCollection">
         <property name="modules" type="Module[]" singular="module" />
+    </transfer>
+
+    <transfer name="Organization">
+        <property name="name" type="string" />
+        <property name="rootPath" type="string"/>
+    </transfer>
+
+    <transfer name="OrganizationCollection">
+        <property name="organizations" type="Organization[]" singular="organization" />
     </transfer>
 
     <transfer name="AccessibleTransferCollection">

@@ -50,9 +50,9 @@ class ModuleFinder implements ModuleFinderInterface
      */
     public function findModules(): ModuleCollectionTransfer
     {
-        if ($this->sessionClient->has(static::MODULE_COLLECTION_TRANSFER_CACHE_KEY)) {
-            return $this->sessionClient->get(static::MODULE_COLLECTION_TRANSFER_CACHE_KEY);
-        }
+//        if ($this->sessionClient->has(static::MODULE_COLLECTION_TRANSFER_CACHE_KEY)) {
+//            return $this->sessionClient->get(static::MODULE_COLLECTION_TRANSFER_CACHE_KEY);
+//        }
 
         $finder = new Finder();
 
@@ -73,7 +73,7 @@ class ModuleFinder implements ModuleFinderInterface
             $this->moduleCollectionTransfer->addModule($moduleTransfer);
         }
 
-        $this->sessionClient->set(static::MODULE_COLLECTION_TRANSFER_CACHE_KEY, $this->moduleCollectionTransfer);
+//        $this->sessionClient->set(static::MODULE_COLLECTION_TRANSFER_CACHE_KEY, $this->moduleCollectionTransfer);
 
         return $this->moduleCollectionTransfer;
     }

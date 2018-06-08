@@ -9,6 +9,7 @@ namespace Spryker\Zed\SprykGui\Communication\Form;
 
 use Generated\Shared\Transfer\ModuleTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Spryker\Zed\SprykGui\Communication\Form\Type\NewModuleType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,7 +20,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class SprykMainForm extends AbstractType
 {
-    const SPRYK = 'spryk';
+    protected const SPRYK = 'spryk';
+    protected const MODULE = 'module';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -29,7 +31,7 @@ class SprykMainForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setRequired([
-            'spryk',
+            static::SPRYK,
         ]);
     }
 
@@ -41,9 +43,19 @@ class SprykMainForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $moduleCollectionTransfer = $this->getFacade()->getModuleDetails();
+        $spryk = $options[static::SPRYK];
+        $sprykDefinition = $this->getFacade()->getSprykDefinitionByName($spryk);
 
-        $builder->add('moduleInformation', ChoiceType::class, [
+        if (isset($sprykDefinition['arguments']['module']['type'])) {
+            $builder->add(static::MODULE, NewModuleType::class, ['sprykDefinition' => $sprykDefinition]);
+            $builder->add('submit', SubmitType::class);
+
+            return;
+        }
+
+        $moduleCollectionTransfer = $this->getFacade()->getModules();
+
+        $builder->add(static::MODULE, ChoiceType::class, [
             'choices' => $moduleCollectionTransfer->getModules(),
             'choice_label' => function (ModuleTransfer $moduleTransfer) {
                 return $moduleTransfer->getName();

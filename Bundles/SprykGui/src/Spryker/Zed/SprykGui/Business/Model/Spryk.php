@@ -47,6 +47,18 @@ class Spryk implements SprykInterface
     }
 
     /**
+     * @param string $spryk
+     *
+     * @return array
+     */
+    public function getSprykDefinitionByName(string $spryk): array
+    {
+        $sprykDefinitions = $this->sprykFacade->getSprykDefinitions();
+
+        return $sprykDefinitions[$spryk];
+    }
+
+    /**
      * @param string $sprykName
      * @param array $sprykArguments
      *
@@ -185,7 +197,12 @@ class Spryk implements SprykInterface
 
                 $userInput = $userArguments[$argumentName];
                 if ($argumentName === 'constructorArguments') {
+                    if (!isset($userInput['arguments'])) {
+                        continue;
+                    }
+
                     $argumentString .= sprintf(' --%s=%s', $argumentName, escapeshellarg($this->buildFromArguments($userInput)));
+
                     foreach ($userInput['arguments'] as $userArgumentDefinition) {
                         $argumentTransfer = $this->getArgumentTransferFromDefinition($userArgumentDefinition);
                         $argumentMetaTransfer = $argumentTransfer->getArgumentMeta();
@@ -250,7 +267,6 @@ class Spryk implements SprykInterface
         $argumentData = [];
         foreach ($userInput as $arguments) {
             foreach ($arguments as $argument) {
-                $argumentString = '';
                 $pattern = '%s %s';
                 if ($argument['isOptional']) {
                     $pattern = '?%s %s = null';
@@ -289,6 +305,10 @@ class Spryk implements SprykInterface
 
                 $userInput = $userArguments[$argumentName];
                 if ($argumentName === 'constructorArguments') {
+                    if (!isset($userInput['arguments'])) {
+                        continue;
+                    }
+
                     $jiraTemplate .= sprintf('"%s"', $argumentName) . PHP_EOL;
                     $jiraTemplate .= sprintf('// %s', $this->buildFromArguments($userInput)) . PHP_EOL . PHP_EOL;
 
