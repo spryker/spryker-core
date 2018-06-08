@@ -38,5 +38,11 @@ interface DiscountableItemTransformerStrategyPluginInterface
      *
      * @return void
      */
-    public function transformDiscountableItem(DiscountableItemTransfer $discountableItemTransfer, DiscountTransfer $discountTransfer, $totalDiscountAmount, $totalAmount, $quantity);
+    public function transformDiscountableItem(
+        DiscountableItemTransfer $discountableItemTransfer,
+        DiscountTransfer $discountTransfer,
+        int $totalDiscountAmount,
+        int $totalAmount,
+        int $quantity
+    ): void;
 }

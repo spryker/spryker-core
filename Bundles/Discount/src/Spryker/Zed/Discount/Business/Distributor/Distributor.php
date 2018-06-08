@@ -65,8 +65,12 @@ class Distributor implements DistributorInterface
      *
      * @return void
      */
-    protected function transformItemsPerStrategyPlugin(DiscountableItemTransfer $discountableItemTransfer, DiscountTransfer $discountTransfer, $totalDiscountAmount, $totalAmount)
-    {
+    protected function transformItemsPerStrategyPlugin(
+        DiscountableItemTransfer $discountableItemTransfer,
+        DiscountTransfer $discountTransfer,
+        int $totalDiscountAmount,
+        int $totalAmount
+    ): void {
         $quantity = $this->getDiscountableItemQuantity($discountableItemTransfer);
 
         foreach ($this->discountableItemTransformerStrategyPlugins as $discountableItemTransformerStrategyPlugin) {
@@ -92,7 +96,7 @@ class Distributor implements DistributorInterface
      *
      * @return int
      */
-    protected function getTotalAmountOfDiscountableObjects(CollectedDiscountTransfer $collectedDiscountTransfer)
+    protected function getTotalAmountOfDiscountableObjects(CollectedDiscountTransfer $collectedDiscountTransfer): int
     {
         $totalGrossAmount = 0;
         foreach ($collectedDiscountTransfer->getDiscountableItems() as $discountableItemTransfer) {
@@ -108,7 +112,7 @@ class Distributor implements DistributorInterface
      *
      * @return int
      */
-    protected function getDiscountableItemQuantity(DiscountableItemTransfer $discountableItemTransfer)
+    protected function getDiscountableItemQuantity(DiscountableItemTransfer $discountableItemTransfer): int
     {
         $quantity = 1;
         if ($discountableItemTransfer->getQuantity()) {

@@ -60,7 +60,7 @@ class ProductExpander implements ProductExpanderInterface
      *
      * @return void
      */
-    protected function assertProductConcreteTransfer(ProductConcreteTransfer $productConcreteTransfer)
+    protected function assertProductConcreteTransfer(ProductConcreteTransfer $productConcreteTransfer): void
     {
         $productConcreteTransfer
             ->requireSku()
@@ -74,7 +74,7 @@ class ProductExpander implements ProductExpanderInterface
      *
      * @return void
      */
-    protected function expandItemWithProductConcrete(ProductConcreteTransfer $productConcreteTransfer, ItemTransfer $itemTransfer)
+    protected function expandItemWithProductConcrete(ProductConcreteTransfer $productConcreteTransfer, ItemTransfer $itemTransfer): void
     {
         $localizedProductName = $this->productFacade->getLocalizedProductConcreteName(
             $productConcreteTransfer,

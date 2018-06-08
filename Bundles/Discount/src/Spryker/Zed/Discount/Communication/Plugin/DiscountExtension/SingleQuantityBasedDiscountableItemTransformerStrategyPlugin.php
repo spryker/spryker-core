@@ -42,8 +42,13 @@ class SingleQuantityBasedDiscountableItemTransformerStrategyPlugin extends Abstr
      *
      * @return void
      */
-    public function transformDiscountableItem(DiscountableItemTransfer $discountableItemTransfer, DiscountTransfer $discountTransfer, $totalDiscountAmount, $totalAmount, $quantity)
-    {
+    public function transformDiscountableItem(
+        DiscountableItemTransfer $discountableItemTransfer,
+        DiscountTransfer $discountTransfer,
+        int $totalDiscountAmount,
+        int $totalAmount,
+        int $quantity
+    ): void {
         $calculatedDiscountTransfer = $this->createBaseCalculatedDiscountTransfer($discountTransfer);
         $singleItemAmountShare = $discountableItemTransfer->getUnitPrice() / $totalAmount;
 
