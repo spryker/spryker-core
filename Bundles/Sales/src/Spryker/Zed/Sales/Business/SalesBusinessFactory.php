@@ -13,6 +13,8 @@ use Spryker\Zed\Sales\Business\Model\Comment\OrderCommentReader;
 use Spryker\Zed\Sales\Business\Model\Comment\OrderCommentSaver;
 use Spryker\Zed\Sales\Business\Model\Customer\CustomerOrderReader;
 use Spryker\Zed\Sales\Business\Model\Customer\PaginatedCustomerOrderReader;
+use Spryker\Zed\Sales\Business\Model\Order\Item\ItemTransformer;
+use Spryker\Zed\Sales\Business\Model\Order\Item\ItemTransformerInterface;
 use Spryker\Zed\Sales\Business\Model\Order\OrderExpander;
 use Spryker\Zed\Sales\Business\Model\Order\OrderHydrator;
 use Spryker\Zed\Sales\Business\Model\Order\OrderReader;
@@ -165,7 +167,18 @@ class SalesBusinessFactory extends AbstractBusinessFactory
      */
     public function createOrderExpander()
     {
-        return new OrderExpander($this->getCalculationFacade());
+        return new OrderExpander(
+            $this->getCalculationFacade(),
+            $this->getSalesItemTransformerStrategyPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Model\Order\Item\ItemTransformerInterface
+     */
+    public function createItemTransformer(): ItemTransformerInterface
+    {
+        return new ItemTransformer();
     }
 
     /**
@@ -256,5 +269,13 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function createOrderItemMapper()
     {
         return new SalesOrderItemMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\SalesItemTransformerStrategyPluginInterface[]
+     */
+    public function getSalesItemTransformerStrategyPlugins(): array
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::SALES_ITEM_TRANSFORMER_STRATEGY_PLUGINS);
     }
 }
