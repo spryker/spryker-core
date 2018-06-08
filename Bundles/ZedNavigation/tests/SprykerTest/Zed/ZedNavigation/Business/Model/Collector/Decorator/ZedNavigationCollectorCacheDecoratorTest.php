@@ -92,7 +92,6 @@ class ZedNavigationCollectorCacheDecoratorTest extends ZedNavigationBusinessTest
             ->method('isNavigationCacheEnabled')
             ->will($this->returnValue(true));
 
-
         //act
         $navigation = $navigationCollectorCacheDecorator->getNavigation();
 

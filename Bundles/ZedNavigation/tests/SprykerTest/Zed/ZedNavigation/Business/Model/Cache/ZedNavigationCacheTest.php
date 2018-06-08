@@ -103,7 +103,7 @@ class ZedNavigationCacheTest extends ZedNavigationBusinessTester
     public function testGetMustThrowExceptionIfCacheEnabledButCacheFileDoesNotExists(): void
     {
         //prepare
-        $navigationCache = $this->getZedNavigationCache( '');
+        $navigationCache = $this->getZedNavigationCache('');
 
         //assert
         $this->expectException(ZedNavigationCacheFileDoesNotExistException::class);
@@ -152,7 +152,8 @@ class ZedNavigationCacheTest extends ZedNavigationBusinessTester
 
     /**
      * @param null|string $cacheFile
-     * @return ZedNavigationCache
+     *
+     * @return \Spryker\Zed\ZedNavigation\Business\Model\Cache\ZedNavigationCache
      */
     protected function getZedNavigationCache(?string $cacheFile = null): ZedNavigationCache
     {
