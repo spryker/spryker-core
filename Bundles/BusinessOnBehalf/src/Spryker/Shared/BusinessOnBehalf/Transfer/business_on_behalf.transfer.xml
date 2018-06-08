@@ -13,4 +13,8 @@
         <property name="company" type="Company" />
         <property name="isDefault" type="bool" />
     </transfer>
+
+    <transfer name="CompanyUserResponse">
+        <property name="companyUser" type="CompanyUserTransfer" />
+    </transfer>
 </transfers>

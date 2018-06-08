@@ -21,9 +21,9 @@ class BusinessOnBehalfEntityManager extends AbstractEntityManager implements Bus
      *
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
      */
-    public function setDefaultCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer
+    public function setDefaultCompanyUser(CompanyUserTransfer $companyUserTransfer): ?CompanyUserTransfer
     {
         $companyUserTransfer
             ->requireIdCompanyUser()
@@ -38,7 +38,7 @@ class BusinessOnBehalfEntityManager extends AbstractEntityManager implements Bus
             ->findOne();
 
         if (!$defaultCompanyUser) {
-            return new CompanyUserTransfer();
+            return null;
         }
 
         $this->cleanupExistingIsDefaultFlag($companyUserTransfer->getCustomer());
