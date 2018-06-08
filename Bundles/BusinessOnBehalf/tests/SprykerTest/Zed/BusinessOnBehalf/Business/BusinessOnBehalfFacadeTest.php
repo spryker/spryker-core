@@ -217,8 +217,8 @@ class BusinessOnBehalfFacadeTest extends Unit
         $companyUserFromDataBase = $this->getCompanyUserFacade()->getCompanyUserById($testCompanyUser->getIdCompanyUser());
 
         //Assert
-        $this->assertNull($defaultCompanyUserFromDataBase->getIsDefault());
-        $this->assertNull($companyUserFromDataBase->getIsDefault());
+        $this->assertFalse($defaultCompanyUserFromDataBase->getIsDefault());
+        $this->assertFalse($companyUserFromDataBase->getIsDefault());
     }
 
     /**
