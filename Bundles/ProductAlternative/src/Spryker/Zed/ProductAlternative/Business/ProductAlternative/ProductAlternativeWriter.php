@@ -121,35 +121,14 @@ class ProductAlternativeWriter implements ProductAlternativeWriterInterface
     }
 
     /**
-     * @param int $idBaseProduct
-     * @param int $idProductAbstract
+     * @param int $idProductAlternative
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
      */
-    public function deleteProductAbstractAlternativeResponse(int $idBaseProduct, int $idProductAbstract): ProductAlternativeResponseTransfer
+    public function deleteProductAlternativeByIdProductAlternativeResponse(int $idProductAlternative): ProductAlternativeResponseTransfer
     {
         $productAlternative = $this->productAlternativeReader
-            ->getProductAbstractAlternative(
-                $idBaseProduct,
-                $idProductAbstract
-            );
-
-        return $this->handleProductAlternativeDeletion($productAlternative);
-    }
-
-    /**
-     * @param int $idBaseProduct
-     * @param int $idProductConcrete
-     *
-     * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
-     */
-    public function deleteProductConcreteAlternativeResponse(int $idBaseProduct, int $idProductConcrete): ProductAlternativeResponseTransfer
-    {
-        $productAlternative = $this->productAlternativeReader
-            ->getProductConcreteAlternative(
-                $idBaseProduct,
-                $idProductConcrete
-            );
+            ->getProductAlternativeByIdProductAlternative($idProductAlternative);
 
         return $this->handleProductAlternativeDeletion($productAlternative);
     }
@@ -202,7 +181,9 @@ class ProductAlternativeWriter implements ProductAlternativeWriterInterface
      */
     protected function handleProductAlternativeDeletion(?ProductAlternativeTransfer $productAlternativeTransfer): ProductAlternativeResponseTransfer
     {
-        $productAlternativeResponseTransfer = new ProductAlternativeResponseTransfer();
+        $productAlternativeResponseTransfer = (new ProductAlternativeResponseTransfer())
+            ->setProductAlternative($productAlternativeTransfer);
+
         $responseMessageTransfer = new ResponseMessageTransfer();
 
         if ($productAlternativeTransfer) {

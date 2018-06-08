@@ -87,29 +87,15 @@ interface ProductAlternativeFacadeInterface
 
     /**
      * Specification:
-     * - Deletes product abstract alternative.
+     * - Deletes product alternative by id.
      *
      * @api
      *
-     * @param int $idBaseProduct
-     * @param int $idProductAbstract
+     * @param int $idProductAlternative
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
      */
-    public function deleteProductAbstractAlternative(int $idBaseProduct, int $idProductAbstract): ProductAlternativeResponseTransfer;
-
-    /**
-     * Specification:
-     * - Deletes product concrete alternative.
-     *
-     * @api
-     *
-     * @param int $idBaseProduct
-     * @param int $idProductConcrete
-     *
-     * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
-     */
-    public function deleteProductConcreteAlternative(int $idBaseProduct, int $idProductConcrete): ProductAlternativeResponseTransfer;
+    public function deleteProductAlternativeByIdProductAlternativeResponse(int $idProductAlternative): ProductAlternativeResponseTransfer;
 
     /**
      * Specification:
