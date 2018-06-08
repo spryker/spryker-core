@@ -15,6 +15,6 @@
     </transfer>
 
     <transfer name="CompanyUserResponse">
-        <property name="companyUser" type="CompanyUserTransfer" />
+        <property name="companyUser" type="CompanyUser" />
     </transfer>
 </transfers>
