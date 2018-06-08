@@ -7,6 +7,8 @@
 
 namespace Spryker\Shared\ProductListSearch;
 
-interface ProductListSearchConfig
+use Spryker\Shared\Kernel\AbstractBundleConfig;
+
+class ProductListSearchConfig extends AbstractBundleConfig
 {
 }

@@ -7,6 +7,8 @@
 
 namespace Spryker\Shared\ProductListStorage;
 
-interface ProductListStorageConfig
+use Spryker\Shared\Kernel\AbstractBundleConfig;
+
+class ProductListStorageConfig extends AbstractBundleConfig
 {
 }
