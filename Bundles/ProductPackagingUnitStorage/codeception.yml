@@ -1,5 +1,9 @@
 namespace: ProductPackagingUnitStorage
 actor: Tester
+
+include:
+    - tests/SprykerTest/Zed/ProductPackagingUnitStorage
+
 paths:
     tests: tests
     log: tests/_output
