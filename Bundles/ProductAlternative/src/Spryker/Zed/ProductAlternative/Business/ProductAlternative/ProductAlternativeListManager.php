@@ -100,7 +100,8 @@ class ProductAlternativeListManager implements ProductAlternativeListManagerInte
 
         $productAlternativeListItemTransfer = (new ProductAlternativeListItemTransfer())
             ->setIdProductAlternative(
-                $productAlternativeTransfer->getIdProductAlternative()
+                $productAlternativeTransfer->getIdProductAbstractAlternative()
+                ?: $productAlternativeTransfer->getIdProductConcreteAlternative()
             );
 
         if ($idProductAbstract) {

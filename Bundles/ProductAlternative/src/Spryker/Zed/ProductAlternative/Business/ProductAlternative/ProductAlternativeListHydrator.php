@@ -160,43 +160,43 @@ class ProductAlternativeListHydrator implements ProductAlternativeListHydratorIn
 
     /**
      * @param int $idProductAbstractAlternative
-     * @param \Generated\Shared\Transfer\ProductAlternativeListItemTransfer $ProductAlternativeListItemTransfer
+     * @param \Generated\Shared\Transfer\ProductAlternativeListItemTransfer $productAlternativeListItemTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeListItemTransfer
      */
     protected function hydrateListItemWithProductAbstractCategoryData(
         int $idProductAbstractAlternative,
-        ProductAlternativeListItemTransfer $ProductAlternativeListItemTransfer
+        ProductAlternativeListItemTransfer $productAlternativeListItemTransfer
     ): ProductAlternativeListItemTransfer {
         $productAbstractCategories = $this
             ->getProductAbstractCategories($idProductAbstractAlternative);
 
         if (empty($productAbstractCategories)) {
-            return $ProductAlternativeListItemTransfer;
+            return $productAlternativeListItemTransfer;
         }
 
-        return $ProductAlternativeListItemTransfer
+        return $productAlternativeListItemTransfer
             ->setCategories($productAbstractCategories);
     }
 
     /**
      * @param int $idProductConcreteAlternative
-     * @param \Generated\Shared\Transfer\ProductAlternativeListItemTransfer $ProductAlternativeListItemTransfer
+     * @param \Generated\Shared\Transfer\ProductAlternativeListItemTransfer $productAlternativeListItemTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeListItemTransfer
      */
     protected function hydrateListItemWithProductConcreteCategoryData(
         int $idProductConcreteAlternative,
-        ProductAlternativeListItemTransfer $ProductAlternativeListItemTransfer
+        ProductAlternativeListItemTransfer $productAlternativeListItemTransfer
     ): ProductAlternativeListItemTransfer {
         $productConcreteCategories = $this
             ->getProductConcreteCategories($idProductConcreteAlternative);
 
         if (empty($productConcreteCategories)) {
-            return $ProductAlternativeListItemTransfer;
+            return $productAlternativeListItemTransfer;
         }
 
-        return $ProductAlternativeListItemTransfer
+        return $productAlternativeListItemTransfer
             ->setCategories($productConcreteCategories);
     }
 
