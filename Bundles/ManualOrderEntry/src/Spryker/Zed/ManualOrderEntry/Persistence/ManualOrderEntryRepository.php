@@ -9,6 +9,7 @@ namespace Spryker\Zed\ManualOrderEntry\Persistence;
 
 use Generated\Shared\Transfer\OrderSourceTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
+use Spryker\Zed\ManualOrderEntry\Business\Exception\OrderSourceNotFoundException;
 
 /**
  * @method \Spryker\Zed\ManualOrderEntry\Persistence\ManualOrderEntryPersistenceFactory getFactory()
@@ -20,6 +21,8 @@ class ManualOrderEntryRepository extends AbstractRepository implements ManualOrd
      *
      * @param int $idOrderSource
      *
+     * @throws \Spryker\Zed\ManualOrderEntry\Business\Exception\OrderSourceNotFoundException
+     *
      * @return \Generated\Shared\Transfer\OrderSourceTransfer
      */
     public function getOrderSourceById($idOrderSource): OrderSourceTransfer
@@ -28,13 +31,13 @@ class ManualOrderEntryRepository extends AbstractRepository implements ManualOrd
         $orderSourceEntity = $query->filterByIdOrderSource($idOrderSource)
             ->findOne();
 
-        $orderSourceTransfer = new OrderSourceTransfer();
-        if ($orderSourceEntity) {
-            $orderSourceTransfer->setIdOrderSource($orderSourceEntity->getIdOrderSource());
-            $orderSourceTransfer->setName($orderSourceEntity->getName());
+        if (!$orderSourceEntity) {
+            throw new OrderSourceNotFoundException();
         }
 
-        return $orderSourceTransfer;
+        return $this->getFactory()
+            ->createOrderSourceMapper()
+            ->mapOrderSourceEntityToTransfer($orderSourceEntity);
     }
 
     /**
@@ -42,15 +45,17 @@ class ManualOrderEntryRepository extends AbstractRepository implements ManualOrd
      *
      * @return \Generated\Shared\Transfer\OrderSourceTransfer[]
      */
-    public function getAllOrderSources(): array
+    public function findAllOrderSources(): array
     {
-        $query = $this->getFactory()->createOrderSourceQuery();
-        $orderSourceEntities = $query->find();
+        $orderSourceEntities = $this->getFactory()
+            ->createOrderSourceQuery()
+            ->find();
+
         $orderSourceTransfers = [];
+        $mapper = $this->getFactory()->createOrderSourceMapper();
 
         foreach ($orderSourceEntities as $orderSourceEntity) {
-            $orderSourceTransfer = new OrderSourceTransfer();
-            $orderSourceTransfer->fromArray($orderSourceEntity->toArray(), true);
+            $orderSourceTransfer = $mapper->mapOrderSourceEntityToTransfer($orderSourceEntity);
 
             $orderSourceTransfers[] = $orderSourceTransfer;
         }
