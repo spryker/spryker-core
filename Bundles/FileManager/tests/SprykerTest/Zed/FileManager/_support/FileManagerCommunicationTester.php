@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace SprykerTest\Zed\FileManager;
 
 use Codeception\Actor;
@@ -24,6 +30,6 @@ class FileManagerCommunicationTester extends Actor
     use _generated\FileManagerCommunicationTesterActions;
 
     /**
-    * Define custom actions here
-    */
+     * Define custom actions here
+     */
 }
