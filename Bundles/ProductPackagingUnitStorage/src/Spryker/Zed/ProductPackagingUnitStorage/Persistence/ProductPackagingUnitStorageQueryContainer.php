@@ -101,8 +101,8 @@ class ProductPackagingUnitStorageQueryContainer extends AbstractQueryContainer i
                 SpyProductTableMap::COL_IS_ACTIVE
             ))
             ->useSpyProductPackagingUnitQuery()
-            ->leftJoinProductPackagingUnitType()
-            ->leftJoinSpyProductPackagingUnitAmount()
+                ->leftJoinProductPackagingUnitType()
+                ->leftJoinSpyProductPackagingUnitAmount()
             ->endUse();
     }
 
@@ -121,7 +121,7 @@ class ProductPackagingUnitStorageQueryContainer extends AbstractQueryContainer i
     /**
      * @param int $productAbstractId
      * @param \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer $productPackagingLeadProductTransfer
-     * @param \Orm\Zed\Product\Persistence\SpyProduct[] $packageProductConcreteEntities
+     * @param \Orm\Zed\Product\Persistence\SpyProduct[]|\Propel\Runtime\Collection\ObjectCollection $packageProductConcreteEntities
      *
      * @return \Generated\Shared\Transfer\ProductAbstractPackagingStorageTransfer
      */

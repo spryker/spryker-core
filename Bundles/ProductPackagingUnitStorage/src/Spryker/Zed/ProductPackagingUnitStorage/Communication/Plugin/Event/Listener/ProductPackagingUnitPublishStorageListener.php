@@ -21,14 +21,16 @@ class ProductPackagingUnitPublishStorageListener extends AbstractPlugin implemen
     /**
      * @api
      *
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      * @param string $eventName
      *
      * @return void
      */
     public function handleBulk(array $eventTransfers, $eventName): void
     {
-        $productAbstractIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
+        $productAbstractIds = $this->getFactory()
+            ->getEventBehaviorFacade()
+            ->getEventTransferIds($eventTransfers);
 
         if ($eventName === ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_UNIT_TYPE_DELETE
             || $eventName === ProductPackagingUnitEvents::PRODUCT_PACKAGING_UNIT_UNPUBLISH

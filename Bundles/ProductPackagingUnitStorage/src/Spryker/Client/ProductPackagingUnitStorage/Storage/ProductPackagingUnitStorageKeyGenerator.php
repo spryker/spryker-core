@@ -36,7 +36,7 @@ class ProductPackagingUnitStorageKeyGenerator implements ProductPackagingUnitSto
     {
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer
-            ->setReference($resourceId);
+            ->setReference((string)$resourceId);
 
         return $this->synchronizationService
             ->getStorageKeyBuilder($resourceName)
