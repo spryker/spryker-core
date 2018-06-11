@@ -110,9 +110,10 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
      */
     public function getCompanyUserById(int $idCompanyUser): CompanyUserTransfer
     {
+        // TODO: leftJoinWithCompany() for BC reasons, it will be innerJoin
         $query = $this->getFactory()
             ->createCompanyUserQuery()
-            ->leftJoinWithCustomer()
+            ->joinWithCustomer()
             ->leftJoinWithCompany()
             ->filterByIdCompanyUser($idCompanyUser);
 
