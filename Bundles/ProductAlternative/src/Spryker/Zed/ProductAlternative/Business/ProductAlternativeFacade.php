@@ -31,8 +31,7 @@ class ProductAlternativeFacade extends AbstractFacade implements ProductAlternat
      */
     public function createProductAbstractAlternative(int $idProductAbstract, int $idProductAbstractAlternative): ProductAlternativeResponseTransfer
     {
-        return $this
-            ->getFactory()
+        return $this->getFactory()
             ->createProductAlternativeWriter()
             ->createProductAbstractAlternativeResponse($idProductAbstract, $idProductAbstractAlternative);
     }
@@ -49,8 +48,7 @@ class ProductAlternativeFacade extends AbstractFacade implements ProductAlternat
      */
     public function createProductConcreteAlternative(int $idProductConcrete, int $idProductConcreteAlternative): ProductAlternativeResponseTransfer
     {
-        return $this
-            ->getFactory()
+        return $this->getFactory()
             ->createProductAlternativeWriter()
             ->createProductConcreteAlternativeResponse($idProductConcrete, $idProductConcreteAlternative);
     }
@@ -66,8 +64,7 @@ class ProductAlternativeFacade extends AbstractFacade implements ProductAlternat
      */
     public function getProductAlternativesByIdProductConcrete(int $idProductConcrete): ProductAlternativeCollectionTransfer
     {
-        return $this
-            ->getFactory()
+        return $this->getFactory()
             ->createProductAlternativeReader()
             ->getProductAlternativesByIdProductConcrete($idProductConcrete);
     }
@@ -83,8 +80,7 @@ class ProductAlternativeFacade extends AbstractFacade implements ProductAlternat
      */
     public function getProductAlternativeByIdProductAlternative(int $idProductAlternative): ProductAlternativeTransfer
     {
-        return $this
-            ->getFactory()
+        return $this->getFactory()
             ->createProductAlternativeReader()
             ->getProductAlternativeByIdProductAlternative($idProductAlternative);
     }
@@ -100,8 +96,7 @@ class ProductAlternativeFacade extends AbstractFacade implements ProductAlternat
      */
     public function getProductAlternativeListByIdProductConcrete(int $idProductConcrete): ProductAlternativeListTransfer
     {
-        return $this
-            ->getFactory()
+        return $this->getFactory()
             ->createProductAlternativeListManager()
             ->getProductAlternativeListByIdProductConcrete($idProductConcrete);
     }
@@ -117,8 +112,7 @@ class ProductAlternativeFacade extends AbstractFacade implements ProductAlternat
      */
     public function persistProductAlternative(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
-        return $this
-            ->getFactory()
+        return $this->getFactory()
             ->createProductAlternativeWriter()
             ->persistProductAlternative($productConcreteTransfer);
     }
@@ -134,8 +128,7 @@ class ProductAlternativeFacade extends AbstractFacade implements ProductAlternat
      */
     public function deleteProductAlternativeByIdProductAlternativeResponse(int $idProductAlternative): ProductAlternativeResponseTransfer
     {
-        return $this
-            ->getFactory()
+        return $this->getFactory()
             ->createProductAlternativeWriter()
             ->deleteProductAlternativeByIdProductAlternativeResponse($idProductAlternative);
     }

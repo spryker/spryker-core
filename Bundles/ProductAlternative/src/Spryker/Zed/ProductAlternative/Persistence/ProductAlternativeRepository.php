@@ -55,8 +55,7 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
      */
     public function getProductAlternativesForProductConcrete(int $idProductConcrete): ProductAlternativeCollectionTransfer
     {
-        $productAlternativeQuery = $this
-            ->getFactory()
+        $productAlternativeQuery = $this->getFactory()
             ->createProductAlternativeQuery();
 
         $productAlternatives = $productAlternativeQuery
@@ -64,13 +63,11 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
                 $idProductConcrete
             )->find();
 
-        $mapper = $this
-            ->getFactory()
+        $mapper = $this->getFactory()
             ->createProductAlternativeMapper();
 
         $mappedProductAlternatives = [];
 
-        /** @var \Orm\Zed\ProductAlternative\Persistence\SpyProductAlternative $productAlternative */
         foreach ($productAlternatives as $productAlternative) {
             $mappedProductAlternatives[] = $mapper->mapSpyProductAlternativeEntityToTransfer($productAlternative);
         }
@@ -89,8 +86,7 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
      */
     public function getProductAlternativeByIdProductAlternative(int $idProductAlternative): ?ProductAlternativeTransfer
     {
-        $productAlternativeQuery = $this
-            ->getFactory()
+        $productAlternativeQuery = $this->getFactory()
             ->createProductAlternativeQuery();
 
         $alternativeProduct = $productAlternativeQuery
@@ -119,8 +115,7 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
      */
     public function getProductAbstractAlternative(int $idBaseProduct, int $idProductAbstract): ?ProductAlternativeTransfer
     {
-        $productAlternativeQuery = $this
-            ->getFactory()
+        $productAlternativeQuery = $this->getFactory()
             ->createProductAlternativeQuery();
 
         $alternativeProduct = $productAlternativeQuery
@@ -149,8 +144,7 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
      */
     public function getProductConcreteAlternative(int $idBaseProduct, int $idProductConcrete): ?ProductAlternativeTransfer
     {
-        $productAlternativeQuery = $this
-            ->getFactory()
+        $productAlternativeQuery = $this->getFactory()
             ->createProductAlternativeQuery();
 
         $alternativeProduct = $productAlternativeQuery

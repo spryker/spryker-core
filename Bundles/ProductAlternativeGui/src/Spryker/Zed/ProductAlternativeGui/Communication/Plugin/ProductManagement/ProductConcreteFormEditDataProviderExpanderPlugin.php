@@ -28,8 +28,7 @@ class ProductConcreteFormEditDataProviderExpanderPlugin extends AbstractPlugin i
      */
     public function expand(ProductConcreteTransfer $productConcrete, array &$formData): void
     {
-        $productAlternatives = $this
-            ->getFactory()
+        $productAlternatives = $this->getFactory()
             ->getProductAlternativeFacade()
             ->getProductAlternativeListByIdProductConcrete(
                 $productConcrete->getIdProductConcrete()

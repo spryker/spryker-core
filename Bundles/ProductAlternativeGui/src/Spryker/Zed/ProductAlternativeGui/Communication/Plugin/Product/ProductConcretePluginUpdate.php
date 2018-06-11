@@ -29,8 +29,7 @@ class ProductConcretePluginUpdate extends AbstractPlugin implements ProductConcr
      */
     public function update(ProductConcreteTransfer $productConcreteTransfer)
     {
-        return $this
-            ->getFactory()
+        return $this->getFactory()
             ->getProductAlternativeFacade()
             ->persistProductAlternative($productConcreteTransfer);
     }

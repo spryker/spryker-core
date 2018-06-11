@@ -34,20 +34,20 @@ class ProductAlternativeMapper implements ProductAlternativeMapperInterface
     }
 
     /**
-     * @param \Orm\Zed\ProductAlternative\Persistence\SpyProductAlternative $spyProductAlternative
+     * @param \Orm\Zed\ProductAlternative\Persistence\SpyProductAlternative $productAlternative
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
      */
     public function mapSpyProductAlternativeEntityToTransfer(
-        SpyProductAlternative $spyProductAlternative
+        SpyProductAlternative $productAlternative
     ): ProductAlternativeTransfer {
         $productAlternativeTransfer = (new ProductAlternativeTransfer())
-            ->fromArray($spyProductAlternative->toArray(), true);
+            ->fromArray($productAlternative->toArray(), true);
 
         $productAlternativeTransfer
-            ->setIdProduct($spyProductAlternative->getFkProduct())
-            ->setIdProductAbstractAlternative($spyProductAlternative->getFkProductAbstractAlternative())
-            ->setIdProductConcreteAlternative($spyProductAlternative->getFkProductConcreteAlternative());
+            ->setIdProduct($productAlternative->getFkProduct())
+            ->setIdProductAbstractAlternative($productAlternative->getFkProductAbstractAlternative())
+            ->setIdProductConcreteAlternative($productAlternative->getFkProductConcreteAlternative());
 
         return $productAlternativeTransfer;
     }
@@ -60,10 +60,10 @@ class ProductAlternativeMapper implements ProductAlternativeMapperInterface
     public function mapProductAlternativeTransferToEntityTransfer(
         ProductAlternativeTransfer $productAlternativeTransfer
     ): SpyProductAlternativeEntityTransfer {
-        $spyProductAlternativeEntityTransfer = (new SpyProductAlternativeEntityTransfer())
+        $productAlternativeEntityTransfer = (new SpyProductAlternativeEntityTransfer())
             ->fromArray($productAlternativeTransfer->toArray(), true);
 
-        $spyProductAlternativeEntityTransfer
+        $productAlternativeEntityTransfer
             ->setFkProduct($productAlternativeTransfer->getIdProduct())
             ->setFkProductAbstractAlternative($productAlternativeTransfer->getIdProductAbstractAlternative())
             ->setFkProductConcreteAlternative($productAlternativeTransfer->getIdProductConcreteAlternative());

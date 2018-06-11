@@ -23,12 +23,12 @@ interface ProductAlternativeMapperInterface
     ): SpyProductAlternativeEntityTransfer;
 
     /**
-     * @param \Orm\Zed\ProductAlternative\Persistence\SpyProductAlternative $spyProductAlternative
+     * @param \Orm\Zed\ProductAlternative\Persistence\SpyProductAlternative $productAlternative
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
      */
     public function mapSpyProductAlternativeEntityToTransfer(
-        SpyProductAlternative $spyProductAlternative
+        SpyProductAlternative $productAlternative
     ): ProductAlternativeTransfer;
 
     /**

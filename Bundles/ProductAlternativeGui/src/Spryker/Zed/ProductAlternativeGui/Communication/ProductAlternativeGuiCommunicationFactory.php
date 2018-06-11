@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductAlternativeGui\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductAlternativeGui\Communication\Form\AddProductAlternativeForm;
-use Spryker\Zed\ProductAlternativeGui\Communication\Form\DataProvider\AddProductAlternativeFormDataProvider;
 use Spryker\Zed\ProductAlternativeGui\Dependency\Facade\ProductAlternativeGuiToProductAlternativeFacadeInterface;
 use Spryker\Zed\ProductAlternativeGui\Dependency\Facade\ProductAlternativeGuiToProductFacadeInterface;
 use Spryker\Zed\ProductAlternativeGui\ProductAlternativeGuiDependencyProvider;
@@ -22,14 +21,6 @@ class ProductAlternativeGuiCommunicationFactory extends AbstractCommunicationFac
     public function createAddProductAlternativeForm(): AddProductAlternativeForm
     {
         return new AddProductAlternativeForm();
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductAlternativeGui\Communication\Form\DataProvider\AddProductAlternativeFormDataProvider
-     */
-    public function createAddProductAlternativeFormDataProvider(): AddProductAlternativeFormDataProvider
-    {
-        return new AddProductAlternativeFormDataProvider();
     }
 
     /**

@@ -28,11 +28,11 @@ class ProductAlternativeEntityManager extends AbstractEntityManager implements P
      */
     public function createProductAbstractAlternative(int $idProduct, int $idProductAbstractAlternative): ProductAlternativeTransfer
     {
-        $spyProductAlternativeEntityTransfer = (new SpyProductAlternativeEntityTransfer())
+        $productAlternativeEntityTransfer = (new SpyProductAlternativeEntityTransfer())
             ->setFkProduct($idProduct)
             ->setFkProductAbstractAlternative($idProductAbstractAlternative);
 
-        return $this->createProductAlternative($spyProductAlternativeEntityTransfer);
+        return $this->createProductAlternative($productAlternativeEntityTransfer);
     }
 
     /**
@@ -47,11 +47,11 @@ class ProductAlternativeEntityManager extends AbstractEntityManager implements P
      */
     public function createProductConcreteAlternative(int $idProduct, int $idProductConcreteAlternative): ProductAlternativeTransfer
     {
-        $spyProductAlternativeEntityTransfer = (new SpyProductAlternativeEntityTransfer())
+        $productAlternativeEntityTransfer = (new SpyProductAlternativeEntityTransfer())
             ->setFkProduct($idProduct)
             ->setFkProductConcreteAlternative($idProductConcreteAlternative);
 
-        return $this->createProductAlternative($spyProductAlternativeEntityTransfer);
+        return $this->createProductAlternative($productAlternativeEntityTransfer);
     }
 
     /**
@@ -65,12 +65,11 @@ class ProductAlternativeEntityManager extends AbstractEntityManager implements P
      */
     public function updateProductAlternative(ProductAlternativeTransfer $productAlternativeTransfer): ProductAlternativeTransfer
     {
-        $spyProductAlternativeEntityTransfer = $this
-            ->getFactory()
+        $productAlternativeEntityTransfer = $this->getFactory()
             ->createProductAlternativeMapper()
             ->mapProductAlternativeTransferToEntityTransfer($productAlternativeTransfer);
 
-        $this->save($spyProductAlternativeEntityTransfer);
+        $this->save($productAlternativeEntityTransfer);
 
         return $productAlternativeTransfer;
     }
@@ -86,35 +85,33 @@ class ProductAlternativeEntityManager extends AbstractEntityManager implements P
      */
     public function deleteProductAlternative(ProductAlternativeTransfer $productAlternativeTransfer): void
     {
-        $productAlternativeQuery = $this
-            ->getFactory()
+        $productAlternative = $this->getFactory()
             ->createProductAlternativeQuery()
             ->filterByIdProductAlternative(
                 $productAlternativeTransfer->getIdProductAlternative()
             )->findOne();
 
-        $productAlternativeQuery->delete();
+        $productAlternative->delete();
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyProductAlternativeEntityTransfer $spyProductAlternativeEntityTransfer
+     * @param \Generated\Shared\Transfer\SpyProductAlternativeEntityTransfer $productAlternativeEntityTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
      */
-    protected function createProductAlternative(SpyProductAlternativeEntityTransfer $spyProductAlternativeEntityTransfer): ProductAlternativeTransfer
+    protected function createProductAlternative(SpyProductAlternativeEntityTransfer $productAlternativeEntityTransfer): ProductAlternativeTransfer
     {
-        $spyProductAlternativeEntityTransfer->setIdProductAlternative(null);
+        $productAlternativeEntityTransfer->setIdProductAlternative(null);
 
-        /** @var \Generated\Shared\Transfer\SpyProductAlternativeEntityTransfer $spyProductAlternativeEntityTransfer */
-        $spyProductAlternativeEntityTransfer = $this->save($spyProductAlternativeEntityTransfer);
+        /** @var \Generated\Shared\Transfer\SpyProductAlternativeEntityTransfer $productAlternativeEntityTransfer */
+        $productAlternativeEntityTransfer = $this->save($productAlternativeEntityTransfer);
 
-        $productAlternativeTransfer = $this
-            ->getFactory()
+        $productAlternativeTransfer = $this->getFactory()
             ->createProductAlternativeMapper()
-            ->mapSpyProductAlternativeEntityTransferToTransfer($spyProductAlternativeEntityTransfer);
+            ->mapSpyProductAlternativeEntityTransferToTransfer($productAlternativeEntityTransfer);
 
         $productAlternativeTransfer->setIdProductAlternative(
-            $spyProductAlternativeEntityTransfer->getIdProductAlternative()
+            $productAlternativeEntityTransfer->getIdProductAlternative()
         );
 
         return $productAlternativeTransfer;

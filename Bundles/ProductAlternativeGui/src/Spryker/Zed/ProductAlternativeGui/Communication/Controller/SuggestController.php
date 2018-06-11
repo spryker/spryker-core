@@ -27,13 +27,11 @@ class SuggestController extends AbstractController
     {
         $searchName = $request->query->get(static::PARAM_NAME);
 
-        $productAbstractSuggestions = $this
-            ->getFactory()
+        $productAbstractSuggestions = $this->getFactory()
             ->getProductFacade()
             ->suggestProductAbstract($searchName);
 
-        $productConcreteSuggestions = $this
-            ->getFactory()
+        $productConcreteSuggestions = $this->getFactory()
             ->getProductFacade()
             ->suggestProductConcrete($searchName);
 

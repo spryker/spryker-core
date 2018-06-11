@@ -32,22 +32,18 @@ class DeleteController extends AbstractController
     protected const REDIRECT_URL_PRODUCT_ALTERNATIVE_DELETE = '/product-management/edit/variant?id-product=%d&id-product-abstract=%d&type=#tab-content-alternatives';
 
     /**
-     * TODO: Add ids validation.
-     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAbstractAction(Request $request): RedirectResponse
     {
-        $idProductAlternative = $request->query->get(static::FIELD_ID_PRODUCT_ALTERNATIVE);
+        $idProductAlternative = $this->castId($request->get(static::FIELD_ID_PRODUCT_ALTERNATIVE));
 
-        $idProduct = $request->query->get(static::FIELD_REDIRECT_ID_PRODUCT_CONCRETE);
-        $idProductAbstract = $request->query->get(static::FIELD_REDIRECT_ID_PRODUCT_ABSTRACT);
+        $idProduct = $this->castId($request->get(static::FIELD_REDIRECT_ID_PRODUCT_CONCRETE));
+        $idProductAbstract = $this->castId($request->get(static::FIELD_REDIRECT_ID_PRODUCT_ABSTRACT));
 
-        /** @var \Generated\Shared\Transfer\ProductAlternativeResponseTransfer $productAlternativeResponseTransfer */
-        $productAlternativeResponseTransfer = $this
-            ->getFactory()
+        $productAlternativeResponseTransfer = $this->getFactory()
             ->getProductAlternativeFacade()
             ->deleteProductAlternativeByIdProductAlternativeResponse(
                 $idProductAlternative
@@ -63,22 +59,18 @@ class DeleteController extends AbstractController
     }
 
     /**
-     * TODO: Add ids validation.
-     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteConcreteAction(Request $request): RedirectResponse
     {
-        $idProductAlternative = $request->query->get(static::FIELD_ID_PRODUCT_ALTERNATIVE);
+        $idProductAlternative = $this->castId($request->get(static::FIELD_ID_PRODUCT_ALTERNATIVE));
 
-        $idProduct = $request->query->get(static::FIELD_REDIRECT_ID_PRODUCT_CONCRETE);
-        $idProductAbstract = $request->query->get(static::FIELD_REDIRECT_ID_PRODUCT_ABSTRACT);
+        $idProduct = $this->castId($request->get(static::FIELD_REDIRECT_ID_PRODUCT_CONCRETE));
+        $idProductAbstract = $this->castId($request->get(static::FIELD_REDIRECT_ID_PRODUCT_ABSTRACT));
 
-        /** @var \Generated\Shared\Transfer\ProductAlternativeResponseTransfer $productAlternativeResponseTransfer */
-        $productAlternativeResponseTransfer = $this
-            ->getFactory()
+        $productAlternativeResponseTransfer = $this->getFactory()
             ->getProductAlternativeFacade()
             ->deleteProductAlternativeByIdProductAlternativeResponse(
                 $idProductAlternative
