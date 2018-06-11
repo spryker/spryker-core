@@ -7,11 +7,13 @@
 
 namespace Spryker\Zed\ProductDiscontinuedStorage\Business\ProductDiscontinuedPublisher;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedStorageTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
 use Generated\Shared\Transfer\SpyProductDiscontinuedStorageEntityTransfer;
+use Spryker\Zed\ProductDiscontinuedStorage\Dependency\Facade\ProductDiscontinuedStorageToLocaleFacadeInterface;
 use Spryker\Zed\ProductDiscontinuedStorage\Dependency\Facade\ProductDiscontinuedStorageToProductDiscontinuedFacadeInterface;
 use Spryker\Zed\ProductDiscontinuedStorage\Persistence\ProductDiscontinuedStorageEntityManagerInterface;
 use Spryker\Zed\ProductDiscontinuedStorage\Persistence\ProductDiscontinuedStorageRepositoryInterface;
@@ -34,18 +36,26 @@ class ProductDiscontinuedPublisher implements ProductDiscontinuedPublisherInterf
     protected $productDiscontinuedFacade;
 
     /**
+     * @var \Spryker\Zed\ProductDiscontinuedStorage\Dependency\Facade\ProductDiscontinuedStorageToLocaleFacadeInterface
+     */
+    protected $localeFacade;
+
+    /**
      * @param \Spryker\Zed\ProductDiscontinuedStorage\Persistence\ProductDiscontinuedStorageEntityManagerInterface $discontinuedStorageEntityManager
      * @param \Spryker\Zed\ProductDiscontinuedStorage\Persistence\ProductDiscontinuedStorageRepositoryInterface $productDiscontinuedStorageRepository
      * @param \Spryker\Zed\ProductDiscontinuedStorage\Dependency\Facade\ProductDiscontinuedStorageToProductDiscontinuedFacadeInterface $productDiscontinuedFacade
+     * @param \Spryker\Zed\ProductDiscontinuedStorage\Dependency\Facade\ProductDiscontinuedStorageToLocaleFacadeInterface $localeFacade
      */
     public function __construct(
         ProductDiscontinuedStorageEntityManagerInterface $discontinuedStorageEntityManager,
         ProductDiscontinuedStorageRepositoryInterface $productDiscontinuedStorageRepository,
-        ProductDiscontinuedStorageToProductDiscontinuedFacadeInterface $productDiscontinuedFacade
+        ProductDiscontinuedStorageToProductDiscontinuedFacadeInterface $productDiscontinuedFacade,
+        ProductDiscontinuedStorageToLocaleFacadeInterface $localeFacade
     ) {
         $this->discontinuedStorageEntityManager = $discontinuedStorageEntityManager;
         $this->productDiscontinuedStorageRepository = $productDiscontinuedStorageRepository;
         $this->productDiscontinuedFacade = $productDiscontinuedFacade;
+        $this->localeFacade = $localeFacade;
     }
 
     /**
@@ -72,35 +82,60 @@ class ProductDiscontinuedPublisher implements ProductDiscontinuedPublisherInterf
         array $productDiscontinuedStorageEntityTransfers
     ): void {
         $indexProductDiscontinuedStorageEntityTransfers = $this->indexProductDiscontinuedStorageEntities($productDiscontinuedStorageEntityTransfers);
+        $localeTransfers = $this->localeFacade->getLocaleCollection();
         foreach ($productDiscontinuedCollectionTransfer->getDiscontinueds() as $productDiscontinuedTransfer) {
-            if (isset($indexProductDiscontinuedStorageEntityTransfers[$productDiscontinuedTransfer->getIdProductDiscontinued()])) {
-                $this->storeDataSet($productDiscontinuedTransfer, $indexProductDiscontinuedStorageEntityTransfers[$productDiscontinuedTransfer->getIdProductDiscontinued()]);
-
-                continue;
-            }
-
-            $this->storeDataSet($productDiscontinuedTransfer);
+            $this->storeLocalizedData(
+                $productDiscontinuedTransfer,
+                $indexProductDiscontinuedStorageEntityTransfers,
+                $localeTransfers
+            );
         }
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductDiscontinuedTransfer $productDiscontinuedTransfer
-     * @param \Generated\Shared\Transfer\SpyProductDiscontinuedStorageEntityTransfer|null $productDiscontinuedStorageEntityTransfer
+     * @param \Generated\Shared\Transfer\SpyProductDiscontinuedStorageEntityTransfer[] $indexProductDiscontinuedStorageEntityTransfers
+     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
+     *
+     * @return void
+     */
+    protected function storeLocalizedData(
+        ProductDiscontinuedTransfer $productDiscontinuedTransfer,
+        array $indexProductDiscontinuedStorageEntityTransfers,
+        array $localeTransfers
+    ): void {
+        foreach ($localeTransfers as $localeName => $localeTransfer) {
+            if (isset($indexProductDiscontinuedStorageEntityTransfers[$productDiscontinuedTransfer->getIdProductDiscontinued()][$localeName])) {
+                $this->storeDataSet(
+                    $productDiscontinuedTransfer,
+                    $localeTransfer,
+                    $indexProductDiscontinuedStorageEntityTransfers[$productDiscontinuedTransfer->getIdProductDiscontinued()][$localeName]
+                );
+
+                continue;
+            }
+
+            $this->storeDataSet($productDiscontinuedTransfer, $localeTransfer, new SpyProductDiscontinuedStorageEntityTransfer());
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductDiscontinuedTransfer $productDiscontinuedTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\SpyProductDiscontinuedStorageEntityTransfer $productDiscontinuedStorageEntityTransfer
      *
      * @return void
      */
     protected function storeDataSet(
         ProductDiscontinuedTransfer $productDiscontinuedTransfer,
-        ?SpyProductDiscontinuedStorageEntityTransfer $productDiscontinuedStorageEntityTransfer = null
+        LocaleTransfer $localeTransfer,
+        SpyProductDiscontinuedStorageEntityTransfer $productDiscontinuedStorageEntityTransfer
     ): void {
-        if ($productDiscontinuedStorageEntityTransfer === null) {
-            $productDiscontinuedStorageEntityTransfer = new SpyProductDiscontinuedStorageEntityTransfer();
-        }
-
         $productDiscontinuedStorageEntityTransfer->setFkProductDiscontinued($productDiscontinuedTransfer->getIdProductDiscontinued())
             ->setSku($productDiscontinuedTransfer->getSku())
+            ->setLocale($localeTransfer->getLocaleName())
             ->setData(
-                $this->mapStorageTransfer($productDiscontinuedTransfer)->toArray()
+                $this->mapStorageTransfer($productDiscontinuedTransfer, $localeTransfer)->toArray()
             );
 
         $this->discontinuedStorageEntityManager->saveProductDiscontinuedStorageEntity($productDiscontinuedStorageEntityTransfer);
@@ -138,7 +173,7 @@ class ProductDiscontinuedPublisher implements ProductDiscontinuedPublisherInterf
     {
         $indexProductDiscontinuedStorageEntityTransfers = [];
         foreach ($productDiscontinuedStorageEntityTransfers as $discontinuedStorageEntityTransfer) {
-            $indexProductDiscontinuedStorageEntityTransfers[$discontinuedStorageEntityTransfer->getFkProductDiscontinued()]
+            $indexProductDiscontinuedStorageEntityTransfers[$discontinuedStorageEntityTransfer->getFkProductDiscontinued()][$discontinuedStorageEntityTransfer->getLocale()]
                 = $discontinuedStorageEntityTransfer;
         }
 
@@ -147,12 +182,35 @@ class ProductDiscontinuedPublisher implements ProductDiscontinuedPublisherInterf
 
     /**
      * @param \Generated\Shared\Transfer\ProductDiscontinuedTransfer $productDiscontinuedTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedStorageTransfer
      */
-    protected function mapStorageTransfer(ProductDiscontinuedTransfer $productDiscontinuedTransfer): ProductDiscontinuedStorageTransfer
-    {
+    protected function mapStorageTransfer(
+        ProductDiscontinuedTransfer $productDiscontinuedTransfer,
+        LocaleTransfer $localeTransfer
+    ): ProductDiscontinuedStorageTransfer {
         return (new ProductDiscontinuedStorageTransfer())
-            ->fromArray($productDiscontinuedTransfer->toArray(), true);
+            ->fromArray($productDiscontinuedTransfer->toArray(), true)
+            ->setNote($this->getLocalizedNote($productDiscontinuedTransfer, $localeTransfer));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductDiscontinuedTransfer $productDiscontinuedTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return string
+     */
+    protected function getLocalizedNote(
+        ProductDiscontinuedTransfer $productDiscontinuedTransfer,
+        LocaleTransfer $localeTransfer
+    ): string {
+        foreach ($productDiscontinuedTransfer->getProductDiscontinuedNotes() as $discontinuedNoteTransfer) {
+            if ($discontinuedNoteTransfer->getFkLocale() === $localeTransfer->getIdLocale()) {
+                return $discontinuedNoteTransfer->getNote();
+            }
+        }
+
+        return '';
     }
 }

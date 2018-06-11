@@ -36,7 +36,7 @@ class ProductDiscontinuedStorageEntityManager extends AbstractEntityManager impl
     ): void {
         $this->getFactory()
             ->createProductDiscontinuedStorageQuery()
-            ->filterByIdProductDiscontinuedStorage($productDiscontinuedStorageEntityTransfer->getIdProductDiscontinuedStorage())
+            ->findOneByIdProductDiscontinuedStorage($productDiscontinuedStorageEntityTransfer->getIdProductDiscontinuedStorage())
             ->delete();
     }
 }

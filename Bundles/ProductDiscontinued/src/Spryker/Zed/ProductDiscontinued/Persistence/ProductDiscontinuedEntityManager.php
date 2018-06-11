@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductDiscontinued\Persistence;
 
+use Generated\Shared\Transfer\ProductDiscontinuedNoteTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
@@ -44,13 +45,33 @@ class ProductDiscontinuedEntityManager extends AbstractEntityManager implements 
      *
      * @return void
      */
-    public function deleteProductDiscontinuedByProductId(ProductDiscontinuedTransfer $productDiscontinuedTransfer): void
+    public function deleteProductDiscontinued(ProductDiscontinuedTransfer $productDiscontinuedTransfer): void
     {
         $this->getFactory()
             ->createProductDiscontinuedQuery()
-            ->filterByFkProduct($productDiscontinuedTransfer->getFkProduct())
-            ->findOne()
+            ->findOneByIdProductDiscontinued($productDiscontinuedTransfer->getIdProductDiscontinued())
             ->delete();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductDiscontinuedNoteTransfer $discontinuedNoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductDiscontinuedNoteTransfer
+     */
+    public function saveProductDiscontinuedNote(
+        ProductDiscontinuedNoteTransfer $discontinuedNoteTransfer
+    ): ProductDiscontinuedNoteTransfer {
+        $discontinuedNoteQuery = $this->getFactory()
+            ->createProductDiscontinuedNoteQuery();
+        if ($discontinuedNoteTransfer->getIdProductDiscontinuedNote()) {
+            $discontinuedNoteQuery
+                ->filterByIdProductDiscontinuedNote($discontinuedNoteTransfer->getIdProductDiscontinuedNote());
+        }
+        $discontinuedNoteEntity = $discontinuedNoteQuery->findOneOrCreate();
+        $discontinuedNoteEntity->fromArray($discontinuedNoteTransfer->modifiedToArray());
+        $discontinuedNoteEntity->save();
+
+        return $discontinuedNoteTransfer->fromArray($discontinuedNoteEntity->toArray(), true);
     }
 
     /**
@@ -58,12 +79,11 @@ class ProductDiscontinuedEntityManager extends AbstractEntityManager implements 
      *
      * @return void
      */
-    public function deleteProductDiscontinued(ProductDiscontinuedTransfer $productDiscontinuedTransfer): void
+    public function deleteProductDiscontinuedNotes(ProductDiscontinuedTransfer $productDiscontinuedTransfer): void
     {
         $this->getFactory()
-            ->createProductDiscontinuedQuery()
-            ->filterByIdProductDiscontinued($productDiscontinuedTransfer->getIdProductDiscontinued())
-            ->findOne()
+            ->createProductDiscontinuedNoteQuery()
+            ->filterByFkProductDiscontinued($productDiscontinuedTransfer->getIdProductDiscontinued())
             ->delete();
     }
 }

@@ -8,16 +8,46 @@
 namespace Spryker\Zed\ProductDiscontinuedGui\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\ProductDiscontinuedGui\Communication\Form\DataProvider\DiscontinueProductFormDataProvider;
+use Spryker\Zed\ProductDiscontinuedGui\Communication\Form\DiscontinueProductForm;
+use Spryker\Zed\ProductDiscontinuedGui\Dependency\Facade\ProductDiscontinuedGuiToLocaleFacadeInterface;
 use Spryker\Zed\ProductDiscontinuedGui\Dependency\Facade\ProductDiscontinuedGuiToProductDiscontinuedFacadeInterface;
 use Spryker\Zed\ProductDiscontinuedGui\ProductDiscontinuedGuiDependencyProvider;
 
 class ProductDiscontinuedGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
+     * @return \Spryker\Zed\ProductDiscontinuedGui\Communication\Form\DiscontinueProductForm
+     */
+    public function createDiscontinueProductForm(): DiscontinueProductForm
+    {
+        return new DiscontinueProductForm();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductDiscontinuedGui\Communication\Form\DataProvider\DiscontinueProductFormDataProvider
+     */
+    public function createDiscontinueProductFormDataProvider(): DiscontinueProductFormDataProvider
+    {
+        return new DiscontinueProductFormDataProvider(
+            $this->getProductDiscontinuedFacade(),
+            $this->getLocaleFacade()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\ProductDiscontinuedGui\Dependency\Facade\ProductDiscontinuedGuiToProductDiscontinuedFacadeInterface
      */
     public function getProductDiscontinuedFacade(): ProductDiscontinuedGuiToProductDiscontinuedFacadeInterface
     {
         return $this->getProvidedDependency(ProductDiscontinuedGuiDependencyProvider::FACADE_PRODUCT_DISCONTINUED);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductDiscontinuedGui\Dependency\Facade\ProductDiscontinuedGuiToLocaleFacadeInterface
+     */
+    public function getLocaleFacade(): ProductDiscontinuedGuiToLocaleFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductDiscontinuedGuiDependencyProvider::FACADE_LOCALE);
     }
 }

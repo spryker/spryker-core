@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductDiscontinuedGui\Communication\Controller;
 
 use Generated\Shared\Transfer\ProductDiscontinuedRequestTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -17,6 +18,8 @@ use Symfony\Component\HttpFoundation\Request;
 class IndexController extends AbstractController
 {
     public const PARAM_ID_PRODUCT_CONCRETE = 'id-product-concrete';
+    protected const HEADER_REFERER = 'referer';
+    protected const TAB_KEY_DISCONTINUE = '#tab-content-discontinue';
 
     protected const MESSAGE_PRODUCT_DISCONTINUED_SUCCESS = 'Product has been marked as discontinued.';
     protected const MESSAGE_PRODUCT_DISCONTINUED_ERROR = 'Product can not be marked as  discontinued.';
@@ -42,11 +45,11 @@ class IndexController extends AbstractController
         if ($productDiscontinuedResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::MESSAGE_PRODUCT_DISCONTINUED_SUCCESS);
 
-            return $this->redirectResponse($request->headers->get('referer'));
+            return $this->redirectReferer($request);
         }
         $this->addErrorMessage(static::MESSAGE_PRODUCT_DISCONTINUED_ERROR);
 
-        return $this->redirectResponse($request->headers->get('referer'));
+        return $this->redirectReferer($request);
     }
 
     /**
@@ -68,10 +71,20 @@ class IndexController extends AbstractController
         if ($productDiscontinuedResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::MESSAGE_PRODUCT_UNDISCONTINUED_SUCCESS);
 
-            return $this->redirectResponse($request->headers->get('referer'));
+            return $this->redirectReferer($request);
         }
         $this->addErrorMessage(static::MESSAGE_PRODUCT_UNDISCONTINUED_ERROR);
 
-        return $this->redirectResponse($request->headers->get('referer'));
+        return $this->redirectReferer($request);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function redirectReferer(Request $request): RedirectResponse
+    {
+        return $this->redirectResponse($request->headers->get(static::HEADER_REFERER) . static::TAB_KEY_DISCONTINUE);
     }
 }

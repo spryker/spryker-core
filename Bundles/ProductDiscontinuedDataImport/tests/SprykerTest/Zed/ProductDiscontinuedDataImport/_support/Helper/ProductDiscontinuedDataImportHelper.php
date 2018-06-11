@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\ProductDiscontinuedDataImport\Helper;
 
 use Codeception\Module;
+use Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinuedNoteQuery;
 use Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinuedQuery;
 
 class ProductDiscontinuedDataImportHelper extends Module
@@ -17,6 +18,8 @@ class ProductDiscontinuedDataImportHelper extends Module
      */
     public function ensureDatabaseTableIsEmpty(): void
     {
+        $this->getProductDiscontinuedNoteQuery()
+            ->deleteAll();
         $this->getProductDiscontinuedQuery()
             ->deleteAll();
     }
@@ -24,10 +27,13 @@ class ProductDiscontinuedDataImportHelper extends Module
     /**
      * @return void
      */
-    public function assertDatabaseTableContainsData(): void
+    public function assertDatabaseTablesContainsData(): void
     {
         $productDiscontinuedQuery = $this->getProductDiscontinuedQuery();
         $this->assertTrue(($productDiscontinuedQuery->count() > 0), 'Expected at least one entry in the database table but database table is empty.');
+
+        $productDiscontinuedNoteQuery = $this->getProductDiscontinuedNoteQuery();
+        $this->assertTrue(($productDiscontinuedNoteQuery->count() > 0), 'Expected at least one entry in the database table but database table is empty.');
     }
 
     /**
@@ -36,5 +42,13 @@ class ProductDiscontinuedDataImportHelper extends Module
     protected function getProductDiscontinuedQuery(): SpyProductDiscontinuedQuery
     {
         return SpyProductDiscontinuedQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinuedNoteQuery
+     */
+    protected function getProductDiscontinuedNoteQuery(): SpyProductDiscontinuedNoteQuery
+    {
+        return SpyProductDiscontinuedNoteQuery::create();
     }
 }

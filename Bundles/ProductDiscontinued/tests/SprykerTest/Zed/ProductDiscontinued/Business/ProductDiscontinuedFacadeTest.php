@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\ProductDiscontinued\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductDiscontinuedNoteTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedRequestTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
 use Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedEntityManager;
@@ -25,6 +26,9 @@ use Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedEntityManager
  */
 class ProductDiscontinuedFacadeTest extends Unit
 {
+    protected const NOTE_TEST = 'NOTE_TEST';
+    protected const LOCALE_TEST = 'LOCALE_TEST';
+
     /**
      * @var \SprykerTest\Zed\ProductDiscontinued\ProductDiscontinuedBusinessTester
      */
@@ -41,6 +45,11 @@ class ProductDiscontinuedFacadeTest extends Unit
     protected $productDiscontinuedEntityManager;
 
     /**
+     * @var \Generated\Shared\Transfer\LocaleTransfer
+     */
+    protected $localeTransfer;
+
+    /**
      * @return void
      */
     protected function setUp()
@@ -48,6 +57,7 @@ class ProductDiscontinuedFacadeTest extends Unit
         parent::setUp();
 
         $this->productConcrete = $this->tester->haveProduct();
+        $this->localeTransfer = $this->tester->haveLocale();
         $this->productDiscontinuedEntityManager = new ProductDiscontinuedEntityManager();
     }
 
@@ -141,5 +151,29 @@ class ProductDiscontinuedFacadeTest extends Unit
 
         // Assert
         $this->assertFalse($loadedProduct->getIsActive());
+    }
+
+    /**
+     * @return void
+     */
+    public function testLocalizedNotesCanBeAddedToProductDiscontinued()
+    {
+        // Arrange
+        $productDiscontinuedRequestTransfer = (new ProductDiscontinuedRequestTransfer())
+            ->setIdProduct($this->productConcrete->getIdProductConcrete());
+        $productDiscontinuedTransfer = $this->tester->getFacade()->markProductAsDiscontinued($productDiscontinuedRequestTransfer)->getProductDiscontinued();
+        $productDiscontinuedNoteTransfer = (new ProductDiscontinuedNoteTransfer())
+            ->setFkProductDiscontinued($productDiscontinuedTransfer->getIdProductDiscontinued())
+            ->setNote(static::NOTE_TEST)
+            ->setFkLocale($this->localeTransfer->getIdLocale());
+
+        // Act
+        $this->tester->getFacade()->saveDiscontinuedNote($productDiscontinuedNoteTransfer);
+        $productDiscontinuedResponseTransfer = $this->tester->getFacade()->findProductDiscontinuedByProductId($productDiscontinuedRequestTransfer);
+        $productDiscontinuedNoteTransfer = $productDiscontinuedResponseTransfer->getProductDiscontinued()->getProductDiscontinuedNotes()->offsetGet(0);
+
+        // Assert
+        $this->assertCount(1, $productDiscontinuedResponseTransfer->getProductDiscontinued()->getProductDiscontinuedNotes());
+        $this->assertInstanceOf(ProductDiscontinuedNoteTransfer::class, $productDiscontinuedNoteTransfer);
     }
 }
