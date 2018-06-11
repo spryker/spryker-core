@@ -92,7 +92,7 @@ class CompanyBusinessUnitDataImportPluginTest extends Unit
         $companyBusinessUnitDataImportPlugin = new CompanyBusinessUnitDataImportPlugin();
 
         $this->expectException(DataImportException::class);
-        $this->expectExceptionMessage('Could not find business unit by key "invalid parent"');
+        $this->expectExceptionMessage('Could not find company business unit by key "invalid parent"');
         $companyBusinessUnitDataImportPlugin->import($dataImportConfigurationTransfer);
     }
 
