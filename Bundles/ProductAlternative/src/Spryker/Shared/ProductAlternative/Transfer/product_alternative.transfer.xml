@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="ProductAlternative">
+        <property name="idProductAlternative" type="int"/>
+        <property name="idProduct" type="int"/>
+        <property name="idProductConcreteAlternative" type="int"/>
+        <property name="idProductAbstractAlternative" type="int"/>
+    </transfer>
+
+    <transfer name="ProductAlternativeResponse">
+        <property name="productAlternative" type="ProductAlternative"/>
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="ResponseMessage[]" singular="message"/>
+    </transfer>
+
+    <transfer name="ResponseMessage">
+        <property name="text" type="string"/>
+    </transfer>
+
+    <transfer name="ProductAlternativeCollection">
+        <property name="productAlternatives" type="ProductAlternative[]" singular="productAlternative"/>
+    </transfer>
+
+    <transfer name="ProductAlternativeToPersist">
+        <property name="idProduct" type="int"/>
+        <property name="suggest" type="string"/>
+    </transfer>
+
+    <transfer name="ProductConcrete">
+        <property name="productAlternatives" type="ProductAlternative[]" singular="productAlternative"/>
+        <property name="productAlternativeToPersist" type="ProductAlternativeToPersist"/>
+    </transfer>
+
+    <transfer name="ProductAlternativeListItem">
+        <property name="idProductAlternative" type="int"/>
+        <property name="idProduct" type="int"/>
+        <property name="name" type="string"/>
+        <property name="sku" type="string"/>
+        <property name="categories" type="string[]" singular="category"/>
+        <property name="status" type="bool"/>
+        <property name="type" type="string"/>
+    </transfer>
+
+    <transfer name="ProductAlternativeList">
+        <property name="productAlternatives" type="ProductAlternativeListItem[]" singular="productAlternative"/>
+    </transfer>
+
+</transfers>

@@ -52,6 +52,22 @@ interface ProductAbstractManagerInterface
 
     /**
      * @param string $sku
+     * @param int $limit
+     *
+     * @return array
+     */
+    public function filterProductAbstractBySku(string $sku, int $limit): array;
+
+    /**
+     * @param string $localizedName
+     * @param int $limit
+     *
+     * @return array
+     */
+    public function filterProductAbstractByLocalizedName(string $localizedName, int $limit): array;
+
+    /**
+     * @param string $sku
      *
      * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
      *

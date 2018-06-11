@@ -10,6 +10,7 @@ namespace Spryker\Zed\Product\Business\Product;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
+use Spryker\Shared\Product\ProductConstants;
 use Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
 use Spryker\Zed\Product\Business\Product\Assertion\ProductAbstractAssertionInterface;
@@ -234,6 +235,78 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
         $productAbstractTransfer = $this->notifyReadObservers($productAbstractTransfer);
 
         return $productAbstractTransfer;
+    }
+
+    /**
+     * @param string $sku
+     * @param int $limit
+     *
+     * @return array
+     */
+    public function filterProductAbstractBySku(string $sku, int $limit): array
+    {
+        $productAbstractEntities = $this->productQueryContainer
+            ->queryProductAbstract()
+            ->filterBySku_Like('%' . $sku . '%')
+            ->limit($limit)
+            ->find();
+
+        if (count($productAbstractEntities) === 0) {
+            return [];
+        }
+
+        $abstractProducts = [];
+
+        /** @var \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity */
+        foreach ($productAbstractEntities as $productAbstractEntity) {
+            $abstractProducts[] = [
+                ProductConstants::FILTERED_PRODUCTS_ABSTRACT_ID_KEY => $productAbstractEntity->getIdProductAbstract(),
+                ProductConstants::FILTERED_PRODUCTS_RESULT_KEY => $productAbstractEntity->getSku(),
+            ];
+        }
+
+        return $abstractProducts;
+    }
+
+    /**
+     * @param string $localizedName
+     * @param int $limit
+     *
+     * @return array
+     */
+    public function filterProductAbstractByLocalizedName(string $localizedName, int $limit): array
+    {
+        $locale = $this->localeFacade
+            ->getCurrentLocale();
+
+        $locale->requireIdLocale();
+
+        $productAbstractEntities = $this->productQueryContainer
+            ->queryProductAbstractWithName(
+                $locale->getIdLocale()
+            )
+            ->useSpyProductAbstractLocalizedAttributesQuery()
+                ->filterByName_Like('%' . $localizedName . '%')
+                ->endUse()
+            ->limit($limit)
+            ->find();
+
+        if (count($productAbstractEntities) === 0) {
+            return [];
+        }
+
+        $abstractProducts = [];
+
+        /** @var \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity */
+        foreach ($productAbstractEntities as $productAbstractEntity) {
+            $abstractProducts[] = [
+                ProductConstants::FILTERED_PRODUCTS_ABSTRACT_ID_KEY => $productAbstractEntity->getIdProductAbstract(),
+                ProductConstants::FILTERED_PRODUCTS_RESULT_KEY => $productAbstractEntity
+                    ->getVirtualColumn(ProductConstants::FILTERED_PRODUCTS_PRODUCT_NAME_COLUMN),
+            ];
+        }
+
+        return $abstractProducts;
     }
 
     /**

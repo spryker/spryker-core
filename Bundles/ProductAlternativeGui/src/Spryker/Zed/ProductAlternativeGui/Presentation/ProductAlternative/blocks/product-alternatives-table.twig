@@ -1,0 +1,20 @@
+{% if productAlternatives is not empty %}
+    <table class="table table-bordered table-striped table-sm">
+        {% filter trans|raw %}
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>SKU</th>
+                <th>Categories</th>
+                <th>Product Type</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+            {% for productAlternative in productAlternatives %}
+                <tr>
+                    {% include '@ProductAlternativeGui/ProductAlternative/blocks/product-alternatives-table-item.twig' %}
+                </tr>
+            {% endfor %}
+        {% endfilter %}
+    </table>
+{% endif %}

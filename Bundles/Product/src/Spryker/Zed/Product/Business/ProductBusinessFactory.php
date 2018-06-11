@@ -34,6 +34,12 @@ use Spryker\Zed\Product\Business\Product\Sku\SkuGenerator;
 use Spryker\Zed\Product\Business\Product\Status\ProductAbstractStatusChecker;
 use Spryker\Zed\Product\Business\Product\StoreRelation\ProductAbstractStoreRelationReader;
 use Spryker\Zed\Product\Business\Product\StoreRelation\ProductAbstractStoreRelationWriter;
+use Spryker\Zed\Product\Business\Product\Suggest\ProductAbstractSuggester;
+use Spryker\Zed\Product\Business\Product\Suggest\ProductAbstractSuggesterInterface;
+use Spryker\Zed\Product\Business\Product\Suggest\ProductConcreteSuggester;
+use Spryker\Zed\Product\Business\Product\Suggest\ProductConcreteSuggesterInterface;
+use Spryker\Zed\Product\Business\Product\Suggest\ProductSuggestionDetailsProvider;
+use Spryker\Zed\Product\Business\Product\Suggest\ProductSuggestionDetailsProviderInterface;
 use Spryker\Zed\Product\Business\Product\Touch\ProductAbstractTouch;
 use Spryker\Zed\Product\Business\Product\Touch\ProductConcreteTouch;
 use Spryker\Zed\Product\Business\Product\Url\ProductAbstractAfterUpdateUrlObserver;
@@ -280,6 +286,40 @@ class ProductBusinessFactory extends AbstractBusinessFactory
         return new ProductAbstractStoreRelationWriter(
             $this->getQueryContainer(),
             $this->createProductAbstractStoreRelationReader()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\Suggest\ProductAbstractSuggesterInterface
+     */
+    public function createProductAbstractSuggester(): ProductAbstractSuggesterInterface
+    {
+        return new ProductAbstractSuggester(
+            $this->getConfig(),
+            $this->createProductAbstractManager()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\Suggest\ProductConcreteSuggesterInterface
+     */
+    public function createProductConcreteSuggester(): ProductConcreteSuggesterInterface
+    {
+        return new ProductConcreteSuggester(
+            $this->getConfig(),
+            $this->createProductConcreteManager()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\Suggest\ProductSuggestionDetailsProviderInterface
+     */
+    public function createProductSuggestionDetailsProvider(): ProductSuggestionDetailsProviderInterface
+    {
+        return new ProductSuggestionDetailsProvider(
+            $this->getConfig(),
+            $this->createProductAbstractManager(),
+            $this->createProductConcreteManager()
         );
     }
 

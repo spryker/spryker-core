@@ -1,0 +1,38 @@
+{
+  "name": "spryker/product-alternative-gui",
+  "description": "ProductAlternativeGui module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1",
+    "spryker/symfony": "^3.0.0",
+    "spryker/kernel": "^3.1.0",
+    "spryker/product": "^6.0.0",
+    "spryker/product-alternative": "^1.0.0",
+    "spryker/product-management-extension": "^1.0.0",
+    "spryker/gui": "^3.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

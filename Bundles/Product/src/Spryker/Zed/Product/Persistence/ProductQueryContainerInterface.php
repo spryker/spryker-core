@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Product\Persistence;
 
+use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface ProductQueryContainerInterface extends QueryContainerInterface
@@ -130,6 +131,18 @@ interface ProductQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function queryProductAbstractWithName($idLocale);
+
+    /**
+     * Specification:
+     * - Get product concrete query with localized name.
+     *
+     * @api
+     *
+     * @param int $idLocale
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    public function queryProductConcreteWithName(int $idLocale): SpyProductQuery;
 
     /**
      * @api

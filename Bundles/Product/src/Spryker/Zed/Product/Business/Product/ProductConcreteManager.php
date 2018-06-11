@@ -10,6 +10,7 @@ namespace Spryker\Zed\Product\Business\Product;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Spryker\Shared\Product\ProductConstants;
 use Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
 use Spryker\Zed\Product\Business\Product\Assertion\ProductAbstractAssertionInterface;
@@ -204,6 +205,78 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
         }
 
         return $productEntity->getIdProduct();
+    }
+
+    /**
+     * @param string $sku
+     * @param int $limit
+     *
+     * @return array
+     */
+    public function filterProductConcreteBySku(string $sku, int $limit): array
+    {
+        $productConcreteEntities = $this->productQueryContainer
+            ->queryProduct()
+            ->filterBySku_Like('%' . $sku . '%')
+            ->limit($limit)
+            ->find();
+
+        if (count($productConcreteEntities) === 0) {
+            return [];
+        }
+
+        $concreteProducts = [];
+
+        /** @var \Orm\Zed\Product\Persistence\SpyProduct $productConcreteEntity */
+        foreach ($productConcreteEntities as $productConcreteEntity) {
+            $concreteProducts[] = [
+                ProductConstants::FILTERED_PRODUCTS_CONCRETE_ID_KEY => $productConcreteEntity->getIdProduct(),
+                ProductConstants::FILTERED_PRODUCTS_RESULT_KEY => $productConcreteEntity->getSku(),
+            ];
+        }
+
+        return $concreteProducts;
+    }
+
+    /**
+     * @param string $localizedName
+     * @param int $limit
+     *
+     * @return array
+     */
+    public function filterProductConcreteByLocalizedName(string $localizedName, int $limit): array
+    {
+        $locale = $this->localeFacade
+            ->getCurrentLocale();
+
+        $locale->requireIdLocale();
+
+        $productConcreteEntities = $this->productQueryContainer
+            ->queryProductConcreteWithName(
+                $locale->getIdLocale()
+            )
+            ->useSpyProductLocalizedAttributesQuery()
+                ->filterByName_Like('%' . $localizedName . '%')
+                ->endUse()
+            ->limit($limit)
+            ->find();
+
+        if (count($productConcreteEntities) === 0) {
+            return [];
+        }
+
+        $concreteProducts = [];
+
+        /** @var \Orm\Zed\Product\Persistence\SpyProduct $productConcreteEntity */
+        foreach ($productConcreteEntities as $productConcreteEntity) {
+            $concreteProducts[] = [
+                ProductConstants::FILTERED_PRODUCTS_CONCRETE_ID_KEY => $productConcreteEntity->getIdProduct(),
+                ProductConstants::FILTERED_PRODUCTS_RESULT_KEY => $productConcreteEntity
+                    ->getVirtualColumn(ProductConstants::FILTERED_PRODUCTS_PRODUCT_NAME_COLUMN),
+            ];
+        }
+
+        return $concreteProducts;
     }
 
     /**
