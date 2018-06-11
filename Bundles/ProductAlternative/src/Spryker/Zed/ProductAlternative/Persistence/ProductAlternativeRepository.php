@@ -22,33 +22,6 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
      *
      * @api
      *
-     * @return \Orm\Zed\ProductAlternative\Persistence\SpyProductAlternativeQuery
-     */
-    public function queryProductAlternative(): SpyProductAlternativeQuery
-    {
-        return SpyProductAlternativeQuery::create();
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param int $idProductConcrete
-     *
-     * @return \Orm\Zed\ProductAlternative\Persistence\SpyProductAlternativeQuery
-     */
-    public function queryProductAlternativeByIdProductConcrete(int $idProductConcrete): SpyProductAlternativeQuery
-    {
-        return $this->queryProductAlternative()
-            ->filterByFkProduct($idProductConcrete);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param int $idProductConcrete
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeCollectionTransfer
@@ -175,5 +148,24 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
         }
 
         return $productAlternativeCollectionTransfer;
+    }
+
+    /**
+     * @return \Orm\Zed\ProductAlternative\Persistence\SpyProductAlternativeQuery
+     */
+    protected function queryProductAlternative(): SpyProductAlternativeQuery
+    {
+        return SpyProductAlternativeQuery::create();
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return \Orm\Zed\ProductAlternative\Persistence\SpyProductAlternativeQuery
+     */
+    protected function queryProductAlternativeByIdProductConcrete(int $idProductConcrete): SpyProductAlternativeQuery
+    {
+        return $this->queryProductAlternative()
+            ->filterByFkProduct($idProductConcrete);
     }
 }

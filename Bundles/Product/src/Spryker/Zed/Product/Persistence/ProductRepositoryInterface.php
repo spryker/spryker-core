@@ -8,57 +8,9 @@
 namespace Spryker\Zed\Product\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
-use Orm\Zed\Product\Persistence\SpyProductQuery;
 
 interface ProductRepositoryInterface
 {
-    /**
-     * Specification:
-     * - Returns product abstract query.
-     *
-     * @api
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
-     */
-    public function queryProductAbstract(): SpyProductAbstractQuery;
-
-    /**
-     * Specification:
-     * - Returns product concrete query.
-     *
-     * @api
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
-     */
-    public function queryProduct(): SpyProductQuery;
-
-    /**
-     * Specification:
-     * - Returns product abstract query with name as virtual column.
-     * - Virtual column name defined in ProductConstants.
-     *
-     * @api
-     *
-     * @param int $idLocale
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
-     */
-    public function queryProductAbstractWithName(int $idLocale): SpyProductAbstractQuery;
-
-    /**
-     * Specification:
-     * - Returns product concrete query with name as virtual column.
-     * - Virtual column name defined in ProductConstants.
-     *
-     * @api
-     *
-     * @param int $idLocale
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
-     */
-    public function queryProductConcreteWithName(int $idLocale): SpyProductQuery;
-
     /**
      * Specification:
      * - Filters abstract products by SKU and returns associative array of abstract products.

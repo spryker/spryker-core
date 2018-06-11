@@ -17,4 +17,18 @@ interface ProductAlternativeToProductFacadeInterface
      * @return \Generated\Shared\Transfer\ProductSuggestionDetailsTransfer
      */
     public function getSuggestionDetails(string $suggestion): ProductSuggestionDetailsTransfer;
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
+     */
+    public function findProductAbstractById($idProductAbstract);
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
+     */
+    public function findProductConcreteById($idProductConcrete);
 }

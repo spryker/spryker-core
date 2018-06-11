@@ -15,68 +15,11 @@ use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Shared\Product\ProductConstants;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
+/**
+ * @method \Spryker\Zed\Product\Persistence\ProductPersistenceFactory getFactory()
+ */
 class ProductRepository extends AbstractRepository implements ProductRepositoryInterface
 {
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
-     */
-    public function queryProductAbstract(): SpyProductAbstractQuery
-    {
-        return SpyProductAbstractQuery::create();
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
-     */
-    public function queryProduct(): SpyProductQuery
-    {
-        return SpyProductQuery::create();
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param int $idLocale
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
-     */
-    public function queryProductAbstractWithName(int $idLocale): SpyProductAbstractQuery
-    {
-        return $this->queryProductAbstract()
-            ->useSpyProductAbstractLocalizedAttributesQuery()
-            ->filterByFkLocale($idLocale)
-            ->endUse()
-            ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, ProductConstants::COL_FILTERED_PRODUCTS_PRODUCT_NAME);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param int $idLocale
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
-     */
-    public function queryProductConcreteWithName(int $idLocale): SpyProductQuery
-    {
-        return $this->queryProduct()
-            ->useSpyProductLocalizedAttributesQuery()
-            ->filterByFkLocale($idLocale)
-            ->endUse()
-            ->withColumn(SpyProductLocalizedAttributesTableMap::COL_NAME, ProductConstants::COL_FILTERED_PRODUCTS_PRODUCT_NAME);
-    }
-
     /**
      * {@inheritdoc}
      *
@@ -211,5 +154,49 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
         }
 
         return $concreteProducts;
+    }
+
+    /**
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
+    protected function queryProductAbstract(): SpyProductAbstractQuery
+    {
+        return SpyProductAbstractQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    protected function queryProduct(): SpyProductQuery
+    {
+        return SpyProductQuery::create();
+    }
+
+    /**
+     * @param int $idLocale
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
+    protected function queryProductAbstractWithName(int $idLocale): SpyProductAbstractQuery
+    {
+        return $this->queryProductAbstract()
+            ->useSpyProductAbstractLocalizedAttributesQuery()
+            ->filterByFkLocale($idLocale)
+            ->endUse()
+            ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, ProductConstants::COL_FILTERED_PRODUCTS_PRODUCT_NAME);
+    }
+
+    /**
+     * @param int $idLocale
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    protected function queryProductConcreteWithName(int $idLocale): SpyProductQuery
+    {
+        return $this->queryProduct()
+            ->useSpyProductLocalizedAttributesQuery()
+            ->filterByFkLocale($idLocale)
+            ->endUse()
+            ->withColumn(SpyProductLocalizedAttributesTableMap::COL_NAME, ProductConstants::COL_FILTERED_PRODUCTS_PRODUCT_NAME);
     }
 }

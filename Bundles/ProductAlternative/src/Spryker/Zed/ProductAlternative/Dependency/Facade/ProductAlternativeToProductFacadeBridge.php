@@ -33,4 +33,24 @@ class ProductAlternativeToProductFacadeBridge implements ProductAlternativeToPro
     {
         return $this->productFacade->getSuggestionDetails($suggestion);
     }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
+     */
+    public function findProductAbstractById($idProductAbstract)
+    {
+        return $this->productFacade->findProductAbstractById($idProductAbstract);
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
+     */
+    public function findProductConcreteById($idProductConcrete)
+    {
+        return $this->productFacade->findProductConcreteById($idProductConcrete);
+    }
 }
