@@ -16,7 +16,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/business-on-behalf": "Business on behalf introduces is default column: ^1.0.0"
+    "spryker/business-on-behalf": "Business on behalf introduces is default column in company user table: ^1.0.0"
   },
   "autoload": {
     "psr-4": {

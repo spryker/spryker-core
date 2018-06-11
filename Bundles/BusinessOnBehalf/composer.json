@@ -4,7 +4,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/company-user": "^1.0.0",
+    "spryker/company-user": "^1.2.0",
     "spryker/kernel": "^3.0.0",
     "spryker/zed-request": "^3.0.0"
   },
@@ -14,7 +14,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/customer": "If you want to have idCustomer in Customer."
+    "spryker/customer": "If you need idCustomer in Customer after registration: ^7.10.0"
   },
   "autoload": {
     "psr-4": {
