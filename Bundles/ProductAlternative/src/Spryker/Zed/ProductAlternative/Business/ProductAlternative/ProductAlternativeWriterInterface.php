@@ -33,21 +33,12 @@ interface ProductAlternativeWriterInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function persistProductAlternatives(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
+    public function persistProductAlternative(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
 
     /**
-     * @param int $idBaseProduct
-     * @param int $idProductAbstract
+     * @param int $idProductAlternative
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
      */
-    public function deleteProductAbstractAlternativeResponse(int $idBaseProduct, int $idProductAbstract): ProductAlternativeResponseTransfer;
-
-    /**
-     * @param int $idBaseProduct
-     * @param int $idProductConcrete
-     *
-     * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
-     */
-    public function deleteProductConcreteAlternativeResponse(int $idBaseProduct, int $idProductConcrete): ProductAlternativeResponseTransfer;
+    public function deleteProductAlternativeByIdProductAlternativeResponse(int $idProductAlternative): ProductAlternativeResponseTransfer;
 }

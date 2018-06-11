@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductAlternativeGui\Communication\Controller;
 
 use Generated\Shared\Transfer\ProductAlternativeResponseTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -16,79 +17,97 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DeleteController extends AbstractController
 {
-    protected const FIELD_ID_PRODUCT = 'id-product';
-    protected const FIELD_ID_ABSTRACT_ALTERNATIVE = 'id-abstract-alternative';
-    protected const FIELD_ID_CONCRETE_ALTERNATIVE = 'id-concrete-alternative';
+    protected const FIELD_ID_PRODUCT_ALTERNATIVE = 'id-product-alternative';
 
-    protected const MESSAGE_PRODUCT_ALTERNATIVE_DELETE_SUCCESS = 'Product Alternative was deleted successfully.';
-    protected const MESSAGE_PRODUCT_ALTERNATIVE_DELETE_ERROR = 'Product Alternative was not deleted.';
-
-    protected const REDIRECT_URL = '/product-management/edit/variant?id-product=%d&id-product-abstract=%d';
+    protected const FIELD_REDIRECT_ID_PRODUCT_CONCRETE = 'id-product';
+    protected const FIELD_REDIRECT_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
 
     /**
+     * TODO: ProductAlternativeResponseTransfer also contains messages; check them out later.
+     */
+
+    protected const MESSAGE_DELETE_PRODUCT_ALTERNATIVE_SUCCESS = 'Product Alternative was deleted successfully.';
+    protected const MESSAGE_DELETE_PRODUCT_ALTERNATIVE_ERROR = 'Product Alternative was not deleted.';
+
+    protected const REDIRECT_URL_PRODUCT_ALTERNATIVE_DELETE = '/product-management/edit/variant?id-product=%d&id-product-abstract=%d&type=#tab-content-alternatives';
+
+    /**
+     * TODO: Add ids validation.
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAbstractAction(Request $request): array
+    public function deleteAbstractAction(Request $request): RedirectResponse
     {
-        $idProduct = $request->query->get(static::FIELD_ID_PRODUCT);
-        $idProductAbstractAlternative = $request->query->get(static::FIELD_ID_ABSTRACT_ALTERNATIVE);
+        $idProductAlternative = $request->query->get(static::FIELD_ID_PRODUCT_ALTERNATIVE);
+
+        $idProduct = $request->query->get(static::FIELD_REDIRECT_ID_PRODUCT_CONCRETE);
+        $idProductAbstract = $request->query->get(static::FIELD_REDIRECT_ID_PRODUCT_ABSTRACT);
 
         /** @var \Generated\Shared\Transfer\ProductAlternativeResponseTransfer $productAlternativeResponseTransfer */
         $productAlternativeResponseTransfer = $this
             ->getFactory()
             ->getProductAlternativeFacade()
-            ->deleteProductAbstractAlternative(
-                $idProduct,
-                $idProductAbstractAlternative
+            ->deleteProductAlternativeByIdProductAlternativeResponse(
+                $idProductAlternative
             );
 
-        return $this->handleProductAlternativeDeletion($productAlternativeResponseTransfer);
+        $this->handleProductAlternativeDeletion($productAlternativeResponseTransfer);
+
+        return $this->redirectResponse(sprintf(
+            static::REDIRECT_URL_PRODUCT_ALTERNATIVE_DELETE,
+            $idProduct,
+            $idProductAbstract
+        ));
     }
 
     /**
+     * TODO: Add ids validation.
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteConcreteAction(Request $request): array
+    public function deleteConcreteAction(Request $request): RedirectResponse
     {
-        $idProduct = $request->query->get(static::FIELD_ID_PRODUCT);
-        $idProductConcreteAlternative = $request->query->get(static::FIELD_ID_CONCRETE_ALTERNATIVE);
+        $idProductAlternative = $request->query->get(static::FIELD_ID_PRODUCT_ALTERNATIVE);
+
+        $idProduct = $request->query->get(static::FIELD_REDIRECT_ID_PRODUCT_CONCRETE);
+        $idProductAbstract = $request->query->get(static::FIELD_REDIRECT_ID_PRODUCT_ABSTRACT);
 
         /** @var \Generated\Shared\Transfer\ProductAlternativeResponseTransfer $productAlternativeResponseTransfer */
         $productAlternativeResponseTransfer = $this
             ->getFactory()
             ->getProductAlternativeFacade()
-            ->deleteProductConcreteAlternative(
-                $idProduct,
-                $idProductConcreteAlternative
+            ->deleteProductAlternativeByIdProductAlternativeResponse(
+                $idProductAlternative
             );
 
-        return $this->handleProductAlternativeDeletion($productAlternativeResponseTransfer);
+        $this->handleProductAlternativeDeletion($productAlternativeResponseTransfer);
+
+        return $this->redirectResponse(sprintf(
+            static::REDIRECT_URL_PRODUCT_ALTERNATIVE_DELETE,
+            $idProduct,
+            $idProductAbstract
+        ));
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductAlternativeResponseTransfer $productAlternativeResponseTransfer
      *
-     * @return array
+     * @return void
      */
-    protected function handleProductAlternativeDeletion(ProductAlternativeResponseTransfer $productAlternativeResponseTransfer): array
+    protected function handleProductAlternativeDeletion(ProductAlternativeResponseTransfer $productAlternativeResponseTransfer): void
     {
         if ($productAlternativeResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(
-                static::MESSAGE_PRODUCT_ALTERNATIVE_DELETE_SUCCESS
+                static::MESSAGE_DELETE_PRODUCT_ALTERNATIVE_SUCCESS
             );
 
-            return [
-                'productAlternative' => $productAlternativeResponseTransfer
-                    ->getProductAlternative(),
-            ];
+            return;
         }
 
-        $this->addErrorMessage(static::MESSAGE_PRODUCT_ALTERNATIVE_DELETE_ERROR);
-
-        return [];
+        $this->addErrorMessage(static::MESSAGE_DELETE_PRODUCT_ALTERNATIVE_ERROR);
     }
 }

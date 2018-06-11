@@ -1,11 +1,12 @@
 {% set productAlternatives = form.vars.data.productAlternatives %}
-{% set productAbstractAlternativeDeleteLink = '/product-alternative-gui/delete/delete-abstract?id-product=%d&id-abstract-alternative=%d' %}
-{% set productConcreteAlternativeDeleteLink = '/product-alternative-gui/delete/delete-abstract?id-product=%d&id-concrete-alternative=%d' %}
+
+{# TODO: Translations must be checked. #}
 
 <div class="well">
     {% filter trans|raw %}
-        <h3>Product Alternative(s)</h3>
-        <p>Below are the product alternatives listed.</p>
+        <h3>Product Alternatives</h3>
+        <p>This is a list of alternative products that current Concrete Product has.</p>
+        <p><i>Note: You can add new product alternative using text field below.</i></p>
     {% endfilter %}
 </div>
 

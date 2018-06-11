@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductAlternative\Business\ProductAlternative;
 
 use Generated\Shared\Transfer\ProductAlternativeListItemTransfer;
-use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
+use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
@@ -160,43 +160,43 @@ class ProductAlternativeListHydrator implements ProductAlternativeListHydratorIn
 
     /**
      * @param int $idProductAbstractAlternative
-     * @param \Generated\Shared\Transfer\ProductAlternativeListItemTransfer $ProductAlternativeListItemTransfer
+     * @param \Generated\Shared\Transfer\ProductAlternativeListItemTransfer $productAlternativeListItemTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeListItemTransfer
      */
     protected function hydrateListItemWithProductAbstractCategoryData(
         int $idProductAbstractAlternative,
-        ProductAlternativeListItemTransfer $ProductAlternativeListItemTransfer
+        ProductAlternativeListItemTransfer $productAlternativeListItemTransfer
     ): ProductAlternativeListItemTransfer {
         $productAbstractCategories = $this
             ->getProductAbstractCategories($idProductAbstractAlternative);
 
         if (empty($productAbstractCategories)) {
-            return $ProductAlternativeListItemTransfer;
+            return $productAlternativeListItemTransfer;
         }
 
-        return $ProductAlternativeListItemTransfer
+        return $productAlternativeListItemTransfer
             ->setCategories($productAbstractCategories);
     }
 
     /**
      * @param int $idProductConcreteAlternative
-     * @param \Generated\Shared\Transfer\ProductAlternativeListItemTransfer $ProductAlternativeListItemTransfer
+     * @param \Generated\Shared\Transfer\ProductAlternativeListItemTransfer $productAlternativeListItemTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeListItemTransfer
      */
     protected function hydrateListItemWithProductConcreteCategoryData(
         int $idProductConcreteAlternative,
-        ProductAlternativeListItemTransfer $ProductAlternativeListItemTransfer
+        ProductAlternativeListItemTransfer $productAlternativeListItemTransfer
     ): ProductAlternativeListItemTransfer {
         $productConcreteCategories = $this
             ->getProductConcreteCategories($idProductConcreteAlternative);
 
         if (empty($productConcreteCategories)) {
-            return $ProductAlternativeListItemTransfer;
+            return $productAlternativeListItemTransfer;
         }
 
-        return $ProductAlternativeListItemTransfer
+        return $productAlternativeListItemTransfer
             ->setCategories($productConcreteCategories);
     }
 
@@ -212,7 +212,15 @@ class ProductAlternativeListHydrator implements ProductAlternativeListHydratorIn
             ->queryProductCategoryMappings()
             ->filterByFkProductAbstract($idProductAbstract)
             ->innerJoinSpyCategory()
-            ->withColumn(SpyCategoryTableMap::COL_CATEGORY_KEY, static::COL_CATEGORY)
+            ->useSpyCategoryQuery()
+                ->innerJoinAttribute()
+                ->useAttributeQuery()
+                    ->filterByFkLocale(
+                        $this->getCurrentLocaleId()
+                    )
+                ->endUse()
+                ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, static::COL_CATEGORY)
+            ->endUse()
             ->select(static::COL_CATEGORY)
             ->find()
             ->toArray();
@@ -249,7 +257,9 @@ class ProductAlternativeListHydrator implements ProductAlternativeListHydratorIn
             ->filterByIdProduct($idProductConcrete)
             ->innerJoinSpyProductLocalizedAttributes()
             ->useSpyProductLocalizedAttributesQuery()
-                ->filterByFkLocale($this->getCurrentLocaleId())
+                ->filterByFkLocale(
+                    $this->getCurrentLocaleId()
+                )
             ->endUse()
             ->withColumn(SpyProductLocalizedAttributesTableMap::COL_NAME, static::COL_NAME)
             ->findOne();
@@ -268,7 +278,9 @@ class ProductAlternativeListHydrator implements ProductAlternativeListHydratorIn
             ->filterByIdProductAbstract($idProductAbstract)
             ->innerJoinSpyProductAbstractLocalizedAttributes()
             ->useSpyProductAbstractLocalizedAttributesQuery()
-                ->filterByFkLocale($this->getCurrentLocaleId())
+                ->filterByFkLocale(
+                    $this->getCurrentLocaleId()
+                )
             ->endUse()
             ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, static::COL_NAME)
             ->findOne();

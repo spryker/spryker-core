@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductAlternative\Business\ProductAlternative;
 
-use ArrayObject;
 use Generated\Shared\Transfer\ProductAlternativeCollectionTransfer;
 use Generated\Shared\Transfer\ProductAlternativeListItemTransfer;
 use Generated\Shared\Transfer\ProductAlternativeListTransfer;
@@ -27,15 +26,23 @@ class ProductAlternativeListManager implements ProductAlternativeListManagerInte
     protected $productAlternativeReader;
 
     /**
+     * @var \Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeListSorterInterface
+     */
+    protected $productAlternativeListSorter;
+
+    /**
      * @param \Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeListHydratorInterface $productAlternativeListHydrator
      * @param \Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeReaderInterface $productAlternativeReader
+     * @param \Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeListSorterInterface $productAlternativeListSorter
      */
     public function __construct(
         ProductAlternativeListHydratorInterface $productAlternativeListHydrator,
-        ProductAlternativeReaderInterface $productAlternativeReader
+        ProductAlternativeReaderInterface $productAlternativeReader,
+        ProductAlternativeListSorterInterface $productAlternativeListSorter
     ) {
         $this->productAlternativeListHydrator = $productAlternativeListHydrator;
         $this->productAlternativeReader = $productAlternativeReader;
+        $this->productAlternativeListSorter = $productAlternativeListSorter;
     }
 
     /**
@@ -72,32 +79,9 @@ class ProductAlternativeListManager implements ProductAlternativeListManagerInte
             );
         }
 
-        $this->sortProductAlternativeList($productAlternativeListTransfer);
-
-        return $productAlternativeListTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductAlternativeListTransfer $productAlternativeListTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductAlternativeListTransfer
-     */
-    protected function sortProductAlternativeList(ProductAlternativeListTransfer $productAlternativeListTransfer): ProductAlternativeListTransfer
-    {
-        $sortedProductAlternativeList = $productAlternativeListTransfer
-            ->getProductAlternatives()
-            ->getArrayCopy();
-
-        usort(
-            $sortedProductAlternativeList,
-            function (ProductAlternativeListItemTransfer $a, ProductAlternativeListItemTransfer $b) {
-                return strcmp($a->getType(), $b->getType());
-            }
-        );
-
-        return $productAlternativeListTransfer->setProductAlternatives(
-            new ArrayObject($sortedProductAlternativeList)
-        );
+        return $this
+            ->productAlternativeListSorter
+            ->sortProductAlternativeList($productAlternativeListTransfer);
     }
 
     /**
@@ -117,6 +101,10 @@ class ProductAlternativeListManager implements ProductAlternativeListManagerInte
         $productAlternativeListItemTransfer = (new ProductAlternativeListItemTransfer())
             ->setIdProductAlternative(
                 $productAlternativeTransfer->getIdProductAlternative()
+            )
+            ->setIdProduct(
+                $productAlternativeTransfer->getIdProductAbstractAlternative()
+                ?: $productAlternativeTransfer->getIdProductConcreteAlternative()
             );
 
         if ($idProductAbstract) {

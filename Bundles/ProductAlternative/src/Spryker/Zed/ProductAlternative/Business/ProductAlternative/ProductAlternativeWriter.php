@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ResponseMessageTransfer;
 use Spryker\Zed\ProductAlternative\Business\Exception\ProductAlternativeHasNoBaseProductException;
 use Spryker\Zed\ProductAlternative\Business\Exception\ProductAlternativeIsNotDefinedException;
+use Spryker\Zed\ProductAlternative\Dependency\Facade\ProductAlternativeToProductFacadeInterface;
 use Spryker\Zed\ProductAlternative\Persistence\ProductAlternativeEntityManagerInterface;
 
 class ProductAlternativeWriter implements ProductAlternativeWriterInterface
@@ -31,15 +32,23 @@ class ProductAlternativeWriter implements ProductAlternativeWriterInterface
     protected $productAlternativeReader;
 
     /**
+     * @var \Spryker\Zed\ProductAlternative\Dependency\Facade\ProductAlternativeToProductFacadeInterface
+     */
+    protected $productFacade;
+
+    /**
      * @param \Spryker\Zed\ProductAlternative\Persistence\ProductAlternativeEntityManagerInterface $productAlternativeEntityManager
      * @param \Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeReaderInterface $productAlternativeReader
+     * @param \Spryker\Zed\ProductAlternative\Dependency\Facade\ProductAlternativeToProductFacadeInterface $productFacade
      */
     public function __construct(
         ProductAlternativeEntityManagerInterface $productAlternativeEntityManager,
-        ProductAlternativeReaderInterface $productAlternativeReader
+        ProductAlternativeReaderInterface $productAlternativeReader,
+        ProductAlternativeToProductFacadeInterface $productFacade
     ) {
         $this->productAlternativeEntityManager = $productAlternativeEntityManager;
         $this->productAlternativeReader = $productAlternativeReader;
+        $this->productFacade = $productFacade;
     }
 
     /**
@@ -78,78 +87,87 @@ class ProductAlternativeWriter implements ProductAlternativeWriterInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function persistProductAlternatives(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
+    public function persistProductAlternative(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
-        /** @var \Generated\Shared\Transfer\ProductAlternativeTransfer $productAlternative */
-        foreach ($productConcreteTransfer->getProductAlternatives() as $productAlternative) {
-            $idProductAlternative = $productAlternative->getIdProductAlternative();
+        /** @var \Generated\Shared\Transfer\ProductAlternativeToPersistTransfer $productAlternativeToPersist */
+        $productAlternativeToPersist = $productConcreteTransfer[ProductConcreteTransfer::PRODUCT_ALTERNATIVE_TO_PERSIST];
 
-            if (!$idProductAlternative) {
-                if (!$productAlternative->getIdProduct()) {
-                    throw new ProductAlternativeHasNoBaseProductException(
-                        'Unable to create an alternative of nothing. Base id product must be set.'
-                    );
-                }
+        if (!$productAlternativeToPersist->getIdProduct()) {
+            throw new ProductAlternativeHasNoBaseProductException(
+                'Unable to create an alternative of nothing. Product id must be set.'
+            );
+        }
 
-                if ($productAlternative->getIdProductConcreteAlternative()) {
-                    $this->createProductConcreteAlternative(
-                        $productConcreteTransfer->getIdProductConcrete(),
-                        $productAlternative->getIdProductConcreteAlternative()
-                    );
+        if (empty($productAlternativeToPersist->getSuggest())) {
+            throw new ProductAlternativeHasNoBaseProductException(
+                'Unable to create an alternative from nothing. Suggest field must be set.'
+            );
+        }
 
-                    return $productConcreteTransfer;
-                }
+        $productSuggestionDetails = $this
+            ->productFacade
+            ->getSuggestionDetails(
+                $productAlternativeToPersist->getSuggest()
+            );
 
-                if ($productAlternative->getIdProductAbstractAlternative()) {
-                    $this->createProductAbstractAlternative(
-                        $productConcreteTransfer->getIdProductConcrete(),
-                        $productAlternative->getIdProductAbstractAlternative()
-                    );
+        if (!$productSuggestionDetails->getIsSuccessful()) {
+            return $productConcreteTransfer;
+        }
 
-                    return $productConcreteTransfer;
-                }
+        /** @var null|int $idProductAbstractAlternative */
+        $idProductAbstractAlternative = $productSuggestionDetails->getIdProductAbstract();
+        if ($idProductAbstractAlternative) {
+            $existingProductAbstractAlternative = $this
+                ->productAlternativeReader
+                ->getProductAbstractAlternative(
+                    $productConcreteTransfer->getIdProductConcrete(),
+                    $idProductAbstractAlternative
+                );
 
-                throw new ProductAlternativeIsNotDefinedException(
-                    'You must set an id of abstract or concrete product alternative.'
+            if (!$existingProductAbstractAlternative) {
+                $this->createProductAbstractAlternative(
+                    $productConcreteTransfer->getIdProductConcrete(),
+                    $idProductAbstractAlternative
                 );
             }
 
-            $this->updateProductAlternative($productAlternative);
+            return $productConcreteTransfer;
         }
 
-        return $productConcreteTransfer;
+        /** @var null|int $idProductConcreteAlternative */
+        $idProductConcreteAlternative = $productSuggestionDetails->getIdProductConcrete();
+        if ($idProductConcreteAlternative) {
+            $existingProductConcreteAlternative = $this
+                ->productAlternativeReader
+                ->getProductConcreteAlternative(
+                    $productConcreteTransfer->getIdProductConcrete(),
+                    $idProductConcreteAlternative
+                );
+
+            if (!$existingProductConcreteAlternative) {
+                $this->createProductConcreteAlternative(
+                    $productConcreteTransfer->getIdProductConcrete(),
+                    $idProductConcreteAlternative
+                );
+            }
+
+            return $productConcreteTransfer;
+        }
+
+        throw new ProductAlternativeIsNotDefinedException(
+            'You must set an id of abstract or concrete product alternative.'
+        );
     }
 
     /**
-     * @param int $idBaseProduct
-     * @param int $idProductAbstract
+     * @param int $idProductAlternative
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
      */
-    public function deleteProductAbstractAlternativeResponse(int $idBaseProduct, int $idProductAbstract): ProductAlternativeResponseTransfer
+    public function deleteProductAlternativeByIdProductAlternativeResponse(int $idProductAlternative): ProductAlternativeResponseTransfer
     {
         $productAlternative = $this->productAlternativeReader
-            ->getProductAbstractAlternative(
-                $idBaseProduct,
-                $idProductAbstract
-            );
-
-        return $this->handleProductAlternativeDeletion($productAlternative);
-    }
-
-    /**
-     * @param int $idBaseProduct
-     * @param int $idProductConcrete
-     *
-     * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
-     */
-    public function deleteProductConcreteAlternativeResponse(int $idBaseProduct, int $idProductConcrete): ProductAlternativeResponseTransfer
-    {
-        $productAlternative = $this->productAlternativeReader
-            ->getProductConcreteAlternative(
-                $idBaseProduct,
-                $idProductConcrete
-            );
+            ->getProductAlternativeByIdProductAlternative($idProductAlternative);
 
         return $this->handleProductAlternativeDeletion($productAlternative);
     }
@@ -185,24 +203,15 @@ class ProductAlternativeWriter implements ProductAlternativeWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductAlternativeTransfer $productAlternativeTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
-     */
-    protected function updateProductAlternative(ProductAlternativeTransfer $productAlternativeTransfer): ProductAlternativeTransfer
-    {
-        return $this->productAlternativeEntityManager
-            ->updateProductAlternative($productAlternativeTransfer);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ProductAlternativeTransfer|null $productAlternativeTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
      */
     protected function handleProductAlternativeDeletion(?ProductAlternativeTransfer $productAlternativeTransfer): ProductAlternativeResponseTransfer
     {
-        $productAlternativeResponseTransfer = new ProductAlternativeResponseTransfer();
+        $productAlternativeResponseTransfer = (new ProductAlternativeResponseTransfer())
+            ->setProductAlternative($productAlternativeTransfer);
+
         $responseMessageTransfer = new ResponseMessageTransfer();
 
         if ($productAlternativeTransfer) {

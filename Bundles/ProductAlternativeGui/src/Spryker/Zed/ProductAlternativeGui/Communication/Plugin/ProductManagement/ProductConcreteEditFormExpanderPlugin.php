@@ -28,8 +28,8 @@ class ProductConcreteEditFormExpanderPlugin extends AbstractPlugin implements Pr
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $formType = $this->getFactory()->createAddAlternativeForm();
-        $dataProvider = $this->getFactory()->createAddAlternativeFormDataProvider();
+        $formType = $this->getFactory()->createAddProductAlternativeForm();
+        $dataProvider = $this->getFactory()->createAddProductAlternativeFormDataProvider();
 
         $formType->buildForm(
             $builder,

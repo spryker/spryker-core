@@ -12,11 +12,14 @@ use Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativ
 use Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeListHydratorInterface;
 use Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeListManager;
 use Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeListManagerInterface;
+use Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeListSorter;
+use Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeListSorterInterface;
 use Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeReader;
 use Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeReaderInterface;
 use Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeWriter;
 use Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeWriterInterface;
 use Spryker\Zed\ProductAlternative\Dependency\Facade\ProductAlternativeToLocaleFacadeInterface;
+use Spryker\Zed\ProductAlternative\Dependency\Facade\ProductAlternativeToProductFacadeInterface;
 use Spryker\Zed\ProductAlternative\Dependency\QueryContainer\ProductAlternativeToProductCategoryQueryContainerInterface;
 use Spryker\Zed\ProductAlternative\Dependency\QueryContainer\ProductAlternativeToProductQueryContainerInterface;
 use Spryker\Zed\ProductAlternative\ProductAlternativeDependencyProvider;
@@ -34,7 +37,8 @@ class ProductAlternativeBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductAlternativeWriter(
             $this->getEntityManager(),
-            $this->createProductAlternativeReader()
+            $this->createProductAlternativeReader(),
+            $this->getProductFacade()
         );
     }
 
@@ -61,13 +65,22 @@ class ProductAlternativeBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeListSorterInterface
+     */
+    public function createProductAlternativeListSorter(): ProductAlternativeListSorterInterface
+    {
+        return new ProductAlternativeListSorter();
+    }
+
+    /**
      * @return \Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeListManagerInterface
      */
     public function createProductAlternativeListManager(): ProductAlternativeListManagerInterface
     {
         return new ProductAlternativeListManager(
             $this->createProductAlternativeListHydrator(),
-            $this->createProductAlternativeReader()
+            $this->createProductAlternativeReader(),
+            $this->createProductAlternativeListSorter()
         );
     }
 
@@ -93,5 +106,13 @@ class ProductAlternativeBusinessFactory extends AbstractBusinessFactory
     public function getLocaleFacade(): ProductAlternativeToLocaleFacadeInterface
     {
         return $this->getProvidedDependency(ProductAlternativeDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductAlternative\Dependency\Facade\ProductAlternativeToProductFacadeInterface
+     */
+    public function getProductFacade(): ProductAlternativeToProductFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductAlternativeDependencyProvider::FACADE_PRODUCT);
     }
 }

@@ -11,9 +11,9 @@ use Spryker\Zed\Gui\Communication\Form\Type\AutosuggestType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class AddAlternativeForm extends AbstractType
+class AddProductAlternativeForm extends AbstractType
 {
-    protected const FIELD_PRODUCT_NAME_OR_SKU_AUTOCOMPLETE = 'searchtext-autocomplete';
+    public const FIELD_PRODUCT_NAME_OR_SKU_AUTOCOMPLETE = 'searchtext-autocomplete';
 
     /**
      * @return null|string
@@ -39,7 +39,7 @@ class AddAlternativeForm extends AbstractType
      *
      * @return $this
      */
-    protected function addProductNameOrSkuAutocompleteField(FormBuilderInterface $builder)
+    protected function addProductNameOrSkuAutocompleteField(FormBuilderInterface $builder): self
     {
         $builder->add(static::FIELD_PRODUCT_NAME_OR_SKU_AUTOCOMPLETE, AutosuggestType::class, [
             'label' => 'Add Product Alternative by Name or SKU',

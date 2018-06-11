@@ -115,12 +115,12 @@ class ProductAlternativeFacade extends AbstractFacade implements ProductAlternat
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function persistProductAlternatives(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
+    public function persistProductAlternative(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
         return $this
             ->getFactory()
             ->createProductAlternativeWriter()
-            ->persistProductAlternatives($productConcreteTransfer);
+            ->persistProductAlternative($productConcreteTransfer);
     }
 
     /**
@@ -128,34 +128,15 @@ class ProductAlternativeFacade extends AbstractFacade implements ProductAlternat
      *
      * @api
      *
-     * @param int $idBaseProduct
-     * @param int $idProductAbstract
+     * @param int $idProductAlternative
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
      */
-    public function deleteProductAbstractAlternative(int $idBaseProduct, int $idProductAbstract): ProductAlternativeResponseTransfer
+    public function deleteProductAlternativeByIdProductAlternativeResponse(int $idProductAlternative): ProductAlternativeResponseTransfer
     {
         return $this
             ->getFactory()
             ->createProductAlternativeWriter()
-            ->deleteProductAbstractAlternativeResponse($idBaseProduct, $idProductAbstract);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param int $idBaseProduct
-     * @param int $idProductConcrete
-     *
-     * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
-     */
-    public function deleteProductConcreteAlternative(int $idBaseProduct, int $idProductConcrete): ProductAlternativeResponseTransfer
-    {
-        return $this
-            ->getFactory()
-            ->createProductAlternativeWriter()
-            ->deleteProductConcreteAlternativeResponse($idBaseProduct, $idProductConcrete);
+            ->deleteProductAlternativeByIdProductAlternativeResponse($idProductAlternative);
     }
 }

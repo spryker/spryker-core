@@ -38,6 +38,8 @@ use Spryker\Zed\Product\Business\Product\Suggest\ProductAbstractSuggester;
 use Spryker\Zed\Product\Business\Product\Suggest\ProductAbstractSuggesterInterface;
 use Spryker\Zed\Product\Business\Product\Suggest\ProductConcreteSuggester;
 use Spryker\Zed\Product\Business\Product\Suggest\ProductConcreteSuggesterInterface;
+use Spryker\Zed\Product\Business\Product\Suggest\ProductSuggestionDetailsProvider;
+use Spryker\Zed\Product\Business\Product\Suggest\ProductSuggestionDetailsProviderInterface;
 use Spryker\Zed\Product\Business\Product\Touch\ProductAbstractTouch;
 use Spryker\Zed\Product\Business\Product\Touch\ProductConcreteTouch;
 use Spryker\Zed\Product\Business\Product\Url\ProductAbstractAfterUpdateUrlObserver;
@@ -305,6 +307,18 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductConcreteSuggester(
             $this->getConfig(),
+            $this->createProductConcreteManager()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\Suggest\ProductSuggestionDetailsProviderInterface
+     */
+    public function createProductSuggestionDetailsProvider(): ProductSuggestionDetailsProviderInterface
+    {
+        return new ProductSuggestionDetailsProvider(
+            $this->getConfig(),
+            $this->createProductAbstractManager(),
             $this->createProductConcreteManager()
         );
     }
