@@ -7,15 +7,18 @@
 
 namespace Spryker\Zed\ProductPackagingUnitStorage\Dependency\QueryContainer;
 
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
+use Orm\Zed\Product\Persistence\SpyProductQuery;
+
 interface ProductPackagingUnitStorageToProductQueryContainerInterface
 {
     /**
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    public function queryProductAbstract();
+    public function queryProductAbstract(): SpyProductAbstractQuery;
 
     /**
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
-    public function queryProduct();
+    public function queryProduct(): SpyProductQuery;
 }

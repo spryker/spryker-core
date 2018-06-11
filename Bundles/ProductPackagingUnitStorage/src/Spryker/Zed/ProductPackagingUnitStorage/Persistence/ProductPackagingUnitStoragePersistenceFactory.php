@@ -9,6 +9,8 @@ namespace Spryker\Zed\ProductPackagingUnitStorage\Persistence;
 
 use Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyProductAbstractPackagingStorageQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\ProductPackagingUnitStorage\Dependency\Facade\ProductPackagingUnitStorageToProductPackagingUnitFacadeInterface;
+use Spryker\Zed\ProductPackagingUnitStorage\Dependency\QueryContainer\ProductPackagingUnitStorageToProductQueryContainerInterface;
 use Spryker\Zed\ProductPackagingUnitStorage\ProductPackagingUnitStorageDependencyProvider;
 
 /**
@@ -20,15 +22,15 @@ class ProductPackagingUnitStoragePersistenceFactory extends AbstractPersistenceF
     /**
      * @return \Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyProductAbstractPackagingStorageQuery
      */
-    public function createSpyProductAbstractPackagingStorageQuery()
+    public function createSpyProductAbstractPackagingStorageQuery(): SpyProductAbstractPackagingStorageQuery
     {
         return SpyProductAbstractPackagingStorageQuery::create();
     }
 
     /**
-     * @return \Spryker\Zed\ProductPackagingUnit\Business\ProductPackagingUnitFacadeInterface
+     * @return \Spryker\Zed\ProductPackagingUnitStorage\Dependency\Facade\ProductPackagingUnitStorageToProductPackagingUnitFacadeInterface
      */
-    public function getProductPackagingUnitFacade()
+    public function getProductPackagingUnitFacade(): ProductPackagingUnitStorageToProductPackagingUnitFacadeInterface
     {
         return $this->getProvidedDependency(ProductPackagingUnitStorageDependencyProvider::FACADE_PRODUCT_PACKAGING_UNIT);
     }
@@ -36,7 +38,7 @@ class ProductPackagingUnitStoragePersistenceFactory extends AbstractPersistenceF
     /**
      * @return \Spryker\Zed\ProductPackagingUnitStorage\Dependency\QueryContainer\ProductPackagingUnitStorageToProductQueryContainerInterface
      */
-    public function getProductQueryContainer()
+    public function getProductQueryContainer(): ProductPackagingUnitStorageToProductQueryContainerInterface
     {
         return $this->getProvidedDependency(ProductPackagingUnitStorageDependencyProvider::QUERY_CONTAINER_PRODUCT);
     }

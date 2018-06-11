@@ -8,15 +8,19 @@
 namespace Spryker\Client\ProductPackagingUnitStorage;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\ProductPackagingUnitStorage\Dependency\Client\ProductPackagingUnitStorageToStorageInterface;
+use Spryker\Client\ProductPackagingUnitStorage\Dependency\Service\ProductPackagingUnitStorageToSynchronizationServiceBridge;
 use Spryker\Client\ProductPackagingUnitStorage\Storage\ProductPackagingUnitStorageKeyGenerator;
+use Spryker\Client\ProductPackagingUnitStorage\Storage\ProductPackagingUnitStorageKeyGeneratorInterface;
 use Spryker\Client\ProductPackagingUnitStorage\Storage\ProductPackagingUnitStorageReader;
+use Spryker\Client\ProductPackagingUnitStorage\Storage\ProductPackagingUnitStorageReaderInterface;
 
 class ProductPackagingUnitStorageFactory extends AbstractFactory
 {
     /**
      * @return \Spryker\Client\ProductPackagingUnitStorage\Storage\ProductPackagingUnitStorageReaderInterface
      */
-    public function createPriceAbstractStorageReader()
+    public function createPriceAbstractStorageReader(): ProductPackagingUnitStorageReaderInterface
     {
         return new ProductPackagingUnitStorageReader($this->getStorage(), $this->createPriceProductStorageKeyGenerator());
     }
@@ -24,7 +28,7 @@ class ProductPackagingUnitStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ProductPackagingUnitStorage\Dependency\Client\ProductPackagingUnitStorageToStorageInterface
      */
-    protected function getStorage()
+    protected function getStorage(): ProductPackagingUnitStorageToStorageInterface
     {
         return $this->getProvidedDependency(ProductPackagingUnitStorageDependencyProvider::CLIENT_STORAGE);
     }
@@ -32,7 +36,7 @@ class ProductPackagingUnitStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ProductPackagingUnitStorage\Storage\ProductPackagingUnitStorageKeyGeneratorInterface
      */
-    protected function createPriceProductStorageKeyGenerator()
+    protected function createPriceProductStorageKeyGenerator(): ProductPackagingUnitStorageKeyGeneratorInterface
     {
         return new ProductPackagingUnitStorageKeyGenerator($this->getSynchronizationService());
     }
@@ -40,7 +44,7 @@ class ProductPackagingUnitStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ProductPackagingUnitStorage\Dependency\Service\ProductPackagingUnitStorageToSynchronizationServiceBridge
      */
-    protected function getSynchronizationService()
+    protected function getSynchronizationService(): ProductPackagingUnitStorageToSynchronizationServiceBridge
     {
         return $this->getProvidedDependency(ProductPackagingUnitStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
     }

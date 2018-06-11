@@ -35,7 +35,7 @@ class ProductAbstractPackagingStorageWriter implements ProductAbstractPackagingS
      *
      * @return void
      */
-    public function publish(array $productAbstractIds)
+    public function publish(array $productAbstractIds): void
     {
         $productAbstractPackagingTransfers = $this->getProductAbstractPackagingTransfers($productAbstractIds);
 
@@ -47,10 +47,10 @@ class ProductAbstractPackagingStorageWriter implements ProductAbstractPackagingS
      *
      * @return void
      */
-    public function unpublish(array $productAbstractIds)
+    public function unpublish(array $productAbstractIds): void
     {
         $productAbstractPackagingStorageEntities = $this->queryContainer
-            ->queryProductAbstractPackagingStorageByProductAbstractIds($productAbstractIds);
+            ->getProductAbstractPackagingStorageByProductAbstractIds($productAbstractIds);
 
         foreach ($productAbstractPackagingStorageEntities as $productAbstractPackagingStorageEntity) {
             $this->queryContainer->deleteProductAbstractPackagingStorage($productAbstractPackagingStorageEntity);
@@ -62,7 +62,7 @@ class ProductAbstractPackagingStorageWriter implements ProductAbstractPackagingS
      *
      * @return void
      */
-    protected function storeData(array $productAbstractPackagingTransfers)
+    protected function storeData(array $productAbstractPackagingTransfers): void
     {
         foreach ($productAbstractPackagingTransfers as $productAbstractPackagingTransfer) {
             $this->queryContainer->createProductAbstractPackagingStorage($productAbstractPackagingTransfer);
@@ -74,7 +74,7 @@ class ProductAbstractPackagingStorageWriter implements ProductAbstractPackagingS
      *
      * @return \Generated\Shared\Transfer\ProductAbstractPackagingStorageTransfer[]
      */
-    protected function getProductAbstractPackagingTransfers(array $productAbstractIds)
+    protected function getProductAbstractPackagingTransfers(array $productAbstractIds): array
     {
         $productAbstractPackagingTransfers = [];
 

@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ProductAbstractPackagingStorageTransfer;
 use Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer;
 use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyProductAbstractPackagingStorage;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
@@ -23,34 +24,11 @@ class ProductPackagingUnitStorageQueryContainer extends AbstractQueryContainer i
     /**
      * @api
      *
-     * @param int $productAbstractId
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
-     */
-    public function queryPackageProductsByAbstractId(int $productAbstractId)
-    {
-        return $this->getFactory()
-            ->getProductQueryContainer()
-            ->queryProduct()
-            ->filterByFkProductAbstract($productAbstractId)
-            ->where(sprintf(
-                "%s = true",
-                SpyProductTableMap::COL_IS_ACTIVE
-            ))
-            ->useSpyProductPackagingUnitQuery()
-                ->leftJoinProductPackagingUnitType()
-                ->leftJoinSpyProductPackagingUnitAmount()
-            ->endUse();
-    }
-
-    /**
-     * @api
-     *
      * @param array $productAbstractIds
      *
-     * @return \Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyProductAbstractPackagingStorage[]
+     * @return \Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyProductAbstractPackagingStorage[]|\Propel\Runtime\Collection\ObjectCollection
      */
-    public function queryProductAbstractPackagingStorageByProductAbstractIds(array $productAbstractIds)
+    public function getProductAbstractPackagingStorageByProductAbstractIds(array $productAbstractIds)
     {
         return $this->getFactory()
             ->createSpyProductAbstractPackagingStorageQuery()
@@ -105,6 +83,27 @@ class ProductPackagingUnitStorageQueryContainer extends AbstractQueryContainer i
             $productPackagingLeadProductTransfer,
             $packageProductConcreteEntities
         );
+    }
+
+    /**
+     * @param int $productAbstractId
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    protected function queryPackageProductsByAbstractId(int $productAbstractId): SpyProductQuery
+    {
+        return $this->getFactory()
+            ->getProductQueryContainer()
+            ->queryProduct()
+            ->filterByFkProductAbstract($productAbstractId)
+            ->where(sprintf(
+                "%s = true",
+                SpyProductTableMap::COL_IS_ACTIVE
+            ))
+            ->useSpyProductPackagingUnitQuery()
+            ->leftJoinProductPackagingUnitType()
+            ->leftJoinSpyProductPackagingUnitAmount()
+            ->endUse();
     }
 
     /**

@@ -55,7 +55,7 @@ class ProductPackagingUnitStorageFacadeTest extends Unit
      */
     public function testPublishProductAbstractPackagingDoesNotThrowException(): void
     {
-        $this->tester->ensureDatabaseTableIsEmpty();
+        $this->tester->ensureStorageDatabaseTableIsEmpty();
         $this->productPackagingUnitStorageFacade->publishProductAbstractPackaging([217]);
 
         $this->assertTrue(true);
@@ -66,7 +66,7 @@ class ProductPackagingUnitStorageFacadeTest extends Unit
      */
     public function testUnpublishProductAbstractPackagingDoesNotThrowException(): void
     {
-        $this->tester->ensureDatabaseTableIsEmpty();
+        $this->tester->ensureStorageDatabaseTableIsEmpty();
         $this->productPackagingUnitStorageFacade->unpublishProductAbstractPackaging([217]);
 
         $this->assertTrue(true);

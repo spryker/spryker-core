@@ -23,7 +23,7 @@ class ProductPackagingUnitStorageFacade extends AbstractFacade implements Produc
      *
      * @return void
      */
-    public function publishProductAbstractPackaging(array $productAbstractIds)
+    public function publishProductAbstractPackaging(array $productAbstractIds): void
     {
         $this->getFactory()
             ->createProductAbstractPackagingStorageWriter()
@@ -39,7 +39,7 @@ class ProductPackagingUnitStorageFacade extends AbstractFacade implements Produc
      *
      * @return void
      */
-    public function unpublishProductAbstractPackaging(array $productAbstractIds)
+    public function unpublishProductAbstractPackaging(array $productAbstractIds): void
     {
         $this->getFactory()
             ->createProductAbstractPackagingStorageWriter()

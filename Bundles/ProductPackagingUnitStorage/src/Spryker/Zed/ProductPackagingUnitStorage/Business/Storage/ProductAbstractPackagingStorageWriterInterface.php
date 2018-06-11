@@ -14,12 +14,12 @@ interface ProductAbstractPackagingStorageWriterInterface
      *
      * @return void
      */
-    public function publish(array $productAbstractIds);
+    public function publish(array $productAbstractIds): void;
 
     /**
      * @param array $productAbstractIds
      *
      * @return void
      */
-    public function unpublish(array $productAbstractIds);
+    public function unpublish(array $productAbstractIds): void;
 }

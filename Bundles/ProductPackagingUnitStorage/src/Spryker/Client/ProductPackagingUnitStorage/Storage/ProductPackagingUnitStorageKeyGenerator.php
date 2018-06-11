@@ -32,7 +32,7 @@ class ProductPackagingUnitStorageKeyGenerator implements ProductPackagingUnitSto
      *
      * @return string
      */
-    public function generateKey($resourceName, $resourceId)
+    public function generateKey($resourceName, $resourceId): string
     {
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer

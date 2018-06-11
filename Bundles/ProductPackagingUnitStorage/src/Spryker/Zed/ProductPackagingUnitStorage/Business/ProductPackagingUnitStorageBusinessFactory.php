@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductPackagingUnitStorage\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductPackagingUnitStorage\Business\Storage\ProductAbstractPackagingStorageWriter;
+use Spryker\Zed\ProductPackagingUnitStorage\Business\Storage\ProductAbstractPackagingStorageWriterInterface;
 
 /**
  * @method \Spryker\Zed\ProductPackagingUnitStorage\ProductPackagingUnitStorageConfig getConfig()
@@ -19,7 +20,7 @@ class ProductPackagingUnitStorageBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductPackagingUnitStorage\Business\Storage\ProductAbstractPackagingStorageWriterInterface
      */
-    public function createProductAbstractPackagingStorageWriter()
+    public function createProductAbstractPackagingStorageWriter(): ProductAbstractPackagingStorageWriterInterface
     {
         return new ProductAbstractPackagingStorageWriter(
             $this->getQueryContainer()

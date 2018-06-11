@@ -15,7 +15,7 @@ class ProductPackagingUnitStorageHelper extends Module
     /**
      * @return void
      */
-    public function ensureDatabaseTableIsEmpty(): void
+    public function ensureStorageDatabaseTableIsEmpty(): void
     {
         $query = SpyProductAbstractPackagingStorageQuery::create();
         $query->deleteAll();

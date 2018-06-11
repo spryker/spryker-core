@@ -26,7 +26,7 @@ class ProductPackagingUnitStorageEventSubscriber extends AbstractPlugin implemen
      *
      * @return \Spryker\Zed\Event\Dependency\EventCollectionInterface
      */
-    public function getSubscribedEvents(EventCollectionInterface $eventCollection)
+    public function getSubscribedEvents(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
         $this->addPriceProductAbstractPublishStorageListener($eventCollection);
         $this->addPriceProductAbstractUnpublishStorageListener($eventCollection);
@@ -39,7 +39,7 @@ class ProductPackagingUnitStorageEventSubscriber extends AbstractPlugin implemen
      *
      * @return void
      */
-    protected function addPriceProductAbstractPublishStorageListener(EventCollectionInterface $eventCollection)
+    protected function addPriceProductAbstractPublishStorageListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection->addListenerQueued(ProductPackagingUnitEvents::PRODUCT_PACKAGING_UNIT_PUBLISH, new ProductPackagingUnitPublishStorageListener());
 
@@ -61,7 +61,7 @@ class ProductPackagingUnitStorageEventSubscriber extends AbstractPlugin implemen
      *
      * @return void
      */
-    protected function addPriceProductAbstractUnpublishStorageListener(EventCollectionInterface $eventCollection)
+    protected function addPriceProductAbstractUnpublishStorageListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection->addListenerQueued(ProductPackagingUnitEvents::PRODUCT_PACKAGING_UNIT_UNPUBLISH, new ProductPackagingUnitPublishStorageListener());
 

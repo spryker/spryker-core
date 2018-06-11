@@ -16,20 +16,11 @@ interface ProductPackagingUnitStorageQueryContainerInterface extends QueryContai
     /**
      * @api
      *
-     * @param int $productAbstractId
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
-     */
-    public function queryPackageProductsByAbstractId(int $productAbstractId);
-
-    /**
-     * @api
-     *
      * @param array $productAbstractIds
      *
-     * @return \Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyProductAbstractPackagingStorage[]
+     * @return \Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyProductAbstractPackagingStorage[]|\Propel\Runtime\Collection\ObjectCollection
      */
-    public function queryProductAbstractPackagingStorageByProductAbstractIds(array $productAbstractIds);
+    public function getProductAbstractPackagingStorageByProductAbstractIds(array $productAbstractIds);
 
     /**
      * @api

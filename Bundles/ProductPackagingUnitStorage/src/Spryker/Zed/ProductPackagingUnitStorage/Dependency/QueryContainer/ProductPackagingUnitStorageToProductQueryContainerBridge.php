@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\ProductPackagingUnitStorage\Dependency\QueryContainer;
 
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
+use Orm\Zed\Product\Persistence\SpyProductQuery;
+
 class ProductPackagingUnitStorageToProductQueryContainerBridge implements ProductPackagingUnitStorageToProductQueryContainerInterface
 {
     /**
@@ -25,7 +28,7 @@ class ProductPackagingUnitStorageToProductQueryContainerBridge implements Produc
     /**
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    public function queryProductAbstract()
+    public function queryProductAbstract(): SpyProductAbstractQuery
     {
         return $this->productQueryContainer->queryProductAbstract();
     }
@@ -33,7 +36,7 @@ class ProductPackagingUnitStorageToProductQueryContainerBridge implements Produc
     /**
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
-    public function queryProduct()
+    public function queryProduct(): SpyProductQuery
     {
         return $this->productQueryContainer->queryProduct();
     }
