@@ -56,7 +56,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
             ->useSpyProductAbstractLocalizedAttributesQuery()
             ->filterByFkLocale($idLocale)
             ->endUse()
-            ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, ProductConstants::FILTERED_PRODUCTS_PRODUCT_NAME_COLUMN);
+            ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, ProductConstants::COL_FILTERED_PRODUCTS_PRODUCT_NAME);
     }
 
     /**
@@ -76,7 +76,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
             ->useSpyProductLocalizedAttributesQuery()
             ->filterByFkLocale($idLocale)
             ->endUse()
-            ->withColumn(SpyProductLocalizedAttributesTableMap::COL_NAME, ProductConstants::FILTERED_PRODUCTS_PRODUCT_NAME_COLUMN);
+            ->withColumn(SpyProductLocalizedAttributesTableMap::COL_NAME, ProductConstants::COL_FILTERED_PRODUCTS_PRODUCT_NAME);
     }
 
     /**
@@ -106,8 +106,8 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
         /** @var \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity */
         foreach ($productAbstractEntities as $productAbstractEntity) {
             $abstractProducts[] = [
-                ProductConstants::FILTERED_PRODUCTS_ABSTRACT_ID_KEY => $productAbstractEntity->getIdProductAbstract(),
-                ProductConstants::FILTERED_PRODUCTS_RESULT_KEY => $productAbstractEntity->getSku(),
+                ProductConstants::KEY_FILTERED_PRODUCTS_ABSTRACT_ID => $productAbstractEntity->getIdProductAbstract(),
+                ProductConstants::KEY_FILTERED_PRODUCTS_RESULT => $productAbstractEntity->getSku(),
             ];
         }
 
@@ -148,9 +148,9 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
         /** @var \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity */
         foreach ($productAbstractEntities as $productAbstractEntity) {
             $abstractProducts[] = [
-                ProductConstants::FILTERED_PRODUCTS_ABSTRACT_ID_KEY => $productAbstractEntity->getIdProductAbstract(),
-                ProductConstants::FILTERED_PRODUCTS_RESULT_KEY => $productAbstractEntity
-                    ->getVirtualColumn(ProductConstants::FILTERED_PRODUCTS_PRODUCT_NAME_COLUMN),
+                ProductConstants::KEY_FILTERED_PRODUCTS_ABSTRACT_ID => $productAbstractEntity->getIdProductAbstract(),
+                ProductConstants::KEY_FILTERED_PRODUCTS_RESULT => $productAbstractEntity
+                    ->getVirtualColumn(ProductConstants::COL_FILTERED_PRODUCTS_PRODUCT_NAME),
             ];
         }
 
@@ -184,8 +184,8 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
         /** @var \Orm\Zed\Product\Persistence\SpyProduct $productConcreteEntity */
         foreach ($productConcreteEntities as $productConcreteEntity) {
             $concreteProducts[] = [
-                ProductConstants::FILTERED_PRODUCTS_CONCRETE_ID_KEY => $productConcreteEntity->getIdProduct(),
-                ProductConstants::FILTERED_PRODUCTS_RESULT_KEY => $productConcreteEntity->getSku(),
+                ProductConstants::KEY_FILTERED_PRODUCTS_CONCRETE_ID => $productConcreteEntity->getIdProduct(),
+                ProductConstants::KEY_FILTERED_PRODUCTS_RESULT => $productConcreteEntity->getSku(),
             ];
         }
 
@@ -226,9 +226,9 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
         /** @var \Orm\Zed\Product\Persistence\SpyProduct $productConcreteEntity */
         foreach ($productConcreteEntities as $productConcreteEntity) {
             $concreteProducts[] = [
-                ProductConstants::FILTERED_PRODUCTS_CONCRETE_ID_KEY => $productConcreteEntity->getIdProduct(),
-                ProductConstants::FILTERED_PRODUCTS_RESULT_KEY => $productConcreteEntity
-                    ->getVirtualColumn(ProductConstants::FILTERED_PRODUCTS_PRODUCT_NAME_COLUMN),
+                ProductConstants::KEY_FILTERED_PRODUCTS_CONCRETE_ID => $productConcreteEntity->getIdProduct(),
+                ProductConstants::KEY_FILTERED_PRODUCTS_RESULT => $productConcreteEntity
+                    ->getVirtualColumn(ProductConstants::COL_FILTERED_PRODUCTS_PRODUCT_NAME),
             ];
         }
 

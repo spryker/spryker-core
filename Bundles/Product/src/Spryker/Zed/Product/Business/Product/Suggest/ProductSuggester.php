@@ -180,7 +180,7 @@ class ProductSuggester implements ProductSuggesterInterface
         $results = [];
 
         foreach ($products as $product) {
-            $results[] = $product[ProductConstants::FILTERED_PRODUCTS_RESULT_KEY];
+            $results[] = $product[ProductConstants::KEY_FILTERED_PRODUCTS_RESULT];
         }
 
         return $results;

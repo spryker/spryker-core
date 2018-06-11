@@ -94,8 +94,8 @@ class ProductSuggestionDetailsProvider implements ProductSuggestionDetailsProvid
 
         $productAbstract = reset($productAbstract);
 
-        if (!empty($productAbstract) && isset($productAbstract[ProductConstants::FILTERED_PRODUCTS_ABSTRACT_ID_KEY])) {
-            return $productAbstract[ProductConstants::FILTERED_PRODUCTS_ABSTRACT_ID_KEY];
+        if (!empty($productAbstract) && isset($productAbstract[ProductConstants::KEY_FILTERED_PRODUCTS_ABSTRACT_ID])) {
+            return $productAbstract[ProductConstants::KEY_FILTERED_PRODUCTS_ABSTRACT_ID];
         }
 
         $productAbstract = $this
@@ -105,8 +105,8 @@ class ProductSuggestionDetailsProvider implements ProductSuggestionDetailsProvid
                 $limit
             );
 
-        if (!empty($productAbstract) && isset($productAbstract[ProductConstants::FILTERED_PRODUCTS_ABSTRACT_ID_KEY])) {
-            return $productAbstract[ProductConstants::FILTERED_PRODUCTS_ABSTRACT_ID_KEY];
+        if (!empty($productAbstract) && isset($productAbstract[ProductConstants::KEY_FILTERED_PRODUCTS_ABSTRACT_ID])) {
+            return $productAbstract[ProductConstants::KEY_FILTERED_PRODUCTS_ABSTRACT_ID];
         }
 
         return null;
@@ -131,8 +131,8 @@ class ProductSuggestionDetailsProvider implements ProductSuggestionDetailsProvid
             );
         $productConcrete = reset($productConcrete);
 
-        if (!empty($productConcrete) && isset($productConcrete[ProductConstants::FILTERED_PRODUCTS_CONCRETE_ID_KEY])) {
-            return $productConcrete[ProductConstants::FILTERED_PRODUCTS_CONCRETE_ID_KEY];
+        if (!empty($productConcrete) && isset($productConcrete[ProductConstants::KEY_FILTERED_PRODUCTS_CONCRETE_ID])) {
+            return $productConcrete[ProductConstants::KEY_FILTERED_PRODUCTS_CONCRETE_ID];
         }
 
         $productConcrete = $this
@@ -142,8 +142,8 @@ class ProductSuggestionDetailsProvider implements ProductSuggestionDetailsProvid
                 $limit
             );
 
-        if (!empty($productConcrete) && isset($productConcrete[ProductConstants::FILTERED_PRODUCTS_CONCRETE_ID_KEY])) {
-            return $productConcrete[ProductConstants::FILTERED_PRODUCTS_CONCRETE_ID_KEY];
+        if (!empty($productConcrete) && isset($productConcrete[ProductConstants::KEY_FILTERED_PRODUCTS_CONCRETE_ID])) {
+            return $productConcrete[ProductConstants::KEY_FILTERED_PRODUCTS_CONCRETE_ID];
         }
 
         return null;

@@ -9,11 +9,11 @@ namespace Spryker\Shared\Product;
 
 interface ProductConstants
 {
-    public const FILTERED_PRODUCTS_ABSTRACT_ID_KEY = 'abstract_id';
+    public const KEY_FILTERED_PRODUCTS_ABSTRACT_ID = 'abstract_id';
 
-    public const FILTERED_PRODUCTS_CONCRETE_ID_KEY = 'concrete_id';
+    public const KEY_FILTERED_PRODUCTS_CONCRETE_ID = 'concrete_id';
 
-    public const FILTERED_PRODUCTS_RESULT_KEY = 'result';
+    public const KEY_FILTERED_PRODUCTS_RESULT = 'result';
 
-    public const FILTERED_PRODUCTS_PRODUCT_NAME_COLUMN = 'name';
+    public const COL_FILTERED_PRODUCTS_PRODUCT_NAME = 'name';
 }
