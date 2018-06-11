@@ -10,16 +10,24 @@ namespace Spryker\Zed\Development\Communication\Console;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Zend\Filter\FilterChain;
+use Zend\Filter\StringToLower;
+use Zend\Filter\Word\CamelCaseToDash;
 use Zend\Filter\Word\DashToCamelCase;
 
 /**
  * @method \Spryker\Zed\Development\Business\DevelopmentFacadeInterface getFacade()
+ * @method \Spryker\Zed\Development\Business\DevelopmentBusinessFactory getFactory()
  */
 class DependencyTreeDependencyViolationConsole extends Console
 {
     const COMMAND_NAME = 'dev:dependency:find-violations';
     const ARGUMENT_MODULE = 'module';
+    const OPTION_FIX = 'fix';
+
+    const REPLACE_4_WITH_2_SPACES = '/^(  +?)\\1(?=[^ ])/m';
 
     /**
      * @return void
@@ -32,6 +40,7 @@ class DependencyTreeDependencyViolationConsole extends Console
             ->setName(static::COMMAND_NAME)
             ->setHelp('<info>' . static::COMMAND_NAME . ' -h</info>')
             ->addArgument(static::ARGUMENT_MODULE, InputArgument::OPTIONAL, 'Module to run checks for.')
+            ->addOption(static::OPTION_FIX, 'f', InputOption::VALUE_NONE, 'Fix all findings (only adding for now).')
             ->setDescription('Find dependency violations in the dependency tree (Spryker core dev only).');
     }
 
@@ -85,8 +94,13 @@ class DependencyTreeDependencyViolationConsole extends Console
                     $violations[] = $composerDependency['src'] . ' is optional but in require';
                 }
 
+                $name = null;
                 if ($composerDependency['isOptional'] && !$composerDependency['composerRequireDev']) {
-                    $violations[] = $composerDependency['src'] . ' is optional but for testing it must be declared in require-dev';
+                    $name = $composerDependency['src'] ?: $composerDependency['tests'];
+                    $violations[] = $name . ' is optional but for testing it must be declared in require-dev';
+                    if ($input->getOption(static::OPTION_FIX)) {
+                        $this->fix($module, $name, $composerDependency);
+                    }
                 }
 
                 if ($this->isMissingInSrc($composerDependency)) {
@@ -95,6 +109,9 @@ class DependencyTreeDependencyViolationConsole extends Console
 
                 if ($this->isMissingInRequireDev($composerDependency)) {
                     $violations[] = 'tests: ' . $composerDependency['tests'] . ' / require-dev: -';
+                    if ($input->getOption(static::OPTION_FIX)) {
+                        $this->fix($module, $name, $composerDependency);
+                    }
                 }
 
                 if ($this->isMissingInTests($composerDependency) && !$composerDependency['isOptional']) {
@@ -175,5 +192,45 @@ class DependencyTreeDependencyViolationConsole extends Console
     protected function isMissingInTests($composerDependency)
     {
         return (!$composerDependency['tests'] && $composerDependency['composerRequireDev']);
+    }
+
+    /**
+     * @param string $module
+     * @param string $target
+     * @param array $composerDependency
+     *
+     * @return void
+     */
+    protected function fix(string $module, string $target, array $composerDependency): void
+    {
+        $corePath = $this->getFactory()->getConfig()->getPathToCore();
+        $modulePath = $corePath . $module . DIRECTORY_SEPARATOR;
+        $composerJsonFile = $modulePath . 'composer.json';
+
+        $composerJsonContent = file_get_contents($composerJsonFile);
+        $composerJsonArray = json_decode($composerJsonContent, true);
+
+        $targetModuleDashed = $this->dasherize($target);
+        $composerJsonArray['require-dev']['spryker/' . $targetModuleDashed] = '*';
+
+        $modifiedComposerJson = json_encode($composerJsonArray, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+        $modifiedComposerJson = preg_replace(static::REPLACE_4_WITH_2_SPACES, '$1', $modifiedComposerJson) . PHP_EOL;
+
+        file_put_contents($composerJsonFile, $modifiedComposerJson);
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return string
+     */
+    protected function dasherize($name)
+    {
+        $filterChain = new FilterChain();
+        $filterChain
+            ->attach(new CamelCaseToDash())
+            ->attach(new StringToLower());
+
+        return $filterChain->filter($name);
     }
 }

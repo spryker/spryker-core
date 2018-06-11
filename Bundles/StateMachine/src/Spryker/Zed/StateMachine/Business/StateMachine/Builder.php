@@ -388,7 +388,6 @@ class Builder implements BuilderInterface
 
             $xmlStates = $xmlProcess->states->children();
 
-            /** @var \SimpleXMLElement $xmlState */
             foreach ($xmlStates as $xmlState) {
                 $state = $this->createState($xmlState, $process);
 
