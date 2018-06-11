@@ -23,7 +23,7 @@ class CompanyClient extends AbstractClient implements CompanyClientInterface
      *
      * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\CompanyResponseTransfer
      */
     public function createCompany(CompanyTransfer $companyTransfer): CompanyResponseTransfer
     {

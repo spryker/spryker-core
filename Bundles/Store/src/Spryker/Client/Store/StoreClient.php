@@ -19,7 +19,7 @@ class StoreClient extends AbstractClient implements StoreClientInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\StoreTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\StoreTransfer
      */
     public function getCurrentStore()
     {

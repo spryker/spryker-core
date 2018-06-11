@@ -19,7 +19,7 @@ class Html implements HtmInterface
      * @param string|null $charset Character set to use when escaping. Defaults to config value in `mb_internal_encoding()`
      *   or 'UTF-8'.
      *
-     * @return string Wrapped text.
+     * @return string|array Wrapped text.
      */
     public function escape($text, $double = true, $charset = null)
     {

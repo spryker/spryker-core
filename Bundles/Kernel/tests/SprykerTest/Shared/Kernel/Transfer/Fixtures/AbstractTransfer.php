@@ -51,7 +51,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     protected $transfer;
 
     /**
-     * @var \ArrayObject|\Spryker\Shared\Kernel\Transfer\TransferInterface[]
+     * @var \ArrayObject[]
      */
     protected $transferCollection;
 
@@ -279,7 +279,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     }
 
     /**
-     * @param \ArrayObject|\Spryker\Shared\Kernel\Transfer\TransferInterface[] $transferCollection
+     * @param \ArrayObject[] $transferCollection
      *
      * @return $this
      */

@@ -28,7 +28,7 @@ class ShipmentStub implements ShipmentStubInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
      */
     public function getAvailableMethods(QuoteTransfer $quoteTransfer)
     {

@@ -81,6 +81,6 @@ class AvailabilityCartConnectorToAvailabilityBridge implements AvailabilityCartC
             return $this->availabilityFacade->isProductSellableForStore($sku, $quantity, $storeTransfer);
         }
 
-        return $this->availabilityFacade->calculateStockForProduct($sku);
+        return (bool)$this->availabilityFacade->calculateStockForProduct($sku);
     }
 }

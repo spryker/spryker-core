@@ -37,7 +37,7 @@ class CompanyUserStub implements CompanyUserStubInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
     public function createCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
@@ -51,7 +51,7 @@ class CompanyUserStub implements CompanyUserStubInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
     public function updateCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
@@ -61,7 +61,7 @@ class CompanyUserStub implements CompanyUserStubInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
     public function deleteCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
@@ -71,7 +71,7 @@ class CompanyUserStub implements CompanyUserStubInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer $criteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
     public function getCompanyUserCollection(
         CompanyUserCriteriaFilterTransfer $criteriaFilterTransfer
@@ -85,7 +85,7 @@ class CompanyUserStub implements CompanyUserStubInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer
      */
     public function getCompanyUserById(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer
     {
