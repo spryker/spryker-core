@@ -70,7 +70,7 @@ class ZedNavigationCollectorCacheDecoratorTest extends ZedNavigationBusinessTest
     {
         //prepare
         $expectedNavigation = [['key' => 'value']];
-        $navigationCacheMock = $this->getZedNavigationCacheMock();
+        $navigationCacheMock = $this->getZedNavigationCacheMockWithReturn($expectedNavigation);
         $navigationCollectorMock = $this->getZedNavigationCollectorMock();
         $configMock = $this->getZedNavigationConfigMock();
         $navigationCollectorCacheDecorator = new ZedNavigationCollectorCacheDecorator(
@@ -80,10 +80,6 @@ class ZedNavigationCollectorCacheDecoratorTest extends ZedNavigationBusinessTest
         );
 
         //assert
-        $navigationCacheMock
-            ->expects($this->once())
-            ->method('getNavigation')
-            ->will($this->returnValue($expectedNavigation));
         $navigationCollectorMock
             ->expects($this->never())
             ->method('getNavigation');
@@ -109,7 +105,7 @@ class ZedNavigationCollectorCacheDecoratorTest extends ZedNavigationBusinessTest
     {
         //prepare
         $expectedNavigation = [['key' => 'value']];
-        $navigationCacheMock = $this->getZedNavigationCacheMock();
+        $navigationCacheMock = $this->getZedNavigationCacheMockWithReturn($expectedNavigation, false);
         $navigationCollectorMock = $this->getZedNavigationCollectorMock();
         $configMock = $this->getZedNavigationConfigMock();
         $navigationCollectorCacheDecorator = new ZedNavigationCollectorCacheDecorator(
@@ -119,21 +115,18 @@ class ZedNavigationCollectorCacheDecoratorTest extends ZedNavigationBusinessTest
         );
 
         //assert
-        $navigationCacheMock
+        $configMock
             ->expects($this->once())
-            ->method('getNavigation')
-            ->will($this->returnValue($expectedNavigation));
-        $navigationCacheMock
-            ->expects($this->once())
-            ->method('hasContent')
-            ->with($this->returnValue(false));
+            ->method('isNavigationCacheEnabled')
+            ->willReturn(true);
         $navigationCacheMock
             ->expects($this->once())
             ->method('setNavigation')
             ->with($this->equalTo($expectedNavigation));
         $navigationCollectorMock
-            ->expects($this->never())
-            ->method('getNavigation');
+            ->expects($this->once())
+            ->method('getNavigation')
+            ->willReturn($expectedNavigation);
 
         //act
         $navigation = $navigationCollectorCacheDecorator->getNavigation();

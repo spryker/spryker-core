@@ -57,9 +57,34 @@ class ZedNavigationBusinessTester extends Unit
         $cacheMock->expects($this->never())
             ->method('isEnabled');
         $cacheMock->expects($this->never())
-            ->method('setNavigation');
-        $cacheMock->expects($this->never())
             ->method('hasContent');
+
+        return $cacheMock;
+    }
+
+    /**
+     * @param array $navigationData
+     * @param bool $hasContent
+     *
+     * @return \Spryker\Zed\ZedNavigation\Business\Model\Cache\ZedNavigationCacheInterface|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function getZedNavigationCacheMockWithReturn(
+        array $navigationData,
+        bool $hasContent = true
+    ): ZedNavigationCacheInterface {
+        $cacheMock = $this
+            ->getMockBuilder(ZedNavigationCacheInterface::class)
+            ->setMethods(['setNavigation', 'getNavigation', 'hasContent', 'isEnabled'])
+            ->getMock();
+
+        $cacheMock->expects($this->never())
+            ->method('isEnabled');
+        $cacheMock->expects($this->once())
+            ->method('hasContent')
+            ->willReturn($hasContent);
+        $cacheMock->expects($this->once())
+            ->method('getNavigation')
+            ->will($this->returnValue($navigationData));
 
         return $cacheMock;
     }

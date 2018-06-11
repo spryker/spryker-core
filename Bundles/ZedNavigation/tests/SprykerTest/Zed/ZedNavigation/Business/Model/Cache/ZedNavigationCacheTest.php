@@ -49,7 +49,7 @@ class ZedNavigationCacheTest extends ZedNavigationBusinessTester
         $navigationCache = $this->getZedNavigationCache('');
 
         //assert
-        $this->assertTrue($navigationCache->hasContent());
+        $this->assertFalse($navigationCache->hasContent());
     }
 
     /**
