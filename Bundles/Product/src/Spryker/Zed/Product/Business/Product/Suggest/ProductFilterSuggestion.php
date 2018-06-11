@@ -39,7 +39,7 @@ class ProductFilterSuggestion implements ProductFilterSuggestionInterface
      * @param string $sku
      * @param int $limit
      *
-     * @return array
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstract[]
      */
     public function filterProductAbstractBySku(string $sku, int $limit): array
     {
@@ -51,7 +51,7 @@ class ProductFilterSuggestion implements ProductFilterSuggestionInterface
      * @param string $localizedName
      * @param int $limit
      *
-     * @return array
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstract[]
      */
     public function filterProductAbstractByLocalizedName(string $localizedName, int $limit): array
     {
@@ -67,7 +67,7 @@ class ProductFilterSuggestion implements ProductFilterSuggestionInterface
      * @param string $sku
      * @param int $limit
      *
-     * @return array
+     * @return \Orm\Zed\Product\Persistence\SpyProduct[]
      */
     public function filterProductConcreteBySku(string $sku, int $limit): array
     {
@@ -80,7 +80,7 @@ class ProductFilterSuggestion implements ProductFilterSuggestionInterface
      * @param string $localizedName
      * @param int $limit
      *
-     * @return array
+     * @return \Orm\Zed\Product\Persistence\SpyProduct[]
      */
     public function filterProductConcreteByLocalizedName(string $localizedName, int $limit): array
     {

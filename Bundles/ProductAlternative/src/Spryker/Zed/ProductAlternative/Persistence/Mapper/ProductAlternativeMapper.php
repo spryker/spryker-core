@@ -14,23 +14,23 @@ use Orm\Zed\ProductAlternative\Persistence\SpyProductAlternative;
 class ProductAlternativeMapper implements ProductAlternativeMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SpyProductAlternativeEntityTransfer $spyProductAlternativeEntityTransfer
+     * @param \Generated\Shared\Transfer\SpyProductAlternativeEntityTransfer $productAlternativeEntityTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
      */
     public function mapSpyProductAlternativeEntityTransferToTransfer(
-        SpyProductAlternativeEntityTransfer $spyProductAlternativeEntityTransfer
+        SpyProductAlternativeEntityTransfer $productAlternativeEntityTransfer
     ): ProductAlternativeTransfer {
         $productAlternativeTransfer = (new ProductAlternativeTransfer())
-            ->fromArray($spyProductAlternativeEntityTransfer->toArray(), true);
+            ->fromArray($productAlternativeEntityTransfer->toArray(), true);
 
         $productAlternativeTransfer
-            ->setIdProduct($spyProductAlternativeEntityTransfer->getFkProduct())
-            ->setIdProductAbstractAlternative($spyProductAlternativeEntityTransfer->getFkProductAbstractAlternative())
-            ->setIdProductConcreteAlternative($spyProductAlternativeEntityTransfer->getFkProductConcreteAlternative());
+            ->setIdProduct($productAlternativeEntityTransfer->getFkProduct())
+            ->setIdProductAbstractAlternative($productAlternativeEntityTransfer->getFkProductAbstractAlternative())
+            ->setIdProductConcreteAlternative($productAlternativeEntityTransfer->getFkProductConcreteAlternative());
 
         return (new ProductAlternativeTransfer())
-            ->fromArray($spyProductAlternativeEntityTransfer->toArray(), true);
+            ->fromArray($productAlternativeEntityTransfer->toArray(), true);
     }
 
     /**

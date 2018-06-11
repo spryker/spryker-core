@@ -60,9 +60,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     }
 
     /**
-     * Specification:
-     * - Returns product concrete query with name as virtual column.
-     * - Virtual column name defined in ProductConstants.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -96,10 +94,6 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
             ->filterBySku_Like('%' . $sku . '%')
             ->limit($limit)
             ->find();
-
-        if (count($productAbstractEntities) === 0) {
-            return [];
-        }
 
         $abstractProducts = [];
 
@@ -139,10 +133,6 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
             ->limit($limit)
             ->find();
 
-        if (count($productAbstractEntities) === 0) {
-            return [];
-        }
-
         $abstractProducts = [];
 
         /** @var \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity */
@@ -174,10 +164,6 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
             ->filterBySku_Like('%' . $sku . '%')
             ->limit($limit)
             ->find();
-
-        if (count($productConcreteEntities) === 0) {
-            return [];
-        }
 
         $concreteProducts = [];
 
@@ -216,10 +202,6 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
             ->endUse()
             ->limit($limit)
             ->find();
-
-        if (count($productConcreteEntities) === 0) {
-            return [];
-        }
 
         $concreteProducts = [];
 
