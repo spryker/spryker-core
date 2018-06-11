@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\SprykGui\Business\Model;
 
+use Generated\Shared\Transfer\ArgumentCollectionTransfer;
 use Generated\Shared\Transfer\ArgumentTransfer;
+use Generated\Shared\Transfer\ModuleTransfer;
 use Spryker\Zed\SprykGui\Business\Model\Graph\GraphBuilderInterface;
 use Spryker\Zed\SprykGui\Dependency\Facade\SprykGuiToSprykFacadeInterface;
 use Symfony\Component\Process\Process;
@@ -60,14 +62,15 @@ class Spryk implements SprykInterface
 
     /**
      * @param string $sprykName
-     * @param array $sprykArguments
+     * @param array $formData
      *
      * @return array
      */
-    public function buildSprykView(string $sprykName, array $sprykArguments): array
+    public function buildSprykView(string $sprykName, array $formData): array
     {
-        $commandLine = $this->getCommandLine($sprykName, $sprykArguments);
-        $jiraTemplate = $this->getJiraTemplate($sprykName, $commandLine, $sprykArguments);
+        $formData = $this->normalizeFormData($formData);
+        $commandLine = $this->getCommandLine($sprykName, $formData);
+        $jiraTemplate = $this->getJiraTemplate($sprykName, $commandLine, $formData);
 
         return [
             'commandLine' => $commandLine,
@@ -76,14 +79,54 @@ class Spryk implements SprykInterface
     }
 
     /**
+     * @param array $formData
+     *
+     * @return array
+     */
+    protected function normalizeFormData(array $formData): array
+    {
+        $normalizedFormData = [];
+        foreach ($formData as $key => $value) {
+            if ($key === 'spryk') {
+                continue;
+            }
+            if ($value instanceof ModuleTransfer) {
+                $normalizedFormData['module'] = $value->getName();
+                $normalizedFormData['organization'] = $value->getOrganization()->getName();
+                $normalizedFormData['rootPath'] = $value->getOrganization()->getRootPath();
+
+                continue;
+            }
+
+            if (isset($formData['constructorArguments'])) {
+            }
+
+            if ($key === 'sprykDetails') {
+                foreach ($value as $sprykDetailKey => $sprykDetailValue) {
+                    if (isset($normalizedFormData[$sprykDetailKey])) {
+                        continue;
+                    }
+                    $normalizedFormData[$sprykDetailKey] = $sprykDetailValue;
+                }
+                continue;
+            }
+
+            $normalizedFormData[$key] = $value;
+        }
+
+        return $normalizedFormData;
+    }
+
+    /**
      * @param string $sprykName
-     * @param array $sprykArguments
+     * @param array $formData
      *
      * @return string
      */
-    public function runSpryk(string $sprykName, array $sprykArguments): string
+    public function runSpryk(string $sprykName, array $formData): string
     {
-        $commandLine = $this->getCommandLine($sprykName, $sprykArguments);
+        $formData = $this->normalizeFormData($formData);
+        $commandLine = $this->getCommandLine($sprykName, $formData);
         $process = new Process($commandLine, APPLICATION_ROOT_DIR);
         $process->run();
 
@@ -161,90 +204,189 @@ class Spryk implements SprykInterface
 
     /**
      * @param string $sprykName
-     * @param array $sprykArguments
+     * @param array $formData
      *
      * @return string
      */
-    protected function getCommandLine(string $sprykName, array $sprykArguments): string
+    protected function getCommandLine(string $sprykName, array $formData): string
     {
-        $arguments = $this->buildArgumentString($sprykArguments);
-        $commandLine = sprintf('vendor/bin/console spryk:run %s %s -n', $sprykName, $arguments);
+        $commandLineArguments = $this->getSprykArguments($sprykName, $formData);
+
+        $commandLine = '';
+        foreach ($commandLineArguments as $argumentKey => $argumentValue) {
+            $argumentValues = (array)$argumentValue;
+            foreach ($argumentValues as $argumentValue) {
+                $commandLine .= sprintf(' --%s=%s', $argumentKey, escapeshellarg($argumentValue));
+            }
+        }
+
+        $commandLine = sprintf('vendor/bin/console spryk:run %s %s -n', $sprykName, $commandLine);
 
         return $commandLine;
     }
 
     /**
-     * @param array $sprykArguments
+     * @param string $sprykName
+     * @param array $formData
      *
      * @return string
      */
-    protected function buildArgumentString(array $sprykArguments)
+    protected function getSprykArguments(string $sprykName, array $formData)
     {
-        $includeOptionalSpryks = [];
-        if (isset($sprykArguments['include-optional'])) {
-            $includeOptionalSpryks = $sprykArguments['include-optional'];
-            unset($sprykArguments['include-optional']);
-        }
-        $addedArguments = [];
-        $argumentString = '';
-        $sprykDefinitions = $this->sprykFacade->getSprykDefinitions();
-        foreach ($sprykArguments as $sprykName => $userArguments) {
-            $sprykDefinition = $sprykDefinitions[$sprykName];
-            foreach ($sprykDefinition['arguments'] as $argumentName => $argumentDefinition) {
-                if (isset($argumentDefinition['value']) || isset($argumentDefinition['callbackOnly'])) {
-                    continue;
-                }
+        $commandLineArguments = [];
 
-                $userInput = $userArguments[$argumentName];
+        $sprykDefinition = $this->getSprykDefinitionByName($sprykName);
+
+        $filteredSprykArguments = $this->filterSprykArguments($sprykDefinition, $formData);
+
+        foreach ($filteredSprykArguments as $argumentName => $argumentDefinition) {
+            $userInput = $this->getUserInputForArgument($argumentName, $formData);
+            if (isset($argumentDefinition['multiline'])) {
+                $userInput = $this->getMultilineConsoleArgument($userInput);
+            }
+            if (isset($argumentDefinition['isMultiple'])) {
                 if ($argumentName === 'constructorArguments') {
-                    if (!isset($userInput['arguments'])) {
-                        continue;
+                    $argumentCollectionTransfer = $userInput['arguments'];
+                    $userInput = [];
+                    $dependencyMethods = [];
+                    if ($argumentCollectionTransfer instanceof ArgumentCollectionTransfer) {
+                        foreach ($argumentCollectionTransfer->getArguments() as $argumentTransfer) {
+                            $userInput[] = $this->buildFromArgument($argumentTransfer);
+                            if ($argumentTransfer->getArgumentMeta() && $argumentTransfer->getArgumentMeta()->getMethod()) {
+                                $dependencyMethods[] = $argumentTransfer->getArgumentMeta()->getMethod();
+                            }
+                        }
                     }
-
-                    $argumentString .= sprintf(' --%s=%s', $argumentName, escapeshellarg($this->buildFromArguments($userInput)));
-
-                    foreach ($userInput['arguments'] as $userArgumentDefinition) {
-                        $argumentTransfer = $this->getArgumentTransferFromDefinition($userArgumentDefinition);
-                        $argumentMetaTransfer = $argumentTransfer->getArgumentMeta();
-
-                        $argumentString .= sprintf(' --dependencyMethods=%s', escapeshellarg($argumentMetaTransfer->getMethod()));
+                    $commandLineArguments[$argumentName] = $userInput;
+                    if (count($dependencyMethods) > 0) {
+                        $commandLineArguments['dependencyMethods'] = $dependencyMethods;
                     }
-
                     continue;
-                }
-
-                if (isset($addedArguments[$argumentName]) && ($userInput !== $addedArguments[$argumentName])) {
-                    $argumentName = sprintf('%s.%s', $sprykName, $argumentName);
-                }
-
-                if (isset($addedArguments[$argumentName])) {
-                    continue;
-                }
-
-                if ((!isset($argumentDefinition['default'])) || (isset($argumentDefinition['default']) && $argumentDefinition['default'] !== $userInput)) {
-                    if (!isset($argumentDefinition['multiline'])) {
-                        $argumentString .= sprintf(' --%s=%s', $argumentName, escapeshellarg($userInput));
-                        $addedArguments[$argumentName] = $userInput;
-
-                        continue;
-                    }
-
-                    $lines = explode(PHP_EOL, $userInput);
-                    foreach ($lines as $line) {
-                        $line = preg_replace('/[[:cntrl:]]/', '', $line);
-                        $argumentString .= sprintf(' --%s=%s', $argumentName, escapeshellarg($line));
-                    }
-
-                    $addedArguments[$argumentName] = $userInput;
                 }
             }
+
+            $commandLineArguments[$argumentName] = $userInput;
         }
 
-        foreach ($includeOptionalSpryks as $includeOptionalSpryk) {
-            $argumentString .= sprintf(' --include-optional=%s', $includeOptionalSpryk);
+        return $commandLineArguments;
+
+//        foreach ($formData as $key => $userInput) {
+//            foreach ($sprykDefinition['arguments'] as $argumentName => $argumentDefinition) {
+//                if (isset($argumentDefinition['value']) || isset($argumentDefinition['callbackOnly'])) {
+//                    continue;
+//                }
+//
+//                if ($argumentName === 'constructorArguments') {
+//                    if (!isset($userInput['arguments'])) {
+//                        continue;
+//                    }
+//
+//                    $argumentString .= sprintf(' --%s=%s', $argumentName, escapeshellarg($this->buildFromArguments($userInput)));
+//
+//                    foreach ($userInput['arguments'] as $userArgumentDefinition) {
+//                        $argumentTransfer = $this->getArgumentTransferFromDefinition($userArgumentDefinition);
+//                        $argumentMetaTransfer = $argumentTransfer->getArgumentMeta();
+//
+//                        $argumentString .= sprintf(' --dependencyMethods=%s', escapeshellarg($argumentMetaTransfer->getMethod()));
+//                    }
+//
+//                    continue;
+//                }
+//
+//                if (isset($addedArguments[$argumentName]) && ($userInput !== $addedArguments[$argumentName])) {
+//                    $argumentName = sprintf('%s.%s', $sprykName, $argumentName);
+//                }
+//
+//                if (isset($addedArguments[$argumentName])) {
+//                    continue;
+//                }
+//
+//                if ($argumentName === $key && $userInput instanceof ModuleTransfer) {
+//                    $userInput = $userInput->getName();
+//                }
+//
+//                if ($argumentName === 'moduleOrganization' && $userInput instanceof ModuleTransfer) {
+//                    $userInput = $userInput->getOrganization()->getName();
+//                }
+//
+//                if ((!isset($argumentDefinition['default'])) || (isset($argumentDefinition['default']) && $argumentDefinition['default'] !== $userInput)) {
+//                    if (!isset($argumentDefinition['multiline'])) {
+//                        $argumentString .= sprintf(' --%s=%s', $argumentName, escapeshellarg($userInput));
+//                        $addedArguments[$argumentName] = $userInput;
+//
+//                        continue;
+//                    }
+//
+//                    $lines = explode(PHP_EOL, $userInput);
+//                    foreach ($lines as $line) {
+//                        $line = preg_replace('/[[:cntrl:]]/', '', $line);
+//                        $argumentString .= sprintf(' --%s=%s', $argumentName, escapeshellarg($line));
+//                    }
+//
+//                    $addedArguments[$argumentName] = $userInput;
+//                }
+//            }
+//        }
+//
+//        foreach ($includeOptionalSpryks as $includeOptionalSpryk) {
+//            $argumentString .= sprintf(' --include-optional=%s', $includeOptionalSpryk);
+//        }
+//
+//        return $argumentString;
+    }
+
+    /**
+     * @param array $userInput
+     *
+     * @return array
+     */
+    protected function getMultilineConsoleArgument(array $userInput)
+    {
+        $lines = explode(PHP_EOL, $userInput);
+        $userInput = [];
+        foreach ($lines as $line) {
+            $line = preg_replace('/[[:cntrl:]]/', '', $line);
+            $userInput[] = $line;
         }
 
-        return $argumentString;
+        return $userInput;
+    }
+
+    /**
+     * @param string $argumentName
+     * @param array $formData
+     *
+     * @return mixed
+     */
+    protected function getUserInputForArgument(string $argumentName, array $formData)
+    {
+        return $formData[$argumentName];
+    }
+
+    /**
+     * @param array $sprykDefinition
+     * @param array $formData
+     *
+     * @return array
+     */
+    protected function filterSprykArguments(array $sprykDefinition, array $formData)
+    {
+        $sprykArguments = [];
+
+        foreach ($sprykDefinition['arguments'] as $argumentName => $argumentDefinition) {
+            if (isset($argumentDefinition['value']) || isset($argumentDefinition['callbackOnly'])) {
+                continue;
+            }
+
+            $userInput = $this->getUserInputForArgument($argumentName, $formData);
+            if (isset($argumentDefinition['default']) && $argumentDefinition['default'] === $userInput) {
+                continue;
+            }
+
+            $sprykArguments[$argumentName] = $argumentDefinition;
+        }
+
+        return $sprykArguments;
     }
 
     /**
@@ -258,101 +400,100 @@ class Spryk implements SprykInterface
     }
 
     /**
-     * @param array $userInput
+     * @param \Generated\Shared\Transfer\ArgumentTransfer $argumentTransfer
      *
      * @return string
      */
-    protected function buildFromArguments(array $userInput)
+    protected function buildFromArgument(ArgumentTransfer $argumentTransfer)
     {
-        $argumentData = [];
-        foreach ($userInput as $arguments) {
-            foreach ($arguments as $argument) {
-                $pattern = '%s %s';
-                if ($argument['isOptional']) {
-                    $pattern = '?%s %s = null';
-                }
-                $argumentData[] = sprintf($pattern, $argument['argument']->getType(), $argument['variable']);
-            }
+        $pattern = '%s %s';
+        if ($argumentTransfer->getIsOptional()) {
+            $pattern = '?%s %s = null';
         }
 
-        return implode(', ', $argumentData);
+        return sprintf($pattern, $argumentTransfer->getType(), $argumentTransfer->getVariable());
     }
 
     /**
      * @param string $sprykName
      * @param string $commandLine
-     * @param array $sprykArguments
+     * @param array $formData
      *
      * @return string
      */
-    protected function getJiraTemplate(string $sprykName, string $commandLine, array $sprykArguments): string
+    protected function getJiraTemplate(string $sprykName, string $commandLine, array $formData): string
     {
-        if (isset($sprykArguments['include-optional'])) {
-            unset($sprykArguments['include-optional']);
-        }
         $jiraTemplate = PHP_EOL . sprintf('{code:title=%s|theme=Midnight|linenumbers=true|collapse=true}', $sprykName) . PHP_EOL;
         $jiraTemplate .= $commandLine . PHP_EOL . PHP_EOL;
 
-        $addedArguments = [];
+        $sprykArguments = $this->getSprykArguments($sprykName, $formData);
 
-        $sprykDefinitions = $this->sprykFacade->getSprykDefinitions();
-        foreach ($sprykArguments as $sprykName => $userArguments) {
-            $sprykDefinition = $sprykDefinitions[$sprykName];
-            foreach ($sprykDefinition['arguments'] as $argumentName => $argumentDefinition) {
-                if (isset($argumentDefinition['value']) || isset($argumentDefinition['callbackOnly'])) {
-                    continue;
-                }
-
-                $userInput = $userArguments[$argumentName];
-                if ($argumentName === 'constructorArguments') {
-                    if (!isset($userInput['arguments'])) {
-                        continue;
-                    }
-
-                    $jiraTemplate .= sprintf('"%s"', $argumentName) . PHP_EOL;
-                    $jiraTemplate .= sprintf('// %s', $this->buildFromArguments($userInput)) . PHP_EOL . PHP_EOL;
-
-                    foreach ($userInput['arguments'] as $userArgumentDefinition) {
-                        $argumentTransfer = $this->getArgumentTransferFromDefinition($userArgumentDefinition);
-                        $argumentMetaTransfer = $argumentTransfer->getArgumentMeta();
-
-                        $jiraTemplate .= '"factoryDependencyMethod"' . PHP_EOL;
-                        $jiraTemplate .= sprintf('// %s', $argumentMetaTransfer->getMethod()) . PHP_EOL . PHP_EOL;
-                    }
-
-                    continue;
-                }
-                if (isset($addedArguments[$argumentName]) && ($userInput !== $addedArguments[$argumentName])) {
-                    $argumentName = sprintf('%s.%s', $sprykName, $argumentName);
-                }
-
-                if (isset($addedArguments[$argumentName])) {
-                    continue;
-                }
-
-                if ((!isset($argumentDefinition['default'])) || (isset($argumentDefinition['default']) && $argumentDefinition['default'] !== $userInput)) {
-                    $jiraTemplate .= sprintf('"%s"', $argumentName) . PHP_EOL;
-
-                    if (!isset($argumentDefinition['multiline'])) {
-                        $jiraTemplate .= sprintf('// %s', $userInput) . PHP_EOL . PHP_EOL;
-
-                        $addedArguments[$argumentName] = $userInput;
-
-                        continue;
-                    }
-
-                    $lines = explode(PHP_EOL, $userInput);
-                    foreach ($lines as $line) {
-                        $line = preg_replace('/[[:cntrl:]]/', '', $line);
-                        $jiraTemplate .= sprintf('// %s', $line) . PHP_EOL;
-                    }
-
-                    $jiraTemplate .= PHP_EOL;
-
-                    $addedArguments[$argumentName] = $userInput;
-                }
+        foreach ($sprykArguments as $argumentName => $argumentValue) {
+            $jiraTemplate .= sprintf('"%s"', $argumentName) . PHP_EOL;
+            $argumentValues = (array)$argumentValue;
+            foreach ($argumentValues as $argumentValue) {
+                $jiraTemplate .= sprintf('// %s', $argumentValue) . PHP_EOL;
             }
+            $jiraTemplate .= PHP_EOL;
         }
+//        $sprykDefinitions = $this->sprykFacade->getSprykDefinitions();
+//        foreach ($sprykArguments as $sprykName => $userArguments) {
+//            $sprykDefinition = $sprykDefinitions[$sprykName];
+//            foreach ($sprykDefinition['arguments'] as $argumentName => $argumentDefinition) {
+//                if (isset($argumentDefinition['value']) || isset($argumentDefinition['callbackOnly'])) {
+//                    continue;
+//                }
+//
+//                $userInput = $userArguments[$argumentName];
+//                if ($argumentName === 'constructorArguments') {
+//                    if (!isset($userInput['arguments'])) {
+//                        continue;
+//                    }
+//
+//                    $jiraTemplate .= sprintf('"%s"', $argumentName) . PHP_EOL;
+//                    $jiraTemplate .= sprintf('// %s', $this->buildFromArguments($userInput)) . PHP_EOL . PHP_EOL;
+//
+//                    foreach ($userInput['arguments'] as $userArgumentDefinition) {
+//                        $argumentTransfer = $this->getArgumentTransferFromDefinition($userArgumentDefinition);
+//                        $argumentMetaTransfer = $argumentTransfer->getArgumentMeta();
+//
+//                        $jiraTemplate .= '"factoryDependencyMethod"' . PHP_EOL;
+//                        $jiraTemplate .= sprintf('// %s', $argumentMetaTransfer->getMethod()) . PHP_EOL . PHP_EOL;
+//                    }
+//
+//                    continue;
+//                }
+//                if (isset($addedArguments[$argumentName]) && ($userInput !== $addedArguments[$argumentName])) {
+//                    $argumentName = sprintf('%s.%s', $sprykName, $argumentName);
+//                }
+//
+//                if (isset($addedArguments[$argumentName])) {
+//                    continue;
+//                }
+//
+//                if ((!isset($argumentDefinition['default'])) || (isset($argumentDefinition['default']) && $argumentDefinition['default'] !== $userInput)) {
+//                    $jiraTemplate .= sprintf('"%s"', $argumentName) . PHP_EOL;
+//
+//                    if (!isset($argumentDefinition['multiline'])) {
+//                        $jiraTemplate .= sprintf('// %s', $userInput) . PHP_EOL . PHP_EOL;
+//
+//                        $addedArguments[$argumentName] = $userInput;
+//
+//                        continue;
+//                    }
+//
+//                    $lines = explode(PHP_EOL, $userInput);
+//                    foreach ($lines as $line) {
+//                        $line = preg_replace('/[[:cntrl:]]/', '', $line);
+//                        $jiraTemplate .= sprintf('// %s', $line) . PHP_EOL;
+//                    }
+//
+//                    $jiraTemplate .= PHP_EOL;
+//
+//                    $addedArguments[$argumentName] = $userInput;
+//                }
+//            }
+//        }
 
         $jiraTemplate .= '{code}';
 

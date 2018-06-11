@@ -11,14 +11,12 @@ use Spryker\Spryk\SprykFacade;
 use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\SprykGui\Dependency\Client\SprykGuiToSessionClientBridge;
 use Spryker\Zed\SprykGui\Dependency\Facade\SprykGuiToSprykFacadeBridge;
 
 class SprykGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     const SPRYK_FACADE = 'spryk facade';
     const PLUGIN_GRAPH = 'graph plugin';
-    const SESSION_CLIENT = 'session client';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -41,7 +39,6 @@ class SprykGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addSprykFacade($container);
         $container = $this->addGraphPlugin($container);
-        $container = $this->addSessionClient($container);
 
         return $container;
     }
@@ -73,24 +70,6 @@ class SprykGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::PLUGIN_GRAPH] = function () {
             return new GraphPlugin();
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addSessionClient(Container $container): Container
-    {
-        $container[static::SESSION_CLIENT] = function (Container $container) {
-            $sprykGuiToSessionClientBridge = new SprykGuiToSessionClientBridge(
-                $container->getLocator()->session()->client()
-            );
-
-            return $sprykGuiToSessionClientBridge;
         };
 
         return $container;

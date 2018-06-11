@@ -10,6 +10,7 @@ namespace Spryker\Zed\SprykGui\Business;
 use Generated\Shared\Transfer\AccessibleTransferCollection;
 use Generated\Shared\Transfer\ClassInformationTransfer;
 use Generated\Shared\Transfer\ModuleCollectionTransfer;
+use Generated\Shared\Transfer\OrganizationCollectionTransfer;
 
 interface SprykGuiFacadeInterface
 {
@@ -71,6 +72,17 @@ interface SprykGuiFacadeInterface
      * @return \Generated\Shared\Transfer\ModuleCollectionTransfer
      */
     public function getModules(): ModuleCollectionTransfer;
+
+    /**
+     * Specification
+     * - Returns a list with TransferObjects.
+     * - Each TransferObject contains information about a organization.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\OrganizationCollectionTransfer
+     */
+    public function getOrganizations(): OrganizationCollectionTransfer;
 
     /**
      * Specification

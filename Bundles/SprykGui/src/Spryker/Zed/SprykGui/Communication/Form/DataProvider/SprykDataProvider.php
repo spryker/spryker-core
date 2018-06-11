@@ -8,22 +8,21 @@
 namespace Spryker\Zed\SprykGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\ModuleTransfer;
-use Generated\Shared\Transfer\OrganizationTransfer;
-use Spryker\Zed\SprykGui\Dependency\Facade\SprykGuiToSprykFacadeInterface;
+use Spryker\Zed\SprykGui\Business\SprykGuiFacadeInterface;
 
 class SprykDataProvider
 {
     /**
-     * @var \Spryker\Zed\SprykGui\Dependency\Facade\SprykGuiToSprykFacadeInterface
+     * @var \Spryker\Zed\SprykGui\Business\SprykGuiFacadeInterface
      */
-    protected $sprykFacade;
+    protected $sprykGuiFacade;
 
     /**
-     * @param \Spryker\Zed\SprykGui\Dependency\Facade\SprykGuiToSprykFacadeInterface $sprykFacade
+     * @param \Spryker\Zed\SprykGui\Business\SprykGuiFacadeInterface $sprykGuiFacade
      */
-    public function __construct(SprykGuiToSprykFacadeInterface $sprykFacade)
+    public function __construct(SprykGuiFacadeInterface $sprykGuiFacade)
     {
-        $this->sprykFacade = $sprykFacade;
+        $this->sprykGuiFacade = $sprykGuiFacade;
     }
 
     /**
@@ -34,6 +33,7 @@ class SprykDataProvider
     public function getOptions(?string $selectedSpryk = null): array
     {
         $options = [];
+        $options['allow_extra_fields'] = true;
 
         if ($selectedSpryk) {
             $options['spryk'] = $selectedSpryk;
@@ -43,27 +43,41 @@ class SprykDataProvider
     }
 
     /**
-     * @param null|string $spryk
+     * @param string $spryk
      * @param \Generated\Shared\Transfer\ModuleTransfer|null $moduleTransfer
      *
      * @return array
      */
-    public function getData(?string $spryk = null, ?ModuleTransfer $moduleTransfer = null): array
+    public function getData(string $spryk, ?ModuleTransfer $moduleTransfer = null): array
     {
         if (!$moduleTransfer) {
             $moduleTransfer = new ModuleTransfer();
         }
-        $organizationTransfer = new OrganizationTransfer();
-        $organizationTransfer
-            ->setName('Spryker')
-            ->setRootPath(APPLICATION_ROOT_DIR . 'vendor/spryker/spryker/');
 
-        $moduleTransfer->setOrganization($organizationTransfer);
-
-        return [
+        $formData = [
             'spryk' => $spryk,
             'module' => $moduleTransfer,
-            'organization' => $organizationTransfer,
         ];
+
+        return $this->addSprykDefinitionDefaultData($formData, $spryk);
+    }
+
+    /**
+     * @param array $formData
+     * @param string $spryk
+     *
+     * @return array
+     */
+    protected function addSprykDefinitionDefaultData(array $formData, string $spryk): array
+    {
+        $sprykDefinition = $this->sprykGuiFacade->getSprykDefinitionByName($spryk);
+
+        foreach ($sprykDefinition['arguments'] as $argumentName => $argumentDefinition) {
+            if (isset($argumentDefinition['default'])) {
+                $formData[$argumentName] = $argumentDefinition['default'];
+            }
+        }
+
+        return $formData;
     }
 }

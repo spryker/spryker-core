@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\SprykGui\Communication\Controller;
 
-use Generated\Shared\Transfer\ModuleTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -31,36 +31,8 @@ class BuildController extends AbstractController
             ->getSprykMainForm($spryk)
             ->handleRequest($request);
 
-        $messages = [];
-        if ($sprykForm->isSubmitted() && $sprykForm->isValid()) {
-            $moduleTransfer = $sprykForm->get('module')->getData();
-
-            return $this->redirectResponse(sprintf('/spryk-gui/build/spryk-details?spryk=%s&module=%s&moduleOrganization=%s', $spryk, $moduleTransfer->getName(), $moduleTransfer->getOrganization()));
-        }
-
-        return $this->viewResponse([
-            'form' => $sprykForm->createView(),
-            'messages' => $messages,
-        ]);
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return array
-     */
-    public function sprykDetailsAction(Request $request)
-    {
-        $moduleTransfer = new ModuleTransfer();
-        $moduleTransfer->setName($request->query->get('module'))
-            ->setOrganization($request->query->get('moduleOrganization'));
-
-        $sprykForm = $this->getFactory()
-            ->getSprykDetailsForm($moduleTransfer, $request->query->get('spryk'))
-            ->handleRequest($request);
-
-        $messages = [];
-        if ($sprykForm->isSubmitted() && $sprykForm->isValid()) {
+        $canRunBuild = $this->canRunBuild($sprykForm);
+        if ($sprykForm->isSubmitted() && $canRunBuild && $sprykForm->isValid()) {
             $formData = $sprykForm->getData();
 
             if ($sprykForm->get('create')->isClicked()) {
@@ -78,7 +50,24 @@ class BuildController extends AbstractController
 
         return $this->viewResponse([
             'form' => $sprykForm->createView(),
-            'messages' => $messages,
+            'messages' => (isset($messages)) ? $messages : [],
         ]);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $sprykForm
+     *
+     * @return bool
+     */
+    protected function canRunBuild(FormInterface $sprykForm): bool
+    {
+        if ($sprykForm->has('run') && $sprykForm->get('run')->isClicked()) {
+            return true;
+        }
+        if ($sprykForm->has('create') && $sprykForm->get('create')->isClicked()) {
+            return true;
+        }
+
+        return false;
     }
 }

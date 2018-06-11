@@ -17,6 +17,7 @@ use Spryker\Zed\SprykGui\SprykGuiDependencyProvider;
 use Symfony\Component\Form\FormInterface;
 
 /**
+ * @method \Spryker\Zed\SprykGui\Business\SprykGuiFacadeInterface getFacade()
  * @method \Spryker\Zed\SprykGui\SprykGuiConfig getConfig()
  */
 class SprykGuiCommunicationFactory extends AbstractCommunicationFactory
@@ -27,7 +28,7 @@ class SprykGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createSprykFormDataProvider(): SprykDataProvider
     {
         return new SprykDataProvider(
-            $this->getSprykFacade()
+            $this->getFacade()
         );
     }
 

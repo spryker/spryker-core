@@ -9,20 +9,13 @@ namespace Spryker\Zed\SprykGui\Business\Finder\Module;
 
 use Generated\Shared\Transfer\ModuleCollectionTransfer;
 use Generated\Shared\Transfer\ModuleTransfer;
-use Spryker\Zed\SprykGui\Dependency\Client\SprykGuiToSessionClientInterface;
+use Generated\Shared\Transfer\OrganizationTransfer;
 use Symfony\Component\Finder\Finder;
 use Zend\Filter\FilterChain;
 use Zend\Filter\Word\DashToCamelCase;
 
 class ModuleFinder implements ModuleFinderInterface
 {
-    const MODULE_COLLECTION_TRANSFER_CACHE_KEY = 'moduleCollectionTransfer';
-
-    /**
-     * @var \Spryker\Zed\SprykGui\Dependency\Client\SprykGuiToSessionClientInterface
-     */
-    protected $sessionClient;
-
     /**
      * @var array
      */
@@ -33,49 +26,34 @@ class ModuleFinder implements ModuleFinderInterface
     ];
 
     /**
-     * @var \Generated\Shared\Transfer\ModuleCollectionTransfer
-     */
-    protected $moduleCollectionTransfer;
-
-    /**
-     * @param \Spryker\Zed\SprykGui\Dependency\Client\SprykGuiToSessionClientInterface $sessionClient
-     */
-    public function __construct(SprykGuiToSessionClientInterface $sessionClient)
-    {
-        $this->sessionClient = $sessionClient;
-    }
-
-    /**
      * @return \Generated\Shared\Transfer\ModuleCollectionTransfer
      */
     public function findModules(): ModuleCollectionTransfer
     {
-//        if ($this->sessionClient->has(static::MODULE_COLLECTION_TRANSFER_CACHE_KEY)) {
-//            return $this->sessionClient->get(static::MODULE_COLLECTION_TRANSFER_CACHE_KEY);
-//        }
-
         $finder = new Finder();
 
         $directories = $this->buildDirectories();
 
         $finder->in($directories)->directories()->depth('== 0');
 
-        $this->moduleCollectionTransfer = new ModuleCollectionTransfer();
+        $moduleCollectionTransfer = new ModuleCollectionTransfer();
 
         foreach ($finder as $fileInfo) {
-            $moduleTransfer = new ModuleTransfer();
             $moduleName = $this->getModuleNameFromPath($fileInfo->getPath());
             $moduleRoot = $this->getModuleRootFromPath($fileInfo->getPath());
-            $moduleTransfer->setName($moduleName);
-            $moduleTransfer->setOrganization($fileInfo->getFilename());
-            $moduleTransfer->setRootPath($moduleRoot);
 
-            $this->moduleCollectionTransfer->addModule($moduleTransfer);
+            $organizationTransfer = new OrganizationTransfer();
+            $organizationTransfer->setName($fileInfo->getFilename())
+                ->setRootPath($moduleRoot);
+
+            $moduleTransfer = new ModuleTransfer();
+            $moduleTransfer->setName($moduleName)
+                ->setOrganization($organizationTransfer);
+
+            $moduleCollectionTransfer->addModule($moduleTransfer);
         }
 
-//        $this->sessionClient->set(static::MODULE_COLLECTION_TRANSFER_CACHE_KEY, $this->moduleCollectionTransfer);
-
-        return $this->moduleCollectionTransfer;
+        return $moduleCollectionTransfer;
     }
 
     /**

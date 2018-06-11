@@ -8,7 +8,6 @@
 namespace Spryker\Zed\SprykGui\Communication\Form\Type;
 
 use Generated\Shared\Transfer\ModuleTransfer;
-use Generated\Shared\Transfer\OrganizationCollectionTransfer;
 use Generated\Shared\Transfer\OrganizationTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -47,34 +46,13 @@ class NewModuleType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $sprykDefinition = $options[static::SPRYK_DEFINITION];
-
         $builder->add('name', TextType::class);
-//        $builder->add('organization', ChoiceType::class, [
-//
-//            'data' => $sprykDefinition['arguments']['moduleOrganization']['default'],
-//        ]);
-
-        $organizationCollection = new OrganizationCollectionTransfer();
-        $organizationTransfer = new OrganizationTransfer();
-        $organizationTransfer
-            ->setName('Spryker')
-            ->setRootPath(APPLICATION_ROOT_DIR . 'vendor/spryker/spryker/');
-
-        $organizationCollection->addOrganization($organizationTransfer);
-        $organizationTransfer = new OrganizationTransfer();
-        $organizationTransfer
-            ->setName('SprykerShop')
-            ->setRootPath(APPLICATION_ROOT_DIR . 'vendor/spryker/spryker-shop/');
-
-        $organizationCollection->addOrganization($organizationTransfer);
-
         $builder->add('organization', ChoiceType::class, [
-            'choices' => $organizationCollection->getOrganizations(),
+            'choices' => $this->getFacade()->getOrganizations()->getOrganizations(),
             'choice_label' => function (OrganizationTransfer $organizationTransfer) {
                 return $organizationTransfer->getName();
             },
-            'data_class' => OrganizationTransfer::class,
+            'choice_value' => 'name',
             'placeholder' => '',
         ]);
     }

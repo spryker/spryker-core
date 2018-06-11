@@ -30,6 +30,10 @@ class ArgumentType extends AbstractType
         $resolver->setRequired([
             'argumentCollectionTransfer',
         ]);
+
+        $resolver->setDefaults([
+//            'data_class' => ArgumentTransfer::class,
+        ]);
     }
 
     /**
@@ -55,28 +59,45 @@ class ArgumentType extends AbstractType
                 'class' => 'type-selector',
             ],
         ]);
+
         $builder->add('variable', TextType::class);
         $builder->add('isOptional', CheckboxType::class, [
             'required' => false,
         ]);
 
-//        $argumentCollectionTransfer = new ArgumentCollectionTransfer();
-//        $builder->get()->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) use ($argumentCollectionTransfer) {
+//        $builder->get('variable')->addEventListener(
+//            FormEvents::POST_SUBMIT,
+//            function (FormEvent $event) use ($argumentCollectionTransfer) {
+//                $form = $event->getForm();
+//                $variable = $event->getData();
+//                $parentForm = $form->getParent();
 //
-//            $form = $event->getForm();
-//            $parentForm = $form->getParent();
-//            $parentFormData = $parentForm->getData();
-//            if (!$parentFormData) {
-//                $parentFormData = new ArgumentCollectionTransfer();
-//                $parentForm->setData($parentFormData);
+//                $parentArgumentTransfer = $parentForm->getData();
+//                $argumentField = $parentForm->get('name');
+//                $argumentTransfer = $argumentField->getData();
+//
+//                if ($argumentTransfer instanceof ArgumentTransfer) {
+//                    $argumentTransfer->setVariable($variable);
+//                }
+//                $parentForm->remove('variable');
 //            }
-//            $argumentData = $event->getData();
+//        );
 //
-//            $argumentTransfer = $argumentData['type'];
-//            $argumentTransfer->setVariable($argumentData['variable']);
-//            $argumentTransfer->setIsOptional($argumentData['isOptional']);
+//        $builder->get('isOptional')->addEventListener(
+//            FormEvents::SUBMIT,
+//            function (FormEvent $event) use ($argumentCollectionTransfer) {
+//                $form = $event->getForm();
+//                $isOptional = $event->getData();
+//                $parentForm = $form->getParent();
 //
-//            $parentFormData->addArgument($argumentTransfer);
-//        });
+//                $argumentField = $parentForm->get('name');
+//                $argumentTransfer = $argumentField->getData();
+//
+//                if ($argumentTransfer instanceof ArgumentTransfer) {
+//                    $argumentTransfer->setIsOptional($isOptional);
+//                }
+//                $parentForm->remove('isOptional');
+//            }
+//        );
     }
 }

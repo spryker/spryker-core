@@ -10,6 +10,7 @@ namespace Spryker\Zed\SprykGui\Business;
 use Generated\Shared\Transfer\AccessibleTransferCollection;
 use Generated\Shared\Transfer\ClassInformationTransfer;
 use Generated\Shared\Transfer\ModuleCollectionTransfer;
+use Generated\Shared\Transfer\OrganizationCollectionTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -85,6 +86,18 @@ class SprykGuiFacade extends AbstractFacade implements SprykGuiFacadeInterface
     public function getModules(): ModuleCollectionTransfer
     {
         return $this->getFactory()->createModuleFinder()->findModules();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\OrganizationCollectionTransfer
+     */
+    public function getOrganizations(): OrganizationCollectionTransfer
+    {
+        return $this->getFactory()->createOrganizationFinder()->findOrganizations();
     }
 
     /**

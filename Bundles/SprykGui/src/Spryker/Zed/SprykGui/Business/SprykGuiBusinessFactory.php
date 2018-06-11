@@ -15,11 +15,12 @@ use Spryker\Zed\SprykGui\Business\Finder\Factory\FactoryInfoFinder;
 use Spryker\Zed\SprykGui\Business\Finder\Factory\FactoryInfoFinderInterface;
 use Spryker\Zed\SprykGui\Business\Finder\Module\ModuleFinder;
 use Spryker\Zed\SprykGui\Business\Finder\Module\ModuleFinderInterface;
+use Spryker\Zed\SprykGui\Business\Finder\Organization\OrganizationFinder;
+use Spryker\Zed\SprykGui\Business\Finder\Organization\OrganizationFinderInterface;
 use Spryker\Zed\SprykGui\Business\Model\Graph\GraphBuilder;
 use Spryker\Zed\SprykGui\Business\Model\Graph\GraphBuilderInterface;
 use Spryker\Zed\SprykGui\Business\Model\Spryk;
 use Spryker\Zed\SprykGui\Business\Model\SprykInterface;
-use Spryker\Zed\SprykGui\Dependency\Client\SprykGuiToSessionClientInterface;
 use Spryker\Zed\SprykGui\Dependency\Facade\SprykGuiToSprykFacadeInterface;
 use Spryker\Zed\SprykGui\SprykGuiDependencyProvider;
 
@@ -74,15 +75,15 @@ class SprykGuiBusinessFactory extends AbstractBusinessFactory
      */
     public function createModuleFinder(): ModuleFinderInterface
     {
-        return new ModuleFinder($this->getSessionClient());
+        return new ModuleFinder();
     }
 
     /**
-     * @return \Spryker\Zed\SprykGui\Dependency\Client\SprykGuiToSessionClientInterface
+     * @return \Spryker\Zed\SprykGui\Business\Finder\Organization\OrganizationFinderInterface
      */
-    public function getSessionClient(): SprykGuiToSessionClientInterface
+    public function createOrganizationFinder(): OrganizationFinderInterface
     {
-        return $this->getProvidedDependency(SprykGuiDependencyProvider::SESSION_CLIENT);
+        return new OrganizationFinder();
     }
 
     /**

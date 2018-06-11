@@ -16,6 +16,8 @@ use Generated\Shared\Transfer\ModuleTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -37,6 +39,10 @@ class ZedBusinessDependencyType extends AbstractType
             static::MODULE,
             static::SPRYK,
         ]);
+
+        $resolver->setDefaults([
+            'data_class' => ArgumentCollectionTransfer::class,
+        ]);
     }
 
     /**
@@ -48,7 +54,7 @@ class ZedBusinessDependencyType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $moduleTransfer = $this->getModuleTransfer($options);
-        $className = sprintf('\%1$s\Zed\%2$s\Business\%2$sBusinessFactory', $moduleTransfer->getOrganization(), $moduleTransfer->getName());
+        $className = sprintf('\%1$s\Zed\%2$s\Business\%2$sBusinessFactory', $moduleTransfer->getOrganization()->getName(), $moduleTransfer->getName());
         $factoryInformation = $this->getFacade()->getFactoryInformation($className);
 
         if ($factoryInformation->getMethods()->count() === 0) {
@@ -70,6 +76,25 @@ class ZedBusinessDependencyType extends AbstractType
         ];
 
         $builder->add('arguments', CollectionType::class, $argumentOptions);
+        $builder->get('arguments')->addEventListener(
+            FormEvents::SUBMIT,
+            function (FormEvent $event) {
+                $argumentCollectionTransfer = new ArgumentCollectionTransfer();
+                $eventData = $event->getData();
+                $formData = $event->getForm()->getData();
+
+                foreach ($event->getData() as $argumentInformation) {
+                    $argumentTransfer = $argumentInformation['argument'];
+                    if ($argumentTransfer instanceof ArgumentTransfer) {
+                        $argumentTransfer
+                            ->setVariable($argumentInformation['variable'])
+                            ->setIsOptional($argumentInformation['isOptional']);
+                    }
+                    $argumentCollectionTransfer->addArgument($argumentTransfer);
+                }
+                $event->setData($argumentCollectionTransfer);
+            }
+        );
     }
 
     /**

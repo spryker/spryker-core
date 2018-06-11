@@ -1,12 +1,15 @@
 <?php
+
 /**
- * Copyright © 2018-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerTest\Zed\SprykGui\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\ModuleTransfer;
+use Generated\Shared\Transfer\OrganizationTransfer;
 
 /**
  * Auto-generated group annotations
@@ -39,9 +42,17 @@ class SprykGuiFacadeTest extends Unit
      */
     public function testBuildSprykViewReturnsCommandAndJiraTemplate(): void
     {
-        $userInput['AddZedBusinessFacadeMethod'] = [
-            'module' => 'FooBar',
-            'moduleOrganization' => 'Spryker',
+        $organizationTransfer = new OrganizationTransfer();
+        $organizationTransfer->setName('Spryker')
+            ->setRootPath(APPLICATION_ROOT_DIR . '/vendor/spryker/spryker/Bundles/%module%/');
+
+        $moduleTransfer = new ModuleTransfer();
+        $moduleTransfer
+            ->setName('FooBar')
+            ->setOrganization($organizationTransfer);
+
+        $userInput = [
+            'module' => $moduleTransfer,
             'method' => 'addFooBar',
             'input' => 'string $fooBar',
             'output' => 'bool',
