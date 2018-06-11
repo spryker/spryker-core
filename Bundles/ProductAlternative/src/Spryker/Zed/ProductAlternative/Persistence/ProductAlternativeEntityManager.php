@@ -95,6 +95,8 @@ class ProductAlternativeEntityManager extends AbstractEntityManager implements P
     }
 
     /**
+     * TODO: Re-check this method.
+     *
      * @param \Generated\Shared\Transfer\SpyProductAlternativeEntityTransfer $productAlternativeEntityTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
@@ -103,7 +105,6 @@ class ProductAlternativeEntityManager extends AbstractEntityManager implements P
     {
         $productAlternativeEntityTransfer->setIdProductAlternative(null);
 
-        /** @var \Generated\Shared\Transfer\SpyProductAlternativeEntityTransfer $productAlternativeEntityTransfer */
         $productAlternativeEntityTransfer = $this->save($productAlternativeEntityTransfer);
 
         $productAlternativeTransfer = $this->getFactory()

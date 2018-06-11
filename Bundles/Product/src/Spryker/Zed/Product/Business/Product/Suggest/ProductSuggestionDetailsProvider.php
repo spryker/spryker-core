@@ -86,7 +86,6 @@ class ProductSuggestionDetailsProvider implements ProductSuggestionDetailsProvid
      */
     protected function getIdProductAbstractBySuggestion(string $suggestion, int $limit): ?int
     {
-        /** @var null|array $productAbstract */
         $productAbstract = $this
             ->productRepository
             ->filterProductAbstractByLocalizedName(
@@ -125,7 +124,6 @@ class ProductSuggestionDetailsProvider implements ProductSuggestionDetailsProvid
      */
     protected function getIdProductConcreteBySuggestion(string $suggestion, int $limit): ?int
     {
-        /** @var null|array $productConcrete */
         $productConcrete = $this
             ->productRepository
             ->filterProductConcreteByLocalizedName(

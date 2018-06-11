@@ -97,7 +97,6 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
 
         $abstractProducts = [];
 
-        /** @var \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity */
         foreach ($productAbstractEntities as $productAbstractEntity) {
             $abstractProducts[] = [
                 ProductConstants::KEY_FILTERED_PRODUCTS_ABSTRACT_ID => $productAbstractEntity->getIdProductAbstract(),
@@ -135,7 +134,6 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
 
         $abstractProducts = [];
 
-        /** @var \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity */
         foreach ($productAbstractEntities as $productAbstractEntity) {
             $abstractProducts[] = [
                 ProductConstants::KEY_FILTERED_PRODUCTS_ABSTRACT_ID => $productAbstractEntity->getIdProductAbstract(),
@@ -167,7 +165,6 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
 
         $concreteProducts = [];
 
-        /** @var \Orm\Zed\Product\Persistence\SpyProduct $productConcreteEntity */
         foreach ($productConcreteEntities as $productConcreteEntity) {
             $concreteProducts[] = [
                 ProductConstants::KEY_FILTERED_PRODUCTS_CONCRETE_ID => $productConcreteEntity->getIdProduct(),
@@ -205,7 +202,6 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
 
         $concreteProducts = [];
 
-        /** @var \Orm\Zed\Product\Persistence\SpyProduct $productConcreteEntity */
         foreach ($productConcreteEntities as $productConcreteEntity) {
             $concreteProducts[] = [
                 ProductConstants::KEY_FILTERED_PRODUCTS_CONCRETE_ID => $productConcreteEntity->getIdProduct(),

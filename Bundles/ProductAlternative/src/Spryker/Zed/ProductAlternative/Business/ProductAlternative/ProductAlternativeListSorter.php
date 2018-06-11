@@ -69,7 +69,6 @@ class ProductAlternativeListSorter implements ProductAlternativeListSorterInterf
             static::TYPE_PRODUCT_CONCRETE => [],
         ];
 
-        /** @var \Generated\Shared\Transfer\ProductAlternativeListItemTransfer $productAlternativeListItem */
         foreach ($productAlternativeListItems as $productAlternativeListItem) {
             $productAlternativeType = $productAlternativeListItem->getType();
 

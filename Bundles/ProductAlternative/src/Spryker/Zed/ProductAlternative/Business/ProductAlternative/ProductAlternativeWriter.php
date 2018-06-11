@@ -89,7 +89,6 @@ class ProductAlternativeWriter implements ProductAlternativeWriterInterface
      */
     public function persistProductAlternative(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
-        /** @var \Generated\Shared\Transfer\ProductAlternativeToPersistTransfer $productAlternativeToPersist */
         $productAlternativeToPersist = $productConcreteTransfer[ProductConcreteTransfer::PRODUCT_ALTERNATIVE_TO_PERSIST];
 
         if (!$productAlternativeToPersist->getIdProduct()) {
@@ -114,7 +113,6 @@ class ProductAlternativeWriter implements ProductAlternativeWriterInterface
             return $productConcreteTransfer;
         }
 
-        /** @var null|int $idProductAbstractAlternative */
         $idProductAbstractAlternative = $productSuggestionDetails->getIdProductAbstract();
         if ($idProductAbstractAlternative) {
             $existingProductAbstractAlternative = $this
@@ -134,7 +132,6 @@ class ProductAlternativeWriter implements ProductAlternativeWriterInterface
             return $productConcreteTransfer;
         }
 
-        /** @var null|int $idProductConcreteAlternative */
         $idProductConcreteAlternative = $productSuggestionDetails->getIdProductConcrete();
         if ($idProductConcreteAlternative) {
             $existingProductConcreteAlternative = $this

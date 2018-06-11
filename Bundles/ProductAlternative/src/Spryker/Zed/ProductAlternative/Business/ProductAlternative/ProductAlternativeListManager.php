@@ -72,7 +72,6 @@ class ProductAlternativeListManager implements ProductAlternativeListManagerInte
         ProductAlternativeCollectionTransfer $productAlternativeCollectionTransfer,
         ProductAlternativeListTransfer $productAlternativeListTransfer
     ): ProductAlternativeListTransfer {
-        /** @var \Generated\Shared\Transfer\ProductAlternativeTransfer $productAlternativeTransfer */
         foreach ($productAlternativeCollectionTransfer->getProductAlternatives() as $productAlternativeTransfer) {
             $productAlternativeListTransfer->addProductAlternative(
                 $this->resolveProductTypeHydration($productAlternativeTransfer)
