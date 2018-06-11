@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Synchronization\Business\Search;
 
 use Elastica\Exception\NotFoundException;
-use Spryker\Zed\Synchronization\Business\SynchronizationInterface;
+use Spryker\Zed\Synchronization\Business\Synchronization\SynchronizationInterface;
 use Spryker\Zed\Synchronization\Business\Validation\OutdatedValidatorInterface;
 use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToSearchClientInterface;
 

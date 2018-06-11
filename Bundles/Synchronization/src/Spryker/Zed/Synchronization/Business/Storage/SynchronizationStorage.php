@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Synchronization\Business\Storage;
 
-use Spryker\Zed\Synchronization\Business\SynchronizationInterface;
+use Spryker\Zed\Synchronization\Business\Synchronization\SynchronizationInterface;
 use Spryker\Zed\Synchronization\Business\Validation\OutdatedValidatorInterface;
 use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToStorageClientInterface;
 use Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingServiceInterface;

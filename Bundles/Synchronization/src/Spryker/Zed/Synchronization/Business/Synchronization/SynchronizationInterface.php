@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Synchronization\Business;
+namespace Spryker\Zed\Synchronization\Business\Synchronization;
 
 interface SynchronizationInterface
 {

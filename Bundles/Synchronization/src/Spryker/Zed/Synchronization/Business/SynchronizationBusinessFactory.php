@@ -21,7 +21,7 @@ use Spryker\Zed\Synchronization\SynchronizationDependencyProvider;
 class SynchronizationBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\Synchronization\Business\SynchronizationInterface
+     * @return \Spryker\Zed\Synchronization\Business\Synchronization\SynchronizationInterface
      */
     public function createStorageManager()
     {
@@ -33,7 +33,7 @@ class SynchronizationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Synchronization\Business\SynchronizationInterface
+     * @return \Spryker\Zed\Synchronization\Business\Synchronization\SynchronizationInterface
      */
     public function createSearchManager()
     {
