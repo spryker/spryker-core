@@ -149,54 +149,6 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @api
      *
-     * @param string $searchName
-     *
-     * @return string[]
-     */
-    public function suggestProductAbstract(string $searchName): array
-    {
-        return $this->getFactory()
-            ->createProductAbstractSuggester()
-            ->suggestProductAbstract($searchName);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param string $searchName
-     *
-     * @return string[]
-     */
-    public function suggestProductConcrete(string $searchName): array
-    {
-        return $this->getFactory()
-            ->createProductConcreteSuggester()
-            ->suggestProductConcrete($searchName);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param string $suggestion
-     *
-     * @return \Generated\Shared\Transfer\ProductSuggestionDetailsTransfer
-     */
-    public function getSuggestionDetails(string $suggestion): ProductSuggestionDetailsTransfer
-    {
-        return $this->getFactory()
-            ->createProductSuggestionDetailsProvider()
-            ->getSuggestionDetails($suggestion);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param string $sku
      *
      * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
@@ -854,5 +806,125 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
         return $this->getFactory()
             ->createAttributeEncoder()
             ->decodeAttributes($attributes);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $searchName
+     *
+     * @return string[]
+     */
+    public function suggestProductAbstract(string $searchName): array
+    {
+        return $this->getFactory()
+            ->createProductSuggester()
+            ->suggestProductAbstract($searchName);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $searchName
+     *
+     * @return string[]
+     */
+    public function suggestProductConcrete(string $searchName): array
+    {
+        return $this->getFactory()
+            ->createProductSuggester()
+            ->suggestProductConcrete($searchName);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $suggestion
+     *
+     * @return \Generated\Shared\Transfer\ProductSuggestionDetailsTransfer
+     */
+    public function getSuggestionDetails(string $suggestion): ProductSuggestionDetailsTransfer
+    {
+        return $this->getFactory()
+            ->createProductSuggestionDetailsProvider()
+            ->getSuggestionDetails($suggestion);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $sku
+     * @param int $limit
+     *
+     * @return array
+     */
+    public function filterProductAbstractBySku(string $sku, int $limit): array
+    {
+        return $this
+            ->getFactory()
+            ->createProductFilterSuggestion()
+            ->filterProductAbstractBySku($sku, $limit);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $localizedName
+     * @param int $limit
+     *
+     * @return array
+     */
+    public function filterProductAbstractByLocalizedName(string $localizedName, int $limit): array
+    {
+        return $this
+            ->getFactory()
+            ->createProductFilterSuggestion()
+            ->filterProductAbstractByLocalizedName($localizedName, $limit);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $sku
+     * @param int $limit
+     *
+     * @return array
+     */
+    public function filterProductConcreteBySku(string $sku, int $limit): array
+    {
+        return $this
+            ->getFactory()
+            ->createProductFilterSuggestion()
+            ->filterProductConcreteBySku($sku, $limit);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $localizedName
+     * @param int $limit
+     *
+     * @return array
+     */
+    public function filterProductConcreteByLocalizedName(string $localizedName, int $limit): array
+    {
+        return $this
+            ->getFactory()
+            ->createProductFilterSuggestion()
+            ->filterProductConcreteByLocalizedName($localizedName, $limit);
     }
 }

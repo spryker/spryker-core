@@ -52,22 +52,6 @@ interface ProductConcreteManagerInterface
     public function findProductConcreteIdBySku($sku);
 
     /**
-     * @param string $sku
-     * @param int $limit
-     *
-     * @return array
-     */
-    public function filterProductConcreteBySku(string $sku, int $limit): array;
-
-    /**
-     * @param string $localizedName
-     * @param int $limit
-     *
-     * @return array
-     */
-    public function filterProductConcreteByLocalizedName(string $localizedName, int $limit): array;
-
-    /**
      * @param string $concreteSku
      *
      * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException

@@ -140,30 +140,6 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Suggests product abstract by name or SKU.
-     *
-     * @api
-     *
-     * @param string $searchName
-     *
-     * @return string[]
-     */
-    public function suggestProductAbstract(string $searchName): array;
-
-    /**
-     * Specification:
-     * - Suggests product concrete by name or SKU.
-     *
-     * @api
-     *
-     * @param string $searchName
-     *
-     * @return string[]
-     */
-    public function suggestProductConcrete(string $searchName): array;
-
-    /**
-     * Specification:
      * - Retrieve product id accordingly to suggestion.
      * - Has $idProductConcrete property set, if concrete product was found for suggestion.
      * - Has $idProductAbstract property set, if abstract product was found for suggestion.
@@ -743,4 +719,88 @@ interface ProductFacadeInterface
      * @return array
      */
     public function decodeProductAttributes($attributes);
+
+    /**
+     * Specification:
+     * - Suggests product abstract by name or SKU.
+     *
+     * @api
+     *
+     * @param string $searchName
+     *
+     * @return string[]
+     */
+    public function suggestProductAbstract(string $searchName): array;
+
+    /**
+     * Specification:
+     * - Suggests product concrete by name or SKU.
+     *
+     * @api
+     *
+     * @param string $searchName
+     *
+     * @return string[]
+     */
+    public function suggestProductConcrete(string $searchName): array;
+
+    /**
+     * Specification:
+     * - Filters abstract products by SKU and returns associative array of abstract products.
+     * - Associative array contains items, each of one has product id as key and SKU as value.
+     * - Keys for associative array are stored in ProductConstants.
+     *
+     * @api
+     *
+     * @param string $sku
+     * @param int $limit
+     *
+     * @return array
+     */
+    public function filterProductAbstractBySku(string $sku, int $limit): array;
+
+    /**
+     * Specification:
+     * - Filters abstract products by name and returns associative array of abstract products.
+     * - Associative array contains items, each of one has product id as key and name as value.
+     * - Keys for associative array are stored in ProductConstants.
+     *
+     * @api
+     *
+     * @param string $localizedName
+     * @param int $limit
+     *
+     * @return array
+     */
+    public function filterProductAbstractByLocalizedName(string $localizedName, int $limit): array;
+
+    /**
+     * Specification:
+     * - Filters concrete products by name and returns associative array of concrete products.
+     * - Associative array contains items, each of one has product id as key and SKU as value.
+     * - Keys for associative array are stored in ProductConstants.
+     *
+     * @api
+     *
+     * @param string $sku
+     * @param int $limit
+     *
+     * @return array
+     */
+    public function filterProductConcreteBySku(string $sku, int $limit): array;
+
+    /**
+     * Specification:
+     * - Filters concrete products by name and returns associative array of concrete products.
+     * - Associative array contains items, each of one has product id as key and name as value.
+     * - Keys for associative array are stored in ProductConstants.
+     *
+     * @api
+     *
+     * @param string $localizedName
+     * @param int $limit
+     *
+     * @return array
+     */
+    public function filterProductConcreteByLocalizedName(string $localizedName, int $limit): array;
 }

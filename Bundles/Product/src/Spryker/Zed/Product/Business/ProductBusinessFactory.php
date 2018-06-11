@@ -34,10 +34,10 @@ use Spryker\Zed\Product\Business\Product\Sku\SkuGenerator;
 use Spryker\Zed\Product\Business\Product\Status\ProductAbstractStatusChecker;
 use Spryker\Zed\Product\Business\Product\StoreRelation\ProductAbstractStoreRelationReader;
 use Spryker\Zed\Product\Business\Product\StoreRelation\ProductAbstractStoreRelationWriter;
-use Spryker\Zed\Product\Business\Product\Suggest\ProductAbstractSuggester;
-use Spryker\Zed\Product\Business\Product\Suggest\ProductAbstractSuggesterInterface;
-use Spryker\Zed\Product\Business\Product\Suggest\ProductConcreteSuggester;
-use Spryker\Zed\Product\Business\Product\Suggest\ProductConcreteSuggesterInterface;
+use Spryker\Zed\Product\Business\Product\Suggest\ProductFilterSuggestion;
+use Spryker\Zed\Product\Business\Product\Suggest\ProductFilterSuggestionInterface;
+use Spryker\Zed\Product\Business\Product\Suggest\ProductSuggester;
+use Spryker\Zed\Product\Business\Product\Suggest\ProductSuggesterInterface;
 use Spryker\Zed\Product\Business\Product\Suggest\ProductSuggestionDetailsProvider;
 use Spryker\Zed\Product\Business\Product\Suggest\ProductSuggestionDetailsProviderInterface;
 use Spryker\Zed\Product\Business\Product\Touch\ProductAbstractTouch;
@@ -53,6 +53,7 @@ use Spryker\Zed\Product\ProductDependencyProvider;
 /**
  * @method \Spryker\Zed\Product\ProductConfig getConfig()
  * @method \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Product\Persistence\ProductRepositoryInterface getRepository()
  */
 class ProductBusinessFactory extends AbstractBusinessFactory
 {
@@ -286,40 +287,6 @@ class ProductBusinessFactory extends AbstractBusinessFactory
         return new ProductAbstractStoreRelationWriter(
             $this->getQueryContainer(),
             $this->createProductAbstractStoreRelationReader()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Product\Business\Product\Suggest\ProductAbstractSuggesterInterface
-     */
-    public function createProductAbstractSuggester(): ProductAbstractSuggesterInterface
-    {
-        return new ProductAbstractSuggester(
-            $this->getConfig(),
-            $this->createProductAbstractManager()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Product\Business\Product\Suggest\ProductConcreteSuggesterInterface
-     */
-    public function createProductConcreteSuggester(): ProductConcreteSuggesterInterface
-    {
-        return new ProductConcreteSuggester(
-            $this->getConfig(),
-            $this->createProductConcreteManager()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Product\Business\Product\Suggest\ProductSuggestionDetailsProviderInterface
-     */
-    public function createProductSuggestionDetailsProvider(): ProductSuggestionDetailsProviderInterface
-    {
-        return new ProductSuggestionDetailsProvider(
-            $this->getConfig(),
-            $this->createProductAbstractManager(),
-            $this->createProductConcreteManager()
         );
     }
 
@@ -590,5 +557,40 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     protected function getEventFacade()
     {
         return $this->getProvidedDependency(ProductDependencyProvider::FACADE_EVENT);
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\Suggest\ProductSuggesterInterface
+     */
+    public function createProductSuggester(): ProductSuggesterInterface
+    {
+        return new ProductSuggester(
+            $this->getConfig(),
+            $this->getRepository(),
+            $this->getLocaleFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\Suggest\ProductSuggestionDetailsProviderInterface
+     */
+    public function createProductSuggestionDetailsProvider(): ProductSuggestionDetailsProviderInterface
+    {
+        return new ProductSuggestionDetailsProvider(
+            $this->getConfig(),
+            $this->createProductAbstractManager(),
+            $this->createProductConcreteManager()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\Suggest\ProductFilterSuggestionInterface
+     */
+    public function createProductFilterSuggestion(): ProductFilterSuggestionInterface
+    {
+        return new ProductFilterSuggestion(
+            $this->getLocaleFacade(),
+            $this->getRepository()
+        );
     }
 }
