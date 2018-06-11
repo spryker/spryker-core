@@ -7,10 +7,11 @@
 
 namespace Spryker\Zed\Product\Business\Product\Suggest;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductSuggestionDetailsTransfer;
 use Spryker\Shared\Product\ProductConstants;
-use Spryker\Zed\Product\Business\Product\ProductAbstractManagerInterface;
-use Spryker\Zed\Product\Business\Product\ProductConcreteManagerInterface;
+use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
+use Spryker\Zed\Product\Persistence\ProductRepositoryInterface;
 use Spryker\Zed\Product\ProductConfig;
 
 class ProductSuggestionDetailsProvider implements ProductSuggestionDetailsProviderInterface
@@ -21,28 +22,28 @@ class ProductSuggestionDetailsProvider implements ProductSuggestionDetailsProvid
     protected $config;
 
     /**
-     * @var \Spryker\Zed\Product\Business\Product\ProductConcreteManagerInterface
+     * @var \Pyz\Zed\DataImport\Business\Model\Product\Repository\ProductRepositoryInterface
      */
-    protected $productConcreteManager;
+    protected $productRepository;
 
     /**
-     * @var \Spryker\Zed\Product\Business\Product\ProductAbstractManagerInterface
+     * @var \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface
      */
-    protected $productAbstractManager;
+    protected $localeFacade;
 
     /**
      * @param \Spryker\Zed\Product\ProductConfig $config
-     * @param \Spryker\Zed\Product\Business\Product\ProductAbstractManagerInterface $productAbstractManager
-     * @param \Spryker\Zed\Product\Business\Product\ProductConcreteManagerInterface $productConcreteManager
+     * @param \Spryker\Zed\Product\Persistence\ProductRepositoryInterface $productRepository
+     * @param \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface $localeFacade
      */
     public function __construct(
         ProductConfig $config,
-        ProductAbstractManagerInterface $productAbstractManager,
-        ProductConcreteManagerInterface $productConcreteManager
+        ProductRepositoryInterface $productRepository,
+        ProductToLocaleInterface $localeFacade
     ) {
         $this->config = $config;
-        $this->productAbstractManager = $productAbstractManager;
-        $this->productConcreteManager = $productConcreteManager;
+        $this->productRepository = $productRepository;
+        $this->localeFacade = $localeFacade;
     }
 
     /**
@@ -76,6 +77,7 @@ class ProductSuggestionDetailsProvider implements ProductSuggestionDetailsProvid
 
     /**
      * TODO: Resolve the case when multiple products were found by name.
+     * TODO: Add SKU rendering for the case above.
      *
      * @param string $suggestion
      * @param int $limit
@@ -86,8 +88,9 @@ class ProductSuggestionDetailsProvider implements ProductSuggestionDetailsProvid
     {
         /** @var null|array $productAbstract */
         $productAbstract = $this
-            ->productAbstractManager
+            ->productRepository
             ->filterProductAbstractByLocalizedName(
+                $this->getCurrentLocale(),
                 $suggestion,
                 $limit
             );
@@ -99,7 +102,7 @@ class ProductSuggestionDetailsProvider implements ProductSuggestionDetailsProvid
         }
 
         $productAbstract = $this
-            ->productAbstractManager
+            ->productRepository
             ->filterProductAbstractBySku(
                 $suggestion,
                 $limit
@@ -124,8 +127,9 @@ class ProductSuggestionDetailsProvider implements ProductSuggestionDetailsProvid
     {
         /** @var null|array $productConcrete */
         $productConcrete = $this
-            ->productConcreteManager
+            ->productRepository
             ->filterProductConcreteByLocalizedName(
+                $this->getCurrentLocale(),
                 $suggestion,
                 $limit
             );
@@ -136,7 +140,7 @@ class ProductSuggestionDetailsProvider implements ProductSuggestionDetailsProvid
         }
 
         $productConcrete = $this
-            ->productConcreteManager
+            ->productRepository
             ->filterProductConcreteBySku(
                 $suggestion,
                 $limit
@@ -147,5 +151,15 @@ class ProductSuggestionDetailsProvider implements ProductSuggestionDetailsProvid
         }
 
         return null;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    protected function getCurrentLocale(): LocaleTransfer
+    {
+        return $this
+            ->localeFacade
+            ->getCurrentLocale();
     }
 }

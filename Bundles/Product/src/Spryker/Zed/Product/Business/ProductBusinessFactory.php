@@ -578,8 +578,8 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductSuggestionDetailsProvider(
             $this->getConfig(),
-            $this->createProductAbstractManager(),
-            $this->createProductConcreteManager()
+            $this->getRepository(),
+            $this->getLocaleFacade()
         );
     }
 
