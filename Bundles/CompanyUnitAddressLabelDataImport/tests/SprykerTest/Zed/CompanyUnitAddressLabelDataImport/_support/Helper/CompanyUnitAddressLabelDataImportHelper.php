@@ -17,8 +17,8 @@ class CompanyUnitAddressLabelDataImportHelper extends Module
      */
     public function ensureDatabaseTableIsEmpty(): void
     {
-        $companyUnitAddressLabelQuery = $this->getCompanyUnitAddressLabelQuery();
-        $companyUnitAddressLabelQuery->find()->delete();
+        $this->getCompanyUnitAddressLabelQuery()
+            ->deleteAll();
     }
 
     /**

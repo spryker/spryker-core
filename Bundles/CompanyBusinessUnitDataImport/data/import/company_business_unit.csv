@@ -1,10 +1,14 @@
-company_key,business_unit_key,name,email,phone,external_url,iban,bic
-test-company,test-business-unit-1,Hotel Tommy Berlin,test+test-business-unit-1@spryker.com,1234567890,,test iban,test bic
-test-company,test-business-unit-2,Hotel Tommy London,test+test-business-unit-2@spryker.com,1234567890,,,
-test-company,test-business-unit-3,Hotel Tommy Zürich,test+test-business-unit-3@spryker.com,1234567890,,,
-trial-company,trial-bus-unit-1,Trial Management unit,trial-bus-unit-1@spryker.com,1234567890,,,
-trial-company,trial-bus-unit-2,Trial Buying unit,trial-bus-unit-2@spryker.com,1234567890,,,
-trial-company,trial-bus-unit-3,Trial Delivery unit,trial-bus-unit-3@spryker.com,1234567890,,,
-proof-company,proof-bus-unit-1,Proof Restaurant,proof-bus-unit-1@spryker.com,1234567890,,,
-proof-company,proof-bus-unit-2,Proof Bar,proof-bus-unit-2@spryker.com,1234567890,,,
-proof-company,proof-bus-unit-3,Proof Cleaning,proof-bus-unit-3@spryker.com,1234567890,,,
+company_key,business_unit_key,name,email,phone,external_url,iban,bic,parent_business_unit_key
+Ottom_ltd,Ottom_HQ,Ottom HQ,Ottom_HQ@ottom.com,4908892450,"","","",""
+Ottom_ltd,Sales_Department,Sales department,Sales_Department@ottom.com,4908892455,"","","",Ottom_HQ
+Ottom_ltd,Supplier_Department,Supplier deparment,Supplier_Department@ottom.com,4908892455,"","","",Ottom_HQ
+Ottom_ltd,Ottom_store_Berlin,Ottom store Berlin,Ottom_store_Berlin@ottom.com,4908892452,"","","",Sales_Department
+Ottom_ltd,Ottom_store_Oslo,Ottom store Oslo,Ottom_store_Oslo@ottom.com,4708892453,"","","",Sales_Department
+Ottom_ltd,Ottom_store_London,Ottom store London,Ottom_store_London@ottom.com,4408892454,"","","",Sales_Department
+27_Rif_Group,27_Rif_HQ,27 Rif HQ,27_Rif_HQ@27rif.com,4902890001,"","","",""
+27_Rif_Group,27_Rif_Barcelona,27 Rif Barcelona,27_Rif_Barcelona@27rif.com,3490284322,"","","",27_Rif_HQ
+27_Rif_Group,27_Rif_Zurich,27 Rif Zurich,27_Rif_Zurich@27rif.com,4102890118,"","","",27_Rif_HQ
+27_Rif_Group,27_Rif_Zurich_restaurant,27 Rif Zurich restaurant,27_Rif_Zurich_restaurant@27rif.com,4102890119,"","","",27_Rif_Zurich
+27_Rif_Group,27_Rif_Zurich_bakery,27 Rif Zurich bakery,27_Rif_Zurich_bakery@27rif.com,4102890120,"","","",27_Rif_Zurich
+27_Rif_Group,27_Rif_Berlin,27 Rif Berlin,27_Rif_Berlin@27rif.com,4902890021,"","","",27_Rif_HQ
+27_Rif_Group,27_Rif_HR department,27 Rif HR department,27_Rif_HR department@27rif.com,4902890031,"","","",27_Rif_HQ
