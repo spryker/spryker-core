@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 class ProductManagementToProductAttributeBridge implements ProductManagementToProductAttributeInterface
 {
     /**
-     * @var \Spryker\Zed\Product\Business\ProductFacadeInterface
+     * @var \Spryker\Zed\ProductAttribute\Business\ProductAttributeFacadeInterface
      */
     protected $productAttributeFacade;
 
