@@ -11,9 +11,9 @@ use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductAlternative\Persistence\SpyProductAlternative;
 use Orm\Zed\ProductAlternative\Persistence\SpyProductAlternativeQuery;
-use Spryker\Zed\Api\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
+use Spryker\Zed\ProductAlternativeDataImport\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\ProductAlternativeDataImport\Business\Exception\NoAlternativesException;
 use Spryker\Zed\ProductAlternativeDataImport\Business\Model\DataSet\ProductAlternativeDataSetInterface;
 
@@ -32,7 +32,7 @@ class ProductAlternativeWriterStep implements DataImportStepInterface
     /**
      * @param string $productConcreteSku
      *
-     * @throws \Spryker\Zed\Api\Business\Exception\EntityNotFoundException
+     * @throws \Spryker\Zed\ProductAlternativeDataImport\Business\Exception\EntityNotFoundException
      *
      * @return int
      */
@@ -52,7 +52,7 @@ class ProductAlternativeWriterStep implements DataImportStepInterface
     /**
      * @param string $productConcreteSku
      *
-     * @throws \Spryker\Zed\Api\Business\Exception\EntityNotFoundException
+     * @throws \Spryker\Zed\ProductAlternativeDataImport\Business\Exception\EntityNotFoundException
      *
      * @return \Orm\Zed\Product\Persistence\SpyProduct
      */
@@ -72,7 +72,7 @@ class ProductAlternativeWriterStep implements DataImportStepInterface
     /**
      * @param string $productAbstractSku
      *
-     * @throws \Spryker\Zed\Api\Business\Exception\EntityNotFoundException
+     * @throws \Spryker\Zed\ProductAlternativeDataImport\Business\Exception\EntityNotFoundException
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstract
      */
@@ -82,7 +82,7 @@ class ProductAlternativeWriterStep implements DataImportStepInterface
 
         if (!$spyProductAbstractEntity) {
             throw new EntityNotFoundException(
-                sprintf('Product concrete with "%s" SKU was not found during data import', $productAbstractSku)
+                sprintf('Product abstract with "%s" SKU was not found during data import', $productAbstractSku)
             );
         }
 

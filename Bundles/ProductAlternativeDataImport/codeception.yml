@@ -1,5 +1,9 @@
-namespace: ProductAlternativeDataImport
+namespace: SprykerTest
 actor: Tester
+
+include:
+    - tests/SprykerTest/Zed/ProductAlternativeDataImport
+
 paths:
     tests: tests
     log: tests/_output
