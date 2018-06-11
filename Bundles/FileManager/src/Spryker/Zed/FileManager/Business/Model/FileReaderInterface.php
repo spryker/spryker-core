@@ -12,20 +12,14 @@ interface FileReaderInterface
     /**
      * @param int $idFileInfo
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return \Generated\Shared\Transfer\FileManagerDataTransfer
      */
-    public function read($idFileInfo);
+    public function read(int $idFileInfo);
 
     /**
      * @param int $idFile
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
-     *
      * @return \Generated\Shared\Transfer\FileManagerDataTransfer
      */
-    public function readLatestByFileId($idFile);
+    public function readLatestByFileId(int $idFile);
 }

@@ -10,15 +10,16 @@ namespace Spryker\Zed\FileManager\Business\Model;
 use Generated\Shared\Transfer\FileInfoTransfer;
 use Generated\Shared\Transfer\FileManagerDataTransfer;
 use Generated\Shared\Transfer\FileTransfer;
-use Orm\Zed\FileManager\Persistence\Base\SpyFile;
-use Orm\Zed\FileManager\Persistence\SpyFileInfo;
+use Generated\Shared\Transfer\SpyFileEntityTransfer;
+use Generated\Shared\Transfer\SpyFileInfoEntityTransfer;
+use Spryker\Zed\FileManager\Persistence\FileManagerRepositoryInterface;
 
 class FileReader implements FileReaderInterface
 {
     /**
-     * @var \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface
+     * @var \Spryker\Zed\FileManager\Persistence\FileManagerRepositoryInterface
      */
-    protected $fileLoader;
+    protected $repository;
 
     /**
      * @var \Spryker\Zed\FileManager\Business\Model\FileContentInterface
@@ -26,12 +27,12 @@ class FileReader implements FileReaderInterface
     protected $fileContent;
 
     /**
-     * @param \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface $fileLoader
+     * @param \Spryker\Zed\FileManager\Persistence\FileManagerRepositoryInterface $repository
      * @param \Spryker\Zed\FileManager\Business\Model\FileContentInterface $fileContent
      */
-    public function __construct(FileLoaderInterface $fileLoader, FileContentInterface $fileContent)
+    public function __construct(FileManagerRepositoryInterface $repository, FileContentInterface $fileContent)
     {
-        $this->fileLoader = $fileLoader;
+        $this->repository = $repository;
         $this->fileContent = $fileContent;
     }
 
@@ -40,9 +41,9 @@ class FileReader implements FileReaderInterface
      *
      * @return \Generated\Shared\Transfer\FileManagerDataTransfer
      */
-    public function read($idFileInfo)
+    public function read(int $idFileInfo)
     {
-        $fileInfo = $this->fileLoader->getFileInfo($idFileInfo);
+        $fileInfo = $this->repository->getFileInfoById($idFileInfo);
 
         if ($fileInfo === null) {
             return new FileManagerDataTransfer();
@@ -56,9 +57,9 @@ class FileReader implements FileReaderInterface
      *
      * @return \Generated\Shared\Transfer\FileManagerDataTransfer
      */
-    public function readLatestByFileId($idFile)
+    public function readLatestByFileId(int $idFile)
     {
-        $fileInfo = $this->fileLoader->getLatestFileInfoByFkFile($idFile);
+        $fileInfo = $this->repository->getLatestFileInfoByIdFile($idFile);
 
         if ($fileInfo === null) {
             return new FileManagerDataTransfer();
@@ -68,47 +69,47 @@ class FileReader implements FileReaderInterface
     }
 
     /**
-     * @param \Orm\Zed\FileManager\Persistence\SpyFileInfo $fileInfo
+     * @param \Generated\Shared\Transfer\SpyFileInfoEntityTransfer $fileInfoEntityTransfer
      *
      * @return \Generated\Shared\Transfer\FileManagerDataTransfer
      */
-    protected function createResponseTransfer(SpyFileInfo $fileInfo)
+    protected function createResponseTransfer(SpyFileInfoEntityTransfer $fileInfoEntityTransfer)
     {
-        $fileTransfer = $this->createFileTransfer($fileInfo->getFile());
-        $fileInfoTransfer = $this->createFileInfoTransfer($fileInfo);
+        $fileTransfer = $this->createFileTransfer($fileInfoEntityTransfer->getFile());
+        $fileInfoTransfer = $this->createFileInfoTransfer($fileInfoEntityTransfer);
 
         $fileManagerDataTransfer = new FileManagerDataTransfer();
         $fileManagerDataTransfer->setFile($fileTransfer);
         $fileManagerDataTransfer->setFileInfo($fileInfoTransfer);
 
-        $content = $this->fileContent->read($fileInfo->getStorageFileName());
+        $content = $this->fileContent->read($fileInfoEntityTransfer->getStorageFileName());
         $fileManagerDataTransfer->setContent($content);
 
         return $fileManagerDataTransfer;
     }
 
     /**
-     * @param \Orm\Zed\FileManager\Persistence\Base\SpyFile $file
+     * @param \Generated\Shared\Transfer\SpyFileEntityTransfer $fileEntityTransfer
      *
      * @return \Generated\Shared\Transfer\FileTransfer
      */
-    protected function createFileTransfer(SpyFile $file)
+    protected function createFileTransfer(SpyFileEntityTransfer $fileEntityTransfer)
     {
         $fileTransfer = new FileTransfer();
-        $fileTransfer->fromArray($file->toArray());
+        $fileTransfer->fromArray($fileEntityTransfer->toArray(), true);
 
         return $fileTransfer;
     }
 
     /**
-     * @param \Orm\Zed\FileManager\Persistence\SpyFileInfo $fileInfo
+     * @param \Generated\Shared\Transfer\SpyFileInfoEntityTransfer $fileInfoEntityTransfer
      *
      * @return \Generated\Shared\Transfer\FileInfoTransfer
      */
-    protected function createFileInfoTransfer(SpyFileInfo $fileInfo)
+    protected function createFileInfoTransfer(SpyFileInfoEntityTransfer $fileInfoEntityTransfer)
     {
         $fileInfoTransfer = new FileInfoTransfer();
-        $fileInfoTransfer->fromArray($fileInfo->toArray());
+        $fileInfoTransfer->fromArray($fileInfoEntityTransfer->toArray(), true);
 
         return $fileInfoTransfer;
     }

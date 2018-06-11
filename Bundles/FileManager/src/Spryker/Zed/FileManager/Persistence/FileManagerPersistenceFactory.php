@@ -13,6 +13,7 @@ use Orm\Zed\FileManager\Persistence\SpyFileInfoQuery;
 use Orm\Zed\FileManager\Persistence\SpyFileLocalizedAttributesQuery;
 use Orm\Zed\FileManager\Persistence\SpyFileQuery;
 use Orm\Zed\FileManager\Persistence\SpyMimeTypeQuery;
+use Spryker\Zed\FileManager\Persistence\Mapper\FileManagerMapper;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -67,5 +68,13 @@ class FileManagerPersistenceFactory extends AbstractPersistenceFactory
     public function createFileDirectoryLocalizedAttributesQuery()
     {
         return SpyFileDirectoryLocalizedAttributesQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\FileManager\Persistence\Mapper\FileManagerMapperInterface
+     */
+    public function createFileManagerMapper()
+    {
+        return new FileManagerMapper();
     }
 }
