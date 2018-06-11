@@ -42,7 +42,7 @@ class CustomersListDataProvider implements FormDataProviderInterface
      *
      * @return array
      */
-    public function getOptions($quoteTransfer)
+    public function getOptions($quoteTransfer): array
     {
         return [
             'data_class' => QuoteTransfer::class,
@@ -57,19 +57,19 @@ class CustomersListDataProvider implements FormDataProviderInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getData($quoteTransfer)
+    public function getData($quoteTransfer): QuoteTransfer
     {
-        $value = $quoteTransfer->getIdCustomer();
-
-        if (!$value && $this->request->query->has(CustomersListType::FIELD_CUSTOMER)) {
-            $value = $this->request->query->get(CustomersListType::FIELD_CUSTOMER);
-        }
-
-        $quoteTransfer->setIdCustomer($value);
-
         if ($quoteTransfer->getCustomer() === null) {
             $quoteTransfer->setCustomer(new CustomerTransfer());
         }
+
+        $idCustomer = $quoteTransfer->getCustomer()->getIdCustomer();
+
+        if (!$idCustomer && $this->request->query->has(CustomersListType::FIELD_CUSTOMER)) {
+            $idCustomer = $this->request->query->get(CustomersListType::FIELD_CUSTOMER);
+        }
+
+        $quoteTransfer->getCustomer()->setIdCustomer($idCustomer);
 
         return $quoteTransfer;
     }
@@ -77,7 +77,7 @@ class CustomersListDataProvider implements FormDataProviderInterface
     /**
      * @return array
      */
-    protected function getCustomerList()
+    protected function getCustomerList(): array
     {
         $customerCollection = $this->customerQueryContainer
             ->queryCustomers()
