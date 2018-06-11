@@ -2,3 +2,6 @@ key,name,is_active,status
 test-company,Hotel Tommy,true,approved
 trial-company,Trial,true,approved
 proof-company,Proof,true,approved
+Test Company,test-company,true,approved
+Ottom_ltd,Ottom_ltd,true,approved
+27_Rif_Group,27_Rif_Group,true,approved
