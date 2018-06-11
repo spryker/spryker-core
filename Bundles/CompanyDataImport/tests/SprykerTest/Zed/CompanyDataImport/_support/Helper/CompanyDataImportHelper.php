@@ -24,6 +24,7 @@ class CompanyDataImportHelper extends Module
                 $priceProduct->setFkCompany(null);
                 $priceProduct->save();
             }
+            $companyEntity->getCompanyUsers()->delete();
             $companyEntity->getCompanyBusinessUnits()->delete();
             $companyEntity->getCompanyUnitAddresses()->delete();
             $companyEntity->delete();
