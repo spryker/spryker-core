@@ -69,11 +69,10 @@ class Reader implements ReaderInterface
     protected function getReader(DatasetFilePathTransfer $filePathTransfer)
     {
         try {
-            /** @var \League\Csv\Reader $csv */
             $csv = $this->createCsvReader($filePathTransfer);
             $csv->setHeaderOffset(static::HEADER_OFFSET);
         } catch (Exception $e) {
-            throw new DatasetParseException('Not valid csv file');
+            throw new DatasetParseException('Not valid CSV in text file.');
         }
 
         return $csv;
