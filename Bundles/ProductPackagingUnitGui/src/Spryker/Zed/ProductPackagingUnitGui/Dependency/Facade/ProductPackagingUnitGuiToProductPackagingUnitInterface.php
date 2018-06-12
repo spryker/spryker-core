@@ -5,22 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductPackagingUnit\Business;
+namespace Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 
-interface ProductPackagingUnitFacadeInterface
+interface ProductPackagingUnitGuiToProductPackagingUnitInterface
 {
-    /**
-     * Specification:
-     * - Add infrastructural packaging unit type list to persistence.
-     *
-     * @api
-     *
-     * @return void
-     */
-    public function installProductPackagingUnitTypes(): void;
-
     /**
      * Specification:
      * - Retrieve infrastructural packaging unit type list as an array of strings.
@@ -30,20 +20,6 @@ interface ProductPackagingUnitFacadeInterface
      * @return string[]
      */
     public function getInfrastructuralPackagingUnitTypeKeys(): array;
-
-    /**
-     * Specification:
-     *  - Retrieve a product packaging unit type by ProductPackagingUnitTypeTransfer::name in the transfer.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
-     */
-    public function getProductPackagingUnitTypeByName(
-        ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
-    ): ProductPackagingUnitTypeTransfer;
 
     /**
      * Specification:

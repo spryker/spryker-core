@@ -5,51 +5,37 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductPackagingUnit\Business;
+namespace Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 
-interface ProductPackagingUnitFacadeInterface
+class ProductPackagingUnitGuiToProductPackagingUnitBridge implements ProductPackagingUnitGuiToProductPackagingUnitInterface
 {
     /**
-     * Specification:
-     * - Add infrastructural packaging unit type list to persistence.
-     *
-     * @api
-     *
-     * @return void
+     * @var \Spryker\Zed\ProductPackagingUnit\Business\ProductPackagingUnitFacadeInterface
      */
-    public function installProductPackagingUnitTypes(): void;
+    protected $productPackagingUnitFacade;
 
     /**
-     * Specification:
-     * - Retrieve infrastructural packaging unit type list as an array of strings.
-     *
-     * @api
+     * @param \Spryker\Zed\ProductPackagingUnit\Business\ProductPackagingUnitFacadeInterface $productPackagingUnitFacade
+     */
+    public function __construct($productPackagingUnitFacade)
+    {
+        $this->productPackagingUnitFacade = $productPackagingUnitFacade;
+    }
+
+    /**
+     * {@inheritdoc}
      *
      * @return string[]
      */
-    public function getInfrastructuralPackagingUnitTypeKeys(): array;
+    public function getInfrastructuralPackagingUnitTypeKeys(): array
+    {
+        return $this->productPackagingUnitFacade->getInfrastructuralPackagingUnitTypeKeys();
+    }
 
     /**
-     * Specification:
-     *  - Retrieve a product packaging unit type by ProductPackagingUnitTypeTransfer::name in the transfer.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
-     */
-    public function getProductPackagingUnitTypeByName(
-        ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
-    ): ProductPackagingUnitTypeTransfer;
-
-    /**
-     * Specification:
-     *  - Retrieve a product packaging unit type by ProductPackagingUnitTypeTransfer::idProductPackagingUnitType in the transfer.
-     *
-     * @api
+     * {@inheritdoc}
      *
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
@@ -57,13 +43,12 @@ interface ProductPackagingUnitFacadeInterface
      */
     public function getProductPackagingUnitTypeById(
         ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
-    ): ProductPackagingUnitTypeTransfer;
+    ): ProductPackagingUnitTypeTransfer {
+        return $this->productPackagingUnitFacade->getProductPackagingUnitTypeById($productPackagingUnitTypeTransfer);
+    }
 
     /**
-     * Specification:
-     *  - Retrieve product packaging units count for a given product packaging unit type.
-     *
-     * @api
+     * {@inheritdoc}
      *
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
@@ -71,13 +56,12 @@ interface ProductPackagingUnitFacadeInterface
      */
     public function getCountProductPackagingUnitsForType(
         ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
-    ): int;
+    ): int {
+        return $this->productPackagingUnitFacade->getCountProductPackagingUnitsForType($productPackagingUnitTypeTransfer);
+    }
 
     /**
-     * Specification:
-     *  - Creates product packaging unit type.
-     *
-     * @api
+     * {@inheritdoc}
      *
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
@@ -85,13 +69,12 @@ interface ProductPackagingUnitFacadeInterface
      */
     public function createProductPackagingUnitType(
         ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
-    ): ProductPackagingUnitTypeTransfer;
+    ): ProductPackagingUnitTypeTransfer {
+        return $this->productPackagingUnitFacade->createProductPackagingUnitType($productPackagingUnitTypeTransfer);
+    }
 
     /**
-     * Specification:
-     *  - Updates product packaging unit type.
-     *
-     * @api
+     * {@inheritdoc}
      *
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
@@ -99,13 +82,12 @@ interface ProductPackagingUnitFacadeInterface
      */
     public function updateProductPackagingUnitType(
         ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
-    ): ProductPackagingUnitTypeTransfer;
+    ): ProductPackagingUnitTypeTransfer {
+        return $this->productPackagingUnitFacade->updateProductPackagingUnitType($productPackagingUnitTypeTransfer);
+    }
 
     /**
-     * Specification:
-     *  - Deletes a product packaging unit type.
-     *
-     * @api
+     * {@inheritdoc}
      *
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
@@ -113,5 +95,7 @@ interface ProductPackagingUnitFacadeInterface
      */
     public function deleteProductPackagingUnitType(
         ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
-    ): bool;
+    ): bool {
+        return $this->productPackagingUnitFacade->deleteProductPackagingUnitType($productPackagingUnitTypeTransfer);
+    }
 }

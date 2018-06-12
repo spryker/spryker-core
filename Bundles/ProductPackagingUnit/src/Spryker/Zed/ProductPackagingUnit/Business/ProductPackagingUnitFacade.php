@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\ProductPackagingUnit\Business\ProductPackagingUnitBusinessFactory getFactory()
- * @method \Spryker\Zed\ProductPackagingUnit\ProductPackagingUnitConfig getConfig()
  */
 class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackagingUnitFacadeInterface
 {
@@ -36,12 +35,13 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      *
      * @api
      *
-     * @return array
+     * @return string[]
      */
-    public function getInfrastructuralPackagingUnitTypes(): array
+    public function getInfrastructuralPackagingUnitTypeKeys(): array
     {
-        return $this->getConfig()
-            ->getInfrastructuralPackagingUnitTypes();
+        return $this->getFactory()
+            ->getConfig()
+            ->getInfrastructuralPackagingUnitTypeKeys();
     }
 
     /**
