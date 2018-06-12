@@ -793,6 +793,30 @@ class DiscountFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testTransformDiscountableItemShouldBeUsedSingleQuantityBasedTransformation(): void
+    {
+        $discountFacade = $this->createDiscountFacade();
+
+        $quantity = 5;
+        $discountableItemTransfer = (new DiscountableItemTransfer())->setUnitPrice(100)
+            ->setQuantity($quantity);
+        $discountTransfer = (new DiscountTransfer())->setIdDiscount(1);
+        $totalDiscountAmount = 10;
+        $totalAmount = 100;
+
+        $discountFacade->transformDiscountableItem($discountableItemTransfer, $discountTransfer, $totalDiscountAmount, $totalAmount, $quantity);
+
+        $this->assertSame($discountableItemTransfer->getOriginalItemCalculatedDiscounts()->count(), $quantity);
+
+        foreach ($discountableItemTransfer->getOriginalItemCalculatedDiscounts() as $resultedDiscountableItemTransfer) {
+            $this->assertSame($resultedDiscountableItemTransfer->getUnitAmount(), 10);
+            $this->assertSame($resultedDiscountableItemTransfer->getQuantity(), 1);
+        }
+    }
+
+    /**
      * @return \Spryker\Zed\Discount\Business\DiscountFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade
      */
     protected function createDiscountFacade()

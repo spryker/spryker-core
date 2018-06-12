@@ -8,6 +8,8 @@ namespace Spryker\Zed\Sales\Business;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
+use Generated\Shared\Transfer\ItemCollectionTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -184,7 +186,8 @@ interface SalesFacadeInterface
     /**
      *
      * Specification:
-     *  - Expands order by quantity 1 recalculates order transfer with new values
+     * - Transforms provided cart items according configured cart item transformer strategies.
+     * - Recalculates order transfer with new values.
      *
      * @api
      *
@@ -194,4 +197,18 @@ interface SalesFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function expandSalesOrder(QuoteTransfer $quoteTransfer, ?CheckoutResponseTransfer $checkoutResponseTransfer = null);
+
+    /**
+     * Specification:
+     * - Explodes items by quantity.
+     * - Adds exploded items to the item collection.
+     * - Returns item collection.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemCollectionTransfer
+     */
+    public function transformItem(ItemTransfer $itemTransfer): ItemCollectionTransfer;
 }
