@@ -9,6 +9,8 @@ namespace Spryker\Zed\ProductCategory\Business;
 
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface ProductCategoryFacadeInterface
 {
@@ -101,4 +103,30 @@ interface ProductCategoryFacadeInterface
      * @return void
      */
     public function updateAllProductMappingsForUpdatedCategory(CategoryTransfer $categoryTransfer);
+
+    /**
+     * Specification:
+     * - Retrieves all localized category names for abstract product.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return array
+     */
+    public function getProductAbstractCategoriesByIdProductAbstract(ProductAbstractTransfer $productAbstractTransfer, LocaleTransfer $localeTransfer): array;
+
+    /**
+     * Specification:
+     * - Retrieves all localized category names for concrete product.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return array
+     */
+    public function getProductConcreteCategoriesByIdProductConcrete(ProductConcreteTransfer $productConcreteTransfer, LocaleTransfer $localeTransfer): array;
 }
