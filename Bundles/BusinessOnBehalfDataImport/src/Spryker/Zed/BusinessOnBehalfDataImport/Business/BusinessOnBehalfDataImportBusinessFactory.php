@@ -12,7 +12,6 @@ use Spryker\Zed\BusinessOnBehalfDataImport\Business\Model\Step\CompanyUser\Compa
 use Spryker\Zed\BusinessOnBehalfDataImport\Business\Model\Step\CompanyUser\CompanyUserWriterStep;
 use Spryker\Zed\BusinessOnBehalfDataImport\Business\Model\Step\CompanyUser\CustomerReferenceToIdCustomerStep;
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
-use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 
 /**
@@ -21,9 +20,9 @@ use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
 class BusinessOnBehalfDataImportBusinessFactory extends DataImportBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerAwareInterface
      */
-    public function createCompanyUserDataImport(): DataImporterInterface
+    public function createCompanyUserDataImport()
     {
         $dataImporter = $this->getCsvDataImporterFromConfig($this->getConfig()->getBusinessOnBehalfDataImporterConfiguration());
 
