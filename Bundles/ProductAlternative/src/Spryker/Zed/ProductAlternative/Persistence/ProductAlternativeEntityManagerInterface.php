@@ -39,18 +39,6 @@ interface ProductAlternativeEntityManagerInterface
 
     /**
      * Specification:
-     * - Updates existing product alternative.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductAlternativeTransfer $productAlternativeTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
-     */
-    public function updateProductAlternative(ProductAlternativeTransfer $productAlternativeTransfer): ProductAlternativeTransfer;
-
-    /**
-     * Specification:
      * - Deletes existing product alternative.
      * - Deletes only a link between products, thus products themselves are untouched.
      *

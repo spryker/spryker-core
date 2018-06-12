@@ -15,15 +15,6 @@ use Orm\Zed\ProductAlternative\Persistence\SpyProductAlternative;
 interface ProductAlternativeMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductAlternativeTransfer $productAlternativeTransfer
-     *
-     * @return \Generated\Shared\Transfer\SpyProductAlternativeEntityTransfer
-     */
-    public function mapProductAlternativeTransferToEntityTransfer(
-        ProductAlternativeTransfer $productAlternativeTransfer
-    ): SpyProductAlternativeEntityTransfer;
-
-    /**
      * @param \Orm\Zed\ProductAlternative\Persistence\SpyProductAlternative $productAlternative
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeTransfer

@@ -78,26 +78,6 @@ class ProductAlternativeEntityManager extends AbstractEntityManager implements P
      *
      * @param \Generated\Shared\Transfer\ProductAlternativeTransfer $productAlternativeTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
-     */
-    public function updateProductAlternative(ProductAlternativeTransfer $productAlternativeTransfer): ProductAlternativeTransfer
-    {
-        $productAlternativeEntityTransfer = $this->getFactory()
-            ->createProductAlternativeMapper()
-            ->mapProductAlternativeTransferToEntityTransfer($productAlternativeTransfer);
-
-        $this->save($productAlternativeEntityTransfer);
-
-        return $productAlternativeTransfer;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductAlternativeTransfer $productAlternativeTransfer
-     *
      * @return void
      */
     public function deleteProductAlternative(ProductAlternativeTransfer $productAlternativeTransfer): void

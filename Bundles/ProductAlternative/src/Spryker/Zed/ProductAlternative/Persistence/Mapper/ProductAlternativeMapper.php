@@ -51,26 +51,6 @@ class ProductAlternativeMapper implements ProductAlternativeMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductAlternativeTransfer $productAlternativeTransfer
-     *
-     * @return \Generated\Shared\Transfer\SpyProductAlternativeEntityTransfer
-     */
-    public function mapProductAlternativeTransferToEntityTransfer(
-        ProductAlternativeTransfer $productAlternativeTransfer
-    ): SpyProductAlternativeEntityTransfer {
-        $productAlternativeEntityTransfer = (new SpyProductAlternativeEntityTransfer())
-            ->fromArray($productAlternativeTransfer->toArray(), true);
-
-        $productAlternativeEntityTransfer
-            ->setFkProduct($productAlternativeTransfer->getIdProduct())
-            ->setFkProductAbstractAlternative($productAlternativeTransfer->getIdProductAbstractAlternative())
-            ->setFkProductConcreteAlternative($productAlternativeTransfer->getIdProductConcreteAlternative());
-
-        return (new SpyProductAlternativeEntityTransfer())
-            ->fromArray($productAlternativeTransfer->toArray(), true);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\SpyProductAlternativeEntityTransfer $productAlternativeEntityTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
