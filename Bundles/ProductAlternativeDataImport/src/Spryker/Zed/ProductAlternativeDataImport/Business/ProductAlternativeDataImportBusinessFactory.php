@@ -8,6 +8,10 @@ namespace Spryker\Zed\ProductAlternativeDataImport\Business;
 
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 use Spryker\Zed\ProductAlternativeDataImport\Business\Model\ProductAlternativeWriterStep;
+use Spryker\Zed\ProductAlternativeDataImport\Business\Model\Step\AlternativeProductAbstractSkuToProductIdStep;
+use Spryker\Zed\ProductAlternativeDataImport\Business\Model\Step\AlternativeProductConcreteSkuToProductIdStep;
+use Spryker\Zed\ProductAlternativeDataImport\Business\Model\Step\DataValidationStep;
+use Spryker\Zed\ProductAlternativeDataImport\Business\Model\Step\ProductSkuToProductIdStep;
 
 /**
  * @method \Spryker\Zed\ProductAlternativeDataImport\ProductAlternativeDataImportConfig getConfig()
@@ -22,6 +26,10 @@ class ProductAlternativeDataImportBusinessFactory extends DataImportBusinessFact
         $dataImporter = $this->getCsvDataImporterFromConfig($this->getConfig()->getProductAlternativeDataImporterConfiguration());
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
+        $dataSetStepBroker->addStep($this->createDataValidationStep());
+        $dataSetStepBroker->addStep($this->createProductSkuToProductIdStep());
+        $dataSetStepBroker->addStep($this->createAlternativeProductConcreteSkuToProductIdStep());
+        $dataSetStepBroker->addStep($this->createAlternativeProductAbstractSkuToProductIdStep());
         $dataSetStepBroker->addStep($this->createProductAlternativeDataImportWriterStep());
 
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
@@ -35,5 +43,37 @@ class ProductAlternativeDataImportBusinessFactory extends DataImportBusinessFact
     public function createProductAlternativeDataImportWriterStep(): ProductAlternativeWriterStep
     {
         return new ProductAlternativeWriterStep();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductAlternativeDataImport\Business\Model\Step\AlternativeProductConcreteSkuToProductIdStep
+     */
+    public function createAlternativeProductConcreteSkuToProductIdStep(): AlternativeProductConcreteSkuToProductIdStep
+    {
+        return new AlternativeProductConcreteSkuToProductIdStep();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductAlternativeDataImport\Business\Model\Step\AlternativeProductAbstractSkuToProductIdStep
+     */
+    public function createAlternativeProductAbstractSkuToProductIdStep(): AlternativeProductAbstractSkuToProductIdStep
+    {
+        return new AlternativeProductAbstractSkuToProductIdStep();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductAlternativeDataImport\Business\Model\Step\ProductSkuToProductIdStep
+     */
+    public function createProductSkuToProductIdStep(): ProductSkuToProductIdStep
+    {
+        return new ProductSkuToProductIdStep();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductAlternativeDataImport\Business\Model\Step\DataValidationStep
+     */
+    public function createDataValidationStep(): DataValidationStep
+    {
+        return new DataValidationStep();
     }
 }

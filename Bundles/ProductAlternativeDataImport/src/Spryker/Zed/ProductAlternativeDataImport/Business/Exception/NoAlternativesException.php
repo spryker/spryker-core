@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductAlternativeDataImport\Business\Exception;
 
-use Exception;
+use Spryker\Zed\DataImport\Business\Exception\InvalidDataException as Exception;
 
 class NoAlternativesException extends Exception
 {

@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * MIT License
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace SprykerTest\Zed\ProductAlternativeDataImport\Communication\Plugin;
 
 use Codeception\Test\Unit;
@@ -35,6 +40,7 @@ class ProductAlternativeDataImportPluginTest extends Unit
         $this->tester->ensureDatabaseTableIsEmpty();
 
         $dataImportConfigurationTransfer = $this->getDataImportConfigurationTransfer('import/product_alternative.csv');
+        $dataImportConfigurationTransfer->setThrowException(false);
 
         $productAlternativeDataImportPlugin = new ProductAlternativeDataImportPlugin();
         $dataImporterReportTransfer = $productAlternativeDataImportPlugin->import($dataImportConfigurationTransfer);

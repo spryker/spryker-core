@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductAlternativeDataImport\Business\Exception;
 
-use Exception;
+use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException as Exception;
 
 class EntityNotFoundException extends Exception
 {
