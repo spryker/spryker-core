@@ -14,11 +14,12 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/customer": "If you need idCustomer in Customer after registration: ^7.10.0"
+    "spryker/customer": "If you want to hydrate customer with isOnBehalf property and default company user: ^7.10.0."
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Zed\\BusinessOnBehalf\\Helper\\": "tests/SprykerTest/Zed/BusinessOnBehalf/_support/Helper/"
     }
   },
   "autoload-dev": {
