@@ -205,11 +205,17 @@ class PriceManager implements PriceManagerInterface
         if ($priceMode === $this->getNetPriceModeIdentifier()) {
             $itemTransfer->setOriginUnitNetPrice($price);
             $itemTransfer->setOriginUnitGrossPrice(0);
+
+            // TODO: find a more suitable place for this
+            $itemTransfer->setSumGrossPrice(0);
             return;
         }
 
         $itemTransfer->setOriginUnitNetPrice(0);
         $itemTransfer->setOriginUnitGrossPrice($price);
+
+        // TODO: find a more suitable place for this
+        $itemTransfer->setSumNetPrice(0);
     }
 
     /**
