@@ -28,13 +28,15 @@ class ProductDiscontinuedRepository extends AbstractRepository implements Produc
     ): ?ProductDiscontinuedTransfer {
         $productDiscontinuedQuery = $this->getFactory()
             ->createProductDiscontinuedQuery()
+            ->leftJoinWithSpyProductDiscontinuedNote()
+            ->leftJoinWithProduct()
             ->filterByFkProduct($productDiscontinuedTransfer->getFkProduct());
 
-        $productDiscontinuedEntityTransfer = $this->buildQueryFromCriteria($productDiscontinuedQuery)->findOne();
-        if ($productDiscontinuedEntityTransfer) {
+        $productDiscontinuedEntityTransfers = $this->buildQueryFromCriteria($productDiscontinuedQuery)->find();
+        if (count($productDiscontinuedEntityTransfers)) {
             return $this->getFactory()
                 ->createProductDiscontinuedMapper()
-                ->mapProductDiscontinuedTransfer($productDiscontinuedEntityTransfer);
+                ->mapProductDiscontinuedTransfer($productDiscontinuedEntityTransfers[0]);
         }
 
         return null;
@@ -69,6 +71,7 @@ class ProductDiscontinuedRepository extends AbstractRepository implements Produc
     ): ProductDiscontinuedCollectionTransfer {
         $productDiscontinuedQuery = $this->getFactory()
             ->createProductDiscontinuedQuery()
+            ->leftJoinWithSpyProductDiscontinuedNote()
             ->leftJoinWithProduct();
 
         if ($criteriaFilterTransfer->getIds()) {
@@ -76,12 +79,12 @@ class ProductDiscontinuedRepository extends AbstractRepository implements Produc
                 ->filterByIdProductDiscontinued_In($criteriaFilterTransfer->getIds());
         }
 
-        $productDiscontinuedEntityTransfer = $this->buildQueryFromCriteria($productDiscontinuedQuery)->find();
+        $productDiscontinuedEntityTransfers = $this->buildQueryFromCriteria($productDiscontinuedQuery)->find();
 
-        if ($productDiscontinuedEntityTransfer) {
+        if ($productDiscontinuedEntityTransfers) {
             return $this->getFactory()
                 ->createProductDiscontinuedMapper()
-                ->mapTransferCollection($productDiscontinuedEntityTransfer);
+                ->mapTransferCollection($productDiscontinuedEntityTransfers);
         }
 
         return new ProductDiscontinuedCollectionTransfer();

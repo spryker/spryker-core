@@ -5,9 +5,8 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinuedWriter;
+namespace Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinued;
 
-use DateTime;
 use Generated\Shared\Transfer\ProductDiscontinuedRequestTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
@@ -75,8 +74,15 @@ class ProductDiscontinuedWriter implements ProductDiscontinuedWriterInterface
      */
     public function delete(ProductDiscontinuedRequestTransfer $productDiscontinuedRequestTransfer): ProductDiscontinuedResponseTransfer
     {
-        return $this->getTransactionHandler()->handleTransaction(function () use ($productDiscontinuedRequestTransfer) {
-            return $this->executeDeleteTransaction($productDiscontinuedRequestTransfer);
+        $productDiscontinuedTransfer = (new ProductDiscontinuedTransfer())
+            ->setFkProduct($productDiscontinuedRequestTransfer->getIdProduct());
+        $productDiscontinuedTransfer = $this->productDiscontinuedRepository->findProductDiscontinuedByProductId($productDiscontinuedTransfer);
+        if (!$productDiscontinuedTransfer) {
+            return (new ProductDiscontinuedResponseTransfer)->setIsSuccessful(false);
+        }
+
+        return $this->getTransactionHandler()->handleTransaction(function () use ($productDiscontinuedTransfer) {
+            return $this->executeDeleteTransaction($productDiscontinuedTransfer);
         });
     }
 
@@ -101,17 +107,15 @@ class ProductDiscontinuedWriter implements ProductDiscontinuedWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductDiscontinuedRequestTransfer $productDiscontinuedRequestTransfer
+     * @param \Generated\Shared\Transfer\ProductDiscontinuedTransfer $productDiscontinuedTransfer
      *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer
      */
     protected function executeDeleteTransaction(
-        ProductDiscontinuedRequestTransfer $productDiscontinuedRequestTransfer
+        ProductDiscontinuedTransfer $productDiscontinuedTransfer
     ): ProductDiscontinuedResponseTransfer {
-        $productDiscontinuedTransfer = (new ProductDiscontinuedTransfer())
-            ->setFkProduct($productDiscontinuedRequestTransfer->getIdProduct());
-
-        $this->productDiscontinuedEntityManager->deleteProductDiscontinuedByProductId($productDiscontinuedTransfer);
+        $this->productDiscontinuedEntityManager->deleteProductDiscontinuedNotes($productDiscontinuedTransfer);
+        $this->productDiscontinuedEntityManager->deleteProductDiscontinued($productDiscontinuedTransfer);
 
         return (new ProductDiscontinuedResponseTransfer)->setIsSuccessful(true);
     }
@@ -121,8 +125,9 @@ class ProductDiscontinuedWriter implements ProductDiscontinuedWriterInterface
      */
     protected function getActiveUntilDate(): string
     {
-        return (new DateTime())
-            ->modify(sprintf('+%s Days', $this->productDiscontinuedConfig->getDaysAmountBeforeProductDeactivate()))
-            ->format('Y-m-d');
+        return date(
+            'Y-m-d',
+            strtotime(sprintf('+%s Days', $this->productDiscontinuedConfig->getDaysAmountBeforeProductDeactivate()))
+        );
     }
 }

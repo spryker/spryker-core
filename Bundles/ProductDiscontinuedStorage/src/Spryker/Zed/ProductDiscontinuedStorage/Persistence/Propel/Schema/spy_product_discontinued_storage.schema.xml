@@ -10,6 +10,7 @@
         <column name="fk_product_discontinued" type="integer" required="true"/>
         <column name="sku" type="VARCHAR" size="255" required="true"/>
         <column name="data" type="LONGVARCHAR" required="false"/>
+        <column name="locale" type="VARCHAR" required="true"/>
 
         <id-method-parameter value="id_product_discontinued_storage_pk_seq"/>
 
@@ -19,6 +20,7 @@
 
         <behavior name="synchronization">
             <parameter name="resource" value="product_discontinued"/>
+            <parameter name="locale" required="true"/>
             <parameter name="key_suffix_column" value="sku"/>
             <parameter name="queue_group" value="sync.storage.product"/>
         </behavior>

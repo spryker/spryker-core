@@ -9,6 +9,8 @@ namespace Spryker\Zed\ProductDiscontinued\Business;
 
 use Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductDiscontinuedNoteResponseTransfer;
+use Generated\Shared\Transfer\ProductDiscontinuedNoteTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedRequestTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer;
 use Psr\Log\LoggerInterface;
@@ -85,6 +87,23 @@ class ProductDiscontinuedFacade extends AbstractFacade implements ProductDiscont
         return $this->getFactory()
             ->createProductDiscontinuedReader()
             ->findProductDiscontinuedCollection($criteriaFilterTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductDiscontinuedNoteTransfer $discontinuedNoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductDiscontinuedNoteResponseTransfer
+     */
+    public function saveDiscontinuedNote(
+        ProductDiscontinuedNoteTransfer $discontinuedNoteTransfer
+    ): ProductDiscontinuedNoteResponseTransfer {
+        return $this->getFactory()
+            ->createProductDiscontinuedNoteWriter()
+            ->saveNote($discontinuedNoteTransfer);
     }
 
     /**

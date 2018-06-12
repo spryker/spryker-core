@@ -12,6 +12,7 @@ use Spryker\Zed\ProductDiscontinuedStorage\Business\ProductDiscontinuedPublisher
 use Spryker\Zed\ProductDiscontinuedStorage\Business\ProductDiscontinuedPublisher\ProductDiscontinuedPublisherInterface;
 use Spryker\Zed\ProductDiscontinuedStorage\Business\ProductDiscontinuedUnpublisher\ProductDiscontinuedUnpublisher;
 use Spryker\Zed\ProductDiscontinuedStorage\Business\ProductDiscontinuedUnpublisher\ProductDiscontinuedUnpublisherInterface;
+use Spryker\Zed\ProductDiscontinuedStorage\Dependency\Facade\ProductDiscontinuedStorageToLocaleFacadeInterface;
 use Spryker\Zed\ProductDiscontinuedStorage\Dependency\Facade\ProductDiscontinuedStorageToProductDiscontinuedFacadeInterface;
 use Spryker\Zed\ProductDiscontinuedStorage\ProductDiscontinuedStorageDependencyProvider;
 
@@ -30,7 +31,8 @@ class ProductDiscontinuedStorageBusinessFactory extends AbstractBusinessFactory
         return new ProductDiscontinuedPublisher(
             $this->getEntityManager(),
             $this->getRepository(),
-            $this->getProductDiscontinuedFacade()
+            $this->getProductDiscontinuedFacade(),
+            $this->getLocaleFacade()
         );
     }
 
@@ -51,5 +53,13 @@ class ProductDiscontinuedStorageBusinessFactory extends AbstractBusinessFactory
     public function getProductDiscontinuedFacade(): ProductDiscontinuedStorageToProductDiscontinuedFacadeInterface
     {
         return $this->getProvidedDependency(ProductDiscontinuedStorageDependencyProvider::FACADE_PRODUCT_DISCONTINUED);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductDiscontinuedStorage\Dependency\Facade\ProductDiscontinuedStorageToLocaleFacadeInterface
+     */
+    public function getLocaleFacade(): ProductDiscontinuedStorageToLocaleFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductDiscontinuedStorageDependencyProvider::FACADE_LOCALE);
     }
 }

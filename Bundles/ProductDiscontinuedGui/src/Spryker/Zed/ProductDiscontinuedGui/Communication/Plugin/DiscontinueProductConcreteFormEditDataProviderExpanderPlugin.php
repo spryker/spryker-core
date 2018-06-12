@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductDiscontinuedGui\Communication\Plugin;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\ProductDiscontinuedRequestTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteFormEditDataProviderExpanderPluginInterface;
 
@@ -30,11 +29,12 @@ class DiscontinueProductConcreteFormEditDataProviderExpanderPlugin extends Abstr
      */
     public function expand(ProductConcreteTransfer $productConcrete, array &$formData): void
     {
-        $productDiscontinuedRequestTransfer = (new ProductDiscontinuedRequestTransfer())
-            ->setIdProduct($productConcrete->getIdProductConcrete());
-        $formData[ProductConcreteTransfer::PRODUCT_DISCONTINUED] = $this->getFactory()
-            ->getProductDiscontinuedFacade()
-            ->findProductDiscontinuedByProductId($productDiscontinuedRequestTransfer)
-            ->getProductDiscontinued();
+        $discontinuedData = $this->getFactory()
+            ->createDiscontinueProductFormDataProvider()
+            ->getData($productConcrete->getIdProductConcrete());
+
+        if (!empty($discontinuedData)) {
+            $formData = array_merge($formData, $discontinuedData);
+        }
     }
 }

@@ -10,7 +10,9 @@ namespace Spryker\Zed\ProductDiscontinuedDataImport\Business;
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\ProductDiscontinuedDataImport\Business\Model\ProductDiscontinuedWriterStep;
+use Spryker\Zed\ProductDiscontinuedDataImport\Business\Model\Step\AddLocalesStep;
 use Spryker\Zed\ProductDiscontinuedDataImport\Business\Model\Step\ConcreteSkuToIdProductStep;
+use Spryker\Zed\ProductDiscontinuedDataImport\Business\Model\Step\NoteExtractorStep;
 
 /**
  * @method \Spryker\Zed\ProductDiscontinuedDataImport\ProductDiscontinuedDataImportConfig getConfig()
@@ -18,7 +20,7 @@ use Spryker\Zed\ProductDiscontinuedDataImport\Business\Model\Step\ConcreteSkuToI
 class ProductDiscontinuedDataImportBusinessFactory extends DataImportBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerAwareInterface
      */
     public function createProductDiscontinuedDataImport()
     {
@@ -27,12 +29,30 @@ class ProductDiscontinuedDataImportBusinessFactory extends DataImportBusinessFac
         );
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker()
+            ->addStep($this->createAddLocalesStep())
+            ->addStep($this->createNoteExtractorStep())
             ->addStep($this->createConcreteSkuToIdProductStep())
             ->addStep(new ProductDiscontinuedWriterStep());
 
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
 
         return $dataImporter;
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
+     */
+    public function createAddLocalesStep(): DataImportStepInterface
+    {
+        return new AddLocalesStep($this->getStore());
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
+     */
+    public function createNoteExtractorStep(): DataImportStepInterface
+    {
+        return new NoteExtractorStep();
     }
 
     /**

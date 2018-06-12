@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\ProductDiscontinued\Persistence\Propel\Mapper;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer;
+use Generated\Shared\Transfer\ProductDiscontinuedNoteTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
 use Generated\Shared\Transfer\SpyProductDiscontinuedEntityTransfer;
 use Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinued;
@@ -26,6 +28,11 @@ class ProductDiscontinuedMapper implements ProductDiscontinuedMapperInterface
         if ($productDiscontinuedEntityTransfer->getProduct()) {
             $productDiscontinuedTransfer->setSku(
                 $productDiscontinuedEntityTransfer->getProduct()->getSku()
+            );
+        }
+        if ($productDiscontinuedEntityTransfer->getSpyProductDiscontinuedNotes()) {
+            $productDiscontinuedTransfer->setProductDiscontinuedNotes(
+                $this->mapProductDiscontinuedNotes($productDiscontinuedEntityTransfer)
             );
         }
 
@@ -64,5 +71,21 @@ class ProductDiscontinuedMapper implements ProductDiscontinuedMapperInterface
         }
 
         return $productDiscontinuedCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyProductDiscontinuedEntityTransfer $productDiscontinuedEntityTransfer
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ProductDiscontinuedNoteTransfer[]
+     */
+    protected function mapProductDiscontinuedNotes(SpyProductDiscontinuedEntityTransfer $productDiscontinuedEntityTransfer): ArrayObject
+    {
+        $discontinuedNoteTransfers = [];
+        foreach ($productDiscontinuedEntityTransfer->getSpyProductDiscontinuedNotes() as $discontinuedNoteEntityTransfer) {
+            $discontinuedNoteTransfers[] = (new ProductDiscontinuedNoteTransfer())
+                ->fromArray($discontinuedNoteEntityTransfer->toArray(), true);
+        }
+
+        return new ArrayObject($discontinuedNoteTransfers);
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * MIT License
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -57,7 +57,7 @@ class ProductDiscontinuedDataImportPluginTest extends Unit
 
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
 
-        $this->tester->assertDatabaseTableContainsData();
+        $this->tester->assertDatabaseTablesContainsData();
     }
 
     /**
@@ -78,6 +78,28 @@ class ProductDiscontinuedDataImportPluginTest extends Unit
 
         $this->expectException(DataImportException::class);
         $this->expectExceptionMessage('Could not find product by sku invalid_discontinued_sku');
+
+        $productDiscontinuedDataImportPlugin->import($dataImportConfigurationTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testImportThrowsExceptionWhenLocalizedNoteMissing(): void
+    {
+        $this->tester->ensureDatabaseTableIsEmpty();
+
+        $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
+        $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/product_discontinued_localized_note_missing.csv');
+
+        $dataImportConfigurationTransfer = new DataImporterConfigurationTransfer();
+        $dataImportConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfigurationTransfer)
+            ->setThrowException(true);
+
+        $productDiscontinuedDataImportPlugin = new ProductDiscontinuedDataImportPlugin();
+
+        $this->expectException(DataImportException::class);
+        $this->expectExceptionMessage('Could not find note for locale "de_DE" and sku "discontinued_sku"');
 
         $productDiscontinuedDataImportPlugin->import($dataImportConfigurationTransfer);
     }

@@ -9,11 +9,13 @@ namespace Spryker\Zed\ProductDiscontinuedGui;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\ProductDiscontinuedGui\Dependency\Facade\ProductDiscontinuedGuiToLocaleFacadeBridge;
 use Spryker\Zed\ProductDiscontinuedGui\Dependency\Facade\ProductDiscontinuedGuiToProductDiscontinuedFacadeBridge;
 
 class ProductDiscontinuedGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_PRODUCT_DISCONTINUED = 'FACADE_PRODUCT_DISCONTINUED';
+    public const FACADE_LOCALE = 'FACADE_LOCALE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -23,6 +25,7 @@ class ProductDiscontinuedGuiDependencyProvider extends AbstractBundleDependencyP
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = $this->addProductDiscontinuedFacade($container);
+        $container = $this->addLocaleFacade($container);
 
         return $container;
     }
@@ -36,6 +39,20 @@ class ProductDiscontinuedGuiDependencyProvider extends AbstractBundleDependencyP
     {
         $container[static::FACADE_PRODUCT_DISCONTINUED] = function (Container $container) {
             return new ProductDiscontinuedGuiToProductDiscontinuedFacadeBridge($container->getLocator()->productDiscontinued()->facade());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addLocaleFacade(Container $container): Container
+    {
+        $container[static::FACADE_LOCALE] = function (Container $container) {
+            return new ProductDiscontinuedGuiToLocaleFacadeBridge($container->getLocator()->locale()->facade());
         };
 
         return $container;
