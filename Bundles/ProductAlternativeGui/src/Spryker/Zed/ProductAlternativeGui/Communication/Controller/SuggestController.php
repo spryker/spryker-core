@@ -25,15 +25,15 @@ class SuggestController extends AbstractController
      */
     public function indexAction(Request $request): JsonResponse
     {
-        $searchName = $request->query->get(static::PARAM_NAME);
+        $suggestion = $request->query->get(static::PARAM_NAME);
 
         $productAbstractSuggestions = $this->getFactory()
             ->getProductFacade()
-            ->suggestProductAbstract($searchName);
+            ->suggestProductAbstract($suggestion);
 
         $productConcreteSuggestions = $this->getFactory()
             ->getProductFacade()
-            ->suggestProductConcrete($searchName);
+            ->suggestProductConcrete($suggestion);
 
         return $this->jsonResponse(
             array_merge($productAbstractSuggestions, $productConcreteSuggestions)

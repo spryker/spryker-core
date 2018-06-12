@@ -813,15 +813,15 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @api
      *
-     * @param string $searchName
+     * @param string $suggestion
      *
      * @return string[]
      */
-    public function suggestProductAbstract(string $searchName): array
+    public function suggestProductAbstract(string $suggestion): array
     {
         return $this->getFactory()
             ->createProductSuggester()
-            ->suggestProductAbstract($searchName);
+            ->suggestProductAbstract($suggestion);
     }
 
     /**
@@ -829,15 +829,15 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @api
      *
-     * @param string $searchName
+     * @param string $suggestion
      *
      * @return string[]
      */
-    public function suggestProductConcrete(string $searchName): array
+    public function suggestProductConcrete(string $suggestion): array
     {
         return $this->getFactory()
             ->createProductSuggester()
-            ->suggestProductConcrete($searchName);
+            ->suggestProductConcrete($suggestion);
     }
 
     /**

@@ -10,16 +10,16 @@ namespace Spryker\Zed\ProductAlternativeGui\Dependency\Facade;
 interface ProductAlternativeGuiToProductFacadeInterface
 {
     /**
-     * @param string $searchName
+     * @param string $suggestion
      *
      * @return string[]
      */
-    public function suggestProductAbstract(string $searchName): array;
+    public function suggestProductAbstract(string $suggestion): array;
 
     /**
-     * @param string $searchName
+     * @param string $suggestion
      *
      * @return string[]
      */
-    public function suggestProductConcrete(string $searchName): array;
+    public function suggestProductConcrete(string $suggestion): array;
 }

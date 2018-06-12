@@ -23,24 +23,24 @@ class ProductAlternativeGuiToProductFacadeBridge implements ProductAlternativeGu
     }
 
     /**
-     * @param string $searchName
+     * @param string $suggestion
      *
      * @return string[]
      */
-    public function suggestProductAbstract(string $searchName): array
+    public function suggestProductAbstract(string $suggestion): array
     {
         return $this->productFacade
-            ->suggestProductAbstract($searchName);
+            ->suggestProductAbstract($suggestion);
     }
 
     /**
-     * @param string $searchName
+     * @param string $suggestion
      *
      * @return string[]
      */
-    public function suggestProductConcrete(string $searchName): array
+    public function suggestProductConcrete(string $suggestion): array
     {
         return $this->productFacade
-            ->suggestProductConcrete($searchName);
+            ->suggestProductConcrete($suggestion);
     }
 }
