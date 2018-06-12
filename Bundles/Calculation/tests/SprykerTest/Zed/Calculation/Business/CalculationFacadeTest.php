@@ -501,13 +501,13 @@ class CalculationFacadeTest extends Unit
         $quoteTransfer = new QuoteTransfer();
 
         $itemTransfer = new ItemTransfer();
-        $itemTransfer->setUnitPriceToPayAggregation(10);
+        $itemTransfer->setSumPriceToPayAggregation(10);
         $itemTransfer->setCanceledAmount(5);
 
         $quoteTransfer->addItem($itemTransfer);
 
         $expenseTransfer = new ExpenseTransfer();
-        $expenseTransfer->setUnitPriceToPayAggregation(10);
+        $expenseTransfer->setSumPriceToPayAggregation(10);
         $expenseTransfer->setCanceledAmount(2);
         $quoteTransfer->addExpense($expenseTransfer);
 
