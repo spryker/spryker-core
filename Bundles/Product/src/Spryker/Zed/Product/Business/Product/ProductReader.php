@@ -40,7 +40,7 @@ class ProductReader implements ProductReaderInterface
      *
      * @return array
      */
-    public function filterProductAbstractBySku(string $sku, ?int $limit = null): array
+    public function getProductAbstractDataBySku(string $sku, ?int $limit = null): array
     {
         return $this->productRepository
             ->getProductAbstractDataBySku($sku, $limit);
@@ -52,7 +52,7 @@ class ProductReader implements ProductReaderInterface
      *
      * @return array
      */
-    public function filterProductAbstractByLocalizedName(string $localizedName, ?int $limit = null): array
+    public function getProductAbstractDataByLocalizedName(string $localizedName, ?int $limit = null): array
     {
         return $this->productRepository
             ->getProductAbstractDataByLocalizedName(
@@ -68,7 +68,7 @@ class ProductReader implements ProductReaderInterface
      *
      * @return array
      */
-    public function filterProductConcreteBySku(string $sku, ?int $limit = null): array
+    public function getProductConcreteDataBySku(string $sku, ?int $limit = null): array
     {
         return $this->productRepository
             ->getProductConcreteDataBySku($sku, $limit);
@@ -80,7 +80,7 @@ class ProductReader implements ProductReaderInterface
      *
      * @return array
      */
-    public function filterProductConcreteByLocalizedName(string $localizedName, ?int $limit = null): array
+    public function getProductConcreteDataByLocalizedName(string $localizedName, ?int $limit = null): array
     {
         return $this->productRepository
             ->getProductConcreteDataByLocalizedName(

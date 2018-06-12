@@ -15,7 +15,7 @@ interface ProductReaderInterface
      *
      * @return array
      */
-    public function filterProductAbstractBySku(string $sku, ?int $limit = null): array;
+    public function getProductAbstractDataBySku(string $sku, ?int $limit = null): array;
 
     /**
      * @param string $localizedName
@@ -23,7 +23,7 @@ interface ProductReaderInterface
      *
      * @return array
      */
-    public function filterProductAbstractByLocalizedName(string $localizedName, ?int $limit = null): array;
+    public function getProductAbstractDataByLocalizedName(string $localizedName, ?int $limit = null): array;
 
     /**
      * @param string $sku
@@ -31,7 +31,7 @@ interface ProductReaderInterface
      *
      * @return array
      */
-    public function filterProductConcreteBySku(string $sku, ?int $limit = null): array;
+    public function getProductConcreteDataBySku(string $sku, ?int $limit = null): array;
 
     /**
      * @param string $localizedName
@@ -39,5 +39,5 @@ interface ProductReaderInterface
      *
      * @return array
      */
-    public function filterProductConcreteByLocalizedName(string $localizedName, ?int $limit = null): array;
+    public function getProductConcreteDataByLocalizedName(string $localizedName, ?int $limit = null): array;
 }

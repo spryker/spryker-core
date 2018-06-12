@@ -866,11 +866,11 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @return array
      */
-    public function filterProductAbstractBySku(string $sku, ?int $limit = null): array
+    public function getProductAbstractDataBySku(string $sku, ?int $limit = null): array
     {
         return $this->getFactory()
             ->createProductReader()
-            ->filterProductAbstractBySku($sku, $limit);
+            ->getProductAbstractDataBySku($sku, $limit);
     }
 
     /**
@@ -883,11 +883,11 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @return array
      */
-    public function filterProductAbstractByLocalizedName(string $localizedName, ?int $limit = null): array
+    public function getProductAbstractDataByLocalizedName(string $localizedName, ?int $limit = null): array
     {
         return $this->getFactory()
             ->createProductReader()
-            ->filterProductAbstractByLocalizedName($localizedName, $limit);
+            ->getProductAbstractDataByLocalizedName($localizedName, $limit);
     }
 
     /**
@@ -900,11 +900,11 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @return array
      */
-    public function filterProductConcreteBySku(string $sku, ?int $limit = null): array
+    public function getProductConcreteDataBySku(string $sku, ?int $limit = null): array
     {
         return $this->getFactory()
             ->createProductReader()
-            ->filterProductConcreteBySku($sku, $limit);
+            ->getProductConcreteDataBySku($sku, $limit);
     }
 
     /**
@@ -917,10 +917,10 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @return array
      */
-    public function filterProductConcreteByLocalizedName(string $localizedName, ?int $limit = null): array
+    public function getProductConcreteDataByLocalizedName(string $localizedName, ?int $limit = null): array
     {
         return $this->getFactory()
             ->createProductReader()
-            ->filterProductConcreteByLocalizedName($localizedName, $limit);
+            ->getProductConcreteDataByLocalizedName($localizedName, $limit);
     }
 }

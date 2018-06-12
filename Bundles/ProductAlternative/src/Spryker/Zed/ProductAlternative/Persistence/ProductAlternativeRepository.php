@@ -237,6 +237,7 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
      */
     protected function queryProductAlternative(): SpyProductAlternativeQuery
     {
-        return SpyProductAlternativeQuery::create();
+        return $this->getFactory()
+            ->createProductAlternativeQuery();
     }
 }
