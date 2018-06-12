@@ -126,7 +126,7 @@ class ProductAlternativeFacade extends AbstractFacade implements ProductAlternat
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
      */
-    public function deleteProductAlternativeByIdProductAlternativeResponse(int $idProductAlternative): ProductAlternativeResponseTransfer
+    public function deleteProductAlternativeByIdProductAlternative(int $idProductAlternative): ProductAlternativeResponseTransfer
     {
         return $this->getFactory()
             ->createProductAlternativeWriter()

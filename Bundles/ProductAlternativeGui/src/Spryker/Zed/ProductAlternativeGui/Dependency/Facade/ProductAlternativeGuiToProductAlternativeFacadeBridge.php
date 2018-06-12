@@ -42,10 +42,10 @@ class ProductAlternativeGuiToProductAlternativeFacadeBridge implements ProductAl
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
      */
-    public function deleteProductAlternativeByIdProductAlternativeResponse(int $idProductAlternative): ProductAlternativeResponseTransfer
+    public function deleteProductAlternativeByIdProductAlternative(int $idProductAlternative): ProductAlternativeResponseTransfer
     {
         return $this->productAlternativeFacade
-            ->deleteProductAlternativeByIdProductAlternativeResponse(
+            ->deleteProductAlternativeByIdProductAlternative(
                 $idProductAlternative
             );
     }

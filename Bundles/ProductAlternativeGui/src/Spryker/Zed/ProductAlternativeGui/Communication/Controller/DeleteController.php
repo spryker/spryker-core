@@ -45,7 +45,7 @@ class DeleteController extends AbstractController
 
         $productAlternativeResponseTransfer = $this->getFactory()
             ->getProductAlternativeFacade()
-            ->deleteProductAlternativeByIdProductAlternativeResponse(
+            ->deleteProductAlternativeByIdProductAlternative(
                 $idProductAlternative
             );
 
@@ -72,7 +72,7 @@ class DeleteController extends AbstractController
 
         $productAlternativeResponseTransfer = $this->getFactory()
             ->getProductAlternativeFacade()
-            ->deleteProductAlternativeByIdProductAlternativeResponse(
+            ->deleteProductAlternativeByIdProductAlternative(
                 $idProductAlternative
             );
 
