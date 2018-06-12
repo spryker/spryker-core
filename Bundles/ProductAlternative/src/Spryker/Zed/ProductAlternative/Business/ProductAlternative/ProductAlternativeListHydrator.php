@@ -105,7 +105,7 @@ class ProductAlternativeListHydrator implements ProductAlternativeListHydratorIn
                 $this->getProductAbstractName($productAbstractAlternative)
             )
             ->setSku($productAbstractAlternative->getSku())
-            ->setStatus($productAbstractAlternative->getIsActive());
+            ->setStatus($productAbstractAlternative->getIsActive()); // TODO: Add ProductFacade call.
     }
 
     /**

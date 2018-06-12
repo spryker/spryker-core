@@ -16,6 +16,4 @@ interface ProductConstants
     public const KEY_FILTERED_PRODUCTS_RESULT = 'result';
 
     public const COL_FILTERED_PRODUCTS_PRODUCT_NAME = 'name';
-
-    public const COL_FILTERED_PRODUCTS_CATEGORY = 'category';
 }

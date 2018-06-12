@@ -29,23 +29,13 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
     public function getProductAlternativesForProductConcrete(int $idProductConcrete): ProductAlternativeCollectionTransfer
     {
         $productAlternativeQuery = $this->getFactory()
-            ->createProductAlternativeQuery();
+            ->createProductAlternativeQuery()
+            ->filterByFkProduct($idProductConcrete);
 
-        $productAlternatives = $productAlternativeQuery
-            ->filterByFkProduct(
-                $idProductConcrete
-            )->find();
+        $productAlternatives = $this->buildQueryFromCriteria($productAlternativeQuery)
+            ->find();
 
-        $mapper = $this->getFactory()
-            ->createProductAlternativeMapper();
-
-        $mappedProductAlternatives = [];
-
-        foreach ($productAlternatives as $productAlternative) {
-            $mappedProductAlternatives[] = $mapper->mapSpyProductAlternativeEntityToTransfer($productAlternative);
-        }
-
-        return $this->hydrateProductAlternativeCollectionWithProductAlternatives($mappedProductAlternatives);
+        return $this->hydrateProductAlternativeCollectionWithProductAlternatives($productAlternatives);
     }
 
     /**
@@ -60,12 +50,11 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
     public function findProductAlternativeByIdProductAlternative(int $idProductAlternative): ?ProductAlternativeTransfer
     {
         $productAlternativeQuery = $this->getFactory()
-            ->createProductAlternativeQuery();
+            ->createProductAlternativeQuery()
+            ->filterByIdProductAlternative($idProductAlternative);
 
-        $alternativeProduct = $productAlternativeQuery
-            ->filterByIdProductAlternative(
-                $idProductAlternative
-            )->findOne();
+        $alternativeProduct = $this->buildQueryFromCriteria($productAlternativeQuery)
+            ->findOne();
 
         if (!$alternativeProduct) {
             return null;
@@ -73,7 +62,7 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
 
         return $this->getFactory()
             ->createProductAlternativeMapper()
-            ->mapSpyProductAlternativeEntityToTransfer($alternativeProduct);
+            ->mapSpyProductAlternativeEntityTransferToTransfer($alternativeProduct);
     }
 
     /**
@@ -89,11 +78,11 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
     public function findProductAbstractAlternative(int $idBaseProduct, int $idProductAbstract): ?ProductAlternativeTransfer
     {
         $productAlternativeQuery = $this->getFactory()
-            ->createProductAlternativeQuery();
-
-        $alternativeProduct = $productAlternativeQuery
+            ->createProductAlternativeQuery()
             ->filterByFkProduct($idBaseProduct)
-            ->filterByFkProductAbstractAlternative($idProductAbstract)
+            ->filterByFkProductAbstractAlternative($idProductAbstract);
+
+        $alternativeProduct = $this->buildQueryFromCriteria($productAlternativeQuery)
             ->findOne();
 
         if (!$alternativeProduct) {
@@ -102,7 +91,7 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
 
         return $this->getFactory()
             ->createProductAlternativeMapper()
-            ->mapSpyProductAlternativeEntityToTransfer($alternativeProduct);
+            ->mapSpyProductAlternativeEntityTransferToTransfer($alternativeProduct);
     }
 
     /**
@@ -118,11 +107,11 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
     public function findProductConcreteAlternative(int $idBaseProduct, int $idProductConcrete): ?ProductAlternativeTransfer
     {
         $productAlternativeQuery = $this->getFactory()
-            ->createProductAlternativeQuery();
-
-        $alternativeProduct = $productAlternativeQuery
+            ->createProductAlternativeQuery()
             ->filterByFkProduct($idBaseProduct)
-            ->filterByFkProductConcreteAlternative($idProductConcrete)
+            ->filterByFkProductConcreteAlternative($idProductConcrete);
+
+        $alternativeProduct = $this->buildQueryFromCriteria($productAlternativeQuery)
             ->findOne();
 
         if (!$alternativeProduct) {
@@ -131,7 +120,7 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
 
         return $this->getFactory()
             ->createProductAlternativeMapper()
-            ->mapSpyProductAlternativeEntityToTransfer($alternativeProduct);
+            ->mapSpyProductAlternativeEntityTransferToTransfer($alternativeProduct);
     }
 
     /**
@@ -141,10 +130,15 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
      */
     protected function hydrateProductAlternativeCollectionWithProductAlternatives(array $productAlternatives): ProductAlternativeCollectionTransfer
     {
+        $mapper = $this->getFactory()
+            ->createProductAlternativeMapper();
+
         $productAlternativeCollectionTransfer = new ProductAlternativeCollectionTransfer();
 
         foreach ($productAlternatives as $productAlternative) {
-            $productAlternativeCollectionTransfer->addProductAlternative($productAlternative);
+            $productAlternativeCollectionTransfer->addProductAlternative(
+                $mapper->mapSpyProductAlternativeEntityTransferToTransfer($productAlternative)
+            );
         }
 
         return $productAlternativeCollectionTransfer;

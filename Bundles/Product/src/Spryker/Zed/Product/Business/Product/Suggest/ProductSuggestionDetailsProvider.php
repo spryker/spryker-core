@@ -105,6 +105,8 @@ class ProductSuggestionDetailsProvider implements ProductSuggestionDetailsProvid
                 $limit
             );
 
+        $productAbstract = reset($productAbstract);
+
         if (!empty($productAbstract) && isset($productAbstract[ProductConstants::KEY_FILTERED_PRODUCTS_ABSTRACT_ID])) {
             return $productAbstract[ProductConstants::KEY_FILTERED_PRODUCTS_ABSTRACT_ID];
         }
@@ -128,6 +130,7 @@ class ProductSuggestionDetailsProvider implements ProductSuggestionDetailsProvid
                 $suggestion,
                 $limit
             );
+
         $productConcrete = reset($productConcrete);
 
         if (!empty($productConcrete) && isset($productConcrete[ProductConstants::KEY_FILTERED_PRODUCTS_CONCRETE_ID])) {
@@ -138,6 +141,8 @@ class ProductSuggestionDetailsProvider implements ProductSuggestionDetailsProvid
             $suggestion,
             $limit
         );
+
+        $productConcrete = reset($productConcrete);
 
         if (!empty($productConcrete) && isset($productConcrete[ProductConstants::KEY_FILTERED_PRODUCTS_CONCRETE_ID])) {
             return $productConcrete[ProductConstants::KEY_FILTERED_PRODUCTS_CONCRETE_ID];

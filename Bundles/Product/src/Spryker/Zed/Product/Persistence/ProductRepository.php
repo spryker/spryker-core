@@ -8,9 +8,10 @@
 namespace Spryker\Zed\Product\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Shared\Product\ProductConstants;
@@ -27,31 +28,21 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
      * @api
      *
      * @param string $sku
-     * @param null|int $limit
+     * @param int $limit
      *
      * @return array
      */
-    public function filterProductAbstractBySku(string $sku, ?int $limit = null): array
+    public function filterProductAbstractBySku(string $sku, int $limit): array
     {
-        $limit = $limit ?? $this->getFactory()
-                ->getConfig()
-                ->getFilteredProductsLimitDefault();
-
-        $productAbstractEntities = $this->queryProductAbstract()
+        $productAbstractQuery = $this->queryProductAbstract()
             ->filterBySku_Like('%' . $sku . '%')
+            ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, ProductConstants::KEY_FILTERED_PRODUCTS_ABSTRACT_ID)
+            ->withColumn(SpyProductAbstractTableMap::COL_SKU, ProductConstants::KEY_FILTERED_PRODUCTS_RESULT)
             ->limit($limit)
-            ->find();
+            ->select([ProductConstants::KEY_FILTERED_PRODUCTS_ABSTRACT_ID, ProductConstants::KEY_FILTERED_PRODUCTS_RESULT]);
 
-        $abstractProducts = [];
-
-        foreach ($productAbstractEntities as $productAbstractEntity) {
-            $abstractProducts[] = [
-                ProductConstants::KEY_FILTERED_PRODUCTS_ABSTRACT_ID => $productAbstractEntity->getIdProductAbstract(),
-                ProductConstants::KEY_FILTERED_PRODUCTS_RESULT => $productAbstractEntity->getSku(),
-            ];
-        }
-
-        return $abstractProducts;
+        return $productAbstractQuery->find()
+            ->toArray();
     }
 
     /**
@@ -61,38 +52,25 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
      *
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string $localizedName
-     * @param null|int $limit
+     * @param int $limit
      *
      * @return array
      */
-    public function filterProductAbstractByLocalizedName(LocaleTransfer $localeTransfer, string $localizedName, ?int $limit = null): array
+    public function filterProductAbstractByLocalizedName(LocaleTransfer $localeTransfer, string $localizedName, int $limit): array
     {
-        $limit = $limit ?? $this->getFactory()
-                ->getConfig()
-                ->getFilteredProductsLimitDefault();
-
         $localeTransfer->requireIdLocale();
 
-        $productAbstractEntities = $this->queryProductAbstractWithNameAndCategory(
-            $localeTransfer->getIdLocale()
-        )
+        $productAbstractQuery = $this->queryProductAbstractWithName($localeTransfer->getIdLocale())
             ->useSpyProductAbstractLocalizedAttributesQuery()
-            ->filterByName_Like('%' . $localizedName . '%')
+                ->filterByName_Like('%' . $localizedName . '%')
             ->endUse()
+            ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, ProductConstants::KEY_FILTERED_PRODUCTS_ABSTRACT_ID)
+            ->withColumn(ProductConstants::COL_FILTERED_PRODUCTS_PRODUCT_NAME, ProductConstants::KEY_FILTERED_PRODUCTS_RESULT)
             ->limit($limit)
-            ->find();
+            ->select([ProductConstants::KEY_FILTERED_PRODUCTS_ABSTRACT_ID, ProductConstants::KEY_FILTERED_PRODUCTS_RESULT]);
 
-        $abstractProducts = [];
-
-        foreach ($productAbstractEntities as $productAbstractEntity) {
-            $abstractProducts[] = [
-                ProductConstants::KEY_FILTERED_PRODUCTS_ABSTRACT_ID => $productAbstractEntity->getIdProductAbstract(),
-                ProductConstants::KEY_FILTERED_PRODUCTS_RESULT => $productAbstractEntity
-                    ->getVirtualColumn(ProductConstants::COL_FILTERED_PRODUCTS_PRODUCT_NAME),
-            ];
-        }
-
-        return $abstractProducts;
+        return $productAbstractQuery->find()
+            ->toArray();
     }
 
     /**
@@ -101,31 +79,21 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
      * @api
      *
      * @param string $sku
-     * @param null|int $limit
+     * @param int $limit
      *
      * @return array
      */
-    public function filterProductConcreteBySku(string $sku, ?int $limit = null): array
+    public function filterProductConcreteBySku(string $sku, int $limit): array
     {
-        $limit = $limit ?? $this->getFactory()
-                ->getConfig()
-                ->getFilteredProductsLimitDefault();
-
-        $productConcreteEntities = $this->queryProduct()
+        $productQuery = $this->queryProduct()
             ->filterBySku_Like('%' . $sku . '%')
+            ->withColumn(SpyProductTableMap::COL_ID_PRODUCT, ProductConstants::KEY_FILTERED_PRODUCTS_CONCRETE_ID)
+            ->withColumn(SpyProductTableMap::COL_SKU, ProductConstants::KEY_FILTERED_PRODUCTS_RESULT)
             ->limit($limit)
-            ->find();
+            ->select([ProductConstants::KEY_FILTERED_PRODUCTS_CONCRETE_ID, ProductConstants::KEY_FILTERED_PRODUCTS_RESULT]);
 
-        $concreteProducts = [];
-
-        foreach ($productConcreteEntities as $productConcreteEntity) {
-            $concreteProducts[] = [
-                ProductConstants::KEY_FILTERED_PRODUCTS_CONCRETE_ID => $productConcreteEntity->getIdProduct(),
-                ProductConstants::KEY_FILTERED_PRODUCTS_RESULT => $productConcreteEntity->getSku(),
-            ];
-        }
-
-        return $concreteProducts;
+        return $productQuery->find()
+            ->toArray();
     }
 
     /**
@@ -135,38 +103,25 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
      *
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string $localizedName
-     * @param null|int $limit
+     * @param int $limit
      *
      * @return array
      */
-    public function filterProductConcreteByLocalizedName(LocaleTransfer $localeTransfer, string $localizedName, ?int $limit = null): array
+    public function filterProductConcreteByLocalizedName(LocaleTransfer $localeTransfer, string $localizedName, int $limit): array
     {
-        $limit = $limit ?? $this->getFactory()
-                ->getConfig()
-                ->getFilteredProductsLimitDefault();
-
         $localeTransfer->requireIdLocale();
 
-        $productConcreteEntities = $this->queryProductConcreteWithNameAndCategory(
-            $localeTransfer->getIdLocale()
-        )
+        $productQuery = $this->queryProductConcreteWithName($localeTransfer->getIdLocale())
             ->useSpyProductLocalizedAttributesQuery()
-            ->filterByName_Like('%' . $localizedName . '%')
+                ->filterByName_Like('%' . $localizedName . '%')
             ->endUse()
+            ->withColumn(SpyProductTableMap::COL_ID_PRODUCT, ProductConstants::KEY_FILTERED_PRODUCTS_CONCRETE_ID)
+            ->withColumn(ProductConstants::COL_FILTERED_PRODUCTS_PRODUCT_NAME, ProductConstants::KEY_FILTERED_PRODUCTS_RESULT)
             ->limit($limit)
-            ->find();
+            ->select([ProductConstants::KEY_FILTERED_PRODUCTS_CONCRETE_ID, ProductConstants::KEY_FILTERED_PRODUCTS_RESULT]);
 
-        $concreteProducts = [];
-
-        foreach ($productConcreteEntities as $productConcreteEntity) {
-            $concreteProducts[] = [
-                ProductConstants::KEY_FILTERED_PRODUCTS_CONCRETE_ID => $productConcreteEntity->getIdProduct(),
-                ProductConstants::KEY_FILTERED_PRODUCTS_RESULT => $productConcreteEntity
-                    ->getVirtualColumn(ProductConstants::COL_FILTERED_PRODUCTS_PRODUCT_NAME),
-            ];
-        }
-
-        return $concreteProducts;
+        return $productQuery->find()
+            ->toArray();
     }
 
     /**
@@ -190,20 +145,10 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    protected function queryProductAbstractWithNameAndCategory(int $idLocale): SpyProductAbstractQuery
+    protected function queryProductAbstractWithName(int $idLocale): SpyProductAbstractQuery
     {
         return $this->queryProductAbstract()
-            ->innerJoinSpyProductCategory()
-            ->useSpyProductCategoryQuery()
-                ->innerJoinSpyCategory()
-                ->useSpyCategoryQuery()
-                    ->innerJoinAttribute()
-                    ->useAttributeQuery()
-                        ->filterByFkLocale($idLocale)
-                    ->endUse()
-                ->endUse()
-            ->endUse()
-            ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, ProductConstants::COL_FILTERED_PRODUCTS_CATEGORY)
+            ->innerJoinSpyProductAbstractLocalizedAttributes()
             ->useSpyProductAbstractLocalizedAttributesQuery()
                 ->filterByFkLocale($idLocale)
             ->endUse()
@@ -215,23 +160,10 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
-    protected function queryProductConcreteWithNameAndCategory(int $idLocale): SpyProductQuery
+    protected function queryProductConcreteWithName(int $idLocale): SpyProductQuery
     {
         return $this->queryProduct()
-            ->innerJoinSpyProductAbstract()
-            ->useSpyProductAbstractQuery()
-                ->innerJoinSpyProductCategory()
-                ->useSpyProductCategoryQuery()
-                    ->innerJoinSpyCategory()
-                    ->useSpyCategoryQuery()
-                        ->innerJoinAttribute()
-                        ->useAttributeQuery()
-                            ->filterByFkLocale($idLocale)
-                        ->endUse()
-                    ->endUse()
-                ->endUse()
-            ->endUse()
-            ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, ProductConstants::COL_FILTERED_PRODUCTS_CATEGORY)
+            ->innerJoinSpyProductLocalizedAttributes()
             ->useSpyProductLocalizedAttributesQuery()
                 ->filterByFkLocale($idLocale)
             ->endUse()
