@@ -17,8 +17,8 @@ class CompanyUnitAddressDataImportHelper extends Module
      */
     public function ensureDatabaseTableIsEmpty(): void
     {
-        $companyUnitAddressQuery = $this->getCompanyUnitAddressQuery();
-        $companyUnitAddressQuery->find()->delete();
+        $this->getCompanyUnitAddressQuery()
+            ->deleteAll();
     }
 
     /**

@@ -15,7 +15,7 @@ class CompanyBusinessUnitAssigner implements CompanyBusinessUnitAssignerInterfac
     /**
      * @var \Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitRepositoryInterface
      */
-    private $repository;
+    protected $repository;
 
     /**
      * @param \Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitRepositoryInterface $repository
@@ -34,7 +34,8 @@ class CompanyBusinessUnitAssigner implements CompanyBusinessUnitAssignerInterfac
         CompanyUserResponseTransfer $companyUserResponseTransfer
     ): CompanyUserResponseTransfer {
         if ($companyUserResponseTransfer->getCompanyUser()->getIdCompanyUser() === null
-            && $companyUserResponseTransfer->getCompanyUser()->getFkCompanyBusinessUnit() === null) {
+            && $companyUserResponseTransfer->getCompanyUser()->getFkCompanyBusinessUnit() === null
+        ) {
             $companyBusinessUnit = $this->repository
                 ->findDefaultBusinessUnitByCompanyId($companyUserResponseTransfer->getCompanyUser()->getFkCompany());
 
