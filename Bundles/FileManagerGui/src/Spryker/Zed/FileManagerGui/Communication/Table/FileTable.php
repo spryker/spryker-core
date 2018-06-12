@@ -8,10 +8,10 @@
 namespace Spryker\Zed\FileManagerGui\Communication\Table;
 
 use Orm\Zed\FileManager\Persistence\Map\SpyFileTableMap;
+use Orm\Zed\FileManager\Persistence\SpyFileQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Shared\FileManagerGui\FileManagerGuiConstants;
-use Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -27,9 +27,9 @@ class FileTable extends AbstractTable
     const DELETE_TITLE = 'Delete';
 
     /**
-     * @var \Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerInterface
+     * @var \Orm\Zed\FileManager\Persistence\SpyFileQuery
      */
-    protected $queryContainer;
+    protected $fileQuery;
 
     /**
      * @var int
@@ -37,18 +37,15 @@ class FileTable extends AbstractTable
     protected $fileDirectoryId;
 
     /**
-     * @param \Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerInterface $queryContainer
+     * @param \Orm\Zed\FileManager\Persistence\SpyFileQuery $fileQuery
      * @param int|null $fileDirectoryId
      */
     public function __construct(
-        FileManagerGuiToFileManagerQueryContainerInterface $queryContainer,
+        SpyFileQuery $fileQuery,
         $fileDirectoryId = null
     ) {
-        $this->queryContainer = $queryContainer;
-
-        if ($fileDirectoryId) {
-            $this->fileDirectoryId = $fileDirectoryId;
-        }
+        $this->fileQuery = $fileQuery;
+        $this->fileDirectoryId = $fileDirectoryId;
     }
 
     /**
@@ -74,7 +71,7 @@ class FileTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config)
     {
-        $query = $this->queryContainer->queryFiles()->orderByIdFile(Criteria::DESC);
+        $query = $this->fileQuery->orderByIdFile(Criteria::DESC);
 
         if ($this->fileDirectoryId) {
             $query->filterByFkFileDirectory($this->fileDirectoryId);

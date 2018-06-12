@@ -37,7 +37,7 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createFileTable($fileDirectoryId = null)
     {
         return new FileTable(
-            $this->getFileManagerQueryContainer(),
+            $this->getFileQuery(),
             $fileDirectoryId
         );
     }
@@ -74,7 +74,7 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createMimeTypeSettingsTable()
     {
         return new MimeTypeSettingsTable(
-            $this->getFileManagerQueryContainer()
+            $this->getMimeTypeQuery()
         );
     }
 
@@ -116,7 +116,7 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createFileFormDataProvider()
     {
         return new FileFormDataProvider(
-            $this->getFileManagerQueryContainer(),
+            $this->getFileQuery(),
             $this->getLocaleFacade(),
             $this->getFileManagerFacade()
         );
@@ -200,7 +200,7 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createMimeTypeFormDataProvider()
     {
         return new MimeTypeFormDataProvider(
-            $this->getFileManagerQueryContainer()
+            $this->getMimeTypeQuery()
         );
     }
 
@@ -215,10 +215,26 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Orm\Zed\FileManager\Persistence\SpyFileQuery
+     */
+    protected function getFileQuery()
+    {
+        return $this->getProvidedDependency(FileManagerGuiDependencyProvider::PROPEL_QUERY_FILE);
+    }
+
+    /**
      * @return \Orm\Zed\FileManager\Persistence\SpyFileInfoQuery
      */
     protected function getFileInfoQuery()
     {
         return $this->getProvidedDependency(FileManagerGuiDependencyProvider::PROPEL_QUERY_FILE_INFO);
+    }
+
+    /**
+     * @return \Orm\Zed\FileManager\Persistence\SpyMimeTypeQuery
+     */
+    protected function getMimeTypeQuery()
+    {
+        return $this->getProvidedDependency(FileManagerGuiDependencyProvider::PROPEL_QUERY_MIME_TYPE);
     }
 }

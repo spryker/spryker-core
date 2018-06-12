@@ -8,8 +8,8 @@
 namespace Spryker\Zed\FileManagerGui\Communication\Table;
 
 use Orm\Zed\FileManager\Persistence\Map\SpyMimeTypeTableMap;
+use Orm\Zed\FileManager\Persistence\SpyMimeTypeQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -31,16 +31,16 @@ class MimeTypeSettingsTable extends AbstractTable
     const ROUTE_DELETE = 'mime-type/delete';
 
     /**
-     * @var \Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerInterface
+     * @var \Orm\Zed\FileManager\Persistence\SpyFileQuery $fileQuery
      */
-    protected $queryContainer;
+    protected $mimeTypeQuery;
 
     /**
-     * @param \Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerInterface $queryContainer
+     * @param \Orm\Zed\FileManager\Persistence\SpyMimeTypeQuery $mimeTypeQuery
      */
-    public function __construct(FileManagerGuiToFileManagerQueryContainerInterface $queryContainer)
+    public function __construct(SpyMimeTypeQuery $mimeTypeQuery)
     {
-        $this->queryContainer = $queryContainer;
+        $this->mimeTypeQuery = $mimeTypeQuery;
     }
 
     /**
@@ -83,8 +83,7 @@ class MimeTypeSettingsTable extends AbstractTable
     protected function prepareData(TableConfiguration $config)
     {
         $data = [];
-        $query = $this->queryContainer->queryMimeType();
-        $queryResults = $this->runQuery($query, $config);
+        $queryResults = $this->runQuery($this->mimeTypeQuery, $config);
 
         foreach ($queryResults as $mimeType) {
             $data[] = $this->mapResults($mimeType);

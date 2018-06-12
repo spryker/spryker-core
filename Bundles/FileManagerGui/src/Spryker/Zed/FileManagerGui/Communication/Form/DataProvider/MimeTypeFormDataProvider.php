@@ -8,21 +8,21 @@
 namespace Spryker\Zed\FileManagerGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\MimeTypeTransfer;
-use Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerInterface;
+use Orm\Zed\FileManager\Persistence\SpyMimeTypeQuery;
 
 class MimeTypeFormDataProvider
 {
     /**
-     * @var \Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerInterface
+     * @var \Orm\Zed\FileManager\Persistence\SpyMimeTypeQuery
      */
-    protected $queryContainer;
+    protected $mimeTypeQuery;
 
     /**
-     * @param \Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerInterface $queryContainer
+     * @param \Orm\Zed\FileManager\Persistence\SpyMimeTypeQuery $mimeTypeQuery
      */
-    public function __construct(FileManagerGuiToFileManagerQueryContainerInterface $queryContainer)
+    public function __construct(SpyMimeTypeQuery $mimeTypeQuery)
     {
-        $this->queryContainer = $queryContainer;
+        $this->mimeTypeQuery = $mimeTypeQuery;
     }
 
     /**
@@ -38,7 +38,7 @@ class MimeTypeFormDataProvider
             return $mimeTypeTransfer;
         }
 
-        $mimeTypeEntity = $this->queryContainer->queryMimeType()->findOneByIdMimeType($idMimeType);
+        $mimeTypeEntity = $this->mimeTypeQuery->findOneByIdMimeType($idMimeType);
 
         if ($mimeTypeEntity !== null) {
             $mimeTypeTransfer->fromArray($mimeTypeEntity->toArray());

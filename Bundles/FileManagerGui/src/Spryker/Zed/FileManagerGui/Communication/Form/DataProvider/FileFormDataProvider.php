@@ -10,19 +10,19 @@ namespace Spryker\Zed\FileManagerGui\Communication\Form\DataProvider;
 use Generated\Shared\Transfer\FileLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\FileTransfer;
 use Orm\Zed\FileManager\Persistence\SpyFile;
+use Orm\Zed\FileManager\Persistence\SpyFileQuery;
 use Spryker\Zed\FileManagerGui\Communication\Form\FileForm;
 use Spryker\Zed\FileManagerGui\Dependency\Facade\FileManagerGuiToFileManagerFacadeInterface;
 use Spryker\Zed\FileManagerGui\Dependency\Facade\FileManagerGuiToLocaleFacadeInterface;
-use Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerInterface;
 
 class FileFormDataProvider
 {
     const FK_LOCALE_KEY = 'fkLocale';
 
     /**
-     * @var \Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerInterface
+     * @var \Orm\Zed\FileManager\Persistence\SpyFileQuery
      */
-    protected $queryContainer;
+    protected $fileQuery;
 
     /**
      * @var \Spryker\Zed\Locale\Business\LocaleFacadeInterface
@@ -35,16 +35,16 @@ class FileFormDataProvider
     protected $fileManagerFacade;
 
     /**
-     * @param \Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerInterface $queryContainer
+     * @param \Orm\Zed\FileManager\Persistence\SpyFileQuery $fileQuery
      * @param \Spryker\Zed\FileManagerGui\Dependency\Facade\FileManagerGuiToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\FileManagerGui\Dependency\Facade\FileManagerGuiToFileManagerFacadeInterface $fileManagerFacade
      */
     public function __construct(
-        FileManagerGuiToFileManagerQueryContainerInterface $queryContainer,
+        SpyFileQuery $fileQuery,
         FileManagerGuiToLocaleFacadeInterface $localeFacade,
         FileManagerGuiToFileManagerFacadeInterface $fileManagerFacade
     ) {
-        $this->queryContainer = $queryContainer;
+        $this->fileQuery = $fileQuery;
         $this->localeFacade = $localeFacade;
         $this->fileManagerFacade = $fileManagerFacade;
     }
@@ -60,11 +60,7 @@ class FileFormDataProvider
             return $this->createEmptyFileTransfer();
         }
 
-        $file = $this
-            ->queryContainer
-            ->queryFileById($idFile)
-            ->findOne();
-
+        $file = $this->fileQuery->findOneByIdFile($idFile);
         $fileTransfer = $this->createEmptyFileTransfer();
 
         $this->addFileLocalizedAttributes($file, $fileTransfer);
