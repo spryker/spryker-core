@@ -149,6 +149,18 @@ class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileMan
     /**
      * @api
      *
+     * @param int $idMimeType
+     *
+     * @return \Generated\Shared\Transfer\MimeTypeResponseTransfer
+     */
+    public function findMimeType($idMimeType)
+    {
+        return $this->fileManagerFacade->findMimeType($idMimeType);
+    }
+
+    /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\MimeTypeTransfer $mimeTypeTransfer
      *
      * @return \Generated\Shared\Transfer\MimeTypeResponseTransfer

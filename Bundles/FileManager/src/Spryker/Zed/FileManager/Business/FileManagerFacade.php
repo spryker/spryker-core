@@ -143,6 +143,18 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
      *
      * {@inheritdoc}
      */
+    public function findMimeType($idMimeType)
+    {
+        return $this->getFactory()
+            ->createMimeTypeReader()
+            ->findMimeType($idMimeType);
+    }
+
+    /**
+     * @api
+     *
+     * {@inheritdoc}
+     */
     public function saveMimeType(MimeTypeTransfer $mimeTypeTransfer)
     {
         return $this->getFactory()

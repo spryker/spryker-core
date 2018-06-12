@@ -185,6 +185,6 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
      */
     public function createMimeTypeReader()
     {
-        return new MimeTypeReader($this->getQueryContainer());
+        return new MimeTypeReader($this->getRepository());
     }
 }

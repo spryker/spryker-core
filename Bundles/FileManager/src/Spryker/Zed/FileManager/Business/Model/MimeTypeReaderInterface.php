@@ -10,6 +10,13 @@ namespace Spryker\Zed\FileManager\Business\Model;
 interface MimeTypeReaderInterface
 {
     /**
+     * @param int $idMimeType
+     *
+     * @return \Generated\Shared\Transfer\MimeTypeResponseTransfer
+     */
+    public function findMimeType(int $idMimeType);
+
+    /**
      * @return \Generated\Shared\Transfer\MimeTypeCollectionTransfer
      */
     public function findAllowedMimeTypes();

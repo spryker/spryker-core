@@ -200,7 +200,7 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createMimeTypeFormDataProvider()
     {
         return new MimeTypeFormDataProvider(
-            $this->getMimeTypeQuery()
+            $this->getFileManagerFacade()
         );
     }
 

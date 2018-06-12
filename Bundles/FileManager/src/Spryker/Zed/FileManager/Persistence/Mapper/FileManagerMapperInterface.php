@@ -8,6 +8,7 @@
 namespace Spryker\Zed\FileManager\Persistence\Mapper;
 
 use Orm\Zed\FileManager\Persistence\SpyFileInfo;
+use Orm\Zed\FileManager\Persistence\SpyMimeType;
 
 interface FileManagerMapperInterface
 {
@@ -17,4 +18,11 @@ interface FileManagerMapperInterface
      * @return \Generated\Shared\Transfer\SpyFileInfoEntityTransfer
      */
     public function mapFileInfoEntityToTransfer(SpyFileInfo $fileInfo);
+
+    /**
+     * @param \Orm\Zed\FileManager\Persistence\Base\SpyMimeType $mimeType
+     *
+     * @return \Generated\Shared\Transfer\MimeTypeTransfer
+     */
+    public function mapMimeTypeEntityToTransfer(SpyMimeType $mimeType);
 }

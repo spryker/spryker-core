@@ -22,4 +22,16 @@ interface FileManagerRepositoryInterface
      * @return \Generated\Shared\Transfer\SpyFileInfoEntityTransfer
      */
     public function getLatestFileInfoByIdFile(int $idFile);
+
+    /**
+     * @param int $idMimeType
+     *
+     * @return \Generated\Shared\Transfer\MimeTypeResponseTransfer
+     */
+    public function findMimeType(int $idMimeType);
+
+    /**
+     * @return \Generated\Shared\Transfer\MimeTypeCollectionTransfer
+     */
+    public function getAllowedMimeTypes();
 }

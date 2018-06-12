@@ -122,6 +122,18 @@ interface FileManagerGuiToFileManagerFacadeInterface
 
     /**
      * Specification:
+     * - Finds a mime type
+     *
+     * @api
+     *
+     * @param int $idMimeType
+     *
+     * @return \Generated\Shared\Transfer\MimeTypeResponseTransfer
+     */
+    public function findMimeType($idMimeType);
+
+    /**
+     * Specification:
      * - Creates or updates mime type
      *
      * @api

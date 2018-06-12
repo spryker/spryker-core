@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\FileManager\Persistence;
 
+use Generated\Shared\Transfer\MimeTypeCollectionTransfer;
 use Generated\Shared\Transfer\SpyFileInfoEntityTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -37,7 +38,7 @@ class FileManagerRepository extends AbstractRepository implements FileManagerRep
     /**
      * @param int $idFile
      *
-     * @return \Generated\Shared\Transfer\SpyFileInfoEntityTransfer
+     * @return \Generated\Shared\Transfer\SpyFileInfoEntityTransfer|null
      */
     public function getLatestFileInfoByIdFile(int $idFile)
     {
@@ -55,5 +56,50 @@ class FileManagerRepository extends AbstractRepository implements FileManagerRep
         return $this->getFactory()
             ->createFileManagerMapper()
             ->mapFileInfoEntityToTransfer($fileInfoEntity);
+    }
+
+    /**
+     * @param int $idMimeType
+     *
+     * @return \Generated\Shared\Transfer\MimeTypeTransfer|null
+     */
+    public function findMimeType(int $idMimeType)
+    {
+        $query = $this->getFactory()
+            ->createMimeTypeQuery()
+            ->filterByIdMimeType($idMimeType);
+
+        $mimeTypeEntity = $query->findOne();
+
+        if ($mimeTypeEntity === null) {
+            return $mimeTypeEntity;
+        }
+
+        return $this->getFactory()
+            ->createFileManagerMapper()
+            ->mapMimeTypeEntityToTransfer($mimeTypeEntity);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\MimeTypeCollectionTransfer
+     */
+    public function getAllowedMimeTypes()
+    {
+        $mimeTypeCollectionTransfer = new MimeTypeCollectionTransfer();
+
+        $query = $this->getFactory()
+            ->createMimeTypeQuery()
+            ->filterByIsAllowed(true);
+
+        $mimeTypeCollection = $query->find();
+        $mapper = $this->getFactory()->createFileManagerMapper();
+
+        foreach ($mimeTypeCollection as $mimeType) {
+            $mimeTypeCollectionTransfer->addMimeType(
+                $mapper->mapMimeTypeEntityToTransfer($mimeType)
+            );
+        }
+
+        return $mimeTypeCollectionTransfer;
     }
 }
