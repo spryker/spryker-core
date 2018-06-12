@@ -67,7 +67,7 @@ class ProductReader implements ProductReaderInterface
      * @param string $sku
      * @param null|int $limit
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProduct[]
+     * @return array
      */
     public function filterProductConcreteBySku(string $sku, ?int $limit = null): array
     {
@@ -79,7 +79,7 @@ class ProductReader implements ProductReaderInterface
      * @param string $localizedName
      * @param null|int $limit
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProduct[]
+     * @return array
      */
     public function filterProductConcreteByLocalizedName(string $localizedName, ?int $limit = null): array
     {
