@@ -6,7 +6,7 @@
     "league/csv": "^8.1.0",
     "php": ">=7.1",
     "spryker/application": "^3.9.0",
-    "spryker/company-business-unit": "^1.1.0",
+    "spryker/company-business-unit": "^1.1.0 || ^2.0.0",
     "spryker/company-user": "^1.0.0",
     "spryker/customer-extension": "^1.0.0",
     "spryker/kernel": "^3.8.0",
