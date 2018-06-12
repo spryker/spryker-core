@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductAlternative\Persistence;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductAlternativeCollectionTransfer;
 use Generated\Shared\Transfer\ProductAlternativeTransfer;
 
@@ -66,4 +67,30 @@ interface ProductAlternativeRepositoryInterface
      * @return null|\Generated\Shared\Transfer\ProductAlternativeTransfer
      */
     public function findProductConcreteAlternative(int $idBaseProduct, int $idProductConcrete): ?ProductAlternativeTransfer;
+
+    /**
+     * Specification:
+     * - Collects all necessary product abstract data for product alternative table view.
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return array
+     */
+    public function getPreparedProductAbstractDataById(int $idProductAbstract, LocaleTransfer $localeTransfer): array;
+
+    /**
+     * Specification:
+     * - Collects all necessary product concrete data for product alternative table view.
+     *
+     * @api
+     *
+     * @param int $idProductConcrete
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return array
+     */
+    public function getPreparedProductConcreteDataById(int $idProductConcrete, LocaleTransfer $localeTransfer): array;
 }

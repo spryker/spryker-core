@@ -53,4 +53,14 @@ class ProductAlternativeToProductFacadeBridge implements ProductAlternativeToPro
     {
         return $this->productFacade->findProductConcreteById($idProductConcrete);
     }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return bool
+     */
+    public function isProductActive($idProductAbstract): bool
+    {
+        return $this->productFacade->isProductActive($idProductAbstract);
+    }
 }

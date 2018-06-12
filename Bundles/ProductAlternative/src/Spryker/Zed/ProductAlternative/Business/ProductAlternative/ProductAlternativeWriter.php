@@ -98,9 +98,7 @@ class ProductAlternativeWriter implements ProductAlternativeWriterInterface
         }
 
         if (empty($productAlternativeToPersist->getSuggest())) {
-            throw new ProductAlternativeHasNoBaseProductException(
-                'Unable to create an alternative from nothing. Suggest field must be set.'
-            );
+            return $productConcreteTransfer;
         }
 
         $productSuggestionDetails = $this->productFacade

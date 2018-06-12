@@ -11,19 +11,13 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductAlternativeListItemTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Spryker\Shared\ProductAlternative\ProductAlternativeConstants;
 use Spryker\Zed\ProductAlternative\Dependency\Facade\ProductAlternativeToLocaleFacadeInterface;
 use Spryker\Zed\ProductAlternative\Dependency\Facade\ProductAlternativeToProductFacadeInterface;
+use Spryker\Zed\ProductAlternative\Persistence\ProductAlternativeRepositoryInterface;
 
 class ProductAlternativeListHydrator implements ProductAlternativeListHydratorInterface
 {
-    protected const COL_NAME = 'name';
-    protected const COL_SKU = 'sku';
-    protected const COL_STATUS = 'status';
-    protected const COL_CATEGORY = 'category';
-
-    protected const FIELD_PRODUCT_TYPE_ABSTRACT = 'Abstract';
-    protected const FIELD_PRODUCT_TYPE_CONCRETE = 'Concrete';
-
     /**
      * @var \Spryker\Zed\ProductAlternative\Dependency\Facade\ProductAlternativeToProductFacadeInterface
      */
@@ -35,15 +29,23 @@ class ProductAlternativeListHydrator implements ProductAlternativeListHydratorIn
     protected $localeFacade;
 
     /**
+     * @var \Spryker\Zed\ProductAlternative\Persistence\ProductAlternativeRepositoryInterface
+     */
+    protected $productAlternativeRepository;
+
+    /**
      * @param \Spryker\Zed\ProductAlternative\Dependency\Facade\ProductAlternativeToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\ProductAlternative\Dependency\Facade\ProductAlternativeToLocaleFacadeInterface $localeFacade
+     * @param \Spryker\Zed\ProductAlternative\Persistence\ProductAlternativeRepositoryInterface $productAlternativeRepository
      */
     public function __construct(
         ProductAlternativeToProductFacadeInterface $productFacade,
-        ProductAlternativeToLocaleFacadeInterface $localeFacade
+        ProductAlternativeToLocaleFacadeInterface $localeFacade,
+        ProductAlternativeRepositoryInterface $productAlternativeRepository
     ) {
         $this->productFacade = $productFacade;
         $this->localeFacade = $localeFacade;
+        $this->productAlternativeRepository = $productAlternativeRepository;
     }
 
     /**
@@ -92,20 +94,24 @@ class ProductAlternativeListHydrator implements ProductAlternativeListHydratorIn
         int $idProductAbstractAlternative,
         ProductAlternativeListItemTransfer $productAlternativeListItemTransfer
     ): ProductAlternativeListItemTransfer {
-        $productAbstractAlternative = $this->productFacade
-            ->findProductAbstractById($idProductAbstractAlternative);
-
-        if (!$productAbstractAlternative) {
-            return $productAlternativeListItemTransfer;
-        }
+        $productAbstractAlternative = $this->productAlternativeRepository
+            ->getPreparedProductAbstractDataById(
+                $idProductAbstractAlternative,
+                $this->getCurrentLocale()
+            );
 
         return $productAlternativeListItemTransfer
-            ->setType(static::FIELD_PRODUCT_TYPE_ABSTRACT)
-            ->setName(
-                $this->getProductAbstractName($productAbstractAlternative)
+            ->setIdProductAlternative($productAbstractAlternative[ProductAlternativeConstants::COL_ID])
+            ->setType(ProductAlternativeConstants::FIELD_PRODUCT_TYPE_ABSTRACT)
+            ->setName($productAbstractAlternative[ProductAlternativeConstants::COL_NAME])
+            ->setSku($productAbstractAlternative[ProductAlternativeConstants::COL_SKU])
+            ->setCategories(
+                explode(
+                    ProductAlternativeConstants::COL_SEPARATOR_CATEGORIES,
+                    $productAbstractAlternative[ProductAlternativeConstants::COL_CATEGORIES]
+                )
             )
-            ->setSku($productAbstractAlternative->getSku())
-            ->setStatus($productAbstractAlternative->getIsActive()); // TODO: Add ProductFacade call.
+            ->setStatus($this->productFacade->isProductActive($idProductAbstractAlternative));
     }
 
     /**
@@ -118,20 +124,24 @@ class ProductAlternativeListHydrator implements ProductAlternativeListHydratorIn
         int $idProductConcreteAlternative,
         ProductAlternativeListItemTransfer $productAlternativeListItemTransfer
     ): ProductAlternativeListItemTransfer {
-        $productConcreteAlternative = $this->productFacade
-            ->findProductConcreteById($idProductConcreteAlternative);
-
-        if (!$productConcreteAlternative) {
-            return $productAlternativeListItemTransfer;
-        }
+        $productConcreteAlternative = $this->productAlternativeRepository
+            ->getPreparedProductConcreteDataById(
+                $idProductConcreteAlternative,
+                $this->getCurrentLocale()
+            );
 
         return $productAlternativeListItemTransfer
-            ->setType(static::FIELD_PRODUCT_TYPE_CONCRETE)
-            ->setName(
-                $this->getProductConcreteName($productConcreteAlternative)
+            ->setIdProductAlternative($productConcreteAlternative[ProductAlternativeConstants::COL_ID])
+            ->setType(ProductAlternativeConstants::FIELD_PRODUCT_TYPE_CONCRETE)
+            ->setName($productConcreteAlternative[ProductAlternativeConstants::COL_NAME])
+            ->setSku($productConcreteAlternative[ProductAlternativeConstants::COL_SKU])
+            ->setCategories(
+                explode(
+                    ProductAlternativeConstants::COL_SEPARATOR_CATEGORIES,
+                    $productConcreteAlternative[ProductAlternativeConstants::COL_CATEGORIES]
+                )
             )
-            ->setSku($productConcreteAlternative->getSku())
-            ->setStatus($productConcreteAlternative->getIsActive());
+            ->setStatus($productConcreteAlternative[ProductAlternativeConstants::COL_STATUS]);
     }
 
     /**

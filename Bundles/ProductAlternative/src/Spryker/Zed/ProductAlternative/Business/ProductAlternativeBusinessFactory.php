@@ -57,7 +57,8 @@ class ProductAlternativeBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductAlternativeListHydrator(
             $this->getProductFacade(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
+            $this->getRepository()
         );
     }
 

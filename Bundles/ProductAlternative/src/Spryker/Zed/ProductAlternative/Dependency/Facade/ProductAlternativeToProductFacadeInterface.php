@@ -31,4 +31,11 @@ interface ProductAlternativeToProductFacadeInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
      */
     public function findProductConcreteById($idProductConcrete);
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return bool
+     */
+    public function isProductActive($idProductAbstract): bool;
 }
