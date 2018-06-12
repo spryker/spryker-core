@@ -45,11 +45,11 @@ class IndexController extends AbstractController
         if ($productDiscontinuedResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::MESSAGE_PRODUCT_DISCONTINUED_SUCCESS);
 
-            return $this->redirectReferer($request);
+            return $this->redirectToReferer($request);
         }
         $this->addErrorMessage(static::MESSAGE_PRODUCT_DISCONTINUED_ERROR);
 
-        return $this->redirectReferer($request);
+        return $this->redirectToReferer($request);
     }
 
     /**
@@ -71,11 +71,11 @@ class IndexController extends AbstractController
         if ($productDiscontinuedResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::MESSAGE_PRODUCT_UNDISCONTINUED_SUCCESS);
 
-            return $this->redirectReferer($request);
+            return $this->redirectToReferer($request);
         }
         $this->addErrorMessage(static::MESSAGE_PRODUCT_UNDISCONTINUED_ERROR);
 
-        return $this->redirectReferer($request);
+        return $this->redirectToReferer($request);
     }
 
     /**
@@ -83,7 +83,7 @@ class IndexController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function redirectReferer(Request $request): RedirectResponse
+    protected function redirectToReferer(Request $request): RedirectResponse
     {
         return $this->redirectResponse($request->headers->get(static::HEADER_REFERER) . static::TAB_KEY_DISCONTINUE);
     }
