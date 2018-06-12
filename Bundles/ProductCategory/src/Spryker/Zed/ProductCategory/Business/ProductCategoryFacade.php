@@ -9,13 +9,10 @@ namespace Spryker\Zed\ProductCategory\Business;
 
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\ProductCategory\Business\ProductCategoryBusinessFactory getFactory()
- * @method \Spryker\Zed\ProductCategory\Persistence\ProductCategoryRepositoryInterface getRepository()
  */
 class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFacadeInterface
 {
@@ -135,45 +132,5 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
             ->getFactory()
             ->createProductCategoryManager()
             ->updateProductMappingsForUpdatedCategory($categoryTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return array
-     */
-    public function getProductAbstractCategoriesByIdProductAbstract(ProductAbstractTransfer $productAbstractTransfer, LocaleTransfer $localeTransfer): array
-    {
-        return $this->getFactory()
-            ->createProductCategoryReader()
-            ->getProductAbstractCategoriesByIdProductAbstract(
-                $productAbstractTransfer,
-                $localeTransfer
-            );
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return array
-     */
-    public function getProductConcreteCategoriesByIdProductConcrete(ProductConcreteTransfer $productConcreteTransfer, LocaleTransfer $localeTransfer): array
-    {
-        return $this->getFactory()
-            ->createProductCategoryReader()
-            ->getProductConcreteCategoriesByIdProductConcrete(
-                $productConcreteTransfer,
-                $localeTransfer
-            );
     }
 }
