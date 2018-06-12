@@ -869,7 +869,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     public function filterProductAbstractBySku(string $sku, int $limit): array
     {
         return $this->getFactory()
-            ->createProductFilterSuggestion()
+            ->createProductReader()
             ->filterProductAbstractBySku($sku, $limit);
     }
 
@@ -886,7 +886,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     public function filterProductAbstractByLocalizedName(string $localizedName, int $limit): array
     {
         return $this->getFactory()
-            ->createProductFilterSuggestion()
+            ->createProductReader()
             ->filterProductAbstractByLocalizedName($localizedName, $limit);
     }
 
@@ -903,7 +903,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     public function filterProductConcreteBySku(string $sku, int $limit): array
     {
         return $this->getFactory()
-            ->createProductFilterSuggestion()
+            ->createProductReader()
             ->filterProductConcreteBySku($sku, $limit);
     }
 
@@ -920,7 +920,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     public function filterProductConcreteByLocalizedName(string $localizedName, int $limit): array
     {
         return $this->getFactory()
-            ->createProductFilterSuggestion()
+            ->createProductReader()
             ->filterProductConcreteByLocalizedName($localizedName, $limit);
     }
 }

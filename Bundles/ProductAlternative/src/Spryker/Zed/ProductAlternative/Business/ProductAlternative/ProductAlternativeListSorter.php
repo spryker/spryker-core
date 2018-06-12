@@ -27,8 +27,7 @@ class ProductAlternativeListSorter implements ProductAlternativeListSorterInterf
             ->getProductAlternatives()
             ->getArrayCopy();
 
-        $filteredProductAlternatives = $this
-            ->filterProductAlternatives($productAlternativeListItems);
+        $filteredProductAlternatives = $this->filterProductAlternatives($productAlternativeListItems);
 
         $sortedProductAlternativeListItems = array_merge(
             $this->sortProductAlternatives($filteredProductAlternatives[static::TYPE_PRODUCT_ABSTRACT]),

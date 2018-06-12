@@ -86,8 +86,7 @@ class ProductSuggestionDetailsProvider implements ProductSuggestionDetailsProvid
      */
     protected function getIdProductAbstractBySuggestion(string $suggestion, int $limit): ?int
     {
-        $productAbstract = $this
-            ->productRepository
+        $productAbstract = $this->productRepository
             ->filterProductAbstractByLocalizedName(
                 $this->getCurrentLocale(),
                 $suggestion,
@@ -100,8 +99,7 @@ class ProductSuggestionDetailsProvider implements ProductSuggestionDetailsProvid
             return $productAbstract[ProductConstants::KEY_FILTERED_PRODUCTS_ABSTRACT_ID];
         }
 
-        $productAbstract = $this
-            ->productRepository
+        $productAbstract = $this->productRepository
             ->filterProductAbstractBySku(
                 $suggestion,
                 $limit
@@ -124,8 +122,7 @@ class ProductSuggestionDetailsProvider implements ProductSuggestionDetailsProvid
      */
     protected function getIdProductConcreteBySuggestion(string $suggestion, int $limit): ?int
     {
-        $productConcrete = $this
-            ->productRepository
+        $productConcrete = $this->productRepository
             ->filterProductConcreteByLocalizedName(
                 $this->getCurrentLocale(),
                 $suggestion,
@@ -137,12 +134,10 @@ class ProductSuggestionDetailsProvider implements ProductSuggestionDetailsProvid
             return $productConcrete[ProductConstants::KEY_FILTERED_PRODUCTS_CONCRETE_ID];
         }
 
-        $productConcrete = $this
-            ->productRepository
-            ->filterProductConcreteBySku(
-                $suggestion,
-                $limit
-            );
+        $productConcrete = $this->productRepository->filterProductConcreteBySku(
+            $suggestion,
+            $limit
+        );
 
         if (!empty($productConcrete) && isset($productConcrete[ProductConstants::KEY_FILTERED_PRODUCTS_CONCRETE_ID])) {
             return $productConcrete[ProductConstants::KEY_FILTERED_PRODUCTS_CONCRETE_ID];
@@ -156,8 +151,6 @@ class ProductSuggestionDetailsProvider implements ProductSuggestionDetailsProvid
      */
     protected function getCurrentLocale(): LocaleTransfer
     {
-        return $this
-            ->localeFacade
-            ->getCurrentLocale();
+        return $this->localeFacade->getCurrentLocale();
     }
 }

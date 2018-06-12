@@ -46,33 +46,33 @@ class ProductSuggester implements ProductSuggesterInterface
     }
 
     /**
-     * @param string $searchName
+     * @param string $suggestion
      * @param int|null $limit
      *
      * @return array
      */
-    public function suggestProductAbstract(string $searchName, ?int $limit = null): array
+    public function suggestProductAbstract(string $suggestion, ?int $limit = null): array
     {
         return array_unique(
             array_merge(
-                $this->suggestProductAbstractName($searchName),
-                $this->suggestProductAbstractSku($searchName)
+                $this->suggestProductAbstractName($suggestion),
+                $this->suggestProductAbstractSku($suggestion)
             )
         );
     }
 
     /**
-     * @param string $searchName
+     * @param string $suggestion
      * @param int|null $limit
      *
      * @return array
      */
-    public function suggestProductConcrete(string $searchName, ?int $limit = null): array
+    public function suggestProductConcrete(string $suggestion, ?int $limit = null): array
     {
         return array_unique(
             array_merge(
-                $this->suggestProductConcreteName($searchName),
-                $this->suggestProductConcreteSku($searchName)
+                $this->suggestProductConcreteName($suggestion),
+                $this->suggestProductConcreteSku($suggestion)
             )
         );
     }
@@ -165,8 +165,7 @@ class ProductSuggester implements ProductSuggesterInterface
      */
     protected function getCurrentLocale(): LocaleTransfer
     {
-        return $this
-            ->localeFacade
+        return $this->localeFacade
             ->getCurrentLocale();
     }
 

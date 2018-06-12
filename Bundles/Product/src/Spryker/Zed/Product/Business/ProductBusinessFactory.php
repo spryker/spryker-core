@@ -30,12 +30,12 @@ use Spryker\Zed\Product\Business\Product\ProductAbstractManager;
 use Spryker\Zed\Product\Business\Product\ProductConcreteActivator;
 use Spryker\Zed\Product\Business\Product\ProductConcreteManager;
 use Spryker\Zed\Product\Business\Product\ProductManager;
+use Spryker\Zed\Product\Business\Product\ProductReader;
+use Spryker\Zed\Product\Business\Product\ProductReaderInterface;
 use Spryker\Zed\Product\Business\Product\Sku\SkuGenerator;
 use Spryker\Zed\Product\Business\Product\Status\ProductAbstractStatusChecker;
 use Spryker\Zed\Product\Business\Product\StoreRelation\ProductAbstractStoreRelationReader;
 use Spryker\Zed\Product\Business\Product\StoreRelation\ProductAbstractStoreRelationWriter;
-use Spryker\Zed\Product\Business\Product\Suggest\ProductFilterSuggestion;
-use Spryker\Zed\Product\Business\Product\Suggest\ProductFilterSuggestionInterface;
 use Spryker\Zed\Product\Business\Product\Suggest\ProductSuggester;
 use Spryker\Zed\Product\Business\Product\Suggest\ProductSuggesterInterface;
 use Spryker\Zed\Product\Business\Product\Suggest\ProductSuggestionDetailsProvider;
@@ -584,11 +584,11 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Product\Business\Product\Suggest\ProductFilterSuggestionInterface
+     * @return \Spryker\Zed\Product\Business\Product\ProductReaderInterface
      */
-    public function createProductFilterSuggestion(): ProductFilterSuggestionInterface
+    public function createProductReader(): ProductReaderInterface
     {
-        return new ProductFilterSuggestion(
+        return new ProductReader(
             $this->getLocaleFacade(),
             $this->getRepository()
         );

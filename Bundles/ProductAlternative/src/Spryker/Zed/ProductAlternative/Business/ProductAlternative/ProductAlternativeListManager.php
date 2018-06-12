@@ -52,8 +52,7 @@ class ProductAlternativeListManager implements ProductAlternativeListManagerInte
      */
     public function getProductAlternativeListByIdProductConcrete(int $idProductConcrete): ProductAlternativeListTransfer
     {
-        $productAlternativeCollection = $this
-            ->productAlternativeReader
+        $productAlternativeCollection = $this->productAlternativeReader
             ->getProductAlternativesByIdProductConcrete($idProductConcrete);
 
         return $this->hydrateProductAlternativeList(
@@ -78,8 +77,7 @@ class ProductAlternativeListManager implements ProductAlternativeListManagerInte
             );
         }
 
-        return $this
-            ->productAlternativeListSorter
+        return $this->productAlternativeListSorter
             ->sortProductAlternativeList($productAlternativeListTransfer);
     }
 
@@ -107,8 +105,7 @@ class ProductAlternativeListManager implements ProductAlternativeListManagerInte
             );
 
         if ($idProductAbstract) {
-            return $this
-                ->productAlternativeListHydrator
+            return $this->productAlternativeListHydrator
                 ->hydrateProductAbstractListItem(
                     $idProductAbstract,
                     $productAlternativeListItemTransfer
@@ -119,8 +116,7 @@ class ProductAlternativeListManager implements ProductAlternativeListManagerInte
             ->getIdProductConcreteAlternative();
 
         if ($idProductConcrete) {
-            return $this
-                ->productAlternativeListHydrator
+            return $this->productAlternativeListHydrator
                 ->hydrateProductConcreteListItem(
                     $idProductConcrete,
                     $productAlternativeListItemTransfer

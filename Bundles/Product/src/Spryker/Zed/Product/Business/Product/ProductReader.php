@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Product\Business\Product\Suggest;
+namespace Spryker\Zed\Product\Business\Product;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
 use Spryker\Zed\Product\Persistence\ProductRepositoryInterface;
 
-class ProductFilterSuggestion implements ProductFilterSuggestionInterface
+class ProductReader implements ProductReaderInterface
 {
     /**
      * @var \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface
@@ -71,8 +71,7 @@ class ProductFilterSuggestion implements ProductFilterSuggestionInterface
      */
     public function filterProductConcreteBySku(string $sku, int $limit): array
     {
-        return $this
-            ->productRepository
+        return $this->productRepository
             ->filterProductConcreteBySku($sku, $limit);
     }
 
@@ -84,8 +83,7 @@ class ProductFilterSuggestion implements ProductFilterSuggestionInterface
      */
     public function filterProductConcreteByLocalizedName(string $localizedName, int $limit): array
     {
-        return $this
-            ->productRepository
+        return $this->productRepository
             ->filterProductConcreteByLocalizedName(
                 $this->getCurrentLocale(),
                 $localizedName,
@@ -98,8 +96,6 @@ class ProductFilterSuggestion implements ProductFilterSuggestionInterface
      */
     protected function getCurrentLocale(): LocaleTransfer
     {
-        return $this
-            ->localeFacade
-            ->getCurrentLocale();
+        return $this->localeFacade->getCurrentLocale();
     }
 }

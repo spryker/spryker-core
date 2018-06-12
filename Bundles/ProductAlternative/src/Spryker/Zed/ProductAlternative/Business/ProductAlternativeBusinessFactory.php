@@ -20,7 +20,6 @@ use Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativ
 use Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeWriterInterface;
 use Spryker\Zed\ProductAlternative\Dependency\Facade\ProductAlternativeToLocaleFacadeInterface;
 use Spryker\Zed\ProductAlternative\Dependency\Facade\ProductAlternativeToProductFacadeInterface;
-use Spryker\Zed\ProductAlternative\Dependency\QueryContainer\ProductAlternativeToProductCategoryQueryContainerInterface;
 use Spryker\Zed\ProductAlternative\ProductAlternativeDependencyProvider;
 
 /**
@@ -58,7 +57,6 @@ class ProductAlternativeBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductAlternativeListHydrator(
             $this->getProductFacade(),
-            $this->getProductCategoryQueryContainer(),
             $this->getLocaleFacade()
         );
     }
@@ -81,14 +79,6 @@ class ProductAlternativeBusinessFactory extends AbstractBusinessFactory
             $this->createProductAlternativeReader(),
             $this->createProductAlternativeListSorter()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductAlternative\Dependency\QueryContainer\ProductAlternativeToProductCategoryQueryContainerInterface
-     */
-    public function getProductCategoryQueryContainer(): ProductAlternativeToProductCategoryQueryContainerInterface
-    {
-        return $this->getProvidedDependency(ProductAlternativeDependencyProvider::QUERY_CONTAINER_PRODUCT_CATEGORY);
     }
 
     /**

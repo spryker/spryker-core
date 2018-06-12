@@ -7,16 +7,12 @@
 
 namespace Spryker\Zed\ProductAlternative\Business\ProductAlternative;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductAlternativeListItemTransfer;
-use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
-use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
-use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
-use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
-use Orm\Zed\Product\Persistence\SpyProduct;
-use Orm\Zed\Product\Persistence\SpyProductAbstract;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\ProductAlternative\Dependency\Facade\ProductAlternativeToLocaleFacadeInterface;
-use Spryker\Zed\ProductAlternative\Dependency\QueryContainer\ProductAlternativeToProductCategoryQueryContainerInterface;
-use Spryker\Zed\ProductAlternative\Dependency\QueryContainer\ProductAlternativeToProductQueryContainerInterface;
+use Spryker\Zed\ProductAlternative\Dependency\Facade\ProductAlternativeToProductFacadeInterface;
 
 class ProductAlternativeListHydrator implements ProductAlternativeListHydratorInterface
 {
@@ -29,14 +25,9 @@ class ProductAlternativeListHydrator implements ProductAlternativeListHydratorIn
     protected const FIELD_PRODUCT_TYPE_CONCRETE = 'Concrete';
 
     /**
-     * @var \Spryker\Zed\ProductAlternative\Dependency\QueryContainer\ProductAlternativeToProductQueryContainerInterface
+     * @var \Spryker\Zed\ProductAlternative\Dependency\Facade\ProductAlternativeToProductFacadeInterface
      */
-    protected $productQueryContainer;
-
-    /**
-     * @var \Spryker\Zed\ProductAlternative\Dependency\QueryContainer\ProductAlternativeToProductCategoryQueryContainerInterface
-     */
-    protected $productCategoryQueryContainer;
+    protected $productFacade;
 
     /**
      * @var \Spryker\Zed\ProductAlternative\Dependency\Facade\ProductAlternativeToLocaleFacadeInterface
@@ -44,17 +35,14 @@ class ProductAlternativeListHydrator implements ProductAlternativeListHydratorIn
     protected $localeFacade;
 
     /**
-     * @param \Spryker\Zed\ProductAlternative\Dependency\QueryContainer\ProductAlternativeToProductQueryContainerInterface $productQueryContainer
-     * @param \Spryker\Zed\ProductAlternative\Dependency\QueryContainer\ProductAlternativeToProductCategoryQueryContainerInterface $productCategoryQueryContainer
+     * @param \Spryker\Zed\ProductAlternative\Dependency\Facade\ProductAlternativeToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\ProductAlternative\Dependency\Facade\ProductAlternativeToLocaleFacadeInterface $localeFacade
      */
     public function __construct(
-        ProductAlternativeToProductQueryContainerInterface $productQueryContainer,
-        ProductAlternativeToProductCategoryQueryContainerInterface $productCategoryQueryContainer,
+        ProductAlternativeToProductFacadeInterface $productFacade,
         ProductAlternativeToLocaleFacadeInterface $localeFacade
     ) {
-        $this->productQueryContainer = $productQueryContainer;
-        $this->productCategoryQueryContainer = $productCategoryQueryContainer;
+        $this->productFacade = $productFacade;
         $this->localeFacade = $localeFacade;
     }
 
@@ -68,17 +56,10 @@ class ProductAlternativeListHydrator implements ProductAlternativeListHydratorIn
         int $idProductAbstractAlternative,
         ProductAlternativeListItemTransfer $productAlternativeListItemTransfer
     ): ProductAlternativeListItemTransfer {
-        $productAlternativeListItemTransfer = $this
-            ->hydrateListItemWithProductAbstractAlternativeData(
-                $idProductAbstractAlternative,
-                $productAlternativeListItemTransfer
-            );
-
-        $productAlternativeListItemTransfer = $this
-            ->hydrateListItemWithProductAbstractCategoryData(
-                $idProductAbstractAlternative,
-                $productAlternativeListItemTransfer
-            );
+        $productAlternativeListItemTransfer = $this->hydrateListItemWithProductAbstractAlternativeData(
+            $idProductAbstractAlternative,
+            $productAlternativeListItemTransfer
+        );
 
         return $productAlternativeListItemTransfer;
     }
@@ -93,17 +74,10 @@ class ProductAlternativeListHydrator implements ProductAlternativeListHydratorIn
         int $idProductConcreteAlternative,
         ProductAlternativeListItemTransfer $productAlternativeListItemTransfer
     ): ProductAlternativeListItemTransfer {
-        $productAlternativeListItemTransfer = $this
-            ->hydrateListItemWithProductConcreteAlternativeData(
-                $idProductConcreteAlternative,
-                $productAlternativeListItemTransfer
-            );
-
-        $productAlternativeListItemTransfer = $this
-            ->hydrateListItemWithProductConcreteCategoryData(
-                $idProductConcreteAlternative,
-                $productAlternativeListItemTransfer
-            );
+        $productAlternativeListItemTransfer = $this->hydrateListItemWithProductConcreteAlternativeData(
+            $idProductConcreteAlternative,
+            $productAlternativeListItemTransfer
+        );
 
         return $productAlternativeListItemTransfer;
     }
@@ -118,8 +92,8 @@ class ProductAlternativeListHydrator implements ProductAlternativeListHydratorIn
         int $idProductAbstractAlternative,
         ProductAlternativeListItemTransfer $productAlternativeListItemTransfer
     ): ProductAlternativeListItemTransfer {
-        $productAbstractAlternative = $this
-            ->getProductAbstractData($idProductAbstractAlternative);
+        $productAbstractAlternative = $this->productFacade
+            ->findProductAbstractById($idProductAbstractAlternative);
 
         if (!$productAbstractAlternative) {
             return $productAlternativeListItemTransfer;
@@ -127,11 +101,11 @@ class ProductAlternativeListHydrator implements ProductAlternativeListHydratorIn
 
         return $productAlternativeListItemTransfer
             ->setType(static::FIELD_PRODUCT_TYPE_ABSTRACT)
-            ->setName($productAbstractAlternative->getVirtualColumn(static::COL_NAME))
+            ->setName(
+                $this->getProductAbstractName($productAbstractAlternative)
+            )
             ->setSku($productAbstractAlternative->getSku())
-            ->setStatus(
-                $this->getProductAbstractStatus($productAbstractAlternative)
-            );
+            ->setStatus($productAbstractAlternative->getIsActive());
     }
 
     /**
@@ -144,8 +118,8 @@ class ProductAlternativeListHydrator implements ProductAlternativeListHydratorIn
         int $idProductConcreteAlternative,
         ProductAlternativeListItemTransfer $productAlternativeListItemTransfer
     ): ProductAlternativeListItemTransfer {
-        $productConcreteAlternative = $this
-            ->getProductConcreteData($idProductConcreteAlternative);
+        $productConcreteAlternative = $this->productFacade
+            ->findProductConcreteById($idProductConcreteAlternative);
 
         if (!$productConcreteAlternative) {
             return $productAlternativeListItemTransfer;
@@ -153,167 +127,56 @@ class ProductAlternativeListHydrator implements ProductAlternativeListHydratorIn
 
         return $productAlternativeListItemTransfer
             ->setType(static::FIELD_PRODUCT_TYPE_CONCRETE)
-            ->setName($productConcreteAlternative->getVirtualColumn(static::COL_NAME))
+            ->setName(
+                $this->getProductConcreteName($productConcreteAlternative)
+            )
             ->setSku($productConcreteAlternative->getSku())
             ->setStatus($productConcreteAlternative->getIsActive());
     }
 
     /**
-     * @param int $idProductAbstractAlternative
-     * @param \Generated\Shared\Transfer\ProductAlternativeListItemTransfer $productAlternativeListItemTransfer
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductAlternativeListItemTransfer
+     * @return null|string
      */
-    protected function hydrateListItemWithProductAbstractCategoryData(
-        int $idProductAbstractAlternative,
-        ProductAlternativeListItemTransfer $productAlternativeListItemTransfer
-    ): ProductAlternativeListItemTransfer {
-        $productAbstractCategories = $this
-            ->getProductAbstractCategories($idProductAbstractAlternative);
-
-        if (empty($productAbstractCategories)) {
-            return $productAlternativeListItemTransfer;
-        }
-
-        return $productAlternativeListItemTransfer
-            ->setCategories($productAbstractCategories);
-    }
-
-    /**
-     * @param int $idProductConcreteAlternative
-     * @param \Generated\Shared\Transfer\ProductAlternativeListItemTransfer $productAlternativeListItemTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductAlternativeListItemTransfer
-     */
-    protected function hydrateListItemWithProductConcreteCategoryData(
-        int $idProductConcreteAlternative,
-        ProductAlternativeListItemTransfer $productAlternativeListItemTransfer
-    ): ProductAlternativeListItemTransfer {
-        $productConcreteCategories = $this
-            ->getProductConcreteCategories($idProductConcreteAlternative);
-
-        if (empty($productConcreteCategories)) {
-            return $productAlternativeListItemTransfer;
-        }
-
-        return $productAlternativeListItemTransfer
-            ->setCategories($productConcreteCategories);
-    }
-
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return array
-     */
-    protected function getProductAbstractCategories(int $idProductAbstract): array
+    protected function getProductAbstractName(ProductAbstractTransfer $productAbstractTransfer): ?string
     {
-        return $this
-            ->productCategoryQueryContainer
-            ->queryProductCategoryMappings()
-            ->filterByFkProductAbstract($idProductAbstract)
-            ->innerJoinSpyCategory()
-            ->useSpyCategoryQuery()
-                ->innerJoinAttribute()
-                ->useAttributeQuery()
-                    ->filterByFkLocale(
-                        $this->getCurrentLocaleId()
-                    )
-                ->endUse()
-                ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, static::COL_CATEGORY)
-            ->endUse()
-            ->select(static::COL_CATEGORY)
-            ->find()
-            ->toArray();
-    }
+        $idCurrentLocale = $this->getCurrentLocale()->getIdLocale();
 
-    /**
-     * @param int $idProductConcrete
-     *
-     * @return array
-     */
-    protected function getProductConcreteCategories(int $idProductConcrete): array
-    {
-        $idProductAbstractParent = $this
-            ->productQueryContainer
-            ->queryProduct()
-            ->filterByIdProduct($idProductConcrete)
-            ->innerJoinSpyProductAbstract()
-            ->select(SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT)
-            ->findOne();
-
-        return $this->getProductAbstractCategories($idProductAbstractParent);
-    }
-
-    /**
-     * @param int $idProductConcrete
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProduct
-     */
-    protected function getProductConcreteData(int $idProductConcrete): SpyProduct
-    {
-        return $this
-            ->productQueryContainer
-            ->queryProduct()
-            ->filterByIdProduct($idProductConcrete)
-            ->innerJoinSpyProductLocalizedAttributes()
-            ->useSpyProductLocalizedAttributesQuery()
-                ->filterByFkLocale(
-                    $this->getCurrentLocaleId()
-                )
-            ->endUse()
-            ->withColumn(SpyProductLocalizedAttributesTableMap::COL_NAME, static::COL_NAME)
-            ->findOne();
-    }
-
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstract
-     */
-    protected function getProductAbstractData(int $idProductAbstract): SpyProductAbstract
-    {
-        return $this
-            ->productQueryContainer
-            ->queryProductAbstract()
-            ->filterByIdProductAbstract($idProductAbstract)
-            ->innerJoinSpyProductAbstractLocalizedAttributes()
-            ->useSpyProductAbstractLocalizedAttributesQuery()
-                ->filterByFkLocale(
-                    $this->getCurrentLocaleId()
-                )
-            ->endUse()
-            ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, static::COL_NAME)
-            ->findOne();
-    }
-
-    /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $spyProductAbstract
-     *
-     * @return bool
-     */
-    protected function getProductAbstractStatus(SpyProductAbstract $spyProductAbstract): bool
-    {
-        $isActive = false;
-
-        /** @var \Orm\Zed\Product\Persistence\SpyProduct $spyProduct */
-        foreach ($spyProductAbstract->getSpyProducts() as $spyProduct) {
-            if ($spyProduct->isActive()) {
-                $isActive = true;
-                break;
+        $productName = '';
+        foreach ($productAbstractTransfer->getLocalizedAttributes() as $localizedAttribute) {
+            if ($localizedAttribute->getLocale()->getIdLocale() === $idCurrentLocale) {
+                $productName = $localizedAttribute->getName();
             }
         }
 
-        return $isActive;
+        return $productName;
     }
 
     /**
-     * @return int
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return null|string
      */
-    protected function getCurrentLocaleId(): int
+    protected function getProductConcreteName(ProductConcreteTransfer $productConcreteTransfer): ?string
     {
-        return $this
-            ->localeFacade
-            ->getCurrentLocale()
-            ->getIdLocale();
+        $idCurrentLocale = $this->getCurrentLocale()->getIdLocale();
+
+        $productName = '';
+        foreach ($productConcreteTransfer->getLocalizedAttributes() as $localizedAttribute) {
+            if ($localizedAttribute->getLocale()->getIdLocale() === $idCurrentLocale) {
+                $productName = $localizedAttribute->getName();
+            }
+        }
+
+        return $productName;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    protected function getCurrentLocale(): LocaleTransfer
+    {
+        return $this->localeFacade->getCurrentLocale();
     }
 }

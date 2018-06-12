@@ -39,7 +39,7 @@ interface ProductAlternativeEntityManagerInterface
 
     /**
      * Specification:
-     * - Update existing product alternative.
+     * - Updates existing product alternative.
      *
      * @api
      *

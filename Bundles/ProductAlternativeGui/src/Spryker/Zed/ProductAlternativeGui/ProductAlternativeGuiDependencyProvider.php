@@ -50,7 +50,7 @@ class ProductAlternativeGuiDependencyProvider extends AbstractBundleDependencyPr
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function addProductFacade(Container $container)
+    public function addProductFacade(Container $container): Container
     {
         $container[static::FACADE_PRODUCT] = function (Container $container) {
             return new ProductAlternativeGuiToProductFacadeBridge(
@@ -66,7 +66,7 @@ class ProductAlternativeGuiDependencyProvider extends AbstractBundleDependencyPr
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addProductAlternativeFacade(Container $container)
+    protected function addProductAlternativeFacade(Container $container): Container
     {
         $container[static::FACADE_PRODUCT_ALTERNATIVE] = function (Container $container) {
             return new ProductAlternativeGuiToProductAlternativeFacadeBridge(

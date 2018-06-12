@@ -103,8 +103,7 @@ class ProductAlternativeWriter implements ProductAlternativeWriterInterface
             );
         }
 
-        $productSuggestionDetails = $this
-            ->productFacade
+        $productSuggestionDetails = $this->productFacade
             ->getSuggestionDetails(
                 $productAlternativeToPersist->getSuggest()
             );
@@ -115,8 +114,7 @@ class ProductAlternativeWriter implements ProductAlternativeWriterInterface
 
         $idProductAbstractAlternative = $productSuggestionDetails->getIdProductAbstract();
         if ($idProductAbstractAlternative) {
-            $existingProductAbstractAlternative = $this
-                ->productAlternativeReader
+            $existingProductAbstractAlternative = $this->productAlternativeReader
                 ->getProductAbstractAlternative(
                     $productConcreteTransfer->getIdProductConcrete(),
                     $idProductAbstractAlternative
@@ -134,8 +132,7 @@ class ProductAlternativeWriter implements ProductAlternativeWriterInterface
 
         $idProductConcreteAlternative = $productSuggestionDetails->getIdProductConcrete();
         if ($idProductConcreteAlternative) {
-            $existingProductConcreteAlternative = $this
-                ->productAlternativeReader
+            $existingProductConcreteAlternative = $this->productAlternativeReader
                 ->getProductConcreteAlternative(
                     $productConcreteTransfer->getIdProductConcrete(),
                     $idProductConcreteAlternative
@@ -163,49 +160,9 @@ class ProductAlternativeWriter implements ProductAlternativeWriterInterface
      */
     public function deleteProductAlternativeByIdProductAlternativeResponse(int $idProductAlternative): ProductAlternativeResponseTransfer
     {
-        $productAlternative = $this->productAlternativeReader
+        $productAlternativeTransfer = $this->productAlternativeReader
             ->getProductAlternativeByIdProductAlternative($idProductAlternative);
 
-        return $this->handleProductAlternativeDeletion($productAlternative);
-    }
-
-    /**
-     * @param int $idProduct
-     * @param int $idProductAbstractAlternative
-     *
-     * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
-     */
-    protected function createProductAbstractAlternative(int $idProduct, int $idProductAbstractAlternative): ProductAlternativeTransfer
-    {
-        return $this->productAlternativeEntityManager
-            ->createProductAbstractAlternative(
-                $idProduct,
-                $idProductAbstractAlternative
-            );
-    }
-
-    /**
-     * @param int $idProduct
-     * @param int $idProductConcreteAlternative
-     *
-     * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
-     */
-    protected function createProductConcreteAlternative(int $idProduct, int $idProductConcreteAlternative): ProductAlternativeTransfer
-    {
-        return $this->productAlternativeEntityManager
-            ->createProductConcreteAlternative(
-                $idProduct,
-                $idProductConcreteAlternative
-            );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductAlternativeTransfer|null $productAlternativeTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
-     */
-    protected function handleProductAlternativeDeletion(?ProductAlternativeTransfer $productAlternativeTransfer): ProductAlternativeResponseTransfer
-    {
         $productAlternativeResponseTransfer = (new ProductAlternativeResponseTransfer())
             ->setProductAlternative($productAlternativeTransfer);
 
@@ -236,5 +193,35 @@ class ProductAlternativeWriter implements ProductAlternativeWriterInterface
         return $productAlternativeResponseTransfer
             ->setIsSuccessful(false)
             ->addMessage($responseMessageTransfer);
+    }
+
+    /**
+     * @param int $idProduct
+     * @param int $idProductAbstractAlternative
+     *
+     * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
+     */
+    protected function createProductAbstractAlternative(int $idProduct, int $idProductAbstractAlternative): ProductAlternativeTransfer
+    {
+        return $this->productAlternativeEntityManager
+            ->createProductAbstractAlternative(
+                $idProduct,
+                $idProductAbstractAlternative
+            );
+    }
+
+    /**
+     * @param int $idProduct
+     * @param int $idProductConcreteAlternative
+     *
+     * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
+     */
+    protected function createProductConcreteAlternative(int $idProduct, int $idProductConcreteAlternative): ProductAlternativeTransfer
+    {
+        return $this->productAlternativeEntityManager
+            ->createProductConcreteAlternative(
+                $idProduct,
+                $idProductConcreteAlternative
+            );
     }
 }

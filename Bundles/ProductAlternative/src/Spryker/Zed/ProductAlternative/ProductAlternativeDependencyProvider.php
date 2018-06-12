@@ -11,11 +11,9 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductAlternative\Dependency\Facade\ProductAlternativeToLocaleFacadeBridge;
 use Spryker\Zed\ProductAlternative\Dependency\Facade\ProductAlternativeToProductFacadeBridge;
-use Spryker\Zed\ProductAlternative\Dependency\QueryContainer\ProductAlternativeToProductCategoryQueryContainerBridge;
 
 class ProductAlternativeDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const QUERY_CONTAINER_PRODUCT_CATEGORY = 'QUERY_CONTAINER_PRODUCT_CATEGORY';
     public const FACADE_LOCALE = 'FACADE_LOCALE';
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
 
@@ -26,7 +24,6 @@ class ProductAlternativeDependencyProvider extends AbstractBundleDependencyProvi
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container = $this->addProductCategoryQueryContainer($container);
         $container = $this->addLocaleFacade($container);
         $container = $this->addProductFacade($container);
 
@@ -38,23 +35,7 @@ class ProductAlternativeDependencyProvider extends AbstractBundleDependencyProvi
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addProductCategoryQueryContainer(Container $container)
-    {
-        $container[static::QUERY_CONTAINER_PRODUCT_CATEGORY] = function (Container $container) {
-            return new ProductAlternativeToProductCategoryQueryContainerBridge(
-                $container->getLocator()->productCategory()->queryContainer()
-            );
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addLocaleFacade(Container $container)
+    protected function addLocaleFacade(Container $container): Container
     {
         $container[static::FACADE_LOCALE] = function (Container $container) {
             return new ProductAlternativeToLocaleFacadeBridge(
@@ -70,7 +51,7 @@ class ProductAlternativeDependencyProvider extends AbstractBundleDependencyProvi
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addProductFacade(Container $container)
+    protected function addProductFacade(Container $container): Container
     {
         $container[static::FACADE_PRODUCT] = function (Container $container) {
             return new ProductAlternativeToProductFacadeBridge(

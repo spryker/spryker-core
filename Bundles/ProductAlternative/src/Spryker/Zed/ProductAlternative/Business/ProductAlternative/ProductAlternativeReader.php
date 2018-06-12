@@ -45,7 +45,7 @@ class ProductAlternativeReader implements ProductAlternativeReaderInterface
     public function getProductAlternativeByIdProductAlternative(int $idProductAlternative): ?ProductAlternativeTransfer
     {
         return $this->productAlternativeRepository
-            ->getProductAlternativeByIdProductAlternative($idProductAlternative);
+            ->findProductAlternativeByIdProductAlternative($idProductAlternative);
     }
 
     /**
@@ -57,7 +57,7 @@ class ProductAlternativeReader implements ProductAlternativeReaderInterface
     public function getProductAbstractAlternative(int $idBaseProduct, int $idProductAbstract): ?ProductAlternativeTransfer
     {
         return $this->productAlternativeRepository
-            ->getProductAbstractAlternative($idBaseProduct, $idProductAbstract);
+            ->findProductAbstractAlternative($idBaseProduct, $idProductAbstract);
     }
 
     /**
@@ -69,6 +69,6 @@ class ProductAlternativeReader implements ProductAlternativeReaderInterface
     public function getProductConcreteAlternative(int $idBaseProduct, int $idProductConcrete): ?ProductAlternativeTransfer
     {
         return $this->productAlternativeRepository
-            ->getProductConcreteAlternative($idBaseProduct, $idProductConcrete);
+            ->findProductConcreteAlternative($idBaseProduct, $idProductConcrete);
     }
 }

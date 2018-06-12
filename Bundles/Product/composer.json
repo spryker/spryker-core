@@ -15,7 +15,8 @@
     "spryker/touch": "^3.0.0 || ^4.0.0",
     "spryker/url": "^3.2.1",
     "spryker/util-encoding": "^2.0.0",
-    "spryker/util-text": "^1.1.0"
+    "spryker/util-text": "^1.1.0",
+    "spryker/category": "^4.4.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

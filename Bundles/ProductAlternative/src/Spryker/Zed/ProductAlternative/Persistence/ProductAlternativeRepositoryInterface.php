@@ -35,7 +35,7 @@ interface ProductAlternativeRepositoryInterface
      *
      * @return null|\Generated\Shared\Transfer\ProductAlternativeTransfer
      */
-    public function getProductAlternativeByIdProductAlternative(int $idProductAlternative): ?ProductAlternativeTransfer;
+    public function findProductAlternativeByIdProductAlternative(int $idProductAlternative): ?ProductAlternativeTransfer;
 
     /**
      * Specification:
@@ -50,7 +50,7 @@ interface ProductAlternativeRepositoryInterface
      *
      * @return null|\Generated\Shared\Transfer\ProductAlternativeTransfer
      */
-    public function getProductAbstractAlternative(int $idBaseProduct, int $idProductAbstract): ?ProductAlternativeTransfer;
+    public function findProductAbstractAlternative(int $idBaseProduct, int $idProductAbstract): ?ProductAlternativeTransfer;
 
     /**
      * Specification:
@@ -65,5 +65,5 @@ interface ProductAlternativeRepositoryInterface
      *
      * @return null|\Generated\Shared\Transfer\ProductAlternativeTransfer
      */
-    public function getProductConcreteAlternative(int $idBaseProduct, int $idProductConcrete): ?ProductAlternativeTransfer;
+    public function findProductConcreteAlternative(int $idBaseProduct, int $idProductConcrete): ?ProductAlternativeTransfer;
 }

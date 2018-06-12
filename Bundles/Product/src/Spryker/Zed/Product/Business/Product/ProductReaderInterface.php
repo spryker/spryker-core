@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Product\Business\Product\Suggest;
+namespace Spryker\Zed\Product\Business\Product;
 
-interface ProductFilterSuggestionInterface
+interface ProductReaderInterface
 {
     /**
      * @param string $sku

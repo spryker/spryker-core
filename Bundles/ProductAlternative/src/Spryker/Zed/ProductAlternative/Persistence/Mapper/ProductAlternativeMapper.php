@@ -15,22 +15,19 @@ class ProductAlternativeMapper implements ProductAlternativeMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\SpyProductAlternativeEntityTransfer $productAlternativeEntityTransfer
+     * @param \Orm\Zed\ProductAlternative\Persistence\SpyProductAlternative $product
      *
-     * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
+     * @return \Orm\Zed\ProductAlternative\Persistence\SpyProductAlternative
      */
-    public function mapSpyProductAlternativeEntityTransferToTransfer(
-        SpyProductAlternativeEntityTransfer $productAlternativeEntityTransfer
-    ): ProductAlternativeTransfer {
-        $productAlternativeTransfer = (new ProductAlternativeTransfer())
-            ->fromArray($productAlternativeEntityTransfer->toArray(), true);
+    public function mapSpyProductAlternativeEntityTransferToEntity(
+        SpyProductAlternativeEntityTransfer $productAlternativeEntityTransfer,
+        SpyProductAlternative $product
+    ): SpyProductAlternative {
+        $product->fromArray(
+            $productAlternativeEntityTransfer->toArray()
+        );
 
-        $productAlternativeTransfer
-            ->setIdProduct($productAlternativeEntityTransfer->getFkProduct())
-            ->setIdProductAbstractAlternative($productAlternativeEntityTransfer->getFkProductAbstractAlternative())
-            ->setIdProductConcreteAlternative($productAlternativeEntityTransfer->getFkProductConcreteAlternative());
-
-        return (new ProductAlternativeTransfer())
-            ->fromArray($productAlternativeEntityTransfer->toArray(), true);
+        return $product;
     }
 
     /**
