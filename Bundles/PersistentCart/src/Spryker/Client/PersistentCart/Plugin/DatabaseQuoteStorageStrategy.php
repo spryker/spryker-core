@@ -81,7 +81,7 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
     public function addItems(array $itemTransfers, array $params = [])
     {
         $persistentCartChangeTransfer = $this->createPersistentCartChangeTransfer();
-        
+
         foreach ($itemTransfers as $itemTransfer) {
             $persistentCartChangeTransfer->addItem($itemTransfer);
         }

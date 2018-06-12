@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class OfferConfig extends AbstractBundleConfig
 {
     public const PRICE_MODE_NET = 'NET_MODE';
-    
+
     /**
      * @return string
      */

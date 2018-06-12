@@ -348,7 +348,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
 
         return $query;
     }
-    
+
     /**
      * @api
      *

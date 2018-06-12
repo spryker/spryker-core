@@ -21,7 +21,7 @@ class QuotePermissionGroupMapper implements QuotePermissionGroupMapperInterface
     {
         $quotePermissionGroupTransfer = new QuotePermissionGroupTransfer();
         $quotePermissionGroupTransfer->fromArray($quotePermissionGroupEntityTransfer->modifiedToArray(), true);
-        
+
         return $quotePermissionGroupTransfer;
     }
 }

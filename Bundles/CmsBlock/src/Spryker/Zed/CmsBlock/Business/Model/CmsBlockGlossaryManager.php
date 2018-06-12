@@ -32,7 +32,7 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
     protected $config;
 
     /**
-     * @var \Spryker\Zed\Locale\Business\LocaleFacadeInterface
+     * @var \Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToLocaleInterface
      */
     protected $localeFacade;
 

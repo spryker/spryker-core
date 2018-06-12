@@ -205,11 +205,11 @@ class PaymentPluginExecutor implements PaymentPluginExecutorInterface
     {
         $errorCount = $checkoutResponseTransfer->getErrors()->count();
         $result = $plugin->execute($quoteTransfer, $checkoutResponseTransfer);
-        
+
         if ($result === null) {
             return $errorCount === $checkoutResponseTransfer->getErrors()->count();
         }
-        
+
         return $result;
     }
 

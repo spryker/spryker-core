@@ -24,7 +24,7 @@ class CompanyBusinessUnitAssigner implements CompanyBusinessUnitAssignerInterfac
     {
         $this->repository = $repository;
     }
-    
+
     /**
      * @param \Generated\Shared\Transfer\CompanyUserResponseTransfer $companyUserResponseTransfer
      *

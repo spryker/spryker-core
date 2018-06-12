@@ -43,7 +43,7 @@ class TaxRateEditCest
     {
         $i->listDataTable(TaxRateListPage::TABLE_DATA_URL);
         $i->clickDataTableEditButton();
-        
+
         $name = $i->grabValueFrom('[name="tax_rate[name]"]');
         $i->assertNotEmpty($name);
         $country = $i->grabValueFrom('[name="tax_rate[fkCountry]"]');

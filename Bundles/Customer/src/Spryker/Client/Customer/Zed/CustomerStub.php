@@ -33,7 +33,10 @@ class CustomerStub implements CustomerStubInterface
      */
     public function hasCustomerWithEmailAndPassword(CustomerTransfer $customerTransfer)
     {
-        return $this->zedStub->call('/customer/gateway/has-customer-with-email-and-password', $customerTransfer);
+        /** @var \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer */
+        $customerResponseTransfer = $this->zedStub->call('/customer/gateway/has-customer-with-email-and-password', $customerTransfer);
+
+        return $customerResponseTransfer;
     }
 
     /**
@@ -43,7 +46,10 @@ class CustomerStub implements CustomerStubInterface
      */
     public function sendPasswordRestoreMail(CustomerTransfer $customerTransfer)
     {
-        return $this->zedStub->call('/customer/gateway/send-password-restore-mail', $customerTransfer);
+        /** @var \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer */
+        $customerResponseTransfer = $this->zedStub->call('/customer/gateway/send-password-restore-mail', $customerTransfer);
+
+        return $customerResponseTransfer;
     }
 
     /**
@@ -53,7 +59,10 @@ class CustomerStub implements CustomerStubInterface
      */
     public function restorePassword(CustomerTransfer $customerTransfer)
     {
-        return $this->zedStub->call('/customer/gateway/restore-password', $customerTransfer);
+        /** @var \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer */
+        $customerResponseTransfer = $this->zedStub->call('/customer/gateway/restore-password', $customerTransfer);
+
+        return $customerResponseTransfer;
     }
 
     /**
@@ -63,7 +72,10 @@ class CustomerStub implements CustomerStubInterface
      */
     public function confirmRegistration(CustomerTransfer $customerTransfer)
     {
-        return $this->zedStub->call('/customer/gateway/confirm-registration', $customerTransfer);
+        /** @var \Generated\Shared\Transfer\CustomerTransfer $customerTransfer */
+        $customerTransfer = $this->zedStub->call('/customer/gateway/confirm-registration', $customerTransfer);
+
+        return $customerTransfer;
     }
 
     /**
@@ -73,7 +85,10 @@ class CustomerStub implements CustomerStubInterface
      */
     public function register(CustomerTransfer $customerTransfer)
     {
-        return $this->zedStub->call('/customer/gateway/register', $customerTransfer);
+        /** @var \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer */
+        $customerResponseTransfer = $this->zedStub->call('/customer/gateway/register', $customerTransfer);
+
+        return $customerResponseTransfer;
     }
 
     /**
@@ -83,7 +98,10 @@ class CustomerStub implements CustomerStubInterface
      */
     public function get(CustomerTransfer $customerTransfer)
     {
-        return $this->zedStub->call('/customer/gateway/customer', $customerTransfer);
+        /** @var \Generated\Shared\Transfer\CustomerTransfer $customerTransfer */
+        $customerTransfer = $this->zedStub->call('/customer/gateway/customer', $customerTransfer);
+
+        return $customerTransfer;
     }
 
     /**
@@ -93,7 +111,10 @@ class CustomerStub implements CustomerStubInterface
      */
     public function update(CustomerTransfer $customerTransfer)
     {
-        return $this->zedStub->call('/customer/gateway/update', $customerTransfer);
+        /** @var \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer */
+        $customerResponseTransfer = $this->zedStub->call('/customer/gateway/update', $customerTransfer);
+
+        return $customerResponseTransfer;
     }
 
     /**
@@ -103,7 +124,10 @@ class CustomerStub implements CustomerStubInterface
      */
     public function updatePassword(CustomerTransfer $customerTransfer)
     {
-        return $this->zedStub->call('/customer/gateway/update-password', $customerTransfer);
+        /** @var \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer */
+        $customerResponseTransfer = $this->zedStub->call('/customer/gateway/update-password', $customerTransfer);
+
+        return $customerResponseTransfer;
     }
 
     /**
@@ -113,7 +137,10 @@ class CustomerStub implements CustomerStubInterface
      */
     public function delete(CustomerTransfer $customerTransfer)
     {
-        return $this->zedStub->call('/customer/gateway/delete', $customerTransfer);
+        /** @var \Spryker\Client\ZedRequest\Client\Response $response */
+        $response = $this->zedStub->call('/customer/gateway/delete', $customerTransfer);
+
+        return $response;
     }
 
     /**
@@ -123,7 +150,10 @@ class CustomerStub implements CustomerStubInterface
      */
     public function createAddress(AddressTransfer $addressTransfer)
     {
-        return $this->zedStub->call('/customer/gateway/new-address', $addressTransfer);
+        /** @var \Generated\Shared\Transfer\AddressTransfer $addressTransfer */
+        $addressTransfer = $this->zedStub->call('/customer/gateway/new-address', $addressTransfer);
+
+        return $addressTransfer;
     }
 
     /**
@@ -133,7 +163,10 @@ class CustomerStub implements CustomerStubInterface
      */
     public function updateAddress(AddressTransfer $addressTransfer)
     {
-        return $this->zedStub->call('/customer/gateway/update-address', $addressTransfer);
+        /** @var \Generated\Shared\Transfer\AddressTransfer $addressTransfer */
+        $addressTransfer = $this->zedStub->call('/customer/gateway/update-address', $addressTransfer);
+
+        return $addressTransfer;
     }
 
     /**
@@ -143,7 +176,10 @@ class CustomerStub implements CustomerStubInterface
      */
     public function updateAddressAndCustomerDefaultAddresses(AddressTransfer $addressTransfer)
     {
-        return $this->zedStub->call('/customer/gateway/update-address-and-customer-default-addresses', $addressTransfer);
+        /** @var \Generated\Shared\Transfer\CustomerTransfer $customerTransfer */
+        $customerTransfer = $this->zedStub->call('/customer/gateway/update-address-and-customer-default-addresses', $addressTransfer);
+
+        return $customerTransfer;
     }
 
     /**
@@ -153,7 +189,10 @@ class CustomerStub implements CustomerStubInterface
      */
     public function createAddressAndUpdateCustomerDefaultAddresses(AddressTransfer $addressTransfer)
     {
-        return $this->zedStub->call('/customer/gateway/create-address-and-update-customer-default-addresses', $addressTransfer);
+        /** @var \Generated\Shared\Transfer\CustomerTransfer $customerTransfer */
+        $customerTransfer = $this->zedStub->call('/customer/gateway/create-address-and-update-customer-default-addresses', $addressTransfer);
+
+        return $customerTransfer;
     }
 
     /**
@@ -163,7 +202,10 @@ class CustomerStub implements CustomerStubInterface
      */
     public function getAddress(AddressTransfer $addressTransfer)
     {
-        return $this->zedStub->call('/customer/gateway/address', $addressTransfer);
+        /** @var \Generated\Shared\Transfer\AddressTransfer $addressTransfer */
+        $addressTransfer = $this->zedStub->call('/customer/gateway/address', $addressTransfer);
+
+        return $addressTransfer;
     }
 
     /**
@@ -173,7 +215,10 @@ class CustomerStub implements CustomerStubInterface
      */
     public function getAddresses(CustomerTransfer $customerTransfer)
     {
-        return $this->zedStub->call('/customer/gateway/addresses', $customerTransfer);
+        /** @var \Generated\Shared\Transfer\AddressesTransfer $addressesTransfer */
+        $addressesTransfer = $this->zedStub->call('/customer/gateway/addresses', $customerTransfer);
+
+        return $addressesTransfer;
     }
 
     /**
@@ -183,7 +228,10 @@ class CustomerStub implements CustomerStubInterface
      */
     public function deleteAddress(AddressTransfer $AddressTransfer)
     {
-        return $this->zedStub->call('/customer/gateway/delete-address', $AddressTransfer);
+        /** @var \Generated\Shared\Transfer\AddressTransfer $addressTransfer */
+        $addressTransfer = $this->zedStub->call('/customer/gateway/delete-address', $AddressTransfer);
+
+        return $addressTransfer;
     }
 
     /**
@@ -193,7 +241,10 @@ class CustomerStub implements CustomerStubInterface
      */
     public function setDefaultBillingAddress(AddressTransfer $AddressTransfer)
     {
-        return $this->zedStub->call('/customer/gateway/default-billing-address', $AddressTransfer);
+        /** @var \Generated\Shared\Transfer\AddressTransfer $addressTransfer */
+        $addressTransfer = $this->zedStub->call('/customer/gateway/default-billing-address', $AddressTransfer);
+
+        return $addressTransfer;
     }
 
     /**
@@ -203,7 +254,10 @@ class CustomerStub implements CustomerStubInterface
      */
     public function setDefaultShippingAddress(AddressTransfer $AddressTransfer)
     {
-        return $this->zedStub->call('/customer/gateway/default-shipping-address', $AddressTransfer);
+        /** @var \Generated\Shared\Transfer\AddressTransfer $addressTransfer */
+        $addressTransfer = $this->zedStub->call('/customer/gateway/default-shipping-address', $AddressTransfer);
+
+        return $addressTransfer;
     }
 
     /**
@@ -213,6 +267,9 @@ class CustomerStub implements CustomerStubInterface
      */
     public function anonymizeCustomer(CustomerTransfer $customerTransfer)
     {
-        return $this->zedStub->call('/customer/gateway/anonymize-customer', $customerTransfer);
+        /** @var \Generated\Shared\Transfer\CustomerTransfer $customerTransfer */
+        $customerTransfer = $this->zedStub->call('/customer/gateway/anonymize-customer', $customerTransfer);
+
+        return $customerTransfer;
     }
 }
