@@ -22,7 +22,7 @@ class BusinessOnBehalfDataImportBusinessFactory extends DataImportBusinessFactor
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerAwareInterface
      */
-    public function createCompanyUserDataImport()
+    public function getCompanyUserDataImport()
     {
         $dataImporter = $this->getCsvDataImporterFromConfig($this->getConfig()->getBusinessOnBehalfDataImporterConfiguration());
 
@@ -41,7 +41,7 @@ class BusinessOnBehalfDataImportBusinessFactory extends DataImportBusinessFactor
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    protected function createCompanyUserWriterStep(): DataImportStepInterface
+    public function createCompanyUserWriterStep(): DataImportStepInterface
     {
         return new CompanyUserWriterStep();
     }
@@ -49,7 +49,7 @@ class BusinessOnBehalfDataImportBusinessFactory extends DataImportBusinessFactor
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    protected function createCompanyKeyToIdCompanyStep(): DataImportStepInterface
+    public function createCompanyKeyToIdCompanyStep(): DataImportStepInterface
     {
         return new CompanyKeyToIdCompanyStep();
     }
@@ -57,7 +57,7 @@ class BusinessOnBehalfDataImportBusinessFactory extends DataImportBusinessFactor
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    protected function createBusinessUnitKeyToIdCompanyBusinessUnitStep(): DataImportStepInterface
+    public function createBusinessUnitKeyToIdCompanyBusinessUnitStep(): DataImportStepInterface
     {
         return new BusinessUnitKeyToIdCompanyBusinessUnitStep();
     }
@@ -65,7 +65,7 @@ class BusinessOnBehalfDataImportBusinessFactory extends DataImportBusinessFactor
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    protected function createCustomerReferenceToIdCustomerStep(): DataImportStepInterface
+    public function createCustomerReferenceToIdCustomerStep(): DataImportStepInterface
     {
         return new CustomerReferenceToIdCustomerStep();
     }
