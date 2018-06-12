@@ -103,4 +103,16 @@ class AvailabilityStorageQueryContainer extends AbstractQueryContainer implement
             ->filterByIdProductAbstract_In($abstractProductIds)
             ->joinWithSpyProduct();
     }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
+    public function queryProductAbstract()
+    {
+        return $this->getFactory()
+            ->getProductQueryContainer()
+            ->queryProductAbstract();
+    }
 }

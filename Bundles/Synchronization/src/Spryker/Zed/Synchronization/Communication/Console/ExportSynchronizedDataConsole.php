@@ -27,7 +27,7 @@ class ExportSynchronizedDataConsole extends Console
     protected function configure()
     {
         $this->addArgument(static::RESOURCE, InputArgument::OPTIONAL, 'Defines which resource(s) should be exported, if there is more than one, use comma to separate them. 
-        If not set, full export will be executed.');
+        If not, full export will be executed.');
 
         $this->setName(self::COMMAND_NAME)
             ->setDescription(self::DESCRIPTION);

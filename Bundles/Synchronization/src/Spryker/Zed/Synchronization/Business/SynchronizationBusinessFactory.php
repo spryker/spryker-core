@@ -111,6 +111,6 @@ class SynchronizationBusinessFactory extends AbstractBusinessFactory
      */
     protected function getSynchronizationDataPlugins()
     {
-        return $this->getProvidedDependency(SynchronizationDependencyProvider::SYNCHRONIZATION_DATA_PLUGINS);
+        return $this->getProvidedDependency(SynchronizationDependencyProvider::PLUGINS_SYNCHRONIZATION_DATA);
     }
 }
