@@ -50,7 +50,7 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createFileInfoEditTable(int $idFile)
     {
         return new FileInfoEditTable(
-            $this->getFileManagerQueryContainer(),
+            $this->getFileInfoQuery(),
             $idFile
         );
     }
@@ -63,7 +63,7 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createFileInfoViewTable(int $idFile)
     {
         return new FileInfoViewTable(
-            $this->getFileManagerQueryContainer(),
+            $this->getFileInfoQuery(),
             $idFile
         );
     }
@@ -212,5 +212,13 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
         return $this->getFormFactory()->create(
             MimeTypeSettingsForm::class
         );
+    }
+
+    /**
+     * @return \Orm\Zed\FileManager\Persistence\SpyFileInfoQuery
+     */
+    protected function getFileInfoQuery()
+    {
+        return $this->getProvidedDependency(FileManagerGuiDependencyProvider::PROPEL_QUERY_FILE_INFO);
     }
 }

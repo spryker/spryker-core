@@ -14,12 +14,12 @@ interface FileVersionInterface
      *
      * @return int
      */
-    public function getNextVersionNumber($idFile = null);
+    public function getNextVersionNumber(?int $idFile = null);
 
     /**
      * @param int $versionNumber
      *
      * @return string
      */
-    public function getNextVersionName($versionNumber);
+    public function getNextVersionName(int $versionNumber);
 }

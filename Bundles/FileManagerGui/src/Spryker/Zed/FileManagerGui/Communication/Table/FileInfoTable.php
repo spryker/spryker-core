@@ -8,8 +8,8 @@
 namespace Spryker\Zed\FileManagerGui\Communication\Table;
 
 use Orm\Zed\FileManager\Persistence\Map\SpyFileInfoTableMap;
+use Orm\Zed\FileManager\Persistence\SpyFileInfoQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -24,9 +24,9 @@ abstract class FileInfoTable extends AbstractTable
     const REQUEST_ID_FILE_INFO = 'id-file-info';
 
     /**
-     * @var \Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerInterface
+     * @var \Orm\Zed\FileManager\Persistence\SpyFileInfoQuery
      */
-    protected $queryContainer;
+    protected $fileInfoQuery;
 
     /**
      * @var int
@@ -34,12 +34,12 @@ abstract class FileInfoTable extends AbstractTable
     protected $idFile;
 
     /**
-     * @param \Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerInterface $queryContainer
+     * @param \Orm\Zed\FileManager\Persistence\SpyFileInfoQuery $fileInfoQuery
      * @param int $idFile
      */
-    public function __construct(FileManagerGuiToFileManagerQueryContainerInterface $queryContainer, int $idFile)
+    public function __construct(SpyFileInfoQuery $fileInfoQuery, int $idFile)
     {
-        $this->queryContainer = $queryContainer;
+        $this->fileInfoQuery = $fileInfoQuery;
         $this->idFile = $idFile;
     }
 
@@ -74,10 +74,13 @@ abstract class FileInfoTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config)
     {
-        $query = $this->queryContainer->queryFileInfoByIdFile($this->idFile)->orderByCreatedAt(Criteria::DESC);
-        $queryResults = $this->runQuery($query, $config);
+        $query = $this->fileInfoQuery
+            ->filterByFkFile($this->idFile)
+            ->orderByVersion(Criteria::DESC);
 
+        $queryResults = $this->runQuery($query, $config);
         $results = [];
+
         foreach ($queryResults as $item) {
             $results[] = $this->mapResults($item);
         }

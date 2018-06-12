@@ -126,7 +126,7 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
      */
     public function createFileVersion()
     {
-        return new FileVersion($this->createFileLoader());
+        return new FileVersion($this->getRepository());
     }
 
     /**
