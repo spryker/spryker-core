@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\ProductPackagingUnit\Business\ProductPackagingUnitBusinessFactory getFactory()
+ * @method \Spryker\Zed\ProductPackagingUnit\ProductPackagingUnitConfig getConfig()
  */
 class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackagingUnitFacadeInterface
 {
@@ -30,6 +31,20 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
     }
 
     /**
+     * Specification:
+     * - Retrieve infrastructural packaging unit type list.
+     *
+     * @api
+     *
+     * @return array
+     */
+    public function getInfrastructuralPackagingUnitTypes(): array
+    {
+        return $this->getConfig()
+            ->getInfrastructuralPackagingUnitTypes();
+    }
+
+    /**
      * {@inheritdoc}
      *
      * @api
@@ -41,8 +56,95 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
     public function getProductPackagingUnitTypeByName(
         ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
     ): ProductPackagingUnitTypeTransfer {
+        $productPackagingUnitTypeTransfer->requireName();
+
         return $this->getFactory()
             ->createProductPackagingUnitTypeReader()
             ->getProductPackagingUnitTypeByName($productPackagingUnitTypeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
+     */
+    public function getProductPackagingUnitTypeById(
+        ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+    ): ProductPackagingUnitTypeTransfer {
+        return $this->getFactory()
+            ->createProductPackagingUnitTypeReader()
+            ->getProductPackagingUnitTypeById($productPackagingUnitTypeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+     *
+     * @return int
+     */
+    public function getCountProductPackagingUnitsForType(
+        ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+    ): int {
+        return $this->getFactory()
+            ->createProductPackagingUnitTypeReader()
+            ->getCountProductPackagingUnitsForType($productPackagingUnitTypeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
+     */
+    public function createProductPackagingUnitType(
+        ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+    ): ProductPackagingUnitTypeTransfer {
+        return $this->getFactory()
+            ->createProductPackagingUnitTypeWriter()
+            ->createProductPackagingUnitType($productPackagingUnitTypeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
+     */
+    public function updateProductPackagingUnitType(
+        ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+    ): ProductPackagingUnitTypeTransfer {
+        return $this->getFactory()
+            ->createProductPackagingUnitTypeWriter()
+            ->updateProductPackagingUnitType($productPackagingUnitTypeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+     *
+     * @return bool
+     */
+    public function deleteProductPackagingUnitType(
+        ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+    ): bool {
+        return $this->getFactory()
+            ->createProductPackagingUnitTypeWriter()
+            ->deleteProductPackagingUnitType($productPackagingUnitTypeTransfer);
     }
 }

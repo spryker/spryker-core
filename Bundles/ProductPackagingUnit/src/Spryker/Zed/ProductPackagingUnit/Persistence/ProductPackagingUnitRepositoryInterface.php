@@ -19,4 +19,22 @@ interface ProductPackagingUnitRepositoryInterface
     public function getProductPackagingUnitTypeByName(
         string $productPackagingUnitTypeName
     ): ProductPackagingUnitTypeTransfer;
+
+    /**
+     * @param int $productPackagingUnitTypeId
+     *
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
+     */
+    public function getProductPackagingUnitTypeById(
+        int $productPackagingUnitTypeId
+    ): ProductPackagingUnitTypeTransfer;
+
+    /**
+     * @param int $productPackagingUnitTypeId
+     *
+     * @return int
+     */
+    public function getCountProductPackagingUnitsForTypeById(
+        int $productPackagingUnitTypeId
+    ): int;
 }

@@ -37,4 +37,41 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
 
         return $productPackagingUnitTypeTransfer;
     }
+
+    /**
+     * @param int $productPackagingUnitTypeId
+     *
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
+     */
+    public function getProductPackagingUnitTypeById(
+        int $productPackagingUnitTypeId
+    ): ProductPackagingUnitTypeTransfer {
+        $productPackagingUnitTypeEntity = $this->getFactory()
+            ->createProductPackagingUnitTypeQuery()
+            ->filterByIdProductPackagingUnitType($productPackagingUnitTypeId)
+            ->findOne();
+
+        $productPackagingUnitTypeTransfer = $this->getFactory()
+            ->createProductPackagingUnitTypeMapper()
+            ->mapProductPackagingUnitTypeTransfer(
+                $productPackagingUnitTypeEntity,
+                new ProductPackagingUnitTypeTransfer()
+            );
+
+        return $productPackagingUnitTypeTransfer;
+    }
+
+    /**
+     * @param int $productPackagingUnitTypeId
+     *
+     * @return int
+     */
+    public function getCountProductPackagingUnitsForTypeById(
+        int $productPackagingUnitTypeId
+    ): int {
+        return $this->getFactory()
+            ->createProductPackagingUnitQuery()
+            ->filterByFkProductPackagingUnitType($productPackagingUnitTypeId)
+            ->count();
+    }
 }
