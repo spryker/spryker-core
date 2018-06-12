@@ -98,6 +98,6 @@ class CategoryTreeSynchronizationDataPlugin extends AbstractPlugin implements Sy
      */
     public function getSynchronizationQueuePoolName()
     {
-        return 'synchronizationPool';
+        return $this->getFactory()->getConfig()->getCategoryTreeSynchronizationPoolName();
     }
 }

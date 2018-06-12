@@ -102,6 +102,6 @@ class AvailabilitySynchronizationDataPlugin extends AbstractPlugin implements Sy
      */
     public function getSynchronizationQueuePoolName()
     {
-        return null;
+        return $this->getFactory()->getConfig()->getSynchronizationPoolName();
     }
 }

@@ -18,4 +18,20 @@ class CategoryStorageConfig extends AbstractBundleConfig
     {
         return true;
     }
+
+    /**
+     * @return string|null
+     */
+    public function getCategoryTreeSynchronizationPoolName()
+    {
+        return null;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCategoryNodeSynchronizationPoolName()
+    {
+        return null;
+    }
 }
