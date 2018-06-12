@@ -14,7 +14,7 @@ interface ProductAlternativeRepositoryInterface
 {
     /**
      * Specification:
-     * - Retrieve all alternative concrete products for concrete product with id = $idProduct
+     * - Retrieves all alternative concrete products for concrete product with id = $idProduct
      *
      * @api
      *
@@ -26,7 +26,7 @@ interface ProductAlternativeRepositoryInterface
 
     /**
      * Specification:
-     * - Retrieve product alternative object by concrete product id
+     * - Retrieves product alternative object by concrete product id
      * - Uses $productAlternativeTransfer to extract concrete product id
      *
      * @api
@@ -39,7 +39,7 @@ interface ProductAlternativeRepositoryInterface
 
     /**
      * Specification:
-     * - Retrieve product abstract alternative for concrete base product.
+     * - Retrieves product abstract alternative for concrete base product.
      * - $idBaseProduct is the id of product concrete which has an alternative.
      * - $idProductAbstract is the product abstract id which is an alternative.
      *
@@ -54,7 +54,7 @@ interface ProductAlternativeRepositoryInterface
 
     /**
      * Specification:
-     * - Retrieve product concrete alternative for concrete base product.
+     * - Retrieves product concrete alternative for concrete base product.
      * - $idBaseProduct is the id of product concrete which has an alternative.
      * - $idProductConcrete is the product id which is an alternative.
      *

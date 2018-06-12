@@ -49,7 +49,7 @@ interface ProductAlternativeFacadeInterface
 
     /**
      * Specification:
-     * - Retrieve all alternative concrete products for concrete product.
+     * - Retrieves all alternative concrete products for concrete product.
      *
      * @api
      *
@@ -61,7 +61,7 @@ interface ProductAlternativeFacadeInterface
 
     /**
      * Specification:
-     * - Retrieve product alternative by id.
+     * - Retrieves product alternative by id.
      *
      * @api
      *
