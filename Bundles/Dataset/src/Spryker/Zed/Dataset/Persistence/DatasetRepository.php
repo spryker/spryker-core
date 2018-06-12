@@ -26,7 +26,7 @@ class DatasetRepository extends AbstractRepository implements DatasetRepositoryI
     {
         $count = $this->getFactory()->createSpyDatasetRowColumnValueQuery()->filterByFkDataset($idDataset)->count();
 
-        return ($count) ? true : false;
+        return ($count > 0);
     }
 
     /**
@@ -34,9 +34,9 @@ class DatasetRepository extends AbstractRepository implements DatasetRepositoryI
      *
      * @return bool
      */
-    public function hasDatasetName($name)
+    public function existsDatasetByName($name)
     {
-        return !empty($this->getFactory()->createDatasetQuery()->filterByName($name)->count());
+        return ($this->getFactory()->createDatasetQuery()->filterByName($name)->count() > 0);
     }
 
     /**

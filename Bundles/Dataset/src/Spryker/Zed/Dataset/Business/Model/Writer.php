@@ -9,21 +9,23 @@ namespace Spryker\Zed\Dataset\Business\Model;
 
 use Generated\Shared\Transfer\SpyDatasetEntityTransfer;
 use League\Csv\Writer as CsvWriter;
-use SplTempFileObject;
+use Spryker\Zed\Dataset\Dependency\Service\DatasetToCsvBridgeInterface;
 
 class Writer implements WriterInterface
 {
     /**
-     * @var \Spryker\Zed\Dataset\Business\Model\DatasetFinderInterface
+     * @var \Spryker\Zed\Dataset\Dependency\Service\DatasetToCsvBridgeInterface
      */
-    protected $datasetFinder;
+    protected $datasetToCsvBridge;
 
     /**
-     * @param \Spryker\Zed\Dataset\Business\Model\DatasetFinderInterface $datasetFinder
+     * Writer constructor.
+     *
+     * @param \Spryker\Zed\Dataset\Dependency\Service\DatasetToCsvBridgeInterface $datasetToCsvBridge
      */
-    public function __construct(DatasetFinderInterface $datasetFinder)
+    public function __construct(DatasetToCsvBridgeInterface $datasetToCsvBridge)
     {
-        $this->datasetFinder = $datasetFinder;
+        $this->datasetToCsvBridge = $datasetToCsvBridge;
     }
 
     /**
@@ -31,9 +33,9 @@ class Writer implements WriterInterface
      *
      * @return string
      */
-    public function exportToCsv(SpyDatasetEntityTransfer $datasetTransfer)
+    public function getCsvByDataset(SpyDatasetEntityTransfer $datasetTransfer)
     {
-        $writer = $this->getWriter();
+        $writer = $this->datasetToCsvBridge->createCsvWriter();
         $this->insertDataByTransfer($writer, $datasetTransfer);
 
         return $writer->getContent();
@@ -47,32 +49,21 @@ class Writer implements WriterInterface
      */
     protected function insertDataByTransfer(CsvWriter $writer, SpyDatasetEntityTransfer $datasetTransfer)
     {
-        $rowValues = [];
-        $headerUnique = [];
         $header = [''];
+        $rowValues = [];
         foreach ($datasetTransfer->getSpyDatasetRowColumnValues() as $datasetRowColumnValue) {
             $datasetColumn = $datasetRowColumnValue->getSpyDatasetColumn();
 
-            if (empty($headerUnique[$datasetColumn->getIdDatasetColumn()])) {
-                $headerUnique[$datasetColumn->getIdDatasetColumn()] = true;
+            if (!in_array($datasetColumn->getTitle(), $header)) {
                 array_push($header, $datasetColumn->getTitle());
             }
 
-            $rowValues[$datasetRowColumnValue->getSpyDatasetRow()->getTitle()][] =
-                $datasetRowColumnValue->getValue();
+            $rowValues[$datasetRowColumnValue->getSpyDatasetRow()->getTitle()][] = $datasetRowColumnValue->getValue();
         }
         $writer->insertOne($header);
         foreach ($rowValues as $rowTitle => $values) {
             array_unshift($values, $rowTitle);
             $writer->insertOne($values);
         }
-    }
-
-    /**
-     * @return \League\Csv\Writer
-     */
-    protected function getWriter()
-    {
-        return CsvWriter::createFromFileObject(new SplTempFileObject());
     }
 }

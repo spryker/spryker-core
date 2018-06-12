@@ -34,7 +34,7 @@ class EditController extends AbstractController
     public function indexAction(Request $request)
     {
         $idDataset = $this->castId($request->query->get(static::URL_PARAM_ID_DATASET));
-        $form = $this->getFactory()->createDatasetForm($idDataset)->handleRequest($request);
+        $form = $this->getFactory()->getDatasetForm($idDataset)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $datasetEntityTransfer = $form->getData();

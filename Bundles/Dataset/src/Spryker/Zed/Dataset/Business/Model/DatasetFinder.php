@@ -33,43 +33,13 @@ class DatasetFinder implements DatasetFinderInterface
     }
 
     /**
-     * @param int $idDataset
-     *
-     * @return void
-     */
-    public function delete($idDataset)
-    {
-        $this->entityManager->delete($idDataset);
-    }
-
-    /**
      * @param string $name
      *
      * @return bool
      */
-    public function hasDatasetName($name)
+    public function existsDatasetByName($name)
     {
-        return $this->repository->hasDatasetName($name);
-    }
-
-    /**
-     * @param int $idDataset
-     *
-     * @return void
-     */
-    public function activateById($idDataset)
-    {
-        $this->entityManager->updateIsActiveByIdDataset($idDataset, true);
-    }
-
-    /**
-     * @param int $idDataset
-     *
-     * @return void
-     */
-    public function deactivateById($idDataset)
-    {
-        $this->entityManager->updateIsActiveByIdDataset($idDataset, false);
+        return $this->repository->existsDatasetByName($name);
     }
 
     /**

@@ -34,9 +34,11 @@ class DatasetEntityManager extends AbstractEntityManager implements DatasetEntit
      */
     public function updateIsActiveByIdDataset($idDataset, $isActive)
     {
-        $datasetEntity = $this->findDatasetById($idDataset);
-        $datasetEntity->setIsActive($isActive);
-        $datasetEntity->save();
+        return $this->handleDatabaseTransaction(function () use ($idDataset, $isActive) {
+            $datasetEntity = $this->findDatasetById($idDataset);
+            $datasetEntity->setIsActive($isActive);
+            $datasetEntity->save();
+        });
     }
 
     /**
@@ -46,8 +48,10 @@ class DatasetEntityManager extends AbstractEntityManager implements DatasetEntit
      */
     public function delete($idDataset)
     {
-        $datasetEntity = $this->findDatasetById($idDataset);
-        $datasetEntity->delete();
+        return $this->handleDatabaseTransaction(function () use ($idDataset) {
+            $datasetEntity = $this->findDatasetById($idDataset);
+            $datasetEntity->delete();
+        });
     }
 
     /**
@@ -57,12 +61,13 @@ class DatasetEntityManager extends AbstractEntityManager implements DatasetEntit
      */
     public function saveDataset(SpyDatasetEntityTransfer $datasetEntityTransfer)
     {
-        if ($this->checkDatasetExists($datasetEntityTransfer)) {
-            $this->update($datasetEntityTransfer);
-
-            return;
-        }
-        $this->create($datasetEntityTransfer);
+        return $this->handleDatabaseTransaction(function () use ($datasetEntityTransfer) {
+            if ($this->checkDatasetExists($datasetEntityTransfer)) {
+                $this->update($datasetEntityTransfer);
+            } else {
+                $this->create($datasetEntityTransfer);
+            }
+        });
     }
 
     /**

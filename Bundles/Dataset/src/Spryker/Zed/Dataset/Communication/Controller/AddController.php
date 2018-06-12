@@ -32,7 +32,7 @@ class AddController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $form = $this->getFactory()->createDatasetForm()->handleRequest($request);
+        $form = $this->getFactory()->getDatasetForm()->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $datasetEntityTransfer = $form->getData();

@@ -45,7 +45,7 @@ class DownloadController extends AbstractController
      */
     protected function createResponse(SpyDatasetEntityTransfer $datasetTransfer)
     {
-        $content = $this->getFacade()->exportToCsv($datasetTransfer);
+        $content = $this->getFacade()->getCsvByDataset($datasetTransfer);
         $response = new Response($content);
         $disposition = $response->headers->makeDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,

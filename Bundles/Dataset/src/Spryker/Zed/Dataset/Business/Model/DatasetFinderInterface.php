@@ -10,32 +10,11 @@ namespace Spryker\Zed\Dataset\Business\Model;
 interface DatasetFinderInterface
 {
     /**
-     * @param int $idDataset
-     *
-     * @return void
-     */
-    public function delete($idDataset);
-
-    /**
      * @param string $name
      *
      * @return bool
      */
-    public function hasDatasetName($name);
-
-    /**
-     * @param int $idDataset
-     *
-     * @return void
-     */
-    public function activateById($idDataset);
-
-    /**
-     * @param int $idDataset
-     *
-     * @return void
-     */
-    public function deactivateById($idDataset);
+    public function existsDatasetByName($name);
 
     /**
      * @param int $idDataset

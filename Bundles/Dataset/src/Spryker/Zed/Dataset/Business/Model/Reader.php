@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\SpyDatasetRowEntityTransfer;
 use League\Csv\Reader as CsvReader;
 use Spryker\Zed\Dataset\Business\Exception\DatasetParseException;
 use Spryker\Zed\Dataset\Business\Exception\DatasetParseFormatException;
+use Spryker\Zed\Dataset\Dependency\Service\DatasetToCsvBridgeInterface;
 
 class Reader implements ReaderInterface
 {
@@ -27,13 +28,28 @@ class Reader implements ReaderInterface
     const UTF_8 = 'utf-8';
 
     /**
+     * @var \Spryker\Zed\Dataset\Dependency\Service\DatasetToCsvBridgeInterface
+     */
+    protected $datasetToCsvBridge;
+
+    /**
+     * Writer constructor.
+     *
+     * @param \Spryker\Zed\Dataset\Dependency\Service\DatasetToCsvBridgeInterface $datasetToCsvBridge
+     */
+    public function __construct(DatasetToCsvBridgeInterface $datasetToCsvBridge)
+    {
+        $this->datasetToCsvBridge = $datasetToCsvBridge;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\DatasetFilePathTransfer $filePathTransfer
      *
      * @throws \Spryker\Zed\Dataset\Business\Exception\DatasetParseException
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\SpyDatasetRowColumnValueEntityTransfer[]
      */
-    public function convertFileToDataTransfers(DatasetFilePathTransfer $filePathTransfer)
+    public function parseFileToDataTransfers(DatasetFilePathTransfer $filePathTransfer)
     {
         $reader = $this->getReader($filePathTransfer);
         $datasetRowColumnValueTransfers = new ArrayObject();
@@ -46,7 +62,7 @@ class Reader implements ReaderInterface
 
             foreach ($values as $key => $value) {
                 if ($value === null) {
-                    throw new DatasetParseException("Values can't be empty.");
+                    throw new DatasetParseException('Values can\'t be empty.');
                 }
                 $datasetRowColumnValueTransfers->append($this->getDatasetRowColumnValueEntityTransfer(
                     $datasetColumnValueTransfers[$key],
@@ -69,23 +85,13 @@ class Reader implements ReaderInterface
     protected function getReader(DatasetFilePathTransfer $filePathTransfer)
     {
         try {
-            $csv = $this->createCsvReader($filePathTransfer);
+            $csv = $this->datasetToCsvBridge->createCsvReader($filePathTransfer->getFilePath(), static::OPEN_MODE);
             $csv->setHeaderOffset(static::HEADER_OFFSET);
         } catch (Exception $e) {
             throw new DatasetParseException('Not valid CSV in text file.');
         }
 
         return $csv;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\DatasetFilePathTransfer $filePathTransfer
-     *
-     * @return \League\Csv\Reader
-     */
-    protected function createCsvReader(DatasetFilePathTransfer $filePathTransfer)
-    {
-        return CsvReader::createFromPath($filePathTransfer->getFilePath(), static::OPEN_MODE);
     }
 
     /**
@@ -99,7 +105,7 @@ class Reader implements ReaderInterface
     {
         $columns = $reader->getHeader();
         if (count($columns) <= static::MIN_COLUMNS || !empty($columns[static::FIRST_HEADER_KEY])) {
-            throw new DatasetParseFormatException("First title column must be empty and document can't be empty");
+            throw new DatasetParseFormatException('First title column must be empty and document can\'t be empty');
         }
         unset($columns[static::FIRST_HEADER_KEY]);
 

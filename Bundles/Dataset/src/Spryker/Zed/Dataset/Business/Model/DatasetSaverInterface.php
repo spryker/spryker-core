@@ -19,4 +19,25 @@ interface DatasetSaverInterface
      * @return void
      */
     public function save(SpyDatasetEntityTransfer $datasetEntityTransfer, ?DatasetFilePathTransfer $filePathTransfer = null);
+
+    /**
+     * @param int $idDataset
+     *
+     * @return void
+     */
+    public function activateById($idDataset);
+
+    /**
+     * @param int $idDataset
+     *
+     * @return void
+     */
+    public function deactivateById($idDataset);
+
+    /**
+     * @param int $idDataset
+     *
+     * @return void
+     */
+    public function delete($idDataset);
 }
