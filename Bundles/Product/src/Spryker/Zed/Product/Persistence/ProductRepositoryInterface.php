@@ -20,11 +20,11 @@ interface ProductRepositoryInterface
      * @api
      *
      * @param string $sku
-     * @param int $limit
+     * @param null|int $limit
      *
      * @return array
      */
-    public function filterProductAbstractBySku(string $sku, int $limit): array;
+    public function filterProductAbstractBySku(string $sku, ?int $limit = null): array;
 
     /**
      * Specification:
@@ -36,11 +36,11 @@ interface ProductRepositoryInterface
      *
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string $localizedName
-     * @param int $limit
+     * @param null|int $limit
      *
      * @return array
      */
-    public function filterProductAbstractByLocalizedName(LocaleTransfer $localeTransfer, string $localizedName, int $limit): array;
+    public function filterProductAbstractByLocalizedName(LocaleTransfer $localeTransfer, string $localizedName, ?int $limit = null): array;
 
     /**
      * Specification:
@@ -51,11 +51,11 @@ interface ProductRepositoryInterface
      * @api
      *
      * @param string $sku
-     * @param int $limit
+     * @param null|int $limit
      *
      * @return array
      */
-    public function filterProductConcreteBySku(string $sku, int $limit): array;
+    public function filterProductConcreteBySku(string $sku, ?int $limit = null): array;
 
     /**
      * Specification:
@@ -67,9 +67,9 @@ interface ProductRepositoryInterface
      *
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string $localizedName
-     * @param int $limit
+     * @param null|int $limit
      *
      * @return array
      */
-    public function filterProductConcreteByLocalizedName(LocaleTransfer $localeTransfer, string $localizedName, int $limit): array;
+    public function filterProductConcreteByLocalizedName(LocaleTransfer $localeTransfer, string $localizedName, ?int $limit = null): array;
 }

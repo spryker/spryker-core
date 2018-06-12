@@ -37,11 +37,11 @@ class ProductReader implements ProductReaderInterface
 
     /**
      * @param string $sku
-     * @param int $limit
+     * @param null|int $limit
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstract[]
      */
-    public function filterProductAbstractBySku(string $sku, int $limit): array
+    public function filterProductAbstractBySku(string $sku, ?int $limit = null): array
     {
         return $this->productRepository
             ->filterProductAbstractBySku($sku, $limit);
@@ -49,11 +49,11 @@ class ProductReader implements ProductReaderInterface
 
     /**
      * @param string $localizedName
-     * @param int $limit
+     * @param null|int $limit
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstract[]
      */
-    public function filterProductAbstractByLocalizedName(string $localizedName, int $limit): array
+    public function filterProductAbstractByLocalizedName(string $localizedName, ?int $limit = null): array
     {
         return $this->productRepository
             ->filterProductAbstractByLocalizedName(
@@ -65,11 +65,11 @@ class ProductReader implements ProductReaderInterface
 
     /**
      * @param string $sku
-     * @param int $limit
+     * @param null|int $limit
      *
      * @return \Orm\Zed\Product\Persistence\SpyProduct[]
      */
-    public function filterProductConcreteBySku(string $sku, int $limit): array
+    public function filterProductConcreteBySku(string $sku, ?int $limit = null): array
     {
         return $this->productRepository
             ->filterProductConcreteBySku($sku, $limit);
@@ -77,11 +77,11 @@ class ProductReader implements ProductReaderInterface
 
     /**
      * @param string $localizedName
-     * @param int $limit
+     * @param null|int $limit
      *
      * @return \Orm\Zed\Product\Persistence\SpyProduct[]
      */
-    public function filterProductConcreteByLocalizedName(string $localizedName, int $limit): array
+    public function filterProductConcreteByLocalizedName(string $localizedName, ?int $limit = null): array
     {
         return $this->productRepository
             ->filterProductConcreteByLocalizedName(

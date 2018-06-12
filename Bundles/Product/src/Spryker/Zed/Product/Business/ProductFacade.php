@@ -862,11 +862,11 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      * @api
      *
      * @param string $sku
-     * @param int $limit
+     * @param null|int $limit
      *
      * @return array
      */
-    public function filterProductAbstractBySku(string $sku, int $limit): array
+    public function filterProductAbstractBySku(string $sku, ?int $limit = null): array
     {
         return $this->getFactory()
             ->createProductReader()
@@ -879,11 +879,11 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      * @api
      *
      * @param string $localizedName
-     * @param int $limit
+     * @param null|int $limit
      *
      * @return array
      */
-    public function filterProductAbstractByLocalizedName(string $localizedName, int $limit): array
+    public function filterProductAbstractByLocalizedName(string $localizedName, ?int $limit = null): array
     {
         return $this->getFactory()
             ->createProductReader()
@@ -896,11 +896,11 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      * @api
      *
      * @param string $sku
-     * @param int $limit
+     * @param null|int $limit
      *
      * @return array
      */
-    public function filterProductConcreteBySku(string $sku, int $limit): array
+    public function filterProductConcreteBySku(string $sku, ?int $limit = null): array
     {
         return $this->getFactory()
             ->createProductReader()
@@ -913,11 +913,11 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      * @api
      *
      * @param string $localizedName
-     * @param int $limit
+     * @param null|int $limit
      *
      * @return array
      */
-    public function filterProductConcreteByLocalizedName(string $localizedName, int $limit): array
+    public function filterProductConcreteByLocalizedName(string $localizedName, ?int $limit = null): array
     {
         return $this->getFactory()
             ->createProductReader()

@@ -80,11 +80,11 @@ class ProductSuggestionDetailsProvider implements ProductSuggestionDetailsProvid
      * TODO: Add SKU rendering for the case above.
      *
      * @param string $suggestion
-     * @param int $limit
+     * @param null|int $limit
      *
      * @return null|int
      */
-    protected function getIdProductAbstractBySuggestion(string $suggestion, int $limit): ?int
+    protected function getIdProductAbstractBySuggestion(string $suggestion, ?int $limit = null): ?int
     {
         $productAbstract = $this->productRepository
             ->filterProductAbstractByLocalizedName(
@@ -116,11 +116,11 @@ class ProductSuggestionDetailsProvider implements ProductSuggestionDetailsProvid
      * TODO: Resolve the case when multiple products were found by name.
      *
      * @param string $suggestion
-     * @param int $limit
+     * @param null|int $limit
      *
      * @return null|int
      */
-    protected function getIdProductConcreteBySuggestion(string $suggestion, int $limit): ?int
+    protected function getIdProductConcreteBySuggestion(string $suggestion, ?int $limit = null): ?int
     {
         $productConcrete = $this->productRepository
             ->filterProductConcreteByLocalizedName(
