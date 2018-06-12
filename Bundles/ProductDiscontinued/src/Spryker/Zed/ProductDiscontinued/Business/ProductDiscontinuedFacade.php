@@ -90,8 +90,7 @@ class ProductDiscontinuedFacade extends AbstractFacade implements ProductDiscont
     }
 
     /**
-     * Specification:
-     * - Saves product discontinued note.
+     * {@inheritdoc}
      *
      * @api
      *

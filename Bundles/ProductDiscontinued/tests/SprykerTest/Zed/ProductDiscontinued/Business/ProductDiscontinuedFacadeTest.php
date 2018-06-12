@@ -27,7 +27,6 @@ use Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedEntityManager
 class ProductDiscontinuedFacadeTest extends Unit
 {
     protected const NOTE_TEST = 'NOTE_TEST';
-    protected const LOCALE_TEST = 'LOCALE_TEST';
 
     /**
      * @var \SprykerTest\Zed\ProductDiscontinued\ProductDiscontinuedBusinessTester

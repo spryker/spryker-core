@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ProductDiscontinuedGui\Dependency\Facade;
 
-use Generated\Shared\Transfer\LocaleTransfer;
-
 class ProductDiscontinuedGuiToLocaleFacadeBridge implements ProductDiscontinuedGuiToLocaleFacadeInterface
 {
     /**
@@ -29,7 +27,7 @@ class ProductDiscontinuedGuiToLocaleFacadeBridge implements ProductDiscontinuedG
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getLocale($localeName): LocaleTransfer
+    public function getLocale($localeName)
     {
         return $this->localeFacade->getLocale($localeName);
     }
@@ -37,7 +35,7 @@ class ProductDiscontinuedGuiToLocaleFacadeBridge implements ProductDiscontinuedG
     /**
      * @return array
      */
-    public function getAvailableLocales(): array
+    public function getAvailableLocales()
     {
         return $this->localeFacade->getAvailableLocales();
     }

@@ -13,13 +13,14 @@ use Spryker\Zed\ProductDiscontinuedGui\Communication\Form\DiscontinueProductForm
 use Spryker\Zed\ProductDiscontinuedGui\Dependency\Facade\ProductDiscontinuedGuiToLocaleFacadeInterface;
 use Spryker\Zed\ProductDiscontinuedGui\Dependency\Facade\ProductDiscontinuedGuiToProductDiscontinuedFacadeInterface;
 use Spryker\Zed\ProductDiscontinuedGui\ProductDiscontinuedGuiDependencyProvider;
+use Symfony\Component\Form\FormTypeInterface;
 
 class ProductDiscontinuedGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\ProductDiscontinuedGui\Communication\Form\DiscontinueProductForm
+     * @return \Symfony\Component\Form\FormTypeInterface
      */
-    public function createDiscontinueProductForm(): DiscontinueProductForm
+    public function createDiscontinueProductForm(): FormTypeInterface
     {
         return new DiscontinueProductForm();
     }
