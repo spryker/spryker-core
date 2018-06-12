@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Dataset\Business;
 
+use Generated\Shared\Transfer\DatasetFilenameTransfer;
 use Generated\Shared\Transfer\DatasetFilePathTransfer;
 use Generated\Shared\Transfer\SpyDatasetEntityTransfer;
 
@@ -22,7 +23,7 @@ interface DatasetFacadeInterface
      *
      * @return void
      */
-    public function delete($idDataset);
+    public function delete($idDataset): void;
 
     /**
      * Specification:
@@ -34,7 +35,7 @@ interface DatasetFacadeInterface
      *
      * @return void
      */
-    public function activateById($idDataset);
+    public function activateById($idDataset): void;
 
     /**
      * Specification:
@@ -46,7 +47,7 @@ interface DatasetFacadeInterface
      *
      * @return void
      */
-    public function deactivateById($idDataset);
+    public function deactivateById($idDataset): void;
 
     /**
      * Specification:
@@ -61,7 +62,7 @@ interface DatasetFacadeInterface
      *
      * @return void
      */
-    public function save(SpyDatasetEntityTransfer $datasetEntityTransfer, DatasetFilePathTransfer $filePathTransfer);
+    public function save(SpyDatasetEntityTransfer $datasetEntityTransfer, DatasetFilePathTransfer $filePathTransfer): void;
 
     /**
      * Specification:
@@ -74,7 +75,7 @@ interface DatasetFacadeInterface
      *
      * @return void
      */
-    public function saveDataset(SpyDatasetEntityTransfer $datasetEntityTransfer);
+    public function saveDataset(SpyDatasetEntityTransfer $datasetEntityTransfer): void;
 
     /**
      * Specification:
@@ -86,7 +87,7 @@ interface DatasetFacadeInterface
      *
      * @return string
      */
-    public function exportToCsv(SpyDatasetEntityTransfer $datasetTransfer);
+    public function getCsvByDataset(SpyDatasetEntityTransfer $datasetTransfer): string;
 
     /**
      * Specification:
@@ -98,7 +99,7 @@ interface DatasetFacadeInterface
      *
      * @return \Generated\Shared\Transfer\SpyDatasetEntityTransfer
      */
-    public function getDatasetModelById($idDataset);
+    public function getDatasetModelById($idDataset): SpyDatasetEntityTransfer;
 
     /**
      * Specification:
@@ -110,7 +111,7 @@ interface DatasetFacadeInterface
      *
      * @return \Generated\Shared\Transfer\SpyDatasetEntityTransfer
      */
-    public function getDatasetModelByName($datasetName);
+    public function getDatasetModelByName($datasetName): SpyDatasetEntityTransfer;
 
     /**
      * Specification:
@@ -120,9 +121,9 @@ interface DatasetFacadeInterface
      *
      * @param string $datasetName
      *
-     * @return \Generated\Shared\Transfer\SpyDatasetEntityTransfer
+     * @return bool
      */
-    public function hasDatasetName($datasetName);
+    public function existsDatasetByName($datasetName): bool;
 
     /**
      * {@inheritdoc}
@@ -133,5 +134,5 @@ interface DatasetFacadeInterface
      *
      * @return \Generated\Shared\Transfer\DatasetFilenameTransfer
      */
-    public function getFilenameByDatasetName($datasetName);
+    public function getFilenameByDatasetName($datasetName): DatasetFilenameTransfer;
 }

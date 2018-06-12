@@ -9,6 +9,7 @@ namespace Spryker\Zed\Dataset;
 
 use Orm\Zed\Dataset\Persistence\SpyDatasetQuery;
 use Spryker\Zed\Dataset\Dependency\Facade\DatasetToLocaleFacadeBridge;
+use Spryker\Zed\Dataset\Dependency\Service\DatasetToCsvBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -16,6 +17,19 @@ class DatasetDependencyProvider extends AbstractBundleDependencyProvider
 {
     const FACADE_LOCALE = 'FACADE_LOCALE';
     const PROPEL_DATASET_QUERY = 'PROPEL_DATASET_QUERY';
+    const DATASET_TO_CSV_BRIDGE = 'DATASET_TO_CSV_BRIDGE';
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideBusinessLayerDependencies(Container $container)
+    {
+        $container = $this->addDatasetToCsvBridge($container);
+
+        return $container;
+    }
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -53,6 +67,20 @@ class DatasetDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::PROPEL_DATASET_QUERY] = function () {
             return SpyDatasetQuery::create();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addDatasetToCsvBridge(Container $container): Container
+    {
+        $container[static::DATASET_TO_CSV_BRIDGE] = function () {
+            return new DatasetToCsvBridge();
         };
 
         return $container;

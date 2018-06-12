@@ -69,13 +69,13 @@ class DatasetTest extends Unit
     /**
      * @return void
      */
-    public function testExportToCsv()
+    public function testCsvByDataset()
     {
         $datasetEntityTransfer = $this->tester->createDatasetTransfer();
         $this->tester->getLocator()->dataset()->facade()->save($datasetEntityTransfer, $this->tester->createDatasetFilePathTransfer());
         $datasetTransfer = $this->tester->getLocator()->dataset()->facade()->getDatasetModelByName($datasetEntityTransfer->getName());
 
-        $dataContent = $this->tester->getLocator()->dataset()->facade()->exportToCsv($datasetTransfer);
+        $dataContent = $this->tester->getLocator()->dataset()->facade()->getCsvByDataset($datasetTransfer);
         $originalFileContent = file_get_contents($this->tester->createDatasetFilePathTransfer()->getFilePath());
 
         $this->assertSame($dataContent, $originalFileContent);

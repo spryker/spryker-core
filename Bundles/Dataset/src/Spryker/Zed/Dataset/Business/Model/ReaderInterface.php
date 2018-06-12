@@ -18,5 +18,5 @@ interface ReaderInterface
      *
      * @return \Generated\Shared\Transfer\SpyDatasetRowColumnValueEntityTransfer[]
      */
-    public function convertFileToDataTransfers(DatasetFilePathTransfer $filePathTransfer);
+    public function parseFileToDataTransfers(DatasetFilePathTransfer $filePathTransfer);
 }

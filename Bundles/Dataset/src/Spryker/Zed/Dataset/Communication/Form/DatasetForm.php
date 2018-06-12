@@ -108,7 +108,7 @@ class DatasetForm extends AbstractType
 
         $constraints[] = new Callback([
             'callback' => function ($name, ExecutionContextInterface $contextInterface) {
-                if ($this->getFacade()->hasDatasetName($name)) {
+                if ($this->getFacade()->existsDatasetByName($name)) {
                     $contextInterface->addViolation('The name already exists.');
                 }
             },

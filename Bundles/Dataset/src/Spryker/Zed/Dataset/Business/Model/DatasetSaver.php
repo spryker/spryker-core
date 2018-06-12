@@ -48,9 +48,39 @@ class DatasetSaver implements DatasetSaverInterface
     {
         if ($filePathTransfer !== null && file_exists($filePathTransfer->getFilePath())) {
             $datasetEntityTransfer->setSpyDatasetRowColumnValues(
-                $this->reader->convertFileToDataTransfers($filePathTransfer)
+                $this->reader->parseFileToDataTransfers($filePathTransfer)
             );
         }
         $this->entityManager->saveDataset($datasetEntityTransfer);
+    }
+
+    /**
+     * @param int $idDataset
+     *
+     * @return void
+     */
+    public function activateById($idDataset)
+    {
+        $this->entityManager->updateIsActiveByIdDataset($idDataset, true);
+    }
+
+    /**
+     * @param int $idDataset
+     *
+     * @return void
+     */
+    public function deactivateById($idDataset)
+    {
+        $this->entityManager->updateIsActiveByIdDataset($idDataset, false);
+    }
+
+    /**
+     * @param int $idDataset
+     *
+     * @return void
+     */
+    public function delete($idDataset)
+    {
+        $this->entityManager->delete($idDataset);
     }
 }

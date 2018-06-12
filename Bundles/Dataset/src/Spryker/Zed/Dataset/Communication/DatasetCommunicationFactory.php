@@ -32,7 +32,7 @@ class DatasetCommunicationFactory extends AbstractCommunicationFactory
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createDatasetForm($idDataset = null)
+    public function getDatasetForm($idDataset = null)
     {
         $datasetFormProvider = $this->createDatasetFormDataProvider();
 
