@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductAlternative\Business\ProductAlternative;
 
 use Generated\Shared\Transfer\ProductAlternativeCollectionTransfer;
+use Generated\Shared\Transfer\ProductAlternativeListTransfer;
 use Generated\Shared\Transfer\ProductAlternativeTransfer;
 
 interface ProductAlternativeReaderInterface
@@ -41,4 +42,11 @@ interface ProductAlternativeReaderInterface
      * @return null|\Generated\Shared\Transfer\ProductAlternativeTransfer
      */
     public function getProductConcreteAlternative(int $idBaseProduct, int $idProductConcrete): ?ProductAlternativeTransfer;
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return \Generated\Shared\Transfer\ProductAlternativeListTransfer
+     */
+    public function getProductAlternativeListByIdProductConcrete(int $idProductConcrete): ProductAlternativeListTransfer;
 }

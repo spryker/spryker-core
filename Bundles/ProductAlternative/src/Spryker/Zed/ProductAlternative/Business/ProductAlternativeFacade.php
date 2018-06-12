@@ -97,7 +97,7 @@ class ProductAlternativeFacade extends AbstractFacade implements ProductAlternat
     public function getProductAlternativeListByIdProductConcrete(int $idProductConcrete): ProductAlternativeListTransfer
     {
         return $this->getFactory()
-            ->createProductAlternativeListManager()
+            ->createProductAlternativeReader()
             ->getProductAlternativeListByIdProductConcrete($idProductConcrete);
     }
 
