@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Product\Business\Product;
 
-use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
 use Spryker\Zed\Product\Persistence\ProductRepositoryInterface;
 
@@ -44,7 +43,7 @@ class ProductReader implements ProductReaderInterface
     public function filterProductAbstractBySku(string $sku, ?int $limit = null): array
     {
         return $this->productRepository
-            ->filterProductAbstractBySku($sku, $limit);
+            ->getProductAbstractDataBySku($sku, $limit);
     }
 
     /**
@@ -56,8 +55,8 @@ class ProductReader implements ProductReaderInterface
     public function filterProductAbstractByLocalizedName(string $localizedName, ?int $limit = null): array
     {
         return $this->productRepository
-            ->filterProductAbstractByLocalizedName(
-                $this->getCurrentLocale(),
+            ->getProductAbstractDataByLocalizedName(
+                $this->localeFacade->getCurrentLocale(),
                 $localizedName,
                 $limit
             );
@@ -72,7 +71,7 @@ class ProductReader implements ProductReaderInterface
     public function filterProductConcreteBySku(string $sku, ?int $limit = null): array
     {
         return $this->productRepository
-            ->filterProductConcreteBySku($sku, $limit);
+            ->getProductConcreteDataBySku($sku, $limit);
     }
 
     /**
@@ -84,18 +83,10 @@ class ProductReader implements ProductReaderInterface
     public function filterProductConcreteByLocalizedName(string $localizedName, ?int $limit = null): array
     {
         return $this->productRepository
-            ->filterProductConcreteByLocalizedName(
-                $this->getCurrentLocale(),
+            ->getProductConcreteDataByLocalizedName(
+                $this->localeFacade->getCurrentLocale(),
                 $localizedName,
                 $limit
             );
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
-    protected function getCurrentLocale(): LocaleTransfer
-    {
-        return $this->localeFacade->getCurrentLocale();
     }
 }

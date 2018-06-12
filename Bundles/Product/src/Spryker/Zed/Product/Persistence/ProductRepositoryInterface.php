@@ -13,7 +13,7 @@ interface ProductRepositoryInterface
 {
     /**
      * Specification:
-     * - Filters abstract products by SKU and returns associative array of abstract products.
+     * - Searches for abstract products by SKU and returns associative array of abstract products.
      * - Associative array contains items, each of one has product id as key and SKU as value.
      * - Keys for associative array are stored in ProductConstants.
      *
@@ -24,11 +24,11 @@ interface ProductRepositoryInterface
      *
      * @return array
      */
-    public function filterProductAbstractBySku(string $sku, int $limit): array;
+    public function getProductAbstractDataBySku(string $sku, int $limit): array;
 
     /**
      * Specification:
-     * - Filters abstract products by name and returns associative array of abstract products.
+     * - Searches for abstract products by name and returns associative array of abstract products.
      * - Associative array contains items, each of one has product id as key and name as value.
      * - Keys for associative array are stored in ProductConstants.
      *
@@ -40,11 +40,11 @@ interface ProductRepositoryInterface
      *
      * @return array
      */
-    public function filterProductAbstractByLocalizedName(LocaleTransfer $localeTransfer, string $localizedName, int $limit): array;
+    public function getProductAbstractDataByLocalizedName(LocaleTransfer $localeTransfer, string $localizedName, int $limit): array;
 
     /**
      * Specification:
-     * - Filters concrete products by name and returns associative array of concrete products.
+     * - Searches for concrete products by name and returns associative array of concrete products.
      * - Associative array contains items, each of one has product id as key and SKU as value.
      * - Keys for associative array are stored in ProductConstants.
      *
@@ -55,11 +55,11 @@ interface ProductRepositoryInterface
      *
      * @return array
      */
-    public function filterProductConcreteBySku(string $sku, int $limit): array;
+    public function getProductConcreteDataBySku(string $sku, int $limit): array;
 
     /**
      * Specification:
-     * - Filters concrete products by name and returns associative array of concrete products.
+     * - Searches for concrete products by name and returns associative array of concrete products.
      * - Associative array contains items, each of one has product id as key and name as value.
      * - Keys for associative array are stored in ProductConstants.
      *
@@ -71,5 +71,5 @@ interface ProductRepositoryInterface
      *
      * @return array
      */
-    public function filterProductConcreteByLocalizedName(LocaleTransfer $localeTransfer, string $localizedName, int $limit): array;
+    public function getProductConcreteDataByLocalizedName(LocaleTransfer $localeTransfer, string $localizedName, int $limit): array;
 }

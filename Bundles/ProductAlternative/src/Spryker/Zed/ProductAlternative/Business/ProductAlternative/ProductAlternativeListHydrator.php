@@ -157,6 +157,7 @@ class ProductAlternativeListHydrator implements ProductAlternativeListHydratorIn
         foreach ($productAbstractTransfer->getLocalizedAttributes() as $localizedAttribute) {
             if ($localizedAttribute->getLocale()->getIdLocale() === $idCurrentLocale) {
                 $productName = $localizedAttribute->getName();
+                break;
             }
         }
 
@@ -176,6 +177,7 @@ class ProductAlternativeListHydrator implements ProductAlternativeListHydratorIn
         foreach ($productConcreteTransfer->getLocalizedAttributes() as $localizedAttribute) {
             if ($localizedAttribute->getLocale()->getIdLocale() === $idCurrentLocale) {
                 $productName = $localizedAttribute->getName();
+                break;
             }
         }
 

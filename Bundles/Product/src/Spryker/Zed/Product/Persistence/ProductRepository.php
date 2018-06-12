@@ -32,7 +32,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
      *
      * @return array
      */
-    public function filterProductAbstractBySku(string $sku, int $limit): array
+    public function getProductAbstractDataBySku(string $sku, int $limit): array
     {
         $productAbstractQuery = $this->queryProductAbstract()
             ->filterBySku_Like('%' . $sku . '%')
@@ -56,7 +56,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
      *
      * @return array
      */
-    public function filterProductAbstractByLocalizedName(LocaleTransfer $localeTransfer, string $localizedName, int $limit): array
+    public function getProductAbstractDataByLocalizedName(LocaleTransfer $localeTransfer, string $localizedName, int $limit): array
     {
         $localeTransfer->requireIdLocale();
 
@@ -83,7 +83,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
      *
      * @return array
      */
-    public function filterProductConcreteBySku(string $sku, int $limit): array
+    public function getProductConcreteDataBySku(string $sku, int $limit): array
     {
         $productQuery = $this->queryProduct()
             ->filterBySku_Like('%' . $sku . '%')
@@ -107,7 +107,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
      *
      * @return array
      */
-    public function filterProductConcreteByLocalizedName(LocaleTransfer $localeTransfer, string $localizedName, int $limit): array
+    public function getProductConcreteDataByLocalizedName(LocaleTransfer $localeTransfer, string $localizedName, int $limit): array
     {
         $localeTransfer->requireIdLocale();
 

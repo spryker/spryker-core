@@ -87,16 +87,16 @@ class ProductSuggester implements ProductSuggesterInterface
     {
         $limit = $limit ?? $this->config->getFilteredProductsLimitDefault();
 
-        $abstractProducts = $this->collectFilteredResults(
+        $productAbstractNames = $this->collectFilteredResults(
             $this->productRepository
-                ->filterProductAbstractByLocalizedName(
+                ->getProductAbstractDataByLocalizedName(
                     $this->getCurrentLocale(),
                     $productName,
                     $limit
                 )
         );
 
-        return $abstractProducts;
+        return $productAbstractNames;
     }
 
     /**
@@ -109,15 +109,15 @@ class ProductSuggester implements ProductSuggesterInterface
     {
         $limit = $limit ?? $this->config->getFilteredProductsLimitDefault();
 
-        $abstractProducts = $this->collectFilteredResults(
+        $productAbstractSkus = $this->collectFilteredResults(
             $this->productRepository
-                ->filterProductAbstractBySku(
+                ->getProductAbstractDataBySku(
                     $productSku,
                     $limit
                 )
         );
 
-        return $abstractProducts;
+        return $productAbstractSkus;
     }
 
     /**
@@ -130,16 +130,16 @@ class ProductSuggester implements ProductSuggesterInterface
     {
         $limit = $limit ?? $this->config->getFilteredProductsLimitDefault();
 
-        $concreteProducts = $this->collectFilteredResults(
+        $productConcreteNames = $this->collectFilteredResults(
             $this->productRepository
-                ->filterProductConcreteByLocalizedName(
+                ->getProductConcreteDataByLocalizedName(
                     $this->getCurrentLocale(),
                     $productName,
                     $limit
                 )
         );
 
-        return $concreteProducts;
+        return $productConcreteNames;
     }
 
     /**
@@ -152,12 +152,12 @@ class ProductSuggester implements ProductSuggesterInterface
     {
         $limit = $limit ?? $this->config->getFilteredProductsLimitDefault();
 
-        $concreteProducts = $this->collectFilteredResults(
+        $productConcreteSkus = $this->collectFilteredResults(
             $this->productRepository
-                ->filterProductConcreteBySku($productSku, $limit)
+                ->getProductConcreteDataBySku($productSku, $limit)
         );
 
-        return $concreteProducts;
+        return $productConcreteSkus;
     }
 
     /**

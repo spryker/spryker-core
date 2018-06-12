@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Product\Business\Product\Suggest;
 
-use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductSuggestionDetailsTransfer;
 use Spryker\Shared\Product\ProductConstants;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
@@ -58,14 +57,14 @@ class ProductSuggestionDetailsProvider implements ProductSuggestionDetailsProvid
         $productSuggestionDetailsTransfer = (new ProductSuggestionDetailsTransfer())
             ->setIsSuccessful(false);
 
-        $productAbstract = $this->getIdProductAbstractBySuggestion($suggestion, $limit);
+        $productAbstract = $this->findIdProductAbstractBySuggestion($suggestion, $limit);
         if ($productAbstract) {
             return $productSuggestionDetailsTransfer
                 ->setIsSuccessful(true)
                 ->setIdProductAbstract($productAbstract);
         }
 
-        $productConcrete = $this->getIdProductConcreteBySuggestion($suggestion, $limit);
+        $productConcrete = $this->findIdProductConcreteBySuggestion($suggestion, $limit);
         if ($productConcrete) {
             return $productSuggestionDetailsTransfer
                 ->setIsSuccessful(true)
@@ -84,30 +83,30 @@ class ProductSuggestionDetailsProvider implements ProductSuggestionDetailsProvid
      *
      * @return null|int
      */
-    protected function getIdProductAbstractBySuggestion(string $suggestion, ?int $limit = null): ?int
+    protected function findIdProductAbstractBySuggestion(string $suggestion, ?int $limit = null): ?int
     {
         $productAbstract = $this->productRepository
-            ->filterProductAbstractByLocalizedName(
-                $this->getCurrentLocale(),
+            ->getProductAbstractDataByLocalizedName(
+                $this->localeFacade->getCurrentLocale(),
                 $suggestion,
                 $limit
             );
 
         $productAbstract = reset($productAbstract);
 
-        if (!empty($productAbstract) && isset($productAbstract[ProductConstants::KEY_FILTERED_PRODUCTS_ABSTRACT_ID])) {
+        if (!empty($productAbstract[ProductConstants::KEY_FILTERED_PRODUCTS_ABSTRACT_ID])) {
             return $productAbstract[ProductConstants::KEY_FILTERED_PRODUCTS_ABSTRACT_ID];
         }
 
         $productAbstract = $this->productRepository
-            ->filterProductAbstractBySku(
+            ->getProductAbstractDataBySku(
                 $suggestion,
                 $limit
             );
 
         $productAbstract = reset($productAbstract);
 
-        if (!empty($productAbstract) && isset($productAbstract[ProductConstants::KEY_FILTERED_PRODUCTS_ABSTRACT_ID])) {
+        if (!empty($productAbstract[ProductConstants::KEY_FILTERED_PRODUCTS_ABSTRACT_ID])) {
             return $productAbstract[ProductConstants::KEY_FILTERED_PRODUCTS_ABSTRACT_ID];
         }
 
@@ -122,40 +121,32 @@ class ProductSuggestionDetailsProvider implements ProductSuggestionDetailsProvid
      *
      * @return null|int
      */
-    protected function getIdProductConcreteBySuggestion(string $suggestion, ?int $limit = null): ?int
+    protected function findIdProductConcreteBySuggestion(string $suggestion, ?int $limit = null): ?int
     {
         $productConcrete = $this->productRepository
-            ->filterProductConcreteByLocalizedName(
-                $this->getCurrentLocale(),
+            ->getProductConcreteDataByLocalizedName(
+                $this->localeFacade->getCurrentLocale(),
                 $suggestion,
                 $limit
             );
 
         $productConcrete = reset($productConcrete);
 
-        if (!empty($productConcrete) && isset($productConcrete[ProductConstants::KEY_FILTERED_PRODUCTS_CONCRETE_ID])) {
+        if (!empty($productConcrete[ProductConstants::KEY_FILTERED_PRODUCTS_CONCRETE_ID])) {
             return $productConcrete[ProductConstants::KEY_FILTERED_PRODUCTS_CONCRETE_ID];
         }
 
-        $productConcrete = $this->productRepository->filterProductConcreteBySku(
+        $productConcrete = $this->productRepository->getProductConcreteDataBySku(
             $suggestion,
             $limit
         );
 
         $productConcrete = reset($productConcrete);
 
-        if (!empty($productConcrete) && isset($productConcrete[ProductConstants::KEY_FILTERED_PRODUCTS_CONCRETE_ID])) {
+        if (!empty($productConcrete[ProductConstants::KEY_FILTERED_PRODUCTS_CONCRETE_ID])) {
             return $productConcrete[ProductConstants::KEY_FILTERED_PRODUCTS_CONCRETE_ID];
         }
 
         return null;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
-    protected function getCurrentLocale(): LocaleTransfer
-    {
-        return $this->localeFacade->getCurrentLocale();
     }
 }
