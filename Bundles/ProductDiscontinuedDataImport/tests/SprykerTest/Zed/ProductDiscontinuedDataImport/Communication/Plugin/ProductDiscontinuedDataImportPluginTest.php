@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * MIT License
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -28,7 +28,7 @@ use Spryker\Zed\ProductDiscontinuedDataImport\ProductDiscontinuedDataImportConfi
  */
 class ProductDiscontinuedDataImportPluginTest extends Unit
 {
-    protected const DISCONTINUED_PRODUCT_TEST_SKU = 'discontinued_sku1';
+    protected const DISCONTINUED_PRODUCT_TEST_SKU = 'discontinued_sku';
 
     /**
      * @var \SprykerTest\Zed\ProductDiscontinuedDataImport\ProductDiscontinuedDataImportCommunicationTester
