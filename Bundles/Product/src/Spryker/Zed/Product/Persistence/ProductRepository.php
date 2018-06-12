@@ -129,7 +129,8 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
      */
     protected function queryProductAbstract(): SpyProductAbstractQuery
     {
-        return SpyProductAbstractQuery::create();
+        return $this->getFactory()
+            ->createProductAbstractQuery();
     }
 
     /**
@@ -137,7 +138,8 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
      */
     protected function queryProduct(): SpyProductQuery
     {
-        return SpyProductQuery::create();
+        return $this->getFactory()
+            ->createProductQuery();
     }
 
     /**
