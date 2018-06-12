@@ -14,7 +14,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/customer": "If you want to have idCustomer in Customer."
+    "spryker/customer": "If you want to hydrate customer with isOnBehalf property and default company user."
   },
   "autoload": {
     "psr-4": {
