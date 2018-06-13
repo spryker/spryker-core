@@ -5,7 +5,7 @@
   "require": {
     "php": ">=7.1",
     "spryker/error-handler": "^2.1.0",
-    "spryker/event": "^2.0.0",
+    "spryker/event": "^2.3.0",
     "spryker/kernel": "^3.0.0",
     "spryker/locale": "^2.0.0 || ^3.0.0",
     "spryker/propel-orm": "^1.0.0",

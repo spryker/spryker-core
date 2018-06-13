@@ -42,7 +42,7 @@ class EventFacade extends AbstractFacade implements EventFacadeInterface
      *
      * @return void
      */
-    public function triggerBulk($eventName, array $eventTransfers)
+    public function triggerBulk($eventName, array $eventTransfers): void
     {
         $this->getFactory()
             ->createEventDispatcher()

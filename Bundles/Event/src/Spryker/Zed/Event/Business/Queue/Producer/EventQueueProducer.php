@@ -46,14 +46,14 @@ class EventQueueProducer implements EventQueueProducerInterface
      *
      * @return void
      */
-    public function enqueueListenerBulk($eventName, array $eventTransfers, $listener, $queuePoolName = null)
+    public function enqueueListenerBulk($eventName, array $eventTransfers, $listener, $queuePoolName = null): void
     {
-        $messageTransfers = [];
+        $queueSendMessageTransfers = [];
         foreach ($eventTransfers as $eventTransfer) {
-            $messageTransfers[] = $this->createQueueMessageTransfer($eventName, $eventTransfer, $listener, $queuePoolName);
+            $queueSendMessageTransfers[] = $this->createQueueSendMessageTransfer($eventName, $eventTransfer, $listener, $queuePoolName);
         }
 
-        $this->queueClient->sendMessages(EventConstants::EVENT_QUEUE, $messageTransfers);
+        $this->queueClient->sendMessages(EventConstants::EVENT_QUEUE, $queueSendMessageTransfers);
     }
 
     /**
@@ -66,7 +66,7 @@ class EventQueueProducer implements EventQueueProducerInterface
      */
     public function enqueueListener($eventName, TransferInterface $eventTransfer, $listener, $queuePoolName = null)
     {
-        $messageTransfer = $this->createQueueMessageTransfer($eventName, $eventTransfer, $listener, $queuePoolName);
+        $messageTransfer = $this->createQueueSendMessageTransfer($eventName, $eventTransfer, $listener, $queuePoolName);
 
         $this->queueClient->sendMessage(EventConstants::EVENT_QUEUE, $messageTransfer);
     }
@@ -79,17 +79,17 @@ class EventQueueProducer implements EventQueueProducerInterface
      *
      * @return \Generated\Shared\Transfer\QueueSendMessageTransfer
      */
-    protected function createQueueMessageTransfer($eventName, TransferInterface $eventTransfer, $listener, $queuePoolName = null)
+    protected function createQueueSendMessageTransfer($eventName, TransferInterface $eventTransfer, $listener, $queuePoolName = null)
     {
-        $messageTransfer = new QueueSendMessageTransfer();
-        $messageTransfer->setQueuePoolName($queuePoolName);
-        $messageTransfer->setBody(
+        $queueSendMessageTransfer = new QueueSendMessageTransfer();
+        $queueSendMessageTransfer->setQueuePoolName($queuePoolName);
+        $queueSendMessageTransfer->setBody(
             $this->utilEncodingService->encodeJson(
                 $this->mapQueueMessageBody($eventTransfer, $listener, $eventName)
             )
         );
 
-        return $messageTransfer;
+        return $queueSendMessageTransfer;
     }
 
     /**

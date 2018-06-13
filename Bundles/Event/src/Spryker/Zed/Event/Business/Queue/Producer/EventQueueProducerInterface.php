@@ -29,5 +29,5 @@ interface EventQueueProducerInterface
      *
      * @return void
      */
-    public function enqueueListenerBulk($eventName, array $eventTransfers, $listener, $queuePoolName = null);
+    public function enqueueListenerBulk($eventName, array $eventTransfers, $listener, $queuePoolName = null): void;
 }

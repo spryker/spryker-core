@@ -25,5 +25,5 @@ interface EventDispatcherInterface
      *
      * @return void
      */
-    public function triggerBulk(string $eventName, array $eventTransfers);
+    public function triggerBulk(string $eventName, array $eventTransfers): void;
 }
