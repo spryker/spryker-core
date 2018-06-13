@@ -1,0 +1,15 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% block section_title 'Products Lists' | trans %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Product Lists table    ' | trans } %}
+
+        {% block widget_content %}
+            {{ table | raw }}
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}
