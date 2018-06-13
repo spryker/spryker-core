@@ -13,11 +13,15 @@ use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductList\Persistence\Propel\AbstractSpyProductList;
 
+/**
+ * @uses ProductList
+ */
 class ProductListTable extends AbstractTable
 {
     protected const COLUMN_ID = SpyProductListTableMap::COL_ID_PRODUCT_LIST;
     protected const COLUMN_NAME = SpyProductListTableMap::COL_TITLE;
     protected const COLUMN_TYPE = SpyProductListTableMap::COL_TYPE;
+    protected const COLUMN_BUTTONS = 'COLUMN_BUTTONS';
 
     /**
      * @var \Spryker\Zed\ProductList\Persistence\Propel\AbstractSpyProductListQuery
@@ -40,6 +44,7 @@ class ProductListTable extends AbstractTable
             static::COLUMN_ID => 'ID',
             static::COLUMN_NAME => 'Name',
             static::COLUMN_TYPE => 'Type',
+            static::COLUMN_BUTTONS => 'Actions',
         ]);
 
         $config->setSortable([
@@ -52,6 +57,7 @@ class ProductListTable extends AbstractTable
             static::COLUMN_ID,
             static::COLUMN_NAME,
         ]);
+        $config->addRawColumn(static::COLUMN_BUTTONS);
 
         return $config;
     }
@@ -88,6 +94,21 @@ class ProductListTable extends AbstractTable
             static::COLUMN_ID => $productListEntity->getIdProductList(),
             static::COLUMN_NAME => $productListEntity->getTitle(),
             static::COLUMN_TYPE => $typeString,
+            static::COLUMN_BUTTONS => $this->createViewButton($productListEntity),
         ];
+    }
+
+    /**
+     * @param \Spryker\Zed\ProductList\Persistence\Propel\AbstractSpyProductList $productListEntity
+     *
+     * @return string
+     */
+    protected function createViewButton(AbstractSpyProductList $productListEntity)
+    {
+        $buttons = [];
+        $buttons[] = $this->generateEditButton('edit', 'Edit');
+        $buttons[] = $this->generateRemoveButton('delete', 'Delete');
+
+        return implode(' ', $buttons);
     }
 }

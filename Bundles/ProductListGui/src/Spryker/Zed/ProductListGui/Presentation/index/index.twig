@@ -2,6 +2,10 @@
 
 {% block section_title 'Products Lists' | trans %}
 
+{% block action %}
+    {{ createActionButton('/product-list-gui/add', 'Create Product List' | trans) }}
+{% endblock %}
+
 {% block content %}
 
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Product Lists table    ' | trans } %}
