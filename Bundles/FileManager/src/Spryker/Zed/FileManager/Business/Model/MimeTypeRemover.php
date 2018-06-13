@@ -9,21 +9,21 @@ namespace Spryker\Zed\FileManager\Business\Model;
 
 use Generated\Shared\Transfer\MimeTypeResponseTransfer;
 use Generated\Shared\Transfer\MimeTypeTransfer;
-use Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface;
+use Spryker\Zed\FileManager\Persistence\FileManagerEntityManagerInterface;
 
 class MimeTypeRemover implements MimeTypeRemoverInterface
 {
     /**
-     * @var \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface
+     * @var \Spryker\Zed\FileManager\Persistence\FileManagerEntityManagerInterface
      */
-    protected $queryContainer;
+    protected $entityManager;
 
     /**
-     * @param \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\FileManager\Persistence\FileManagerEntityManagerInterface $entityManager
      */
-    public function __construct(FileManagerQueryContainerInterface $queryContainer)
+    public function __construct(FileManagerEntityManagerInterface $entityManager)
     {
-        $this->queryContainer = $queryContainer;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -40,12 +40,8 @@ class MimeTypeRemover implements MimeTypeRemoverInterface
             return $mimeTypeResponseTransfer;
         }
 
-        $mimeTypeEntity = $this->queryContainer->queryMimeType()->findOneByIdMimeType($mimeTypeTransfer->getIdMimeType());
-
-        if ($mimeTypeEntity !== null) {
-            $mimeTypeEntity->delete();
-            $mimeTypeResponseTransfer->setIsSuccessful(true);
-        }
+        $this->entityManager->deleteMimeType($mimeTypeTransfer->getIdMimeType());
+        $mimeTypeResponseTransfer->setIsSuccessful(true);
 
         return $mimeTypeResponseTransfer;
     }

@@ -169,7 +169,10 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
      */
     public function createMimeTypeSaver()
     {
-        return new MimeTypeSaver($this->getQueryContainer());
+        return new MimeTypeSaver(
+            $this->getEntityManager(),
+            $this->getRepository()
+        );
     }
 
     /**
@@ -177,7 +180,7 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
      */
     public function createMimeTypeRemover()
     {
-        return new MimeTypeRemover($this->getQueryContainer());
+        return new MimeTypeRemover($this->getEntityManager());
     }
 
     /**

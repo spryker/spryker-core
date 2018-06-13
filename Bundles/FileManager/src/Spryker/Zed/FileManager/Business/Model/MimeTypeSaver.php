@@ -7,28 +7,32 @@
 
 namespace Spryker\Zed\FileManager\Business\Model;
 
-use ArrayObject;
 use Generated\Shared\Transfer\MimeTypeCollectionTransfer;
 use Generated\Shared\Transfer\MimeTypeResponseTransfer;
 use Generated\Shared\Transfer\MimeTypeTransfer;
-use Orm\Zed\FileManager\Persistence\Map\SpyMimeTypeTableMap;
-use Orm\Zed\FileManager\Persistence\SpyMimeType;
-use Propel\Runtime\ActiveQuery\Criteria;
-use Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface;
+use Spryker\Zed\FileManager\Persistence\FileManagerEntityManagerInterface;
+use Spryker\Zed\FileManager\Persistence\FileManagerRepositoryInterface;
 
 class MimeTypeSaver implements MimeTypeSaverInterface
 {
     /**
-     * @var \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface
+     * @var \Spryker\Zed\FileManager\Persistence\FileManagerEntityManagerInterface
      */
-    protected $queryContainer;
+    protected $entityManager;
 
     /**
-     * @param \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface $queryContainer
+     * @var \Spryker\Zed\FileManager\Persistence\FileManagerRepositoryInterface
      */
-    public function __construct(FileManagerQueryContainerInterface $queryContainer)
+    protected $repository;
+
+    /**
+     * @param \Spryker\Zed\FileManager\Persistence\FileManagerEntityManagerInterface $entityManager
+     * @param \Spryker\Zed\FileManager\Persistence\FileManagerRepositoryInterface $repository
+     */
+    public function __construct(FileManagerEntityManagerInterface $entityManager, FileManagerRepositoryInterface $repository)
     {
-        $this->queryContainer = $queryContainer;
+        $this->entityManager = $entityManager;
+        $this->repository = $repository;
     }
 
     /**
@@ -46,15 +50,7 @@ class MimeTypeSaver implements MimeTypeSaverInterface
             return $mimeTypeResponseTransfer;
         }
 
-        $mimeTypeEntity = new SpyMimeType();
-
-        if ($mimeTypeTransfer->getIdMimeType()) {
-            $mimeTypeEntity = $this->queryContainer->queryMimeType()->findOneByIdMimeType($mimeTypeTransfer->getIdMimeType());
-        }
-
-        $mimeTypeEntity->fromArray($mimeTypeTransfer->toArray());
-        $mimeTypeEntity->save();
-
+        $this->entityManager->saveMimeType($mimeTypeTransfer);
         $mimeTypeResponseTransfer->setIsSuccessful(true);
 
         return $mimeTypeResponseTransfer;
@@ -67,10 +63,9 @@ class MimeTypeSaver implements MimeTypeSaverInterface
      */
     public function updateIsAllowed(MimeTypeCollectionTransfer $mimeTypeCollectionTransfer)
     {
-        list($allowedMimeTypes, $disallowedMimeTypes) = $this->getMimeTypesSeparatedByIsAllowed($mimeTypeCollectionTransfer);
-
-        $this->performUpdateIsAllowed($allowedMimeTypes, true);
-        $this->performUpdateIsAllowed($disallowedMimeTypes, false);
+        foreach ($mimeTypeCollectionTransfer->getItems() as $mimeTypeTransfer) {
+            $this->entityManager->saveMimeType($mimeTypeTransfer);
+        }
     }
 
     /**
@@ -80,60 +75,6 @@ class MimeTypeSaver implements MimeTypeSaverInterface
      */
     protected function validateMimeType(MimeTypeTransfer $mimeTypeTransfer)
     {
-        $query = $this->queryContainer->queryMimeType();
-
-        if ($mimeTypeTransfer->getIdMimeType() !== null) {
-            $query->filterByIdMimeType($mimeTypeTransfer->getIdMimeType(), Criteria::NOT_EQUAL);
-        }
-
-        $mimeTypeEntity = $query->findOneByName($mimeTypeTransfer->getName());
-
-        return $mimeTypeEntity === null;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MimeTypeCollectionTransfer $mimeTypeCollectionTransfer
-     *
-     * @return array
-     */
-    protected function getMimeTypesSeparatedByIsAllowed(MimeTypeCollectionTransfer $mimeTypeCollectionTransfer)
-    {
-        $allowedMimeTypes = new ArrayObject();
-        $disallowedMimeTypes = new ArrayObject();
-
-        foreach ($mimeTypeCollectionTransfer->getItems() as $mimeTypeTransfer) {
-            if ($mimeTypeTransfer->getIsAllowed() === true) {
-                $allowedMimeTypes[] = $mimeTypeTransfer;
-                continue;
-            }
-
-            $disallowedMimeTypes[] = $mimeTypeTransfer;
-        }
-
-        return [$allowedMimeTypes, $disallowedMimeTypes];
-    }
-
-    /**
-     * @param \ArrayObject $mimeTypes
-     * @param bool $isAllowed
-     *
-     * @return void
-     */
-    protected function performUpdateIsAllowed(ArrayObject $mimeTypes, bool $isAllowed)
-    {
-        $mimeTypeIds = array_map(function ($mimeTypeTransfer) {
-            return $mimeTypeTransfer->getIdMimeType();
-        }, $mimeTypes->getArrayCopy());
-
-        $query = $this->queryContainer->queryMimeType()
-            ->filterByIsAllowed(!$isAllowed)
-            ->where(SpyMimeTypeTableMap::COL_ID_MIME_TYPE . Criteria::IN . '?', $mimeTypeIds);
-
-        $results = $query->find();
-
-        foreach ($results as $mimeType) {
-            $mimeType->setIsAllowed($isAllowed);
-            $mimeType->save();
-        }
+        return $this->repository->getMimeTypeByIdMimeTypeAndName($mimeTypeTransfer) === null;
     }
 }

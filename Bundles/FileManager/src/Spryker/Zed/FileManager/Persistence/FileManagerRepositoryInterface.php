@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\FileManager\Persistence;
 
+use Generated\Shared\Transfer\MimeTypeTransfer;
+
 interface FileManagerRepositoryInterface
 {
     /**
@@ -36,6 +38,13 @@ interface FileManagerRepositoryInterface
      * @return \Generated\Shared\Transfer\MimeTypeResponseTransfer
      */
     public function getMimeType(int $idMimeType);
+
+    /**
+     * @param \Generated\Shared\Transfer\MimeTypeTransfer $mimeTypeTransfer
+     *
+     * @return \Generated\Shared\Transfer\MimeTypeResponseTransfer
+     */
+    public function getMimeTypeByIdMimeTypeAndName(MimeTypeTransfer $mimeTypeTransfer);
 
     /**
      * @return \Generated\Shared\Transfer\MimeTypeCollectionTransfer

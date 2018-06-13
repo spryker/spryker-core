@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\FileManager\Persistence;
 
+use Generated\Shared\Transfer\FileTransfer;
 use Generated\Shared\Transfer\MimeTypeCollectionTransfer;
+use Generated\Shared\Transfer\MimeTypeTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -32,7 +34,7 @@ class FileManagerRepository extends AbstractRepository implements FileManagerRep
 
         return $this->getFactory()
             ->createFileManagerMapper()
-            ->mapFileEntityToTransfer($fileEntity);
+            ->mapFileEntityToTransfer($fileEntity, new FileTransfer());
     }
 
     /**
@@ -45,7 +47,7 @@ class FileManagerRepository extends AbstractRepository implements FileManagerRep
         $query = $this->getFactory()
             ->createFileQuery()
             ->useSpyFileInfoQuery()
-                ->filterByIdFileInfo($idFileInfo)
+            ->filterByIdFileInfo($idFileInfo)
             ->endUse();
 
         $fileEntity = $query->findOne();
@@ -56,7 +58,7 @@ class FileManagerRepository extends AbstractRepository implements FileManagerRep
 
         return $this->getFactory()
             ->createFileManagerMapper()
-            ->mapFileEntityToTransfer($fileEntity);
+            ->mapFileEntityToTransfer($fileEntity, new FileTransfer());
     }
 
     /**
@@ -101,7 +103,33 @@ class FileManagerRepository extends AbstractRepository implements FileManagerRep
 
         return $this->getFactory()
             ->createFileManagerMapper()
-            ->mapMimeTypeEntityToTransfer($mimeTypeEntity);
+            ->mapMimeTypeEntityToTransfer($mimeTypeEntity, new MimeTypeTransfer());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MimeTypeTransfer $mimeTypeTransfer
+     *
+     * @return \Generated\Shared\Transfer\MimeTypeResponseTransfer
+     */
+    public function getMimeTypeByIdMimeTypeAndName(MimeTypeTransfer $mimeTypeTransfer)
+    {
+        $query = $this->getFactory()
+            ->createMimeTypeQuery()
+            ->filterByName($mimeTypeTransfer->getName());
+
+        if ($mimeTypeTransfer->getIdMimeType()) {
+            $query->filterByIdMimeType($mimeTypeTransfer->getIdMimeType(), Criteria::NOT_EQUAL);
+        }
+
+        $mimeTypeEntity = $query->findOne();
+
+        if ($mimeTypeEntity === null) {
+            return $mimeTypeEntity;
+        }
+
+        return $this->getFactory()
+            ->createFileManagerMapper()
+            ->mapMimeTypeEntityToTransfer($mimeTypeEntity, new MimeTypeTransfer());
     }
 
     /**
@@ -120,7 +148,7 @@ class FileManagerRepository extends AbstractRepository implements FileManagerRep
 
         foreach ($mimeTypeCollection as $mimeType) {
             $mimeTypeCollectionTransfer->addMimeType(
-                $mapper->mapMimeTypeEntityToTransfer($mimeType)
+                $mapper->mapMimeTypeEntityToTransfer($mimeType, new MimeTypeTransfer())
             );
         }
 
