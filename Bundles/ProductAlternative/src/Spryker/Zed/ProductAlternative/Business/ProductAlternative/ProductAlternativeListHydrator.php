@@ -8,9 +8,7 @@
 namespace Spryker\Zed\ProductAlternative\Business\ProductAlternative;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductAlternativeListItemTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Shared\ProductAlternative\ProductAlternativeConstants;
 use Spryker\Zed\ProductAlternative\Dependency\Facade\ProductAlternativeToLocaleFacadeInterface;
 use Spryker\Zed\ProductAlternative\Dependency\Facade\ProductAlternativeToProductFacadeInterface;
@@ -142,46 +140,6 @@ class ProductAlternativeListHydrator implements ProductAlternativeListHydratorIn
                 )
             )
             ->setStatus($productConcreteAlternative[ProductAlternativeConstants::COL_STATUS]);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return null|string
-     */
-    protected function getProductAbstractName(ProductAbstractTransfer $productAbstractTransfer): ?string
-    {
-        $idCurrentLocale = $this->getCurrentLocale()->getIdLocale();
-
-        $productName = '';
-        foreach ($productAbstractTransfer->getLocalizedAttributes() as $localizedAttribute) {
-            if ($localizedAttribute->getLocale()->getIdLocale() === $idCurrentLocale) {
-                $productName = $localizedAttribute->getName();
-                break;
-            }
-        }
-
-        return $productName;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return null|string
-     */
-    protected function getProductConcreteName(ProductConcreteTransfer $productConcreteTransfer): ?string
-    {
-        $idCurrentLocale = $this->getCurrentLocale()->getIdLocale();
-
-        $productName = '';
-        foreach ($productConcreteTransfer->getLocalizedAttributes() as $localizedAttribute) {
-            if ($localizedAttribute->getLocale()->getIdLocale() === $idCurrentLocale) {
-                $productName = $localizedAttribute->getName();
-                break;
-            }
-        }
-
-        return $productName;
     }
 
     /**

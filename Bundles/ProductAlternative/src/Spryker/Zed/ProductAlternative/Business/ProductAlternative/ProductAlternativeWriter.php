@@ -89,7 +89,7 @@ class ProductAlternativeWriter implements ProductAlternativeWriterInterface
      */
     public function persistProductAlternative(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
-        $productAlternativeToPersist = $productConcreteTransfer[ProductConcreteTransfer::PRODUCT_ALTERNATIVE_TO_PERSIST];
+        $productAlternativeToPersist = $productConcreteTransfer->getProductAlternativeToPersist();
 
         if (!$productAlternativeToPersist->getIdProduct()) {
             throw new ProductAlternativeHasNoBaseProductException(
