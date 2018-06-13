@@ -17,14 +17,14 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 class AddLocalesStep implements DataImportStepInterface
 {
     /**
-     * @var array
+     * @var int[]
      */
     protected $locales = [];
 
     /**
-     * @var array
+     * @var int[]
      */
-    protected $availableLocales;
+    protected $availableLocales = [];
 
     /**
      * @param \Spryker\Shared\Kernel\Store $store
