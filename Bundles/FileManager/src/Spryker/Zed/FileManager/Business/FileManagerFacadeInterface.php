@@ -110,7 +110,20 @@ interface FileManagerFacadeInterface
 
     /**
      * Specification:
-     * - Finds a file info
+     * - Finds a file by idFile
+     * - Returns file with localized attributes
+     *
+     * @api
+     *
+     * @param int $idFile
+     *
+     * @return \Generated\Shared\Transfer\FileManagerDataTransfer
+     */
+    public function findFileByIdFile($idFile);
+
+    /**
+     * Specification:
+     * - Finds a file info by idFileInfo
      * - Returns a file meta info and a file content with a specified version
      *
      * @api
@@ -119,7 +132,7 @@ interface FileManagerFacadeInterface
      *
      * @return \Generated\Shared\Transfer\FileManagerDataTransfer
      */
-    public function readFile($idFileInfo);
+    public function findFileByIdFileInfo($idFileInfo);
 
     /**
      * Specification:

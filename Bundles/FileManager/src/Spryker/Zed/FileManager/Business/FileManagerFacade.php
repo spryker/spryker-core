@@ -85,9 +85,19 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
      *
      * {@inheritdoc}
      */
-    public function readFile($idFileInfo)
+    public function findFileByIdFile($idFile)
     {
-        return $this->getFactory()->createFileReader()->read($idFileInfo);
+        return $this->getFactory()->createFileReader()->readFileByIdFile($idFile);
+    }
+
+    /**
+     * @api
+     *
+     * {@inheritdoc}
+     */
+    public function findFileByIdFileInfo($idFileInfo)
+    {
+        return $this->getFactory()->createFileReader()->readFileByIdFileInfo($idFileInfo);
     }
 
     /**

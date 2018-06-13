@@ -101,13 +101,25 @@ class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileMan
     /**
      * @api
      *
+     * @param int $idFile
+     *
+     * @return \Generated\Shared\Transfer\FileManagerDataTransfer
+     */
+    public function findFileByIdFile($idFile)
+    {
+        return $this->fileManagerFacade->findFileByIdFile($idFile);
+    }
+
+    /**
+     * @api
+     *
      * @param int $idFileInfo
      *
      * @return \Generated\Shared\Transfer\FileManagerDataTransfer
      */
-    public function readFile($idFileInfo)
+    public function findFileByIdFileInfo($idFileInfo)
     {
-        return $this->fileManagerFacade->readFile($idFileInfo);
+        return $this->fileManagerFacade->findFileByIdFileInfo($idFileInfo);
     }
 
     /**

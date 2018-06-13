@@ -8,7 +8,7 @@
 namespace Spryker\Zed\FileManager\Persistence;
 
 use Generated\Shared\Transfer\MimeTypeCollectionTransfer;
-use Generated\Shared\Transfer\SpyFileInfoEntityTransfer;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -17,22 +17,46 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class FileManagerRepository extends AbstractRepository implements FileManagerRepositoryInterface
 {
     /**
-     * @param int $idFileInfo
+     * @param int $idFile
      *
-     * @return \Generated\Shared\Transfer\SpyFileInfoEntityTransfer|null
+     * @return \Generated\Shared\Transfer\FileTransfer|null
      */
-    public function getFileInfoById(int $idFileInfo): ?SpyFileInfoEntityTransfer
+    public function getFileByIdFile(int $idFile)
     {
-        $query = $this->getFactory()->createFileInfoQuery();
-        $fileInfoEntity = $query->findOneByIdFileInfo($idFileInfo);
+        $query = $this->getFactory()->createFileQuery();
+        $fileEntity = $query->findOneByIdFile($idFile);
 
-        if ($fileInfoEntity === null) {
-            return $fileInfoEntity;
+        if ($fileEntity === null) {
+            return $fileEntity;
         }
 
         return $this->getFactory()
             ->createFileManagerMapper()
-            ->mapFileInfoEntityToTransfer($fileInfoEntity);
+            ->mapFileEntityToTransfer($fileEntity);
+    }
+
+    /**
+     * @param int $idFileInfo
+     *
+     * @return \Generated\Shared\Transfer\FileTransfer|null
+     */
+    public function getFileByIdFileInfo(int $idFileInfo)
+    {
+        $query = $this->getFactory()
+            ->createFileQuery()
+            ->useSpyFileInfoQuery()
+                ->filterByIdFileInfo($idFileInfo)
+            ->endUse();
+
+        $fileEntity = $query->findOne();
+
+        if ($fileEntity === null) {
+            return $fileEntity;
+        }
+
+        return $this->getFactory()
+            ->createFileManagerMapper()
+            ->mapFileEntityToTransfer($fileEntity);
     }
 
     /**
@@ -63,7 +87,7 @@ class FileManagerRepository extends AbstractRepository implements FileManagerRep
      *
      * @return \Generated\Shared\Transfer\MimeTypeTransfer|null
      */
-    public function findMimeType(int $idMimeType)
+    public function getMimeType(int $idMimeType)
     {
         $query = $this->getFactory()
             ->createMimeTypeQuery()

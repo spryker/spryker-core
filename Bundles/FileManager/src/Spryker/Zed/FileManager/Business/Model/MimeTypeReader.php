@@ -34,7 +34,7 @@ class MimeTypeReader implements MimeTypeReaderInterface
     {
         $mimeTypeResponseTransfer = new MimeTypeResponseTransfer();
         $mimeTypeResponseTransfer->setIsSuccessful(false);
-        $mimeTypeTransfer = $this->repository->findMimeType($idMimeType);
+        $mimeTypeTransfer = $this->repository->getMimeType($idMimeType);
 
         if ($mimeTypeTransfer !== null) {
             $mimeTypeResponseTransfer->setMimeType($mimeTypeTransfer);

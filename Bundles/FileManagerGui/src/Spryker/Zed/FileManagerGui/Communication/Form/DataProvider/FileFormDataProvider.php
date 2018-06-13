@@ -7,10 +7,7 @@
 
 namespace Spryker\Zed\FileManagerGui\Communication\Form\DataProvider;
 
-use Generated\Shared\Transfer\FileLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\FileTransfer;
-use Orm\Zed\FileManager\Persistence\SpyFile;
-use Orm\Zed\FileManager\Persistence\SpyFileQuery;
 use Spryker\Zed\FileManagerGui\Communication\Form\FileForm;
 use Spryker\Zed\FileManagerGui\Dependency\Facade\FileManagerGuiToFileManagerFacadeInterface;
 use Spryker\Zed\FileManagerGui\Dependency\Facade\FileManagerGuiToLocaleFacadeInterface;
@@ -18,11 +15,6 @@ use Spryker\Zed\FileManagerGui\Dependency\Facade\FileManagerGuiToLocaleFacadeInt
 class FileFormDataProvider
 {
     const FK_LOCALE_KEY = 'fkLocale';
-
-    /**
-     * @var \Orm\Zed\FileManager\Persistence\SpyFileQuery
-     */
-    protected $fileQuery;
 
     /**
      * @var \Spryker\Zed\Locale\Business\LocaleFacadeInterface
@@ -35,16 +27,13 @@ class FileFormDataProvider
     protected $fileManagerFacade;
 
     /**
-     * @param \Orm\Zed\FileManager\Persistence\SpyFileQuery $fileQuery
      * @param \Spryker\Zed\FileManagerGui\Dependency\Facade\FileManagerGuiToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\FileManagerGui\Dependency\Facade\FileManagerGuiToFileManagerFacadeInterface $fileManagerFacade
      */
     public function __construct(
-        SpyFileQuery $fileQuery,
         FileManagerGuiToLocaleFacadeInterface $localeFacade,
         FileManagerGuiToFileManagerFacadeInterface $fileManagerFacade
     ) {
-        $this->fileQuery = $fileQuery;
         $this->localeFacade = $localeFacade;
         $this->fileManagerFacade = $fileManagerFacade;
     }
@@ -60,11 +49,8 @@ class FileFormDataProvider
             return $this->createEmptyFileTransfer();
         }
 
-        $file = $this->fileQuery->findOneByIdFile($idFile);
-        $fileTransfer = $this->createEmptyFileTransfer();
-
-        $this->addFileLocalizedAttributes($file, $fileTransfer);
-        $fileTransfer->fromArray($file->toArray());
+        $fileTransfer = $this->fileManagerFacade->findFileByIdFile($idFile)->getFile();
+        $this->setLocalizedAttributesLocales($fileTransfer);
 
         return $fileTransfer;
     }
@@ -105,39 +91,34 @@ class FileFormDataProvider
     }
 
     /**
-     * @return \Generated\Shared\Transfer\FileTransfer
-     */
-    protected function createEmptyFileTransfer()
-    {
-        $fileTransfer = new FileTransfer();
-
-        foreach ($this->getAvailableLocales() as $locale) {
-            $fileLocalizedAttribute = new FileLocalizedAttributesTransfer();
-            $fileLocalizedAttribute->setLocale($locale);
-
-            $fileTransfer->addLocalizedAttributes($fileLocalizedAttribute);
-        }
-
-        return $fileTransfer;
-    }
-
-    /**
-     * @param \Orm\Zed\FileManager\Persistence\SpyFile $file
      * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
      *
      * @return void
      */
-    protected function addFileLocalizedAttributes(SpyFile $file, FileTransfer $fileTransfer)
+    protected function setLocalizedAttributesLocales(FileTransfer $fileTransfer)
     {
-        $savedLocalizedAttributes = $file->getSpyFileLocalizedAttributess()
-            ->toKeyIndex(static::FK_LOCALE_KEY);
+        $locales = $this->getTransformedAvailableLocales($this->getAvailableLocales());
 
-        foreach ($fileTransfer->getLocalizedAttributes() as $fileLocalizedAttribute) {
-            $fkLocale = $fileLocalizedAttribute->getLocale()->getIdLocale();
-
-            if (!empty($savedLocalizedAttributes[$fkLocale])) {
-                $fileLocalizedAttribute->fromArray($savedLocalizedAttributes[$fkLocale]->toArray());
+        foreach ($fileTransfer->getLocalizedAttributes() as $attribute) {
+            if (isset($locales[$attribute->getFkLocale()])) {
+                $attribute->setLocale($locales[$attribute->getFkLocale()]);
             }
         }
+    }
+
+    /**
+     * @param array $locales
+     *
+     * @return array
+     */
+    protected function getTransformedAvailableLocales(array $locales)
+    {
+        $transformed = [];
+
+        foreach ($locales as $locale) {
+            $transformed[$locale->getIdLocale()] = $locale;
+        }
+
+        return $transformed;
     }
 }

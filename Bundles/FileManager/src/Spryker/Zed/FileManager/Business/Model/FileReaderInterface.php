@@ -10,11 +10,18 @@ namespace Spryker\Zed\FileManager\Business\Model;
 interface FileReaderInterface
 {
     /**
+     * @param int $idFile
+     *
+     * @return \Generated\Shared\Transfer\FileManagerDataTransfer
+     */
+    public function readFileByIdFile(int $idFile);
+
+    /**
      * @param int $idFileInfo
      *
      * @return \Generated\Shared\Transfer\FileManagerDataTransfer
      */
-    public function read(int $idFileInfo);
+    public function readFileByIdFileInfo(int $idFileInfo);
 
     /**
      * @param int $idFile

@@ -70,11 +70,20 @@ interface FileManagerGuiToFileManagerFacadeInterface
     /**
      * @api
      *
+     * @param int $idFile
+     *
+     * @return \Generated\Shared\Transfer\FileManagerDataTransfer
+     */
+    public function findFileByIdFile($idFile);
+
+    /**
+     * @api
+     *
      * @param int $idFileInfo
      *
      * @return \Generated\Shared\Transfer\FileManagerDataTransfer
      */
-    public function readFile($idFileInfo);
+    public function findFileByIdFileInfo($idFileInfo);
 
     /**
      * Specification:

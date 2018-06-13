@@ -37,7 +37,7 @@ class DownloadFileController extends AbstractController
         try {
             $file = $this->getFactory()
                 ->getFileManagerFacade()
-                ->readFile($idFileInfo);
+                ->findFileByIdFileInfo($idFileInfo);
         } catch (FileSystemReadException $e) {
             $this->addErrorMessage(static::MESSAGE_FILE_UNAVAILABLE);
             $redirectUrl = Url::generate('/file-manager-gui')->build();
