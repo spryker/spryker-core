@@ -7,11 +7,15 @@
 
 namespace Spryker\Zed\ProductAlternative\Business\ProductAlternative;
 
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductAlternativeCollectionTransfer;
 use Generated\Shared\Transfer\ProductAlternativeListItemTransfer;
 use Generated\Shared\Transfer\ProductAlternativeListTransfer;
 use Generated\Shared\Transfer\ProductAlternativeTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\ProductAlternative\Business\Exception\ProductAlternativeIsNotDefinedException;
+use Spryker\Zed\ProductAlternative\Dependency\Facade\ProductAlternativeToLocaleFacadeInterface;
+use Spryker\Zed\ProductAlternative\Dependency\Facade\ProductAlternativeToProductFacadeInterface;
 use Spryker\Zed\ProductAlternative\Persistence\ProductAlternativeRepositoryInterface;
 
 class ProductAlternativeReader implements ProductAlternativeReaderInterface
@@ -27,23 +31,31 @@ class ProductAlternativeReader implements ProductAlternativeReaderInterface
     protected $productAlternativeListSorter;
 
     /**
-     * @var \Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeListHydratorInterface
+     * @var \Spryker\Zed\ProductAlternative\Dependency\Facade\ProductAlternativeToLocaleFacadeInterface
      */
-    protected $productAlternativeListHydrator;
+    protected $localeFacade;
+
+    /**
+     * @var \Spryker\Zed\ProductAlternative\Dependency\Facade\ProductAlternativeToProductFacadeInterface
+     */
+    protected $productFacade;
 
     /**
      * @param \Spryker\Zed\ProductAlternative\Persistence\ProductAlternativeRepositoryInterface $productAlternativeRepository
      * @param \Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeListSorterInterface $productAlternativeListSorter
-     * @param \Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeListHydratorInterface $productAlternativeListHydrator
+     * @param \Spryker\Zed\ProductAlternative\Dependency\Facade\ProductAlternativeToLocaleFacadeInterface $localeFacade
+     * @param \Spryker\Zed\ProductAlternative\Dependency\Facade\ProductAlternativeToProductFacadeInterface $productFacade
      */
     public function __construct(
         ProductAlternativeRepositoryInterface $productAlternativeRepository,
         ProductAlternativeListSorterInterface $productAlternativeListSorter,
-        ProductAlternativeListHydratorInterface $productAlternativeListHydrator
+        ProductAlternativeToLocaleFacadeInterface $localeFacade,
+        ProductAlternativeToProductFacadeInterface $productFacade
     ) {
         $this->productAlternativeRepository = $productAlternativeRepository;
         $this->productAlternativeListSorter = $productAlternativeListSorter;
-        $this->productAlternativeListHydrator = $productAlternativeListHydrator;
+        $this->localeFacade = $localeFacade;
+        $this->productFacade = $productFacade;
     }
 
     /**
@@ -111,6 +123,8 @@ class ProductAlternativeReader implements ProductAlternativeReaderInterface
      * @param \Generated\Shared\Transfer\ProductAlternativeCollectionTransfer $productAlternativeCollectionTransfer
      * @param \Generated\Shared\Transfer\ProductAlternativeListTransfer $productAlternativeListTransfer
      *
+     * @throws \Spryker\Zed\ProductAlternative\Business\Exception\ProductAlternativeIsNotDefinedException
+     *
      * @return \Generated\Shared\Transfer\ProductAlternativeListTransfer
      */
     protected function hydrateProductAlternativeList(
@@ -118,9 +132,33 @@ class ProductAlternativeReader implements ProductAlternativeReaderInterface
         ProductAlternativeListTransfer $productAlternativeListTransfer
     ): ProductAlternativeListTransfer {
         foreach ($productAlternativeCollectionTransfer->getProductAlternatives() as $productAlternativeTransfer) {
-            $productAlternativeListTransfer->addProductAlternative(
-                $this->resolveProductTypeHydration($productAlternativeTransfer)
-            );
+            $productAlternativeTransfer->requireIdProduct();
+
+            $productAlternativeListItemTransfer = null;
+
+            $productAlternativeTransferHasProductAbstractAlternative = $productAlternativeTransfer->getIdProductAbstractAlternative();
+            $productAlternativeTransferHasProductConcreteAlternative = $productAlternativeTransfer->getIdProductConcreteAlternative();
+
+            if (!$productAlternativeTransferHasProductAbstractAlternative
+                && !$productAlternativeTransferHasProductConcreteAlternative) {
+                throw new ProductAlternativeIsNotDefinedException(
+                    'You must set an id of abstract or concrete product alternative.'
+                );
+            }
+
+            if ($productAlternativeTransferHasProductAbstractAlternative) {
+                $productAlternativeListItemTransfer = $this->hydrateProductAbstractListItemTransfer(
+                    $productAlternativeTransfer
+                );
+            }
+
+            if ($productAlternativeTransferHasProductConcreteAlternative) {
+                $productAlternativeListItemTransfer = $this->hydrateProductConcreteListItemTransfer(
+                    $productAlternativeTransfer
+                );
+            }
+
+            $productAlternativeListTransfer->addProductAlternative($productAlternativeListItemTransfer);
         }
 
         return $this->productAlternativeListSorter
@@ -130,18 +168,75 @@ class ProductAlternativeReader implements ProductAlternativeReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ProductAlternativeTransfer $productAlternativeTransfer
      *
-     * @throws \Spryker\Zed\ProductAlternative\Business\Exception\ProductAlternativeIsNotDefinedException
+     * @return \Generated\Shared\Transfer\ProductAlternativeListItemTransfer
+     */
+    protected function hydrateProductAbstractListItemTransfer(
+        ProductAlternativeTransfer $productAlternativeTransfer
+    ): ProductAlternativeListItemTransfer {
+        $productAlternativeTransfer
+            ->requireIdProduct()
+            ->requireIdProductAbstractAlternative();
+
+        $idProductAbstractAlternative = $productAlternativeTransfer->getIdProductAbstractAlternative();
+
+        $productAbstractTransfer = (new ProductAbstractTransfer())
+            ->setIdProductAbstract($idProductAbstractAlternative)
+            ->setIsActive(
+                $this->productFacade->isProductActive($idProductAbstractAlternative)
+            );
+
+        $productAbstractListItemTransfer = $this->productAlternativeRepository
+            ->getProductAlternativeListItemTransferForProductAbstract(
+                $productAbstractTransfer,
+                $this->localeFacade->getCurrentLocale()
+            );
+
+        return $this->finalizeProductAlternativeListItemTransfer(
+            $productAbstractListItemTransfer,
+            $productAlternativeTransfer
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAlternativeTransfer $productAlternativeTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeListItemTransfer
      */
-    protected function resolveProductTypeHydration(ProductAlternativeTransfer $productAlternativeTransfer): ProductAlternativeListItemTransfer
-    {
-        $productAlternativeTransfer->requireIdProduct();
+    protected function hydrateProductConcreteListItemTransfer(
+        ProductAlternativeTransfer $productAlternativeTransfer
+    ): ProductAlternativeListItemTransfer {
+        $productAlternativeTransfer
+            ->requireIdProduct()
+            ->requireIdProductConcreteAlternative();
 
-        $idProductAbstract = $productAlternativeTransfer
-            ->getIdProductAbstractAlternative();
+        $productConcreteTransfer = (new ProductConcreteTransfer())
+            ->setIdProductConcrete(
+                $productAlternativeTransfer->getIdProductConcreteAlternative()
+            );
 
-        $productAlternativeListItemTransfer = (new ProductAlternativeListItemTransfer())
+        $productConcreteListItemTransfer = $this->productAlternativeRepository
+            ->getProductAlternativeListItemTransferForProductConcrete(
+                $productConcreteTransfer,
+                $this->localeFacade->getCurrentLocale()
+            );
+
+        return $this->finalizeProductAlternativeListItemTransfer(
+            $productConcreteListItemTransfer,
+            $productAlternativeTransfer
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAlternativeListItemTransfer $productAlternativeListItemTransfer
+     * @param \Generated\Shared\Transfer\ProductAlternativeTransfer $productAlternativeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAlternativeListItemTransfer
+     */
+    protected function finalizeProductAlternativeListItemTransfer(
+        ProductAlternativeListItemTransfer $productAlternativeListItemTransfer,
+        ProductAlternativeTransfer $productAlternativeTransfer
+    ): ProductAlternativeListItemTransfer {
+        return $productAlternativeListItemTransfer
             ->setIdProductAlternative(
                 $productAlternativeTransfer->getIdProductAlternative()
             )
@@ -149,28 +244,5 @@ class ProductAlternativeReader implements ProductAlternativeReaderInterface
                 $productAlternativeTransfer->getIdProductAbstractAlternative()
                     ?: $productAlternativeTransfer->getIdProductConcreteAlternative()
             );
-
-        if ($idProductAbstract) {
-            return $this->productAlternativeListHydrator
-                ->hydrateProductAbstractListItem(
-                    $idProductAbstract,
-                    $productAlternativeListItemTransfer
-                );
-        }
-
-        $idProductConcrete = $productAlternativeTransfer
-            ->getIdProductConcreteAlternative();
-
-        if ($idProductConcrete) {
-            return $this->productAlternativeListHydrator
-                ->hydrateProductConcreteListItem(
-                    $idProductConcrete,
-                    $productAlternativeListItemTransfer
-                );
-        }
-
-        throw new ProductAlternativeIsNotDefinedException(
-            'You must set an id of abstract or concrete product alternative.'
-        );
     }
 }

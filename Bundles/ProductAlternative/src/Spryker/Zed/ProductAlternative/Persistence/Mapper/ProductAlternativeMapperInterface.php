@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductAlternative\Persistence\Mapper;
 
 use Generated\Shared\Transfer\ProductAlternativeCollectionTransfer;
+use Generated\Shared\Transfer\ProductAlternativeListItemTransfer;
 use Generated\Shared\Transfer\ProductAlternativeTransfer;
 use Generated\Shared\Transfer\SpyProductAlternativeEntityTransfer;
 use Orm\Zed\ProductAlternative\Persistence\SpyProductAlternative;
@@ -49,4 +50,18 @@ interface ProductAlternativeMapperInterface
      * @return \Generated\Shared\Transfer\ProductAlternativeCollectionTransfer
      */
     public function hydrateProductAlternativeCollectionWithProductAlternatives(array $productAlternatives): ProductAlternativeCollectionTransfer;
+
+    /**
+     * @param array $productConcreteData
+     *
+     * @return \Generated\Shared\Transfer\ProductAlternativeListItemTransfer
+     */
+    public function mapProductConcreteDataToProductAlternativeListItemTransfer(array $productConcreteData): ProductAlternativeListItemTransfer;
+
+    /**
+     * @param array $productAbstractData
+     *
+     * @return \Generated\Shared\Transfer\ProductAlternativeListItemTransfer
+     */
+    public function mapProductAbstractDataToProductAlternativeListItemTransfer(array $productAbstractData): ProductAlternativeListItemTransfer;
 }

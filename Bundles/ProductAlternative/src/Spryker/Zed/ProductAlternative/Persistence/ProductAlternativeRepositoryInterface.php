@@ -8,8 +8,11 @@
 namespace Spryker\Zed\ProductAlternative\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductAlternativeCollectionTransfer;
+use Generated\Shared\Transfer\ProductAlternativeListItemTransfer;
 use Generated\Shared\Transfer\ProductAlternativeTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface ProductAlternativeRepositoryInterface
 {
@@ -70,27 +73,37 @@ interface ProductAlternativeRepositoryInterface
 
     /**
      * Specification:
-     * - Collects all necessary product abstract data for product alternative table view.
+     * - Collects all abstract product data for product alternative and map it to ProductAlternativeListItemTransfer.
+     * - ProductAlternativeListItem transfer acts as a data row for Product Alternatives table view.
+     * - Requires id and isActive values passed in $productAbstractTransfer.
      *
      * @api
      *
-     * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ProductAlternativeListItemTransfer
      */
-    public function getPreparedProductAbstractDataById(int $idProductAbstract, LocaleTransfer $localeTransfer): array;
+    public function getProductAlternativeListItemTransferForProductAbstract(
+        ProductAbstractTransfer $productAbstractTransfer,
+        LocaleTransfer $localeTransfer
+    ): ProductAlternativeListItemTransfer;
 
     /**
      * Specification:
-     * - Collects all necessary product concrete data for product alternative table view.
+     * - Collects all concrete product data for product alternative and map it to ProductAlternativeListItemTransfer.
+     * - ProductAlternativeListItem transfer acts as a data row for Product Alternatives table view.
+     * - Required id value passed in $productConcreteTransfer.
      *
      * @api
      *
-     * @param int $idProductConcrete
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ProductAlternativeListItemTransfer
      */
-    public function getPreparedProductConcreteDataById(int $idProductConcrete, LocaleTransfer $localeTransfer): array;
+    public function getProductAlternativeListItemTransferForProductConcrete(
+        ProductConcreteTransfer $productConcreteTransfer,
+        LocaleTransfer $localeTransfer
+    ): ProductAlternativeListItemTransfer;
 }

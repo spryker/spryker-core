@@ -8,8 +8,11 @@
 namespace Spryker\Zed\ProductAlternative\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductAlternativeCollectionTransfer;
+use Generated\Shared\Transfer\ProductAlternativeListItemTransfer;
 use Generated\Shared\Transfer\ProductAlternativeTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
@@ -137,15 +140,23 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
      *
      * @api
      *
-     * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ProductAlternativeListItemTransfer
      */
-    public function getPreparedProductAbstractDataById(int $idProductAbstract, LocaleTransfer $localeTransfer): array
-    {
-        return $this->queryProductAlternative()
-            ->filterByFkProductAbstractAlternative($idProductAbstract)
+    public function getProductAlternativeListItemTransferForProductAbstract(
+        ProductAbstractTransfer $productAbstractTransfer,
+        LocaleTransfer $localeTransfer
+    ): ProductAlternativeListItemTransfer {
+        $productAbstractTransfer
+            ->requireIdProductAbstract()
+            ->requireIsActive();
+
+        $productAbstractData = $this->queryProductAlternative()
+            ->filterByFkProductAbstractAlternative(
+                $productAbstractTransfer->getIdProductAbstract()
+            )
             ->innerJoinProductAbstractAlternative()
             ->useProductAbstractAlternativeQuery()
                 ->innerJoinSpyProductAbstractLocalizedAttributes()
@@ -178,6 +189,12 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
             ->groupByIdProductAlternative()
             ->distinct()
             ->findOne();
+
+        $productAbstractData[ProductAlternativeConstants::COL_STATUS] = $productAbstractTransfer->getIsActive();
+
+        return $this->getFactory()
+            ->createProductAlternativeMapper()
+            ->mapProductAbstractDataToProductAlternativeListItemTransfer($productAbstractData);
     }
 
     /**
@@ -185,15 +202,21 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
      *
      * @api
      *
-     * @param int $idProductConcrete
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ProductAlternativeListItemTransfer
      */
-    public function getPreparedProductConcreteDataById(int $idProductConcrete, LocaleTransfer $localeTransfer): array
-    {
-        return $this->queryProductAlternative()
-            ->filterByFkProductConcreteAlternative($idProductConcrete)
+    public function getProductAlternativeListItemTransferForProductConcrete(
+        ProductConcreteTransfer $productConcreteTransfer,
+        LocaleTransfer $localeTransfer
+    ): ProductAlternativeListItemTransfer {
+        $productConcreteTransfer->requireIdProductConcrete();
+
+        $productConcreteData = $this->queryProductAlternative()
+            ->filterByFkProductConcreteAlternative(
+                $productConcreteTransfer->getIdProductConcrete()
+            )
             ->useProductConcreteQuery()
                 ->innerJoinSpyProductLocalizedAttributes()
                 ->useSpyProductLocalizedAttributesQuery()
@@ -230,6 +253,10 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
             ->groupByIdProductAlternative()
             ->distinct()
             ->findOne();
+
+        return $this->getFactory()
+            ->createProductAlternativeMapper()
+            ->mapProductConcreteDataToProductAlternativeListItemTransfer($productConcreteData);
     }
 
     /**

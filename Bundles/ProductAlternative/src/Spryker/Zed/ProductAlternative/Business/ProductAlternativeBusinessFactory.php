@@ -8,8 +8,6 @@
 namespace Spryker\Zed\ProductAlternative\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeListHydrator;
-use Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeListHydratorInterface;
 use Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeListSorter;
 use Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeListSorterInterface;
 use Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeReader;
@@ -46,19 +44,8 @@ class ProductAlternativeBusinessFactory extends AbstractBusinessFactory
         return new ProductAlternativeReader(
             $this->getRepository(),
             $this->createProductAlternativeListSorter(),
-            $this->createProductAlternativeListHydrator()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeListHydratorInterface
-     */
-    public function createProductAlternativeListHydrator(): ProductAlternativeListHydratorInterface
-    {
-        return new ProductAlternativeListHydrator(
-            $this->getProductFacade(),
             $this->getLocaleFacade(),
-            $this->getRepository()
+            $this->getProductFacade()
         );
     }
 

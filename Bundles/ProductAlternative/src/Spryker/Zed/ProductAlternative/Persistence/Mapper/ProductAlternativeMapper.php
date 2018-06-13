@@ -8,9 +8,11 @@
 namespace Spryker\Zed\ProductAlternative\Persistence\Mapper;
 
 use Generated\Shared\Transfer\ProductAlternativeCollectionTransfer;
+use Generated\Shared\Transfer\ProductAlternativeListItemTransfer;
 use Generated\Shared\Transfer\ProductAlternativeTransfer;
 use Generated\Shared\Transfer\SpyProductAlternativeEntityTransfer;
 use Orm\Zed\ProductAlternative\Persistence\SpyProductAlternative;
+use Spryker\Shared\ProductAlternative\ProductAlternativeConstants;
 
 class ProductAlternativeMapper implements ProductAlternativeMapperInterface
 {
@@ -83,5 +85,47 @@ class ProductAlternativeMapper implements ProductAlternativeMapperInterface
         }
 
         return $productAlternativeCollectionTransfer;
+    }
+
+    /**
+     * @param array $productAbstractData
+     *
+     * @return \Generated\Shared\Transfer\ProductAlternativeListItemTransfer
+     */
+    public function mapProductAbstractDataToProductAlternativeListItemTransfer(array $productAbstractData): ProductAlternativeListItemTransfer
+    {
+        return $this->mapProductDataToProductAlternativeListItemTransfer($productAbstractData)
+            ->setType(ProductAlternativeConstants::FIELD_PRODUCT_TYPE_ABSTRACT);
+    }
+
+    /**
+     * @param array $productConcreteData
+     *
+     * @return \Generated\Shared\Transfer\ProductAlternativeListItemTransfer
+     */
+    public function mapProductConcreteDataToProductAlternativeListItemTransfer(array $productConcreteData): ProductAlternativeListItemTransfer
+    {
+        return $this->mapProductDataToProductAlternativeListItemTransfer($productConcreteData)
+            ->setType(ProductAlternativeConstants::FIELD_PRODUCT_TYPE_ABSTRACT);
+    }
+
+    /**
+     * @param array $productData
+     *
+     * @return \Generated\Shared\Transfer\ProductAlternativeListItemTransfer
+     */
+    protected function mapProductDataToProductAlternativeListItemTransfer(array $productData): ProductAlternativeListItemTransfer
+    {
+        return (new ProductAlternativeListItemTransfer())
+            ->setIdProductAlternative($productData[ProductAlternativeConstants::COL_ID])
+            ->setName($productData[ProductAlternativeConstants::COL_NAME])
+            ->setSku($productData[ProductAlternativeConstants::COL_SKU])
+            ->setCategories(
+                explode(
+                    ProductAlternativeConstants::COL_SEPARATOR_CATEGORIES,
+                    $productData[ProductAlternativeConstants::COL_CATEGORIES]
+                )
+            )
+            ->setStatus($productData[ProductAlternativeConstants::COL_STATUS]);
     }
 }
