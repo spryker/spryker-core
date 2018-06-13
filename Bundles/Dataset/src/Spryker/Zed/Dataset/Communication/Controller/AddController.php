@@ -48,8 +48,6 @@ class AddController extends AbstractController
                 return $this->redirectResponse($redirectUrl);
             } catch (DatasetParseException $e) {
                 $this->addErrorMessage($e->getMessage());
-            } catch (Exception $e) {
-                $this->addErrorMessage(static::MESSAGE_DATASET_PARSE_ERROR);
             }
         }
 
