@@ -23,7 +23,7 @@ class DatasetMapper implements DatasetMapperInterface
      *
      * @return \Generated\Shared\Transfer\DatasetTransfer
      */
-    public function getResponseDatasetTransfer(SpyDataset $datasetEntity)
+    public function getResponseDatasetTransfer(SpyDataset $datasetEntity): DatasetTransfer
     {
         $datasetTransfer = new DatasetTransfer();
         $datasetTransfer->fromArray($datasetEntity->toArray(), true);
@@ -42,7 +42,7 @@ class DatasetMapper implements DatasetMapperInterface
     protected function appendDatasetLocalizedAttributesTransfers(
         SpyDataset $datasetEntity,
         DatasetTransfer $datasetTransfer
-    ) {
+    ): void {
         foreach ($datasetEntity->getSpyDatasetLocalizedAttributess() as $datasetLocalizedAttribute) {
             $localTransfer = new LocaleTransfer();
             $localTransfer->fromArray($datasetLocalizedAttribute->getLocale()->toArray());
@@ -62,7 +62,7 @@ class DatasetMapper implements DatasetMapperInterface
     protected function appendDatasetRowColumnTransfers(
         SpyDataset $datasetEntity,
         DatasetTransfer $datasetTransfer
-    ) {
+    ): void {
         foreach ($datasetEntity->getSpyDatasetRowColumnValues() as $datasetRowColumnValue) {
             $datasetRowColumnValueTransfer = new DatasetRowColumnValueTransfer();
             $datasetRowTransfer = $this->createDatasetRowTransfer($datasetRowColumnValue);
@@ -79,7 +79,7 @@ class DatasetMapper implements DatasetMapperInterface
      *
      * @return \Generated\Shared\Transfer\DatasetRowTransfer
      */
-    protected function createDatasetRowTransfer(SpyDatasetRowColumnValue $datasetRowColumnValueEntity)
+    protected function createDatasetRowTransfer(SpyDatasetRowColumnValue $datasetRowColumnValueEntity): DatasetRowTransfer
     {
         $datasetRowTransfer = new DatasetRowTransfer();
         $datasetRowTransfer->fromArray($datasetRowColumnValueEntity->getSpyDatasetRow()->toArray());
@@ -92,7 +92,7 @@ class DatasetMapper implements DatasetMapperInterface
      *
      * @return \Generated\Shared\Transfer\DatasetColumnTransfer
      */
-    protected function createDatasetColumnTransfer(SpyDatasetRowColumnValue $datasetRowColumnValueEntity)
+    protected function createDatasetColumnTransfer(SpyDatasetRowColumnValue $datasetRowColumnValueEntity): DatasetColumnTransfer
     {
         $datasetColumnTransfer = new DatasetColumnTransfer();
         $datasetColumnTransfer->fromArray($datasetRowColumnValueEntity->getSpyDatasetColumn()->toArray());

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Dataset\Persistence;
 
+use Generated\Shared\Transfer\DatasetTransfer;
 use Orm\Zed\Dataset\Persistence\SpyDatasetQuery;
 use Spryker\Zed\Dataset\Business\Exception\DatasetNotFoundException;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -22,7 +23,7 @@ class DatasetRepository extends AbstractRepository implements DatasetRepositoryI
      *
      * @return bool
      */
-    public function existsDatasetById($idDataset)
+    public function existsDatasetById($idDataset): bool
     {
         $count = $this->getFactory()->createSpyDatasetRowColumnValueQuery()->filterByFkDataset($idDataset)->count();
 
@@ -34,7 +35,7 @@ class DatasetRepository extends AbstractRepository implements DatasetRepositoryI
      *
      * @return bool
      */
-    public function existsDatasetByName($name)
+    public function existsDatasetByName($name): bool
     {
         return ($this->getFactory()->createDatasetQuery()->filterByName($name)->count() > 0);
     }
@@ -46,7 +47,7 @@ class DatasetRepository extends AbstractRepository implements DatasetRepositoryI
      *
      * @return \Generated\Shared\Transfer\DatasetTransfer
      */
-    public function getDatasetByIdWithRelation($idDataset)
+    public function getDatasetByIdWithRelation($idDataset): DatasetTransfer
     {
         $datasetEntity = $this->joinDatasetRelations(
             $this->getFactory()->createDatasetQuery()->filterByIdDataset($idDataset)
@@ -66,7 +67,7 @@ class DatasetRepository extends AbstractRepository implements DatasetRepositoryI
      *
      * @return \Generated\Shared\Transfer\DatasetTransfer
      */
-    public function getDatasetByNameWithRelation($datasetName)
+    public function getDatasetByNameWithRelation($datasetName): DatasetTransfer
     {
         $datasetEntity = $this->joinDatasetRelations(
             $this->getFactory()->createDatasetQuery()->filterByName($datasetName)
@@ -84,7 +85,7 @@ class DatasetRepository extends AbstractRepository implements DatasetRepositoryI
      *
      * @return \Orm\Zed\Dataset\Persistence\SpyDatasetQuery
      */
-    protected function joinDatasetRelations(SpyDatasetQuery $datasetQuery)
+    protected function joinDatasetRelations(SpyDatasetQuery $datasetQuery): SpyDatasetQuery
     {
         return $datasetQuery->leftJoinWithSpyDatasetLocalizedAttributes()
             ->useSpyDatasetRowColumnValueQuery(null, Criteria::LEFT_JOIN)

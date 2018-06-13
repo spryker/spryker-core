@@ -17,19 +17,19 @@ interface DatasetEntityManagerInterface
      *
      * @return void
      */
-    public function updateIsActiveByIdDataset($idDataset, $isActive);
+    public function updateIsActiveByIdDataset($idDataset, $isActive): void;
 
     /**
      * @param int $idDataset
      *
      * @return void
      */
-    public function delete($idDataset);
+    public function delete($idDataset): void;
 
     /**
      * @param \Generated\Shared\Transfer\DatasetTransfer $datasetTransfer
      *
      * @return void
      */
-    public function saveDataset(DatasetTransfer $datasetTransfer);
+    public function saveDataset(DatasetTransfer $datasetTransfer): void;
 }

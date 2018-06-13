@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Dataset\Business\Model;
 
+use ArrayObject;
 use Generated\Shared\Transfer\DatasetFilePathTransfer;
 
 interface ReaderInterface
@@ -18,5 +19,5 @@ interface ReaderInterface
      *
      * @return \Generated\Shared\Transfer\DatasetRowColumnValueTransfer[]
      */
-    public function parseFileToDataTransfers(DatasetFilePathTransfer $filePathTransfer);
+    public function parseFileToDataTransfers(DatasetFilePathTransfer $filePathTransfer): ArrayObject;
 }

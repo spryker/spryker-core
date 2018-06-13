@@ -49,7 +49,7 @@ class DatasetDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addLocaleFacade(Container $container)
+    protected function addLocaleFacade(Container $container): Container
     {
         $container[static::FACADE_LOCALE] = function (Container $container) {
             return new DatasetToLocaleFacadeBridge($container->getLocator()->locale()->facade());

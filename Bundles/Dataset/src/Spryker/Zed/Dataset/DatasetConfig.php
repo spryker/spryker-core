@@ -15,9 +15,9 @@ class DatasetConfig extends AbstractBundleConfig
     protected const DEFAULT_SIZE = '1M';
 
     /**
-     * @return mixed|string
+     * @return string
      */
-    public function getMaxFileSize()
+    public function getMaxFileSize(): string
     {
         return $path = $this->getConfig()->hasValue(static::DATASET_FILE_SIZE) ?
             $this->getConfig()->get(static::DATASET_FILE_SIZE) : static::DEFAULT_SIZE;

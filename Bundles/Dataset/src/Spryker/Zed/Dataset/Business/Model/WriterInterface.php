@@ -16,5 +16,5 @@ interface WriterInterface
      *
      * @return string
      */
-    public function getCsvByDataset(DatasetTransfer $datasetTransfer);
+    public function getCsvByDataset(DatasetTransfer $datasetTransfer): string;
 }

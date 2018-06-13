@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Dataset\Business\Model;
 
+use Generated\Shared\Transfer\DatasetTransfer;
 use Spryker\Zed\Dataset\Persistence\DatasetEntityManagerInterface;
 use Spryker\Zed\Dataset\Persistence\DatasetRepositoryInterface;
 
@@ -37,7 +38,7 @@ class DatasetFinder implements DatasetFinderInterface
      *
      * @return bool
      */
-    public function existsDatasetByName($name)
+    public function existsDatasetByName($name): bool
     {
         return $this->repository->existsDatasetByName($name);
     }
@@ -47,7 +48,7 @@ class DatasetFinder implements DatasetFinderInterface
      *
      * @return \Generated\Shared\Transfer\DatasetTransfer
      */
-    public function getDatasetModelById($idDataset)
+    public function getDatasetModelById($idDataset): DatasetTransfer
     {
         return $this->repository->getDatasetByIdWithRelation($idDataset);
     }
@@ -57,7 +58,7 @@ class DatasetFinder implements DatasetFinderInterface
      *
      * @return \Generated\Shared\Transfer\DatasetTransfer
      */
-    public function getDatasetModelByName($datasetName)
+    public function getDatasetModelByName($datasetName): DatasetTransfer
     {
         return $this->repository->getDatasetByNameWithRelation($datasetName);
     }

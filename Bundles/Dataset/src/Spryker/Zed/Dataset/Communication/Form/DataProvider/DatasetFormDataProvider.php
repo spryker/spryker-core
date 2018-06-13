@@ -61,7 +61,7 @@ class DatasetFormDataProvider
      *
      * @return array
      */
-    public function getOptions($idDataset)
+    public function getOptions($idDataset): array
     {
         return [
             DatasetForm::OPTION_AVAILABLE_LOCALES => $this->getAvailableLocales(),
@@ -72,7 +72,7 @@ class DatasetFormDataProvider
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
-    protected function getAvailableLocales()
+    protected function getAvailableLocales(): array
     {
         return $this->localeFacade->getLocaleCollection();
     }
@@ -80,7 +80,7 @@ class DatasetFormDataProvider
     /**
      * @return \Generated\Shared\Transfer\DatasetTransfer
      */
-    protected function createSpyDatasetTransfer()
+    protected function createSpyDatasetTransfer(): DatasetTransfer
     {
         $datasetTransfer = new DatasetTransfer();
         foreach ($this->getAvailableLocales() as $locale) {
@@ -103,7 +103,7 @@ class DatasetFormDataProvider
     protected function addSpyDatasetLocalizedAttributeTransfers(
         SpyDataset $dataset,
         DatasetTransfer $datasetTransfer
-    ) {
+    ): void {
         $savedLocalizedAttributes = $dataset->getSpyDatasetLocalizedAttributess()
             ->toKeyIndex(static::FK_LOCALE_KEY);
         foreach ($datasetTransfer->getDatasetLocalizedAttributes() as $datasetLocalizedAttributeTransfer) {

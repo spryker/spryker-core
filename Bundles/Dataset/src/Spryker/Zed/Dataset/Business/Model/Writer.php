@@ -33,7 +33,7 @@ class Writer implements WriterInterface
      *
      * @return string
      */
-    public function getCsvByDataset(DatasetTransfer $datasetTransfer)
+    public function getCsvByDataset(DatasetTransfer $datasetTransfer): string
     {
         $writer = $this->datasetToCsvBridge->createCsvWriter();
         $this->insertDataByTransfer($writer, $datasetTransfer);
@@ -47,7 +47,7 @@ class Writer implements WriterInterface
      *
      * @return void
      */
-    protected function insertDataByTransfer(CsvWriter $writer, DatasetTransfer $datasetTransfer)
+    protected function insertDataByTransfer(CsvWriter $writer, DatasetTransfer $datasetTransfer): void
     {
         $header = [''];
         $rowValues = [];

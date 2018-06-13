@@ -49,7 +49,7 @@ class Reader implements ReaderInterface
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\DatasetRowColumnValueTransfer[]
      */
-    public function parseFileToDataTransfers(DatasetFilePathTransfer $filePathTransfer)
+    public function parseFileToDataTransfers(DatasetFilePathTransfer $filePathTransfer): ArrayObject
     {
         $reader = $this->getReader($filePathTransfer);
         $datasetRowColumnValueTransfers = new ArrayObject();
@@ -82,7 +82,7 @@ class Reader implements ReaderInterface
      *
      * @return \League\Csv\Reader
      */
-    protected function getReader(DatasetFilePathTransfer $filePathTransfer)
+    protected function getReader(DatasetFilePathTransfer $filePathTransfer): CsvReader
     {
         try {
             $csv = $this->datasetToCsvBridge->createCsvReader($filePathTransfer->getFilePath(), static::OPEN_MODE);
@@ -101,7 +101,7 @@ class Reader implements ReaderInterface
      *
      * @return \Generated\Shared\Transfer\DatasetColumnTransfer[]
      */
-    protected function getDatasetColumnTransfers(CsvReader $reader)
+    protected function getDatasetColumnTransfers(CsvReader $reader): array
     {
         $columns = $reader->getHeader();
         if (count($columns) <= static::MIN_COLUMNS || !empty($columns[static::FIRST_HEADER_KEY])) {
@@ -122,7 +122,7 @@ class Reader implements ReaderInterface
      *
      * @return \Generated\Shared\Transfer\DatasetColumnTransfer
      */
-    protected function getDatasetColumnTransfer($column)
+    protected function getDatasetColumnTransfer($column): DatasetColumnTransfer
     {
         $datasetColumnTransfer = new DatasetColumnTransfer();
         $datasetColumnTransfer->setTitle($column);
@@ -135,7 +135,7 @@ class Reader implements ReaderInterface
      *
      * @return \Generated\Shared\Transfer\DatasetRowTransfer
      */
-    protected function getDatasetRowTransfer($row)
+    protected function getDatasetRowTransfer($row): DatasetRowTransfer
     {
         $datasetRowTransfer = new DatasetRowTransfer();
         $datasetRowTransfer->setTitle($row);
@@ -154,7 +154,7 @@ class Reader implements ReaderInterface
         DatasetColumnTransfer $datasetColumnValueTransfer,
         DatasetRowTransfer $datasetRowValueTransfer,
         $value
-    ) {
+    ): DatasetRowColumnValueTransfer {
         $datasetRowColumnValueTransfer = new DatasetRowColumnValueTransfer();
         $datasetRowColumnValueTransfer->setDatasetColumn($datasetColumnValueTransfer);
         $datasetRowColumnValueTransfer->setDatasetRow($datasetRowValueTransfer);
