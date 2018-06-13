@@ -46,7 +46,7 @@ class PermissionTest extends Unit
      * @var \Generated\Shared\Transfer\SpyQuoteCompanyUserEntityTransfer
      */
     protected $quoteCompanyUserEntityTransfer1;
-    
+
     /**
      * @var \Generated\Shared\Transfer\SpyQuoteCompanyUserEntityTransfer
      */

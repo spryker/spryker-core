@@ -2,11 +2,11 @@ parameters:
     bootstrap: %rootDir%/../../../phpstan-bootstrap.php
 
     ignoreErrors:
-    - '#Call to method .+ on an unknown class .+DialogHelper.#'
-    - '#Call to an undefined method .+ActiveRecordInterface::save\(\)#'
-    - '#Access to an undefined static property .+EntityTransferInterface::\$entityNamespace.#'
-    - '#Call to an undefined method .+ActiveRecordInterface::toArray\(\).#'
-    - '#Access to undefined constant .+ActiveRecordInterface::TABLE_MAP.#'
+        - '#Call to method .+ on an unknown class .+DialogHelper.#'
+        - '#Call to an undefined method .+ActiveRecordInterface::save\(\)#'
+        - '#Access to an undefined static property .+EntityTransferInterface::\$entityNamespace.#'
+        - '#Call to an undefined method .+ActiveRecordInterface::toArray\(\).#'
+        - '#Access to undefined constant .+ActiveRecordInterface::TABLE_MAP.#'
 
 services:
     -
