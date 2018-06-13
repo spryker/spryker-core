@@ -8,17 +8,17 @@
 namespace Spryker\Zed\Dataset\Business\Model;
 
 use Generated\Shared\Transfer\DatasetFilePathTransfer;
-use Generated\Shared\Transfer\SpyDatasetEntityTransfer;
+use Generated\Shared\Transfer\DatasetTransfer;
 
 interface DatasetSaverInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SpyDatasetEntityTransfer $datasetEntityTransfer
+     * @param \Generated\Shared\Transfer\DatasetTransfer $datasetTransfer
      * @param \Generated\Shared\Transfer\DatasetFilePathTransfer|null $filePathTransfer
      *
      * @return void
      */
-    public function save(SpyDatasetEntityTransfer $datasetEntityTransfer, ?DatasetFilePathTransfer $filePathTransfer = null);
+    public function save(DatasetTransfer $datasetTransfer, ?DatasetFilePathTransfer $filePathTransfer = null);
 
     /**
      * @param int $idDataset

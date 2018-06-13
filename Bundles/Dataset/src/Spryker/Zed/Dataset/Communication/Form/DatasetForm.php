@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Dataset\Communication\Form;
 
-use Generated\Shared\Transfer\SpyDatasetEntityTransfer;
+use Generated\Shared\Transfer\DatasetTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -35,7 +35,7 @@ class DatasetForm extends AbstractType
     const DATASET_DATA_CONTENT = 'spyDatasetRowColumnValues';
     const DATASET_FILE_CONTENT = 'contentFile';
     const FIELD_USE_REAL_NAME = 'useRealName';
-    const DATASET_LOCALIZED_ATTRIBUTES = 'getSpyDatasetLocalizedAttributess';
+    const DATASET_LOCALIZED_ATTRIBUTES = 'getDatasetLocalizedAttributes';
     const OPTION_DATA_CLASS = 'data_class';
     const OPTION_AVAILABLE_LOCALES = 'option_available_locales';
     const DATASET_HAS_DATA = 'datasetHasData';
@@ -67,7 +67,7 @@ class DatasetForm extends AbstractType
         $resolver->setRequired(static::OPTION_AVAILABLE_LOCALES);
         $resolver->setRequired(static::DATASET_HAS_DATA);
         $resolver->setDefaults([
-            static::OPTION_DATA_CLASS => SpyDatasetEntityTransfer::class,
+            static::OPTION_DATA_CLASS => DatasetTransfer::class,
             'validation_groups' => function (FormInterface $form) {
                 $defaultData = $form->getConfig()->getData()->toArray();
                 $submittedData = $form->getData()->toArray();

@@ -44,7 +44,7 @@ class DatasetRepository extends AbstractRepository implements DatasetRepositoryI
      *
      * @throws \Spryker\Zed\Dataset\Business\Exception\DatasetNotFoundException
      *
-     * @return \Generated\Shared\Transfer\SpyDatasetEntityTransfer
+     * @return \Generated\Shared\Transfer\DatasetTransfer
      */
     public function getDatasetByIdWithRelation($idDataset)
     {
@@ -64,7 +64,7 @@ class DatasetRepository extends AbstractRepository implements DatasetRepositoryI
      *
      * @throws \Spryker\Zed\Dataset\Business\Exception\DatasetNotFoundException
      *
-     * @return \Generated\Shared\Transfer\SpyDatasetEntityTransfer
+     * @return \Generated\Shared\Transfer\DatasetTransfer
      */
     public function getDatasetByNameWithRelation($datasetName)
     {

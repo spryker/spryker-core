@@ -10,9 +10,9 @@ namespace SprykerTest\Zed\Dataset;
 use Codeception\Actor;
 use Codeception\Configuration;
 use Generated\Shared\Transfer\DatasetFilePathTransfer;
-use Generated\Shared\Transfer\SpyDatasetEntityTransfer;
-use Generated\Shared\Transfer\SpyDatasetLocalizedAttributesEntityTransfer;
-use Generated\Shared\Transfer\SpyLocaleEntityTransfer;
+use Generated\Shared\Transfer\DatasetLocalizedAttributeTransfer;
+use Generated\Shared\Transfer\DatasetTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 
 /**
  * Inherited Methods
@@ -49,11 +49,11 @@ class DatasetBusinessTester extends Actor
     /**
      * array $data
      *
-     * @return \Generated\Shared\Transfer\SpyDatasetEntityTransfer
+     * @return \Generated\Shared\Transfer\DatasetTransfer
      */
-    public function createDatasetTransfer(): SpyDatasetEntityTransfer
+    public function createDatasetTransfer(): DatasetTransfer
     {
-        $datasetEntity = new SpyDatasetEntityTransfer();
+        $datasetEntity = new DatasetTransfer();
         $datasetEntity->setName(sprintf('Test Dashboard %s', rand(1, 999)));
         $datasetEntity->setIsActive(true);
 
@@ -63,20 +63,20 @@ class DatasetBusinessTester extends Actor
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyDatasetEntityTransfer $datasetEntity
+     * @param \Generated\Shared\Transfer\DatasetTransfer $datasetEntity
      *
      * @return void
      */
-    protected function addDatasetLocalizedAttributes(SpyDatasetEntityTransfer $datasetEntity): void
+    protected function addDatasetLocalizedAttributes(DatasetTransfer $datasetEntity): void
     {
         $localizedAttributes = $this->getLocator()->locale()->facade()->getAvailableLocales();
         foreach ($localizedAttributes as $idLocale => $localizedAttribute) {
-            $datasetLocalizedAttributesEntityTransfer = new SpyDatasetLocalizedAttributesEntityTransfer();
-            $localeEntityTransfer = new SpyLocaleEntityTransfer();
-            $localeEntityTransfer->setIdLocale($idLocale);
-            $datasetLocalizedAttributesEntityTransfer->setLocale($localeEntityTransfer);
-            $datasetLocalizedAttributesEntityTransfer->setTitle($localizedAttribute);
-            $datasetEntity->addSpyDatasetLocalizedAttributess($datasetLocalizedAttributesEntityTransfer);
+            $datasetLocalizedAttributesTransfer = new DatasetLocalizedAttributeTransfer();
+            $localeTransfer = new LocaleTransfer();
+            $localeTransfer->setIdLocale($idLocale);
+            $datasetLocalizedAttributesTransfer->setLocale($localeTransfer);
+            $datasetLocalizedAttributesTransfer->setTitle($localizedAttribute);
+            $datasetEntity->addDatasetLocalizedAttribute($datasetLocalizedAttributesTransfer);
         }
     }
 }

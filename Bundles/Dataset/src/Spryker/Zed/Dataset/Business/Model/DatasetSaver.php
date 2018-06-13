@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Dataset\Business\Model;
 
 use Generated\Shared\Transfer\DatasetFilePathTransfer;
-use Generated\Shared\Transfer\SpyDatasetEntityTransfer;
+use Generated\Shared\Transfer\DatasetTransfer;
 use Spryker\Zed\Dataset\Persistence\DatasetEntityManagerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
@@ -39,19 +39,19 @@ class DatasetSaver implements DatasetSaverInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyDatasetEntityTransfer $datasetEntityTransfer
+     * @param \Generated\Shared\Transfer\DatasetTransfer $datasetTransfer
      * @param \Generated\Shared\Transfer\DatasetFilePathTransfer|null $filePathTransfer
      *
      * @return void
      */
-    public function save(SpyDatasetEntityTransfer $datasetEntityTransfer, ?DatasetFilePathTransfer $filePathTransfer = null)
+    public function save(DatasetTransfer $datasetTransfer, ?DatasetFilePathTransfer $filePathTransfer = null)
     {
         if ($filePathTransfer !== null && file_exists($filePathTransfer->getFilePath())) {
-            $datasetEntityTransfer->setSpyDatasetRowColumnValues(
+            $datasetTransfer->setDatasetRowColumnValues(
                 $this->reader->parseFileToDataTransfers($filePathTransfer)
             );
         }
-        $this->entityManager->saveDataset($datasetEntityTransfer);
+        $this->entityManager->saveDataset($datasetTransfer);
     }
 
     /**

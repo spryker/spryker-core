@@ -36,10 +36,10 @@ class EditController extends AbstractController
         $form = $this->getFactory()->getDatasetForm($idDataset)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $datasetEntityTransfer = $form->getData();
+            $datasetTransfer = $form->getData();
             $file = $form->get('contentFile')->getData();
             try {
-                $this->saveDataset($datasetEntityTransfer, $file);
+                $this->saveDataset($datasetTransfer, $file);
                 $redirectUrl = Url::generate(static::DATSET_LIST_URL)->build();
 
                 return $this->redirectResponse($redirectUrl);
@@ -56,21 +56,21 @@ class EditController extends AbstractController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyDatasetEntityTransfer $datasetEntityTransfer
+     * @param \Generated\Shared\Transfer\DatasetTransfer $datasetTransfer
      * @param string $file
      *
      * @return void
      */
-    protected function saveDataset($datasetEntityTransfer, $file)
+    protected function saveDataset($datasetTransfer, $file)
     {
         if ($file instanceof UploadedFile) {
             $filePathTransfer = new DatasetFilePathTransfer();
             $filePathTransfer->setFilePath($file->getRealPath());
-            $this->getFacade()->save($datasetEntityTransfer, $filePathTransfer);
+            $this->getFacade()->save($datasetTransfer, $filePathTransfer);
 
             return;
         }
 
-        $this->getFacade()->saveDataset($datasetEntityTransfer);
+        $this->getFacade()->saveDataset($datasetTransfer);
     }
 }

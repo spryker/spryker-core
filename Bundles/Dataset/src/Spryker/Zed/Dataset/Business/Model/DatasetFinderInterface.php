@@ -19,14 +19,14 @@ interface DatasetFinderInterface
     /**
      * @param int $idDataset
      *
-     * @return \Generated\Shared\Transfer\SpyDatasetEntityTransfer
+     * @return \Generated\Shared\Transfer\DatasetTransfer
      */
     public function getDatasetModelById($idDataset);
 
     /**
      * @param string $datasetName
      *
-     * @return \Generated\Shared\Transfer\SpyDatasetEntityTransfer
+     * @return \Generated\Shared\Transfer\DatasetTransfer
      */
     public function getDatasetModelByName($datasetName);
 }

@@ -14,7 +14,7 @@ interface DatasetMapperInterface
     /**
      * @param \Orm\Zed\Dataset\Persistence\SpyDataset $datasetEntity
      *
-     * @return \Generated\Shared\Transfer\SpyDatasetEntityTransfer
+     * @return \Generated\Shared\Transfer\DatasetTransfer
      */
     public function getResponseDatasetTransfer(SpyDataset $datasetEntity);
 }

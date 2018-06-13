@@ -34,14 +34,14 @@ class AddController extends AbstractController
         $form = $this->getFactory()->getDatasetForm()->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $datasetEntityTransfer = $form->getData();
+            $datasetTransfer = $form->getData();
             $file = $form->get('contentFile')->getData();
             $filePathTransfer = new DatasetFilePathTransfer();
             if ($file instanceof UploadedFile) {
                 $filePathTransfer->setFilePath($file->getRealPath());
             }
             try {
-                $this->getFacade()->save($datasetEntityTransfer, $filePathTransfer);
+                $this->getFacade()->save($datasetTransfer, $filePathTransfer);
                 $redirectUrl = Url::generate(static::DATSET_LIST_URL)->build();
 
                 return $this->redirectResponse($redirectUrl);
