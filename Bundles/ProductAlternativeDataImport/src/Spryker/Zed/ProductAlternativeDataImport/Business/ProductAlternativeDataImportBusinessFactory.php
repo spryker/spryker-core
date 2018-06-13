@@ -26,11 +26,12 @@ class ProductAlternativeDataImportBusinessFactory extends DataImportBusinessFact
         $dataImporter = $this->getCsvDataImporterFromConfig($this->getConfig()->getProductAlternativeDataImporterConfiguration());
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
-        $dataSetStepBroker->addStep($this->createDataValidationStep());
-        $dataSetStepBroker->addStep($this->createProductSkuToProductIdStep());
-        $dataSetStepBroker->addStep($this->createAlternativeProductConcreteSkuToProductIdStep());
-        $dataSetStepBroker->addStep($this->createAlternativeProductAbstractSkuToProductIdStep());
-        $dataSetStepBroker->addStep($this->createProductAlternativeDataImportWriterStep());
+        $dataSetStepBroker
+            ->addStep($this->createDataValidationStep())
+            ->addStep($this->createProductSkuToProductIdStep())
+            ->addStep($this->createAlternativeProductConcreteSkuToProductIdStep())
+            ->addStep($this->createAlternativeProductAbstractSkuToProductIdStep())
+            ->addStep($this->createProductAlternativeDataImportWriterStep());
 
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
 

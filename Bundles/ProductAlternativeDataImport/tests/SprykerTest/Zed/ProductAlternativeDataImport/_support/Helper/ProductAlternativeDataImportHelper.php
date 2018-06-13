@@ -18,7 +18,7 @@ class ProductAlternativeDataImportHelper extends Module
     public function ensureDatabaseTableIsEmpty(): void
     {
         $query = $this->getProductAlternativeQuery();
-        $query->deleteAll();
+        $query->find()->delete();
     }
 
     /**

@@ -16,7 +16,7 @@ use Spryker\Zed\ProductAlternativeDataImport\Business\Model\DataSet\ProductAlter
 class AlternativeProductConcreteSkuToProductIdStep implements DataImportStepInterface
 {
     /**
-     * @var array
+     * @var int[]
      */
     protected $idProductAlternativeCache = [];
 
@@ -40,7 +40,7 @@ class AlternativeProductConcreteSkuToProductIdStep implements DataImportStepInte
 
             if (!$productAlternativeEntity) {
                 throw new EntityNotFoundException(sprintf(
-                    'Could not find concrete product by sku "%s"',
+                    'Could not find product by sku "%s"',
                     $productAlternativeSku
                 ));
             }

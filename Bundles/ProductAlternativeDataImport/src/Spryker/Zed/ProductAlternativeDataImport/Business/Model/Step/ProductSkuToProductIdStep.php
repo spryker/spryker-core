@@ -16,7 +16,7 @@ use Spryker\Zed\ProductAlternativeDataImport\Business\Model\DataSet\ProductAlter
 class ProductSkuToProductIdStep implements DataImportStepInterface
 {
     /**
-     * @var array
+     * @var int[]
      */
     protected $idProductCache = [];
 

@@ -29,7 +29,7 @@ class ProductAlternativeWriterStep implements DataImportStepInterface
             $productAlternativeEntity = $productAlternativeEntity->filterByFkProductConcreteAlternative(
                 $dataSet[ProductAlternativeDataSetInterface::FK_PRODUCT_CONCRETE_ALTERNATIVE]
             )->findOneOrCreate()->setFkProductConcreteAlternative(
-                $dataSet[ProductAlternativeDataSetInterface::KEY_COLUMN_ALTERNATIVE_PRODUCT_CONCRETE_SKU]
+                $dataSet[ProductAlternativeDataSetInterface::FK_PRODUCT_CONCRETE_ALTERNATIVE]
             );
         }
 
@@ -37,7 +37,7 @@ class ProductAlternativeWriterStep implements DataImportStepInterface
             $productAlternativeEntity = $productAlternativeEntity->filterByFkProductAbstractAlternative(
                 $dataSet[ProductAlternativeDataSetInterface::FK_PRODUCT_ABSTRACT_ALTERNATIVE]
             )->findOneOrCreate()->setFkProductAbstractAlternative(
-                $dataSet[ProductAlternativeDataSetInterface::KEY_COLUMN_ALTERNATIVE_PRODUCT_ABSTRACT_SKU]
+                $dataSet[ProductAlternativeDataSetInterface::FK_PRODUCT_ABSTRACT_ALTERNATIVE]
             );
         }
 
