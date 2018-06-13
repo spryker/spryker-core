@@ -36,19 +36,18 @@ class AlternativeProductAbstractSkuToProductIdStep implements DataImportStepInte
         $productAlternativeSku = $dataSet[ProductAlternativeDataSetInterface::KEY_COLUMN_ALTERNATIVE_PRODUCT_ABSTRACT_SKU];
 
         if (!isset($this->idProductAlternativeCache[$productAlternativeSku])) {
-            $idProductAlternative = SpyProductAbstractQuery::create()->findOneBySku($productAlternativeSku)
-                ->getIdProductAbstract();
+            $productAlternativeEntity = SpyProductAbstractQuery::create()->findOneBySku($productAlternativeSku);
 
-            if (!$idProductAlternative) {
+            if (!$productAlternativeEntity) {
                 throw new EntityNotFoundException(sprintf(
                     'Could not find abstract product by sku "%s"',
                     $productAlternativeSku
                 ));
             }
 
-            $this->idProductAlternativeCache[$productAlternativeSku] = $idProductAlternative;
+            $this->idProductAlternativeCache[$productAlternativeSku] = $productAlternativeEntity->getIdProductAbstract();
         }
-        $dataSet[ProductAlternativeDataSetInterface::KEY_COLUMN_ALTERNATIVE_PRODUCT_ABSTRACT_ID] =
+        $dataSet[ProductAlternativeDataSetInterface::FK_PRODUCT_ABSTRACT_ALTERNATIVE] =
             $this->idProductAlternativeCache[$productAlternativeSku];
     }
 }

@@ -40,7 +40,7 @@ class ProductAlternativeDataImportPluginTest extends Unit
         $this->tester->ensureDatabaseTableIsEmpty();
 
         $dataImportConfigurationTransfer = $this->getDataImportConfigurationTransfer('import/product_alternative.csv');
-        $dataImportConfigurationTransfer->setThrowException(false);
+        $dataImportConfigurationTransfer->setThrowException(true);
 
         $productAlternativeDataImportPlugin = new ProductAlternativeDataImportPlugin();
         $dataImporterReportTransfer = $productAlternativeDataImportPlugin->import($dataImportConfigurationTransfer);
@@ -63,7 +63,7 @@ class ProductAlternativeDataImportPluginTest extends Unit
         $productAlternativeDataImportPlugin = new ProductAlternativeDataImportPlugin();
 
         $this->expectException(DataImportException::class);
-        $this->expectExceptionMessage('Product concrete with "999999999" SKU was not found during data import');
+        $this->expectExceptionMessage('Could not find concrete product by sku "999999999"');
         $productAlternativeDataImportPlugin->import($dataImportConfigurationTransfer);
     }
 

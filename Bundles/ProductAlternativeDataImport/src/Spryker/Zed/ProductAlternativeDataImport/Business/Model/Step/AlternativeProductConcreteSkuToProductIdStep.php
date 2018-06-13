@@ -36,18 +36,18 @@ class AlternativeProductConcreteSkuToProductIdStep implements DataImportStepInte
         $productAlternativeSku = $dataSet[ProductAlternativeDataSetInterface::KEY_COLUMN_ALTERNATIVE_PRODUCT_CONCRETE_SKU];
 
         if (!isset($this->idProductAlternativeCache[$productAlternativeSku])) {
-            $idProductAlternative = SpyProductQuery::create()->findOneBySku($productAlternativeSku)->getIdProduct();
+            $productAlternativeEntity = SpyProductQuery::create()->findOneBySku($productAlternativeSku);
 
-            if (!$idProductAlternative) {
+            if (!$productAlternativeEntity) {
                 throw new EntityNotFoundException(sprintf(
                     'Could not find concrete product by sku "%s"',
                     $productAlternativeSku
                 ));
             }
 
-            $this->idProductAlternativeCache[$productAlternativeSku] = $idProductAlternative;
+            $this->idProductAlternativeCache[$productAlternativeSku] = $productAlternativeEntity->getIdProduct();
         }
-        $dataSet[ProductAlternativeDataSetInterface::KEY_COLUMN_ALTERNATIVE_PRODUCT_CONCRETE_ID] =
+        $dataSet[ProductAlternativeDataSetInterface::FK_PRODUCT_CONCRETE_ALTERNATIVE] =
             $this->idProductAlternativeCache[$productAlternativeSku];
     }
 }

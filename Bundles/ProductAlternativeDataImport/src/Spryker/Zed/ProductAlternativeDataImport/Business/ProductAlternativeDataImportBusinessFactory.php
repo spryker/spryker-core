@@ -38,41 +38,41 @@ class ProductAlternativeDataImportBusinessFactory extends DataImportBusinessFact
     }
 
     /**
-     * @return \Spryker\Zed\ProductAlternativeDataImport\Business\Model\ProductAlternativeWriterStep
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    public function createProductAlternativeDataImportWriterStep(): ProductAlternativeWriterStep
+    public function createProductAlternativeDataImportWriterStep()
     {
         return new ProductAlternativeWriterStep();
     }
 
     /**
-     * @return \Spryker\Zed\ProductAlternativeDataImport\Business\Model\Step\AlternativeProductConcreteSkuToProductIdStep
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    public function createAlternativeProductConcreteSkuToProductIdStep(): AlternativeProductConcreteSkuToProductIdStep
+    public function createAlternativeProductConcreteSkuToProductIdStep()
     {
         return new AlternativeProductConcreteSkuToProductIdStep();
     }
 
     /**
-     * @return \Spryker\Zed\ProductAlternativeDataImport\Business\Model\Step\AlternativeProductAbstractSkuToProductIdStep
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    public function createAlternativeProductAbstractSkuToProductIdStep(): AlternativeProductAbstractSkuToProductIdStep
+    public function createAlternativeProductAbstractSkuToProductIdStep()
     {
         return new AlternativeProductAbstractSkuToProductIdStep();
     }
 
     /**
-     * @return \Spryker\Zed\ProductAlternativeDataImport\Business\Model\Step\ProductSkuToProductIdStep
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    public function createProductSkuToProductIdStep(): ProductSkuToProductIdStep
+    public function createProductSkuToProductIdStep()
     {
         return new ProductSkuToProductIdStep();
     }
 
     /**
-     * @return \Spryker\Zed\ProductAlternativeDataImport\Business\Model\Step\DataValidationStep
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    public function createDataValidationStep(): DataValidationStep
+    public function createDataValidationStep()
     {
         return new DataValidationStep();
     }

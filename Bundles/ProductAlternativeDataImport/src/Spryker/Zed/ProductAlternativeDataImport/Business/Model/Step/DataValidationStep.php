@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\ProductAlternativeDataImport\Business\Model\Step;
 
+use Spryker\Zed\DataImport\Business\Exception\InvalidDataException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\ProductAlternativeDataImport\Business\Exception\NoAlternativesException;
 use Spryker\Zed\ProductAlternativeDataImport\Business\Model\DataSet\ProductAlternativeDataSetInterface;
 
 class DataValidationStep implements DataImportStepInterface
@@ -17,7 +17,7 @@ class DataValidationStep implements DataImportStepInterface
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
-     * @throws \Spryker\Zed\ProductAlternativeDataImport\Business\Exception\NoAlternativesException
+     * @throws \Spryker\Zed\DataImport\Business\Exception\InvalidDataException
      *
      * @return void
      */
@@ -26,7 +26,7 @@ class DataValidationStep implements DataImportStepInterface
         if (!$dataSet[ProductAlternativeDataSetInterface::KEY_COLUMN_ALTERNATIVE_PRODUCT_CONCRETE_SKU] &&
             !$dataSet[ProductAlternativeDataSetInterface::KEY_COLUMN_ALTERNATIVE_PRODUCT_ABSTRACT_SKU]
         ) {
-            throw new NoAlternativesException(
+            throw new InvalidDataException(
                 sprintf(
                     'Product concrete with "%s" SKU has neither concrete nor abstract alternative',
                     $dataSet[ProductAlternativeDataSetInterface::KEY_COLUMN_CONCRETE_SKU]
