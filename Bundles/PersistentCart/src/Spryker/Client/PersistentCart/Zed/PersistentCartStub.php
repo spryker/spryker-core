@@ -20,7 +20,7 @@ class PersistentCartStub extends ZedRequestStub implements PersistentCartStubInt
     /**
      * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function addItem(PersistentCartChangeTransfer $persistentCartChangeTransfer): QuoteResponseTransfer
     {
@@ -30,7 +30,7 @@ class PersistentCartStub extends ZedRequestStub implements PersistentCartStubInt
     /**
      * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function addValidItems(PersistentCartChangeTransfer $persistentCartChangeTransfer): QuoteResponseTransfer
     {
@@ -40,7 +40,7 @@ class PersistentCartStub extends ZedRequestStub implements PersistentCartStubInt
     /**
      * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function removeItem(PersistentCartChangeTransfer $persistentCartChangeTransfer): QuoteResponseTransfer
     {
@@ -70,7 +70,7 @@ class PersistentCartStub extends ZedRequestStub implements PersistentCartStubInt
     /**
      * @param \Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer $persistentCartChangeQuantityTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function decreaseItemQuantity(PersistentCartChangeQuantityTransfer $persistentCartChangeQuantityTransfer): QuoteResponseTransfer
     {
@@ -80,7 +80,7 @@ class PersistentCartStub extends ZedRequestStub implements PersistentCartStubInt
     /**
      * @param \Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer $persistentCartChangeQuantityTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function increaseItemQuantity(PersistentCartChangeQuantityTransfer $persistentCartChangeQuantityTransfer): QuoteResponseTransfer
     {

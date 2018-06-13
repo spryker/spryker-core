@@ -522,7 +522,7 @@ class AbstractProductFormDataProvider
             if ($isDefined) {
                 continue;
             }
-            
+
             $isProductSpecificAttribute = true;
             $id = null;
             $isSuper = false;

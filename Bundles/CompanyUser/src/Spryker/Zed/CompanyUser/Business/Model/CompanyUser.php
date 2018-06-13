@@ -130,6 +130,18 @@ class CompanyUser implements CompanyUserInterface
     }
 
     /**
+     * @param int $idCompanyUser
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     */
+    public function getCompanyUserById(int $idCompanyUser): CompanyUserTransfer
+    {
+        $companyUserTransfer = $this->companyUserRepository->getCompanyUserById($idCompanyUser);
+
+        return $this->companyUserPluginExecutor->executeHydrationPlugins($companyUserTransfer);
+    }
+
+    /**
      * @param int $idCustomer
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
