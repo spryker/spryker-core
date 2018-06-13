@@ -9,9 +9,12 @@ namespace Spryker\Yves\Kernel\Controller;
 
 use Silex\Application;
 use Spryker\Client\Kernel\ClassResolver\Client\ClientResolver;
+use Spryker\Shared\Config\Config;
+use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Yves\Kernel\ClassResolver\Factory\FactoryResolver;
 use Spryker\Yves\Kernel\Dependency\Messenger\KernelToMessengerBridge;
 use Spryker\Yves\Kernel\Dependency\Messenger\NullMessenger;
+use Spryker\Yves\Kernel\Exception\ForbiddenExternalRedirectException;
 use Spryker\Yves\Kernel\View\View;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -81,13 +84,19 @@ abstract class AbstractController
     }
 
     /**
-     * @param string $absoluteUrl
+     * @param $absoluteUrl
      * @param int $code
+     *
+     * @throws \Spryker\Yves\Kernel\Exception\ForbiddenExternalRedirectException
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function redirectResponseExternal($absoluteUrl, $code = 302)
     {
+        if (strpos($absoluteUrl, '/') != 0 && !$this->isUrlWhitelisted($absoluteUrl)) {
+            throw new ForbiddenExternalRedirectException("The url is not in the whitelist: $absoluteUrl");
+        }
+
         return new RedirectResponse($absoluteUrl, $code);
     }
 
@@ -237,5 +246,19 @@ abstract class AbstractController
     protected function renderView($viewPath, array $parameters = [])
     {
         return $this->getApplication()->render($viewPath, $parameters);
+    }
+
+    protected function isUrlWhitelisted(string $absoluteUrl)
+    {
+        $absoluteUrl = str_replace(['http://', 'https://'], '', $absoluteUrl);
+        $whitelistUrls = Config::getInstance()->get(KernelConstants::URL_WHITELIST);
+
+        foreach ($whitelistUrls as $whitelistUrl) {
+            if (strpos($absoluteUrl, $whitelistUrl !== false)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
