@@ -46,8 +46,6 @@ class EditController extends AbstractController
                 return $this->redirectResponse($redirectUrl);
             } catch (DatasetParseException $e) {
                 $this->addErrorMessage($e->getMessage());
-            } catch (Exception $e) {
-                $this->addErrorMessage($e->getMessage());
             }
         }
 
