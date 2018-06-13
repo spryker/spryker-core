@@ -65,7 +65,7 @@ class DatasetFormDataProvider
     {
         return [
             DatasetForm::OPTION_AVAILABLE_LOCALES => $this->getAvailableLocales(),
-            DatasetForm::DATASET_HAS_DATA => $this->repository->hasDatasetData($idDataset),
+            DatasetForm::DATASET_HAS_DATA => $this->repository->existsDatasetById($idDataset),
         ];
     }
 
