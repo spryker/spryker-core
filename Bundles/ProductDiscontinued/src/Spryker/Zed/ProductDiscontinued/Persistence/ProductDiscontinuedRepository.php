@@ -19,6 +19,8 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 class ProductDiscontinuedRepository extends AbstractRepository implements ProductDiscontinuedRepositoryInterface
 {
     /**
+     * @uses Product
+     *
      * @param \Generated\Shared\Transfer\ProductDiscontinuedTransfer $productDiscontinuedTransfer
      *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedTransfer|null
@@ -62,6 +64,8 @@ class ProductDiscontinuedRepository extends AbstractRepository implements Produc
     }
 
     /**
+     * @uses Product
+     *
      * @param \Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer $criteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer

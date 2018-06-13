@@ -51,7 +51,7 @@ class ProductDiscontinuedFacade extends AbstractFacade implements ProductDiscont
         ProductDiscontinuedRequestTransfer $productDiscontinuedRequestTransfer
     ): ProductDiscontinuedResponseTransfer {
         return $this->getFactory()
-            ->createProductDiscontinuedWriter()
+            ->createProductDiscontinuedDeleter()
             ->delete($productDiscontinuedRequestTransfer);
     }
 
