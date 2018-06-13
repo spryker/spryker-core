@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Dataset\Communication\Controller;
 
-use Exception;
 use Generated\Shared\Transfer\DatasetFilePathTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Dataset\Business\Exception\DatasetParseException;
