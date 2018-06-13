@@ -61,7 +61,7 @@ class DatasetTest extends Unit
     {
         $datasetEntityTransfer = $this->tester->createDatasetTransfer();
         $this->tester->getLocator()->dataset()->facade()->save($datasetEntityTransfer, $this->tester->createDatasetFilePathTransfer());
-        $dashboardExist = $this->tester->getLocator()->dataset()->facade()->hasDatasetName($datasetEntityTransfer->getName());
+        $dashboardExist = $this->tester->getLocator()->dataset()->facade()->existsDatasetByName($datasetEntityTransfer->getName());
 
         $this->assertTrue($dashboardExist);
     }

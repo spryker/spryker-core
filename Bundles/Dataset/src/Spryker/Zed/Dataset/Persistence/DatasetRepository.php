@@ -22,7 +22,7 @@ class DatasetRepository extends AbstractRepository implements DatasetRepositoryI
      *
      * @return bool
      */
-    public function hasDatasetData($idDataset)
+    public function existsDatasetById($idDataset)
     {
         $count = $this->getFactory()->createSpyDatasetRowColumnValueQuery()->filterByFkDataset($idDataset)->count();
 

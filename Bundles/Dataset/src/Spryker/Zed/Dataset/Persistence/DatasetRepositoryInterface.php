@@ -14,7 +14,7 @@ interface DatasetRepositoryInterface
      *
      * @return bool
      */
-    public function hasDatasetData($idDataset);
+    public function existsDatasetById($idDataset);
 
     /**
      * @param string $name
