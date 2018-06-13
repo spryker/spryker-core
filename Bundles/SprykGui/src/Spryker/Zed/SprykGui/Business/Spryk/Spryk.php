@@ -229,9 +229,9 @@ class Spryk implements SprykInterface
      * @param string $sprykName
      * @param array $formData
      *
-     * @return string
+     * @return array
      */
-    protected function getSprykArguments(string $sprykName, array $formData)
+    protected function getSprykArguments(string $sprykName, array $formData): array
     {
         $commandLineArguments = [];
 
@@ -367,8 +367,8 @@ class Spryk implements SprykInterface
         foreach ($sprykArguments as $argumentName => $argumentValue) {
             $jiraTemplate .= sprintf('"%s"', $argumentName) . PHP_EOL;
             $argumentValues = (array)$argumentValue;
-            foreach ($argumentValues as $argumentValue) {
-                $jiraTemplate .= sprintf('// %s', $argumentValue) . PHP_EOL;
+            foreach ($argumentValues as $innerArgumentValue) {
+                $jiraTemplate .= sprintf('// %s', $innerArgumentValue) . PHP_EOL;
             }
             $jiraTemplate .= PHP_EOL;
         }

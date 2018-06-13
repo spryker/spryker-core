@@ -69,14 +69,7 @@ class SprykDetailsForm extends AbstractType
     {
         $sprykDefinition = $this->getSprykDefinition($options[static::SPRYK]);
 
-//        $sprykSubForm = $builder->getFormFactory()->createNamedBuilder($options[static::SPRYK]);
-
         $this->addArgumentsToForm($builder, $sprykDefinition, $options);
-
-//        $builder->add($sprykSubForm);
-
-//        $this->addRunSprykButton($builder);
-//        $this->addCreateTemplateButton($builder);
 
         return $builder;
     }
@@ -135,30 +128,6 @@ class SprykDetailsForm extends AbstractType
     protected function getModuleTransfer(array $options): ModuleTransfer
     {
         return $options[static::MODULE];
-    }
-
-    /**
-     * @param string $argumentName
-     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
-     * @param array $argumentDefinition
-     *
-     * @return string
-     */
-    protected function getValue(string $argumentName, ModuleTransfer $moduleTransfer, array $argumentDefinition): string
-    {
-        if ($argumentName === 'module') {
-            return $moduleTransfer->getName();
-        }
-
-        if ($argumentName === 'moduleOrganization') {
-            return $moduleTransfer->getOrganization();
-        }
-
-        if (isset($argumentDefinition['default'])) {
-            return $argumentDefinition['default'];
-        }
-
-        return '';
     }
 
     /**

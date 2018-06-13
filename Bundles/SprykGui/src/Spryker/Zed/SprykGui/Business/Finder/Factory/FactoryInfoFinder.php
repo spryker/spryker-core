@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ClassInformationTransfer;
 use Generated\Shared\Transfer\MethodInformationTransfer;
 use Generated\Shared\Transfer\ReturnTypeTransfer;
 use Roave\BetterReflection\BetterReflection;
+use Roave\BetterReflection\Reflection\ReflectionClass;
 use Roave\BetterReflection\Reflection\ReflectionMethod;
 use Roave\BetterReflection\Reflector\Exception\IdentifierNotFound;
 
@@ -60,8 +61,11 @@ class FactoryInfoFinder implements FactoryInfoFinderInterface
             return $classInformationTransfer;
         }
 
-        $betterReflection = new BetterReflection();
-        $reflectedClass = $betterReflection->classReflector()->reflect($className);
+        $reflectedClass = $this->getReflectedClass($className);
+
+        if (!($reflectedClass instanceof  ReflectionClass)) {
+            return $classInformationTransfer;
+        }
 
         $classInformationTransfer->setName($className);
 
@@ -131,11 +135,24 @@ class FactoryInfoFinder implements FactoryInfoFinderInterface
         $returnTypes = $method->getDocBlockReturnTypes();
         $returnStrings = [];
         foreach ($returnTypes as $returnType) {
-            $returnStrings[] = $returnType->getFqsen()->__toString();
+            $returnStrings[] = $returnType->__toString();
         }
 
         $returnTypeTransfer->setType(implode('|', $returnStrings));
 
         return $returnTypeTransfer;
+    }
+
+    /**
+     * @param string $className
+     *
+     * @return \Roave\BetterReflection\Reflection\Reflection|\Roave\BetterReflection\Reflection\ReflectionClass
+     */
+    protected function getReflectedClass(string $className)
+    {
+        $betterReflection = new BetterReflection();
+        $reflectedClass = $betterReflection->classReflector()->reflect($className);
+
+        return $reflectedClass;
     }
 }

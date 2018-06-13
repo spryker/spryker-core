@@ -34,7 +34,7 @@ class BuildController extends AbstractController
         if ($sprykForm->isSubmitted() && $canRunBuild && $sprykForm->isValid()) {
             $formData = $sprykForm->getData();
 
-            if ($sprykForm->get('create')->isClicked()) {
+            if ($this->getClickableByName($sprykForm, 'create')->isClicked()) {
                 return $this->viewResponse(
                     $this->getFacade()->buildSprykView($request->query->get('spryk'), $formData)
                 );
@@ -55,15 +55,26 @@ class BuildController extends AbstractController
 
     /**
      * @param \Symfony\Component\Form\FormInterface $sprykForm
+     * @param string $buttonName
+     *
+     * @return \Symfony\Component\Form\ClickableInterface|\Symfony\Component\Form\FormInterface
+     */
+    protected function getClickableByName(FormInterface $sprykForm, string $buttonName)
+    {
+        return $sprykForm->get($buttonName);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $sprykForm
      *
      * @return bool
      */
     protected function canRunBuild(FormInterface $sprykForm): bool
     {
-        if ($sprykForm->has('run') && $sprykForm->get('run')->isClicked()) {
+        if ($sprykForm->has('run') && $this->getClickableByName($sprykForm, 'run')->isClicked()) {
             return true;
         }
-        if ($sprykForm->has('create') && $sprykForm->get('create')->isClicked()) {
+        if ($sprykForm->has('create') && $this->getClickableByName($sprykForm, 'create')->isClicked()) {
             return true;
         }
 
