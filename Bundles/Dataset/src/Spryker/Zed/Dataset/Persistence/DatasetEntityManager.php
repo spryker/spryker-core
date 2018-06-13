@@ -71,7 +71,7 @@ class DatasetEntityManager extends AbstractEntityManager implements DatasetEntit
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyDatasetTransfer $datasetTransfer
+     * @param \Generated\Shared\Transfer\DatasetTransfer $datasetTransfer
      *
      * @return void
      */
@@ -298,7 +298,7 @@ class DatasetEntityManager extends AbstractEntityManager implements DatasetEntit
 
     /**
      * @param \Orm\Zed\Dataset\Persistence\SpyDatasetLocalizedAttributes $existingAttribute
-     * @param \Generated\Shared\Transfer\DatasetLocalizedAttributesTransfer $newAttribute
+     * @param \Generated\Shared\Transfer\DatasetLocalizedAttributeTransfer $newAttribute
      *
      * @return void
      */
