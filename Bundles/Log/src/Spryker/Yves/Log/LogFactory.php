@@ -154,7 +154,7 @@ class LogFactory extends AbstractFactory
     /**
      * @return \Spryker\Shared\Log\Sanitizer\SanitizerInterface
      */
-    protected function createSanitizer()
+    public function createSanitizer()
     {
         return new Sanitizer(
             $this->getConfig()->getSanitizerFieldNames(),

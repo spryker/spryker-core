@@ -129,7 +129,7 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
      */
     public function getCompanyUserById(int $idCompanyUser): CompanyUserTransfer
     {
-        return $this->getRepository()->getCompanyUserById($idCompanyUser);
+        return $this->getFactory()->createCompanyUser()->getCompanyUserById($idCompanyUser);
     }
 
     /**
@@ -144,5 +144,20 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
     public function findInitialCompanyUserByCompanyId(int $idCompany): ?CompanyUserTransfer
     {
         return $this->getRepository()->findInitialCompanyUserByCompanyId($idCompany);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return int
+     */
+    public function countActiveCompanyUsersByIdCustomer(CustomerTransfer $customerTransfer): int
+    {
+        return $this->getRepository()
+            ->countActiveCompanyUsersByIdCustomer($customerTransfer->getIdCustomer());
     }
 }
