@@ -8,12 +8,11 @@
 namespace Spryker\Zed\ProductListGui\Communication\Controller;
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\ProductListGui\Communication\ProductListGuiCommunicationFactory;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method ProductListGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductListGui\Communication\ProductListGuiCommunicationFactory getFactory()
  */
 class IndexController extends AbstractController
 {
@@ -32,7 +31,7 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @return JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function tableAction(): JsonResponse
     {

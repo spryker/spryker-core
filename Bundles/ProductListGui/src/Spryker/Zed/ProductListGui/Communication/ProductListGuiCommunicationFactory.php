@@ -16,7 +16,7 @@ use Spryker\Zed\ProductListGui\Communication\Table\ProductListTable;
 class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return ProductListTable
+     * @return \Spryker\Zed\ProductListGui\Communication\Table\ProductListTable
      */
     public function createProductListTable(): ProductListTable
     {
