@@ -12,23 +12,23 @@ use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Spryker\Shared\ErrorHandler\ErrorLogger;
 use Spryker\Zed\DataImport\Business\Exception\DataImportException;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\DataImport\Business\Model\Writer\DataImportWriterInterface;
+use Spryker\Zed\DataImport\Business\Model\Writer\DataSettWriterInterface;
 
 class DataImporterWriterAware extends DataImporter implements DataImporterWriterAwareInterface
 {
     /**
-     * @var \Spryker\Zed\DataImport\Business\Model\Writer\DataImportWriterInterface
+     * @var \Spryker\Zed\DataImport\Business\Model\Writer\DataSettWriterInterface
      */
-    protected $dataImportWriter;
+    protected $dataSetWriter;
 
     /**
-     * @param \Spryker\Zed\DataImport\Business\Model\Writer\DataImportWriterInterface $dataImportWriter
+     * @param \Spryker\Zed\DataImport\Business\Model\Writer\DataSettWriterInterface $dataSetWriter
      *
      * @return void
      */
-    public function setDataImportWriter(DataImportWriterInterface $dataImportWriter)
+    public function setDataSetWriter(DataSettWriterInterface $dataSetWriter)
     {
-        $this->dataImportWriter = $dataImportWriter;
+        $this->dataSetWriter = $dataSetWriter;
     }
 
     /**
@@ -43,7 +43,7 @@ class DataImporterWriterAware extends DataImporter implements DataImporterWriter
      */
     public function import(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null)
     {
-        if (!$this->dataImportWriter) {
+        if (!$this->dataSetWriter) {
             throw new Exception('Writer is not defined.');
         }
 
@@ -70,7 +70,7 @@ class DataImporterWriterAware extends DataImporter implements DataImporterWriter
             unset($dataSet);
         }
 
-        $this->dataImportWriter->flush();
+        $this->dataSetWriter->flush();
 
         $dataImporterReportTransfer->setImportTime(microtime(true) - $start);
 
@@ -90,6 +90,6 @@ class DataImporterWriterAware extends DataImporter implements DataImporterWriter
             $dataSetStep->execute($dataSet);
         }
 
-        $this->dataImportWriter->write($dataSet);
+        $this->dataSetWriter->write($dataSet);
     }
 }

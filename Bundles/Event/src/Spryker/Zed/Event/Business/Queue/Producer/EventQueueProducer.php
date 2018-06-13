@@ -51,7 +51,6 @@ class EventQueueProducer implements EventQueueProducerInterface
         $messageTransfers = [];
         foreach ($eventTransfers as $eventTransfer) {
             $messageTransfers[] = $this->createQueueMessageTransfer($eventName, $eventTransfer, $listener, $queuePoolName);
-            ;
         }
 
         $this->queueClient->sendMessages(EventConstants::EVENT_QUEUE, $messageTransfers);

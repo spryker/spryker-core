@@ -9,7 +9,7 @@ namespace Spryker\Zed\DataImport\Business\Model\Writer;
 
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
-interface WriterInterface
+interface DataSettWriterInterface
 {
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
@@ -17,4 +17,9 @@ interface WriterInterface
      * @return void
      */
     public function write(DataSetInterface $dataSet);
+
+    /**
+     * @return void
+     */
+    public function flush();
 }

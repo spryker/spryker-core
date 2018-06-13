@@ -37,7 +37,7 @@ class DataImportToEventBridge implements DataImportToEventFacadeInterface
 
     /**
      * @param string $eventName
-     * @param array $eventTransfers
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $eventTransfers
      *
      * @return void
      */

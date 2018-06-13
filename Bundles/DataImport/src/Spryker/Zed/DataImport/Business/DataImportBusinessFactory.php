@@ -74,7 +74,7 @@ class DataImportBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\DataImport\Dependency\Plugin\DataImportWriterPluginInterface[]
+     * @return \Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginInterface[]
      */
     public function getDefaultDataImportWriterPlugins()
     {

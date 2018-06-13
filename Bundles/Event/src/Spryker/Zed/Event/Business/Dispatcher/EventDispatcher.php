@@ -60,7 +60,7 @@ class EventDispatcher implements EventDispatcherInterface
      *
      * @return void
      */
-    public function trigger($eventName, TransferInterface $eventTransfer)
+    public function trigger(string $eventName, TransferInterface $eventTransfer): void
     {
         foreach ($this->extractEventListeners($eventName) as $eventListener) {
             if ($eventListener->isHandledInQueue()) {
@@ -78,18 +78,30 @@ class EventDispatcher implements EventDispatcherInterface
      *
      * @return void
      */
-    public function triggerBulk($eventName, array $eventTransfers)
+    public function triggerBulk(string $eventName, array $eventTransfers): void
     {
         foreach ($this->extractEventListeners($eventName) as $eventListener) {
             if ($eventListener->isHandledInQueue()) {
                 $this->eventQueueProducer->enqueueListenerBulk($eventName, $eventTransfers, $eventListener->getListenerName(), $eventListener->getQueuePoolName());
                 $this->logEventHandleBulk($eventName, $eventTransfers, $eventListener);
             } elseif ($eventListener instanceof EventHandlerInterface) {
-                foreach ($eventTransfers as $eventTransfer) {
-                    $eventListener->handle($eventTransfer, $eventName);
-                    $this->logEventHandle($eventName, $eventTransfer, $eventListener);
-                }
+                $this->handleEventListeners($eventName, $eventTransfers, $eventListener);
             }
+        }
+    }
+
+    /**
+     * @param string $eventName
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $eventTransfers
+     * @param \Spryker\Zed\Event\Business\Dispatcher\EventListenerContextInterface $eventListener
+     *
+     * @return void
+     */
+    protected function handleEventListeners(string $eventName, array $eventTransfers, EventListenerContextInterface $eventListener): void
+    {
+        foreach ($eventTransfers as $eventTransfer) {
+            $eventListener->handle($eventTransfer, $eventName);
+            $this->logEventHandle($eventName, $eventTransfer, $eventListener);
         }
     }
 
@@ -115,10 +127,10 @@ class EventDispatcher implements EventDispatcherInterface
      * @return void
      */
     protected function logEventHandleBulk(
-        $eventName,
+        string $eventName,
         array $eventTransfers,
         EventListenerContextInterface $eventListener
-    ) {
+    ): void {
         foreach ($eventTransfers as $eventTransfer) {
             $this->logEventHandle($eventName, $eventTransfer, $eventListener);
         }
@@ -135,7 +147,7 @@ class EventDispatcher implements EventDispatcherInterface
         $eventName,
         TransferInterface $eventTransfer,
         EventListenerContextInterface $eventListener
-    ) {
+    ): void {
         $this->eventLogger->log(
             sprintf(
                 $this->createHandleMessage($eventListener),
@@ -152,7 +164,7 @@ class EventDispatcher implements EventDispatcherInterface
      *
      * @return string
      */
-    protected function createHandleMessage(EventListenerContextInterface $eventListener)
+    protected function createHandleMessage(EventListenerContextInterface $eventListener): string
     {
         if ($eventListener->isHandledInQueue()) {
             return '[async] "%s" listener "%s", sent to the queue, event data: "%s" => "%s".';

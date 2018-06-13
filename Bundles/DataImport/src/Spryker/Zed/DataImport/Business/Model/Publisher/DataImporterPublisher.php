@@ -58,7 +58,7 @@ class DataImporterPublisher implements DataImporterPublisherInterface
      */
     public function triggerEvents(): void
     {
-        foreach (static::getUniqueArray() as $event => $ids) {
+        foreach (static::getUniqueImportedEntityEvents() as $event => $ids) {
             $uniqueIds = array_unique($ids);
             $events = [];
             foreach ($uniqueIds as $id) {
@@ -72,7 +72,7 @@ class DataImporterPublisher implements DataImporterPublisherInterface
     /**
      * @return array
      */
-    protected static function getUniqueArray(): array
+    protected static function getUniqueImportedEntityEvents(): array
     {
         $uniqueArray = [];
         foreach (static::$importedEntityEvents as $event => $ids) {

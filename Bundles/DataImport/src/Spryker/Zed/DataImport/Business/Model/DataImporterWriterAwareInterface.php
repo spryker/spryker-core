@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\DataImport\Business\Model;
 
-use Spryker\Zed\DataImport\Business\Model\Writer\DataImportWriterInterface;
+use Spryker\Zed\DataImport\Business\Model\Writer\DataSettWriterInterface;
 
 interface DataImporterWriterAwareInterface
 {
     /**
-     * @param \Spryker\Zed\DataImport\Business\Model\Writer\DataImportWriterInterface $dataImportWriter
+     * @param \Spryker\Zed\DataImport\Business\Model\Writer\DataSettWriterInterface $dataImportWriter
      *
      * @return void
      */
-    public function setDataImportWriter(DataImportWriterInterface $dataImportWriter);
+    public function setDataSetWriter(DataSettWriterInterface $dataImportWriter);
 }

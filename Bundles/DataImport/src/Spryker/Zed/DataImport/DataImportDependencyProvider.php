@@ -188,7 +188,7 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\DataImport\Dependency\Plugin\DataImportWriterPluginInterface|\Spryker\Zed\DataImport\Dependency\Plugin\DataImportFlushPluginInterface[]
+     * @return \Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginInterface[]
      */
     protected function getDataImportDefaultWriterPlugins(): array
     {
