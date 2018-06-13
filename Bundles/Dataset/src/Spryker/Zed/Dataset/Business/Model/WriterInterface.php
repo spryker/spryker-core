@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\Dataset\Business\Model;
 
-use Generated\Shared\Transfer\SpyDatasetEntityTransfer;
+use Generated\Shared\Transfer\DatasetTransfer;
 
 interface WriterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SpyDatasetEntityTransfer $datasetTransfer
+     * @param \Generated\Shared\Transfer\DatasetTransfer $datasetTransfer
      *
      * @return string
      */
-    public function getCsvByDataset(SpyDatasetEntityTransfer $datasetTransfer);
+    public function getCsvByDataset(DatasetTransfer $datasetTransfer);
 }

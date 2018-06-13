@@ -9,10 +9,10 @@ namespace Spryker\Zed\Dataset\Business\Model;
 
 use ArrayObject;
 use Exception;
+use Generated\Shared\Transfer\DatasetColumnTransfer;
 use Generated\Shared\Transfer\DatasetFilePathTransfer;
-use Generated\Shared\Transfer\SpyDatasetColumnEntityTransfer;
-use Generated\Shared\Transfer\SpyDatasetRowColumnValueEntityTransfer;
-use Generated\Shared\Transfer\SpyDatasetRowEntityTransfer;
+use Generated\Shared\Transfer\DatasetRowColumnValueTransfer;
+use Generated\Shared\Transfer\DatasetRowTransfer;
 use League\Csv\Reader as CsvReader;
 use Spryker\Zed\Dataset\Business\Exception\DatasetParseException;
 use Spryker\Zed\Dataset\Business\Exception\DatasetParseFormatException;
@@ -47,7 +47,7 @@ class Reader implements ReaderInterface
      *
      * @throws \Spryker\Zed\Dataset\Business\Exception\DatasetParseException
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\SpyDatasetRowColumnValueEntityTransfer[]
+     * @return \ArrayObject|\Generated\Shared\Transfer\DatasetRowColumnValueTransfer[]
      */
     public function parseFileToDataTransfers(DatasetFilePathTransfer $filePathTransfer)
     {
@@ -58,13 +58,13 @@ class Reader implements ReaderInterface
         foreach ($reader as $row) {
             $rowTitle = array_shift($row);
             $values = array_values($row);
-            $datasetRowValueTransfer = $this->getDatasetRowEntityTransfer($rowTitle);
+            $datasetRowValueTransfer = $this->getDatasetRowTransfer($rowTitle);
 
             foreach ($values as $key => $value) {
                 if ($value === null) {
                     throw new DatasetParseException('Values can\'t be empty.');
                 }
-                $datasetRowColumnValueTransfers->append($this->getDatasetRowColumnValueEntityTransfer(
+                $datasetRowColumnValueTransfers->append($this->getDatasetRowColumnValueTransfer(
                     $datasetColumnValueTransfers[$key],
                     $datasetRowValueTransfer,
                     $value
@@ -99,7 +99,7 @@ class Reader implements ReaderInterface
      *
      * @throws \Spryker\Zed\Dataset\Business\Exception\DatasetParseFormatException
      *
-     * @return \Generated\Shared\Transfer\SpyDatasetColumnEntityTransfer[]
+     * @return \Generated\Shared\Transfer\DatasetColumnTransfer[]
      */
     protected function getDatasetColumnTransfers(CsvReader $reader)
     {
@@ -120,11 +120,11 @@ class Reader implements ReaderInterface
     /**
      * @param string $column
      *
-     * @return \Generated\Shared\Transfer\SpyDatasetColumnEntityTransfer
+     * @return \Generated\Shared\Transfer\DatasetColumnTransfer
      */
     protected function getDatasetColumnTransfer($column)
     {
-        $datasetColumnTransfer = new SpyDatasetColumnEntityTransfer();
+        $datasetColumnTransfer = new DatasetColumnTransfer();
         $datasetColumnTransfer->setTitle($column);
 
         return $datasetColumnTransfer;
@@ -133,33 +133,33 @@ class Reader implements ReaderInterface
     /**
      * @param string $row
      *
-     * @return \Generated\Shared\Transfer\SpyDatasetRowEntityTransfer
+     * @return \Generated\Shared\Transfer\DatasetRowTransfer
      */
-    protected function getDatasetRowEntityTransfer($row)
+    protected function getDatasetRowTransfer($row)
     {
-        $datasetRowTransfer = new SpyDatasetRowEntityTransfer();
+        $datasetRowTransfer = new DatasetRowTransfer();
         $datasetRowTransfer->setTitle($row);
 
         return $datasetRowTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyDatasetColumnEntityTransfer $datasetColumnValueTransfer
-     * @param \Generated\Shared\Transfer\SpyDatasetRowEntityTransfer $datasetRowValueTransfer
+     * @param \Generated\Shared\Transfer\DatasetColumnTransfer $datasetColumnValueTransfer
+     * @param \Generated\Shared\Transfer\DatasetRowTransfer $datasetRowValueTransfer
      * @param string $value
      *
-     * @return \Generated\Shared\Transfer\SpyDatasetRowColumnValueEntityTransfer
+     * @return \Generated\Shared\Transfer\DatasetRowColumnValueTransfer
      */
-    protected function getDatasetRowColumnValueEntityTransfer(
-        SpyDatasetColumnEntityTransfer $datasetColumnValueTransfer,
-        SpyDatasetRowEntityTransfer $datasetRowValueTransfer,
+    protected function getDatasetRowColumnValueTransfer(
+        DatasetColumnTransfer $datasetColumnValueTransfer,
+        DatasetRowTransfer $datasetRowValueTransfer,
         $value
     ) {
-        $datasetRowColumnValueEntityTransfer = new SpyDatasetRowColumnValueEntityTransfer();
-        $datasetRowColumnValueEntityTransfer->setSpyDatasetColumn($datasetColumnValueTransfer);
-        $datasetRowColumnValueEntityTransfer->setSpyDatasetRow($datasetRowValueTransfer);
-        $datasetRowColumnValueEntityTransfer->setValue($value);
+        $datasetRowColumnValueTransfer = new DatasetRowColumnValueTransfer();
+        $datasetRowColumnValueTransfer->setDatasetColumn($datasetColumnValueTransfer);
+        $datasetRowColumnValueTransfer->setDatasetRow($datasetRowValueTransfer);
+        $datasetRowColumnValueTransfer->setValue($value);
 
-        return $datasetRowColumnValueEntityTransfer;
+        return $datasetRowColumnValueTransfer;
     }
 }

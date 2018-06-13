@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Dataset\Communication\Controller;
 
-use Generated\Shared\Transfer\SpyDatasetEntityTransfer;
+use Generated\Shared\Transfer\DatasetTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,11 +39,11 @@ class DownloadController extends AbstractController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyDatasetEntityTransfer $datasetTransfer
+     * @param \Generated\Shared\Transfer\DatasetTransfer $datasetTransfer
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected function createResponse(SpyDatasetEntityTransfer $datasetTransfer)
+    protected function createResponse(DatasetTransfer $datasetTransfer)
     {
         $content = $this->getFacade()->getCsvByDataset($datasetTransfer);
         $response = new Response($content);

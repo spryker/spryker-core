@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Dataset\Communication\Form;
 
-use Generated\Shared\Transfer\SpyDatasetLocalizedAttributesEntityTransfer;
+use Generated\Shared\Transfer\DatasetLocalizedAttributeTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -47,7 +47,7 @@ class DatasetLocalizedAttributesForm extends AbstractType
     {
         $resolver->setRequired(DatasetForm::OPTION_AVAILABLE_LOCALES);
         $resolver->setDefaults([
-            static::OPTION_DATA_CLASS => SpyDatasetLocalizedAttributesEntityTransfer::class,
+            static::OPTION_DATA_CLASS => DatasetLocalizedAttributeTransfer::class,
         ]);
     }
 

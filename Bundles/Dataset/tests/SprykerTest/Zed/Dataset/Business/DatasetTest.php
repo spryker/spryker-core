@@ -9,7 +9,7 @@ namespace SprykerTest\Zed\Dataset\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DatasetFilenameTransfer;
-use Generated\Shared\Transfer\SpyDatasetEntityTransfer;
+use Generated\Shared\Transfer\DatasetTransfer;
 use Spryker\Zed\Dataset\Business\Exception\DatasetNotFoundException;
 
 /**
@@ -36,7 +36,7 @@ class DatasetTest extends Unit
         $datasetEntityTransfer = $this->tester->createDatasetTransfer();
         $datasetTransfer = $this->saveDatasetByTransfer($datasetEntityTransfer);
 
-        $this->assertInstanceOf(SpyDatasetEntityTransfer::class, $datasetTransfer);
+        $this->assertInstanceOf(DatasetTransfer::class, $datasetTransfer);
         $this->assertNotNull($datasetTransfer->getIdDataset());
         $this->assertSame($datasetEntityTransfer->getName(), $datasetTransfer->getName());
     }
@@ -49,7 +49,7 @@ class DatasetTest extends Unit
         $datasetEntityTransfer = $this->tester->createDatasetTransfer();
         $datasetTransfer = $this->saveDatasetByTransfer($datasetEntityTransfer);
 
-        $this->assertInstanceOf(SpyDatasetEntityTransfer::class, $datasetTransfer);
+        $this->assertInstanceOf(DatasetTransfer::class, $datasetTransfer);
         $this->assertNotNull($datasetTransfer->getIdDataset());
         $this->assertSame($datasetEntityTransfer->getName(), $datasetTransfer->getName());
     }
@@ -59,9 +59,9 @@ class DatasetTest extends Unit
      */
     public function testExistingDatasetName(): void
     {
-        $datasetEntityTransfer = $this->tester->createDatasetTransfer();
-        $this->tester->getLocator()->dataset()->facade()->save($datasetEntityTransfer, $this->tester->createDatasetFilePathTransfer());
-        $dashboardExist = $this->tester->getLocator()->dataset()->facade()->existsDatasetByName($datasetEntityTransfer->getName());
+        $datasetTransfer = $this->tester->createDatasetTransfer();
+        $this->tester->getLocator()->dataset()->facade()->save($datasetTransfer, $this->tester->createDatasetFilePathTransfer());
+        $dashboardExist = $this->tester->getLocator()->dataset()->facade()->existsDatasetByName($datasetTransfer->getName());
 
         $this->assertTrue($dashboardExist);
     }
@@ -90,7 +90,7 @@ class DatasetTest extends Unit
         $datasetTransfer = $this->saveDatasetByTransfer($datasetEntityTransfer);
         $datasetTransfer = $this->tester->getLocator()->dataset()->facade()->getDatasetModelById($datasetTransfer->getIdDataset());
 
-        $this->assertInstanceOf(SpyDatasetEntityTransfer::class, $datasetTransfer);
+        $this->assertInstanceOf(DatasetTransfer::class, $datasetTransfer);
         $this->assertNotNull($datasetTransfer->getIdDataset());
         $this->assertSame($datasetEntityTransfer->getName(), $datasetTransfer->getName());
     }
@@ -103,7 +103,7 @@ class DatasetTest extends Unit
         $datasetEntityTransfer = $this->tester->createDatasetTransfer();
         $datasetTransfer = $this->saveDatasetByTransfer($datasetEntityTransfer);
 
-        $this->assertInstanceOf(SpyDatasetEntityTransfer::class, $datasetTransfer);
+        $this->assertInstanceOf(DatasetTransfer::class, $datasetTransfer);
         $this->assertNotNull($datasetTransfer->getIdDataset());
         $this->assertSame($datasetEntityTransfer->getName(), $datasetTransfer->getName());
     }
@@ -161,11 +161,11 @@ class DatasetTest extends Unit
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyDatasetEntityTransfer $datasetEntityTransfer
+     * @param \Generated\Shared\Transfer\DatasetTransfer $datasetEntityTransfer
      *
-     * @return \Generated\Shared\Transfer\SpyDatasetEntityTransfer
+     * @return \Generated\Shared\Transfer\DatasetTransfer
      */
-    protected function saveDatasetByTransfer(SpyDatasetEntityTransfer $datasetEntityTransfer)
+    protected function saveDatasetByTransfer(DatasetTransfer $datasetEntityTransfer)
     {
         $this->tester->getLocator()->dataset()->facade()->saveDataset($datasetEntityTransfer);
 

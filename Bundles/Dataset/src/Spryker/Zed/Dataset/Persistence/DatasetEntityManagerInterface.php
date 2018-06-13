@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Dataset\Persistence;
 
-use Generated\Shared\Transfer\SpyDatasetEntityTransfer;
+use Generated\Shared\Transfer\DatasetTransfer;
 
 interface DatasetEntityManagerInterface
 {
@@ -27,9 +27,9 @@ interface DatasetEntityManagerInterface
     public function delete($idDataset);
 
     /**
-     * @param \Generated\Shared\Transfer\SpyDatasetEntityTransfer $datasetEntityTransfer
+     * @param \Generated\Shared\Transfer\DatasetTransfer $datasetTransfer
      *
      * @return void
      */
-    public function saveDataset(SpyDatasetEntityTransfer $datasetEntityTransfer);
+    public function saveDataset(DatasetTransfer $datasetTransfer);
 }

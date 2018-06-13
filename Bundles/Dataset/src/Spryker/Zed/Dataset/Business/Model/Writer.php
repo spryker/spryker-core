@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Dataset\Business\Model;
 
-use Generated\Shared\Transfer\SpyDatasetEntityTransfer;
+use Generated\Shared\Transfer\DatasetTransfer;
 use League\Csv\Writer as CsvWriter;
 use Spryker\Zed\Dataset\Dependency\Service\DatasetToCsvBridgeInterface;
 
@@ -29,11 +29,11 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyDatasetEntityTransfer $datasetTransfer
+     * @param \Generated\Shared\Transfer\DatasetTransfer $datasetTransfer
      *
      * @return string
      */
-    public function getCsvByDataset(SpyDatasetEntityTransfer $datasetTransfer)
+    public function getCsvByDataset(DatasetTransfer $datasetTransfer)
     {
         $writer = $this->datasetToCsvBridge->createCsvWriter();
         $this->insertDataByTransfer($writer, $datasetTransfer);
@@ -43,22 +43,22 @@ class Writer implements WriterInterface
 
     /**
      * @param \League\Csv\Writer $writer
-     * @param \Generated\Shared\Transfer\SpyDatasetEntityTransfer $datasetTransfer
+     * @param \Generated\Shared\Transfer\DatasetTransfer $datasetTransfer
      *
      * @return void
      */
-    protected function insertDataByTransfer(CsvWriter $writer, SpyDatasetEntityTransfer $datasetTransfer)
+    protected function insertDataByTransfer(CsvWriter $writer, DatasetTransfer $datasetTransfer)
     {
         $header = [''];
         $rowValues = [];
-        foreach ($datasetTransfer->getSpyDatasetRowColumnValues() as $datasetRowColumnValue) {
-            $datasetColumn = $datasetRowColumnValue->getSpyDatasetColumn();
+        foreach ($datasetTransfer->getDatasetRowColumnValues() as $datasetRowColumnValue) {
+            $datasetColumn = $datasetRowColumnValue->getDatasetColumn();
 
             if (!in_array($datasetColumn->getTitle(), $header)) {
                 array_push($header, $datasetColumn->getTitle());
             }
 
-            $rowValues[$datasetRowColumnValue->getSpyDatasetRow()->getTitle()][] = $datasetRowColumnValue->getValue();
+            $rowValues[$datasetRowColumnValue->getDatasetRow()->getTitle()][] = $datasetRowColumnValue->getValue();
         }
         $writer->insertOne($header);
         foreach ($rowValues as $rowTitle => $values) {

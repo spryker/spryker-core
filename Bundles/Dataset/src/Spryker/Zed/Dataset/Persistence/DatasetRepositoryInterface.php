@@ -26,14 +26,14 @@ interface DatasetRepositoryInterface
     /**
      * @param int $idDataset
      *
-     * @return \Generated\Shared\Transfer\SpyDatasetEntityTransfer
+     * @return \Generated\Shared\Transfer\DatasetTransfer
      */
     public function getDatasetByIdWithRelation($idDataset);
 
     /**
      * @param string $datasetName
      *
-     * @return \Generated\Shared\Transfer\SpyDatasetEntityTransfer
+     * @return \Generated\Shared\Transfer\DatasetTransfer
      */
     public function getDatasetByNameWithRelation($datasetName);
 }

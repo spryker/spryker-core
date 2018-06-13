@@ -1,4 +1,4 @@
-{% for localizedAttributes in form.getSpyDatasetLocalizedAttributess %}
+{% for localizedAttributes in form.getDatasetLocalizedAttributes %}
 
     {% set localeName = localizedAttributes.vars.value.locale.localeName %}
     {% set collapsed = (currentLocale != localeName) %}
