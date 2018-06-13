@@ -7,10 +7,6 @@
 
 namespace Spryker\Zed\FileManagerGui\Communication\Controller;
 
-use Generated\Shared\Transfer\FileInfoTransfer;
-use Generated\Shared\Transfer\FileManagerDataTransfer;
-use Generated\Shared\Transfer\FileTransfer;
-use Spryker\Zed\FileManagerGui\Communication\Form\FileForm;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -31,9 +27,9 @@ class ViewFileController extends AbstractController
         $idFile = $this->castId($request->get(static::URL_PARAM_ID_FILE));
 
         $file = $this->getFactory()
-            ->getFileManagerQueryContainer()
-            ->queryFileById($idFile)
-            ->findOne();
+            ->getFileManagerFacade()
+            ->findFileByIdFile($idFile)
+            ->getFile();
         $fileInfoTable = $this->getFactory()->createFileInfoViewTable($idFile);
 
         return [
@@ -60,74 +56,5 @@ class ViewFileController extends AbstractController
         return $this->jsonResponse(
             $fileInfoTable->fetchData()
         );
-    }
-
-    /**
-     * @param array $data
-     *
-     * @return \Generated\Shared\Transfer\FileManagerDataTransfer
-     */
-    protected function createFileManagerDataTransfer(array $data)
-    {
-        $fileManagerDataTransfer = new FileManagerDataTransfer();
-        $fileManagerDataTransfer->setFile($this->createFileTransfer($data));
-        $fileManagerDataTransfer->setFileInfo($this->createFileInfoTransfer($data));
-        $fileManagerDataTransfer->setContent($this->getFileContent($data));
-
-        return $fileManagerDataTransfer;
-    }
-
-    /**
-     * @param array $data
-     *
-     * @return \Generated\Shared\Transfer\FileInfoTransfer
-     */
-    protected function createFileInfoTransfer(array $data)
-    {
-        /** @var \Symfony\Component\HttpFoundation\File\UploadedFile $uploadedFile */
-        $uploadedFile = $data[FileForm::FIELD_FILE_CONTENT];
-        $fileInfo = new FileInfoTransfer();
-
-        if ($uploadedFile === null) {
-            return $fileInfo;
-        }
-
-        $fileInfo->setExtension($uploadedFile->getClientOriginalExtension());
-        $fileInfo->setSize($uploadedFile->getSize());
-        $fileInfo->setType($uploadedFile->getMimeType());
-        $fileInfo->setFkFile($data[FileForm::FIELD_ID_FILE]);
-
-        return $fileInfo;
-    }
-
-    /**
-     * @param array $data
-     *
-     * @return \Generated\Shared\Transfer\FileTransfer
-     */
-    protected function createFileTransfer(array $data)
-    {
-        $file = new FileTransfer();
-        $file->setFileName($data[FileForm::FIELD_FILE_NAME]);
-        $file->setIdFile($data[FileForm::FIELD_ID_FILE]);
-
-        return $file;
-    }
-
-    /**
-     * @param array $data
-     *
-     * @return bool|string
-     */
-    protected function getFileContent(array $data)
-    {
-        /** @var \Symfony\Component\HttpFoundation\File\UploadedFile $uploadedFile */
-        $uploadedFile = $data[FileForm::FIELD_FILE_CONTENT];
-
-        if ($uploadedFile === null) {
-            return null;
-        }
-
-        return file_get_contents($uploadedFile->getRealPath());
     }
 }
