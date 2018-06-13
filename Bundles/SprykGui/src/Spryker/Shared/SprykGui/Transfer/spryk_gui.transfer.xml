@@ -30,6 +30,10 @@
         <property name="methods" type="MethodInformation[]" singular="method" />
     </transfer>
 
+    <transfer name="ClassInformationCollection">
+        <property name="classInformations" type="ClassInformation[]" singular="classInformation" />
+    </transfer>
+
     <transfer name="MethodInformation">
         <property name="name" type="string" />
         <property name="returnType" type="ReturnType" />

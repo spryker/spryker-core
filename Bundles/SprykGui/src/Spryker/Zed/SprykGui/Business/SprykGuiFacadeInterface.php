@@ -8,8 +8,10 @@
 namespace Spryker\Zed\SprykGui\Business;
 
 use Generated\Shared\Transfer\AccessibleTransferCollection;
+use Generated\Shared\Transfer\ClassInformationCollectionTransfer;
 use Generated\Shared\Transfer\ClassInformationTransfer;
 use Generated\Shared\Transfer\ModuleCollectionTransfer;
+use Generated\Shared\Transfer\ModuleTransfer;
 use Generated\Shared\Transfer\OrganizationCollectionTransfer;
 
 interface SprykGuiFacadeInterface
@@ -107,6 +109,18 @@ interface SprykGuiFacadeInterface
      * @return \Generated\Shared\Transfer\ClassInformationTransfer
      */
     public function getFactoryInformation(string $className): ClassInformationTransfer;
+
+    /**
+     * Specification
+     * - Returns a list with all methods and their return type.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
+     *
+     * @return \Generated\Shared\Transfer\ClassInformationCollectionTransfer
+     */
+    public function getZedBusinessModels(ModuleTransfer $moduleTransfer): ClassInformationCollectionTransfer;
 
     /**
      * Specification:

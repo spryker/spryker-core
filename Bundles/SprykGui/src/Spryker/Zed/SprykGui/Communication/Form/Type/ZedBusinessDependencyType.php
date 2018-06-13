@@ -80,8 +80,6 @@ class ZedBusinessDependencyType extends AbstractType
             FormEvents::SUBMIT,
             function (FormEvent $event) {
                 $argumentCollectionTransfer = new ArgumentCollectionTransfer();
-                $eventData = $event->getData();
-                $formData = $event->getForm()->getData();
 
                 foreach ($event->getData() as $argumentInformation) {
                     $argumentTransfer = $argumentInformation['argument'];

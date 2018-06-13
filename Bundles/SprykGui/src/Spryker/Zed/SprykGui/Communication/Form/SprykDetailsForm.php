@@ -45,33 +45,9 @@ class SprykDetailsForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-//        $sprykDefinition = $this->getFacade()->getSprykDefinitionByName($options[static::SPRYK]);
-
-//        if (isset($sprykDefinition['arguments']['module']['type'])) {
-//            $builder->add(static::MODULE, NewModuleType::class, ['sprykDefinition' => $sprykDefinition]);
-//
-//            $this->addRunSprykButton($builder);
-//            $this->addCreateTemplateButton($builder);
-//
-//            return;
-//        }
-
-        $this->addSprykDetails($builder, $options);
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
-     *
-     * @return \Symfony\Component\Form\FormBuilderInterface
-     */
-    protected function addSprykDetails(FormBuilderInterface $builder, array $options): FormBuilderInterface
-    {
         $sprykDefinition = $this->getSprykDefinition($options[static::SPRYK]);
 
         $this->addArgumentsToForm($builder, $sprykDefinition, $options);
-
-        return $builder;
     }
 
     /**
