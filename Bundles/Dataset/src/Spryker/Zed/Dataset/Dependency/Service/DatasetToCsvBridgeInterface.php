@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Dataset\Dependency\Service;
 
+use League\Csv\Reader;
+use League\Csv\Writer;
+
 interface DatasetToCsvBridgeInterface
 {
     /**
@@ -15,10 +18,10 @@ interface DatasetToCsvBridgeInterface
      *
      * @return \League\Csv\Reader
      */
-    public function createCsvReader($path, $mode);
+    public function createCsvReader($path, $mode): Reader;
 
     /**
      * @return \League\Csv\Writer
      */
-    public function createCsvWriter();
+    public function createCsvWriter(): Writer;
 }

@@ -18,7 +18,7 @@ class DatasetToCsvBridge implements DatasetToCsvBridgeInterface
      *
      * @return \League\Csv\Reader
      */
-    public function createCsvReader($path, $mode)
+    public function createCsvReader($path, $mode): Reader
     {
         return Reader::createFromPath($path, $mode);
     }
@@ -26,7 +26,7 @@ class DatasetToCsvBridge implements DatasetToCsvBridgeInterface
     /**
      * @return \League\Csv\Writer
      */
-    public function createCsvWriter()
+    public function createCsvWriter(): Writer
     {
         return Writer::createFromFileObject(new SplTempFileObject());
     }

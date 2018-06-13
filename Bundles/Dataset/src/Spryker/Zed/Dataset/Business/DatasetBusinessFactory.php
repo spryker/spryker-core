@@ -8,11 +8,17 @@
 namespace Spryker\Zed\Dataset\Business;
 
 use Spryker\Zed\Dataset\Business\Model\DatasetFinder;
+use Spryker\Zed\Dataset\Business\Model\DatasetFinderInterface;
 use Spryker\Zed\Dataset\Business\Model\DatasetSaver;
+use Spryker\Zed\Dataset\Business\Model\DatasetSaverInterface;
 use Spryker\Zed\Dataset\Business\Model\Reader;
+use Spryker\Zed\Dataset\Business\Model\ReaderInterface;
 use Spryker\Zed\Dataset\Business\Model\ResolverPath;
+use Spryker\Zed\Dataset\Business\Model\ResolverPathInterface;
 use Spryker\Zed\Dataset\Business\Model\Writer;
+use Spryker\Zed\Dataset\Business\Model\WriterInterface;
 use Spryker\Zed\Dataset\DatasetDependencyProvider;
+use Spryker\Zed\Dataset\Dependency\Service\DatasetToCsvBridge;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -25,7 +31,7 @@ class DatasetBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Dataset\Business\Model\DatasetFinderInterface
      */
-    public function createDatasetFinder()
+    public function createDatasetFinder(): DatasetFinderInterface
     {
         return new DatasetFinder(
             $this->getRepository(),
@@ -36,7 +42,7 @@ class DatasetBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Dataset\Business\Model\DatasetSaverInterface
      */
-    public function createDatasetSaver()
+    public function createDatasetSaver(): DatasetSaverInterface
     {
         return new DatasetSaver(
             $this->getEntityManager(),
@@ -47,7 +53,7 @@ class DatasetBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Dataset\Business\Model\ReaderInterface
      */
-    public function createReader()
+    public function createReader(): ReaderInterface
     {
         return new Reader($this->getDatasetToCsvBridge());
     }
@@ -55,7 +61,7 @@ class DatasetBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Dataset\Business\Model\WriterInterface
      */
-    public function createWriter()
+    public function createWriter(): WriterInterface
     {
         return new Writer($this->getDatasetToCsvBridge());
     }
@@ -63,7 +69,7 @@ class DatasetBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Dataset\Business\Model\ResolverPathInterface
      */
-    public function createResolverPath()
+    public function createResolverPath(): ResolverPathInterface
     {
         return new ResolverPath();
     }
@@ -71,7 +77,7 @@ class DatasetBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Dataset\Dependency\Service\DatasetToCsvBridge
      */
-    public function getDatasetToCsvBridge()
+    public function getDatasetToCsvBridge(): DatasetToCsvBridge
     {
         return $this->getProvidedDependency(DatasetDependencyProvider::DATASET_TO_CSV_BRIDGE);
     }

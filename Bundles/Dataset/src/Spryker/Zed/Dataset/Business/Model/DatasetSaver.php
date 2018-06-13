@@ -44,7 +44,7 @@ class DatasetSaver implements DatasetSaverInterface
      *
      * @return void
      */
-    public function save(DatasetTransfer $datasetTransfer, ?DatasetFilePathTransfer $filePathTransfer = null)
+    public function save(DatasetTransfer $datasetTransfer, ?DatasetFilePathTransfer $filePathTransfer = null): void
     {
         if ($filePathTransfer !== null && file_exists($filePathTransfer->getFilePath())) {
             $datasetTransfer->setDatasetRowColumnValues(
@@ -59,7 +59,7 @@ class DatasetSaver implements DatasetSaverInterface
      *
      * @return void
      */
-    public function activateById($idDataset)
+    public function activateById($idDataset): void
     {
         $this->entityManager->updateIsActiveByIdDataset($idDataset, true);
     }
@@ -69,7 +69,7 @@ class DatasetSaver implements DatasetSaverInterface
      *
      * @return void
      */
-    public function deactivateById($idDataset)
+    public function deactivateById($idDataset): void
     {
         $this->entityManager->updateIsActiveByIdDataset($idDataset, false);
     }
@@ -79,7 +79,7 @@ class DatasetSaver implements DatasetSaverInterface
      *
      * @return void
      */
-    public function delete($idDataset)
+    public function delete($idDataset): void
     {
         $this->entityManager->delete($idDataset);
     }

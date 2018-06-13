@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Dataset\Persistence;
 
+use Generated\Shared\Transfer\DatasetTransfer;
+
 interface DatasetRepositoryInterface
 {
     /**
@@ -14,26 +16,26 @@ interface DatasetRepositoryInterface
      *
      * @return bool
      */
-    public function existsDatasetById($idDataset);
+    public function existsDatasetById($idDataset): bool;
 
     /**
      * @param string $name
      *
      * @return bool
      */
-    public function existsDatasetByName($name);
+    public function existsDatasetByName($name): bool;
 
     /**
      * @param int $idDataset
      *
      * @return \Generated\Shared\Transfer\DatasetTransfer
      */
-    public function getDatasetByIdWithRelation($idDataset);
+    public function getDatasetByIdWithRelation($idDataset): DatasetTransfer;
 
     /**
      * @param string $datasetName
      *
      * @return \Generated\Shared\Transfer\DatasetTransfer
      */
-    public function getDatasetByNameWithRelation($datasetName);
+    public function getDatasetByNameWithRelation($datasetName): DatasetTransfer;
 }

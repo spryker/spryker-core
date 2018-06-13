@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Dataset\Business\Model;
 
+use Generated\Shared\Transfer\DatasetFilenameTransfer;
+
 interface ResolverPathInterface
 {
     /**
@@ -14,5 +16,5 @@ interface ResolverPathInterface
      *
      * @return \Generated\Shared\Transfer\DatasetFilenameTransfer
      */
-    public function getFilenameByDatasetName($datasetName);
+    public function getFilenameByDatasetName($datasetName): DatasetFilenameTransfer;
 }

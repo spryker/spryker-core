@@ -24,7 +24,7 @@ class DatasetPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\Dataset\Persistence\SpyDatasetQuery
      */
-    public function createDatasetQuery()
+    public function createDatasetQuery(): SpyDatasetQuery
     {
         return SpyDatasetQuery::create();
     }
@@ -32,7 +32,7 @@ class DatasetPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\Dataset\Persistence\SpyDatasetColumnQuery
      */
-    public function createSpyDatasetColumnQuery()
+    public function createSpyDatasetColumnQuery(): SpyDatasetColumnQuery
     {
         return SpyDatasetColumnQuery::create();
     }
@@ -40,7 +40,7 @@ class DatasetPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\Dataset\Persistence\SpyDatasetRowQuery
      */
-    public function createSpyDatasetRowQuery()
+    public function createSpyDatasetRowQuery(): SpyDatasetRowQuery
     {
         return SpyDatasetRowQuery::create();
     }
@@ -48,7 +48,7 @@ class DatasetPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\Dataset\Persistence\SpyDatasetRowColumnValueQuery
      */
-    public function createSpyDatasetRowColumnValueQuery()
+    public function createSpyDatasetRowColumnValueQuery(): SpyDatasetRowColumnValueQuery
     {
         return SpyDatasetRowColumnValueQuery::create();
     }
@@ -56,7 +56,7 @@ class DatasetPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\Dataset\Persistence\SpyDatasetLocalizedAttributesQuery
      */
-    public function createSpyDatasetLocalizedAttributesQuery()
+    public function createSpyDatasetLocalizedAttributesQuery(): SpyDatasetLocalizedAttributesQuery
     {
         return SpyDatasetLocalizedAttributesQuery::create();
     }

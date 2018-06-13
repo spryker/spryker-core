@@ -7,15 +7,17 @@
 
 namespace Spryker\Zed\Dataset\Dependency\Facade;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+
 interface DatasetToLocaleFacadeInterface
 {
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getCurrentLocale();
+    public function getCurrentLocale(): LocaleTransfer;
 
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
-    public function getLocaleCollection();
+    public function getLocaleCollection(): array;
 }

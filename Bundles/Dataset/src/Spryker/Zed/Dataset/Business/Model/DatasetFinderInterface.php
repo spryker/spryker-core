@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Dataset\Business\Model;
 
+use Generated\Shared\Transfer\DatasetTransfer;
+
 interface DatasetFinderInterface
 {
     /**
@@ -14,19 +16,19 @@ interface DatasetFinderInterface
      *
      * @return bool
      */
-    public function existsDatasetByName($name);
+    public function existsDatasetByName($name): bool;
 
     /**
      * @param int $idDataset
      *
      * @return \Generated\Shared\Transfer\DatasetTransfer
      */
-    public function getDatasetModelById($idDataset);
+    public function getDatasetModelById($idDataset): DatasetTransfer;
 
     /**
      * @param string $datasetName
      *
      * @return \Generated\Shared\Transfer\DatasetTransfer
      */
-    public function getDatasetModelByName($datasetName);
+    public function getDatasetModelByName($datasetName): DatasetTransfer;
 }
