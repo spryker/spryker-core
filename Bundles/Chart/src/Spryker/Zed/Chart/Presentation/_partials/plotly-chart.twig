@@ -8,7 +8,9 @@
         <script>/*<![CDATA[*/
             var chartLayout = {{ layout.toArray | json_encode | raw }};
             chartLayout.title = '{{ layout.title | default(data.title) }}';
-
+            chartLayout.margin = {
+                l: 8 * {{ maxLabeLength }}, // left
+            };
             Plotly.plot('{{ chartDivId }}', chartData, chartLayout, { displayModeBar: false });
 
         /*]]>*/</script>
