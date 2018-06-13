@@ -8,7 +8,9 @@
 namespace Spryker\Zed\ProductListGui\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\ProductListGui\Communication\Form\ProductListForm;
 use Spryker\Zed\ProductListGui\Communication\Table\ProductListTable;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * @method \Spryker\Zed\ProductListGui\ProductListGuiConfig getConfig()
@@ -21,5 +23,16 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createProductListTable(): ProductListTable
     {
         return new ProductListTable();
+    }
+
+    /**
+     * @param array|null $data
+     * @param array $options
+     *
+     * @return \Spryker\Zed\ProductListGui\Communication\Form\ProductListForm|\Symfony\Component\Form\FormInterface
+     */
+    public function getProductListForm($data = null, array $options = []): FormInterface
+    {
+        return $this->getFormFactory()->create(ProductListForm::class, $data, $options);
     }
 }

@@ -11,11 +11,11 @@
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Create Product List' | trans } %}
 
         {% block widget_content %}
-            {{ test }}
-            {#{{ form_start(form) }}#}
+            {{ form_start(form) }}
+                {{ form_widget(form) }}
 
-            {#<input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}" />#}
-            {#{{ form_end(form) }}#}
+                <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Create' | trans }}" />
+            {{ form_end(form) }}
         {% endblock %}
 
     {% endembed %}
