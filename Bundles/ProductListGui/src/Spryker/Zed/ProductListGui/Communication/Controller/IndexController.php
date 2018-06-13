@@ -19,7 +19,7 @@ class IndexController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return array Twig variables
      */
     public function indexAction(Request $request): array
     {

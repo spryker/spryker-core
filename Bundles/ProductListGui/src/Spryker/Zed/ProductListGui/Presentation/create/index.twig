@@ -1,0 +1,22 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% block section_title 'Create Product List' | trans %}
+
+{% block action %}
+    {{ backActionButton(url('/product-list-gui'), 'Back to product list' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Create Product List' | trans } %}
+
+        {% block widget_content %}
+            {{ test }}
+            {#{{ form_start(form) }}#}
+
+            {#<input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}" />#}
+            {#{{ form_end(form) }}#}
+        {% endblock %}
+
+    {% endembed %}
+{% endblock %}
