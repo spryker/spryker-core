@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SprykGui\Business\Model;
+namespace Spryker\Zed\SprykGui\Business\Spryk;
 
 interface SprykInterface
 {

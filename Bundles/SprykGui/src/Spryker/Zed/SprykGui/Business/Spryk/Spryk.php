@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SprykGui\Business\Model;
+namespace Spryker\Zed\SprykGui\Business\Spryk;
 
 use Generated\Shared\Transfer\ArgumentCollectionTransfer;
 use Generated\Shared\Transfer\ArgumentTransfer;
 use Generated\Shared\Transfer\ModuleTransfer;
-use Spryker\Zed\SprykGui\Business\Model\Graph\GraphBuilderInterface;
+use Spryker\Zed\SprykGui\Business\Graph\GraphBuilderInterface;
 use Spryker\Zed\SprykGui\Dependency\Facade\SprykGuiToSprykFacadeInterface;
 use Symfony\Component\Process\Process;
 use Zend\Filter\FilterChain;
@@ -24,13 +24,13 @@ class Spryk implements SprykInterface
     protected $sprykFacade;
 
     /**
-     * @var \Spryker\Zed\SprykGui\Business\Model\Graph\GraphBuilderInterface
+     * @var \Spryker\Zed\SprykGui\Business\Graph\GraphBuilderInterface
      */
     protected $graphBuilder;
 
     /**
      * @param \Spryker\Zed\SprykGui\Dependency\Facade\SprykGuiToSprykFacadeInterface $sprykFacade
-     * @param \Spryker\Zed\SprykGui\Business\Model\Graph\GraphBuilderInterface $graphBuilder
+     * @param \Spryker\Zed\SprykGui\Business\Graph\GraphBuilderInterface $graphBuilder
      */
     public function __construct(SprykGuiToSprykFacadeInterface $sprykFacade, GraphBuilderInterface $graphBuilder)
     {

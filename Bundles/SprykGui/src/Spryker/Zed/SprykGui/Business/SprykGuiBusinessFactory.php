@@ -17,23 +17,21 @@ use Spryker\Zed\SprykGui\Business\Finder\Module\ModuleFinder;
 use Spryker\Zed\SprykGui\Business\Finder\Module\ModuleFinderInterface;
 use Spryker\Zed\SprykGui\Business\Finder\Organization\OrganizationFinder;
 use Spryker\Zed\SprykGui\Business\Finder\Organization\OrganizationFinderInterface;
-use Spryker\Zed\SprykGui\Business\Model\Graph\GraphBuilder;
-use Spryker\Zed\SprykGui\Business\Model\Graph\GraphBuilderInterface;
-use Spryker\Zed\SprykGui\Business\Model\Spryk;
-use Spryker\Zed\SprykGui\Business\Model\SprykInterface;
+use Spryker\Zed\SprykGui\Business\Graph\GraphBuilder;
+use Spryker\Zed\SprykGui\Business\Graph\GraphBuilderInterface;
+use Spryker\Zed\SprykGui\Business\Spryk\Spryk;
+use Spryker\Zed\SprykGui\Business\Spryk\SprykInterface;
 use Spryker\Zed\SprykGui\Dependency\Facade\SprykGuiToSprykFacadeInterface;
 use Spryker\Zed\SprykGui\SprykGuiDependencyProvider;
 
 /**
  * @method \Spryker\Zed\SprykGui\SprykGuiConfig getConfig()
  * @method \Spryker\Zed\SprykGui\Business\SprykGuiBusinessFactory getFactory()
- * @method \Spryker\Zed\SprykGui\Persistence\SprykGuiEntityManagerInterface getEntityManager()
- * @method \Spryker\Zed\SprykGui\Persistence\SprykGuiQueryContainerInterface getQueryContainer()
  */
 class SprykGuiBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\SprykGui\Business\Model\SprykInterface
+     * @return \Spryker\Zed\SprykGui\Business\Spryk\SprykInterface
      */
     public function createSpryk(): SprykInterface
     {
@@ -44,7 +42,7 @@ class SprykGuiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\SprykGui\Business\Model\Graph\GraphBuilderInterface
+     * @return \Spryker\Zed\SprykGui\Business\Graph\GraphBuilderInterface
      */
     public function createGraphBuilder(): GraphBuilderInterface
     {

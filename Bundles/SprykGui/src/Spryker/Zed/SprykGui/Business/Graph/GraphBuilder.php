@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SprykGui\Business\Model\Graph;
+namespace Spryker\Zed\SprykGui\Business\Graph;
 
 use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 use Spryker\Zed\SprykGui\Dependency\Facade\SprykGuiToSprykFacadeInterface;
