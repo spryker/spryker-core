@@ -14,7 +14,6 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\SprykGui\Communication\SprykGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\SprykGui\Business\SprykGuiFacadeInterface getFacade()
- * @method \Spryker\Zed\SprykGui\Persistence\SprykGuiQueryContainerInterface getQueryContainer()
  */
 class BuildController extends AbstractController
 {

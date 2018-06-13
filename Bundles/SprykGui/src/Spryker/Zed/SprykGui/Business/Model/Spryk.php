@@ -269,78 +269,14 @@ class Spryk implements SprykInterface
         }
 
         return $commandLineArguments;
-
-//        foreach ($formData as $key => $userInput) {
-//            foreach ($sprykDefinition['arguments'] as $argumentName => $argumentDefinition) {
-//                if (isset($argumentDefinition['value']) || isset($argumentDefinition['callbackOnly'])) {
-//                    continue;
-//                }
-//
-//                if ($argumentName === 'constructorArguments') {
-//                    if (!isset($userInput['arguments'])) {
-//                        continue;
-//                    }
-//
-//                    $argumentString .= sprintf(' --%s=%s', $argumentName, escapeshellarg($this->buildFromArguments($userInput)));
-//
-//                    foreach ($userInput['arguments'] as $userArgumentDefinition) {
-//                        $argumentTransfer = $this->getArgumentTransferFromDefinition($userArgumentDefinition);
-//                        $argumentMetaTransfer = $argumentTransfer->getArgumentMeta();
-//
-//                        $argumentString .= sprintf(' --dependencyMethods=%s', escapeshellarg($argumentMetaTransfer->getMethod()));
-//                    }
-//
-//                    continue;
-//                }
-//
-//                if (isset($addedArguments[$argumentName]) && ($userInput !== $addedArguments[$argumentName])) {
-//                    $argumentName = sprintf('%s.%s', $sprykName, $argumentName);
-//                }
-//
-//                if (isset($addedArguments[$argumentName])) {
-//                    continue;
-//                }
-//
-//                if ($argumentName === $key && $userInput instanceof ModuleTransfer) {
-//                    $userInput = $userInput->getName();
-//                }
-//
-//                if ($argumentName === 'moduleOrganization' && $userInput instanceof ModuleTransfer) {
-//                    $userInput = $userInput->getOrganization()->getName();
-//                }
-//
-//                if ((!isset($argumentDefinition['default'])) || (isset($argumentDefinition['default']) && $argumentDefinition['default'] !== $userInput)) {
-//                    if (!isset($argumentDefinition['multiline'])) {
-//                        $argumentString .= sprintf(' --%s=%s', $argumentName, escapeshellarg($userInput));
-//                        $addedArguments[$argumentName] = $userInput;
-//
-//                        continue;
-//                    }
-//
-//                    $lines = explode(PHP_EOL, $userInput);
-//                    foreach ($lines as $line) {
-//                        $line = preg_replace('/[[:cntrl:]]/', '', $line);
-//                        $argumentString .= sprintf(' --%s=%s', $argumentName, escapeshellarg($line));
-//                    }
-//
-//                    $addedArguments[$argumentName] = $userInput;
-//                }
-//            }
-//        }
-//
-//        foreach ($includeOptionalSpryks as $includeOptionalSpryk) {
-//            $argumentString .= sprintf(' --include-optional=%s', $includeOptionalSpryk);
-//        }
-//
-//        return $argumentString;
     }
 
     /**
-     * @param array $userInput
+     * @param string $userInput
      *
      * @return array
      */
-    protected function getMultilineConsoleArgument(array $userInput)
+    protected function getMultilineConsoleArgument(string $userInput): array
     {
         $lines = explode(PHP_EOL, $userInput);
         $userInput = [];
@@ -436,64 +372,6 @@ class Spryk implements SprykInterface
             }
             $jiraTemplate .= PHP_EOL;
         }
-//        $sprykDefinitions = $this->sprykFacade->getSprykDefinitions();
-//        foreach ($sprykArguments as $sprykName => $userArguments) {
-//            $sprykDefinition = $sprykDefinitions[$sprykName];
-//            foreach ($sprykDefinition['arguments'] as $argumentName => $argumentDefinition) {
-//                if (isset($argumentDefinition['value']) || isset($argumentDefinition['callbackOnly'])) {
-//                    continue;
-//                }
-//
-//                $userInput = $userArguments[$argumentName];
-//                if ($argumentName === 'constructorArguments') {
-//                    if (!isset($userInput['arguments'])) {
-//                        continue;
-//                    }
-//
-//                    $jiraTemplate .= sprintf('"%s"', $argumentName) . PHP_EOL;
-//                    $jiraTemplate .= sprintf('// %s', $this->buildFromArguments($userInput)) . PHP_EOL . PHP_EOL;
-//
-//                    foreach ($userInput['arguments'] as $userArgumentDefinition) {
-//                        $argumentTransfer = $this->getArgumentTransferFromDefinition($userArgumentDefinition);
-//                        $argumentMetaTransfer = $argumentTransfer->getArgumentMeta();
-//
-//                        $jiraTemplate .= '"factoryDependencyMethod"' . PHP_EOL;
-//                        $jiraTemplate .= sprintf('// %s', $argumentMetaTransfer->getMethod()) . PHP_EOL . PHP_EOL;
-//                    }
-//
-//                    continue;
-//                }
-//                if (isset($addedArguments[$argumentName]) && ($userInput !== $addedArguments[$argumentName])) {
-//                    $argumentName = sprintf('%s.%s', $sprykName, $argumentName);
-//                }
-//
-//                if (isset($addedArguments[$argumentName])) {
-//                    continue;
-//                }
-//
-//                if ((!isset($argumentDefinition['default'])) || (isset($argumentDefinition['default']) && $argumentDefinition['default'] !== $userInput)) {
-//                    $jiraTemplate .= sprintf('"%s"', $argumentName) . PHP_EOL;
-//
-//                    if (!isset($argumentDefinition['multiline'])) {
-//                        $jiraTemplate .= sprintf('// %s', $userInput) . PHP_EOL . PHP_EOL;
-//
-//                        $addedArguments[$argumentName] = $userInput;
-//
-//                        continue;
-//                    }
-//
-//                    $lines = explode(PHP_EOL, $userInput);
-//                    foreach ($lines as $line) {
-//                        $line = preg_replace('/[[:cntrl:]]/', '', $line);
-//                        $jiraTemplate .= sprintf('// %s', $line) . PHP_EOL;
-//                    }
-//
-//                    $jiraTemplate .= PHP_EOL;
-//
-//                    $addedArguments[$argumentName] = $userInput;
-//                }
-//            }
-//        }
 
         $jiraTemplate .= '{code}';
 

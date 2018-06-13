@@ -48,10 +48,10 @@ class BuildControllerCest
 
         $formData = [
             'spryk_main_form' => [
-                'module' => 'FooBar',
+                'module' => 'SprykGui',
                 'organization' => 'Spryker',
                 'sprykDetails' => [
-                    'comment' => "Specification:\r\n- Line one.\r\n- Line two.",
+                    'comment' => "Line one.\r\nLine two.",
                     'method' => 'addFooBar',
                     'input' => 'string $fooBar',
                     'output' => 'bool',
