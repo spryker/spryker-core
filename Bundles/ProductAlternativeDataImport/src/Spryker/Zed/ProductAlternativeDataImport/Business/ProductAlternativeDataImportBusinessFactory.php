@@ -7,6 +7,8 @@
 namespace Spryker\Zed\ProductAlternativeDataImport\Business;
 
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
+use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
+use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\ProductAlternativeDataImport\Business\Model\ProductAlternativeWriterStep;
 use Spryker\Zed\ProductAlternativeDataImport\Business\Model\Step\AlternativeProductAbstractSkuToProductIdStep;
 use Spryker\Zed\ProductAlternativeDataImport\Business\Model\Step\AlternativeProductConcreteSkuToProductIdStep;
@@ -21,7 +23,7 @@ class ProductAlternativeDataImportBusinessFactory extends DataImportBusinessFact
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
-    public function getProductAlternativeDataImport()
+    public function getProductAlternativeDataImport(): DataImporterInterface
     {
         $dataImporter = $this->getCsvDataImporterFromConfig($this->getConfig()->getProductAlternativeDataImporterConfiguration());
 
@@ -41,7 +43,7 @@ class ProductAlternativeDataImportBusinessFactory extends DataImportBusinessFact
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    public function createProductAlternativeDataImportWriterStep()
+    public function createProductAlternativeDataImportWriterStep(): DataImportStepInterface
     {
         return new ProductAlternativeWriterStep();
     }
@@ -49,7 +51,7 @@ class ProductAlternativeDataImportBusinessFactory extends DataImportBusinessFact
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    public function createAlternativeProductConcreteSkuToProductIdStep()
+    public function createAlternativeProductConcreteSkuToProductIdStep(): DataImportStepInterface
     {
         return new AlternativeProductConcreteSkuToProductIdStep();
     }
@@ -57,7 +59,7 @@ class ProductAlternativeDataImportBusinessFactory extends DataImportBusinessFact
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    public function createAlternativeProductAbstractSkuToProductIdStep()
+    public function createAlternativeProductAbstractSkuToProductIdStep(): DataImportStepInterface
     {
         return new AlternativeProductAbstractSkuToProductIdStep();
     }
@@ -65,7 +67,7 @@ class ProductAlternativeDataImportBusinessFactory extends DataImportBusinessFact
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    public function createProductSkuToProductIdStep()
+    public function createProductSkuToProductIdStep(): DataImportStepInterface
     {
         return new ProductSkuToProductIdStep();
     }
@@ -73,7 +75,7 @@ class ProductAlternativeDataImportBusinessFactory extends DataImportBusinessFact
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    public function createDataValidationStep()
+    public function createDataValidationStep(): DataImportStepInterface
     {
         return new DataValidationStep();
     }

@@ -19,7 +19,7 @@ class DataValidationStep implements DataImportStepInterface
      *
      * @return void
      */
-    public function execute(DataSetInterface $dataSet)
+    public function execute(DataSetInterface $dataSet): void
     {
         $this->checkIfProductHasConcreteOrAbstractAlternative($dataSet);
         $this->checkIfProductHasConcreteAndAbstractAlternative($dataSet);
@@ -32,7 +32,7 @@ class DataValidationStep implements DataImportStepInterface
      *
      * @return void
      */
-    protected function checkIfProductHasConcreteOrAbstractAlternative(DataSetInterface $dataSet)
+    protected function checkIfProductHasConcreteOrAbstractAlternative(DataSetInterface $dataSet): void
     {
         if (!$dataSet[ProductAlternativeDataSetInterface::KEY_COLUMN_ALTERNATIVE_PRODUCT_CONCRETE_SKU] &&
             !$dataSet[ProductAlternativeDataSetInterface::KEY_COLUMN_ALTERNATIVE_PRODUCT_ABSTRACT_SKU]
@@ -53,7 +53,7 @@ class DataValidationStep implements DataImportStepInterface
      *
      * @return void
      */
-    protected function checkIfProductHasConcreteAndAbstractAlternative(DataSetInterface $dataSet)
+    protected function checkIfProductHasConcreteAndAbstractAlternative(DataSetInterface $dataSet): void
     {
         if ($dataSet[ProductAlternativeDataSetInterface::KEY_COLUMN_ALTERNATIVE_PRODUCT_CONCRETE_SKU] &&
             $dataSet[ProductAlternativeDataSetInterface::KEY_COLUMN_ALTERNATIVE_PRODUCT_ABSTRACT_SKU]

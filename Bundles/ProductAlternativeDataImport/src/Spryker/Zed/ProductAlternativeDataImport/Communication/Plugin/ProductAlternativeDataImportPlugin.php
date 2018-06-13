@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductAlternativeDataImport\Communication\Plugin;
 
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
+use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductAlternativeDataImport\ProductAlternativeDataImportConfig;
@@ -22,7 +23,7 @@ class ProductAlternativeDataImportPlugin extends AbstractPlugin implements DataI
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
-    public function import(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null)
+    public function import(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
         return $this->getFacade()->import($dataImporterConfigurationTransfer);
     }
@@ -30,7 +31,7 @@ class ProductAlternativeDataImportPlugin extends AbstractPlugin implements DataI
     /**
      * @return string
      */
-    public function getImportType()
+    public function getImportType(): string
     {
         return ProductAlternativeDataImportConfig::IMPORT_TYPE_PRODUCT_ALTERNATIVE;
     }

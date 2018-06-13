@@ -27,7 +27,7 @@ class ProductSkuToProductIdStep implements DataImportStepInterface
      *
      * @return void
      */
-    public function execute(DataSetInterface $dataSet)
+    public function execute(DataSetInterface $dataSet): void
     {
         $productSku = $dataSet[ProductAlternativeDataSetInterface::KEY_COLUMN_CONCRETE_SKU];
 
