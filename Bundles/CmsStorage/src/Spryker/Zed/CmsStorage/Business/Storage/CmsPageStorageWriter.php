@@ -32,7 +32,7 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
      * @var \Spryker\Zed\Cms\Dependency\Plugin\CmsPageDataExpanderPluginInterface[]
      */
     protected $contentWidgetDataExpanderPlugins = [];
-    
+
     /**
      * @var \Spryker\Shared\Kernel\Store
      */
