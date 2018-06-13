@@ -124,7 +124,7 @@ class BusinessOnBehalfFacadeTest extends Unit
         $this->tester->assertInstanceOf(CompanyUserCollectionTransfer::class, $actualCompanyUserCollection);
         $this->tester->assertCount($expectedCompanyUserAmount, $actualCompanyUserCollection->getCompanyUsers());
     }
-    
+
     /**
      * @return void
      */
