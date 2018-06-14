@@ -95,6 +95,7 @@ interface CompanyUserFacadeInterface
     /**
      * Specification:
      * - Retrieves company user by id
+     * - Hydrates company field
      *
      * @api
      *
@@ -115,4 +116,17 @@ interface CompanyUserFacadeInterface
      * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
      */
     public function findInitialCompanyUserByCompanyId(int $idCompany): ?CompanyUserTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves count of company user information by customer ID
+     * - Checks activity flag in a related company
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return int
+     */
+    public function countActiveCompanyUsersByIdCustomer(CustomerTransfer $customerTransfer): int;
 }

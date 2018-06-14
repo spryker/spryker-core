@@ -254,7 +254,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\AbstractBundleConfig|\Spryker\Zed\PriceProduct\PriceProductConfig
+     * @return \Spryker\Zed\PriceProduct\PriceProductConfig
      */
     public function getModuleConfig()
     {

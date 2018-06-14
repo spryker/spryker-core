@@ -15,7 +15,7 @@ class UrlKeyBuilder implements KeyBuilderInterface
     use KeyBuilderTrait;
 
     /**
-     * @param array $data
+     * @param string $data
      *
      * @return string
      */

@@ -257,7 +257,7 @@ class Group implements GroupInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\GroupTransfer
+     * @return \Generated\Shared\Transfer\GroupsTransfer
      */
     public function getAllGroups()
     {
@@ -348,7 +348,7 @@ class Group implements GroupInterface
     /**
      * @param int $idGroup
      *
-     * @return \Generated\Shared\Transfer\RoleTransfer
+     * @return \Generated\Shared\Transfer\RolesTransfer
      */
     public function getRoles($idGroup)
     {
