@@ -9,6 +9,8 @@ namespace Spryker\Zed\ProductListGui\Communication;
 
 use Generated\Shared\Transfer\ProductListTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\ProductListGui\Communication\DataProvider\CategoriesDataProvider;
+use Spryker\Zed\ProductListGui\Communication\DataProvider\ProductListDataProvider;
 use Spryker\Zed\ProductListGui\Communication\Form\ProductListForm;
 use Spryker\Zed\ProductListGui\Communication\Table\ProductListTable;
 use Spryker\Zed\ProductListGui\Communication\Tabs\ProductListTabs;
@@ -38,16 +40,37 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param array|null $data
-     * @param array $options
+     * @param \Generated\Shared\Transfer\ProductListTransfer|null $productListTransfer
      *
-     * @return \Spryker\Zed\ProductListGui\Communication\Form\ProductListForm|\Symfony\Component\Form\FormInterface
+     * @return \Spryker\Zed\ProductListGui\Communication\Form\ProductListGeneralType|\Symfony\Component\Form\FormInterface
      */
-    public function getProductListForm($data = null, array $options = []): FormInterface
+    public function getProductListForm(?ProductListTransfer $productListTransfer = null): FormInterface
     {
-        $options['data_class'] = ProductListTransfer::class;
+        $dataProvider = $this->createProductListDataProvider();
 
-        return $this->getFormFactory()->create(ProductListForm::class, $data, $options);
+        return $this->getFormFactory()->create(
+            ProductListForm::class,
+            $dataProvider->getData($productListTransfer),
+            $dataProvider->getOptions()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductListGui\Communication\DataProvider\ProductListDataProvider
+     */
+    public function createProductListDataProvider(): ProductListDataProvider
+    {
+        return new ProductListDataProvider(
+            $this->createCategoriesDataProvider()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductListGui\Communication\DataProvider\CategoriesDataProvider
+     */
+    public function createCategoriesDataProvider(): CategoriesDataProvider
+    {
+        return new CategoriesDataProvider();
     }
 
     /**

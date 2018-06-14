@@ -7,31 +7,38 @@
 
 namespace Spryker\Zed\ProductListGui\Communication\Form;
 
-use Orm\Zed\ProductList\Persistence\Map\SpyProductListTableMap;
+use Generated\Shared\Transfer\ProductListTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Required;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ProductListForm extends AbstractType
 {
-    /** @see SpyProductListTableMap::COL_ID_PRODUCT_LIST */
-    public const FIELD_ID = 'id_product_list';
-    /** @see SpyProductListTableMap::COL_TITLE */
-    public const FIELD_NAME = 'title';
-    /** @see SpyProductListTableMap::COL_TYPE */
-    public const FIELD_TYPE = 'type';
+    public const FIELD_GENERAL = 'productList';
+    public const FIELD_CATEGORIES = 'categories';
 
     /**
      * @return string
      */
     public function getBlockPrefix()
     {
-        return 'productListForm';
+        return 'productList';
+    }
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setRequired([
+            static::FIELD_CATEGORIES,
+        ]);
+
+        $resolver->setDefaults([
+            'data_class' => ProductListTransfer::class,
+        ]);
     }
 
     /**
@@ -40,12 +47,11 @@ class ProductListForm extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this
-            ->addIdField($builder)
-            ->addNameField($builder)
-            ->addTypeFiled($builder);
+            ->addGeneralSubForm($builder)
+            ->addCategoriesSubForm($builder, $options[static::FIELD_CATEGORIES]);
     }
 
     /**
@@ -53,48 +59,22 @@ class ProductListForm extends AbstractType
      *
      * @return $this
      */
-    protected function addIdField(FormBuilderInterface $builder): self
+    protected function addGeneralSubForm(FormBuilderInterface $builder): self
     {
-        $builder->add(static::FIELD_ID, HiddenType::class);
+        $builder->add(static::FIELD_GENERAL, ProductListGeneralType::class);
 
         return $this;
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
      * @return $this
      */
-    protected function addNameField(FormBuilderInterface $builder): self
+    protected function addCategoriesSubForm(FormBuilderInterface $builder, array $options): self
     {
-        $builder->add(static::FIELD_NAME, TextType::class, [
-            'label' => 'Name',
-            'constraints' => [
-                new Required(),
-                new NotBlank(),
-                new Length(['max' => 100]),
-            ],
-        ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addTypeFiled(FormBuilderInterface $builder): self
-    {
-        $builder->add(static::FIELD_TYPE, ChoiceType::class, [
-            'label' => 'Type',
-            'expanded' => true,
-            'multiple' => false,
-            'choices' => [
-                'Whitelist' => SpyProductListTableMap::COL_TYPE_WHITELIST,
-                'Blacklist' => SpyProductListTableMap::COL_TYPE_BLACKLIST,
-            ],
-        ]);
+        $builder->add(static::FIELD_CATEGORIES, CategoriesType::class, $options);
 
         return $this;
     }

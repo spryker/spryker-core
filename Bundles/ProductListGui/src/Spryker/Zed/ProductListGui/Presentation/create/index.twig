@@ -13,7 +13,8 @@
         {% block widget_content %}
             {{ form_start(form) }}
                 {{ tabs(productListFormTabs, {
-                    'generalForm': form
+                    'generalForm': form.productList,
+                    'categoryForm': form.categories,
                 }) }}
 
                 <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Create' | trans }}" />

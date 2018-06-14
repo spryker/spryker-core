@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductListGui\Communication\Controller;
 
+use Generated\Shared\Transfer\ProductListTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -31,12 +32,11 @@ class CreateController extends AbstractController
     public function indexAction(Request $request)
     {
         $redirectUrl = $request->query->get(static::PARAM_REDIRECT_URL, static::URL_LIST);
-
+        $productListTransfer = new ProductListTransfer();
         $form = $this->getFactory()
-            ->getProductListForm()
-            ->handleRequest($request);
-        $tabs = $this->getFactory()
-            ->createProductListTabs();
+            ->getProductListForm($productListTransfer);
+
+        $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $productListTransfer = $form->getData();
@@ -55,6 +55,8 @@ class CreateController extends AbstractController
 
             $this->addErrorMessage(static::MESSAGE_PRODUCT_LIST_CREATE_ERROR);
         }
+
+        $tabs = $this->getFactory()->createProductListTabs();
 
         return $this->viewResponse([
             'form' => $form->createView(),
