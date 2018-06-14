@@ -27,7 +27,11 @@ class ProductAlternativeDataImportHelper extends Module
     public function assertDatabaseTableContainsData(): void
     {
         $query = $this->getProductAlternativeQuery();
-        $this->assertTrue(($query->count() > 0), 'Expected at least one entry in the database table but database table is empty.');
+        $this->assertGreaterThan(
+            ($query->count()),
+            0,
+            'Expected at least one entry in the database table but database table is empty.'
+        );
     }
 
     /**

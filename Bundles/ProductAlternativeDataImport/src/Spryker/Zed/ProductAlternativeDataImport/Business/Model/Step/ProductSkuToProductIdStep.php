@@ -33,7 +33,6 @@ class ProductSkuToProductIdStep implements DataImportStepInterface
 
         if (!isset($this->idProductCache[$productSku])) {
             $productEntity = SpyProductQuery::create()->findOneBySku($productSku);
-
             if (!$productEntity) {
                 throw new EntityNotFoundException(sprintf('Could not find product by sku "%s"', $productSku));
             }

@@ -38,16 +38,13 @@ class ProductAlternativeDataImportPluginTest extends Unit
     public function testImportImportsProductAlternative(): void
     {
         $this->tester->ensureDatabaseTableIsEmpty();
-
         $dataImportConfigurationTransfer = $this->getDataImportConfigurationTransfer('import/product_alternative.csv');
         $dataImportConfigurationTransfer->setThrowException(true);
 
         $productAlternativeDataImportPlugin = new ProductAlternativeDataImportPlugin();
-
         $dataImporterReportTransfer = $productAlternativeDataImportPlugin->import($dataImportConfigurationTransfer);
 
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
-
         $this->tester->assertDatabaseTableContainsData();
     }
 
@@ -57,12 +54,10 @@ class ProductAlternativeDataImportPluginTest extends Unit
     public function testImportThrowsExceptionWhenProductNotFound(): void
     {
         $this->tester->ensureDatabaseTableIsEmpty();
-
         $dataImportConfigurationTransfer = $this->getDataImportConfigurationTransfer(
             'import/product_alternative_with_invalid_sku.csv'
         );
         $dataImportConfigurationTransfer->setThrowException(true);
-
         $productAlternativeDataImportPlugin = new ProductAlternativeDataImportPlugin();
 
         $this->expectException(DataImportException::class);
@@ -76,12 +71,10 @@ class ProductAlternativeDataImportPluginTest extends Unit
     public function testImportThrowsExceptionWhenProductHasNeitherConcreteNorAbstractAlternatives(): void
     {
         $this->tester->ensureDatabaseTableIsEmpty();
-
         $dataImportConfigurationTransfer = $this->getDataImportConfigurationTransfer(
             'import/product_alternative_with_no_alternatives.csv'
         );
         $dataImportConfigurationTransfer->setThrowException(true);
-
         $productAlternativeDataImportPlugin = new ProductAlternativeDataImportPlugin();
 
         $this->expectException(DataImportException::class);
@@ -95,16 +88,13 @@ class ProductAlternativeDataImportPluginTest extends Unit
     public function testImportThrowsExceptionWhenProductHasBothConcreteAndAbstractAlternatives(): void
     {
         $this->tester->ensureDatabaseTableIsEmpty();
-
         $dataImportConfigurationTransfer = $this->getDataImportConfigurationTransfer(
             'import/product_alternative_with_both_alternatives.csv'
         );
         $dataImportConfigurationTransfer->setThrowException(true);
-
         $productAlternativeDataImportPlugin = new ProductAlternativeDataImportPlugin();
 
         $this->expectException(DataImportException::class);
-
         $this->expectExceptionMessage('Product concrete with SKU "999999999" has both a concrete and an abstract alternative products');
         $productAlternativeDataImportPlugin->import($dataImportConfigurationTransfer);
     }

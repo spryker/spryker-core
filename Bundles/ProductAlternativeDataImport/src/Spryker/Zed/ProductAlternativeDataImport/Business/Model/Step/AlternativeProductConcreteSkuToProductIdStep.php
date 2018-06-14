@@ -37,7 +37,6 @@ class AlternativeProductConcreteSkuToProductIdStep implements DataImportStepInte
 
         if (!isset($this->idProductAlternativeCache[$productAlternativeSku])) {
             $productAlternativeEntity = SpyProductQuery::create()->findOneBySku($productAlternativeSku);
-
             if (!$productAlternativeEntity) {
                 throw new EntityNotFoundException(sprintf(
                     'Could not find product by sku "%s"',
