@@ -18,17 +18,17 @@ class ProductPackagingUnitTypeReader implements ProductPackagingUnitTypeReaderIn
     protected $repository;
 
     /**
-     * @var \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeTranslationsReader
+     * @var \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeTranslationsReaderInterface
      */
     protected $translationsReader;
 
     /**
      * @param \Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface $repository
-     * @param \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeTranslationsReader $translationsReader
+     * @param \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeTranslationsReaderInterface $translationsReader
      */
     public function __construct(
         ProductPackagingUnitRepositoryInterface $repository,
-        ProductPackagingUnitTypeTranslationsReader $translationsReader
+        ProductPackagingUnitTypeTranslationsReaderInterface $translationsReader
     ) {
         $this->repository = $repository;
         $this->translationsReader = $translationsReader;

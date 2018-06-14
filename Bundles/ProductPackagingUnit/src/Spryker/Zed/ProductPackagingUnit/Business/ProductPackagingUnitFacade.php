@@ -30,8 +30,7 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
     }
 
     /**
-     * Specification:
-     * - Retrieve infrastructural packaging unit type list.
+     * {@inheritdoc}
      *
      * @api
      *

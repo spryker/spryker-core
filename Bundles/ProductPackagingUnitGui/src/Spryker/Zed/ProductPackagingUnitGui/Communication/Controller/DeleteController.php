@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductPackagingUnitGui\Communication\Controller;
 
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\ProductPackagingUnitGui\Communication\Table\ProductPackagingUnitTypeTableConstantsInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -54,11 +55,9 @@ class DeleteController extends AbstractProductPackagingUnitGuiController
     protected function getErorrRedirectUrl(
         int $idProductPackagingUnitType
     ): string {
-        return sprintf(
-            '%s?%s=%s',
+        return Url::generate(
             ProductPackagingUnitTypeTableConstantsInterface::URL_PRODUCT_PACKAGING_UNIT_TYPE_EDIT,
-            ProductPackagingUnitTypeTableConstantsInterface::REQUEST_ID_PRODUCT_PACKAGING_UNIT_TYPE,
-            $idProductPackagingUnitType
+            [ ProductPackagingUnitTypeTableConstantsInterface::REQUEST_ID_PRODUCT_PACKAGING_UNIT_TYPE => $idProductPackagingUnitType]
         );
     }
 

@@ -30,7 +30,7 @@ class ProductPackagingUnitToGlossaryBridge implements ProductPackagingUnitToGlos
      *
      * @return bool
      */
-    public function hasTranslation($keyName, ?LocaleTransfer $localeTransfer = null): bool
+    public function hasTranslation(string $keyName, ?LocaleTransfer $localeTransfer = null): bool
     {
         return $this->glossaryFacade->hasTranslation($keyName, $localeTransfer);
     }
