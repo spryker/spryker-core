@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductListTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductListGui\Communication\Form\ProductListForm;
 use Spryker\Zed\ProductListGui\Communication\Table\ProductListTable;
+use Spryker\Zed\ProductListGui\Communication\Tabs\ProductListTabs;
 use Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToProductListFacadeInterface;
 use Spryker\Zed\ProductListGui\ProductListGuiDependencyProvider;
 use Symfony\Component\Form\FormInterface;
@@ -26,6 +27,14 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createProductListTable(): ProductListTable
     {
         return new ProductListTable();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductListGui\Communication\Tabs\ProductListTabs
+     */
+    public function createProductListTabs(): ProductListTabs
+    {
+        return new ProductListTabs();
     }
 
     /**

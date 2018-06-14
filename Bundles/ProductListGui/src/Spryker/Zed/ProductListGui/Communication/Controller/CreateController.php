@@ -35,6 +35,8 @@ class CreateController extends AbstractController
         $form = $this->getFactory()
             ->getProductListForm()
             ->handleRequest($request);
+        $tabs = $this->getFactory()
+            ->createProductListTabs();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $productListTransfer = $form->getData();
@@ -56,6 +58,7 @@ class CreateController extends AbstractController
 
         return $this->viewResponse([
             'form' => $form->createView(),
+            'productListFormTabs' => $tabs->createView(),
         ]);
     }
 }
