@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductListGui\Communication\Controller;
 
 use Generated\Shared\Transfer\ProductListTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -57,10 +58,26 @@ class CreateController extends AbstractController
         }
 
         $tabs = $this->getFactory()->createProductListTabs();
+        $productConcreteTable = $this->getFactory()->createProductConcreteTable();
+        $productConcreteTabs = $this->getFactory()->createProductConcreteTabs();
 
         return $this->viewResponse([
             'form' => $form->createView(),
             'productListFormTabs' => $tabs->createView(),
+            'productConcreteFormTabs' => $productConcreteTabs->createView(),
+            'productTable' => $productConcreteTable->render(),
         ]);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function tableAction(): JsonResponse
+    {
+        $productConcreteTable = $this->getFactory()->createProductConcreteTable();
+
+        return $this->jsonResponse(
+            $productConcreteTable->fetchData()
+        );
     }
 }

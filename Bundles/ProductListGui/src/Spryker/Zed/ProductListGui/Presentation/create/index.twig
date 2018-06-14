@@ -16,6 +16,8 @@
                     'form': form,
                     'categoryForm': form.productListCategoryRelation,
                     'productsForm': form.productListProductConcreteRelation,
+                    'productConcreteFormTabs': productConcreteFormTabs,
+                    'productTable': productTable,
                 }) }}
 
                 <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Create' | trans }}" />
@@ -23,4 +25,5 @@
         {% endblock %}
 
     {% endembed %}
+
 {% endblock %}

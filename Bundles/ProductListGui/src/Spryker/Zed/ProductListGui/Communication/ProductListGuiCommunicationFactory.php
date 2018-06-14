@@ -13,7 +13,9 @@ use Spryker\Zed\ProductListGui\Communication\DataProvider\CategoriesDataProvider
 use Spryker\Zed\ProductListGui\Communication\DataProvider\ProductListDataProvider;
 use Spryker\Zed\ProductListGui\Communication\DataProvider\ProductListProductConcreteRelationDataProvider;
 use Spryker\Zed\ProductListGui\Communication\Form\ProductListForm;
+use Spryker\Zed\ProductListGui\Communication\Table\ProductConcreteTable;
 use Spryker\Zed\ProductListGui\Communication\Table\ProductListTable;
+use Spryker\Zed\ProductListGui\Communication\Tabs\ProductConcreteTabs;
 use Spryker\Zed\ProductListGui\Communication\Tabs\ProductListTabs;
 use Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToProductListFacadeInterface;
 use Spryker\Zed\ProductListGui\ProductListGuiDependencyProvider;
@@ -34,11 +36,27 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductListGui\Communication\Table\ProductConcreteTable
+     */
+    public function createProductConcreteTable(): ProductConcreteTable
+    {
+        return new ProductConcreteTable();
+    }
+
+    /**
      * @return \Spryker\Zed\ProductListGui\Communication\Tabs\ProductListTabs
      */
     public function createProductListTabs(): ProductListTabs
     {
         return new ProductListTabs();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductListGui\Communication\Tabs\ProductConcreteTabs
+     */
+    public function createProductConcreteTabs(): ProductConcreteTabs
+    {
+        return new ProductConcreteTabs();
     }
 
     /**
