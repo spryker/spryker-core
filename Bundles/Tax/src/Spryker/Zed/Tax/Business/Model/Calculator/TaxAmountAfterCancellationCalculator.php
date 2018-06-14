@@ -49,10 +49,10 @@ class TaxAmountAfterCancellationCalculator implements CalculatorInterface
                 continue;
             }
 
-            $canceledTaxableAmount = $itemTransfer->getUnitPriceToPayAggregation() - $itemTransfer->getCanceledAmount();
+            $canceledTaxableAmount = $itemTransfer->getSumPriceToPayAggregation() - $itemTransfer->getCanceledAmount();
 
             if (!$canceledTaxableAmount) {
-                $itemTransfer->setTaxAmountAfterCancellation($itemTransfer->getUnitTaxAmountFullAggregation());
+                $itemTransfer->setTaxAmountAfterCancellation($itemTransfer->getSumTaxAmountFullAggregation());
             }
 
             $taxAmount = $this->calculateTaxAmount(
@@ -61,7 +61,7 @@ class TaxAmountAfterCancellationCalculator implements CalculatorInterface
                 CalculationPriceMode::PRICE_MODE_GROSS
             );
 
-            $itemTransfer->setTaxAmountAfterCancellation($itemTransfer->getUnitTaxAmountFullAggregation() - $taxAmount);
+            $itemTransfer->setTaxAmountAfterCancellation($itemTransfer->getSumTaxAmountFullAggregation() - $taxAmount);
         }
     }
 
@@ -77,10 +77,10 @@ class TaxAmountAfterCancellationCalculator implements CalculatorInterface
                 continue;
             }
 
-            $canceledTaxableAmount = $expenseTransfer->getUnitPriceToPayAggregation() - $expenseTransfer->getCanceledAmount();
+            $canceledTaxableAmount = $expenseTransfer->getSumPriceToPayAggregation() - $expenseTransfer->getCanceledAmount();
 
             if (!$canceledTaxableAmount) {
-                $expenseTransfer->setTaxAmountAfterCancellation($expenseTransfer->getUnitTaxAmount());
+                $expenseTransfer->setTaxAmountAfterCancellation($expenseTransfer->getSumTaxAmount());
             }
 
             $taxAmount = $this->calculateTaxAmount(
@@ -89,7 +89,7 @@ class TaxAmountAfterCancellationCalculator implements CalculatorInterface
                 $calculableObjectTransfer->getPriceMode()
             );
 
-            $expenseTransfer->setTaxAmountAfterCancellation($expenseTransfer->getUnitTaxAmount() - $taxAmount);
+            $expenseTransfer->setTaxAmountAfterCancellation($expenseTransfer->getSumTaxAmount() - $taxAmount);
         }
     }
 

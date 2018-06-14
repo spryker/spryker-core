@@ -69,7 +69,7 @@ class TaxRateAverageAggregator implements CalculatorInterface
     ) {
 
         if ($priceMode === CalculationPriceMode::PRICE_MODE_NET) {
-            return $itemTransfer->getUnitPriceToPayAggregation();
+            return $itemTransfer->getSumPriceToPayAggregation();
         }
 
         $taxAmount = $this->calculateTax($itemTransfer);

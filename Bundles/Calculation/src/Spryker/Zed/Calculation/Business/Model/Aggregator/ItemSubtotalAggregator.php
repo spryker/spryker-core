@@ -79,6 +79,6 @@ class ItemSubtotalAggregator implements CalculatorInterface
      */
     protected function assertSumAggregationCalculationRequirements($itemTransfer)
     {
-        $itemTransfer->requireSumPrice()->requireUnitPrice();
+        $itemTransfer->requireSumPrice();
     }
 }
