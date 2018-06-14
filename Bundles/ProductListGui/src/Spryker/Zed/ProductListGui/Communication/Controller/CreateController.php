@@ -20,13 +20,15 @@ class CreateController extends AbstractController
      * @see \Spryker\Zed\ProductListGui\Communication\Controller\IndexController::indexAction()
      */
     protected const URL_LIST = '/product-list-gui';
+    protected const MESSAGE_PRODUCT_LIST_CREATE_ERROR = 'Product list can not be created';
+    protected const MESSAGE_PRODUCT_LIST_CREATE_SUCCESS = 'Product list with id "%d" successfully created';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse twig variables
      */
-    public function indexAction(Request $request): array
+    public function indexAction(Request $request)
     {
         $redirectUrl = $request->query->get(static::PARAM_REDIRECT_URL, static::URL_LIST);
 
@@ -36,21 +38,20 @@ class CreateController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $productListTransfer = $form->getData();
-//            $productListTransfer = $this->getFactory()
-//                ->getCompanyBusinessUnitFacade()
-//                ->create($productListTransfer);
-//
-//            if (!$companyResponseTransfer->getIsSuccessful()) {
-//                $this->addErrorMessage(static::MESSAGE_COMPANY_BUSINESS_UNIT_CREATE_ERROR);
-//
-//                return $this->viewResponse([
-//                    'form' => $form->createView(),
-//                ]);
-//            }
-//
-//            $this->addSuccessMessage(static::MESSAGE_COMPANY_BUSINESS_UNIT_CREATE_SUCCESS);
-//
-//            return $this->redirectResponse($redirectUrl);
+            $productListTransfer = $this->getFactory()
+                ->getProductListFacade()
+                ->saveProductList($productListTransfer);
+
+            if ($productListTransfer->getIdProductList()) {
+                $this->addSuccessMessage(sprintf(
+                    static::MESSAGE_PRODUCT_LIST_CREATE_SUCCESS,
+                    $productListTransfer->getIdProductList()
+                ));
+
+                return $this->redirectResponse($redirectUrl);
+            }
+
+            $this->addErrorMessage(static::MESSAGE_PRODUCT_LIST_CREATE_ERROR);
         }
 
         return $this->viewResponse([

@@ -7,9 +7,12 @@
 
 namespace Spryker\Zed\ProductListGui\Communication;
 
+use Generated\Shared\Transfer\ProductListTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductListGui\Communication\Form\ProductListForm;
 use Spryker\Zed\ProductListGui\Communication\Table\ProductListTable;
+use Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToProductListFacadeInterface;
+use Spryker\Zed\ProductListGui\ProductListGuiDependencyProvider;
 use Symfony\Component\Form\FormInterface;
 
 /**
@@ -33,6 +36,16 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function getProductListForm($data = null, array $options = []): FormInterface
     {
+        $options['data_class'] = ProductListTransfer::class;
+
         return $this->getFormFactory()->create(ProductListForm::class, $data, $options);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToProductListFacadeInterface
+     */
+    public function getProductListFacade(): ProductListGuiToProductListFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductListGuiDependencyProvider::FACADE_PRODUCT_LIST);
     }
 }

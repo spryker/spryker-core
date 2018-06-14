@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\ProductListGui\Communication\Form;
 
+use Orm\Zed\ProductList\Persistence\Map\SpyProductListTableMap;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -21,6 +23,8 @@ class ProductListForm extends AbstractType
     public const FIELD_ID = 'id_product_list';
     /** @see SpyProductListTableMap::COL_TITLE */
     public const FIELD_NAME = 'title';
+    /** @see SpyProductListTableMap::COL_TYPE */
+    public const FIELD_TYPE = 'type';
 
     /**
      * @return string
@@ -39,8 +43,9 @@ class ProductListForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this
-            ->addId($builder)
-            ->addNameField($builder);
+            ->addIdField($builder)
+            ->addNameField($builder)
+            ->addTypeFiled($builder);
     }
 
     /**
@@ -48,7 +53,7 @@ class ProductListForm extends AbstractType
      *
      * @return $this
      */
-    protected function addId(FormBuilderInterface $builder): self
+    protected function addIdField(FormBuilderInterface $builder): self
     {
         $builder->add(static::FIELD_ID, HiddenType::class);
 
@@ -68,6 +73,26 @@ class ProductListForm extends AbstractType
                 new Required(),
                 new NotBlank(),
                 new Length(['max' => 100]),
+            ],
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addTypeFiled(FormBuilderInterface $builder): self
+    {
+        $builder->add(static::FIELD_TYPE, ChoiceType::class, [
+            'label' => 'Type',
+            'expanded' => true,
+            'multiple' => false,
+            'choices' => [
+                'Whitelist' => SpyProductListTableMap::COL_TYPE_WHITELIST,
+                'Blacklist' => SpyProductListTableMap::COL_TYPE_BLACKLIST,
             ],
         ]);
 
