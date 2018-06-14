@@ -12,21 +12,21 @@ use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Spryker\Shared\ErrorHandler\ErrorLogger;
 use Spryker\Zed\DataImport\Business\Exception\DataImportException;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\DataImport\Business\Model\Writer\DataSettWriterInterface;
+use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetWriterInterface;
 
-class DataImporterWriterAware extends DataImporter implements DataImporterWriterAwareInterface
+class DataImporterDataSetWriterAware extends DataImporter implements DataImporterDataSetWriterAwareInterface
 {
     /**
-     * @var \Spryker\Zed\DataImport\Business\Model\Writer\DataSettWriterInterface
+     * @var \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetWriterInterface
      */
     protected $dataSetWriter;
 
     /**
-     * @param \Spryker\Zed\DataImport\Business\Model\Writer\DataSettWriterInterface $dataSetWriter
+     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetWriterInterface $dataSetWriter
      *
      * @return void
      */
-    public function setDataSetWriter(DataSettWriterInterface $dataSetWriter)
+    public function setDataSetWriter(DataSetWriterInterface $dataSetWriter)
     {
         $this->dataSetWriter = $dataSetWriter;
     }

@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\DataImportExtension\Dependency\Plugin;
 
-use Spryker\Zed\DataImport\Business\Model\Writer\DataSettWriterInterface;
+use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetWriterInterface;
 
-interface DataSetWriterPluginInterface extends DataSettWriterInterface
+interface DataSetWriterPluginInterface extends DataSetWriterInterface
 {
 }

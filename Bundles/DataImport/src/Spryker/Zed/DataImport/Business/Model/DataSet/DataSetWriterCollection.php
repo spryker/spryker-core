@@ -5,19 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\DataImport\Business\Model\Writer;
+namespace Spryker\Zed\DataImport\Business\Model\DataSet;
 
-use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-
-class DataSettWriterCollection implements DataSettWriterInterface
+class DataSetWriterCollection implements DataSetWriterInterface
 {
     /**
-     * @var \Spryker\Zed\DataImport\Business\Model\Writer\DataSettWriterInterface[]
+     * @var \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetWriterInterface[]
      */
     protected $dataSetWriters = [];
 
     /**
-     * @param \Spryker\Zed\DataImport\Business\Model\Writer\DataSettWriterInterface[] $dataSetWriter
+     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetWriterInterface[] $dataSetWriter
      */
     public function __construct(array $dataSetWriter)
     {

@@ -5,11 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\DataImport\Business\Model\Writer;
+namespace Spryker\Zed\DataImport\Business\Model\DataSet;
 
-use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-
-interface DataSettWriterInterface
+interface DataSetWriterInterface
 {
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
