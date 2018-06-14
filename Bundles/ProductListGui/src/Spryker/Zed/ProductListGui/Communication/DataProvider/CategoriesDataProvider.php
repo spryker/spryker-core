@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductListGui\Communication\DataProvider;
 
 use Generated\Shared\Transfer\ProductListTransfer;
 use Spryker\Zed\ProductListGui\Business\ProductListGuiFacadeInterface;
-use Spryker\Zed\ProductListGui\Communication\Form\CategoriesType;
+use Spryker\Zed\ProductListGui\Communication\Form\ProductListCategoryRelationType;
 
 class CategoriesDataProvider
 {
@@ -33,7 +33,7 @@ class CategoriesDataProvider
     public function getOptions()
     {
         return [
-            CategoriesType::OPTION_CATEGORY_ARRAY => $this->getCategoryList(),
+            ProductListCategoryRelationType::OPTION_CATEGORY_ARRAY => $this->getCategoryList(),
         ];
     }
 

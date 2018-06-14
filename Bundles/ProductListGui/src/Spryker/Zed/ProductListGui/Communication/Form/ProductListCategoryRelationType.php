@@ -7,15 +7,15 @@
 
 namespace Spryker\Zed\ProductListGui\Communication\Form;
 
-use Generated\Shared\Transfer\ProductListTransfer;
+use Generated\Shared\Transfer\ProductListCategoryRelationTransfer;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CategoriesType extends AbstractType
+class ProductListCategoryRelationType extends AbstractType
 {
-    const FIELD_CATEGORIES = 'id_categories';
+    const FIELD_CATEGORIES = ProductListCategoryRelationTransfer::CATEGORY_IDS;
     const OPTION_CATEGORY_ARRAY = 'option-category-array';
 
     /**
@@ -37,7 +37,7 @@ class CategoriesType extends AbstractType
             ->setRequired(static::OPTION_CATEGORY_ARRAY);
 
         $resolver->setDefaults([
-            'data_class' => ProductListTransfer::class,
+            'data_class' => ProductListCategoryRelationTransfer::class,
         ]);
     }
 

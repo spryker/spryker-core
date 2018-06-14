@@ -8,14 +8,23 @@
 namespace Spryker\Zed\ProductListGui\Communication\Form;
 
 use Generated\Shared\Transfer\ProductListTransfer;
+use Orm\Zed\ProductList\Persistence\Map\SpyProductListTableMap;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Required;
 
 class ProductListForm extends AbstractType
 {
-    public const FIELD_GENERAL = 'productList';
-    public const FIELD_CATEGORIES = 'categories';
+    public const FIELD_ID = ProductListTransfer::ID_PRODUCT_LIST;
+    public const FIELD_NAME = ProductListTransfer::TITLE;
+    public const FIELD_TYPE = ProductListTransfer::TYPE;
+    public const FIELD_CATEGORIES = ProductListTransfer::PRODUCT_LIST_CATEGORY_RELATION;
 
     /**
      * @return string
@@ -50,7 +59,9 @@ class ProductListForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this
-            ->addGeneralSubForm($builder)
+            ->addIdField($builder)
+            ->addNameField($builder)
+            ->addTypeFiled($builder)
             ->addCategoriesSubForm($builder, $options[static::FIELD_CATEGORIES]);
     }
 
@@ -59,9 +70,48 @@ class ProductListForm extends AbstractType
      *
      * @return $this
      */
-    protected function addGeneralSubForm(FormBuilderInterface $builder): self
+    protected function addIdField(FormBuilderInterface $builder): self
     {
-        $builder->add(static::FIELD_GENERAL, ProductListGeneralType::class);
+        $builder->add(static::FIELD_ID, HiddenType::class);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addNameField(FormBuilderInterface $builder): self
+    {
+        $builder->add(static::FIELD_NAME, TextType::class, [
+            'label' => 'Name',
+            'constraints' => [
+                new Required(),
+                new NotBlank(),
+                new Length(['max' => 100]),
+            ],
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addTypeFiled(FormBuilderInterface $builder): self
+    {
+        $builder->add(static::FIELD_TYPE, ChoiceType::class, [
+            'label' => 'Type',
+            'expanded' => true,
+            'multiple' => false,
+            'choices' => [
+                'Whitelist' => SpyProductListTableMap::COL_TYPE_WHITELIST,
+                'Blacklist' => SpyProductListTableMap::COL_TYPE_BLACKLIST,
+            ],
+        ]);
 
         return $this;
     }
@@ -74,7 +124,7 @@ class ProductListForm extends AbstractType
      */
     protected function addCategoriesSubForm(FormBuilderInterface $builder, array $options): self
     {
-        $builder->add(static::FIELD_CATEGORIES, CategoriesType::class, $options);
+        $builder->add(static::FIELD_CATEGORIES, ProductListCategoryRelationType::class, $options);
 
         return $this;
     }

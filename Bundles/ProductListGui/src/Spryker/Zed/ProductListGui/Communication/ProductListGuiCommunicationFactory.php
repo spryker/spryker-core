@@ -43,7 +43,7 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @param \Generated\Shared\Transfer\ProductListTransfer|null $productListTransfer
      *
-     * @return \Spryker\Zed\ProductListGui\Communication\Form\ProductListGeneralType|\Symfony\Component\Form\FormInterface
+     * @return \Spryker\Zed\ProductListGui\Communication\Form\ProductListForm|\Symfony\Component\Form\FormInterface
      */
     public function getProductListForm(?ProductListTransfer $productListTransfer = null): FormInterface
     {
