@@ -27,12 +27,14 @@ class ProductListForm extends AbstractType
     public const FIELD_CATEGORIES = ProductListTransfer::PRODUCT_LIST_CATEGORY_RELATION;
     public const FIELD_PRODUCTS = ProductListTransfer::PRODUCT_LIST_PRODUCT_CONCRETE_RELATION;
 
+    public const BLOCK_PREFIX = 'productList';
+
     /**
      * @return string
      */
     public function getBlockPrefix()
     {
-        return 'productList';
+        return static::BLOCK_PREFIX;
     }
 
     /**

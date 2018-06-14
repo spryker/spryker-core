@@ -101,7 +101,9 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createProductConcreteDataProvider(): ProductListProductConcreteRelationDataProvider
     {
-        return new ProductListProductConcreteRelationDataProvider();
+        return new ProductListProductConcreteRelationDataProvider(
+            $this->getFacade()
+        );
     }
 
     /**

@@ -21,4 +21,15 @@ interface ProductListGuiRepositoryInterface
      * @return string[] [<category id> => <category name in english locale>]
      */
     public function getAllCategoriesNames(LocaleTransfer $localeTransfer): array;
+
+    /**
+     * @api
+     *
+     * @module Product
+     *
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return string[] [<product id> => <product name in english locale>]
+     */
+    public function getAllProductsNames(LocaleTransfer $localeTransfer): array;
 }

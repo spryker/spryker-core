@@ -7,10 +7,27 @@
 
 namespace Spryker\Zed\ProductListGui\Communication\DataProvider;
 
+use Spryker\Zed\ProductListGui\Business\ProductListGuiFacadeInterface;
 use Spryker\Zed\ProductListGui\Communication\Form\ProductListProductConcreteRelationType;
 
 class ProductListProductConcreteRelationDataProvider
 {
+    /**
+     * @var \Spryker\Zed\ProductListGui\Business\ProductListGuiFacadeInterface
+     */
+    protected $facade;
+
+    /**
+     * ProductListProductConcreteRelationDataProvider constructor.
+     *
+     * @param \Spryker\Zed\ProductListGui\Business\ProductListGuiFacadeInterface $facade
+     */
+    public function __construct(
+        ProductListGuiFacadeInterface $facade
+    ) {
+        $this->facade = $facade;
+    }
+
     /**
      * @return array
      */
@@ -26,6 +43,6 @@ class ProductListProductConcreteRelationDataProvider
      */
     protected function getCategoryList(): array
     {
-        return ['name A' => 1, 'B' => 2];
+        return array_flip($this->facade->getAllProductsNames());
     }
 }

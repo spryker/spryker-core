@@ -12,6 +12,8 @@ use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\ProductListGui\Communication\Form\ProductListForm;
+use Spryker\Zed\ProductListGui\Communication\Form\ProductListProductConcreteRelationType;
 
 class ProductConcreteTable extends AbstractTable
 {
@@ -94,20 +96,41 @@ class ProductConcreteTable extends AbstractTable
                 SpyProductLocalizedAttributesTableMap::COL_NAME,
             ]);
 
-        /** @var \Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes[] $queryResults */
         $queryResults = $this->runQuery($query, $config);
 
         $results = [];
         foreach ($queryResults as $product) {
-            $results[] = [
-                static::COLUMN_ID => $product[SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT],
-                static::COLUMN_SKU => $product[SpyProductTableMap::COL_SKU],
-                static::COLUMN_NAME => $product[SpyProductLocalizedAttributesTableMap::COL_NAME],
-                static::COLUMN_ACTION => "<input id='all_products_checkbox_%d' class='all-products-checkbox' type='checkbox' data-info='%s'>",
-            ];
+            $results[] = $this->buildDataRow($product);
         }
         unset($queryResults);
 
         return $results;
+    }
+
+    /**
+     * @param string[] $product
+     *
+     * @return string[]
+     */
+    protected function buildDataRow(array $product): array
+    {
+        $checkboxName = sprintf(
+            '%s[%s][%s][]',
+            ProductListForm::BLOCK_PREFIX,
+            ProductListForm::FIELD_PRODUCTS,
+            ProductListProductConcreteRelationType::FIELD_PRODUCTS
+        );
+        $idProduct = $product[SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT];
+
+        return [
+            static::COLUMN_ID => $idProduct,
+            static::COLUMN_SKU => $product[SpyProductTableMap::COL_SKU],
+            static::COLUMN_NAME => $product[SpyProductLocalizedAttributesTableMap::COL_NAME],
+            static::COLUMN_ACTION => sprintf(
+                "<input class='all-products-checkbox' type='checkbox' name='%s' value='%d'>",
+                $checkboxName,
+                $idProduct
+            ),
+        ];
     }
 }

@@ -17,4 +17,13 @@ interface ProductListGuiFacadeInterface
      * @return string[] [<category id> => <category name in english locale>]
      */
     public function getAllCategoriesNames(): array;
+
+    /**
+     * @api
+     *
+     * @module Product
+     *
+     * @return string[] [<product id> => <product name in english locale>]
+     */
+    public function getAllProductsNames(): array;
 }

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductListGui;
 
 use Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery;
+use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToLocaleFacadeBridge;
@@ -18,6 +19,7 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_LOCALE = 'FACADE_LOCALE';
     public const FACADE_PRODUCT_LIST = 'FACADE_PRODUCT_LIST';
     public const QUERY_CATEGORY_ATTRIBUTE = 'QUERY_CATEGORY_ATTRIBUTE';
+    public const QUERY_PRODUCT_ATTRIBUTE = 'QUERY_PRODUCT_ATTRIBUTE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -51,6 +53,7 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
     public function providePersistenceLayerDependencies(Container $container): Container
     {
         $container = $this->addCategoryAttributeQuery($container);
+        $container = $this->addProductAttributeQuery($container);
 
         return $container;
     }
@@ -96,6 +99,20 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::QUERY_CATEGORY_ATTRIBUTE] = function (Container $container) {
             return new SpyCategoryAttributeQuery();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductAttributeQuery(Container $container): Container
+    {
+        $container[static::QUERY_PRODUCT_ATTRIBUTE] = function (Container $container) {
+            return new SpyProductLocalizedAttributesQuery();
         };
 
         return $container;

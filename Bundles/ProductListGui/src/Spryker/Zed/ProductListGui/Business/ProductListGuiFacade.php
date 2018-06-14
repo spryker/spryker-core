@@ -31,4 +31,21 @@ class ProductListGuiFacade extends AbstractFacade implements ProductListGuiFacad
         return $this->getRepository()
             ->getAllCategoriesNames($localeTransfer);
     }
+
+    /**
+     * @api
+     *
+     * @module Product
+     *
+     * @return string[] [<product id> => <product name in english locale>]
+     */
+    public function getAllProductsNames(): array
+    {
+        $localeTransfer = $this->getFactory()
+            ->getLocaleFacade()
+            ->getCurrentLocale();
+
+        return $this->getRepository()
+            ->getAllProductsNames($localeTransfer);
+    }
 }
