@@ -19,6 +19,7 @@ use Spryker\Zed\ProductListGui\ProductListGuiDependencyProvider;
 use Symfony\Component\Form\FormInterface;
 
 /**
+ * @method \Spryker\Zed\ProductListGui\Business\ProductListGuiFacadeInterface getFacade();
  * @method \Spryker\Zed\ProductListGui\ProductListGuiConfig getConfig()
  */
 class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
@@ -70,7 +71,9 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCategoriesDataProvider(): CategoriesDataProvider
     {
-        return new CategoriesDataProvider();
+        return new CategoriesDataProvider(
+            $this->getFacade()
+        );
     }
 
     /**

@@ -8,19 +8,23 @@
 namespace Spryker\Zed\ProductListGui\Communication\DataProvider;
 
 use Generated\Shared\Transfer\ProductListTransfer;
+use Spryker\Zed\ProductListGui\Business\ProductListGuiFacadeInterface;
 use Spryker\Zed\ProductListGui\Communication\Form\CategoriesType;
 
 class CategoriesDataProvider
 {
     /**
-     * @var array
+     * @var \Spryker\Zed\ProductListGui\Business\ProductListGuiFacadeInterface
      */
-    protected $idCategoriesWithWrongTemplate = [];
+    protected $facade;
 
     /**
+     * @param \Spryker\Zed\ProductListGui\Business\ProductListGuiFacadeInterface $facade
      */
-    public function __construct()
-    {
+    public function __construct(
+        ProductListGuiFacadeInterface $facade
+    ) {
+        $this->facade = $facade;
     }
 
     /**
@@ -42,17 +46,41 @@ class CategoriesDataProvider
     {
         $categoryIds = [];
 
+//        if ($cmsBlockTransfer->getIdCmsBlock()) {
+//            $categoryIds = $this->getAssignedCategoryIds($cmsBlockTransfer->getIdCmsBlock());
+//        }
+//
+//        $productListTransfer->setIdCategories($categoryIds);
+
         return $productListTransfer;
     }
 
+//    /**
+//     * @param int $idCmsBlock
+//     *
+//     * @return array
+//     */
+//    protected function getAssignedCategoryIds($idCmsBlock)
+//    {
+//        $query = $this->cmsBlockCategoryConnectorQueryContainer
+//            ->queryCmsBlockCategoryConnectorByIdCmsBlock($idCmsBlock)
+//            ->find();
+//
+//        $assignedIdCategories = [];
+//
+//        foreach ($query as $item) {
+//            $assignedIdCategories[$item->getFkCmsBlockCategoryPosition()][] = $item->getFkCategory();
+//            $this->assertCmsBlockTemplate($item);
+//        }
+//
+//        return $assignedIdCategories;
+//    }
+
     /**
-     * @return array
+     * @return string[] [<category id> => <category name in english locale>]
      */
-    protected function getCategoryList()
+    protected function getCategoryList(): array
     {
-        return [
-            1 => 'cat 1',
-            2 => 'cat 2',
-        ];
+        return array_flip($this->facade->getAllCategoriesNames());
     }
 }

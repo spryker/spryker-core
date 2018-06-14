@@ -5,16 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductListGui\Business;
+namespace Spryker\Zed\ProductListGui\Persistence;
 
-interface ProductListGuiFacadeInterface
+use Generated\Shared\Transfer\LocaleTransfer;
+
+interface ProductListGuiRepositoryInterface
 {
     /**
      * @api
      *
      * @module Category
      *
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
      * @return string[] [<category id> => <category name in english locale>]
      */
-    public function getAllCategoriesNames(): array;
+    public function getAllCategoriesNames(LocaleTransfer $localeTransfer): array;
 }
