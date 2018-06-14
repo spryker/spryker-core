@@ -43,6 +43,7 @@ class YvesFragmentControllerResolver extends SilexControllerResolver
     {
         $controllerResolver = new ControllerResolver();
 
+        /** @var \Spryker\Yves\Kernel\Controller\AbstractController $controller */
         $controller = $controllerResolver->resolve($bundleControllerAction);
         $controller->setApplication($this->app);
         $controller->initialize();

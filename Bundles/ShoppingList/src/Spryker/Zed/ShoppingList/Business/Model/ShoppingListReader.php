@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ShoppingList\Business\Model;
 
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
@@ -14,7 +15,6 @@ use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
-use Generated\Shared\Transfer\ShoppingListPaginationTransfer;
 use Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Shared\ShoppingList\ShoppingListConfig;
@@ -23,7 +23,7 @@ use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToCompanyUserFacadeIn
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterface;
 use Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface;
 
-class Reader implements ReaderInterface
+class ShoppingListReader implements ShoppingListReaderInterface
 {
     use PermissionAwareTrait;
 
@@ -33,7 +33,7 @@ class Reader implements ReaderInterface
     protected $shoppingListRepository;
 
     /**
-     * @var \Spryker\Zed\ShoppingList\Dependency\Plugin\ItemExpanderPluginInterface[]
+     * @var \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemExpanderPluginInterface[]
      */
     protected $itemExpanderPlugins;
 
@@ -45,13 +45,13 @@ class Reader implements ReaderInterface
     /**
      * @var \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToCompanyUserFacadeInterface
      */
-    private $companyUserFacade;
+    protected $companyUserFacade;
 
     /**
      * @param \Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface $shoppingListRepository
      * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToCompanyUserFacadeInterface $customerFacade
-     * @param \Spryker\Zed\ShoppingList\Dependency\Plugin\ItemExpanderPluginInterface[] $itemExpanderPlugins
+     * @param \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemExpanderPluginInterface[] $itemExpanderPlugins
      */
     public function __construct(
         ShoppingListRepositoryInterface $shoppingListRepository,
@@ -92,12 +92,8 @@ class Reader implements ReaderInterface
         $shoppingListOverviewRequestTransfer->requireShoppingList();
         $shoppingListOverviewRequestTransfer->getShoppingList()->requireIdShoppingList();
 
-        $shoppingListPaginationTransfer = $this->buildShoppingListPaginationTransfer($shoppingListOverviewRequestTransfer);
-
-        $shoppingListOverviewResponseTransfer = $this->buildShoppingListOverviewResponseTransfer(
-            $shoppingListOverviewRequestTransfer->getShoppingList(),
-            $shoppingListPaginationTransfer
-        );
+        $shoppingListOverviewResponseTransfer = (new ShoppingListOverviewResponseTransfer())
+            ->setShoppingList($shoppingListOverviewRequestTransfer->getShoppingList());
 
         $shoppingListTransfer = $this->getShoppingList($shoppingListOverviewRequestTransfer->getShoppingList());
 
@@ -110,7 +106,7 @@ class Reader implements ReaderInterface
         $shoppingListOverviewResponseTransfer = $this->expandProducts($shoppingListOverviewResponseTransfer);
 
         $customerTransfer = new CustomerTransfer();
-        $requestCompanyUserTransfer = $this->companyUserFacade->getCompanyUserById($shoppingListOverviewRequestTransfer->getShoppingList()->getRequesterId());
+        $requestCompanyUserTransfer = $this->companyUserFacade->getCompanyUserById($shoppingListOverviewRequestTransfer->getShoppingList()->getIdCompanyUser());
 
         $customerTransfer->setCustomerReference($requestCompanyUserTransfer->getCustomer()->getCustomerReference());
         $customerTransfer->setCompanyUserTransfer($requestCompanyUserTransfer);
@@ -202,12 +198,7 @@ class Reader implements ReaderInterface
         $companyUserTransfer = $this->companyUserFacade->getCompanyUserById($idCompanyUser);
         $companyUserPermissionCollectionTransfer = new PermissionCollectionTransfer();
 
-        $companyUserOwnShoppingLists = $this->shoppingListRepository->findCustomerShoppingLists($companyUserTransfer->getCustomer()->getCustomerReference());
-        $companyUserOwnShoppingListIds = [];
-
-        foreach ($companyUserOwnShoppingLists->getShoppingLists() as $shoppingList) {
-            $companyUserOwnShoppingListIds[] = $shoppingList->getIdShoppingList();
-        }
+        $companyUserOwnShoppingListIds = $this->findCompanyUserShoppingListIds($companyUserTransfer);
 
         $companyUserPermissionCollectionTransfer = $this->addReadPermissionToPermissionCollectionTransfer(
             $companyUserPermissionCollectionTransfer,
@@ -218,7 +209,10 @@ class Reader implements ReaderInterface
             )
         );
 
-        $companyUserPermissionCollectionTransfer = $this->addWritePermissionToPermissionCollectionTransfer($companyUserPermissionCollectionTransfer, $companyUserOwnShoppingListIds);
+        $companyUserPermissionCollectionTransfer = $this->addWritePermissionToPermissionCollectionTransfer(
+            $companyUserPermissionCollectionTransfer,
+            $companyUserOwnShoppingListIds
+        );
 
         return $companyUserPermissionCollectionTransfer;
     }
@@ -229,8 +223,10 @@ class Reader implements ReaderInterface
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
-    protected function addReadPermissionToPermissionCollectionTransfer(PermissionCollectionTransfer $permissionCollectionTransfer, array $shoppingListIds): PermissionCollectionTransfer
-    {
+    protected function addReadPermissionToPermissionCollectionTransfer(
+        PermissionCollectionTransfer $permissionCollectionTransfer,
+        array $shoppingListIds
+    ): PermissionCollectionTransfer {
         $permissionTransfer = (new PermissionTransfer())
             ->setKey(ShoppingListConfig::READ_SHOPPING_LIST_PERMISSION_PLUGIN_KEY)
             ->setConfiguration([
@@ -248,8 +244,10 @@ class Reader implements ReaderInterface
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */
-    protected function addWritePermissionToPermissionCollectionTransfer(PermissionCollectionTransfer $permissionCollectionTransfer, array $shoppingListIds): PermissionCollectionTransfer
-    {
+    protected function addWritePermissionToPermissionCollectionTransfer(
+        PermissionCollectionTransfer $permissionCollectionTransfer,
+        array $shoppingListIds
+    ): PermissionCollectionTransfer {
         $permissionTransfer = (new PermissionTransfer())
             ->setKey(ShoppingListConfig::WRITE_SHOPPING_LIST_PERMISSION_PLUGIN_KEY)
             ->setConfiguration([
@@ -259,31 +257,6 @@ class Reader implements ReaderInterface
         $permissionCollectionTransfer = $permissionCollectionTransfer->addPermission($permissionTransfer);
 
         return $permissionCollectionTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListPaginationTransfer
-     */
-    protected function buildShoppingListPaginationTransfer(ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer): ShoppingListPaginationTransfer
-    {
-        return (new ShoppingListPaginationTransfer())
-            ->setPage($shoppingListOverviewRequestTransfer->getPage())
-            ->setItemsPerPage($shoppingListOverviewRequestTransfer->getItemsPerPage());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingList
-     * @param \Generated\Shared\Transfer\ShoppingListPaginationTransfer $shoppingListPaginationTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer
-     */
-    protected function buildShoppingListOverviewResponseTransfer(ShoppingListTransfer $shoppingList, ShoppingListPaginationTransfer $shoppingListPaginationTransfer): ShoppingListOverviewResponseTransfer
-    {
-        return (new ShoppingListOverviewResponseTransfer())
-            ->setShoppingList($shoppingList)
-            ->setPagination($shoppingListPaginationTransfer);
     }
 
     /**
@@ -318,15 +291,15 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListCollectionTransfer[] ...$shoppingListCollections
+     * @param \Generated\Shared\Transfer\ShoppingListCollectionTransfer ...$shoppingListTransferCollections
      *
      * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
      */
-    protected function mergeShoppingListCollections(...$shoppingListCollections): ShoppingListCollectionTransfer
+    protected function mergeShoppingListCollections(ShoppingListCollectionTransfer ...$shoppingListTransferCollections): ShoppingListCollectionTransfer
     {
         $mergedShoppingListCollection = new ShoppingListCollectionTransfer();
         $mergedShoppingListIds = [];
-        foreach ($shoppingListCollections as $shoppingListCollection) {
+        foreach ($shoppingListTransferCollections as $shoppingListCollection) {
             foreach ($shoppingListCollection->getShoppingLists() as $shoppingList) {
                 if (!isset($mergedShoppingListIds[$shoppingList->getIdShoppingList()])) {
                     $mergedShoppingListCollection->addShoppingList($shoppingList);
@@ -345,14 +318,33 @@ class Reader implements ReaderInterface
      */
     protected function checkReadPermission(ShoppingListTransfer $shoppingListTransfer): bool
     {
-        if (!$shoppingListTransfer->getRequesterId()) {
+        if (!$shoppingListTransfer->getIdCompanyUser()) {
             return false;
         }
 
         return $this->can(
             'ReadShoppingListPermissionPlugin',
-            $shoppingListTransfer->getRequesterId(),
+            $shoppingListTransfer->getIdCompanyUser(),
             $shoppingListTransfer->getIdShoppingList()
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return array
+     */
+    protected function findCompanyUserShoppingListIds(CompanyUserTransfer $companyUserTransfer): array
+    {
+        $companyUserOwnShoppingLists = $this->shoppingListRepository->findCustomerShoppingLists(
+            $companyUserTransfer->getCustomer()->getCustomerReference()
+        );
+        $companyUserOwnShoppingListIds = [];
+
+        foreach ($companyUserOwnShoppingLists->getShoppingLists() as $shoppingList) {
+            $companyUserOwnShoppingListIds[] = $shoppingList->getIdShoppingList();
+        }
+
+        return $companyUserOwnShoppingListIds;
     }
 }

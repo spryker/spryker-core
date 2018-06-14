@@ -16,12 +16,12 @@ use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
 class DiscountAmountAggregator implements CalculatorInterface
 {
     /**
-     * @var array|\Generated\Shared\Transfer\DiscountTransfer[]
+     * @var int[]
      */
     protected $voucherDiscountTotals = [];
 
     /**
-     * @var array|\Generated\Shared\Transfer\DiscountTransfer[]
+     * @var int[]
      */
     protected $cartRuleDiscountTotals = [];
 

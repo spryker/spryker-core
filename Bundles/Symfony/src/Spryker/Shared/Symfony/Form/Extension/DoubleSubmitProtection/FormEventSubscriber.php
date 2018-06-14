@@ -40,7 +40,7 @@ class FormEventSubscriber implements EventSubscriberInterface
     protected $fieldName = self::DEFAULT_TOKEN_FIELD_NAME;
 
     /**
-     * @var \Symfony\Component\Translation\TranslatorInterface
+     * @var \Symfony\Component\Translation\TranslatorInterface|null
      */
     protected $translator;
 
