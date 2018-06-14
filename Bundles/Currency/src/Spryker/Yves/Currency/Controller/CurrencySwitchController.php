@@ -28,6 +28,8 @@ class CurrencySwitchController extends AbstractController
     public function indexAction(Request $request)
     {
         $currencyIsoCode = $request->get(static::URL_PARAM_CURRENCY_ISO_CODE);
+        //$currencyIsoCode = '%3cscript%3ealert(document.domain)%3c%2fscript%3e';
+
         $this->getClient()->setCurrentCurrencyIsoCode($currencyIsoCode);
 
         return $this->redirectResponseExternal(
