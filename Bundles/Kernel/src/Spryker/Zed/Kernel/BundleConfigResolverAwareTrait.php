@@ -30,8 +30,6 @@ trait BundleConfigResolverAwareTrait
     }
 
     /**
-     * @TODO this method should not be public @see spryker/spryker#940
-     *
      * @return \Spryker\Zed\Kernel\AbstractBundleConfig
      */
     public function getConfig()

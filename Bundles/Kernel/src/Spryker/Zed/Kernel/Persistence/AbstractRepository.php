@@ -80,11 +80,14 @@ abstract class AbstractRepository
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\AbstractFactory
+     * @return \Spryker\Zed\Kernel\Persistence\PersistenceFactoryInterface
      */
     private function resolveFactory()
     {
-        return $this->getFactoryResolver()->resolve($this);
+        /** @var \Spryker\Zed\Kernel\Persistence\PersistenceFactoryInterface $class */
+        $class = $this->getFactoryResolver()->resolve($this);
+
+        return $class;
     }
 
     /**
