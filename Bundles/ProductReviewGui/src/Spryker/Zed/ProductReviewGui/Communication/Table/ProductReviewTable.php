@@ -239,7 +239,7 @@ class ProductReviewTable extends AbstractTable
     /**
      * @param \Orm\Zed\ProductReview\Persistence\SpyProductReview $productReviewEntity
      *
-     * @return string
+     * @return array
      */
     protected function generateApproveButtonGroupItem(SpyProductReview $productReviewEntity)
     {
@@ -254,7 +254,7 @@ class ProductReviewTable extends AbstractTable
     /**
      * @param \Orm\Zed\ProductReview\Persistence\SpyProductReview $productReviewEntity
      *
-     * @return string
+     * @return array
      */
     protected function generateRejectButtonGroupItem(SpyProductReview $productReviewEntity)
     {
