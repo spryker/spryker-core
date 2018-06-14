@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductPackagingUnitStorage\Persistence;
 
 use Generated\Shared\Transfer\ProductAbstractPackagingStorageTransfer;
 use Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer;
-use Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyProductAbstractPackagingStorage;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -22,9 +21,9 @@ class ProductPackagingUnitStorageEntityManager extends AbstractEntityManager imp
      *
      * @param \Generated\Shared\Transfer\ProductAbstractPackagingStorageTransfer $productAbstractPackagingStorageTransfer
      *
-     * @return \Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyProductAbstractPackagingStorage
+     * @return void
      */
-    public function saveProductAbstractPackagingStorageEntity(ProductAbstractPackagingStorageTransfer $productAbstractPackagingStorageTransfer): SpyProductAbstractPackagingStorage
+    public function saveProductAbstractPackagingStorageEntity(ProductAbstractPackagingStorageTransfer $productAbstractPackagingStorageTransfer): void
     {
         $productAbstractPackagingStorageEntity = $this->getFactory()
             ->createSpyProductAbstractPackagingStorageQuery()
@@ -34,8 +33,6 @@ class ProductPackagingUnitStorageEntityManager extends AbstractEntityManager imp
         $productAbstractPackagingStorageEntity->setData($productAbstractPackagingStorageTransfer->toArray());
 
         $productAbstractPackagingStorageEntity->save();
-
-        return $productAbstractPackagingStorageEntity;
     }
 
     /**

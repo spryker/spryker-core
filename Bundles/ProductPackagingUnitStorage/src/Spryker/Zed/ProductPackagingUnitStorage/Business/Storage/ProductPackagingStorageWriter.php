@@ -41,7 +41,7 @@ class ProductPackagingStorageWriter implements ProductPackagingStorageWriterInte
     public function publish(array $productAbstractIds): void
     {
         $productAbstractPackagingTransfers = $this->productAbstractPackagingUnitStorageReader
-            ->getProductAbstractPackagingTransfers($productAbstractIds);
+            ->getProductAbstractPackagingStorageTransfer($productAbstractIds);
 
         $this->storeData($productAbstractPackagingTransfers);
     }

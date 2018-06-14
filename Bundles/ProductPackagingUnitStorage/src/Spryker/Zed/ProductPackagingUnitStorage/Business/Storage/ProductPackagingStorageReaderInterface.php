@@ -14,7 +14,7 @@ interface ProductPackagingStorageReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductAbstractPackagingStorageTransfer[]
      */
-    public function getProductAbstractPackagingTransfers(array $productAbstractIds): array;
+    public function getProductAbstractPackagingStorageTransfer(array $productAbstractIds): array;
 
     /**
      * @param int[] $productAbstractIds
