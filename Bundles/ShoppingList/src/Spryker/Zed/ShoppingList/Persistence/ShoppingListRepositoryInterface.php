@@ -13,8 +13,6 @@ use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
-use Generated\Shared\Transfer\SpyShoppingListCompanyBusinessUnitEntityTransfer;
-use Generated\Shared\Transfer\SpyShoppingListCompanyUserEntityTransfer;
 
 /**
  * @method \Spryker\Zed\ShoppingList\Persistence\ShoppingListPersistenceFactory getFactory()
@@ -26,14 +24,14 @@ interface ShoppingListRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListTransfer|null
      */
-    public function findCustomerShoppingListWithSameName(ShoppingListTransfer $shoppingListTransfer): ?ShoppingListTransfer;
+    public function findCustomerShoppingListByName(ShoppingListTransfer $shoppingListTransfer): ?ShoppingListTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListTransfer
+     * @return null|\Generated\Shared\Transfer\ShoppingListTransfer
      */
-    public function findCustomerShoppingListById(ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer;
+    public function findCustomerShoppingListById(ShoppingListTransfer $shoppingListTransfer): ?ShoppingListTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer
@@ -52,9 +50,9 @@ interface ShoppingListRepositoryInterface
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListTransfer
+     * @return null|\Generated\Shared\Transfer\ShoppingListTransfer
      */
-    public function findShoppingListById(ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer;
+    public function findShoppingListById(ShoppingListTransfer $shoppingListTransfer): ?ShoppingListTransfer;
 
     /**
      * @param int[] $shoppingListIds
@@ -79,17 +77,17 @@ interface ShoppingListRepositoryInterface
      * @param int $idShoppingList
      * @param int $idCompanyBusinessUnit
      *
-     * @return \Generated\Shared\Transfer\SpyShoppingListCompanyBusinessUnitEntityTransfer|null
+     * @return bool
      */
-    public function getShoppingListCompanyBusinessUnit(int $idShoppingList, int $idCompanyBusinessUnit): ?SpyShoppingListCompanyBusinessUnitEntityTransfer;
+    public function isShoppingListSharedWithCompanyBusinessUnit(int $idShoppingList, int $idCompanyBusinessUnit): bool;
 
     /**
      * @param int $idShoppingList
      * @param int $idCompanyUser
      *
-     * @return \Generated\Shared\Transfer\SpyShoppingListCompanyUserEntityTransfer|null
+     * @return bool
      */
-    public function getShoppingListCompanyUser(int $idShoppingList, int $idCompanyUser): ?SpyShoppingListCompanyUserEntityTransfer;
+    public function isShoppingListSharedWithCompanyUser(int $idShoppingList, int $idCompanyUser): bool;
 
     /**
      * @param int $idCompanyBusinessUnit
