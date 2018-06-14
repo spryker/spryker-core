@@ -37,13 +37,16 @@ class ProductAlternativeDataImportPluginTest extends Unit
      */
     public function testImportImportsProductAlternative(): void
     {
+        // Arrange
         $this->tester->ensureDatabaseTableIsEmpty();
         $dataImportConfigurationTransfer = $this->getDataImportConfigurationTransfer('import/product_alternative.csv');
         $dataImportConfigurationTransfer->setThrowException(true);
-
         $productAlternativeDataImportPlugin = new ProductAlternativeDataImportPlugin();
+
+        // Act
         $dataImporterReportTransfer = $productAlternativeDataImportPlugin->import($dataImportConfigurationTransfer);
 
+        // Assert
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
         $this->tester->assertDatabaseTableContainsData();
     }
@@ -59,9 +62,9 @@ class ProductAlternativeDataImportPluginTest extends Unit
         );
         $dataImportConfigurationTransfer->setThrowException(true);
         $productAlternativeDataImportPlugin = new ProductAlternativeDataImportPlugin();
-
         $this->expectException(DataImportException::class);
         $this->expectExceptionMessage('Could not find product by sku "999999999"');
+
         $productAlternativeDataImportPlugin->import($dataImportConfigurationTransfer);
     }
 
@@ -76,9 +79,9 @@ class ProductAlternativeDataImportPluginTest extends Unit
         );
         $dataImportConfigurationTransfer->setThrowException(true);
         $productAlternativeDataImportPlugin = new ProductAlternativeDataImportPlugin();
-
         $this->expectException(DataImportException::class);
         $this->expectExceptionMessage('Product concrete with SKU "999999999" has neither concrete nor abstract alternative products');
+
         $productAlternativeDataImportPlugin->import($dataImportConfigurationTransfer);
     }
 
@@ -93,9 +96,9 @@ class ProductAlternativeDataImportPluginTest extends Unit
         );
         $dataImportConfigurationTransfer->setThrowException(true);
         $productAlternativeDataImportPlugin = new ProductAlternativeDataImportPlugin();
-
         $this->expectException(DataImportException::class);
         $this->expectExceptionMessage('Product concrete with SKU "999999999" has both a concrete and an abstract alternative products');
+
         $productAlternativeDataImportPlugin->import($dataImportConfigurationTransfer);
     }
 
@@ -105,6 +108,7 @@ class ProductAlternativeDataImportPluginTest extends Unit
     public function testGetImportTypeReturnsTypeOfImporter(): void
     {
         $productAlternativeDataImportPlugin = new ProductAlternativeDataImportPlugin();
+
         $this->assertSame(
             ProductAlternativeDataImportConfig::IMPORT_TYPE_PRODUCT_ALTERNATIVE,
             $productAlternativeDataImportPlugin->getImportType()
