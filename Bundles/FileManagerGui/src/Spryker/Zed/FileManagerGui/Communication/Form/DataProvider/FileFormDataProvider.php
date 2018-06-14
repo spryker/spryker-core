@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\FileManagerGui\Communication\Form\DataProvider;
 
+use Generated\Shared\Transfer\FileLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\FileTransfer;
 use Spryker\Zed\FileManagerGui\Communication\Form\FileForm;
 use Spryker\Zed\FileManagerGui\Dependency\Facade\FileManagerGuiToFileManagerFacadeInterface;
@@ -33,7 +34,8 @@ class FileFormDataProvider
     public function __construct(
         FileManagerGuiToLocaleFacadeInterface $localeFacade,
         FileManagerGuiToFileManagerFacadeInterface $fileManagerFacade
-    ) {
+    )
+    {
         $this->localeFacade = $localeFacade;
         $this->fileManagerFacade = $fileManagerFacade;
     }
@@ -88,6 +90,23 @@ class FileFormDataProvider
         return array_map(function ($mimeTypeTransfer) {
             return $mimeTypeTransfer->getName();
         }, $mimeTypes);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\FileTransfer
+     */
+    protected function createEmptyFileTransfer()
+    {
+        $fileTransfer = new FileTransfer();
+
+        foreach ($this->getAvailableLocales() as $locale) {
+            $fileLocalizedAttribute = new FileLocalizedAttributesTransfer();
+            $fileLocalizedAttribute->setLocale($locale);
+
+            $fileTransfer->addLocalizedAttributes($fileLocalizedAttribute);
+        }
+
+        return $fileTransfer;
     }
 
     /**
