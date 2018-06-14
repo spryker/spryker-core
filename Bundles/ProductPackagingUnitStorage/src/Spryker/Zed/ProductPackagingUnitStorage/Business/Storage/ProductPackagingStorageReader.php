@@ -148,7 +148,7 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
             }
 
             list($productPackagingUnitAmountEntityTransfer) = $productPackagingUnitEntityTransfer->getSpyProductPackagingUnitAmounts();
-            $productConcretePackagingStorageTransfer = $this->addProductAbstractPackagingType($productConcretePackagingStorageTransfer, $productPackagingUnitAmountEntityTransfer);
+            $productConcretePackagingStorageTransfer = $this->getProductAbstractPackagingType($productConcretePackagingStorageTransfer, $productPackagingUnitAmountEntityTransfer);
             $productConcretePackagingStorageTransfers[] = $productConcretePackagingStorageTransfer;
         }
 
@@ -185,7 +185,7 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
      *
      * @return \Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer
      */
-    protected function addProductAbstractPackagingType(
+    protected function getProductAbstractPackagingType(
         ProductConcretePackagingStorageTransfer $productConcretePackagingStorageTransfer,
         SpyProductPackagingUnitAmountEntityTransfer $productPackagingUnitAmountEntityTransfer
     ): ProductConcretePackagingStorageTransfer {
