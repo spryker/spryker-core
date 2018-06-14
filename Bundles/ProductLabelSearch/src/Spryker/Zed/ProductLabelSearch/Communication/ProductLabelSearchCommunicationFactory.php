@@ -12,6 +12,7 @@ use Spryker\Zed\ProductLabelSearch\ProductLabelSearchDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductLabelSearch\ProductLabelSearchConfig getConfig()
+ * @method \Spryker\Zed\ProductLabelSearch\Persistence\ProductLabelSearchQueryContainerInterface getQueryContainer()
  */
 class ProductLabelSearchCommunicationFactory extends AbstractCommunicationFactory
 {

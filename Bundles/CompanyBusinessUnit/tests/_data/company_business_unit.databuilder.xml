@@ -5,6 +5,7 @@
 
     <transfer name="CompanyBusinessUnit">
         <property name="idCompanyBusinessUnit" dataBuilderRule="="/>
+        <property name="key" dataBuilderRule="word"/>
         <property name="name" dataBuilderRule="word"/>
         <property name="email" dataBuilderRule="email"/>
         <property name="phone" dataBuilderRule="e164PhoneNumber"/>

@@ -9,13 +9,15 @@ namespace Spryker\Zed\ProductCategoryFilterStorage\Communication\Plugin\Event\Li
 
 use Orm\Zed\ProductCategoryFilter\Persistence\Map\SpyProductCategoryFilterTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\ProductCategoryFilterStorage\Persistence\ProductCategoryFilterStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductCategoryFilterStorage\Communication\ProductCategoryFilterStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductCategoryFilterStorage\Business\ProductCategoryFilterStorageFacadeInterface getFacade()
  */
-class ProductCategoryFilterPublishStorageListener extends AbstractProductCategoryFilterStorageListener implements EventBulkHandlerInterface
+class ProductCategoryFilterPublishStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
@@ -32,6 +34,6 @@ class ProductCategoryFilterPublishStorageListener extends AbstractProductCategor
         $this->preventTransaction();
         $categoryIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventTransfers, SpyProductCategoryFilterTableMap::COL_FK_CATEGORY);
 
-        $this->publish($categoryIds);
+        $this->getFacade()->publish($categoryIds);
     }
 }

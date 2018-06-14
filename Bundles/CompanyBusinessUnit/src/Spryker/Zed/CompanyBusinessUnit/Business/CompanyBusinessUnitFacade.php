@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyResponseTransfer;
+use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -133,5 +134,22 @@ class CompanyBusinessUnitFacade extends AbstractFacade implements CompanyBusines
     {
         return $this->getRepository()
             ->findDefaultBusinessUnitByCompanyId($idCompany);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserResponseTransfer $companyUserResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
+     */
+    public function assignDefaultBusinessUnitToCompanyUser(
+        CompanyUserResponseTransfer $companyUserResponseTransfer
+    ): CompanyUserResponseTransfer {
+        return $this->getFactory()
+            ->createCompanyBusinessUnitAssigner()
+            ->assignDefaultBusinessUnitToCompanyUser($companyUserResponseTransfer);
     }
 }

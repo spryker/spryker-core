@@ -27,12 +27,4 @@ class CmsStorageFactory extends AbstractFactory
     {
         return $this->getProvidedDependency(CmsStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
     }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    public function getStore()
-    {
-        return $this->getProvidedDependency(CmsStorageDependencyProvider::STORE);
-    }
 }

@@ -46,21 +46,10 @@ class UrlStorageRedirectMapperPlugin extends AbstractPlugin implements UrlStorag
     protected function generateKey($idRedirectUrl)
     {
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
-        $synchronizationDataTransfer->setStore($this->getStoreName());
         $synchronizationDataTransfer->setReference($idRedirectUrl);
 
         return $this->getFactory()
             ->getSynchronizationService()
             ->getStorageKeyBuilder(UrlStorageConstants::REDIRECT_RESOURCE_NAME)->generateKey($synchronizationDataTransfer);
-    }
-
-    /**
-     * @return string
-     */
-    protected function getStoreName()
-    {
-        return $this->getFactory()
-            ->getStore()
-            ->getStoreName();
     }
 }

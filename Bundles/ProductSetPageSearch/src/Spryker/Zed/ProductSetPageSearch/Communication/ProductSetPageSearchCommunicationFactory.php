@@ -19,51 +19,11 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilder;
 class ProductSetPageSearchCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\ProductSetPageSearch\Dependency\Service\ProductSetPageSearchToUtilSanitizeServiceInterface
-     */
-    public function getUtilSanitizeService()
-    {
-        return $this->getProvidedDependency(ProductSetPageSearchDependencyProvider::SERVICE_UTIL_SANITIZE);
-    }
-
-    /**
      * @return \Spryker\Zed\ProductSetPageSearch\Dependency\Facade\ProductSetPageSearchToEventBehaviorFacadeInterface
      */
     public function getEventBehaviorFacade()
     {
         return $this->getProvidedDependency(ProductSetPageSearchDependencyProvider::FACADE_EVENT_BEHAVIOR);
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductSetPageSearch\Dependency\Service\ProductSetPageSearchToUtilEncodingInterface
-     */
-    public function getUtilEncoding()
-    {
-        return $this->getProvidedDependency(ProductSetPageSearchDependencyProvider::SERVICE_UTIL_ENCODING);
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    public function getStore()
-    {
-        return $this->getProvidedDependency(ProductSetPageSearchDependencyProvider::STORE);
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductSetPageSearch\Dependency\Facade\ProductSetPageSearchToSearchInterface
-     */
-    public function getSearchFacade()
-    {
-        return $this->getProvidedDependency(ProductSetPageSearchDependencyProvider::FACADE_SEARCH);
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductSetPageSearch\Dependency\Facade\ProductSetPageSearchToProductSetInterface
-     */
-    public function getProductSetFacade()
-    {
-        return $this->getProvidedDependency(ProductSetPageSearchDependencyProvider::FACADE_PRODUCT_SET);
     }
 
     /**

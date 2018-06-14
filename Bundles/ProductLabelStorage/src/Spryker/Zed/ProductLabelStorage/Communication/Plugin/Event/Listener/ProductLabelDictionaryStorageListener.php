@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductLabelStorage\Communication\Plugin\Event\Listener;
 
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductLabel\Dependency\ProductLabelEvents;
 use Spryker\Zed\ProductLabel\Persistence\Propel\SpyProductLabelQuery;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
@@ -15,8 +16,9 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 /**
  * @method \Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductLabelStorage\Communication\ProductLabelStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacadeInterface getFacade()
  */
-class ProductLabelDictionaryStorageListener extends AbstractProductLabelDictionaryStorageListener implements EventBulkHandlerInterface
+class ProductLabelDictionaryStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
@@ -36,9 +38,11 @@ class ProductLabelDictionaryStorageListener extends AbstractProductLabelDictiona
         if (($eventName === ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_DELETE || $eventName === ProductLabelEvents::PRODUCT_LABEL_DICTIONARY_UNPUBLISH) &&
             $productLabelsCount === 0
         ) {
-            $this->unpublish();
-        } else {
-            $this->publish();
+            $this->getFacade()->unpublishLabelDictionary();
+
+            return;
         }
+
+        $this->getFacade()->publishLabelDictionary();
     }
 }

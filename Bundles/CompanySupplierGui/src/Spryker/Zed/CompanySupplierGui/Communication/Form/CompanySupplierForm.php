@@ -25,9 +25,9 @@ class CompanySupplierForm extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
-     * @return \Spryker\Zed\CompanySupplierGui\Communication\Form\CompanySupplierForm
+     * @return $this
      */
-    public function buildForm(FormBuilderInterface $builder, array $options): CompanySupplierForm
+    public function buildForm(FormBuilderInterface $builder, array $options): self
     {
         $this->addCompanySuppliersSelectField($builder, $options);
 

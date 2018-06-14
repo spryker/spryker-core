@@ -9,13 +9,15 @@ namespace Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener;
 
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\ProductSetPageSearch\Persistence\ProductSetPageSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductSetPageSearch\Communication\ProductSetPageSearchCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductSetPageSearch\Business\ProductSetPageSearchFacadeInterface getFacade()
  */
-class ProductSetPageUrlSearchListener extends AbstractProductSetPageSearchListener implements EventBulkHandlerInterface
+class ProductSetPageUrlSearchListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
@@ -35,7 +37,7 @@ class ProductSetPageUrlSearchListener extends AbstractProductSetPageSearchListen
             return;
         }
 
-        $this->publish($productSetIds);
+        $this->getFacade()->publish($productSetIds);
     }
 
     /**

@@ -32,7 +32,7 @@ class CompanyUnitAddressStub implements CompanyUnitAddressStubInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
      */
     public function createCompanyUnitAddress(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
@@ -43,7 +43,7 @@ class CompanyUnitAddressStub implements CompanyUnitAddressStubInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
      */
     public function updateCompanyUnitAddress(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
@@ -54,7 +54,7 @@ class CompanyUnitAddressStub implements CompanyUnitAddressStubInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
      */
     public function deleteCompanyUnitAddress(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
@@ -65,7 +65,7 @@ class CompanyUnitAddressStub implements CompanyUnitAddressStubInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer
      */
     public function getCompanyUnitAddressCollection(
         CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
@@ -79,7 +79,7 @@ class CompanyUnitAddressStub implements CompanyUnitAddressStubInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
      */
     public function getCompanyUnitAddressById(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
@@ -90,7 +90,7 @@ class CompanyUnitAddressStub implements CompanyUnitAddressStubInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
      */
     public function createCompanyUnitAddressAndUpdateBusinessUnitDefaultAddresses(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer
@@ -104,7 +104,7 @@ class CompanyUnitAddressStub implements CompanyUnitAddressStubInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddressTransfer
      *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\CompanyUnitAddressResponseTransfer
      */
     public function updateCompanyUnitAddressAndBusinessUnitDefaultAddresses(
         CompanyUnitAddressTransfer $companyUnitAddressTransfer

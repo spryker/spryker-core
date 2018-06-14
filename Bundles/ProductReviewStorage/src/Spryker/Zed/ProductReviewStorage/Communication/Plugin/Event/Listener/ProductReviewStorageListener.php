@@ -8,13 +8,16 @@
 namespace Spryker\Zed\ProductReviewStorage\Communication\Plugin\Event\Listener;
 
 use Orm\Zed\ProductReview\Persistence\Map\SpyProductReviewTableMap;
+use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\ProductReviewStorage\Persistence\ProductReviewStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductReviewStorage\Communication\ProductReviewStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductReviewStorage\Business\ProductReviewStorageFacadeInterface getFacade()
  */
-class ProductReviewStorageListener extends AbstractProductReviewStorageListener
+class ProductReviewStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
@@ -31,6 +34,6 @@ class ProductReviewStorageListener extends AbstractProductReviewStorageListener
         $this->preventTransaction();
         $productAbstractIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventTransfers, SpyProductReviewTableMap::COL_FK_PRODUCT_ABSTRACT);
 
-        $this->publish($productAbstractIds);
+        $this->getFacade()->publish($productAbstractIds);
     }
 }

@@ -32,4 +32,11 @@ interface ProductOptionValuePriceReaderInterface
      * @return \Generated\Shared\Transfer\ProductOptionValueStorePricesResponseTransfer
      */
     public function getStorePrices(ProductOptionValueStorePricesRequestTransfer $storePricesRequestTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOptionValueStorePricesRequestTransfer $storePricesRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOptionValueStorePricesResponseTransfer
+     */
+    public function getAllPrices(ProductOptionValueStorePricesRequestTransfer $storePricesRequestTransfer);
 }

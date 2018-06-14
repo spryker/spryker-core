@@ -16,6 +16,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\CmsBlockProductStorage\Communication\CmsBlockProductStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CmsBlockProductStorage\Business\CmsBlockProductStorageFacadeInterface getFacade()
  */
 class CmsBlockProductStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
@@ -28,13 +29,62 @@ class CmsBlockProductStorageEventSubscriber extends AbstractPlugin implements Ev
      */
     public function getSubscribedEvents(EventCollectionInterface $eventCollection)
     {
-        $eventCollection
-            ->addListenerQueued(CmsBlockProductConnectorEvents::CMS_BLOCK_PRODUCT_CONNECTOR_PUBLISH, new CmsBlockProductConnectorPublishStorageListener())
-            ->addListenerQueued(CmsBlockProductConnectorEvents::CMS_BLOCK_PRODUCT_CONNECTOR_UNPUBLISH, new CmsBlockProductConnectorPublishStorageListener())
-            ->addListenerQueued(CmsBlockProductConnectorEvents::ENTITY_SPY_CMS_BLOCK_PRODUCT_CONNECTOR_CREATE, new CmsBlockProductConnectorStorageListener())
-            ->addListenerQueued(CmsBlockProductConnectorEvents::ENTITY_SPY_CMS_BLOCK_PRODUCT_CONNECTOR_UPDATE, new CmsBlockProductConnectorStorageListener())
-            ->addListenerQueued(CmsBlockProductConnectorEvents::ENTITY_SPY_CMS_BLOCK_PRODUCT_CONNECTOR_DELETE, new CmsBlockProductConnectorStorageListener());
+        $this->addCmsBlockProductConnectorPublishStorageListener($eventCollection);
+        $this->addCmsBlockProductConnectorUnpublishStorageListener($eventCollection);
+        $this->addCmsBlockProductConnectorCreateStorageListener($eventCollection);
+        $this->addCmsBlockProductConnectorUpdateStorageListener($eventCollection);
+        $this->addCmsBlockProductConnectorDeleteStorageListener($eventCollection);
 
         return $eventCollection;
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addCmsBlockProductConnectorPublishStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(CmsBlockProductConnectorEvents::CMS_BLOCK_PRODUCT_CONNECTOR_PUBLISH, new CmsBlockProductConnectorPublishStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addCmsBlockProductConnectorUnpublishStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(CmsBlockProductConnectorEvents::CMS_BLOCK_PRODUCT_CONNECTOR_UNPUBLISH, new CmsBlockProductConnectorPublishStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addCmsBlockProductConnectorCreateStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(CmsBlockProductConnectorEvents::ENTITY_SPY_CMS_BLOCK_PRODUCT_CONNECTOR_CREATE, new CmsBlockProductConnectorStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addCmsBlockProductConnectorUpdateStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(CmsBlockProductConnectorEvents::ENTITY_SPY_CMS_BLOCK_PRODUCT_CONNECTOR_UPDATE, new CmsBlockProductConnectorStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addCmsBlockProductConnectorDeleteStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(CmsBlockProductConnectorEvents::ENTITY_SPY_CMS_BLOCK_PRODUCT_CONNECTOR_DELETE, new CmsBlockProductConnectorStorageListener());
     }
 }

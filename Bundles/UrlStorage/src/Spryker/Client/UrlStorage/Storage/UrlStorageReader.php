@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Generated\Shared\Transfer\UrlStorageTransfer;
 use Spryker\Client\UrlStorage\Dependency\Client\UrlStorageToStorageInterface;
 use Spryker\Client\UrlStorage\Dependency\Service\UrlStorageToSynchronizationServiceInterface;
-use Spryker\Shared\Kernel\Store;
 
 class UrlStorageReader implements UrlStorageReaderInterface
 {
@@ -28,11 +27,6 @@ class UrlStorageReader implements UrlStorageReaderInterface
     protected $synchronizationService;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
-     */
-    protected $store;
-
-    /**
      * @var \Spryker\Client\UrlStorage\Dependency\Plugin\UrlStorageResourceMapperPluginInterface[]
      */
     protected $urlStorageResourceMapperPlugins;
@@ -40,14 +34,12 @@ class UrlStorageReader implements UrlStorageReaderInterface
     /**
      * @param \Spryker\Client\UrlStorage\Dependency\Client\UrlStorageToStorageInterface $storageClient
      * @param \Spryker\Client\UrlStorage\Dependency\Service\UrlStorageToSynchronizationServiceInterface $synchronizationService
-     * @param \Spryker\Shared\Kernel\Store $store
      * @param \Spryker\Client\UrlStorage\Dependency\Plugin\UrlStorageResourceMapperPluginInterface[] $resourceMapperPlugins
      */
-    public function __construct(UrlStorageToStorageInterface $storageClient, UrlStorageToSynchronizationServiceInterface $synchronizationService, Store $store, array $resourceMapperPlugins)
+    public function __construct(UrlStorageToStorageInterface $storageClient, UrlStorageToSynchronizationServiceInterface $synchronizationService, array $resourceMapperPlugins)
     {
         $this->storageClient = $storageClient;
         $this->synchronizationService = $synchronizationService;
-        $this->store = $store;
         $this->urlStorageResourceMapperPlugins = $resourceMapperPlugins;
     }
 
@@ -118,7 +110,6 @@ class UrlStorageReader implements UrlStorageReaderInterface
     protected function getUrlKey($url)
     {
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
-        $synchronizationDataTransfer->setStore($this->store->getStoreName());
         $synchronizationDataTransfer->setReference(rawurldecode($url));
 
         return $this->synchronizationService->getStorageKeyBuilder(static::URL)->generateKey($synchronizationDataTransfer);

@@ -14,14 +14,14 @@ interface ProductQuantityRepositoryInterface
      *
      * @param string[] $productSkus
      *
-     * @return \Generated\Shared\Transfer\SpyProductQuantityEntityTransfer[]
+     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
      */
-    public function findProductQuantityEntitiesByProductSku(array $productSkus): array;
+    public function findProductQuantityTransfersByProductSku(array $productSkus): array;
 
     /**
      * @param int[] $productIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductQuantityEntityTransfer[]
+     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
      */
-    public function findProductQuantityEntitiesByProductIds(array $productIds): array;
+    public function findProductQuantityTransfersByProductIds(array $productIds): array;
 }

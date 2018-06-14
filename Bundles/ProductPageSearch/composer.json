@@ -6,8 +6,8 @@
     "php": ">=7.1",
     "spryker/catalog-price-product-connector": "^1.1.0",
     "spryker/category": "^4.3.0",
-    "spryker/event-behavior": "^0.1.2",
-    "spryker/kernel": "^3.16.0",
+    "spryker/event-behavior": "^1.0.0",
+    "spryker/kernel": "^3.21.0",
     "spryker/price-product": "^1.1.0",
     "spryker/product": "^5.5.0 || ^6.0.0",
     "spryker/product-category": "^4.5.0",
@@ -15,6 +15,7 @@
     "spryker/product-search": "^5.4.0",
     "spryker/propel-orm": "^1.5.0",
     "spryker/search": "^7.0.0 || ^8.0.0",
+    "spryker/store": "^1.7.0",
     "spryker/url": "^3.3.0",
     "spryker/util-encoding": "^2.0.0",
     "spryker/util-sanitize": "^2.1.0"
@@ -23,11 +24,17 @@
     "spryker/event": "*"
   },
   "suggest": {
-    "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0"
+    "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0",
+    "spryker/product": "If you want to use Event plugins, minimum required version: 6.1.0"
   },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",

@@ -15,6 +15,7 @@ use Spryker\Zed\ProductCategoryFilterStorage\Communication\Plugin\Event\Listener
 
 /**
  * @method \Spryker\Zed\ProductCategoryFilterStorage\Communication\ProductCategoryFilterStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductCategoryFilterStorage\Business\ProductCategoryFilterStorageFacadeInterface getFacade()
  */
 class ProductCategoryFilterStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
@@ -27,11 +28,40 @@ class ProductCategoryFilterStorageEventSubscriber extends AbstractPlugin impleme
      */
     public function getSubscribedEvents(EventCollectionInterface $eventCollection)
     {
-        $eventCollection
-            ->addListenerQueued(ProductCategoryFilterEvents::ENTITY_SPY_PRODUCT_CATEGORY_FILTER_CREATE, new ProductCategoryFilterPublishStorageListener())
-            ->addListenerQueued(ProductCategoryFilterEvents::ENTITY_SPY_PRODUCT_CATEGORY_FILTER_UPDATE, new ProductCategoryFilterPublishStorageListener())
-            ->addListenerQueued(ProductCategoryFilterEvents::ENTITY_SPY_PRODUCT_CATEGORY_FILTER_DELETE, new ProductCategoryFilterPublishStorageListener());
+        $this->addProductCategoryFilterCreateStorageListener($eventCollection);
+        $this->addProductCategoryFilterUpdateStorageListener($eventCollection);
+        $this->addProductCategoryFilterDeleteStorageListener($eventCollection);
 
         return $eventCollection;
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductCategoryFilterCreateStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(ProductCategoryFilterEvents::ENTITY_SPY_PRODUCT_CATEGORY_FILTER_CREATE, new ProductCategoryFilterPublishStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductCategoryFilterUpdateStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(ProductCategoryFilterEvents::ENTITY_SPY_PRODUCT_CATEGORY_FILTER_UPDATE, new ProductCategoryFilterPublishStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductCategoryFilterDeleteStorageListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(ProductCategoryFilterEvents::ENTITY_SPY_PRODUCT_CATEGORY_FILTER_DELETE, new ProductCategoryFilterPublishStorageListener());
     }
 }

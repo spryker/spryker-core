@@ -114,7 +114,7 @@ class AddressForm extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $choices
      *
-     * @return \Spryker\Zed\Customer\Communication\Form\AddressForm
+     * @return $this
      */
     protected function addSalutationField(FormBuilderInterface $builder, array $choices)
     {
@@ -251,7 +251,7 @@ class AddressForm extends AbstractType
      * @param array $choices
      * @param array $preferredChoices
      *
-     * @return \Spryker\Zed\Customer\Communication\Form\AddressForm
+     * @return $this
      */
     protected function addFkCountryField(FormBuilderInterface $builder, array $choices, array $preferredChoices = [])
     {

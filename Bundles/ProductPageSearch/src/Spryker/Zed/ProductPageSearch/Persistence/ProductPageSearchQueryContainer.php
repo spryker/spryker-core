@@ -28,8 +28,6 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
     const FK_CATEGORY = 'fkCategory';
 
     /**
-     * TODO locale condition does not work here for SpyProducts
-     *
      * @api
      *
      * @param array $productAbstractIds
@@ -38,26 +36,41 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
      */
     public function queryProductAbstractByIds(array $productAbstractIds)
     {
-        $query = $this
-            ->getFactory()
-            ->getProductQueryContainer()
+        $query = $this->getFactory()->getProductQueryContainer()
             ->queryAllProductAbstractLocalizedAttributes()
             ->joinWithLocale()
             ->joinWithSpyProductAbstract()
-            ->joinWith('SpyProductAbstract.SpyProduct')
-            ->joinWith('SpyProduct.SpyProductLocalizedAttributes')
-            ->joinWith('SpyProductAbstract.SpyProductCategory')
-            ->joinWith('SpyProductCategory.SpyCategory')
-            ->joinWith('SpyCategory.Node')
-            ->join('SpyProductAbstract.SpyUrl')
-            ->join('SpyProductAbstract.SpyProductImageSet', Criteria::LEFT_JOIN)
-            ->addJoinCondition('SpyUrl', 'spy_url.fk_locale = ' . SpyProductAbstractLocalizedAttributesTableMap::COL_FK_LOCALE)
-            ->addJoinCondition('SpyProductImageSet', sprintf('(spy_product_image_set.fk_locale = %s or spy_product_image_set.fk_locale is null)', SpyProductAbstractLocalizedAttributesTableMap::COL_FK_LOCALE))
-            ->addJoinCondition('SpyProductLocalizedAttributes', 'SpyProductLocalizedAttributes.fk_locale = ' . SpyProductAbstractLocalizedAttributesTableMap::COL_FK_LOCALE)
+            ->useSpyProductAbstractQuery()
+                ->joinWithSpyProduct()
+                ->joinWithSpyProductCategory()
+                ->useSpyProductCategoryQuery()
+                    ->joinWithSpyCategory()
+                    ->useSpyCategoryQuery()
+                        ->joinWithNode()
+                    ->endUse()
+                ->endUse()
+                ->joinWithSpyProductAbstractStore()
+                ->useSpyProductAbstractStoreQuery()
+                    ->joinWithSpyStore()
+                ->endUse()
+            ->endUse()
             ->filterByFkProductAbstract_In($productAbstractIds)
-            ->setFormatter(ModelCriteria::FORMAT_ARRAY)
-            ->withColumn(SpyUrlTableMap::COL_URL, 'url')
+            ->setFormatter(ModelCriteria::FORMAT_ARRAY);
+
+        $query
+            ->joinWith('SpyProduct.SpyProductLocalizedAttributes')
+            ->addJoinCondition('SpyProductLocalizedAttributes', 'SpyProductLocalizedAttributes.fk_locale = ' . SpyProductAbstractLocalizedAttributesTableMap::COL_FK_LOCALE);
+
+        $query
+            ->join('SpyProductAbstract.SpyUrl')
+            ->addJoinCondition('SpyUrl', 'spy_url.fk_locale = ' . SpyProductAbstractLocalizedAttributesTableMap::COL_FK_LOCALE)
+            ->withColumn(SpyUrlTableMap::COL_URL, 'url');
+
+        $query
+            ->join('SpyProductAbstract.SpyProductImageSet', Criteria::LEFT_JOIN)
+            ->addJoinCondition('SpyProductImageSet', sprintf('(spy_product_image_set.fk_locale = %s or spy_product_image_set.fk_locale is null)', SpyProductAbstractLocalizedAttributesTableMap::COL_FK_LOCALE))
             ->withColumn(SpyProductImageSetTableMap::COL_ID_PRODUCT_IMAGE_SET, 'id_image_set');
+        ;
 
         return $query;
     }

@@ -8,13 +8,16 @@
 namespace Spryker\Zed\CmsBlockProductStorage\Communication\Plugin\Event\Listener;
 
 use Spryker\Zed\CmsBlockProductConnector\Dependency\CmsBlockProductConnectorEvents;
+use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\CmsBlockProductStorage\Communication\CmsBlockProductStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\CmsBlockProductStorage\Persistence\CmsBlockProductStorageQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\CmsBlockProductStorage\Business\CmsBlockProductStorageFacadeInterface getFacade()
  */
-class CmsBlockProductConnectorPublishStorageListener extends AbstractCmsBlockProductStorageListener
+class CmsBlockProductConnectorPublishStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
@@ -30,11 +33,11 @@ class CmsBlockProductConnectorPublishStorageListener extends AbstractCmsBlockPro
         $idProductAbstracts = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
         if ($eventName === CmsBlockProductConnectorEvents::CMS_BLOCK_PRODUCT_CONNECTOR_UNPUBLISH) {
-            $this->refreshOrUnpublish($idProductAbstracts);
+            $this->getFacade()->refreshOrUnpublish($idProductAbstracts);
 
             return;
         }
 
-        $this->publish($idProductAbstracts);
+        $this->getFacade()->publish($idProductAbstracts);
     }
 }

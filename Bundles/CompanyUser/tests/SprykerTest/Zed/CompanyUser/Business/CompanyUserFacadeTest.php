@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace SprykerTest\Zed\CompanyUser\Business;
 
 use Codeception\TestCase\Test;
@@ -7,6 +12,7 @@ use Generated\Shared\DataBuilder\CompanyResponseBuilder;
 use Generated\Shared\DataBuilder\CompanyUserBuilder;
 use Generated\Shared\DataBuilder\CompanyUserCriteriaFilterBuilder;
 use Generated\Shared\DataBuilder\CustomerBuilder;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use TypeError;
 
 /**
@@ -240,6 +246,35 @@ class CompanyUserFacadeTest extends Test
 
         // Assert
         $this->assertSame($initialCompanyUserId, $companyUserTransfer->getIdCompanyUser());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCountActiveCompanyUsersByIdCustomerCountsActiveCompanyUsersOnly(): void
+    {
+        //Arrange
+        $expectedCompanyUserAmount = 1;
+        $customer = $this->tester->haveCustomer();
+        $activeCompany = $this->tester->haveCompany(['isActive' => true]);
+        $inactiveCompany = $this->tester->haveCompany(['isActive' => false]);
+
+        $seedDataWithActiveCompany = [
+            CompanyUserTransfer::CUSTOMER => $customer,
+            CompanyUserTransfer::FK_COMPANY => $activeCompany->getIdCompany(),
+        ];
+        $seedDataWithInactiveCompany = [
+            CompanyUserTransfer::CUSTOMER => $customer,
+            CompanyUserTransfer::FK_COMPANY => $inactiveCompany->getIdCompany(),
+        ];
+        $this->tester->haveCompanyUser($seedDataWithActiveCompany);
+        $this->tester->haveCompanyUser($seedDataWithInactiveCompany);
+
+        //Act
+        $actualCompanyUserAmount = $this->tester->getFacade()->countActiveCompanyUsersByIdCustomer($customer);
+
+        //Assert
+        $this->tester->assertEquals($expectedCompanyUserAmount, $actualCompanyUserAmount);
     }
 
     /**

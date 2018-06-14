@@ -14,7 +14,6 @@ use Spryker\Zed\CmsPageSearch\Dependency\Facade\CmsPageSearchToSearchBridge;
 use Spryker\Zed\CmsPageSearch\Dependency\QueryContainer\CmsPageSearchToCmsQueryContainerBridge;
 use Spryker\Zed\CmsPageSearch\Dependency\QueryContainer\CmsPageSearchToLocaleQueryContainerBridge;
 use Spryker\Zed\CmsPageSearch\Dependency\Service\CmsPageSearchToUtilEncodingBridge;
-use Spryker\Zed\CmsPageSearch\Dependency\Service\CmsPageSearchToUtilSanitizeServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -37,14 +36,20 @@ class CmsPageSearchDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[static::SERVICE_UTIL_SANITIZE] = function (Container $container) {
-            return new CmsPageSearchToUtilSanitizeServiceBridge($container->getLocator()->utilSanitize()->service());
-        };
-
         $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
             return new CmsPageSearchToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
         };
 
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideBusinessLayerDependencies(Container $container)
+    {
         $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
             return new CmsPageSearchToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
         };

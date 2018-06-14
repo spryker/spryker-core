@@ -9,13 +9,15 @@ namespace Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener;
 
 use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\ProductSetPageSearch\Persistence\ProductSetPageSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductSetPageSearch\Communication\ProductSetPageSearchCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductSetPageSearch\Business\ProductSetPageSearchFacadeInterface getFacade()
  */
-class ProductSetPageProductImageSetSearchListener extends AbstractProductSetPageSearchListener implements EventBulkHandlerInterface
+class ProductSetPageProductImageSetSearchListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
@@ -32,6 +34,6 @@ class ProductSetPageProductImageSetSearchListener extends AbstractProductSetPage
         $this->preventTransaction();
         $productSetIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventTransfers, SpyProductImageSetTableMap::COL_FK_RESOURCE_PRODUCT_SET);
 
-        $this->publish($productSetIds);
+        $this->getFacade()->publish($productSetIds);
     }
 }
