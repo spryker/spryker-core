@@ -10,6 +10,8 @@ namespace Spryker\Zed\Event\Business\Queue\Consumer;
 use Generated\Shared\Transfer\EventQueueSendMessageBodyTransfer;
 use Generated\Shared\Transfer\QueueReceiveMessageTransfer;
 use Spryker\Shared\ErrorHandler\ErrorLogger;
+use Spryker\Shared\Event\EventConstants;
+use Spryker\Zed\Event\Business\Exception\MessageTypeNotFoundException;
 use Spryker\Zed\Event\Business\Logger\EventLoggerInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventHandlerInterface;
@@ -20,6 +22,7 @@ class EventQueueConsumer implements EventQueueConsumerInterface
 {
     const EVENT_TRANSFERS = 'eventTransfers';
     const EVENT_MESSAGES = 'eventMessages';
+    const RETRY_KEY = 'retry';
     /**
      * @var \Spryker\Zed\Event\Business\Logger\EventLoggerInterface
      */
@@ -89,7 +92,11 @@ class EventQueueConsumer implements EventQueueConsumerInterface
                     $exception->getTraceAsString()
                 );
                 $this->logConsumerAction($errorMessage, $exception);
-                $this->markMessageAsFailed($queueMessageTransfer, $errorMessage);
+                $this->retryMessage($queueMessageTransfer, $errorMessage);
+
+                if (!$queueMessageTransfer->getRoutingKey()) {
+                    $this->markMessageAsFailed($queueMessageTransfer, $errorMessage);
+                }
             }
         }
 
@@ -125,11 +132,61 @@ class EventQueueConsumer implements EventQueueConsumerInterface
                     $throwable->getTraceAsString()
                 );
                 $this->logConsumerAction($errorMessage, $throwable);
-                foreach ($eventItem[static::EVENT_MESSAGES] as $queueMessageTransfer) {
-                    $this->markMessageAsFailed($queueMessageTransfer, $errorMessage);
-                }
+                $this->handleFailedMessages($eventItem, $errorMessage);
             }
         }
+    }
+
+    /**
+     * @param array $eventItem
+     * @param string $errorMessage
+     *
+     * @return void
+     */
+    protected function handleFailedMessages(array $eventItem, string $errorMessage): void
+    {
+        foreach ($eventItem[static::EVENT_MESSAGES] as $queueMessageTransfer) {
+            if (!$queueMessageTransfer->getRoutingKey()) {
+                $this->retryMessage($queueMessageTransfer, $errorMessage);
+            }
+
+            if (!$queueMessageTransfer->getRoutingKey()) {
+                $this->markMessageAsFailed($queueMessageTransfer, $errorMessage);
+            }
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer $queueMessageTransfer
+     * @param string $retryMessage
+     *
+     * @return void
+     */
+    protected function retryMessage(QueueReceiveMessageTransfer $queueMessageTransfer, string $retryMessage): void
+    {
+        $queueMessageBody = $this->utilEncodingService->decodeJson($queueMessageTransfer->getQueueMessage()->getBody(), true);
+        $queueMessageBody = $this->updateMessageRetryKey($queueMessageBody);
+
+        //TODO the number of retrying should come from config_default
+        if ($queueMessageBody[static::RETRY_KEY] < 1) {
+            $queueMessageBody[static::RETRY_KEY]++;
+            $queueMessageTransfer->getQueueMessage()->setBody($this->utilEncodingService->encodeJson($queueMessageBody));
+            $this->markMessageAsRetry($queueMessageTransfer, $retryMessage);
+        }
+    }
+
+    /**
+     * @param array $messageBody
+     *
+     * @return array
+     */
+    protected function updateMessageRetryKey(array $messageBody): array
+    {
+        if (!isset($messageBody[static::RETRY_KEY])) {
+            $messageBody[static::RETRY_KEY] = 0;
+        }
+
+        return $messageBody;
     }
 
     /**
@@ -232,22 +289,43 @@ class EventQueueConsumer implements EventQueueConsumerInterface
      */
     protected function markMessageAsFailed(QueueReceiveMessageTransfer $queueMessageTransfer, $errorMessage = '')
     {
-        $this->setMessageError($queueMessageTransfer, $errorMessage);
-        $queueMessageTransfer->setAcknowledge(false);
+        $this->setMessage($queueMessageTransfer, 'errorMessage', $errorMessage);
         $queueMessageTransfer->setReject(true);
         $queueMessageTransfer->setHasError(true);
+        $queueMessageTransfer->setRoutingKey(EventConstants::EVENT_ROUTING_KEY_ERROR);
     }
 
     /**
      * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer $queueMessageTransfer
-     * @param string $errorMessage
+     * @param string $retryMessage
      *
      * @return void
      */
-    protected function setMessageError(QueueReceiveMessageTransfer $queueMessageTransfer, $errorMessage = '')
+    protected function markMessageAsRetry(QueueReceiveMessageTransfer $queueMessageTransfer, $retryMessage = '')
     {
+        $message = sprintf('Retry on: %s', $retryMessage);
+        $this->setMessage($queueMessageTransfer, 'retryMessage', $message);
+        $queueMessageTransfer->setAcknowledge(true);
+        $queueMessageTransfer->setRoutingKey(EventConstants::EVENT_ROUTING_KEY_RETRY);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer $queueMessageTransfer
+     * @param string $messageType
+     * @param string $message
+     *
+     * @throws \Spryker\Zed\Event\Business\Exception\MessageTypeNotFoundException
+     *
+     * @return void
+     */
+    protected function setMessage(QueueReceiveMessageTransfer $queueMessageTransfer, string $messageType, string $message = '')
+    {
+        if (!$messageType) {
+            throw new MessageTypeNotFoundException('message type is not defined');
+        }
+
         $queueMessageBody = $this->utilEncodingService->decodeJson($queueMessageTransfer->getQueueMessage()->getBody(), true);
-        $queueMessageBody['errorMessage'] = $errorMessage;
+        $queueMessageBody[$messageType] = $message;
         $queueMessageTransfer->getQueueMessage()->setBody($this->utilEncodingService->encodeJson($queueMessageBody));
     }
 

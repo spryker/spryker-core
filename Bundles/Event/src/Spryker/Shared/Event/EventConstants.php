@@ -35,6 +35,30 @@ interface EventConstants
 
     /**
      * Specification:
+     * - Routing key for forwarding message to retry queue
+     *
+     * @api
+     */
+    const EVENT_ROUTING_KEY_RETRY = 'retry';
+
+    /**
+     * Specification:
+     * - Retry queue name as used when with asynchronous event handling
+     *
+     * @api
+     */
+    const EVENT_QUEUE_RETRY = 'event.retry';
+
+    /**
+     * Specification:
+     * - Routing key for forwarding message to error queue
+     *
+     * @api
+     */
+    const EVENT_ROUTING_KEY_ERROR = 'error';
+
+    /**
+     * Specification:
      * - Error queue name as used when with asynchronous event handling
      *
      * @api
