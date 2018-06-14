@@ -17,10 +17,12 @@ use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitTypeQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
+use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
+use Spryker\Zed\ProductPackagingUnit\Dependency\ProductPackagingUnitEvents;
 use Spryker\Zed\ProductPackagingUnitDataImport\Business\Model\DataSet\ProductPackagingUnitDataSetInterface;
 
-class ProductPackagingUnitWriterStep implements DataImportStepInterface
+class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
     protected const PRODUCTS_HEAP_LIMIT = 500;
     protected const CONCRETE_PRODUCT_ID = 'CONCRETE_PRODUCT_ID';
@@ -91,6 +93,8 @@ class ProductPackagingUnitWriterStep implements DataImportStepInterface
         $productPackagingUnitEntity->save();
 
         $this->persistAmount($dataSet, $productPackagingUnitEntity);
+
+        $this->addPublishEvents(ProductPackagingUnitEvents::PRODUCT_PACKAGING_UNIT_PUBLISH, $this->getProductAbstractIdByConcreteSku($dataSet[ProductPackagingUnitDataSetInterface::CONCRETE_SKU]));
     }
 
     /**

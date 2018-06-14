@@ -13,17 +13,17 @@ use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingLeadProduct;
 class ProductPackagingLeadProductMapper implements ProductPackagingLeadProductMapperInterface
 {
     /**
-     * @param \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingLeadProduct $spyProductPackagingLeadProduct
+     * @param \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingLeadProduct $productPackagingLeadProductEntity
      * @param \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer $productPackagingLeadProductTransfer
      *
      * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer
      */
     public function mapProductPackagingLeadProductTransfer(
-        SpyProductPackagingLeadProduct $spyProductPackagingLeadProduct,
+        SpyProductPackagingLeadProduct $productPackagingLeadProductEntity,
         ProductPackagingLeadProductTransfer $productPackagingLeadProductTransfer
     ): ProductPackagingLeadProductTransfer {
-        $productPackagingLeadProductTransfer->setIdProduct($spyProductPackagingLeadProduct->getFkProduct());
-        $productPackagingLeadProductTransfer->setIdProductAbstract($spyProductPackagingLeadProduct->getFkProductAbstract());
+        $productPackagingLeadProductTransfer->setIdProduct($productPackagingLeadProductEntity->getFkProduct());
+        $productPackagingLeadProductTransfer->setIdProductAbstract($productPackagingLeadProductEntity->getFkProductAbstract());
 
         return $productPackagingLeadProductTransfer;
     }

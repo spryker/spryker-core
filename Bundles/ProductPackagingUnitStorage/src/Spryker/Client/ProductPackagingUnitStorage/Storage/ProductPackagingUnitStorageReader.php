@@ -22,18 +22,18 @@ class ProductPackagingUnitStorageReader implements ProductPackagingUnitStorageRe
     /**
      * @var \Spryker\Client\ProductPackagingUnitStorage\Storage\ProductPackagingUnitStorageKeyGeneratorInterface
      */
-    protected $priceStorageKeyGenerator;
+    protected $productPackagingUnitStorageKeyGenerator;
 
     /**
      * @param \Spryker\Client\ProductPackagingUnitStorage\Dependency\Client\ProductPackagingUnitStorageToStorageInterface $storageClient
-     * @param \Spryker\Client\ProductPackagingUnitStorage\Storage\ProductPackagingUnitStorageKeyGeneratorInterface $priceStorageKeyGenerator
+     * @param \Spryker\Client\ProductPackagingUnitStorage\Storage\ProductPackagingUnitStorageKeyGeneratorInterface $productPackagingUnitStorageKeyGenerator
      */
     public function __construct(
         ProductPackagingUnitStorageToStorageInterface $storageClient,
-        ProductPackagingUnitStorageKeyGeneratorInterface $priceStorageKeyGenerator
+        ProductPackagingUnitStorageKeyGeneratorInterface $productPackagingUnitStorageKeyGenerator
     ) {
         $this->storageClient = $storageClient;
-        $this->priceStorageKeyGenerator = $priceStorageKeyGenerator;
+        $this->productPackagingUnitStorageKeyGenerator = $productPackagingUnitStorageKeyGenerator;
     }
 
     /**
@@ -43,7 +43,7 @@ class ProductPackagingUnitStorageReader implements ProductPackagingUnitStorageRe
      */
     public function findProductAbstractPackagingById(int $idProductAbstract): ?ProductAbstractPackagingStorageTransfer
     {
-        $key = $this->priceStorageKeyGenerator->generateKey(
+        $key = $this->productPackagingUnitStorageKeyGenerator->generateKey(
             ProductPackagingUnitStorageConstants::PRODUCT_PACKAGING_UNIT_RESOURCE_NAME,
             $idProductAbstract
         );

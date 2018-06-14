@@ -2,7 +2,7 @@ parameters:
     bootstrap: %rootDir%/../../../phpstan-bootstrap.php
 
     ignoreErrors:
-            - '#Propel\\Runtime\\ActiveQuery\\ModelCriteria::useSpyProductPackagingUnitQuery#'
+            - '#Propel\\Runtime\\ActiveQuery\\ModelCriteria::#'
 
 services:
     -

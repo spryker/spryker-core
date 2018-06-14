@@ -26,7 +26,7 @@ interface ProductPackagingUnitStorageClientInterface
 
     /**
      * Specification:
-     * - Retrieves a product concrete packaging information for the provided product abstract ID.
+     * - Retrieves a product concrete packaging information for the provided product abstract ID and product concrete ID.
      *
      * @api
      *

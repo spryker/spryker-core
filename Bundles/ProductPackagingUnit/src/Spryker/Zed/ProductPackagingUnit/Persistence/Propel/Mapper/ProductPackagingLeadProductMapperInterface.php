@@ -13,13 +13,13 @@ use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingLeadProduct;
 interface ProductPackagingLeadProductMapperInterface
 {
     /**
-     * @param \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingLeadProduct $spyProductPackagingLeadProduct
+     * @param \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingLeadProduct $productPackagingLeadProductEntity
      * @param \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer $productPackagingLeadProductTransfer
      *
      * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer
      */
     public function mapProductPackagingLeadProductTransfer(
-        SpyProductPackagingLeadProduct $spyProductPackagingLeadProduct,
+        SpyProductPackagingLeadProduct $productPackagingLeadProductEntity,
         ProductPackagingLeadProductTransfer $productPackagingLeadProductTransfer
     ): ProductPackagingLeadProductTransfer;
 }

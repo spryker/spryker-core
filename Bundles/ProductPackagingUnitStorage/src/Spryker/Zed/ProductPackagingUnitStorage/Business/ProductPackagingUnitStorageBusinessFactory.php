@@ -8,22 +8,48 @@
 namespace Spryker\Zed\ProductPackagingUnitStorage\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductPackagingUnitStorage\Business\Storage\ProductAbstractPackagingStorageWriter;
-use Spryker\Zed\ProductPackagingUnitStorage\Business\Storage\ProductAbstractPackagingStorageWriterInterface;
+use Spryker\Zed\ProductPackagingUnitStorage\Business\Storage\ProductPackagingStorageReader;
+use Spryker\Zed\ProductPackagingUnitStorage\Business\Storage\ProductPackagingStorageReaderInterface;
+use Spryker\Zed\ProductPackagingUnitStorage\Business\Storage\ProductPackagingStorageWriter;
+use Spryker\Zed\ProductPackagingUnitStorage\Business\Storage\ProductPackagingStorageWriterInterface;
+use Spryker\Zed\ProductPackagingUnitStorage\Dependency\Facade\ProductPackagingUnitStorageToProductPackagingUnitFacadeInterface;
+use Spryker\Zed\ProductPackagingUnitStorage\ProductPackagingUnitStorageDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductPackagingUnitStorage\ProductPackagingUnitStorageConfig getConfig()
+ * @method \Spryker\Zed\ProductPackagingUnitStorage\Persistence\ProductPackagingUnitStorageRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ProductPackagingUnitStorage\Persistence\ProductPackagingUnitStorageEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\ProductPackagingUnitStorage\Persistence\ProductPackagingUnitStorageQueryContainerInterface getQueryContainer()
  */
 class ProductPackagingUnitStorageBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\ProductPackagingUnitStorage\Business\Storage\ProductAbstractPackagingStorageWriterInterface
+     * @return \Spryker\Zed\ProductPackagingUnitStorage\Business\Storage\ProductPackagingStorageReaderInterface
      */
-    public function createProductAbstractPackagingStorageWriter(): ProductAbstractPackagingStorageWriterInterface
+    public function createProductPackagingStorageReader(): ProductPackagingStorageReaderInterface
     {
-        return new ProductAbstractPackagingStorageWriter(
-            $this->getQueryContainer()
+        return new ProductPackagingStorageReader(
+            $this->getRepository(),
+            $this->getProductPackagingUnitFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnitStorage\Business\Storage\ProductPackagingStorageWriterInterface
+     */
+    public function createProductPackagingStorageWriter(): ProductPackagingStorageWriterInterface
+    {
+        return new ProductPackagingStorageWriter(
+            $this->getEntityManager(),
+            $this->createProductPackagingStorageReader()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnitStorage\Dependency\Facade\ProductPackagingUnitStorageToProductPackagingUnitFacadeInterface
+     */
+    public function getProductPackagingUnitFacade(): ProductPackagingUnitStorageToProductPackagingUnitFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductPackagingUnitStorageDependencyProvider::FACADE_PRODUCT_PACKAGING_UNIT);
     }
 }

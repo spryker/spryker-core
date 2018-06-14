@@ -29,7 +29,7 @@ class ProductPackagingUnitStorageToStorageBridge implements ProductPackagingUnit
      *
      * @return array
      */
-    public function get($key): array
+    public function get($key)
     {
         return $this->storageClient->get($key);
     }

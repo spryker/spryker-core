@@ -32,17 +32,28 @@ class ProductPackagingUnitPublishStorageListener extends AbstractPlugin implemen
             ->getEventBehaviorFacade()
             ->getEventTransferIds($eventTransfers);
 
-        if ($eventName === ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_UNIT_TYPE_DELETE
-            || $eventName === ProductPackagingUnitEvents::PRODUCT_PACKAGING_UNIT_UNPUBLISH
-            || $eventName === ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_UNIT_DELETE
-            || $eventName === ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_UNIT_AMOUNT_DELETE
-            || $eventName === ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_LEAD_PRODUCT_DELETE
-        ) {
+        $unpublishEvents = $this->getUnpublishEvents();
+
+        if (in_array($eventName, $unpublishEvents)) {
             $this->getFacade()->unpublishProductAbstractPackaging($productAbstractIds);
 
             return;
         }
 
         $this->getFacade()->publishProductAbstractPackaging($productAbstractIds);
+    }
+
+    /**
+     * @return array
+     */
+    protected function getUnpublishEvents(): array
+    {
+        return [
+            ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_UNIT_TYPE_DELETE,
+            ProductPackagingUnitEvents::PRODUCT_PACKAGING_UNIT_UNPUBLISH,
+            ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_UNIT_DELETE,
+            ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_UNIT_AMOUNT_DELETE,
+            ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_LEAD_PRODUCT_DELETE,
+        ];
     }
 }

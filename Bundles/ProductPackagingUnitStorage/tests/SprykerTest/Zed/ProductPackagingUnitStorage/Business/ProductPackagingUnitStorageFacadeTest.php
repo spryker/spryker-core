@@ -25,6 +25,11 @@ use Spryker\Client\Queue\QueueDependencyProvider;
 class ProductPackagingUnitStorageFacadeTest extends Unit
 {
     /**
+     * @see ProductPackagingUnitDataImport/data/import/product_packaging_unit.csv
+     */
+    protected const PRODUCT_ABSTRACT_ID = 217;
+
+    /**
      * @var \SprykerTest\Zed\ProductPackagingUnitStorage\ProductPackagingUnitStorageBusinessTester
      */
     protected $tester;
@@ -56,7 +61,7 @@ class ProductPackagingUnitStorageFacadeTest extends Unit
     public function testPublishProductAbstractPackagingDoesNotThrowException(): void
     {
         $this->tester->ensureStorageDatabaseTableIsEmpty();
-        $this->productPackagingUnitStorageFacade->publishProductAbstractPackaging([217]);
+        $this->productPackagingUnitStorageFacade->publishProductAbstractPackaging([static::PRODUCT_ABSTRACT_ID]);
 
         $this->assertTrue(true);
     }
@@ -67,7 +72,7 @@ class ProductPackagingUnitStorageFacadeTest extends Unit
     public function testUnpublishProductAbstractPackagingDoesNotThrowException(): void
     {
         $this->tester->ensureStorageDatabaseTableIsEmpty();
-        $this->productPackagingUnitStorageFacade->unpublishProductAbstractPackaging([217]);
+        $this->productPackagingUnitStorageFacade->unpublishProductAbstractPackaging([static::PRODUCT_ABSTRACT_ID]);
 
         $this->assertTrue(true);
     }
