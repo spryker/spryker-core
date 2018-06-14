@@ -25,6 +25,7 @@ class ProductListForm extends AbstractType
     public const FIELD_NAME = ProductListTransfer::TITLE;
     public const FIELD_TYPE = ProductListTransfer::TYPE;
     public const FIELD_CATEGORIES = ProductListTransfer::PRODUCT_LIST_CATEGORY_RELATION;
+    public const FIELD_PRODUCTS = ProductListTransfer::PRODUCT_LIST_PRODUCT_CONCRETE_RELATION;
 
     /**
      * @return string
@@ -43,6 +44,7 @@ class ProductListForm extends AbstractType
     {
         $resolver->setRequired([
             static::FIELD_CATEGORIES,
+            static::FIELD_PRODUCTS,
         ]);
 
         $resolver->setDefaults([
@@ -62,7 +64,8 @@ class ProductListForm extends AbstractType
             ->addIdField($builder)
             ->addNameField($builder)
             ->addTypeFiled($builder)
-            ->addCategoriesSubForm($builder, $options[static::FIELD_CATEGORIES]);
+            ->addCategoriesSubForm($builder, $options[static::FIELD_CATEGORIES])
+            ->addProductsSubForm($builder, $options[static::FIELD_PRODUCTS]);
     }
 
     /**
@@ -125,6 +128,19 @@ class ProductListForm extends AbstractType
     protected function addCategoriesSubForm(FormBuilderInterface $builder, array $options): self
     {
         $builder->add(static::FIELD_CATEGORIES, ProductListCategoryRelationType::class, $options);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addProductsSubForm(FormBuilderInterface $builder, array $options): self
+    {
+        $builder->add(static::FIELD_PRODUCTS, ProductListProductConcreteRelationType::class, $options);
 
         return $this;
     }

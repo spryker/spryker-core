@@ -7,23 +7,23 @@
 
 namespace Spryker\Zed\ProductListGui\Communication\Form;
 
-use Generated\Shared\Transfer\ProductListCategoryRelationTransfer;
+use Generated\Shared\Transfer\ProductListProductConcreteRelationTransfer;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ProductListCategoryRelationType extends AbstractType
+class ProductListProductConcreteRelationType extends AbstractType
 {
-    const FIELD_CATEGORIES = ProductListCategoryRelationTransfer::CATEGORY_IDS;
-    const OPTION_CATEGORY_ARRAY = 'option-category-array';
+    const FIELD_PRODUCTS = ProductListProductConcreteRelationTransfer::PRODUCT_IDS;
+    const OPTION_PRODUCT_NAMES = 'option-product-names';
 
     /**
      * @return string
      */
     public function getBlockPrefix()
     {
-        return 'categories';
+        return 'products';
     }
 
     /**
@@ -34,10 +34,10 @@ class ProductListCategoryRelationType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
-            ->setRequired(static::OPTION_CATEGORY_ARRAY);
+            ->setRequired(static::OPTION_PRODUCT_NAMES);
 
         $resolver->setDefaults([
-            'data_class' => ProductListCategoryRelationTransfer::class,
+            'data_class' => ProductListProductConcreteRelationTransfer::class,
         ]);
     }
 
@@ -49,9 +49,9 @@ class ProductListCategoryRelationType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addCategoryField(
+        $this->addProductsField(
             $builder,
-            $options[static::OPTION_CATEGORY_ARRAY]
+            $options[static::OPTION_PRODUCT_NAMES]
         );
     }
 
@@ -61,11 +61,11 @@ class ProductListCategoryRelationType extends AbstractType
      *
      * @return void
      */
-    protected function addCategoryField(FormBuilderInterface $builder, array $categoryList)
+    protected function addProductsField(FormBuilderInterface $builder, array $categoryList)
     {
-        $builder->add(static::FIELD_CATEGORIES, Select2ComboBoxType::class, [
-            'property_path' => static::FIELD_CATEGORIES,
-            'label' => 'Categories',
+        $builder->add(static::FIELD_PRODUCTS, Select2ComboBoxType::class, [
+            'property_path' => static::FIELD_PRODUCTS,
+            'label' => 'Products',
             'choices' => $categoryList,
             'choices_as_values' => true,
             'multiple' => true,

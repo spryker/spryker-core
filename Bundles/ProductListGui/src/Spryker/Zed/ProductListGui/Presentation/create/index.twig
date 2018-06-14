@@ -15,6 +15,7 @@
                 {{ tabs(productListFormTabs, {
                     'form': form,
                     'categoryForm': form.productListCategoryRelation,
+                    'productsForm': form.productListProductConcreteRelation,
                 }) }}
 
                 <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Create' | trans }}" />

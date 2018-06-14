@@ -22,7 +22,8 @@ class ProductListTabs extends AbstractTabs
     {
         $this
             ->addGeneralTab($tabsViewTransfer)
-            ->addCategoriesTab($tabsViewTransfer);
+            ->addCategoriesTab($tabsViewTransfer)
+            ->addProductsTab($tabsViewTransfer);
 
         return $tabsViewTransfer;
     }
@@ -57,6 +58,24 @@ class ProductListTabs extends AbstractTabs
             ->setName('categories')
             ->setTitle('Assign categories')
             ->setTemplate('@ProductListGui/_partials/tab-categories.twig');
+
+        $tabsViewTransfer->addTab($tabItemTransfer);
+
+        return $this;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\TabsViewTransfer $tabsViewTransfer
+     *
+     * @return $this
+     */
+    protected function addProductsTab(TabsViewTransfer $tabsViewTransfer)
+    {
+        $tabItemTransfer = new TabItemTransfer();
+        $tabItemTransfer
+            ->setName('products')
+            ->setTitle('Assign products')
+            ->setTemplate('@ProductListGui/_partials/tab-products.twig');
 
         $tabsViewTransfer->addTab($tabItemTransfer);
 

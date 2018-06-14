@@ -18,11 +18,20 @@ class ProductListDataProvider
     protected $categoriesDataProvider;
 
     /**
-     * @param \Spryker\Zed\ProductListGui\Communication\DataProvider\CategoriesDataProvider $categoriesDataProvider
+     * @var \Spryker\Zed\ProductListGui\Communication\DataProvider\ProductListProductConcreteRelationDataProvider
      */
-    public function __construct(CategoriesDataProvider $categoriesDataProvider)
-    {
+    protected $productConcreteRelationDataProvider;
+
+    /**
+     * @param \Spryker\Zed\ProductListGui\Communication\DataProvider\CategoriesDataProvider $categoriesDataProvider
+     * @param \Spryker\Zed\ProductListGui\Communication\DataProvider\ProductListProductConcreteRelationDataProvider $productConcreteRelationDataProvider
+     */
+    public function __construct(
+        CategoriesDataProvider $categoriesDataProvider,
+        ProductListProductConcreteRelationDataProvider $productConcreteRelationDataProvider
+    ) {
         $this->categoriesDataProvider = $categoriesDataProvider;
+        $this->productConcreteRelationDataProvider = $productConcreteRelationDataProvider;
     }
 
     /**
@@ -32,6 +41,7 @@ class ProductListDataProvider
     {
         return [
             ProductListForm::FIELD_CATEGORIES => $this->categoriesDataProvider->getOptions(),
+            ProductListForm::FIELD_PRODUCTS => $this->productConcreteRelationDataProvider->getOptions(),
         ];
     }
 

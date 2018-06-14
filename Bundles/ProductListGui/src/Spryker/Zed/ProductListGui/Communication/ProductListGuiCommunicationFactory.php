@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductListTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductListGui\Communication\DataProvider\CategoriesDataProvider;
 use Spryker\Zed\ProductListGui\Communication\DataProvider\ProductListDataProvider;
+use Spryker\Zed\ProductListGui\Communication\DataProvider\ProductListProductConcreteRelationDataProvider;
 use Spryker\Zed\ProductListGui\Communication\Form\ProductListForm;
 use Spryker\Zed\ProductListGui\Communication\Table\ProductListTable;
 use Spryker\Zed\ProductListGui\Communication\Tabs\ProductListTabs;
@@ -62,7 +63,8 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createProductListDataProvider(): ProductListDataProvider
     {
         return new ProductListDataProvider(
-            $this->createCategoriesDataProvider()
+            $this->createCategoriesDataProvider(),
+            $this->createProductConcreteDataProvider()
         );
     }
 
@@ -74,6 +76,14 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
         return new CategoriesDataProvider(
             $this->getFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductListGui\Communication\DataProvider\ProductListProductConcreteRelationDataProvider
+     */
+    public function createProductConcreteDataProvider(): ProductListProductConcreteRelationDataProvider
+    {
+        return new ProductListProductConcreteRelationDataProvider();
     }
 
     /**
