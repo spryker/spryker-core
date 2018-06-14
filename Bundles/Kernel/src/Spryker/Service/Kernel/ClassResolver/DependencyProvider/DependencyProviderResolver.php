@@ -18,13 +18,16 @@ class DependencyProviderResolver extends AbstractClassResolver
      *
      * @throws \Spryker\Service\Kernel\ClassResolver\DependencyProvider\DependencyProviderNotFoundException
      *
-     * @return \Spryker\Service\Kernel\AbstractBundleDependencyProvider|object
+     * @return \Spryker\Service\Kernel\AbstractBundleDependencyProvider
      */
     public function resolve($callerClass)
     {
         $this->setCallerClass($callerClass);
         if ($this->canResolve()) {
-            return $this->getResolvedClassInstance();
+            /** @var \Spryker\Service\Kernel\AbstractBundleDependencyProvider $class */
+            $class = $this->getResolvedClassInstance();
+
+            return $class;
         }
 
         throw new DependencyProviderNotFoundException($this->getClassInfo());

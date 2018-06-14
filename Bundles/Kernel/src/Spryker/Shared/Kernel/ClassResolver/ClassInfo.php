@@ -21,7 +21,7 @@ class ClassInfo
     private $callerClassName;
 
     /**
-     * @var string
+     * @var string[]
      */
     protected $callerClassParts;
 

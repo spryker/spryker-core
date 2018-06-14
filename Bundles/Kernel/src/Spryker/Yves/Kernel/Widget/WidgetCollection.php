@@ -14,12 +14,12 @@ use Spryker\Yves\Kernel\Exception\MissingWidgetPluginException;
 class WidgetCollection implements WidgetContainerInterface
 {
     /**
-     * @var \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface[]
+     * @var string[]
      */
     protected $widgets = [];
 
     /**
-     * @param \Spryker\Yves\Kernel\Dependency\Plugin\WidgetPluginInterface[] $widgetPlugins
+     * @param string[] $widgetPlugins
      */
     public function __construct(array $widgetPlugins = [])
     {
