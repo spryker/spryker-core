@@ -122,7 +122,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
     /**
      * @param \Symfony\Component\Finder\SplFileInfo[] $schemaFiles
      *
-     * @return \SimpleXMLElement[]
+     * @return \SimpleXMLElement[]|\ArrayObject
      */
     private function createSchemaXmlElements(array $schemaFiles)
     {
