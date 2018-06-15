@@ -133,4 +133,18 @@ interface SprykGuiFacadeInterface
      * @return array
      */
     public function getSprykDefinitionByName(string $spryk): array;
+
+    /**
+     * Specification:
+     * - Loads all possible options for a Spryk.
+     * - Adds OptionsTransfer to ModuleTransfer.
+     * - Returns ModuleTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
+     *
+     * @return \Generated\Shared\Transfer\ModuleTransfer
+     */
+    public function buildOptions(ModuleTransfer $moduleTransfer): ModuleTransfer;
 }

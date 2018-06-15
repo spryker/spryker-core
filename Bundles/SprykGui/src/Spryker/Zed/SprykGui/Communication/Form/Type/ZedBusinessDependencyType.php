@@ -28,7 +28,8 @@ class ZedBusinessDependencyType extends AbstractType
     protected const MODULE = 'module';
     protected const SPRYK = 'spryk';
 
-    /**
+    /**w
+     *
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
      * @return void
@@ -76,6 +77,7 @@ class ZedBusinessDependencyType extends AbstractType
         ];
 
         $builder->add('arguments', CollectionType::class, $argumentOptions);
+
         $builder->get('arguments')->addEventListener(
             FormEvents::SUBMIT,
             function (FormEvent $event) {

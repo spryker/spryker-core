@@ -10,7 +10,6 @@ namespace Spryker\Zed\SprykGui\Communication\Controller;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\VarDumper\VarDumper;
 
 /**
  * @method \Spryker\Zed\SprykGui\Communication\SprykGuiCommunicationFactory getFactory()
@@ -34,7 +33,6 @@ class BuildController extends AbstractController
         $canRunBuild = $this->canRunBuild($sprykForm);
         if ($sprykForm->isSubmitted() && $canRunBuild && $sprykForm->isValid()) {
             $formData = $sprykForm->getData();
-            echo '<pre>' . PHP_EOL . VarDumper::dump($formData) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
 
             if ($this->getClickableByName($sprykForm, 'create')->isClicked()) {
                 return $this->viewResponse(

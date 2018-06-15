@@ -21,6 +21,13 @@ use Spryker\Zed\SprykGui\Business\Finder\Zed\Business\BusinessModelFinder;
 use Spryker\Zed\SprykGui\Business\Finder\Zed\Business\BusinessModelFinderInterface;
 use Spryker\Zed\SprykGui\Business\Graph\GraphBuilder;
 use Spryker\Zed\SprykGui\Business\Graph\GraphBuilderInterface;
+use Spryker\Zed\SprykGui\Business\Option\Argument\ArgumentOptionBuilder;
+use Spryker\Zed\SprykGui\Business\Option\ClassName\ClassNameOptionBuilder;
+use Spryker\Zed\SprykGui\Business\Option\OptionBuilder;
+use Spryker\Zed\SprykGui\Business\Option\OptionBuilderInterface;
+use Spryker\Zed\SprykGui\Business\Option\Output\ModuleOutputOptionBuilder;
+use Spryker\Zed\SprykGui\Business\PhpInternal\Type\Type;
+use Spryker\Zed\SprykGui\Business\PhpInternal\Type\TypeInterface;
 use Spryker\Zed\SprykGui\Business\Spryk\Spryk;
 use Spryker\Zed\SprykGui\Business\Spryk\SprykInterface;
 use Spryker\Zed\SprykGui\Dependency\Facade\SprykGuiToSprykFacadeInterface;
@@ -108,5 +115,52 @@ class SprykGuiBusinessFactory extends AbstractBusinessFactory
     public function createZedBusinessModelFinder(): BusinessModelFinderInterface
     {
         return new BusinessModelFinder();
+    }
+
+    /**
+     * @return \Spryker\Zed\SprykGui\Business\Option\OptionBuilderInterface
+     */
+    public function createOptionBuilder(): OptionBuilderInterface
+    {
+        return new OptionBuilder([
+            $this->createClassNameOptionBuilder(),
+            $this->createOutputOptionBuilder(),
+            $this->createArgumentOptionBuilder(),
+        ]);
+    }
+
+    /**
+     * @return \Spryker\Zed\SprykGui\Business\Option\OptionBuilderInterface
+     */
+    public function createClassNameOptionBuilder(): OptionBuilderInterface
+    {
+        return new ClassNameOptionBuilder();
+    }
+
+    /**
+     * @return \Spryker\Zed\SprykGui\Business\Option\OptionBuilderInterface
+     */
+    public function createOutputOptionBuilder(): OptionBuilderInterface
+    {
+        return new ModuleOutputOptionBuilder();
+    }
+
+    /**
+     * @return \Spryker\Zed\SprykGui\Business\Option\OptionBuilderInterface
+     */
+    public function createArgumentOptionBuilder(): OptionBuilderInterface
+    {
+        return new ArgumentOptionBuilder(
+            $this->createAccessibleTransferFinder(),
+            $this->createPhpInternalTypes()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\SprykGui\Business\PhpInternal\Type\TypeInterface
+     */
+    public function createPhpInternalTypes(): TypeInterface
+    {
+        return new Type();
     }
 }

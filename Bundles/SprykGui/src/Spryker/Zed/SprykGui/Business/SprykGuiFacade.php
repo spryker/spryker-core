@@ -157,4 +157,18 @@ class SprykGuiFacade extends AbstractFacade implements SprykGuiFacadeInterface
     {
         return $this->getFactory()->createSpryk()->getSprykDefinitionByName($spryk);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
+     *
+     * @return \Generated\Shared\Transfer\ModuleTransfer
+     */
+    public function buildOptions(ModuleTransfer $moduleTransfer): ModuleTransfer
+    {
+        return $this->getFactory()->createOptionBuilder()->build($moduleTransfer);
+    }
 }

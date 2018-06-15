@@ -6,6 +6,9 @@
     <transfer name="Module">
         <property name="name" type="string" />
         <property name="organization" type="Organization"/>
+        <property name="application" type="Application"/>
+        <property name="layer" type="Layer"/>
+        <property name="options" type="Options"/>
     </transfer>
 
     <transfer name="ModuleCollection">
@@ -19,6 +22,14 @@
 
     <transfer name="OrganizationCollection">
         <property name="organizations" type="Organization[]" singular="organization" />
+    </transfer>
+
+    <transfer name="Application">
+        <property name="name" type="string" />
+    </transfer>
+
+    <transfer name="Layer">
+        <property name="name" type="string" />
     </transfer>
 
     <transfer name="AccessibleTransferCollection">
@@ -47,8 +58,10 @@
         <property name="name" type="string" />
         <property name="type" type="string" />
         <property name="variable" type="string" />
+        <property name="defaultValue" type="string" />
         <property name="isOptional" type="bool" />
         <property name="argumentMeta" type="ArgumentMeta" />
+        <property name="innerArgument" type="Argument" description="Only needed for internal form data handling" />
     </transfer>
 
     <transfer name="ArgumentMeta">
@@ -60,6 +73,14 @@
         <property name="isPhpSeven" type="bool" />
     </transfer>
 
+    <transfer name="ReturnTypeCollection">
+        <property name="returnTypes" type="ReturnType[]" singular="returnType" />
+    </transfer>
 
+    <transfer name="Options">
+        <property name="returnTypeCollection" type="ReturnTypeCollection" />
+        <property name="classInformationCollection" type="ClassInformationCollection" />
+        <property name="argumentCollection" type="ArgumentCollection" />
+    </transfer>
 
 </transfers>
