@@ -9,6 +9,7 @@ namespace Spryker\Zed\Dataset\Business\Saver;
 
 use Generated\Shared\Transfer\DatasetFilePathTransfer;
 use Generated\Shared\Transfer\DatasetTransfer;
+use Spryker\Zed\Dataset\Business\Reader\ReaderInterface;
 use Spryker\Zed\Dataset\Persistence\DatasetEntityManagerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
