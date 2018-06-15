@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Dataset\Business\Model;
+namespace Spryker\Zed\Dataset\Business\Saver;
 
 use Generated\Shared\Transfer\DatasetFilePathTransfer;
 use Generated\Shared\Transfer\DatasetTransfer;
