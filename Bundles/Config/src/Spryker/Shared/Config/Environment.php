@@ -113,7 +113,7 @@ class Environment
     /**
      * @param string $environment
      *
-     * @return string
+     * @return void
      */
     public static function setEnvironment($environment)
     {

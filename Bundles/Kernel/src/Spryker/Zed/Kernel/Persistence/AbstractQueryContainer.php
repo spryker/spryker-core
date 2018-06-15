@@ -28,13 +28,15 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
      * @param \Spryker\Zed\Kernel\AbstractBundleDependencyProvider $dependencyProvider
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return void
+     * @return \Spryker\Zed\Kernel\Container $container
      */
     protected function provideExternalDependencies(
         AbstractBundleDependencyProvider $dependencyProvider,
         Container $container
     ) {
         $dependencyProvider->providePersistenceLayerDependencies($container);
+
+        return $container;
     }
 
     /**
