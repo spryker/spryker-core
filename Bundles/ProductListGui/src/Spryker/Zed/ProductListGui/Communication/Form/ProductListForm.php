@@ -26,6 +26,7 @@ class ProductListForm extends AbstractType
     public const FIELD_TYPE = ProductListTransfer::TYPE;
     public const FIELD_CATEGORIES = ProductListTransfer::PRODUCT_LIST_CATEGORY_RELATION;
     public const FIELD_PRODUCTS = ProductListTransfer::PRODUCT_LIST_PRODUCT_CONCRETE_RELATION;
+    public const OPTION_DISABLE_GENERAL = 'OPTION_EDITABLE_GENERAL';
 
     public const BLOCK_PREFIX = 'productList';
 
@@ -47,10 +48,12 @@ class ProductListForm extends AbstractType
         $resolver->setRequired([
             static::FIELD_CATEGORIES,
             static::FIELD_PRODUCTS,
+            static::OPTION_DISABLE_GENERAL,
         ]);
 
         $resolver->setDefaults([
             'data_class' => ProductListTransfer::class,
+            static::OPTION_DISABLE_GENERAL => true,
         ]);
     }
 
@@ -63,34 +66,39 @@ class ProductListForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this
-            ->addIdField($builder)
-            ->addNameField($builder)
-            ->addTypeFiled($builder)
+            ->addIdField($builder, $options[static::OPTION_DISABLE_GENERAL])
+            ->addNameField($builder, $options[static::OPTION_DISABLE_GENERAL])
+            ->addTypeFiled($builder, $options[static::OPTION_DISABLE_GENERAL])
             ->addCategoriesSubForm($builder, $options[static::FIELD_CATEGORIES])
             ->addProductsSubForm($builder, $options[static::FIELD_PRODUCTS]);
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param bool $disabled
      *
      * @return $this
      */
-    protected function addIdField(FormBuilderInterface $builder): self
+    protected function addIdField(FormBuilderInterface $builder, bool $disabled): self
     {
-        $builder->add(static::FIELD_ID, HiddenType::class);
+        $builder->add(static::FIELD_ID, HiddenType::class, [
+            'disabled' => $disabled,
+        ]);
 
         return $this;
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param bool $disabled
      *
      * @return $this
      */
-    protected function addNameField(FormBuilderInterface $builder): self
+    protected function addNameField(FormBuilderInterface $builder, bool $disabled): self
     {
         $builder->add(static::FIELD_NAME, TextType::class, [
             'label' => 'Name',
+            'disabled' => $disabled,
             'constraints' => [
                 new Required(),
                 new NotBlank(),
@@ -103,13 +111,15 @@ class ProductListForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param bool $disabled
      *
      * @return $this
      */
-    protected function addTypeFiled(FormBuilderInterface $builder): self
+    protected function addTypeFiled(FormBuilderInterface $builder, bool $disabled): self
     {
         $builder->add(static::FIELD_TYPE, ChoiceType::class, [
             'label' => 'Type',
+            'disabled' => $disabled,
             'expanded' => true,
             'multiple' => false,
             'choices' => [

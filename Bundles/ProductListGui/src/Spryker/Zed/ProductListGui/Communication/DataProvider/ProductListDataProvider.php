@@ -35,13 +35,16 @@ class ProductListDataProvider
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ProductListTransfer|null $productListTransfer
+     *
      * @return array
      */
-    public function getOptions()
+    public function getOptions(?ProductListTransfer $productListTransfer = null)
     {
         return [
             ProductListForm::FIELD_CATEGORIES => $this->categoriesDataProvider->getOptions(),
             ProductListForm::FIELD_PRODUCTS => $this->productConcreteRelationDataProvider->getOptions(),
+            ProductListForm::OPTION_DISABLE_GENERAL => $productListTransfer && $productListTransfer->getIdProductList(),
         ];
     }
 

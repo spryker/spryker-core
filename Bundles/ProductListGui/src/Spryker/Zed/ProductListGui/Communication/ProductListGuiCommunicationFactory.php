@@ -71,7 +71,7 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
         return $this->getFormFactory()->create(
             ProductListForm::class,
             $dataProvider->getData($productListTransfer),
-            $dataProvider->getOptions()
+            $dataProvider->getOptions($productListTransfer)
         );
     }
 

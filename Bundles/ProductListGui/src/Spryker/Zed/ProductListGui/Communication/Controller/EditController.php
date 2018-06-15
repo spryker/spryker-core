@@ -23,8 +23,8 @@ class EditController extends AbstractController
      * @see \Spryker\Zed\ProductListGui\Communication\Controller\IndexController::indexAction()
      */
     protected const URL_LIST = '/product-list-gui';
-    protected const MESSAGE_PRODUCT_LIST_CREATE_ERROR = 'Product list can not be created';
-    protected const MESSAGE_PRODUCT_LIST_CREATE_SUCCESS = 'Product list with id "%d" successfully created';
+    protected const MESSAGE_PRODUCT_LIST_UPDATE_ERROR = 'Product list can not be update';
+    protected const MESSAGE_PRODUCT_LIST_UPDATE_SUCCESS = 'Product list with id "%d" successfully updated';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -47,7 +47,7 @@ class EditController extends AbstractController
 
             if ($productListTransfer->getIdProductList()) {
                 $this->addSuccessMessage(sprintf(
-                    static::MESSAGE_PRODUCT_LIST_CREATE_SUCCESS,
+                    static::MESSAGE_PRODUCT_LIST_UPDATE_SUCCESS,
                     $productListTransfer->getIdProductList()
                 ));
                 $redirectUrl = $request->query->get(static::PARAM_REDIRECT_URL, static::URL_LIST);
@@ -55,7 +55,7 @@ class EditController extends AbstractController
                 return $this->redirectResponse($redirectUrl);
             }
 
-            $this->addErrorMessage(static::MESSAGE_PRODUCT_LIST_CREATE_ERROR);
+            $this->addErrorMessage(static::MESSAGE_PRODUCT_LIST_UPDATE_ERROR);
         }
 
         $tabs = $this->getFactory()->createProductListTabs();
