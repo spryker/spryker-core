@@ -43,4 +43,17 @@ interface ProductListFacadeInterface
      * @return void
      */
     public function deleteProductList(ProductListTransfer $productListTransfer): void;
+
+    /**
+     * Specification:
+     * - Finds a Product List by ProductListTransfer::idProductList in the transfer.
+     * - Hydrate ProductListTransfer and relations to products and categories.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListTransfer
+     */
+    public function findProductList(ProductListTransfer $productListTransfer): ProductListTransfer;
 }

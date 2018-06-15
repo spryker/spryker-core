@@ -9,9 +9,11 @@ namespace Spryker\Zed\ProductListGui\Communication\Table;
 
 use Orm\Zed\ProductList\Persistence\Map\SpyProductListTableMap;
 use Orm\Zed\ProductList\Persistence\SpyProductListQuery;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductList\Persistence\Propel\AbstractSpyProductList;
+use Spryker\Zed\ProductListGui\Communication\Controller\EditController;
 
 /**
  * @uses ProductList
@@ -106,7 +108,12 @@ class ProductListTable extends AbstractTable
     protected function createViewButton(AbstractSpyProductList $productListEntity)
     {
         $buttons = [];
-        $buttons[] = $this->generateEditButton('edit', 'Edit');
+
+        $editUrl = Url::generate('/product-list-gui/edit', [
+            EditController::PARAM_ID_PRODUCT_LIST => $productListEntity->getIdProductList(),
+        ]);
+        $buttons[] = $this->generateEditButton($editUrl, 'Edit');
+
         $buttons[] = $this->generateRemoveButton('delete', 'Delete');
 
         return implode(' ', $buttons);

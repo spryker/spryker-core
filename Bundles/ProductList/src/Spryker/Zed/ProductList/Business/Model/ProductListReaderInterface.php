@@ -5,19 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductListGui\Dependency\Facade;
+namespace Spryker\Zed\ProductList\Business\Model;
 
 use Generated\Shared\Transfer\ProductListTransfer;
 
-interface ProductListGuiToProductListFacadeInterface
+interface ProductListReaderInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductListTransfer
-     */
-    public function saveProductList(ProductListTransfer $productListTransfer): ProductListTransfer;
-
     /**
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
      *

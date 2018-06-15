@@ -52,5 +52,6 @@ class ProductListDataProvider
      */
     public function getData(ProductListTransfer $productListTransfer)
     {
+        return $productListTransfer;
     }
 }

@@ -10,7 +10,8 @@
     "spryker/locale": "^3.0.0",
     "spryker/product-list": "^1.0.0",
     "spryker/product": "^5.0.0 || ^6.0.0",
-    "spryker/symfony": "^3.0.0"
+    "spryker/symfony": "^3.0.0",
+    "spryker/util-text": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

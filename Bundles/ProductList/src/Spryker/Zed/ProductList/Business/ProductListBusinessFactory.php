@@ -16,6 +16,8 @@ use Spryker\Zed\ProductList\Business\Model\ProductListProductConcreteRelationRea
 use Spryker\Zed\ProductList\Business\Model\ProductListProductConcreteRelationReaderInterface;
 use Spryker\Zed\ProductList\Business\Model\ProductListProductConcreteRelationWriter;
 use Spryker\Zed\ProductList\Business\Model\ProductListProductConcreteRelationWriterInterface;
+use Spryker\Zed\ProductList\Business\Model\ProductListReader;
+use Spryker\Zed\ProductList\Business\Model\ProductListReaderInterface;
 use Spryker\Zed\ProductList\Business\Model\ProductListWriter;
 use Spryker\Zed\ProductList\Business\Model\ProductListWriterInterface;
 
@@ -35,6 +37,18 @@ class ProductListBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->createProductListCategoryRelationWriter(),
             $this->createProductListProductConcreteRelationWriter()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductList\Business\Model\ProductListReaderInterface
+     */
+    public function createProductListReader(): ProductListReaderInterface
+    {
+        return new ProductListReader(
+            $this->getRepository(),
+            $this->createProductListCategoryRelationReader(),
+            $this->createProductListProductConcreteRelationReader()
         );
     }
 

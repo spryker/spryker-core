@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\ProductList\Persistence;
 
+use Generated\Shared\Transfer\ProductListTransfer;
 use Orm\Zed\ProductList\Persistence\Map\SpyProductListCategoryTableMap;
 use Orm\Zed\ProductList\Persistence\Map\SpyProductListProductConcreteTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
+use Spryker\Zed\ProductList\Persistence\Mapper\ProductListMapperInterface;
 
 /**
  * @method \Spryker\Zed\ProductList\Persistence\ProductListPersistenceFactory getFactory()
@@ -42,5 +44,31 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
             ->select(SpyProductListProductConcreteTableMap::COL_FK_PRODUCT)
             ->findByFkProductList($idProductList)
             ->toArray();
+    }
+
+    /**
+     * @param int $idProductList
+     *
+     * @return \Generated\Shared\Transfer\ProductListTransfer
+     */
+    public function getProductListById(int $idProductList): ProductListTransfer
+    {
+        $productListTransfer = new ProductListTransfer();
+        $query = $this->getFactory()
+            ->createProductListQuery()
+            ->filterByIdProductList($idProductList);
+        $spyProductListEntityTransfer = $this->buildQueryFromCriteria($query)->findOne();
+
+        return $this->getMapper()
+            ->mapEntityTransferToProductListTransfer($spyProductListEntityTransfer, $productListTransfer);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductList\Persistence\Mapper\ProductListMapperInterface
+     */
+    protected function getMapper(): ProductListMapperInterface
+    {
+        return $this->getFactory()
+            ->createProductListMapper();
     }
 }
