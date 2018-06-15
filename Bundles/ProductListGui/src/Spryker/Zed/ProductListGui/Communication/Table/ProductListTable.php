@@ -13,6 +13,7 @@ use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductList\Persistence\Propel\AbstractSpyProductList;
+use Spryker\Zed\ProductListGui\Communication\Controller\DeleteController;
 use Spryker\Zed\ProductListGui\Communication\Controller\EditController;
 
 /**
@@ -114,7 +115,10 @@ class ProductListTable extends AbstractTable
         ]);
         $buttons[] = $this->generateEditButton($editUrl, 'Edit');
 
-        $buttons[] = $this->generateRemoveButton('delete', 'Delete');
+        $deleteUrl = Url::generate('/product-list-gui/delete', [
+            DeleteController::PARAM_ID_PRODUCT_LIST => $productListEntity->getIdProductList(),
+        ]);
+        $buttons[] = $this->generateRemoveButton($deleteUrl, 'Delete');
 
         return implode(' ', $buttons);
     }

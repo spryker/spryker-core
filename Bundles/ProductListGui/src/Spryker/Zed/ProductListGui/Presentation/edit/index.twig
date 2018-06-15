@@ -4,6 +4,10 @@
 
 {% block action %}
     {{ backActionButton(url('/product-list-gui'), 'Back to product list' | trans) }}
+    {{ removeActionButton(
+        url('/product-list-gui/delete', {'id-product-list': idProductList}),
+        'Delete product list' | trans
+    ) }}
 {% endblock %}
 
 {% block content %}

@@ -66,6 +66,7 @@ class EditController extends AbstractController
             'productListFormTabs' => $tabs->createView(),
             'productConcreteFormTabs' => $productConcreteTabs->createView(),
             'productTable' => $productConcreteTable->render(),
+            'idProductList' => $productListTransfer->getIdProductList(),
         ]);
     }
 

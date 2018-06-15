@@ -43,4 +43,14 @@ class ProductListGuiToProductListFacadeBridge implements ProductListGuiToProduct
     {
         return $this->productListFacade->findProductList($productListTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return void
+     */
+    public function deleteProductList(ProductListTransfer $productListTransfer): void
+    {
+        $this->productListFacade->deleteProductList($productListTransfer);
+    }
 }
