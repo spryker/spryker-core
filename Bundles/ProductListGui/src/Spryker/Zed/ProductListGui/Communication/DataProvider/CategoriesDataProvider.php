@@ -44,43 +44,21 @@ class CategoriesDataProvider
      */
     public function getData(ProductListTransfer $productListTransfer)
     {
-        $categoryIds = [];
-
-//        if ($cmsBlockTransfer->getIdCmsBlock()) {
-//            $categoryIds = $this->getAssignedCategoryIds($cmsBlockTransfer->getIdCmsBlock());
-//        }
-//
-//        $productListTransfer->setIdCategories($categoryIds);
-
         return $productListTransfer;
     }
 
-//    /**
-//     * @param int $idCmsBlock
-//     *
-//     * @return array
-//     */
-//    protected function getAssignedCategoryIds($idCmsBlock)
-//    {
-//        $query = $this->cmsBlockCategoryConnectorQueryContainer
-//            ->queryCmsBlockCategoryConnectorByIdCmsBlock($idCmsBlock)
-//            ->find();
-//
-//        $assignedIdCategories = [];
-//
-//        foreach ($query as $item) {
-//            $assignedIdCategories[$item->getFkCmsBlockCategoryPosition()][] = $item->getFkCategory();
-//            $this->assertCmsBlockTemplate($item);
-//        }
-//
-//        return $assignedIdCategories;
-//    }
-
     /**
-     * @return int[] [<category name in english locale> => <category id>]
+     * @return int[] [<category key> => <category id>] where <category key>:="<category id> - <category name>"
      */
     protected function getCategoryList(): array
     {
-        return array_flip($this->facade->getAllCategoriesNames());
+        $uniqueCategoryNames = [];
+        $categoryNames = $this->facade->getAllCategoriesNames();
+        foreach ($categoryNames as $idCategory => $categoryName) {
+            $categoryKey = sprintf('%s - %s', $idCategory, $categoryName);
+            $uniqueCategoryNames[$categoryKey] = $idCategory;
+        }
+
+        return $uniqueCategoryNames;
     }
 }
