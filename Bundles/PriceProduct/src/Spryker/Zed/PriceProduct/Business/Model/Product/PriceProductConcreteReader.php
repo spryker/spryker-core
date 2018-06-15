@@ -14,6 +14,7 @@ use Spryker\Zed\PriceProduct\Business\Model\PriceDecision\PriceProductMatcherInt
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreFacadeInterface;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductRepositoryInterface;
+use Spryker\Zed\PriceProduct\PriceProductConfig;
 
 class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
 {
@@ -118,8 +119,14 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
      */
     public function findProductConcretePricesById(
         $idProductConcrete,
-        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+        PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
     ) {
+        if (!$priceProductCriteriaTransfer) {
+            $priceProductCriteriaTransfer = new PriceProductCriteriaTransfer();
+            $priceProductDimension = (new PriceProductDimensionTransfer())
+                ->setType(PriceProductConfig::PRICE_DIMENSION_DEFAULT);
+            $priceProductCriteriaTransfer->setPriceDimension($priceProductDimension);
+        }
 
         $priceProductStoreTransferCollection = $this->priceProductRepository->findProductConcretePricesByIdAndCriteria(
             $idProductConcrete,

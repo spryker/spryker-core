@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\PriceProduct\Persistence\Propel\PriceDimensionQueryExpander;
 
-use Generated\Shared\Transfer\PriceDimensionCriteriaTransfer;
-use Generated\Shared\Transfer\PriceDimensionJoinTransfer;
+use Generated\Shared\Transfer\QueryCriteriaTransfer;
+use Generated\Shared\Transfer\QueryJoinTransfer;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductDefaultTableMap;
@@ -22,13 +22,13 @@ class DefaultPriceQueryExpander implements DefaultPriceQueryExpanderInterface
     /**
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceDimensionCriteriaTransfer|null
+     * @return \Generated\Shared\Transfer\QueryCriteriaTransfer|null
      */
     public function buildDefaultPriceDimensionCriteria(
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-    ): ?PriceDimensionCriteriaTransfer {
-        return (new PriceDimensionCriteriaTransfer())
-            ->addPriceDimensionJoin(
+    ): ?QueryCriteriaTransfer {
+        return (new QueryCriteriaTransfer())
+            ->addJoin(
                 $this->createJoin()
             )
             ->setWithColumns([
@@ -37,11 +37,11 @@ class DefaultPriceQueryExpander implements DefaultPriceQueryExpanderInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\PriceDimensionJoinTransfer
+     * @return \Generated\Shared\Transfer\QueryJoinTransfer
      */
-    protected function createJoin(): PriceDimensionJoinTransfer
+    protected function createJoin(): QueryJoinTransfer
     {
-        return (new PriceDimensionJoinTransfer())
+        return (new QueryJoinTransfer())
             ->setLeft([
                 SpyPriceProductStoreTableMap::COL_ID_PRICE_PRODUCT_STORE,
             ])

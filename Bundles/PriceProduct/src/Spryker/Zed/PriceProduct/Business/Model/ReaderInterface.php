@@ -46,7 +46,7 @@ interface ReaderInterface
     public function findProductConcretePrices(
         $idProductConcrete,
         $idProductAbstract,
-        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+        PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
     );
 
     /**

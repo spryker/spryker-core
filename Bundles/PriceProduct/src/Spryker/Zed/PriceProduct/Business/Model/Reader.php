@@ -117,9 +117,8 @@ class Reader implements ReaderInterface
     public function findProductConcretePrices(
         $idProductConcrete,
         $idProductAbstract,
-        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+        PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
     ) {
-
         $abstractPriceProductTransfers = $this->priceProductAbstractReader
             ->findProductAbstractPricesById($idProductAbstract, $priceProductCriteriaTransfer);
 

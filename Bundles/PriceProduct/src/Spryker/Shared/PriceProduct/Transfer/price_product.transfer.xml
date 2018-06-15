@@ -56,7 +56,7 @@
         <property name="idCurrency" type="int" />
         <property name="priceMode" type="string" />
         <property name="priceType" type="string" />
-        <property name="priceDimension" type="string" />
+        <property name="priceDimension" type="PriceProductDimension" />
         <property name="quote" type="Quote" />
         <property name="item" type="Item" />
     </transfer>
@@ -64,17 +64,6 @@
     <transfer name="CurrentProductPrice">
         <property name="price" type="int" />
         <property name="prices" type="array" singular="price" />
-    </transfer>
-
-    <transfer name="PriceDimensionCriteria">
-        <property name="priceDimensionJoins" type="PriceDimensionJoin[]" singular="priceDimensionJoin" />
-        <property name="withColumns" type="array" singular="withColumn"/>
-    </transfer>
-
-    <transfer name="PriceDimensionJoin">
-        <property name="left" type="array" />
-        <property name="right" type="array" />
-        <property name="joinType" type="string" />
     </transfer>
 
 </transfers>

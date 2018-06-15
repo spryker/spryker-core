@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\PriceProduct\Persistence;
 
-use Generated\Shared\Transfer\PriceDimensionCriteriaTransfer;
+use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\SpyPriceProductDefaultEntityTransfer;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
@@ -112,9 +112,9 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
      *
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceDimensionCriteriaTransfer|null
+     * @return \Generated\Shared\Transfer\QueryCriteriaTransfer|null
      */
-    public function buildDefaultPriceDimensionCriteria(PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?PriceDimensionCriteriaTransfer
+    public function buildDefaultPriceDimensionCriteria(PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?QueryCriteriaTransfer
     {
         return $this->getFactory()
             ->createDefaultPriceQueryExpander()

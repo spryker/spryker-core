@@ -288,9 +288,8 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      */
     public function findProductAbstractPrices(
         $idProductAbstract,
-        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+        PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
     ) {
-
         return $this->getFactory()
             ->createPriceProductAbstractReader()
             ->findProductAbstractPricesById($idProductAbstract, $priceProductCriteriaTransfer);
@@ -309,11 +308,11 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
     public function findProductConcretePrices(
         $idProductConcrete,
         $idProductAbstract,
-        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+        PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
     ) {
         return $this->getFactory()
             ->createReaderModel()
-            ->findProductConcretePrices($idProductConcrete, $idProductAbstract, $priceProductCriteriaTransfer);
+            ->findProductConcretePrices($idProductConcrete, $idProductAbstract, $priceProductCriteriaTransfer = null);
     }
 
     /**

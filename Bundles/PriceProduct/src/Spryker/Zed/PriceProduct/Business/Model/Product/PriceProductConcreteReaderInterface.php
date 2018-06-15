@@ -34,7 +34,7 @@ interface PriceProductConcreteReaderInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findProductConcretePricesById($idProductConcrete, PriceProductCriteriaTransfer $priceProductCriteriaTransfer);
+    public function findProductConcretePricesById($idProductConcrete, PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null);
 
     /**
      * @param string $sku

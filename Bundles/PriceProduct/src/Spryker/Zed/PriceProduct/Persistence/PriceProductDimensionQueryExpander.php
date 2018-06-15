@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\PriceProduct\Persistence;
 
-use Generated\Shared\Transfer\PriceDimensionCriteriaTransfer;
+use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -122,7 +122,7 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
     ): void {
 
         $priceDimensionQueryCriteriaPlugin = $this->findPriceDimensionCriteriaPluginByName(
-            $priceProductCriteriaTransfer->getPriceDimension()
+            $priceProductCriteriaTransfer->getPriceDimension()->getType()
         );
 
         if ($priceDimensionQueryCriteriaPlugin) {
@@ -141,14 +141,14 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
      * @param \Spryker\Zed\PriceProduct\Dependency\Plugin\PriceDimensionQueryCriteriaPluginInterface $priceProductDimensionQueryExpanderPlugin
      * @param null|string $joinType
      *
-     * @return \Generated\Shared\Transfer\PriceDimensionCriteriaTransfer|null
+     * @return \Generated\Shared\Transfer\QueryCriteriaTransfer|null
      */
     protected function runPlugin(
         SpyPriceProductStoreQuery $priceProductStoreQuery,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer,
         PriceDimensionQueryCriteriaPluginInterface $priceProductDimensionQueryExpanderPlugin,
         $joinType = null
-    ): ?PriceDimensionCriteriaTransfer {
+    ): ?QueryCriteriaTransfer {
 
         $priceDimensionCriteriaTransfer = $priceProductDimensionQueryExpanderPlugin
             ->buildPriceDimensionCriteria($priceProductCriteriaTransfer);
@@ -164,52 +164,52 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
 
     /**
      * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery $priceProductStoreQuery
-     * @param \Generated\Shared\Transfer\PriceDimensionCriteriaTransfer $priceDimensionCriteriaTransfer
+     * @param \Generated\Shared\Transfer\QueryCriteriaTransfer $queryCriteriaTransfer
      * @param null|string $joinType
      *
      * @return void
      */
     protected function addJoin(
         SpyPriceProductStoreQuery $priceProductStoreQuery,
-        PriceDimensionCriteriaTransfer $priceDimensionCriteriaTransfer,
+        QueryCriteriaTransfer $queryCriteriaTransfer,
         $joinType = null
     ): void {
 
-        foreach ($priceDimensionCriteriaTransfer->getPriceDimensionJoins() as $priceDimensionJoinTransfer) {
+        foreach ($queryCriteriaTransfer->getJoins() as $queryJoinTransfer) {
             $priceProductStoreQuery->addJoin(
-                $priceDimensionJoinTransfer->getLeft(),
-                $priceDimensionJoinTransfer->getRight(),
-                $joinType ?: $priceDimensionJoinTransfer->getJoinType()
+                $queryJoinTransfer->getLeft(),
+                $queryJoinTransfer->getRight(),
+                $joinType ?: $queryJoinTransfer->getJoinType()
             );
         }
     }
 
     /**
      * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery $priceProductStoreQuery
-     * @param \Generated\Shared\Transfer\PriceDimensionCriteriaTransfer $priceDimensionCriteriaTransfer
+     * @param \Generated\Shared\Transfer\QueryCriteriaTransfer $queryCriteriaTransfer
      *
      * @return void
      */
     protected function addWithColumns(
         SpyPriceProductStoreQuery $priceProductStoreQuery,
-        PriceDimensionCriteriaTransfer $priceDimensionCriteriaTransfer
+        QueryCriteriaTransfer $queryCriteriaTransfer
     ): void {
-        foreach ($priceDimensionCriteriaTransfer->getWithColumns() as $field => $value) {
+        foreach ($queryCriteriaTransfer->getWithColumns() as $field => $value) {
             $priceProductStoreQuery->withColumn($field, $value);
         }
     }
 
     /**
      * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery $priceProductStoreQuery
-     * @param \Generated\Shared\Transfer\PriceDimensionCriteriaTransfer $priceDimensionCriteriaTransfer
+     * @param \Generated\Shared\Transfer\QueryCriteriaTransfer $queryCriteriaTransfer
      *
      * @return void
      */
     protected function filterEmptyDimensions(
         SpyPriceProductStoreQuery $priceProductStoreQuery,
-        PriceDimensionCriteriaTransfer $priceDimensionCriteriaTransfer
+        QueryCriteriaTransfer $queryCriteriaTransfer
     ): void {
-        foreach ($priceDimensionCriteriaTransfer->getWithColumns() as $field => $value) {
+        foreach ($queryCriteriaTransfer->getWithColumns() as $field => $value) {
             $priceProductStoreQuery->addAnd($field, null, Criteria::ISNULL);
         }
     }

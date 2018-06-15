@@ -16,6 +16,7 @@ use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeInterf
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreFacadeInterface;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductRepositoryInterface;
+use Spryker\Zed\PriceProduct\PriceProductConfig;
 
 class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
 {
@@ -166,9 +167,14 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findProductAbstractPricesById($idProductAbstract, PriceProductCriteriaTransfer $priceProductCriteriaTransfer)
+    public function findProductAbstractPricesById($idProductAbstract, PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null)
     {
-        $priceProductCriteriaTransfer->requirePriceDimension();
+        if (!$priceProductCriteriaTransfer) {
+            $priceProductCriteriaTransfer = new PriceProductCriteriaTransfer();
+            $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
+                ->setType(PriceProductConfig::PRICE_DIMENSION_DEFAULT);
+            $priceProductCriteriaTransfer->setPriceDimension($priceProductDimensionTransfer);
+        }
 
         $priceProductStoreTransferCollection = $this->priceProductRepository->findProductAbstactPricesByIdAndCriteria(
             $idProductAbstract,
