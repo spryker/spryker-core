@@ -47,4 +47,28 @@ class CompanyHelper extends Module
 
         return $this->getLocator()->company()->facade()->create($companyTransfer)->getCompanyTransfer();
     }
+
+    /**
+     * @param array $seedData
+     *
+     * @return \Generated\Shared\Transfer\CompanyTransfer
+     */
+    public function haveActiveCompany(array $seedData = [])
+    {
+        $seedData = array_merge($seedData, [CompanyTransfer::IS_ACTIVE => true]);
+
+        return $this->haveCompany($seedData);
+    }
+
+    /**
+     * @param array $seedData
+     *
+     * @return \Generated\Shared\Transfer\CompanyTransfer
+     */
+    public function haveInactiveCompany(array $seedData = [])
+    {
+        $seedData = array_merge($seedData, [CompanyTransfer::IS_ACTIVE => false]);
+
+        return $this->haveCompany($seedData);
+    }
 }
