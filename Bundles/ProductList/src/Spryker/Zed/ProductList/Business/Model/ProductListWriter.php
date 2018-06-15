@@ -81,6 +81,7 @@ class ProductListWriter implements ProductListWriterInterface
     ): ProductListTransfer {
         $productListCategoryRelationTransfer = $productListTransfer->getProductListCategoryRelation();
         $productListProductConcreteRelationTransfer = $productListTransfer->getProductListProductConcreteRelation();
+        $productListTransfer = $this->generateKey($productListTransfer);
 
         $productListTransfer = $this->productListEntityManager->saveProductList($productListTransfer);
 
@@ -106,6 +107,26 @@ class ProductListWriter implements ProductListWriterInterface
         ProductListTransfer $productListTransfer
     ): void {
         $this->productListEntityManager->deleteProductList($productListTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListTransfer
+     */
+    protected function generateKey(ProductListTransfer $productListTransfer): ProductListTransfer
+    {
+        if ($productListTransfer->getIdProductList()) {
+            return $productListTransfer;
+        }
+        if ($productListTransfer->getKey()) {
+            return $productListTransfer;
+        }
+
+        $key = uniqid('spy-product-list-');
+        $productListTransfer->setKey(md5($key));
+
+        return $productListTransfer;
     }
 
     /**
