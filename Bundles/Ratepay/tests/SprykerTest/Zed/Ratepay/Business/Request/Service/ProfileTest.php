@@ -6,6 +6,7 @@
 
 namespace SprykerTest\Zed\Ratepay\Business\Request\Service;
 
+use RuntimeException;
 use Spryker\Zed\Money\Business\MoneyFacade;
 use Spryker\Zed\Ratepay\Business\Api\Converter\ConverterFactory;
 use Spryker\Zed\Ratepay\Business\Api\Model\Response\ProfileResponse;
@@ -148,7 +149,7 @@ class ProfileTest extends AbstractFacadeTest
     /**
      * @param \Spryker\Zed\Ratepay\Business\RatepayFacade $facade
      *
-     * @return \Generated\Shared\Transfer\RatepayProfileResponseTransfer
+     * @return \Generated\Shared\Transfer\RatepayResponseTransfer
      */
     protected function runFacadeMethod($facade)
     {
@@ -176,15 +177,19 @@ class ProfileTest extends AbstractFacadeTest
 
     /**
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @throws \RuntimeException
      */
     protected function getRatepayPaymentMethodTransfer()
     {
+        throw new RuntimeException('Implement getRatepayPaymentMethodTransfer()');
     }
 
     /**
      * @return mixed
+     * @throws \RuntimeException
      */
     protected function getPaymentTransferFromQuote()
     {
+        throw new RuntimeException('Implement getPaymentTransferFromQuote()');
     }
 }
