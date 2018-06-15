@@ -30,7 +30,8 @@ class ProductPackagingUnitStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductPackagingStorageReader(
             $this->getRepository(),
-            $this->getProductPackagingUnitFacade()
+            $this->getProductPackagingUnitFacade(),
+            $this->getConfig()
         );
     }
 

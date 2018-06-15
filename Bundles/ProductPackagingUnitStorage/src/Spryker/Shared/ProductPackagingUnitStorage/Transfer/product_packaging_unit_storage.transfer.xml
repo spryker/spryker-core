@@ -20,4 +20,9 @@
         <property name="types" type="ProductConcretePackagingStorage[]"/>
     </transfer>
 
+    <transfer name="ProductConcretePackagingStorageAmount">
+        <property name="defaultAmount" type="int"/>
+        <property name="isVariable" type="bool"/>
+    </transfer>
+
 </transfers>
