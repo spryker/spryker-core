@@ -66,10 +66,10 @@ class ShoppingListPermissionInstaller implements ShoppingListPermissionInstaller
         foreach ($shoppingListPermissionGroupTransfers as $shoppingListPermissionGroupTransfer) {
             $shoppingListPermissionGroupEntityTransfer = $this->createShoppingListPermissionGroupEntityTransfer($shoppingListPermissionGroupTransfer);
 
-            $shoppingListPermissionGroupEntityTransfer = $this->shoppingListEntityManager->saveShoppingListPermissionGroupEntity($shoppingListPermissionGroupEntityTransfer);
+            $shoppingListPermissionGroupEntityTransfer = $this->shoppingListEntityManager->saveShoppingListPermissionGroup($shoppingListPermissionGroupEntityTransfer);
 
             foreach ($shoppingListPermissionGroupTransfer->getPermissions() as $permissionTransfer) {
-                $this->shoppingListEntityManager->saveShoppingListPermissionGroupToPermissionEntity(
+                $this->shoppingListEntityManager->saveShoppingListPermissionGroupToPermission(
                     $shoppingListPermissionGroupEntityTransfer,
                     $this->permissionFacade->findPermissionByKey($permissionTransfer->getKey())
                 );
@@ -84,6 +84,6 @@ class ShoppingListPermissionInstaller implements ShoppingListPermissionInstaller
      */
     protected function createShoppingListPermissionGroupEntityTransfer(ShoppingListPermissionGroupTransfer $shoppingListPermissionGroupTransfer): SpyShoppingListPermissionGroupEntityTransfer
     {
-        return (new SpyShoppingListPermissionGroupEntityTransfer())->fromArray($shoppingListPermissionGroupTransfer->toArray(), true);
+        return (new SpyShoppingListPermissionGroupEntityTransfer())->fromArray($shoppingListPermissionGroupTransfer->modifiedToArray(), true);
     }
 }

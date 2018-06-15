@@ -139,7 +139,7 @@
         <property name="expenses" type="Expense[]" singular="expense" />
     </transfer>
 
-    <transfer name="StatemachineTrigger">
+    <transfer name="StatemachineTrigger" deprecated="Not in use anymore, will be removed with next major">
         <property name="eventName" type="string" />
         <property name="orderId" type="string" />
         <property name="references" type="array" />

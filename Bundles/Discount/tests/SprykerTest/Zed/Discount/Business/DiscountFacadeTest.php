@@ -438,7 +438,7 @@ class DiscountFacadeTest extends Unit
             $idStores
         );
     }
-    
+
     /**
      * @return void
      */
