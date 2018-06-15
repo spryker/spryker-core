@@ -27,6 +27,14 @@ interface EventConstants
 
     /**
      * Specification:
+     * - Maximum amount of retrying on failing message
+     *
+     * @api
+     */
+    const MAX_RETRY_ON_FAIL = 'MAX_RETRY_ON_FAIL';
+
+    /**
+     * Specification:
      * - Queue name as used when with asynchronous event handling
      *
      * @api

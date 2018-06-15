@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Event\Communication\Plugin\Queue;
 
-use Generated\Shared\Transfer\QueueSendMessageTransfer;
-use Spryker\Client\Queue\QueueClient;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Queue\Dependency\Plugin\QueueMessageProcessorPluginInterface;
 
@@ -27,18 +25,7 @@ class EventRetryQueueMessageProcessorPlugin extends AbstractPlugin implements Qu
      */
     public function processMessages(array $queueMessageTransfers)
     {
-        $responses = [];
-        //TODO refactor this
-        $queueClient = new QueueClient();
-        foreach ($queueMessageTransfers as $queueMessageTransfer) {
-            $responses[] = $queueMessageTransfer;
-            $queueMessageTransfer->setAcknowledge(true);
-            $queueSendMessageTransfer = new QueueSendMessageTransfer();
-            $queueSendMessageTransfer->fromArray($queueMessageTransfer->getQueueMessage()->toArray());
-            $queueClient->sendMessage($queueMessageTransfer->getQueueName(), $queueSendMessageTransfer);
-        }
-
-        return $responses;
+        return $this->getFacade()->forwardMessages($queueMessageTransfers);
     }
 
     /**

@@ -64,4 +64,20 @@ class EventFacade extends AbstractFacade implements EventFacadeInterface
             ->createEventQueueConsumer()
             ->processMessages($queueMessageTransfers);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueMessageTransfers
+     *
+     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     */
+    public function forwardMessages(array $queueMessageTransfers): array
+    {
+        return $this->getFactory()
+            ->createMessageForwarder()
+            ->forwardMessages($queueMessageTransfers);
+    }
 }

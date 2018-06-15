@@ -34,16 +34,24 @@ class EventQueueConsumer implements EventQueueConsumerInterface
     protected $utilEncodingService;
 
     /**
+     * @var int
+     */
+    protected $maxRetryAmount;
+
+    /**
      * @param \Spryker\Zed\Event\Business\Logger\EventLoggerInterface $eventLogger
      * @param \Spryker\Zed\Event\Dependency\Service\EventToUtilEncodingInterface $utilEncodingService
+     * @param int $maxRetryAmount
      */
     public function __construct(
         EventLoggerInterface $eventLogger,
-        EventToUtilEncodingInterface $utilEncodingService
+        EventToUtilEncodingInterface $utilEncodingService,
+        $maxRetryAmount = 1
     ) {
 
         $this->eventLogger = $eventLogger;
         $this->utilEncodingService = $utilEncodingService;
+        $this->maxRetryAmount = $maxRetryAmount;
     }
 
     /**
@@ -93,10 +101,7 @@ class EventQueueConsumer implements EventQueueConsumerInterface
                 );
                 $this->logConsumerAction($errorMessage, $exception);
                 $this->retryMessage($queueMessageTransfer, $errorMessage);
-
-                if (!$queueMessageTransfer->getRoutingKey()) {
-                    $this->markMessageAsFailed($queueMessageTransfer, $errorMessage);
-                }
+                $this->markMessageAsFailed($queueMessageTransfer, $errorMessage);
             }
         }
 
@@ -146,13 +151,8 @@ class EventQueueConsumer implements EventQueueConsumerInterface
     protected function handleFailedMessages(array $eventItem, string $errorMessage): void
     {
         foreach ($eventItem[static::EVENT_MESSAGES] as $queueMessageTransfer) {
-            if (!$queueMessageTransfer->getRoutingKey()) {
-                $this->retryMessage($queueMessageTransfer, $errorMessage);
-            }
-
-            if (!$queueMessageTransfer->getRoutingKey()) {
-                $this->markMessageAsFailed($queueMessageTransfer, $errorMessage);
-            }
+            $this->retryMessage($queueMessageTransfer, $errorMessage);
+            $this->markMessageAsFailed($queueMessageTransfer, $errorMessage);
         }
     }
 
@@ -164,11 +164,14 @@ class EventQueueConsumer implements EventQueueConsumerInterface
      */
     protected function retryMessage(QueueReceiveMessageTransfer $queueMessageTransfer, string $retryMessage): void
     {
+        if ($queueMessageTransfer->getRoutingKey()) {
+            return;
+        }
+
         $queueMessageBody = $this->utilEncodingService->decodeJson($queueMessageTransfer->getQueueMessage()->getBody(), true);
         $queueMessageBody = $this->updateMessageRetryKey($queueMessageBody);
 
-        //TODO the number of retrying should come from config_default
-        if ($queueMessageBody[static::RETRY_KEY] < 1) {
+        if ($queueMessageBody[static::RETRY_KEY] < $this->maxRetryAmount) {
             $queueMessageBody[static::RETRY_KEY]++;
             $queueMessageTransfer->getQueueMessage()->setBody($this->utilEncodingService->encodeJson($queueMessageBody));
             $this->markMessageAsRetry($queueMessageTransfer, $retryMessage);
@@ -289,7 +292,12 @@ class EventQueueConsumer implements EventQueueConsumerInterface
      */
     protected function markMessageAsFailed(QueueReceiveMessageTransfer $queueMessageTransfer, $errorMessage = '')
     {
+        if ($queueMessageTransfer->getRoutingKey()) {
+            return;
+        }
+
         $this->setMessage($queueMessageTransfer, 'errorMessage', $errorMessage);
+        $queueMessageTransfer->setAcknowledge(false);
         $queueMessageTransfer->setReject(true);
         $queueMessageTransfer->setHasError(true);
         $queueMessageTransfer->setRoutingKey(EventConstants::EVENT_ROUTING_KEY_ERROR);

@@ -55,4 +55,16 @@ interface EventFacadeInterface
      * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
      */
     public function processEnqueuedMessages(array $queueMessageTransfers);
+
+    /**
+     * Specification:
+     * - Forward consumed messages to event queue
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueMessageTransfers
+     *
+     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     */
+    public function forwardMessages(array $queueMessageTransfers): array;
 }
