@@ -20,6 +20,7 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_PRODUCT_LIST = 'FACADE_PRODUCT_LIST';
     public const QUERY_CATEGORY_ATTRIBUTE = 'QUERY_CATEGORY_ATTRIBUTE';
     public const QUERY_PRODUCT_ATTRIBUTE = 'QUERY_PRODUCT_ATTRIBUTE';
+    public const PLUGINS_FORM_EXTENSION = 'PLUGINS_FORM_EXTENSION';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -29,6 +30,7 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = $this->addProductListFacade($container);
+        $container = $this->addProductListCreateFormExpanderPlugins($container);
 
         return $container;
     }
@@ -116,5 +118,27 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductListCreateFormExpanderPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_FORM_EXTENSION] = function (Container $container) {
+            return $this->getProductListCreateFormExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListCreateFormExpanderPluginInterface[]
+     */
+    protected function getProductListCreateFormExpanderPlugins(): array
+    {
+        return [];
     }
 }

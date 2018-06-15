@@ -82,7 +82,8 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new ProductListDataProvider(
             $this->createCategoriesDataProvider(),
-            $this->createProductConcreteDataProvider()
+            $this->createProductConcreteDataProvider(),
+            ...$this->getProductListCreateFormExpanderPlugins()
         );
     }
 
@@ -112,5 +113,13 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getProductListFacade(): ProductListGuiToProductListFacadeInterface
     {
         return $this->getProvidedDependency(ProductListGuiDependencyProvider::FACADE_PRODUCT_LIST);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListCreateFormExpanderPluginInterface[]
+     */
+    public function getProductListCreateFormExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductListGuiDependencyProvider::PLUGINS_FORM_EXTENSION);
     }
 }

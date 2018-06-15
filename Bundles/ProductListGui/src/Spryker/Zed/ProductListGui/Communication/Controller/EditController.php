@@ -60,6 +60,7 @@ class EditController extends AbstractController
         $tabs = $this->getFactory()->createProductListTabs();
         $productConcreteTable = $this->getFactory()->createProductConcreteTable();
         $productConcreteTabs = $this->getFactory()->createProductConcreteTabs();
+        $plugins = $this->getFactory()->getProductListCreateFormExpanderPlugins();
 
         return $this->viewResponse([
             'form' => $form->createView(),
@@ -67,6 +68,7 @@ class EditController extends AbstractController
             'productConcreteFormTabs' => $productConcreteTabs->createView(),
             'productTable' => $productConcreteTable->render(),
             'idProductList' => $productListTransfer->getIdProductList(),
+            'plugins' => $plugins,
         ]);
     }
 
