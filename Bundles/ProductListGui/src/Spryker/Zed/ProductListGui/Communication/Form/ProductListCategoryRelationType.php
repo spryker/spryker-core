@@ -21,7 +21,7 @@ class ProductListCategoryRelationType extends AbstractType
     /**
      * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'categories';
     }
@@ -31,7 +31,7 @@ class ProductListCategoryRelationType extends AbstractType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired(static::OPTION_CATEGORY_ARRAY);
@@ -47,21 +47,18 @@ class ProductListCategoryRelationType extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addCategoryField(
-            $builder,
-            $options[static::OPTION_CATEGORY_ARRAY]
-        );
+        $this->addCategoryField($builder, $options[static::OPTION_CATEGORY_ARRAY]);
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $categoryList
      *
-     * @return void
+     * @return $this
      */
-    protected function addCategoryField(FormBuilderInterface $builder, array $categoryList)
+    protected function addCategoryField(FormBuilderInterface $builder, array $categoryList): self
     {
         $builder->add(static::FIELD_CATEGORIES, Select2ComboBoxType::class, [
             'property_path' => static::FIELD_CATEGORIES,
@@ -71,5 +68,7 @@ class ProductListCategoryRelationType extends AbstractType
             'multiple' => true,
             'required' => false,
         ]);
+
+        return $this;
     }
 }

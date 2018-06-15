@@ -10,18 +10,20 @@ namespace Spryker\Zed\ProductListGui\Communication\Form;
 use Generated\Shared\Transfer\ProductListProductConcreteRelationTransfer;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ProductListProductConcreteRelationType extends AbstractType
 {
     const FIELD_PRODUCTS = ProductListProductConcreteRelationTransfer::PRODUCT_IDS;
+    const FIELD_FILE_UPLOAD = 'products_upload';
     const OPTION_PRODUCT_NAMES = 'option-product-names';
 
     /**
      * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'products';
     }
@@ -31,7 +33,7 @@ class ProductListProductConcreteRelationType extends AbstractType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired(static::OPTION_PRODUCT_NAMES);
@@ -47,21 +49,20 @@ class ProductListProductConcreteRelationType extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addProductsField(
-            $builder,
-            $options[static::OPTION_PRODUCT_NAMES]
-        );
+        $this
+            ->addProductsField($builder, $options[static::OPTION_PRODUCT_NAMES])
+            ->addUploadFileFile($builder);
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $categoryList
      *
-     * @return void
+     * @return $this
      */
-    protected function addProductsField(FormBuilderInterface $builder, array $categoryList)
+    protected function addProductsField(FormBuilderInterface $builder, array $categoryList): self
     {
         $builder->add(static::FIELD_PRODUCTS, Select2ComboBoxType::class, [
             'property_path' => static::FIELD_PRODUCTS,
@@ -71,5 +72,22 @@ class ProductListProductConcreteRelationType extends AbstractType
             'multiple' => true,
             'required' => false,
         ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addUploadFileFile(FormBuilderInterface $builder): self
+    {
+        $builder->add(static::FIELD_FILE_UPLOAD, FileType::class, [
+            'label' => 'Select csv',
+            'mapped' => false,
+        ]);
+
+        return $this;
     }
 }

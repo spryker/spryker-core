@@ -19,9 +19,8 @@ class EditController extends AbstractController
 {
     public const PARAM_ID_PRODUCT_LIST = 'id-product-list';
     protected const PARAM_REDIRECT_URL = 'redirect-url';
-    /**
-     * @see \Spryker\Zed\ProductListGui\Communication\Controller\IndexController::indexAction()
-     */
+
+    /** @see \Spryker\Zed\ProductListGui\Communication\Controller\IndexController::indexAction() */
     protected const URL_LIST = '/product-list-gui';
     protected const MESSAGE_PRODUCT_LIST_UPDATE_ERROR = 'Product list can not be update';
     protected const MESSAGE_PRODUCT_LIST_UPDATE_SUCCESS = 'Product list with id "%d" successfully updated';
