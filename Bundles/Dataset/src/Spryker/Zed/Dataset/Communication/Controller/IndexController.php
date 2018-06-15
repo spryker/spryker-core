@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Dataset\Communication\Controller;
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @method \Spryker\Zed\Dataset\Business\DatasetFacadeInterface getFacade()
@@ -18,7 +19,7 @@ class IndexController extends AbstractController
     /**
      * @return array
      */
-    public function indexAction()
+    public function indexAction(): array
     {
         $fileTable = $this->getFactory()
             ->createDatasetTable();
@@ -31,7 +32,7 @@ class IndexController extends AbstractController
     /**
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function tableAction()
+    public function tableAction(): JsonResponse
     {
         $table = $this->getFactory()
             ->createDatasetTable();

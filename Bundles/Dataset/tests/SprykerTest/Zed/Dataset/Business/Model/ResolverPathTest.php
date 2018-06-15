@@ -32,7 +32,7 @@ class ResolverPathTest extends Unit
     /**
      * @return void
      */
-    public function testGetFilenameByDatasetNameWillReturnDefaultFilename()
+    public function testGetFilenameByDatasetNameWillReturnDefaultFilename(): void
     {
         $this->assertEquals(
             $this->tester->getLocator()->dataset()->facade()->getFilenameByDatasetName(
@@ -57,7 +57,7 @@ class ResolverPathTest extends Unit
     /**
      * @return void
      */
-    public function testGetFilenameByDatasetNameWillReturnValidFilename()
+    public function testGetFilenameByDatasetNameWillReturnValidFilename(): void
     {
         $this->assertEquals(
             $this->tester->getLocator()->dataset()->facade()->getFilenameByDatasetName(
@@ -90,7 +90,7 @@ class ResolverPathTest extends Unit
      *
      * @return \Generated\Shared\Transfer\DatasetFilenameTransfer
      */
-    protected function buildDatasetFilenameTransfer($filename)
+    protected function buildDatasetFilenameTransfer(string $filename): DatasetFilenameTransfer
     {
         $datasetFilenameTransfer = new DatasetFilenameTransfer();
         $datasetFilenameTransfer->setFilename($filename);

@@ -46,7 +46,7 @@ class DatasetFormDataProvider
      *
      * @return \Generated\Shared\Transfer\DatasetTransfer
      */
-    public function getData($idDataset = null)
+    public function getData(?int $idDataset = null): DatasetTransfer
     {
         if ($idDataset === null) {
             return $this->createSpyDatasetTransfer();
@@ -57,11 +57,11 @@ class DatasetFormDataProvider
     }
 
     /**
-     * @param int $idDataset
+     * @param int|null $idDataset
      *
      * @return array
      */
-    public function getOptions($idDataset): array
+    public function getOptions(?int $idDataset = null): array
     {
         return [
             DatasetForm::OPTION_AVAILABLE_LOCALES => $this->getAvailableLocales(),

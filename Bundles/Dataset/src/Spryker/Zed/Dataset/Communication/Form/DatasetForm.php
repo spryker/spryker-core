@@ -47,7 +47,7 @@ class DatasetForm extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->setByReference(false);
         $this
@@ -62,7 +62,7 @@ class DatasetForm extends AbstractType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired(static::OPTION_AVAILABLE_LOCALES);
         $resolver->setRequired(static::DATASET_HAS_DATA);
@@ -107,7 +107,7 @@ class DatasetForm extends AbstractType
         $constraints = $this->getFieldDefaultConstraints();
 
         $constraints[] = new Callback([
-            'callback' => function ($name, ExecutionContextInterface $contextInterface) {
+            'callback' => function ($name, ExecutionContextInterface $contextInterface): void {
                 if ($this->getFacade()->existsDatasetByName((new DatasetTransfer())->setName($name))) {
                     $contextInterface->addViolation('The name already exists.');
                 }

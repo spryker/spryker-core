@@ -27,7 +27,7 @@ class DatasetListCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(DatasetCommunicationTester $i)
+    public function breadcrumbIsVisible(DatasetCommunicationTester $i): void
     {
         $i->amOnPage(DatasetListPage::URL);
         $i->seeBreadcrumbNavigation('Dashboard / Dataset');

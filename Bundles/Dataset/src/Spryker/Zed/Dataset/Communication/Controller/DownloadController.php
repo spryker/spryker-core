@@ -31,7 +31,7 @@ class DownloadController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): Response
     {
         $idDataset = $this->castId($request->query->get(static::URL_PARAM_ID_DATASET));
         $datasetTransfer = $this->getFacade()->getDatasetModelById((new DatasetTransfer())->setIdDataset($idDataset));
@@ -44,7 +44,7 @@ class DownloadController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected function createResponse(DatasetTransfer $datasetTransfer)
+    protected function createResponse(DatasetTransfer $datasetTransfer): Response
     {
         $content = $this->getFacade()->getCsvByDataset($datasetTransfer);
         $response = new Response($content);

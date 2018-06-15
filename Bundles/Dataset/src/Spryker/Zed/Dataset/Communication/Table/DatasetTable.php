@@ -54,7 +54,7 @@ class DatasetTable extends AbstractTable
      *
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
-    protected function configure(TableConfiguration $config)
+    protected function configure(TableConfiguration $config): TableConfiguration
     {
         $this->setHeaders($config);
         $this->setSortableFields($config);
@@ -72,7 +72,7 @@ class DatasetTable extends AbstractTable
      *
      * @return array
      */
-    protected function prepareData(TableConfiguration $config)
+    protected function prepareData(TableConfiguration $config): array
     {
         $queryResults = $this->runQuery($this->datasetQuery, $config);
         $results = [];
@@ -88,7 +88,7 @@ class DatasetTable extends AbstractTable
      *
      * @return array
      */
-    protected function mapResults(array $item)
+    protected function mapResults(array $item): array
     {
         $actions = implode(' ', $this->buildLinks($item));
 
@@ -105,7 +105,7 @@ class DatasetTable extends AbstractTable
      *
      * @return void
      */
-    protected function setHeaders(TableConfiguration $config)
+    protected function setHeaders(TableConfiguration $config): void
     {
         $config->setHeader([
             static::COL_ID_DATASET => '#',
@@ -120,7 +120,7 @@ class DatasetTable extends AbstractTable
      *
      * @return void
      */
-    protected function setSortableFields(TableConfiguration $config)
+    protected function setSortableFields(TableConfiguration $config): void
     {
         $config->setSortable([
             static::COL_ID_DATASET,
@@ -134,7 +134,7 @@ class DatasetTable extends AbstractTable
      *
      * @return void
      */
-    protected function setSearchableFields(TableConfiguration $config)
+    protected function setSearchableFields(TableConfiguration $config): void
     {
         $config->setSearchable([
             static::COL_ID_DATASET,
@@ -147,7 +147,7 @@ class DatasetTable extends AbstractTable
      *
      * @return void
      */
-    protected function setRawColumns(TableConfiguration $config)
+    protected function setRawColumns(TableConfiguration $config): void
     {
         $config->setRawColumns([
             static::COL_ACTIONS,
@@ -159,7 +159,7 @@ class DatasetTable extends AbstractTable
      *
      * @return void
      */
-    protected function setDefaultSortField(TableConfiguration $config)
+    protected function setDefaultSortField(TableConfiguration $config): void
     {
         $config->setDefaultSortField(static::COL_ID_DATASET, static::SORT_DESC);
     }
@@ -169,7 +169,7 @@ class DatasetTable extends AbstractTable
      *
      * @return array
      */
-    protected function buildLinks($item)
+    protected function buildLinks(array $item): array
     {
         $buttons = [];
         $buttons[] = $this->generateViewButton(
@@ -200,7 +200,7 @@ class DatasetTable extends AbstractTable
      *
      * @return string
      */
-    protected function generateStateChangeButton(array $item)
+    protected function generateStateChangeButton(array $item): string
     {
         if ($item[static::COL_IS_ACTIVE]) {
             return $this->generateRemoveButton(
@@ -224,7 +224,7 @@ class DatasetTable extends AbstractTable
      *
      * @return string
      */
-    protected function generateStatusLabels(array $item)
+    protected function generateStatusLabels(array $item): string
     {
         if ($item[static::COL_IS_ACTIVE]) {
             return '<span class="label label-info">Active</span>';

@@ -18,7 +18,7 @@ use Spryker\Zed\Dataset\Business\Saver\DatasetSaverInterface;
 use Spryker\Zed\Dataset\Business\Writer\Writer;
 use Spryker\Zed\Dataset\Business\Writer\WriterInterface;
 use Spryker\Zed\Dataset\DatasetDependencyProvider;
-use Spryker\Zed\Dataset\Dependency\Service\DatasetToCsvBridge;
+use Spryker\Zed\Dataset\Dependency\Service\DatasetToCsvBridgeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -40,7 +40,7 @@ class DatasetBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Dataset\Business\Finder\DatasetSaverInterface
+     * @return \Spryker\Zed\Dataset\Business\Saver\DatasetSaverInterface
      */
     public function createDatasetSaver(): DatasetSaverInterface
     {
@@ -51,7 +51,7 @@ class DatasetBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Dataset\Business\Finder\ReaderInterface
+     * @return \Spryker\Zed\Dataset\Business\Reader\ReaderInterface
      */
     public function createReader(): ReaderInterface
     {
@@ -59,7 +59,7 @@ class DatasetBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Dataset\Business\Finder\WriterInterface
+     * @return \Spryker\Zed\Dataset\Business\Writer\WriterInterface
      */
     public function createWriter(): WriterInterface
     {
@@ -67,7 +67,7 @@ class DatasetBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Dataset\Business\Finder\ResolverPathInterface
+     * @return \Spryker\Zed\Dataset\Business\Resolver\ResolverPathInterface
      */
     public function createResolverPath(): ResolverPathInterface
     {
@@ -75,9 +75,9 @@ class DatasetBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Dataset\Dependency\Service\DatasetToCsvBridge
+     * @return \Spryker\Zed\Dataset\Dependency\Service\DatasetToCsvBridgeInterface
      */
-    public function getDatasetToCsvBridge(): DatasetToCsvBridge
+    public function getDatasetToCsvBridge(): DatasetToCsvBridgeInterface
     {
         return $this->getProvidedDependency(DatasetDependencyProvider::DATASET_TO_CSV_BRIDGE);
     }

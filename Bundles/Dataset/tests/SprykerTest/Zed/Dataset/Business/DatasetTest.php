@@ -69,7 +69,7 @@ class DatasetTest extends Unit
     /**
      * @return void
      */
-    public function testCsvByDataset()
+    public function testCsvByDataset(): void
     {
         $datasetEntityTransfer = $this->tester->createDatasetTransfer();
         $this->tester->getLocator()->dataset()->facade()->save($datasetEntityTransfer, $this->tester->createDatasetFilePathTransfer());
@@ -84,7 +84,7 @@ class DatasetTest extends Unit
     /**
      * @return void
      */
-    public function testExistingDatasetById()
+    public function testExistingDatasetById(): void
     {
         $datasetEntityTransfer = $this->tester->createDatasetTransfer();
         $datasetTransfer = $this->saveDatasetByTransfer($datasetEntityTransfer);
@@ -98,7 +98,7 @@ class DatasetTest extends Unit
     /**
      * @return void
      */
-    public function testExistingDatasetByName()
+    public function testExistingDatasetByName(): void
     {
         $datasetEntityTransfer = $this->tester->createDatasetTransfer();
         $datasetTransfer = $this->saveDatasetByTransfer($datasetEntityTransfer);
@@ -111,7 +111,7 @@ class DatasetTest extends Unit
     /**
      * @return void
      */
-    public function testDeleteDataset()
+    public function testDeleteDataset(): void
     {
         $datasetEntityTransfer = $this->tester->createDatasetTransfer();
         $datasetTransfer = $this->saveDatasetByTransfer($datasetEntityTransfer);
@@ -126,7 +126,7 @@ class DatasetTest extends Unit
     /**
      * @return void
      */
-    public function testActivateDataset()
+    public function testActivateDataset(): void
     {
         $datasetEntityTransfer = $this->tester->createDatasetTransfer();
         $datasetTransfer = $this->saveDatasetByTransfer($datasetEntityTransfer);
@@ -139,7 +139,7 @@ class DatasetTest extends Unit
     /**
      * @return void
      */
-    public function testGetFilenameByDatasetNameReturnsValidTransfer()
+    public function testGetFilenameByDatasetNameReturnsValidTransfer(): void
     {
         $datasetFilenameTransfer = $this->tester->getLocator()->dataset()->facade()->getFilenameByDatasetName(
             (new DatasetFilenameTransfer())->setFilename('some name')
@@ -154,7 +154,7 @@ class DatasetTest extends Unit
      *
      * @return \Generated\Shared\Transfer\DatasetTransfer
      */
-    protected function saveDatasetByTransfer(DatasetTransfer $datasetEntityTransfer)
+    protected function saveDatasetByTransfer(DatasetTransfer $datasetEntityTransfer): DatasetTransfer
     {
         $this->tester->getLocator()->dataset()->facade()->saveDataset($datasetEntityTransfer);
 

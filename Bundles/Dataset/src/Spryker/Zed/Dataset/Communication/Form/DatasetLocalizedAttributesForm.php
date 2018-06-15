@@ -30,7 +30,7 @@ class DatasetLocalizedAttributesForm extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addIdDatasetLocalizedAttributes($builder)
             ->addTitleField($builder)
@@ -43,7 +43,7 @@ class DatasetLocalizedAttributesForm extends AbstractType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired(DatasetForm::OPTION_AVAILABLE_LOCALES);
         $resolver->setDefaults([
