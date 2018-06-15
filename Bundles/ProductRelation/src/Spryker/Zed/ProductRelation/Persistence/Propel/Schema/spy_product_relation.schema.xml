@@ -3,11 +3,15 @@
 
     <table name="spy_product_relation_type" idMethod="native" allowPkInsert="true" identifierQuoting="true">
         <column name="id_product_relation_type" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="key" required="true" type="VARCHAR"/>
+        <column name="key" required="false" type="VARCHAR"/>
 
         <behavior name="timestampable"/>
 
         <id-method-parameter value="spy_product_relation_type_pk_seq"/>
+
+        <unique name="spy_product_relation_type-unique-key">
+            <unique-column name="key"/>
+        </unique>
     </table>
 
     <table name="spy_product_relation" idMethod="native" allowPkInsert="true" identifierQuoting="true">

@@ -53,6 +53,10 @@
 
         <id-method-parameter value="id_product_measurement_sales_unit_pk_seq"/>
 
+        <unique name="spy_product_measurement_sales_unit-unique-key">
+            <unique-column name="key"/>
+        </unique>
+
         <foreign-key name="spy_product_measurement_sales_unit-fk_product" foreignTable="spy_product" phpName="Product">
             <reference local="fk_product" foreign="id_product"/>
         </foreign-key>
