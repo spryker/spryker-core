@@ -122,7 +122,7 @@ class Reader implements ReaderInterface
      *
      * @return \Generated\Shared\Transfer\DatasetColumnTransfer
      */
-    protected function getDatasetColumnTransfer($column): DatasetColumnTransfer
+    protected function getDatasetColumnTransfer(string $column): DatasetColumnTransfer
     {
         $datasetColumnTransfer = new DatasetColumnTransfer();
         $datasetColumnTransfer->setTitle($column);
@@ -135,7 +135,7 @@ class Reader implements ReaderInterface
      *
      * @return \Generated\Shared\Transfer\DatasetRowTransfer
      */
-    protected function getDatasetRowTransfer($row): DatasetRowTransfer
+    protected function getDatasetRowTransfer(string $row): DatasetRowTransfer
     {
         $datasetRowTransfer = new DatasetRowTransfer();
         $datasetRowTransfer->setTitle($row);
@@ -153,7 +153,7 @@ class Reader implements ReaderInterface
     protected function getDatasetRowColumnValueTransfer(
         DatasetColumnTransfer $datasetColumnValueTransfer,
         DatasetRowTransfer $datasetRowValueTransfer,
-        $value
+        string $value
     ): DatasetRowColumnValueTransfer {
         $datasetRowColumnValueTransfer = new DatasetRowColumnValueTransfer();
         $datasetRowColumnValueTransfer->setDatasetColumn($datasetColumnValueTransfer);

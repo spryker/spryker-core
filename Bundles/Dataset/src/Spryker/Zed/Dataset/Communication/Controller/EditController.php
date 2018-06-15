@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Dataset\Communication\Controller;
 
 use Generated\Shared\Transfer\DatasetFilePathTransfer;
+use Generated\Shared\Transfer\DatasetTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Dataset\Business\Exception\DatasetParseException;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
@@ -57,11 +58,11 @@ class EditController extends AbstractController
 
     /**
      * @param \Generated\Shared\Transfer\DatasetTransfer $datasetTransfer
-     * @param string $file
+     * @param \Symfony\Component\HttpFoundation\File\UploadedFile|null $file
      *
      * @return void
      */
-    protected function saveDataset($datasetTransfer, $file)
+    protected function saveDataset(DatasetTransfer $datasetTransfer, ?UploadedFile $file = null): void
     {
         if ($file instanceof UploadedFile) {
             $filePathTransfer = new DatasetFilePathTransfer();

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Dataset\Persistence\Mapper;
 
+use Generated\Shared\Transfer\DatasetTransfer;
 use Orm\Zed\Dataset\Persistence\SpyDataset;
 
 interface DatasetMapperInterface
@@ -16,5 +17,5 @@ interface DatasetMapperInterface
      *
      * @return \Generated\Shared\Transfer\DatasetTransfer
      */
-    public function getResponseDatasetTransfer(SpyDataset $datasetEntity);
+    public function getResponseDatasetTransfer(SpyDataset $datasetEntity): DatasetTransfer;
 }

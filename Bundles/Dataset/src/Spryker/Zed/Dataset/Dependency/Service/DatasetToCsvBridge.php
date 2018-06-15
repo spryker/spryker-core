@@ -18,7 +18,7 @@ class DatasetToCsvBridge implements DatasetToCsvBridgeInterface
      *
      * @return \League\Csv\Reader
      */
-    public function createCsvReader($path, $mode): Reader
+    public function createCsvReader(string $path, string $mode): Reader
     {
         return Reader::createFromPath($path, $mode);
     }

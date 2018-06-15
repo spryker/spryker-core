@@ -27,7 +27,7 @@ class DatasetAddCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(DatasetCommunicationTester $i)
+    public function breadcrumbIsVisible(DatasetCommunicationTester $i): void
     {
         $i->amOnPage(DatasetAddDatasetPage::URL);
         $i->seeBreadcrumbNavigation('Dashboard / Dataset / Add dashboard');
