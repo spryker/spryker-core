@@ -37,9 +37,8 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
     public function createFileSaver()
     {
         return new FileSaver(
-            $this->getQueryContainer(),
+            $this->getEntityManager(),
             $this->createFileVersion(),
-            $this->createFileLoader(),
             $this->createFileContent(),
             $this->createLocalizedAttributesSaver(),
             $this->getConfig()
@@ -99,7 +98,7 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
      */
     public function createLocalizedAttributesSaver()
     {
-        return new FileLocalizedAttributesSaver();
+        return new FileLocalizedAttributesSaver($this->getEntityManager());
     }
 
     /**

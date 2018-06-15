@@ -62,7 +62,7 @@ class FileReader implements FileReaderInterface
             return new FileManagerDataTransfer();
         }
 
-        return $this->createResponseTransfer($fileInfo);
+        return $this->createResponseTransfer($fileInfo, $idFileInfo);
     }
 
     /**
@@ -83,20 +83,42 @@ class FileReader implements FileReaderInterface
 
     /**
      * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
+     * @param int|null $idFileInfo
      *
      * @return \Generated\Shared\Transfer\FileManagerDataTransfer
      */
-    protected function createResponseTransfer(FileTransfer $fileTransfer)
+    protected function createResponseTransfer(FileTransfer $fileTransfer, ?int $idFileInfo = null)
     {
         $fileManagerDataTransfer = new FileManagerDataTransfer();
         $fileManagerDataTransfer->setFile($fileTransfer);
 
-        $fileInfoTransfer = $fileTransfer->getFileInfo()[0];
+        if (!$idFileInfo) {
+            return $fileManagerDataTransfer;
+        }
+
+        $fileInfoTransfer = $this->getRequestedFileInfo($fileTransfer, $idFileInfo);
         $fileManagerDataTransfer->setFileInfo($fileInfoTransfer);
         $fileManagerDataTransfer->setContent(
             $this->fileContent->read($fileInfoTransfer->getStorageFileName())
         );
 
         return $fileManagerDataTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
+     * @param int $idFileInfo
+     *
+     * @return \Generated\Shared\Transfer\FileInfoTransfer|null
+     */
+    protected function getRequestedFileInfo(FileTransfer $fileTransfer, int $idFileInfo)
+    {
+        foreach ($fileTransfer->getFileInfo() as $fileInfoTransfer) {
+            if ($fileInfoTransfer->getIdFileInfo() === $idFileInfo) {
+                return $fileInfoTransfer;
+            }
+        }
+
+        return null;
     }
 }

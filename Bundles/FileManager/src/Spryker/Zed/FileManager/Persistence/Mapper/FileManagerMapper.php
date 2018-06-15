@@ -7,11 +7,15 @@
 
 namespace Spryker\Zed\FileManager\Persistence\Mapper;
 
+use ArrayObject;
 use Generated\Shared\Transfer\FileInfoTransfer;
 use Generated\Shared\Transfer\FileLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\FileTransfer;
 use Generated\Shared\Transfer\MimeTypeTransfer;
+use Generated\Shared\Transfer\SpyFileEntityTransfer;
+use Generated\Shared\Transfer\SpyFileInfoEntityTransfer;
 use Orm\Zed\FileManager\Persistence\SpyFile;
+use Orm\Zed\FileManager\Persistence\SpyFileInfo;
 use Orm\Zed\FileManager\Persistence\SpyFileLocalizedAttributes;
 use Orm\Zed\FileManager\Persistence\SpyMimeType;
 
@@ -30,6 +34,72 @@ class FileManagerMapper implements FileManagerMapperInterface
         $this->addSpyFileLocalizedAttributessTransfers($file, $fileTransfer);
 
         return $fileTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
+     * @param \Orm\Zed\FileManager\Persistence\SpyFile $file
+     *
+     * @return \Orm\Zed\FileManager\Persistence\SpyFile
+     */
+    public function mapFileTransferToEntity(FileTransfer $fileTransfer, SpyFile $file)
+    {
+        $file->fromArray($fileTransfer->toArray());
+        $fileInfoTransferCollection = $fileTransfer->getFileInfo();
+
+        if (!empty($fileInfoTransferCollection)) {
+            foreach ($fileInfoTransferCollection as $fileInfoTransfer) {
+                $fileInfo = new SpyFileInfo();
+                $fileInfo->fromArray($fileInfoTransfer->toArray());
+                $file->addSpyFileInfo($fileInfo);
+            }
+        }
+
+        return $file;
+    }
+
+    /**
+     * @param \Orm\Zed\FileManager\Persistence\SpyFileInfo $fileInfo
+     * @param \Generated\Shared\Transfer\SpyFileInfoEntityTransfer $fileInfoEntityTransfer
+     *
+     * @return \Generated\Shared\Transfer\SpyFileInfoEntityTransfer
+     */
+    public function mapFileInfoEntityToTransfer(SpyFileInfo $fileInfo, SpyFileInfoEntityTransfer $fileInfoEntityTransfer)
+    {
+        $fileInfoEntityTransfer->fromArray($fileInfo->toArray(), true);
+        $fileInfoEntityTransfer->setFile(
+            (new SpyFileEntityTransfer())->fromArray($fileInfo->getFile()->toArray())
+        );
+
+        return $fileInfoEntityTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FileInfoTransfer $fileInfoTransfer
+     * @param \Orm\Zed\FileManager\Persistence\SpyFileInfo $fileInfo
+     *
+     * @return \Orm\Zed\FileManager\Persistence\SpyFileInfo
+     */
+    public function mapFileInfoTransferToEntity(FileInfoTransfer $fileInfoTransfer, SpyFileInfo $fileInfo)
+    {
+        $fileInfo->fromArray($fileInfoTransfer->toArray());
+
+        return $fileInfo;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FileLocalizedAttributesTransfer $fileLocalizedAttributesTransfer
+     * @param \Orm\Zed\FileManager\Persistence\SpyFileLocalizedAttributes $fileLocalizedAttributes
+     *
+     * @return \Orm\Zed\FileManager\Persistence\SpyFileLocalizedAttributes
+     */
+    public function mapFileLocalizedAttributesTransferToEntity(FileLocalizedAttributesTransfer $fileLocalizedAttributesTransfer, SpyFileLocalizedAttributes $fileLocalizedAttributes)
+    {
+        $fileLocalizedAttributes->fromArray(
+            $fileLocalizedAttributesTransfer->toArray()
+        );
+
+        return $fileLocalizedAttributes;
     }
 
     /**
@@ -94,6 +164,7 @@ class FileManagerMapper implements FileManagerMapperInterface
      */
     protected function addSpyFileLocalizedAttributessTransfers(SpyFile $file, FileTransfer $fileTransfer)
     {
+        $fileTransfer->setLocalizedAttributes(new ArrayObject());
         $attributesCollection = $file->getSpyFileLocalizedAttributess();
 
         foreach ($attributesCollection as $attribute) {

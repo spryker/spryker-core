@@ -9,81 +9,49 @@ namespace Spryker\Zed\FileManager\Business\Model;
 
 use Generated\Shared\Transfer\FileLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\FileManagerDataTransfer;
-use Orm\Zed\FileManager\Persistence\SpyFile;
-use Orm\Zed\FileManager\Persistence\SpyFileLocalizedAttributes;
+use Spryker\Zed\FileManager\Persistence\FileManagerEntityManagerInterface;
 
 class FileLocalizedAttributesSaver implements FileLocalizedAttributesSaverInterface
 {
     /**
-     * @param \Orm\Zed\FileManager\Persistence\SpyFile $fileEntity
+     * @var \Spryker\Zed\FileManager\Persistence\FileManagerEntityManagerInterface
+     */
+    protected $entityManager;
+
+    /**
+     * @param \Spryker\Zed\FileManager\Persistence\FileManagerEntityManagerInterface $entityManager
+     */
+    public function __construct(FileManagerEntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\FileManagerDataTransfer $fileManagerDataTransfer
      *
      * @return void
      */
-    public function saveLocalizedFileAttributes(SpyFile $fileEntity, FileManagerDataTransfer $fileManagerDataTransfer)
+    public function save(FileManagerDataTransfer $fileManagerDataTransfer)
     {
-        $localizedAttributesToSave = $fileManagerDataTransfer->getFileLocalizedAttributes();
-        $existingFileLocalizedAttributes = $fileEntity->getSpyFileLocalizedAttributess()->toKeyIndex('fkLocale');
+        $fkFile = $fileManagerDataTransfer->getFile()->getIdFile();
 
-        if (empty($existingFileLocalizedAttributes)) {
-            $this->createLocalizedAttributes($fileEntity, $localizedAttributesToSave);
-            return;
-        }
-
-        $this->updateOrCreateNew($localizedAttributesToSave, $existingFileLocalizedAttributes, $fileEntity);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FileLocalizedAttributesTransfer[] $localizedAttributes
-     * @param array $existingFileLocalizedAttributes
-     * @param \Orm\Zed\FileManager\Persistence\SpyFile $file
-     *
-     * @return void
-     */
-    protected function updateOrCreateNew($localizedAttributes, $existingFileLocalizedAttributes, SpyFile $file)
-    {
-        foreach ($localizedAttributes as $localizedAttribute) {
-            $localizedAttribute->requireLocale();
-            $idLocale = $localizedAttribute->getLocale()->getIdLocale();
-
-            if (!empty($existingFileLocalizedAttributes[$idLocale])) {
-                $this->updateLocalizedAttribute($existingFileLocalizedAttributes[$idLocale], $localizedAttribute);
-                continue;
-            }
-
-            $this->createLocalizedAttributes($file, [$localizedAttribute]);
+        foreach ($fileManagerDataTransfer->getFileLocalizedAttributes() as $fileLocalizedAttributesTransfer) {
+            $this->prepareFileLocalizedAttributesTransfer($fileLocalizedAttributesTransfer, $fkFile);
+            $this->entityManager->saveLocalizedFileAttribute($fileLocalizedAttributesTransfer);
         }
     }
 
     /**
-     * @param \Orm\Zed\FileManager\Persistence\SpyFile $file
-     * @param \Generated\Shared\Transfer\FileLocalizedAttributesTransfer[] $localizedAttributes
+     * @param \Generated\Shared\Transfer\FileLocalizedAttributesTransfer $fileLocalizedAttributesTransfer
+     * @param int $fkFile
      *
      * @return void
      */
-    protected function createLocalizedAttributes(SpyFile $file, $localizedAttributes)
+    protected function prepareFileLocalizedAttributesTransfer(FileLocalizedAttributesTransfer $fileLocalizedAttributesTransfer, int $fkFile)
     {
-        foreach ($localizedAttributes as $localizedAttribute) {
-            $spyLocalizedAttribute = new SpyFileLocalizedAttributes();
-            $spyLocalizedAttribute->fromArray($localizedAttribute->toArray());
-            $spyLocalizedAttribute->setFkLocale($localizedAttribute->getLocale()->getIdLocale());
-
-            $file->addSpyFileLocalizedAttributes($spyLocalizedAttribute);
-            $spyLocalizedAttribute->save();
-        }
-
-        $file->save();
-    }
-
-    /**
-     * @param \Orm\Zed\FileManager\Persistence\SpyFileLocalizedAttributes $existingAttribute
-     * @param \Generated\Shared\Transfer\FileLocalizedAttributesTransfer $newAttribute
-     *
-     * @return void
-     */
-    protected function updateLocalizedAttribute(SpyFileLocalizedAttributes $existingAttribute, FileLocalizedAttributesTransfer $newAttribute)
-    {
-        $existingAttribute->fromArray($newAttribute->toArray());
-        $existingAttribute->save();
+        $fileLocalizedAttributesTransfer->setFkFile($fkFile);
+        $fileLocalizedAttributesTransfer->setFkLocale(
+            $fileLocalizedAttributesTransfer->getLocale()->getIdLocale()
+        );
     }
 }

@@ -34,8 +34,7 @@ class FileFormDataProvider
     public function __construct(
         FileManagerGuiToLocaleFacadeInterface $localeFacade,
         FileManagerGuiToFileManagerFacadeInterface $fileManagerFacade
-    )
-    {
+    ) {
         $this->localeFacade = $localeFacade;
         $this->fileManagerFacade = $fileManagerFacade;
     }

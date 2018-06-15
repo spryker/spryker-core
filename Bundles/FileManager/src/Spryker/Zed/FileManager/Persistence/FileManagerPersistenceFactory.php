@@ -49,7 +49,7 @@ class FileManagerPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\FileManager\Persistence\SpyFileLocalizedAttributesQuery
      */
-    public function createFileInfoLocalizedAttributesQuery()
+    public function createFileLocalizedAttributesQuery()
     {
         return SpyFileLocalizedAttributesQuery::create();
     }

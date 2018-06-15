@@ -9,34 +9,33 @@ namespace Spryker\Zed\FileManager\Business\Model;
 
 use Generated\Shared\Transfer\FileManagerDataTransfer;
 use Generated\Shared\Transfer\FileTransfer;
-use Orm\Zed\FileManager\Persistence\SpyFile;
 use Orm\Zed\FileManager\Persistence\SpyFileInfo;
 use Spryker\Shared\FileManager\FileManagerConstants;
 use Spryker\Zed\FileManager\FileManagerConfig;
-use Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
+use Spryker\Zed\FileManager\Persistence\FileManagerEntityManagerInterface;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 class FileSaver implements FileSaverInterface
 {
-    use DatabaseTransactionHandlerTrait;
+    use FileNameResolverTrait, TransactionTrait;
 
     const FILE_NAME_PATTERN = '%u%s%s.%s';
     const DEFAULT_FILENAME = 'file';
 
     /**
-     * @var \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface
+     * @var \Spryker\Zed\FileManager\Persistence\FileManagerEntityManagerInterface
      */
-    protected $queryContainer;
+    protected $entityManager;
+
+    /**
+     * @var \Spryker\Zed\FileManager\Persistence\FileManagerRepositoryInterface
+     */
+    protected $repository;
 
     /**
      * @var \Spryker\Zed\FileManager\Business\Model\FileVersionInterface
      */
     protected $fileVersion;
-
-    /**
-     * @var \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface
-     */
-    protected $fileLoader;
 
     /**
      * @var \Spryker\Zed\FileManager\Business\Model\FileContentInterface
@@ -54,24 +53,21 @@ class FileSaver implements FileSaverInterface
     protected $attributesSaver;
 
     /**
-     * @param \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\FileManager\Persistence\FileManagerEntityManagerInterface $entityManager
      * @param \Spryker\Zed\FileManager\Business\Model\FileVersionInterface $fileVersion
-     * @param \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface $fileLoader
      * @param \Spryker\Zed\FileManager\Business\Model\FileContentInterface $fileContent
      * @param \Spryker\Zed\FileManager\Business\Model\FileLocalizedAttributesSaverInterface $attributesSaver
      * @param \Spryker\Zed\FileManager\FileManagerConfig $config
      */
     public function __construct(
-        FileManagerQueryContainerInterface $queryContainer,
+        FileManagerEntityManagerInterface $entityManager,
         FileVersionInterface $fileVersion,
-        FileLoaderInterface $fileLoader,
         FileContentInterface $fileContent,
         FileLocalizedAttributesSaverInterface $attributesSaver,
         FileManagerConfig $config
     ) {
-        $this->queryContainer = $queryContainer;
+        $this->entityManager = $entityManager;
         $this->fileVersion = $fileVersion;
-        $this->fileLoader = $fileLoader;
         $this->fileContent = $fileContent;
         $this->config = $config;
         $this->attributesSaver = $attributesSaver;
@@ -80,64 +76,90 @@ class FileSaver implements FileSaverInterface
     /**
      * @param \Generated\Shared\Transfer\FileManagerDataTransfer $fileManagerDataTransfer
      *
-     * @return int
+     * @return \Generated\Shared\Transfer\FileManagerDataTransfer
      */
     public function save(FileManagerDataTransfer $fileManagerDataTransfer)
     {
-        if ($this->fileExists($fileManagerDataTransfer)) {
-            return $this->update($fileManagerDataTransfer);
+        return $this->getTransactionHandler()->handleTransaction(function () use ($fileManagerDataTransfer) {
+            return $this->executeSaveTransaction($fileManagerDataTransfer);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FileManagerDataTransfer $fileManagerDataTransfer
+     *
+     * @return \Generated\Shared\Transfer\FileManagerDataTransfer
+     */
+    protected function executeSaveTransaction(FileManagerDataTransfer $fileManagerDataTransfer)
+    {
+        $this->saveFile($fileManagerDataTransfer);
+        $this->saveFileInfo($fileManagerDataTransfer);
+
+        $this->attributesSaver->save($fileManagerDataTransfer);
+        $this->saveContent($fileManagerDataTransfer);
+
+        return $fileManagerDataTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FileManagerDataTransfer $fileManagerDataTransfer
+     *
+     * @return void
+     */
+    protected function saveFile(FileManagerDataTransfer $fileManagerDataTransfer)
+    {
+        $this->prepareFileTransfer($fileManagerDataTransfer->getFile());
+        $fileTransfer = $this->entityManager->saveFile($fileManagerDataTransfer->getFile());
+        $fileManagerDataTransfer->setFile($fileTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FileManagerDataTransfer $fileManagerDataTransfer
+     *
+     * @return void
+     */
+    protected function saveFileInfo(FileManagerDataTransfer $fileManagerDataTransfer)
+    {
+        if ($fileManagerDataTransfer->getContent() === null) {
+            return;
         }
 
-        return $this->create($fileManagerDataTransfer);
+        $this->prepareFileInfoTransfer($fileManagerDataTransfer);
+        $fileInfoTransfer = $this->entityManager->saveFileInfo($fileManagerDataTransfer->getFileInfo());
+        $fileManagerDataTransfer->setFileInfo($fileInfoTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
+     *
+     * @return void
+     */
+    protected function prepareFileTransfer(FileTransfer $fileTransfer)
+    {
+        $fileTransfer->setFileName(
+            $this->sanitizeFileName($fileTransfer->getFileName())
+        );
     }
 
     /**
      * @param \Generated\Shared\Transfer\FileManagerDataTransfer $fileManagerDataTransfer
      *
-     * @return int
+     * @return void
      */
-    protected function update(FileManagerDataTransfer $fileManagerDataTransfer)
+    protected function prepareFileInfoTransfer(FileManagerDataTransfer $fileManagerDataTransfer)
     {
-        $file = $this->fileLoader->getFile($fileManagerDataTransfer->getFile()->getIdFile());
+        $fileTransfer = $fileManagerDataTransfer->getFile();
+        $fileInfoTransfer = $fileManagerDataTransfer->getFileInfo();
 
-        return $this->saveFile($file, $fileManagerDataTransfer);
-    }
+        $nextVersion = $this->fileVersion->getNextVersionNumber($fileInfoTransfer->getFkFile());
+        $nextVersionName = $this->fileVersion->getNextVersionName($nextVersion);
 
-    /**
-     * @param \Generated\Shared\Transfer\FileManagerDataTransfer $fileManagerDataTransfer
-     *
-     * @return int
-     */
-    protected function create(FileManagerDataTransfer $fileManagerDataTransfer)
-    {
-        $file = new SpyFile();
-
-        return $this->saveFile($file, $fileManagerDataTransfer);
-    }
-
-    /**
-     * @param \Orm\Zed\FileManager\Persistence\SpyFile $file
-     * @param \Generated\Shared\Transfer\FileManagerDataTransfer $fileManagerDataTransfer
-     *
-     * @return int
-     */
-    protected function saveFile(SpyFile $file, FileManagerDataTransfer $fileManagerDataTransfer)
-    {
-        return $this->handleDatabaseTransaction(
-            function () use ($file, $fileManagerDataTransfer) {
-                $file->fromArray($fileManagerDataTransfer->getFile()->toArray());
-                $file->setFileName($this->sanitizeFileName($file->getFileName()));
-
-                $fileInfo = $this->createFileInfo($fileManagerDataTransfer);
-                $this->addFileInfoToFile($file, $fileInfo);
-
-                $savedRowsCount = $file->save();
-                $this->attributesSaver->saveLocalizedFileAttributes($file, $fileManagerDataTransfer);
-                $this->saveContent($fileManagerDataTransfer, $file, $fileInfo);
-
-                return $savedRowsCount;
-            },
-            $this->queryContainer->getConnection()
+        $fileInfoTransfer->setFkFile($fileTransfer->getIdFile());
+        $fileInfoTransfer->setVersion($nextVersion);
+        $fileInfoTransfer->setVersionName($nextVersionName);
+        $fileInfoTransfer->setStorageName($this->config->getStorageName());
+        $fileInfoTransfer->setStorageFileName(
+            $this->buildFilename($fileInfoTransfer, $fileTransfer->getFkFileDirectory())
         );
     }
 
@@ -161,33 +183,21 @@ class FileSaver implements FileSaverInterface
     }
 
     /**
-     * @param \Orm\Zed\FileManager\Persistence\SpyFile $file
-     * @param \Orm\Zed\FileManager\Persistence\SpyFileInfo|null $fileInfo
-     *
-     * @return void
-     */
-    protected function addFileInfoToFile(SpyFile $file, ?SpyFileInfo $fileInfo = null)
-    {
-        if ($fileInfo !== null) {
-            $file->addSpyFileInfo($fileInfo);
-        }
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\FileManagerDataTransfer $fileManagerDataTransfer
-     * @param \Orm\Zed\FileManager\Persistence\SpyFile $file
-     * @param \Orm\Zed\FileManager\Persistence\SpyFileInfo|null $fileInfo
      *
      * @return void
      */
-    protected function saveContent(FileManagerDataTransfer $fileManagerDataTransfer, SpyFile $file, ?SpyFileInfo $fileInfo = null)
+    protected function saveContent(FileManagerDataTransfer $fileManagerDataTransfer)
     {
-        if ($fileManagerDataTransfer->getContent() !== null || $fileInfo !== null) {
-            $fileTransfer = new FileTransfer();
-            $fileTransfer->setFileName($this->fileLoader->buildFilename($fileInfo));
+        if ($fileManagerDataTransfer->getContent() !== null) {
+            $fileTransfer = $fileManagerDataTransfer->getFile();
+            $fileInfoTransfer = $fileManagerDataTransfer->getFileInfo();
+
             $fileTransfer->setFileContent($fileManagerDataTransfer->getContent());
+            $fileTransfer->setFileName(
+                $fileManagerDataTransfer->getFileInfo()->getStorageFileName()
+            );
             $this->fileContent->save($fileTransfer);
-            $this->addStorageInfo($fileInfo, $fileTransfer->getFileName());
         }
     }
 
@@ -206,29 +216,6 @@ class FileSaver implements FileSaverInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\FileManagerDataTransfer $fileManagerDataTransfer
-     *
-     * @return \Orm\Zed\FileManager\Persistence\SpyFileInfo
-     */
-    protected function createFileInfo(FileManagerDataTransfer $fileManagerDataTransfer)
-    {
-        if ($fileManagerDataTransfer->getContent() === null) {
-            return null;
-        }
-
-        $fileInfoTransfer = $fileManagerDataTransfer->getFileInfo();
-        $fileInfo = new SpyFileInfo();
-        $fileInfo->fromArray($fileInfoTransfer->toArray());
-
-        $nextVersion = $this->fileVersion->getNextVersionNumber($fileInfoTransfer->getFkFile());
-        $newVersionName = $this->fileVersion->getNextVersionName($nextVersion);
-        $fileInfo->setVersion($nextVersion);
-        $fileInfo->setVersionName($newVersionName);
-
-        return $fileInfo;
-    }
-
-    /**
      * @param int $idFile
      * @param string $versionName
      * @param string $fileExtension
@@ -244,23 +231,5 @@ class FileSaver implements FileSaverInterface
             $versionName,
             $fileExtension
         );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FileManagerDataTransfer $fileManagerDataTransfer
-     *
-     * @return bool
-     */
-    protected function fileExists(FileManagerDataTransfer $fileManagerDataTransfer)
-    {
-        $idFile = $fileManagerDataTransfer->getFile()->getIdFile();
-
-        if ($idFile === null) {
-            return false;
-        }
-
-        $file = $this->fileLoader->getFile($idFile);
-
-        return $file !== null;
     }
 }

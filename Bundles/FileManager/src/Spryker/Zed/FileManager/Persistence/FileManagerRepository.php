@@ -10,6 +10,7 @@ namespace Spryker\Zed\FileManager\Persistence;
 use Generated\Shared\Transfer\FileTransfer;
 use Generated\Shared\Transfer\MimeTypeCollectionTransfer;
 use Generated\Shared\Transfer\MimeTypeTransfer;
+use Generated\Shared\Transfer\SpyFileInfoEntityTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -81,7 +82,7 @@ class FileManagerRepository extends AbstractRepository implements FileManagerRep
 
         return $this->getFactory()
             ->createFileManagerMapper()
-            ->mapFileInfoEntityToTransfer($fileInfoEntity);
+            ->mapFileInfoEntityToTransfer($fileInfoEntity, new SpyFileInfoEntityTransfer());
     }
 
     /**
