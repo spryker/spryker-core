@@ -30,8 +30,9 @@ class CmsBlockDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Yves\CmsContentWidget\Plugin\CmsTwigContentRendererPluginInterface
      * @throws \RuntimeException
+     *
+     * @return \Spryker\Yves\CmsContentWidget\Plugin\CmsTwigContentRendererPluginInterface
      */
     protected function getCmsBlockTwigContentRendererPlugin()
     {

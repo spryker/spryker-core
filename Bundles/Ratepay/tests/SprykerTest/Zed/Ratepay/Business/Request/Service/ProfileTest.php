@@ -176,8 +176,9 @@ class ProfileTest extends AbstractFacadeTest
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      * @throws \RuntimeException
+     *
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
     protected function getRatepayPaymentMethodTransfer()
     {
@@ -185,8 +186,9 @@ class ProfileTest extends AbstractFacadeTest
     }
 
     /**
-     * @return mixed
      * @throws \RuntimeException
+     *
+     * @return mixed
      */
     protected function getPaymentTransferFromQuote()
     {
