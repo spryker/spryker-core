@@ -9,7 +9,7 @@ namespace SprykerTest\Zed\Dataset\Business\Model;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DatasetFilenameTransfer;
-use Spryker\Zed\Dataset\Business\Model\ResolverPath;
+use Spryker\Zed\Dataset\Business\Resolver\ResolverPath;
 
 /**
  * Auto-generated group annotations
@@ -66,7 +66,7 @@ class ResolverPathTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\Dataset\Business\Model\ResolverPath
+     * @return \Spryker\Zed\Dataset\Business\Resolver\ResolverPath
      */
     protected function createDatasetResolverPath()
     {

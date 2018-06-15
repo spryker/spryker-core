@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Dataset\Business\Model;
+namespace Spryker\Zed\Dataset\Business\Saver;
 
 use Generated\Shared\Transfer\DatasetFilePathTransfer;
 use Generated\Shared\Transfer\DatasetTransfer;
@@ -22,13 +22,13 @@ class DatasetSaver implements DatasetSaverInterface
     protected $entityManager;
 
     /**
-     * @var \Spryker\Zed\Dataset\Business\Model\ReaderInterface
+     * @var \Spryker\Zed\Dataset\Business\Reader\ReaderInterface
      */
     protected $reader;
 
     /**
      * @param \Spryker\Zed\Dataset\Persistence\DatasetEntityManagerInterface $entityManager
-     * @param \Spryker\Zed\Dataset\Business\Model\ReaderInterface $reader
+     * @param \Spryker\Zed\Dataset\Business\Reader\ReaderInterface $reader
      */
     public function __construct(
         DatasetEntityManagerInterface $entityManager,

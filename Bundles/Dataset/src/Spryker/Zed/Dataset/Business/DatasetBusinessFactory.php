@@ -7,16 +7,16 @@
 
 namespace Spryker\Zed\Dataset\Business;
 
-use Spryker\Zed\Dataset\Business\Model\DatasetFinder;
-use Spryker\Zed\Dataset\Business\Model\DatasetFinderInterface;
-use Spryker\Zed\Dataset\Business\Model\DatasetSaver;
-use Spryker\Zed\Dataset\Business\Model\DatasetSaverInterface;
-use Spryker\Zed\Dataset\Business\Model\Reader;
-use Spryker\Zed\Dataset\Business\Model\ReaderInterface;
-use Spryker\Zed\Dataset\Business\Model\ResolverPath;
-use Spryker\Zed\Dataset\Business\Model\ResolverPathInterface;
-use Spryker\Zed\Dataset\Business\Model\Writer;
-use Spryker\Zed\Dataset\Business\Model\WriterInterface;
+use Spryker\Zed\Dataset\Business\Finder\DatasetFinder;
+use Spryker\Zed\Dataset\Business\Finder\DatasetFinderInterface;
+use Spryker\Zed\Dataset\Business\Saver\DatasetSaver;
+use Spryker\Zed\Dataset\Business\Saver\DatasetSaverInterface;
+use Spryker\Zed\Dataset\Business\Reader\Reader;
+use Spryker\Zed\Dataset\Business\Reader\ReaderInterface;
+use Spryker\Zed\Dataset\Business\Resolver\ResolverPath;
+use Spryker\Zed\Dataset\Business\Resolver\ResolverPathInterface;
+use Spryker\Zed\Dataset\Business\Writer\Writer;
+use Spryker\Zed\Dataset\Business\Writer\WriterInterface;
 use Spryker\Zed\Dataset\DatasetDependencyProvider;
 use Spryker\Zed\Dataset\Dependency\Service\DatasetToCsvBridge;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -29,7 +29,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 class DatasetBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\Dataset\Business\Model\DatasetFinderInterface
+     * @return \Spryker\Zed\Dataset\Business\Finder\DatasetFinderInterface
      */
     public function createDatasetFinder(): DatasetFinderInterface
     {
@@ -40,7 +40,7 @@ class DatasetBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Dataset\Business\Model\DatasetSaverInterface
+     * @return \Spryker\Zed\Dataset\Business\Finder\DatasetSaverInterface
      */
     public function createDatasetSaver(): DatasetSaverInterface
     {
@@ -51,7 +51,7 @@ class DatasetBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Dataset\Business\Model\ReaderInterface
+     * @return \Spryker\Zed\Dataset\Business\Finder\ReaderInterface
      */
     public function createReader(): ReaderInterface
     {
@@ -59,7 +59,7 @@ class DatasetBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Dataset\Business\Model\WriterInterface
+     * @return \Spryker\Zed\Dataset\Business\Finder\WriterInterface
      */
     public function createWriter(): WriterInterface
     {
@@ -67,7 +67,7 @@ class DatasetBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Dataset\Business\Model\ResolverPathInterface
+     * @return \Spryker\Zed\Dataset\Business\Finder\ResolverPathInterface
      */
     public function createResolverPath(): ResolverPathInterface
     {
