@@ -37,11 +37,19 @@ interface FileManagerMapperInterface
 
     /**
      * @param \Orm\Zed\FileManager\Persistence\SpyFileInfo $fileInfo
+     * @param \Generated\Shared\Transfer\FileInfoTransfer $fileInfoTransfer
+     *
+     * @return \Generated\Shared\Transfer\FileInfoTransfer
+     */
+    public function mapFileInfoEntityToTransfer(SpyFileInfo $fileInfo, FileInfoTransfer $fileInfoTransfer);
+
+    /**
+     * @param \Orm\Zed\FileManager\Persistence\SpyFileInfo $fileInfo
      * @param \Generated\Shared\Transfer\SpyFileInfoEntityTransfer $fileInfoEntityTransfer
      *
      * @return \Generated\Shared\Transfer\SpyFileInfoEntityTransfer
      */
-    public function mapFileInfoEntityToTransfer(SpyFileInfo $fileInfo, SpyFileInfoEntityTransfer $fileInfoEntityTransfer);
+    public function mapFileInfoEntityToEntityTransfer(SpyFileInfo $fileInfo, SpyFileInfoEntityTransfer $fileInfoEntityTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\FileInfoTransfer $fileInfoTransfer

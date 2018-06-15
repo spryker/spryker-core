@@ -26,6 +26,13 @@ interface FileManagerRepositoryInterface
     public function getFileByIdFileInfo(int $idFileInfo);
 
     /**
+     * @param int $idFileInfo
+     *
+     * @return \Generated\Shared\Transfer\FileInfoTransfer
+     */
+    public function getFileInfo(int $idFileInfo);
+
+    /**
      * @param int $idFile
      *
      * @return \Generated\Shared\Transfer\SpyFileInfoEntityTransfer

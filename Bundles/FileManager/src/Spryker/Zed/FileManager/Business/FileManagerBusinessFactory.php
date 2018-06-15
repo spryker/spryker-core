@@ -74,9 +74,9 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
     public function createFileRemover()
     {
         return new FileRemover(
-            $this->createFileLoader(),
-            $this->createFileContent(),
-            $this->getQueryContainer()
+            $this->getRepository(),
+            $this->getEntityManager(),
+            $this->createFileContent()
         );
     }
 

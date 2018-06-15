@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\FileManager\Persistence;
 
+use Generated\Shared\Transfer\FileInfoTransfer;
 use Generated\Shared\Transfer\FileTransfer;
 use Generated\Shared\Transfer\MimeTypeCollectionTransfer;
 use Generated\Shared\Transfer\MimeTypeTransfer;
@@ -63,6 +64,28 @@ class FileManagerRepository extends AbstractRepository implements FileManagerRep
     }
 
     /**
+     * @param int $idFileInfo
+     *
+     * @return \Generated\Shared\Transfer\FileInfoTransfer
+     */
+    public function getFileInfo(int $idFileInfo)
+    {
+        $query = $this->getFactory()
+            ->createFileInfoQuery()
+            ->filterByIdFileInfo($idFileInfo);
+
+        $fileInfoEntity = $query->findOne();
+
+        if ($fileInfoEntity === null) {
+            return $fileInfoEntity;
+        }
+
+        return $this->getFactory()
+            ->createFileManagerMapper()
+            ->mapFileInfoEntityToTransfer($fileInfoEntity, new FileInfoTransfer());
+    }
+
+    /**
      * @param int $idFile
      *
      * @return \Generated\Shared\Transfer\SpyFileInfoEntityTransfer|null
@@ -82,7 +105,7 @@ class FileManagerRepository extends AbstractRepository implements FileManagerRep
 
         return $this->getFactory()
             ->createFileManagerMapper()
-            ->mapFileInfoEntityToTransfer($fileInfoEntity, new SpyFileInfoEntityTransfer());
+            ->mapFileInfoEntityToEntityTransfer($fileInfoEntity, new SpyFileInfoEntityTransfer());
     }
 
     /**

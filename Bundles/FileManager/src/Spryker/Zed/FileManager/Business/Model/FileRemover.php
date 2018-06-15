@@ -7,17 +7,25 @@
 
 namespace Spryker\Zed\FileManager\Business\Model;
 
-use Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
+use Generated\Shared\Transfer\FileInfoTransfer;
+use Generated\Shared\Transfer\FileTransfer;
+use Spryker\Zed\FileManager\Persistence\FileManagerEntityManagerInterface;
+use Spryker\Zed\FileManager\Persistence\FileManagerRepositoryInterface;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 class FileRemover implements FileRemoverInterface
 {
-    use DatabaseTransactionHandlerTrait;
-    
+    use TransactionTrait;
+
     /**
-     * @var \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface
+     * @var \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface
      */
-    protected $fileLoader;
+    protected $entityManager;
+
+    /**
+     * @var \Spryker\Zed\FileManager\Persistence\FileManagerRepositoryInterface
+     */
+    protected $repository;
 
     /**
      * @var \Spryker\Zed\FileManager\Business\Model\FileContentInterface
@@ -25,20 +33,15 @@ class FileRemover implements FileRemoverInterface
     protected $fileContent;
 
     /**
-     * @var \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface
-     */
-    protected $fileManagerQueryContainer;
-
-    /**
-     * @param \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface $fileLoader
+     * @param \Spryker\Zed\FileManager\Persistence\FileManagerRepositoryInterface $repository
+     * @param \Spryker\Zed\FileManager\Persistence\FileManagerEntityManagerInterface $entityManager
      * @param \Spryker\Zed\FileManager\Business\Model\FileContentInterface $fileContent
-     * @param \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface $fileManagerQueryContainer
      */
-    public function __construct(FileLoaderInterface $fileLoader, FileContentInterface $fileContent, FileManagerQueryContainerInterface $fileManagerQueryContainer)
+    public function __construct(FileManagerRepositoryInterface $repository, FileManagerEntityManagerInterface $entityManager, FileContentInterface $fileContent)
     {
-        $this->fileLoader = $fileLoader;
+        $this->repository = $repository;
+        $this->entityManager = $entityManager;
         $this->fileContent = $fileContent;
-        $this->fileManagerQueryContainer = $fileManagerQueryContainer;
     }
 
     /**
@@ -46,23 +49,13 @@ class FileRemover implements FileRemoverInterface
      *
      * @return bool
      */
-    public function deleteFileInfo($idFileInfo)
+    public function deleteFileInfo(int $idFileInfo)
     {
-        $fileInfo = $this->fileLoader->getFileInfo($idFileInfo);
+        $fileInfoTransfer = (new FileInfoTransfer())->setIdFileInfo($idFileInfo);
 
-        if ($fileInfo === null) {
-            return false;
-        }
-
-        $this->handleDatabaseTransaction(
-            function () use ($fileInfo) {
-                $this->fileContent->delete($fileInfo->getStorageFileName());
-                $fileInfo->delete();
-            },
-            $this->fileManagerQueryContainer->getConnection()
-        );
-
-        return true;
+        return $this->getTransactionHandler()->handleTransaction(function () use ($fileInfoTransfer) {
+            return $this->executeDeleteFileInfoTransaction($fileInfoTransfer);
+        });
     }
 
     /**
@@ -70,26 +63,41 @@ class FileRemover implements FileRemoverInterface
      *
      * @return bool
      */
-    public function delete($idFile)
+    public function delete(int $idFile)
     {
-        $file = $this->fileLoader->getFile($idFile);
+        $fileTransfer = (new FileTransfer())->setIdFile($idFile);
 
-        if ($file === null) {
-            return false;
+        return $this->getTransactionHandler()->handleTransaction(function () use ($fileTransfer) {
+            return $this->executeDeleteFileTransaction($fileTransfer);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
+     *
+     * @return bool
+     */
+    protected function executeDeleteFileTransaction(FileTransfer $fileTransfer)
+    {
+        $fileTransfer = $this->repository->getFileByIdFile($fileTransfer->getIdFile());
+
+        foreach ($fileTransfer->getFileInfo() as $fileInfoTransfer) {
+            $this->fileContent->delete($fileInfoTransfer->getStorageFileName());
+            $this->entityManager->deleteFileInfo($fileInfoTransfer);
         }
 
-        $this->handleDatabaseTransaction(
-            function () use ($file) {
-                foreach ($file->getSpyFileInfos() as $fileInfo) {
-                    $this->fileContent->delete($fileInfo->getStorageFileName());
-                    $fileInfo->delete();
-                }
+        return $this->entityManager->deleteFile($fileTransfer);
+    }
 
-                $file->delete();
-            },
-            $this->fileManagerQueryContainer->getConnection()
-        );
+    /**
+     * @param \Generated\Shared\Transfer\FileInfoTransfer $fileInfoTransfer
+     *
+     * @return bool
+     */
+    protected function executeDeleteFileInfoTransaction(FileInfoTransfer $fileInfoTransfer)
+    {
+        $this->fileContent->delete($fileInfoTransfer->getStorageFileName());
 
-        return true;
+        return $this->entityManager->deleteFileInfo($fileInfoTransfer);
     }
 }

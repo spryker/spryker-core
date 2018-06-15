@@ -14,12 +14,12 @@ interface FileRemoverInterface
      *
      * @return bool
      */
-    public function deleteFileInfo($idFileInfo);
+    public function deleteFileInfo(int $idFileInfo);
 
     /**
      * @param int $idFile
      *
      * @return bool
      */
-    public function delete($idFile);
+    public function delete(int $idFile);
 }

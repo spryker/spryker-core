@@ -22,11 +22,25 @@ interface FileManagerEntityManagerInterface
     public function saveFile(FileTransfer $fileTransfer);
 
     /**
+     * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
+     *
+     * @return bool
+     */
+    public function deleteFile(FileTransfer $fileTransfer);
+
+    /**
      * @param \Generated\Shared\Transfer\FileInfoTransfer $fileInfoTransfer
      *
      * @return \Generated\Shared\Transfer\FileInfoTransfer
      */
     public function saveFileInfo(FileInfoTransfer $fileInfoTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\FileInfoTransfer $fileInfoTransfer
+     *
+     * @return bool
+     */
+    public function deleteFileInfo(FileInfoTransfer $fileInfoTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\FileLocalizedAttributesTransfer $attributesTransfer

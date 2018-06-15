@@ -44,6 +44,31 @@ class FileManagerEntityManager extends AbstractEntityManager implements FileMana
     }
 
     /**
+     * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
+     *
+     * @return bool
+     */
+    public function deleteFile(FileTransfer $fileTransfer)
+    {
+        $fileEntity = $this->getFactory()
+            ->createFileQuery()
+            ->filterByIdFile($fileTransfer->getIdFile())
+            ->findOne();
+
+        if ($fileEntity === null) {
+            return false;
+        }
+
+        $fileEntity = $this->getFactory()
+            ->createFileManagerMapper()
+            ->mapFileTransferToEntity($fileTransfer, $fileEntity);
+
+        $fileEntity->delete();
+
+        return true;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\FileInfoTransfer $fileInfoTransfer
      *
      * @return \Generated\Shared\Transfer\FileInfoTransfer
@@ -64,6 +89,27 @@ class FileManagerEntityManager extends AbstractEntityManager implements FileMana
         $fileInfoTransfer->setIdFileInfo($fileInfoEntity->getIdFileInfo());
 
         return $fileInfoTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FileInfoTransfer $fileInfoTransfer
+     *
+     * @return bool
+     */
+    public function deleteFileInfo(FileInfoTransfer $fileInfoTransfer)
+    {
+        $fileInfoEntity = $this->getFactory()
+            ->createFileInfoQuery()
+            ->filterByIdFileInfo($fileInfoTransfer->getIdFileInfo())
+            ->findOne();
+
+        if ($fileInfoEntity === null) {
+            return false;
+        }
+
+        $fileInfoEntity->delete();
+
+        return true;
     }
 
     /**

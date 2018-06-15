@@ -60,11 +60,22 @@ class FileManagerMapper implements FileManagerMapperInterface
 
     /**
      * @param \Orm\Zed\FileManager\Persistence\SpyFileInfo $fileInfo
+     * @param \Generated\Shared\Transfer\FileInfoTransfer $fileInfoTransfer
+     *
+     * @return \Generated\Shared\Transfer\FileInfoTransfer
+     */
+    public function mapFileInfoEntityToTransfer(SpyFileInfo $fileInfo, FileInfoTransfer $fileInfoTransfer)
+    {
+        return $fileInfoTransfer->fromArray($fileInfo->toArray());
+    }
+
+    /**
+     * @param \Orm\Zed\FileManager\Persistence\SpyFileInfo $fileInfo
      * @param \Generated\Shared\Transfer\SpyFileInfoEntityTransfer $fileInfoEntityTransfer
      *
      * @return \Generated\Shared\Transfer\SpyFileInfoEntityTransfer
      */
-    public function mapFileInfoEntityToTransfer(SpyFileInfo $fileInfo, SpyFileInfoEntityTransfer $fileInfoEntityTransfer)
+    public function mapFileInfoEntityToEntityTransfer(SpyFileInfo $fileInfo, SpyFileInfoEntityTransfer $fileInfoEntityTransfer)
     {
         $fileInfoEntityTransfer->fromArray($fileInfo->toArray(), true);
         $fileInfoEntityTransfer->setFile(
