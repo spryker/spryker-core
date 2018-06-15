@@ -12,19 +12,18 @@ use Generated\Shared\Transfer\DatasetTransfer;
 interface DatasetEntityManagerInterface
 {
     /**
-     * @param int $idDataset
-     * @param bool $isActive
+     * @param \Generated\Shared\Transfer\DatasetTransfer $datasetTransfer
      *
      * @return void
      */
-    public function updateIsActiveByIdDataset($idDataset, $isActive): void;
+    public function updateIsActiveDataset(DatasetTransfer $datasetTransfer): void;
 
     /**
-     * @param int $idDataset
+     * @param \Generated\Shared\Transfer\DatasetTransfer $datasetTransfer
      *
      * @return void
      */
-    public function delete($idDataset): void;
+    public function delete(DatasetTransfer $datasetTransfer): void;
 
     /**
      * @param \Generated\Shared\Transfer\DatasetTransfer $datasetTransfer

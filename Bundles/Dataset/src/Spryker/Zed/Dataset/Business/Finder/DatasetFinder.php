@@ -34,32 +34,32 @@ class DatasetFinder implements DatasetFinderInterface
     }
 
     /**
-     * @param string $name
+     * @param \Generated\Shared\Transfer\DatasetTransfer $datasetTransfer
      *
      * @return bool
      */
-    public function existsDatasetByName($name): bool
+    public function existsDatasetByName(DatasetTransfer $datasetTransfer): bool
     {
-        return $this->repository->existsDatasetByName($name);
+        return $this->repository->existsDatasetByName($datasetTransfer);
     }
 
     /**
-     * @param int $idDataset
+     * @param \Generated\Shared\Transfer\DatasetTransfer $datasetTransfer
      *
      * @return \Generated\Shared\Transfer\DatasetTransfer
      */
-    public function getDatasetModelById($idDataset): DatasetTransfer
+    public function getDatasetModelById(DatasetTransfer $datasetTransfer): DatasetTransfer
     {
-        return $this->repository->getDatasetByIdWithRelation($idDataset);
+        return $this->repository->getDatasetByIdWithRelation($datasetTransfer);
     }
 
     /**
-     * @param string $datasetName
+     * @param \Generated\Shared\Transfer\DatasetTransfer $datasetTransfer
      *
      * @return \Generated\Shared\Transfer\DatasetTransfer
      */
-    public function getDatasetModelByName($datasetName): DatasetTransfer
+    public function getDatasetModelByName(DatasetTransfer $datasetTransfer): DatasetTransfer
     {
-        return $this->repository->getDatasetByNameWithRelation($datasetName);
+        return $this->repository->getDatasetByNameWithRelation($datasetTransfer);
     }
 }

@@ -19,35 +19,23 @@ interface DatasetFacadeInterface
      *
      * @api
      *
-     * @param int $idDataset
+     * @param \Generated\Shared\Transfer\DatasetTransfer $datasetTransfer
      *
      * @return void
      */
-    public function delete($idDataset): void;
+    public function delete(DatasetTransfer $datasetTransfer): void;
 
     /**
      * Specification:
-     * - Activate Dataset entity.
+     * - Activate or deactivate Dataset entity.
      *
      * @api
      *
-     * @param int $idDataset
+     * @param \Generated\Shared\Transfer\DatasetTransfer $datasetTransfer
      *
      * @return void
      */
-    public function activateById($idDataset): void;
-
-    /**
-     * Specification:
-     * - Deactivate Dataset entity.
-     *
-     * @api
-     *
-     * @param int $idDataset
-     *
-     * @return void
-     */
-    public function deactivateById($idDataset): void;
+    public function activateDataset(DatasetTransfer $datasetTransfer): void;
 
     /**
      * Specification:
@@ -95,11 +83,11 @@ interface DatasetFacadeInterface
      *
      * @api
      *
-     * @param int $idDataset
+     * @param \Generated\Shared\Transfer\DatasetTransfer $datasetTransfer
      *
      * @return \Generated\Shared\Transfer\DatasetTransfer
      */
-    public function getDatasetModelById($idDataset): DatasetTransfer;
+    public function getDatasetModelById(DatasetTransfer $datasetTransfer): DatasetTransfer;
 
     /**
      * Specification:
@@ -107,11 +95,11 @@ interface DatasetFacadeInterface
      *
      * @api
      *
-     * @param string $datasetName
+     * @param \Generated\Shared\Transfer\DatasetTransfer $datasetTransfer
      *
      * @return \Generated\Shared\Transfer\DatasetTransfer
      */
-    public function getDatasetModelByName($datasetName): DatasetTransfer;
+    public function getDatasetModelByName(DatasetTransfer $datasetTransfer): DatasetTransfer;
 
     /**
      * Specification:
@@ -119,20 +107,20 @@ interface DatasetFacadeInterface
      *
      * @api
      *
-     * @param string $datasetName
+     * @param \Generated\Shared\Transfer\DatasetTransfer $datasetTransfer
      *
      * @return bool
      */
-    public function existsDatasetByName($datasetName): bool;
+    public function existsDatasetByName(DatasetTransfer $datasetTransfer): bool;
 
     /**
      * {@inheritdoc}
      *
      * @api
      *
-     * @param string $datasetName
+     * @param \Generated\Shared\Transfer\DatasetFilenameTransfer $datasetFilenameTransfer
      *
      * @return \Generated\Shared\Transfer\DatasetFilenameTransfer
      */
-    public function getFilenameByDatasetName($datasetName): DatasetFilenameTransfer;
+    public function getFilenameByDatasetName(DatasetFilenameTransfer $datasetFilenameTransfer): DatasetFilenameTransfer;
 }

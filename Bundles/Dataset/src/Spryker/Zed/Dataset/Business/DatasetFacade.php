@@ -22,13 +22,13 @@ class DatasetFacade extends AbstractFacade implements DatasetFacadeInterface
      *
      * @api
      *
-     * @param int $idDataset
+     * @param \Generated\Shared\Transfer\DatasetTransfer $datasetTransfer
      *
      * @return void
      */
-    public function delete($idDataset): void
+    public function delete(DatasetTransfer $datasetTransfer): void
     {
-        $this->getFactory()->createDatasetSaver()->delete($idDataset);
+        $this->getFactory()->createDatasetSaver()->delete($datasetTransfer);
     }
 
     /**
@@ -36,27 +36,13 @@ class DatasetFacade extends AbstractFacade implements DatasetFacadeInterface
      *
      * @api
      *
-     * @param int $idDataset
+     * @param \Generated\Shared\Transfer\DatasetTransfer $datasetTransfer
      *
      * @return void
      */
-    public function activateById($idDataset): void
+    public function activateDataset(DatasetTransfer $datasetTransfer): void
     {
-        $this->getFactory()->createDatasetSaver()->activateById($idDataset);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param int $idDataset
-     *
-     * @return void
-     */
-    public function deactivateById($idDataset): void
-    {
-        $this->getFactory()->createDatasetSaver()->deactivateById($idDataset);
+        $this->getFactory()->createDatasetSaver()->activateDataset($datasetTransfer);
     }
 
     /**
@@ -107,13 +93,13 @@ class DatasetFacade extends AbstractFacade implements DatasetFacadeInterface
      *
      * @api
      *
-     * @param int $idDataset
+     * @param \Generated\Shared\Transfer\DatasetTransfer $datasetTransfer
      *
      * @return \Generated\Shared\Transfer\DatasetTransfer
      */
-    public function getDatasetModelById($idDataset): DatasetTransfer
+    public function getDatasetModelById(DatasetTransfer $datasetTransfer): DatasetTransfer
     {
-        return $this->getFactory()->createDatasetFinder()->getDatasetModelById($idDataset);
+        return $this->getFactory()->createDatasetFinder()->getDatasetModelById($datasetTransfer);
     }
 
     /**
@@ -121,13 +107,13 @@ class DatasetFacade extends AbstractFacade implements DatasetFacadeInterface
      *
      * @api
      *
-     * @param string $datasetName
+     * @param \Generated\Shared\Transfer\DatasetTransfer $datasetTransfer
      *
      * @return \Generated\Shared\Transfer\DatasetTransfer
      */
-    public function getDatasetModelByName($datasetName): DatasetTransfer
+    public function getDatasetModelByName(DatasetTransfer $datasetTransfer): DatasetTransfer
     {
-        return $this->getFactory()->createDatasetFinder()->getDatasetModelByName($datasetName);
+        return $this->getFactory()->createDatasetFinder()->getDatasetModelByName($datasetTransfer);
     }
 
     /**
@@ -135,13 +121,13 @@ class DatasetFacade extends AbstractFacade implements DatasetFacadeInterface
      *
      * @api
      *
-     * @param string $datasetName
+     * @param \Generated\Shared\Transfer\DatasetTransfer $datasetTransfer
      *
      * @return bool
      */
-    public function existsDatasetByName($datasetName): bool
+    public function existsDatasetByName(DatasetTransfer $datasetTransfer): bool
     {
-        return $this->getFactory()->createDatasetFinder()->existsDatasetByName($datasetName);
+        return $this->getFactory()->createDatasetFinder()->existsDatasetByName($datasetTransfer);
     }
 
     /**
@@ -149,12 +135,12 @@ class DatasetFacade extends AbstractFacade implements DatasetFacadeInterface
      *
      * @api
      *
-     * @param string $datasetName
+     * @param \Generated\Shared\Transfer\DatasetFilenameTransfer $datasetFilenameTransfer
      *
      * @return \Generated\Shared\Transfer\DatasetFilenameTransfer
      */
-    public function getFilenameByDatasetName($datasetName): DatasetFilenameTransfer
+    public function getFilenameByDatasetName(DatasetFilenameTransfer $datasetFilenameTransfer): DatasetFilenameTransfer
     {
-        return $this->getFactory()->createResolverPath()->getFilenameByDatasetName($datasetName);
+        return $this->getFactory()->createResolverPath()->getFilenameByDatasetName($datasetFilenameTransfer);
     }
 }

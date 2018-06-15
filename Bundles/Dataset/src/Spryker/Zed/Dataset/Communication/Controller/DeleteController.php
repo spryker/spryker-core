@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Dataset\Communication\Controller;
 
+use Generated\Shared\Transfer\DatasetTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -28,7 +29,7 @@ class DeleteController extends AbstractController
     public function indexAction(Request $request)
     {
         $idDataset = $this->castId($request->get(static::URL_PARAM_ID_DATASET));
-        $this->getFacade()->delete($idDataset);
+        $this->getFacade()->delete((new DatasetTransfer())->setIdDataset($idDataset));
 
         return $this->redirectBack($request);
     }

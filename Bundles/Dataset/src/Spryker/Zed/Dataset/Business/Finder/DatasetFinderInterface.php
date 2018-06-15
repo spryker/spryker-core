@@ -12,23 +12,23 @@ use Generated\Shared\Transfer\DatasetTransfer;
 interface DatasetFinderInterface
 {
     /**
-     * @param string $name
+     * @param \Generated\Shared\Transfer\DatasetTransfer $datasetTransfer
      *
      * @return bool
      */
-    public function existsDatasetByName($name): bool;
+    public function existsDatasetByName(DatasetTransfer $datasetTransfer): bool;
 
     /**
-     * @param int $idDataset
+     * @param \Generated\Shared\Transfer\DatasetTransfer $datasetTransfer
      *
      * @return \Generated\Shared\Transfer\DatasetTransfer
      */
-    public function getDatasetModelById($idDataset): DatasetTransfer;
+    public function getDatasetModelById(DatasetTransfer $datasetTransfer): DatasetTransfer;
 
     /**
-     * @param string $datasetName
+     * @param \Generated\Shared\Transfer\DatasetTransfer $datasetTransfer
      *
      * @return \Generated\Shared\Transfer\DatasetTransfer
      */
-    public function getDatasetModelByName($datasetName): DatasetTransfer;
+    public function getDatasetModelByName(DatasetTransfer $datasetTransfer): DatasetTransfer;
 }

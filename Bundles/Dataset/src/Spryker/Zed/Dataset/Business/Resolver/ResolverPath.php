@@ -14,13 +14,13 @@ class ResolverPath implements ResolverPathInterface
     const DEFAULT_NAME = 'dataset';
 
     /**
-     * @param string|null $datasetName
+     * @param \Generated\Shared\Transfer\DatasetFilenameTransfer $datasetFilenameTransfer
      *
      * @return \Generated\Shared\Transfer\DatasetFilenameTransfer
      */
-    public function getFilenameByDatasetName($datasetName): DatasetFilenameTransfer
+    public function getFilenameByDatasetName(DatasetFilenameTransfer $datasetFilenameTransfer): DatasetFilenameTransfer
     {
-        $filename = mb_ereg_replace("([^\w\s\d\-_~,;\[\]\(\).])", '', $datasetName);
+        $filename = mb_ereg_replace("([^\w\s\d\-_~,;\[\]\(\).])", '', $datasetFilenameTransfer->requireFilename()->getFilename());
         $filename = mb_ereg_replace("([\.]{2,})", '', $filename);
         $filename = preg_replace("/\s+/", ' ', $filename);
         $filename = trim($filename);

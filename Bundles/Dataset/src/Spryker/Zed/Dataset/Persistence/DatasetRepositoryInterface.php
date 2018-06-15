@@ -12,30 +12,30 @@ use Generated\Shared\Transfer\DatasetTransfer;
 interface DatasetRepositoryInterface
 {
     /**
-     * @param int $idDataset
+     * @param \Generated\Shared\Transfer\DatasetTransfer $datasetTransfer
      *
      * @return bool
      */
-    public function existsDatasetById($idDataset): bool;
+    public function existsDatasetById(DatasetTransfer $datasetTransfer): bool;
 
     /**
-     * @param string $name
+     * @param \Generated\Shared\Transfer\DatasetTransfer $datasetTransfer
      *
      * @return bool
      */
-    public function existsDatasetByName($name): bool;
+    public function existsDatasetByName(DatasetTransfer $datasetTransfer): bool;
 
     /**
-     * @param int $idDataset
+     * @param \Generated\Shared\Transfer\DatasetTransfer $datasetTransfer
      *
      * @return \Generated\Shared\Transfer\DatasetTransfer
      */
-    public function getDatasetByIdWithRelation($idDataset): DatasetTransfer;
+    public function getDatasetByIdWithRelation(DatasetTransfer $datasetTransfer): DatasetTransfer;
 
     /**
-     * @param string $datasetName
+     * @param \Generated\Shared\Transfer\DatasetTransfer $datasetTransfer
      *
      * @return \Generated\Shared\Transfer\DatasetTransfer
      */
-    public function getDatasetByNameWithRelation($datasetName): DatasetTransfer;
+    public function getDatasetByNameWithRelation(DatasetTransfer $datasetTransfer): DatasetTransfer;
 }

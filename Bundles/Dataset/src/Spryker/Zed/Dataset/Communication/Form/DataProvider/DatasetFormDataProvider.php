@@ -51,7 +51,7 @@ class DatasetFormDataProvider
         if ($idDataset === null) {
             return $this->createSpyDatasetTransfer();
         }
-        $datasetTransfer = $this->repository->getDatasetByIdWithRelation($idDataset);
+        $datasetTransfer = $this->repository->getDatasetByIdWithRelation((new DatasetTransfer())->setIdDataset($idDataset));
 
         return $datasetTransfer;
     }
@@ -65,7 +65,7 @@ class DatasetFormDataProvider
     {
         return [
             DatasetForm::OPTION_AVAILABLE_LOCALES => $this->getAvailableLocales(),
-            DatasetForm::DATASET_HAS_DATA => $this->repository->existsDatasetById($idDataset),
+            DatasetForm::DATASET_HAS_DATA => $this->repository->existsDatasetById((new DatasetTransfer())->setIdDataset($idDataset)),
         ];
     }
 
