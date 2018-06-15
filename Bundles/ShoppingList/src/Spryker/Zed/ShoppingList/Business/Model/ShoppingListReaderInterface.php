@@ -16,7 +16,7 @@ use Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 
-interface ReaderInterface
+interface ShoppingListReaderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
