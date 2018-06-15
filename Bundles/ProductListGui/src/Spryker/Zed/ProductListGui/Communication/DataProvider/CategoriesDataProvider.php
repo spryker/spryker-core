@@ -77,7 +77,7 @@ class CategoriesDataProvider
 //    }
 
     /**
-     * @return string[] [<category id> => <category name in english locale>]
+     * @return int[] [<category name in english locale> => <category id>]
      */
     protected function getCategoryList(): array
     {

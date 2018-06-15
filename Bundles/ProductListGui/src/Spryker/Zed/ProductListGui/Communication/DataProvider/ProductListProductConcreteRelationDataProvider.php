@@ -34,14 +34,14 @@ class ProductListProductConcreteRelationDataProvider
     public function getOptions()
     {
         return [
-            ProductListProductConcreteRelationType::OPTION_PRODUCT_NAMES => $this->getCategoryList(),
+            ProductListProductConcreteRelationType::OPTION_PRODUCT_NAMES => $this->getProductList(),
         ];
     }
 
     /**
-     * @return array
+     * @return int[] [<product name in english locale> => <product id>]
      */
-    protected function getCategoryList(): array
+    protected function getProductList(): array
     {
         return array_flip($this->facade->getAllProductsNames());
     }
