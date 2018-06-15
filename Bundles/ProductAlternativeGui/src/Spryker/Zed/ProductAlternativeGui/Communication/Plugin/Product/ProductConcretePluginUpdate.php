@@ -17,7 +17,8 @@ use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginUpdateInterface;
 class ProductConcretePluginUpdate extends AbstractPlugin implements ProductConcretePluginUpdateInterface
 {
     /**
-     * {@inheritdoc}
+     * Specification:
+     *  - Calls product alternatives create facade call on product concrete save.
      *
      * @api
      *
@@ -29,6 +30,10 @@ class ProductConcretePluginUpdate extends AbstractPlugin implements ProductConcr
      */
     public function update(ProductConcreteTransfer $productConcreteTransfer)
     {
+        if (!$productConcreteTransfer->getProductAlternativeCreateRequests()) {
+            return $productConcreteTransfer;
+        }
+
         return $this->getFactory()
             ->getProductAlternativeFacade()
             ->persistProductAlternative($productConcreteTransfer);

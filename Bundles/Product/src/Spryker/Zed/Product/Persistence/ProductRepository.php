@@ -12,34 +12,52 @@ use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMa
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
-use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
-use Orm\Zed\Product\Persistence\SpyProductQuery;
-use Spryker\Shared\Product\ProductConstants;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
  * @method \Spryker\Zed\Product\Persistence\ProductPersistenceFactory getFactory()
  */
 class ProductRepository extends AbstractRepository implements ProductRepositoryInterface
 {
+    public const KEY_FILTERED_PRODUCTS_RESULT = 'result';
+    public const KEY_FILTERED_PRODUCTS_PRODUCT_NAME = 'name';
+
     /**
      * {@inheritdoc}
      *
      * @api
      *
-     * @param string $sku
+     * @param string $search
      * @param int $limit
      *
      * @return array
      */
-    public function getProductAbstractDataBySku(string $sku, int $limit): array
+    public function findProductAbstractDataBySkuOrLocalizedName(string $search, LocaleTransfer $localeTransfer, int $limit): array
     {
-        $productAbstractQuery = $this->queryProductAbstract()
-            ->filterBySku_Like('%' . $sku . '%')
-            ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, ProductConstants::KEY_FILTERED_PRODUCTS_ABSTRACT_ID)
-            ->withColumn(SpyProductAbstractTableMap::COL_SKU, ProductConstants::KEY_FILTERED_PRODUCTS_RESULT)
+        $criteria = new Criteria();
+        $skuLikeCriteria = $criteria->getNewCriterion(
+            SpyProductAbstractTableMap::COL_SKU,
+            '%' . $search . '%',
+            Criteria::LIKE
+        );
+
+        $productAbstractQuery = $this->getFactory()
+            ->createProductAbstractQuery()
+            ->leftJoinSpyProductAbstractLocalizedAttributes()
+            ->addJoinCondition(
+                'SpyProductAbstractLocalizedAttributes',
+                sprintf('SpyProductAbstractLocalizedAttributes.fk_locale = %d', $localeTransfer->getIdLocale())
+            )
+            ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, static::KEY_FILTERED_PRODUCTS_PRODUCT_NAME)
+            ->withColumn(SpyProductAbstractTableMap::COL_SKU, static::KEY_FILTERED_PRODUCTS_RESULT)
+            ->where('lower(' . SpyProductAbstractLocalizedAttributesTableMap::COL_NAME . ') like ?', '%' . mb_strtolower($search) . '%')
+            ->addOr($skuLikeCriteria)
             ->limit($limit)
-            ->select([ProductConstants::KEY_FILTERED_PRODUCTS_ABSTRACT_ID, ProductConstants::KEY_FILTERED_PRODUCTS_RESULT]);
+            ->select([
+                 static::KEY_FILTERED_PRODUCTS_RESULT,
+                 static::KEY_FILTERED_PRODUCTS_PRODUCT_NAME,
+             ]);
 
         return $productAbstractQuery->find()
             ->toArray();
@@ -50,125 +68,38 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param string $localizedName
+     * @param string $search
      * @param int $limit
      *
      * @return array
      */
-    public function getProductAbstractDataByLocalizedName(LocaleTransfer $localeTransfer, string $localizedName, int $limit): array
+    public function findProductConcreteDataBySkuOrLocalizedName(string $search, LocaleTransfer $localeTransfer, int $limit): array
     {
-        $localeTransfer->requireIdLocale();
+        $criteria = new Criteria();
+        $skuLikeCriteria = $criteria->getNewCriterion(
+            SpyProductTableMap::COL_SKU,
+            '%' . $search . '%',
+            Criteria::LIKE
+        );
 
-        $productAbstractQuery = $this->queryProductAbstractWithName($localeTransfer->getIdLocale())
-            ->useSpyProductAbstractLocalizedAttributesQuery()
-                ->filterByName_Like('%' . $localizedName . '%')
-            ->endUse()
-            ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, ProductConstants::KEY_FILTERED_PRODUCTS_ABSTRACT_ID)
-            ->withColumn(ProductConstants::COL_FILTERED_PRODUCTS_PRODUCT_NAME, ProductConstants::KEY_FILTERED_PRODUCTS_RESULT)
+        $productAbstractQuery = $this->getFactory()
+            ->createProductQuery()
+            ->leftJoinSpyProductLocalizedAttributes()
+            ->addJoinCondition(
+                'SpyProductLocalizedAttributes',
+                sprintf('SpyProductLocalizedAttributes.fk_locale = %d', $localeTransfer->getIdLocale())
+            )
+            ->withColumn(SpyProductLocalizedAttributesTableMap::COL_NAME, static::KEY_FILTERED_PRODUCTS_PRODUCT_NAME)
+            ->withColumn(SpyProductTableMap::COL_SKU, static::KEY_FILTERED_PRODUCTS_RESULT)
+            ->where('lower(' . SpyProductLocalizedAttributesTableMap::COL_NAME . ') like ?', '%' . mb_strtolower($search) . '%')
+            ->addOr($skuLikeCriteria)
             ->limit($limit)
-            ->select([ProductConstants::KEY_FILTERED_PRODUCTS_ABSTRACT_ID, ProductConstants::KEY_FILTERED_PRODUCTS_RESULT]);
+            ->select([
+                 static::KEY_FILTERED_PRODUCTS_RESULT,
+                 static::KEY_FILTERED_PRODUCTS_PRODUCT_NAME,
+             ]);
 
         return $productAbstractQuery->find()
             ->toArray();
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param string $sku
-     * @param int $limit
-     *
-     * @return array
-     */
-    public function getProductConcreteDataBySku(string $sku, int $limit): array
-    {
-        $productQuery = $this->queryProduct()
-            ->filterBySku_Like('%' . $sku . '%')
-            ->withColumn(SpyProductTableMap::COL_ID_PRODUCT, ProductConstants::KEY_FILTERED_PRODUCTS_CONCRETE_ID)
-            ->withColumn(SpyProductTableMap::COL_SKU, ProductConstants::KEY_FILTERED_PRODUCTS_RESULT)
-            ->limit($limit)
-            ->select([ProductConstants::KEY_FILTERED_PRODUCTS_CONCRETE_ID, ProductConstants::KEY_FILTERED_PRODUCTS_RESULT]);
-
-        return $productQuery->find()
-            ->toArray();
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param string $localizedName
-     * @param int $limit
-     *
-     * @return array
-     */
-    public function getProductConcreteDataByLocalizedName(LocaleTransfer $localeTransfer, string $localizedName, int $limit): array
-    {
-        $localeTransfer->requireIdLocale();
-
-        $productQuery = $this->queryProductConcreteWithName($localeTransfer->getIdLocale())
-            ->useSpyProductLocalizedAttributesQuery()
-                ->filterByName_Like('%' . $localizedName . '%')
-            ->endUse()
-            ->withColumn(SpyProductTableMap::COL_ID_PRODUCT, ProductConstants::KEY_FILTERED_PRODUCTS_CONCRETE_ID)
-            ->withColumn(ProductConstants::COL_FILTERED_PRODUCTS_PRODUCT_NAME, ProductConstants::KEY_FILTERED_PRODUCTS_RESULT)
-            ->limit($limit)
-            ->select([ProductConstants::KEY_FILTERED_PRODUCTS_CONCRETE_ID, ProductConstants::KEY_FILTERED_PRODUCTS_RESULT]);
-
-        return $productQuery->find()
-            ->toArray();
-    }
-
-    /**
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
-     */
-    protected function queryProductAbstract(): SpyProductAbstractQuery
-    {
-        return $this->getFactory()
-            ->createProductAbstractQuery();
-    }
-
-    /**
-     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
-     */
-    protected function queryProduct(): SpyProductQuery
-    {
-        return $this->getFactory()
-            ->createProductQuery();
-    }
-
-    /**
-     * @param int $idLocale
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
-     */
-    protected function queryProductAbstractWithName(int $idLocale): SpyProductAbstractQuery
-    {
-        return $this->queryProductAbstract()
-            ->innerJoinSpyProductAbstractLocalizedAttributes()
-            ->useSpyProductAbstractLocalizedAttributesQuery()
-                ->filterByFkLocale($idLocale)
-            ->endUse()
-            ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, ProductConstants::COL_FILTERED_PRODUCTS_PRODUCT_NAME);
-    }
-
-    /**
-     * @param int $idLocale
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
-     */
-    protected function queryProductConcreteWithName(int $idLocale): SpyProductQuery
-    {
-        return $this->queryProduct()
-            ->innerJoinSpyProductLocalizedAttributes()
-            ->useSpyProductLocalizedAttributesQuery()
-                ->filterByFkLocale($idLocale)
-            ->endUse()
-            ->withColumn(SpyProductLocalizedAttributesTableMap::COL_NAME, ProductConstants::COL_FILTERED_PRODUCTS_PRODUCT_NAME);
     }
 }

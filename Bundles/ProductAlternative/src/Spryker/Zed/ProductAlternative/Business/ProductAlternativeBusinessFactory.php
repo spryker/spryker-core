@@ -8,8 +8,6 @@
 namespace Spryker\Zed\ProductAlternative\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeListSorter;
-use Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeListSorterInterface;
 use Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeReader;
 use Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeReaderInterface;
 use Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeWriter;
@@ -21,6 +19,7 @@ use Spryker\Zed\ProductAlternative\ProductAlternativeDependencyProvider;
 /**
  * @method \Spryker\Zed\ProductAlternative\Persistence\ProductAlternativeEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\ProductAlternative\Persistence\ProductAlternativeRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ProductAlternative\ProductAlternativeConfig getConfig()
  */
 class ProductAlternativeBusinessFactory extends AbstractBusinessFactory
 {
@@ -31,10 +30,11 @@ class ProductAlternativeBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductAlternativeWriter(
             $this->getEntityManager(),
-            $this->createProductAlternativeReader(),
+            $this->getRepository(),
             $this->getProductFacade()
         );
     }
+    
 
     /**
      * @return \Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeReaderInterface
@@ -43,18 +43,9 @@ class ProductAlternativeBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductAlternativeReader(
             $this->getRepository(),
-            $this->createProductAlternativeListSorter(),
             $this->getLocaleFacade(),
             $this->getProductFacade()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeListSorterInterface
-     */
-    public function createProductAlternativeListSorter(): ProductAlternativeListSorterInterface
-    {
-        return new ProductAlternativeListSorter();
     }
 
     /**

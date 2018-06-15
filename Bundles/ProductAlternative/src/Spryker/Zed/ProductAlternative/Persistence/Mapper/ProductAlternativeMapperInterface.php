@@ -10,46 +10,24 @@ namespace Spryker\Zed\ProductAlternative\Persistence\Mapper;
 use Generated\Shared\Transfer\ProductAlternativeCollectionTransfer;
 use Generated\Shared\Transfer\ProductAlternativeListItemTransfer;
 use Generated\Shared\Transfer\ProductAlternativeTransfer;
-use Generated\Shared\Transfer\SpyProductAlternativeEntityTransfer;
 use Orm\Zed\ProductAlternative\Persistence\SpyProductAlternative;
+use Propel\Runtime\Collection\Collection;
 
 interface ProductAlternativeMapperInterface
 {
     /**
-     * @param \Orm\Zed\ProductAlternative\Persistence\SpyProductAlternative $productAlternative
+     * @param \Orm\Zed\ProductAlternative\Persistence\SpyProductAlternative $productAlternativeEntity
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
      */
-    public function mapSpyProductAlternativeEntityToTransfer(
-        SpyProductAlternative $productAlternative
-    ): ProductAlternativeTransfer;
+    public function mapProductAlternativeTransfer(SpyProductAlternative $productAlternativeEntity): ProductAlternativeTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\SpyProductAlternativeEntityTransfer $productAlternativeEntityTransfer
-     * @param \Orm\Zed\ProductAlternative\Persistence\SpyProductAlternative $product
-     *
-     * @return \Orm\Zed\ProductAlternative\Persistence\SpyProductAlternative
-     */
-    public function mapSpyProductAlternativeEntityTransferToEntity(
-        SpyProductAlternativeEntityTransfer $productAlternativeEntityTransfer,
-        SpyProductAlternative $product
-    ): SpyProductAlternative;
-
-    /**
-     * @param \Generated\Shared\Transfer\SpyProductAlternativeEntityTransfer $productAlternativeEntityTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
-     */
-    public function mapSpyProductAlternativeEntityTransferToTransfer(
-        SpyProductAlternativeEntityTransfer $productAlternativeEntityTransfer
-    ): ProductAlternativeTransfer;
-
-    /**
-     * @param array $productAlternatives
+     * @param \Propel\Runtime\Collection\Collection $productAlternativeEntities
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeCollectionTransfer
      */
-    public function hydrateProductAlternativeCollectionWithProductAlternatives(array $productAlternatives): ProductAlternativeCollectionTransfer;
+    public function mapProductAlternativeCollectionTransfer(Collection $productAlternativeEntities): ProductAlternativeCollectionTransfer;
 
     /**
      * @param array $productConcreteData

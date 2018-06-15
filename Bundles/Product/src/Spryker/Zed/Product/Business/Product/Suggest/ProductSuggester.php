@@ -8,8 +8,8 @@
 namespace Spryker\Zed\Product\Business\Product\Suggest;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Shared\Product\ProductConstants;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
+use Spryker\Zed\Product\Persistence\ProductRepository;
 use Spryker\Zed\Product\Persistence\ProductRepositoryInterface;
 use Spryker\Zed\Product\ProductConfig;
 
@@ -53,12 +53,18 @@ class ProductSuggester implements ProductSuggesterInterface
      */
     public function suggestProductAbstract(string $suggestion, ?int $limit = null): array
     {
-        return array_unique(
-            array_merge(
-                $this->suggestProductAbstractName($suggestion),
-                $this->suggestProductAbstractSku($suggestion)
-            )
+        $limit = $limit ?? $this->config->getFilteredProductsLimitDefault();
+
+        $productAbstractNames = $this->collectFilteredResults(
+            $this->productRepository
+                ->findProductAbstractDataBySkuOrLocalizedName(
+                    $suggestion,
+                    $this->getCurrentLocale(),
+                    $limit
+                )
         );
+
+        return $productAbstractNames;
     }
 
     /**
@@ -69,72 +75,13 @@ class ProductSuggester implements ProductSuggesterInterface
      */
     public function suggestProductConcrete(string $suggestion, ?int $limit = null): array
     {
-        return array_unique(
-            array_merge(
-                $this->suggestProductConcreteName($suggestion),
-                $this->suggestProductConcreteSku($suggestion)
-            )
-        );
-    }
-
-    /**
-     * @param string $productName
-     * @param null|int $limit
-     *
-     * @return string[]
-     */
-    protected function suggestProductAbstractName(string $productName, ?int $limit = null): array
-    {
-        $limit = $limit ?? $this->config->getFilteredProductsLimitDefault();
-
-        $productAbstractNames = $this->collectFilteredResults(
-            $this->productRepository
-                ->getProductAbstractDataByLocalizedName(
-                    $this->getCurrentLocale(),
-                    $productName,
-                    $limit
-                )
-        );
-
-        return $productAbstractNames;
-    }
-
-    /**
-     * @param string $productSku
-     * @param null|int $limit
-     *
-     * @return string[]
-     */
-    protected function suggestProductAbstractSku(string $productSku, ?int $limit = null): array
-    {
-        $limit = $limit ?? $this->config->getFilteredProductsLimitDefault();
-
-        $productAbstractSkus = $this->collectFilteredResults(
-            $this->productRepository
-                ->getProductAbstractDataBySku(
-                    $productSku,
-                    $limit
-                )
-        );
-
-        return $productAbstractSkus;
-    }
-
-    /**
-     * @param string $productName
-     * @param null|int $limit
-     *
-     * @return string[]
-     */
-    protected function suggestProductConcreteName(string $productName, ?int $limit = null): array
-    {
         $limit = $limit ?? $this->config->getFilteredProductsLimitDefault();
 
         $productConcreteNames = $this->collectFilteredResults(
             $this->productRepository
-                ->getProductConcreteDataByLocalizedName(
+                ->findProductConcreteDataBySkuOrLocalizedName(
+                    $suggestion,
                     $this->getCurrentLocale(),
-                    $productName,
                     $limit
                 )
         );
@@ -143,30 +90,11 @@ class ProductSuggester implements ProductSuggesterInterface
     }
 
     /**
-     * @param string $productSku
-     * @param null|int $limit
-     *
-     * @return string[]
-     */
-    protected function suggestProductConcreteSku(string $productSku, ?int $limit = null): array
-    {
-        $limit = $limit ?? $this->config->getFilteredProductsLimitDefault();
-
-        $productConcreteSkus = $this->collectFilteredResults(
-            $this->productRepository
-                ->getProductConcreteDataBySku($productSku, $limit)
-        );
-
-        return $productConcreteSkus;
-    }
-
-    /**
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     protected function getCurrentLocale(): LocaleTransfer
     {
-        return $this->localeFacade
-            ->getCurrentLocale();
+        return $this->localeFacade->getCurrentLocale();
     }
 
     /**
@@ -179,7 +107,7 @@ class ProductSuggester implements ProductSuggesterInterface
         $results = [];
 
         foreach ($products as $product) {
-            $results[] = $product[ProductConstants::KEY_FILTERED_PRODUCTS_RESULT];
+            $results[$product[ProductRepository::KEY_FILTERED_PRODUCTS_RESULT]] = $product[ProductRepository::KEY_FILTERED_PRODUCTS_PRODUCT_NAME];
         }
 
         return $results;

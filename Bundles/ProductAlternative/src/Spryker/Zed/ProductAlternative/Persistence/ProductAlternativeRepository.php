@@ -8,18 +8,14 @@
 namespace Spryker\Zed\ProductAlternative\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductAlternativeCollectionTransfer;
 use Generated\Shared\Transfer\ProductAlternativeListItemTransfer;
 use Generated\Shared\Transfer\ProductAlternativeTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
-use Orm\Zed\ProductAlternative\Persistence\SpyProductAlternativeQuery;
-use Spryker\Shared\ProductAlternative\ProductAlternativeConstants;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -38,16 +34,14 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
      */
     public function getProductAlternativesForProductConcrete(int $idProductConcrete): ProductAlternativeCollectionTransfer
     {
-        $productAlternativeQuery = $this->getFactory()
+        $productAlternativeEntities = $this->getFactory()
             ->createProductAlternativeQuery()
-            ->filterByFkProduct($idProductConcrete);
-
-        $productAlternatives = $this->buildQueryFromCriteria($productAlternativeQuery)
+            ->filterByFkProduct($idProductConcrete)
             ->find();
 
         return $this->getFactory()
             ->createProductAlternativeMapper()
-            ->hydrateProductAlternativeCollectionWithProductAlternatives($productAlternatives);
+            ->mapProductAlternativeCollectionTransfer($productAlternativeEntities);
     }
 
     /**
@@ -61,20 +55,18 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
      */
     public function findProductAlternativeByIdProductAlternative(int $idProductAlternative): ?ProductAlternativeTransfer
     {
-        $productAlternativeQuery = $this->getFactory()
+        $alternativeProductEntity = $this->getFactory()
             ->createProductAlternativeQuery()
-            ->filterByIdProductAlternative($idProductAlternative);
-
-        $alternativeProduct = $this->buildQueryFromCriteria($productAlternativeQuery)
+            ->filterByIdProductAlternative($idProductAlternative)
             ->findOne();
 
-        if (!$alternativeProduct) {
+        if (!$alternativeProductEntity) {
             return null;
         }
 
         return $this->getFactory()
             ->createProductAlternativeMapper()
-            ->mapSpyProductAlternativeEntityTransferToTransfer($alternativeProduct);
+            ->mapProductAlternativeTransfer($alternativeProductEntity);
     }
 
     /**
@@ -82,115 +74,46 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
      *
      * @api
      *
-     * @param int $idBaseProduct
      * @param int $idProductAbstract
-     *
-     * @return null|\Generated\Shared\Transfer\ProductAlternativeTransfer
-     */
-    public function findProductAbstractAlternative(int $idBaseProduct, int $idProductAbstract): ?ProductAlternativeTransfer
-    {
-        $productAlternativeQuery = $this->getFactory()
-            ->createProductAlternativeQuery()
-            ->filterByFkProduct($idBaseProduct)
-            ->filterByFkProductAbstractAlternative($idProductAbstract);
-
-        $alternativeProduct = $this->buildQueryFromCriteria($productAlternativeQuery)
-            ->findOne();
-
-        if (!$alternativeProduct) {
-            return null;
-        }
-
-        return $this->getFactory()
-            ->createProductAlternativeMapper()
-            ->mapSpyProductAlternativeEntityTransferToTransfer($alternativeProduct);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param int $idBaseProduct
-     * @param int $idProductConcrete
-     *
-     * @return null|\Generated\Shared\Transfer\ProductAlternativeTransfer
-     */
-    public function findProductConcreteAlternative(int $idBaseProduct, int $idProductConcrete): ?ProductAlternativeTransfer
-    {
-        $productAlternativeQuery = $this->getFactory()
-            ->createProductAlternativeQuery()
-            ->filterByFkProduct($idBaseProduct)
-            ->filterByFkProductConcreteAlternative($idProductConcrete);
-
-        $alternativeProduct = $this->buildQueryFromCriteria($productAlternativeQuery)
-            ->findOne();
-
-        if (!$alternativeProduct) {
-            return null;
-        }
-
-        return $this->getFactory()
-            ->createProductAlternativeMapper()
-            ->mapSpyProductAlternativeEntityTransferToTransfer($alternativeProduct);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeListItemTransfer
      */
     public function getProductAlternativeListItemTransferForProductAbstract(
-        ProductAbstractTransfer $productAbstractTransfer,
+        int $idProductAbstract,
         LocaleTransfer $localeTransfer
     ): ProductAlternativeListItemTransfer {
-        $productAbstractTransfer
-            ->requireIdProductAbstract()
-            ->requireIsActive();
-
-        $productAbstractData = $this->queryProductAlternative()
-            ->filterByFkProductAbstractAlternative(
-                $productAbstractTransfer->getIdProductAbstract()
-            )
-            ->innerJoinProductAbstractAlternative()
-            ->useProductAbstractAlternativeQuery()
-                ->innerJoinSpyProductAbstractLocalizedAttributes()
-                ->useSpyProductAbstractLocalizedAttributesQuery()
-                    ->filterByFkLocale(
-                        $localeTransfer->getIdLocale()
-                    )
-                ->endUse()
-                ->innerJoinSpyProductCategory()
-                ->useSpyProductCategoryQuery()
-                    ->innerJoinSpyCategory()
-                    ->useSpyCategoryQuery()
-                        ->innerJoinAttribute()
-                        ->useAttributeQuery()
-                            ->filterByFkLocale($localeTransfer->getIdLocale())
-                        ->endUse()
+        $productAbstractData = $this->getFactory()
+            ->createProductAbstractQuery()
+            ->filterByIdProductAbstract($idProductAbstract)
+            ->leftJoinSpyProductAbstractLocalizedAttributes()
+            ->useSpyProductAbstractLocalizedAttributesQuery()
+                ->filterByFkLocale(
+                    $localeTransfer->getIdLocale()
+                )
+            ->endUse()
+            ->leftJoinSpyProductCategory()
+            ->useSpyProductCategoryQuery()
+                ->leftJoinSpyCategory()
+                ->useSpyCategoryQuery()
+                    ->innerJoinAttribute()
+                    ->useAttributeQuery()
+                        ->filterByFkLocale($localeTransfer->getIdLocale())
                     ->endUse()
                 ->endUse()
             ->endUse()
-            ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, ProductAlternativeConstants::COL_ID)
-            ->withColumn(SpyProductAbstractTableMap::COL_SKU, ProductAlternativeConstants::COL_SKU)
-            ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, ProductAlternativeConstants::COL_NAME)
-            ->withColumn('GROUP_CONCAT(' . SpyCategoryAttributeTableMap::COL_NAME . ')', ProductAlternativeConstants::COL_CATEGORIES)
+            ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, ProductAlternativeListItemTransfer::ID_PRODUCT)
+            ->withColumn(SpyProductAbstractTableMap::COL_SKU, ProductAlternativeListItemTransfer::SKU)
+            ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, ProductAlternativeListItemTransfer::NAME)
+            ->withColumn('GROUP_CONCAT(' . SpyCategoryAttributeTableMap::COL_NAME . ')', ProductAlternativeListItemTransfer::CATEGORIES)
             ->select([
-                ProductAlternativeConstants::COL_ID,
-                ProductAlternativeConstants::COL_SKU,
-                ProductAlternativeConstants::COL_NAME,
-                ProductAlternativeConstants::COL_CATEGORIES,
+                 ProductAlternativeListItemTransfer::ID_PRODUCT,
+                 ProductAlternativeListItemTransfer::SKU,
+                 ProductAlternativeListItemTransfer::NAME,
+                 ProductAlternativeListItemTransfer::CATEGORIES,
             ])
-            ->groupByIdProductAlternative()
-            ->distinct()
+            ->groupByIdProductAbstract()
             ->findOne();
-
-        $productAbstractData[ProductAlternativeConstants::COL_STATUS] = $productAbstractTransfer->getIsActive();
 
         return $this->getFactory()
             ->createProductAlternativeMapper()
@@ -202,69 +125,54 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param int $idProduct
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeListItemTransfer
      */
     public function getProductAlternativeListItemTransferForProductConcrete(
-        ProductConcreteTransfer $productConcreteTransfer,
+        int $idProduct,
         LocaleTransfer $localeTransfer
     ): ProductAlternativeListItemTransfer {
-        $productConcreteTransfer->requireIdProductConcrete();
-
-        $productConcreteData = $this->queryProductAlternative()
-            ->filterByFkProductConcreteAlternative(
-                $productConcreteTransfer->getIdProductConcrete()
-            )
-            ->useProductConcreteQuery()
-                ->innerJoinSpyProductLocalizedAttributes()
-                ->useSpyProductLocalizedAttributesQuery()
-                    ->filterByFkLocale(
-                        $localeTransfer->getIdLocale()
-                    )
-                ->endUse()
-                ->innerJoinSpyProductAbstract()
-                ->useSpyProductAbstractQuery()
-                    ->innerJoinSpyProductCategory()
-                    ->useSpyProductCategoryQuery()
-                        ->innerJoinSpyCategory()
-                        ->useSpyCategoryQuery()
-                            ->innerJoinAttribute()
-                            ->useAttributeQuery()
-                                ->filterByFkLocale($localeTransfer->getIdLocale())
-                            ->endUse()
+        $productConcreteData = $this->getFactory()
+            ->createProductQuery()
+            ->filterByIdProduct($idProduct)
+            ->leftJoinSpyProductLocalizedAttributes()
+            ->useSpyProductLocalizedAttributesQuery()
+                ->filterByFkLocale(
+                    $localeTransfer->getIdLocale()
+                )
+            ->endUse()
+            ->leftJoinSpyProductAbstract()
+            ->useSpyProductAbstractQuery()
+                ->leftJoinSpyProductCategory()
+                ->useSpyProductCategoryQuery()
+                    ->leftJoinSpyCategory()
+                    ->useSpyCategoryQuery()
+                        ->leftJoinAttribute()
+                        ->useAttributeQuery()
+                            ->filterByFkLocale($localeTransfer->getIdLocale())
                         ->endUse()
                     ->endUse()
                 ->endUse()
             ->endUse()
-            ->withColumn(SpyProductTableMap::COL_ID_PRODUCT, ProductAlternativeConstants::COL_ID)
-            ->withColumn(SpyProductTableMap::COL_SKU, ProductAlternativeConstants::COL_SKU)
-            ->withColumn(SpyProductLocalizedAttributesTableMap::COL_NAME, ProductAlternativeConstants::COL_NAME)
-            ->withColumn('GROUP_CONCAT(' . SpyCategoryAttributeTableMap::COL_NAME . ')', ProductAlternativeConstants::COL_CATEGORIES)
-            ->withColumn(SpyProductTableMap::COL_IS_ACTIVE, ProductAlternativeConstants::COL_STATUS)
+            ->withColumn(SpyProductTableMap::COL_ID_PRODUCT, ProductAlternativeListItemTransfer::ID_PRODUCT)
+            ->withColumn(SpyProductTableMap::COL_SKU, ProductAlternativeListItemTransfer::SKU)
+            ->withColumn(SpyProductLocalizedAttributesTableMap::COL_NAME, ProductAlternativeListItemTransfer::NAME)
+            ->withColumn('GROUP_CONCAT(' . SpyCategoryAttributeTableMap::COL_NAME . ')', ProductAlternativeListItemTransfer::CATEGORIES)
+            ->withColumn(SpyProductTableMap::COL_IS_ACTIVE, ProductAlternativeListItemTransfer::STATUS)
             ->select([
-                ProductAlternativeConstants::COL_ID,
-                ProductAlternativeConstants::COL_SKU,
-                ProductAlternativeConstants::COL_NAME,
-                ProductAlternativeConstants::COL_CATEGORIES,
-                ProductAlternativeConstants::COL_STATUS,
+                ProductAlternativeListItemTransfer::ID_PRODUCT,
+                ProductAlternativeListItemTransfer::SKU,
+                ProductAlternativeListItemTransfer::NAME,
+                ProductAlternativeListItemTransfer::CATEGORIES,
+                ProductAlternativeListItemTransfer::STATUS,
             ])
-            ->groupByIdProductAlternative()
-            ->distinct()
+            ->groupByIdProduct()
             ->findOne();
 
         return $this->getFactory()
             ->createProductAlternativeMapper()
             ->mapProductConcreteDataToProductAlternativeListItemTransfer($productConcreteData);
-    }
-
-    /**
-     * @return \Orm\Zed\ProductAlternative\Persistence\SpyProductAlternativeQuery
-     */
-    protected function queryProductAlternative(): SpyProductAlternativeQuery
-    {
-        return $this->getFactory()
-            ->createProductAlternativeQuery();
     }
 }

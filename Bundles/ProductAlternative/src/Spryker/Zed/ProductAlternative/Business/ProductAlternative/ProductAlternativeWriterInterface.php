@@ -13,22 +13,6 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 interface ProductAlternativeWriterInterface
 {
     /**
-     * @param int $idProduct
-     * @param int $idProductAbstractAlternative
-     *
-     * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
-     */
-    public function createProductAbstractAlternativeResponse(int $idProduct, int $idProductAbstractAlternative): ProductAlternativeResponseTransfer;
-
-    /**
-     * @param int $idProduct
-     * @param int $idProductConcreteAlternative
-     *
-     * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
-     */
-    public function createProductConcreteAlternativeResponse(int $idProduct, int $idProductConcreteAlternative): ProductAlternativeResponseTransfer;
-
-    /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
@@ -40,5 +24,5 @@ interface ProductAlternativeWriterInterface
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
      */
-    public function deleteProductAlternativeByIdProductAlternativeResponse(int $idProductAlternative): ProductAlternativeResponseTransfer;
+    public function deleteProductAlternativeByIdProductAlternative(int $idProductAlternative): ProductAlternativeResponseTransfer;
 }

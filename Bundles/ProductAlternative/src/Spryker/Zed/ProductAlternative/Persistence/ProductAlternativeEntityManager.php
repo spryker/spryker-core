@@ -40,7 +40,7 @@ class ProductAlternativeEntityManager extends AbstractEntityManager implements P
 
         return $this->getFactory()
             ->createProductAlternativeMapper()
-            ->mapSpyProductAlternativeEntityToTransfer($productAlternativeEntity);
+            ->mapProductAlternativeTransfer($productAlternativeEntity);
     }
 
     /**
@@ -68,7 +68,7 @@ class ProductAlternativeEntityManager extends AbstractEntityManager implements P
 
         return $this->getFactory()
             ->createProductAlternativeMapper()
-            ->mapSpyProductAlternativeEntityToTransfer($productAlternativeEntity);
+            ->mapProductAlternativeTransfer($productAlternativeEntity);
     }
 
     /**

@@ -140,21 +140,6 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Retrieve product id accordingly to suggestion.
-     * - Has $idProductConcrete property set, if concrete product was found for suggestion.
-     * - Has $idProductAbstract property set, if abstract product was found for suggestion.
-     * - If no products were found for suggestion, $isSuccessful property will be set to false.
-     *
-     * @api
-     *
-     * @param string $suggestion
-     *
-     * @return \Generated\Shared\Transfer\ProductSuggestionDetailsTransfer
-     */
-    public function getSuggestionDetails(string $suggestion): ProductSuggestionDetailsTransfer;
-
-    /**
-     * Specification:
      * - Returns the SKU of an abstract product that belongs to the given SKU of a concrete product.
      * - Throws exception if no abstract product is found.
      *
@@ -746,61 +731,16 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     * - Searches for abstract products by SKU and returns associative array of abstract products.
-     * - Associative array contains items, each of one has product id as key and SKU as value.
-     * - Keys for associative array are stored in ProductConstants.
+     * - Retrieve product id accordingly to suggestion.
+     * - Has $idProductConcrete property set, if concrete product was found for suggestion.
+     * - Has $idProductAbstract property set, if abstract product was found for suggestion.
+     * - If no products were found for suggestion, $isSuccessful property will be set to false.
      *
      * @api
      *
-     * @param string $sku
-     * @param null|int $limit
+     * @param string $suggestion
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ProductSuggestionDetailsTransfer
      */
-    public function getProductAbstractDataBySku(string $sku, ?int $limit = null): array;
-
-    /**
-     * Specification:
-     * - Searches for abstract products by name and returns associative array of abstract products.
-     * - Associative array contains items, each of one has product id as key and name as value.
-     * - Keys for associative array are stored in ProductConstants.
-     *
-     * @api
-     *
-     * @param string $localizedName
-     * @param null|int $limit
-     *
-     * @return array
-     */
-    public function getProductAbstractDataByLocalizedName(string $localizedName, ?int $limit = null): array;
-
-    /**
-     * Specification:
-     * - Searches for concrete products by name and returns associative array of concrete products.
-     * - Associative array contains items, each of one has product id as key and SKU as value.
-     * - Keys for associative array are stored in ProductConstants.
-     *
-     * @api
-     *
-     * @param string $sku
-     * @param null|int $limit
-     *
-     * @return array
-     */
-    public function getProductConcreteDataBySku(string $sku, ?int $limit = null): array;
-
-    /**
-     * Specification:
-     * - Searches for concrete products by name and returns associative array of concrete products.
-     * - Associative array contains items, each of one has product id as key and name as value.
-     * - Keys for associative array are stored in ProductConstants.
-     *
-     * @api
-     *
-     * @param string $localizedName
-     * @param null|int $limit
-     *
-     * @return array
-     */
-    public function getProductConcreteDataByLocalizedName(string $localizedName, ?int $limit = null): array;
+    public function getSuggestionDetails(string $suggestion): ProductSuggestionDetailsTransfer;
 }
