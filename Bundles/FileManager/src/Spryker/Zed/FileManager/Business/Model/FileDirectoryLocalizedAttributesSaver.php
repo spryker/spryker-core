@@ -9,70 +9,49 @@ namespace Spryker\Zed\FileManager\Business\Model;
 
 use Generated\Shared\Transfer\FileDirectoryLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\FileDirectoryTransfer;
-use Orm\Zed\FileManager\Persistence\SpyFileDirectory;
-use Orm\Zed\FileManager\Persistence\SpyFileDirectoryLocalizedAttributes;
+use Spryker\Zed\FileManager\Persistence\FileManagerEntityManagerInterface;
 
 class FileDirectoryLocalizedAttributesSaver implements FileDirectoryLocalizedAttributesSaverInterface
 {
     /**
-     * @param \Orm\Zed\FileManager\Persistence\SpyFileDirectory $fileDirectory
+     * @var \Spryker\Zed\FileManager\Persistence\FileManagerEntityManagerInterface
+     */
+    protected $entityManager;
+
+    /**
+     * @param \Spryker\Zed\FileManager\Persistence\FileManagerEntityManagerInterface $entityManager
+     */
+    public function __construct(FileManagerEntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\FileDirectoryTransfer $fileDirectoryTransfer
      *
      * @return void
      */
-    public function saveFileLocalizedAttributes(SpyFileDirectory $fileDirectory, FileDirectoryTransfer $fileDirectoryTransfer)
+    public function save(FileDirectoryTransfer $fileDirectoryTransfer)
     {
-        $localizedAttributesToSave = $fileDirectoryTransfer->getFileDirectoryLocalizedAttributes();
-        $existingFileDirectoryLocalizedAttributes = $fileDirectory->getSpyFileDirectoryLocalizedAttributess()->toKeyIndex('fkLocale');
+        $fkFileDirectory = $fileDirectoryTransfer->getIdFileDirectory();
 
-        if (empty($existingFileDirectoryLocalizedAttributes)) {
-            $this->createNewLocalizedAttributes($fileDirectory, $localizedAttributesToSave);
-            return;
-        }
-
-        foreach ($localizedAttributesToSave as $localizedAttribute) {
-            $idLocale = $localizedAttribute->getLocale()->getIdLocale();
-
-            if (!empty($existingFileLocalizedAttributes[$idLocale])) {
-                $this->updateLocalizedAttribute($existingFileLocalizedAttributes[$idLocale], $localizedAttribute);
-                continue;
-            }
-
-            $this->createNewLocalizedAttributes($fileDirectory, [$localizedAttribute]);
+        foreach ($fileDirectoryTransfer->getFileDirectoryLocalizedAttributes() as $fileDirectoryLocalizedAttributesTransfer) {
+            $this->prepareFileDiretoryLocalizedAttributesTransfer($fileDirectoryLocalizedAttributesTransfer, $fkFileDirectory);
+            $this->entityManager->saveFileDirectoryLocalizedAttribute($fileDirectoryLocalizedAttributesTransfer);
         }
     }
 
     /**
-     * @param \Orm\Zed\FileManager\Persistence\SpyFileDirectory $fileDirectory
-     * @param array $localizedAttributesToSave
+     * @param \Generated\Shared\Transfer\FileDirectoryLocalizedAttributesTransfer $fileDirectoryLocalizedAttributesTransfer
+     * @param int $fkFileDirectory
      *
      * @return void
      */
-    protected function createNewLocalizedAttributes(SpyFileDirectory $fileDirectory, $localizedAttributesToSave)
+    protected function prepareFileDiretoryLocalizedAttributesTransfer(FileDirectoryLocalizedAttributesTransfer $fileDirectoryLocalizedAttributesTransfer, int $fkFileDirectory)
     {
-        foreach ($localizedAttributesToSave as $localizedAttribute) {
-            $spyLocalizedAttribute = new SpyFileDirectoryLocalizedAttributes();
-            $spyLocalizedAttribute->fromArray($localizedAttribute->toArray());
-            $spyLocalizedAttribute->setFkLocale($localizedAttribute->getLocale()->getIdLocale());
-
-            $fileDirectory->addSpyFileDirectoryLocalizedAttributes($spyLocalizedAttribute);
-            $spyLocalizedAttribute->save();
-        }
-
-        $fileDirectory->save();
-    }
-
-    /**
-     * @param \Orm\Zed\FileManager\Persistence\SpyFileDirectoryLocalizedAttributes $existingAttribute
-     * @param \Generated\Shared\Transfer\FileDirectoryLocalizedAttributesTransfer $newAttribute
-     *
-     * @return void
-     */
-    protected function updateLocalizedAttribute(
-        SpyFileDirectoryLocalizedAttributes $existingAttribute,
-        FileDirectoryLocalizedAttributesTransfer $newAttribute
-    ) {
-        $existingAttribute->fromArray($newAttribute->toArray());
-        $existingAttribute->save();
+        $fileDirectoryLocalizedAttributesTransfer->setFkFileDirectory($fkFileDirectory);
+        $fileDirectoryLocalizedAttributesTransfer->setFkLocale(
+            $fileDirectoryLocalizedAttributesTransfer->getLocale()->getIdLocale()
+        );
     }
 }

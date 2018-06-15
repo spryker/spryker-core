@@ -8,6 +8,8 @@
 namespace Spryker\Zed\FileManager\Persistence\Mapper;
 
 use ArrayObject;
+use Generated\Shared\Transfer\FileDirectoryLocalizedAttributesTransfer;
+use Generated\Shared\Transfer\FileDirectoryTransfer;
 use Generated\Shared\Transfer\FileInfoTransfer;
 use Generated\Shared\Transfer\FileLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\FileTransfer;
@@ -15,6 +17,8 @@ use Generated\Shared\Transfer\MimeTypeTransfer;
 use Generated\Shared\Transfer\SpyFileEntityTransfer;
 use Generated\Shared\Transfer\SpyFileInfoEntityTransfer;
 use Orm\Zed\FileManager\Persistence\SpyFile;
+use Orm\Zed\FileManager\Persistence\SpyFileDirectory;
+use Orm\Zed\FileManager\Persistence\SpyFileDirectoryLocalizedAttributes;
 use Orm\Zed\FileManager\Persistence\SpyFileInfo;
 use Orm\Zed\FileManager\Persistence\SpyFileLocalizedAttributes;
 use Orm\Zed\FileManager\Persistence\SpyMimeType;
@@ -111,6 +115,32 @@ class FileManagerMapper implements FileManagerMapperInterface
         );
 
         return $fileLocalizedAttributes;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FileDirectoryTransfer $fileDirectoryTransfer
+     * @param \Orm\Zed\FileManager\Persistence\SpyFileDirectory $fileDirectory
+     *
+     * @return \Orm\Zed\FileManager\Persistence\SpyFileDirectory
+     */
+    public function mapFileDirectoryTransferToEntity(FileDirectoryTransfer $fileDirectoryTransfer, SpyFileDirectory $fileDirectory)
+    {
+        $fileDirectory->fromArray($fileDirectoryTransfer->toArray());
+
+        return $fileDirectory;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FileDirectoryLocalizedAttributesTransfer $fileDirectoryLocalizedAttributesTransfer
+     * @param \Orm\Zed\FileManager\Persistence\SpyFileDirectoryLocalizedAttributes $fileDirectoryLocalizedAttributes
+     *
+     * @return \Orm\Zed\FileManager\Persistence\SpyFileDirectoryLocalizedAttributes
+     */
+    public function mapFileDirectoryLocalizedAttributesTransferToEntity(FileDirectoryLocalizedAttributesTransfer $fileDirectoryLocalizedAttributesTransfer, SpyFileDirectoryLocalizedAttributes $fileDirectoryLocalizedAttributes)
+    {
+        $fileDirectoryLocalizedAttributes->fromArray($fileDirectoryLocalizedAttributesTransfer->toArray());
+
+        return $fileDirectoryLocalizedAttributes;
     }
 
     /**

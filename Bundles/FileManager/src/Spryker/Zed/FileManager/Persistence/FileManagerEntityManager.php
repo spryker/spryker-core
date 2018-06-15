@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\FileManager\Persistence;
 
+use Generated\Shared\Transfer\FileDirectoryLocalizedAttributesTransfer;
+use Generated\Shared\Transfer\FileDirectoryTransfer;
 use Generated\Shared\Transfer\FileInfoTransfer;
 use Generated\Shared\Transfer\FileLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\FileTransfer;
@@ -85,7 +87,6 @@ class FileManagerEntityManager extends AbstractEntityManager implements FileMana
             ->mapFileInfoTransferToEntity($fileInfoTransfer, $fileInfoEntity);
 
         $fileInfoEntity->save();
-
         $fileInfoTransfer->setIdFileInfo($fileInfoEntity->getIdFileInfo());
 
         return $fileInfoTransfer;
@@ -117,7 +118,7 @@ class FileManagerEntityManager extends AbstractEntityManager implements FileMana
      *
      * @return \Generated\Shared\Transfer\FileLocalizedAttributesTransfer
      */
-    public function saveLocalizedFileAttribute(FileLocalizedAttributesTransfer $fileLocalizedAttributesTransfer)
+    public function saveFileLocalizedAttribute(FileLocalizedAttributesTransfer $fileLocalizedAttributesTransfer)
     {
         $fileLocalizedAttributesEntity = $this->getFactory()
             ->createFileLocalizedAttributesQuery()
@@ -138,6 +139,53 @@ class FileManagerEntityManager extends AbstractEntityManager implements FileMana
     }
 
     /**
+     * @param \Generated\Shared\Transfer\FileDirectoryTransfer $fileDirectoryTransfer
+     *
+     * @return \Generated\Shared\Transfer\FileDirectoryTransfer
+     */
+    public function saveFileDirectory(FileDirectoryTransfer $fileDirectoryTransfer)
+    {
+        $fileDirectoryEntity = $this->getFactory()
+            ->createFileDirectoryQuery()
+            ->filterByIdFileDirectory($fileDirectoryTransfer->getIdFileDirectory())
+            ->findOneOrCreate();
+
+        $fileDirectoryEntity = $this->getFactory()
+            ->createFileManagerMapper()
+            ->mapFileDirectoryTransferToEntity($fileDirectoryTransfer, $fileDirectoryEntity);
+
+        $fileDirectoryEntity->save();
+        $fileDirectoryTransfer->setIdFileDirectory($fileDirectoryEntity->getIdFileDirectory());
+
+        return $fileDirectoryTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FileDirectoryLocalizedAttributesTransfer $fileDirectoryLocalizedAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\FileDirectoryLocalizedAttributesTransfer
+     */
+    public function saveFileDirectoryLocalizedAttribute(FileDirectoryLocalizedAttributesTransfer $fileDirectoryLocalizedAttributesTransfer)
+    {
+        $fileDirectoryLocalizedAttributesEntity = $this->getFactory()
+            ->createFileDirectoryLocalizedAttributesQuery()
+            ->filterByIdFileDirectoryLocalizedAttributes($fileDirectoryLocalizedAttributesTransfer->getIdFileDirectoryLocalizedAttributes())
+            ->findOneOrCreate();
+
+        $fileDirectoryLocalizedAttributesEntity = $this->getFactory()
+            ->createFileManagerMapper()
+            ->mapFileDirectoryLocalizedAttributesTransferToEntity($fileDirectoryLocalizedAttributesTransfer, $fileDirectoryLocalizedAttributesEntity);
+
+        $fileDirectoryLocalizedAttributesEntity->save();
+
+        $fileDirectoryLocalizedAttributesTransfer->setIdFileDirectoryLocalizedAttributes(
+            $fileDirectoryLocalizedAttributesEntity->getIdFileDirectoryLocalizedAttributes()
+        );
+
+        return $fileDirectoryLocalizedAttributesTransfer;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\MimeTypeTransfer $mimeTypeTransfer
      *
      * @return \Generated\Shared\Transfer\MimeTypeTransfer
@@ -153,8 +201,8 @@ class FileManagerEntityManager extends AbstractEntityManager implements FileMana
             ->createFileManagerMapper()
             ->mapMimeTypeTransferToEntity($mimeTypeTransfer, $mimeTypeEntity);
 
-        $mimeTypeTransfer->setIdMimeType($mimeTypeEntity->getIdMimeType());
         $mimeTypeEntity->save();
+        $mimeTypeTransfer->setIdMimeType($mimeTypeEntity->getIdMimeType());
 
         return $mimeTypeTransfer;
     }

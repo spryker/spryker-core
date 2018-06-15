@@ -9,22 +9,23 @@ namespace Spryker\Zed\FileManager\Business\Model;
 
 use Generated\Shared\Transfer\FileDirectoryTransfer;
 use Orm\Zed\FileManager\Persistence\SpyFileDirectory;
-use Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
+use Spryker\Zed\FileManager\Persistence\FileManagerEntityManagerInterface;
+use Spryker\Zed\FileManager\Persistence\FileManagerRepositoryInterface;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 class FileDirectorySaver implements FileDirectorySaverInterface
 {
-    use DatabaseTransactionHandlerTrait;
+    use TransactionTrait;
 
     /**
-     * @var \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface
+     * @var \Spryker\Zed\FileManager\Persistence\FileManagerEntityManagerInterface
      */
-    protected $queryContainer;
+    protected $entityManager;
 
     /**
-     * @var \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface
+     * @var \Spryker\Zed\FileManager\Persistence\FileManagerRepositoryInterface
      */
-    protected $fileLoader;
+    protected $repository;
 
     /**
      * @var \Spryker\Zed\FileManager\Business\Model\FileDirectoryLocalizedAttributesSaverInterface
@@ -32,17 +33,17 @@ class FileDirectorySaver implements FileDirectorySaverInterface
     protected $attributesSaver;
 
     /**
-     * @param \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface $fileLoader
+     * @param \Spryker\Zed\FileManager\Persistence\FileManagerEntityManagerInterface $entityManager
+     * @param \Spryker\Zed\FileManager\Persistence\FileManagerRepositoryInterface $repository
      * @param \Spryker\Zed\FileManager\Business\Model\FileDirectoryLocalizedAttributesSaverInterface $attributesSaver
      */
     public function __construct(
-        FileManagerQueryContainerInterface $queryContainer,
-        FileLoaderInterface $fileLoader,
+        FileManagerEntityManagerInterface $entityManager,
+        FileManagerRepositoryInterface $repository,
         FileDirectoryLocalizedAttributesSaverInterface $attributesSaver
     ) {
-        $this->queryContainer = $queryContainer;
-        $this->fileLoader = $fileLoader;
+        $this->entityManager = $entityManager;
+        $this->repository = $repository;
         $this->attributesSaver = $attributesSaver;
     }
 
@@ -53,29 +54,9 @@ class FileDirectorySaver implements FileDirectorySaverInterface
      */
     public function save(FileDirectoryTransfer $fileDirectoryTransfer)
     {
-        if ($this->checkFileDirectoryExists($fileDirectoryTransfer)) {
-            return $this->update($fileDirectoryTransfer);
-        }
-
-        return $this->create($fileDirectoryTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FileDirectoryTransfer $fileDirectoryTransfer
-     *
-     * @return bool
-     */
-    protected function checkFileDirectoryExists(FileDirectoryTransfer $fileDirectoryTransfer)
-    {
-        $fileDirectoryId = $fileDirectoryTransfer->getIdFileDirectory();
-
-        if ($fileDirectoryId == null) {
-            return false;
-        }
-
-        $file = $this->fileLoader->getFileDirectory($fileDirectoryId);
-
-        return $file !== null;
+        return $this->getTransactionHandler()->handleTransaction(function () use ($fileDirectoryTransfer) {
+            return $this->executeSaveTransaction($fileDirectoryTransfer);
+        });
     }
 
     /**
@@ -83,23 +64,12 @@ class FileDirectorySaver implements FileDirectorySaverInterface
      *
      * @return int
      */
-    protected function update(FileDirectoryTransfer $fileDirectoryTransfer)
+    protected function executeSaveTransaction(FileDirectoryTransfer $fileDirectoryTransfer)
     {
-        $fileDirectory = $this->fileLoader->getFileDirectory($fileDirectoryTransfer->getIdFileDirectory());
+        $this->entityManager->saveFileDirectory($fileDirectoryTransfer);
+        $this->attributesSaver->save($fileDirectoryTransfer);
 
-        return $this->saveFileDirectory($fileDirectory, $fileDirectoryTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FileDirectoryTransfer $fileDirectoryTransfer
-     *
-     * @return int
-     */
-    protected function create(FileDirectoryTransfer $fileDirectoryTransfer)
-    {
-        $fileDirectory = new SpyFileDirectory();
-
-        return $this->saveFileDirectory($fileDirectory, $fileDirectoryTransfer);
+        return $fileDirectoryTransfer->getIdFileDirectory();
     }
 
     /**

@@ -51,8 +51,8 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
     public function createFileDirectorySaver()
     {
         return new FileDirectorySaver(
-            $this->getQueryContainer(),
-            $this->createFileLoader(),
+            $this->getEntityManager(),
+            $this->getRepository(),
             $this->createFileDirectoryLocalizedAttributesSaver()
         );
     }
@@ -106,7 +106,7 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
      */
     public function createFileDirectoryLocalizedAttributesSaver()
     {
-        return new FileDirectoryLocalizedAttributesSaver();
+        return new FileDirectoryLocalizedAttributesSaver($this->getEntityManager());
     }
 
     /**

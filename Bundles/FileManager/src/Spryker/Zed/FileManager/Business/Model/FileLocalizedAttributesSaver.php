@@ -37,7 +37,7 @@ class FileLocalizedAttributesSaver implements FileLocalizedAttributesSaverInterf
 
         foreach ($fileManagerDataTransfer->getFileLocalizedAttributes() as $fileLocalizedAttributesTransfer) {
             $this->prepareFileLocalizedAttributesTransfer($fileLocalizedAttributesTransfer, $fkFile);
-            $this->entityManager->saveLocalizedFileAttribute($fileLocalizedAttributesTransfer);
+            $this->entityManager->saveFileLocalizedAttribute($fileLocalizedAttributesTransfer);
         }
     }
 
