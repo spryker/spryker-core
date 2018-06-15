@@ -21,23 +21,16 @@ interface DatasetSaverInterface
     public function save(DatasetTransfer $datasetTransfer, ?DatasetFilePathTransfer $filePathTransfer = null): void;
 
     /**
-     * @param int $idDataset
+     * @param \Generated\Shared\Transfer\DatasetTransfer $datasetTransfer
      *
      * @return void
      */
-    public function activateById($idDataset): void;
+    public function activateDataset(DatasetTransfer $datasetTransfer): void;
 
     /**
-     * @param int $idDataset
+     * @param \Generated\Shared\Transfer\DatasetTransfer $datasetTransfer
      *
      * @return void
      */
-    public function deactivateById($idDataset): void;
-
-    /**
-     * @param int $idDataset
-     *
-     * @return void
-     */
-    public function delete($idDataset): void;
+    public function delete(DatasetTransfer $datasetTransfer): void;
 }

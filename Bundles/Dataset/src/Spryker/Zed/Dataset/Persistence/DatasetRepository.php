@@ -19,38 +19,38 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 class DatasetRepository extends AbstractRepository implements DatasetRepositoryInterface
 {
     /**
-     * @param int $idDataset
+     * @param \Generated\Shared\Transfer\DatasetTransfer $datasetTransfer
      *
      * @return bool
      */
-    public function existsDatasetById($idDataset): bool
+    public function existsDatasetById(DatasetTransfer $datasetTransfer): bool
     {
-        $count = $this->getFactory()->createSpyDatasetRowColumnValueQuery()->filterByFkDataset($idDataset)->count();
+        $count = $this->getFactory()->createSpyDatasetRowColumnValueQuery()->filterByFkDataset($datasetTransfer->getIdDataset())->count();
 
         return ($count > 0);
     }
 
     /**
-     * @param string $name
+     * @param \Generated\Shared\Transfer\DatasetTransfer $datasetTransfer
      *
      * @return bool
      */
-    public function existsDatasetByName($name): bool
+    public function existsDatasetByName(DatasetTransfer $datasetTransfer): bool
     {
-        return ($this->getFactory()->createDatasetQuery()->filterByName($name)->count() > 0);
+        return ($this->getFactory()->createDatasetQuery()->filterByName($datasetTransfer->getName())->count() > 0);
     }
 
     /**
-     * @param int $idDataset
+     * @param \Generated\Shared\Transfer\DatasetTransfer $datasetTransfer
      *
      * @throws \Spryker\Zed\Dataset\Business\Exception\DatasetNotFoundException
      *
      * @return \Generated\Shared\Transfer\DatasetTransfer
      */
-    public function getDatasetByIdWithRelation($idDataset): DatasetTransfer
+    public function getDatasetByIdWithRelation(DatasetTransfer $datasetTransfer): DatasetTransfer
     {
         $datasetEntity = $this->joinDatasetRelations(
-            $this->getFactory()->createDatasetQuery()->filterByIdDataset($idDataset)
+            $this->getFactory()->createDatasetQuery()->filterByIdDataset($datasetTransfer->requireIdDataset()->getIdDataset())
         )->find()->getFirst();
 
         if (!$datasetEntity) {
@@ -61,16 +61,16 @@ class DatasetRepository extends AbstractRepository implements DatasetRepositoryI
     }
 
     /**
-     * @param string $datasetName
+     * @param \Generated\Shared\Transfer\DatasetTransfer $datasetTransfer
      *
      * @throws \Spryker\Zed\Dataset\Business\Exception\DatasetNotFoundException
      *
      * @return \Generated\Shared\Transfer\DatasetTransfer
      */
-    public function getDatasetByNameWithRelation($datasetName): DatasetTransfer
+    public function getDatasetByNameWithRelation(DatasetTransfer $datasetTransfer): DatasetTransfer
     {
         $datasetEntity = $this->joinDatasetRelations(
-            $this->getFactory()->createDatasetQuery()->filterByName($datasetName)
+            $this->getFactory()->createDatasetQuery()->filterByName($datasetTransfer->requireName()->getName())
         )->find()->getFirst();
 
         if (!$datasetEntity) {

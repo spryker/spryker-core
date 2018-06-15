@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Dataset\Communication\Controller;
 
+use Generated\Shared\Transfer\DatasetFilenameTransfer;
 use Generated\Shared\Transfer\DatasetTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,7 +34,7 @@ class DownloadController extends AbstractController
     public function indexAction(Request $request)
     {
         $idDataset = $this->castId($request->query->get(static::URL_PARAM_ID_DATASET));
-        $datasetTransfer = $this->getFacade()->getDatasetModelById($idDataset);
+        $datasetTransfer = $this->getFacade()->getDatasetModelById((new DatasetTransfer())->setIdDataset($idDataset));
 
         return $this->createResponse($datasetTransfer);
     }
@@ -49,7 +50,10 @@ class DownloadController extends AbstractController
         $response = new Response($content);
         $disposition = $response->headers->makeDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-            sprintf('%s.%s', $this->getFacade()->getFilenameByDatasetName($datasetTransfer->getName())->getFilename(), static::FILE_EXTENTION)
+            sprintf('%s.%s', $this->getFacade()->getFilenameByDatasetName(
+                (new DatasetFilenameTransfer())->setFilename($datasetTransfer->getName())
+            )
+                ->getFilename(), static::FILE_EXTENTION)
         );
         $response->headers->set(static::CONTENT_DISPOSITION, $disposition);
         $response->headers->set(static::CONTENT_TYPE, static::CONTENT_TYPE_CSV);

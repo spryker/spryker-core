@@ -12,9 +12,9 @@ use Generated\Shared\Transfer\DatasetFilenameTransfer;
 interface ResolverPathInterface
 {
     /**
-     * @param string $datasetName
+     * @param \Generated\Shared\Transfer\DatasetFilenameTransfer $datasetFilenameTransfer
      *
      * @return \Generated\Shared\Transfer\DatasetFilenameTransfer
      */
-    public function getFilenameByDatasetName($datasetName): DatasetFilenameTransfer;
+    public function getFilenameByDatasetName(DatasetFilenameTransfer $datasetFilenameTransfer): DatasetFilenameTransfer;
 }

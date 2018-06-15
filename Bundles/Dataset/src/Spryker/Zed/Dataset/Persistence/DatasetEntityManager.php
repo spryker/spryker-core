@@ -27,29 +27,28 @@ class DatasetEntityManager extends AbstractEntityManager implements DatasetEntit
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * @param int $idDataset
-     * @param bool $isActive
+     * @param \Generated\Shared\Transfer\DatasetTransfer $datasetTransfer
      *
      * @return void
      */
-    public function updateIsActiveByIdDataset($idDataset, $isActive): void
+    public function updateIsActiveDataset(DatasetTransfer $datasetTransfer): void
     {
-        $this->handleDatabaseTransaction(function () use ($idDataset, $isActive) {
-            $datasetEntity = $this->findDatasetById($idDataset);
-            $datasetEntity->setIsActive($isActive);
+        $this->handleDatabaseTransaction(function () use ($datasetTransfer) {
+            $datasetEntity = $this->findDatasetById($datasetTransfer->requireIdDataset()->getIdDataset());
+            $datasetEntity->setIsActive($datasetTransfer->requireIsActive()->getIsActive());
             $datasetEntity->save();
         });
     }
 
     /**
-     * @param int $idDataset
+     * @param \Generated\Shared\Transfer\DatasetTransfer $datasetTransfer
      *
      * @return void
      */
-    public function delete($idDataset): void
+    public function delete(DatasetTransfer $datasetTransfer): void
     {
-        $this->handleDatabaseTransaction(function () use ($idDataset) {
-            $datasetEntity = $this->findDatasetById($idDataset);
+        $this->handleDatabaseTransaction(function () use ($datasetTransfer) {
+            $datasetEntity = $this->findDatasetById($datasetTransfer->requireIdDataset()->getIdDataset());
             $datasetEntity->delete();
         });
     }

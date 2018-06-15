@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\Dataset\Business\Model;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DatasetFilenameTransfer;
-use Spryker\Zed\Dataset\Business\Resolver\ResolverPath;
 
 /**
  * Auto-generated group annotations
@@ -26,17 +25,33 @@ class ResolverPathTest extends Unit
     const DEFAULT_FILENAME = 'dataset';
 
     /**
+     * @var \SprykerTest\Zed\Dataset\DatasetBusinessTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
     public function testGetFilenameByDatasetNameWillReturnDefaultFilename()
     {
-        $resolverPath = $this->createDatasetResolverPath();
-
-        $this->assertEquals($resolverPath->getFilenameByDatasetName(null)->getFilename(), static::DEFAULT_FILENAME);
-        $this->assertEquals($resolverPath->getFilenameByDatasetName('')->getFilename(), static::DEFAULT_FILENAME);
-        $this->assertEquals($resolverPath->getFilenameByDatasetName('.')->getFilename(), static::DEFAULT_FILENAME);
-        $this->assertEquals($resolverPath->getFilenameByDatasetName('.!+*.')->getFilename(), static::DEFAULT_FILENAME);
-        $this->assertEquals($resolverPath->getFilenameByDatasetName('%    % .. ... ?=')->getFilename(), static::DEFAULT_FILENAME);
+        $this->assertEquals(
+            $this->tester->getLocator()->dataset()->facade()->getFilenameByDatasetName(
+                $this->buildDatasetFilenameTransfer('.')
+            )->getFilename(),
+            static::DEFAULT_FILENAME
+        );
+        $this->assertEquals(
+            $this->tester->getLocator()->dataset()->facade()->getFilenameByDatasetName(
+                $this->buildDatasetFilenameTransfer('.!+*.')
+            )->getFilename(),
+            static::DEFAULT_FILENAME
+        );
+        $this->assertEquals(
+            $this->tester->getLocator()->dataset()->facade()->getFilenameByDatasetName(
+                $this->buildDatasetFilenameTransfer('%    % .. ... ?=')
+            )->getFilename(),
+            static::DEFAULT_FILENAME
+        );
     }
 
     /**
@@ -44,32 +59,42 @@ class ResolverPathTest extends Unit
      */
     public function testGetFilenameByDatasetNameWillReturnValidFilename()
     {
-        $resolverPath = $this->createDatasetResolverPath();
-
-        $this->assertEquals($resolverPath->getFilenameByDatasetName(' Extra         Spaces   123 ')->getFilename(), 'Extra Spaces 123');
-        $this->assertEquals($resolverPath->getFilenameByDatasetName('Bad/Good Example')->getFilename(), 'BadGood Example');
-        $this->assertEquals($resolverPath->getFilenameByDatasetName('already-valid-name')->getFilename(), 'already-valid-name');
-        $this->assertEquals($resolverPath->getFilenameByDatasetName('Unacceptable Symbols / %?.. .?. ! \ ')->getFilename(), 'Unacceptable Symbols');
+        $this->assertEquals(
+            $this->tester->getLocator()->dataset()->facade()->getFilenameByDatasetName(
+                $this->buildDatasetFilenameTransfer(' Extra         Spaces   123 ')
+            )->getFilename(),
+            'Extra Spaces 123'
+        );
+        $this->assertEquals(
+            $this->tester->getLocator()->dataset()->facade()->getFilenameByDatasetName(
+                $this->buildDatasetFilenameTransfer('Bad/Good Example')
+            )->getFilename(),
+            'BadGood Example'
+        );
+        $this->assertEquals(
+            $this->tester->getLocator()->dataset()->facade()->getFilenameByDatasetName(
+                $this->buildDatasetFilenameTransfer('already-valid-name')
+            )->getFilename(),
+            'already-valid-name'
+        );
+        $this->assertEquals(
+            $this->tester->getLocator()->dataset()->facade()->getFilenameByDatasetName(
+                $this->buildDatasetFilenameTransfer('Unacceptable Symbols / %?.. .?. ! \ ')
+            )->getFilename(),
+            'Unacceptable Symbols'
+        );
     }
 
     /**
      * @param string $filename
      *
-     * @return string
+     * @return \Generated\Shared\Transfer\DatasetFilenameTransfer
      */
     protected function buildDatasetFilenameTransfer($filename)
     {
         $datasetFilenameTransfer = new DatasetFilenameTransfer();
         $datasetFilenameTransfer->setFilename($filename);
 
-        return $filename;
-    }
-
-    /**
-     * @return \Spryker\Zed\Dataset\Business\Resolver\ResolverPath
-     */
-    protected function createDatasetResolverPath()
-    {
-        return new ResolverPath();
+        return $datasetFilenameTransfer;
     }
 }

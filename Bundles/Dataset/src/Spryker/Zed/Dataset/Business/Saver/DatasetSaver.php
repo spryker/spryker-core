@@ -56,32 +56,22 @@ class DatasetSaver implements DatasetSaverInterface
     }
 
     /**
-     * @param int $idDataset
+     * @param \Generated\Shared\Transfer\DatasetTransfer $datasetTransfer
      *
      * @return void
      */
-    public function activateById($idDataset): void
+    public function activateDataset(DatasetTransfer $datasetTransfer): void
     {
-        $this->entityManager->updateIsActiveByIdDataset($idDataset, true);
+        $this->entityManager->updateIsActiveDataset($datasetTransfer);
     }
 
     /**
-     * @param int $idDataset
+     * @param \Generated\Shared\Transfer\DatasetTransfer $datasetTransfer
      *
      * @return void
      */
-    public function deactivateById($idDataset): void
+    public function delete(DatasetTransfer $datasetTransfer): void
     {
-        $this->entityManager->updateIsActiveByIdDataset($idDataset, false);
-    }
-
-    /**
-     * @param int $idDataset
-     *
-     * @return void
-     */
-    public function delete($idDataset): void
-    {
-        $this->entityManager->delete($idDataset);
+        $this->entityManager->delete($datasetTransfer);
     }
 }
