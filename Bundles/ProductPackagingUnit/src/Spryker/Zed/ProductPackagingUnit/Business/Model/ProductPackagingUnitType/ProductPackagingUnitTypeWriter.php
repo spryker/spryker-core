@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitTy
 
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 use Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitEntityManagerInterface;
+use Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface;
 
 class ProductPackagingUnitTypeWriter implements ProductPackagingUnitTypeWriterInterface
 {
@@ -18,19 +19,27 @@ class ProductPackagingUnitTypeWriter implements ProductPackagingUnitTypeWriterIn
     protected $entityManager;
 
     /**
+     * @var \Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface
+     */
+    protected $repository;
+
+    /**
      * @var \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeTranslationsWriterInterface
      */
     protected $translationWriter;
 
     /**
      * @param \Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitEntityManagerInterface $entityManager
+     * @param \Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface $repository
      * @param \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeTranslationsWriterInterface $translationWriter
      */
     public function __construct(
         ProductPackagingUnitEntityManagerInterface $entityManager,
+        ProductPackagingUnitRepositoryInterface $repository,
         ProductPackagingUnitTypeTranslationsWriterInterface $translationWriter
     ) {
         $this->entityManager = $entityManager;
+        $this->repository = $repository;
         $this->translationWriter = $translationWriter;
     }
 
@@ -74,8 +83,15 @@ class ProductPackagingUnitTypeWriter implements ProductPackagingUnitTypeWriterIn
     ): bool {
         $productPackagingUnitTypeTransfer->requireIdProductPackagingUnitType();
 
-        $this->translationWriter->deleteTranslations($productPackagingUnitTypeTransfer);
+        if ($this->repository
+                ->getCountProductPackagingUnitsForTypeById(
+                    $productPackagingUnitTypeTransfer->getIdProductPackagingUnitType()
+                ) <= 0) {
+            $this->translationWriter->deleteTranslations($productPackagingUnitTypeTransfer);
 
-        return $this->entityManager->deleteProductPackagingUnitType($productPackagingUnitTypeTransfer);
+            return $this->entityManager->deleteProductPackagingUnitType($productPackagingUnitTypeTransfer);
+        }
+
+        return false;
     }
 }

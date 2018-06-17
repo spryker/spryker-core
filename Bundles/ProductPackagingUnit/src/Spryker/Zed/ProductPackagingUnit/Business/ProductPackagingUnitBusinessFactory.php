@@ -58,6 +58,7 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductPackagingUnitTypeWriter(
             $this->getEntityManager(),
+            $this->getRepository(),
             $this->createProductPackagingUnitTypeTranslationsWriter()
         );
     }
