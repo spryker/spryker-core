@@ -55,8 +55,6 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
     public function getProductPackagingUnitTypeByName(
         ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
     ): ProductPackagingUnitTypeTransfer {
-        $productPackagingUnitTypeTransfer->requireName();
-
         return $this->getFactory()
             ->createProductPackagingUnitTypeReader()
             ->getProductPackagingUnitTypeByName($productPackagingUnitTypeTransfer);

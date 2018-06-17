@@ -8,10 +8,14 @@
 namespace Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType;
 
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
+use Spryker\Zed\ProductPackagingUnit\Business\Exception\ProductPackagingUnitTypeNotFoundException;
 use Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface;
 
 class ProductPackagingUnitTypeReader implements ProductPackagingUnitTypeReaderInterface
 {
+    protected const ERROR_NO_PRODUCT_PACKAGING_UNIT_TYPE_BY_NAME = 'Product packaging unit type was not found for name "%s".';
+    protected const ERROR_NO_PRODUCT_PACKAGING_UNIT_TYPE_BY_ID = 'Product packaging unit type was not found for ID "%d".';
+
     /**
      * @var \Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface
      */
@@ -37,14 +41,23 @@ class ProductPackagingUnitTypeReader implements ProductPackagingUnitTypeReaderIn
     /**
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
+     * @throws \Spryker\Zed\ProductPackagingUnit\Business\Exception\ProductPackagingUnitTypeNotFoundException
+     *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
      */
     public function getProductPackagingUnitTypeByName(
         ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
     ): ProductPackagingUnitTypeTransfer {
         $productPackagingUnitTypeTransfer->requireName();
+        $productPackagingUnitTypeName = $productPackagingUnitTypeTransfer->getName();
+        $productPackagingUnitTypeTransfer = $this->repository->getProductPackagingUnitTypeByName($productPackagingUnitTypeName);
 
-        $productPackagingUnitTypeTransfer = $this->repository->getProductPackagingUnitTypeByName($productPackagingUnitTypeTransfer->getName());
+        if ($productPackagingUnitTypeTransfer === null) {
+            throw new ProductPackagingUnitTypeNotFoundException(
+                sprintf(static::ERROR_NO_PRODUCT_PACKAGING_UNIT_TYPE_BY_NAME, $productPackagingUnitTypeName)
+            );
+        }
+
         $productPackagingUnitTypeTransfer = $this->translationsReader->hydrateTranslations($productPackagingUnitTypeTransfer);
 
         return $productPackagingUnitTypeTransfer;
@@ -53,14 +66,23 @@ class ProductPackagingUnitTypeReader implements ProductPackagingUnitTypeReaderIn
     /**
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
+     * @throws \Spryker\Zed\ProductPackagingUnit\Business\Exception\ProductPackagingUnitTypeNotFoundException
+     *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
      */
     public function getProductPackagingUnitTypeById(
         ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
     ): ProductPackagingUnitTypeTransfer {
         $productPackagingUnitTypeTransfer->requireIdProductPackagingUnitType();
+        $productPackagingUnitTypeId = $productPackagingUnitTypeTransfer->getIdProductPackagingUnitType();
+        $productPackagingUnitTypeTransfer = $this->repository->getProductPackagingUnitTypeById($productPackagingUnitTypeId);
 
-        $productPackagingUnitTypeTransfer = $this->repository->getProductPackagingUnitTypeById($productPackagingUnitTypeTransfer->getIdProductPackagingUnitType());
+        if ($productPackagingUnitTypeTransfer === null) {
+            throw new ProductPackagingUnitTypeNotFoundException(
+                sprintf(static::ERROR_NO_PRODUCT_PACKAGING_UNIT_TYPE_BY_ID, $productPackagingUnitTypeId)
+            );
+        }
+
         $productPackagingUnitTypeTransfer = $this->translationsReader->hydrateTranslations($productPackagingUnitTypeTransfer);
 
         return $productPackagingUnitTypeTransfer;

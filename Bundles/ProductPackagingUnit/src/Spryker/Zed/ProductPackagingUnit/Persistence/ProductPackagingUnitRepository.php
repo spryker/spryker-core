@@ -18,47 +18,51 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
     /**
      * @param string $productPackagingUnitTypeName
      *
-     * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer|null
      */
     public function getProductPackagingUnitTypeByName(
         string $productPackagingUnitTypeName
-    ): ProductPackagingUnitTypeTransfer {
+    ): ?ProductPackagingUnitTypeTransfer {
         $productPackagingUnitTypeEntity = $this->getFactory()
             ->createProductPackagingUnitTypeQuery()
             ->filterByName($productPackagingUnitTypeName)
             ->findOne();
 
-        $productPackagingUnitTypeTransfer = $this->getFactory()
-            ->createProductPackagingUnitTypeMapper()
-            ->mapProductPackagingUnitTypeTransfer(
-                $productPackagingUnitTypeEntity,
-                new ProductPackagingUnitTypeTransfer()
-            );
+        if ($productPackagingUnitTypeEntity) {
+            return $this->getFactory()
+                ->createProductPackagingUnitTypeMapper()
+                ->mapProductPackagingUnitTypeTransfer(
+                    $productPackagingUnitTypeEntity,
+                    new ProductPackagingUnitTypeTransfer()
+                );
+        }
 
-        return $productPackagingUnitTypeTransfer;
+        return null;
     }
 
     /**
      * @param int $productPackagingUnitTypeId
      *
-     * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer|null
      */
     public function getProductPackagingUnitTypeById(
         int $productPackagingUnitTypeId
-    ): ProductPackagingUnitTypeTransfer {
+    ): ?ProductPackagingUnitTypeTransfer {
         $productPackagingUnitTypeEntity = $this->getFactory()
             ->createProductPackagingUnitTypeQuery()
             ->filterByIdProductPackagingUnitType($productPackagingUnitTypeId)
             ->findOne();
 
-        $productPackagingUnitTypeTransfer = $this->getFactory()
-            ->createProductPackagingUnitTypeMapper()
-            ->mapProductPackagingUnitTypeTransfer(
-                $productPackagingUnitTypeEntity,
-                new ProductPackagingUnitTypeTransfer()
-            );
+        if ($productPackagingUnitTypeEntity) {
+            return $this->getFactory()
+                ->createProductPackagingUnitTypeMapper()
+                ->mapProductPackagingUnitTypeTransfer(
+                    $productPackagingUnitTypeEntity,
+                    new ProductPackagingUnitTypeTransfer()
+                );
+        }
 
-        return $productPackagingUnitTypeTransfer;
+        return null;
     }
 
     /**

@@ -14,6 +14,8 @@ interface ProductPackagingUnitTypeReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
+     * @throws \Spryker\Zed\ProductPackagingUnit\Business\Exception\ProductPackagingUnitTypeNotFoundException
+     *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
      */
     public function getProductPackagingUnitTypeByName(
@@ -22,6 +24,8 @@ interface ProductPackagingUnitTypeReaderInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+     *
+     * @throws \Spryker\Zed\ProductPackagingUnit\Business\Exception\ProductPackagingUnitTypeNotFoundException
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
      */

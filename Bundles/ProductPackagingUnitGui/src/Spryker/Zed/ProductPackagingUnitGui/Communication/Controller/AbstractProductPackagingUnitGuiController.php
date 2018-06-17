@@ -33,11 +33,11 @@ abstract class AbstractProductPackagingUnitGuiController extends AbstractControl
     /**
      * @param int $idProductPackagingUnitType
      *
-     * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer|null
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
      */
     protected function findProductPackagingUnitTypeById(
         int $idProductPackagingUnitType
-    ): ?ProductPackagingUnitTypeTransfer {
+    ): ProductPackagingUnitTypeTransfer {
         $productPackagingUnitTypeTransfer = (new ProductPackagingUnitTypeTransfer())
             ->setIdProductPackagingUnitType($idProductPackagingUnitType);
 

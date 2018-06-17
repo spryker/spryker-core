@@ -14,20 +14,20 @@ interface ProductPackagingUnitRepositoryInterface
     /**
      * @param string $productPackagingUnitTypeName
      *
-     * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer|null
      */
     public function getProductPackagingUnitTypeByName(
         string $productPackagingUnitTypeName
-    ): ProductPackagingUnitTypeTransfer;
+    ): ?ProductPackagingUnitTypeTransfer;
 
     /**
      * @param int $productPackagingUnitTypeId
      *
-     * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer|null
      */
     public function getProductPackagingUnitTypeById(
         int $productPackagingUnitTypeId
-    ): ProductPackagingUnitTypeTransfer;
+    ): ?ProductPackagingUnitTypeTransfer;
 
     /**
      * @param int $productPackagingUnitTypeId
