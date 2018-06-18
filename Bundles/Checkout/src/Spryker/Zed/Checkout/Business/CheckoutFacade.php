@@ -41,6 +41,8 @@ class CheckoutFacade extends AbstractFacade implements CheckoutFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\MessageTransfer $messageTransfer
+     *
+     * @return void
      */
     public function addCheckoutErrorMessage(MessageTransfer $messageTransfer): void
     {
