@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
+use Orm\Zed\Product\Persistence\SpyProduct;
 use Propel\Runtime\Collection\ObjectCollection;
 
 class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements ProductBundleCheckoutAvailabilityCheckInterface
@@ -97,20 +97,17 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $bundleItemTransfer
-     * @param \Orm\Zed\ProductBundle\Persistence\SpyProductBundle $productBundle
+     * @param \Orm\Zed\Product\Persistence\SpyProduct $product
      *
      * @return \Generated\Shared\Transfer\CheckoutErrorTransfer
      */
-    protected function createCheckoutResponseTransfer(ItemTransfer $bundleItemTransfer, SpyProductBundle $productBundle): CheckoutErrorTransfer
+    protected function createCheckoutResponseTransfer(ItemTransfer $bundleItemTransfer, SpyProduct $product): CheckoutErrorTransfer
     {
-        $productBundleSku = $productBundle->getSpyProductRelatedByFkProduct()
-            ->getSku();
-
         $messageTransfer = $this->createMessageTransfer()
             ->setValue(static::CHECKOUT_PRODUCT_BUNDLE_UNAVAILABLE_TRANSLATION_KEY)
             ->setParameters([
-                static::CHECKOUT_PRODUCT_BUNDLE_UNAVAILABLE_PARAMETER_BUNDLE_SKU => $productBundleSku,
-                static::CHECKOUT_PRODUCT_BUNDLE_UNAVAILABLE_PARAMETER_PRODUCT_SKU => $bundleItemTransfer->getSku(),
+                static::CHECKOUT_PRODUCT_BUNDLE_UNAVAILABLE_PARAMETER_BUNDLE_SKU => $bundleItemTransfer->getSku(),
+                static::CHECKOUT_PRODUCT_BUNDLE_UNAVAILABLE_PARAMETER_PRODUCT_SKU => $product->getSku(),
             ]);
 
         $checkoutErrorTransfer = $this->createCheckoutErrorTransfer()
@@ -124,7 +121,7 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
      * @param \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\Collection\ObjectCollection $bundledItems
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]
+     * @return \Orm\Zed\Product\Persistence\SpyProduct[]
      */
     protected function getUnavailableCheckoutBundledItems(
         ArrayObject $currentCartItems,
@@ -138,7 +135,7 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
 
             $sku = $bundledProductConcreteEntity->getSku();
             if (!$this->checkIfItemIsSellable($currentCartItems, $sku, $storeTransfer)) {
-                $unavailableProducts[] = $productBundleEntity;
+                $unavailableProducts[] = $bundledProductConcreteEntity;
             }
         }
 

@@ -55,7 +55,9 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
 
         foreach ($quoteTransfer->getItems() as $quoteItem) {
             if (!$this->isProductSellable($quoteItem, $storeTransfer)) {
-                $this->addAvailabilityErrorToCheckoutResponse($checkoutResponse, $quoteItem);
+                if (!$quoteItem->getRelatedBundleItemIdentifier()) {
+                    $this->addAvailabilityErrorToCheckoutResponse($checkoutResponse, $quoteItem);
+                }
                 $isPassed = false;
             }
         }

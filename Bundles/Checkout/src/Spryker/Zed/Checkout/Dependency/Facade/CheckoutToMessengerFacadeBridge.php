@@ -33,4 +33,12 @@ class CheckoutToMessengerFacadeBridge implements CheckoutToMessengerFacadeInterf
     {
         $this->messengerFacade->addErrorMessage($message);
     }
+
+    /**
+     * @return null|\Generated\Shared\Transfer\FlashMessagesTransfer
+     */
+    public function getStoredMessages()
+    {
+        return $this->messengerFacade->getStoredMessages();
+    }
 }

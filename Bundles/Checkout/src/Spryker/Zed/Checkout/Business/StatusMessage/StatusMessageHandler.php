@@ -34,6 +34,15 @@ class StatusMessageHandler implements StatusMessageHandlerInterface
      */
     public function addErrorMessage(MessageTransfer $messageTransfer): void
     {
-        $this->messengerFacade->addErrorMessage($messageTransfer);
+        $storedMessages = $this->messengerFacade->getStoredMessages();
+
+        if (!$storedMessages || !$storedMessages->getErrorMessages()) {
+            $this->messengerFacade->addErrorMessage($messageTransfer);
+            return;
+        }
+
+        if (!\in_array($messageTransfer, $storedMessages->getErrorMessages(), true)) {
+            $this->messengerFacade->addErrorMessage($messageTransfer);
+        }
     }
 }

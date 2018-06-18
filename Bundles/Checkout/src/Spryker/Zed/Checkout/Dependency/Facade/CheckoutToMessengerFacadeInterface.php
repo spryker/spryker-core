@@ -17,4 +17,9 @@ interface CheckoutToMessengerFacadeInterface
      * @return void
      */
     public function addErrorMessage(MessageTransfer $message);
+
+    /**
+     * @return null|\Generated\Shared\Transfer\FlashMessagesTransfer
+     */
+    public function getStoredMessages();
 }
