@@ -7,8 +7,8 @@
 namespace Spryker\Zed\Discount\Communication\Plugin\DiscountExtension;
 
 use Generated\Shared\Transfer\DiscountableItemTransfer;
-use Generated\Shared\Transfer\DiscountTransfer;
-use Spryker\Zed\DiscountExtension\Dependency\Plugin\Distributor\DiscountableItemTransformerStrategyPluginInterface;
+use Generated\Shared\Transfer\DiscountableItemTransformerTransfer;
+use Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountableItemTransformerStrategyPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
@@ -28,22 +28,14 @@ class SingleQuantityBasedDiscountableItemTransformerStrategyPlugin extends Abstr
     }
 
     /**
-     * @param \Generated\Shared\Transfer\DiscountableItemTransfer $discountableItemTransfer
-     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
-     * @param int $totalDiscountAmount
-     * @param int $totalAmount
-     * @param int $quantity
+     * @param \Generated\Shared\Transfer\DiscountableItemTransformerTransfer $discountableItemTransformerTransfer
      *
      * @return void
      */
     public function transformDiscountableItem(
-        DiscountableItemTransfer $discountableItemTransfer,
-        DiscountTransfer $discountTransfer,
-        int $totalDiscountAmount,
-        int $totalAmount,
-        int $quantity
+        DiscountableItemTransformerTransfer $discountableItemTransformerTransfer
     ): void {
         $this->getFacade()
-            ->transformDiscountableItem($discountableItemTransfer, $discountTransfer, $totalDiscountAmount, $totalAmount, $quantity);
+            ->transformDiscountableItem($discountableItemTransformerTransfer);
     }
 }

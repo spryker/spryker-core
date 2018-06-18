@@ -7,25 +7,16 @@
 
 namespace Spryker\Zed\SalesQuantity\Business\Model\Distributor\DiscountableItem;
 
-use Generated\Shared\Transfer\DiscountableItemTransfer;
-use Generated\Shared\Transfer\DiscountTransfer;
+use Generated\Shared\Transfer\DiscountableItemTransformerTransfer;
 
 interface DiscountableItemTransformerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\DiscountableItemTransfer $discountableItemTransfer
-     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
-     * @param int $totalDiscountAmount
-     * @param int $totalAmount
-     * @param int $quantity
+     * @param \Generated\Shared\Transfer\DiscountableItemTransformerTransfer $discountableItemTransformerTransfer
      *
      * @return void
      */
     public function transformDiscountableItem(
-        DiscountableItemTransfer $discountableItemTransfer,
-        DiscountTransfer $discountTransfer,
-        int $totalDiscountAmount,
-        int $totalAmount,
-        int $quantity
+        DiscountableItemTransformerTransfer $discountableItemTransformerTransfer
     ): void;
 }

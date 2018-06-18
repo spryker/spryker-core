@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\DiscountExtension\Dependency\Plugin\Distributor;
+namespace Spryker\Zed\DiscountExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\DiscountableItemTransfer;
-use Generated\Shared\Transfer\DiscountTransfer;
+use Generated\Shared\Transfer\DiscountableItemTransformerTransfer;
 
 interface DiscountableItemTransformerStrategyPluginInterface
 {
     /**
      * Specification:
-     * - Returns true if plugin is can be used for the item.
+     * - Returns true if strategy can be used for the item.
      *
      * @api
      *
@@ -30,19 +30,11 @@ interface DiscountableItemTransformerStrategyPluginInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\DiscountableItemTransfer $discountableItemTransfer
-     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
-     * @param int $totalDiscountAmount
-     * @param int $totalAmount
-     * @param int $quantity
+     * @param \Generated\Shared\Transfer\DiscountableItemTransformerTransfer $discountableItemTransformerTransfer
      *
      * @return void
      */
     public function transformDiscountableItem(
-        DiscountableItemTransfer $discountableItemTransfer,
-        DiscountTransfer $discountTransfer,
-        int $totalDiscountAmount,
-        int $totalAmount,
-        int $quantity
+        DiscountableItemTransformerTransfer $discountableItemTransformerTransfer
     ): void;
 }

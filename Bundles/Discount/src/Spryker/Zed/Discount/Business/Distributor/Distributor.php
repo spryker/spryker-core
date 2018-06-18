@@ -9,19 +9,20 @@ namespace Spryker\Zed\Discount\Business\Distributor;
 
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
 use Generated\Shared\Transfer\DiscountableItemTransfer;
+use Generated\Shared\Transfer\DiscountableItemTransformerTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Spryker\Zed\Discount\Exception\MissingDiscountableItemTransformerStrategyPluginException;
-use Spryker\Zed\DiscountExtension\Dependency\Plugin\Distributor\DiscountableItemTransformerStrategyPluginInterface;
+use Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountableItemTransformerStrategyPluginInterface;
 
 class Distributor implements DistributorInterface
 {
     /**
-     * @var \Spryker\Zed\DiscountExtension\Dependency\Plugin\Distributor\DiscountableItemTransformerStrategyPluginInterface[]
+     * @var \Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountableItemTransformerStrategyPluginInterface[]
      */
     protected $discountableItemTransformerStrategyPlugins;
 
     /**
-     * @param \Spryker\Zed\DiscountExtension\Dependency\Plugin\Distributor\DiscountableItemTransformerStrategyPluginInterface[] $discountableItemTransformerStrategyPlugins
+     * @param \Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountableItemTransformerStrategyPluginInterface[] $discountableItemTransformerStrategyPlugins
      */
     public function __construct(array $discountableItemTransformerStrategyPlugins)
     {
@@ -75,7 +76,8 @@ class Distributor implements DistributorInterface
 
         foreach ($this->discountableItemTransformerStrategyPlugins as $discountableItemTransformerStrategyPlugin) {
             if ($discountableItemTransformerStrategyPlugin->isApplicable($discountableItemTransfer)) {
-                $discountableItemTransformerStrategyPlugin->transformDiscountableItem($discountableItemTransfer, $discountTransfer, $totalDiscountAmount, $totalAmount, $quantity);
+                $discountableItemTransformerTransfer = $this->mapDiscountableItemTransformerTransfer($discountableItemTransfer, $discountTransfer, $totalDiscountAmount, $totalAmount, $quantity);
+                $discountableItemTransformerStrategyPlugin->transformDiscountableItem($discountableItemTransformerTransfer);
 
                 return;
             }
@@ -89,6 +91,32 @@ class Distributor implements DistributorInterface
                 DiscountableItemTransformerStrategyPluginInterface::class
             )
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DiscountableItemTransfer $discountableItemTransfer
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
+     * @param int $totalDiscountAmount
+     * @param int $totalAmount
+     * @param int $quantity
+     *
+     * @return \Generated\Shared\Transfer\DiscountableItemTransformerTransfer
+     */
+    protected function mapDiscountableItemTransformerTransfer(
+        DiscountableItemTransfer $discountableItemTransfer,
+        DiscountTransfer $discountTransfer,
+        int $totalDiscountAmount,
+        int $totalAmount,
+        int $quantity
+    ): DiscountableItemTransformerTransfer {
+        $discountableItemTransformerTransfer = new DiscountableItemTransformerTransfer();
+        $discountableItemTransformerTransfer->setDiscountableItem($discountableItemTransfer)
+            ->setDiscount($discountTransfer)
+            ->setTotalDiscountAmount($totalDiscountAmount)
+            ->setTotalAmount($totalAmount)
+            ->setQuantity($quantity);
+
+        return $discountableItemTransformerTransfer;
     }
 
     /**

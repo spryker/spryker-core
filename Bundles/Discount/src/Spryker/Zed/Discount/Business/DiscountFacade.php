@@ -9,7 +9,7 @@ namespace Spryker\Zed\Discount\Business;
 
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
-use Generated\Shared\Transfer\DiscountableItemTransfer;
+use Generated\Shared\Transfer\DiscountableItemTransformerTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\DiscountVoucherTransfer;
@@ -684,23 +684,15 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\DiscountableItemTransfer $discountableItemTransfer
-     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
-     * @param int $totalDiscountAmount
-     * @param int $totalAmount
-     * @param int $quantity
+     * @param \Generated\Shared\Transfer\DiscountableItemTransformerTransfer $discountableItemTransformerTransfer
      *
      * @return void
      */
     public function transformDiscountableItem(
-        DiscountableItemTransfer $discountableItemTransfer,
-        DiscountTransfer $discountTransfer,
-        int $totalDiscountAmount,
-        int $totalAmount,
-        int $quantity
+        DiscountableItemTransformerTransfer $discountableItemTransformerTransfer
     ): void {
         $this->getFactory()
             ->createDiscountableItemTransformer()
-            ->transformDiscountableItem($discountableItemTransfer, $discountTransfer, $totalDiscountAmount, $totalAmount, $quantity);
+            ->transformDiscountableItem($discountableItemTransformerTransfer);
     }
 }

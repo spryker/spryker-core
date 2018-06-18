@@ -63,6 +63,14 @@
         <property name="originalItem" type="Item" />
     </transfer>
 
+    <transfer name="DiscountableItemTransformer">
+        <property name="discountableItem" type="DiscountableItem"/>
+        <property name="discount" type="Discount"/>
+        <property name="totalDiscountAmount" type="int"/>
+        <property name="totalAmount" type="int"/>
+        <property name="quantity" type="int"/>
+    </transfer>
+
     <transfer name="CollectedDiscount">
         <property name="discountableItems" type="DiscountableItem[]"/>
         <property name="discount" type="Discount"/>
