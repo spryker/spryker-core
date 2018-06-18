@@ -49,14 +49,19 @@ class FileManagerMapper implements FileManagerMapperInterface
     public function mapFileTransferToEntity(FileTransfer $fileTransfer, SpyFile $file)
     {
         $file->fromArray($fileTransfer->toArray());
+        $fileInfoCollection = $file->getSpyFileInfos()->toKeyIndex();
         $fileInfoTransferCollection = $fileTransfer->getFileInfo();
 
-        if (!empty($fileInfoTransferCollection)) {
-            foreach ($fileInfoTransferCollection as $fileInfoTransfer) {
-                $fileInfo = new SpyFileInfo();
-                $fileInfo->fromArray($fileInfoTransfer->toArray());
-                $file->addSpyFileInfo($fileInfo);
+        foreach ($fileInfoTransferCollection as $fileInfoTransfer) {
+            $fileInfo = $fileInfoCollection[$fileInfoTransfer->getIdFileInfo()] ?? null;
+
+            if ($fileInfo) {
+                $fileInfo = $this->mapFileInfoTransferToEntity($fileInfoTransfer, $fileInfo);
+                continue;
             }
+
+            $fileInfo = $this->mapFileInfoTransferToEntity($fileInfoTransfer, new SpyFileInfo());
+            $file->addSpyFileInfo($fileInfo);
         }
 
         return $file;
