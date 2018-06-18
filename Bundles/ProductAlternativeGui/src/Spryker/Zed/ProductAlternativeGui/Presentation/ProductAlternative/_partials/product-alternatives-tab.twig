@@ -10,10 +10,10 @@
     {% endfilter %}
 </div>
 
-<div class="form-group col-sm-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
-    {{ form_label(form['searchtext-autocomplete']) }}
-    {{ form_errors(form['searchtext-autocomplete']) }}
-    {{ form_widget(form['searchtext-autocomplete']) }}
+<div class="form-group">
+    {{ form_label(form['alternative_products']) }}
+    {{ form_errors(form['alternative_products']) }}
+    {{ form_widget(form['alternative_products']) }}
 </div>
 
 <div id="items" class="col-sm-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -21,3 +21,5 @@
         {% include '@ProductAlternativeGui/ProductAlternative/blocks/product-alternatives-table.twig' %}
     </div>
 </div>
+
+<script src="/assets/js/spryker-zed-roductalternative-assign.js"></script>

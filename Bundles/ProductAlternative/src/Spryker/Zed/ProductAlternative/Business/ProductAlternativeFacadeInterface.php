@@ -7,70 +7,12 @@
 
 namespace Spryker\Zed\ProductAlternative\Business;
 
-use Generated\Shared\Transfer\ProductAlternativeCollectionTransfer;
 use Generated\Shared\Transfer\ProductAlternativeListTransfer;
 use Generated\Shared\Transfer\ProductAlternativeResponseTransfer;
-use Generated\Shared\Transfer\ProductAlternativeTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface ProductAlternativeFacadeInterface
 {
-    /**
-     * Specification:
-     * - Creates alternative abstract product for concrete one.
-     * - Uses $idProductAbstract to find for which concrete product alternative one will be created.
-     * - Uses $idProductAbstractAlternative as a reference to abstract product that will be an alternative one.
-     * - Returns response transfer object with created product alternative.
-     *
-     * @api
-     *
-     * @param int $idProductAbstract
-     * @param int $idProductAbstractAlternative
-     *
-     * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
-     */
-    public function createProductAbstractAlternative(int $idProductAbstract, int $idProductAbstractAlternative): ProductAlternativeResponseTransfer;
-
-    /**
-     * Specification:
-     * - Creates alternative concrete product for concrete one.
-     * - Uses $idProductConcrete to find for which concrete product alternative one will be created.
-     * - Uses $idProductAbstractAlternative as a reference to abstract product that will be an alternative one.
-     * - Returns response transfer object with created product alternative.
-     *
-     * @api
-     *
-     * @param int $idProductConcrete
-     * @param int $idProductConcreteAlternative
-     *
-     * @return \Generated\Shared\Transfer\ProductAlternativeResponseTransfer
-     */
-    public function createProductConcreteAlternative(int $idProductConcrete, int $idProductConcreteAlternative): ProductAlternativeResponseTransfer;
-
-    /**
-     * Specification:
-     * - Retrieves all alternative concrete products for concrete product.
-     *
-     * @api
-     *
-     * @param int $idProductConcrete
-     *
-     * @return \Generated\Shared\Transfer\ProductAlternativeCollectionTransfer
-     */
-    public function getProductAlternativesByIdProductConcrete(int $idProductConcrete): ProductAlternativeCollectionTransfer;
-
-    /**
-     * Specification:
-     * - Retrieves product alternative by id.
-     *
-     * @api
-     *
-     * @param int $idProductAlternative
-     *
-     * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
-     */
-    public function getProductAlternativeByIdProductAlternative(int $idProductAlternative): ProductAlternativeTransfer;
-
     /**
      * Specification:
      * - Searches for all alternatives for concrete product and returns an array, hydrated with data.

@@ -25,7 +25,7 @@ class ProductAlternativeEntityManager extends AbstractEntityManager implements P
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
      */
-    public function createProductAbstractAlternative(int $idProduct, int $idProductAbstractAlternative): ProductAlternativeTransfer
+    public function saveProductAbstractAlternative(int $idProduct, int $idProductAbstractAlternative): ProductAlternativeTransfer
     {
         $productAlternativeEntity = $this->getFactory()
             ->createProductAlternativeQuery()
@@ -40,7 +40,7 @@ class ProductAlternativeEntityManager extends AbstractEntityManager implements P
 
         return $this->getFactory()
             ->createProductAlternativeMapper()
-            ->mapSpyProductAlternativeEntityToTransfer($productAlternativeEntity);
+            ->mapProductAlternativeTransfer($productAlternativeEntity);
     }
 
     /**
@@ -53,7 +53,7 @@ class ProductAlternativeEntityManager extends AbstractEntityManager implements P
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
      */
-    public function createProductConcreteAlternative(int $idProduct, int $idProductConcreteAlternative): ProductAlternativeTransfer
+    public function saveProductConcreteAlternative(int $idProduct, int $idProductConcreteAlternative): ProductAlternativeTransfer
     {
         $productAlternativeEntity = $this->getFactory()
             ->createProductAlternativeQuery()
@@ -68,7 +68,7 @@ class ProductAlternativeEntityManager extends AbstractEntityManager implements P
 
         return $this->getFactory()
             ->createProductAlternativeMapper()
-            ->mapSpyProductAlternativeEntityToTransfer($productAlternativeEntity);
+            ->mapProductAlternativeTransfer($productAlternativeEntity);
     }
 
     /**

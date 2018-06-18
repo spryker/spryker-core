@@ -17,6 +17,10 @@ use Symfony\Component\HttpFoundation\Request;
 class SuggestController extends AbstractController
 {
     protected const PARAM_NAME = 'term';
+    protected const KEY_RESULTS = 'results';
+    protected const KEY_ID = 'id';
+    protected const KEY_TEXT = 'text';
+    protected const TEXT_FORMAT = '%s (sku: %s)';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -25,7 +29,7 @@ class SuggestController extends AbstractController
      */
     public function indexAction(Request $request): JsonResponse
     {
-        $suggestion = $request->query->get(static::PARAM_NAME);
+        $suggestion = $request->query->get(static::PARAM_NAME, '');
 
         $productAbstractSuggestions = $this->getFactory()
             ->getProductFacade()
@@ -35,8 +39,29 @@ class SuggestController extends AbstractController
             ->getProductFacade()
             ->suggestProductConcrete($suggestion);
 
-        return $this->jsonResponse(
-            array_merge($productAbstractSuggestions, $productConcreteSuggestions)
-        );
+        return $this->jsonResponse([
+           static::KEY_RESULTS => array_merge(
+               $this->prepareData($productAbstractSuggestions),
+               $this->prepareData($productConcreteSuggestions)
+           ),
+        ]);
+    }
+
+    /**
+     * @param array $suggestData
+     *
+     * @return array
+     */
+    protected function prepareData(array $suggestData): array
+    {
+        $preparedSuggestData = [];
+        foreach ($suggestData as $sku => $name) {
+            $preparedSuggestData[] = [
+                static::KEY_ID => $sku,
+                static::KEY_TEXT => sprintf(static::TEXT_FORMAT, $name, $sku),
+            ];
+        }
+
+        return $preparedSuggestData;
     }
 }

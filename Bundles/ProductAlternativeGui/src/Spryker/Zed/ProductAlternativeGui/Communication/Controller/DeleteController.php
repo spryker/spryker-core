@@ -19,29 +19,19 @@ class DeleteController extends AbstractController
 {
     protected const FIELD_ID_PRODUCT_ALTERNATIVE = 'id-product-alternative';
 
-    protected const FIELD_REDIRECT_ID_PRODUCT_CONCRETE = 'id-product';
-    protected const FIELD_REDIRECT_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
-
-    /**
-     * TODO: ProductAlternativeResponseTransfer also contains messages; check them out later.
-     */
-
     protected const MESSAGE_DELETE_PRODUCT_ALTERNATIVE_SUCCESS = 'Product Alternative was deleted successfully.';
     protected const MESSAGE_DELETE_PRODUCT_ALTERNATIVE_ERROR = 'Product Alternative was not deleted.';
 
-    protected const REDIRECT_URL_PRODUCT_ALTERNATIVE_DELETE = '/product-management/edit/variant?id-product=%d&id-product-abstract=%d&type=#tab-content-alternatives';
+    protected const KEY_TAB_PRODUCT_ALTERNATIVE = '#tab-content-alternatives';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAbstractAction(Request $request): RedirectResponse
+    public function deleteAlternativeAction(Request $request): RedirectResponse
     {
         $idProductAlternative = $this->castId($request->get(static::FIELD_ID_PRODUCT_ALTERNATIVE));
-
-        $idProduct = $this->castId($request->get(static::FIELD_REDIRECT_ID_PRODUCT_CONCRETE));
-        $idProductAbstract = $this->castId($request->get(static::FIELD_REDIRECT_ID_PRODUCT_ABSTRACT));
 
         $productAlternativeResponseTransfer = $this->getFactory()
             ->getProductAlternativeFacade()
@@ -51,38 +41,7 @@ class DeleteController extends AbstractController
 
         $this->handleProductAlternativeDeletion($productAlternativeResponseTransfer);
 
-        return $this->redirectResponse(sprintf(
-            static::REDIRECT_URL_PRODUCT_ALTERNATIVE_DELETE,
-            $idProduct,
-            $idProductAbstract
-        ));
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function deleteConcreteAction(Request $request): RedirectResponse
-    {
-        $idProductAlternative = $this->castId($request->get(static::FIELD_ID_PRODUCT_ALTERNATIVE));
-
-        $idProduct = $this->castId($request->get(static::FIELD_REDIRECT_ID_PRODUCT_CONCRETE));
-        $idProductAbstract = $this->castId($request->get(static::FIELD_REDIRECT_ID_PRODUCT_ABSTRACT));
-
-        $productAlternativeResponseTransfer = $this->getFactory()
-            ->getProductAlternativeFacade()
-            ->deleteProductAlternativeByIdProductAlternative(
-                $idProductAlternative
-            );
-
-        $this->handleProductAlternativeDeletion($productAlternativeResponseTransfer);
-
-        return $this->redirectResponse(sprintf(
-            static::REDIRECT_URL_PRODUCT_ALTERNATIVE_DELETE,
-            $idProduct,
-            $idProductAbstract
-        ));
+        return $this->redirectToReferer($request);
     }
 
     /**
@@ -101,5 +60,15 @@ class DeleteController extends AbstractController
         }
 
         $this->addErrorMessage(static::MESSAGE_DELETE_PRODUCT_ALTERNATIVE_ERROR);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function redirectToReferer(Request $request): RedirectResponse
+    {
+        return $this->redirectResponse($request->headers->get('referer') . static::KEY_TAB_PRODUCT_ALTERNATIVE);
     }
 }

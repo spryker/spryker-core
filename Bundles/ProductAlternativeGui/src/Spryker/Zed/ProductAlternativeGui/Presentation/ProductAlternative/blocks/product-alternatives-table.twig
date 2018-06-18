@@ -11,9 +11,18 @@
                 <th>Actions</th>
             </tr>
             {% for productAlternative in productAlternatives %}
+                {% if productAlternative.type == 'Abstract' %}
                 <tr>
                     {% include '@ProductAlternativeGui/ProductAlternative/blocks/product-alternatives-table-item.twig' %}
                 </tr>
+                {% endif %}
+            {% endfor %}
+            {% for productAlternative in productAlternatives %}
+                {% if productAlternative.type == 'Concrete' %}
+                <tr>
+                    {% include '@ProductAlternativeGui/ProductAlternative/blocks/product-alternatives-table-item.twig' %}
+                </tr>
+                {% endif %}
             {% endfor %}
         {% endfilter %}
     </table>

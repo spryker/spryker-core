@@ -10,77 +10,41 @@ namespace Spryker\Zed\ProductAlternative\Persistence\Mapper;
 use Generated\Shared\Transfer\ProductAlternativeCollectionTransfer;
 use Generated\Shared\Transfer\ProductAlternativeListItemTransfer;
 use Generated\Shared\Transfer\ProductAlternativeTransfer;
-use Generated\Shared\Transfer\SpyProductAlternativeEntityTransfer;
 use Orm\Zed\ProductAlternative\Persistence\SpyProductAlternative;
+use Propel\Runtime\Collection\Collection;
 use Spryker\Shared\ProductAlternative\ProductAlternativeConstants;
 
 class ProductAlternativeMapper implements ProductAlternativeMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SpyProductAlternativeEntityTransfer $productAlternativeEntityTransfer
-     * @param \Orm\Zed\ProductAlternative\Persistence\SpyProductAlternative $product
-     *
-     * @return \Orm\Zed\ProductAlternative\Persistence\SpyProductAlternative
-     */
-    public function mapSpyProductAlternativeEntityTransferToEntity(
-        SpyProductAlternativeEntityTransfer $productAlternativeEntityTransfer,
-        SpyProductAlternative $product
-    ): SpyProductAlternative {
-        $product->fromArray(
-            $productAlternativeEntityTransfer->toArray()
-        );
-
-        return $product;
-    }
-
-    /**
-     * @param \Orm\Zed\ProductAlternative\Persistence\SpyProductAlternative $productAlternative
+     * @param \Orm\Zed\ProductAlternative\Persistence\SpyProductAlternative $productAlternativeEntity
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
      */
-    public function mapSpyProductAlternativeEntityToTransfer(
-        SpyProductAlternative $productAlternative
-    ): ProductAlternativeTransfer {
-        $productAlternativeTransfer = (new ProductAlternativeTransfer())
-            ->fromArray($productAlternative->toArray(), true);
-
-        $productAlternativeTransfer
-            ->setIdProduct($productAlternative->getFkProduct())
-            ->setIdProductAbstractAlternative($productAlternative->getFkProductAbstractAlternative())
-            ->setIdProductConcreteAlternative($productAlternative->getFkProductConcreteAlternative());
-
-        return $productAlternativeTransfer;
+    public function mapProductAlternativeTransfer(SpyProductAlternative $productAlternativeEntity): ProductAlternativeTransfer
+    {
+        return (new ProductAlternativeTransfer())
+            ->setIdProductAlternative($productAlternativeEntity->getIdProductAlternative())
+            ->setIdProduct($productAlternativeEntity->getFkProduct())
+            ->setIdProductAbstractAlternative($productAlternativeEntity->getFkProductAbstractAlternative())
+            ->setIdProductConcreteAlternative($productAlternativeEntity->getFkProductConcreteAlternative());
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyProductAlternativeEntityTransfer $productAlternativeEntityTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
-     */
-    public function mapSpyProductAlternativeEntityTransferToTransfer(
-        SpyProductAlternativeEntityTransfer $productAlternativeEntityTransfer
-    ): ProductAlternativeTransfer {
-        $productAlternativeTransfer = (new ProductAlternativeTransfer())
-            ->fromArray($productAlternativeEntityTransfer->toArray(), true);
-
-        return $productAlternativeTransfer
-            ->setIdProduct($productAlternativeEntityTransfer->getFkProduct())
-            ->setIdProductAbstractAlternative($productAlternativeEntityTransfer->getFkProductAbstractAlternative())
-            ->setIdProductConcreteAlternative($productAlternativeEntityTransfer->getFkProductConcreteAlternative());
-    }
-
-    /**
-     * @param array $productAlternatives
+     * @param \Propel\Runtime\Collection\Collection|null $productAlternativeEntities
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeCollectionTransfer
      */
-    public function hydrateProductAlternativeCollectionWithProductAlternatives(array $productAlternatives): ProductAlternativeCollectionTransfer
+    public function mapProductAlternativeCollectionTransfer(?Collection $productAlternativeEntities): ProductAlternativeCollectionTransfer
     {
         $productAlternativeCollectionTransfer = new ProductAlternativeCollectionTransfer();
+        if (!$productAlternativeEntities->count()) {
+            return $productAlternativeCollectionTransfer;
+        }
 
-        foreach ($productAlternatives as $productAlternative) {
+        foreach ($productAlternativeEntities as $productAlternativeEntity) {
             $productAlternativeCollectionTransfer->addProductAlternative(
-                $this->mapSpyProductAlternativeEntityTransferToTransfer($productAlternative)
+                $this->mapProductAlternativeTransfer($productAlternativeEntity)
             );
         }
 
@@ -106,7 +70,7 @@ class ProductAlternativeMapper implements ProductAlternativeMapperInterface
     public function mapProductConcreteDataToProductAlternativeListItemTransfer(array $productConcreteData): ProductAlternativeListItemTransfer
     {
         return $this->mapProductDataToProductAlternativeListItemTransfer($productConcreteData)
-            ->setType(ProductAlternativeConstants::FIELD_PRODUCT_TYPE_ABSTRACT);
+            ->setType(ProductAlternativeConstants::FIELD_PRODUCT_TYPE_CONCRETE);
     }
 
     /**
@@ -116,16 +80,7 @@ class ProductAlternativeMapper implements ProductAlternativeMapperInterface
      */
     protected function mapProductDataToProductAlternativeListItemTransfer(array $productData): ProductAlternativeListItemTransfer
     {
-        return (new ProductAlternativeListItemTransfer())
-            ->setIdProductAlternative($productData[ProductAlternativeConstants::COL_ID])
-            ->setName($productData[ProductAlternativeConstants::COL_NAME])
-            ->setSku($productData[ProductAlternativeConstants::COL_SKU])
-            ->setCategories(
-                explode(
-                    ProductAlternativeConstants::COL_SEPARATOR_CATEGORIES,
-                    $productData[ProductAlternativeConstants::COL_CATEGORIES]
-                )
-            )
-            ->setStatus($productData[ProductAlternativeConstants::COL_STATUS]);
+        return (new ProductAlternativeListItemTransfer())->fromArray($productData)
+            ->setCategories(explode(',', $productData[ProductAlternativeListItemTransfer::CATEGORIES]));
     }
 }

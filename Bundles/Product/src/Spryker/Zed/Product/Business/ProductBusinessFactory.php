@@ -30,8 +30,6 @@ use Spryker\Zed\Product\Business\Product\ProductAbstractManager;
 use Spryker\Zed\Product\Business\Product\ProductConcreteActivator;
 use Spryker\Zed\Product\Business\Product\ProductConcreteManager;
 use Spryker\Zed\Product\Business\Product\ProductManager;
-use Spryker\Zed\Product\Business\Product\ProductReader;
-use Spryker\Zed\Product\Business\Product\ProductReaderInterface;
 use Spryker\Zed\Product\Business\Product\Sku\SkuGenerator;
 use Spryker\Zed\Product\Business\Product\Status\ProductAbstractStatusChecker;
 use Spryker\Zed\Product\Business\Product\StoreRelation\ProductAbstractStoreRelationReader;
@@ -580,17 +578,6 @@ class ProductBusinessFactory extends AbstractBusinessFactory
             $this->getConfig(),
             $this->getRepository(),
             $this->getLocaleFacade()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Product\Business\Product\ProductReaderInterface
-     */
-    public function createProductReader(): ProductReaderInterface
-    {
-        return new ProductReader(
-            $this->getLocaleFacade(),
-            $this->getRepository()
         );
     }
 }
