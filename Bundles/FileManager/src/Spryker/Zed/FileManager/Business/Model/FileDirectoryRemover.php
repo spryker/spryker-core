@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\FileManager\Business\Model;
 
+use ArrayObject;
 use Generated\Shared\Transfer\FileSystemDeleteDirectoryTransfer;
 use Generated\Shared\Transfer\FileSystemQueryTransfer;
 use Generated\Shared\Transfer\FileSystemRenameTransfer;
@@ -84,9 +85,11 @@ class FileDirectoryRemover implements FileDirectoryRemoverInterface
      */
     protected function executeDeleteTransaction(int $idFileDirectory, ?int $idParentFileDirectory = null)
     {
+        $directoryFiles = $this->repository->getDirectoryFiles($idFileDirectory);
+
         $idParentFileDirectory === null ?
-            $this->entityManager->deleteDirectoryFiles($idFileDirectory) :
-            $this->moveDirectoryFiles($idFileDirectory, $idParentFileDirectory);
+            $this->deleteDirectoryFiles($directoryFiles) :
+            $this->moveDirectoryFiles($directoryFiles, $idParentFileDirectory);
 
         $fileSystemDeleteDirectoryTransfer = new FileSystemDeleteDirectoryTransfer();
         $fileSystemDeleteDirectoryTransfer->setFileSystemName($this->config->getStorageName());
@@ -104,14 +107,26 @@ class FileDirectoryRemover implements FileDirectoryRemoverInterface
     }
 
     /**
-     * @param int $idFileDirectory
+     * @param \ArrayObject|\Generated\Shared\Transfer\FileTransfer[] $directoryFiles
+     *
+     * @return void
+     */
+    protected function deleteDirectoryFiles(ArrayObject $directoryFiles)
+    {
+        foreach ($directoryFiles as $fileTransfer) {
+            $this->entityManager->deleteFile($fileTransfer);
+        }
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\FileTransfer[] $directoryFiles
      * @param int $idParentFileDirectory
      *
      * @return void
      */
-    protected function moveDirectoryFiles(int $idFileDirectory, int $idParentFileDirectory)
+    protected function moveDirectoryFiles(ArrayObject $directoryFiles, int $idParentFileDirectory)
     {
-        foreach ($this->repository->getDirectoryFiles($idFileDirectory) as $fileTransfer) {
+        foreach ($directoryFiles as $fileTransfer) {
             foreach ($fileTransfer->getFileInfo() as $fileInfoTransfer) {
                 $fileSystemRenameTransfer = new FileSystemRenameTransfer();
                 $fileSystemRenameTransfer->setFileSystemName($this->config->getStorageName());
