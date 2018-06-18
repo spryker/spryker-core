@@ -14,6 +14,8 @@ interface ProductPackagingUnitTypeWriterInterface
     /**
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
+     * @throws \Spryker\Zed\ProductPackagingUnit\Business\Exception\ProductPackagingUnitTypeUniqueViolationException
+     *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
      */
     public function createProductPackagingUnitType(
@@ -22,6 +24,8 @@ interface ProductPackagingUnitTypeWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+     *
+     * @throws \Spryker\Zed\ProductPackagingUnit\Business\Exception\ProductPackagingUnitTypeUniqueViolationException
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
      */

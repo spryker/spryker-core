@@ -8,11 +8,13 @@
 namespace Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType;
 
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
+use Spryker\Zed\ProductPackagingUnit\Business\Exception\ProductPackagingUnitTypeUniqueViolationException;
 use Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitEntityManagerInterface;
 use Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface;
 
 class ProductPackagingUnitTypeWriter implements ProductPackagingUnitTypeWriterInterface
 {
+    protected const ERROR_PRODUCT_PACKAGING_UNIT_TYPE_EXISTS = 'Product packaging unit type was found already for name "%s".';
     /**
      * @var \Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitEntityManagerInterface
      */
@@ -46,6 +48,8 @@ class ProductPackagingUnitTypeWriter implements ProductPackagingUnitTypeWriterIn
     /**
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
+     * @throws \Spryker\Zed\ProductPackagingUnit\Business\Exception\ProductPackagingUnitTypeUniqueViolationException
+     *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
      */
     public function createProductPackagingUnitType(
@@ -53,13 +57,33 @@ class ProductPackagingUnitTypeWriter implements ProductPackagingUnitTypeWriterIn
     ): ProductPackagingUnitTypeTransfer {
         $productPackagingUnitTypeTransfer->requireName();
 
-        $this->translationWriter->saveTranslations($productPackagingUnitTypeTransfer);
+        if ($this->isUniqueForCreate($productPackagingUnitTypeTransfer)) {
+            $this->translationWriter->saveTranslations($productPackagingUnitTypeTransfer);
 
-        return $this->entityManager->saveProductPackagingUnitType($productPackagingUnitTypeTransfer);
+            return $this->entityManager->saveProductPackagingUnitType($productPackagingUnitTypeTransfer);
+        }
+
+        throw new ProductPackagingUnitTypeUniqueViolationException(sprintf(
+            static::ERROR_PRODUCT_PACKAGING_UNIT_TYPE_EXISTS,
+            $productPackagingUnitTypeTransfer->getName()
+        ));
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+     *
+     * @return bool
+     */
+    protected function isUniqueForCreate(
+        ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+    ): bool {
+        return $this->repository->getProductPackagingUnitTypeByName($productPackagingUnitTypeTransfer->getName()) === null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+     *
+     * @throws \Spryker\Zed\ProductPackagingUnit\Business\Exception\ProductPackagingUnitTypeUniqueViolationException
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
      */
@@ -68,9 +92,30 @@ class ProductPackagingUnitTypeWriter implements ProductPackagingUnitTypeWriterIn
     ): ProductPackagingUnitTypeTransfer {
         $productPackagingUnitTypeTransfer->requireIdProductPackagingUnitType();
 
-        $this->translationWriter->saveTranslations($productPackagingUnitTypeTransfer);
+        if ($this->isUniqueForUpdate($productPackagingUnitTypeTransfer)) {
+            $this->translationWriter->saveTranslations($productPackagingUnitTypeTransfer);
 
-        return $this->entityManager->saveProductPackagingUnitType($productPackagingUnitTypeTransfer);
+            return $this->entityManager->saveProductPackagingUnitType($productPackagingUnitTypeTransfer);
+        }
+
+        throw new ProductPackagingUnitTypeUniqueViolationException(sprintf(
+            static::ERROR_PRODUCT_PACKAGING_UNIT_TYPE_EXISTS,
+            $productPackagingUnitTypeTransfer->getName()
+        ));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+     *
+     * @return bool
+     */
+    protected function isUniqueForUpdate(
+        ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+    ): bool {
+        $existingProductPackagingUnitTypeTransfer = $this->repository->getProductPackagingUnitTypeByName($productPackagingUnitTypeTransfer->getName());
+
+        return $existingProductPackagingUnitTypeTransfer === null ||
+            $productPackagingUnitTypeTransfer->getIdProductPackagingUnitType() === $existingProductPackagingUnitTypeTransfer->getIdProductPackagingUnitType();
     }
 
     /**
