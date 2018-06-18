@@ -61,10 +61,6 @@ class FileManagerEntityManager extends AbstractEntityManager implements FileMana
             return false;
         }
 
-        $fileEntity = $this->getFactory()
-            ->createFileManagerMapper()
-            ->mapFileTransferToEntity($fileTransfer, $fileEntity);
-
         $fileEntity->delete();
 
         return true;
