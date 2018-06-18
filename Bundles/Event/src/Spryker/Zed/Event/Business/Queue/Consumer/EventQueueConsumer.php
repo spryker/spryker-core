@@ -127,7 +127,8 @@ class EventQueueConsumer implements EventQueueConsumerInterface
 
         foreach ($eventItems as $eventName => $eventItem) {
             try {
-                $listener->handleBulk($eventItem[static::EVENT_TRANSFERS], $eventName);
+                $uniqueTransfers = $this->removeDuplicates($eventItem[static::EVENT_TRANSFERS]);
+                $listener->handleBulk($uniqueTransfers, $eventName);
             } catch (Throwable $throwable) {
                 $errorMessage = sprintf(
                     'Failed to handle "%s" for listener "%s". Exception: "%s", "%s".',
@@ -140,6 +141,22 @@ class EventQueueConsumer implements EventQueueConsumerInterface
                 $this->handleFailedMessages($eventItem, $errorMessage);
             }
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return \Generated\Shared\Transfer\EventEntityTransfer[]
+     */
+    protected function removeDuplicates(array $eventTransfers): array
+    {
+        $uniqueEventTransfers = [];
+        foreach ($eventTransfers as $eventTransfer) {
+            $uniqueId = md5($eventTransfer->getId() . json_encode($eventTransfer->getForeignKeys()));
+            $uniqueEventTransfers[$uniqueId] = $eventTransfer;
+        }
+
+        return $uniqueEventTransfers;
     }
 
     /**

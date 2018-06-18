@@ -23,6 +23,11 @@ class DataImporterPublisher implements DataImporterPublisherInterface
     protected static $importedEntityEvents = [];
 
     /**
+     * @var array
+     */
+    protected static $triggeredEventIds = [];
+
+    /**
      * @param \Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventFacadeInterface $eventFacade
      */
     public function __construct(DataImportToEventFacadeInterface $eventFacade)
@@ -38,6 +43,10 @@ class DataImporterPublisher implements DataImporterPublisherInterface
      */
     public function addEvent($eventName, $entityId): void
     {
+        if (isset(static::$triggeredEventIds[$eventName][$entityId])) {
+            return;
+        }
+
         static::$importedEntityEvents[$eventName][] = $entityId;
     }
 
@@ -54,19 +63,27 @@ class DataImporterPublisher implements DataImporterPublisherInterface
     }
 
     /**
+     * @param int $flushChunkSize
+     *
      * @return void
      */
-    public function triggerEvents(): void
+    public function triggerEvents($flushChunkSize = 1000000): void
     {
         foreach (static::getUniqueImportedEntityEvents() as $event => $ids) {
             $uniqueIds = array_unique($ids);
             $events = [];
             foreach ($uniqueIds as $id) {
                 $events[] = (new EventEntityTransfer())->setId($id);
+                static::$triggeredEventIds[$event][$id] = true;
             }
             $this->eventFacade->triggerBulk($event, $events);
         }
+
         static::$importedEntityEvents = [];
+
+        if (count(static::$triggeredEventIds, COUNT_RECURSIVE) > $flushChunkSize) {
+            static::$triggeredEventIds = [];
+        }
     }
 
     /**
