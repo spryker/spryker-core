@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductList\Business\Model;
+namespace Spryker\Zed\ProductList\Business\ProductListProductConcreteRelation;
 
 use Generated\Shared\Transfer\ProductListProductConcreteRelationTransfer;
 use Spryker\Zed\ProductList\Persistence\ProductListRepositoryInterface;

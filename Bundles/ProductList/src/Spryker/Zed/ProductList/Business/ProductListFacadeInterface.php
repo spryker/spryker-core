@@ -13,11 +13,11 @@ interface ProductListFacadeInterface
 {
     /**
      * Specification:
-     * - Creates a Product List entity.
+     * - Creates a Product List entity if ProductListTransfer::idProductList is null.
      * - Creates relations to categories.
      * - Creates relations to concrete products.
      * - Finds a Product List by ProductListTransfer::idProductList in the transfer.
-     * - Updates fields in a Product List entity.
+     * - Updates fields in a Product List entity if ProductListTransfer::idProductList is set.
      * - Updates relations to categories.
      * - Updates relations to concrete products.
      *

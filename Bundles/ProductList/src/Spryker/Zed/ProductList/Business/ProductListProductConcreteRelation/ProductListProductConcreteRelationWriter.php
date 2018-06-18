@@ -5,26 +5,29 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductList\Business\Model;
+namespace Spryker\Zed\ProductList\Business\ProductListProductConcreteRelation;
 
 use Generated\Shared\Transfer\ProductListProductConcreteRelationTransfer;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\ProductList\Persistence\ProductListEntityManagerInterface;
 
 class ProductListProductConcreteRelationWriter implements ProductListProductConcreteRelationWriterInterface
 {
+    use TransactionTrait;
+
     /**
      * @var \Spryker\Zed\ProductList\Persistence\ProductListEntityManagerInterface
      */
     protected $productListEntityManager;
 
     /**
-     * @var \Spryker\Zed\ProductList\Business\Model\ProductListProductConcreteRelationReaderInterface
+     * @var \Spryker\Zed\ProductList\Business\ProductListProductConcreteRelation\ProductListProductConcreteRelationReaderInterface
      */
     protected $productListProductConcreteRelationReader;
 
     /**
      * @param \Spryker\Zed\ProductList\Persistence\ProductListEntityManagerInterface $productListEntityManager
-     * @param \Spryker\Zed\ProductList\Business\Model\ProductListProductConcreteRelationReaderInterface $productListProductConcreteRelationReader
+     * @param \Spryker\Zed\ProductList\Business\ProductListProductConcreteRelation\ProductListProductConcreteRelationReaderInterface $productListProductConcreteRelationReader
      */
     public function __construct(
         ProductListEntityManagerInterface $productListEntityManager,
@@ -37,11 +40,23 @@ class ProductListProductConcreteRelationWriter implements ProductListProductConc
     /**
      * @param \Generated\Shared\Transfer\ProductListProductConcreteRelationTransfer $productListProductConcreteRelationTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductListProductConcreteRelationTransfer
      */
     public function saveProductListProductConcreteRelation(
         ProductListProductConcreteRelationTransfer $productListProductConcreteRelationTransfer
-    ): void {
+    ): ProductListProductConcreteRelationTransfer {
+        return $this->getTransactionHandler()->handleTransaction(function () use ($productListProductConcreteRelationTransfer) {
+            return $this->executeSaveProductListProductConcreteRelationTransaction($productListProductConcreteRelationTransfer);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductListProductConcreteRelationTransfer $productListProductConcreteRelationTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListProductConcreteRelationTransfer
+     */
+    protected function executeSaveProductListProductConcreteRelationTransaction(ProductListProductConcreteRelationTransfer $productListProductConcreteRelationTransfer): ProductListProductConcreteRelationTransfer
+    {
         $productListProductConcreteRelationTransfer->requireIdProductList();
         $idProductList = $productListProductConcreteRelationTransfer->getIdProductList();
 
@@ -54,7 +69,7 @@ class ProductListProductConcreteRelationWriter implements ProductListProductConc
         $this->productListEntityManager->addProductConcreteRelations($idProductList, $saveProductConcreteIds);
         $this->productListEntityManager->removeProductConcreteRelations($idProductList, $deleteProductConcreteIds);
 
-        $productListProductConcreteRelationTransfer->setProductIds(
+        return $productListProductConcreteRelationTransfer->setProductIds(
             $this->getRelatedProductConcreteIds($productListProductConcreteRelationTransfer)
         );
     }

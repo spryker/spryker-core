@@ -5,18 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductList\Business\Model;
+namespace Spryker\Zed\ProductList\Business\ProductListCategoryRelation;
 
 use Generated\Shared\Transfer\ProductListCategoryRelationTransfer;
 
-interface ProductListCategoryRelationReaderInterface
+interface ProductListCategoryRelationWriterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductListCategoryRelationTransfer $productListCategoryRelationTransfer
      *
      * @return \Generated\Shared\Transfer\ProductListCategoryRelationTransfer
      */
-    public function getProductListCategoryRelation(
+    public function saveProductListCategoryRelation(
         ProductListCategoryRelationTransfer $productListCategoryRelationTransfer
     ): ProductListCategoryRelationTransfer;
 }
