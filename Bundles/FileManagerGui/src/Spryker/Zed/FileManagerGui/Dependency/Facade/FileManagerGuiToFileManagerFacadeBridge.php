@@ -88,14 +88,13 @@ class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileMan
     /**
      * @api
      *
-     * @param int $idFile
      * @param int $idFileInfo
      *
      * @return void
      */
-    public function rollbackFile($idFile, $idFileInfo)
+    public function rollbackFile($idFileInfo)
     {
-        $this->fileManagerFacade->rollbackFile($idFile, $idFileInfo);
+        $this->fileManagerFacade->rollbackFile($idFileInfo);
     }
 
     /**

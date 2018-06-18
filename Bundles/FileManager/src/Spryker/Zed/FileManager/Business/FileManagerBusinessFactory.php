@@ -63,7 +63,8 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
     public function createFileRollback()
     {
         return new FileRollback(
-            $this->createFileLoader(),
+            $this->getEntityManager(),
+            $this->getRepository(),
             $this->createFileVersion()
         );
     }

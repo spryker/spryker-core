@@ -7,9 +7,10 @@
 
 namespace Spryker\Zed\FileManager\Business\Model;
 
-use Orm\Zed\FileManager\Persistence\SpyFileInfo;
+use Generated\Shared\Transfer\FileInfoTransfer;
 use Spryker\Zed\FileManager\Exception\FileInfoNotFoundException;
-use Spryker\Zed\FileManager\Exception\FileNotFoundException;
+use Spryker\Zed\FileManager\Persistence\FileManagerEntityManagerInterface;
+use Spryker\Zed\FileManager\Persistence\FileManagerRepositoryInterface;
 
 class FileRollback implements FileRollbackInterface
 {
@@ -19,81 +20,55 @@ class FileRollback implements FileRollbackInterface
     protected $fileVersion;
 
     /**
-     * @var \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface
+     * @var \Spryker\Zed\FileManager\Persistence\FileManagerEntityManagerInterface
      */
-    protected $fileLoader;
+    protected $entityManager;
 
     /**
-     * @param \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface $fileLoader
+     * @var \Spryker\Zed\FileManager\Persistence\FileManagerRepositoryInterface
+     */
+    protected $repository;
+
+    /**
+     * @param \Spryker\Zed\FileManager\Persistence\FileManagerEntityManagerInterface $entityManager
+     * @param \Spryker\Zed\FileManager\Persistence\FileManagerRepositoryInterface $repository
      * @param \Spryker\Zed\FileManager\Business\Model\FileVersionInterface $fileVersion
      */
-    public function __construct(FileLoaderInterface $fileLoader, FileVersionInterface $fileVersion)
-    {
+    public function __construct(
+        FileManagerEntityManagerInterface $entityManager,
+        FileManagerRepositoryInterface $repository,
+        FileVersionInterface $fileVersion
+    ) {
+        $this->entityManager = $entityManager;
+        $this->repository = $repository;
         $this->fileVersion = $fileVersion;
-        $this->fileLoader = $fileLoader;
     }
 
     /**
-     * @param int $idFile
      * @param int $idFileInfo
      *
      * @return void
      */
-    public function rollback($idFile, $idFileInfo)
+    public function rollback(int $idFileInfo)
     {
-        $file = $this->getFile($idFile);
-        $targetFileInfo = $this->getFileInfo($idFileInfo);
-        $file->addSpyFileInfo($this->createFileInfo($targetFileInfo));
+        $targetFileInfo = $this->repository->getFileInfo($idFileInfo);
+        $this->addFileVersion($targetFileInfo);
     }
 
     /**
-     * @param \Orm\Zed\FileManager\Persistence\SpyFileInfo $targetFileInfo
-     *
-     * @return \Orm\Zed\FileManager\Persistence\SpyFileInfo
-     */
-    protected function createFileInfo(SpyFileInfo $targetFileInfo)
-    {
-        $fileInfo = new SpyFileInfo();
-        $targetFileInfoArray = $targetFileInfo->toArray();
-        unset($targetFileInfoArray['id_file_info']);
-        $fileInfo->fromArray($targetFileInfoArray);
-
-        $this->updateVersion($fileInfo, $targetFileInfo->getFkFile());
-        $fileInfo->save();
-
-        return $fileInfo;
-    }
-
-    /**
-     * @param \Orm\Zed\FileManager\Persistence\SpyFileInfo $fileInfo
-     * @param int $idFile
+     * @param \Generated\Shared\Transfer\FileInfoTransfer $fileInfoTransfer
      *
      * @return void
      */
-    protected function updateVersion(SpyFileInfo $fileInfo, $idFile)
+    protected function addFileVersion(FileInfoTransfer $fileInfoTransfer)
     {
-        $nextVersion = $this->fileVersion->getNextVersionNumber($idFile);
-        $newVersionName = $this->fileVersion->getNextVersionName($nextVersion);
-        $fileInfo->setVersion($nextVersion);
-        $fileInfo->setVersionName($newVersionName);
-    }
+        $fileInfoTransfer->setIdFileInfo(null);
+        $nextVersion = $this->fileVersion->getNextVersionNumber($fileInfoTransfer->getFkFile());
+        $nextVersionName = $this->fileVersion->getNextVersionName($nextVersion);
+        $fileInfoTransfer->setVersion($nextVersion);
+        $fileInfoTransfer->setVersionName($nextVersionName);
 
-    /**
-     * @param int $idFile
-     *
-     * @throws \Spryker\Zed\FileManager\Exception\FileNotFoundException
-     *
-     * @return \Orm\Zed\FileManager\Persistence\SpyFile
-     */
-    protected function getFile($idFile)
-    {
-        $file = $this->fileLoader->getFile($idFile);
-
-        if ($file === null) {
-            throw new FileNotFoundException(sprintf('File with id %s not found', $idFile));
-        }
-
-        return $file;
+        $this->entityManager->saveFileInfo($fileInfoTransfer);
     }
 
     /**
@@ -101,16 +76,16 @@ class FileRollback implements FileRollbackInterface
      *
      * @throws \Spryker\Zed\FileManager\Exception\FileInfoNotFoundException
      *
-     * @return \Orm\Zed\FileManager\Persistence\SpyFileInfo
+     * @return \Generated\Shared\Transfer\FileInfoTransfer
      */
-    protected function getFileInfo($idFileInfo)
+    protected function getFileInfo(int $idFileInfo)
     {
-        $fileInfo = $this->fileLoader->getFileInfo($idFileInfo);
+        $fileInfoTransfer = $this->repository->getFileInfo($idFileInfo);
 
-        if ($fileInfo === null) {
+        if ($fileInfoTransfer === null) {
             throw new FileInfoNotFoundException(sprintf('Target file info with id %s not found', $idFileInfo));
         }
 
-        return $fileInfo;
+        return $fileInfoTransfer;
     }
 }

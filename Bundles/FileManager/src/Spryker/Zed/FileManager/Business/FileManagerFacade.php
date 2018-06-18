@@ -75,9 +75,9 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
      *
      * {@inheritdoc}
      */
-    public function rollbackFile($idFile, $idFileInfo)
+    public function rollbackFile($idFileInfo)
     {
-        $this->getFactory()->createFileRollback()->rollback($idFile, $idFileInfo);
+        $this->getFactory()->createFileRollback()->rollback($idFileInfo);
     }
 
     /**
