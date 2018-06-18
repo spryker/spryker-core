@@ -7,29 +7,35 @@
 
 namespace Spryker\Zed\FileManager\Business\Tree;
 
-use Generated\Shared\Transfer\FileDirectoryTransfer;
 use Generated\Shared\Transfer\FileDirectoryTreeNodeTransfer;
 use Generated\Shared\Transfer\FileDirectoryTreeTransfer;
-use Orm\Zed\FileManager\Persistence\SpyFileDirectory;
 use Spryker\Zed\FileManager\Exception\FileDirectoryNotFoundException;
-use Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
+use Spryker\Zed\FileManager\Persistence\FileManagerEntityManagerInterface;
+use Spryker\Zed\FileManager\Persistence\FileManagerRepositoryInterface;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 class FileDirectoryTreeHierarchyUpdater implements FileDirectoryTreeHierarchyUpdaterInterface
 {
-    use DatabaseTransactionHandlerTrait;
+    use TransactionTrait;
 
     /**
-     * @var \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface
+     * @var \Spryker\Zed\FileManager\Persistence\FileManagerEntityManagerInterface
      */
-    protected $fileManagerQueryContainer;
+    protected $entityManager;
 
     /**
-     * @param \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface $fileManagerQueryContainer
+     * @var \Spryker\Zed\FileManager\Persistence\FileManagerRepositoryInterface
      */
-    public function __construct(FileManagerQueryContainerInterface $fileManagerQueryContainer)
+    protected $repository;
+
+    /**
+     * @param \Spryker\Zed\FileManager\Persistence\FileManagerEntityManagerInterface $entityManager
+     * @param \Spryker\Zed\FileManager\Persistence\FileManagerRepositoryInterface $repository
+     */
+    public function __construct(FileManagerEntityManagerInterface $entityManager, FileManagerRepositoryInterface $repository)
     {
-        $this->fileManagerQueryContainer = $fileManagerQueryContainer;
+        $this->entityManager = $entityManager;
+        $this->repository = $repository;
     }
 
     /**
@@ -41,11 +47,23 @@ class FileDirectoryTreeHierarchyUpdater implements FileDirectoryTreeHierarchyUpd
     {
         $this->assertFileDirectoryTreeForUpdate($fileDirectoryTreeTransfer);
 
-        $this->handleDatabaseTransaction(
+        $this->getTransactionHandler()->handleTransaction(
             function () use ($fileDirectoryTreeTransfer) {
-                $this->executeUpdateFileDirectoryTreeHierarchyTransaction($fileDirectoryTreeTransfer);
+                return $this->executeUpdateFileDirectoryTreeHierarchyTransaction($fileDirectoryTreeTransfer);
             }
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FileDirectoryTreeTransfer $fileDirectoryTreeTransfer
+     *
+     * @return void
+     */
+    protected function executeUpdateFileDirectoryTreeHierarchyTransaction(FileDirectoryTreeTransfer $fileDirectoryTreeTransfer)
+    {
+        foreach ($fileDirectoryTreeTransfer->getNodes() as $fileDirectoryTreeNodeTransfer) {
+            $this->persistFileDirectoryTreeNodeRecursively($fileDirectoryTreeNodeTransfer);
+        }
     }
 
     /**
@@ -60,16 +78,6 @@ class FileDirectoryTreeHierarchyUpdater implements FileDirectoryTreeHierarchyUpd
         foreach ($fileDirectoryTreeTransfer->getNodes() as $fileDirectoryTreeNodeTransfer) {
             $this->assertFileDirectoryTreeNodeRecursively($fileDirectoryTreeNodeTransfer);
         }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FileDirectoryTreeTransfer $fileDirectoryTreeTransfer
-     *
-     * @return void
-     */
-    protected function executeUpdateFileDirectoryTreeHierarchyTransaction(FileDirectoryTreeTransfer $fileDirectoryTreeTransfer)
-    {
-        $this->persistFileManagerTree($fileDirectoryTreeTransfer);
     }
 
     /**
@@ -90,50 +98,38 @@ class FileDirectoryTreeHierarchyUpdater implements FileDirectoryTreeHierarchyUpd
     }
 
     /**
-     * @param \Generated\Shared\Transfer\FileDirectoryTreeTransfer $fileDirectoryTreeTransfer
+     * @param \Generated\Shared\Transfer\FileDirectoryTreeNodeTransfer $fileDirectoryTreeNodeTransfer
      * @param int|null $fkParentFileDirectory
      *
      * @return void
      */
-    protected function persistFileManagerTree(FileDirectoryTreeTransfer $fileDirectoryTreeTransfer, $fkParentFileDirectory = null)
+    protected function persistFileDirectoryTreeNodeRecursively(FileDirectoryTreeNodeTransfer $fileDirectoryTreeNodeTransfer, ?int $fkParentFileDirectory = null)
     {
-        foreach ($fileDirectoryTreeTransfer->getNodes() as $fileDirectoryTreeNodeTransfer) {
-            $this->persistFileDirectoryTreeNodeRecursively($fileDirectoryTreeNodeTransfer, $fkParentFileDirectory);
-        }
-    }
+        $fileDirectoryTransfer = $this->getFileDirectoryTransfer(
+            $fileDirectoryTreeNodeTransfer->getFileDirectory()->getIdFileDirectory()
+        );
+        $fileDirectoryTransfer->setPosition($fileDirectoryTransfer->getPosition());
+        $fileDirectoryTransfer->setFkParentFileDirectory($fkParentFileDirectory);
 
-    /**
-     * @param \Generated\Shared\Transfer\FileDirectoryTreeNodeTransfer $fileDirectoryTreeNodeTransfer
-     * @param int $fkParentFileDirectory
-     *
-     * @return void
-     */
-    protected function persistFileDirectoryTreeNodeRecursively(FileDirectoryTreeNodeTransfer $fileDirectoryTreeNodeTransfer, $fkParentFileDirectory)
-    {
-        $fileDirectoryTransfer = $fileDirectoryTreeNodeTransfer->getFileDirectory();
-        $fileDirectoryEntity = $this->getFileDirectoryEntity($fileDirectoryTransfer);
-        $fileDirectoryEntity = $this->setFileDirectoryEntityChanges($fileDirectoryEntity, $fileDirectoryTransfer, $fkParentFileDirectory);
-        $fileDirectoryEntity->save();
+        $this->entityManager->saveFileDirectory($fileDirectoryTransfer);
 
         foreach ($fileDirectoryTreeNodeTransfer->getChildren() as $childFileDirectoryTreeNodeTransfer) {
-            $this->persistFileDirectoryTreeNodeRecursively($childFileDirectoryTreeNodeTransfer, $fileDirectoryEntity->getIdFileDirectory());
+            $this->persistFileDirectoryTreeNodeRecursively($childFileDirectoryTreeNodeTransfer, $fileDirectoryTransfer->getIdFileDirectory());
         }
     }
 
     /**
-     * @param \Generated\Shared\Transfer\FileDirectoryTransfer $fileDirectoryTransfer
+     * @param int $idFileDirectory
      *
      * @throws \Spryker\Zed\FileManager\Exception\FileDirectoryNotFoundException
      *
-     * @return \Orm\Zed\FileManager\Persistence\SpyFileDirectory
+     * @return \Generated\Shared\Transfer\FileDirectoryTransfer
      */
-    protected function getFileDirectoryEntity(FileDirectoryTransfer $fileDirectoryTransfer)
+    protected function getFileDirectoryTransfer(int $idFileDirectory)
     {
-        $fileDirectoryEntity = $this->fileManagerQueryContainer
-            ->queryFileDirectoryById($fileDirectoryTransfer->getIdFileDirectory())
-            ->findOne();
+        $fileDirectoryTransfer = $this->repository->getFileDirectory($idFileDirectory);
 
-        if (!$fileDirectoryEntity) {
+        if ($fileDirectoryTransfer === null) {
             throw new FileDirectoryNotFoundException(
                 sprintf(
                     'File directory entity not found with ID %d.',
@@ -142,30 +138,6 @@ class FileDirectoryTreeHierarchyUpdater implements FileDirectoryTreeHierarchyUpd
             );
         }
 
-        return $fileDirectoryEntity;
-    }
-
-    /**
-     * @param \Orm\Zed\Navigation\Persistence\SpyNavigationNode $fileDirectoryEntity
-     * @param \Generated\Shared\Transfer\NavigationNodeTransfer $navigationNodeTransfer
-     * @param int $fkParentNavigationNode
-     *
-     * @return \Orm\Zed\Navigation\Persistence\SpyNavigationNode
-     */
-
-    /**
-     * @param \Orm\Zed\FileManager\Persistence\SpyFileDirectory $fileDirectoryEntity
-     * @param \Generated\Shared\Transfer\FileDirectoryTransfer $fileDirectoryTransfer
-     * @param int $fkParentFileDirectory
-     *
-     * @return \Orm\Zed\FileManager\Persistence\SpyFileDirectory
-     */
-    protected function setFileDirectoryEntityChanges(SpyFileDirectory $fileDirectoryEntity, FileDirectoryTransfer $fileDirectoryTransfer, $fkParentFileDirectory)
-    {
-        $fileDirectoryEntity
-            ->setPosition($fileDirectoryTransfer->getPosition())
-            ->setFkParentFileDirectory($fkParentFileDirectory);
-
-        return $fileDirectoryEntity;
+        return $fileDirectoryTransfer;
     }
 }

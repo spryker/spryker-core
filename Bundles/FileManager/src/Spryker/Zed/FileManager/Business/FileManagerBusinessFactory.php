@@ -161,7 +161,10 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
      */
     public function createFileDirectoryTreeHierarchyUpdater()
     {
-        return new FileDirectoryTreeHierarchyUpdater($this->getQueryContainer());
+        return new FileDirectoryTreeHierarchyUpdater(
+            $this->getEntityManager(),
+            $this->getRepository()
+        );
     }
 
     /**
