@@ -22,7 +22,7 @@ use Throwable;
  */
 class GatewayController extends AbstractGatewayController
 {
-    const MESSAGE_PLACE_ORDER_ERROR = 'Order can not be processed';
+    protected const ERROR_MESSAGE_ORDER_CAN_NOT_BE_PROCESSED = 'checkout.step.error.order_can_not_be_processed';
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -63,7 +63,7 @@ class GatewayController extends AbstractGatewayController
     {
         $checkoutErrorTransfer = (new CheckoutErrorTransfer())
             ->setErrorCode(Response::HTTP_INTERNAL_SERVER_ERROR)
-            ->setMessage(static::MESSAGE_PLACE_ORDER_ERROR);
+            ->setMessage(static::ERROR_MESSAGE_ORDER_CAN_NOT_BE_PROCESSED);
 
         $checkoutResponseTransfer = (new CheckoutResponseTransfer())
             ->addError($checkoutErrorTransfer)
