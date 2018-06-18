@@ -40,7 +40,7 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
     public function createShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
     {
         return $this->getFactory()
-            ->createWriter()
+            ->createShoppingListWriter()
             ->validateAndSaveShoppingList($shoppingListTransfer);
     }
 
@@ -56,7 +56,7 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
     public function updateShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
     {
         return $this->getFactory()
-            ->createWriter()
+            ->createShoppingListWriter()
             ->validateAndSaveShoppingList($shoppingListTransfer);
     }
 
@@ -72,7 +72,7 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
     public function removeShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
     {
         return $this->getFactory()
-            ->createWriter()
+            ->createShoppingListWriter()
             ->removeShoppingList($shoppingListTransfer);
     }
 
@@ -88,7 +88,7 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
     public function addItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
     {
         return $this->getFactory()
-            ->createWriter()
+            ->createShoppingListItemOperation()
             ->addItem($shoppingListItemTransfer);
     }
 
@@ -103,7 +103,9 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
      */
     public function removeItemById(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemResponseTransfer
     {
-        return $this->getFactory()->createWriter()->removeItemById($shoppingListItemTransfer);
+        return $this->getFactory()
+            ->createShoppingListItemOperation()
+            ->removeItemById($shoppingListItemTransfer);
     }
 
     /**
@@ -118,7 +120,7 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
     public function getShoppingList(ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer
     {
         return $this->getFactory()
-            ->createReader()
+            ->createShoppingListReader()
             ->getShoppingList($shoppingListTransfer);
     }
 
@@ -134,7 +136,7 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
     public function getShoppingListOverview(ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer): ShoppingListOverviewResponseTransfer
     {
         return $this->getFactory()
-            ->createReader()
+            ->createShoppingListReader()
             ->getShoppingListOverview($shoppingListOverviewRequestTransfer);
     }
 
@@ -150,7 +152,7 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
     public function getCustomerShoppingListCollection(CustomerTransfer $customerTransfer): ShoppingListCollectionTransfer
     {
         return $this->getFactory()
-            ->createReader()
+            ->createShoppingListReader()
             ->getCustomerShoppingListCollection($customerTransfer);
     }
 
@@ -166,7 +168,7 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
     public function getShoppingListItemCollection(ShoppingListCollectionTransfer $shoppingListCollectionTransfer): ShoppingListItemCollectionTransfer
     {
         return $this->getFactory()
-            ->createReader()
+            ->createShoppingListReader()
             ->getShoppingListItemCollection($shoppingListCollectionTransfer);
     }
 
@@ -182,7 +184,7 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
     public function getShoppingListItemCollectionTransfer(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ShoppingListItemCollectionTransfer
     {
         return $this->getFactory()
-            ->createReader()
+            ->createShoppingListReader()
             ->getShoppingListItemCollectionTransfer($shoppingListItemCollectionTransfer);
     }
 
@@ -197,7 +199,7 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
      */
     public function updateShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
     {
-        return $this->getFactory()->createWriter()->saveShoppingListItem($shoppingListItemTransfer);
+        return $this->getFactory()->createShoppingListItemOperation()->saveShoppingListItem($shoppingListItemTransfer);
     }
 
     /**
@@ -211,7 +213,7 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
      */
     public function createShoppingListFromQuote(ShoppingListFromCartRequestTransfer $shoppingListFromCartRequestTransfer): ShoppingListTransfer
     {
-        return $this->getFactory()->createWriter()->createShoppingListFromQuote($shoppingListFromCartRequestTransfer);
+        return $this->getFactory()->createQuoteToShoppingListConverter()->createShoppingListFromQuote($shoppingListFromCartRequestTransfer);
     }
 
     /**
@@ -235,7 +237,7 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
      */
     public function getShoppingListPermissionGroup(): ShoppingListPermissionGroupTransfer
     {
-        return $this->getFactory()->createReader()->getShoppingListPermissionGroup();
+        return $this->getFactory()->createShoppingListReader()->getShoppingListPermissionGroup();
     }
 
     /**
@@ -249,7 +251,7 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
      */
     public function shareShoppingListWithCompanyBusinessUnit(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ShoppingListShareResponseTransfer
     {
-        return $this->getFactory()->createWriter()->shareShoppingListWithCompanyBusinessUnit($shoppingListShareRequestTransfer);
+        return $this->getFactory()->createShoppingListSharer()->shareShoppingListWithCompanyBusinessUnit($shoppingListShareRequestTransfer);
     }
 
     /**
@@ -263,7 +265,7 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
      */
     public function shareShoppingListWithCompanyUser(ShoppingListShareRequestTransfer $shoppingListShareRequestTransfer): ShoppingListShareResponseTransfer
     {
-        return $this->getFactory()->createWriter()->shareShoppingListWithCompanyUser($shoppingListShareRequestTransfer);
+        return $this->getFactory()->createShoppingListSharer()->shareShoppingListWithCompanyUser($shoppingListShareRequestTransfer);
     }
 
     /**
@@ -277,6 +279,6 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
      */
     public function findCompanyUserPermissions(int $idCompanyUser): PermissionCollectionTransfer
     {
-        return $this->getFactory()->createReader()->findCompanyUserPermissions($idCompanyUser);
+        return $this->getFactory()->createShoppingListReader()->findCompanyUserPermissions($idCompanyUser);
     }
 }

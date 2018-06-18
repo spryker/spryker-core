@@ -24,7 +24,10 @@ class RepositoryResolver extends AbstractClassResolver
     {
         $this->setCallerClass($callerClass);
         if ($this->canResolve()) {
-            return $this->getResolvedClassInstance();
+            /** @var \Spryker\Zed\Kernel\Persistence\AbstractRepository $class */
+            $class = $this->getResolvedClassInstance();
+
+            return $class;
         }
 
         throw new RepositoryNotFoundException($this->getClassInfo());

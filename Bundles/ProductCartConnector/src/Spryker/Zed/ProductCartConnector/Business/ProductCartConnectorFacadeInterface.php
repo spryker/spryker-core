@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductCartConnector\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface ProductCartConnectorFacadeInterface
 {
@@ -37,4 +38,17 @@ interface ProductCartConnectorFacadeInterface
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
     public function validateItems(CartChangeTransfer $cartChangeTransfer);
+
+    /**
+     * Specification:
+     *  - Removes inactive items from quote.
+     *  - Adds note to messages about removed items.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function filterInactiveItems(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }
