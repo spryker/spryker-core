@@ -14,7 +14,7 @@ interface ProductAlternativeStorageFacadeInterface
      *
      * @api
      *
-     * @param int[] $productAlternativeIds
+     * @param int[] $idProduct
      *
      * @return void
      */

@@ -10,9 +10,9 @@ namespace Spryker\Zed\ProductAlternativeStorage\Business\ProductAlternativePubli
 interface ProductAlternativePublisherInterface
 {
     /**
-     * @param array $productAlternativeIds
+     * @param int[] $productIds
      *
      * @return void
      */
-    public function publish(array $productAlternativeIds): void;
+    public function publish(array $productIds): void;
 }

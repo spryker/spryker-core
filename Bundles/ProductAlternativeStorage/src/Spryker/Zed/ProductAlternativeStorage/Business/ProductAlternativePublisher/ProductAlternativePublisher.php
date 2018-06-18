@@ -8,8 +8,9 @@
 namespace Spryker\Zed\ProductAlternativeStorage\Business\ProductAlternativePublisher;
 
 
+use Generated\Shared\Transfer\ProductAlternativeStorageTransfer;
+use Generated\Shared\Transfer\ProductAlternativeTransfer;
 use Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer;
-use Spryker\Zed\ProductAlternativeStorage\Business\Model\ProductAlternativeStorageReaderInterface;
 use Spryker\Zed\ProductAlternativeStorage\Dependency\Facade\ProductAlternativeStorageToProductAlternativeFacadeInterface;
 use Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageEntityManagerInterface;
 use Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface;
@@ -41,7 +42,8 @@ class ProductAlternativePublisher implements ProductAlternativePublisherInterfac
         ProductAlternativeStorageToProductAlternativeFacadeInterface $productAlternativeFacade,
         ProductAlternativeStorageRepositoryInterface $productAlternativeStorageRepository,
         ProductAlternativeStorageEntityManagerInterface $productAlternativeStorageEntityManager
-    ) {
+    )
+    {
         $this->productAlternativeFacade = $productAlternativeFacade;
         $this->productAlternativeStorageRepository = $productAlternativeStorageRepository;
         $this->productAlternativeStorageEntityManager = $productAlternativeStorageEntityManager;
@@ -54,53 +56,57 @@ class ProductAlternativePublisher implements ProductAlternativePublisherInterfac
      */
     public function publish(array $productIds): void
     {
-        $mappedProductConcreteAlternativeStorageEntityTransfer =
-            $this->findMappedProductConcreteAlternativeStorageEntityTransfers($productIds);
+        $abstractAlternatives = [];
+        $concreteAlternatives = [];
 
-        foreach ($productIds as $idProduct) {
-            $storageEntitiesWithStore = [];
+        foreach ($productIds as $productId) {
+            $productAlternativeTransfer = $this->productAlternativeFacade->findProductAlternativeTransfer($productId);
+            $productAlternativeStorageEntity = $this->findProductAlternativeStorageEntity($productId);
 
-            if (isset($mappedProductConcreteAlternativeStorageEntityTransfer[$idProduct])) {
-                $storageEntitiesWithStore = $mappedProductConcreteAlternativeStorageEntityTransfer[$idProduct];
-            }
-
-            unset($mappedProductConcreteAlternativeStorageEntityTransfer[$idProduct]);
-
-            $this->saveStorageEntityTransfer($idProduct, $storageEntitiesWithStore);
+            $this->saveStorageEntity($productAlternativeStorageEntity, $productAlternativeTransfer);
         }
     }
 
     /**
-     * @param int $idProduct
-     * @param \Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer[]
+     * @param int $IdProduct
+     *
+     * @return SpyProductAlternativeStorageEntityTransfer
+     */
+    protected function findProductAlternativeStorageEntity($IdProduct): ProductAlternativeTransfer
+    {
+        return $this->productAlternativeStorageRepository->findProductAlternativeStorageEntity($IdProduct);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer $productAlternativeStorageEntity
+     * @param \Generated\Shared\Transfer\ProductAlternativeTransfer $productAlternativeTransfer
      *
      * @return void
      */
-    protected function saveStorageEntityTransfer(int $idProduct, array $storageEntityTransfers): void
+
+    protected function saveStorageEntity(
+        SpyProductAlternativeStorageEntityTransfer $productAlternativeStorageEntity,
+        ProductAlternativeTransfer $productAlternativeTransfer
+    ): void
     {
-        $productConcreteAlternativeStorageData = $this->generateProductAlternativeStorageTransfersByIdProduct($idProduct);
-        foreach ($productConcreteAlternativeStorageData as $storageData) {
+        $productAlternativeStorageEntity
+            ->setSku($productAlternativeTransfer->getIdProduct())
+            ->setData($this->getStorageEntityData($productAlternativeTransfer));
 
-        }
-
+        $this->productAlternativeStorageEntityManager->saveProductAlternativeStorageEntity($productAlternativeStorageEntity);
     }
 
     /**
-     * @param int $idProduct
-     *
-     * @return \Generated\Shared\Transfer\ProductAlternativeStorageTransfer[]
-     */
-    protected function generateProductAlternativeStorageTransfersByIdProduct(int $idProduct): array
-    {
-    }
-
-    /**
-     * @param int[] $productIds
+     * @param \Generated\Shared\Transfer\ProductAlternativeTransfer $productAlternativeTransfer
      *
      * @return array
      */
-    protected function findMappedProductConcreteAlternativeStorageEntityTransfers(array $productIds): array
+    protected function getStorageEntityData(ProductAlternativeTransfer $productAlternativeTransfer): array
     {
-
+        return (new ProductAlternativeStorageTransfer())
+            ->fromArray($productAlternativeTransfer->toArray(), true)
+            ->addProductAbstractIds()
+            ->addProductConcreteIds()
+            ->toArray();
     }
 }

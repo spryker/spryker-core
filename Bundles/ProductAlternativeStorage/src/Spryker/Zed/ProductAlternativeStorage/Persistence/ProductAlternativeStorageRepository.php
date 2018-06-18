@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductAlternativeStorage\Persistence;
 
+use Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -15,20 +16,16 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class ProductAlternativeStorageRepository extends AbstractRepository implements ProductAlternativeStorageRepositoryInterface
 {
     /**
-     * @param int[] $productAlternativeIds
+     * @param int $idProduct
      *
-     * @return \Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer[]
+     * @return \Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer
      */
-    public function findProductAlternativeStorageEntities(array $productAlternativeIds): array
+    public function findProductAlternativeStorageEntity($idProduct): SpyProductAlternativeStorageEntityTransfer
     {
-        if (!$productAlternativeIds) {
-            return [];
-        }
-
         $query = $this->getFactory()
             ->createProductAlternativeStorageQuery()
-            ->filterByFkProductAlternative_In($productAlternativeIds);
+            ->filterByFkProductAlternative($idProduct);
 
-        return $this->buildQueryFromCriteria($query)->find();
+        return $this->buildQueryFromCriteria($query)->findOneOrCreate();
     }
 }

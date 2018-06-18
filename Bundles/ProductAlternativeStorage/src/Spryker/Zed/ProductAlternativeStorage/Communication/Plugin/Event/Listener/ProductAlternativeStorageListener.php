@@ -32,12 +32,12 @@ class ProductAlternativeStorageListener extends AbstractPlugin implements EventB
     {
         $this->preventTransaction();
 
-        $productAlternativeIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
+        $productIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
-        if (empty($productAlternativeIds)) {
+        if (empty($productIds)) {
             return;
         }
 
-        $this->getFacade()->publishAlternative($productAlternativeIds);
+        $this->getFacade()->publishAlternative($productIds);
     }
 }
