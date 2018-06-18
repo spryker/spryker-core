@@ -16,6 +16,7 @@
     <transfer name="CheckoutError">
         <property name="errorCode" type="int" />
         <property name="message" type="string" />
+        <property name="detailedMessage" type="Message"/>
     </transfer>
 
     <transfer name="CheckoutResponse">
@@ -77,5 +78,9 @@
         <property name="orderReference" type="string" />
     </transfer>
 
-</transfers>
+    <transfer name="Message">
+        <property name="value" type="string"/>
+        <property name="parameters" type="array"/>
+    </transfer>
 
+</transfers>

@@ -9,13 +9,17 @@ namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\PreCheck
 use ArrayObject;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 
 class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements ProductBundleCheckoutAvailabilityCheckInterface
 {
-    const CHECKOUT_PRODUCT_UNAVAILABLE_TRANSLATION_KEY = 'product.unavailable';
+    protected const CHECKOUT_PRODUCT_BUNDLE_UNAVAILABLE_TRANSLATION_KEY = 'product.unavailable';
+    protected const CHECKOUT_PRODUCT_BUNDLE_UNAVAILABLE_PARAMETER_BUNDLE_SKU = '%bundleSku%';
+    protected const CHECKOUT_PRODUCT_BUNDLE_UNAVAILABLE_PARAMETER_PRODUCT_SKU = '%productSku%';
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -59,20 +63,54 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
 
         foreach ($uniqueBundleItems as $bundleItemTransfer) {
             $bundledItems = $this->findBundledProducts($bundleItemTransfer->getSku());
-            if (!$this->isAllCheckoutBundledItemsAvailable($itemsInCart, $bundledItems, $storeTransfer)) {
-                $checkoutErrorMessages[] = $this->createCheckoutResponseTransfer();
+
+            $unavailableItems = $this->getUnavailableCheckoutBundledItems($itemsInCart, $bundledItems, $storeTransfer);
+            if (!empty($unavailableItems)) {
+                foreach ($unavailableItems as $unavailableItem) {
+                    $checkoutErrorMessages[] = $this->createCheckoutResponseTransfer(
+                        $bundleItemTransfer,
+                        $unavailableItem
+                    );
+                }
             }
         }
+
         return $checkoutErrorMessages;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\MessageTransfer
+     */
+    protected function createMessageTransfer(): MessageTransfer
+    {
+        return new MessageTransfer();
     }
 
     /**
      * @return \Generated\Shared\Transfer\CheckoutErrorTransfer
      */
-    protected function createCheckoutResponseTransfer()
+    protected function createCheckoutErrorTransfer(): CheckoutErrorTransfer
     {
-        $checkoutErrorTransfer = new CheckoutErrorTransfer();
-        $checkoutErrorTransfer->setMessage(static::CHECKOUT_PRODUCT_UNAVAILABLE_TRANSLATION_KEY);
+        return new CheckoutErrorTransfer();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $bundleItemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $productItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\CheckoutErrorTransfer
+     */
+    protected function createCheckoutResponseTransfer(ItemTransfer $bundleItemTransfer, ItemTransfer $productItemTransfer): CheckoutErrorTransfer
+    {
+        $messageTransfer = $this->createMessageTransfer()
+            ->setValue(static::CHECKOUT_PRODUCT_BUNDLE_UNAVAILABLE_TRANSLATION_KEY)
+            ->setParameters([
+                static::CHECKOUT_PRODUCT_BUNDLE_UNAVAILABLE_PARAMETER_BUNDLE_SKU => $bundleItemTransfer->getSku(),
+                static::CHECKOUT_PRODUCT_BUNDLE_UNAVAILABLE_PARAMETER_PRODUCT_SKU => $productItemTransfer->getSku(),
+            ]);
+
+        $checkoutErrorTransfer = $this->createCheckoutErrorTransfer()
+            ->setDetailedMessage($messageTransfer);
 
         return $checkoutErrorTransfer;
     }
@@ -82,23 +120,25 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
      * @param \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\Collection\ObjectCollection $bundledItems
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return bool
+     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]
      */
-    protected function isAllCheckoutBundledItemsAvailable(
+    protected function getUnavailableCheckoutBundledItems(
         ArrayObject $currentCartItems,
         ObjectCollection $bundledItems,
         StoreTransfer $storeTransfer
-    ) {
+    ): array {
+        $unavailableProducts = [];
+
         foreach ($bundledItems as $productBundleEntity) {
             $bundledProductConcreteEntity = $productBundleEntity->getSpyProductRelatedByFkBundledProduct();
 
             $sku = $bundledProductConcreteEntity->getSku();
             if (!$this->checkIfItemIsSellable($currentCartItems, $sku, $storeTransfer)) {
-                return false;
+                $unavailableProducts[] = $productBundleEntity;
             }
         }
 
-        return true;
+        return $unavailableProducts;
     }
 
     /**
