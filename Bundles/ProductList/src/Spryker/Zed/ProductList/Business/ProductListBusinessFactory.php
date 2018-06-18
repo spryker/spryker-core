@@ -36,10 +36,7 @@ class ProductListBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductListWriter(
             $this->getEntityManager(),
-            [
-                $this->createProductListCategoryRelationPostSaver(),
-                $this->createProductListProductConcreteRelationPostSaver(),
-            ]
+            $this->getProductListPostSaverCollection()
         );
     }
 
@@ -95,5 +92,16 @@ class ProductListBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->createProductListProductConcreteRelationReader()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductList\Business\ProductList\ProductListPostSaverInterface[]
+     */
+    public function getProductListPostSaverCollection(): array
+    {
+        return [
+            $this->createProductListCategoryRelationPostSaver(),
+            $this->createProductListProductConcreteRelationPostSaver()
+        ];
     }
 }
