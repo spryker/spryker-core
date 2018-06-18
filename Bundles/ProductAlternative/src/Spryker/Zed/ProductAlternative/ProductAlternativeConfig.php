@@ -5,10 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductAlternative\Business\Exception;
+namespace Spryker\Zed\ProductAlternative;
 
-use Exception;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
 
-class ProductAlternativeIsNotDefinedException extends Exception
+class ProductAlternativeConfig extends AbstractBundleConfig
 {
 }

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductAlternative;
 
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
+use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductAlternative\Dependency\Facade\ProductAlternativeToLocaleFacadeBridge;
@@ -16,16 +18,33 @@ class ProductAlternativeDependencyProvider extends AbstractBundleDependencyProvi
 {
     public const FACADE_LOCALE = 'FACADE_LOCALE';
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+    public const QUERY_PRODUCT = 'QUERY_PRODUCT';
+    public const QUERY_PRODUCT_ABSTRACT = 'QUERY_PRODUCT_ABSTRACT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideBusinessLayerDependencies(Container $container)
+    public function provideBusinessLayerDependencies(Container $container): Container
     {
+        $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addLocaleFacade($container);
         $container = $this->addProductFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function providePersistenceLayerDependencies(Container $container): Container
+    {
+        $container = parent::providePersistenceLayerDependencies($container);
+        $container = $this->addProductQuery($container);
+        $container = $this->addProductAbstractQuery($container);
 
         return $container;
     }
@@ -57,6 +76,34 @@ class ProductAlternativeDependencyProvider extends AbstractBundleDependencyProvi
             return new ProductAlternativeToProductFacadeBridge(
                 $container->getLocator()->product()->facade()
             );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductQuery(Container $container): Container
+    {
+        $container[static::QUERY_PRODUCT] = function () {
+            return SpyProductQuery::create();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductAbstractQuery(Container $container): Container
+    {
+        $container[static::QUERY_PRODUCT_ABSTRACT] = function () {
+            return SpyProductAbstractQuery::create();
         };
 
         return $container;

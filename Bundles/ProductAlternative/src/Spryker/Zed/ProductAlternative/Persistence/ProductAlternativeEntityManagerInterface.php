@@ -13,7 +13,7 @@ interface ProductAlternativeEntityManagerInterface
 {
     /**
      * Specification:
-     * - Creates new abstract product alternative for existing product concrete.
+     * - Creates new or updates existing abstract product alternative for existing product concrete.
      *
      * @api
      *
@@ -22,11 +22,11 @@ interface ProductAlternativeEntityManagerInterface
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
      */
-    public function createProductAbstractAlternative(int $idProduct, int $idProductAbstractAlternative): ProductAlternativeTransfer;
+    public function saveProductAbstractAlternative(int $idProduct, int $idProductAbstractAlternative): ProductAlternativeTransfer;
 
     /**
      * Specification:
-     * - Creates new concrete product alternative for existing product concrete.
+     * - Creates new or updates existing concrete product alternative for existing product concrete.
      *
      * @api
      *
@@ -35,12 +35,11 @@ interface ProductAlternativeEntityManagerInterface
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
      */
-    public function createProductConcreteAlternative(int $idProduct, int $idProductConcreteAlternative): ProductAlternativeTransfer;
+    public function saveProductConcreteAlternative(int $idProduct, int $idProductConcreteAlternative): ProductAlternativeTransfer;
 
     /**
      * Specification:
      * - Deletes existing product alternative.
-     * - Deletes only a link between products, thus products themselves are untouched.
      *
      * @api
      *

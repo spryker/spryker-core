@@ -4,10 +4,11 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker/category": "^4.4.0",
     "spryker/kernel": "^3.20.0",
-    "spryker/product": "^6.0.0",
     "spryker/locale": "^3.1.0",
-    "spryker/category": "^4.4.0"
+    "spryker/product": "^6.0.0",
+    "spryker/propel-orm": "^1.1.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
