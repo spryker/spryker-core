@@ -5,6 +5,7 @@
  */
 namespace Spryker\Zed\Checkout\Business;
 
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
@@ -30,4 +31,17 @@ interface CheckoutFacadeInterface
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
     public function placeOrder(QuoteTransfer $quoteTransfer);
+
+    /**
+     * Specification:
+     * - Saves error message in Zed, so it later can be retrieved and rendered with help of ZedRequestClient.
+     * - Uses Messenger module's Facade to add messages to flashbag.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MessageTransfer $messageTransfer
+     *
+     * @return void
+     */
+    public function addCheckoutErrorMessage(MessageTransfer $messageTransfer): void;
 }

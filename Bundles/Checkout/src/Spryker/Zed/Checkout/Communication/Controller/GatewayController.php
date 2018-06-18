@@ -10,6 +10,7 @@ namespace Spryker\Zed\Checkout\Communication\Controller;
 use Exception;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\ErrorHandler\ErrorLogger;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
@@ -39,6 +40,16 @@ class GatewayController extends AbstractGatewayController
         }
 
         return $checkoutResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MessageTransfer $messageTransfer
+     *
+     * @return void
+     */
+    public function addCheckoutErrorMessageAction(MessageTransfer $messageTransfer): void
+    {
+        $this->getFacade()->addCheckoutErrorMessage($messageTransfer);
     }
 
     /**

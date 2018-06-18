@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Checkout\Business;
 
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -32,5 +33,19 @@ class CheckoutFacade extends AbstractFacade implements CheckoutFacadeInterface
             ->getFactory()
             ->createCheckoutWorkflow()
             ->placeOrder($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MessageTransfer $messageTransfer
+     */
+    public function addCheckoutErrorMessage(MessageTransfer $messageTransfer): void
+    {
+        $this->getFactory()
+            ->createStatusMessageHandler()
+            ->addErrorMessage($messageTransfer);
     }
 }

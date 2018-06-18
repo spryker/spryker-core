@@ -7,8 +7,11 @@
 
 namespace Spryker\Zed\Checkout\Business;
 
+use Spryker\Zed\Checkout\Business\StatusMessage\StatusMessageHandler;
+use Spryker\Zed\Checkout\Business\StatusMessage\StatusMessageHandlerInterface;
 use Spryker\Zed\Checkout\Business\Workflow\CheckoutWorkflow;
 use Spryker\Zed\Checkout\CheckoutDependencyProvider;
+use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToMessengerFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -31,10 +34,28 @@ class CheckoutBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Checkout\Business\StatusMessage\StatusMessageHandlerInterface
+     */
+    public function createStatusMessageHandler(): StatusMessageHandlerInterface
+    {
+        return new StatusMessageHandler(
+            $this->getMessengerFacade()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsFacadeInterface
      */
     protected function getOmsFacade()
     {
         return $this->getProvidedDependency(CheckoutDependencyProvider::FACADE_OMS);
+    }
+
+    /**
+     * @return \Spryker\Zed\Checkout\Dependency\Facade\CheckoutToMessengerFacadeInterface
+     */
+    protected function getMessengerFacade(): CheckoutToMessengerFacadeInterface
+    {
+        return $this->getProvidedDependency(CheckoutDependencyProvider::FACADE_MESSENGER);
     }
 }
