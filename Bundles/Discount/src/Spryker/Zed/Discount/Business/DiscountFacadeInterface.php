@@ -545,7 +545,7 @@ interface DiscountFacadeInterface
      *
      * @return void
      */
-    public function transformDiscountableItem(
+    public function transformDiscountableItemPerQuantity(
         DiscountableItemTransformerTransfer $discountableItemTransformerTransfer
     ): void;
 }

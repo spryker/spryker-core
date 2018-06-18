@@ -12,16 +12,10 @@ use Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountableItemTransformerS
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\Discount\Business\DiscountFacadeInterface getFacade()
- * @method \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory getFactory()
+ * @method \Spryker\Zed\SalesQuantity\Business\SalesQuantityFacadeInterface getFacade()
  */
 class NonSplittableDiscountableItemTransformerStrategyPlugin extends AbstractPlugin implements DiscountableItemTransformerStrategyPluginInterface
 {
-    /**
-     * @var float
-     */
-    protected $roundingError = 0.0;
-
     /**
      * @param \Generated\Shared\Transfer\DiscountableItemTransfer $discountableItemTransfer
      *

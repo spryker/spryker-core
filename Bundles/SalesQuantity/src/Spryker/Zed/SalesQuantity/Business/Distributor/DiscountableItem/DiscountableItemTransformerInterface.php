@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SalesQuantity\Business\Model\Distributor\DiscountableItem;
+namespace Spryker\Zed\SalesQuantity\Business\Distributor\DiscountableItem;
 
 use Generated\Shared\Transfer\DiscountableItemTransformerTransfer;
 

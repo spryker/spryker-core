@@ -5,25 +5,25 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SalesQuantity\Business\Model\Cart\Expander;
+namespace Spryker\Zed\SalesQuantity\Business\Cart\Expander;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Spryker\Zed\SalesQuantity\Dependency\Facade\SalesQuantityToProductInterface;
+use Spryker\Zed\SalesQuantity\Dependency\Facade\SalesQuantityToProductFacadeInterface;
 
 class ItemExpander implements ItemExpanderInterface
 {
     /**
-     * @var \Spryker\Zed\SalesQuantity\Dependency\Facade\SalesQuantityToProductInterface
+     * @var \Spryker\Zed\SalesQuantity\Dependency\Facade\SalesQuantityToProductFacadeInterface
      */
     protected $productFacade;
 
     /**
-     * @param \Spryker\Zed\SalesQuantity\Dependency\Facade\SalesQuantityToProductInterface $productFacade
+     * @param \Spryker\Zed\SalesQuantity\Dependency\Facade\SalesQuantityToProductFacadeInterface $productFacade
      */
     public function __construct(
-        SalesQuantityToProductInterface $productFacade
+        SalesQuantityToProductFacadeInterface $productFacade
     ) {
         $this->productFacade = $productFacade;
     }
@@ -33,7 +33,7 @@ class ItemExpander implements ItemExpanderInterface
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function expandItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
+    public function expandWithIsQuantitySplittable(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             $productConcreteTransfer = $this->productFacade->getProductConcrete($itemTransfer->getSku());
@@ -63,6 +63,6 @@ class ItemExpander implements ItemExpanderInterface
     protected function assertProductConcreteTransfer(ProductConcreteTransfer $productConcreteTransfer): void
     {
         $productConcreteTransfer
-            ->requireSku();
+            ->requireIsQuantitySplittable();
     }
 }

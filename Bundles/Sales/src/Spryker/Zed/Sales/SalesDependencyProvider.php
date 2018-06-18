@@ -62,7 +62,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCalculationFacade($container);
         $container = $this->addCustomerFacade($container);
         $container = $this->addOrderItemExpanderPreSavePlugins($container);
-        $container = $this->addSalesItemTransformerStrategyPlugins($container);
+        $container = $this->additemTransformerStrategyPlugins($container);
 
         return $container;
     }
@@ -133,7 +133,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addSalesItemTransformerStrategyPlugins(Container $container): Container
+    protected function additemTransformerStrategyPlugins(Container $container): Container
     {
         $container[static::SALES_ITEM_TRANSFORMER_STRATEGY_PLUGINS] = function (Container $container) {
             return $this->getSalesOrderItemTransformerStrategyPlugins();
@@ -335,7 +335,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\SalesItemTransformerStrategyPluginInterface[]
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\ItemTransformerStrategyPluginInterface[]
      */
     public function getSalesOrderItemTransformerStrategyPlugins(): array
     {

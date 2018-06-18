@@ -23,7 +23,7 @@ class DiscountableItemTransformer implements DiscountableItemTransformerInterfac
      *
      * @return void
      */
-    public function transformDiscountableItem(
+    public function transformDiscountableItemPerQuantity(
         DiscountableItemTransformerTransfer $discountableItemTransformerTransfer
     ): void {
         $discountableItemTransfer = $discountableItemTransformerTransfer->getDiscountableItem();

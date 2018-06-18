@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SalesQuantity\Business\Model\Cart\Expander;
+namespace Spryker\Zed\SalesQuantity\Business\Cart\Expander;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 
@@ -16,5 +16,5 @@ interface ItemExpanderInterface
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function expandItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
+    public function expandWithIsQuantitySplittable(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
 }

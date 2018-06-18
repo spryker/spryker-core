@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Sales\Business\Model\Order\Item;
+namespace Spryker\Zed\SalesQuantity\Business\Order\Item;
 
 use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -17,5 +17,5 @@ interface ItemTransformerInterface
      *
      * @return \Generated\Shared\Transfer\ItemCollectionTransfer
      */
-    public function transformItemPerQuantity(ItemTransfer $itemTransfer): ItemCollectionTransfer;
+    public function transformNonSplittableItem(ItemTransfer $itemTransfer): ItemCollectionTransfer;
 }

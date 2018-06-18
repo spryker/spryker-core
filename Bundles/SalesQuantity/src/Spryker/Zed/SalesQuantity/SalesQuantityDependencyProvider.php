@@ -9,7 +9,7 @@ namespace Spryker\Zed\SalesQuantity;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\SalesQuantity\Dependency\Facade\SalesQuantityToProductBridge;
+use Spryker\Zed\SalesQuantity\Dependency\Facade\SalesQuantityToProductFacadeBridge;
 
 class SalesQuantityDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -34,8 +34,8 @@ class SalesQuantityDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductFacade(Container $container): Container
     {
-        $container[self::FACADE_PRODUCT] = function (Container $container) {
-            return new SalesQuantityToProductBridge($container->getLocator()->product()->facade());
+        $container[static::FACADE_PRODUCT] = function (Container $container) {
+            return new SalesQuantityToProductFacadeBridge($container->getLocator()->product()->facade());
         };
 
         return $container;

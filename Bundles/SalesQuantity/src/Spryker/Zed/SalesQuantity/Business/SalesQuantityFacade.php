@@ -27,11 +27,11 @@ class SalesQuantityFacade extends AbstractFacade implements SalesQuantityFacadeI
      *
      * @return \Generated\Shared\Transfer\ItemCollectionTransfer
      */
-    public function transformItem(ItemTransfer $itemTransfer): ItemCollectionTransfer
+    public function transformNonSplittableItem(ItemTransfer $itemTransfer): ItemCollectionTransfer
     {
         return $this->getFactory()
             ->createItemTransformer()
-            ->transformItem($itemTransfer);
+            ->transformNonSplittableItem($itemTransfer);
     }
 
     /**
@@ -47,7 +47,7 @@ class SalesQuantityFacade extends AbstractFacade implements SalesQuantityFacadeI
     {
         return $this->getFactory()
             ->createItemExpander()
-            ->expandItems($cartChangeTransfer);
+            ->expandWithIsQuantitySplittable($cartChangeTransfer);
     }
 
     /**

@@ -169,7 +169,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     {
         return new OrderExpander(
             $this->getCalculationFacade(),
-            $this->getSalesItemTransformerStrategyPlugins()
+            $this->getitemTransformerStrategyPlugins()
         );
     }
 
@@ -272,9 +272,9 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\SalesItemTransformerStrategyPluginInterface[]
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\ItemTransformerStrategyPluginInterface[]
      */
-    public function getSalesItemTransformerStrategyPlugins(): array
+    public function getitemTransformerStrategyPlugins(): array
     {
         return $this->getProvidedDependency(SalesDependencyProvider::SALES_ITEM_TRANSFORMER_STRATEGY_PLUGINS);
     }

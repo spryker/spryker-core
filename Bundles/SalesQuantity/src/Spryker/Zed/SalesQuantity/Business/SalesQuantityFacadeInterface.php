@@ -17,8 +17,7 @@ interface SalesQuantityFacadeInterface
 {
     /**
      * Specification:
-     * - Adds item to item collection.
-     * - Returns item collection.
+     * - Adds unchanged item to the returned item collection according the non-splittable strategy.
      *
      * @api
      *
@@ -26,7 +25,7 @@ interface SalesQuantityFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ItemCollectionTransfer
      */
-    public function transformItem(ItemTransfer $itemTransfer): ItemCollectionTransfer;
+    public function transformNonSplittableItem(ItemTransfer $itemTransfer): ItemCollectionTransfer;
 
     /**
      * Specification:

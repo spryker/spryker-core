@@ -210,5 +210,5 @@ interface SalesFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ItemCollectionTransfer
      */
-    public function transformItem(ItemTransfer $itemTransfer): ItemCollectionTransfer;
+    public function transformItemPerQuantity(ItemTransfer $itemTransfer): ItemCollectionTransfer;
 }

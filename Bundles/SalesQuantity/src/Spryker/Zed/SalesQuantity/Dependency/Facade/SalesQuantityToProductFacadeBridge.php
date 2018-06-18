@@ -9,7 +9,7 @@ namespace Spryker\Zed\SalesQuantity\Dependency\Facade;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 
-class SalesQuantityToProductBridge implements SalesQuantityToProductInterface
+class SalesQuantityToProductFacadeBridge implements SalesQuantityToProductFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Product\Business\ProductFacadeInterface

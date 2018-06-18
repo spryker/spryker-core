@@ -36,6 +36,6 @@ class SingleQuantityBasedDiscountableItemTransformerStrategyPlugin extends Abstr
         DiscountableItemTransformerTransfer $discountableItemTransformerTransfer
     ): void {
         $this->getFacade()
-            ->transformDiscountableItem($discountableItemTransformerTransfer);
+            ->transformDiscountableItemPerQuantity($discountableItemTransformerTransfer);
     }
 }
