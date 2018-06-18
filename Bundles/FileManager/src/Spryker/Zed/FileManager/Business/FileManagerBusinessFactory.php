@@ -86,8 +86,8 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
     public function createFileDirectoryRemover()
     {
         return new FileDirectoryRemover(
-            $this->getQueryContainer(),
-            $this->createFileLoader(),
+            $this->getEntityManager(),
+            $this->getRepository(),
             $this->getFileSystemService(),
             $this->getConfig()
         );

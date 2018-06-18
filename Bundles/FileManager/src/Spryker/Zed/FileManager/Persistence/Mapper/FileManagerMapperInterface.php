@@ -80,6 +80,14 @@ interface FileManagerMapperInterface
     public function mapFileDirectoryTransferToEntity(FileDirectoryTransfer $fileDirectoryTransfer, SpyFileDirectory $fileDirectory);
 
     /**
+     * @param \Orm\Zed\FileManager\Persistence\SpyFileDirectory $fileDirectory
+     * @param \Generated\Shared\Transfer\FileDirectoryTransfer $fileDirectoryTransfer
+     *
+     * @return \Generated\Shared\Transfer\FileDirectoryTransfer
+     */
+    public function mapFileDirectoryEntityToTransfer(SpyFileDirectory $fileDirectory, FileDirectoryTransfer $fileDirectoryTransfer);
+
+    /**
      * @param \Generated\Shared\Transfer\FileDirectoryLocalizedAttributesTransfer $fileDirectoryLocalizedAttributesTransfer
      * @param \Orm\Zed\FileManager\Persistence\SpyFileDirectoryLocalizedAttributes $fileDirectoryLocalizedAttributes
      *

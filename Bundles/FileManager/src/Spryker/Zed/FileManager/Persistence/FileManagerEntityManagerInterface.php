@@ -66,6 +66,20 @@ interface FileManagerEntityManagerInterface
     public function saveFileDirectoryLocalizedAttribute(FileDirectoryLocalizedAttributesTransfer $fileDirectoryLocalizedAttributesTransfer);
 
     /**
+     * @param int $idFileDirectory
+     *
+     * @return bool
+     */
+    public function deleteDirectoryFiles(int $idFileDirectory);
+
+    /**
+     * @param int $idFileDirectory
+     *
+     * @return bool
+     */
+    public function deleteDirectory(int $idFileDirectory);
+
+    /**
      * @param \Generated\Shared\Transfer\MimeTypeTransfer $mimeTypeTransfer
      *
      * @return \Generated\Shared\Transfer\MimeTypeTransfer

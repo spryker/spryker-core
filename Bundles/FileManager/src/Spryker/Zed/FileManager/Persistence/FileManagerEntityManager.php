@@ -186,6 +186,42 @@ class FileManagerEntityManager extends AbstractEntityManager implements FileMana
     }
 
     /**
+     * @param int $idFileDirectory
+     *
+     * @return bool
+     */
+    public function deleteDirectoryFiles(int $idFileDirectory)
+    {
+        $this->getFactory()
+            ->createFileQuery()
+            ->filterByFkFileDirectory($idFileDirectory)
+            ->delete();
+
+        return true;
+    }
+
+    /**
+     * @param int $idFileDirectory
+     *
+     * @return bool
+     */
+    public function deleteDirectory(int $idFileDirectory)
+    {
+        $directoryEntity = $this->getFactory()
+            ->createFileDirectoryQuery()
+            ->filterByIdFileDirectory($idFileDirectory)
+            ->findOne();
+
+        if ($directoryEntity === null) {
+            return false;
+        }
+
+        $directoryEntity->delete();
+
+        return true;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\MimeTypeTransfer $mimeTypeTransfer
      *
      * @return \Generated\Shared\Transfer\MimeTypeTransfer

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\FileManager\Persistence;
 
+use ArrayObject;
+use Generated\Shared\Transfer\FileDirectoryTransfer;
 use Generated\Shared\Transfer\FileInfoTransfer;
 use Generated\Shared\Transfer\FileTransfer;
 use Generated\Shared\Transfer\MimeTypeCollectionTransfer;
@@ -106,6 +108,53 @@ class FileManagerRepository extends AbstractRepository implements FileManagerRep
         return $this->getFactory()
             ->createFileManagerMapper()
             ->mapFileInfoEntityToEntityTransfer($fileInfoEntity, new SpyFileInfoEntityTransfer());
+    }
+
+    /**
+     * @param int $idFileDirectory
+     *
+     * @return \Generated\Shared\Transfer\FileDirectoryTransfer|null
+     */
+    public function getFileDirectory(int $idFileDirectory)
+    {
+        $query = $this->getFactory()
+            ->createFileDirectoryQuery()
+            ->filterByIdFileDirectory($idFileDirectory);
+
+        $fileDirectoryEntity = $query->findOne();
+
+        if ($fileDirectoryEntity === null) {
+            return $fileDirectoryEntity;
+        }
+
+        return $this->getFactory()
+            ->createFileManagerMapper()
+            ->mapFileDirectoryEntityToTransfer($fileDirectoryEntity, new FileDirectoryTransfer());
+    }
+
+    /**
+     * @param int $idFileDirectory
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\FileTransfer[]
+     */
+    public function getDirectoryFiles(int $idFileDirectory)
+    {
+        $directoryFilesCollection = new ArrayObject();
+        $mapper = $this->getFactory()->createFileManagerMapper();
+
+        $query = $this->getFactory()
+            ->createFileQuery()
+            ->filterByFkFileDirectory($idFileDirectory);
+
+        $files = $query->find();
+
+        foreach ($files as $file) {
+            $directoryFilesCollection->append(
+                $mapper->mapFileEntityToTransfer($file, new FileTransfer())
+            );
+        }
+
+        return $directoryFilesCollection;
     }
 
     /**

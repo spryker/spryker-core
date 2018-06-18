@@ -131,6 +131,17 @@ class FileManagerMapper implements FileManagerMapperInterface
     }
 
     /**
+     * @param \Orm\Zed\FileManager\Persistence\SpyFileDirectory $fileDirectory
+     * @param \Generated\Shared\Transfer\FileDirectoryTransfer $fileDirectoryTransfer
+     *
+     * @return \Generated\Shared\Transfer\FileDirectoryTransfer
+     */
+    public function mapFileDirectoryEntityToTransfer(SpyFileDirectory $fileDirectory, FileDirectoryTransfer $fileDirectoryTransfer)
+    {
+        return $fileDirectoryTransfer->fromArray($fileDirectory->toArray());
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\FileDirectoryLocalizedAttributesTransfer $fileDirectoryLocalizedAttributesTransfer
      * @param \Orm\Zed\FileManager\Persistence\SpyFileDirectoryLocalizedAttributes $fileDirectoryLocalizedAttributes
      *
@@ -151,8 +162,7 @@ class FileManagerMapper implements FileManagerMapperInterface
      */
     public function mapMimeTypeEntityToTransfer(SpyMimeType $mimeType, MimeTypeTransfer $mimeTypeTransfer)
     {
-        return $mimeTypeTransfer
-            ->fromArray($mimeType->toArray(), true);
+        return $mimeTypeTransfer->fromArray($mimeType->toArray(), true);
     }
 
     /**

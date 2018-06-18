@@ -10,25 +10,25 @@ namespace Spryker\Zed\FileManager\Business\Model;
 use Generated\Shared\Transfer\FileSystemDeleteDirectoryTransfer;
 use Generated\Shared\Transfer\FileSystemQueryTransfer;
 use Generated\Shared\Transfer\FileSystemRenameTransfer;
-use Orm\Zed\FileManager\Persistence\SpyFileDirectory;
 use Spryker\Zed\FileManager\Dependency\Service\FileManagerToFileSystemServiceInterface;
 use Spryker\Zed\FileManager\FileManagerConfig;
-use Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
+use Spryker\Zed\FileManager\Persistence\FileManagerEntityManagerInterface;
+use Spryker\Zed\FileManager\Persistence\FileManagerRepositoryInterface;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 class FileDirectoryRemover implements FileDirectoryRemoverInterface
 {
-    use DatabaseTransactionHandlerTrait;
+    use TransactionTrait, FileNameResolverTrait;
 
     /**
-     * @var \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface
+     * @var \Spryker\Zed\FileManager\Persistence\FileManagerEntityManagerInterface
      */
-    protected $fileManagerQueryContainer;
+    protected $entityManager;
 
     /**
-     * @var \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface
+     * @var \Spryker\Zed\FileManager\Persistence\FileManagerRepositoryInterface
      */
-    protected $fileLoader;
+    protected $repository;
 
     /**
      * @var \Spryker\Zed\FileManager\Dependency\Service\FileManagerToFileSystemServiceInterface
@@ -41,19 +41,19 @@ class FileDirectoryRemover implements FileDirectoryRemoverInterface
     protected $config;
 
     /**
-     * @param \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface $fileManagerQueryContainer
-     * @param \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface $fileLoader
+     * @param \Spryker\Zed\FileManager\Persistence\FileManagerEntityManagerInterface $entityManager
+     * @param \Spryker\Zed\FileManager\Persistence\FileManagerRepositoryInterface $repository
      * @param \Spryker\Zed\FileManager\Dependency\Service\FileManagerToFileSystemServiceInterface $fileSystemService
      * @param \Spryker\Zed\FileManager\FileManagerConfig $config
      */
     public function __construct(
-        FileManagerQueryContainerInterface $fileManagerQueryContainer,
-        FileLoaderInterface $fileLoader,
+        FileManagerEntityManagerInterface $entityManager,
+        FileManagerRepositoryInterface $repository,
         FileManagerToFileSystemServiceInterface $fileSystemService,
         FileManagerConfig $config
     ) {
-        $this->fileManagerQueryContainer = $fileManagerQueryContainer;
-        $this->fileLoader = $fileLoader;
+        $this->entityManager = $entityManager;
+        $this->repository = $repository;
         $this->fileSystemService = $fileSystemService;
         $this->config = $config;
     }
@@ -65,68 +65,66 @@ class FileDirectoryRemover implements FileDirectoryRemoverInterface
      */
     public function delete($idFileDirectory)
     {
-        $fileDirectory = $this->fileManagerQueryContainer->queryFileDirectoryById($idFileDirectory)->findOne();
-        $fileParentDirectory = $fileDirectory->getParentFileDirectory();
+        $fileDirectoryTransfer = $this->repository->getFileDirectory($idFileDirectory);
+        $idFileDirectory = $fileDirectoryTransfer->getIdFileDirectory();
+        $idParentFileDirectory = $fileDirectoryTransfer->getFkParentFileDirectory();
 
-        return $this->handleDatabaseTransaction(
-            function () use ($fileDirectory, $fileParentDirectory) {
-                $fileParentDirectory === null ?
-                    $this->deleteDirectoryFiles($fileDirectory) :
-                    $this->moveDirectoryFiles($fileDirectory, $fileParentDirectory);
-
-                $fileSystemDeleteDirectoryTransfer = new FileSystemDeleteDirectoryTransfer();
-                $fileSystemDeleteDirectoryTransfer->setFileSystemName($this->config->getStorageName());
-                $fileSystemDeleteDirectoryTransfer->setPath($fileDirectory->getIdFileDirectory());
-
-                $fileSystemQueryTransfer = new FileSystemQueryTransfer();
-                $fileSystemQueryTransfer->setFileSystemName($this->config->getStorageName());
-                $fileSystemQueryTransfer->setPath($fileDirectory->getIdFileDirectory());
-
-                if ($this->fileSystemService->has($fileSystemQueryTransfer)) {
-                    $this->fileSystemService->deleteDirectory($fileSystemDeleteDirectoryTransfer);
-                }
-
-                $fileDirectory->delete();
-            },
-            $this->fileManagerQueryContainer->getConnection()
+        return $this->getTransactionHandler()->handleTransaction(
+            function () use ($idFileDirectory, $idParentFileDirectory) {
+                return $this->executeDeleteTransaction($idFileDirectory, $idParentFileDirectory);
+            }
         );
     }
 
     /**
-     * @param \Orm\Zed\FileManager\Persistence\SpyFileDirectory $fileDirectory
+     * @param int $idFileDirectory
+     * @param int|null $idParentFileDirectory
      *
-     * @return void
+     * @return bool
      */
-    protected function deleteDirectoryFiles(SpyFileDirectory $fileDirectory)
+    protected function executeDeleteTransaction(int $idFileDirectory, ?int $idParentFileDirectory = null)
     {
-        foreach ($fileDirectory->getSpyFiles() as $file) {
-            $file->delete();
+        $idParentFileDirectory === null ?
+            $this->entityManager->deleteDirectoryFiles($idFileDirectory) :
+            $this->moveDirectoryFiles($idFileDirectory, $idParentFileDirectory);
+
+        $fileSystemDeleteDirectoryTransfer = new FileSystemDeleteDirectoryTransfer();
+        $fileSystemDeleteDirectoryTransfer->setFileSystemName($this->config->getStorageName());
+        $fileSystemDeleteDirectoryTransfer->setPath($idFileDirectory);
+
+        $fileSystemQueryTransfer = new FileSystemQueryTransfer();
+        $fileSystemQueryTransfer->setFileSystemName($this->config->getStorageName());
+        $fileSystemQueryTransfer->setPath($idFileDirectory);
+
+        if ($this->fileSystemService->has($fileSystemQueryTransfer)) {
+            $this->fileSystemService->deleteDirectory($fileSystemDeleteDirectoryTransfer);
         }
+
+        return $this->entityManager->deleteDirectory($idFileDirectory);
     }
 
     /**
-     * @param \Orm\Zed\FileManager\Persistence\SpyFileDirectory $fileDirectory
-     * @param \Orm\Zed\FileManager\Persistence\SpyFileDirectory $fileParentDirectory
+     * @param int $idFileDirectory
+     * @param int $idParentFileDirectory
      *
      * @return void
      */
-    protected function moveDirectoryFiles(SpyFileDirectory $fileDirectory, SpyFileDirectory $fileParentDirectory)
+    protected function moveDirectoryFiles(int $idFileDirectory, int $idParentFileDirectory)
     {
-        foreach ($fileDirectory->getSpyFiles() as $file) {
-            foreach ($file->getSpyFileInfos() as $fileInfo) {
+        foreach ($this->repository->getDirectoryFiles($idFileDirectory) as $fileTransfer) {
+            foreach ($fileTransfer->getFileInfo() as $fileInfoTransfer) {
                 $fileSystemRenameTransfer = new FileSystemRenameTransfer();
                 $fileSystemRenameTransfer->setFileSystemName($this->config->getStorageName());
-                $fileSystemRenameTransfer->setPath($fileInfo->getStorageFileName());
-                $fileInfo->getFile()->setFileDirectory($fileParentDirectory);
-                $newPath = $this->fileLoader->buildFilename($fileInfo);
+                $fileSystemRenameTransfer->setPath($fileInfoTransfer->getStorageFileName());
+                $newPath = $this->buildFilename($fileInfoTransfer, $idParentFileDirectory);
                 $fileSystemRenameTransfer->setNewPath($newPath);
-                $fileInfo->setStorageFileName($newPath);
+                $fileInfoTransfer->setStorageFileName($newPath);
 
                 $this->fileSystemService->rename($fileSystemRenameTransfer);
             }
 
-            $file->setFileDirectory($fileParentDirectory);
-            $file->save();
+            $fileTransfer->setFkFileDirectory($idParentFileDirectory);
+            $this->entityManager->saveFile($fileTransfer);
         }
     }
 }

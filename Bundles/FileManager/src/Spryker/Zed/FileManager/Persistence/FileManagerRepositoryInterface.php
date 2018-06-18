@@ -14,30 +14,44 @@ interface FileManagerRepositoryInterface
     /**
      * @param int $idFile
      *
-     * @return \Generated\Shared\Transfer\FileTransfer
+     * @return \Generated\Shared\Transfer\FileTransfer|null
      */
     public function getFileByIdFile(int $idFile);
 
     /**
      * @param int $idFileInfo
      *
-     * @return \Generated\Shared\Transfer\FileTransfer
+     * @return \Generated\Shared\Transfer\FileTransfer|null
      */
     public function getFileByIdFileInfo(int $idFileInfo);
 
     /**
      * @param int $idFileInfo
      *
-     * @return \Generated\Shared\Transfer\FileInfoTransfer
+     * @return \Generated\Shared\Transfer\FileInfoTransfer|null
      */
     public function getFileInfo(int $idFileInfo);
 
     /**
      * @param int $idFile
      *
-     * @return \Generated\Shared\Transfer\SpyFileInfoEntityTransfer
+     * @return \Generated\Shared\Transfer\SpyFileInfoEntityTransfer|null
      */
     public function getLatestFileInfoByIdFile(int $idFile);
+
+    /**
+     * @param int $idFileDirectory
+     *
+     * @return \Generated\Shared\Transfer\FileDirectoryTransfer|null
+     */
+    public function getFileDirectory(int $idFileDirectory);
+
+    /**
+     * @param int $idFileDirectory
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\FileTransfer[]
+     */
+    public function getDirectoryFiles(int $idFileDirectory);
 
     /**
      * @param int $idMimeType
