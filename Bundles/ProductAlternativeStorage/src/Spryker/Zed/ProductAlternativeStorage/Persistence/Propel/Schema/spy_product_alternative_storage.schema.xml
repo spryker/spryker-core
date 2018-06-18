@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          name="zed"
+          xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
+          namespace="Orm\Zed\ProductAlternativeStorage\Persistence"
+          package="src.Orm.Zed.ProductAlternativeStorage.Persistence">
+
+    <table name="spy_product_alternative_storage">
+        <column name="id_product_alternative_storage" type="integer" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_product" type="integer" required="true"/>
+        <column name="sku" type="VARCHAR" size="255" required="true"/>
+        <column name="data" type="LONGVARCHAR" required="false"/>
+
+        <id-method-parameter value="id_product_alternative_storage_pk_seq"/>
+
+        <index name="spy_product_alternative_storage-fk_product">
+            <index-column name="fk_product"/>
+        </index>
+
+        <behavior name="synchronization">
+            <parameter name="resource" value="product_alternative"/>
+            <parameter name="key_suffix_column" value="sku"/>
+            <parameter name="queue_group" value="sync.storage.product"/>
+        </behavior>
+
+        <behavior name="timestampable"/>
+    </table>
+
+</database>
