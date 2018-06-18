@@ -29,6 +29,7 @@ use Spryker\Zed\Calculation\Business\Model\Calculator\PriceCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\RefundableAmountCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\RefundTotalCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\RemoveAllCalculatedDiscountsCalculator;
+use Spryker\Zed\Calculation\Business\Model\Calculator\RemoveCanceledAmountCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\RemoveTotalsCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\SubtotalCalculator;
 use Spryker\Zed\Calculation\Business\Model\Calculator\TaxTotalCalculator;
@@ -292,6 +293,14 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     public function createRemoveAllCalculatedDiscountsCalculator()
     {
         return new RemoveAllCalculatedDiscountsCalculator();
+    }
+
+    /**
+     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\RemoveAllCalculatedDiscountsCalculator|\Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface
+     */
+    public function createRemoveCanceledAmountCalculator()
+    {
+        return new RemoveCanceledAmountCalculator();
     }
 
     /**
