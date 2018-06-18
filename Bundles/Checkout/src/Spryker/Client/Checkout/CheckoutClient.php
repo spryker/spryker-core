@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Checkout;
 
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
@@ -16,7 +17,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class CheckoutClient extends AbstractClient implements CheckoutClientInterface
 {
     /**
-     * Places the order
+     * {@inheritdoc}
      *
      * @api
      *
@@ -27,6 +28,20 @@ class CheckoutClient extends AbstractClient implements CheckoutClientInterface
     public function placeOrder(QuoteTransfer $quoteTransfer)
     {
         return $this->getZedStub()->placeOrder($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MessageTransfer $messageTransfer
+     *
+     * @return void
+     */
+    public function addCheckoutErrorMessage(MessageTransfer $messageTransfer): void
+    {
+        $this->getZedStub()->addCheckoutErrorMessage($messageTransfer);
     }
 
     /**

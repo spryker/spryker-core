@@ -7,11 +7,15 @@
 
 namespace Spryker\Client\Checkout;
 
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CheckoutClientInterface
 {
     /**
+     * Specification:
+     * - Places the order.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -19,4 +23,16 @@ interface CheckoutClientInterface
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
     public function placeOrder(QuoteTransfer $quoteTransfer);
+
+    /**
+     * Specification:
+     * - Sends a request to Checkout controller to save error message for future use.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MessageTransfer $messageTransfer
+     *
+     * @return void
+     */
+    public function addCheckoutErrorMessage(MessageTransfer $messageTransfer): void;
 }

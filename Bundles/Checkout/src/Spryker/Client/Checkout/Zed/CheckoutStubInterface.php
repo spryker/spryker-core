@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Checkout\Zed;
 
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CheckoutStubInterface
@@ -17,4 +18,11 @@ interface CheckoutStubInterface
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
     public function placeOrder(QuoteTransfer $quoteTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\MessageTransfer $messageTransfer
+     *
+     * @return void
+     */
+    public function addCheckoutErrorMessage(MessageTransfer $messageTransfer): void;
 }

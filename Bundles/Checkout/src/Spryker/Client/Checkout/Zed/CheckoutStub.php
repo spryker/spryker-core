@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Checkout\Zed;
 
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\ZedRequest\ZedRequestClient;
 
@@ -33,5 +34,15 @@ class CheckoutStub implements CheckoutStubInterface
     public function placeOrder(QuoteTransfer $quoteTransfer)
     {
         return $this->zedStub->call('/checkout/gateway/place-order', $quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MessageTransfer $messageTransfer
+     *
+     * @return void
+     */
+    public function addCheckoutErrorMessage(MessageTransfer $messageTransfer): void
+    {
+        $this->zedStub->call('/checkout/gateway/add-checkout-error-message', $messageTransfer);
     }
 }
