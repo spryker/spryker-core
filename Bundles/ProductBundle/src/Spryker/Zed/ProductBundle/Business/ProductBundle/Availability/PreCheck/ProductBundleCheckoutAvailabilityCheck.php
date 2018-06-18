@@ -13,11 +13,12 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
 use Propel\Runtime\Collection\ObjectCollection;
 
 class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements ProductBundleCheckoutAvailabilityCheckInterface
 {
-    protected const CHECKOUT_PRODUCT_BUNDLE_UNAVAILABLE_TRANSLATION_KEY = 'product.unavailable';
+    protected const CHECKOUT_PRODUCT_BUNDLE_UNAVAILABLE_TRANSLATION_KEY = 'product_bundle.unavailable';
     protected const CHECKOUT_PRODUCT_BUNDLE_UNAVAILABLE_PARAMETER_BUNDLE_SKU = '%bundleSku%';
     protected const CHECKOUT_PRODUCT_BUNDLE_UNAVAILABLE_PARAMETER_PRODUCT_SKU = '%productSku%';
 
@@ -96,17 +97,20 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $bundleItemTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer $productItemTransfer
+     * @param \Orm\Zed\ProductBundle\Persistence\SpyProductBundle $productBundle
      *
      * @return \Generated\Shared\Transfer\CheckoutErrorTransfer
      */
-    protected function createCheckoutResponseTransfer(ItemTransfer $bundleItemTransfer, ItemTransfer $productItemTransfer): CheckoutErrorTransfer
+    protected function createCheckoutResponseTransfer(ItemTransfer $bundleItemTransfer, SpyProductBundle $productBundle): CheckoutErrorTransfer
     {
+        $productBundleSku = $productBundle->getSpyProductRelatedByFkProduct()
+            ->getSku();
+
         $messageTransfer = $this->createMessageTransfer()
             ->setValue(static::CHECKOUT_PRODUCT_BUNDLE_UNAVAILABLE_TRANSLATION_KEY)
             ->setParameters([
-                static::CHECKOUT_PRODUCT_BUNDLE_UNAVAILABLE_PARAMETER_BUNDLE_SKU => $bundleItemTransfer->getSku(),
-                static::CHECKOUT_PRODUCT_BUNDLE_UNAVAILABLE_PARAMETER_PRODUCT_SKU => $productItemTransfer->getSku(),
+                static::CHECKOUT_PRODUCT_BUNDLE_UNAVAILABLE_PARAMETER_BUNDLE_SKU => $productBundleSku,
+                static::CHECKOUT_PRODUCT_BUNDLE_UNAVAILABLE_PARAMETER_PRODUCT_SKU => $bundleItemTransfer->getSku(),
             ]);
 
         $checkoutErrorTransfer = $this->createCheckoutErrorTransfer()
