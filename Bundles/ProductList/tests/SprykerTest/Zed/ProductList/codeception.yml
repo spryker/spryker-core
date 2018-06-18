@@ -23,3 +23,6 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Zed\ProductList\Helper\ProductListHelper
+                - \SprykerTest\Zed\Category\Helper\CategoryDataHelper
+                - \SprykerTest\Shared\Product\Helper\ProductDataHelper

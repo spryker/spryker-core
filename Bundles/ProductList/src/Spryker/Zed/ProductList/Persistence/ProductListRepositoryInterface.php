@@ -9,4 +9,17 @@ namespace Spryker\Zed\ProductList\Persistence;
 
 interface ProductListRepositoryInterface
 {
+    /**
+     * @param int $idProductList
+     *
+     * @return array
+     */
+    public function getRelatedCategoryIdsByIdProductList(int $idProductList): array;
+
+    /**
+     * @param int $idProductList
+     *
+     * @return array
+     */
+    public function getRelatedProductConcreteIdsByIdProductList(int $idProductList): array;
 }

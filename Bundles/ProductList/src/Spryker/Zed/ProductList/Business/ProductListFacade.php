@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductList\Business;
 
+use Generated\Shared\Transfer\ProductListTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -14,4 +15,33 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ProductListFacade extends AbstractFacade implements ProductListFacadeInterface
 {
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListTransfer
+     */
+    public function saveProductList(ProductListTransfer $productListTransfer): ProductListTransfer
+    {
+        return $this->getFactory()
+            ->createProductListWriter()
+            ->saveProductList($productListTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     */
+    public function deleteProductList(ProductListTransfer $productListTransfer): void
+    {
+        $this->getFactory()
+            ->createProductListWriter()
+            ->deleteProductList($productListTransfer);
+    }
 }
