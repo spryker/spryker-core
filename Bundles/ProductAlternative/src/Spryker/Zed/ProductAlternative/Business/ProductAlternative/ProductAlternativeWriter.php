@@ -123,7 +123,7 @@ class ProductAlternativeWriter implements ProductAlternativeWriterInterface
     protected function createProductAbstractAlternative(int $idProduct, int $idProductAbstractAlternative): ProductAlternativeTransfer
     {
         return $this->productAlternativeEntityManager
-            ->createProductAbstractAlternative(
+            ->saveProductAbstractAlternative(
                 $idProduct,
                 $idProductAbstractAlternative
             );
@@ -138,7 +138,7 @@ class ProductAlternativeWriter implements ProductAlternativeWriterInterface
     protected function createProductConcreteAlternative(int $idProduct, int $idProductConcreteAlternative): ProductAlternativeTransfer
     {
         return $this->productAlternativeEntityManager
-            ->createProductConcreteAlternative(
+            ->saveProductConcreteAlternative(
                 $idProduct,
                 $idProductConcreteAlternative
             );

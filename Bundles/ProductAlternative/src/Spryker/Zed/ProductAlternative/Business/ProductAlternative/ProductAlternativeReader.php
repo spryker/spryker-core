@@ -55,7 +55,7 @@ class ProductAlternativeReader implements ProductAlternativeReaderInterface
     public function getProductAlternativeListByIdProductConcrete(int $idProductConcrete): ProductAlternativeListTransfer
     {
         $productAlternativeCollection = $this->productAlternativeRepository
-                    ->getProductAlternativesForProductConcrete($idProductConcrete);
+            ->getProductAlternativesForProductConcrete($idProductConcrete);
 
         return $this->hydrateProductAlternativeList(
             $productAlternativeCollection,

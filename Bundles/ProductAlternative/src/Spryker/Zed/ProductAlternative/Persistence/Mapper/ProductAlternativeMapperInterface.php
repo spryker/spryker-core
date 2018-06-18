@@ -23,11 +23,11 @@ interface ProductAlternativeMapperInterface
     public function mapProductAlternativeTransfer(SpyProductAlternative $productAlternativeEntity): ProductAlternativeTransfer;
 
     /**
-     * @param \Propel\Runtime\Collection\Collection $productAlternativeEntities
+     * @param \Propel\Runtime\Collection\Collection|null $productAlternativeEntities
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeCollectionTransfer
      */
-    public function mapProductAlternativeCollectionTransfer(Collection $productAlternativeEntities): ProductAlternativeCollectionTransfer;
+    public function mapProductAlternativeCollectionTransfer(?Collection $productAlternativeEntities): ProductAlternativeCollectionTransfer;
 
     /**
      * @param array $productConcreteData

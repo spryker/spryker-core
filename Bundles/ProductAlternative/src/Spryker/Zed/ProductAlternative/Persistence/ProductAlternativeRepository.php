@@ -16,6 +16,9 @@ use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMa
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
+use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -83,25 +86,8 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
         int $idProductAbstract,
         LocaleTransfer $localeTransfer
     ): ProductAlternativeListItemTransfer {
-        $productAbstractData = $this->getFactory()
-            ->createProductAbstractQuery()
-            ->filterByIdProductAbstract($idProductAbstract)
-            ->leftJoinSpyProductAbstractLocalizedAttributes()
-            ->useSpyProductAbstractLocalizedAttributesQuery()
-                ->filterByFkLocale(
-                    $localeTransfer->getIdLocale()
-                )
-            ->endUse()
-            ->leftJoinSpyProductCategory()
-            ->useSpyProductCategoryQuery()
-                ->leftJoinSpyCategory()
-                ->useSpyCategoryQuery()
-                    ->innerJoinAttribute()
-                    ->useAttributeQuery()
-                        ->filterByFkLocale($localeTransfer->getIdLocale())
-                    ->endUse()
-                ->endUse()
-            ->endUse()
+        $productAbstractData = $this->prepareProductAbstractQuery($idProductAbstract, $localeTransfer)
+            ->clearSelectColumns()
             ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, ProductAlternativeListItemTransfer::ID_PRODUCT)
             ->withColumn(SpyProductAbstractTableMap::COL_SKU, ProductAlternativeListItemTransfer::SKU)
             ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, ProductAlternativeListItemTransfer::NAME)
@@ -134,28 +120,8 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
         int $idProduct,
         LocaleTransfer $localeTransfer
     ): ProductAlternativeListItemTransfer {
-        $productConcreteData = $this->getFactory()
-            ->createProductQuery()
-            ->filterByIdProduct($idProduct)
-            ->leftJoinSpyProductLocalizedAttributes()
-            ->useSpyProductLocalizedAttributesQuery()
-                ->filterByFkLocale(
-                    $localeTransfer->getIdLocale()
-                )
-            ->endUse()
-            ->leftJoinSpyProductAbstract()
-            ->useSpyProductAbstractQuery()
-                ->leftJoinSpyProductCategory()
-                ->useSpyProductCategoryQuery()
-                    ->leftJoinSpyCategory()
-                    ->useSpyCategoryQuery()
-                        ->leftJoinAttribute()
-                        ->useAttributeQuery()
-                            ->filterByFkLocale($localeTransfer->getIdLocale())
-                        ->endUse()
-                    ->endUse()
-                ->endUse()
-            ->endUse()
+        $productConcreteData = $this->prepareProductQuery($idProduct, $localeTransfer)
+            ->clearSelectColumns()
             ->withColumn(SpyProductTableMap::COL_ID_PRODUCT, ProductAlternativeListItemTransfer::ID_PRODUCT)
             ->withColumn(SpyProductTableMap::COL_SKU, ProductAlternativeListItemTransfer::SKU)
             ->withColumn(SpyProductLocalizedAttributesTableMap::COL_NAME, ProductAlternativeListItemTransfer::NAME)
@@ -174,5 +140,71 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
         return $this->getFactory()
             ->createProductAlternativeMapper()
             ->mapProductConcreteDataToProductAlternativeListItemTransfer($productConcreteData);
+    }
+
+    /**
+     * @uses SpyProductAbstractLocalizedAttributesQuery
+     * @uses SpyProductCategoryQuery
+     * @uses SpyCategoryQuery
+     * @uses SpyProductCategoryAttributeQuery
+     *
+     * @param int $idProduct
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    protected function prepareProductQuery(int $idProduct, LocaleTransfer $localeTransfer): SpyProductQuery
+    {
+        return $this->getFactory()
+            ->createProductQuery()
+            ->filterByIdProduct($idProduct)
+            ->joinSpyProductLocalizedAttributes(null, Criteria::LEFT_JOIN)
+            ->addJoinCondition(
+                'SpyProductLocalizedAttributes',
+                sprintf('%s = %s', SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE, $localeTransfer->getIdLocale())
+            )
+            ->useSpyProductAbstractQuery(null, Criteria::LEFT_JOIN)
+                ->useSpyProductCategoryQuery(null, Criteria::LEFT_JOIN)
+                    ->useSpyCategoryQuery(null, Criteria::LEFT_JOIN)
+                        ->joinAttribute(null, Criteria::LEFT_JOIN)
+                        ->addJoinCondition(
+                            'Attribute',
+                            sprintf('%s = %s', SpyCategoryAttributeTableMap::COL_FK_LOCALE, $localeTransfer->getIdLocale())
+                        )
+                    ->endUse()
+                ->endUse()
+            ->endUse();
+    }
+
+    /**
+     * @uses SpyProductAbstractLocalizedAttributesQuery
+     * @uses SpyProductCategoryQuery
+     * @uses SpyCategoryQuery
+     * @uses SpyProductCategoryAttributeQuery
+     *
+     * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
+    protected function prepareProductAbstractQuery(int $idProductAbstract, LocaleTransfer $localeTransfer): SpyProductAbstractQuery
+    {
+        return $this->getFactory()
+            ->createProductAbstractQuery()
+            ->filterByIdProductAbstract($idProductAbstract)
+            ->joinSpyProductAbstractLocalizedAttributes(null, Criteria::LEFT_JOIN)
+            ->addJoinCondition(
+                'SpyProductAbstractLocalizedAttributes',
+                sprintf('%s = %s', SpyProductAbstractLocalizedAttributesTableMap::COL_FK_LOCALE, $localeTransfer->getIdLocale())
+            )
+            ->useSpyProductCategoryQuery(null, Criteria::LEFT_JOIN)
+                ->useSpyCategoryQuery(null, Criteria::LEFT_JOIN)
+                    ->joinAttribute(null, Criteria::LEFT_JOIN)
+                    ->addJoinCondition(
+                        'Attribute',
+                        sprintf('%s = %s', SpyCategoryAttributeTableMap::COL_FK_LOCALE, $localeTransfer->getIdLocale())
+                    )
+                ->endUse()
+            ->endUse();
     }
 }

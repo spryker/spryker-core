@@ -31,13 +31,16 @@ class ProductAlternativeMapper implements ProductAlternativeMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\Collection $productAlternativeEntities
+     * @param \Propel\Runtime\Collection\Collection|null $productAlternativeEntities
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeCollectionTransfer
      */
-    public function mapProductAlternativeCollectionTransfer(Collection $productAlternativeEntities): ProductAlternativeCollectionTransfer
+    public function mapProductAlternativeCollectionTransfer(?Collection $productAlternativeEntities): ProductAlternativeCollectionTransfer
     {
         $productAlternativeCollectionTransfer = new ProductAlternativeCollectionTransfer();
+        if (!$productAlternativeEntities->count()) {
+            return $productAlternativeCollectionTransfer;
+        }
 
         foreach ($productAlternativeEntities as $productAlternativeEntity) {
             $productAlternativeCollectionTransfer->addProductAlternative(

@@ -16,7 +16,7 @@ interface ProductAlternativeRepositoryInterface
 {
     /**
      * Specification:
-     * - Retrieves all alternative concrete products for concrete product with id = $idProduct
+     * - Retrieves all alternative concrete products for concrete product with id = $idProductConcrete
      *
      * @api
      *
