@@ -18,7 +18,7 @@ class CartStub extends ZedRequestStub implements CartStubInterface
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function addValidItems(CartChangeTransfer $cartChangeTransfer): QuoteTransfer
     {
@@ -28,7 +28,7 @@ class CartStub extends ZedRequestStub implements CartStubInterface
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function addItem(CartChangeTransfer $cartChangeTransfer)
     {
@@ -38,7 +38,7 @@ class CartStub extends ZedRequestStub implements CartStubInterface
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $changeTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function removeItem(CartChangeTransfer $changeTransfer)
     {
@@ -48,7 +48,7 @@ class CartStub extends ZedRequestStub implements CartStubInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function reloadItems(QuoteTransfer $quoteTransfer)
     {
@@ -58,7 +58,7 @@ class CartStub extends ZedRequestStub implements CartStubInterface
     /**
      * @param \Generated\Shared\Transfer\CartChangeQuantityTransfer $cartChangeQuantityTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function changeItemQuantity(CartChangeQuantityTransfer $cartChangeQuantityTransfer): QuoteResponseTransfer
     {
@@ -68,7 +68,7 @@ class CartStub extends ZedRequestStub implements CartStubInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\QuoteResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function validateQuote(QuoteTransfer $quoteTransfer)
     {

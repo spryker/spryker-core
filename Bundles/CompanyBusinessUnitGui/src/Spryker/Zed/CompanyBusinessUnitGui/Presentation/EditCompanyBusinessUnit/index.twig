@@ -1,4 +1,4 @@
-{% extends '@Gui/Layout/layout.twig' %}
+{% extends '@CompanyBusinessUnitGui/_layout/layout.twig' %}
 
 {% set widget_title = 'Edit Company Business Unit' %}
 
@@ -16,6 +16,12 @@
         {% block widget_content %}
 
             {{ form_start(form) }}
+                {% set company = form.vars.value.company %}
+                <div class="form-group">
+                    <label class="control-label" for="company-business-unit_fk_company">Company: </label>
+                    {{ company.name }}
+                </div>
+
                 {{ form_widget(form) }}
 
                 <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}" />

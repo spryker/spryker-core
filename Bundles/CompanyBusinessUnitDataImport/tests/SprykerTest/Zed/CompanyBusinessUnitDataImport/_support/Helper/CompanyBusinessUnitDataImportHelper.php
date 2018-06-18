@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2018-present Spryker Systems GmbH. All rights reserved.
+ * MIT License
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -17,8 +17,10 @@ class CompanyBusinessUnitDataImportHelper extends Module
      */
     public function ensureDatabaseTableIsEmpty(): void
     {
-        $companyQuery = $this->getCompanyBusinessUnitQuery();
-        $companyQuery->find()->delete();
+        $this->getCompanyBusinessUnitQuery()
+            ->update(['FkParentCompanyBusinessUnit' => null]);
+        $this->getCompanyBusinessUnitQuery()
+            ->deleteAll();
     }
 
     /**
@@ -27,7 +29,11 @@ class CompanyBusinessUnitDataImportHelper extends Module
     public function assertDatabaseTableIsEmpty(): void
     {
         $companyQuery = $this->getCompanyBusinessUnitQuery();
-        $this->assertCount(0, $companyQuery, 'Found at least one entry in the database table but database table was expected to be empty.');
+        $this->assertCount(
+            0,
+            $companyQuery,
+            'Found at least one entry in the database table but database table was expected to be empty.'
+        );
     }
 
     /**
@@ -36,7 +42,11 @@ class CompanyBusinessUnitDataImportHelper extends Module
     public function assertDatabaseTableContainsData(): void
     {
         $companyQuery = $this->getCompanyBusinessUnitQuery();
-        $this->assertTrue(($companyQuery->count() > 0), 'Expected at least one entry in the database table but database table is empty.');
+        $this->assertGreaterThan(
+            0,
+            $companyQuery->count(),
+            'Expected at least one entry in the database table but database table is empty.'
+        );
     }
 
     /**

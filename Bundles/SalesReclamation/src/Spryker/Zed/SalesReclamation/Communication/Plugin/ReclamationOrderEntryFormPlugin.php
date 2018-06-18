@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface;
 use Spryker\Zed\SalesReclamation\Communication\Form\ReclamationType;
+use Spryker\Zed\SalesReclamation\SalesReclamationConfig;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -59,5 +60,24 @@ class ReclamationOrderEntryFormPlugin extends AbstractPlugin implements ManualOr
     public function isFormPreFilled(QuoteTransfer $quoteTransfer): bool
     {
         return true;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isFormSkipped(Request $request, QuoteTransfer $quoteTransfer): bool
+    {
+        $value = null;
+
+        if (!$quoteTransfer->getReclamationId()
+            && $request->query->has(SalesReclamationConfig::PARAM_ID_RECLAMATION)
+        ) {
+            $value = $request->query->get(SalesReclamationConfig::PARAM_ID_RECLAMATION);
+        }
+
+        return $value === null;
     }
 }

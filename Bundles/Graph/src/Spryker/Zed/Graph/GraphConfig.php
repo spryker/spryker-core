@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class GraphConfig extends AbstractBundleConfig
 {
     /**
-     * @return \Spryker\Shared\Graph\GraphAdapterInterface
+     * @return string
      */
     public function getGraphAdapterName()
     {
