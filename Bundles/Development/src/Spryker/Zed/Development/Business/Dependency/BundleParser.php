@@ -226,7 +226,7 @@ class BundleParser implements BundleParserInterface
     /**
      * @param array $allFileDependencies
      *
-     * @return array
+     * @return void
      */
     protected function buildBundleDependencies(array $allFileDependencies)
     {
