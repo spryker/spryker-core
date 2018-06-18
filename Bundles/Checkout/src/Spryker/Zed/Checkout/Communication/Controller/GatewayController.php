@@ -45,11 +45,13 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param \Generated\Shared\Transfer\MessageTransfer $messageTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\MessageTransfer
      */
-    public function addCheckoutErrorMessageAction(MessageTransfer $messageTransfer): void
+    public function addCheckoutErrorMessageAction(MessageTransfer $messageTransfer): MessageTransfer
     {
         $this->getFacade()->addCheckoutErrorMessage($messageTransfer);
+
+        return $messageTransfer;
     }
 
     /**
