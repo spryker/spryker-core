@@ -143,7 +143,18 @@ class FileManagerMapper implements FileManagerMapperInterface
      */
     public function mapFileDirectoryEntityToTransfer(SpyFileDirectory $fileDirectory, FileDirectoryTransfer $fileDirectoryTransfer)
     {
-        return $fileDirectoryTransfer->fromArray($fileDirectory->toArray());
+        $fileDirectoryTransfer->fromArray($fileDirectory->toArray());
+
+        foreach ($fileDirectory->getSpyFileDirectoryLocalizedAttributess() as $fileDirectoryLocalizedAttributes) {
+            $fileDirectoryLocalizedAttributesTransfer = new FileDirectoryLocalizedAttributesTransfer();
+            $fileDirectoryLocalizedAttributesTransfer->fromArray(
+                $fileDirectoryLocalizedAttributes->toArray(),
+                true
+            );
+            $fileDirectoryTransfer->addFileDirectoryLocalizedAttribute($fileDirectoryLocalizedAttributesTransfer);
+        }
+
+        return $fileDirectoryTransfer;
     }
 
     /**

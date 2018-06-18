@@ -54,6 +54,13 @@ interface FileManagerRepositoryInterface
     public function getDirectoryFiles(int $idFileDirectory);
 
     /**
+     * @param int|null $idParentFileDirectory
+     *
+     * @return \ArrayObject
+     */
+    public function getFileDirectories(?int $idParentFileDirectory = null);
+
+    /**
      * @param int $idMimeType
      *
      * @return \Generated\Shared\Transfer\MimeTypeResponseTransfer

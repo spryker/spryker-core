@@ -158,6 +158,38 @@ class FileManagerRepository extends AbstractRepository implements FileManagerRep
     }
 
     /**
+     * @param int|null $idParentFileDirectory
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\FileDirectoryTransfer[]
+     */
+    public function getFileDirectories(?int $idParentFileDirectory = null)
+    {
+        $fileDirectoryTransferCollection = new ArrayObject();
+        $mapper = $this->getFactory()->createFileManagerMapper();
+        $query = $this->getFactory()
+            ->createFileDirectoryQuery();
+
+        if ($idParentFileDirectory) {
+            $query->filterByFkParentFileDirectory($idParentFileDirectory);
+        } else {
+            $query->filterByFkParentFileDirectory(null, Criteria::ISNULL);
+        }
+
+        $query->orderByPosition(Criteria::ASC)
+            ->orderByIdFileDirectory(Criteria::ASC);
+
+        $fileDrectoryEntities = $query->find();
+
+        foreach ($fileDrectoryEntities as $fileDirectoryEntity) {
+            $fileDirectoryTransferCollection->append(
+                $mapper->mapFileDirectoryEntityToTransfer($fileDirectoryEntity, new FileDirectoryTransfer())
+            );
+        }
+
+        return $fileDirectoryTransferCollection;
+    }
+
+    /**
      * @param int $idMimeType
      *
      * @return \Generated\Shared\Transfer\MimeTypeTransfer|null

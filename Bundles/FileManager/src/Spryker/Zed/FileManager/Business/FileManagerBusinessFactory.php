@@ -153,7 +153,7 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
      */
     public function createFileDirectoryTreeReader()
     {
-        return new FileDirectoryTreeReader($this->getQueryContainer());
+        return new FileDirectoryTreeReader($this->getRepository());
     }
 
     /**

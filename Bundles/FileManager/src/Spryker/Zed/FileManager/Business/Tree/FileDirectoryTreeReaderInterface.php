@@ -7,14 +7,10 @@
 
 namespace Spryker\Zed\FileManager\Business\Tree;
 
-use Generated\Shared\Transfer\LocaleTransfer;
-
 interface FileDirectoryTreeReaderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
-     *
      * @return \Generated\Shared\Transfer\FileDirectoryTreeTransfer
      */
-    public function findFileDirectoryTree(?LocaleTransfer $localeTransfer = null);
+    public function findFileDirectoryTree();
 }
