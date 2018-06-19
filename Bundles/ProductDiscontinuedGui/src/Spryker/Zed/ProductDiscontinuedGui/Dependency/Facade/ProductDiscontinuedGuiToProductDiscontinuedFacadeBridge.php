@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ProductDiscontinuedGui\Dependency\Facade;
 
-use Generated\Shared\Transfer\ProductDiscontinuedRequestTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer;
+use Generated\Shared\Transfer\ProductDiscontinueRequestTransfer;
 
 class ProductDiscontinuedGuiToProductDiscontinuedFacadeBridge implements ProductDiscontinuedGuiToProductDiscontinuedFacadeInterface
 {
@@ -26,37 +26,34 @@ class ProductDiscontinuedGuiToProductDiscontinuedFacadeBridge implements Product
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductDiscontinuedRequestTransfer $productDiscontinuedRequestTransfer
+     * @param \Generated\Shared\Transfer\ProductDiscontinueRequestTransfer $productDiscontinueRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer
      */
     public function unmarkProductAsDiscontinued(
-        ProductDiscontinuedRequestTransfer $productDiscontinuedRequestTransfer
+        ProductDiscontinueRequestTransfer $productDiscontinueRequestTransfer
     ): ProductDiscontinuedResponseTransfer {
-        return $this->productDiscontinuedFacade->unmarkProductAsDiscontinued($productDiscontinuedRequestTransfer);
+        return $this->productDiscontinuedFacade->unmarkProductAsDiscontinued($productDiscontinueRequestTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductDiscontinuedRequestTransfer $productDiscontinuedRequestTransfer
+     * @param \Generated\Shared\Transfer\ProductDiscontinueRequestTransfer $productDiscontinueRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer
      */
     public function markProductAsDiscontinued(
-        ProductDiscontinuedRequestTransfer $productDiscontinuedRequestTransfer
+        ProductDiscontinueRequestTransfer $productDiscontinueRequestTransfer
     ): ProductDiscontinuedResponseTransfer {
-        return $this->productDiscontinuedFacade->markProductAsDiscontinued($productDiscontinuedRequestTransfer);
+        return $this->productDiscontinuedFacade->markProductAsDiscontinued($productDiscontinueRequestTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductDiscontinuedRequestTransfer $productDiscontinuedRequestTransfer
+     * @param int $idProduct
      *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer
      */
-    public function findProductDiscontinuedByProductId(
-        ProductDiscontinuedRequestTransfer $productDiscontinuedRequestTransfer
-    ): ProductDiscontinuedResponseTransfer {
-        return $this->productDiscontinuedFacade->findProductDiscontinuedByProductId(
-            $productDiscontinuedRequestTransfer
-        );
+    public function findProductDiscontinuedByProductId(int $idProduct): ProductDiscontinuedResponseTransfer
+    {
+        return $this->productDiscontinuedFacade->findProductDiscontinuedByProductId($idProduct);
     }
 }

@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductDiscontinuedDataImport\Business\Model\Step;
+namespace Spryker\Zed\ProductDiscontinuedDataImport\Business\Step;
 
 use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\ProductDiscontinuedDataImport\Business\Model\DataSet\ProductDiscontinuedDataSetInterface;
+use Spryker\Zed\ProductDiscontinuedDataImport\Business\DataSet\ProductDiscontinuedDataSetInterface;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 class AddLocalesStep implements DataImportStepInterface
@@ -19,10 +19,10 @@ class AddLocalesStep implements DataImportStepInterface
     /**
      * @var array
      */
-    protected $locales = [];
+    protected $localesCache = [];
 
     /**
-     * @var array
+     * @var int[]
      */
     protected $availableLocales;
 
@@ -41,16 +41,16 @@ class AddLocalesStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet)
     {
-        if (empty($this->locales)) {
+        if (empty($this->localesCache)) {
             $localeEntityCollection = SpyLocaleQuery::create()
                 ->filterByLocaleName($this->availableLocales, Criteria::IN)
                 ->find();
 
             foreach ($localeEntityCollection as $localeEntity) {
-                $this->locales[$localeEntity->getLocaleName()] = $localeEntity->getIdLocale();
+                $this->localesCache[$localeEntity->getLocaleName()] = $localeEntity->getIdLocale();
             }
         }
 
-        $dataSet[ProductDiscontinuedDataSetInterface::KEY_LOCALES] = $this->locales;
+        $dataSet[ProductDiscontinuedDataSetInterface::KEY_LOCALES] = $this->localesCache;
     }
 }

@@ -24,6 +24,7 @@ class ProductDiscontinuedGuiDependencyProvider extends AbstractBundleDependencyP
      */
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
+        $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addProductDiscontinuedFacade($container);
         $container = $this->addLocaleFacade($container);
 

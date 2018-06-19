@@ -10,8 +10,8 @@ namespace SprykerTest\Zed\ProductDiscontinued\Business;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedNoteTransfer;
-use Generated\Shared\Transfer\ProductDiscontinuedRequestTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
+use Generated\Shared\Transfer\ProductDiscontinueRequestTransfer;
 use Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedEntityManager;
 
 /**
@@ -63,14 +63,14 @@ class ProductDiscontinuedFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testProductCanBeDiscontinued()
+    public function testProductCanBeDiscontinued(): void
     {
         // Arrange
-        $productDiscontinuedRequestTransfer = (new ProductDiscontinuedRequestTransfer())
+        $productDiscontinueRequestTransfer = (new ProductDiscontinueRequestTransfer())
             ->setIdProduct($this->productConcrete->getIdProductConcrete());
 
         // Act
-        $productDiscontinuedResponseTransfer = $this->tester->getFacade()->markProductAsDiscontinued($productDiscontinuedRequestTransfer);
+        $productDiscontinuedResponseTransfer = $this->tester->getFacade()->markProductAsDiscontinued($productDiscontinueRequestTransfer);
 
         // Assert
         $this->assertTrue($productDiscontinuedResponseTransfer->getIsSuccessful());
@@ -80,15 +80,15 @@ class ProductDiscontinuedFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testProductCanBeUndiscontinued()
+    public function testProductCanBeUndiscontinued(): void
     {
         // Arrange
-        $productDiscontinuedRequestTransfer = (new ProductDiscontinuedRequestTransfer())
+        $productDiscontinueRequestTransfer = (new ProductDiscontinueRequestTransfer())
             ->setIdProduct($this->productConcrete->getIdProductConcrete());
-        $this->tester->getFacade()->markProductAsDiscontinued($productDiscontinuedRequestTransfer);
+        $this->tester->getFacade()->markProductAsDiscontinued($productDiscontinueRequestTransfer);
 
         // Act
-        $productDiscontinuedResponseTransfer = $this->tester->getFacade()->unmarkProductAsDiscontinued($productDiscontinuedRequestTransfer);
+        $productDiscontinuedResponseTransfer = $this->tester->getFacade()->unmarkProductAsDiscontinued($productDiscontinueRequestTransfer);
 
         // Assert
         $this->assertTrue($productDiscontinuedResponseTransfer->getIsSuccessful());
@@ -97,15 +97,15 @@ class ProductDiscontinuedFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetProductDiscontinuedByProductId()
+    public function testGetProductDiscontinuedByProductId(): void
     {
         // Arrange
-        $productDiscontinuedRequestTransfer = (new ProductDiscontinuedRequestTransfer())
+        $productDiscontinueRequestTransfer = (new ProductDiscontinueRequestTransfer())
             ->setIdProduct($this->productConcrete->getIdProductConcrete());
-        $this->tester->getFacade()->markProductAsDiscontinued($productDiscontinuedRequestTransfer);
+        $this->tester->getFacade()->markProductAsDiscontinued($productDiscontinueRequestTransfer);
 
         // Act
-        $productDiscontinuedResponseTransfer = $this->tester->getFacade()->findProductDiscontinuedByProductId($productDiscontinuedRequestTransfer);
+        $productDiscontinuedResponseTransfer = $this->tester->getFacade()->findProductDiscontinuedByProductId($this->productConcrete->getIdProductConcrete());
 
         // Assert
         $this->assertTrue($productDiscontinuedResponseTransfer->getIsSuccessful());
@@ -115,12 +115,12 @@ class ProductDiscontinuedFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetProductDiscontinuedCollectionFilteredById()
+    public function testGetProductDiscontinuedCollectionFilteredById(): void
     {
         // Arrange
-        $productDiscontinuedRequestTransfer = (new ProductDiscontinuedRequestTransfer())
+        $productDiscontinueRequestTransfer = (new ProductDiscontinueRequestTransfer())
             ->setIdProduct($this->productConcrete->getIdProductConcrete());
-        $productDiscontinuedResponseTransfer = $this->tester->getFacade()->markProductAsDiscontinued($productDiscontinuedRequestTransfer);
+        $productDiscontinuedResponseTransfer = $this->tester->getFacade()->markProductAsDiscontinued($productDiscontinueRequestTransfer);
         $productDiscontinuedCriteriaFilterTransfer = (new ProductDiscontinuedCriteriaFilterTransfer())
             ->setIds([$productDiscontinuedResponseTransfer->getProductDiscontinued()->getIdProductDiscontinued()]);
 
@@ -128,18 +128,18 @@ class ProductDiscontinuedFacadeTest extends Unit
         $productDiscontinuedCollectionTransfer = $this->tester->getFacade()->findProductDiscontinuedCollection($productDiscontinuedCriteriaFilterTransfer);
 
         // Assert
-        $this->assertCount(1, $productDiscontinuedCollectionTransfer->getDiscontinueds());
+        $this->assertCount(1, $productDiscontinuedCollectionTransfer->getDiscontinuedProducts());
     }
 
     /**
      * @return void
      */
-    public function testProductDeactivatedAfterActiveUntilDatePassed()
+    public function testProductDeactivatedAfterActiveUntilDatePassed(): void
     {
         // Arrange
-        $productDiscontinuedRequestTransfer = (new ProductDiscontinuedRequestTransfer())
+        $productDiscontinueRequestTransfer = (new ProductDiscontinueRequestTransfer())
             ->setIdProduct($this->productConcrete->getIdProductConcrete());
-        $productDiscontinuedResponseTransfer = $this->tester->getFacade()->markProductAsDiscontinued($productDiscontinuedRequestTransfer);
+        $productDiscontinuedResponseTransfer = $this->tester->getFacade()->markProductAsDiscontinued($productDiscontinueRequestTransfer);
         $productDiscontinuedTransfer = $productDiscontinuedResponseTransfer->getProductDiscontinued();
         $productDiscontinuedTransfer->setActiveUntil(date('Y-m-d', strtotime('-1 Day')));
         $this->productDiscontinuedEntityManager->saveProductDiscontinued($productDiscontinuedTransfer);
@@ -155,12 +155,12 @@ class ProductDiscontinuedFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testLocalizedNotesCanBeAddedToProductDiscontinued()
+    public function testLocalizedNotesCanBeAddedToProductDiscontinued(): void
     {
         // Arrange
-        $productDiscontinuedRequestTransfer = (new ProductDiscontinuedRequestTransfer())
+        $productDiscontinueRequestTransfer = (new ProductDiscontinueRequestTransfer())
             ->setIdProduct($this->productConcrete->getIdProductConcrete());
-        $productDiscontinuedTransfer = $this->tester->getFacade()->markProductAsDiscontinued($productDiscontinuedRequestTransfer)->getProductDiscontinued();
+        $productDiscontinuedTransfer = $this->tester->getFacade()->markProductAsDiscontinued($productDiscontinueRequestTransfer)->getProductDiscontinued();
         $productDiscontinuedNoteTransfer = (new ProductDiscontinuedNoteTransfer())
             ->setFkProductDiscontinued($productDiscontinuedTransfer->getIdProductDiscontinued())
             ->setNote(static::NOTE_TEST)
@@ -168,7 +168,7 @@ class ProductDiscontinuedFacadeTest extends Unit
 
         // Act
         $this->tester->getFacade()->saveDiscontinuedNote($productDiscontinuedNoteTransfer);
-        $productDiscontinuedResponseTransfer = $this->tester->getFacade()->findProductDiscontinuedByProductId($productDiscontinuedRequestTransfer);
+        $productDiscontinuedResponseTransfer = $this->tester->getFacade()->findProductDiscontinuedByProductId($this->productConcrete->getIdProductConcrete());
         $productDiscontinuedNoteTransfer = $productDiscontinuedResponseTransfer->getProductDiscontinued()->getProductDiscontinuedNotes()->offsetGet(0);
 
         // Assert

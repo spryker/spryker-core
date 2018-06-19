@@ -26,6 +26,7 @@ class ProductDiscontinuedStorageDependencyProvider extends AbstractBundleDepende
      */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
+        $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addProductDiscontinuedFacade($container);
         $container = $this->addLocaleFacade($container);
 
@@ -39,6 +40,7 @@ class ProductDiscontinuedStorageDependencyProvider extends AbstractBundleDepende
      */
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
+        $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addEventBehaviorFacade($container);
 
         return $container;

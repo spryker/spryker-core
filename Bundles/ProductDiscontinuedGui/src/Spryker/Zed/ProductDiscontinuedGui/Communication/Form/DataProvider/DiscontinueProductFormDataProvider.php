@@ -9,8 +9,8 @@ namespace Spryker\Zed\ProductDiscontinuedGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedNoteTransfer;
-use Generated\Shared\Transfer\ProductDiscontinuedRequestTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
+use Generated\Shared\Transfer\ProductDiscontinueRequestTransfer;
 use Spryker\Zed\ProductDiscontinuedGui\Communication\Form\DiscontinueProductForm;
 use Spryker\Zed\ProductDiscontinuedGui\Dependency\Facade\ProductDiscontinuedGuiToLocaleFacadeInterface;
 use Spryker\Zed\ProductDiscontinuedGui\Dependency\Facade\ProductDiscontinuedGuiToProductDiscontinuedFacadeInterface;
@@ -52,7 +52,6 @@ class DiscontinueProductFormDataProvider
         if (!$productDiscontinuedTransfer) {
             return $data;
         }
-        $data[ProductConcreteTransfer::PRODUCT_DISCONTINUED] = $productDiscontinuedTransfer;
         $data[DiscontinueProductForm::FIELD_DISCONTINUED_NOTES] = $this->getLocalizedNotes($productDiscontinuedTransfer);
 
         return $data;
@@ -65,10 +64,10 @@ class DiscontinueProductFormDataProvider
      */
     protected function findProductDiscontinuedByProductId(int $idProductConcrete): ?ProductDiscontinuedTransfer
     {
-        $productDiscontinuedRequestTransfer = (new ProductDiscontinuedRequestTransfer())
+        $productDiscontinueRequestTransfer = (new ProductDiscontinueRequestTransfer())
             ->setIdProduct($idProductConcrete);
         return $this->productDiscontinuedFacade
-                    ->findProductDiscontinuedByProductId($productDiscontinuedRequestTransfer)
+                    ->findProductDiscontinuedByProductId($productDiscontinueRequestTransfer)
                     ->getProductDiscontinued();
     }
 
