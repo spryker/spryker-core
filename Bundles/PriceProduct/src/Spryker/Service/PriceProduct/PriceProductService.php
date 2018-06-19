@@ -3,7 +3,9 @@
 namespace Spryker\Service\PriceProduct;
 
 use Generated\Shared\Transfer\CurrentProductPriceTransfer;
+use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Service\Kernel\AbstractService;
 
 /**
@@ -13,15 +15,15 @@ class PriceProductService extends AbstractService implements PriceProductService
 {
 
     /**
-     * @param array $priceProductTransferCollection
+     * @param PriceProductTransfer[] $priceProductTransferCollection
      * @param PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
-     * @return CurrentProductPriceTransfer
+     * @return \Generated\Shared\Transfer\MoneyValueTransfer|null
      */
     public function resolveProductPrice(
         array $priceProductTransferCollection,
         ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
-    ): CurrentProductPriceTransfer {
+    ): ?MoneyValueTransfer {
         return $this->getFactory()
             ->createPriceProductMatcher()
             ->matchPriceValue($priceProductTransferCollection, $priceProductCriteriaTransfer);

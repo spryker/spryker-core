@@ -13,13 +13,13 @@ use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 interface PriceProductMatcherInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SpyPriceProductStoreEntityTransfer[] $priceProductStoreEntityTransferCollection
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransferCollection
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MoneyValueTransfer|null
      */
     public function matchPriceValue(
-        array $priceProductStoreEntityTransferCollection,
+        array $priceProductTransferCollection,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
     ): ?MoneyValueTransfer;
 }

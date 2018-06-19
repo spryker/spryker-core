@@ -13,12 +13,12 @@ use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 class PriceProductMatcher implements PriceProductMatcherInterface
 {
     /**
-     * @var \Spryker\Zed\PriceProduct\Dependency\Plugin\PriceProductDecisionPluginInterface[]
+     * @var \Spryker\Service\PriceProduct\Dependency\Plugin\PriceProductDecisionPluginInterface[]
      */
     protected $priceProductDecisionPlugins = [];
 
     /**
-     * @param \Spryker\Zed\PriceProduct\Dependency\Plugin\PriceProductDecisionPluginInterface[] $priceProductDecisionPlugins
+     * @param \Spryker\Service\PriceProduct\Dependency\Plugin\PriceProductDecisionPluginInterface[] $priceProductDecisionPlugins
      */
     public function __construct(array $priceProductDecisionPlugins)
     {

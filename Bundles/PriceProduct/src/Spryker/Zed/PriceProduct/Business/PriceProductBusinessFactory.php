@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProduct\Business;
 
+use Spryker\Service\PriceProduct\PriceProductServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\PriceProduct\Business\Internal\Install;
 use Spryker\Zed\PriceProduct\Business\Internal\InstallInterface;
@@ -156,7 +157,8 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->getProductFacade(),
             $this->createProductCriteriaBuilder(),
             $this->getStoreFacade(),
-            $this->getRepository()
+            $this->getRepository(),
+            $this->getPriceProductService()
         );
     }
 
@@ -182,7 +184,8 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->createPriceProductMapper(),
             $this->getStoreFacade(),
-            $this->getRepository()
+            $this->getRepository(),
+            $this->getPriceProductService()
         );
     }
 
@@ -324,9 +327,17 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Service\PriceProduct\PriceProductServiceInterface
+     */
+    public function getPriceProductService(): PriceProductServiceInterface
+    {
+        return $this->getProvidedDependency(PriceProductDependencyProvider::SERVICE_PRICE_PRODUCT);
+    }
+
+    /**
      * @return \Spryker\Zed\PriceProduct\Dependency\Plugin\PriceDimensionAbstractSaverPluginInterface[]
      */
-    protected function getPriceDimensionAbstractSaverPlugins(): array
+    public function getPriceDimensionAbstractSaverPlugins(): array
     {
         return $this->getProvidedDependency(PriceProductDependencyProvider::PLUGIN_PRICE_DIMENSION_ABSTRACT_SAVER);
     }
@@ -334,7 +345,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\PriceProduct\Dependency\Plugin\PriceDimensionAbstractSaverPluginInterface[]
      */
-    protected function getPriceDimensionConcreteSaverPlugins(): array
+    public function getPriceDimensionConcreteSaverPlugins(): array
     {
         return $this->getProvidedDependency(PriceProductDependencyProvider::PLUGIN_PRICE_DIMENSION_CONCRETE_SAVER);
     }

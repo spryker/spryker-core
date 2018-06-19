@@ -142,19 +142,17 @@ class PriceProductMapper implements PriceProductMapperInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function mapPriceProductStoreEntitiesToTransfers(
-        array $priceProductStoreEntities,
+    public function mapPriceProductStoreEntitiesToPriceProductTransfers(
+        $priceProductStoreEntities,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
     ): array {
         $productPriceCollection = [];
-        foreach ($priceProductStoreEntities as $priceProductEntity) {
-            foreach ($priceProductEntity->getPriceProductStores() as $priceProductStoreEntity) {
-                $index = $this->createProductPriceGroupingIndex($priceProductStoreEntity);
-                $productPriceCollection[$index] = $this->mapPriceProductStoreEntityToTransfer(
-                    $priceProductStoreEntity,
-                    $priceProductCriteriaTransfer
-                );
-            }
+        foreach ($priceProductStoreEntities as $priceProductStoreEntity) {
+            $index = $this->createProductPriceGroupingIndex($priceProductStoreEntity);
+            $productPriceCollection[$index] = $this->mapPriceProductStoreEntityToTransfer(
+                $priceProductStoreEntity,
+                $priceProductCriteriaTransfer
+            );
         }
 
         return $productPriceCollection;
@@ -228,7 +226,7 @@ class PriceProductMapper implements PriceProductMapperInterface
         return (new PriceProductDimensionTransfer())
             ->setType($priceProductCriteriaTransfer->getPriceDimension()->getType())
             ->fromArray(
-                $priceProductStoreEntity->virtualProperties(),
+                $priceProductStoreEntity->getVirtualColumns(),
                 true
             );
     }

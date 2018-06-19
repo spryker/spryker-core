@@ -25,6 +25,8 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_PRICE = 'price facade';
     public const FACADE_STORE = 'store facade';
 
+    public const SERVICE_PRICE_PRODUCT = 'SERVICE_PRICE_PRODUCT';
+
     public const PLUGIN_PRICE_DIMENSION_QUERY_CRITERIA = 'PLUGIN_PRICE_DIMENSION_QUERY_CRITERIA';
     public const PLUGIN_PRICE_DIMENSION_ABSTRACT_SAVER = 'PLUGIN_PRICE_DIMENSION_ABSTRACT_SAVER';
     public const PLUGIN_PRICE_DIMENSION_CONCRETE_SAVER = 'PLUGIN_PRICE_DIMENSION_CONCRETE_SAVER';
@@ -41,6 +43,7 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCurrencyFacade($container);
         $container = $this->addPriceFacade($container);
         $container = $this->addStoreFacade($container);
+        $container = $this->addPriceProductService($container);
         $container = $this->addPriceDimensionAbstractSaverPlugins($container);
         $container = $this->addPriceDimensionConcreteSaverPlugins($container);
 
@@ -184,18 +187,6 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * The plugins in this stack will filter data returned by price query.
-     *
-     * @return \Spryker\Zed\PriceProduct\Dependency\Plugin\PriceProductDecisionPluginInterface[]
-     */
-    protected function getPriceProductDecisionPlugins(): array
-    {
-        return [
-            new DefaultPriceDimensionDecisionPlugin(),
-        ];
-    }
-
-    /**
      * The plugins are executed when saving abstract product price
      *
      * @return \Spryker\Zed\PriceProduct\Dependency\Plugin\PriceDimensionAbstractSaverPluginInterface[]
@@ -213,5 +204,14 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
     protected function getPriceDimensionConcreteSaverPlugins(): array
     {
         return [];
+    }
+
+    protected function addPriceProductService(Container $container): Container
+    {
+        $container[static::SERVICE_PRICE_PRODUCT] = function (Container $container) {
+            return $container->getLocator()->priceProduct()->service();
+        };
+
+        return $container;
     }
 }
