@@ -41,7 +41,7 @@ class StatusMessageHandler implements StatusMessageHandlerInterface
             return;
         }
 
-        if (!\in_array($messageTransfer, $storedMessages->getErrorMessages(), true)) {
+        if (!\in_array($messageTransfer->getValue(), $storedMessages->getErrorMessages(), true)) {
             $this->messengerFacade->addErrorMessage($messageTransfer);
         }
     }

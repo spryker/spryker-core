@@ -67,10 +67,18 @@ use Spryker\Zed\Sales\SalesDependencyProvider;
  */
 class CheckoutFacadeTest extends Unit
 {
+    protected const CHECKOUT_ERROR_MESSAGE_TRANSFER_VALUE = 'CHECKOUT_ERROR_MESSAGE_TRANSFER_VALUE';
+    protected const CHECKOUT_ERROR_MESSAGE_TRANSFER_PARAMETERS = ['testParameter' => 'testValue'];
+
     /**
      * @var \Spryker\Zed\Checkout\Business\CheckoutFacade
      */
     protected $checkoutFacade;
+
+    /**
+     * @var \Spryker\Zed\Messenger\Business\MessengerFacadeInterface
+     */
+    protected $messengerFacade;
 
     /**
      * @var \SprykerTest\Zed\Checkout\CheckoutBusinessTester
@@ -85,6 +93,7 @@ class CheckoutFacadeTest extends Unit
         parent::setUp();
 
         $this->checkoutFacade = new CheckoutFacade();
+        $this->messengerFacade = $this->tester->getMessengerFacade();
 
         $factoryMock = $this->getFactory();
         $this->checkoutFacade->setFactory($factoryMock);
@@ -281,6 +290,44 @@ class CheckoutFacadeTest extends Unit
 
         $this->assertNotEquals($omsConfig->getInitialStatus(), $orderItem1->getState()->getName());
         $this->assertEquals('waiting for payment', $orderItem2->getState()->getName());
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddCheckoutErrorMessageAddsCheckoutErrorMessage(): void
+    {
+        $messageTransfer = $this->tester->getMessageTransfer();
+
+        $this->tester->getCheckoutFacade()
+            ->addCheckoutErrorMessage($messageTransfer);
+
+        $this->assertContains($messageTransfer->getValue(), $this->tester->getStoredMessageValues());
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddCheckoutErrorMessageDoesNotAddDuplicatedMessages(): void
+    {
+        $messageTransfer = $this->tester->getMessageTransfer();
+
+        $storedMessageValues = $this->tester->getStoredMessageValues();
+
+        if (!\in_array(static::CHECKOUT_ERROR_MESSAGE_TRANSFER_VALUE, $storedMessageValues)) {
+            $this->tester->getCheckoutFacade()
+                ->addCheckoutErrorMessage($messageTransfer);
+
+            $this->tester->getCheckoutFacade()
+                ->addCheckoutErrorMessage($messageTransfer);
+
+            $this->assertCount(count($storedMessageValues) + 1, $this->tester->getStoredMessageValues());
+        }
+
+        $this->tester->getCheckoutFacade()
+            ->addCheckoutErrorMessage($messageTransfer);
+
+        $this->assertCount(count($storedMessageValues), $this->tester->getStoredMessageValues());
     }
 
     /**
