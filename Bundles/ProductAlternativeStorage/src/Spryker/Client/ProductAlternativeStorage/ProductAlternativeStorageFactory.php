@@ -12,6 +12,8 @@ use Spryker\Client\ProductAlternativeStorage\Dependency\Client\ProductAlternativ
 use Spryker\Client\ProductAlternativeStorage\Dependency\Service\ProductAlternativeStorageToSynchronizationServiceInterface;
 use Spryker\Client\ProductAlternativeStorage\Storage\ProductAlternativeStorageReader;
 use Spryker\Client\ProductAlternativeStorage\Storage\ProductAlternativeStorageReaderInterface;
+use Spryker\Client\ProductAlternativeStorage\Storage\ProductReplacementStorageReader;
+use Spryker\Client\ProductAlternativeStorage\Storage\ProductReplacementStorageReaderInterface;
 
 class ProductAlternativeStorageFactory extends AbstractFactory
 {
@@ -21,6 +23,17 @@ class ProductAlternativeStorageFactory extends AbstractFactory
     public function createProductAlternativeStorageReader(): ProductAlternativeStorageReaderInterface
     {
         return new ProductAlternativeStorageReader(
+            $this->getStorageClient(),
+            $this->getSynchronizationService()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\ProductAlternativeStorage\Storage\ProductReplacementStorageReaderInterface
+     */
+    public function createProductReplacementStorageReader(): ProductReplacementStorageReaderInterface
+    {
+        return new ProductReplacementStorageReader(
             $this->getStorageClient(),
             $this->getSynchronizationService()
         );
