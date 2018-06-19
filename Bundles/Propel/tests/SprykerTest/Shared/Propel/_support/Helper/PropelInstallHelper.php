@@ -33,7 +33,7 @@ class PropelInstallHelper extends Module
     }
 
     /**
-     * @return int
+     * @return void
      */
     protected function initPropel()
     {

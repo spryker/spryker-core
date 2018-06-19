@@ -35,7 +35,7 @@ class PathExtractor implements PathExtractorInterface
      * @param array $nodes
      * @param array $path
      *
-     * @return array
+     * @return void
      */
     protected function extractActiveNodes(array $nodes, array &$path)
     {
