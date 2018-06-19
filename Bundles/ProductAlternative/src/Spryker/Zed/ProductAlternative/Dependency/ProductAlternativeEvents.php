@@ -43,6 +43,14 @@ interface ProductAlternativeEvents
 
     /**
      * Specification:
+     * - This event is used for product_alternative unpublishing.
+     *
+     * @api
+     */
+    public const PRODUCT_ALTERNATIVE_UNPUBLISH = 'ProductAlternative.product_alternative.unpublish';
+
+    /**
+     * Specification:
      * - This event is used for product_replacement_for publishing of abstract alternative products.
      *
      * @api
