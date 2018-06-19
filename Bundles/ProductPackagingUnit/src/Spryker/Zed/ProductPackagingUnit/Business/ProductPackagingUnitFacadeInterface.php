@@ -72,7 +72,6 @@ interface ProductPackagingUnitFacadeInterface
 
     /**
      * Specification:
-     * - Returns default packaging unit type name.
      *  - Retrieves a product packaging unit type by ProductPackagingUnitTypeTransfer::idProductPackagingUnitType in the transfer.
      *
      * @api

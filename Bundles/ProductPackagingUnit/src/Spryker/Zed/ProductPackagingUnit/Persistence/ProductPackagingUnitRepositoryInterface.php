@@ -19,7 +19,7 @@ interface ProductPackagingUnitRepositoryInterface
      */
     public function getProductPackagingUnitTypeByName(
         string $productPackagingUnitTypeName
-    ): ProductPackagingUnitTypeTransfer;
+    ): ?ProductPackagingUnitTypeTransfer;
 
     /**
      * @param int $productPackagingUnitTypeId
