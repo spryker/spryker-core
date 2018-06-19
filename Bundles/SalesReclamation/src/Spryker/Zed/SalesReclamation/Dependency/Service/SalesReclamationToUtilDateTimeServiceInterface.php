@@ -10,7 +10,7 @@ namespace Spryker\Zed\SalesReclamation\Dependency\Service;
 interface SalesReclamationToUtilDateTimeServiceInterface
 {
     /**
-     * @param string $date
+     * @param \DateTime|string $date
      *
      * @return string
      */

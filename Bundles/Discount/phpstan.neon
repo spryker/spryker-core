@@ -1,11 +1,9 @@
 parameters:
-    bootstrap: %rootDir%/../../../phpstan-bootstrap.php
-
     ignoreErrors:
-    - '#Constant T_SEMICOLON not found.#'
-    - '#Constant T_OPEN_PARENTHESIS not found.#'
-    - '#Constant T_OPEN_SQUARE_BRACKET not found.#'
-    - '#Parameter .+ of class Symfony\\Component\\Finder\\SplFileInfo constructor expects string, null given.#'
+        - '#Call to an undefined method Propel\\Runtime\\ActiveQuery\\ModelCriteria::#'
+        - '#Call to an undefined method Spryker\\Zed\\Discount\\Dependency\\Plugin\\DiscountRuleWithValueOptionsPluginInterface::getFieldName\(\).#'
+
+    bootstrap: %rootDir%/../../../phpstan-bootstrap.php
 
 services:
     -
