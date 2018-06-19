@@ -40,6 +40,14 @@ class ProductPackagingUnitConfig extends AbstractBundleConfig
     }
 
     /**
+     * @return string[]
+     */
+    public function getInfrastructuralPackagingUnitTypeKeys(): array
+    {
+        return array_column(static::INFRASTRUCTURAL_PACKAGING_UNIT_TYPES, 'name');
+    }
+
+    /**
      * @return string
      */
     public function getDefaultPackagingUnitTypeName(): string

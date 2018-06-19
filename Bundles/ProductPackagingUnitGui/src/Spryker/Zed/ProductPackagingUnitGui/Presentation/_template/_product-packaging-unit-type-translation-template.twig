@@ -1,0 +1,10 @@
+<div class="form-product-packaging-unit-type-translation-row" id="{{ productPackagingUnitTypeNameTranslationForm.vars.id }}">
+
+    <div class="form-group {% if productPackagingUnitTypeNameTranslationForm.translation.vars.errors|length > 0 %}has-error{% endif %}">
+        {{ form_widget(productPackagingUnitTypeNameTranslationForm) }}
+        {{ form_errors(productPackagingUnitTypeNameTranslationForm) }}
+    </div>
+
+    {{ form_row(productPackagingUnitTypeNameTranslationForm.localeCode) }}
+</div>
+

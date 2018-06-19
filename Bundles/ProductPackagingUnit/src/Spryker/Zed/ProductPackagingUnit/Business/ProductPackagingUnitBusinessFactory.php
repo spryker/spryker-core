@@ -14,6 +14,15 @@ use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitLeadProd
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitLeadProduct\ProductPackagingUnitLeadProductReaderInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeReader;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeReaderInterface;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeTranslationsReader;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeTranslationsReaderInterface;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeTranslationsWriter;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeTranslationsWriterInterface;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeWriter;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeWriterInterface;
+use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToGlossaryInterface;
+use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToLocaleInterface;
+use Spryker\Zed\ProductPackagingUnit\ProductPackagingUnitDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitEntityManagerInterface getEntityManager()
@@ -39,7 +48,20 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     public function createProductPackagingUnitTypeReader(): ProductPackagingUnitTypeReaderInterface
     {
         return new ProductPackagingUnitTypeReader(
-            $this->getRepository()
+            $this->getRepository(),
+            $this->createProductPackagingUnitTypeTranslationsReader()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeWriterInterface
+     */
+    public function createProductPackagingUnitTypeWriter(): ProductPackagingUnitTypeWriterInterface
+    {
+        return new ProductPackagingUnitTypeWriter(
+            $this->getEntityManager(),
+            $this->getRepository(),
+            $this->createProductPackagingUnitTypeTranslationsWriter()
         );
     }
 
@@ -51,5 +73,43 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
         return new ProductPackagingUnitLeadProductReader(
             $this->getRepository()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeTranslationsReaderInterface
+     */
+    public function createProductPackagingUnitTypeTranslationsReader(): ProductPackagingUnitTypeTranslationsReaderInterface
+    {
+        return new ProductPackagingUnitTypeTranslationsReader(
+            $this->getLocaleFacade(),
+            $this->getGlossaryFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeTranslationsWriterInterface
+     */
+    public function createProductPackagingUnitTypeTranslationsWriter(): ProductPackagingUnitTypeTranslationsWriterInterface
+    {
+        return new ProductPackagingUnitTypeTranslationsWriter(
+            $this->getLocaleFacade(),
+            $this->getGlossaryFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToLocaleInterface
+     */
+    public function getLocaleFacade(): ProductPackagingUnitToLocaleInterface
+    {
+        return $this->getProvidedDependency(ProductPackagingUnitDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToGlossaryInterface
+     */
+    public function getGlossaryFacade(): ProductPackagingUnitToGlossaryInterface
+    {
+        return $this->getProvidedDependency(ProductPackagingUnitDependencyProvider::FACADE_GLOSSARY);
     }
 }

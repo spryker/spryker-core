@@ -35,6 +35,32 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      *
      * @api
      *
+     * @return string[]
+     */
+    public function getInfrastructuralPackagingUnitTypeKeys(): array
+    {
+        return $this->getFactory()
+            ->getConfig()
+            ->getInfrastructuralPackagingUnitTypeKeys();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getDefaultPackagingUnitTypeName(): string
+    {
+        return $this->getFactory()->getConfig()->getDefaultPackagingUnitTypeName();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
@@ -45,6 +71,40 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
         return $this->getFactory()
             ->createProductPackagingUnitTypeReader()
             ->getProductPackagingUnitTypeByName($productPackagingUnitTypeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
+     */
+    public function getProductPackagingUnitTypeById(
+        ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+    ): ProductPackagingUnitTypeTransfer {
+        return $this->getFactory()
+            ->createProductPackagingUnitTypeReader()
+            ->getProductPackagingUnitTypeById($productPackagingUnitTypeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+     *
+     * @return int
+     */
+    public function getCountProductPackagingUnitsForType(
+        ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+    ): int {
+        return $this->getFactory()
+            ->createProductPackagingUnitTypeReader()
+            ->getCountProductPackagingUnitsForType($productPackagingUnitTypeTransfer);
     }
 
     /**
@@ -69,11 +129,50 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      *
      * @api
      *
-     * @return string
+     * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
      */
-    public function getDefaultPackagingUnitTypeName(): string
-    {
-        return $this->getFactory()->getConfig()->getDefaultPackagingUnitTypeName();
+    public function createProductPackagingUnitType(
+        ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+    ): ProductPackagingUnitTypeTransfer {
+        return $this->getFactory()
+            ->createProductPackagingUnitTypeWriter()
+            ->createProductPackagingUnitType($productPackagingUnitTypeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
+     */
+    public function updateProductPackagingUnitType(
+        ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+    ): ProductPackagingUnitTypeTransfer {
+        return $this->getFactory()
+            ->createProductPackagingUnitTypeWriter()
+            ->updateProductPackagingUnitType($productPackagingUnitTypeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+     *
+     * @return bool
+     */
+    public function deleteProductPackagingUnitType(
+        ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+    ): bool {
+        return $this->getFactory()
+            ->createProductPackagingUnitTypeWriter()
+            ->deleteProductPackagingUnitType($productPackagingUnitTypeTransfer);
     }
 
     /**
