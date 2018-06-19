@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Dataset;
 
 use Orm\Zed\Dataset\Persistence\SpyDatasetQuery;
-use Spryker\Zed\Dataset\Dependency\Adapter\CsvFactory;
+use Spryker\Zed\Dataset\Business\CsvFactory\CsvFactory;
 use Spryker\Zed\Dataset\Dependency\Facade\DatasetToLocaleFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;

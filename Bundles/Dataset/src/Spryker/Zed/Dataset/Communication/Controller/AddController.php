@@ -21,8 +21,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class AddController extends AbstractController
 {
-    public const MESSAGE_DATASET_PARSE_ERROR = 'Something wrong';
-    public const DATSET_LIST_URL = '/dataset';
+    protected const MESSAGE_DATASET_PARSE_ERROR = 'Something wrong';
+    protected const DATSET_LIST_URL = '/dataset';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

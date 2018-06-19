@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Dataset\Business;
 
+use Spryker\Zed\Dataset\Business\CsvFactory\CsvFactory;
 use Spryker\Zed\Dataset\Business\Finder\DatasetFinder;
 use Spryker\Zed\Dataset\Business\Finder\DatasetFinderInterface;
 use Spryker\Zed\Dataset\Business\Reader\Reader;
@@ -18,7 +19,6 @@ use Spryker\Zed\Dataset\Business\Saver\DatasetSaverInterface;
 use Spryker\Zed\Dataset\Business\Writer\Writer;
 use Spryker\Zed\Dataset\Business\Writer\WriterInterface;
 use Spryker\Zed\Dataset\DatasetDependencyProvider;
-use Spryker\Zed\Dataset\Dependency\Adapter\CsvFactoryInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -75,9 +75,9 @@ class DatasetBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Dataset\Dependency\Adapter\CsvFactoryInterface
+     * @return \Spryker\Zed\Dataset\Business\CsvFactory\CsvFactory
      */
-    public function getCsvFactory(): CsvFactoryInterface
+    public function getCsvFactory(): CsvFactory
     {
         return $this->getProvidedDependency(DatasetDependencyProvider::CSV_ADAPTER);
     }

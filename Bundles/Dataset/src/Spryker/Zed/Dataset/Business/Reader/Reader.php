@@ -13,9 +13,9 @@ use Generated\Shared\Transfer\DatasetColumnTransfer;
 use Generated\Shared\Transfer\DatasetFilePathTransfer;
 use Generated\Shared\Transfer\DatasetRowColumnValueTransfer;
 use Generated\Shared\Transfer\DatasetRowTransfer;
+use Spryker\Zed\Dataset\Business\CsvFactory\CsvFactory;
 use Spryker\Zed\Dataset\Business\Exception\DatasetParseException;
 use Spryker\Zed\Dataset\Business\Exception\DatasetParseFormatException;
-use Spryker\Zed\Dataset\Dependency\Adapter\CsvFactoryInterface;
 use Spryker\Zed\Dataset\Dependency\Adapter\CsvReaderInterface;
 
 class Reader implements ReaderInterface
@@ -28,14 +28,14 @@ class Reader implements ReaderInterface
     public const UTF_8 = 'utf-8';
 
     /**
-     * @var \Spryker\Zed\Dataset\Dependency\Adapter\CsvFactoryInterface
+     * @var \Spryker\Zed\Dataset\Business\CsvFactory\CsvFactory
      */
     protected $csvFactory;
 
     /**
-     * @param \Spryker\Zed\Dataset\Dependency\Adapter\CsvFactoryInterface $csvFactory
+     * @param \Spryker\Zed\Dataset\Business\CsvFactory\CsvFactory $csvFactory
      */
-    public function __construct(CsvFactoryInterface $csvFactory)
+    public function __construct(CsvFactory $csvFactory)
     {
         $this->csvFactory = $csvFactory;
     }

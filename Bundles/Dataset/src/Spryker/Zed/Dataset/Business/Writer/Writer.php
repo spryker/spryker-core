@@ -9,20 +9,20 @@ namespace Spryker\Zed\Dataset\Business\Writer;
 
 use Generated\Shared\Transfer\DatasetTransfer;
 use SplTempFileObject;
-use Spryker\Zed\Dataset\Dependency\Adapter\CsvFactoryInterface;
+use Spryker\Zed\Dataset\Business\CsvFactory\CsvFactory;
 use Spryker\Zed\Dataset\Dependency\Adapter\CsvWriterInterface;
 
 class Writer implements WriterInterface
 {
     /**
-     * @var \Spryker\Zed\Dataset\Dependency\Adapter\CsvFactoryInterface
+     * @var \Spryker\Zed\Dataset\Business\CsvFactory\CsvFactory
      */
     protected $csvFactory;
 
     /**
-     * @param \Spryker\Zed\Dataset\Dependency\Adapter\CsvFactoryInterface $csvFactory
+     * @param \Spryker\Zed\Dataset\Business\CsvFactory\CsvFactory $csvFactory
      */
-    public function __construct(CsvFactoryInterface $csvFactory)
+    public function __construct(CsvFactory $csvFactory)
     {
         $this->csvFactory = $csvFactory;
     }
