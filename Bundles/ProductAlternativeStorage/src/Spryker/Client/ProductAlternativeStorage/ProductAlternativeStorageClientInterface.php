@@ -30,14 +30,14 @@ interface ProductAlternativeStorageClientInterface
 
     /**
      * Specification:
-     * - Finds a product replacement for within Storage with a given concrete product sku.
+     * - Finds a product replacement for within Storage with a given concrete or abstract product sku.
      * - Returns null if product replacement for was not found.
      *
      * @api
      *
-     * @param string $concreteSku
+     * @param string $sku
      *
      * @return \Generated\Shared\Transfer\ProductReplacementStorageTransfer|null
      */
-    public function findProductReplacementForStorage(string $concreteSku): ?ProductReplacementStorageTransfer;
+    public function findProductReplacementForStorage(string $sku): ?ProductReplacementStorageTransfer;
 }

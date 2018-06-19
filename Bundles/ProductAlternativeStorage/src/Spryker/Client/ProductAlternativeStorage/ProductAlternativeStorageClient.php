@@ -37,14 +37,14 @@ class ProductAlternativeStorageClient extends AbstractClient implements ProductA
      *
      * @api
      *
-     * @param string $concreteSku
+     * @param string $sku
      *
      * @return \Generated\Shared\Transfer\ProductReplacementStorageTransfer|null
      */
-    public function findProductReplacementForStorage(string $concreteSku): ?ProductReplacementStorageTransfer
+    public function findProductReplacementForStorage(string $sku): ?ProductReplacementStorageTransfer
     {
         return $this->getFactory()
             ->createProductReplacementStorageReader()
-            ->findProductAlternativeStorage($concreteSku);
+            ->findProductAlternativeStorage($sku);
     }
 }

@@ -12,9 +12,9 @@ use Generated\Shared\Transfer\ProductReplacementStorageTransfer;
 interface ProductReplacementStorageReaderInterface
 {
     /**
-     * @param string $concreteSku
+     * @param string $sku
      *
      * @return \Generated\Shared\Transfer\ProductReplacementStorageTransfer|null
      */
-    public function findProductAlternativeStorage(string $concreteSku): ?ProductReplacementStorageTransfer;
+    public function findProductAlternativeStorage(string $sku): ?ProductReplacementStorageTransfer;
 }

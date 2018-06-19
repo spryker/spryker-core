@@ -38,13 +38,13 @@ class ProductReplacementStorageReader implements ProductReplacementStorageReader
     }
 
     /**
-     * @param string $concreteSku
+     * @param string $sku
      *
      * @return \Generated\Shared\Transfer\ProductReplacementStorageTransfer|null
      */
-    public function findProductAlternativeStorage(string $concreteSku): ?ProductReplacementStorageTransfer
+    public function findProductAlternativeStorage(string $sku): ?ProductReplacementStorageTransfer
     {
-        $key = $this->generateKey($concreteSku);
+        $key = $this->generateKey($sku);
         $productReplacementStorageData = $this->storageClient->get($key);
 
         if (!$productReplacementStorageData) {
@@ -66,14 +66,14 @@ class ProductReplacementStorageReader implements ProductReplacementStorageReader
     }
 
     /**
-     * @param string $concreteSku
+     * @param string $sku
      *
      * @return string
      */
-    protected function generateKey(string $concreteSku): string
+    protected function generateKey(string $sku): string
     {
         $synchronizationDataTransfer = (new SynchronizationDataTransfer())
-            ->setReference($concreteSku);
+            ->setReference($sku);
 
         return $this->synchronizationService
             ->getStorageKeyBuilder(ProductAlternativeStorageConfig::PRODUCT_REPLACEMENT_RESOURCE_NAME)
