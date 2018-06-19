@@ -23,6 +23,8 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 class ProductAlternativeStorageRepository extends AbstractRepository implements ProductAlternativeStorageRepositoryInterface
 {
     /**
+     * @api
+     *
      * @param int $idProduct
      *
      * @return \Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer
@@ -37,67 +39,54 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     }
 
     /**
-     * @param $idProduct
+     * @api
      *
-     * @return null|string
+     * @param int $idProduct
+     *
+     * @return string
      */
-    public function findProductSkuById($idProduct)
+    public function findProductSkuById($idProduct): string
     {
-        $product = $this
+        return $this
             ->getFactory()
             ->getProductQuery()
             ->filterByIdProduct($idProduct)
-            ->findOne();
-
-        if (!$product) {
-            return null;
-        }
-
-        return $product->getSku();
+            ->findOne()
+            ->getSku();
     }
 
     /**
-     * @param $idProduct
+     * @api
      *
-     * @return null|array
+     * @param int $idProduct
+     *
+     * @return int[]
      */
-    public function findAbstractAlternativesIdsByConcreteProductId($idProduct)
+    public function findAbstractAlternativesIdsByConcreteProductId($idProduct): array
     {
-        $productAlternativeEntities = $this->getFactory()
+        return $this->getFactory()
             ->getProductAlternativeQuery()
             ->filterByFkProduct($idProduct)
             ->filterByFkProductAbstractAlternative(null, Criteria::ISNOTNULL)
-            ->find();
-
-        $alternativesIds = [];
-
-        foreach ($productAlternativeEntities as $alternativeEntity) {
-            $alternativesIds[] = $alternativeEntity->getFkProductAbstractAlternative();
-        }
-
-        return $alternativesIds;
+            ->select([SpyProductAlternativeTableMap::COL_FK_PRODUCT_ABSTRACT_ALTERNATIVE])
+            ->find()
+            ->toArray();
     }
 
     /**
-     * @param $idProduct
+     * @param int $idProduct
      *
-     * @return null|array
+     * @return int[]
      */
-    public function findConcreteAlternativesIdsByConcreteProductId($idProduct)
+    public function findConcreteAlternativesIdsByConcreteProductId($idProduct): array
     {
-        $productAlternativeEntities = $this->getFactory()
+        return $this->getFactory()
             ->getProductAlternativeQuery()
             ->filterByFkProduct($idProduct)
             ->filterByFkProductConcreteAlternative(null, Criteria::ISNOTNULL)
-            ->find();
-
-        $alternativesIds = [];
-
-        foreach ($productAlternativeEntities as $alternativeEntity) {
-            $alternativesIds[] = $alternativeEntity->getFkProductConcreteAlternative();
-        }
-
-        return $alternativesIds;
+            ->select([SpyProductAlternativeTableMap::COL_FK_PRODUCT_CONCRETE_ALTERNATIVE])
+            ->find()
+            ->toArray();
     }
 
     /**

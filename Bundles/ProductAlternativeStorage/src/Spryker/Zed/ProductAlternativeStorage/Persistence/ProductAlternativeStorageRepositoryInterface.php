@@ -20,21 +20,29 @@ interface ProductAlternativeStorageRepositoryInterface
     public function findProductAlternativeStorageEntity($idProduct): SpyProductAlternativeStorageEntityTransfer;
 
     /**
-     * @param $idProduct
+     * @api
      *
-     * @return string|null
+     * @param int $idProduct
+     *
+     * @return string
      */
-    public function findProductSkuById($idProduct);
+    public function findProductSkuById($idProduct): string;
 
     /**
-     * @param $idProduct
+     * @api
+     *
+     * @param int $idProduct
+     *
+     * @return string[]
      */
-    public function findAbstractAlternativesIdsByConcreteProductId($idProduct);
+    public function findAbstractAlternativesIdsByConcreteProductId($idProduct): array;
 
     /**
-     * @param $idProduct
+     * @param int $idProduct
+     *
+     * @return string[]
      */
-    public function findConcreteAlternativesIdsByConcreteProductId($idProduct);
+    public function findConcreteAlternativesIdsByConcreteProductId($idProduct): array;
 
     /**
      * @api

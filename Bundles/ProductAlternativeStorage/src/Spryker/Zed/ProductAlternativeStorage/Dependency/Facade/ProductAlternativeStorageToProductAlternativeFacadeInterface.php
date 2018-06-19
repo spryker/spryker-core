@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductAlternativeStorage\Dependency\Facade;
 
-
 use Generated\Shared\Transfer\ProductAlternativeTransfer;
 
 interface ProductAlternativeStorageToProductAlternativeFacadeInterface

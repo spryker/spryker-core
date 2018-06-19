@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductAlternativeStorage\Business\ProductAlternativePublisher;
 
-
 use Generated\Shared\Transfer\ProductAlternativeStorageTransfer;
 use Generated\Shared\Transfer\ProductAlternativeTransfer;
 use Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer;
@@ -32,7 +31,6 @@ class ProductAlternativePublisher implements ProductAlternativePublisherInterfac
      */
     protected $productAlternativeStorageEntityManager;
 
-
     /**
      * @param \Spryker\Zed\ProductAlternativeStorage\Dependency\Facade\ProductAlternativeStorageToProductAlternativeFacadeInterface $productAlternativeFacade
      * @param \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface $productAlternativeStorageRepository
@@ -42,8 +40,7 @@ class ProductAlternativePublisher implements ProductAlternativePublisherInterfac
         ProductAlternativeStorageToProductAlternativeFacadeInterface $productAlternativeFacade,
         ProductAlternativeStorageRepositoryInterface $productAlternativeStorageRepository,
         ProductAlternativeStorageEntityManagerInterface $productAlternativeStorageEntityManager
-    )
-    {
+    ) {
         $this->productAlternativeFacade = $productAlternativeFacade;
         $this->productAlternativeStorageRepository = $productAlternativeStorageRepository;
         $this->productAlternativeStorageEntityManager = $productAlternativeStorageEntityManager;
@@ -70,7 +67,7 @@ class ProductAlternativePublisher implements ProductAlternativePublisherInterfac
     /**
      * @param int $IdProduct
      *
-     * @return SpyProductAlternativeStorageEntityTransfer
+     * @return \Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer
      */
     protected function findProductAlternativeStorageEntity($IdProduct): ProductAlternativeTransfer
     {
@@ -78,24 +75,19 @@ class ProductAlternativePublisher implements ProductAlternativePublisherInterfac
     }
 
     /**
-     * @param SpyProductAlternativeStorageEntityTransfer $productAlternativeStorageEntity
-     *
-     * @param ProductAlternativeTransfer $productAlternativeTransfer
-     *
-     * @param $alternativeAbstractIds
-     *
-     * @param $alternativeConcreteIds
+     * @param \Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer $productAlternativeStorageEntity
+     * @param \Generated\Shared\Transfer\ProductAlternativeTransfer $productAlternativeTransfer
+     * @param string[] $alternativeAbstractIds
+     * @param string[] $alternativeConcreteIds
      *
      * @return void
      */
-
     protected function saveStorageEntity(
         SpyProductAlternativeStorageEntityTransfer $productAlternativeStorageEntity,
         ProductAlternativeTransfer $productAlternativeTransfer,
         $alternativeAbstractIds,
         $alternativeConcreteIds
-    ): void
-    {
+    ): void {
         $productAlternativeStorageEntity
             ->setSku($this->productAlternativeStorageRepository->findProductSkuById($productAlternativeTransfer->getIdProduct()))
             ->setData($this->getStorageEntityData($productAlternativeTransfer, $alternativeAbstractIds, $alternativeConcreteIds));
@@ -104,11 +96,9 @@ class ProductAlternativePublisher implements ProductAlternativePublisherInterfac
     }
 
     /**
-     * @param ProductAlternativeTransfer $productAlternativeTransfer
-     *
-     * @param $alternativeAbstractIds
-     *
-     * @param $alternativeConcreteIds
+     * @param \Generated\Shared\Transfer\ProductAlternativeTransfer $productAlternativeTransfer
+     * @param string[] $alternativeAbstractIds
+     * @param string[] $alternativeConcreteIds
      *
      * @return array
      */
@@ -116,8 +106,7 @@ class ProductAlternativePublisher implements ProductAlternativePublisherInterfac
         ProductAlternativeTransfer $productAlternativeTransfer,
         $alternativeAbstractIds,
         $alternativeConcreteIds
-    ): array
-    {
+    ): array {
         return (new ProductAlternativeStorageTransfer())
             ->fromArray($productAlternativeTransfer->toArray(), true)
             ->setProductAbstractIds($alternativeAbstractIds)

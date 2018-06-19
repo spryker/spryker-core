@@ -19,13 +19,13 @@ class ProductAlternativeStorageFacade extends AbstractFacade implements ProductA
      *
      * @api
      *
-     * @param int[] $idProduct
+     * @param int[] $productIds
      *
      * @return void
      */
-    public function publishAlternative(array $idProduct): void
+    public function publishAlternative(array $productIds): void
     {
-        $this->getFactory()->createProductAlternativePublisher()->publish($idProduct);
+        $this->getFactory()->createProductAlternativePublisher()->publish($productIds);
     }
 
     /**

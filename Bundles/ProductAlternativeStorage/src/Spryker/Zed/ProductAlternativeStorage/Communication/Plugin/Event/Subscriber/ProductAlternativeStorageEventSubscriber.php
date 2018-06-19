@@ -31,11 +31,7 @@ class ProductAlternativeStorageEventSubscriber extends AbstractPlugin implements
      */
     public function getSubscribedEvents(EventCollectionInterface $eventCollection)
     {
-//        $this->addProductAlternativePublishListener($eventCollection);
-//        $this->addProductAlternativeCreateListener($eventCollection);
-//        $this->addProductAlternativeUpdateListener($eventCollection);
-//        $this->addProductAlternativeDeleteListener($eventCollection);
-
+        $this->addProductAlternativesListeners($eventCollection);
         $this->addProductAlternativeReplacementsListeners($eventCollection);
 
         return $eventCollection;
@@ -99,6 +95,19 @@ class ProductAlternativeStorageEventSubscriber extends AbstractPlugin implements
 
         $this->addReplacementsAbstractPublishListener($eventCollection);
         $this->addReplacementsConcretePublishListener($eventCollection);
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductAlternativesListeners(EventCollectionInterface $eventCollection): void
+    {
+        $this->addProductAlternativePublishListener($eventCollection);
+        $this->addProductAlternativeCreateListener($eventCollection);
+        $this->addProductAlternativeUpdateListener($eventCollection);
+        $this->addProductAlternativeDeleteListener($eventCollection);
     }
 
     /**
