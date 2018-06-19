@@ -9,4 +9,8 @@
         <property name="idsProductConcrete" type="array" />
     </transfer>
 
+    <transfer name="ProductReplacementStorage">
+        <property name="productConcreteIds" type="array" />
+    </transfer>
+
 </transfers>

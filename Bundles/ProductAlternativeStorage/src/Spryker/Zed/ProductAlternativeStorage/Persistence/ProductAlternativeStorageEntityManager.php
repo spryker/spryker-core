@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductAlternativeStorage\Persistence;
 
 use Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer;
+use Generated\Shared\Transfer\SpyProductReplacementStorageEntityTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -37,6 +38,32 @@ class ProductAlternativeStorageEntityManager extends AbstractEntityManager imple
         $this->getFactory()
             ->createProductAlternativeStorageQuery()
             ->filterByIdProductAlternativeStorage($productAlternativeStorageEntityTransfer->getIdProductAlternativeStorage())
+            ->delete();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyProductReplacementStorageEntityTransfer $productReplacementStorageEntityTransfer
+     *
+     * @return void
+     */
+    public function saveProductReplacementStorage(
+        SpyProductReplacementStorageEntityTransfer $productReplacementStorageEntityTransfer
+    ): void {
+        $this->save($productReplacementStorageEntityTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyProductReplacementStorageEntityTransfer $productReplacementStorageEntityTransfer
+     *
+     * @return void
+     */
+    public function deleteProductReplacementStorage(
+        SpyProductReplacementStorageEntityTransfer $productReplacementStorageEntityTransfer
+    ): void {
+        $this->getFactory()
+            ->createProductReplacementStorageQuery()
+            ->filterByIdProductReplacementStorage($productReplacementStorageEntityTransfer->getIdProductReplacementStorage())
+            ->findOne()
             ->delete();
     }
 }

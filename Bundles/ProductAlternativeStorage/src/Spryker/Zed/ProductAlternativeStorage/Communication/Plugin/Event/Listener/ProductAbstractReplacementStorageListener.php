@@ -9,14 +9,13 @@ namespace Spryker\Zed\ProductAlternativeStorage\Communication\Plugin\Event\Liste
 
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ProductAlternative\Dependency\ProductAlternativeEvents;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\ProductAlternativeStorage\Business\ProductAlternativeStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductAlternativeStorage\Communication\ProductAlternativeStorageCommunicationFactory getFactory()
  */
-class ProductReplacementStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
+class ProductAbstractReplacementStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
@@ -32,12 +31,12 @@ class ProductReplacementStorageListener extends AbstractPlugin implements EventB
     {
         $this->preventTransaction();
 
-        $productAlternativeIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
+        $productAbstractIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
-        if (empty($productAlternativeIds)) {
+        if (empty($productAbstractIds)) {
             return;
         }
 
-        $this->getFacade()->publishReplacement($productAlternativeIds);
+        $this->getFacade()->publishAbstractReplacements($productAbstractIds);
     }
 }

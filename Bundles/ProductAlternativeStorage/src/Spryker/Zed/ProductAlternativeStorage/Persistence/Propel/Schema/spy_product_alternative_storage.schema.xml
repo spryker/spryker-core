@@ -6,8 +6,8 @@
           package="src.Orm.Zed.ProductAlternativeStorage.Persistence">
 
     <table name="spy_product_alternative_storage">
-        <column name="id_product_alternative_storage" type="integer" autoIncrement="true" primaryKey="true"/>
-        <column name="fk_product" type="integer" required="true"/>
+        <column name="id_product_alternative_storage" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_product" type="INTEGER" required="true"/>
         <column name="sku" type="VARCHAR" size="255" required="true"/>
         <column name="data" type="LONGVARCHAR" required="false"/>
 
@@ -19,6 +19,26 @@
 
         <behavior name="synchronization">
             <parameter name="resource" value="product_alternative"/>
+            <parameter name="key_suffix_column" value="sku"/>
+            <parameter name="queue_group" value="sync.storage.product"/>
+        </behavior>
+
+        <behavior name="timestampable"/>
+    </table>
+
+    <table name="spy_product_replacement_storage">
+        <column name="id_product_replacement_storage" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="sku" type="VARCHAR" size="255" required="true"/>
+        <column name="data" type="LONGVARCHAR" required="false"/>
+
+        <id-method-parameter value="id_product_replacement_storage_pk_seq"/>
+
+        <index name="spy_product_replacement_storage-sku">
+            <index-column name="sku"/>
+        </index>
+
+        <behavior name="synchronization">
+            <parameter name="resource" value="product_replacement_for"/>
             <parameter name="key_suffix_column" value="sku"/>
             <parameter name="queue_group" value="sync.storage.product"/>
         </behavior>

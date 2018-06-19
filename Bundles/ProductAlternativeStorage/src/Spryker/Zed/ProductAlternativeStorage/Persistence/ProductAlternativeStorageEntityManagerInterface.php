@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductAlternativeStorage\Persistence;
 
 use Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer;
+use Generated\Shared\Transfer\SpyProductReplacementStorageEntityTransfer;
 
 interface ProductAlternativeStorageEntityManagerInterface
 {
@@ -27,5 +28,23 @@ interface ProductAlternativeStorageEntityManagerInterface
      */
     public function deleteProductAlternativeStorageEntity(
         SpyProductAlternativeStorageEntityTransfer $productAlternativeStorageEntityTransfer
+    ): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyProductReplacementStorageEntityTransfer $productReplacementStorageEntityTransfer
+     *
+     * @return void
+     */
+    public function saveProductReplacementStorage(
+        SpyProductReplacementStorageEntityTransfer $productReplacementStorageEntityTransfer
+    ): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyProductReplacementStorageEntityTransfer $productReplacementStorageEntityTransfer
+     *
+     * @return void
+     */
+    public function deleteProductReplacementStorage(
+        SpyProductReplacementStorageEntityTransfer $productReplacementStorageEntityTransfer
     ): void;
 }

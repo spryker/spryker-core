@@ -21,13 +21,26 @@ interface ProductAlternativeStorageFacadeInterface
     public function publishAlternative(array $idProduct): void;
 
     /**
-     * {@inheritdoc}
+     * Specification:
+     *  - Publish replacements for abstract product
      *
      * @api
      *
-     * @param int[] $idProduct
+     * @param int[] $productIds
      *
      * @return void
      */
-    public function publishReplacement(array $idProduct): void;
+    public function publishAbstractReplacements(array $productIds): void;
+
+    /**
+     * Specification:
+     *  - Publish replacements for concrete product
+     *
+     * @api
+     *
+     * @param int[] $productIds
+     *
+     * @return void
+     */
+    public function publishConcreteReplacements(array $productIds): void;
 }

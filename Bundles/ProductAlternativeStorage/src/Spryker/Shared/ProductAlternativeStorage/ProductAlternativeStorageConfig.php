@@ -18,4 +18,12 @@ class ProductAlternativeStorageConfig extends AbstractBundleConfig
      * @api
      */
     public const PRODUCT_ALTERNATIVE_RESOURCE_NAME = 'product_alternative';
+
+    /**
+     * Specification:
+     * - Key generation resource name of product replacement.
+     *
+     * @api
+     */
+    public const PRODUCT_REPLACEMENT_RESOURCE_NAME = 'product_replacement_for';
 }

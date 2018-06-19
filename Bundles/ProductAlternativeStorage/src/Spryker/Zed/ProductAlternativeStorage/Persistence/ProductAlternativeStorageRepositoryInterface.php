@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductAlternativeStorage\Persistence;
 
+use Generated\Shared\Transfer\SpyProductReplacementStorageEntityTransfer;
+
 interface ProductAlternativeStorageRepositoryInterface
 {
     /**
@@ -15,4 +17,49 @@ interface ProductAlternativeStorageRepositoryInterface
      * @return \Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer[]
      */
     public function findProductAlternativeStorageEntities(array $productAlternativeIds): array;
+
+    /**
+     * @api
+     *
+     * @param int[] $productIds
+     *
+     * @return string[]
+     */
+    public function getIndexedProductConcreteIdToSkusByProductIds(array $productIds): array;
+
+    /**
+     * @api
+     *
+     * @param int[] $productIds
+     *
+     * @return string[]
+     */
+    public function getIndexedProductAbstractIdToSkusByProductIds(array $productIds): array;
+
+    /**
+     * @api
+     *
+     * @param string $sku
+     *
+     * @return \Generated\Shared\Transfer\SpyProductReplacementStorageEntityTransfer|null
+     */
+    public function findProductReplacementStorageEntitiesBySku(string $sku): ?SpyProductReplacementStorageEntityTransfer;
+
+    /**
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return int[]
+     */
+    public function getReplacementsByAbstractProductId(int $idProductAbstract): array;
+
+    /**
+     * @api
+     *
+     * @param int $idProductConcrete
+     *
+     * @return int[]
+     */
+    public function getReplacementsByConcreteProductId(int $idProductConcrete): array;
 }

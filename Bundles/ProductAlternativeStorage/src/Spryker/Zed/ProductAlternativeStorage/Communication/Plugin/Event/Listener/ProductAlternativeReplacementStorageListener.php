@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductAlternativeStorage\Communication\Plugin\Event\Listener;
 
+use Orm\Zed\ProductAlternative\Persistence\Map\SpyProductAlternativeTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
@@ -15,7 +16,7 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  * @method \Spryker\Zed\ProductAlternativeStorage\Business\ProductAlternativeStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductAlternativeStorage\Communication\ProductAlternativeStorageCommunicationFactory getFactory()
  */
-class ProductAlternativeStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
+class ProductAlternativeReplacementStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
@@ -30,13 +31,18 @@ class ProductAlternativeStorageListener extends AbstractPlugin implements EventB
     public function handleBulk(array $eventTransfers, $eventName)
     {
         $this->preventTransaction();
+        $eventBehaviorFacade = $this->getFactory()->getEventBehaviorFacade();
 
-        $productAlternativeIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
+        $productAbstractIds = $eventBehaviorFacade->getEventTransferForeignKeys($eventTransfers, SpyProductAlternativeTableMap::COL_FK_PRODUCT_ABSTRACT_ALTERNATIVE);
 
-        if (empty($productAlternativeIds)) {
-            return;
+        if (!empty($productAbstractIds)) {
+            $this->getFacade()->publishAbstractReplacements($productAbstractIds);
         }
 
-        $this->getFacade()->publishAlternative($productAlternativeIds);
+        $productConcreteIds = $eventBehaviorFacade->getEventTransferForeignKeys($eventTransfers, SpyProductAlternativeTableMap::COL_FK_PRODUCT_CONCRETE_ALTERNATIVE);
+
+        if (!empty($productConcreteIds)) {
+            $this->getFacade()->publishConcreteReplacements($productConcreteIds);
+        }
     }
 }

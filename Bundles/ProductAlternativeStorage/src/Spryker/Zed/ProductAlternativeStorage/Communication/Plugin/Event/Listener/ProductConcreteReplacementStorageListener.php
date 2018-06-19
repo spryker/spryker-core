@@ -15,7 +15,7 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  * @method \Spryker\Zed\ProductAlternativeStorage\Business\ProductAlternativeStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductAlternativeStorage\Communication\ProductAlternativeStorageCommunicationFactory getFactory()
  */
-class ProductAlternativeStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
+class ProductConcreteReplacementStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
@@ -31,12 +31,12 @@ class ProductAlternativeStorageListener extends AbstractPlugin implements EventB
     {
         $this->preventTransaction();
 
-        $productAlternativeIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
+        $productConcreteIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
-        if (empty($productAlternativeIds)) {
+        if (empty($productConcreteIds)) {
             return;
         }
 
-        $this->getFacade()->publishAlternative($productAlternativeIds);
+        $this->getFacade()->publishConcreteReplacements($productConcreteIds);
     }
 }
