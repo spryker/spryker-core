@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductPackagingUnit\Persistence;
 
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingLeadProductQuery;
+use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitQuery;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitTypeQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ProductPackagingUnit\Persistence\Propel\Mapper\ProductPackagingLeadProductMapper;
@@ -34,6 +35,14 @@ class ProductPackagingUnitPersistenceFactory extends AbstractPersistenceFactory
     public function createProductPackagingUnitTypeMapper(): ProductPackagingUnitTypeMapperInterface
     {
         return new ProductPackagingUnitTypeMapper();
+    }
+
+    /**
+     * @return \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitQuery
+     */
+    public function createProductPackagingUnitQuery(): SpyProductPackagingUnitQuery
+    {
+        return SpyProductPackagingUnitQuery::create();
     }
 
     /**

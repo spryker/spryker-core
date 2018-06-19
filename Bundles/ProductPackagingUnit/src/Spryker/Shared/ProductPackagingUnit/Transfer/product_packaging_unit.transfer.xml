@@ -6,6 +6,12 @@
     <transfer name="ProductPackagingUnitType">
         <property name="idProductPackagingUnitType" type="int"/>
         <property name="name" type="string"/>
+        <property name="nameTranslations" type="ProductPackagingUnitTypeTranslation[]" singular="productPackagingUnitTypeNameTranslation" />
+    </transfer>
+
+    <transfer name="ProductPackagingUnitTypeTranslation">
+        <property name="translation" type="string" />
+        <property name="localeCode" type="string" />
     </transfer>
 
     <transfer name="ProductPackagingUnit">

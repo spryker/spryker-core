@@ -15,11 +15,33 @@ interface ProductPackagingUnitTypeReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
+     * @throws \Spryker\Zed\ProductPackagingUnit\Business\Exception\ProductPackagingUnitTypeNotFoundException
+     *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
      */
     public function getProductPackagingUnitTypeByName(
         ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
     ): ProductPackagingUnitTypeTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+     *
+     * @throws \Spryker\Zed\ProductPackagingUnit\Business\Exception\ProductPackagingUnitTypeNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
+     */
+    public function getProductPackagingUnitTypeById(
+        ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+    ): ProductPackagingUnitTypeTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+     *
+     * @return int
+     */
+    public function getCountProductPackagingUnitsForType(
+        ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+    ): int;
 
     /**
      * @param int $productAbstractId
