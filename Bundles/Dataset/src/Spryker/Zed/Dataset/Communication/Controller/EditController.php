@@ -22,9 +22,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class EditController extends AbstractController
 {
-    const URL_PARAM_ID_DATASET = 'id-dataset';
-    const MESSAGE_DATASET_PARSE_ERROR = 'Something wrong';
-    const DATSET_LIST_URL = '/dataset';
+    public const URL_PARAM_ID_DATASET = 'id-dataset';
+    public const MESSAGE_DATASET_PARSE_ERROR = 'Something wrong';
+    public const DATSET_LIST_URL = '/dataset';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

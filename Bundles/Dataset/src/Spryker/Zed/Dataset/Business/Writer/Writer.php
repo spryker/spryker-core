@@ -8,24 +8,23 @@
 namespace Spryker\Zed\Dataset\Business\Writer;
 
 use Generated\Shared\Transfer\DatasetTransfer;
-use League\Csv\Writer as CsvWriter;
-use Spryker\Zed\Dataset\Dependency\Service\DatasetToCsvBridgeInterface;
+use SplTempFileObject;
+use Spryker\Zed\Dataset\Dependency\Adapter\CsvFactoryInterface;
+use Spryker\Zed\Dataset\Dependency\Adapter\CsvWriterInterface;
 
 class Writer implements WriterInterface
 {
     /**
-     * @var \Spryker\Zed\Dataset\Dependency\Service\DatasetToCsvBridgeInterface
+     * @var \Spryker\Zed\Dataset\Dependency\Adapter\CsvFactoryInterface
      */
-    protected $datasetToCsvBridge;
+    protected $csvFactory;
 
     /**
-     * Writer constructor.
-     *
-     * @param \Spryker\Zed\Dataset\Dependency\Service\DatasetToCsvBridgeInterface $datasetToCsvBridge
+     * @param \Spryker\Zed\Dataset\Dependency\Adapter\CsvFactoryInterface $csvFactory
      */
-    public function __construct(DatasetToCsvBridgeInterface $datasetToCsvBridge)
+    public function __construct(CsvFactoryInterface $csvFactory)
     {
-        $this->datasetToCsvBridge = $datasetToCsvBridge;
+        $this->csvFactory = $csvFactory;
     }
 
     /**
@@ -35,19 +34,19 @@ class Writer implements WriterInterface
      */
     public function getCsvByDataset(DatasetTransfer $datasetTransfer): string
     {
-        $writer = $this->datasetToCsvBridge->createCsvWriter();
-        $this->insertDataByTransfer($writer, $datasetTransfer);
+        $writerAdapter = $this->csvFactory->createCsvWriter(new SplTempFileObject());
+        $this->insertDataByTransfer($writerAdapter, $datasetTransfer);
 
-        return $writer->getContent();
+        return $writerAdapter->getContent();
     }
 
     /**
-     * @param \League\Csv\Writer $writer
+     * @param \Spryker\Zed\Dataset\Dependency\Adapter\CsvWriterInterface $writerAdapter
      * @param \Generated\Shared\Transfer\DatasetTransfer $datasetTransfer
      *
      * @return void
      */
-    protected function insertDataByTransfer(CsvWriter $writer, DatasetTransfer $datasetTransfer): void
+    protected function insertDataByTransfer(CsvWriterInterface $writerAdapter, DatasetTransfer $datasetTransfer): void
     {
         $header = [''];
         $rowValues = [];
@@ -60,10 +59,10 @@ class Writer implements WriterInterface
 
             $rowValues[$datasetRowColumnValue->getDatasetRow()->getTitle()][] = $datasetRowColumnValue->getValue();
         }
-        $writer->insertOne($header);
+        $writerAdapter->insertOne($header);
         foreach ($rowValues as $rowTitle => $values) {
             array_unshift($values, $rowTitle);
-            $writer->insertOne($values);
+            $writerAdapter->insertOne($values);
         }
     }
 }

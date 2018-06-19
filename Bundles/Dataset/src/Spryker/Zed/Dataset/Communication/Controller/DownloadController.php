@@ -20,11 +20,11 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
  */
 class DownloadController extends AbstractController
 {
-    const URL_PARAM_ID_DATASET = 'id-dataset';
-    const CONTENT_DISPOSITION = 'Content-Disposition';
-    const CONTENT_TYPE = 'Content-Type';
-    const CONTENT_TYPE_CSV = 'text/plain';
-    const FILE_EXTENTION = 'csv';
+    public const URL_PARAM_ID_DATASET = 'id-dataset';
+    public const CONTENT_DISPOSITION = 'Content-Disposition';
+    public const CONTENT_TYPE = 'Content-Type';
+    public const CONTENT_TYPE_CSV = 'text/plain';
+    public const FILE_EXTENTION = 'csv';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

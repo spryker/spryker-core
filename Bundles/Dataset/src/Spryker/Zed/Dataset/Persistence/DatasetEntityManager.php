@@ -89,9 +89,14 @@ class DatasetEntityManager extends AbstractEntityManager implements DatasetEntit
      */
     protected function create(DatasetTransfer $datasetTransfer): void
     {
-        $dataset = new SpyDataset();
-
-        $this->updateDataset($dataset, $datasetTransfer);
+        $this->handleDatabaseTransaction(function () use ($datasetTransfer): void {
+            $datasetEntity = new SpyDataset();
+            $datasetEntity->fromArray($datasetTransfer->toArray());
+            $datasetEntity->save();
+            $this->saveDatasetLocalizedAttributes($datasetEntity, $datasetTransfer);
+            $this->saveDatasetRowColumnValues($datasetEntity, $datasetTransfer);
+            $datasetEntity->save();
+        });
     }
 
     /**
@@ -104,7 +109,7 @@ class DatasetEntityManager extends AbstractEntityManager implements DatasetEntit
     {
         $this->handleDatabaseTransaction(function () use ($datasetEntity, $datasetTransfer): void {
             $datasetEntity->fromArray($datasetTransfer->toArray());
-            if ($datasetTransfer->getDatasetRowColumnValues()->count() && !$datasetEntity->isNew()) {
+            if ($datasetTransfer->getDatasetRowColumnValues()->count()) {
                 $this->removeDatasetRowColumnValues($datasetEntity);
             }
             $datasetEntity->save();

@@ -13,33 +13,31 @@ use Generated\Shared\Transfer\DatasetColumnTransfer;
 use Generated\Shared\Transfer\DatasetFilePathTransfer;
 use Generated\Shared\Transfer\DatasetRowColumnValueTransfer;
 use Generated\Shared\Transfer\DatasetRowTransfer;
-use League\Csv\Reader as CsvReader;
 use Spryker\Zed\Dataset\Business\Exception\DatasetParseException;
 use Spryker\Zed\Dataset\Business\Exception\DatasetParseFormatException;
-use Spryker\Zed\Dataset\Dependency\Service\DatasetToCsvBridgeInterface;
+use Spryker\Zed\Dataset\Dependency\Adapter\CsvFactoryInterface;
+use Spryker\Zed\Dataset\Dependency\Adapter\CsvReaderInterface;
 
 class Reader implements ReaderInterface
 {
-    const OPEN_MODE = 'r';
-    const HEADER_OFFSET = 0;
-    const FIRST_HEADER_KEY = 0;
-    const MIN_COLUMNS = 0;
-    const UTF_16 = 'utf-16';
-    const UTF_8 = 'utf-8';
+    public const OPEN_MODE = 'r';
+    public const HEADER_OFFSET = 0;
+    public const FIRST_HEADER_KEY = 0;
+    public const MIN_COLUMNS = 0;
+    public const UTF_16 = 'utf-16';
+    public const UTF_8 = 'utf-8';
 
     /**
-     * @var \Spryker\Zed\Dataset\Dependency\Service\DatasetToCsvBridgeInterface
+     * @var \Spryker\Zed\Dataset\Dependency\Adapter\CsvFactoryInterface
      */
-    protected $datasetToCsvBridge;
+    protected $csvFactory;
 
     /**
-     * Writer constructor.
-     *
-     * @param \Spryker\Zed\Dataset\Dependency\Service\DatasetToCsvBridgeInterface $datasetToCsvBridge
+     * @param \Spryker\Zed\Dataset\Dependency\Adapter\CsvFactoryInterface $csvFactory
      */
-    public function __construct(DatasetToCsvBridgeInterface $datasetToCsvBridge)
+    public function __construct(CsvFactoryInterface $csvFactory)
     {
-        $this->datasetToCsvBridge = $datasetToCsvBridge;
+        $this->csvFactory = $csvFactory;
     }
 
     /**
@@ -51,11 +49,11 @@ class Reader implements ReaderInterface
      */
     public function parseFileToDataTransfers(DatasetFilePathTransfer $filePathTransfer): ArrayObject
     {
-        $reader = $this->getReader($filePathTransfer);
+        $readerAdapter = $this->getReader($filePathTransfer);
         $datasetRowColumnValueTransfers = new ArrayObject();
-        $datasetColumnValueTransfers = $this->getDatasetColumnTransfers($reader);
+        $datasetColumnValueTransfers = $this->getDatasetColumnTransfers($readerAdapter);
 
-        foreach ($reader as $row) {
+        foreach ($readerAdapter->getRecords() as $row) {
             $rowTitle = array_shift($row);
             $values = array_values($row);
             $datasetRowValueTransfer = $this->getDatasetRowTransfer($rowTitle);
@@ -80,30 +78,30 @@ class Reader implements ReaderInterface
      *
      * @throws \Spryker\Zed\Dataset\Business\Exception\DatasetParseException
      *
-     * @return \League\Csv\Reader
+     * @return \Spryker\Zed\Dataset\Dependency\Adapter\CsvReaderInterface
      */
-    protected function getReader(DatasetFilePathTransfer $filePathTransfer): CsvReader
+    protected function getReader(DatasetFilePathTransfer $filePathTransfer): CsvReaderInterface
     {
         try {
-            $csv = $this->datasetToCsvBridge->createCsvReader($filePathTransfer->getFilePath(), static::OPEN_MODE);
-            $csv->setHeaderOffset(static::HEADER_OFFSET);
+            $readerAdapter = $this->csvFactory->createCsvReader($filePathTransfer->getFilePath(), static::OPEN_MODE);
+            $readerAdapter->setHeaderOffset(static::HEADER_OFFSET);
         } catch (Exception $e) {
             throw new DatasetParseException('Not valid CSV in text file.');
         }
 
-        return $csv;
+        return $readerAdapter;
     }
 
     /**
-     * @param \League\Csv\Reader $reader
+     * @param \Spryker\Zed\Dataset\Dependency\Adapter\CsvReaderInterface $reader
      *
      * @throws \Spryker\Zed\Dataset\Business\Exception\DatasetParseFormatException
      *
      * @return \Generated\Shared\Transfer\DatasetColumnTransfer[]
      */
-    protected function getDatasetColumnTransfers(CsvReader $reader): array
+    protected function getDatasetColumnTransfers(CsvReaderInterface $readerAdapter): array
     {
-        $columns = $reader->getHeader();
+        $columns = $readerAdapter->getHeader();
         if (count($columns) <= static::MIN_COLUMNS || !empty($columns[static::FIRST_HEADER_KEY])) {
             throw new DatasetParseFormatException('First title column must be empty and document can\'t be empty');
         }
