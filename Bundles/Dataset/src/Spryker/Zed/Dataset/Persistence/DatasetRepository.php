@@ -87,10 +87,12 @@ class DatasetRepository extends AbstractRepository implements DatasetRepositoryI
      */
     protected function joinDatasetRelations(SpyDatasetQuery $datasetQuery): SpyDatasetQuery
     {
-        return $datasetQuery->leftJoinWithSpyDatasetLocalizedAttributes()
+        $datasetQuery->leftJoinWithSpyDatasetLocalizedAttributes()
             ->useSpyDatasetRowColumnValueQuery(null, Criteria::LEFT_JOIN)
                 ->leftJoinSpyDatasetColumn()
                 ->leftJoinSpyDatasetRow()
             ->endUse();
+
+        return $datasetQuery;
     }
 }
