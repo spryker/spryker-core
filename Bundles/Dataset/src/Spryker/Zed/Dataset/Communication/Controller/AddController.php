@@ -35,7 +35,7 @@ class AddController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $datasetTransfer = $form->getData();
-            $filePathTransfer = $this->getFileTransfer($file = $form->get('contentFile')->getData());
+            $filePathTransfer = $this->getFileTransfer($form->get('contentFile')->getData());
             try {
                 $this->getFacade()->save($datasetTransfer, $filePathTransfer);
                 $redirectUrl = Url::generate(static::DATSET_LIST_URL)->build();
@@ -54,11 +54,11 @@ class AddController extends AbstractController
     }
 
     /**
-     * @param $file
+     * @param \Symfony\Component\HttpFoundation\File\UploadedFile|null $file
      *
      * @return \Generated\Shared\Transfer\DatasetFilePathTransfer
      */
-    protected function getFileTransfer($file): DatasetFilePathTransfer
+    protected function getFileTransfer(?UploadedFile $file): DatasetFilePathTransfer
     {
         $filePathTransfer = new DatasetFilePathTransfer();
         if ($file instanceof UploadedFile) {

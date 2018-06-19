@@ -12,7 +12,7 @@ use League\Csv\Reader;
 class CsvReaderAdapter implements CsvReaderInterface
 {
     /**
-     * @var League\Csv\Reader
+     * @var \League\Csv\Reader
      */
     protected $reader;
 

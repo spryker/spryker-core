@@ -12,13 +12,12 @@ use SplFileObject;
 class CsvWriterAdapter implements CsvWriterInterface
 {
     /**
-     * @var League\Csv\Writer
+     * @var \League\Csv\Writer
      */
     protected $writer;
 
     /**
-     * @param string $path
-     * @param string $mode
+     * @param \SplFileObject $splFileObject
      */
     public function __construct(SplFileObject $splFileObject)
     {
