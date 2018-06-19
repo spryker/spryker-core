@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductDiscontinuedGui\Communication\Form\DataProvider;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedNoteTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
-use Generated\Shared\Transfer\ProductDiscontinueRequestTransfer;
 use Spryker\Zed\ProductDiscontinuedGui\Communication\Form\DiscontinueProductForm;
 use Spryker\Zed\ProductDiscontinuedGui\Dependency\Facade\ProductDiscontinuedGuiToLocaleFacadeInterface;
 use Spryker\Zed\ProductDiscontinuedGui\Dependency\Facade\ProductDiscontinuedGuiToProductDiscontinuedFacadeInterface;
@@ -64,11 +63,8 @@ class DiscontinueProductFormDataProvider
      */
     protected function findProductDiscontinuedByProductId(int $idProductConcrete): ?ProductDiscontinuedTransfer
     {
-        $productDiscontinueRequestTransfer = (new ProductDiscontinueRequestTransfer())
-            ->setIdProduct($idProductConcrete);
-        return $this->productDiscontinuedFacade
-                    ->findProductDiscontinuedByProductId($productDiscontinueRequestTransfer)
-                    ->getProductDiscontinued();
+        return $this->productDiscontinuedFacade->findProductDiscontinuedByProductId($idProductConcrete)
+            ->getProductDiscontinued();
     }
 
     /**

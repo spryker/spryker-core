@@ -62,11 +62,10 @@ class ProductDiscontinuedEntityManager extends AbstractEntityManager implements 
         ProductDiscontinuedNoteTransfer $discontinuedNoteTransfer
     ): ProductDiscontinuedNoteTransfer {
         $discontinuedNoteQuery = $this->getFactory()
-            ->createProductDiscontinuedNoteQuery();
-        if ($discontinuedNoteTransfer->getIdProductDiscontinuedNote()) {
-            $discontinuedNoteQuery
-                ->filterByIdProductDiscontinuedNote($discontinuedNoteTransfer->getIdProductDiscontinuedNote());
-        }
+            ->createProductDiscontinuedNoteQuery()
+            ->filterByIdProductDiscontinuedNote($discontinuedNoteTransfer->getIdProductDiscontinuedNote())
+            ->filterByFkProductDiscontinued($discontinuedNoteTransfer->getFkProductDiscontinued())
+            ->filterByFkLocale($discontinuedNoteTransfer->getFkLocale());
         $discontinuedNoteEntity = $discontinuedNoteQuery->findOneOrCreate();
         $discontinuedNoteEntity->fromArray($discontinuedNoteTransfer->modifiedToArray());
         $discontinuedNoteEntity->save();

@@ -8,8 +8,8 @@
 namespace Spryker\Zed\ProductDiscontinuedDataImport\Business;
 
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
+use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
-use Spryker\Zed\ProductDiscontinuedDataImport\Business\Step\AddLocalesStep;
 use Spryker\Zed\ProductDiscontinuedDataImport\Business\Step\ConcreteSkuToIdProductStep;
 use Spryker\Zed\ProductDiscontinuedDataImport\Business\Step\NoteExtractorStep;
 use Spryker\Zed\ProductDiscontinuedDataImport\Business\Step\ProductDiscontinuedWriterStep;
@@ -20,16 +20,18 @@ use Spryker\Zed\ProductDiscontinuedDataImport\Business\Step\ProductDiscontinuedW
 class ProductDiscontinuedDataImportBusinessFactory extends DataImportBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerAwareInterface
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
-    public function createProductDiscontinuedDataImport()
+    public function createProductDiscontinuedDataImport(): DataImporterInterface
     {
+        /** @var \Spryker\Zed\DataImport\Business\Model\DataImporter $dataImporter */
         $dataImporter = $this->getCsvDataImporterFromConfig(
             $this->getConfig()->getProductDiscontinuedDataImporterConfiguration()
         );
 
-        $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker()
-            ->addStep($this->createAddLocalesStep())
+        /** @var \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerTransactionAware $dataSetStepBroker */
+        $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
+        $dataSetStepBroker->addStep($this->createAddLocalesStep())
             ->addStep($this->createNoteExtractorStep())
             ->addStep($this->createConcreteSkuToIdProductStep())
             ->addStep(new ProductDiscontinuedWriterStep());
@@ -37,14 +39,6 @@ class ProductDiscontinuedDataImportBusinessFactory extends DataImportBusinessFac
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
 
         return $dataImporter;
-    }
-
-    /**
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
-     */
-    public function createAddLocalesStep(): DataImportStepInterface
-    {
-        return new AddLocalesStep($this->getStore());
     }
 
     /**
