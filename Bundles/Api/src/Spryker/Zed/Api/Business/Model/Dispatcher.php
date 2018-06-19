@@ -150,7 +150,7 @@ class Dispatcher implements DispatcherInterface
      * @param string|null $id
      * @param array $params
      *
-     * @return \Generated\Shared\Transfer\ApiCollectionTransfer|\Generated\Shared\Transfer\ApiItemTransfer|ApiOptionsTransfer
+     * @return \Generated\Shared\Transfer\ApiCollectionTransfer|\Generated\Shared\Transfer\ApiItemTransfer|\Generated\Shared\Transfer\ApiOptionsTransfer
      */
     protected function callApiPlugin($resource, $method, $id, array $params)
     {

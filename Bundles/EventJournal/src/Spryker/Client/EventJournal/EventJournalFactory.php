@@ -8,7 +8,6 @@
 namespace Spryker\Client\EventJournal;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Shared\EventJournal\Model\EventJournalInterface;
 
 /**
  * @deprecated Use Log bundle instead
@@ -16,7 +15,7 @@ use Spryker\Shared\EventJournal\Model\EventJournalInterface;
 class EventJournalFactory extends AbstractFactory
 {
     /**
-     * @return EventJournalInterface
+     * @return \Spryker\Shared\EventJournal\Model\EventJournalInterface
      */
     public function createEventJournal()
     {

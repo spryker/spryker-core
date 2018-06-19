@@ -33,7 +33,7 @@ class QuoteStub implements QuoteStubInterface
      */
     public function deleteQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
-        /** @var QuoteResponseTransfer $quoteResponseTransfer */
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
         $quoteResponseTransfer = $this->zedStub->call('/quote/gateway/delete-quote', $quoteTransfer);
 
         return $quoteResponseTransfer;

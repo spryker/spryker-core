@@ -44,7 +44,7 @@ class QueryStringValidator extends ConstraintValidator
 
     /**
      * @param string $queryString
-     * @param QueryString $constraint
+     * @param \Spryker\Zed\Discount\Communication\Form\Constraint\QueryString $constraint
      *
      * @return string[]
      */
