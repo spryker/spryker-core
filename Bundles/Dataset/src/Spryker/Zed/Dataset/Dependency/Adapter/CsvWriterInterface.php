@@ -17,8 +17,6 @@ interface CsvWriterInterface
     public function insertOne(array $values): int;
 
     /**
-     * @param array $values
-     *
      * @return string
      */
     public function getContent(): string;
