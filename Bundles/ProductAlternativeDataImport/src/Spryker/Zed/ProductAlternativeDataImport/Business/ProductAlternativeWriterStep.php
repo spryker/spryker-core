@@ -5,20 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductAlternativeDataImport\Business\Model;
+namespace Spryker\Zed\ProductAlternativeDataImport\Business;
 
 use Orm\Zed\ProductAlternative\Persistence\SpyProductAlternativeQuery;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\ProductAlternative\Dependency\ProductAlternativeEvents;
-use Spryker\Zed\ProductAlternativeDataImport\Business\Model\DataSet\ProductAlternativeDataSetInterface;
+use Spryker\Zed\ProductAlternativeDataImport\Business\DataSet\ProductAlternativeDataSetInterface;
 
 class ProductAlternativeWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     * *
      *
      * @return void
      */
@@ -56,6 +55,10 @@ class ProductAlternativeWriterStep extends PublishAwareStep implements DataImpor
             ProductAlternativeEvents::PRODUCT_REPLACEMENT_CONCRETE_PUBLISH,
             $productAlternativeEntity->getFkProductConcreteAlternative()
         );
+        $this->addPublishEvents(
+            ProductAlternativeEvents::PRODUCT_ALTERNATIVE_PUBLISH,
+            $productAlternativeEntity->getFkProduct()
+        );
     }
 
     /**
@@ -77,6 +80,10 @@ class ProductAlternativeWriterStep extends PublishAwareStep implements DataImpor
         $this->addPublishEvents(
             ProductAlternativeEvents::PRODUCT_REPLACEMENT_ABSTRACT_PUBLISH,
             $productAlternativeEntity->getFkProductAbstractAlternative()
+        );
+        $this->addPublishEvents(
+            ProductAlternativeEvents::PRODUCT_ALTERNATIVE_PUBLISH,
+            $productAlternativeEntity->getFkProduct()
         );
     }
 }

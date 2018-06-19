@@ -15,9 +15,9 @@ interface ProductAlternativeStorageRepositoryInterface
     /**
      * @param int $idProduct
      *
-     * @return \Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer
+     * @return \Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer|null
      */
-    public function findProductAlternativeStorageEntity($idProduct): SpyProductAlternativeStorageEntityTransfer;
+    public function findProductAlternativeStorageEntity($idProduct): ?SpyProductAlternativeStorageEntityTransfer;
 
     /**
      * @api

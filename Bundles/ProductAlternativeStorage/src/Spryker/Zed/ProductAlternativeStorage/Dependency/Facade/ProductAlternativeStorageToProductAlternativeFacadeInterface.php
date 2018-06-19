@@ -7,14 +7,6 @@
 
 namespace Spryker\Zed\ProductAlternativeStorage\Dependency\Facade;
 
-use Generated\Shared\Transfer\ProductAlternativeTransfer;
-
 interface ProductAlternativeStorageToProductAlternativeFacadeInterface
 {
-    /**
-     * @param int $idProduct
-     *
-     * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
-     */
-    public function findProductAlternativeTransfer($idProduct): ProductAlternativeTransfer;
 }

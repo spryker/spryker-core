@@ -9,11 +9,10 @@ namespace Spryker\Zed\ProductAlternativeDataImport\Business;
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
-use Spryker\Zed\ProductAlternativeDataImport\Business\Model\ProductAlternativeWriterStep;
-use Spryker\Zed\ProductAlternativeDataImport\Business\Model\Step\AlternativeProductAbstractSkuToProductIdStep;
-use Spryker\Zed\ProductAlternativeDataImport\Business\Model\Step\AlternativeProductConcreteSkuToProductIdStep;
-use Spryker\Zed\ProductAlternativeDataImport\Business\Model\Step\DataValidationStep;
-use Spryker\Zed\ProductAlternativeDataImport\Business\Model\Step\ProductSkuToProductIdStep;
+use Spryker\Zed\ProductAlternativeDataImport\Business\Step\AlternativeProductAbstractSkuToProductIdStep;
+use Spryker\Zed\ProductAlternativeDataImport\Business\Step\AlternativeProductConcreteSkuToProductIdStep;
+use Spryker\Zed\ProductAlternativeDataImport\Business\Step\DataValidationStep;
+use Spryker\Zed\ProductAlternativeDataImport\Business\Step\ProductSkuToProductIdStep;
 
 /**
  * @method \Spryker\Zed\ProductAlternativeDataImport\ProductAlternativeDataImportConfig getConfig()

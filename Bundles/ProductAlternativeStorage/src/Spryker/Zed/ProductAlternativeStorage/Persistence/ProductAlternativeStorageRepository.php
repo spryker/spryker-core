@@ -27,15 +27,15 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
      *
      * @param int $idProduct
      *
-     * @return \Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer
+     * @return \Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer|null
      */
-    public function findProductAlternativeStorageEntity($idProduct): SpyProductAlternativeStorageEntityTransfer
+    public function findProductAlternativeStorageEntity($idProduct): ?SpyProductAlternativeStorageEntityTransfer
     {
         $query = $this->getFactory()
             ->createProductAlternativeStorageQuery()
-            ->filterByFkProductAlternative($idProduct);
+            ->filterByFkProduct($idProduct);
 
-        return $this->buildQueryFromCriteria($query)->findOneOrCreate();
+        return $this->buildQueryFromCriteria($query)->findOne();
     }
 
     /**

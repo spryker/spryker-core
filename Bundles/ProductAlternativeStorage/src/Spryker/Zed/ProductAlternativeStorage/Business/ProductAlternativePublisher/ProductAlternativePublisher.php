@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductAlternativeStorage\Business\ProductAlternativePublisher;
 
 use Generated\Shared\Transfer\ProductAlternativeStorageTransfer;
-use Generated\Shared\Transfer\ProductAlternativeTransfer;
 use Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer;
 use Spryker\Zed\ProductAlternativeStorage\Dependency\Facade\ProductAlternativeStorageToProductAlternativeFacadeInterface;
 use Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageEntityManagerInterface;
@@ -56,59 +55,63 @@ class ProductAlternativePublisher implements ProductAlternativePublisherInterfac
         foreach ($productIds as $productId) {
             $abstractAlternatives = $this->productAlternativeStorageRepository->findAbstractAlternativesIdsByConcreteProductId($productId);
             $concreteAlternatives = $this->productAlternativeStorageRepository->findConcreteAlternativesIdsByConcreteProductId($productId);
+            $sku = $this->productAlternativeStorageRepository->findProductSkuById($productId);
 
-            $productAlternativeTransfer = $this->productAlternativeFacade->findProductAlternativeTransfer($productId);
             $productAlternativeStorageEntity = $this->findProductAlternativeStorageEntity($productId);
 
-            $this->saveStorageEntity($productAlternativeStorageEntity, $productAlternativeTransfer, $abstractAlternatives, $concreteAlternatives);
+            if (!$productAlternativeStorageEntity) {
+                $productAlternativeStorageEntity = new SpyProductAlternativeStorageEntityTransfer();
+            }
+
+            $this->saveStorageEntity($productAlternativeStorageEntity, $abstractAlternatives, $concreteAlternatives, $sku, $productId);
         }
     }
 
     /**
-     * @param int $IdProduct
+     * @param int $idProduct
      *
-     * @return \Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer
+     * @return \Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer|null
      */
-    protected function findProductAlternativeStorageEntity($IdProduct): ProductAlternativeTransfer
+    protected function findProductAlternativeStorageEntity($idProduct): ?SpyProductAlternativeStorageEntityTransfer
     {
-        return $this->productAlternativeStorageRepository->findProductAlternativeStorageEntity($IdProduct);
+        return $this->productAlternativeStorageRepository->findProductAlternativeStorageEntity($idProduct);
     }
 
     /**
      * @param \Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer $productAlternativeStorageEntity
-     * @param \Generated\Shared\Transfer\ProductAlternativeTransfer $productAlternativeTransfer
      * @param string[] $alternativeAbstractIds
      * @param string[] $alternativeConcreteIds
+     * @param string $sku
+     * @param int $productId
      *
      * @return void
      */
     protected function saveStorageEntity(
         SpyProductAlternativeStorageEntityTransfer $productAlternativeStorageEntity,
-        ProductAlternativeTransfer $productAlternativeTransfer,
         $alternativeAbstractIds,
-        $alternativeConcreteIds
+        $alternativeConcreteIds,
+        $sku,
+        $productId
     ): void {
         $productAlternativeStorageEntity
-            ->setSku($this->productAlternativeStorageRepository->findProductSkuById($productAlternativeTransfer->getIdProduct()))
-            ->setData($this->getStorageEntityData($productAlternativeTransfer, $alternativeAbstractIds, $alternativeConcreteIds));
+            ->setFkProduct($productId)
+            ->setSku($sku)
+            ->setData($this->getStorageEntityData($alternativeAbstractIds, $alternativeConcreteIds));
 
         $this->productAlternativeStorageEntityManager->saveProductAlternativeStorageEntity($productAlternativeStorageEntity);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductAlternativeTransfer $productAlternativeTransfer
      * @param string[] $alternativeAbstractIds
      * @param string[] $alternativeConcreteIds
      *
      * @return array
      */
     protected function getStorageEntityData(
-        ProductAlternativeTransfer $productAlternativeTransfer,
         $alternativeAbstractIds,
         $alternativeConcreteIds
     ): array {
         return (new ProductAlternativeStorageTransfer())
-            ->fromArray($productAlternativeTransfer->toArray(), true)
             ->setProductAbstractIds($alternativeAbstractIds)
             ->setProductConcreteIds($alternativeConcreteIds)
             ->toArray();
