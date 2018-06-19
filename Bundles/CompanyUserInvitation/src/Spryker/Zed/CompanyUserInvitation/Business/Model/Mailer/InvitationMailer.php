@@ -50,7 +50,7 @@ class InvitationMailer implements InvitationMailerInterface
             ->setType(CompanyUserInvitationMailTypePlugin::MAIL_TYPE)
             ->setInvitationLink($this->getInvitationLink($companyUserInvitationTransfer))
             ->setCompanyUserInvitation($companyUserInvitationTransfer);
-        
+
         $this->mailFacade->handleMail($mailTransfer);
     }
 

@@ -45,5 +45,6 @@ class QueueDependencyProvider extends AbstractDependencyProvider
      */
     protected function createQueueAdapters(Container $container)
     {
+        return [];
     }
 }
