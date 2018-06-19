@@ -35,8 +35,6 @@ class CsvWriterAdapter implements CsvWriterInterface
     }
 
     /**
-     * @param array $values
-     *
      * @return string
      */
     public function getContent(): string
