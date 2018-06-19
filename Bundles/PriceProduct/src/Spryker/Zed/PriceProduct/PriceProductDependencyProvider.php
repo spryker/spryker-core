@@ -26,7 +26,6 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_STORE = 'store facade';
 
     public const PLUGIN_PRICE_DIMENSION_QUERY_CRITERIA = 'PLUGIN_PRICE_DIMENSION_QUERY_CRITERIA';
-    public const PLUGIN_PRICE_PRODUCT_DECISION = 'PLUGIN_PRICE_PRODUCT_DECISION';
     public const PLUGIN_PRICE_DIMENSION_ABSTRACT_SAVER = 'PLUGIN_PRICE_DIMENSION_ABSTRACT_SAVER';
     public const PLUGIN_PRICE_DIMENSION_CONCRETE_SAVER = 'PLUGIN_PRICE_DIMENSION_CONCRETE_SAVER';
 
@@ -42,7 +41,6 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCurrencyFacade($container);
         $container = $this->addPriceFacade($container);
         $container = $this->addStoreFacade($container);
-        $container = $this->addPriceProductDecisionPlugins($container);
         $container = $this->addPriceDimensionAbstractSaverPlugins($container);
         $container = $this->addPriceDimensionConcreteSaverPlugins($container);
 
@@ -140,20 +138,6 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::PLUGIN_PRICE_DIMENSION_QUERY_CRITERIA] = function (Container $container) {
             return $this->getPriceDimensionQueryCriteriaPlugins();
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addPriceProductDecisionPlugins(Container $container): Container
-    {
-        $container[static::PLUGIN_PRICE_PRODUCT_DECISION] = function (Container $container) {
-            return $this->getPriceProductDecisionPlugins();
         };
 
         return $container;

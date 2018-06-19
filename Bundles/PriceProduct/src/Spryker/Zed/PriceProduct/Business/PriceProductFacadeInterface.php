@@ -273,7 +273,7 @@ interface PriceProductFacadeInterface
      */
     public function findProductAbstractPrices(
         $idProductAbstract,
-        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+        PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
     );
 
     /**
@@ -292,7 +292,7 @@ interface PriceProductFacadeInterface
     public function findProductConcretePrices(
         $idProductConcrete,
         $idProductAbstract,
-        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+        PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
     );
 
     /**
@@ -332,21 +332,6 @@ interface PriceProductFacadeInterface
      */
     public function generatePriceDataChecksum(array $priceData): string;
 
-    /**
-     * Specification:
-     *  - Matches and returns default product price
-     *
-     * @api
-     *
-     * @param array $priceProductStoreEntityTransferCollection
-     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\MoneyValueTransfer|null
-     */
-    public function matchDefaultPriceValue(
-        array $priceProductStoreEntityTransferCollection,
-        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-    ): ?MoneyValueTransfer;
 
     /**
      * Specification:

@@ -19,7 +19,7 @@ interface PriceProductRepositoryInterface
      * @param string $concreteSku
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\SpyPriceProductStoreEntityTransfer[]
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function findProductConcretePricesBySkuAndCriteria(
         $concreteSku,
@@ -32,7 +32,7 @@ interface PriceProductRepositoryInterface
      * @param string $abstractSku
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\SpyPriceProductStoreEntityTransfer[]
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function findProductAbstractPricesBySkuAndCriteria(
         $abstractSku,
@@ -45,7 +45,7 @@ interface PriceProductRepositoryInterface
      * @param int $idProductConcrete
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\SpyPriceProductStoreEntityTransfer[]
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function findProductConcretePricesByIdAndCriteria(
         $idProductConcrete,
@@ -58,9 +58,9 @@ interface PriceProductRepositoryInterface
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\SpyPriceProductStoreEntityTransfer[]
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findProductAbstactPricesByIdAndCriteria(
+    public function findProductAbstractPricesByIdAndCriteria(
         $idProductAbstract,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
     ): array;

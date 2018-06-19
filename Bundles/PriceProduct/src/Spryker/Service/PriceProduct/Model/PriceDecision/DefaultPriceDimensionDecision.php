@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PriceProduct\Business\Model\PriceDecision;
+namespace Spryker\Service\PriceProduct\Business\Model\PriceDecision;
 
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
@@ -16,10 +16,6 @@ class DefaultPriceDimensionDecision implements DefaultPriceDecisionInterface
 {
     protected const GROSS_PRICE = 'GROSS_PRICE';
     protected const NET_PRICE = 'NET_PRICE';
-
-    public function __construct()
-    {
-    }
 
     /**
      * @param \Generated\Shared\Transfer\SpyPriceProductStoreEntityTransfer[] $priceProductStoreEntityTransferCollection

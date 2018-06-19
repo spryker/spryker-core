@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PriceProduct\Communication\Plugin;
+namespace Spryker\Service\PriceProduct\Plugin;
 
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\PriceProduct\Dependency\Plugin\PriceProductDecisionPluginInterface;
+use Spryker\Service\PriceProduct\Dependency\Plugin\PriceProductDecisionPluginInterface;
 
 /**
  * @method \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface getFacade()

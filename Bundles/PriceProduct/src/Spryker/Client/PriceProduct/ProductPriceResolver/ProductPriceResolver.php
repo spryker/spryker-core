@@ -79,46 +79,46 @@ class ProductPriceResolver implements ProductPriceResolverInterface
             ->setPrices($prices);
     }
 
-    /**
-     * @param array $priceMap
-     * @param int $idProductAbstract
-     *
-     * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
-     */
-    public function resolveProductAbstractPriceByPriceDimension(array $priceMap, int $idProductAbstract)
-    {
-        foreach ($this->priceDimensionPlugins as $priceDimensionPlugin) {
-            $priceProductAbstractDimensionTransfer = $priceDimensionPlugin->findProductAbstractPrice($idProductAbstract);
-
-            if ($priceProductAbstractDimensionTransfer) {
-                $priceMap = array_replace_recursive($priceMap, $priceProductAbstractDimensionTransfer->getPrices());
-            }
-        }
-
-        return $this->resolve($priceMap);
-    }
-
-    /**
-     * @param array $priceMap
-     * @param int $idProductAbstract
-     * @param int $idProductConcrete
-     *
-     * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
-     */
-    public function resolveProductConcretePriceByPriceDimension(array $priceMap, int $idProductAbstract, int $idProductConcrete)
-    {
-        foreach ($this->priceDimensionPlugins as $priceDimensionPlugin) {
-            $priceProductDimensionTransfer = $priceDimensionPlugin->findProductConcretePrice($idProductConcrete);
-
-            if ($priceProductDimensionTransfer === null) {
-                $priceProductDimensionTransfer = $priceDimensionPlugin->findProductAbstractPrice($idProductAbstract);
-            }
-
-            if ($priceProductDimensionTransfer) {
-                $priceMap = array_replace_recursive($priceMap, $priceProductDimensionTransfer->getPrices());
-            }
-        }
-
-        return $this->resolve($priceMap);
-    }
+//    /**
+//     * @param array $priceMap
+//     * @param int $idProductAbstract
+//     *
+//     * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
+//     */
+//    public function resolveProductAbstractPriceByPriceDimension(array $priceMap, int $idProductAbstract)
+//    {
+//        foreach ($this->priceDimensionPlugins as $priceDimensionPlugin) {
+//            $priceProductAbstractDimensionTransfer = $priceDimensionPlugin->findProductAbstractPrice($idProductAbstract);
+//
+//            if ($priceProductAbstractDimensionTransfer) {
+//                $priceMap = array_replace_recursive($priceMap, $priceProductAbstractDimensionTransfer->getPrices());
+//            }
+//        }
+//
+//        return $this->resolve($priceMap);
+//    }
+//
+//    /**
+//     * @param array $priceMap
+//     * @param int $idProductAbstract
+//     * @param int $idProductConcrete
+//     *
+//     * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
+//     */
+//    public function resolveProductConcretePriceByPriceDimension(array $priceMap, int $idProductAbstract, int $idProductConcrete)
+//    {
+//        foreach ($this->priceDimensionPlugins as $priceDimensionPlugin) {
+//            $priceProductDimensionTransfer = $priceDimensionPlugin->findProductConcretePrice($idProductConcrete);
+//
+//            if ($priceProductDimensionTransfer === null) {
+//                $priceProductDimensionTransfer = $priceDimensionPlugin->findProductAbstractPrice($idProductAbstract);
+//            }
+//
+//            if ($priceProductDimensionTransfer) {
+//                $priceMap = array_replace_recursive($priceMap, $priceProductDimensionTransfer->getPrices());
+//            }
+//        }
+//
+//        return $this->resolve($priceMap);
+//    }
 }

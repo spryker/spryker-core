@@ -8,6 +8,7 @@
 namespace Spryker\Zed\PriceProduct\Business\Model;
 
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyFacadeInterface;
@@ -60,7 +61,7 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
      *
      * @return \Generated\Shared\Transfer\PriceProductCriteriaTransfer
      */
-    public function buildCriteriaFromFilter(PriceProductFilterTransfer $priceProductFilterTransfer)
+    public function buildCriteriaFromFilter(PriceProductFilterTransfer $priceProductFilterTransfer): PriceProductCriteriaTransfer
     {
         $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
             ->fromArray($priceProductFilterTransfer->toArray(), true);
@@ -82,7 +83,7 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
      *
      * @return \Generated\Shared\Transfer\PriceProductCriteriaTransfer
      */
-    public function buildCriteriaWithDefaultValues($priceTypeName = null)
+    public function buildCriteriaWithDefaultValues($priceTypeName = null): PriceProductCriteriaTransfer
     {
         return (new PriceProductCriteriaTransfer())
         ->setPriceMode(
@@ -98,8 +99,26 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
             $this->priceProductTypeReader->handleDefaultPriceType($priceTypeName)
         )
         ->setPriceDimension(
-            PriceProductConfig::PRICE_DIMENSION_DEFAULT
+            (new PriceProductDimensionTransfer())->setType(PriceProductConfig::PRICE_DIMENSION_DEFAULT)
         );
+    }
+
+    /**
+     * @param string|null $priceDimensionType
+     *
+     * @return PriceProductCriteriaTransfer
+     */
+    public function buildCriteriaWithPriceDimension(string $priceDimensionType = null): PriceProductCriteriaTransfer
+    {
+        if (!$priceDimensionType) {
+            $priceDimensionType = PriceProductConfig::PRICE_DIMENSION_DEFAULT;
+        }
+
+        $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
+            ->setType($priceDimensionType);
+
+        return (new PriceProductCriteriaTransfer())
+            ->setPriceDimension($priceProductDimensionTransfer);
     }
 
     /**

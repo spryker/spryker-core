@@ -10,7 +10,6 @@ namespace Spryker\Zed\PriceProduct\Business\Model\Product;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
-use Spryker\Zed\PriceProduct\Business\Model\PriceDecision\PriceProductMatcherInterface;
 use Spryker\Zed\PriceProduct\Business\Model\PriceProductCriteriaBuilderInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreFacadeInterface;
@@ -51,18 +50,12 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
     protected $priceProductRepository;
 
     /**
-     * @var \Spryker\Zed\PriceProduct\Business\Model\PriceDecision\PriceProductMatcherInterface
-     */
-    protected $priceProductMatcher;
-
-    /**
      * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface $priceProductQueryContainer
      * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapperInterface $priceProductMapper
      * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\PriceProduct\Business\Model\PriceProductCriteriaBuilderInterface $priceProductCriteriaBuilder
      * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductRepositoryInterface $priceProductRepository
-     * @param \Spryker\Zed\PriceProduct\Business\Model\PriceDecision\PriceProductMatcherInterface $priceProductMatcher
      */
     public function __construct(
         PriceProductQueryContainerInterface $priceProductQueryContainer,
@@ -70,8 +63,7 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
         PriceProductToProductFacadeInterface $productFacade,
         PriceProductCriteriaBuilderInterface $priceProductCriteriaBuilder,
         PriceProductToStoreFacadeInterface $storeFacade,
-        PriceProductRepositoryInterface $priceProductRepository,
-        PriceProductMatcherInterface $priceProductMatcher
+        PriceProductRepositoryInterface $priceProductRepository
     ) {
         $this->priceProductQueryContainer = $priceProductQueryContainer;
         $this->priceProductMapper = $priceProductMapper;
@@ -79,7 +71,6 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
         $this->priceProductCriteriaBuilder = $priceProductCriteriaBuilder;
         $this->storeFacade = $storeFacade;
         $this->priceProductRepository = $priceProductRepository;
-        $this->priceProductMatcher = $priceProductMatcher;
     }
 
     /**
@@ -117,19 +108,13 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
 
         $idStore = $this->storeFacade->getCurrentStore()->getIdStore();
 
-        $priceProductCriteriaTrasfer = new PriceProductCriteriaTransfer();
-        $priceProductCriteriaTrasfer->fromArray($priceProductDimensionTransfer->toArray(), true);
+        $priceProductCriteriaTransfer = new PriceProductCriteriaTransfer();
+        $priceProductCriteriaTransfer->fromArray($priceProductDimensionTransfer->toArray(), true);
 
-        $priceProductCriteriaTrasfer->setIdStore($idStore)
+        $priceProductCriteriaTransfer->setIdStore($idStore)
             ->setPriceDimension($priceProductDimensionTransfer->getType());
 
-        $priceProductStoreTransferCollection = $this->priceProductRepository
-            ->findProductAbstractPricesBySkuAndCriteria($abstractSku, $priceProductCriteriaTrasfer);
-
-        return $this->priceProductMapper->mapPriceProductStoreEntityTransfersToPriceProduct(
-            $priceProductStoreTransferCollection,
-            $priceProductCriteriaTrasfer
-        );
+        return $this->priceProductRepository->findProductAbstractPricesBySkuAndCriteria($abstractSku, $priceProductCriteriaTransfer);
     }
 
     /**
@@ -155,10 +140,12 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
      */
     public function findPriceForProductAbstract($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer)
     {
-        $priceProductStoreEntityTransferCollection = $this->priceProductRepository
+        $priceProductTransferCollection = $this->priceProductRepository
             ->findProductAbstractPricesBySkuAndCriteria($sku, $priceProductCriteriaTransfer);
 
-        return $this->priceProductMatcher->matchPriceValue($priceProductStoreEntityTransferCollection, $priceProductCriteriaTransfer);
+        // @todo call Service resolveProductPrice
+        return $this->priceProductMatcher
+            ->matchPriceValue($priceProductTransferCollection, $priceProductCriteriaTransfer);
     }
 
     /**
@@ -167,24 +154,14 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findProductAbstractPricesById($idProductAbstract, PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null)
+    public function findProductAbstractPricesById($idProductAbstract, PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null): array
     {
         if (!$priceProductCriteriaTransfer) {
-            $priceProductCriteriaTransfer = new PriceProductCriteriaTransfer();
-            $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
-                ->setType(PriceProductConfig::PRICE_DIMENSION_DEFAULT);
-            $priceProductCriteriaTransfer->setPriceDimension($priceProductDimensionTransfer);
+            $priceProductCriteriaTransfer = $this->priceProductCriteriaBuilder
+                ->buildCriteriaWithPriceDimension(PriceProductConfig::PRICE_DIMENSION_DEFAULT);
         }
 
-        $priceProductStoreTransferCollection = $this->priceProductRepository->findProductAbstactPricesByIdAndCriteria(
-            $idProductAbstract,
-            $priceProductCriteriaTransfer
-        );
-
-        return $this->priceProductMapper->mapPriceProductStoreEntityTransfersToPriceProduct(
-            $priceProductStoreTransferCollection,
-            $priceProductCriteriaTransfer
-        );
+        return $this->priceProductRepository->findProductAbstractPricesByIdAndCriteria($idProductAbstract, $priceProductCriteriaTransfer);
     }
 
     /**

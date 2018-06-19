@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProduct\Persistence;
 
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\SpyPriceProductDefaultEntityTransfer;
@@ -24,13 +25,14 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
 {
     public const PRICE_PRODUCT_RELATION_NAME = 'PriceProduct';
 
+
     /**
      * @api
      *
      * @param string $concreteSku
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\SpyPriceProductStoreEntityTransfer[]
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function findProductConcretePricesBySkuAndCriteria(
         $concreteSku,
@@ -39,7 +41,14 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
         $priceProductStoreQuery = $this->createBasePriceProductStoreQuery($priceProductCriteriaTransfer);
         $this->addJoinProductConcreteBySku($priceProductStoreQuery, $concreteSku);
 
-        return $this->buildQueryFromCriteria($priceProductStoreQuery)->find();
+        $priceProductStoreEntities = $priceProductStoreQuery->find();
+        if (!$priceProductStoreEntities->count()) {
+            return [];
+        }
+
+        return $this->getFactory()
+            ->createPropelPriceProductMapper()
+            ->mapPriceProductStoreEntitiesToTransfers($priceProductStoreQuery->find(), $priceProductCriteriaTransfer);
     }
 
     /**
@@ -48,7 +57,7 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
      * @param string $abstractSku
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\SpyPriceProductStoreEntityTransfer[]
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function findProductAbstractPricesBySkuAndCriteria(
         $abstractSku,
@@ -58,7 +67,9 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
         $priceProductStoreQuery = $this->createBasePriceProductStoreQuery($priceProductCriteriaTransfer);
         $this->addJoinProductAbstractBySku($priceProductStoreQuery, $abstractSku);
 
-        return $this->buildQueryFromCriteria($priceProductStoreQuery)->find();
+        return $this->getFactory()
+            ->createPropelPriceProductMapper()
+            ->mapPriceProductStoreEntitiesToTransfers($priceProductStoreQuery->find(), $priceProductCriteriaTransfer);
     }
 
     /**
@@ -67,7 +78,7 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
      * @param int $idProductConcrete
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\SpyPriceProductStoreEntityTransfer[]
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function findProductConcretePricesByIdAndCriteria(
         $idProductConcrete,
@@ -81,7 +92,9 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
                 $idProductConcrete
             );
 
-        return $this->buildQueryFromCriteria($priceProductStoreQuery)->find();
+        return $this->getFactory()
+            ->createPropelPriceProductMapper()
+            ->mapPriceProductStoreEntitiesToTransfers($priceProductStoreQuery->find(), $priceProductCriteriaTransfer);
     }
 
     /**
@@ -90,9 +103,9 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\SpyPriceProductStoreEntityTransfer[]
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findProductAbstactPricesByIdAndCriteria(
+    public function findProductAbstractPricesByIdAndCriteria(
         $idProductAbstract,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
     ): array {
@@ -104,7 +117,9 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
                 $idProductAbstract
             );
 
-        return $this->buildQueryFromCriteria($priceProductStoreQuery)->find();
+        return $this->getFactory()
+            ->createPropelPriceProductMapper()
+            ->mapPriceProductStoreEntitiesToTransfers($priceProductStoreQuery->find(), $priceProductCriteriaTransfer);
     }
 
     /**

@@ -367,25 +367,6 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      *
      * @api
      *
-     * @param array $priceProductStoreEntityTransferCollection
-     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\MoneyValueTransfer|null
-     */
-    public function matchDefaultPriceValue(
-        array $priceProductStoreEntityTransferCollection,
-        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-    ): ?MoneyValueTransfer {
-        return $this->getFactory()
-            ->createDefaultPriceDecision()
-            ->matchValue($priceProductStoreEntityTransferCollection, $priceProductCriteriaTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer

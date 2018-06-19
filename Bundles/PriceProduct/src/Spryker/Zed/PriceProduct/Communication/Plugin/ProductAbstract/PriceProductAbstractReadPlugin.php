@@ -33,13 +33,7 @@ class PriceProductAbstractReadPlugin extends AbstractPlugin implements ProductAb
     {
         $productAbstractTransfer->requireIdProductAbstract();
 
-        $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
-            ->setPriceDimension(PriceProductConfig::PRICE_DIMENSION_DEFAULT);
-
-        $priceProductTransfers = $this->getFacade()->findProductAbstractPrices(
-            $productAbstractTransfer->getIdProductAbstract(),
-            $priceProductCriteriaTransfer
-        );
+        $priceProductTransfers = $this->getFacade()->findProductAbstractPrices($productAbstractTransfer->getIdProductAbstract());
         if ($priceProductTransfers) {
             $productAbstractTransfer->setPrices(new ArrayObject($priceProductTransfers));
         }

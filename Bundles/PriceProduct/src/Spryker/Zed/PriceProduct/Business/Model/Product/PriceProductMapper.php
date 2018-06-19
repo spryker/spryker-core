@@ -93,24 +93,6 @@ class PriceProductMapper implements PriceProductMapperInterface
             ->setMoneyValue($moneyValueTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SpyPriceProductStoreEntityTransfer[] $priceProductStoreTransferCollection
-     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
-     */
-    public function mapPriceProductStoreEntityTransfersToPriceProduct(
-        array $priceProductStoreTransferCollection,
-        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-    ): array {
-        $productPriceCollection = [];
-        foreach ($priceProductStoreTransferCollection as $priceProductStoreEntityTransfer) {
-            $index = $this->buildCollectionIndex($priceProductStoreEntityTransfer);
-            $productPriceCollection[$index] = $this->mapPriceProductTransfer($priceProductStoreEntityTransfer, $priceProductCriteriaTransfer);
-        }
-
-        return $productPriceCollection;
-    }
 
     /**
      * @return string
@@ -155,94 +137,101 @@ class PriceProductMapper implements PriceProductMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyPriceProductStoreEntityTransfer $priceProductStoreEntityTransfer
+     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore[] $priceProductStoreEntities
+     * @param PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return string
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    protected function buildCollectionIndex(SpyPriceProductStoreEntityTransfer $priceProductStoreEntityTransfer): string
-    {
-        $priceType = $this->config->getPriceTypeDefaultName();
-        $priceConfigurationMode = $this->config->getPriceModeIdentifierForBothType();
+    public function mapPriceProductStoreEntitiesToTransfers(
+        array $priceProductStoreEntities,
+        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+    ): array {
+        $productPriceCollection = [];
+        foreach ($priceProductStoreEntities as $priceProductEntity) {
+            foreach ($priceProductEntity->getPriceProductStores() as $priceProductStoreEntity) {
+                $index = $this->createProductPriceGroupingIndex($priceProductStoreEntity);
+                $productPriceCollection[$index] = $this->mapPriceProductStoreEntityToTransfer(
+                    $priceProductStoreEntity,
+                    $priceProductCriteriaTransfer
+                );
+            }
+        }
 
-        return implode(
-            '-',
-            [
-                $priceProductStoreEntityTransfer->getFkStore(),
-                $priceProductStoreEntityTransfer->getFkCurrency(),
-                $priceType,
-                $priceConfigurationMode,
-            ]
-        );
+        return $productPriceCollection;
     }
 
+
     /**
-     * @param \Generated\Shared\Transfer\SpyPriceProductStoreEntityTransfer $priceProductStoreEntityTransfer
+     * @param SpyPriceProductStore $priceProductStoreEntity
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
-    protected function mapPriceProductTransfer(
-        SpyPriceProductStoreEntityTransfer $priceProductStoreEntityTransfer,
+    public function mapPriceProductStoreEntityToTransfer(
+        SpyPriceProductStore $priceProductStoreEntity,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
     ): PriceProductTransfer {
 
-        $priceProductEntityTransfer = $priceProductStoreEntityTransfer->getPriceProduct();
+        $priceProductEntity = $priceProductStoreEntity->getPriceProduct();
 
         $priceTypeTransfer = (new PriceTypeTransfer())
-            ->setName($this->config->getPriceTypeDefaultName())
-            ->setPriceModeConfiguration($this->config->getPriceModeIdentifierForBothType());
+            ->setName($priceProductEntity->getPriceType()->getName())
+            ->setPriceModeConfiguration($priceProductEntity->getPriceType()->getPriceModeConfiguration());
 
-        $moneyValueTransfer = $this->getMoneyValueTransfer($priceProductStoreEntityTransfer);
+        $moneyValueTransfer = $this->mapMoneyValueTransfer($priceProductStoreEntity);
 
         $priceProductDimensionTransfer = $this->getPriceProductDimensionTransfer(
-            $priceProductCriteriaTransfer,
-            $priceProductStoreEntityTransfer
+            $priceProductStoreEntity,
+            $priceProductCriteriaTransfer
         );
+
         return (new PriceProductTransfer())
-            ->setIdProduct($priceProductEntityTransfer->getFkProduct())
-            ->setIdProductAbstract($priceProductEntityTransfer->getFkProductAbstract())
-            ->setIdProduct($priceProductEntityTransfer->getIdPriceProduct())
+            ->fromArray($priceProductEntity->toArray(), true)
+            ->setIdProduct($priceProductEntity->getFkProduct())
+            ->setIdProductAbstract($priceProductEntity->getFkProductAbstract())
             ->setPriceType($priceTypeTransfer)
-            ->setPriceTypeName($this->config->getPriceTypeDefaultName())
+            ->setPriceTypeName($priceTypeTransfer->getName())
             ->setMoneyValue($moneyValueTransfer)
             ->setPriceDimension($priceProductDimensionTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyPriceProductStoreEntityTransfer $priceProductStoreEntityTransfer
+     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore $priceProductStoreEntity
      *
-     * @return \Generated\Shared\Transfer\MoneyValueTransfer
+     * @return string
      */
-    protected function getMoneyValueTransfer(SpyPriceProductStoreEntityTransfer $priceProductStoreEntityTransfer): MoneyValueTransfer
+    protected function createProductPriceGroupingIndex(SpyPriceProductStore $priceProductStoreEntity)
     {
-        $currencyTransfer = $this->currencyFacade->getByIdCurrency(
-            $priceProductStoreEntityTransfer->getFkCurrency()
-        );
+        $priceProductEntity = $priceProductStoreEntity->getPriceProduct();
 
-        return (new MoneyValueTransfer())
-            ->setCurrency($currencyTransfer)
-            ->setIdEntity($priceProductStoreEntityTransfer->getIdPriceProductStore())
-            ->setFkCurrency($priceProductStoreEntityTransfer->getFkCurrency())
-            ->setFkStore($priceProductStoreEntityTransfer->getFkStore())
-            ->setNetAmount($priceProductStoreEntityTransfer->getNetPrice())
-            ->setGrossAmount($priceProductStoreEntityTransfer->getGrossPrice());
+        return implode(
+            '-',
+            [
+                $priceProductStoreEntity->getFkStore(),
+                $priceProductStoreEntity->getFkCurrency(),
+                $priceProductEntity->getPriceType()->getName(),
+                $priceProductEntity->getPriceType()->getPriceModeConfiguration(),
+            ]
+        );
     }
 
     /**
+     * @param SpyPriceProductStore $priceProductStoreEntity
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-     * @param \Generated\Shared\Transfer\SpyPriceProductStoreEntityTransfer $priceProductStoreEntityTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductDimensionTransfer
      */
     protected function getPriceProductDimensionTransfer(
-        PriceProductCriteriaTransfer $priceProductCriteriaTransfer,
-        SpyPriceProductStoreEntityTransfer $priceProductStoreEntityTransfer
+        SpyPriceProductStore $priceProductStoreEntity,
+        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
     ): PriceProductDimensionTransfer {
         return (new PriceProductDimensionTransfer())
-            ->setType($priceProductCriteriaTransfer->getPriceDimension())
+            ->setType($priceProductCriteriaTransfer->getPriceDimension()->getType())
             ->fromArray(
-                $priceProductStoreEntityTransfer->virtualProperties(),
+                $priceProductStoreEntity->virtualProperties(),
                 true
             );
     }
+
+
 }

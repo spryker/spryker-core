@@ -39,29 +39,21 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
     protected $priceProductRepository;
 
     /**
-     * @var \Spryker\Zed\PriceProduct\Business\Model\PriceDecision\PriceProductMatcherInterface
-     */
-    protected $priceProductMatcher;
-
-    /**
      * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface $priceProductQueryContainer
      * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapperInterface $priceProductMapper
      * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductRepositoryInterface $priceProductRepository
-     * @param \Spryker\Zed\PriceProduct\Business\Model\PriceDecision\PriceProductMatcherInterface $priceProductMatcher
      */
     public function __construct(
         PriceProductQueryContainerInterface $priceProductQueryContainer,
         PriceProductMapperInterface $priceProductMapper,
         PriceProductToStoreFacadeInterface $storeFacade,
-        PriceProductRepositoryInterface $priceProductRepository,
-        PriceProductMatcherInterface $priceProductMatcher
+        PriceProductRepositoryInterface $priceProductRepository
     ) {
         $this->priceProductQueryContainer = $priceProductQueryContainer;
         $this->priceProductMapper = $priceProductMapper;
         $this->storeFacade = $storeFacade;
         $this->priceProductRepository = $priceProductRepository;
-        $this->priceProductMatcher = $priceProductMatcher;
     }
 
     /**
@@ -147,9 +139,11 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
      */
     public function findPriceForProductConcrete($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer)
     {
+        // @todo change return value to PriceProductTransfer[]
         $priceProductStoreEntityTransferCollection = $this->priceProductRepository
             ->findProductConcretePricesBySkuAndCriteria($sku, $priceProductCriteriaTransfer);
 
+        // @todo call Service resolveProductPrice
         return $this->priceProductMatcher->matchPriceValue(
             $priceProductStoreEntityTransferCollection,
             $priceProductCriteriaTransfer

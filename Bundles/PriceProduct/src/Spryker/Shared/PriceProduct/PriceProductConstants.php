@@ -9,4 +9,5 @@ namespace Spryker\Shared\PriceProduct;
 
 interface PriceProductConstants
 {
+    public const PRICE_DIMENSION_DEFAULT = 'PRICE_DIMENSION_DEFAULT';
 }

@@ -12,7 +12,10 @@ use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceTypeQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\PriceProduct\Persistence\Propel\Mapper\PriceProductMapper;
+use Spryker\Zed\PriceProduct\Persistence\Propel\Mapper\PriceProductMapperInterface;
 use Spryker\Zed\PriceProduct\Persistence\Propel\PriceDimensionQueryExpander\DefaultPriceQueryExpander;
+use Spryker\Zed\PriceProduct\Persistence\Propel\PriceDimensionQueryExpander\DefaultPriceQueryExpanderInterface;
 use Spryker\Zed\PriceProduct\PriceProductDependencyProvider;
 
 /**
@@ -54,9 +57,17 @@ class PriceProductPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
+     * @return PriceProductMapperInterface
+     */
+    public function createPropelPriceProductMapper(): PriceProductMapperInterface
+    {
+        return new PriceProductMapper();
+    }
+
+    /**
      * @return \Spryker\Zed\PriceProduct\Persistence\PriceProductDimensionQueryExpanderInterface
      */
-    public function createPriceProductDimensionQueryExpander()
+    public function createPriceProductDimensionQueryExpander(): PriceProductDimensionQueryExpanderInterface
     {
         return new PriceProductDimensionQueryExpander($this->getPriceDimensionQueryCriteriaPlugins());
     }
@@ -64,7 +75,7 @@ class PriceProductPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Spryker\Zed\PriceProduct\Persistence\Propel\PriceDimensionQueryExpander\DefaultPriceQueryExpanderInterface
      */
-    public function createDefaultPriceQueryExpander()
+    public function createDefaultPriceQueryExpander(): DefaultPriceQueryExpanderInterface
     {
         return new DefaultPriceQueryExpander();
     }
@@ -72,7 +83,7 @@ class PriceProductPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Spryker\Zed\PriceProduct\Dependency\Plugin\PriceDimensionQueryCriteriaPluginInterface[]
      */
-    public function getPriceDimensionQueryCriteriaPlugins()
+    public function getPriceDimensionQueryCriteriaPlugins(): array
     {
         return $this->getProvidedDependency(PriceProductDependencyProvider::PLUGIN_PRICE_DIMENSION_QUERY_CRITERIA);
     }

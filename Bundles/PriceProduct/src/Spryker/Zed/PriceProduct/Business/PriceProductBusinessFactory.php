@@ -16,8 +16,6 @@ use Spryker\Zed\PriceProduct\Business\Model\PriceData\PriceDataChecksumGenerator
 use Spryker\Zed\PriceProduct\Business\Model\PriceData\PriceDataChecksumGeneratorInterface;
 use Spryker\Zed\PriceProduct\Business\Model\PriceDecision\DefaultPriceDecisionInterface;
 use Spryker\Zed\PriceProduct\Business\Model\PriceDecision\DefaultPriceDimensionDecision;
-use Spryker\Zed\PriceProduct\Business\Model\PriceDecision\PriceProductMatcher;
-use Spryker\Zed\PriceProduct\Business\Model\PriceDecision\PriceProductMatcherInterface;
 use Spryker\Zed\PriceProduct\Business\Model\PriceGrouper;
 use Spryker\Zed\PriceProduct\Business\Model\PriceGrouperInterface;
 use Spryker\Zed\PriceProduct\Business\Model\PriceProductCriteriaBuilder;
@@ -158,8 +156,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->getProductFacade(),
             $this->createProductCriteriaBuilder(),
             $this->getStoreFacade(),
-            $this->getRepository(),
-            $this->createPriceProductMatcher()
+            $this->getRepository()
         );
     }
 
@@ -185,8 +182,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->createPriceProductMapper(),
             $this->getStoreFacade(),
-            $this->getRepository(),
-            $this->createPriceProductMatcher()
+            $this->getRepository()
         );
     }
 
@@ -266,13 +262,6 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
         return new PriceProductStoreWriter($this->getQueryContainer(), $this->getEntityManager());
     }
 
-    /**
-     * @return \Spryker\Zed\PriceProduct\Business\Model\PriceDecision\PriceProductMatcherInterface
-     */
-    protected function createPriceProductMatcher(): PriceProductMatcherInterface
-    {
-        return new PriceProductMatcher($this->getPriceProductDecisionPlugins());
-    }
 
     /**
      * @return \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductDefaultWriterInterface
@@ -332,14 +321,6 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     public function getModuleConfig(): PriceProductConfig
     {
         return parent::getConfig();
-    }
-
-    /**
-     * @return \Spryker\Zed\PriceProduct\Dependency\Plugin\PriceProductDecisionPluginInterface[]
-     */
-    protected function getPriceProductDecisionPlugins(): array
-    {
-        return $this->getProvidedDependency(PriceProductDependencyProvider::PLUGIN_PRICE_PRODUCT_DECISION);
     }
 
     /**
