@@ -21,8 +21,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class AddController extends AbstractController
 {
-    const MESSAGE_DATASET_PARSE_ERROR = 'Something wrong';
-    const DATSET_LIST_URL = '/dataset';
+    public const MESSAGE_DATASET_PARSE_ERROR = 'Something wrong';
+    public const DATSET_LIST_URL = '/dataset';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -35,11 +35,7 @@ class AddController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $datasetTransfer = $form->getData();
-            $file = $form->get('contentFile')->getData();
-            $filePathTransfer = new DatasetFilePathTransfer();
-            if ($file instanceof UploadedFile) {
-                $filePathTransfer->setFilePath($file->getRealPath());
-            }
+            $filePathTransfer = $this->getFileTransfer($file = $form->get('contentFile')->getData());
             try {
                 $this->getFacade()->save($datasetTransfer, $filePathTransfer);
                 $redirectUrl = Url::generate(static::DATSET_LIST_URL)->build();
@@ -55,5 +51,20 @@ class AddController extends AbstractController
             'availableLocales' => $this->getFactory()->getLocaleFacade()->getLocaleCollection(),
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale(),
         ]);
+    }
+
+    /**
+     * @param $file
+     *
+     * @return \Generated\Shared\Transfer\DatasetFilePathTransfer
+     */
+    protected function getFileTransfer($file): DatasetFilePathTransfer
+    {
+        $filePathTransfer = new DatasetFilePathTransfer();
+        if ($file instanceof UploadedFile) {
+            $filePathTransfer->setFilePath($file->getRealPath());
+        }
+
+        return $filePathTransfer;
     }
 }

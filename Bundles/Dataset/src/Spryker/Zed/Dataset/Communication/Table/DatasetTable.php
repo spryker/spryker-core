@@ -16,18 +16,18 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class DatasetTable extends AbstractTable
 {
-    const REQUEST_ID_DATASET = 'id-dataset';
-    const COL_ID_DATASET = SpyDatasetTableMap::COL_ID_DATASET;
-    const COL_DATASET_NAME = SpyDatasetTableMap::COL_NAME;
-    const COL_ACTIONS = 'Actions';
-    const SORT_DESC = TableConfiguration::SORT_DESC;
-    const COL_IS_ACTIVE = SpyDatasetTableMap::COL_IS_ACTIVE;
+    public const REQUEST_ID_DATASET = 'id-dataset';
+    public const COL_ID_DATASET = SpyDatasetTableMap::COL_ID_DATASET;
+    public const COL_DATASET_NAME = SpyDatasetTableMap::COL_NAME;
+    public const COL_ACTIONS = 'Actions';
+    public const SORT_DESC = TableConfiguration::SORT_DESC;
+    public const COL_IS_ACTIVE = SpyDatasetTableMap::COL_IS_ACTIVE;
 
-    const DATASET_ACTIVATE_URL = '/dataset/activate';
-    const DATASET_DEACTIVATE_URL = '/dataset/deactivate';
-    const DATASET_EDIT_URL = '/dataset/edit';
-    const DATASET_DOWNLOAD_URL = '/dataset/download';
-    const DATASET_DELETE_URL = '/dataset/delete';
+    public const DATASET_ACTIVATE_URL = '/dataset/activate';
+    public const DATASET_DEACTIVATE_URL = '/dataset/deactivate';
+    public const DATASET_EDIT_URL = '/dataset/edit';
+    public const DATASET_DOWNLOAD_URL = '/dataset/download';
+    public const DATASET_DELETE_URL = '/dataset/delete';
 
     /**
      * @var \Spryker\Zed\Dataset\Persistence\DatasetRepositoryInterface
@@ -173,20 +173,20 @@ class DatasetTable extends AbstractTable
     {
         $buttons = [];
         $buttons[] = $this->generateViewButton(
-            Url::generate(self::DATASET_DOWNLOAD_URL, [
+            Url::generate(static::DATASET_DOWNLOAD_URL, [
                 static::REQUEST_ID_DATASET => $item[static::COL_ID_DATASET],
             ]),
             'Download'
         );
         $buttons[] = $this->generateEditButton(
-            Url::generate(self::DATASET_EDIT_URL, [
+            Url::generate(static::DATASET_EDIT_URL, [
                 static::REQUEST_ID_DATASET => $item[static::COL_ID_DATASET],
             ]),
             'Edit'
         );
         $buttons[] = $this->generateStateChangeButton($item);
         $buttons[] = $this->generateRemoveButton(
-            Url::generate(self::DATASET_DELETE_URL, [
+            Url::generate(static::DATASET_DELETE_URL, [
                 static::REQUEST_ID_DATASET => $item[static::COL_ID_DATASET],
             ]),
             'Delete'
@@ -204,16 +204,16 @@ class DatasetTable extends AbstractTable
     {
         if ($item[static::COL_IS_ACTIVE]) {
             return $this->generateRemoveButton(
-                Url::generate(self::DATASET_DEACTIVATE_URL, [
-                    self::REQUEST_ID_DATASET => $item[static::COL_ID_DATASET],
+                Url::generate(static::DATASET_DEACTIVATE_URL, [
+                    static::REQUEST_ID_DATASET => $item[static::COL_ID_DATASET],
                 ]),
                 'Deactivate'
             );
         }
 
         return $this->generateViewButton(
-            Url::generate(self::DATASET_ACTIVATE_URL, [
-                self::REQUEST_ID_DATASET => $item[static::COL_ID_DATASET],
+            Url::generate(static::DATASET_ACTIVATE_URL, [
+                static::REQUEST_ID_DATASET => $item[static::COL_ID_DATASET],
             ]),
             'Activate'
         );

@@ -19,8 +19,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DeleteController extends AbstractController
 {
-    const URL_PARAM_ID_DATASET = 'id-dataset';
-    const REFERER_PARAM = 'referer';
+    public const URL_PARAM_ID_DATASET = 'id-dataset';
+    public const REFERER_PARAM = 'referer';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

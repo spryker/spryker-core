@@ -18,7 +18,7 @@ use Spryker\Zed\Dataset\Business\Saver\DatasetSaverInterface;
 use Spryker\Zed\Dataset\Business\Writer\Writer;
 use Spryker\Zed\Dataset\Business\Writer\WriterInterface;
 use Spryker\Zed\Dataset\DatasetDependencyProvider;
-use Spryker\Zed\Dataset\Dependency\Service\DatasetToCsvBridgeInterface;
+use Spryker\Zed\Dataset\Dependency\Adapter\CsvFactoryInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -55,7 +55,7 @@ class DatasetBusinessFactory extends AbstractBusinessFactory
      */
     public function createReader(): ReaderInterface
     {
-        return new Reader($this->getDatasetToCsvBridge());
+        return new Reader($this->getCsvFactory());
     }
 
     /**
@@ -63,7 +63,7 @@ class DatasetBusinessFactory extends AbstractBusinessFactory
      */
     public function createWriter(): WriterInterface
     {
-        return new Writer($this->getDatasetToCsvBridge());
+        return new Writer($this->getCsvFactory());
     }
 
     /**
@@ -75,10 +75,10 @@ class DatasetBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Dataset\Dependency\Service\DatasetToCsvBridgeInterface
+     * @return \Spryker\Zed\Dataset\Dependency\Adapter\CsvFactoryInterface
      */
-    public function getDatasetToCsvBridge(): DatasetToCsvBridgeInterface
+    public function getCsvFactory(): CsvFactoryInterface
     {
-        return $this->getProvidedDependency(DatasetDependencyProvider::DATASET_TO_CSV_BRIDGE);
+        return $this->getProvidedDependency(DatasetDependencyProvider::CSV_ADAPTER);
     }
 }

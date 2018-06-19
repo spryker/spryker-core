@@ -18,11 +18,11 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class DatasetLocalizedAttributesForm extends AbstractType
 {
-    const FIELD_TITLE = 'title';
-    const FIELD_LOCALE_NAME = 'localeName';
-    const FIELD_FK_LOCALE = 'fkLocale';
-    const FIELD_ID_DATASET_LOCALIZED_ATTRIBUTES = 'idDatasetLocalizedAttributes';
-    const OPTION_DATA_CLASS = 'data_class';
+    public const FIELD_TITLE = 'title';
+    public const FIELD_LOCALE_NAME = 'localeName';
+    public const FIELD_FK_LOCALE = 'fkLocale';
+    public const FIELD_ID_DATASET_LOCALIZED_ATTRIBUTES = 'idDatasetLocalizedAttributes';
+    public const OPTION_DATA_CLASS = 'data_class';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -94,7 +94,7 @@ class DatasetLocalizedAttributesForm extends AbstractType
     protected function addFkLocaleField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_FK_LOCALE, HiddenType::class, [
+            ->add(static::FIELD_FK_LOCALE, HiddenType::class, [
                 'constraints' => [
                     new NotBlank(),
                 ],

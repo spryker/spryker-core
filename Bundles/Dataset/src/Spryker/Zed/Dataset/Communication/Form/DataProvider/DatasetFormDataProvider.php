@@ -17,7 +17,7 @@ use Spryker\Zed\Dataset\Persistence\DatasetRepositoryInterface;
 
 class DatasetFormDataProvider
 {
-    const FK_LOCALE_KEY = 'fkLocale';
+    public const FK_LOCALE_KEY = 'fkLocale';
 
     /**
      * @var \Spryker\Zed\Dataset\Persistence\DatasetRepositoryInterface

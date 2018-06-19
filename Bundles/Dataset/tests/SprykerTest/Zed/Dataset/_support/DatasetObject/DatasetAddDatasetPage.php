@@ -9,5 +9,5 @@ namespace SprykerTest\Zed\Dataset\DatasetObject;
 
 class DatasetAddDatasetPage
 {
-    const URL = '/dataset/add';
+    public const URL = '/dataset/add';
 }

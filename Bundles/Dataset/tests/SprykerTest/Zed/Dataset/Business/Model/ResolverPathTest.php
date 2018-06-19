@@ -22,7 +22,7 @@ use Generated\Shared\Transfer\DatasetFilenameTransfer;
  */
 class ResolverPathTest extends Unit
 {
-    const DEFAULT_FILENAME = 'dataset';
+    public const DEFAULT_FILENAME = 'dataset';
 
     /**
      * @var \SprykerTest\Zed\Dataset\DatasetBusinessTester

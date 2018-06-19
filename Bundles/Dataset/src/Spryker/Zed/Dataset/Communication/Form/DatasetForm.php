@@ -30,16 +30,16 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class DatasetForm extends AbstractType
 {
-    const FIELD_DATASET_NAME = 'name';
-    const FIELD_ID_DATASET = 'idDataset';
-    const DATASET_DATA_CONTENT = 'spyDatasetRowColumnValues';
-    const DATASET_FILE_CONTENT = 'contentFile';
-    const FIELD_USE_REAL_NAME = 'useRealName';
-    const DATASET_LOCALIZED_ATTRIBUTES = 'getDatasetLocalizedAttributes';
-    const OPTION_DATA_CLASS = 'data_class';
-    const OPTION_AVAILABLE_LOCALES = 'option_available_locales';
-    const DATASET_HAS_DATA = 'datasetHasData';
-    const GROUP_UNIQUE_DATASET_NAME_CHECK = 'unique_dataset_name_check';
+    public const FIELD_DATASET_NAME = 'name';
+    public const FIELD_ID_DATASET = 'idDataset';
+    public const DATASET_DATA_CONTENT = 'spyDatasetRowColumnValues';
+    public const DATASET_FILE_CONTENT = 'contentFile';
+    public const FIELD_USE_REAL_NAME = 'useRealName';
+    public const DATASET_LOCALIZED_ATTRIBUTES = 'getDatasetLocalizedAttributes';
+    public const OPTION_DATA_CLASS = 'data_class';
+    public const OPTION_AVAILABLE_LOCALES = 'option_available_locales';
+    public const DATASET_HAS_DATA = 'datasetHasData';
+    public const GROUP_UNIQUE_DATASET_NAME_CHECK = 'unique_dataset_name_check';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -72,10 +72,10 @@ class DatasetForm extends AbstractType
                 $defaultData = $form->getConfig()->getData()->toArray();
                 $submittedData = $form->getData()->toArray();
 
-                if (array_key_exists(self::FIELD_DATASET_NAME, $defaultData) === false ||
-                    $defaultData[self::FIELD_DATASET_NAME] !== $submittedData[self::FIELD_DATASET_NAME]
+                if (array_key_exists(static::FIELD_DATASET_NAME, $defaultData) === false ||
+                    $defaultData[static::FIELD_DATASET_NAME] !== $submittedData[static::FIELD_DATASET_NAME]
                 ) {
-                    return [Constraint::DEFAULT_GROUP, self::GROUP_UNIQUE_DATASET_NAME_CHECK];
+                    return [Constraint::DEFAULT_GROUP, static::GROUP_UNIQUE_DATASET_NAME_CHECK];
                 }
 
                 return [Constraint::DEFAULT_GROUP];
@@ -112,7 +112,7 @@ class DatasetForm extends AbstractType
                     $contextInterface->addViolation('The name already exists.');
                 }
             },
-            'groups' => [self::GROUP_UNIQUE_DATASET_NAME_CHECK],
+            'groups' => [static::GROUP_UNIQUE_DATASET_NAME_CHECK],
         ]);
 
         return $constraints;

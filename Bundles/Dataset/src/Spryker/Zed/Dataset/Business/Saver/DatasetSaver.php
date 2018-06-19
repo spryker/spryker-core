@@ -11,12 +11,9 @@ use Generated\Shared\Transfer\DatasetFilePathTransfer;
 use Generated\Shared\Transfer\DatasetTransfer;
 use Spryker\Zed\Dataset\Business\Reader\ReaderInterface;
 use Spryker\Zed\Dataset\Persistence\DatasetEntityManagerInterface;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class DatasetSaver implements DatasetSaverInterface
 {
-    use DatabaseTransactionHandlerTrait;
-
     /**
      * @var \Spryker\Zed\Dataset\Persistence\DatasetEntityManagerInterface
      */
