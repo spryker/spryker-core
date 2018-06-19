@@ -23,7 +23,7 @@ class SalesReclamationToUtilDateTimeServiceBridge implements SalesReclamationToU
     }
 
     /**
-     * @param string $date
+     * @param \DateTime|string $date
      *
      * @return string
      */
