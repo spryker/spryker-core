@@ -9,11 +9,13 @@ namespace Spryker\Zed\ProductAlternativeStorage\Persistence;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer;
 use Generated\Shared\Transfer\SpyProductReplacementStorageEntityTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\ProductAlternative\Persistence\Map\SpyProductAlternativeTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
  * @method \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStoragePersistenceFactory getFactory()
@@ -21,23 +23,81 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class ProductAlternativeStorageRepository extends AbstractRepository implements ProductAlternativeStorageRepositoryInterface
 {
     /**
-     * @api
+     * @param int $idProduct
      *
-     * @param int[] $productAlternativeIds
-     *
-     * @return \Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer[]
+     * @return \Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer
      */
-    public function findProductAlternativeStorageEntities(array $productAlternativeIds): array
+    public function findProductAlternativeStorageEntity($idProduct): SpyProductAlternativeStorageEntityTransfer
     {
-        if (!$productAlternativeIds) {
-            return [];
-        }
-
         $query = $this->getFactory()
             ->createProductAlternativeStorageQuery()
-            ->filterByFkProductAlternative_In($productAlternativeIds);
+            ->filterByFkProductAlternative($idProduct);
 
-        return $this->buildQueryFromCriteria($query)->find();
+        return $this->buildQueryFromCriteria($query)->findOneOrCreate();
+    }
+
+    /**
+     * @param $idProduct
+     *
+     * @return null|string
+     */
+    public function findProductSkuById($idProduct)
+    {
+        $product = $this
+            ->getFactory()
+            ->getProductQuery()
+            ->filterByIdProduct($idProduct)
+            ->findOne();
+
+        if (!$product) {
+            return null;
+        }
+
+        return $product->getSku();
+    }
+
+    /**
+     * @param $idProduct
+     *
+     * @return null|array
+     */
+    public function findAbstractAlternativesIdsByConcreteProductId($idProduct)
+    {
+        $productAlternativeEntities = $this->getFactory()
+            ->getProductAlternativeQuery()
+            ->filterByFkProduct($idProduct)
+            ->filterByFkProductAbstractAlternative(null, Criteria::ISNOTNULL)
+            ->find();
+
+        $alternativesIds = [];
+
+        foreach ($productAlternativeEntities as $alternativeEntity) {
+            $alternativesIds[] = $alternativeEntity->getFkProductAbstractAlternative();
+        }
+
+        return $alternativesIds;
+    }
+
+    /**
+     * @param $idProduct
+     *
+     * @return null|array
+     */
+    public function findConcreteAlternativesIdsByConcreteProductId($idProduct)
+    {
+        $productAlternativeEntities = $this->getFactory()
+            ->getProductAlternativeQuery()
+            ->filterByFkProduct($idProduct)
+            ->filterByFkProductConcreteAlternative(null, Criteria::ISNOTNULL)
+            ->find();
+
+        $alternativesIds = [];
+
+        foreach ($productAlternativeEntities as $alternativeEntity) {
+            $alternativesIds[] = $alternativeEntity->getFkProductConcreteAlternative();
+        }
+
+        return $alternativesIds;
     }
 
     /**
