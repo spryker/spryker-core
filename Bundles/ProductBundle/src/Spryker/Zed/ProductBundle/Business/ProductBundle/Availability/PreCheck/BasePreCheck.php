@@ -8,7 +8,6 @@ namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\PreCheck
 
 use ArrayObject;
 use Generated\Shared\Transfer\StoreTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
@@ -55,33 +54,6 @@ class BasePreCheck
         return $this->productBundleQueryContainer
             ->queryBundleProductBySku($sku)
             ->find();
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
-     * @param \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\Collection\ObjectCollection $bundledProducts
-     * @param int $itemQuantity
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return bool
-     */
-    protected function isAllBundleItemsAvailable(
-        ArrayObject $items,
-        ObjectCollection $bundledProducts,
-        $itemQuantity,
-        StoreTransfer $storeTransfer
-    ) {
-        foreach ($bundledProducts as $productBundleEntity) {
-            $bundledProductConcreteEntity = $productBundleEntity->getSpyProductRelatedByFkBundledProduct();
-
-            $sku = $bundledProductConcreteEntity->getSku();
-            $totalBundledItemQuantity = $productBundleEntity->getQuantity() * $itemQuantity;
-            if (!$this->checkIfItemIsSellable($items, $sku, $storeTransfer, $totalBundledItemQuantity)) {
-                return false;
-            }
-        }
-
-        return true;
     }
 
     /**
