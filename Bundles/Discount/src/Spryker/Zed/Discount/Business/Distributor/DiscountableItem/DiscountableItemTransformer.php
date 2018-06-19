@@ -8,39 +8,33 @@
 namespace Spryker\Zed\Discount\Business\Distributor\DiscountableItem;
 
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
-use Generated\Shared\Transfer\DiscountableItemTransfer;
+use Generated\Shared\Transfer\DiscountableItemTransformerTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 
 class DiscountableItemTransformer implements DiscountableItemTransformerInterface
 {
     /**
-     * @var float
-     */
-    protected $roundingError = 0.0;
-
-    /**
-     * @param \Generated\Shared\Transfer\DiscountableItemTransfer $discountableItemTransfer
-     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
-     * @param int $totalDiscountAmount
-     * @param int $totalAmount
-     * @param int $quantity
+     * @param \Generated\Shared\Transfer\DiscountableItemTransformerTransfer $discountableItemTransformerTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\DiscountableItemTransformerTransfer
      */
-    public function transformDiscountableItem(
-        DiscountableItemTransfer $discountableItemTransfer,
-        DiscountTransfer $discountTransfer,
-        int $totalDiscountAmount,
-        int $totalAmount,
-        int $quantity
-    ): void {
+    public function transformDiscountableItemPerQuantity(
+        DiscountableItemTransformerTransfer $discountableItemTransformerTransfer
+    ): DiscountableItemTransformerTransfer {
+        $roundingError = $discountableItemTransformerTransfer->getRoundingError();
+        $discountableItemTransfer = $discountableItemTransformerTransfer->getDiscountableItem();
+        $discountTransfer = $discountableItemTransformerTransfer->getDiscount();
+        $totalDiscountAmount = $discountableItemTransformerTransfer->getTotalDiscountAmount();
+        $totalAmount = $discountableItemTransformerTransfer->getTotalAmount();
+        $quantity = $discountableItemTransformerTransfer->getQuantity();
+
         $calculatedDiscountTransfer = $this->createBaseCalculatedDiscountTransfer($discountTransfer);
         $singleItemAmountShare = $discountableItemTransfer->getUnitPrice() / $totalAmount;
 
         for ($i = 0; $i < $quantity; $i++) {
-            $itemDiscountAmount = ($totalDiscountAmount * $singleItemAmountShare) + $this->roundingError;
+            $itemDiscountAmount = ($totalDiscountAmount * $singleItemAmountShare) + $roundingError;
             $itemDiscountAmountRounded = (int)round($itemDiscountAmount);
-            $this->roundingError = $itemDiscountAmount - $itemDiscountAmountRounded;
+            $roundingError = $itemDiscountAmount - $itemDiscountAmountRounded;
 
             $distributedDiscountTransfer = clone $calculatedDiscountTransfer;
             $distributedDiscountTransfer->setIdDiscount($discountTransfer->getIdDiscount());
@@ -49,6 +43,11 @@ class DiscountableItemTransformer implements DiscountableItemTransformerInterfac
 
             $discountableItemTransfer->getOriginalItemCalculatedDiscounts()->append($distributedDiscountTransfer);
         }
+
+        $discountableItemTransformerTransfer->setRoundingError($roundingError)
+            ->setDiscountableItem($discountableItemTransfer);
+
+        return $discountableItemTransformerTransfer;
     }
 
     /**

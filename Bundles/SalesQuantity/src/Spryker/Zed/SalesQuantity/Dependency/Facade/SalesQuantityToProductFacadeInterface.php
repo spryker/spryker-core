@@ -9,7 +9,7 @@ namespace Spryker\Zed\SalesQuantity\Dependency\Facade;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 
-interface SalesQuantityToProductInterface
+interface SalesQuantityToProductFacadeInterface
 {
     /**
      * @param string $concreteSku

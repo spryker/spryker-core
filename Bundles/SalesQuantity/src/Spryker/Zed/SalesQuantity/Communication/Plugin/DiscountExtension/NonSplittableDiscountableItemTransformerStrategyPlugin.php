@@ -7,21 +7,15 @@
 namespace Spryker\Zed\SalesQuantity\Communication\Plugin\DiscountExtension;
 
 use Generated\Shared\Transfer\DiscountableItemTransfer;
-use Generated\Shared\Transfer\DiscountTransfer;
-use Spryker\Zed\DiscountExtension\Dependency\Plugin\Distributor\DiscountableItemTransformerStrategyPluginInterface;
+use Generated\Shared\Transfer\DiscountableItemTransformerTransfer;
+use Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountableItemTransformerStrategyPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\Discount\Business\DiscountFacadeInterface getFacade()
- * @method \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory getFactory()
+ * @method \Spryker\Zed\SalesQuantity\Business\SalesQuantityFacadeInterface getFacade()
  */
 class NonSplittableDiscountableItemTransformerStrategyPlugin extends AbstractPlugin implements DiscountableItemTransformerStrategyPluginInterface
 {
-    /**
-     * @var float
-     */
-    protected $roundingError = 0.0;
-
     /**
      * @param \Generated\Shared\Transfer\DiscountableItemTransfer $discountableItemTransfer
      *
@@ -29,26 +23,24 @@ class NonSplittableDiscountableItemTransformerStrategyPlugin extends AbstractPlu
      */
     public function isApplicable(DiscountableItemTransfer $discountableItemTransfer): bool
     {
-        return !$discountableItemTransfer->getOriginalItem()->getIsQuantitySplittable();
+        $originalItem = $discountableItemTransfer->getOriginalItem();
+
+        if (!$originalItem) {
+            return false;
+        }
+
+        return !$originalItem->getIsQuantitySplittable();
     }
 
     /**
-     * @param \Generated\Shared\Transfer\DiscountableItemTransfer $discountableItemTransfer
-     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
-     * @param int $totalDiscountAmount
-     * @param int $totalAmount
-     * @param int $quantity
+     * @param \Generated\Shared\Transfer\DiscountableItemTransformerTransfer $discountableItemTransformerTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\DiscountableItemTransformerTransfer
      */
     public function transformDiscountableItem(
-        DiscountableItemTransfer $discountableItemTransfer,
-        DiscountTransfer $discountTransfer,
-        int $totalDiscountAmount,
-        int $totalAmount,
-        int $quantity
-    ): void {
-        $this->getFacade()
-            ->transformDiscountableItem($discountableItemTransfer, $discountTransfer, $totalDiscountAmount, $totalAmount, $quantity);
+        DiscountableItemTransformerTransfer $discountableItemTransformerTransfer
+    ): DiscountableItemTransformerTransfer {
+        return $this->getFacade()
+            ->transformDiscountableItem($discountableItemTransformerTransfer);
     }
 }

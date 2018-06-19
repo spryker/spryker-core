@@ -14,7 +14,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\SalesQuantity\Business\SalesQuantityFacadeInterface getFacade()
  */
-class NonSplittableItemExpanderPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
+class IsQuantitySplittableItemExpanderPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
@@ -23,7 +23,7 @@ class NonSplittableItemExpanderPlugin extends AbstractPlugin implements ItemExpa
      */
     public function expandItems(CartChangeTransfer $cartChangeTransfer)
     {
-        $this->getFacade()->expandItems($cartChangeTransfer);
+        $this->getFacade()->expandWithIsQuantitySplittable($cartChangeTransfer);
 
         return $cartChangeTransfer;
     }

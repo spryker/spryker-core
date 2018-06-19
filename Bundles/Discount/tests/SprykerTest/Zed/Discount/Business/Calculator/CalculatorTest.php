@@ -30,6 +30,7 @@ use Spryker\Zed\Discount\Business\QueryString\Tokenizer;
 use Spryker\Zed\Discount\Communication\Plugin\Calculator\PercentagePlugin;
 use Spryker\Zed\Discount\Communication\Plugin\Collector\ItemBySkuCollectorPlugin;
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\SkuDecisionRulePlugin;
+use Spryker\Zed\Discount\Communication\Plugin\DiscountExtension\SingleQuantityBasedDiscountableItemTransformerStrategyPlugin;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerBridge;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountAmountCalculatorPluginInterface;
@@ -261,7 +262,18 @@ class CalculatorTest extends Unit
      */
     protected function createDistributor()
     {
-        return new Distributor();
+        return new Distributor($this->createDiscountableItemTransformerStrategyPlugins());
+    }
+
+    /**
+     * @return \Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountableItemTransformerStrategyPluginInterface[]
+     */
+    protected function createDiscountableItemTransformerStrategyPlugins(): array
+    {
+        // BC default plugin
+        return [
+            new SingleQuantityBasedDiscountableItemTransformerStrategyPlugin(),
+        ];
     }
 
     /**

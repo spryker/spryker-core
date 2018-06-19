@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Discount\Business\Distributor\DiscountableItem;
+namespace Spryker\Zed\SalesQuantity\Business\Discount\DiscountableItem;
 
 use Generated\Shared\Transfer\DiscountableItemTransformerTransfer;
 
@@ -16,7 +16,7 @@ interface DiscountableItemTransformerInterface
      *
      * @return \Generated\Shared\Transfer\DiscountableItemTransformerTransfer
      */
-    public function transformDiscountableItemPerQuantity(
+    public function transformDiscountableItem(
         DiscountableItemTransformerTransfer $discountableItemTransformerTransfer
     ): DiscountableItemTransformerTransfer;
 }

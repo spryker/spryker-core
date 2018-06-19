@@ -8,8 +8,7 @@
 namespace Spryker\Zed\SalesQuantity\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
-use Generated\Shared\Transfer\DiscountableItemTransfer;
-use Generated\Shared\Transfer\DiscountTransfer;
+use Generated\Shared\Transfer\DiscountableItemTransformerTransfer;
 use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -28,11 +27,11 @@ class SalesQuantityFacade extends AbstractFacade implements SalesQuantityFacadeI
      *
      * @return \Generated\Shared\Transfer\ItemCollectionTransfer
      */
-    public function transformItem(ItemTransfer $itemTransfer): ItemCollectionTransfer
+    public function transformNonSplittableItem(ItemTransfer $itemTransfer): ItemCollectionTransfer
     {
         return $this->getFactory()
             ->createItemTransformer()
-            ->transformItem($itemTransfer);
+            ->transformNonSplittableItem($itemTransfer);
     }
 
     /**
@@ -44,11 +43,11 @@ class SalesQuantityFacade extends AbstractFacade implements SalesQuantityFacadeI
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function expandItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
+    public function expandWithIsQuantitySplittable(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         return $this->getFactory()
             ->createItemExpander()
-            ->expandItems($cartChangeTransfer);
+            ->expandWithIsQuantitySplittable($cartChangeTransfer);
     }
 
     /**
@@ -56,23 +55,15 @@ class SalesQuantityFacade extends AbstractFacade implements SalesQuantityFacadeI
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\DiscountableItemTransfer $discountableItemTransfer
-     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
-     * @param int $totalDiscountAmount
-     * @param int $totalAmount
-     * @param int $quantity
+     * @param \Generated\Shared\Transfer\DiscountableItemTransformerTransfer $discountableItemTransformerTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\DiscountableItemTransformerTransfer
      */
     public function transformDiscountableItem(
-        DiscountableItemTransfer $discountableItemTransfer,
-        DiscountTransfer $discountTransfer,
-        int $totalDiscountAmount,
-        int $totalAmount,
-        int $quantity
-    ): void {
-        $this->getFactory()
+        DiscountableItemTransformerTransfer $discountableItemTransformerTransfer
+    ): DiscountableItemTransformerTransfer {
+        return $this->getFactory()
             ->createDiscountableItemTransformer()
-            ->transformDiscountableItem($discountableItemTransfer, $discountTransfer, $totalDiscountAmount, $totalAmount, $quantity);
+            ->transformDiscountableItem($discountableItemTransformerTransfer);
     }
 }

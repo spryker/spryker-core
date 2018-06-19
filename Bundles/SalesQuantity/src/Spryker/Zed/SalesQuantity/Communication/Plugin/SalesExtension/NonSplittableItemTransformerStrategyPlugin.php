@@ -10,12 +10,12 @@ namespace Spryker\Zed\SalesQuantity\Communication\Plugin\SalesExtension;
 use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\SalesExtension\Dependency\Plugin\SalesItemTransformerStrategyPluginInterface;
+use Spryker\Zed\SalesExtension\Dependency\Plugin\ItemTransformerStrategyPluginInterface;
 
 /**
  * @method \Spryker\Zed\SalesQuantity\Business\SalesQuantityFacadeInterface getFacade()
  */
-class NonSplittableItemTransformerStrategyPlugin extends AbstractPlugin implements SalesItemTransformerStrategyPluginInterface
+class NonSplittableItemTransformerStrategyPlugin extends AbstractPlugin implements ItemTransformerStrategyPluginInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
@@ -38,6 +38,6 @@ class NonSplittableItemTransformerStrategyPlugin extends AbstractPlugin implemen
      */
     public function transformItem(ItemTransfer $itemTransfer): ItemCollectionTransfer
     {
-        return $this->getFacade()->transformItem($itemTransfer);
+        return $this->getFacade()->transformNonSplittableItem($itemTransfer);
     }
 }
