@@ -10,6 +10,7 @@ namespace Spryker\Zed\Event;
 use Spryker\Zed\Event\Dependency\Client\EventToQueueBridge;
 use Spryker\Zed\Event\Dependency\EventCollection;
 use Spryker\Zed\Event\Dependency\EventSubscriberCollection;
+use Spryker\Zed\Event\Dependency\QueryContainer\EventToQueueQueryContainerBridge;
 use Spryker\Zed\Event\Dependency\Service\EventToUtilEncoding;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -22,6 +23,7 @@ class EventDependencyProvider extends AbstractBundleDependencyProvider
     const CLIENT_QUEUE = 'client queue';
 
     const SERVICE_UTIL_ENCODING = 'service util encoding';
+    const QUERY_CONTAINER_QUEUE = 'QUERY_CONTAINER_QUEUE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -30,21 +32,11 @@ class EventDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[static::EVENT_LISTENERS] = function (Container $container) {
-            return $this->getEventListenerCollection();
-        };
-
-        $container[static::EVENT_SUBSCRIBERS] = function (Container $container) {
-            return $this->getEventSubscriberCollection();
-        };
-
-        $container[static::CLIENT_QUEUE] = function (Container $container) {
-            return new EventToQueueBridge($container->getLocator()->queue()->client());
-        };
-
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
-            return new EventToUtilEncoding($container->getLocator()->utilEncoding()->service());
-        };
+        $container = $this->addEventListenerCollection($container);
+        $container = $this->addEventSubscriberCollection($container);
+        $container = $this->addQueueClient($container);
+        $container = $this->addUtilEncodingService($container);
+        $container = $this->addQueueQueryContainer($container);
 
         return $container;
     }
@@ -63,5 +55,75 @@ class EventDependencyProvider extends AbstractBundleDependencyProvider
     public function getEventSubscriberCollection()
     {
         return new EventSubscriberCollection();
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addEventListenerCollection(Container $container): Container
+    {
+        $container[static::EVENT_LISTENERS] = function (Container $container) {
+            return $this->getEventListenerCollection();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addEventSubscriberCollection(Container $container): Container
+    {
+        $container[static::EVENT_SUBSCRIBERS] = function (Container $container) {
+            return $this->getEventSubscriberCollection();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addQueueClient(Container $container): Container
+    {
+        $container[static::CLIENT_QUEUE] = function (Container $container) {
+            return new EventToQueueBridge($container->getLocator()->queue()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilEncodingService(Container $container): Container
+    {
+        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+            return new EventToUtilEncoding($container->getLocator()->utilEncoding()->service());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addQueueQueryContainer($container)
+    {
+        $container[static::QUERY_CONTAINER_QUEUE] = function (Container $container) {
+            return new EventToQueueQueryContainerBridge($container->getLocator()->queue()->queryContainer());
+        };
+
+        return $container;
     }
 }

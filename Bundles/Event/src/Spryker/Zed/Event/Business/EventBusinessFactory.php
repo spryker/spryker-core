@@ -59,7 +59,7 @@ class EventBusinessFactory extends AbstractBusinessFactory
      */
     public function createMessageForwarder()
     {
-        return new MessageForwarder($this->getQueueClient());
+        return new MessageForwarder($this->getQueueClient(), $this->getQueueQueryContainer());
     }
 
     /**
@@ -108,6 +108,14 @@ class EventBusinessFactory extends AbstractBusinessFactory
     protected function getQueueClient()
     {
         return $this->getProvidedDependency(EventDependencyProvider::CLIENT_QUEUE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Event\Dependency\QueryContainer\EventToQueueQueryContainerInterface
+     */
+    protected function getQueueQueryContainer()
+    {
+        return $this->getProvidedDependency(EventDependencyProvider::QUERY_CONTAINER_QUEUE);
     }
 
     /**

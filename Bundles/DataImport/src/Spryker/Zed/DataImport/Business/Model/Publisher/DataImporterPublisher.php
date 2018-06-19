@@ -69,7 +69,8 @@ class DataImporterPublisher implements DataImporterPublisherInterface
      */
     public function triggerEvents($flushChunkSize = 1000000): void
     {
-        foreach (static::getUniqueImportedEntityEvents() as $event => $ids) {
+        $uniqueEvents = $this->getUniqueEvents();
+        foreach ($uniqueEvents as $event => $ids) {
             $uniqueIds = array_unique($ids);
             $events = [];
             foreach ($uniqueIds as $id) {
@@ -97,5 +98,22 @@ class DataImporterPublisher implements DataImporterPublisherInterface
         }
 
         return $uniqueArray;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getUniqueEvents(): array
+    {
+        $uniqueEvents = static::getUniqueImportedEntityEvents();
+        foreach ($uniqueEvents as $eventName => $events) {
+            foreach ($events as $entityKey => $entityId) {
+                if (isset(static::$triggeredEventIds[$eventName][(int)$entityId])) {
+                    unset($uniqueEvents[$eventName][$entityKey]);
+                }
+            }
+        }
+
+        return $uniqueEvents;
     }
 }
