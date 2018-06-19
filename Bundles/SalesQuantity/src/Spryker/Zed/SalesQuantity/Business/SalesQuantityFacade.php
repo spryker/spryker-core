@@ -43,7 +43,7 @@ class SalesQuantityFacade extends AbstractFacade implements SalesQuantityFacadeI
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function expandItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
+    public function expandWithIsQuantitySplittable(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         return $this->getFactory()
             ->createItemExpander()
@@ -57,12 +57,12 @@ class SalesQuantityFacade extends AbstractFacade implements SalesQuantityFacadeI
      *
      * @param \Generated\Shared\Transfer\DiscountableItemTransformerTransfer $discountableItemTransformerTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\DiscountableItemTransformerTransfer
      */
     public function transformDiscountableItem(
         DiscountableItemTransformerTransfer $discountableItemTransformerTransfer
-    ): void {
-        $this->getFactory()
+    ): DiscountableItemTransformerTransfer {
+        return $this->getFactory()
             ->createDiscountableItemTransformer()
             ->transformDiscountableItem($discountableItemTransformerTransfer);
     }

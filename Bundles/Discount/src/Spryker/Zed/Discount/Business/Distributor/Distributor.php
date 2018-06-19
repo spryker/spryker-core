@@ -17,6 +17,11 @@ use Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountableItemTransformerS
 class Distributor implements DistributorInterface
 {
     /**
+     * @var float
+     */
+    protected $roundingError = 0.0;
+
+    /**
      * @var \Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountableItemTransformerStrategyPluginInterface[]
      */
     protected $discountableItemTransformerStrategyPlugins;
@@ -77,7 +82,8 @@ class Distributor implements DistributorInterface
         foreach ($this->discountableItemTransformerStrategyPlugins as $discountableItemTransformerStrategyPlugin) {
             if ($discountableItemTransformerStrategyPlugin->isApplicable($discountableItemTransfer)) {
                 $discountableItemTransformerTransfer = $this->mapDiscountableItemTransformerTransfer($discountableItemTransfer, $discountTransfer, $totalDiscountAmount, $totalAmount, $quantity);
-                $discountableItemTransformerStrategyPlugin->transformDiscountableItem($discountableItemTransformerTransfer);
+                $discountableItemTransformerTransfer = $discountableItemTransformerStrategyPlugin->transformDiscountableItem($discountableItemTransformerTransfer);
+                $this->roundingError = $discountableItemTransformerTransfer->getRoundingError();
 
                 return;
             }
@@ -114,7 +120,8 @@ class Distributor implements DistributorInterface
             ->setDiscount($discountTransfer)
             ->setTotalDiscountAmount($totalDiscountAmount)
             ->setTotalAmount($totalAmount)
-            ->setQuantity($quantity);
+            ->setQuantity($quantity)
+            ->setRoundingError($this->roundingError);
 
         return $discountableItemTransformerTransfer;
     }

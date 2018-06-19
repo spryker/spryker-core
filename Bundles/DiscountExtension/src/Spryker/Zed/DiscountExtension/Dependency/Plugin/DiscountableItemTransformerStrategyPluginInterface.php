@@ -32,9 +32,9 @@ interface DiscountableItemTransformerStrategyPluginInterface
      *
      * @param \Generated\Shared\Transfer\DiscountableItemTransformerTransfer $discountableItemTransformerTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\DiscountableItemTransformerTransfer
      */
     public function transformDiscountableItem(
         DiscountableItemTransformerTransfer $discountableItemTransformerTransfer
-    ): void;
+    ): DiscountableItemTransformerTransfer;
 }

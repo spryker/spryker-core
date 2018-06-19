@@ -14,9 +14,9 @@ interface DiscountableItemTransformerInterface
     /**
      * @param \Generated\Shared\Transfer\DiscountableItemTransformerTransfer $discountableItemTransformerTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\DiscountableItemTransformerTransfer
      */
     public function transformDiscountableItemPerQuantity(
         DiscountableItemTransformerTransfer $discountableItemTransformerTransfer
-    ): void;
+    ): DiscountableItemTransformerTransfer;
 }

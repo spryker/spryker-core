@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SalesQuantity\Business\Distributor\DiscountableItem;
+namespace Spryker\Zed\SalesQuantity\Business\Discount\DiscountableItem;
 
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\DiscountableItemTransformerTransfer;
@@ -14,18 +14,14 @@ use Generated\Shared\Transfer\DiscountTransfer;
 class DiscountableItemTransformer implements DiscountableItemTransformerInterface
 {
     /**
-     * @var float
-     */
-    protected $roundingError = 0.0;
-
-    /**
      * @param \Generated\Shared\Transfer\DiscountableItemTransformerTransfer $discountableItemTransformerTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\DiscountableItemTransformerTransfer
      */
     public function transformDiscountableItem(
         DiscountableItemTransformerTransfer $discountableItemTransformerTransfer
-    ): void {
+    ): DiscountableItemTransformerTransfer {
+        $roundingError = $discountableItemTransformerTransfer->getRoundingError();
         $discountableItemTransfer = $discountableItemTransformerTransfer->getDiscountableItem();
         $discountTransfer = $discountableItemTransformerTransfer->getDiscount();
         $totalDiscountAmount = $discountableItemTransformerTransfer->getTotalDiscountAmount();
@@ -35,9 +31,9 @@ class DiscountableItemTransformer implements DiscountableItemTransformerInterfac
         $calculatedDiscountTransfer = $this->createBaseCalculatedDiscountTransfer($discountTransfer);
         $singleItemAmountShare = $discountableItemTransfer->getUnitPrice() * $quantity / $totalAmount;
 
-        $itemDiscountAmount = ($totalDiscountAmount * $singleItemAmountShare) + $this->roundingError;
+        $itemDiscountAmount = ($totalDiscountAmount * $singleItemAmountShare) + $roundingError;
         $itemDiscountAmountRounded = (int)round($itemDiscountAmount);
-        $this->roundingError = $itemDiscountAmount - $itemDiscountAmountRounded;
+        $roundingError = $itemDiscountAmount - $itemDiscountAmountRounded;
 
         $distributedDiscountTransfer = clone $calculatedDiscountTransfer;
         $distributedDiscountTransfer->setIdDiscount($discountTransfer->getIdDiscount());
@@ -45,6 +41,11 @@ class DiscountableItemTransformer implements DiscountableItemTransformerInterfac
         $distributedDiscountTransfer->setQuantity(1);
 
         $discountableItemTransfer->getOriginalItemCalculatedDiscounts()->append($distributedDiscountTransfer);
+
+        $discountableItemTransformerTransfer->setRoundingError($roundingError)
+            ->setDiscountableItem($discountableItemTransfer);
+
+        return $discountableItemTransformerTransfer;
     }
 
     /**

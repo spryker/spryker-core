@@ -46,7 +46,7 @@ class SalesQuantityFacadeTest extends Unit
     public function testTransformItemShouldNotSplitItemsPerQuantity(): void
     {
         $itemTransfer = (new ItemTransfer())->setQuantity(static::QUANTITY);
-        $itemCollectionTransfer = $this->tester->getFacade()->transformItem($itemTransfer);
+        $itemCollectionTransfer = $this->tester->getFacade()->transformNonSplittableItem($itemTransfer);
 
         $this->assertSame($itemCollectionTransfer->getItems()->count(), 1);
 
@@ -64,7 +64,7 @@ class SalesQuantityFacadeTest extends Unit
         $item = (new ItemTransfer())->setSku(static::CONCRETE_PRODUCT_SKU);
         $cartChangeTransfer = (new CartChangeTransfer())->setItems(new ArrayObject($item));
 
-        $resultCartChangeTransfer = $this->tester->getFacade()->expandItems($cartChangeTransfer);
+        $resultCartChangeTransfer = $this->tester->getFacade()->expandWithIsQuantitySplittable($cartChangeTransfer);
 
         foreach ($resultCartChangeTransfer->getItems() as $itemTransfer) {
             $this->assertSame($itemTransfer->getIsQuantitySplittable(), true);
@@ -72,7 +72,7 @@ class SalesQuantityFacadeTest extends Unit
 
         $this->setData(false);
 
-        $resultCartChangeTransfer = $this->tester->getFacade()->expandItems($cartChangeTransfer);
+        $resultCartChangeTransfer = $this->tester->getFacade()->expandWithIsQuantitySplittable($cartChangeTransfer);
 
         foreach ($resultCartChangeTransfer->getItems() as $itemTransfer) {
             $this->assertSame($itemTransfer->getIsQuantitySplittable(), false);

@@ -23,18 +23,24 @@ class NonSplittableDiscountableItemTransformerStrategyPlugin extends AbstractPlu
      */
     public function isApplicable(DiscountableItemTransfer $discountableItemTransfer): bool
     {
-        return !$discountableItemTransfer->getOriginalItem()->getIsQuantitySplittable();
+        $originalItem = $discountableItemTransfer->getOriginalItem();
+
+        if (!$originalItem) {
+            return false;
+        }
+
+        return !$originalItem->getIsQuantitySplittable();
     }
 
     /**
      * @param \Generated\Shared\Transfer\DiscountableItemTransformerTransfer $discountableItemTransformerTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\DiscountableItemTransformerTransfer
      */
     public function transformDiscountableItem(
         DiscountableItemTransformerTransfer $discountableItemTransformerTransfer
-    ): void {
-        $this->getFacade()
+    ): DiscountableItemTransformerTransfer {
+        return $this->getFacade()
             ->transformDiscountableItem($discountableItemTransformerTransfer);
     }
 }

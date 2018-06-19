@@ -805,7 +805,7 @@ class DiscountFacadeTest extends Unit
         $discountableItemTransfer = $this->createDiscountableItemTransfer();
         $discountableItemTransformerTransfer = $this->createDiscountableItemTransformerTransfer($discountableItemTransfer);
 
-        $discountFacade->transformDiscountableItem($discountableItemTransformerTransfer);
+        $discountFacade->transformDiscountableItemPerQuantity($discountableItemTransformerTransfer);
 
         $this->assertSame($discountableItemTransfer->getOriginalItemCalculatedDiscounts()->count(), static::QUANTITY);
 

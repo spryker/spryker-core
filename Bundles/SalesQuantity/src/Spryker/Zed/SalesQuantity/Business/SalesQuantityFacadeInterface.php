@@ -39,7 +39,7 @@ interface SalesQuantityFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function expandItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
+    public function expandWithIsQuantitySplittable(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
 
     /**
      * Specification:
@@ -49,9 +49,9 @@ interface SalesQuantityFacadeInterface
      *
      * @param \Generated\Shared\Transfer\DiscountableItemTransformerTransfer $discountableItemTransformerTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\DiscountableItemTransformerTransfer
      */
     public function transformDiscountableItem(
         DiscountableItemTransformerTransfer $discountableItemTransformerTransfer
-    ): void;
+    ): DiscountableItemTransformerTransfer;
 }
