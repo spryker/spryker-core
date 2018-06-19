@@ -28,8 +28,8 @@ Ottom_ltd,Ottom_store_London,Ottom store London,Ottom_store_London@ottom.com,440
 27_Rif_Group,27_Rif_Zurich_bakery,27 Rif Zurich bakery,27_Rif_Zurich_bakery@27rif.com,4102890120,"","","",27_Rif_Zurich
 27_Rif_Group,27_Rif_Berlin,27 Rif Berlin,27_Rif_Berlin@27rif.com,4902890021,"","","",27_Rif_HQ
 27_Rif_Group,27_Rif_HR department,27 Rif HR department,27_Rif_HR department@27rif.com,4902890031,"","","",27_Rif_HQ
-restricted-company-1,BU-IT-no-tablets,IT no tablets,notablets@spryker.com,1234567890,,,
-restricted-company-1,BU-IT-no-ASUS,IT no ASUS,noasus@spryker.com,1234567890,,,
-restricted-company-1,BU-IT-only-wearables,IT wearables,wearables@spryker.com,1234567890,,,
-restricted-company-2,Sales-under-400,Sales on a Budget,salesbudget@spryker.com,1234567890,,,
-restricted-company-2,Sales,Sales,sales@spryker.com,1234567890,,,
+restricted-company-1,BU-IT-no-tablets,IT no tablets,notablets@spryker.com,1234567890,"","","",""
+restricted-company-1,BU-IT-no-ASUS,IT no ASUS,noasus@spryker.com,1234567890,"","","",""
+restricted-company-1,BU-IT-only-wearables,IT wearables,wearables@spryker.com,1234567890,"","","",""
+restricted-company-2,Sales-under-400,Sales on a Budget,salesbudget@spryker.com,1234567890,"","","",""
+restricted-company-2,Sales,Sales,sales@spryker.com,1234567890,"","","",""

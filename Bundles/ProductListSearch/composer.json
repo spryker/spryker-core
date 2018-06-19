@@ -6,11 +6,25 @@
     "php": ">=7.1",
     "spryker/event-behavior": "^1.0.0",
     "spryker/kernel": "^3.21.0",
-    "spryker/product-list": "^1.0.0"
+    "spryker/locale": "^3.0.0",
+    "spryker/product": "^5.0.0 || ^6.0.0",
+    "spryker/product-category": "^4.5.0",
+    "spryker/product-list": "^1.0.0",
+    "spryker/product-page-search": "^0.1.0 || ^1.0.0"
   },
   "require-dev": {
+    "spryker/category": "^3.0.0 || ^4.0.0",
     "spryker/code-sniffer": "*",
+    "spryker/event": "*",
+    "spryker/propel-orm": "^1.5.0",
+    "spryker/search": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0",
+    "spryker/propel-orm": "If you want to use transaction functionality, minimum required version: 1.3.0",
+    "spryker/search": "If you want to use Search plugins, minimum required version: 7.0.0",
+    "spryker/category": "If you want to use lists Category relations, minimum required version: 3.0.0"
   },
   "autoload": {
     "psr-4": {

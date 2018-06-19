@@ -9,6 +9,8 @@ namespace Spryker\Zed\ProductList\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductList\Business\ProductList\ProductListPostSaverInterface;
+use Spryker\Zed\ProductList\Business\ProductList\ProductListReader;
+use Spryker\Zed\ProductList\Business\ProductList\ProductListReaderInterface;
 use Spryker\Zed\ProductList\Business\ProductList\ProductListWriter;
 use Spryker\Zed\ProductList\Business\ProductList\ProductListWriterInterface;
 use Spryker\Zed\ProductList\Business\ProductListCategoryRelation\ProductListCategoryRelationPostSaver;
@@ -29,6 +31,16 @@ use Spryker\Zed\ProductList\Business\ProductListProductConcreteRelation\ProductL
  */
 class ProductListBusinessFactory extends AbstractBusinessFactory
 {
+    /**
+     * @return \Spryker\Zed\ProductList\Business\ProductList\ProductListReaderInterface
+     */
+    public function createProductListReader(): ProductListReaderInterface
+    {
+        return new ProductListReader(
+            $this->getRepository()
+        );
+    }
+
     /**
      * @return \Spryker\Zed\ProductList\Business\ProductList\ProductListWriterInterface
      */
@@ -101,7 +113,7 @@ class ProductListBusinessFactory extends AbstractBusinessFactory
     {
         return [
             $this->createProductListCategoryRelationPostSaver(),
-            $this->createProductListProductConcreteRelationPostSaver()
+            $this->createProductListProductConcreteRelationPostSaver(),
         ];
     }
 }

@@ -44,4 +44,36 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
             ->createProductListWriter()
             ->deleteProductList($productListTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return int[]
+     */
+    public function getProductAbstractBlacklistIdsByIdProductAbstract(int $idProductAbstract): array
+    {
+        return $this->getFactory()
+            ->createProductListReader()
+            ->getProductAbstractBlacklistIdsByIdProductAbstract($idProductAbstract);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return int[]
+     */
+    public function getProductAbstractWhitelistIdsByIdProductAbstract(int $idProductAbstract): array
+    {
+        return $this->getFactory()
+            ->createProductListReader()
+            ->getProductAbstractWhitelistIdsByIdProductAbstract($idProductAbstract);
+    }
 }

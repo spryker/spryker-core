@@ -43,4 +43,28 @@ interface ProductListFacadeInterface
      * @return void
      */
     public function deleteProductList(ProductListTransfer $productListTransfer): void;
+
+    /**
+     * Specification:
+     *  - Retrieves product abstract blacklists by product abstract id.
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return int[]
+     */
+    public function getProductAbstractBlacklistIdsByIdProductAbstract(int $idProductAbstract): array;
+
+    /**
+     * Specification:
+     *  - Retrieves product abstract whitelists by product abstract id.
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return int[]
+     */
+    public function getProductAbstractWhitelistIdsByIdProductAbstract(int $idProductAbstract): array;
 }
