@@ -176,6 +176,10 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param array $productPackagingUnitTypeIds
      *
      * @return array

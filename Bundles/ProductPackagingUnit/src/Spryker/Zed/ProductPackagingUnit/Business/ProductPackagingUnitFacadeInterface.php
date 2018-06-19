@@ -101,19 +101,9 @@ interface ProductPackagingUnitFacadeInterface
 
     /**
      * Specification:
-     *  - Creates product packaging unit type.
+     * - Retrieve productAbstractId by productPackagingUnitTypeIds.
      *
      * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
-     */
-    public function getDefaultPackagingUnitTypeName(): string;
-
-    /**
-     * Specification:
-     * - Retrieve productAbstractId by productPackagingUnitTypeIds.
      *
      * @param array $productPackagingUnitTypeIds
      *
