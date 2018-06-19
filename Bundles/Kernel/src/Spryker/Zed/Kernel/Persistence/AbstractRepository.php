@@ -31,13 +31,15 @@ abstract class AbstractRepository
      * @param \Spryker\Zed\Kernel\AbstractBundleDependencyProvider $dependencyProvider
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return void
+     * @return \Spryker\Zed\Kernel\Container $container
      */
     protected function provideExternalDependencies(
         AbstractBundleDependencyProvider $dependencyProvider,
         Container $container
     ) {
         $dependencyProvider->providePersistenceLayerDependencies($container);
+
+        return $container;
     }
 
     /**
@@ -80,11 +82,14 @@ abstract class AbstractRepository
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\AbstractFactory
+     * @return \Spryker\Zed\Kernel\Persistence\PersistenceFactoryInterface
      */
     private function resolveFactory()
     {
-        return $this->getFactoryResolver()->resolve($this);
+        /** @var \Spryker\Zed\Kernel\Persistence\PersistenceFactoryInterface $class */
+        $class = $this->getFactoryResolver()->resolve($this);
+
+        return $class;
     }
 
     /**

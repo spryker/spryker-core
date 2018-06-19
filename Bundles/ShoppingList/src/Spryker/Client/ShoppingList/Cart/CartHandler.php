@@ -7,11 +7,13 @@
 
 namespace Spryker\Client\ShoppingList\Cart;
 
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShoppingListAddToCartRequestCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListAddToCartRequestTransfer;
 use Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToCartClientInterface;
+use Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToMessengerClientInterface;
 use Spryker\Client\ShoppingList\Zed\ShoppingListStubInterface;
 
 class CartHandler implements CartHandlerInterface
@@ -27,13 +29,23 @@ class CartHandler implements CartHandlerInterface
     protected $shoppingListStub;
 
     /**
+     * @var \Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToMessengerClientInterface
+     */
+    protected $messengerClient;
+
+    /**
      * @param \Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToCartClientInterface $cartClient
      * @param \Spryker\Client\ShoppingList\Zed\ShoppingListStubInterface $shoppingListStub
+     * @param \Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToMessengerClientInterface $messengerClient
      */
-    public function __construct(ShoppingListToCartClientInterface $cartClient, ShoppingListStubInterface $shoppingListStub)
-    {
+    public function __construct(
+        ShoppingListToCartClientInterface $cartClient,
+        ShoppingListStubInterface $shoppingListStub,
+        ShoppingListToMessengerClientInterface $messengerClient
+    ) {
         $this->cartClient = $cartClient;
         $this->shoppingListStub = $shoppingListStub;
+        $this->messengerClient = $messengerClient;
     }
 
     /**
@@ -41,17 +53,20 @@ class CartHandler implements CartHandlerInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListAddToCartRequestCollectionTransfer
      */
-    public function addItemCollectionToCart(ShoppingListAddToCartRequestCollectionTransfer $shoppingListAddToCartRequestCollectionTransfer): ShoppingListAddToCartRequestCollectionTransfer
-    {
-        $itemTransfers = [];
-
-        foreach ($shoppingListAddToCartRequestCollectionTransfer->getRequests() as $ShoppingListAddToCartRequestTransfer) {
-            $this->assertRequestTransfer($ShoppingListAddToCartRequestTransfer);
-            $itemTransfers[] = $this->createItemTransfer($ShoppingListAddToCartRequestTransfer->getSku(), $ShoppingListAddToCartRequestTransfer->getQuantity());
+    public function addItemCollectionToCart(
+        ShoppingListAddToCartRequestCollectionTransfer $shoppingListAddToCartRequestCollectionTransfer
+    ): ShoppingListAddToCartRequestCollectionTransfer {
+        $cartChangeTransfer = new CartChangeTransfer();
+        $cartChangeTransfer->setQuote($this->cartClient->getQuote());
+        foreach ($shoppingListAddToCartRequestCollectionTransfer->getRequests() as $shoppingListAddToCartRequestTransfer) {
+            $this->assertRequestTransfer($shoppingListAddToCartRequestTransfer);
+            $cartChangeTransfer->addItem(
+                $this->createItemTransfer($shoppingListAddToCartRequestTransfer->getSku(), $shoppingListAddToCartRequestTransfer->getQuantity())
+            );
         }
 
-        $quoteTransfer = $this->cartClient->addItems($itemTransfers);
-
+        $quoteTransfer = $this->cartClient->addValidItems($cartChangeTransfer);
+        $this->addErrorMessages();
         $failedToMoveRequestCollectionTransfer = $this->getShoppingListRequestCollectionToCartDiff(
             $shoppingListAddToCartRequestCollectionTransfer,
             $quoteTransfer
@@ -66,8 +81,10 @@ class CartHandler implements CartHandlerInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListAddToCartRequestCollectionTransfer
      */
-    protected function getShoppingListRequestCollectionToCartDiff(ShoppingListAddToCartRequestCollectionTransfer $ShoppingListAddToCartRequestCollectionTransfer, QuoteTransfer $quoteTransfer): ShoppingListAddToCartRequestCollectionTransfer
-    {
+    protected function getShoppingListRequestCollectionToCartDiff(
+        ShoppingListAddToCartRequestCollectionTransfer $ShoppingListAddToCartRequestCollectionTransfer,
+        QuoteTransfer $quoteTransfer
+    ): ShoppingListAddToCartRequestCollectionTransfer {
         $shoppingListRequestCollectionDiff = new ShoppingListAddToCartRequestCollectionTransfer();
 
         $existingSkuIndex = $this->createExistingSkuIndex($quoteTransfer);
@@ -123,5 +140,15 @@ class CartHandler implements CartHandlerInterface
             $skuIndex[$itemTransfer->getSku()] = true;
         }
         return $skuIndex;
+    }
+
+    /**
+     * @return void
+     */
+    protected function addErrorMessages(): void
+    {
+        foreach ($this->shoppingListStub->getLastResponseErrorMessages() as $messageTransfer) {
+            $this->messengerClient->addErrorMessage($messageTransfer->getValue());
+        }
     }
 }
