@@ -17,4 +17,21 @@ interface ProductAlternativeStorageRepositoryInterface
      * @return \Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer
      */
     public function findProductAlternativeStorageEntity($idProduct): SpyProductAlternativeStorageEntityTransfer;
+
+    /**
+     * @param $idProduct
+     *
+     * @return string|null
+     */
+    public function findProductSkuById($idProduct);
+
+    /**
+     * @param $idProduct
+     */
+    public function findAbstractAlternativesIdsByConcreteProductId($idProduct);
+
+    /**
+     * @param $idProduct
+     */
+    public function findConcreteAlternativesIdsByConcreteProductId($idProduct);
 }

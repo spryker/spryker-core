@@ -13,6 +13,8 @@ use Orm\Zed\ProductAlternative\Persistence\SpyProductAlternativeQuery;
 use Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorageQuery;
 use Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementStorageQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\ProductAlternativeStorage\Persistence\Mapper\ProductAlternativeStorageMapper;
+use Spryker\Zed\ProductAlternativeStorage\Persistence\Mapper\ProductAlternativeStorageMapperInterface;
 use Spryker\Zed\ProductAlternativeStorage\ProductAlternativeStorageDependencyProvider;
 
 /**
