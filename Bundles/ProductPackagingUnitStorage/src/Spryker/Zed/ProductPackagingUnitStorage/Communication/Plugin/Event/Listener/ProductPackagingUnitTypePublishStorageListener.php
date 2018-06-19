@@ -15,7 +15,7 @@ use Spryker\Zed\ProductPackagingUnit\Dependency\ProductPackagingUnitEvents;
  * @method \Spryker\Zed\ProductPackagingUnitStorage\Communication\ProductPackagingUnitStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductPackagingUnitStorage\Business\ProductPackagingUnitStorageFacadeInterface getFacade()
  */
-class ProductPackagingUnitPublishStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
+class ProductPackagingUnitTypePublishStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     /**
      * @api
@@ -27,29 +27,31 @@ class ProductPackagingUnitPublishStorageListener extends AbstractPlugin implemen
      */
     public function handleBulk(array $eventTransfers, $eventName): void
     {
-        $idProductAbstracts = $this->getFactory()
+        $idProductPackagingTypes = $this->getFactory()
             ->getEventBehaviorFacade()
             ->getEventTransferIds($eventTransfers);
 
-        $unpublishEvents = $this->getUnpublishEvents();
+        $idProductAbstracts = $this->getFacade()->getIdProductAbstractsByIdProductPackagingUnitTypes($idProductPackagingTypes);
 
-        if (in_array($eventName, $unpublishEvents)) {
-            $this->getFacade()->unpublishProductAbstractPackaging($idProductAbstracts);
+        $publishEvents = $this->getPublishEvents();
+
+        if (in_array($eventName, $publishEvents)) {
+            $this->getFacade()->publishProductAbstractPackaging($idProductAbstracts);
 
             return;
         }
 
-        $this->getFacade()->publishProductAbstractPackaging($idProductAbstracts);
+        $this->getFacade()->unpublishProductAbstractPackaging($idProductAbstracts);
     }
 
     /**
      * @return string[]
      */
-    protected function getUnpublishEvents(): array
+    protected function getPublishEvents(): array
     {
         return [
-            ProductPackagingUnitEvents::PRODUCT_PACKAGING_UNIT_UNPUBLISH,
-            ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_UNIT_DELETE,
+            ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_UNIT_TYPE_CREATE,
+            ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_UNIT_TYPE_UPDATE,
         ];
     }
 }

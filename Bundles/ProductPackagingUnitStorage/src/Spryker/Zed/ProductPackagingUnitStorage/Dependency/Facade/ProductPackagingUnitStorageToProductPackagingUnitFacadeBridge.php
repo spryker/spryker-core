@@ -25,14 +25,14 @@ class ProductPackagingUnitStorageToProductPackagingUnitFacadeBridge implements P
     }
 
     /**
-     * @param int $productAbstractId
+     * @param int $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null
      */
-    public function getProductPackagingLeadProductByAbstractId(
-        int $productAbstractId
+    public function getProductPackagingLeadProductByIdProductAbstract(
+        int $idProductAbstract
     ): ?ProductPackagingLeadProductTransfer {
-        return $this->productPackagingUnitFacade->getProductPackagingLeadProductByAbstractId($productAbstractId);
+        return $this->productPackagingUnitFacade->getProductPackagingLeadProductByIdProductAbstract($idProductAbstract);
     }
 
     /**
@@ -41,5 +41,15 @@ class ProductPackagingUnitStorageToProductPackagingUnitFacadeBridge implements P
     public function getDefaultPackagingUnitTypeName(): string
     {
         return $this->productPackagingUnitFacade->getDefaultPackagingUnitTypeName();
+    }
+
+    /**
+     * @param array $productPackagingUnitTypeIds
+     *
+     * @return array
+     */
+    public function getIdProductAbstractsByIdProductPackagingUnitTypes(array $productPackagingUnitTypeIds): array
+    {
+        return $this->productPackagingUnitFacade->getIdProductAbstractsByIdProductPackagingUnitTypes($productPackagingUnitTypeIds);
     }
 }

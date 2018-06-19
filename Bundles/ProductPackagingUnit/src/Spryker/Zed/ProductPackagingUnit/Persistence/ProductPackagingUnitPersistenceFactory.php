@@ -30,6 +30,14 @@ class ProductPackagingUnitPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
+     * @return \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitQuery
+     */
+    public function createProductPackagingUnitQuery(): SpyProductPackagingUnitQuery
+    {
+        return SpyProductPackagingUnitQuery::create();
+    }
+
+    /**
      * @return \Spryker\Zed\ProductPackagingUnit\Persistence\Propel\Mapper\ProductPackagingUnitTypeMapperInterface
      */
     public function createProductPackagingUnitTypeMapper(): ProductPackagingUnitTypeMapperInterface

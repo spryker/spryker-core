@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductPackagingUnit\Persistence;
 
 use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -81,16 +82,16 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
     }
 
     /**
-     * @param int $productAbstractId
+     * @param int $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null
      */
-    public function getProductPackagingLeadProductByAbstractId(
-        int $productAbstractId
+    public function getProductPackagingLeadProductByIdProductAbstract(
+        int $idProductAbstract
     ): ?ProductPackagingLeadProductTransfer {
         $productPackagingLeadProductEntity = $this->getFactory()
             ->createProductPackagingLeadProductQuery()
-            ->filterByFkProductAbstract($productAbstractId)
+            ->filterByFkProductAbstract($idProductAbstract)
             ->findOne();
 
         if (!$productPackagingLeadProductEntity) {
@@ -105,5 +106,29 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
             );
 
         return $productPackagingLeadProductTransfer;
+    }
+
+    /**
+     * @param array $productPackagingUnitTypeIds
+     *
+     * @return array
+     */
+    public function getIdProductAbstractsByIdProductPackagingUnitTypes(array $productPackagingUnitTypeIds): array
+    {
+        $query = $this->getFactory()
+            ->createProductPackagingUnitQuery()
+            ->innerJoinWithProductPackagingUnitType()
+            ->useProductPackagingUnitTypeQuery()
+                ->filterByIdProductPackagingUnitType_In($productPackagingUnitTypeIds)
+            ->endUse()
+            ->innerJoinWithProduct()
+            ->useProductQuery()
+                ->innerJoinWithSpyProductAbstract()
+                ->useSpyProductAbstractQuery()
+                    ->select([SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT])
+                ->endUse()
+            ->endUse();
+
+        return $this->buildQueryFromCriteria($query)->find();
     }
 }

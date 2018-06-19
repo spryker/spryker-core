@@ -12,7 +12,6 @@ use Spryker\Zed\ProductPackagingUnitStorage\Dependency\Facade\ProductPackagingUn
 use Spryker\Zed\ProductPackagingUnitStorage\ProductPackagingUnitStorageDependencyProvider;
 
 /**
- * @method \Spryker\Zed\ProductPackagingUnitStorage\Persistence\ProductPackagingUnitStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductPackagingUnitStorage\ProductPackagingUnitStorageConfig getConfig()
  */
 class ProductPackagingUnitStorageCommunicationFactory extends AbstractCommunicationFactory

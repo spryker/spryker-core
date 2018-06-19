@@ -9,13 +9,13 @@ namespace Spryker\Client\ProductPackagingUnitStorage\Storage;
 
 use Generated\Shared\Transfer\ProductAbstractPackagingStorageTransfer;
 use Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer;
-use Spryker\Client\ProductPackagingUnitStorage\Dependency\Client\ProductPackagingUnitStorageToStorageInterface;
+use Spryker\Client\ProductPackagingUnitStorage\Dependency\Client\ProductPackagingUnitStorageToStorageClientInterface;
 use Spryker\Shared\ProductPackagingUnitStorage\ProductPackagingUnitStorageConstants;
 
 class ProductPackagingUnitStorageReader implements ProductPackagingUnitStorageReaderInterface
 {
     /**
-     * @var \Spryker\Client\ProductPackagingUnitStorage\Dependency\Client\ProductPackagingUnitStorageToStorageInterface
+     * @var \Spryker\Client\ProductPackagingUnitStorage\Dependency\Client\ProductPackagingUnitStorageToStorageClientInterface
      */
     protected $storageClient;
 
@@ -25,11 +25,11 @@ class ProductPackagingUnitStorageReader implements ProductPackagingUnitStorageRe
     protected $productPackagingUnitStorageKeyGenerator;
 
     /**
-     * @param \Spryker\Client\ProductPackagingUnitStorage\Dependency\Client\ProductPackagingUnitStorageToStorageInterface $storageClient
+     * @param \Spryker\Client\ProductPackagingUnitStorage\Dependency\Client\ProductPackagingUnitStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\ProductPackagingUnitStorage\Storage\ProductPackagingUnitStorageKeyGeneratorInterface $productPackagingUnitStorageKeyGenerator
      */
     public function __construct(
-        ProductPackagingUnitStorageToStorageInterface $storageClient,
+        ProductPackagingUnitStorageToStorageClientInterface $storageClient,
         ProductPackagingUnitStorageKeyGeneratorInterface $productPackagingUnitStorageKeyGenerator
     ) {
         $this->storageClient = $storageClient;

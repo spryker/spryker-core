@@ -19,7 +19,6 @@ use Spryker\Zed\ProductPackagingUnitStorage\ProductPackagingUnitStorageDependenc
  * @method \Spryker\Zed\ProductPackagingUnitStorage\ProductPackagingUnitStorageConfig getConfig()
  * @method \Spryker\Zed\ProductPackagingUnitStorage\Persistence\ProductPackagingUnitStorageRepositoryInterface getRepository()
  * @method \Spryker\Zed\ProductPackagingUnitStorage\Persistence\ProductPackagingUnitStorageEntityManagerInterface getEntityManager()
- * @method \Spryker\Zed\ProductPackagingUnitStorage\Persistence\ProductPackagingUnitStorageQueryContainerInterface getQueryContainer()
  */
 class ProductPackagingUnitStorageBusinessFactory extends AbstractBusinessFactory
 {
@@ -30,8 +29,7 @@ class ProductPackagingUnitStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductPackagingStorageReader(
             $this->getRepository(),
-            $this->getProductPackagingUnitFacade(),
-            $this->getConfig()
+            $this->getProductPackagingUnitFacade()
         );
     }
 

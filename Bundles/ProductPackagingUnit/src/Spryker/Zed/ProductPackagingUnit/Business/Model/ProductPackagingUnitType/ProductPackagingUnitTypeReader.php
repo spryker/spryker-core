@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType;
 
-use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 use Spryker\Zed\ProductPackagingUnit\Business\Exception\ProductPackagingUnitTypeNotFoundException;
 use Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface;
@@ -103,13 +102,12 @@ class ProductPackagingUnitTypeReader implements ProductPackagingUnitTypeReaderIn
     }
 
     /**
-     * @param int $productAbstractId
+     * @param array $productPackagingUnitTypeIds
      *
-     * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null
+     * @return array
      */
-    public function getProductPackagingLeadProductByAbstractId(
-        int $productAbstractId
-    ): ?ProductPackagingLeadProductTransfer {
-        return $this->repository->getProductPackagingLeadProductByAbstractId($productAbstractId);
+    public function getIdProductAbstractsByIdProductPackagingUnitTypes(array $productPackagingUnitTypeIds): array
+    {
+        return $this->repository->getIdProductAbstractsByIdProductPackagingUnitTypes($productPackagingUnitTypeIds);
     }
 }

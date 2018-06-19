@@ -18,43 +18,47 @@ class ProductPackagingUnitStorageRepository extends AbstractRepository implement
     /**
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param int[] $idProductAbstracts
      *
      * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
      */
-    public function findProductAbstractPackagingUnitStorageByProductAbstractIds(array $productAbstractIds): array
+    public function findProductAbstractPackagingUnitStorageByProductAbstractIds(array $idProductAbstracts): array
     {
-        if (!$productAbstractIds) {
+        if (!$idProductAbstracts) {
             return [];
         }
 
         $query = $this->getFactory()
             ->createSpyProductAbstractPackagingStorageQuery()
-            ->filterByFkProductAbstract_In($productAbstractIds);
+            ->filterByFkProductAbstract_In($idProductAbstracts);
 
         return $this->buildQueryFromCriteria($query)->find();
     }
 
     /**
-     * @param int $productAbstractId
+     * @module ProductPackagingUnit
+     *
+     * @param int $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\SpyProductEntityTransfer[]
      */
-    public function findPackagingProductsByAbstractId(int $productAbstractId): array
+    public function findPackagingProductsByAbstractId(int $idProductAbstract): array
     {
-        if (!$productAbstractId) {
+        if (!$idProductAbstract) {
             return [];
         }
 
         $query = $this->getFactory()
             ->getProductQueryContainer()
             ->queryProduct()
-                ->filterByFkProductAbstract($productAbstractId)
+                ->filterByFkProductAbstract($idProductAbstract)
             ->where(sprintf(
                 "%s = true",
                 SpyProductTableMap::COL_IS_ACTIVE
             ))
-            ->joinWithSpyProductPackagingUnit()
+            ->leftJoinWithSpyProductAbstract()
+            ->leftJoinWithSpyProductPackagingLeadProduct()
+            ->innerJoinWithSpyProductPackagingUnit()
             ->useSpyProductPackagingUnitQuery()
                 ->leftJoinWithSpyProductPackagingUnitAmount()
                 ->leftJoinWithProductPackagingUnitType()

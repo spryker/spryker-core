@@ -17,11 +17,11 @@ interface ProductPackagingUnitStorageFacadeInterface
      *
      * @api
      *
-     * @param array $productAbstractIds
+     * @param array $idProductAbstracts
      *
      * @return void
      */
-    public function publishProductAbstractPackaging(array $productAbstractIds): void;
+    public function publishProductAbstractPackaging(array $idProductAbstracts): void;
 
     /**
      * Specification:
@@ -30,9 +30,21 @@ interface ProductPackagingUnitStorageFacadeInterface
      *
      * @api
      *
-     * @param array $productAbstractIds
+     * @param array $idProductAbstracts
      *
      * @return void
      */
-    public function unpublishProductAbstractPackaging(array $productAbstractIds): void;
+    public function unpublishProductAbstractPackaging(array $idProductAbstracts): void;
+
+    /**
+     *  Specification:
+     * - Queries all productAbstractIds by productPackagingUnitTypeId
+     *
+     * @api
+     *
+     * @param array $productPackagingUnitTypeIds
+     *
+     * @return array
+     */
+    public function getIdProductAbstractsByIdProductPackagingUnitTypes(array $productPackagingUnitTypeIds): array;
 }
