@@ -10,8 +10,9 @@ namespace Spryker\Zed\ProductPackagingUnitStorage\Business\Storage;
 use ArrayObject;
 use Generated\Shared\Transfer\ProductAbstractPackagingStorageTransfer;
 use Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer;
-use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
+use Generated\Shared\Transfer\ProductPackagingUnitAmountTransfer;
 use Generated\Shared\Transfer\SpyProductEntityTransfer;
+use Generated\Shared\Transfer\SpyProductPackagingLeadProductEntityTransfer;
 use Generated\Shared\Transfer\SpyProductPackagingUnitAmountEntityTransfer;
 use Generated\Shared\Transfer\SpyProductPackagingUnitEntityTransfer;
 use Spryker\Zed\ProductPackagingUnitStorage\Dependency\Facade\ProductPackagingUnitStorageToProductPackagingUnitFacadeInterface;
@@ -30,6 +31,21 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
     protected $productPackagingUnitFacade;
 
     /**
+     * @var \Spryker\Zed\ProductPackagingUnitStorage\ProductPackagingUnitStorageConfig
+     */
+    protected $config;
+
+    /**
+     * default values for packaging unit storage values.
+     */
+    protected const PRODUCT_ABSTRACT_STORAGE_DEFAULT_VALUES = [
+        'default_amount' => 1,
+        'is_variable' => false,
+        'amount_min' => 1,
+        'amount_interval' => 1,
+    ];
+
+    /**
      * @param \Spryker\Zed\ProductPackagingUnitStorage\Persistence\ProductPackagingUnitStorageRepositoryInterface $productPackagingUnitStorageRepository
      * @param \Spryker\Zed\ProductPackagingUnitStorage\Dependency\Facade\ProductPackagingUnitStorageToProductPackagingUnitFacadeInterface $productPackagingUnitFacade
      */
@@ -42,20 +58,21 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param int[] $idProductAbstracts
      *
      * @return \Generated\Shared\Transfer\ProductAbstractPackagingStorageTransfer[]
      */
-    public function getProductAbstractPackagingStorageTransfer(array $productAbstractIds): array
+    public function getProductAbstractPackagingStorageTransfer(array $idProductAbstracts): array
     {
         $productAbstractPackagingStoreTransfers = [];
 
-        foreach ($productAbstractIds as $productAbstractId) {
-            $productPackagingLeadProduct = $this->getProductPackagingLeadProductByAbstractId($productAbstractId);
-            $packageProductConcreteEntityTransfers = $this->getPackageProductsByAbstractId($productAbstractId);
+        foreach ($idProductAbstracts as $idProductAbstract) {
+            $packageProductConcreteEntityTransfers = $this->getPackageProductsByAbstractId($idProductAbstract);
+
+            list($productPackagingLeadProduct) = $packageProductConcreteEntityTransfers[0]->getSpyProductPackagingLeadProducts();
 
             $productAbstractPackagingStoreTransfers[] = $this->hydrateProductAbstractPackagingStoreTransfer(
-                $productAbstractId,
+                $idProductAbstract,
                 $productPackagingLeadProduct,
                 $packageProductConcreteEntityTransfers
             );
@@ -65,54 +82,43 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param int[] $idProductAbstracts
      *
      * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
      */
-    public function getProductAbstractPackagingUnitStorageEntities(array $productAbstractIds): array
+    public function getProductAbstractPackagingUnitStorageEntities(array $idProductAbstracts): array
     {
         return $this->productPackagingUnitStorageRepository
-            ->findProductAbstractPackagingUnitStorageByProductAbstractIds($productAbstractIds);
+            ->findProductAbstractPackagingUnitStorageByProductAbstractIds($idProductAbstracts);
     }
 
     /**
-     * @param int $productAbstractId
-     *
-     * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null
-     */
-    protected function getProductPackagingLeadProductByAbstractId(int $productAbstractId): ?ProductPackagingLeadProductTransfer
-    {
-        return $this->productPackagingUnitFacade
-            ->getProductPackagingLeadProductByAbstractId($productAbstractId);
-    }
-
-    /**
-     * @param int $productAbstractId
+     * @param int $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\SpyProductEntityTransfer[]
      */
-    protected function getPackageProductsByAbstractId(int $productAbstractId): array
+    protected function getPackageProductsByAbstractId(int $idProductAbstract): array
     {
         return $this->productPackagingUnitStorageRepository
-            ->findPackagingProductsByAbstractId($productAbstractId);
+            ->findPackagingProductsByAbstractId($idProductAbstract);
     }
 
     /**
-     * @param int $productAbstractId
-     * @param \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer $productPackagingLeadProductTransfer
+     * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\SpyProductPackagingLeadProductEntityTransfer $productPackagingLeadProductEntityTransfer
      * @param \Generated\Shared\Transfer\SpyProductEntityTransfer[] $packageProductConcreteEntityTransfers
      *
      * @return \Generated\Shared\Transfer\ProductAbstractPackagingStorageTransfer
      */
     protected function hydrateProductAbstractPackagingStoreTransfer(
-        int $productAbstractId,
-        ProductPackagingLeadProductTransfer $productPackagingLeadProductTransfer,
+        int $idProductAbstract,
+        SpyProductPackagingLeadProductEntityTransfer $productPackagingLeadProductEntityTransfer,
         array $packageProductConcreteEntityTransfers
     ): ProductAbstractPackagingStorageTransfer {
 
-        $idProduct = $productPackagingLeadProductTransfer ? $productPackagingLeadProductTransfer->getIdProduct() : null;
+        $idProduct = $productPackagingLeadProductEntityTransfer->getFkProduct();
         $productAbstractPackagingTypes = $this->getProductAbstractPackagingTypes($packageProductConcreteEntityTransfers);
-        $productAbstractPackagingStorageTransfer = $this->createProductAbstractPackagingStorageTransfer($productAbstractId, $idProduct, $productAbstractPackagingTypes);
+        $productAbstractPackagingStorageTransfer = $this->createProductAbstractPackagingStorageTransfer($idProductAbstract, $idProduct, $productAbstractPackagingTypes);
 
         return $productAbstractPackagingStorageTransfer;
     }
@@ -129,30 +135,76 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
 
         foreach ($packageProductConcreteEntityTransfers as $packageProductConcreteEntityTransfer) {
             $productConcretePackagingStorageTransfer = $this->createProductConcretePackagingStorageTransfer($packageProductConcreteEntityTransfer);
+            $hasProductPackagingUnit = $packageProductConcreteEntityTransfer->getSpyProductPackagingUnits()->count();
 
-            if (!$packageProductConcreteEntityTransfer->getSpyProductPackagingUnits()->count()) {
+            if (!$hasProductPackagingUnit) {
+                $this->getDefaultParameters($productConcretePackagingStorageTransfer, $hasProductPackagingUnit);
                 $productConcretePackagingStorageTransfers[] = $productConcretePackagingStorageTransfer;
                 continue;
             }
 
             list($productPackagingUnitEntityTransfer) = $packageProductConcreteEntityTransfer->getSpyProductPackagingUnits();
-            $productPackagingUnitTypeName = $this->getProductPackagingUnitTypeName($productPackagingUnitEntityTransfer, $defaultPackagingUnitTypeName);
-
-            $productConcretePackagingStorageTransfer
-                ->setHasLeadProduct($productPackagingUnitEntityTransfer->getHasLeadProduct())
-                ->setName($productPackagingUnitTypeName);
+            $this->getProductAbstractPackagingStorageNameAndLead($productConcretePackagingStorageTransfer, $productPackagingUnitEntityTransfer, $defaultPackagingUnitTypeName);
 
             if (!$productPackagingUnitEntityTransfer->getSpyProductPackagingUnitAmounts()->count()) {
+                $this->getDefaultParameters($productConcretePackagingStorageTransfer, false);
                 $productConcretePackagingStorageTransfers[] = $productConcretePackagingStorageTransfer;
                 continue;
             }
 
             list($productPackagingUnitAmountEntityTransfer) = $productPackagingUnitEntityTransfer->getSpyProductPackagingUnitAmounts();
-            $productConcretePackagingStorageTransfer = $this->getProductAbstractPackagingType($productConcretePackagingStorageTransfer, $productPackagingUnitAmountEntityTransfer);
+            $this->getProductAbstractPackagingStorageAmount($productConcretePackagingStorageTransfer, $productPackagingUnitAmountEntityTransfer);
             $productConcretePackagingStorageTransfers[] = $productConcretePackagingStorageTransfer;
         }
 
         return $productConcretePackagingStorageTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer $productConcretePackagingStorageTransfer
+     * @param bool $hasProductPackagingUnit
+     *
+     * @return void
+     */
+    protected function getDefaultParameters(ProductConcretePackagingStorageTransfer $productConcretePackagingStorageTransfer, bool $hasProductPackagingUnit): void
+    {
+        if ($hasProductPackagingUnit) {
+            $productConcretePackagingStorageTransfer->setName($this->getDefaultPackagingUnitTypeName());
+        }
+
+        $productConcretePackagingStorageTransfer->fromArray($this->createDefaultProductPackagingUnitAmountTransfer(), true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer $productConcretePackagingStorageTransfer
+     * @param \Generated\Shared\Transfer\SpyProductPackagingUnitEntityTransfer $productPackagingUnitEntityTransfer
+     * @param string $defaultPackagingUnitTypeName
+     *
+     * @return void
+     */
+    protected function getProductAbstractPackagingStorageNameAndLead(
+        ProductConcretePackagingStorageTransfer $productConcretePackagingStorageTransfer,
+        SpyProductPackagingUnitEntityTransfer $productPackagingUnitEntityTransfer,
+        string $defaultPackagingUnitTypeName
+    ): void {
+        $productPackagingUnitTypeName = $this->getProductPackagingUnitTypeName($productPackagingUnitEntityTransfer, $defaultPackagingUnitTypeName);
+
+        $productConcretePackagingStorageTransfer
+            ->setHasLeadProduct($productPackagingUnitEntityTransfer->getHasLeadProduct())
+            ->setName($productPackagingUnitTypeName);
+    }
+
+    /**
+     * @return array
+     */
+    protected function createDefaultProductPackagingUnitAmountTransfer(): array
+    {
+        $productPackagingUnitAmount = new ProductPackagingUnitAmountTransfer();
+        $productPackagingUnitAmount
+            ->setDefaultAmount(static::PRODUCT_ABSTRACT_STORAGE_DEFAULT_VALUES['default_amount'])
+            ->setIsVariable(static::PRODUCT_ABSTRACT_STORAGE_DEFAULT_VALUES['is_variable']);
+
+        return $productPackagingUnitAmount->toArray();
     }
 
     /**
@@ -183,20 +235,27 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
      * @param \Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer $productConcretePackagingStorageTransfer
      * @param \Generated\Shared\Transfer\SpyProductPackagingUnitAmountEntityTransfer $productPackagingUnitAmountEntityTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer
+     * @return void
      */
-    protected function getProductAbstractPackagingType(
+    protected function getProductAbstractPackagingStorageAmount(
         ProductConcretePackagingStorageTransfer $productConcretePackagingStorageTransfer,
         SpyProductPackagingUnitAmountEntityTransfer $productPackagingUnitAmountEntityTransfer
-    ): ProductConcretePackagingStorageTransfer {
+    ): void {
+
         $productConcretePackagingStorageTransfer
             ->setDefaultAmount($productPackagingUnitAmountEntityTransfer->getDefaultAmount())
-            ->setIsVariable($productPackagingUnitAmountEntityTransfer->getIsVariable())
-            ->setAmountMin($productPackagingUnitAmountEntityTransfer->getAmountMin())
-            ->setAmountMax($productPackagingUnitAmountEntityTransfer->getAmountMax())
-            ->setAmountInterval($productPackagingUnitAmountEntityTransfer->getAmountInterval());
+            ->setIsVariable($productPackagingUnitAmountEntityTransfer->getIsVariable());
 
-        return $productConcretePackagingStorageTransfer;
+        if ($productPackagingUnitAmountEntityTransfer->getIsVariable()) {
+            $amountMax = $productPackagingUnitAmountEntityTransfer->getAmountMax();
+            $amountMin = $productPackagingUnitAmountEntityTransfer->getAmountMin() ?: static::PRODUCT_ABSTRACT_STORAGE_DEFAULT_VALUES['amount_min'];
+            $amountInterval = $productPackagingUnitAmountEntityTransfer->getAmountInterval() ?: static::PRODUCT_ABSTRACT_STORAGE_DEFAULT_VALUES['amount_interval'];
+
+            $productConcretePackagingStorageTransfer
+                ->setAmountMin($amountMax)
+                ->setAmountMax($amountMin)
+                ->setAmountInterval($amountInterval);
+        }
     }
 
     /**

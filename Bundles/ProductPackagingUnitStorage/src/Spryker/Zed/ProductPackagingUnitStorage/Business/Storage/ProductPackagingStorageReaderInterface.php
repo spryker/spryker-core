@@ -10,16 +10,16 @@ namespace Spryker\Zed\ProductPackagingUnitStorage\Business\Storage;
 interface ProductPackagingStorageReaderInterface
 {
     /**
-     * @param int[] $productAbstractIds
+     * @param int[] $idProductAbstracts
      *
      * @return \Generated\Shared\Transfer\ProductAbstractPackagingStorageTransfer[]
      */
-    public function getProductAbstractPackagingStorageTransfer(array $productAbstractIds): array;
+    public function getProductAbstractPackagingStorageTransfer(array $idProductAbstracts): array;
 
     /**
-     * @param int[] $productAbstractIds
+     * @param int[] $idProductAbstracts
      *
      * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
      */
-    public function getProductAbstractPackagingUnitStorageEntities(array $productAbstractIds): array;
+    public function getProductAbstractPackagingUnitStorageEntities(array $idProductAbstracts): array;
 }

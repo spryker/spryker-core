@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductPackagingUnitStorage\Dependency\Facade;
+namespace Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitLeadProduct;
 
 use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
 
-interface ProductPackagingUnitStorageToProductPackagingUnitFacadeInterface
+interface ProductPackagingUnitLeadProductReaderInterface
 {
     /**
      * @param int $idProductAbstract
@@ -19,16 +19,4 @@ interface ProductPackagingUnitStorageToProductPackagingUnitFacadeInterface
     public function getProductPackagingLeadProductByIdProductAbstract(
         int $idProductAbstract
     ): ?ProductPackagingLeadProductTransfer;
-
-    /**
-     * @return string
-     */
-    public function getDefaultPackagingUnitTypeName(): string;
-
-    /**
-     * @param array $productPackagingUnitTypeIds
-     *
-     * @return array
-     */
-    public function getIdProductAbstractsByIdProductPackagingUnitTypes(array $productPackagingUnitTypeIds): array;
 }

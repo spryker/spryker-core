@@ -22,11 +22,18 @@ interface ProductPackagingUnitRepositoryInterface
     ): ProductPackagingUnitTypeTransfer;
 
     /**
-     * @param int $productAbstractId
+     * @param int $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null
      */
-    public function getProductPackagingLeadProductByAbstractId(
-        int $productAbstractId
+    public function getProductPackagingLeadProductByIdProductAbstract(
+        int $idProductAbstract
     ): ?ProductPackagingLeadProductTransfer;
+
+    /**
+     * @param array $productPackagingUnitTypeIds
+     *
+     * @return array
+     */
+    public function getIdProductAbstractsByIdProductPackagingUnitTypes(array $productPackagingUnitTypeIds): array;
 }

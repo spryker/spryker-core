@@ -52,16 +52,16 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      *
      * @api
      *
-     * @param int $productAbstractId
+     * @param int $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null
      */
-    public function getProductPackagingLeadProductByAbstractId(
-        int $productAbstractId
+    public function getProductPackagingLeadProductByIdProductAbstract(
+        int $idProductAbstract
     ): ?ProductPackagingLeadProductTransfer {
         return $this->getFactory()
-            ->createProductPackagingUnitTypeReader()
-            ->getProductPackagingLeadProductByAbstractId($productAbstractId);
+            ->createProductPackagingUnitLeadProductReader()
+            ->getProductPackagingLeadProductByIdProductAbstract($idProductAbstract);
     }
 
     /**
@@ -74,5 +74,17 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
     public function getDefaultPackagingUnitTypeName(): string
     {
         return $this->getFactory()->getConfig()->getDefaultPackagingUnitTypeName();
+    }
+
+    /**
+     * @param array $productPackagingUnitTypeIds
+     *
+     * @return array
+     */
+    public function getIdProductAbstractsByIdProductPackagingUnitTypes(array $productPackagingUnitTypeIds): array
+    {
+        return $this->getFactory()
+            ->createProductPackagingUnitTypeReader()
+            ->getIdProductAbstractsByIdProductPackagingUnitTypes($productPackagingUnitTypeIds);
     }
 }

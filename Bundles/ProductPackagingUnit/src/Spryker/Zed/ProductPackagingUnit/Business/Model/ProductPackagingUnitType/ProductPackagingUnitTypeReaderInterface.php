@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType;
 
-use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 
 interface ProductPackagingUnitTypeReaderInterface
@@ -22,11 +21,9 @@ interface ProductPackagingUnitTypeReaderInterface
     ): ProductPackagingUnitTypeTransfer;
 
     /**
-     * @param int $productAbstractId
+     * @param array $productPackagingUnitTypeIds
      *
-     * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null
+     * @return array
      */
-    public function getProductPackagingLeadProductByAbstractId(
-        int $productAbstractId
-    ): ?ProductPackagingLeadProductTransfer;
+    public function getIdProductAbstractsByIdProductPackagingUnitTypes(array $productPackagingUnitTypeIds): array;
 }

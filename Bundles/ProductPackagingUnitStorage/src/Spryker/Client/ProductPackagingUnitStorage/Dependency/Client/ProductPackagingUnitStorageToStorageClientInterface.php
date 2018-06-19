@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\ProductPackagingUnitStorage\Dependency\Client;
 
-interface ProductPackagingUnitStorageToStorageInterface
+interface ProductPackagingUnitStorageToStorageClientInterface
 {
     /**
      * @param string $key

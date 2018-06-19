@@ -12,16 +12,16 @@ interface ProductPackagingUnitStorageRepositoryInterface
     /**
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param int[] $idProductAbstracts
      *
      * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
      */
-    public function findProductAbstractPackagingUnitStorageByProductAbstractIds(array $productAbstractIds): array;
+    public function findProductAbstractPackagingUnitStorageByProductAbstractIds(array $idProductAbstracts): array;
 
     /**
-     * @param int $productAbstractId
+     * @param int $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\SpyProductEntityTransfer[]
      */
-    public function findPackagingProductsByAbstractId(int $productAbstractId): array;
+    public function findPackagingProductsByAbstractId(int $idProductAbstract): array;
 }

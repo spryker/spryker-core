@@ -38,25 +38,35 @@ interface ProductPackagingUnitFacadeInterface
 
     /**
      * Specification:
-     *  - Retrieve a product packaging lead product by productAbstractId in the transfer.
+     * - Retrieves a product packaging lead product by provided product abstract ID.
      *
      * @api
      *
-     * @param int $productAbstractId
+     * @param int $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null
      */
-    public function getProductPackagingLeadProductByAbstractId(
-        int $productAbstractId
+    public function getProductPackagingLeadProductByIdProductAbstract(
+        int $idProductAbstract
     ): ?ProductPackagingLeadProductTransfer;
 
     /**
      * Specification:
-     *  - Returns Default Packaging Unit Type Name
+     * - Returns default packaging unit type name.
      *
      * @api
      *
      * @return string
      */
     public function getDefaultPackagingUnitTypeName(): string;
+
+    /**
+     * Specification:
+     * - Retrieve productAbstractId by productPackagingUnitTypeIds.
+     *
+     * @param array $productPackagingUnitTypeIds
+     *
+     * @return array
+     */
+    public function getIdProductAbstractsByIdProductPackagingUnitTypes(array $productPackagingUnitTypeIds): array;
 }
