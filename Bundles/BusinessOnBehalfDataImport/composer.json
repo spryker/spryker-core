@@ -1,0 +1,42 @@
+{
+  "name": "spryker/business-on-behalf-data-import",
+  "description": "BusinessOnBehalfDataImport module",
+  "license": "MIT",
+  "require": {
+    "php": ">=7.1",
+    "spryker/company": "^1.0.0",
+    "spryker/company-business-unit": "^1.0.0 || ^2.0.0",
+    "spryker/company-user": "^1.0.0",
+    "spryker/customer": "^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0",
+    "spryker/data-import": "^1.2.0",
+    "spryker/kernel": "^3.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/business-on-behalf": "Business on behalf introduces is default column in company user table: ^1.0.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Zed\\BusinessOnBehalfDataImport\\Helper\\": "tests/SprykerTest/Zed/BusinessOnBehalfDataImport/_support/Helper/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

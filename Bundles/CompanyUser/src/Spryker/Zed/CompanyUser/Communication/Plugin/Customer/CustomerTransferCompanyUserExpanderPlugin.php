@@ -18,6 +18,8 @@ class CustomerTransferCompanyUserExpanderPlugin extends AbstractPlugin implement
 {
     /**
      * {@inheritdoc}
+     * - Does not set company user if multiple company user accounts were found.
+     * - Does not set company user if it is already set.
      *
      * @api
      *
@@ -37,6 +39,14 @@ class CustomerTransferCompanyUserExpanderPlugin extends AbstractPlugin implement
      */
     protected function addCompanyUserTransfer(CustomerTransfer $customerTransfer): CustomerTransfer
     {
+        if ($customerTransfer->getCompanyUserTransfer() !== null) {
+            return $customerTransfer;
+        }
+
+        if ($this->getFacade()->countActiveCompanyUsersByIdCustomer($customerTransfer) > 1) {
+            return $customerTransfer;
+        }
+
         $companyUserTransfer = $this->getFacade()->findActiveCompanyUserByCustomerId($customerTransfer);
         $customerTransfer->setCompanyUserTransfer($companyUserTransfer);
 

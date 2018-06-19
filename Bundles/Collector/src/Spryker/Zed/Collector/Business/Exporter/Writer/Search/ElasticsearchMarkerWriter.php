@@ -58,6 +58,8 @@ class ElasticsearchMarkerWriter implements WriterInterface, ConfigurableSearchWr
         foreach ($dataSet as $key => $value) {
             $this->metaData[$key] = $value;
         }
+
+        return true;
     }
 
     /**
