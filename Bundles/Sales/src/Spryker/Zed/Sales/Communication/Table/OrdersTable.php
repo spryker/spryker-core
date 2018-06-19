@@ -198,6 +198,24 @@ class OrdersTable extends AbstractTable
     }
 
     /**
+     * @param int $value
+     * @param bool $includeSymbol
+     * @param null|string $currencyIsoCode
+     *
+     * @return string
+     */
+    protected function formatPrice($value, $includeSymbol = true, $currencyIsoCode = null)
+    {
+        $moneyTransfer = $this->moneyFacade->fromInteger($value, $currencyIsoCode);
+
+        if ($includeSymbol) {
+            return $this->moneyFacade->formatWithSymbol($moneyTransfer);
+        }
+
+        return $this->moneyFacade->formatWithoutSymbol($moneyTransfer);
+    }
+
+    /**
      * @param array $item
      *
      * @return array
@@ -214,24 +232,6 @@ class OrdersTable extends AbstractTable
         );
 
         return $urls;
-    }
-
-    /**
-     * @param int $value
-     * @param bool $includeSymbol
-     * @param null|string $currencyIsoCode
-     *
-     * @return string
-     */
-    protected function formatPrice($value, $includeSymbol = true, $currencyIsoCode = null)
-    {
-        $moneyTransfer = $this->moneyFacade->fromInteger($value, $currencyIsoCode);
-
-        if ($includeSymbol) {
-            return $this->moneyFacade->formatWithSymbol($moneyTransfer);
-        }
-
-        return $this->moneyFacade->formatWithoutSymbol($moneyTransfer);
     }
 
     /**
