@@ -21,8 +21,8 @@ class AddCompanyBusinessUnitController extends AbstractController
      */
     protected const URL_BUSINESS_UNIT_LIST = '/company-business-unit-gui/list-company-business-unit';
 
-    protected const MESSAGE_COMPANY_BUSINESS_UNIT_CREATE_SUCCESS = 'Company Business Unit has been created.';
-    protected const MESSAGE_COMPANY_BUSINESS_UNIT_CREATE_ERROR = 'Company Business Unit has not been created.';
+    protected const MESSAGE_COMPANY_BUSINESS_UNIT_CREATE_SUCCESS = 'Company Business Unit "%s" has been created.';
+    protected const MESSAGE_COMPANY_BUSINESS_UNIT_CREATE_ERROR = 'Company Business Unit "%s" has not been created.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -48,14 +48,20 @@ class AddCompanyBusinessUnitController extends AbstractController
                 ->create($companyBusinessUnitTransfer);
 
             if (!$companyResponseTransfer->getIsSuccessful()) {
-                $this->addErrorMessage(static::MESSAGE_COMPANY_BUSINESS_UNIT_CREATE_ERROR);
+                $this->addErrorMessage(sprintf(
+                    static::MESSAGE_COMPANY_BUSINESS_UNIT_CREATE_ERROR,
+                    $companyBusinessUnitTransfer->getName()
+                ));
 
                 return $this->viewResponse([
                     'form' => $form->createView(),
                 ]);
             }
 
-            $this->addSuccessMessage(static::MESSAGE_COMPANY_BUSINESS_UNIT_CREATE_SUCCESS);
+            $this->addSuccessMessage(sprintf(
+                static::MESSAGE_COMPANY_BUSINESS_UNIT_CREATE_SUCCESS,
+                $companyBusinessUnitTransfer->getName()
+            ));
 
             return $this->redirectResponse($redirectUrl);
         }
