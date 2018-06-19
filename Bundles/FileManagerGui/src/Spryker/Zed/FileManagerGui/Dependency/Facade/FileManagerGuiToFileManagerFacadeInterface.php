@@ -86,6 +86,16 @@ interface FileManagerGuiToFileManagerFacadeInterface
 
     /**
      * Specification:
+     * - Finds a directory by idFileDirectory
+     *
+     * @param int $idFileDirectory
+     *
+     * @return \Generated\Shared\Transfer\FileDirectoryTransfer|null
+     */
+    public function findFileDirectory($idFileDirectory);
+
+    /**
+     * Specification:
      * - Finds a file info
      * - Returns a file meta info and a file content with a specified version
      *

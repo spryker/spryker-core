@@ -122,6 +122,16 @@ class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileMan
     }
 
     /**
+     * @param int $idFileDirectory
+     *
+     * @return \Generated\Shared\Transfer\FileDirectoryTransfer|null
+     */
+    public function findFileDirectory($idFileDirectory)
+    {
+        return $this->fileManagerFacade->findFileDirectory($idFileDirectory);
+    }
+
+    /**
      * @api
      *
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer

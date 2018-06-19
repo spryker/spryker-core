@@ -9,6 +9,7 @@ namespace Spryker\Zed\FileManager\Business;
 
 use Spryker\Zed\FileManager\Business\Model\FileContent;
 use Spryker\Zed\FileManager\Business\Model\FileDirectoryLocalizedAttributesSaver;
+use Spryker\Zed\FileManager\Business\Model\FileDirectoryReader;
 use Spryker\Zed\FileManager\Business\Model\FileDirectoryRemover;
 use Spryker\Zed\FileManager\Business\Model\FileDirectorySaver;
 use Spryker\Zed\FileManager\Business\Model\FileLocalizedAttributesSaver;
@@ -55,6 +56,14 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createFileDirectoryLocalizedAttributesSaver()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\FileManager\Business\Model\FileDirectoryReaderInterface
+     */
+    public function createFileDirectoryReader()
+    {
+        return new FileDirectoryReader($this->getRepository());
     }
 
     /**

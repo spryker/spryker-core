@@ -9,10 +9,9 @@ namespace Spryker\Zed\FileManagerGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\FileDirectoryLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\FileDirectoryTransfer;
-use Orm\Zed\FileManager\Persistence\SpyFileDirectory;
 use Spryker\Zed\FileManagerGui\Communication\Form\FileDirectoryForm;
+use Spryker\Zed\FileManagerGui\Dependency\Facade\FileManagerGuiToFileManagerFacadeInterface;
 use Spryker\Zed\FileManagerGui\Dependency\Facade\FileManagerGuiToLocaleFacadeInterface;
-use Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerInterface;
 
 class FileDirectoryFormDataProvider
 {
@@ -21,7 +20,7 @@ class FileDirectoryFormDataProvider
     /**
      * @var \Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerInterface
      */
-    protected $queryContainer;
+    protected $fileManagerFacade;
 
     /**
      * @var \Spryker\Zed\FileManagerGui\Dependency\Facade\FileManagerGuiToLocaleFacadeInterface
@@ -29,37 +28,30 @@ class FileDirectoryFormDataProvider
     protected $localeFacade;
 
     /**
-     * @param \Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\FileManagerGui\Dependency\Facade\FileManagerGuiToFileManagerFacadeInterface $fileManagerFacade
      * @param \Spryker\Zed\FileManagerGui\Dependency\Facade\FileManagerGuiToLocaleFacadeInterface $localeFacade
      */
     public function __construct(
-        FileManagerGuiToFileManagerQueryContainerInterface $queryContainer,
+        FileManagerGuiToFileManagerFacadeInterface $fileManagerFacade,
         FileManagerGuiToLocaleFacadeInterface $localeFacade
     ) {
-        $this->queryContainer = $queryContainer;
+        $this->fileManagerFacade = $fileManagerFacade;
         $this->localeFacade = $localeFacade;
     }
 
     /**
-     * @param int|null $idFile
+     * @param int|null $idFileDirectory
      *
      * @return \Generated\Shared\Transfer\FileDirectoryTransfer
      */
-    public function getData($idFile = null)
+    public function getData($idFileDirectory = null)
     {
-        if ($idFile === null) {
+        if ($idFileDirectory === null) {
             return $this->createEmptyFileDirectoryTransfer();
         }
 
-        $fileDirectory = $this
-            ->queryContainer
-            ->queryFileDirectoryById($idFile)
-            ->findOne();
-
-        $fileDirectoryTransfer = $this->createEmptyFileDirectoryTransfer();
-
-        $this->addFileDirectoryLocalizedAttributes($fileDirectory, $fileDirectoryTransfer);
-        $fileDirectoryTransfer->fromArray($fileDirectory->toArray());
+        $fileDirectoryTransfer = $this->fileManagerFacade->findFileDirectory($idFileDirectory);
+        $this->setFileDirectoryLocalizedAttributes($fileDirectoryTransfer);
 
         return $fileDirectoryTransfer;
     }
@@ -100,38 +92,34 @@ class FileDirectoryFormDataProvider
     }
 
     /**
-     * @param \Orm\Zed\FileManager\Persistence\SpyFileDirectory $fileDirectory
      * @param \Generated\Shared\Transfer\FileDirectoryTransfer $fileDirectoryTransfer
      *
      * @return void
      */
-    protected function addFileDirectoryLocalizedAttributes(SpyFileDirectory $fileDirectory, FileDirectoryTransfer $fileDirectoryTransfer)
+    protected function setFileDirectoryLocalizedAttributes(FileDirectoryTransfer $fileDirectoryTransfer)
     {
-        $savedLocalizedAttributes = $fileDirectory->getSpyFileDirectoryLocalizedAttributess()
-            ->toKeyIndex(static::FK_LOCALE_KEY);
+        $locales = $this->getTransformedAvailableLocales($this->getAvailableLocales());
 
-        foreach ($fileDirectoryTransfer->getFileDirectoryLocalizedAttributes() as $fileLocalizedAttribute) {
-            $fkLocale = $fileLocalizedAttribute->getLocale()->getIdLocale();
-
-            if (!empty($savedLocalizedAttributes[$fkLocale])) {
-                $fileLocalizedAttribute->fromArray($savedLocalizedAttributes[$fkLocale]->toArray());
+        foreach ($fileDirectoryTransfer->getFileDirectoryLocalizedAttributes() as $attribute) {
+            if (isset($locales[$attribute->getFkLocale()])) {
+                $attribute->setLocale($locales[$attribute->getFkLocale()]);
             }
         }
     }
 
     /**
-     * @param \Generated\Shared\Transfer\FileDirectoryTransfer $fileDirectoryTransfer
+     * @param array $locales
      *
-     * @return \Generated\Shared\Transfer\FileDirectoryTransfer
+     * @return array
      */
-    protected function setTranslationFields(FileDirectoryTransfer $fileDirectoryTransfer)
+    protected function getTransformedAvailableLocales(array $locales)
     {
-        foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
-            $fileDirectoryLocalizedAttributesTransfer = new FileDirectoryLocalizedAttributesTransfer();
-            $fileDirectoryLocalizedAttributesTransfer->setFkLocale($localeTransfer->getIdLocale());
-            $fileDirectoryTransfer->addFileDirectoryLocalizedAttribute($fileDirectoryLocalizedAttributesTransfer);
+        $transformed = [];
+
+        foreach ($locales as $locale) {
+            $transformed[$locale->getIdLocale()] = $locale;
         }
 
-        return $fileDirectoryTransfer;
+        return $transformed;
     }
 }

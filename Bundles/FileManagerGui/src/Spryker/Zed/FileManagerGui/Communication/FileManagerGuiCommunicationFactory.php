@@ -138,14 +138,6 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerInterface
-     */
-    public function getFileManagerQueryContainer()
-    {
-        return $this->getProvidedDependency(FileManagerGuiDependencyProvider::QUERY_CONTAINER_FILE_MANAGER);
-    }
-
-    /**
      * @return \Spryker\Zed\FileManagerGui\Dependency\Facade\FileManagerGuiToLocaleFacadeInterface
      */
     public function getLocaleFacade()
@@ -159,7 +151,7 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createFileDirectoryFormDataProvider()
     {
         return new FileDirectoryFormDataProvider(
-            $this->getFileManagerQueryContainer(),
+            $this->getFileManagerFacade(),
             $this->getLocaleFacade()
         );
     }

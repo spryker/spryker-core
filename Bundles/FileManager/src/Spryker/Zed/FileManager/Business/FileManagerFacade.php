@@ -105,6 +105,16 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
      *
      * {@inheritdoc}
      */
+    public function findFileDirectory($idFileDirectory)
+    {
+        return $this->getFactory()->createFileDirectoryReader()->getFileDirectory($idFileDirectory);
+    }
+
+    /**
+     * @api
+     *
+     * {@inheritdoc}
+     */
     public function findFileDirectoryTree(?LocaleTransfer $localeTransfer = null)
     {
         return $this->getFactory()
