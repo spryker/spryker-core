@@ -1,16 +1,16 @@
 <?php
+
 /**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Calculation\Business\Model\Calculator;
 
-use Generated\Shared\Transfer\CalculableObjectTransfer;
-use Spryker\Zed\Calculation\Dependency\Plugin\CalculationPluginInterface;
 use ArrayObject;
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 
-class RemoveCanceledAmountCalculatorPlugin implements CalculationPluginInterface
+class RemoveCanceledAmountCalculator implements CalculatorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
@@ -19,7 +19,7 @@ class RemoveCanceledAmountCalculatorPlugin implements CalculationPluginInterface
      */
     public function recalculate(CalculableObjectTransfer $calculableObjectTransfer)
     {
-       $this->recalculateCanceledAmountForItems($calculableObjectTransfer->getItems());
+        $this->recalculateCanceledAmountForItems($calculableObjectTransfer->getItems());
     }
 
     /**

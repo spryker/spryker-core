@@ -294,6 +294,19 @@ interface CalculationFacadeInterface
     public function removeAllCalculatedDiscounts(CalculableObjectTransfer $calculableObjectTransfer);
 
     /**
+     * Specification:
+     *  - Loops over items
+     *  - Sets to zero canceled amount
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return void
+     */
+    public function removeCanceledAmount(CalculableObjectTransfer $calculableObjectTransfer);
+
+    /**
      *
      * Specification:
      *  - Calculates order total before taxes, net total.
