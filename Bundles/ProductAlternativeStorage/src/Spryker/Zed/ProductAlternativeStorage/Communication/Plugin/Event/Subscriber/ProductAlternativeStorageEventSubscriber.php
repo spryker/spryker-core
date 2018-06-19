@@ -53,6 +53,17 @@ class ProductAlternativeStorageEventSubscriber extends AbstractPlugin implements
      *
      * @return void
      */
+    protected function addProductAlternativeUnpublishListener(EventCollectionInterface $eventCollection): void
+    {
+        $eventCollection
+            ->addListenerQueued(ProductAlternativeEvents::PRODUCT_ALTERNATIVE_UNPUBLISH, new ProductAlternativeStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
     protected function addProductAlternativeCreateListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection
@@ -105,6 +116,7 @@ class ProductAlternativeStorageEventSubscriber extends AbstractPlugin implements
     protected function addProductAlternativesListeners(EventCollectionInterface $eventCollection): void
     {
         $this->addProductAlternativePublishListener($eventCollection);
+        $this->addProductAlternativeUnpublishListener($eventCollection);
         $this->addProductAlternativeCreateListener($eventCollection);
         $this->addProductAlternativeUpdateListener($eventCollection);
         $this->addProductAlternativeDeleteListener($eventCollection);
