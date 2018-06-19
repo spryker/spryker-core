@@ -12,7 +12,6 @@ use Orm\Zed\FileManager\Persistence\SpyFileQuery;
 use Orm\Zed\FileManager\Persistence\SpyMimeTypeQuery;
 use Spryker\Zed\FileManagerGui\Dependency\Facade\FileManagerGuiToFileManagerFacadeBridge;
 use Spryker\Zed\FileManagerGui\Dependency\Facade\FileManagerGuiToLocaleFacadeBridge;
-use Spryker\Zed\FileManagerGui\Dependency\QueryContainer\FileManagerGuiToFileManagerQueryContainerBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -20,7 +19,6 @@ class FileManagerGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     const FACADE_FILE_MANAGER = 'FACADE_FILE_MANAGER';
     const FACADE_LOCALE = 'FACADE_LOCALE';
-    const QUERY_CONTAINER_FILE_MANAGER = 'QUERY_CONTAINER_FILE_MANAGER';
     const PROPEL_QUERY_FILE = 'PROPEL_QUERY_FILE';
     const PROPEL_QUERY_FILE_INFO = 'PROPEL_QUERY_FILE_INFO';
     const PROPEL_QUERY_MIME_TYPE = 'PROPEL_QUERY_MIME_TYPE';
@@ -33,7 +31,6 @@ class FileManagerGuiDependencyProvider extends AbstractBundleDependencyProvider
     public function provideCommunicationLayerDependencies(Container $container)
     {
         $container = $this->addFileManagerFacade($container);
-        $container = $this->addFileManagerQueryContainer($container);
         $container = $this->addLocaleFacade($container);
         $container = $this->addQueries($container);
 
@@ -50,22 +47,6 @@ class FileManagerGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container[static::FACADE_FILE_MANAGER] = function (Container $container) {
             return new FileManagerGuiToFileManagerFacadeBridge(
                 $container->getLocator()->fileManager()->facade()
-            );
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addFileManagerQueryContainer(Container $container)
-    {
-        $container[static::QUERY_CONTAINER_FILE_MANAGER] = function (Container $container) {
-            return new FileManagerGuiToFileManagerQueryContainerBridge(
-                $container->getLocator()->fileManager()->queryContainer()
             );
         };
 

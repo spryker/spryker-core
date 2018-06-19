@@ -18,7 +18,7 @@ class FileRemover implements FileRemoverInterface
     use TransactionTrait;
 
     /**
-     * @var \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface
+     * @var \Spryker\Zed\FileManager\Persistence\FileManagerEntityManagerInterface
      */
     protected $entityManager;
 

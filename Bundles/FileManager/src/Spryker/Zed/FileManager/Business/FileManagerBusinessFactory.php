@@ -27,7 +27,6 @@ use Spryker\Zed\FileManager\FileManagerDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
- * @method \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\FileManager\FileManagerConfig getConfig()
  */
 class FileManagerBusinessFactory extends AbstractBusinessFactory

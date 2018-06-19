@@ -8,7 +8,6 @@
 namespace Spryker\Zed\FileManager\Business\Model;
 
 use Generated\Shared\Transfer\FileDirectoryTransfer;
-use Orm\Zed\FileManager\Persistence\SpyFileDirectory;
 use Spryker\Zed\FileManager\Persistence\FileManagerEntityManagerInterface;
 use Spryker\Zed\FileManager\Persistence\FileManagerRepositoryInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
@@ -70,27 +69,5 @@ class FileDirectorySaver implements FileDirectorySaverInterface
         $this->attributesSaver->save($fileDirectoryTransfer);
 
         return $fileDirectoryTransfer->getIdFileDirectory();
-    }
-
-    /**
-     * @param \Orm\Zed\FileManager\Persistence\SpyFileDirectory $fileDirectory
-     * @param \Generated\Shared\Transfer\FileDirectoryTransfer $fileDirectoryTransfer
-     *
-     * @return int
-     */
-    protected function saveFileDirectory(SpyFileDirectory $fileDirectory, FileDirectoryTransfer $fileDirectoryTransfer)
-    {
-        return $this->handleDatabaseTransaction(
-            function () use ($fileDirectory, $fileDirectoryTransfer) {
-                $fileDirectory->fromArray($fileDirectoryTransfer->toArray());
-
-                $fileDirectory->save();
-                $idFileDirectory = $fileDirectory->getIdFileDirectory();
-                $this->attributesSaver->saveFileLocalizedAttributes($fileDirectory, $fileDirectoryTransfer);
-
-                return $idFileDirectory;
-            },
-            $this->queryContainer->getConnection()
-        );
     }
 }

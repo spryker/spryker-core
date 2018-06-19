@@ -18,7 +18,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\FileManager\FileManagerConfig getConfig()
- * @method \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainerInterface getQueryContainer()
  */
 class FileManagerPersistenceFactory extends AbstractPersistenceFactory
 {
