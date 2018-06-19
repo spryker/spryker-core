@@ -17,7 +17,6 @@ use Spryker\Zed\Discount\Communication\Form\DiscountForm;
 use Spryker\Zed\Discount\Communication\Form\Transformer\CalculatorAmountTransformer;
 use Spryker\Zed\Discount\Communication\Form\VoucherForm;
 use Spryker\Zed\Discount\Communication\QueryBuilderTransformer\JavascriptQueryBuilderTransformer;
-use Spryker\Zed\Discount\Communication\QueryBuilderTransformer\JavascriptQueryBuilderTransformerInterface;
 use Spryker\Zed\Discount\Communication\Table\DiscountsTable;
 use Spryker\Zed\Discount\Communication\Table\DiscountVoucherCodesTable;
 use Spryker\Zed\Discount\Communication\Tabs\DiscountFormTabs;
@@ -128,7 +127,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return JavascriptQueryBuilderTransformerInterface
+     * @return \Spryker\Zed\Discount\Communication\QueryBuilderTransformer\JavascriptQueryBuilderTransformerInterface
      */
     public function createJavascriptQueryBuilderTransformer()
     {
