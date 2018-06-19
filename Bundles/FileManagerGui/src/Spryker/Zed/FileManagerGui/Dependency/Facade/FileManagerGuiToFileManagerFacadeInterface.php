@@ -10,7 +10,6 @@ namespace Spryker\Zed\FileManagerGui\Dependency\Facade;
 use Generated\Shared\Transfer\FileDirectoryTransfer;
 use Generated\Shared\Transfer\FileDirectoryTreeTransfer;
 use Generated\Shared\Transfer\FileManagerDataTransfer;
-use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\MimeTypeCollectionTransfer;
 use Generated\Shared\Transfer\MimeTypeTransfer;
 
@@ -96,19 +95,13 @@ interface FileManagerGuiToFileManagerFacadeInterface
 
     /**
      * Specification:
-     * - Finds a file info
-     * - Returns a file meta info and a file content with a specified version
+     * - Finds a directory tree
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
-     *
      * @return \Generated\Shared\Transfer\FileManagerDataTransfer
      */
-    public function findFileDirectoryTree(?LocaleTransfer $localeTransfer = null);
+    public function findFileDirectoryTree();
 
     /**
      * Specification:

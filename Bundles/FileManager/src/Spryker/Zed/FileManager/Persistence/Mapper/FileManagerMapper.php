@@ -171,7 +171,7 @@ class FileManagerMapper implements FileManagerMapperInterface
     }
 
     /**
-     * @param \Orm\Zed\FileManager\Persistence\Base\SpyMimeType $mimeType
+     * @param \Orm\Zed\FileManager\Persistence\SpyMimeType $mimeType
      * @param \Generated\Shared\Transfer\MimeTypeTransfer $mimeTypeTransfer
      *
      * @return \Generated\Shared\Transfer\MimeTypeTransfer

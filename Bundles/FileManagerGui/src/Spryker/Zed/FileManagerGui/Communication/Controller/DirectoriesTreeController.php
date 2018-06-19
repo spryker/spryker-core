@@ -22,13 +22,9 @@ class DirectoriesTreeController extends AbstractController
      */
     public function indexAction()
     {
-        $localeTransfer = $this->getFactory()
-            ->getLocaleFacade()
-            ->getCurrentLocale();
-
         $fileDirectoryTreeTransfer = $this->getFactory()
             ->getFileManagerFacade()
-            ->findFileDirectoryTree($localeTransfer);
+            ->findFileDirectoryTree();
 
         $fileTable = $this->getFactory()
             ->createFileTable();

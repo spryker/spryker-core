@@ -57,13 +57,15 @@ class FileDirectoryTreeHierarchyUpdater implements FileDirectoryTreeHierarchyUpd
     /**
      * @param \Generated\Shared\Transfer\FileDirectoryTreeTransfer $fileDirectoryTreeTransfer
      *
-     * @return void
+     * @return bool
      */
     protected function executeUpdateFileDirectoryTreeHierarchyTransaction(FileDirectoryTreeTransfer $fileDirectoryTreeTransfer)
     {
         foreach ($fileDirectoryTreeTransfer->getNodes() as $fileDirectoryTreeNodeTransfer) {
             $this->persistFileDirectoryTreeNodeRecursively($fileDirectoryTreeNodeTransfer);
         }
+
+        return true;
     }
 
     /**
@@ -133,7 +135,7 @@ class FileDirectoryTreeHierarchyUpdater implements FileDirectoryTreeHierarchyUpd
             throw new FileDirectoryNotFoundException(
                 sprintf(
                     'File directory entity not found with ID %d.',
-                    $fileDirectoryTransfer->getIdFileDirectory()
+                    $idFileDirectory
                 )
             );
         }
