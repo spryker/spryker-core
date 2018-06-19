@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductPackagingUnit\Persistence;
 
+use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -77,5 +78,32 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
             ->createProductPackagingUnitQuery()
             ->filterByFkProductPackagingUnitType($productPackagingUnitTypeId)
             ->count();
+    }
+
+    /**
+     * @param int $productAbstractId
+     *
+     * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null
+     */
+    public function getProductPackagingLeadProductByAbstractId(
+        int $productAbstractId
+    ): ?ProductPackagingLeadProductTransfer {
+        $productPackagingLeadProductEntity = $this->getFactory()
+            ->createProductPackagingLeadProductQuery()
+            ->filterByFkProductAbstract($productAbstractId)
+            ->findOne();
+
+        if (!$productPackagingLeadProductEntity) {
+            return null;
+        }
+
+        $productPackagingLeadProductTransfer = $this->getFactory()
+            ->createProductPackagingLeadProductMapper()
+            ->mapProductPackagingLeadProductTransfer(
+                $productPackagingLeadProductEntity,
+                new ProductPackagingLeadProductTransfer()
+            );
+
+        return $productPackagingLeadProductTransfer;
     }
 }

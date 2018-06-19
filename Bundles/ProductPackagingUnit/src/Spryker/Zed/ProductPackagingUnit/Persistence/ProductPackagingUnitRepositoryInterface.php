@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductPackagingUnit\Persistence;
 
+use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 
 interface ProductPackagingUnitRepositoryInterface
@@ -18,7 +19,7 @@ interface ProductPackagingUnitRepositoryInterface
      */
     public function getProductPackagingUnitTypeByName(
         string $productPackagingUnitTypeName
-    ): ?ProductPackagingUnitTypeTransfer;
+    ): ProductPackagingUnitTypeTransfer;
 
     /**
      * @param int $productPackagingUnitTypeId
@@ -37,4 +38,13 @@ interface ProductPackagingUnitRepositoryInterface
     public function getCountProductPackagingUnitsForTypeById(
         int $productPackagingUnitTypeId
     ): int;
+
+    /**
+     * @param int $productAbstractId
+     *
+     * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null
+     */
+    public function getProductPackagingLeadProductByAbstractId(
+        int $productAbstractId
+    ): ?ProductPackagingLeadProductTransfer;
 }

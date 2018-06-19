@@ -35,7 +35,7 @@ class CreateController extends AbstractProductPackagingUnitGuiController
                 $productPackagingUnitTypeDataProvider->getOptions()
             )
             ->handleRequest($request);
-        
+
         if ($productPackagingUnitTypeForm->isSubmitted() && $productPackagingUnitTypeForm->isValid()) {
             return $this->createProductPackagingUnitType($request, $productPackagingUnitTypeForm);
         }

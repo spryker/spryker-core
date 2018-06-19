@@ -7,13 +7,14 @@
 
 namespace Spryker\Zed\ProductPackagingUnit\Business;
 
+use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 
 interface ProductPackagingUnitFacadeInterface
 {
     /**
      * Specification:
-     * - Add infrastructural packaging unit type list to persistence.
+     *  - Add infrastructural packaging unit type list to persistence.
      *
      * @api
      *
@@ -23,13 +24,23 @@ interface ProductPackagingUnitFacadeInterface
 
     /**
      * Specification:
-     * - Retrieve infrastructural packaging unit type list as an array of strings.
+     *  - Retrieves infrastructural packaging unit type list as an array of strings.
      *
      * @api
      *
      * @return string[]
      */
     public function getInfrastructuralPackagingUnitTypeKeys(): array;
+
+    /**
+     * Specification:
+     *  - Returns Default Packaging Unit Type Name
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getDefaultPackagingUnitTypeName(): string;
 
     /**
      * Specification:
@@ -44,6 +55,20 @@ interface ProductPackagingUnitFacadeInterface
     public function getProductPackagingUnitTypeByName(
         ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
     ): ProductPackagingUnitTypeTransfer;
+
+    /**
+     * Specification:
+     *  - Retrieve a product packaging lead product by productAbstractId in the transfer.
+     *
+     * @api
+     *
+     * @param int $productAbstractId
+     *
+     * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null
+     */
+    public function getProductPackagingLeadProductByAbstractId(
+        int $productAbstractId
+    ): ?ProductPackagingLeadProductTransfer;
 
     /**
      * Specification:
