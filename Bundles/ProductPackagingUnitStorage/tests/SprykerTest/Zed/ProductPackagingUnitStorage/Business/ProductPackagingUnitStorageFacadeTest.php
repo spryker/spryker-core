@@ -24,11 +24,7 @@ use Spryker\Client\Queue\QueueDependencyProvider;
  */
 class ProductPackagingUnitStorageFacadeTest extends Unit
 {
-    /**
-     * @see ProductPackagingUnitDataImport/data/import/product_packaging_unit.csv
-     */
-    protected const ID_PRODUCT_ABSTRACT = '217';
-    protected const PRODUCT_SKU = '217_123';
+    protected const PRODUCT_ABSTRACT_SKU = '217';
 
     /**
      * @var \SprykerTest\Zed\ProductPackagingUnitStorage\ProductPackagingUnitStorageBusinessTester
@@ -61,12 +57,13 @@ class ProductPackagingUnitStorageFacadeTest extends Unit
      */
     public function testPublishProductAbstractPackagingDoesNotThrowException(): void
     {
-        $productAbstractTransfer = $this->tester->haveProductAbstract([
-            'sku' => static::PRODUCT_SKU,
-            'id_product_abstract' => static::ID_PRODUCT_ABSTRACT,
-        ]);
+        $this->tester->assertStorageDatabaseTableIsEmpty();
 
-        $this->productPackagingUnitStorageFacade->publishProductAbstractPackaging([$productAbstractTransfer->getIdProductAbstract()]);
+        if (!$this->tester->isProductAbstractCreated(static::PRODUCT_ABSTRACT_SKU)) {
+            $this->tester->haveProductAbstract(['sku' => static::PRODUCT_ABSTRACT_SKU]);
+        }
+
+        $this->productPackagingUnitStorageFacade->publishProductAbstractPackaging([static::PRODUCT_ABSTRACT_SKU]);
 
         $this->assertTrue(true);
     }
@@ -76,13 +73,13 @@ class ProductPackagingUnitStorageFacadeTest extends Unit
      */
     public function testUnpublishProductAbstractPackagingDoesNotThrowException(): void
     {
+        $this->tester->assertStorageDatabaseTableIsEmpty();
 
-        $productAbstractTransfer = $this->tester->haveProductAbstract([
-            'sku' => static::PRODUCT_SKU,
-            'id_product_abstract' => static::ID_PRODUCT_ABSTRACT,
-        ]);
+        if (!$this->tester->isProductAbstractCreated(static::PRODUCT_ABSTRACT_SKU)) {
+            $this->tester->haveProductAbstract(['sku' => static::PRODUCT_ABSTRACT_SKU]);
+        }
 
-        $this->productPackagingUnitStorageFacade->unpublishProductAbstractPackaging([$productAbstractTransfer->getIdProductAbstract()]);
+        $this->productPackagingUnitStorageFacade->unpublishProductAbstractPackaging([static::PRODUCT_ABSTRACT_SKU]);
 
         $this->assertTrue(true);
     }
