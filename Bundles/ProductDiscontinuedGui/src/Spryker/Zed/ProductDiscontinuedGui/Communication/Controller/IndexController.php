@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductDiscontinuedGui\Communication\Controller;
 
-use Generated\Shared\Transfer\ProductDiscontinuedRequestTransfer;
+use Generated\Shared\Transfer\ProductDiscontinueRequestTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,7 +35,7 @@ class IndexController extends AbstractController
     {
         $idProductConcrete = $this->castId($request->get(static::PARAM_ID_PRODUCT_CONCRETE));
 
-        $productDiscontinuedRequestTransfer = (new ProductDiscontinuedRequestTransfer())
+        $productDiscontinuedRequestTransfer = (new ProductDiscontinueRequestTransfer())
             ->setIdProduct($idProductConcrete);
 
         $productDiscontinuedResponseTransfer = $this->getFactory()
@@ -61,7 +61,7 @@ class IndexController extends AbstractController
     {
         $idProductConcrete = $this->castId($request->get(static::PARAM_ID_PRODUCT_CONCRETE));
 
-        $productDiscontinuedRequestTransfer = (new ProductDiscontinuedRequestTransfer())
+        $productDiscontinuedRequestTransfer = (new ProductDiscontinueRequestTransfer())
             ->setIdProduct($idProductConcrete);
 
         $productDiscontinuedResponseTransfer = $this->getFactory()

@@ -22,7 +22,8 @@ class ProductDiscontinuedDependencyProvider extends AbstractBundleDependencyProv
      */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
-        $this->addProductFacade($container);
+        $container = parent::provideBusinessLayerDependencies($container);
+        $container = $this->addProductFacade($container);
 
         return $container;
     }

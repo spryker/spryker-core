@@ -29,16 +29,36 @@ class ProductDiscontinuedStorageEventSubscriber extends AbstractPlugin implement
      */
     public function getSubscribedEvents(EventCollectionInterface $eventCollection)
     {
+        $this->addProductDiscontinuedListeners($eventCollection);
+        $this->addProductDiscontinuedNoteListeners($eventCollection);
+
+        return $eventCollection;
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductDiscontinuedListeners(EventCollectionInterface $eventCollection): void
+    {
         $this->addProductDiscontinuedPublishListener($eventCollection);
         $this->addProductDiscontinuedUnpublishListener($eventCollection);
         $this->addProductDiscontinuedCreateListener($eventCollection);
         $this->addProductDiscontinuedUpdateListener($eventCollection);
         $this->addProductDiscontinuedDeleteListener($eventCollection);
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductDiscontinuedNoteListeners(EventCollectionInterface $eventCollection): void
+    {
         $this->addProductDiscontinuedNoteCreateListener($eventCollection);
         $this->addProductDiscontinuedNoteUpdateListener($eventCollection);
         $this->addProductDiscontinuedNoteDeleteListener($eventCollection);
-
-        return $eventCollection;
     }
 
     /**

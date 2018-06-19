@@ -26,17 +26,17 @@ class ProductDiscontinuedRepository extends AbstractRepository implements Produc
     public function findProductDiscontinuedByProductId(
         ProductDiscontinuedTransfer $productDiscontinuedTransfer
     ): ?ProductDiscontinuedTransfer {
-        $productDiscontinuedQuery = $this->getFactory()
+        $productDiscontinuedEntity = $this->getFactory()
             ->createProductDiscontinuedQuery()
             ->leftJoinWithSpyProductDiscontinuedNote()
             ->leftJoinWithProduct()
-            ->filterByFkProduct($productDiscontinuedTransfer->getFkProduct());
+            ->filterByFkProduct($productDiscontinuedTransfer->getFkProduct())
+            ->find();
 
-        $productDiscontinuedEntityTransfers = $this->buildQueryFromCriteria($productDiscontinuedQuery)->find();
-        if (count($productDiscontinuedEntityTransfers)) {
+        if ($productDiscontinuedEntity->count()) {
             return $this->getFactory()
                 ->createProductDiscontinuedMapper()
-                ->mapProductDiscontinuedTransfer($productDiscontinuedEntityTransfers[0]);
+                ->mapProductDiscontinuedTransfer($productDiscontinuedEntity->getFirst());
         }
 
         return null;
@@ -47,15 +47,15 @@ class ProductDiscontinuedRepository extends AbstractRepository implements Produc
      */
     public function findProductsToDeactivate(): ProductDiscontinuedCollectionTransfer
     {
-        $productDiscontinuedQuery = $this->getFactory()
+        $productDiscontinuedEntityCollection = $this->getFactory()
             ->createProductDiscontinuedQuery()
-            ->filterByActiveUntil(['max' => time()], Criteria::LESS_THAN);
-        $productDiscontinuedEntityTransfer = $this->buildQueryFromCriteria($productDiscontinuedQuery)->find();
+            ->filterByActiveUntil(['max' => time()], Criteria::LESS_THAN)
+            ->find();
 
-        if ($productDiscontinuedEntityTransfer) {
+        if ($productDiscontinuedEntityCollection->count()) {
             return $this->getFactory()
                 ->createProductDiscontinuedMapper()
-                ->mapTransferCollection($productDiscontinuedEntityTransfer);
+                ->mapTransferCollection($productDiscontinuedEntityCollection);
         }
 
         return new ProductDiscontinuedCollectionTransfer();
@@ -79,12 +79,12 @@ class ProductDiscontinuedRepository extends AbstractRepository implements Produc
                 ->filterByIdProductDiscontinued_In($criteriaFilterTransfer->getIds());
         }
 
-        $productDiscontinuedEntityTransfers = $this->buildQueryFromCriteria($productDiscontinuedQuery)->find();
+        $productDiscontinuedEntityCollection = $productDiscontinuedQuery->find();
 
-        if ($productDiscontinuedEntityTransfers) {
+        if ($productDiscontinuedEntityCollection->count()) {
             return $this->getFactory()
                 ->createProductDiscontinuedMapper()
-                ->mapTransferCollection($productDiscontinuedEntityTransfers);
+                ->mapTransferCollection($productDiscontinuedEntityCollection);
         }
 
         return new ProductDiscontinuedCollectionTransfer();

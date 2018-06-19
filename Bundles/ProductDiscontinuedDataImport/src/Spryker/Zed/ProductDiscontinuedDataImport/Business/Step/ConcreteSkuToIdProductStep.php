@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductDiscontinuedDataImport\Business\Model\Step;
+namespace Spryker\Zed\ProductDiscontinuedDataImport\Business\Step;
 
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\ProductDiscontinuedDataImport\Business\Model\DataSet\ProductDiscontinuedDataSetInterface;
+use Spryker\Zed\ProductDiscontinuedDataImport\Business\DataSet\ProductDiscontinuedDataSetInterface;
 
 class ConcreteSkuToIdProductStep implements DataImportStepInterface
 {

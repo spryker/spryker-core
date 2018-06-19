@@ -32,9 +32,6 @@ class DiscontinueProductConcreteFormEditDataProviderExpanderPlugin extends Abstr
         $discontinuedData = $this->getFactory()
             ->createDiscontinueProductFormDataProvider()
             ->getData($productConcrete->getIdProductConcrete());
-
-        if (!empty($discontinuedData)) {
-            $formData = array_merge($formData, $discontinuedData);
-        }
+        $formData = array_merge($formData, $discontinuedData);
     }
 }
