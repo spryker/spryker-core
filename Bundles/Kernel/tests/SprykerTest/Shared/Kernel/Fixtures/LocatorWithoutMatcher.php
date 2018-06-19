@@ -8,6 +8,7 @@
 namespace SprykerTest\Shared\Kernel\Fixtures;
 
 use Spryker\Shared\Kernel\Locator\LocatorInterface;
+use stdClass;
 
 class LocatorWithoutMatcher implements LocatorInterface
 {
@@ -18,5 +19,6 @@ class LocatorWithoutMatcher implements LocatorInterface
      */
     public function locate($bundle)
     {
+        return new stdClass();
     }
 }

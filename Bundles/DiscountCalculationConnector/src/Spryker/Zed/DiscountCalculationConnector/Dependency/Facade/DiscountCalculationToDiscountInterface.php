@@ -14,7 +14,7 @@ interface DiscountCalculationToDiscountInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return mixed
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function calculateDiscounts(QuoteTransfer $quoteTransfer);
 }

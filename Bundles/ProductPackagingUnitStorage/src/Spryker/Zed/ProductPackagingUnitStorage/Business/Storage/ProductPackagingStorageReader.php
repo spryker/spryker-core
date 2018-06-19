@@ -31,11 +31,6 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
     protected $productPackagingUnitFacade;
 
     /**
-     * @var \Spryker\Zed\ProductPackagingUnitStorage\ProductPackagingUnitStorageConfig
-     */
-    protected $config;
-
-    /**
      * default values for packaging unit storage values.
      */
     protected const PRODUCT_ABSTRACT_STORAGE_DEFAULT_VALUES = [

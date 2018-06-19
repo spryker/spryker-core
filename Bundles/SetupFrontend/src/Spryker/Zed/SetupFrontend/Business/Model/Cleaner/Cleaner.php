@@ -12,7 +12,7 @@ use Symfony\Component\Filesystem\Filesystem;
 class Cleaner implements CleanerInterface
 {
     /**
-     * @var \Symfony\Component\Filesystem\Filesystem
+     * @var \Symfony\Component\Filesystem\Filesystem[]
      */
     protected $directories;
 

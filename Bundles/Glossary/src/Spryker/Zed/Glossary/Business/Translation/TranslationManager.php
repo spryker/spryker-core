@@ -342,7 +342,7 @@ class TranslationManager implements TranslationManagerInterface
     /**
      * @param array $idKeys
      *
-     * @return bool
+     * @return void
      */
     public function deleteTranslationsByFkKeys(array $idKeys)
     {
