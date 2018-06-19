@@ -5,16 +5,18 @@
   "require": {
     "php": ">=7.1",
     "spryker/cart": "^5.0.0",
-    "spryker/company-business-unit": "^1.0.0",
+    "spryker/company-business-unit": "^1.0.0 || ^2.0.0",
     "spryker/company-user": "^1.0.0",
     "spryker/customer": "^7.0.0",
     "spryker/kernel": "^3.0.0",
+    "spryker/messenger": "^3.0.0",
     "spryker/permission": "^1.1.0",
     "spryker/permission-extension": "^1.0.0",
     "spryker/persistent-cart": "^0.1.0 || ^1.0.0",
     "spryker/price-product": "^1.0.0",
     "spryker/product": "^6.0.0",
     "spryker/propel-orm": "^1.0.0",
+    "spryker/shopping-list-extension": "^1.0.0",
     "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
@@ -27,7 +29,13 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Shared\\ShoppingList\\Helper\\": "tests/SprykerTest/Shared/ShoppingList/_support/Helper/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",

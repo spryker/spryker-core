@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface;
 
 class ProductValidator implements ProductValidatorInterface
@@ -18,6 +19,7 @@ class ProductValidator implements ProductValidatorInterface
     const MESSAGE_ERROR_ABSTRACT_PRODUCT_EXISTS = 'product-cart.validation.error.abstract-product-exists';
     const MESSAGE_ERROR_CONCRETE_PRODUCT_EXISTS = 'product-cart.validation.error.concrete-product-exists';
     const MESSAGE_PARAM_SKU = 'sku';
+    public const MESSAGE_ERROR_CONCRETE_PRODUCT_INACTIVE = 'product-cart.validation.error.concrete-product-inactive';
 
     /** @var \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface */
     protected $productFacade;
@@ -41,6 +43,7 @@ class ProductValidator implements ProductValidatorInterface
 
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             if ($itemTransfer->getSku()) {
+                $this->productStatusCheck($itemTransfer, $responseTransfer);
                 $this->validateConcreteItem($itemTransfer, $responseTransfer);
                 continue;
             }
@@ -79,6 +82,33 @@ class ProductValidator implements ProductValidatorInterface
      *
      * @return void
      */
+    protected function productStatusCheck(ItemTransfer $itemTransfer, CartPreCheckResponseTransfer $responseTransfer): void
+    {
+        if ($this->isProductConcreteActive($itemTransfer->getSku())) {
+            return;
+        }
+
+        $responseTransfer->addMessage($this->createItemInactiveErrorMessage($itemTransfer->getSku()));
+    }
+
+    /**
+     * @param string $concreteSku
+     *
+     * @return bool
+     */
+    protected function isProductConcreteActive(string $concreteSku): bool
+    {
+        return $this->productFacade->isProductConcreteActive(
+            (new ProductConcreteTransfer())->setSku($concreteSku)
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $responseTransfer
+     *
+     * @return void
+     */
     protected function validateAbstractItem(ItemTransfer $itemTransfer, CartPreCheckResponseTransfer $responseTransfer)
     {
         $isValid = $this->productFacade->hasProductAbstract($itemTransfer->getAbstractSku());
@@ -93,6 +123,20 @@ class ProductValidator implements ProductValidatorInterface
         ]);
 
         $responseTransfer->addMessage($message);
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @return \Generated\Shared\Transfer\MessageTransfer
+     */
+    protected function createItemInactiveErrorMessage(string $sku): MessageTransfer
+    {
+        return (new MessageTransfer())
+            ->setValue(static::MESSAGE_ERROR_CONCRETE_PRODUCT_INACTIVE)
+            ->setParameters([
+                static::MESSAGE_PARAM_SKU => $sku,
+            ]);
     }
 
     /**

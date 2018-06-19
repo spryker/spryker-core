@@ -58,7 +58,7 @@ class SalesReclamationFacade extends AbstractFacade implements SalesReclamationF
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return null|\Generated\Shared\Transfer\ReclamationTransfer
+     * @return \Generated\Shared\Transfer\ReclamationTransfer
      */
     public function hydrateReclamationByOrder(OrderTransfer $orderTransfer): ReclamationTransfer
     {

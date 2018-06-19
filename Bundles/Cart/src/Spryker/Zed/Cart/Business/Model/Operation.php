@@ -276,7 +276,7 @@ class Operation implements OperationInterface
             }
 
             $this->collectErrorsFromPreCheckResponse($cartPreCheckResponseTransfer);
-            
+
             if ($cartRemovalPreCheckPlugin instanceof TerminationAwareCartPreCheckPluginInterface && $cartRemovalPreCheckPlugin->terminateOnFailure()) {
                 return false;
             }
