@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\ProductDiscontinuedStorage;
 
-use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
+use Generated\Shared\Transfer\ProductDiscontinuedStorageTransfer;
 
 /**
  * @method \Spryker\Client\ProductDiscontinuedStorage\ProductDiscontinuedStorageFactory getFactory()
@@ -16,14 +16,15 @@ interface ProductDiscontinuedStorageClientInterface
 {
     /**
      * Specification:
-     * - Finds a product discontinued within Storage with a given concrete product sku.
+     * - Finds a product discontinued within Storage with a given concrete product sku for given locale.
      * - Returns null if product discontinued was not found.
      *
      * @api
      *
      * @param string $concreteSku
+     * @param string $locale
      *
-     * @return \Generated\Shared\Transfer\ProductDiscontinuedTransfer|null
+     * @return \Generated\Shared\Transfer\ProductDiscontinuedStorageTransfer|null
      */
-    public function findProductDiscontinuedStorage(string $concreteSku): ?ProductDiscontinuedTransfer;
+    public function findProductDiscontinuedStorage(string $concreteSku, string $locale): ?ProductDiscontinuedStorageTransfer;
 }
