@@ -14,12 +14,12 @@ use Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 class QuoteCalculatorExecutor implements QuoteCalculatorExecutorInterface
 {
     /**
-     * @var array|\Spryker\Zed\Calculation\Dependency\Plugin\CalculationPluginInterface[]
+     * @var array|\Spryker\Zed\Calculation\Dependency\Plugin\CalculationPluginInterface[]|CalculatorPluginInterface[]
      */
     protected $quoteCalculators;
 
     /**
-     * @param \Spryker\Zed\Calculation\Dependency\Plugin\CalculationPluginInterface[] $quoteCalculators
+     * @param \Spryker\Zed\Calculation\Dependency\Plugin\CalculationPluginInterface[]|CalculatorPluginInterface[] $quoteCalculators
      */
     public function __construct(array $quoteCalculators)
     {
