@@ -7,7 +7,7 @@
 
 namespace Spryker\Yves\FileWidget\Dependency\Client;
 
-class FileWidgetToFileBridge implements FileWidgetToFileBridgeInterface
+class FileWidgetToFileBridge implements FileWidgetToFileInterface
 {
     /**
      * @var \Spryker\Client\FileManagerStorage\FileManagerStorageClient

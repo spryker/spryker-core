@@ -19,7 +19,7 @@ interface FileManagerStorageClientInterface
      * @param int $fileId
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\FileManagerStorageTransfer|null
+     * @return \Generated\Shared\Transfer\FileStorageDataTransfer|null
      */
     public function findFileById($fileId, $localeName);
 }

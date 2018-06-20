@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\FileManagerStorage\Storage;
 
-use Generated\Shared\Transfer\FileManagerStorageTransfer;
+use Generated\Shared\Transfer\FileStorageDataTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\FileManagerStorage\Dependency\Client\FileManagerStorageToStorageClientInterface;
 use Spryker\Client\FileManagerStorage\Dependency\Service\FileManagerStorageToSynchronizationServiceInterface;
@@ -46,17 +46,17 @@ class FileManagerStorage implements FileManagerStorageInterface
      * @param int $fileId
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\FileManagerStorageTransfer
+     * @return \Generated\Shared\Transfer\FileStorageDataTransfer
      */
     public function findFileById($fileId, $localeName)
     {
         $storageKey = $this->generateKey($fileId, $localeName);
         $fileContent = $this->storageClient->get($storageKey);
 
-        $fileManagerStorageTransfer = new FileManagerStorageTransfer();
-        $fileManagerStorageTransfer->fromArray(($fileContent), true);
+        $fileStorageDataTransfer = new FileStorageDataTransfer();
+        $fileStorageDataTransfer->fromArray(($fileContent), true);
 
-        return $fileManagerStorageTransfer;
+        return $fileStorageDataTransfer;
     }
 
     /**

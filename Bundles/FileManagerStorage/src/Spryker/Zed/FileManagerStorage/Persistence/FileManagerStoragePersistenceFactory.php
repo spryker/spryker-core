@@ -7,14 +7,11 @@
 
 namespace Spryker\Zed\FileManagerStorage\Persistence;
 
-use Orm\Zed\FileManager\Persistence\SpyFileInfoQuery;
 use Orm\Zed\FileManager\Persistence\SpyFileQuery;
 use Orm\Zed\FileManagerStorage\Persistence\SpyFileStorageQuery;
+use Spryker\Zed\FileManagerStorage\Persistence\Mapper\FileManagerStorageMapper;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
-/**
- * @method \Spryker\Zed\FileManagerStorage\Persistence\FileManagerStorageQueryContainerInterface getQueryContainer()
- */
 class FileManagerStoragePersistenceFactory extends AbstractPersistenceFactory
 {
     /**
@@ -28,24 +25,16 @@ class FileManagerStoragePersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\FileManagerStorage\Persistence\SpyFileStorageQuery
      */
-    public function createFileManagerStorageQuery()
-    {
-        return SpyFileStorageQuery::create();
-    }
-
-    /**
-     * @return \Orm\Zed\FileManager\Persistence\SpyFileInfoQuery
-     */
-    public function createFileInfoQuery()
-    {
-        return SpyFileInfoQuery::create();
-    }
-
-    /**
-     * @return \Orm\Zed\FileManagerStorage\Persistence\SpyFileStorageQuery
-     */
     public function createFileStorageQuery()
     {
         return SpyFileStorageQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\FileManagerStorage\Persistence\Mapper\FileManagerStorageMapperInterface
+     */
+    public function createFileManagerStorageMapper()
+    {
+        return new FileManagerStorageMapper();
     }
 }

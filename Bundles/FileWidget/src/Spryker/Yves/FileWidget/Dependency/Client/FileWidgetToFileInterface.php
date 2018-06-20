@@ -7,13 +7,13 @@
 
 namespace Spryker\Yves\FileWidget\Dependency\Client;
 
-interface FileWidgetToFileBridgeInterface
+interface FileWidgetToFileInterface
 {
     /**
      * @param string $fileId
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\FileManagerStorageTransfer|null
+     * @return \Generated\Shared\Transfer\FileStorageDataTransfer
      */
     public function findFileById($fileId, $localeName);
 }

@@ -10,9 +10,6 @@ namespace Spryker\Zed\FileManagerStorage\Communication;
 use Spryker\Zed\FileManagerStorage\FileManagerStorageDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
-/**
- * @method \Spryker\Zed\FileManagerStorage\Persistence\FileManagerStorageQueryContainerInterface getQueryContainer()
- */
 class FileManagerStorageCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
@@ -21,21 +18,5 @@ class FileManagerStorageCommunicationFactory extends AbstractCommunicationFactor
     public function getEventBehaviorFacade()
     {
         return $this->getProvidedDependency(FileManagerStorageDependencyProvider::FACADE_EVENT_BEHAVIOR);
-    }
-
-    /**
-     * @return \Spryker\Zed\FileManagerStorage\Dependency\Facade\FileManagerStorageToLocaleFacadeInterface
-     */
-    public function getLocaleFacade()
-    {
-        return $this->getProvidedDependency(FileManagerStorageDependencyProvider::FACADE_LOCALE);
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    public function getStore()
-    {
-        return $this->getProvidedDependency(FileManagerStorageDependencyProvider::STORE);
     }
 }

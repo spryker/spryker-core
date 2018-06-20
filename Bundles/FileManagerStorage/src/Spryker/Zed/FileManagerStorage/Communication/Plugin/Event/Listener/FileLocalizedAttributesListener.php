@@ -12,7 +12,6 @@ use Spryker\Zed\FileManager\Dependency\FileManagerEvents;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
- * @method \Spryker\Zed\FileManagerStorage\Persistence\FileManagerStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\FileManagerStorage\Communication\FileManagerStorageCommunicationFactory getFactory()
  */
 class FileLocalizedAttributesListener extends AbstractFileManagerListener
