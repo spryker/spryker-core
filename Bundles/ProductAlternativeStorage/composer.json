@@ -1,17 +1,22 @@
 {
-  "name": "spryker/product-alternative-data-import",
-  "description": "ProductAlternativeDataImport module",
-  "license": "MIT",
+  "name": "spryker/product-alternative-storage",
+  "description": "ProductAlternativeStorage module",
+  "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/data-import": "^1.2.0",
+    "spryker/event-behavior": "^1.0.0",
+    "spryker/kernel": "^3.21.0",
     "spryker/product": "^6.0.0",
     "spryker/product-alternative": "^1.0.0",
-    "spryker/kernel": "^3.0.0"
+    "spryker/propel-orm": "^1.0.0",
+    "spryker/storage": "^3.4.0",
+    "spryker/synchronization": "^0.2.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/event": "*"
+  },
+  "suggest": {
+    "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0"
   },
   "autoload": {
     "psr-4": {
