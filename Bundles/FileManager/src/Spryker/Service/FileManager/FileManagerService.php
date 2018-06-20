@@ -14,28 +14,6 @@ use Spryker\Service\Kernel\AbstractService;
  */
 class FileManagerService extends AbstractService implements FileManagerServiceInterface
 {
-    const URL_PARAM_ID_FILE_INFO = 'id-file-info';
-
-    /**
-     * @param string $fileName
-     *
-     * @return string
-     */
-    public function getPublicUrl(string $fileName)
-    {
-        return sprintf('/download/%s', $fileName);
-    }
-
-    /**
-     * @param string $fileName
-     *
-     * @return string
-     */
-    public function getZedUrl(string $fileName)
-    {
-        return sprintf('/file-manager/download?%s=%s', static::URL_PARAM_ID_FILE_INFO, $fileName);
-    }
-
     /**
      * {@inheritdoc}
      */
