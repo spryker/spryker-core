@@ -24,7 +24,10 @@ class DependencyProviderResolver extends AbstractClassResolver
     {
         $this->setCallerClass($callerClass);
         if ($this->canResolve()) {
-            return $this->getResolvedClassInstance();
+            /** @var \Spryker\Zed\Kernel\AbstractBundleDependencyProvider $class */
+            $class = $this->getResolvedClassInstance();
+
+            return $class;
         }
 
         throw new DependencyProviderNotFoundException($this->getClassInfo());

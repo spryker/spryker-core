@@ -9,18 +9,17 @@ namespace Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinued;
 
 use Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer;
-use Generated\Shared\Transfer\ProductDiscontinuedRequestTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer;
 
 interface ProductDiscontinuedReaderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductDiscontinuedRequestTransfer $productDiscontinuedRequestTransfer
+     * @param int $idProduct
      *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer
      */
     public function findProductDiscontinuedByProductId(
-        ProductDiscontinuedRequestTransfer $productDiscontinuedRequestTransfer
+        int $idProduct
     ): ProductDiscontinuedResponseTransfer;
 
     /**

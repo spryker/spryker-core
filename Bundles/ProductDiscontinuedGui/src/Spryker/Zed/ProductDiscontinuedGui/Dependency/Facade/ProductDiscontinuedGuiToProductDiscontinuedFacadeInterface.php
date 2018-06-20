@@ -7,35 +7,33 @@
 
 namespace Spryker\Zed\ProductDiscontinuedGui\Dependency\Facade;
 
-use Generated\Shared\Transfer\ProductDiscontinuedRequestTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer;
+use Generated\Shared\Transfer\ProductDiscontinueRequestTransfer;
 
 interface ProductDiscontinuedGuiToProductDiscontinuedFacadeInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductDiscontinuedRequestTransfer $productDiscontinuedRequestTransfer
+     * @param \Generated\Shared\Transfer\ProductDiscontinueRequestTransfer $productDiscontinuedRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer
      */
     public function unmarkProductAsDiscontinued(
-        ProductDiscontinuedRequestTransfer $productDiscontinuedRequestTransfer
+        ProductDiscontinueRequestTransfer $productDiscontinuedRequestTransfer
     ): ProductDiscontinuedResponseTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\ProductDiscontinuedRequestTransfer $productDiscontinuedRequestTransfer
+     * @param \Generated\Shared\Transfer\ProductDiscontinueRequestTransfer $productDiscontinuedRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer
      */
     public function markProductAsDiscontinued(
-        ProductDiscontinuedRequestTransfer $productDiscontinuedRequestTransfer
+        ProductDiscontinueRequestTransfer $productDiscontinuedRequestTransfer
     ): ProductDiscontinuedResponseTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\ProductDiscontinuedRequestTransfer $productDiscontinuedRequestTransfer
+     * @param int $idProduct
      *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer
      */
-    public function findProductDiscontinuedByProductId(
-        ProductDiscontinuedRequestTransfer $productDiscontinuedRequestTransfer
-    ): ProductDiscontinuedResponseTransfer;
+    public function findProductDiscontinuedByProductId(int $idProduct): ProductDiscontinuedResponseTransfer;
 }

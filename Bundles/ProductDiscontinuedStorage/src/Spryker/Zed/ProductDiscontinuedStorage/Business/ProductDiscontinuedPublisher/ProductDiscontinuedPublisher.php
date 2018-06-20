@@ -23,7 +23,7 @@ class ProductDiscontinuedPublisher implements ProductDiscontinuedPublisherInterf
     /**
      * @var \Spryker\Zed\ProductDiscontinuedStorage\Persistence\ProductDiscontinuedStorageEntityManagerInterface
      */
-    protected $discontinuedStorageEntityManager;
+    protected $productDiscontinuedStorageEntityManager;
 
     /**
      * @var \Spryker\Zed\ProductDiscontinuedStorage\Persistence\ProductDiscontinuedStorageRepositoryInterface
@@ -41,18 +41,18 @@ class ProductDiscontinuedPublisher implements ProductDiscontinuedPublisherInterf
     protected $localeFacade;
 
     /**
-     * @param \Spryker\Zed\ProductDiscontinuedStorage\Persistence\ProductDiscontinuedStorageEntityManagerInterface $discontinuedStorageEntityManager
+     * @param \Spryker\Zed\ProductDiscontinuedStorage\Persistence\ProductDiscontinuedStorageEntityManagerInterface $productDiscontinuedStorageEntityManager
      * @param \Spryker\Zed\ProductDiscontinuedStorage\Persistence\ProductDiscontinuedStorageRepositoryInterface $productDiscontinuedStorageRepository
      * @param \Spryker\Zed\ProductDiscontinuedStorage\Dependency\Facade\ProductDiscontinuedStorageToProductDiscontinuedFacadeInterface $productDiscontinuedFacade
      * @param \Spryker\Zed\ProductDiscontinuedStorage\Dependency\Facade\ProductDiscontinuedStorageToLocaleFacadeInterface $localeFacade
      */
     public function __construct(
-        ProductDiscontinuedStorageEntityManagerInterface $discontinuedStorageEntityManager,
+        ProductDiscontinuedStorageEntityManagerInterface $productDiscontinuedStorageEntityManager,
         ProductDiscontinuedStorageRepositoryInterface $productDiscontinuedStorageRepository,
         ProductDiscontinuedStorageToProductDiscontinuedFacadeInterface $productDiscontinuedFacade,
         ProductDiscontinuedStorageToLocaleFacadeInterface $localeFacade
     ) {
-        $this->discontinuedStorageEntityManager = $discontinuedStorageEntityManager;
+        $this->productDiscontinuedStorageEntityManager = $productDiscontinuedStorageEntityManager;
         $this->productDiscontinuedStorageRepository = $productDiscontinuedStorageRepository;
         $this->productDiscontinuedFacade = $productDiscontinuedFacade;
         $this->localeFacade = $localeFacade;
@@ -83,7 +83,7 @@ class ProductDiscontinuedPublisher implements ProductDiscontinuedPublisherInterf
     ): void {
         $indexProductDiscontinuedStorageEntityTransfers = $this->indexProductDiscontinuedStorageEntities($productDiscontinuedStorageEntityTransfers);
         $localeTransfers = $this->localeFacade->getLocaleCollection();
-        foreach ($productDiscontinuedCollectionTransfer->getDiscontinueds() as $productDiscontinuedTransfer) {
+        foreach ($productDiscontinuedCollectionTransfer->getDiscontinuedProducts() as $productDiscontinuedTransfer) {
             $this->storeLocalizedData(
                 $productDiscontinuedTransfer,
                 $indexProductDiscontinuedStorageEntityTransfers,
@@ -135,10 +135,10 @@ class ProductDiscontinuedPublisher implements ProductDiscontinuedPublisherInterf
             ->setSku($productDiscontinuedTransfer->getSku())
             ->setLocale($localeTransfer->getLocaleName())
             ->setData(
-                $this->mapStorageTransfer($productDiscontinuedTransfer, $localeTransfer)->toArray()
+                $this->mapToProductDiscontinuedStorageTransfer($productDiscontinuedTransfer, $localeTransfer)->toArray()
             );
 
-        $this->discontinuedStorageEntityManager->saveProductDiscontinuedStorageEntity($productDiscontinuedStorageEntityTransfer);
+        $this->productDiscontinuedStorageEntityManager->saveProductDiscontinuedStorageEntity($productDiscontinuedStorageEntityTransfer);
     }
 
     /**
@@ -186,7 +186,7 @@ class ProductDiscontinuedPublisher implements ProductDiscontinuedPublisherInterf
      *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedStorageTransfer
      */
-    protected function mapStorageTransfer(
+    protected function mapToProductDiscontinuedStorageTransfer(
         ProductDiscontinuedTransfer $productDiscontinuedTransfer,
         LocaleTransfer $localeTransfer
     ): ProductDiscontinuedStorageTransfer {

@@ -25,6 +25,8 @@ use Spryker\Zed\ProductDiscontinuedDataImport\ProductDiscontinuedDataImportConfi
  * @group Plugin
  * @group ProductDiscontinuedDataImportPluginTest
  * Add your own group annotations below this line
+ *
+ * @group ProductDiscontinued
  */
 class ProductDiscontinuedDataImportPluginTest extends Unit
 {

@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinued;
 
 use Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer;
-use Generated\Shared\Transfer\ProductDiscontinuedRequestTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
 use Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedRepositoryInterface;
@@ -30,15 +29,14 @@ class ProductDiscontinuedReader implements ProductDiscontinuedReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductDiscontinuedRequestTransfer $productDiscontinuedRequestTransfer
+     * @param int $idProduct
      *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer
      */
-    public function findProductDiscontinuedByProductId(
-        ProductDiscontinuedRequestTransfer $productDiscontinuedRequestTransfer
-    ): ProductDiscontinuedResponseTransfer {
+    public function findProductDiscontinuedByProductId(int $idProduct): ProductDiscontinuedResponseTransfer
+    {
         $productDiscontinuedTransfer = (new ProductDiscontinuedTransfer())
-            ->setFkProduct($productDiscontinuedRequestTransfer->getIdProduct());
+            ->setFkProduct($idProduct);
         $productDiscontinuedTransfer = $this->productDiscontinuedRepository->findProductDiscontinuedByProductId(
             $productDiscontinuedTransfer
         );

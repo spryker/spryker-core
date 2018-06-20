@@ -25,10 +25,10 @@
     </transfer>
 
     <transfer name="ProductDiscontinuedCollection">
-        <property name="discontinueds" type="ProductDiscontinued[]" singular="discontinued"/>
+        <property name="DiscontinuedProducts" type="ProductDiscontinued[]" singular="DiscontinuedProduct"/>
     </transfer>
 
-    <transfer name="ProductDiscontinuedRequest">
+    <transfer name="ProductDiscontinueRequest">
         <property name="idProduct" type="int"/>
     </transfer>
 
@@ -43,6 +43,10 @@
 
     <transfer name="ProductDiscontinuedCriteriaFilter">
         <property name="ids" type="array"/>
+    </transfer>
+
+    <transfer name="ProductConcrete">
+        <property name="discontinuedNotes" type="ProductDiscontinuedNote[]" singular="discontinuedNote"/>
     </transfer>
 
 </transfers>

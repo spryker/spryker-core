@@ -35,7 +35,7 @@ class ProductDiscontinuedUnpublisher implements ProductDiscontinuedUnpublisherIn
     }
 
     /**
-     * @param array $productDiscontinuedIds
+     * @param int[] $productDiscontinuedIds
      *
      * @return void
      */

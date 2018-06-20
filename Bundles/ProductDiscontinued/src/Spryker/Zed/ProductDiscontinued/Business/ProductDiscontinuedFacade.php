@@ -11,8 +11,8 @@ use Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedNoteResponseTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedNoteTransfer;
-use Generated\Shared\Transfer\ProductDiscontinuedRequestTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer;
+use Generated\Shared\Transfer\ProductDiscontinueRequestTransfer;
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -26,16 +26,16 @@ class ProductDiscontinuedFacade extends AbstractFacade implements ProductDiscont
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductDiscontinuedRequestTransfer $productDiscontinuedRequestTransfer
+     * @param \Generated\Shared\Transfer\ProductDiscontinueRequestTransfer $productDiscontinueRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer
      */
     public function markProductAsDiscontinued(
-        ProductDiscontinuedRequestTransfer $productDiscontinuedRequestTransfer
+        ProductDiscontinueRequestTransfer $productDiscontinueRequestTransfer
     ): ProductDiscontinuedResponseTransfer {
         return $this->getFactory()
             ->createProductDiscontinuedWriter()
-            ->create($productDiscontinuedRequestTransfer);
+            ->create($productDiscontinueRequestTransfer);
     }
 
     /**
@@ -43,16 +43,16 @@ class ProductDiscontinuedFacade extends AbstractFacade implements ProductDiscont
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductDiscontinuedRequestTransfer $productDiscontinuedRequestTransfer
+     * @param \Generated\Shared\Transfer\ProductDiscontinueRequestTransfer $productDiscontinueRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer
      */
     public function unmarkProductAsDiscontinued(
-        ProductDiscontinuedRequestTransfer $productDiscontinuedRequestTransfer
+        ProductDiscontinueRequestTransfer $productDiscontinueRequestTransfer
     ): ProductDiscontinuedResponseTransfer {
         return $this->getFactory()
-            ->createProductDiscontinuedDeleter()
-            ->delete($productDiscontinuedRequestTransfer);
+            ->createProductDiscontinuedWriter()
+            ->delete($productDiscontinueRequestTransfer);
     }
 
     /**
@@ -60,16 +60,15 @@ class ProductDiscontinuedFacade extends AbstractFacade implements ProductDiscont
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductDiscontinuedRequestTransfer $productDiscontinuedRequestTransfer
+     * @param int $idProduct
      *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer
      */
-    public function findProductDiscontinuedByProductId(
-        ProductDiscontinuedRequestTransfer $productDiscontinuedRequestTransfer
-    ): ProductDiscontinuedResponseTransfer {
+    public function findProductDiscontinuedByProductId(int $idProduct): ProductDiscontinuedResponseTransfer
+    {
         return $this->getFactory()
             ->createProductDiscontinuedReader()
-            ->findProductDiscontinuedByProductId($productDiscontinuedRequestTransfer);
+            ->findProductDiscontinuedByProductId($idProduct);
     }
 
     /**

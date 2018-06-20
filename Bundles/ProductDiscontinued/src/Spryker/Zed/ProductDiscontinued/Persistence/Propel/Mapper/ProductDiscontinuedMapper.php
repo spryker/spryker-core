@@ -11,28 +11,28 @@ use ArrayObject;
 use Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedNoteTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
-use Generated\Shared\Transfer\SpyProductDiscontinuedEntityTransfer;
 use Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinued;
+use Propel\Runtime\Collection\ObjectCollection;
 
 class ProductDiscontinuedMapper implements ProductDiscontinuedMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SpyProductDiscontinuedEntityTransfer $productDiscontinuedEntityTransfer
+     * @param \Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinued $productDiscontinuedEntity
      *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedTransfer
      */
-    public function mapProductDiscontinuedTransfer(SpyProductDiscontinuedEntityTransfer $productDiscontinuedEntityTransfer): ProductDiscontinuedTransfer
+    public function mapProductDiscontinuedTransfer(SpyProductDiscontinued $productDiscontinuedEntity): ProductDiscontinuedTransfer
     {
         $productDiscontinuedTransfer = (new ProductDiscontinuedTransfer())
-            ->fromArray($productDiscontinuedEntityTransfer->toArray(), true);
-        if ($productDiscontinuedEntityTransfer->getProduct()) {
+            ->fromArray($productDiscontinuedEntity->toArray(), true);
+        if ($productDiscontinuedEntity->getProduct()) {
             $productDiscontinuedTransfer->setSku(
-                $productDiscontinuedEntityTransfer->getProduct()->getSku()
+                $productDiscontinuedEntity->getProduct()->getSku()
             );
         }
-        if ($productDiscontinuedEntityTransfer->getSpyProductDiscontinuedNotes()) {
+        if ($productDiscontinuedEntity->getSpyProductDiscontinuedNotes()) {
             $productDiscontinuedTransfer->setProductDiscontinuedNotes(
-                $this->mapProductDiscontinuedNotes($productDiscontinuedEntityTransfer)
+                $this->mapProductDiscontinuedNotes($productDiscontinuedEntity)
             );
         }
 
@@ -55,17 +55,17 @@ class ProductDiscontinuedMapper implements ProductDiscontinuedMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyProductDiscontinuedEntityTransfer[] $productDiscontinuedEntityTransfers
+     * @param \Propel\Runtime\Collection\ObjectCollection $productDiscontinuedEntityCollection
      *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer
      */
-    public function mapTransferCollection(array $productDiscontinuedEntityTransfers): ProductDiscontinuedCollectionTransfer
+    public function mapTransferCollection(ObjectCollection $productDiscontinuedEntityCollection): ProductDiscontinuedCollectionTransfer
     {
         $productDiscontinuedCollectionTransfer = new ProductDiscontinuedCollectionTransfer();
-        foreach ($productDiscontinuedEntityTransfers as $productDiscontinuedEntityTransfer) {
-            $productDiscontinuedCollectionTransfer->addDiscontinued(
+        foreach ($productDiscontinuedEntityCollection as $productDiscontinuedEntity) {
+            $productDiscontinuedCollectionTransfer->addDiscontinuedProduct(
                 $this->mapProductDiscontinuedTransfer(
-                    $productDiscontinuedEntityTransfer
+                    $productDiscontinuedEntity
                 )
             );
         }
@@ -74,14 +74,14 @@ class ProductDiscontinuedMapper implements ProductDiscontinuedMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyProductDiscontinuedEntityTransfer $productDiscontinuedEntityTransfer
+     * @param \Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinued $productDiscontinuedEntity
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ProductDiscontinuedNoteTransfer[]
      */
-    protected function mapProductDiscontinuedNotes(SpyProductDiscontinuedEntityTransfer $productDiscontinuedEntityTransfer): ArrayObject
+    protected function mapProductDiscontinuedNotes(SpyProductDiscontinued $productDiscontinuedEntity): ArrayObject
     {
         $discontinuedNoteTransfers = [];
-        foreach ($productDiscontinuedEntityTransfer->getSpyProductDiscontinuedNotes() as $discontinuedNoteEntityTransfer) {
+        foreach ($productDiscontinuedEntity->getSpyProductDiscontinuedNotes() as $discontinuedNoteEntityTransfer) {
             $discontinuedNoteTransfers[] = (new ProductDiscontinuedNoteTransfer())
                 ->fromArray($discontinuedNoteEntityTransfer->toArray(), true);
         }

@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinued;
 
-use Generated\Shared\Transfer\ProductDiscontinuedRequestTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
+use Generated\Shared\Transfer\ProductDiscontinueRequestTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedEntityManagerInterface;
 use Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedRepositoryInterface;
@@ -35,53 +35,64 @@ class ProductDiscontinuedWriter implements ProductDiscontinuedWriterInterface
     protected $productDiscontinuedRepository;
 
     /**
-     * @var array|\Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PostProductDiscontinuePluginInterface[]
-     */
-    protected $postCreateProductDiscontinuePlugins;
-
-    /**
      * @param \Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedEntityManagerInterface $productDiscontinuedEntityManager
      * @param \Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedRepositoryInterface $productDiscontinuedRepository
-     * @param \Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PostProductDiscontinuePluginInterface[] $postCreateProductDiscontinuePlugins
      * @param \Spryker\Zed\ProductDiscontinued\ProductDiscontinuedConfig $productDiscontinuedConfig
      */
     public function __construct(
         ProductDiscontinuedEntityManagerInterface $productDiscontinuedEntityManager,
         ProductDiscontinuedRepositoryInterface $productDiscontinuedRepository,
-        array $postCreateProductDiscontinuePlugins,
         ProductDiscontinuedConfig $productDiscontinuedConfig
     ) {
         $this->productDiscontinuedEntityManager = $productDiscontinuedEntityManager;
         $this->productDiscontinuedConfig = $productDiscontinuedConfig;
         $this->productDiscontinuedRepository = $productDiscontinuedRepository;
-        $this->postCreateProductDiscontinuePlugins = $postCreateProductDiscontinuePlugins;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductDiscontinuedRequestTransfer $productDiscontinuedRequestTransfer
+     * @param \Generated\Shared\Transfer\ProductDiscontinueRequestTransfer $productDiscontinueRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer
      */
-    public function create(ProductDiscontinuedRequestTransfer $productDiscontinuedRequestTransfer): ProductDiscontinuedResponseTransfer
+    public function create(ProductDiscontinueRequestTransfer $productDiscontinueRequestTransfer): ProductDiscontinuedResponseTransfer
     {
         $productDiscontinuedTransfer = (new ProductDiscontinuedTransfer())
-            ->setFkProduct($productDiscontinuedRequestTransfer->getIdProduct());
+            ->setFkProduct($productDiscontinueRequestTransfer->getIdProduct());
         if ($this->productDiscontinuedRepository->findProductDiscontinuedByProductId($productDiscontinuedTransfer)) {
-            return (new ProductDiscontinuedResponseTransfer)->setIsSuccessful(false);
+            return (new ProductDiscontinuedResponseTransfer())->setIsSuccessful(false);
         }
 
-        return $this->getTransactionHandler()->handleTransaction(function () use ($productDiscontinuedRequestTransfer) {
-            return $this->executeCreateTransaction($productDiscontinuedRequestTransfer);
+        return $this->getTransactionHandler()->handleTransaction(function () use ($productDiscontinueRequestTransfer) {
+            return $this->executeCreateTransaction($productDiscontinueRequestTransfer);
         });
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductDiscontinuedRequestTransfer $productDiscontinuedRequestTransfer
+     * @param \Generated\Shared\Transfer\ProductDiscontinueRequestTransfer $productDiscontinueRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer
+     */
+    public function delete(ProductDiscontinueRequestTransfer $productDiscontinueRequestTransfer): ProductDiscontinuedResponseTransfer
+    {
+        $productDiscontinuedTransfer = (new ProductDiscontinuedTransfer())
+            ->setFkProduct($productDiscontinueRequestTransfer->getIdProduct());
+        $productDiscontinuedTransfer = $this->productDiscontinuedRepository->findProductDiscontinuedByProductId($productDiscontinuedTransfer);
+        if (!$productDiscontinuedTransfer) {
+            return (new ProductDiscontinuedResponseTransfer())->setIsSuccessful(false);
+        }
+
+        return $this->getTransactionHandler()->handleTransaction(function () use ($productDiscontinuedTransfer) {
+            return $this->executeDeleteTransaction($productDiscontinuedTransfer);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductDiscontinueRequestTransfer $productDiscontinuedRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer
      */
     protected function executeCreateTransaction(
-        ProductDiscontinuedRequestTransfer $productDiscontinuedRequestTransfer
+        ProductDiscontinueRequestTransfer $productDiscontinuedRequestTransfer
     ): ProductDiscontinuedResponseTransfer {
         $productDiscontinuedTransfer = (new ProductDiscontinuedTransfer())
             ->setFkProduct($productDiscontinuedRequestTransfer->getIdProduct())
@@ -89,9 +100,8 @@ class ProductDiscontinuedWriter implements ProductDiscontinuedWriterInterface
 
         $productDiscontinuedTransfer = $this->productDiscontinuedEntityManager
             ->saveProductDiscontinued($productDiscontinuedTransfer);
-        $this->executePostCreatePlugins($productDiscontinuedTransfer);
 
-        return (new ProductDiscontinuedResponseTransfer)
+        return (new ProductDiscontinuedResponseTransfer())
             ->setProductDiscontinued($productDiscontinuedTransfer)
             ->setIsSuccessful(true);
     }
@@ -99,13 +109,15 @@ class ProductDiscontinuedWriter implements ProductDiscontinuedWriterInterface
     /**
      * @param \Generated\Shared\Transfer\ProductDiscontinuedTransfer $productDiscontinuedTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer
      */
-    protected function executePostCreatePlugins(ProductDiscontinuedTransfer $productDiscontinuedTransfer): void
-    {
-        foreach ($this->postCreateProductDiscontinuePlugins as $postDeleteProductDiscontinuePlugin) {
-            $postDeleteProductDiscontinuePlugin->execute($productDiscontinuedTransfer);
-        }
+    protected function executeDeleteTransaction(
+        ProductDiscontinuedTransfer $productDiscontinuedTransfer
+    ): ProductDiscontinuedResponseTransfer {
+        $this->productDiscontinuedEntityManager->deleteProductDiscontinuedNotes($productDiscontinuedTransfer);
+        $this->productDiscontinuedEntityManager->deleteProductDiscontinued($productDiscontinuedTransfer);
+
+        return (new ProductDiscontinuedResponseTransfer())->setIsSuccessful(true);
     }
 
     /**

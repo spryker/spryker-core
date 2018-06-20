@@ -26,7 +26,7 @@ class DeleteQuoteTest extends Unit
      * @var \SprykerTest\Zed\Quote\QuoteBusinessTester
      */
     protected $tester;
-    
+
     /**
      * @return void
      */
