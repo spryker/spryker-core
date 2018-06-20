@@ -37,7 +37,7 @@ class GatewayControllerListener extends AbstractPlugin implements EventSubscribe
      *
      * @return void
      */
-    public function onKernelController(FilterControllerEvent $event)
+    public function onKernelController(FilterControllerEvent $event): void
     {
         $request = $event->getRequest();
 
@@ -49,7 +49,7 @@ class GatewayControllerListener extends AbstractPlugin implements EventSubscribe
     /**
      * @return array
      */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             KernelEvents::CONTROLLER => ['onKernelController'],

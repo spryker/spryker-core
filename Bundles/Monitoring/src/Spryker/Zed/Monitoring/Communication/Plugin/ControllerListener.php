@@ -76,7 +76,7 @@ class ControllerListener extends AbstractPlugin implements EventSubscriberInterf
      *
      * @return void
      */
-    public function onKernelController(FilterControllerEvent $event)
+    public function onKernelController(FilterControllerEvent $event): void
     {
         if (!$event->isMasterRequest()) {
             return;
@@ -103,7 +103,7 @@ class ControllerListener extends AbstractPlugin implements EventSubscriberInterf
      *
      * @return bool
      */
-    protected function ignoreTransaction($transaction)
+    protected function ignoreTransaction(string $transaction): bool
     {
         foreach ($this->ignorableTransactions as $ignorableTransaction) {
             if (strpos($transaction, $ignorableTransaction) !== false) {
@@ -119,7 +119,7 @@ class ControllerListener extends AbstractPlugin implements EventSubscriberInterf
      *
      * @return string
      */
-    protected function getTransactionName(Request $request)
+    protected function getTransactionName(Request $request): string
     {
         $module = $request->attributes->get('module');
         $controller = $request->attributes->get('controller');
@@ -132,7 +132,7 @@ class ControllerListener extends AbstractPlugin implements EventSubscriberInterf
     /**
      * @return array
      */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             KernelEvents::CONTROLLER => ['onKernelController', static::PRIORITY],

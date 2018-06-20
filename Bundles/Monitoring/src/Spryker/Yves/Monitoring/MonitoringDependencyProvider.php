@@ -21,7 +21,7 @@ class MonitoringDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    public function provideDependencies(Container $container)
+    public function provideDependencies(Container $container): Container
     {
         $container = $this->addMonitoringService($container);
         $container = $this->addUtilNetworkService($container);
@@ -34,7 +34,7 @@ class MonitoringDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addMonitoringService(Container $container)
+    protected function addMonitoringService(Container $container): Container
     {
         $container[static::MONITORING_SERVICE] = function (Container $container) {
             return $container->getLocator()->monitoring()->service();
@@ -48,7 +48,7 @@ class MonitoringDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addUtilNetworkService(Container $container)
+    protected function addUtilNetworkService(Container $container): Container
     {
         $container[static::SERVICE_NETWORK] = function (Container $container) {
             $monitoringToUtilNetworkServiceBridge = new MonitoringToUtilNetworkServiceBridge(

@@ -9,6 +9,7 @@ namespace Spryker\Yves\Monitoring;
 
 use Spryker\Service\Monitoring\MonitoringServiceInterface;
 use Spryker\Yves\Kernel\AbstractFactory;
+use Spryker\Yves\Monitoring\Dependency\Service\MonitoringToUtilNetworkServiceInterface;
 use Spryker\Yves\Monitoring\Plugin\ControllerListener;
 
 /**
@@ -19,7 +20,7 @@ class MonitoringFactory extends AbstractFactory
     /**
      * @return \Spryker\Yves\Monitoring\Plugin\ControllerListener
      */
-    public function createControllerListener()
+    public function createControllerListener(): ControllerListener
     {
         return new ControllerListener(
             $this->getMonitoringService(),
@@ -39,7 +40,7 @@ class MonitoringFactory extends AbstractFactory
     /**
      * @return \Spryker\Yves\Monitoring\Dependency\Service\MonitoringToUtilNetworkServiceInterface
      */
-    public function getSystem()
+    public function getSystem(): MonitoringToUtilNetworkServiceInterface
     {
         return $this->getProvidedDependency(MonitoringDependencyProvider::SERVICE_NETWORK);
     }

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Monitoring;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\Container as KernelContainer;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Monitoring\Dependency\Facade\MonitoringToLocaleFacadeBridge;
 use Spryker\Zed\Monitoring\Dependency\Facade\MonitoringToStoreFacadeBridge;
@@ -25,7 +26,7 @@ class MonitoringDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideCommunicationLayerDependencies(Container $container)
+    public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = $this->addMonitoringService($container);
         $container = $this->addStoreFacade($container);
@@ -36,11 +37,11 @@ class MonitoringDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param \Spryker\Yves\Kernel\Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Yves\Kernel\Container
+     * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addMonitoringService(Container $container)
+    protected function addMonitoringService(Container $container): KernelContainer
     {
         $container[static::MONITORING_SERVICE] = function (Container $container) {
             return $container->getLocator()->monitoring()->service();
@@ -54,7 +55,7 @@ class MonitoringDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addStoreFacade(Container $container)
+    protected function addStoreFacade(Container $container): Container
     {
         $container[static::FACADE_STORE] = function (Container $container) {
             $monitoringToStoreFacadeBridge = new MonitoringToStoreFacadeBridge(
@@ -72,7 +73,7 @@ class MonitoringDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addLocaleFacade(Container $container)
+    protected function addLocaleFacade(Container $container): Container
     {
         $container[static::FACADE_LOCALE] = function (Container $container) {
             $monitoringToLocaleFacadeBridge = new MonitoringToLocaleFacadeBridge(
@@ -90,7 +91,7 @@ class MonitoringDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addUtilNetworkService(Container $container)
+    protected function addUtilNetworkService(Container $container): Container
     {
         $container[static::SERVICE_UTIL_NETWORK] = function (Container $container) {
             $monitoringToUtilNetworkServiceBridge = new MonitoringToUtilNetworkServiceBridge(
