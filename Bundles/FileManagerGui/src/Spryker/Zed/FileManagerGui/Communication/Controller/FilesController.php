@@ -25,11 +25,11 @@ class FilesController extends AbstractController
     public function indexAction(Request $request)
     {
         $fileTable = $this->getFactory()
-            ->createFileTable($request->request->get(self::FILE_DIRECTORY_ID));
+            ->createFileTable($request->request->get(static::FILE_DIRECTORY_ID));
 
         return [
             'files' => $fileTable->render(),
-            'fileDirectoryId' => $request->request->get(self::FILE_DIRECTORY_ID),
+            'fileDirectoryId' => $request->request->get(static::FILE_DIRECTORY_ID),
         ];
     }
 
@@ -41,7 +41,7 @@ class FilesController extends AbstractController
     public function tableAction(Request $request)
     {
         $table = $this->getFactory()
-            ->createFileTable($request->get(self::FILE_DIRECTORY_ID));
+            ->createFileTable($request->get(static::FILE_DIRECTORY_ID));
 
         return $this->jsonResponse($table->fetchData());
     }

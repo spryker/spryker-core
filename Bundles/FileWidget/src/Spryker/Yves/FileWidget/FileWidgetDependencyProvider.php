@@ -13,7 +13,7 @@ use Spryker\Yves\Kernel\Container;
 
 class FileWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FILE_CLIENT = 'FILE CLIENT';
+    public const CLIENT_FILE_MANAGER_STORAGE = 'CLIENT_FILE_MANAGER_STORAGE';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -22,7 +22,7 @@ class FileWidgetDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideDependencies(Container $container)
     {
-        $container[static::FILE_CLIENT] = function (Container $container) {
+        $container[static::CLIENT_FILE_MANAGER_STORAGE] = function (Container $container) {
             return new FileWidgetToFileBridge($container->getLocator()->fileManagerStorage()->client());
         };
 

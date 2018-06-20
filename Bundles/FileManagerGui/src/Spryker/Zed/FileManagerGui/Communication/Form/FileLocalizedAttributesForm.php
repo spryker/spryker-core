@@ -116,7 +116,7 @@ class FileLocalizedAttributesForm extends AbstractType
     protected function addFkLocaleField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_FK_LOCALE, HiddenType::class, [
+            ->add(static::FIELD_FK_LOCALE, HiddenType::class, [
                 'constraints' => [
                     new NotBlank(),
                 ],

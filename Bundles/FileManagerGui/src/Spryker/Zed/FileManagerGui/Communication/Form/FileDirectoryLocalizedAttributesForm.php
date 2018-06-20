@@ -62,7 +62,7 @@ class FileDirectoryLocalizedAttributesForm extends AbstractType
     protected function addTitleField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(self::FIELD_TITLE, TextType::class, [
+            ->add(static::FIELD_TITLE, TextType::class, [
                 'label' => 'Title',
                 'required' => true,
                 'constraints' => [
@@ -80,7 +80,7 @@ class FileDirectoryLocalizedAttributesForm extends AbstractType
      */
     protected function addFkLocaleField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_FK_LOCALE, HiddenType::class);
+        $builder->add(static::FIELD_FK_LOCALE, HiddenType::class);
 
         return $this;
     }

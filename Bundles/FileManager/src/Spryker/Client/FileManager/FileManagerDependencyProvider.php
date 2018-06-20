@@ -40,7 +40,7 @@ class FileManagerDependencyProvider extends AbstractDependencyProvider
      */
     protected function addStore(Container $container): Container
     {
-        $container[self::STORE] = function () {
+        $container[static::STORE] = function () {
             return Store::getInstance();
         };
 
@@ -54,7 +54,7 @@ class FileManagerDependencyProvider extends AbstractDependencyProvider
      */
     protected function addStorageClient(Container $container): Container
     {
-        $container[self::CLIENT_STORAGE] = function (Container $container) {
+        $container[static::CLIENT_STORAGE] = function (Container $container) {
             return new FileManagerToStorageClientBridge(
                 $container->getLocator()->storage()->client()
             );
@@ -70,7 +70,7 @@ class FileManagerDependencyProvider extends AbstractDependencyProvider
      */
     protected function addLocaleClient(Container $container): Container
     {
-        $container[self::CLIENT_LOCALE] = function (Container $container) {
+        $container[static::CLIENT_LOCALE] = function (Container $container) {
             return new FileManagerToLocaleClientBridge(
                 $container->getLocator()->locale()->client()
             );

@@ -35,7 +35,7 @@ class AddFileController extends AbstractController
             ->handleRequest($request);
 
         $redirectUrl = Url::generate(
-            $request->get(self::FILE_DIRECTORY_ID) ?
+            $request->get(static::FILE_DIRECTORY_ID) ?
                 '/file-manager-gui/directories-tree' :
                 '/file-manager-gui'
         )->build();
@@ -46,8 +46,8 @@ class AddFileController extends AbstractController
                     $data = $form->getData();
                     $fileManagerDataTransfer = $this->createFileManagerDataTransfer($data);
 
-                    if ($request->get(self::FILE_DIRECTORY_ID)) {
-                        $fileManagerDataTransfer->getFile()->setFkFileDirectory($request->get(self::FILE_DIRECTORY_ID));
+                    if ($request->get(static::FILE_DIRECTORY_ID)) {
+                        $fileManagerDataTransfer->getFile()->setFkFileDirectory($request->get(static::FILE_DIRECTORY_ID));
                     }
 
                     $this->getFactory()->getFileManagerFacade()->saveFile($fileManagerDataTransfer);

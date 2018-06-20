@@ -42,7 +42,7 @@ class DirectoriesTreeController extends AbstractController
      */
     public function updateHierarchyAction(Request $request)
     {
-        $fileDirectoryTreeData = $request->request->get(self::FILE_DIRECTORY_TREE);
+        $fileDirectoryTreeData = $request->request->get(static::FILE_DIRECTORY_TREE);
 
         if (!$fileDirectoryTreeData) {
             return $this->jsonResponse([

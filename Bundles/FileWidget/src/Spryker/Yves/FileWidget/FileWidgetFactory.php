@@ -16,6 +16,6 @@ class FileWidgetFactory extends AbstractFactory
      */
     public function getFileManagerClient()
     {
-        return $this->getProvidedDependency(FileWidgetDependencyProvider::FILE_CLIENT);
+        return $this->getProvidedDependency(FileWidgetDependencyProvider::CLIENT_FILE_MANAGER_STORAGE);
     }
 }
