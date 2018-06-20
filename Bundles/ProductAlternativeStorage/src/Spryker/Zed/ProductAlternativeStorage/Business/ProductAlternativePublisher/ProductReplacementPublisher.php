@@ -17,7 +17,6 @@ use Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageR
 class ProductReplacementPublisher implements ProductReplacementPublisherInterface
 {
     /**
-    /**
      * @var \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface
      */
     protected $productAlternativeStorageRepository;
