@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/product-alternative-storage.svg)](https://travis-ci.org/spryker/product-alternative-storage)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/product-alternative-storage/badge.svg)](https://coveralls.io/github/spryker/product-alternative-storage)
 
-{{ADD DESCRIPTION HERE}}
+Main responsible module for dealing with alternative products on the memory storage level.
 
 ## Installation
 
