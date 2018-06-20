@@ -7,9 +7,8 @@
 
 namespace Spryker\Zed\PriceProduct\Persistence;
 
-use Propel\Runtime\Collection\ObjectCollection;
-use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
+use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Generated\Shared\Transfer\SpyPriceProductDefaultEntityTransfer;
 
 interface PriceProductRepositoryInterface
@@ -23,7 +22,7 @@ interface PriceProductRepositoryInterface
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore[]
      */
     public function findProductConcretePricesBySkuAndCriteria(
-        $concreteSku,
+        string $concreteSku,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
     );
 
@@ -36,7 +35,7 @@ interface PriceProductRepositoryInterface
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore[]
      */
     public function findProductAbstractPricesBySkuAndCriteria(
-        $abstractSku,
+        string $abstractSku,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
     );
 
@@ -49,7 +48,7 @@ interface PriceProductRepositoryInterface
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore[]
      */
     public function findProductConcretePricesByIdAndCriteria(
-        $idProductConcrete,
+        int $idProductConcrete,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
     );
 
@@ -62,7 +61,7 @@ interface PriceProductRepositoryInterface
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore[]
      */
     public function findProductAbstractPricesByIdAndCriteria(
-        $idProductAbstract,
+        int $idProductAbstract,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
     );
 

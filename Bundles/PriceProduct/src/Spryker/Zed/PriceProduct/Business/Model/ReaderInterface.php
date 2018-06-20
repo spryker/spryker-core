@@ -39,14 +39,14 @@ interface ReaderInterface
     /**
      * @param int $idProductConcrete
      * @param int $idProductAbstract
-     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function findProductConcretePrices(
         $idProductConcrete,
         $idProductAbstract,
-        PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
+        ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
     );
 
     /**

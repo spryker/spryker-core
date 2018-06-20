@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\PriceProduct\Persistence;
 
-use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
+use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\PriceProduct\Dependency\Plugin\PriceDimensionQueryCriteriaPluginInterface;

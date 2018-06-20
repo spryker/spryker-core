@@ -9,7 +9,6 @@ namespace Spryker\Zed\PriceProduct;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\PriceProduct\Communication\Plugin\DefaultPriceDimensionDecisionPlugin;
 use Spryker\Zed\PriceProduct\Communication\Plugin\DefaultPriceQueryCriteriaPlugin;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyFacadeBridge;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceFacadeBridge;
@@ -206,6 +205,11 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
         return [];
     }
 
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addPriceProductService(Container $container): Container
     {
         $container[static::SERVICE_PRICE_PRODUCT] = function (Container $container) {

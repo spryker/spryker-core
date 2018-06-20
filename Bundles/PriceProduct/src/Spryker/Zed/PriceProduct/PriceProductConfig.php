@@ -14,8 +14,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
  */
 class PriceProductConfig extends AbstractBundleConfig
 {
-    public const PRICE_DIMENSION_DEFAULT = 'PRICE_DIMENSION_DEFAULT';
-
     /**
      * @return string
      */

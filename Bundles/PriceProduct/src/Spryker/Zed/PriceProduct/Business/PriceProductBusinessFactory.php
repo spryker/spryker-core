@@ -15,8 +15,6 @@ use Spryker\Zed\PriceProduct\Business\Model\BulkWriter;
 use Spryker\Zed\PriceProduct\Business\Model\BulkWriterInterface;
 use Spryker\Zed\PriceProduct\Business\Model\PriceData\PriceDataChecksumGenerator;
 use Spryker\Zed\PriceProduct\Business\Model\PriceData\PriceDataChecksumGeneratorInterface;
-use Spryker\Zed\PriceProduct\Business\Model\PriceDecision\DefaultPriceDecisionInterface;
-use Spryker\Zed\PriceProduct\Business\Model\PriceDecision\DefaultPriceDimensionDecision;
 use Spryker\Zed\PriceProduct\Business\Model\PriceGrouper;
 use Spryker\Zed\PriceProduct\Business\Model\PriceGrouperInterface;
 use Spryker\Zed\PriceProduct\Business\Model\PriceProductCriteriaBuilder;
@@ -242,14 +240,6 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\PriceProduct\Business\Model\PriceDecision\DefaultPriceDecisionInterface
-     */
-    public function createDefaultPriceDecision(): DefaultPriceDecisionInterface
-    {
-        return new DefaultPriceDimensionDecision();
-    }
-
-    /**
      * @return \Spryker\Zed\PriceProduct\Business\Model\PriceData\PriceDataChecksumGeneratorInterface
      */
     public function createPriceDataChecksumGenerator(): PriceDataChecksumGeneratorInterface
@@ -264,7 +254,6 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     {
         return new PriceProductStoreWriter($this->getQueryContainer(), $this->getEntityManager());
     }
-
 
     /**
      * @return \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductDefaultWriterInterface

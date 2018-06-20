@@ -45,38 +45,38 @@ class PriceProductClient extends AbstractClient implements PriceProductClientInt
             ->resolve($priceMap);
     }
 
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param array $defaultPriceMap
-     * @param int $idProductAbstract
-     *
-     * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
-     */
-    public function resolveProductAbstractPriceByPriceDimension(array $defaultPriceMap, int $idProductAbstract)
-    {
-        return $this->getFactory()
-            ->createProductPriceResolver()
-            ->resolveProductAbstractPriceByPriceDimension($defaultPriceMap, $idProductAbstract);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param array $defaultPriceMap
-     * @param int $idProductAbstract
-     * @param int $idProductConcrete
-     *
-     * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
-     */
-    public function resolveProductConcretePriceByPriceDimension(array $defaultPriceMap, int $idProductAbstract, int $idProductConcrete)
-    {
-        return $this->getFactory()
-            ->createProductPriceResolver()
-            ->resolveProductConcretePriceByPriceDimension($defaultPriceMap, $idProductAbstract, $idProductConcrete);
-    }
+//    /**
+//     * {@inheritdoc}
+//     *
+//     * @api
+//     *
+//     * @param array $defaultPriceMap
+//     * @param int $idProductAbstract
+//     *
+//     * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
+//     */
+//    public function resolveProductAbstractPriceByPriceDimension(array $defaultPriceMap, int $idProductAbstract)
+//    {
+//        return $this->getFactory()
+//            ->createProductPriceResolver()
+//            ->resolveProductAbstractPriceByPriceDimension($defaultPriceMap, $idProductAbstract);
+//    }
+//
+//    /**
+//     * {@inheritdoc}
+//     *
+//     * @api
+//     *
+//     * @param array $defaultPriceMap
+//     * @param int $idProductAbstract
+//     * @param int $idProductConcrete
+//     *
+//     * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
+//     */
+//    public function resolveProductConcretePriceByPriceDimension(array $defaultPriceMap, int $idProductAbstract, int $idProductConcrete)
+//    {
+//        return $this->getFactory()
+//            ->createProductPriceResolver()
+//            ->resolveProductConcretePriceByPriceDimension($defaultPriceMap, $idProductAbstract, $idProductConcrete);
+//    }
 }

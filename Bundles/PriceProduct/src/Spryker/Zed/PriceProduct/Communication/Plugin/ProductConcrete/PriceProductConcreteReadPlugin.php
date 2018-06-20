@@ -7,10 +7,8 @@
 namespace Spryker\Zed\PriceProduct\Communication\Plugin\ProductConcrete;
 
 use ArrayObject;
-use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\PriceProduct\PriceProductConfig;
 use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginReadInterface;
 
 /**

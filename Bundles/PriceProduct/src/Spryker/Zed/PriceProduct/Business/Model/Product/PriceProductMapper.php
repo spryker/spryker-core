@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
-use Generated\Shared\Transfer\SpyPriceProductStoreEntityTransfer;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProduct;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore;
 use Spryker\Zed\PriceProduct\Business\Model\PriceType\ProductPriceTypeMapperInterface;
@@ -93,7 +92,6 @@ class PriceProductMapper implements PriceProductMapperInterface
             ->setMoneyValue($moneyValueTransfer);
     }
 
-
     /**
      * @return string
      */
@@ -138,7 +136,7 @@ class PriceProductMapper implements PriceProductMapperInterface
 
     /**
      * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore[] $priceProductStoreEntities
-     * @param PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
@@ -158,9 +156,8 @@ class PriceProductMapper implements PriceProductMapperInterface
         return $productPriceCollection;
     }
 
-
     /**
-     * @param SpyPriceProductStore $priceProductStoreEntity
+     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore $priceProductStoreEntity
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
@@ -214,7 +211,7 @@ class PriceProductMapper implements PriceProductMapperInterface
     }
 
     /**
-     * @param SpyPriceProductStore $priceProductStoreEntity
+     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore $priceProductStoreEntity
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductDimensionTransfer
@@ -230,6 +227,4 @@ class PriceProductMapper implements PriceProductMapperInterface
                 true
             );
     }
-
-
 }

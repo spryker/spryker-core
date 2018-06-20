@@ -29,7 +29,19 @@ class DefaultPriceDimensionDecisionPlugin extends AbstractPlugin implements Pric
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
     ): ?MoneyValueTransfer {
 
-        //TODO based on $priceProductTransferCollection, $priceProductCriteriaTransfer;
-        return new MoneyValueTransfer;
+        if (empty($priceProductTransferCollection)) {
+            return null;
+        }
+
+        foreach ($priceProductTransferCollection as $priceProductTransfer) {
+            if (!$priceProductTransfer->getPriceDimension()) {
+                continue;
+            }
+            if ($priceProductTransfer->getPriceDimension()->getType() === $priceProductCriteriaTransfer->getPriceDimension()->getType()) {
+                return $priceProductTransfer->getMoneyValue();
+            }
+        }
+
+        return null;
     }
 }

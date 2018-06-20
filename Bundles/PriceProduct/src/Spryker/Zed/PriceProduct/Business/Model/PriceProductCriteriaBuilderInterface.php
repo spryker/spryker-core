@@ -29,7 +29,7 @@ interface PriceProductCriteriaBuilderInterface
     /**
      * @param string|null $priceDimensionType
      *
-     * @return PriceProductCriteriaTransfer
+     * @return \Generated\Shared\Transfer\PriceProductCriteriaTransfer
      */
-    public function buildCriteriaWithPriceDimension(string $priceDimensionType = null): PriceProductCriteriaTransfer;
+    public function buildCriteriaWithPriceDimension(?string $priceDimensionType = null): PriceProductCriteriaTransfer;
 }

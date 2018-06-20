@@ -11,12 +11,12 @@ use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
 use Spryker\Service\PriceProduct\PriceProductServiceInterface;
+use Spryker\Shared\PriceProduct\PriceProductConstants;
 use Spryker\Zed\PriceProduct\Business\Model\PriceProductCriteriaBuilderInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreFacadeInterface;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductRepositoryInterface;
-use Spryker\Zed\PriceProduct\PriceProductConfig;
 
 class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
 {
@@ -166,15 +166,15 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
 
     /**
      * @param int $idProductAbstract
-     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findProductAbstractPricesById($idProductAbstract, PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null): array
+    public function findProductAbstractPricesById($idProductAbstract, ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null): array
     {
         if (!$priceProductCriteriaTransfer) {
             $priceProductCriteriaTransfer = $this->priceProductCriteriaBuilder
-                ->buildCriteriaWithPriceDimension(PriceProductConfig::PRICE_DIMENSION_DEFAULT);
+                ->buildCriteriaWithPriceDimension(PriceProductConstants::PRICE_DIMENSION_DEFAULT);
         }
 
         $priceProductEntities = $this->priceProductRepository

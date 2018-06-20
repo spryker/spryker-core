@@ -8,10 +8,8 @@
 namespace Spryker\Zed\PriceProduct\Communication\Plugin\ProductAbstract;
 
 use ArrayObject;
-use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\PriceProduct\PriceProductConfig;
 use Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginReadInterface;
 
 /**

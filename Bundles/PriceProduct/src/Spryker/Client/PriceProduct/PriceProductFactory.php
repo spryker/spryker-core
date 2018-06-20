@@ -8,7 +8,10 @@
 namespace Spryker\Client\PriceProduct;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToCurrencyClientInterface;
+use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToPriceClientInterface;
 use Spryker\Client\PriceProduct\ProductPriceResolver\ProductPriceResolver;
+use Spryker\Service\PriceProduct\PriceProductServiceInterface;
 
 /**
  * @method \Spryker\Client\PriceProduct\PriceProductConfig getConfig()
@@ -23,15 +26,22 @@ class PriceProductFactory extends AbstractFactory
         return new ProductPriceResolver(
             $this->getPriceClient(),
             $this->getCurrencyClient(),
-            $this->getConfig(),
-            $this->getPriceDimensionPlugins()
+            $this->getConfig()
         );
+    }
+
+    /**
+     * @return \Spryker\Service\PriceProduct\PriceProductServiceInterface
+     */
+    public function getPriceProductService(): PriceProductServiceInterface
+    {
+        return $this->getProvidedDependency(PriceProductDependencyProvider::SERVICE_PRICE_PRODUCT);
     }
 
     /**
      * @return \Spryker\Client\PriceProduct\Dependency\Client\PriceProductToPriceClientInterface
      */
-    protected function getPriceClient()
+    protected function getPriceClient(): PriceProductToPriceClientInterface
     {
         return $this->getProvidedDependency(PriceProductDependencyProvider::CLIENT_PRICE);
     }
@@ -39,17 +49,9 @@ class PriceProductFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\PriceProduct\Dependency\Client\PriceProductToCurrencyClientInterface
      */
-    protected function getCurrencyClient()
+    protected function getCurrencyClient(): PriceProductToCurrencyClientInterface
     {
         return $this->getProvidedDependency(PriceProductDependencyProvider::CLIENT_CURRENCY);
-    }
-
-    /**
-     * @return \Spryker\Client\PriceProduct\Dependency\Plugin\PriceDimensionPluginInterface[]
-     */
-    protected function getPriceDimensionPlugins()
-    {
-        return $this->getProvidedDependency(PriceProductDependencyProvider::PLUGIN_PRICE_DIMENSION);
     }
 
     /**

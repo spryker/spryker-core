@@ -1,14 +1,11 @@
 <?php
+
 /**
- * Created by PhpStorm.
- * User: matveyev
- * Date: 6/18/18
- * Time: 14:59
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\PriceProductStorage\Plugin;
-
-use Generated\Shared\Transfer\PriceProductTransfer;
 
 interface PriceProductStoragePriceDimensionPluginInterface
 {
@@ -20,7 +17,7 @@ interface PriceProductStoragePriceDimensionPluginInterface
      *
      * @param int $idProductConcrete
      *
-     * @return PriceProductTransfer[]
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function findProductConcretePrices(int $idProductConcrete): array;
 
@@ -32,7 +29,7 @@ interface PriceProductStoragePriceDimensionPluginInterface
      *
      * @param int $idProductAbstract
      *
-     * @return PriceProductTransfer[]
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function findProductAbstractPrices(int $idProductAbstract): array;
 }

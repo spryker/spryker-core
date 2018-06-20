@@ -9,8 +9,8 @@ namespace Spryker\Zed\PriceProduct\Business\Model;
 
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Spryker\Shared\PriceProduct\PriceProductConstants;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapperInterface;
-use Spryker\Zed\PriceProduct\PriceProductConfig;
 
 class PriceGrouper implements PriceGrouperInterface
 {
@@ -49,7 +49,7 @@ class PriceGrouper implements PriceGrouperInterface
 
         if (!$priceProductDimensionTransfer) {
             $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
-                ->setType(PriceProductConfig::PRICE_DIMENSION_DEFAULT);
+                ->setType(PriceProductConstants::PRICE_DIMENSION_DEFAULT);
         }
 
         $priceProductTransfers = $this->priceReader->findPricesBySkuForCurrentStore($sku, $priceProductDimensionTransfer);

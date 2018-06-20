@@ -16,18 +16,18 @@ class PriceProductDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_PRICE = 'PRICE_CLIENT';
     public const CLIENT_CURRENCY = 'CURRENCY_CLIENT';
-    public const PLUGIN_PRICE_DIMENSION = 'PLUGIN_PRICE_DIMENSION';
+    public const SERVICE_PRICE_PRODUCT = 'SERVICE_PRICE_PRODUCT';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    public function provideServiceLayerDependencies(Container $container)
+    public function provideServiceLayerDependencies(Container $container): Container
     {
         $container = $this->addPriceProductClient($container);
         $container = $this->addCurrencyClient($container);
-        $container = $this->addPriceDimensionPlugins($container);
+        $container = $this->addPriceProductService($container);
 
         return $container;
     }
@@ -37,7 +37,7 @@ class PriceProductDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addPriceProductClient(Container $container)
+    protected function addPriceProductClient(Container $container): Container
     {
         $container[static::CLIENT_PRICE] = function (Container $container) {
             return new PriceProductToPriceClientBridge($container->getLocator()->price()->client());
@@ -51,7 +51,7 @@ class PriceProductDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addCurrencyClient(Container $container)
+    protected function addCurrencyClient(Container $container): Container
     {
         $container[static::CLIENT_CURRENCY] = function (Container $container) {
             return new PriceProductToCurrencyClientBridge($container->getLocator()->currency()->client());
@@ -65,20 +65,12 @@ class PriceProductDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addPriceDimensionPlugins(Container $container)
+    protected function addPriceProductService(Container $container): Container
     {
-        $container[static::PLUGIN_PRICE_DIMENSION] = function (Container $container) {
-            return $this->getPriceDimensionPlugins();
+        $container[static::SERVICE_PRICE_PRODUCT] = function (Container $container) {
+            return $container->getLocator()->priceProduct()->service();
         };
 
         return $container;
-    }
-
-    /**
-     * @return \Spryker\Client\PriceProduct\Dependency\Plugin\PriceDimensionPluginInterface[]
-     */
-    protected function getPriceDimensionPlugins()
-    {
-        return [];
     }
 }

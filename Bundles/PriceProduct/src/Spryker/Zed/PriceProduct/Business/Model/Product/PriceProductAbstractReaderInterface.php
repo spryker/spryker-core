@@ -45,11 +45,11 @@ interface PriceProductAbstractReaderInterface
 
     /**
      * @param int $idProductAbstract
-     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findProductAbstractPricesById($idProductAbstract, PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null);
+    public function findProductAbstractPricesById($idProductAbstract, ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null);
 
     /**
      * @param string $sku

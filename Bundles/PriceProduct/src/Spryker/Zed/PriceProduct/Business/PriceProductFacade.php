@@ -7,14 +7,12 @@
 
 namespace Spryker\Zed\PriceProduct\Business;
 
-use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\SpyPriceProductStoreEntityTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -288,7 +286,7 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      */
     public function findProductAbstractPrices(
         $idProductAbstract,
-        PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
+        ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
     ) {
         return $this->getFactory()
             ->createPriceProductAbstractReader()
@@ -308,7 +306,7 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
     public function findProductConcretePrices(
         $idProductConcrete,
         $idProductAbstract,
-        PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
+        ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
     ) {
         return $this->getFactory()
             ->createReaderModel()

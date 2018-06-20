@@ -7,14 +7,12 @@
 
 namespace Spryker\Zed\PriceProduct\Business;
 
-use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\SpyPriceProductStoreEntityTransfer;
 
 interface PriceProductFacadeInterface
 {
@@ -267,13 +265,13 @@ interface PriceProductFacadeInterface
      * @api
      *
      * @param int $idProductAbstract
-     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function findProductAbstractPrices(
         $idProductAbstract,
-        PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
+        ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
     );
 
     /**
@@ -285,14 +283,14 @@ interface PriceProductFacadeInterface
      *
      * @param int $idProductConcrete
      * @param int $idProductAbstract
-     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function findProductConcretePrices(
         $idProductConcrete,
         $idProductAbstract,
-        PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
+        ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
     );
 
     /**
@@ -331,7 +329,6 @@ interface PriceProductFacadeInterface
      * @return string
      */
     public function generatePriceDataChecksum(array $priceData): string;
-
 
     /**
      * Specification:

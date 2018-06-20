@@ -11,11 +11,10 @@ use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
 use Spryker\Service\PriceProduct\PriceProductServiceInterface;
-use Spryker\Zed\PriceProduct\Business\Model\PriceDecision\PriceProductMatcherInterface;
+use Spryker\Shared\PriceProduct\PriceProductConstants;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreFacadeInterface;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductRepositoryInterface;
-use Spryker\Zed\PriceProduct\PriceProductConfig;
 
 class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
 {
@@ -112,18 +111,18 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
 
     /**
      * @param int $idProductConcrete
-     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function findProductConcretePricesById(
         $idProductConcrete,
-        PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
+        ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
     ) {
         if (!$priceProductCriteriaTransfer) {
             $priceProductCriteriaTransfer = new PriceProductCriteriaTransfer();
             $priceProductDimension = (new PriceProductDimensionTransfer())
-                ->setType(PriceProductConfig::PRICE_DIMENSION_DEFAULT);
+                ->setType(PriceProductConstants::PRICE_DIMENSION_DEFAULT);
             $priceProductCriteriaTransfer->setPriceDimension($priceProductDimension);
         }
 

@@ -12,12 +12,12 @@ use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Spryker\Shared\PriceProduct\PriceProductConstants;
 use Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInterface;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductAbstractReaderInterface;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductConcreteReaderInterface;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapperInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeInterface;
-use Spryker\Zed\PriceProduct\PriceProductConfig;
 
 class Reader implements ReaderInterface
 {
@@ -110,14 +110,14 @@ class Reader implements ReaderInterface
     /**
      * @param int $idProductConcrete
      * @param int $idProductAbstract
-     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function findProductConcretePrices(
         $idProductConcrete,
         $idProductAbstract,
-        PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
+        ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
     ) {
         $abstractPriceProductTransfers = $this->priceProductAbstractReader
             ->findProductAbstractPricesById($idProductAbstract, $priceProductCriteriaTransfer);
@@ -408,7 +408,7 @@ class Reader implements ReaderInterface
     {
         if (!$priceProductDimensionTransfer) {
             $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
-                ->setType(PriceProductConfig::PRICE_DIMENSION_DEFAULT);
+                ->setType(PriceProductConstants::PRICE_DIMENSION_DEFAULT);
         }
 
         return $priceProductDimensionTransfer;

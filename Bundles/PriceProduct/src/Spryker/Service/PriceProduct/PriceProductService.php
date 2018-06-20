@@ -1,11 +1,14 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Service\PriceProduct;
 
-use Generated\Shared\Transfer\CurrentProductPriceTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
-use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Service\Kernel\AbstractService;
 
 /**
@@ -13,10 +16,9 @@ use Spryker\Service\Kernel\AbstractService;
  */
 class PriceProductService extends AbstractService implements PriceProductServiceInterface
 {
-
     /**
-     * @param PriceProductTransfer[] $priceProductTransferCollection
-     * @param PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransferCollection
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MoneyValueTransfer|null
      */

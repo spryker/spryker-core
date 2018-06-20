@@ -9,10 +9,10 @@ namespace Spryker\Zed\PriceProduct\Business\Model\Product;
 
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Spryker\Shared\PriceProduct\PriceProductConstants;
 use Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInterface;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductEntityManagerInterface;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface;
-use Spryker\Zed\PriceProduct\PriceProductConfig;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class PriceProductConcreteWriter extends BaseProductPriceWriter implements PriceProductConcreteWriterInterface
@@ -121,7 +121,7 @@ class PriceProductConcreteWriter extends BaseProductPriceWriter implements Price
     ): PriceProductTransfer {
 
         $priceDimensionType = $priceProductTransfer->getPriceDimension()->getType();
-        if ($priceDimensionType === PriceProductConfig::PRICE_DIMENSION_DEFAULT) {
+        if ($priceDimensionType === PriceProductConstants::PRICE_DIMENSION_DEFAULT) {
             $priceProductDefaultEntityTransfer = $this->priceProductDefaultWriter->persistPriceProductDefault($priceProductTransfer);
             $priceProductTransfer->getPriceDimension()->setIdPriceProductDefault(
                 $priceProductDefaultEntityTransfer->getIdPriceProductDefault()

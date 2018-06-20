@@ -57,7 +57,7 @@ class PriceProductPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return PriceProductMapperInterface
+     * @return \Spryker\Zed\PriceProduct\Persistence\Propel\Mapper\PriceProductMapperInterface
      */
     public function createPropelPriceProductMapper(): PriceProductMapperInterface
     {

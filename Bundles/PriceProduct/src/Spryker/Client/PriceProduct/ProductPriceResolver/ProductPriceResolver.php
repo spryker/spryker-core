@@ -30,26 +30,18 @@ class ProductPriceResolver implements ProductPriceResolverInterface
     protected $priceProductConfig;
 
     /**
-     * @var \Spryker\Client\PriceProduct\Dependency\Plugin\PriceDimensionPluginInterface[]
-     */
-    protected $priceDimensionPlugins;
-
-    /**
      * @param \Spryker\Client\PriceProduct\Dependency\Client\PriceProductToPriceClientInterface $priceClient
      * @param \Spryker\Client\PriceProduct\Dependency\Client\PriceProductToCurrencyClientInterface $currencyClient
      * @param \Spryker\Client\PriceProduct\PriceProductConfig $priceProductConfig
-     * @param \Spryker\Client\PriceProduct\Dependency\Plugin\PriceDimensionPluginInterface[] $priceDimensionPlugins
      */
     public function __construct(
         PriceProductToPriceClientInterface $priceClient,
         PriceProductToCurrencyClientInterface $currencyClient,
-        PriceProductConfig $priceProductConfig,
-        array $priceDimensionPlugins
+        PriceProductConfig $priceProductConfig
     ) {
         $this->priceProductConfig = $priceProductConfig;
         $this->priceClient = $priceClient;
         $this->currencyClient = $currencyClient;
-        $this->priceDimensionPlugins = $priceDimensionPlugins;
     }
 
     /**

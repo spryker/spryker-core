@@ -10,7 +10,7 @@ use Spryker\Service\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Service\Kernel\Container;
 use Spryker\Service\PriceProduct\Plugin\DefaultPriceDimensionDecisionPlugin;
 
-class PriceProductServiceDependencyProvider extends AbstractBundleDependencyProvider
+class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PLUGIN_PRICE_PRODUCT_DECISION = 'PLUGIN_PRICE_PRODUCT_DECISION';
 

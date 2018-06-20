@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\PriceProduct\Dependency\Plugin;
 
-use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
+use Generated\Shared\Transfer\QueryCriteriaTransfer;
 
 interface PriceDimensionQueryCriteriaPluginInterface
 {

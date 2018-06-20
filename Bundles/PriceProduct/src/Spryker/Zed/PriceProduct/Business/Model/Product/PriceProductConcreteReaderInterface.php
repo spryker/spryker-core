@@ -30,11 +30,11 @@ interface PriceProductConcreteReaderInterface
 
     /**
      * @param int $idProductConcrete
-     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findProductConcretePricesById($idProductConcrete, PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null);
+    public function findProductConcretePricesById($idProductConcrete, ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null);
 
     /**
      * @param string $sku

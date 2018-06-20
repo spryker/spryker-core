@@ -10,11 +10,11 @@ namespace Spryker\Zed\PriceProduct\Business\Model;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
+use Spryker\Shared\PriceProduct\PriceProductConstants;
 use Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyFacadeInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceFacadeInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreFacadeInterface;
-use Spryker\Zed\PriceProduct\PriceProductConfig;
 
 class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterface
 {
@@ -99,19 +99,19 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
             $this->priceProductTypeReader->handleDefaultPriceType($priceTypeName)
         )
         ->setPriceDimension(
-            (new PriceProductDimensionTransfer())->setType(PriceProductConfig::PRICE_DIMENSION_DEFAULT)
+            (new PriceProductDimensionTransfer())->setType(PriceProductConstants::PRICE_DIMENSION_DEFAULT)
         );
     }
 
     /**
      * @param string|null $priceDimensionType
      *
-     * @return PriceProductCriteriaTransfer
+     * @return \Generated\Shared\Transfer\PriceProductCriteriaTransfer
      */
-    public function buildCriteriaWithPriceDimension(string $priceDimensionType = null): PriceProductCriteriaTransfer
+    public function buildCriteriaWithPriceDimension(?string $priceDimensionType = null): PriceProductCriteriaTransfer
     {
         if (!$priceDimensionType) {
-            $priceDimensionType = PriceProductConfig::PRICE_DIMENSION_DEFAULT;
+            $priceDimensionType = PriceProductConstants::PRICE_DIMENSION_DEFAULT;
         }
 
         $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())

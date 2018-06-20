@@ -20,9 +20,9 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\Price\PriceConfig;
+use Spryker\Shared\PriceProduct\PriceProductConstants;
 use Spryker\Zed\Currency\Business\CurrencyFacade;
 use Spryker\Zed\PriceProduct\Business\PriceProductFacade;
-use Spryker\Zed\PriceProduct\PriceProductConfig;
 use Spryker\Zed\Store\Business\StoreFacade;
 
 /**
@@ -481,7 +481,7 @@ class PriceProductFacadeTest extends Unit
              ->setSkuProduct($skuConcrete);
 
         $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
-            ->setType(PriceProductConfig::PRICE_DIMENSION_DEFAULT);
+            ->setType(PriceProductConstants::PRICE_DIMENSION_DEFAULT);
         $priceProductTransfer->setPriceDimension($priceProductDimensionTransfer);
 
         if (!$skuAbstract || !$skuConcrete) {
@@ -544,7 +544,7 @@ class PriceProductFacadeTest extends Unit
         $currencyIsoCode
     ) {
         $priceDimensionTransfer = (new PriceProductDimensionTransfer())
-            ->setType(PriceProductConfig::PRICE_DIMENSION_DEFAULT);
+            ->setType(PriceProductConstants::PRICE_DIMENSION_DEFAULT);
 
         $priceProductTransfer = (new PriceProductTransfer())
             ->setIdProduct($productConcreteTransfer->getIdProductConcrete())
@@ -628,6 +628,6 @@ class PriceProductFacadeTest extends Unit
     protected function createPriceProductCriteriaTransfer()
     {
         return (new PriceProductCriteriaTransfer())
-            ->setPriceDimension(PriceProductConfig::PRICE_DIMENSION_DEFAULT);
+            ->setPriceDimension(PriceProductConstants::PRICE_DIMENSION_DEFAULT);
     }
 }

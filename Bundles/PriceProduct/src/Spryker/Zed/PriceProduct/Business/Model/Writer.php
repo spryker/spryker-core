@@ -10,6 +10,7 @@ namespace Spryker\Zed\PriceProduct\Business\Model;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProduct;
+use Spryker\Shared\PriceProduct\PriceProductConstants;
 use Spryker\Zed\PriceProduct\Business\Exception\MissingPriceException;
 use Spryker\Zed\PriceProduct\Business\Exception\ProductPriceChangeException;
 use Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInterface;
@@ -385,7 +386,7 @@ class Writer implements WriterInterface
     ): PriceProductTransfer {
 
         $priceDimensionType = $priceProductTransfer->getPriceDimension()->getType();
-        if ($priceDimensionType === PriceProductConfig::PRICE_DIMENSION_DEFAULT) {
+        if ($priceDimensionType === PriceProductConstants::PRICE_DIMENSION_DEFAULT) {
             $priceProductDefaultEntityTransfer = $this->priceProductDefaultWriter->persistPriceProductDefault($priceProductTransfer);
             $priceProductTransfer->getPriceDimension()->setIdPriceProductDefault(
                 $priceProductDefaultEntityTransfer->getIdPriceProductDefault()
