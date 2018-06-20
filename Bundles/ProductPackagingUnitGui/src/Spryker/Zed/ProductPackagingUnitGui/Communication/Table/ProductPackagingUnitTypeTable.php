@@ -14,7 +14,7 @@ use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitTypeQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToLocaleBridge;
+use Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToLocaleInterface;
 use Spryker\Zed\ProductPackagingUnitGui\Persistence\ProductPackagingUnitGuiRepositoryInterface;
 
 class ProductPackagingUnitTypeTable extends AbstractTable
@@ -40,7 +40,7 @@ class ProductPackagingUnitTypeTable extends AbstractTable
      */
     public function __construct(
         ProductPackagingUnitGuiRepositoryInterface $productPackagingUnitGuiRepository,
-        ProductPackagingUnitGuiToLocaleBridge $localeFacade
+        ProductPackagingUnitGuiToLocaleInterface $localeFacade
     ) {
         $this->productPackagingUnitGuiRepository = $productPackagingUnitGuiRepository;
         $this->localeFacade = $localeFacade;
