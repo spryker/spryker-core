@@ -14,7 +14,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * @method \Spryker\Zed\Monitoring\Communication\MonitoringCommunicationFactory getFactory()
- * @method \Spryker\Zed\Monitoring\Business\MonitoringFacadeInterface getFacade()
  */
 class MonitoringConsolePlugin extends AbstractPlugin implements EventSubscriberInterface
 {
@@ -25,7 +24,7 @@ class MonitoringConsolePlugin extends AbstractPlugin implements EventSubscriberI
      *
      * @return void
      */
-    public function onConsoleTerminate(ConsoleTerminateEvent $event)
+    public function onConsoleTerminate(ConsoleTerminateEvent $event): void
     {
         $transactionName = $this->getTransactionName($event);
         $hostName = $this->getFactory()->getUtilNetworkService()->getHostName();
@@ -44,7 +43,7 @@ class MonitoringConsolePlugin extends AbstractPlugin implements EventSubscriberI
      *
      * @return string
      */
-    protected function getTransactionName(ConsoleTerminateEvent $event)
+    protected function getTransactionName(ConsoleTerminateEvent $event): string
     {
         return static::TRANSACTION_NAME_PREFIX . $event->getCommand()->getName();
     }
@@ -52,7 +51,7 @@ class MonitoringConsolePlugin extends AbstractPlugin implements EventSubscriberI
     /**
      * @return array
      */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             ConsoleEvents::TERMINATE => ['onConsoleTerminate'],
@@ -62,9 +61,9 @@ class MonitoringConsolePlugin extends AbstractPlugin implements EventSubscriberI
     /**
      * @param \Symfony\Component\Console\Event\ConsoleTerminateEvent $event
      *
-     * @return array
+     * @return void
      */
-    protected function addArgumentsAsCustomParameter(ConsoleTerminateEvent $event)
+    protected function addArgumentsAsCustomParameter(ConsoleTerminateEvent $event): void
     {
         $this->addCustomParameter($event->getInput()->getArguments());
     }
@@ -72,9 +71,9 @@ class MonitoringConsolePlugin extends AbstractPlugin implements EventSubscriberI
     /**
      * @param \Symfony\Component\Console\Event\ConsoleTerminateEvent $event
      *
-     * @return array
+     * @return void
      */
-    protected function addOptionsAsCustomParameter(ConsoleTerminateEvent $event)
+    protected function addOptionsAsCustomParameter(ConsoleTerminateEvent $event): void
     {
         $this->addCustomParameter($event->getInput()->getOptions());
     }
@@ -84,9 +83,9 @@ class MonitoringConsolePlugin extends AbstractPlugin implements EventSubscriberI
      *
      * @return void
      */
-    protected function addCustomParameter(array $customParameter)
+    protected function addCustomParameter(array $customParameter): void
     {
-        $monitoring = $this->getFactory()->createMonitoring();
+        $monitoring = $this->getFactory()->getMonitoringService();
 
         foreach ($customParameter as $key => $value) {
             if (is_array($value)) {
