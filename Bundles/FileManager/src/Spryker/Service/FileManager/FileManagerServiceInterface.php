@@ -10,28 +10,6 @@ namespace Spryker\Service\FileManager;
 interface FileManagerServiceInterface
 {
     /**
-     * Provides public url to the file
-     *
-     * @api
-     *
-     * @param string $fileName
-     *
-     * @return string
-     */
-    public function getPublicUrl(string $fileName);
-
-    /**
-     * Provides ZED url to the file
-     *
-     * @api
-     *
-     * @param string $fileName
-     *
-     * @return string
-     */
-    public function getZedUrl(string $fileName);
-
-    /**
      * Reads the file
      *
      * @api

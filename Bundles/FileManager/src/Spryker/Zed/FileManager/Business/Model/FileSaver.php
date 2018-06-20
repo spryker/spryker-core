@@ -19,8 +19,8 @@ class FileSaver implements FileSaverInterface
 {
     use FileNameResolverTrait, TransactionTrait;
 
-    const FILE_NAME_PATTERN = '%u%s%s.%s';
-    const DEFAULT_FILENAME = 'file';
+    protected const FILE_NAME_PATTERN = '%u%s%s.%s';
+    protected const DEFAULT_FILENAME = 'file';
 
     /**
      * @var \Spryker\Zed\FileManager\Persistence\FileManagerEntityManagerInterface

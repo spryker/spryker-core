@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditFileController extends AbstractController
 {
-    const URL_PARAM_ID_FILE = 'id-file';
+    protected const URL_PARAM_ID_FILE = 'id-file';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

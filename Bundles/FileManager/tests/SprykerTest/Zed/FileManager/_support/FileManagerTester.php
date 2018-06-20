@@ -28,8 +28,4 @@ use Codeception\Actor;
 class FileManagerTester extends Actor
 {
     use _generated\FileManagerTesterActions;
-
-    /**
-     * Define custom actions here
-     */
 }

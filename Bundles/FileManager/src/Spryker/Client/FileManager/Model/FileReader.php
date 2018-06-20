@@ -20,8 +20,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class FileReader implements FileReaderInterface
 {
-    const ID_FILE = 'fk_file';
-    const TYPE_FILE = 'file';
+    protected const ID_FILE = 'fk_file';
+    protected const TYPE_FILE = 'file';
 
     /**
      * @var \Spryker\Client\FileManager\Dependency\Client\FileManagerToStorageClientInterface

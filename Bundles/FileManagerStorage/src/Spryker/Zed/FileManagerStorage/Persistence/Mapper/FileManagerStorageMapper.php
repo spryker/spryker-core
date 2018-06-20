@@ -19,8 +19,6 @@ use Orm\Zed\FileManagerStorage\Persistence\SpyFileStorage;
 
 class FileManagerStorageMapper implements FileManagerStorageMapperInterface
 {
-    const FK_LOCALE = 'fkLocale';
-
     /**
      * @param \Orm\Zed\FileManager\Persistence\SpyFile $file
      * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer

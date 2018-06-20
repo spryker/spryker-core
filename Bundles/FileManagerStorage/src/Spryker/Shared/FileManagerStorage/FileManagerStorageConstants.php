@@ -15,7 +15,7 @@ interface FileManagerStorageConstants
      *
      * @api
      */
-    const FILE_SYNC_STORAGE_QUEUE = 'sync.storage.file';
+    public const FILE_SYNC_STORAGE_QUEUE = 'sync.storage.file';
 
     /**
      * Specification:
@@ -23,7 +23,7 @@ interface FileManagerStorageConstants
      *
      * @api
      */
-    const FILE_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.file.error';
+    public const FILE_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.file.error';
 
-    const STORAGE_COMPOSITE_KEY = 'composite_key';
+    public const STORAGE_COMPOSITE_KEY = 'composite_key';
 }

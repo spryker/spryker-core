@@ -22,11 +22,11 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class FileDirectoryForm extends AbstractType
 {
-    const FIELD_NAME = 'name';
-    const FIELD_FILE_DIRECTORY_LOCALIZED_ATTRIBUTES = 'fileDirectoryLocalizedAttributes';
+    public const FIELD_NAME = 'name';
+    public const FIELD_FILE_DIRECTORY_LOCALIZED_ATTRIBUTES = 'fileDirectoryLocalizedAttributes';
 
-    const OPTION_DATA_CLASS = 'data_class';
-    const OPTION_AVAILABLE_LOCALES = 'option_available_locales';
+    public const OPTION_DATA_CLASS = 'data_class';
+    public const OPTION_AVAILABLE_LOCALES = 'option_available_locales';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver

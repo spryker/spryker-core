@@ -9,6 +9,6 @@ namespace Spryker\Shared\FileManager;
 
 interface FileManagerConstants
 {
-    const STORAGE_NAME = 'FILE_MANAGER:STORAGE_NAME';
-    const FILE_NAME_VERSION_DELIMITER = '-';
+    public const STORAGE_NAME = 'FILE_MANAGER:STORAGE_NAME';
+    public const FILE_NAME_VERSION_DELIMITER = '-';
 }

@@ -23,7 +23,7 @@ class FileManagerStorageWriter implements FileManagerStorageWriterInterface
 {
     use TransactionTrait;
 
-    const KEY_DELIMITER = '_';
+    protected const KEY_DELIMITER = '_';
 
     /**
      * @var \Spryker\Zed\FileManagerStorage\Persistence\FileManagerStorageEntityManagerInterface

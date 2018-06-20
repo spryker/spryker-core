@@ -15,8 +15,6 @@ use Spryker\Zed\FileManagerGui\Dependency\Facade\FileManagerGuiToLocaleFacadeInt
 
 class FileFormDataProvider
 {
-    const FK_LOCALE_KEY = 'fkLocale';
-
     /**
      * @var \Spryker\Zed\Locale\Business\LocaleFacadeInterface
      */

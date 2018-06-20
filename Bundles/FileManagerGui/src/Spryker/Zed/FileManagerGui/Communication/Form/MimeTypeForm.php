@@ -22,10 +22,10 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class MimeTypeForm extends AbstractType
 {
-    const FIELD_ID_MIME_TYPE = 'idMimeType';
-    const FIELD_NAME = 'name';
-    const FIELD_COMMENT = 'comment';
-    const FIELD_IS_ALLOWED = 'isAllowed';
+    public const FIELD_ID_MIME_TYPE = 'idMimeType';
+    public const FIELD_NAME = 'name';
+    public const FIELD_COMMENT = 'comment';
+    public const FIELD_IS_ALLOWED = 'isAllowed';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver

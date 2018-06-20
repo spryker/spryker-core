@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AddFileController extends AbstractController
 {
-    const FILE_DIRECTORY_ID = 'file-directory-id';
+    protected const FILE_DIRECTORY_ID = 'file-directory-id';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

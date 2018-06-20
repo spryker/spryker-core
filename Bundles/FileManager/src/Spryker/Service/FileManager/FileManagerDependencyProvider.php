@@ -13,7 +13,7 @@ use Spryker\Service\Kernel\Container;
 
 class FileManagerDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FILE_SYSTEM_SERVICE = 'FILE_SYSTEM_SERVICE';
+    public const FILE_SYSTEM_SERVICE = 'FILE_SYSTEM_SERVICE';
 
     /**
      * @param \Spryker\Service\Kernel\Container $container

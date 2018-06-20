@@ -26,15 +26,15 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class FileForm extends AbstractType
 {
-    const FIELD_FILE_NAME = 'fileName';
-    const FIELD_FILE_CONTENT = 'fileContent';
-    const FIELD_ID_FILE = 'idFile';
-    const FIELD_USE_REAL_NAME = 'useRealName';
-    const FILE_LOCALIZED_ATTRIBUTES = 'localizedAttributes';
+    public const FIELD_FILE_NAME = 'fileName';
+    public const FIELD_FILE_CONTENT = 'fileContent';
+    public const FIELD_ID_FILE = 'idFile';
+    public const FIELD_USE_REAL_NAME = 'useRealName';
+    public const FILE_LOCALIZED_ATTRIBUTES = 'localizedAttributes';
 
-    const OPTION_DATA_CLASS = 'data_class';
-    const OPTION_AVAILABLE_LOCALES = 'option_available_locales';
-    const OPTION_ALLOWED_MIME_TYPES = 'option_allowed_mime_types';
+    public const OPTION_DATA_CLASS = 'data_class';
+    public const OPTION_AVAILABLE_LOCALES = 'option_available_locales';
+    public const OPTION_ALLOWED_MIME_TYPES = 'option_allowed_mime_types';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

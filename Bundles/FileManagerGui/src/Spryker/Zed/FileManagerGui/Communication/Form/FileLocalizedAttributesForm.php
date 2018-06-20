@@ -18,13 +18,13 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class FileLocalizedAttributesForm extends AbstractType
 {
-    const FIELD_ALT = 'alt';
-    const FIELD_TITLE = 'title';
-    const FIELD_LOCALE_NAME = 'localeName';
-    const FIELD_FK_LOCALE = 'fkLocale';
-    const FIELD_ID_FILE_LOCALIZED_ATTRIBUTES = 'idFileLocalizedAttributes';
+    public const FIELD_ALT = 'alt';
+    public const FIELD_TITLE = 'title';
+    public const FIELD_LOCALE_NAME = 'localeName';
+    public const FIELD_FK_LOCALE = 'fkLocale';
+    public const FIELD_ID_FILE_LOCALIZED_ATTRIBUTES = 'idFileLocalizedAttributes';
 
-    const OPTION_DATA_CLASS = 'data_class';
+    public const OPTION_DATA_CLASS = 'data_class';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

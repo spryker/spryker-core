@@ -20,14 +20,14 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class MimeTypeController extends AbstractController
 {
-    const ROUTE_MIME_TYPE_INDEX = '/file-manager-gui/mime-type';
+    protected const ROUTE_MIME_TYPE_INDEX = '/file-manager-gui/mime-type';
 
-    const URL_PARAM_ID_MIME_TYPE = 'id-mime-type';
+    protected const URL_PARAM_ID_MIME_TYPE = 'id-mime-type';
 
-    const MESSAGE_MIME_TYPE_SAVING_SUCCESS = 'MIME type was successfully saved';
-    const MESSAGE_MIME_TYPE_SAVING_ERROR = 'MIME type already exists';
-    const MESSAGE_MIME_TYPE_DELETING_SUCCESS = 'MIME type was successfully deleted';
-    const MESSAGE_MIME_TYPE_DELETING_ERROR = 'Failed to delete MIME type';
+    protected const MESSAGE_MIME_TYPE_SAVING_SUCCESS = 'MIME type was successfully saved';
+    protected const MESSAGE_MIME_TYPE_SAVING_ERROR = 'MIME type already exists';
+    protected const MESSAGE_MIME_TYPE_DELETING_SUCCESS = 'MIME type was successfully deleted';
+    protected const MESSAGE_MIME_TYPE_DELETING_ERROR = 'Failed to delete MIME type';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

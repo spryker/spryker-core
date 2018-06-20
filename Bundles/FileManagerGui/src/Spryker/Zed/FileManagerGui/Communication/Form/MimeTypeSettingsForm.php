@@ -16,10 +16,10 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class MimeTypeSettingsForm extends AbstractType
 {
-    const FIELD_MIME_TYPES = 'mimeTypes';
+    public const FIELD_MIME_TYPES = 'mimeTypes';
 
-    const FORM_DATA_KEY_ID_MIME_TYPE = 'idMimeType';
-    const FORM_DATA_KEY_IS_ALLOWED = 'isAllowed';
+    public const FORM_DATA_KEY_ID_MIME_TYPE = 'idMimeType';
+    public const FORM_DATA_KEY_IS_ALLOWED = 'isAllowed';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

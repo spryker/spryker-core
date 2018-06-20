@@ -15,13 +15,13 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 abstract class FileInfoTable extends AbstractTable
 {
-    const COL_ID_FILE_INFO = SpyFileInfoTableMap::COL_ID_FILE_INFO;
-    const COL_FILE_INFO_VERSION_NAME = SpyFileInfoTableMap::COL_VERSION_NAME;
-    const COL_FILE_INFO_TYPE = SpyFileInfoTableMap::COL_TYPE;
-    const COL_FILE_INFO_CREATED_AT = SpyFileInfoTableMap::COL_CREATED_AT;
-    const COL_ACTIONS = 'Actions';
+    protected const COL_ID_FILE_INFO = SpyFileInfoTableMap::COL_ID_FILE_INFO;
+    protected const COL_FILE_INFO_VERSION_NAME = SpyFileInfoTableMap::COL_VERSION_NAME;
+    protected const COL_FILE_INFO_TYPE = SpyFileInfoTableMap::COL_TYPE;
+    protected const COL_FILE_INFO_CREATED_AT = SpyFileInfoTableMap::COL_CREATED_AT;
+    protected const COL_ACTIONS = 'Actions';
 
-    const REQUEST_ID_FILE_INFO = 'id-file-info';
+    protected const REQUEST_ID_FILE_INFO = 'id-file-info';
 
     /**
      * @var \Orm\Zed\FileManager\Persistence\SpyFileInfoQuery

@@ -17,14 +17,14 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class FileTable extends AbstractTable
 {
-    const COL_ID_FILE = SpyFileTableMap::COL_ID_FILE;
-    const COL_FILE_NAME = SpyFileTableMap::COL_FILE_NAME;
-    const COL_ACTIONS = 'Actions';
+    protected const COL_ID_FILE = SpyFileTableMap::COL_ID_FILE;
+    protected const COL_FILE_NAME = SpyFileTableMap::COL_FILE_NAME;
+    protected const COL_ACTIONS = 'Actions';
 
-    const REQUEST_ID_FILE = 'id-file';
-    const VIEW_TITLE = 'View';
-    const EDIT_TITLE = 'Edit';
-    const DELETE_TITLE = 'Delete';
+    protected const REQUEST_ID_FILE = 'id-file';
+    protected const VIEW_TITLE = 'View';
+    protected const EDIT_TITLE = 'Edit';
+    protected const DELETE_TITLE = 'Delete';
 
     /**
      * @var \Orm\Zed\FileManager\Persistence\SpyFileQuery

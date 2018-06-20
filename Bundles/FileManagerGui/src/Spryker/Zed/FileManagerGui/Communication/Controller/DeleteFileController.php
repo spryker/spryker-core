@@ -15,9 +15,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DeleteFileController extends AbstractController
 {
-    const URL_PARAM_ID_FILE_INFO = 'id-file-info';
-    const URL_PARAM_ID_FILE = 'id-file';
-    const REFERER_PARAM = 'referer';
+    protected const URL_PARAM_ID_FILE_INFO = 'id-file-info';
+    protected const URL_PARAM_ID_FILE = 'id-file';
+    protected const REFERER_PARAM = 'referer';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

@@ -17,11 +17,11 @@ use Spryker\Zed\Kernel\Container;
 
 class FileManagerGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_FILE_MANAGER = 'FACADE_FILE_MANAGER';
-    const FACADE_LOCALE = 'FACADE_LOCALE';
-    const PROPEL_QUERY_FILE = 'PROPEL_QUERY_FILE';
-    const PROPEL_QUERY_FILE_INFO = 'PROPEL_QUERY_FILE_INFO';
-    const PROPEL_QUERY_MIME_TYPE = 'PROPEL_QUERY_MIME_TYPE';
+    public const FACADE_FILE_MANAGER = 'FACADE_FILE_MANAGER';
+    public const FACADE_LOCALE = 'FACADE_LOCALE';
+    public const PROPEL_QUERY_FILE = 'PROPEL_QUERY_FILE';
+    public const PROPEL_QUERY_FILE_INFO = 'PROPEL_QUERY_FILE_INFO';
+    public const PROPEL_QUERY_MIME_TYPE = 'PROPEL_QUERY_MIME_TYPE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

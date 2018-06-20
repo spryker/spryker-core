@@ -20,10 +20,10 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
  */
 class DownloadFileController extends AbstractController
 {
-    const URL_PARAM_ID_FILE_INFO = 'id-file-info';
-    const CONTENT_DISPOSITION = 'Content-Disposition';
-    const CONTENT_TYPE = 'Content-Type';
-    const MESSAGE_FILE_UNAVAILABLE = 'File was not found';
+    protected const URL_PARAM_ID_FILE_INFO = 'id-file-info';
+    protected const CONTENT_DISPOSITION = 'Content-Disposition';
+    protected const CONTENT_TYPE = 'Content-Type';
+    protected const MESSAGE_FILE_UNAVAILABLE = 'File was not found';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

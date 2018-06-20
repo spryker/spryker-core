@@ -11,8 +11,8 @@ use Spryker\Zed\FileManager\Persistence\FileManagerRepositoryInterface;
 
 class FileVersion implements FileVersionInterface
 {
-    const INITIAL_VERSION_NUMBER = 1;
-    const VERSION_FORMAT = 'v.%d';
+    protected const INITIAL_VERSION_NUMBER = 1;
+    protected const VERSION_FORMAT = 'v.%d';
 
     /**
      * @var \Spryker\Zed\FileManager\Persistence\FileManagerRepositoryInterface

@@ -58,9 +58,9 @@ use SprykerTest\Zed\FileManager\Stub\FlysystemConfigStub;
  */
 class FileManagerFacadeTest extends Unit
 {
-    const PATH_DOCUMENT = 'documents/';
-    const FILE_CONTENT = 'Spryker is awesome';
-    const ROOT_DIRECTORY = 'fileSystemRoot/uploads/';
+    protected const PATH_DOCUMENT = 'documents/';
+    protected const FILE_CONTENT = 'Spryker is awesome';
+    protected const ROOT_DIRECTORY = 'fileSystemRoot/uploads/';
 
     /**
      * @var \Spryker\Zed\FileManager\Business\FileManagerFacade

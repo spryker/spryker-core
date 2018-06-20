@@ -15,10 +15,10 @@ use Spryker\Zed\Kernel\Container;
 
 class FileManagerStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
-    const FACADE_LOCALE = 'FACADE_LOCALE';
+    public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+    public const FACADE_LOCALE = 'FACADE_LOCALE';
 
-    const STORE = 'STORE';
+    public const STORE = 'STORE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

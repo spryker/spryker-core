@@ -15,7 +15,7 @@ interface FileManagerEvents
      *
      * @api
      */
-    const ENTITY_FILE_CREATE = 'Entity.spy_file.create';
+    public const ENTITY_FILE_CREATE = 'Entity.spy_file.create';
 
     /**
      * Specification:
@@ -23,7 +23,7 @@ interface FileManagerEvents
      *
      * @api
      */
-    const ENTITY_FILE_UPDATE = 'Entity.spy_file.update';
+    public const ENTITY_FILE_UPDATE = 'Entity.spy_file.update';
 
     /**
      * Specification:
@@ -31,7 +31,7 @@ interface FileManagerEvents
      *
      * @api
      */
-    const ENTITY_FILE_DELETE = 'Entity.spy_file.delete';
+    public const ENTITY_FILE_DELETE = 'Entity.spy_file.delete';
 
     /**
      * Specification:
@@ -39,7 +39,7 @@ interface FileManagerEvents
      *
      * @api
      */
-    const ENTITY_FILE_INFO_CREATE = 'Entity.spy_file_info.create';
+    public const ENTITY_FILE_INFO_CREATE = 'Entity.spy_file_info.create';
 
     /**
      * Specification:
@@ -47,7 +47,7 @@ interface FileManagerEvents
      *
      * @api
      */
-    const ENTITY_FILE_INFO_UPDATE = 'Entity.spy_file_info.update';
+    public const ENTITY_FILE_INFO_UPDATE = 'Entity.spy_file_info.update';
 
     /**
      * Specification:
@@ -55,7 +55,7 @@ interface FileManagerEvents
      *
      * @api
      */
-    const ENTITY_FILE_INFO_DELETE = 'Entity.spy_file_info.delete';
+    public const ENTITY_FILE_INFO_DELETE = 'Entity.spy_file_info.delete';
 
     /**
      * Specification:
@@ -63,7 +63,7 @@ interface FileManagerEvents
      *
      * @api
      */
-    const ENTITY_FILE_LOCALIZED_ATTRIBUTES_CREATE = 'Entity.spy_file_localized_attributes.create';
+    public const ENTITY_FILE_LOCALIZED_ATTRIBUTES_CREATE = 'Entity.spy_file_localized_attributes.create';
 
     /**
      * Specification:
@@ -71,7 +71,7 @@ interface FileManagerEvents
      *
      * @api
      */
-    const ENTITY_FILE_LOCALIZED_ATTRIBUTES_UPDATE = 'Entity.spy_file_localized_attributes.update';
+    public const ENTITY_FILE_LOCALIZED_ATTRIBUTES_UPDATE = 'Entity.spy_file_localized_attributes.update';
 
     /**
      * Specification:
@@ -79,5 +79,5 @@ interface FileManagerEvents
      *
      * @api
      */
-    const ENTITY_FILE_LOCALIZED_ATTRIBUTES_DELETE = 'Entity.spy_file_localized_attributes.delete';
+    public const ENTITY_FILE_LOCALIZED_ATTRIBUTES_DELETE = 'Entity.spy_file_localized_attributes.delete';
 }

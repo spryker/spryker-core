@@ -15,20 +15,20 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class MimeTypeSettingsTable extends AbstractTable
 {
-    const COL_ID_MIME_TYPE = SpyMimeTypeTableMap::COL_ID_MIME_TYPE;
-    const COL_NAME = SpyMimeTypeTableMap::COL_NAME;
-    const COL_COMMENT = SpyMimeTypeTableMap::COL_COMMENT;
-    const COL_IS_ALLOWED = SpyMimeTypeTableMap::COL_IS_ALLOWED;
-    const COL_ACTIONS = 'Actions';
+    protected const COL_ID_MIME_TYPE = SpyMimeTypeTableMap::COL_ID_MIME_TYPE;
+    protected const COL_NAME = SpyMimeTypeTableMap::COL_NAME;
+    protected const COL_COMMENT = SpyMimeTypeTableMap::COL_COMMENT;
+    protected const COL_IS_ALLOWED = SpyMimeTypeTableMap::COL_IS_ALLOWED;
+    protected const COL_ACTIONS = 'Actions';
 
-    const TITLE_MIME_TYPE = 'MIME Type';
-    const TITLE_COMMENT = 'Comment';
-    const TITLE_IS_ALLOWED = 'Is Allowed';
-    const TITLE_ACTIONS = 'Actions';
+    protected const TITLE_MIME_TYPE = 'MIME Type';
+    protected const TITLE_COMMENT = 'Comment';
+    protected const TITLE_IS_ALLOWED = 'Is Allowed';
+    protected const TITLE_ACTIONS = 'Actions';
 
-    const REQUEST_ID_MIME_TYPE = 'id-mime-type';
-    const ROUTE_EDIT = 'mime-type/edit';
-    const ROUTE_DELETE = 'mime-type/delete';
+    protected const REQUEST_ID_MIME_TYPE = 'id-mime-type';
+    protected const ROUTE_EDIT = 'mime-type/edit';
+    protected const ROUTE_DELETE = 'mime-type/delete';
 
     /**
      * @var \Orm\Zed\FileManager\Persistence\SpyFileQuery $fileQuery

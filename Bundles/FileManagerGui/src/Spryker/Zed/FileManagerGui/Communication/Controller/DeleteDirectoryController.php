@@ -17,7 +17,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class DeleteDirectoryController extends AbstractController
 {
-    const URL_PARAM_ID_DIRECTORY = 'id-directory';
+    protected const URL_PARAM_ID_DIRECTORY = 'id-directory';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request

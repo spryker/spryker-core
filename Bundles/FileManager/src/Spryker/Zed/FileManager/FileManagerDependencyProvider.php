@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Container;
 
 class FileManagerDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const SERVICE_FILE_SYSTEM = 'SERVICE_FILE_SYSTEM';
+    public const SERVICE_FILE_SYSTEM = 'SERVICE_FILE_SYSTEM';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

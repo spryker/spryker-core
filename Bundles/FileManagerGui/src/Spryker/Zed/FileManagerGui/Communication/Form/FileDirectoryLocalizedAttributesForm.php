@@ -20,11 +20,11 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class FileDirectoryLocalizedAttributesForm extends AbstractType
 {
-    const FIELD_TITLE = 'title';
-    const FIELD_FK_LOCALE = 'fk_locale';
-    const FIELD_LOCALE_NAME = 'localeName';
+    public const FIELD_TITLE = 'title';
+    public const FIELD_FK_LOCALE = 'fk_locale';
+    public const FIELD_LOCALE_NAME = 'localeName';
 
-    const OPTION_DATA_CLASS = 'data_class';
+    public const OPTION_DATA_CLASS = 'data_class';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver

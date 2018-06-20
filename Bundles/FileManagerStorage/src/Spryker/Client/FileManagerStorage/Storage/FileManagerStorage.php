@@ -15,7 +15,7 @@ use Spryker\Shared\Kernel\Store;
 
 class FileManagerStorage implements FileManagerStorageInterface
 {
-    const RESOURCE_NAME = 'file';
+    protected const RESOURCE_NAME = 'file';
 
     /**
      * @var \Spryker\Client\FileManagerStorage\Dependency\Client\FileManagerStorageToStorageClientInterface
