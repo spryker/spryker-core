@@ -43,15 +43,16 @@ class ProductAlternativePublisher implements ProductAlternativePublisherInterfac
      */
     public function publish(array $productIds): void
     {
-        $mappedProductAlternativeEntityTransfers =
-            $this->findMappedProductAlternativeStorageEntities($productIds);
+        $indexedProductAlternativeEntityTransfers =
+            $this->findIndexedProductAlternativeStorageEntities($productIds);
 
         foreach ($productIds as $idProduct) {
-            if (!isset($mappedProductAlternativeEntityTransfers[$idProduct])) {
-                $mappedProductAlternativeEntityTransfers[$idProduct] = new SpyProductAlternativeStorageEntityTransfer();
+            if (!isset($indexedProductAlternativeEntityTransfers[$idProduct])) {
+                $indexedProductAlternativeEntityTransfers[$idProduct] = new SpyProductAlternativeStorageEntityTransfer();
             }
 
-            $this->saveStorageEntity($mappedProductAlternativeEntityTransfers[$idProduct], $idProduct);
+            $this->saveStorageEntity($indexedProductAlternativeEntityTransfers[$idProduct], $idProduct);
+            unset($indexedProductAlternativeEntityTransfers[$idProduct]);
         }
     }
 
@@ -60,7 +61,7 @@ class ProductAlternativePublisher implements ProductAlternativePublisherInterfac
      *
      * @return \Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer[]
      */
-    protected function findMappedProductAlternativeStorageEntities(array $productIds): array
+    protected function findIndexedProductAlternativeStorageEntities(array $productIds): array
     {
         $productAlternativeStorageEntityTransfers = $this->productAlternativeStorageRepository
             ->findProductAlternativeStorageEntities($productIds);

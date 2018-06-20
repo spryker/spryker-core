@@ -12,8 +12,6 @@ use Generated\Shared\Transfer\SpyProductReplacementStorageEntityTransfer;
 interface ProductAlternativeStorageRepositoryInterface
 {
     /**
-     * @api
-     *
      * @param int[] $productIds
      *
      * @return \Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer[]
@@ -21,8 +19,6 @@ interface ProductAlternativeStorageRepositoryInterface
     public function findProductAlternativeStorageEntities(array $productIds): array;
 
     /**
-     * @api
-     *
      * @param int $idProduct
      *
      * @return string
@@ -30,8 +26,6 @@ interface ProductAlternativeStorageRepositoryInterface
     public function findProductSkuById($idProduct): string;
 
     /**
-     * @api
-     *
      * @param int $idProduct
      *
      * @return string[]
@@ -46,8 +40,6 @@ interface ProductAlternativeStorageRepositoryInterface
     public function findConcreteAlternativesIdsByConcreteProductId($idProduct): array;
 
     /**
-     * @api
-     *
      * @param int[] $productIds
      *
      * @return string[]
@@ -55,8 +47,6 @@ interface ProductAlternativeStorageRepositoryInterface
     public function getIndexedProductConcreteIdToSkusByProductIds(array $productIds): array;
 
     /**
-     * @api
-     *
      * @param int[] $productIds
      *
      * @return string[]
@@ -64,8 +54,6 @@ interface ProductAlternativeStorageRepositoryInterface
     public function getIndexedProductAbstractIdToSkusByProductIds(array $productIds): array;
 
     /**
-     * @api
-     *
      * @param string $sku
      *
      * @return \Generated\Shared\Transfer\SpyProductReplacementStorageEntityTransfer|null
@@ -73,8 +61,6 @@ interface ProductAlternativeStorageRepositoryInterface
     public function findProductReplacementStorageEntitiesBySku(string $sku): ?SpyProductReplacementStorageEntityTransfer;
 
     /**
-     * @api
-     *
      * @param int $idProductAbstract
      *
      * @return int[]
@@ -82,8 +68,6 @@ interface ProductAlternativeStorageRepositoryInterface
     public function getReplacementsByAbstractProductId(int $idProductAbstract): array;
 
     /**
-     * @api
-     *
      * @param int $idProductConcrete
      *
      * @return int[]

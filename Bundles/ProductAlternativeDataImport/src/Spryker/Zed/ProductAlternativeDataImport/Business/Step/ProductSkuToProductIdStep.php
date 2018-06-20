@@ -11,7 +11,7 @@ use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\ProductAlternativeDataImport\Business\DataSet\ProductAlternativeDataSetInterface;
+use Spryker\Zed\ProductAlternativeDataImport\Business\ProductAlternativeDataSet\ProductAlternativeDataSetInterface;
 
 class ProductSkuToProductIdStep implements DataImportStepInterface
 {

@@ -12,7 +12,7 @@ use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\ProductAlternative\Dependency\ProductAlternativeEvents;
-use Spryker\Zed\ProductAlternativeDataImport\Business\DataSet\ProductAlternativeDataSetInterface;
+use Spryker\Zed\ProductAlternativeDataImport\Business\ProductAlternativeDataSet\ProductAlternativeDataSetInterface;
 
 class ProductAlternativeWriterStep extends PublishAwareStep implements DataImportStepInterface
 {

@@ -22,8 +22,6 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 class ProductAlternativeStorageRepository extends AbstractRepository implements ProductAlternativeStorageRepositoryInterface
 {
     /**
-     * @api
-     *
      * @param int[] $productIds
      *
      * @return \Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer[]
@@ -41,16 +39,13 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     }
 
     /**
-     * @api
-     *
      * @param int $idProduct
      *
      * @return string
      */
     public function findProductSkuById($idProduct): string
     {
-        return $this
-            ->getFactory()
+        return $this->getFactory()
             ->getProductQuery()
             ->filterByIdProduct($idProduct)
             ->select([SpyProductTableMap::COL_SKU])
@@ -58,8 +53,6 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     }
 
     /**
-     * @api
-     *
      * @param int $idProduct
      *
      * @return int[]
@@ -92,8 +85,6 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     }
 
     /**
-     * @api
-     *
      * @param int[] $productIds
      *
      * @return string[]
@@ -110,8 +101,6 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     }
 
     /**
-     * @api
-     *
      * @param int[] $productIds
      *
      * @return string[]
@@ -128,8 +117,6 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     }
 
     /**
-     * @api
-     *
      * @param string $sku
      *
      * @return \Generated\Shared\Transfer\SpyProductReplacementStorageEntityTransfer|null
@@ -144,8 +131,6 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     }
 
     /**
-     * @api
-     *
      * @param int $idProductAbstract
      *
      * @return int[]
@@ -161,8 +146,6 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     }
 
     /**
-     * @api
-     *
      * @param int $idProductConcrete
      *
      * @return int[]

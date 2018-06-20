@@ -12,7 +12,7 @@ interface ProductAlternativeStorageToStorageClientInterface
     /**
      * @param string $key
      *
-     * @return mixed
+     * @return array
      */
-    public function get($key);
+    public function get(string $key);
 }

@@ -25,7 +25,7 @@ class ProductAlternativeStorageToEventBehaviorFacadeBridge implements ProductAlt
     /**
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      *
-     * @return array
+     * @return int[]
      */
     public function getEventTransferIds(array $eventTransfers)
     {
@@ -36,9 +36,9 @@ class ProductAlternativeStorageToEventBehaviorFacadeBridge implements ProductAlt
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      * @param string $foreignKeyColumnName
      *
-     * @return array
+     * @return int[]
      */
-    public function getEventTransferForeignKeys(array $eventTransfers, $foreignKeyColumnName)
+    public function getEventTransferForeignKeys(array $eventTransfers, string $foreignKeyColumnName)
     {
         return $this->eventBehaviorFacade->getEventTransferForeignKeys($eventTransfers, $foreignKeyColumnName);
     }
