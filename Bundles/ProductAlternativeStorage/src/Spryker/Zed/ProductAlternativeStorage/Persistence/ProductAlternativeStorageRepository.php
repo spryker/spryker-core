@@ -22,6 +22,8 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 class ProductAlternativeStorageRepository extends AbstractRepository implements ProductAlternativeStorageRepositoryInterface
 {
     /**
+     * @api
+     *
      * @param int[] $productIds
      *
      * @return \Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer[]
@@ -39,6 +41,10 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     }
 
     /**
+     * @api
+     *
+     * @module Product
+     *
      * @param int $idProduct
      *
      * @return string
@@ -53,6 +59,10 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     }
 
     /**
+     * @api
+     *
+     * @module ProductAlternative
+     *
      * @param int $idProduct
      *
      * @return int[]
@@ -69,6 +79,10 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     }
 
     /**
+     * @api
+     *
+     * @module ProductAlternative
+     *
      * @param int $idProduct
      *
      * @return int[]
@@ -85,6 +99,10 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     }
 
     /**
+     * @api
+     *
+     * @module Product
+     *
      * @param int[] $productIds
      *
      * @return string[]
@@ -101,6 +119,10 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     }
 
     /**
+     * @api
+     *
+     * @module Product
+     *
      * @param int[] $productIds
      *
      * @return string[]
@@ -117,6 +139,8 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     }
 
     /**
+     * @api
+     *
      * @param string $sku
      *
      * @return \Generated\Shared\Transfer\SpyProductReplacementStorageEntityTransfer|null
@@ -131,6 +155,10 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     }
 
     /**
+     * @api
+     *
+     * @module ProductAlternative
+     *
      * @param int $idProductAbstract
      *
      * @return int[]
@@ -146,6 +174,10 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     }
 
     /**
+     * @api
+     *
+     * @module ProductAlternative
+     *
      * @param int $idProductConcrete
      *
      * @return int[]

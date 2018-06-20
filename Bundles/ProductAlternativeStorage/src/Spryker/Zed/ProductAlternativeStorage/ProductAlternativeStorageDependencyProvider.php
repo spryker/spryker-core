@@ -58,7 +58,9 @@ class ProductAlternativeStorageDependencyProvider extends AbstractBundleDependen
     protected function addEventBehaviorFacade(Container $container): Container
     {
         $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
-            return new ProductAlternativeStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
+            return new ProductAlternativeStorageToEventBehaviorFacadeBridge(
+                $container->getLocator()->eventBehavior()->facade()
+            );
         };
 
         return $container;

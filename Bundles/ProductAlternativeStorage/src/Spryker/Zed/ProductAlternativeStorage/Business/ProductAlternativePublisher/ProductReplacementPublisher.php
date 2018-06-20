@@ -65,9 +65,8 @@ class ProductReplacementPublisher implements ProductReplacementPublisherInterfac
      *
      * @return void
      */
-    protected function storeAbstractProductData(
-        array $indexedSkus
-    ): void {
+    protected function storeAbstractProductData(array $indexedSkus): void
+    {
         foreach ($indexedSkus as $idProductAbstract => $productAbstractData) {
             $replacementIds = $this->productAlternativeStorageRepository->getReplacementsByAbstractProductId($idProductAbstract);
             $sku = $productAbstractData[ProductAbstractTransfer::SKU];

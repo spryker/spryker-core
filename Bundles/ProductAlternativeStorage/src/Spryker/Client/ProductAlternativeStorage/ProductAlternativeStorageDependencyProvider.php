@@ -53,7 +53,9 @@ class ProductAlternativeStorageDependencyProvider extends AbstractDependencyProv
     protected function addSynchronizationService(Container $container): Container
     {
         $container[static::SERVICE_SYNCHRONIZATION] = function (Container $container) {
-            return new ProductAlternativeStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());
+            return new ProductAlternativeStorageToSynchronizationServiceBridge(
+                $container->getLocator()->synchronization()->service()
+            );
         };
 
         return $container;

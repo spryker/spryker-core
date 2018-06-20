@@ -16,7 +16,7 @@ class ProductAlternativeUnpublisher implements ProductAlternativeUnpublisherInte
     /**
      * @var \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageEntityManagerInterface
      */
-    protected $alternativeStorageEntityManager;
+    protected $productAlternativeStorageEntityManager;
 
     /**
      * @var \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface
@@ -24,14 +24,14 @@ class ProductAlternativeUnpublisher implements ProductAlternativeUnpublisherInte
     protected $productAlternativeStorageRepository;
 
     /**
-     * @param \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageEntityManagerInterface $alternativeStorageEntityManager
+     * @param \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageEntityManagerInterface $productAlternativeStorageEntityManager
      * @param \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface $productAlternativeStorageRepository
      */
     public function __construct(
-        ProductAlternativeStorageEntityManagerInterface $alternativeStorageEntityManager,
+        ProductAlternativeStorageEntityManagerInterface $productAlternativeStorageEntityManager,
         ProductAlternativeStorageRepositoryInterface $productAlternativeStorageRepository
     ) {
-        $this->alternativeStorageEntityManager = $alternativeStorageEntityManager;
+        $this->productAlternativeStorageEntityManager = $productAlternativeStorageEntityManager;
         $this->productAlternativeStorageRepository = $productAlternativeStorageRepository;
     }
 
@@ -43,7 +43,7 @@ class ProductAlternativeUnpublisher implements ProductAlternativeUnpublisherInte
     public function unpublish(array $productIds): void
     {
         foreach ($productIds as $productId) {
-            $this->alternativeStorageEntityManager->deleteProductAlternativeStorageEntity(
+            $this->productAlternativeStorageEntityManager->deleteProductAlternativeStorageEntity(
                 $this->findProductAlternativeStorageEntity($productId)
             );
         }
