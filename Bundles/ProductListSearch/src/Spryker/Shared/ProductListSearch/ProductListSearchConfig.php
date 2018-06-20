@@ -11,4 +11,5 @@ use Spryker\Shared\Kernel\AbstractBundleConfig;
 
 class ProductListSearchConfig extends AbstractBundleConfig
 {
+    public const PLUGIN_PRODUCT_LIST_DATA = 'PLUGIN_PRODUCT_LIST_DATA';
 }

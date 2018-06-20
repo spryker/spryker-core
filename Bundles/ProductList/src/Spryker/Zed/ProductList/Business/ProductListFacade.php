@@ -50,6 +50,38 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
      *
      * @api
      *
+     * @param int $idProductAbstract
+     *
+     * @return int[]
+     */
+    public function getProductAbstractBlacklistIdsByIdProductAbstract(int $idProductAbstract): array
+    {
+        return $this->getFactory()
+            ->createProductListReader()
+            ->getProductAbstractBlacklistIdsByIdProductAbstract($idProductAbstract);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return int[]
+     */
+    public function getProductAbstractWhitelistIdsByIdProductAbstract(int $idProductAbstract): array
+    {
+        return $this->getFactory()
+            ->createProductListReader()
+            ->getProductAbstractWhitelistIdsByIdProductAbstract($idProductAbstract);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
      *
      * @return \Generated\Shared\Transfer\ProductListTransfer

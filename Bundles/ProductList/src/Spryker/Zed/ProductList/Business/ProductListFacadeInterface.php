@@ -13,11 +13,11 @@ interface ProductListFacadeInterface
 {
     /**
      * Specification:
-     * - Creates a Product List entity.
+     * - Creates a Product List entity if ProductListTransfer::idProductList is null.
      * - Creates relations to categories.
      * - Creates relations to concrete products.
      * - Finds a Product List by ProductListTransfer::idProductList in the transfer.
-     * - Updates fields in a Product List entity.
+     * - Updates fields in a Product List entity if ProductListTransfer::idProductList is set.
      * - Updates relations to categories.
      * - Updates relations to concrete products.
      *
@@ -43,6 +43,30 @@ interface ProductListFacadeInterface
      * @return void
      */
     public function deleteProductList(ProductListTransfer $productListTransfer): void;
+
+    /**
+     * Specification:
+     *  - Retrieves product abstract blacklists by product abstract id.
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return int[]
+     */
+    public function getProductAbstractBlacklistIdsByIdProductAbstract(int $idProductAbstract): array;
+
+    /**
+     * Specification:
+     *  - Retrieves product abstract whitelists by product abstract id.
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return int[]
+     */
+    public function getProductAbstractWhitelistIdsByIdProductAbstract(int $idProductAbstract): array;
 
     /**
      * Specification:

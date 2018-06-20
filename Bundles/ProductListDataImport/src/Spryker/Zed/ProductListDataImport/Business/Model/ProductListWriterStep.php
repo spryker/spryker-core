@@ -10,10 +10,12 @@ namespace Spryker\Zed\ProductListDataImport\Business\Model;
 use Orm\Zed\ProductList\Persistence\SpyProductListQuery;
 use Spryker\Zed\DataImport\Business\Exception\InvalidDataException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
+use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
+use Spryker\Zed\ProductList\Dependency\ProductListEvents;
 use Spryker\Zed\ProductListDataImport\Business\Model\DataSet\ProductListDataSetInterface;
 
-class ProductListWriterStep implements DataImportStepInterface
+class ProductListWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
@@ -47,5 +49,10 @@ class ProductListWriterStep implements DataImportStepInterface
             ->setTitle($dataSet[ProductListDataSetInterface::PRODUCT_LIST_NAME])
             ->setType($dataSet[ProductListDataSetInterface::PRODUCT_LIST_TYPE])
             ->save();
+
+        $this->addPublishEvents(
+            ProductListEvents::PRODUCT_LIST_PUBLISH,
+            $productListEntity->getIdProductList()
+        );
     }
 }

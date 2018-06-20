@@ -50,8 +50,9 @@ class ProductListFacadeTest extends Unit
     public function testSaveProductListCreatesProductListCategoryRelations(): void
     {
         // Assign
+        $categoryTransfer = $this->tester->haveCategory();
         $productListTransfer = (new ProductListBuilder())->withProductListCategoryRelation()->build();
-        $productListTransfer->getProductListCategoryRelation()->addCategoryIds(1);
+        $productListTransfer->getProductListCategoryRelation()->addCategoryIds($categoryTransfer->getIdCategory());
 
         // Act
         $productListTransfer = $this->getFacade()->saveProductList($productListTransfer);
@@ -66,8 +67,9 @@ class ProductListFacadeTest extends Unit
     public function testSaveProductListCreatesProductListProductConcreteRelations(): void
     {
         // Assign
+        $productTransfer = $this->tester->haveProduct();
         $productListTransfer = (new ProductListBuilder())->withProductListProductConcreteRelation()->build();
-        $productListTransfer->getProductListProductConcreteRelation()->addProductIds(1);
+        $productListTransfer->getProductListProductConcreteRelation()->addProductIds($productTransfer->getIdProductConcrete());
 
         // Act
         $productListTransfer = $this->getFacade()->saveProductList($productListTransfer);

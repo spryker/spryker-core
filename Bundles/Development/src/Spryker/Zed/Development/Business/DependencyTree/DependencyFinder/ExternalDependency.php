@@ -7,12 +7,10 @@
 
 namespace Spryker\Zed\Development\Business\DependencyTree\DependencyFinder;
 
-use PHP_CodeSniffer;
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Ruleset;
 use PHP_CodeSniffer\Runner;
-use PHP_CodeSniffer_File;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
 use Symfony\Component\Finder\SplFileInfo;
 use Zend\Filter\Word\SeparatorToCamelCase;
@@ -110,16 +108,6 @@ class ExternalDependency extends AbstractDependencyFinder
      */
     protected function getFile(SplFileInfo $fileInfo)
     {
-        if (!class_exists(Runner::class)) {
-            // Deprecated: phpcs 2.x for BC
-            $phpcs = new PHP_CodeSniffer();
-            $phpcs->process([], null, []);
-            $fileObject = new PHP_CodeSniffer_File($fileInfo->getPathname(), [], [], $phpcs);
-            $fileObject->start($fileInfo->getContents());
-
-            return $fileObject;
-        }
-
         $phpcs = new Runner();
 
         if (!defined('PHP_CODESNIFFER_CBF')) {

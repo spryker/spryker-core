@@ -1,0 +1,40 @@
+{
+  "name": "spryker/business-on-behalf",
+  "description": "BusinessOnBehalf module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1",
+    "spryker/company-user": "^1.2.0",
+    "spryker/kernel": "^3.0.0",
+    "spryker/zed-request": "^3.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/customer": "*",
+    "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/customer": "If you want to hydrate customer with isOnBehalf property and default company user: ^7.10.0."
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Zed\\BusinessOnBehalf\\Helper\\": "tests/SprykerTest/Zed/BusinessOnBehalf/_support/Helper/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

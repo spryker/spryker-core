@@ -41,7 +41,7 @@ class SharedCartFactory extends AbstractFactory
     {
         return new SharedCartStub($this->getZedRequestClient());
     }
-    
+
     /**
      * @return \Spryker\Client\SharedCart\Dependency\Client\SharedCartToCartClientInterface
      */

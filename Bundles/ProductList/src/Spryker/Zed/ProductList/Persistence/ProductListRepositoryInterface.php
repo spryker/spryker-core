@@ -14,14 +14,14 @@ interface ProductListRepositoryInterface
     /**
      * @param int $idProductList
      *
-     * @return array
+     * @return int[]
      */
     public function getRelatedCategoryIdsByIdProductList(int $idProductList): array;
 
     /**
      * @param int $idProductList
      *
-     * @return array
+     * @return int[]
      */
     public function getRelatedProductConcreteIdsByIdProductList(int $idProductList): array;
 
@@ -31,4 +31,18 @@ interface ProductListRepositoryInterface
      * @return \Generated\Shared\Transfer\ProductListTransfer
      */
     public function getProductListById(int $idProductList): ProductListTransfer;
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return int[]
+     */
+    public function getAbstractProductBlacklistIds(int $idProductAbstract): array;
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return int[]
+     */
+    public function getAbstractProductWhitelistIds(int $idProductAbstract): array;
 }

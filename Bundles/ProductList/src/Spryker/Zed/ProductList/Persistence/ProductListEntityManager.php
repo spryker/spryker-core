@@ -24,6 +24,9 @@ class ProductListEntityManager extends AbstractEntityManager implements ProductL
      */
     public function saveProductList(ProductListTransfer $productListTransfer): ProductListTransfer
     {
+        $productListCategoryRelationTransfer = $productListTransfer->getProductListCategoryRelation();
+        $productListProductConcreteRelationTransfer = $productListTransfer->getProductListProductConcreteRelation();
+
         $productListEntity = $this->getFactory()
             ->createProductListQuery()
             ->filterByIdProductList($productListTransfer->getIdProductList())
@@ -32,6 +35,9 @@ class ProductListEntityManager extends AbstractEntityManager implements ProductL
         $productListEntity->fromArray($productListTransfer->toArray());
         $productListEntity->save();
         $productListTransfer->fromArray($productListEntity->toArray(), true);
+
+        $productListTransfer->setProductListCategoryRelation($productListCategoryRelationTransfer);
+        $productListTransfer->setProductListProductConcreteRelation($productListProductConcreteRelationTransfer);
 
         return $productListTransfer;
     }
@@ -51,7 +57,7 @@ class ProductListEntityManager extends AbstractEntityManager implements ProductL
 
     /**
      * @param int $idProductList
-     * @param array $categoryIds
+     * @param int[] $categoryIds
      *
      * @return void
      */
@@ -67,7 +73,7 @@ class ProductListEntityManager extends AbstractEntityManager implements ProductL
 
     /**
      * @param int $idProductList
-     * @param array $categoryIds
+     * @param int[] $categoryIds
      *
      * @return void
      */
@@ -76,16 +82,21 @@ class ProductListEntityManager extends AbstractEntityManager implements ProductL
         if (count($categoryIds) === 0) {
             return;
         }
-        $this->getFactory()
+
+        $productListCategoryEntities = $this->getFactory()
             ->createProductListCategoryQuery()
             ->filterByFkProductList($idProductList)
             ->filterByFkCategory_In($categoryIds)
-            ->delete();
+            ->find();
+
+        foreach ($productListCategoryEntities as $productListCategory) {
+            $productListCategory->delete();
+        }
     }
 
     /**
      * @param int $idProductList
-     * @param array $productIds
+     * @param int[] $productIds
      *
      * @return void
      */
@@ -101,7 +112,7 @@ class ProductListEntityManager extends AbstractEntityManager implements ProductL
 
     /**
      * @param int $idProductList
-     * @param array $productIds
+     * @param int[] $productIds
      *
      * @return void
      */
@@ -110,10 +121,15 @@ class ProductListEntityManager extends AbstractEntityManager implements ProductL
         if (count($productIds) === 0) {
             return;
         }
-        $this->getFactory()
+
+        $productListConcreteProductEntities = $this->getFactory()
             ->createProductListProductConcreteQuery()
             ->filterByFkProductList($idProductList)
             ->filterByFkProduct_In($productIds)
-            ->delete();
+            ->find();
+
+        foreach ($productListConcreteProductEntities as $productListConcreteProductEntity) {
+            $productListConcreteProductEntity->delete();
+        }
     }
 }
