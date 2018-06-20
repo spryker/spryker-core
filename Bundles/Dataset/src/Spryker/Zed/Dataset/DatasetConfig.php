@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\Dataset;
 
+use Spryker\Shared\Dataset\DatasetConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class DatasetConfig extends AbstractBundleConfig
 {
-    public const DATASET_FILE_SIZE = 'DATASET_FILE_SIZE';
     protected const DEFAULT_SIZE = '1M';
 
     /**
@@ -19,7 +19,7 @@ class DatasetConfig extends AbstractBundleConfig
      */
     public function getMaxFileSize(): string
     {
-        return $path = $this->getConfig()->hasValue(static::DATASET_FILE_SIZE) ?
-            $this->getConfig()->get(static::DATASET_FILE_SIZE) : static::DEFAULT_SIZE;
+        return $path = $this->getConfig()->hasValue(DatasetConstants::DATASET_FILE_SIZE) ?
+            $this->getConfig()->get(DatasetConstants::DATASET_FILE_SIZE) : static::DEFAULT_SIZE;
     }
 }
