@@ -10,8 +10,8 @@ namespace SprykerTest\Shared\ErrorHandler;
 use Codeception\Test\Unit;
 use Exception;
 use Psr\Log\LoggerInterface;
+use Spryker\Service\Monitoring\MonitoringServiceInterface;
 use Spryker\Shared\ErrorHandler\ErrorLogger;
-use Spryker\Shared\NewRelicApi\NewRelicApiInterface;
 
 /**
  * Auto-generated group annotations
@@ -31,10 +31,10 @@ class ErrorLoggerTest extends Unit
         $loggerMock = $this->getLoggerMock();
         $loggerMock->expects($this->once())->method('critical');
 
-        $newRelicApiMock = $this->getNewRelicApiMock();
-        $newRelicApiMock->expects($this->once())->method('noticeError');
+        $monitoringServiceMock = $this->getMonitoringServiceMock();
+        $monitoringServiceMock->expects($this->once())->method('setError');
 
-        $errorLoggerMock = $this->getErrorLoggerMock($loggerMock, $newRelicApiMock);
+        $errorLoggerMock = $this->getErrorLoggerMock($loggerMock, $monitoringServiceMock);
         $exception = new Exception('TestException');
 
         $errorLoggerMock->log($exception);
@@ -50,28 +50,28 @@ class ErrorLoggerTest extends Unit
         $loggerMock->expects($this->once())->method('critical')->willThrowException($exception);
         $loggerMock->expects($this->never())->method('error');
 
-        $newRelicApiMock = $this->getNewRelicApiMock();
-        $newRelicApiMock->expects($this->exactly(2))->method('noticeError');
+        $monitoringServiceMock = $this->getMonitoringServiceMock();
+        $monitoringServiceMock->expects($this->exactly(2))->method('setError');
 
-        $errorLoggerMock = $this->getErrorLoggerMock($loggerMock, $newRelicApiMock);
+        $errorLoggerMock = $this->getErrorLoggerMock($loggerMock, $monitoringServiceMock);
 
         $errorLoggerMock->log($exception);
     }
 
     /**
      * @param \Psr\Log\LoggerInterface $logger
-     * @param \Spryker\Shared\NewRelicApi\NewRelicApiInterface $newRelicApi
+     * @param \Spryker\Service\Monitoring\MonitoringServiceInterface $monitoringService
      *
      * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\ErrorHandler\ErrorLogger
      */
-    protected function getErrorLoggerMock(LoggerInterface $logger, NewRelicApiInterface $newRelicApi)
+    protected function getErrorLoggerMock(LoggerInterface $logger, MonitoringServiceInterface $monitoringService)
     {
         $errorLoggerMock = $this->getMockBuilder(ErrorLogger::class)
-            ->setMethods(['getLogger', 'createNewRelicApi'])
+            ->setMethods(['getLogger', 'createMonitoringService'])
             ->getMock();
 
         $errorLoggerMock->method('getLogger')->willReturn($logger);
-        $errorLoggerMock->method('createNewRelicApi')->willReturn($newRelicApi);
+        $errorLoggerMock->method('createMonitoringService')->willReturn($monitoringService);
 
         return $errorLoggerMock;
     }
@@ -88,13 +88,13 @@ class ErrorLoggerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\NewRelicApi\NewRelicApiInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Service\Monitoring\MonitoringServiceInterface
      */
-    protected function getNewRelicApiMock()
+    protected function getMonitoringServiceMock()
     {
-        $newRelicApiMock = $this->getMockBuilder(NewRelicApiInterface::class)
+        $monitoringServiceMock = $this->getMockBuilder(MonitoringServiceInterface::class)
             ->getMock();
 
-        return $newRelicApiMock;
+        return $monitoringServiceMock;
     }
 }
