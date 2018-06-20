@@ -69,6 +69,7 @@ class ProductListWriter implements ProductListWriterInterface
     protected function executeSaveProductListTransaction(
         ProductListTransfer $productListTransfer
     ): ProductListTransfer {
+        $productListTransfer = $this->generateKey($productListTransfer);
         $productListTransfer = $this->productListEntityManager->saveProductList($productListTransfer);
 
         foreach ($this->productListPostSavers as $productListPostSaver) {
@@ -87,5 +88,25 @@ class ProductListWriter implements ProductListWriterInterface
         ProductListTransfer $productListTransfer
     ): void {
         $this->productListEntityManager->deleteProductList($productListTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListTransfer
+     */
+    protected function generateKey(ProductListTransfer $productListTransfer): ProductListTransfer
+    {
+        if ($productListTransfer->getIdProductList()) {
+            return $productListTransfer;
+        }
+        if ($productListTransfer->getKey()) {
+            return $productListTransfer;
+        }
+
+        $key = uniqid('spy-product-list-');
+        $productListTransfer->setKey(md5($key));
+
+        return $productListTransfer;
     }
 }
