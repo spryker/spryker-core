@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductPackagingUnit\Persistence;
 
 use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
+use Generated\Shared\Transfer\ProductPackagingUnitTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -92,6 +93,7 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
         $productPackagingLeadProductEntity = $this->getFactory()
             ->createProductPackagingLeadProductQuery()
             ->filterByFkProductAbstract($idProductAbstract)
+            ->innerJoinSpyProduct()
             ->findOne();
 
         if (!$productPackagingLeadProductEntity) {
@@ -130,5 +132,39 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
             ->endUse();
 
         return $this->buildQueryFromCriteria($query)->find();
+    }
+
+    /**
+     * @param int $productPackagingUnitId
+     *
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer|null
+     */
+    public function getProductPackagingUnitById(
+        int $productPackagingUnitId
+    ): ?ProductPackagingUnitTransfer {
+        $productPackagingUnitEntity = $this->getFactory()
+            ->createProductPackagingUnitQuery()
+            ->filterByIdProductPackagingUnit($productPackagingUnitId)
+            ->innerJoinProductPackagingUnitType()
+            ->leftJoinSpyProductPackagingUnitAmount()
+            ->findOne();
+
+        if (!$productPackagingUnitEntity) {
+            return null;
+        }
+
+        $productPackagingLeadProductTransfer = $this->getProductPackagingLeadProductByIdProductAbstract(
+            $productPackagingUnitEntity->getProduct()->getFkProductAbstract()
+        );
+
+        $productPackagingUnitTransfer = $this->getFactory()
+            ->createProductPackagingUnitMapper()
+            ->mapProductPackagingUnitTransfer(
+                $productPackagingUnitEntity,
+                new ProductPackagingUnitTransfer(),
+                $productPackagingLeadProductTransfer
+            );
+
+        return $productPackagingUnitTransfer;
     }
 }

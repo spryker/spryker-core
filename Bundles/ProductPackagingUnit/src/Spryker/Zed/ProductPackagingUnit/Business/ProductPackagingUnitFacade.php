@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductPackagingUnit\Business;
 
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -189,5 +190,21 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
         return $this->getFactory()
             ->createProductPackagingUnitTypeReader()
             ->getIdProductAbstractsByIdProductPackagingUnitTypes($productPackagingUnitTypeIds);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function expandCartChangeWithQuantityPackagingUnit(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
+    {
+        return $this->getFactory()
+            ->createCartChangeExpander()
+            ->expandWithQuantityPackagingUnit($cartChangeTransfer);
     }
 }

@@ -18,6 +18,7 @@
         <property name="idProductPackagingUnit" type="int" />
         <property name="productPackagingUnitType" type="ProductPackagingUnitType" />
         <property name="productPackagingUnitAmount" type="ProductPackagingUnitAmount" />
+        <property name="productPackagingUnitLeadProduct" type="ProductPackagingLeadProduct" />
     </transfer>
 
     <transfer name="ProductPackagingUnitAmount">
@@ -27,10 +28,16 @@
         <property name="amountMin" type="int" />
         <property name="amountMax" type="int" />
         <property name="amountInterval" type="int" />
+        <property name="amount" type="int"/>
     </transfer>
 
     <transfer name="ProductPackagingLeadProduct">
         <property name="idProductAbstract" type="int"/>
         <property name="idProduct" type="int"/>
+        <property name="skuProduct" type="string"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="quantityPackagingUnit" type="ProductPackagingUnit" />
     </transfer>
 </transfers>
