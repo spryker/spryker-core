@@ -35,18 +35,26 @@ class ProductDiscontinuedWriter implements ProductDiscontinuedWriterInterface
     protected $productDiscontinuedRepository;
 
     /**
+     * @var \Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PostProductDiscontinuePluginInterface[]
+     */
+    protected $postCreateProductDiscontinuePlugins;
+
+    /**
      * @param \Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedEntityManagerInterface $productDiscontinuedEntityManager
      * @param \Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedRepositoryInterface $productDiscontinuedRepository
+     * @param \Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PostProductDiscontinuePluginInterface[] $postCreateProductDiscontinuePlugins
      * @param \Spryker\Zed\ProductDiscontinued\ProductDiscontinuedConfig $productDiscontinuedConfig
      */
     public function __construct(
         ProductDiscontinuedEntityManagerInterface $productDiscontinuedEntityManager,
         ProductDiscontinuedRepositoryInterface $productDiscontinuedRepository,
+        array $postCreateProductDiscontinuePlugins,
         ProductDiscontinuedConfig $productDiscontinuedConfig
     ) {
         $this->productDiscontinuedEntityManager = $productDiscontinuedEntityManager;
         $this->productDiscontinuedConfig = $productDiscontinuedConfig;
         $this->productDiscontinuedRepository = $productDiscontinuedRepository;
+        $this->postCreateProductDiscontinuePlugins = $postCreateProductDiscontinuePlugins;
     }
 
     /**
@@ -68,25 +76,6 @@ class ProductDiscontinuedWriter implements ProductDiscontinuedWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductDiscontinueRequestTransfer $productDiscontinueRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer
-     */
-    public function delete(ProductDiscontinueRequestTransfer $productDiscontinueRequestTransfer): ProductDiscontinuedResponseTransfer
-    {
-        $productDiscontinuedTransfer = (new ProductDiscontinuedTransfer())
-            ->setFkProduct($productDiscontinueRequestTransfer->getIdProduct());
-        $productDiscontinuedTransfer = $this->productDiscontinuedRepository->findProductDiscontinuedByProductId($productDiscontinuedTransfer);
-        if (!$productDiscontinuedTransfer) {
-            return (new ProductDiscontinuedResponseTransfer())->setIsSuccessful(false);
-        }
-
-        return $this->getTransactionHandler()->handleTransaction(function () use ($productDiscontinuedTransfer) {
-            return $this->executeDeleteTransaction($productDiscontinuedTransfer);
-        });
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ProductDiscontinueRequestTransfer $productDiscontinuedRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer
@@ -100,6 +89,7 @@ class ProductDiscontinuedWriter implements ProductDiscontinuedWriterInterface
 
         $productDiscontinuedTransfer = $this->productDiscontinuedEntityManager
             ->saveProductDiscontinued($productDiscontinuedTransfer);
+        $this->executePostCreatePlugins($productDiscontinuedTransfer);
 
         return (new ProductDiscontinuedResponseTransfer())
             ->setProductDiscontinued($productDiscontinuedTransfer)
@@ -109,15 +99,13 @@ class ProductDiscontinuedWriter implements ProductDiscontinuedWriterInterface
     /**
      * @param \Generated\Shared\Transfer\ProductDiscontinuedTransfer $productDiscontinuedTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer
+     * @return void
      */
-    protected function executeDeleteTransaction(
-        ProductDiscontinuedTransfer $productDiscontinuedTransfer
-    ): ProductDiscontinuedResponseTransfer {
-        $this->productDiscontinuedEntityManager->deleteProductDiscontinuedNotes($productDiscontinuedTransfer);
-        $this->productDiscontinuedEntityManager->deleteProductDiscontinued($productDiscontinuedTransfer);
-
-        return (new ProductDiscontinuedResponseTransfer())->setIsSuccessful(true);
+    protected function executePostCreatePlugins(ProductDiscontinuedTransfer $productDiscontinuedTransfer): void
+    {
+        foreach ($this->postCreateProductDiscontinuePlugins as $postCreateProductDiscontinuePlugin) {
+            $postCreateProductDiscontinuePlugin->execute($productDiscontinuedTransfer);
+        }
     }
 
     /**
