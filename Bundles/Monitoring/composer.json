@@ -14,14 +14,14 @@
     "spryker/silex": "^2.0.0",
     "spryker/symfony": "^3.0.0"
   },
+  "suggest": {
+    "spryker/silex": "If you want to use the Monitoring ServiceProvider, please add spryker/silex",
+    "spryker/symfony": "If you want to use the Monitoring ServiceProvider, please add spryker/symfony"
+  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
     }
-  },
-  "suggest": {
-      "spryker/silex": "If you want to use the Monitoring ServiceProvider, please add spryker/silex",
-      "spryker/symfony": "If you want to use the Monitoring ServiceProvider, please add spryker/symfony"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
