@@ -18,7 +18,7 @@ class EntityTransferDefinitionLoader extends TransferDefinitionLoader
     const ENTITY_NAMESPACE = 'entity-namespace';
 
     /**
-     * @return array
+     * @return void
      */
     protected function loadDefinitions()
     {
