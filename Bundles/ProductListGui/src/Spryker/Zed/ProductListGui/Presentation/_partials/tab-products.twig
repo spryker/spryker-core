@@ -1,6 +1,13 @@
 {{ form_widget(productsForm) }}
 
+<h3>Select products to assign</h3>
+
 {{ tabs(productConcreteFormTabs, {
     'productTable': productTable,
-    'productsForm': productsForm,
+}) }}
+
+<h3>Assigned products</h3>
+
+{{ tabs(assignedProductConcreteTabs, {
+    'productTable': productAssignedTable,
 }) }}

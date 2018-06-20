@@ -58,15 +58,19 @@ class EditController extends AbstractController
         }
 
         $tabs = $this->getFactory()->createProductListTabs();
-        $productConcreteTable = $this->getFactory()->createProductConcreteTable();
+        $productConcreteTable = $this->getFactory()->createProductConcreteTable($productListTransfer);
         $productConcreteTabs = $this->getFactory()->createProductConcreteTabs();
+        $productConcreteListedTable = $this->getFactory()->createProductConcreteTable($productListTransfer, false);
+        $assignedProductConcreteTabs = $this->getFactory()->createAssignedProductConcreteTabs();
         $plugins = $this->getFactory()->getProductListCreateFormExpanderPlugins();
 
         return $this->viewResponse([
             'form' => $form->createView(),
             'productListFormTabs' => $tabs->createView(),
             'productConcreteFormTabs' => $productConcreteTabs->createView(),
+            'assignedProductConcreteTabs' => $assignedProductConcreteTabs->createView(),
             'productTable' => $productConcreteTable->render(),
+            'productAssignedTable' => $productConcreteListedTable->render(),
             'idProductList' => $productListTransfer->getIdProductList(),
             'plugins' => $plugins,
         ]);

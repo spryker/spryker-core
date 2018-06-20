@@ -7,9 +7,12 @@
 
 namespace Spryker\Zed\ProductListGui\Communication\Table;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\ProductListTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductListGui\Communication\Form\ProductListForm;
@@ -22,6 +25,35 @@ class ProductConcreteTable extends AbstractTable
     protected const COLUMN_SKU = SpyProductTableMap::COL_SKU;
     protected const COLUMN_NAME = SpyProductLocalizedAttributesTableMap::COL_NAME;
     protected const COLUMN_ACTION = 'action';
+    /**
+     * @var \Generated\Shared\Transfer\LocaleTransfer
+     */
+    protected $localeTransfer;
+
+    /**
+     * @var \Generated\Shared\Transfer\ProductListTransfer|null
+     */
+    protected $productListTransfer;
+
+    /**
+     * @var bool
+     */
+    protected $notInList;
+
+    /**
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\ProductListTransfer|null $productListTransfer
+     * @param bool $notInList
+     */
+    public function __construct(
+        LocaleTransfer $localeTransfer,
+        ?ProductListTransfer $productListTransfer = null,
+        bool $notInList = true
+    ) {
+        $this->localeTransfer = $localeTransfer;
+        $this->productListTransfer = $productListTransfer;
+        $this->notInList = $notInList;
+    }
 
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
@@ -61,14 +93,7 @@ class ProductConcreteTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config)
     {
-        $query = (new SpyProductLocalizedAttributesQuery())
-            ->leftJoinSpyProduct()
-            ->filterByFkLocale(66)
-            ->select([
-                SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT,
-                SpyProductTableMap::COL_SKU,
-                SpyProductLocalizedAttributesTableMap::COL_NAME,
-            ]);
+        $query = $this->buildQuery();
 
         $queryResults = $this->runQuery($query, $config);
 
@@ -106,5 +131,34 @@ class ProductConcreteTable extends AbstractTable
                 $idProduct
             ),
         ];
+    }
+
+    /**
+     * @return \Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery
+     */
+    protected function buildQuery(): SpyProductLocalizedAttributesQuery
+    {
+        $this->localeTransfer->requireIdLocale();
+
+        $query = (new SpyProductLocalizedAttributesQuery())
+            ->innerJoinSpyProduct()
+            ->filterByFkLocale($this->localeTransfer->getIdLocale())
+            ->select([
+                SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT,
+                SpyProductTableMap::COL_SKU,
+                SpyProductLocalizedAttributesTableMap::COL_NAME,
+            ]);
+
+        if ($this->productListTransfer) {
+            $this->productListTransfer->requireIdProductList();
+            $criteria = $this->notInList ? Criteria::NOT_EQUAL : Criteria::EQUAL;
+
+            /** @var \Orm\Zed\ProductList\Persistence\SpyProductListProductConcreteQuery|\Orm\Zed\Product\Persistence\SpyProductQuery|\Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery $query */
+            $query
+                ->innerJoinSpyProductListProductConcrete()
+                ->filterByFkProductList($this->productListTransfer->getIdProductList(), $criteria);
+        }
+
+        return $query;
     }
 }

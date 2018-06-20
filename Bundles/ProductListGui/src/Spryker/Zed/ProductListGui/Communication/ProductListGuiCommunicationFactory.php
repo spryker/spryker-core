@@ -15,8 +15,10 @@ use Spryker\Zed\ProductListGui\Communication\DataProvider\ProductListProductConc
 use Spryker\Zed\ProductListGui\Communication\Form\ProductListForm;
 use Spryker\Zed\ProductListGui\Communication\Table\ProductConcreteTable;
 use Spryker\Zed\ProductListGui\Communication\Table\ProductListTable;
+use Spryker\Zed\ProductListGui\Communication\Tabs\AssignedProductConcreteTabs;
 use Spryker\Zed\ProductListGui\Communication\Tabs\ProductConcreteTabs;
 use Spryker\Zed\ProductListGui\Communication\Tabs\ProductListTabs;
+use Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToLocaleFacadeInterface;
 use Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToProductListFacadeInterface;
 use Spryker\Zed\ProductListGui\ProductListGuiDependencyProvider;
 use Symfony\Component\Form\FormInterface;
@@ -36,11 +38,18 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ProductListTransfer|null $productListTransfer
+     * @param bool $notInList
+     *
      * @return \Spryker\Zed\ProductListGui\Communication\Table\ProductConcreteTable
      */
-    public function createProductConcreteTable(): ProductConcreteTable
-    {
-        return new ProductConcreteTable();
+    public function createProductConcreteTable(
+        ?ProductListTransfer $productListTransfer = null,
+        bool $notInList = true
+    ): ProductConcreteTable {
+        $locale = $this->getLocaleFacade()->getCurrentLocale();
+
+        return new ProductConcreteTable($locale, $productListTransfer, $notInList);
     }
 
     /**
@@ -57,6 +66,14 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createProductConcreteTabs(): ProductConcreteTabs
     {
         return new ProductConcreteTabs();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductListGui\Communication\Tabs\AssignedProductConcreteTabs
+     */
+    public function createAssignedProductConcreteTabs(): AssignedProductConcreteTabs
+    {
+        return new AssignedProductConcreteTabs();
     }
 
     /**
@@ -121,5 +138,13 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getProductListCreateFormExpanderPlugins(): array
     {
         return $this->getProvidedDependency(ProductListGuiDependencyProvider::PLUGINS_FORM_EXTENSION);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToLocaleFacadeInterface
+     */
+    public function getLocaleFacade(): ProductListGuiToLocaleFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductListGuiDependencyProvider::FACADE_LOCALE);
     }
 }

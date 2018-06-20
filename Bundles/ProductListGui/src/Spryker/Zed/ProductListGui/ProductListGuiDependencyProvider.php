@@ -30,6 +30,7 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = $this->addProductListFacade($container);
+        $container = $this->addLocaleFacade($container);
         $container = $this->addProductListCreateFormExpanderPlugins($container);
 
         return $container;
