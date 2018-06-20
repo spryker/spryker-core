@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ProductDiscontinuedProductBundleConnector\Dependency\Facade;
 
-use Generated\Shared\Transfer\ProductDiscontinuedRequestTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer;
+use Generated\Shared\Transfer\ProductDiscontinueRequestTransfer;
 
 class ProductDiscontinuedProductBundleConnectorToProductDiscontinuedFacadeBridge implements ProductDiscontinuedProductBundleConnectorToProductDiscontinuedFacadeInterface
 {
@@ -26,12 +26,12 @@ class ProductDiscontinuedProductBundleConnectorToProductDiscontinuedFacadeBridge
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductDiscontinuedRequestTransfer $productDiscontinuedRequestTransfer
+     * @param \Generated\Shared\Transfer\ProductDiscontinueRequestTransfer $productDiscontinueRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer
      */
-    public function markProductAsDiscontinued(ProductDiscontinuedRequestTransfer $productDiscontinuedRequestTransfer): ProductDiscontinuedResponseTransfer
+    public function markProductAsDiscontinued(ProductDiscontinueRequestTransfer $productDiscontinueRequestTransfer): ProductDiscontinuedResponseTransfer
     {
-        return $this->productDiscontinuedFacade->markProductAsDiscontinued($productDiscontinuedRequestTransfer);
+        return $this->productDiscontinuedFacade->markProductAsDiscontinued($productDiscontinueRequestTransfer);
     }
 }

@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ProductDiscontinuedProductBundleConnector\Business\ProductBundleDiscontinued;
 
-use Generated\Shared\Transfer\ProductDiscontinuedRequestTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
+use Generated\Shared\Transfer\ProductDiscontinueRequestTransfer;
 use Spryker\Zed\ProductDiscontinuedProductBundleConnector\Dependency\Facade\ProductDiscontinuedProductBundleConnectorToProductDiscontinuedFacadeInterface;
 use Spryker\Zed\ProductDiscontinuedProductBundleConnector\Persistence\ProductDiscontinuedProductBundleConnectorRepositoryInterface;
 
@@ -62,7 +62,7 @@ class ProductBundleDiscontinuedWriter implements ProductBundleDiscontinuedWriter
      */
     protected function discontinueProduct(int $idProduct): void
     {
-        $productDiscontinuedRequestTransfer = (new ProductDiscontinuedRequestTransfer())
+        $productDiscontinuedRequestTransfer = (new ProductDiscontinueRequestTransfer())
             ->setIdProduct($idProduct);
 
         $this->productDiscontinuedFacade->markProductAsDiscontinued($productDiscontinuedRequestTransfer);
