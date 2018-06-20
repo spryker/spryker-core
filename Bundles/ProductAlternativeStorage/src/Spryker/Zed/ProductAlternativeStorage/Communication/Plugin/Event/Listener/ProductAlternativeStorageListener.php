@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductAlternativeStorage\Communication\Plugin\Event\Liste
 
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ProductAlternative\Dependency\ProductAlternativeEvents;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
@@ -35,14 +34,6 @@ class ProductAlternativeStorageListener extends AbstractPlugin implements EventB
         $productIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
         if (empty($productIds)) {
-            return;
-        }
-
-        if ($eventName === ProductAlternativeEvents::ENTITY_SPY_PRODUCT_ALTERNATIVE_DELETE
-            || $eventName === ProductAlternativeEvents::PRODUCT_ALTERNATIVE_UNPUBLISH
-        ) {
-            $this->getFacade()->unpublishAlternative($productIds);
-
             return;
         }
 

@@ -7,17 +7,18 @@
 
 namespace Spryker\Zed\ProductAlternativeStorage\Persistence;
 
-use Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer;
 use Generated\Shared\Transfer\SpyProductReplacementStorageEntityTransfer;
 
 interface ProductAlternativeStorageRepositoryInterface
 {
     /**
-     * @param int $idProduct
+     * @api
      *
-     * @return \Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer|null
+     * @param int[] $productIds
+     *
+     * @return \Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer[]
      */
-    public function findProductAlternativeStorageEntity($idProduct): ?SpyProductAlternativeStorageEntityTransfer;
+    public function findProductAlternativeStorageEntities(array $productIds): array;
 
     /**
      * @api

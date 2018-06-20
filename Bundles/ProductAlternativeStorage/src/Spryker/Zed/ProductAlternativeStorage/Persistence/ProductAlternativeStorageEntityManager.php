@@ -38,6 +38,7 @@ class ProductAlternativeStorageEntityManager extends AbstractEntityManager imple
         $this->getFactory()
             ->createProductAlternativeStorageQuery()
             ->filterByIdProductAlternativeStorage($productAlternativeStorageEntityTransfer->getIdProductAlternativeStorage())
+            ->findOne()
             ->delete();
     }
 

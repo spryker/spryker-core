@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductAlternativeStorage\Persistence;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer;
 use Generated\Shared\Transfer\SpyProductReplacementStorageEntityTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
@@ -25,17 +24,20 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     /**
      * @api
      *
-     * @param int $idProduct
+     * @param int[] $productIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer|null
+     * @return \Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer[]
      */
-    public function findProductAlternativeStorageEntity($idProduct): ?SpyProductAlternativeStorageEntityTransfer
+    public function findProductAlternativeStorageEntities(array $productIds): array
     {
+        if (!$productIds) {
+            return [];
+        }
         $query = $this->getFactory()
             ->createProductAlternativeStorageQuery()
-            ->filterByFkProduct($idProduct);
+            ->filterByFkProduct_In($productIds);
 
-        return $this->buildQueryFromCriteria($query)->findOne();
+        return $this->buildQueryFromCriteria($query)->find();
     }
 
     /**
@@ -51,8 +53,8 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
             ->getFactory()
             ->getProductQuery()
             ->filterByIdProduct($idProduct)
-            ->findOne()
-            ->getSku();
+            ->select([SpyProductTableMap::COL_SKU])
+            ->findOne();
     }
 
     /**
