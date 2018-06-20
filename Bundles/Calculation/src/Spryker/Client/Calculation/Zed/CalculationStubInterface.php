@@ -14,7 +14,7 @@ interface CalculationStubInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function recalculate(QuoteTransfer $quoteTransfer);
 }

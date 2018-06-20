@@ -29,7 +29,7 @@ class Locator implements LocatorLocatorInterface
     private static $instance;
 
     /**
-     * @return $this
+     * @return static
      */
     public static function getInstance()
     {

@@ -87,7 +87,7 @@ class TestStateMachineHandler implements StateMachineHandlerInterface
      *
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
-     * @return bool
+     * @return void
      */
     public function itemStateUpdated(StateMachineItemTransfer $stateMachineItemTransfer)
     {

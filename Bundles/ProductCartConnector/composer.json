@@ -6,7 +6,8 @@
     "php": ">=7.1",
     "spryker/kernel": "^3.0.0",
     "spryker/locale": "^3.0.0",
-    "spryker/product": "^5.0.0 || ^6.0.0"
+    "spryker/messenger": "^3.0.0",
+    "spryker/product": "^6.1.0"
   },
   "require-dev": {
     "spryker/cart": "*",
