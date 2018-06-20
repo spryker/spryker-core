@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ProductListTransfer;
 use Spryker\Zed\ProductListGui\Business\ProductListGuiFacadeInterface;
 use Spryker\Zed\ProductListGui\Communication\Form\ProductListCategoryRelationType;
 
-class CategoriesDataProvider
+class CategoryDataProvider
 {
     /**
      * @var \Spryker\Zed\ProductListGui\Business\ProductListGuiFacadeInterface

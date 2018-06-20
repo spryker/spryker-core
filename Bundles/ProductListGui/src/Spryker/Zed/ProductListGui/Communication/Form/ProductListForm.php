@@ -117,7 +117,7 @@ class ProductListForm extends AbstractType
             'constraints' => [
                 new Required(),
                 new NotBlank(),
-                new Length(['max' => 100]),
+                new Length(['max' => 255]),
             ],
         ]);
 

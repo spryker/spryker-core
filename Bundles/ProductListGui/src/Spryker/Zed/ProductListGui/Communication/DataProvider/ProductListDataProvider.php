@@ -14,9 +14,9 @@ use Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListCreateFormE
 class ProductListDataProvider
 {
     /**
-     * @var \Spryker\Zed\ProductListGui\Communication\DataProvider\CategoriesDataProvider
+     * @var \Spryker\Zed\ProductListGui\Communication\DataProvider\CategoryDataProvider
      */
-    protected $categoriesDataProvider;
+    protected $categoryDataProvider;
 
     /**
      * @var \Spryker\Zed\ProductListGui\Communication\DataProvider\ProductListProductConcreteRelationDataProvider
@@ -29,16 +29,16 @@ class ProductListDataProvider
     private $productListCreateFormExpanderPlugins;
 
     /**
-     * @param \Spryker\Zed\ProductListGui\Communication\DataProvider\CategoriesDataProvider $categoriesDataProvider
+     * @param \Spryker\Zed\ProductListGui\Communication\DataProvider\CategoryDataProvider $categoryDataProvider
      * @param \Spryker\Zed\ProductListGui\Communication\DataProvider\ProductListProductConcreteRelationDataProvider $productConcreteRelationDataProvider
      * @param \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListCreateFormExpanderPluginInterface[] $productListCreateFormExpanderPlugins
      */
     public function __construct(
-        CategoriesDataProvider $categoriesDataProvider,
+        CategoryDataProvider $categoryDataProvider,
         ProductListProductConcreteRelationDataProvider $productConcreteRelationDataProvider,
         ProductListCreateFormExpanderPluginInterface ... $productListCreateFormExpanderPlugins
     ) {
-        $this->categoriesDataProvider = $categoriesDataProvider;
+        $this->categoryDataProvider = $categoryDataProvider;
         $this->productConcreteRelationDataProvider = $productConcreteRelationDataProvider;
         $this->productListCreateFormExpanderPlugins = $productListCreateFormExpanderPlugins;
     }
@@ -51,7 +51,7 @@ class ProductListDataProvider
     public function getOptions(?ProductListTransfer $productListTransfer = null): array
     {
         $options = [
-            ProductListForm::FIELD_CATEGORIES => $this->categoriesDataProvider->getOptions(),
+            ProductListForm::FIELD_CATEGORIES => $this->categoryDataProvider->getOptions(),
             ProductListForm::FIELD_PRODUCTS => $this->productConcreteRelationDataProvider->getOptions(),
             ProductListForm::OPTION_DISABLE_GENERAL => $productListTransfer && $productListTransfer->getIdProductList(),
             ProductListForm::OPTION_OWNER_TYPES => $this->getOwnerTypes(),

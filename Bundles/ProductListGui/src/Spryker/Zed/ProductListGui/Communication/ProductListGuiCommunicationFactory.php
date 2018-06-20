@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductListGui\Communication;
 
 use Generated\Shared\Transfer\ProductListTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\ProductListGui\Communication\DataProvider\CategoriesDataProvider;
+use Spryker\Zed\ProductListGui\Communication\DataProvider\CategoryDataProvider;
 use Spryker\Zed\ProductListGui\Communication\DataProvider\ProductListDataProvider;
 use Spryker\Zed\ProductListGui\Communication\DataProvider\ProductListProductConcreteRelationDataProvider;
 use Spryker\Zed\ProductListGui\Communication\Form\ProductListForm;
@@ -88,11 +88,11 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductListGui\Communication\DataProvider\CategoriesDataProvider
+     * @return \Spryker\Zed\ProductListGui\Communication\DataProvider\CategoryDataProvider
      */
-    public function createCategoriesDataProvider(): CategoriesDataProvider
+    public function createCategoriesDataProvider(): CategoryDataProvider
     {
-        return new CategoriesDataProvider(
+        return new CategoryDataProvider(
             $this->getFacade()
         );
     }

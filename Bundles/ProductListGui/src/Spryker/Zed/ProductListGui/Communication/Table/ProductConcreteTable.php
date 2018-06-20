@@ -17,37 +17,11 @@ use Spryker\Zed\ProductListGui\Communication\Form\ProductListProductConcreteRela
 
 class ProductConcreteTable extends AbstractTable
 {
-    const TABLE_IDENTIFIER = 'product-table';
+    protected const TABLE_IDENTIFIER = 'product-table';
     protected const COLUMN_ID = SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT;
     protected const COLUMN_SKU = SpyProductTableMap::COL_SKU;
     protected const COLUMN_NAME = SpyProductLocalizedAttributesTableMap::COL_NAME;
     protected const COLUMN_ACTION = 'action';
-
-    /**
-     * @var \Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface
-     */
-    protected $productCategoryQueryContainer;
-
-    /**
-     * @var \Spryker\Zed\ProductCategory\Dependency\Service\ProductCategoryToUtilEncodingInterface
-     */
-    protected $utilEncodingService;
-
-    /**
-     * @var \Generated\Shared\Transfer\LocaleTransfer
-     */
-    protected $locale;
-
-    /**
-     * @var int
-     */
-    protected $idCategory;
-
-    /**
-     */
-    public function __construct()
-    {
-    }
 
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
