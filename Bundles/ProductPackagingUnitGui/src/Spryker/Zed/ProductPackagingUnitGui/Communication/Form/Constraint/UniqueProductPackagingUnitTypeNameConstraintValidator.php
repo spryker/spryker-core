@@ -17,7 +17,7 @@ class UniqueProductPackagingUnitTypeNameConstraintValidator extends ConstraintVa
 {
     /**
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $value
-     * @param \Symfony\Component\Validator\Constraint|\Spryker\Zed\ProductPackagingUnitTypeGui\Communication\Form\Constraint\UniqueProductPackagingUnitTypeNameConstraint $constraint
+     * @param \Symfony\Component\Validator\Constraint|\Spryker\Zed\ProductPackagingUnitGui\Communication\Form\Constraint\UniqueProductPackagingUnitTypeNameConstraint $constraint
      *
      * @return void
      */
@@ -71,7 +71,7 @@ class UniqueProductPackagingUnitTypeNameConstraintValidator extends ConstraintVa
 
     /**
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
-     * @param \Spryker\Zed\ProductPackagingUnitTypeGui\Communication\Form\Constraint\UniqueProductPackagingUnitTypeNameConstraint $constraint
+     * @param \Spryker\Zed\ProductPackagingUnitGui\Communication\Form\Constraint\UniqueProductPackagingUnitTypeNameConstraint $constraint
      *
      * @return bool
      */
@@ -91,7 +91,7 @@ class UniqueProductPackagingUnitTypeNameConstraintValidator extends ConstraintVa
 
     /**
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
-     * @param \Spryker\Zed\ProductPackagingUnitTypeGui\Communication\Form\Constraint\UniqueProductPackagingUnitTypeNameConstraint $constraint
+     * @param \Spryker\Zed\ProductPackagingUnitGui\Communication\Form\Constraint\UniqueProductPackagingUnitTypeNameConstraint $constraint
      *
      * @return bool
      */

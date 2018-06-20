@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductPackagingUnitGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTranslationTransfer;
-use Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToLocaleBridge;
+use Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToLocaleInterface;
 use Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToProductPackagingUnitInterface;
 
 class ProductPackagingUnitTypeDataProvider
@@ -20,17 +20,17 @@ class ProductPackagingUnitTypeDataProvider
     protected $productPackagingUnitFacade;
 
     /**
-     * @var \Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToLocaleBridge
+     * @var \Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToLocaleInterface
      */
     protected $localeFacade;
 
     /**
-     * @param \Spryker\Zed\ProductPackagingUnitTypeGui\Dependency\Facade\ProductPackagingUnitTypeGuiToProductPackagingUnitTypeFacadeInterface $productPackagingUnitFacade
-     * @param \Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToLocaleBridge $localeFacade
+     * @param \Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToProductPackagingUnitInterface $productPackagingUnitFacade
+     * @param \Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToLocaleInterface $localeFacade
      */
     public function __construct(
         ProductPackagingUnitGuiToProductPackagingUnitInterface $productPackagingUnitFacade,
-        ProductPackagingUnitGuiToLocaleBridge $localeFacade
+        ProductPackagingUnitGuiToLocaleInterface $localeFacade
     ) {
         $this->productPackagingUnitFacade = $productPackagingUnitFacade;
         $this->localeFacade = $localeFacade;

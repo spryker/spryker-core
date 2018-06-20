@@ -58,7 +58,7 @@ class DeleteController extends AbstractProductPackagingUnitGuiController
         return Url::generate(
             ProductPackagingUnitTypeTableConstantsInterface::URL_PRODUCT_PACKAGING_UNIT_TYPE_EDIT,
             [ ProductPackagingUnitTypeTableConstantsInterface::REQUEST_ID_PRODUCT_PACKAGING_UNIT_TYPE => $idProductPackagingUnitType]
-        );
+        )->build();
     }
 
     /**
