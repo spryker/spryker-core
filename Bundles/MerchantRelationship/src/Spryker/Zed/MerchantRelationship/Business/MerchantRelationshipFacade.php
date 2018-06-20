@@ -90,7 +90,7 @@ class MerchantRelationshipFacade extends AbstractFacade implements MerchantRelat
      */
     public function listMerchantRelation(): array
     {
-        $this->getRepository()
+        return $this->getRepository()
             ->listMerchantRelation();
     }
 }

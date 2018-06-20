@@ -85,6 +85,7 @@ class ProductListProductConcreteRelationType extends AbstractType
     {
         $builder->add(static::FIELD_FILE_UPLOAD, FileType::class, [
             'label' => 'Select csv',
+            'required' => false,
             'mapped' => false,
         ]);
 
