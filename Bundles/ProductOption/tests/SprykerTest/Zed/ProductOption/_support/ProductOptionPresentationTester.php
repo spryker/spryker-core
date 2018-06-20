@@ -113,7 +113,7 @@ class ProductOptionPresentationTester extends Actor
     }
 
     /**
-     * @return array
+     * @return void
      */
     public function assignProducts()
     {

@@ -128,6 +128,38 @@ class ProductManagementTest extends FacadeTestAbstract
     /**
      * @return void
      */
+    public function testIsProductConcreteActiveShouldReturnTrue()
+    {
+        // Arrange
+        $this->productConcreteTransfer->setIsActive(true);
+        $this->setupDefaultProducts();
+
+        // Act
+        $isActive = $this->productFacade->isProductConcreteActive($this->productConcreteTransfer);
+
+        // Assert
+        $this->assertTrue($isActive);
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsProductConcreteActiveShouldReturnFalse()
+    {
+        // Arrange
+        $this->productConcreteTransfer->setIsActive(false);
+        $this->setupDefaultProducts();
+
+        // Act
+        $isActive = $this->productFacade->isProductConcreteActive($this->productConcreteTransfer);
+
+        // Assert
+        $this->assertFalse($isActive);
+    }
+
+    /**
+     * @return void
+     */
     public function testCreateProductAbstractSavesStoreRelation()
     {
         // Assign

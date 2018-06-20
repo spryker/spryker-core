@@ -92,11 +92,14 @@ abstract class AbstractPlugin
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\AbstractFactory|\Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory
+     * @return \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory
      */
     private function resolveFactory()
     {
-        return $this->getFactoryResolver()->resolve($this);
+        /** @var \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory $factory */
+        $factory = $this->getFactoryResolver()->resolve($this);
+
+        return $factory;
     }
 
     /**
