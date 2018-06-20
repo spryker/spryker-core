@@ -23,7 +23,7 @@ class CreateController extends AbstractController
      */
     protected const URL_LIST = '/product-list-gui';
     protected const MESSAGE_PRODUCT_LIST_CREATE_ERROR = 'Product list can not be created';
-    protected const MESSAGE_PRODUCT_LIST_CREATE_SUCCESS = 'Product list with id "%d" successfully created';
+    protected const MESSAGE_PRODUCT_LIST_CREATE_SUCCESS = 'Product list with id "%d" has been successfully created';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
