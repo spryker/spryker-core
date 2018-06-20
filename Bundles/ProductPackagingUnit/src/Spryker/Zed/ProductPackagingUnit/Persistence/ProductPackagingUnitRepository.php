@@ -32,7 +32,7 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
 
         if ($productPackagingUnitTypeEntity) {
             return $this->getFactory()
-                ->createProductPackagingUnitTypeMapper()
+                ->createProductPackagingUnitMapper()
                 ->mapProductPackagingUnitTypeTransfer(
                     $productPackagingUnitTypeEntity,
                     new ProductPackagingUnitTypeTransfer()
@@ -57,7 +57,7 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
 
         if ($productPackagingUnitTypeEntity) {
             return $this->getFactory()
-                ->createProductPackagingUnitTypeMapper()
+                ->createProductPackagingUnitMapper()
                 ->mapProductPackagingUnitTypeTransfer(
                     $productPackagingUnitTypeEntity,
                     new ProductPackagingUnitTypeTransfer()
@@ -99,7 +99,7 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
         }
 
         $productPackagingLeadProductTransfer = $this->getFactory()
-            ->createProductPackagingLeadProductMapper()
+            ->createProductPackagingUnitMapper()
             ->mapProductPackagingLeadProductTransfer(
                 $productPackagingLeadProductEntity,
                 new ProductPackagingLeadProductTransfer()

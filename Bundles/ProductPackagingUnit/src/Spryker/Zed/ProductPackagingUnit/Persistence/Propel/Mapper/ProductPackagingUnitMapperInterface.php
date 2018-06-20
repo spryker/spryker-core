@@ -8,10 +8,23 @@
 namespace Spryker\Zed\ProductPackagingUnit\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
+use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingLeadProduct;
+use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitType;
 
-interface ProductPackagingLeadProductMapperInterface
+interface ProductPackagingUnitMapperInterface
 {
+    /**
+     * @param \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitType $spyProductPackagingUnitType
+     * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
+     */
+    public function mapProductPackagingUnitTypeTransfer(
+        SpyProductPackagingUnitType $spyProductPackagingUnitType,
+        ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+    ): ProductPackagingUnitTypeTransfer;
+
     /**
      * @param \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingLeadProduct $productPackagingLeadProductEntity
      * @param \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer $productPackagingLeadProductTransfer
