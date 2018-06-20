@@ -12,6 +12,8 @@ use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Spryker\Zed\Synchronization\Business\Message\QueueMessageCreatorInterface;
 use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToQueueClientInterface;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface;
+use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
+use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRepositoryPluginInterface;
 
 class Exporter implements ExporterInterface
 {
@@ -26,7 +28,7 @@ class Exporter implements ExporterInterface
     protected $queueMessageCreator;
 
     /**
-     * @var \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface[]
+     * @var \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface[]
      */
     protected $synchronizationDataPlugins;
 
@@ -38,7 +40,7 @@ class Exporter implements ExporterInterface
     /**
      * @param \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToQueueClientInterface $queueClient
      * @param \Spryker\Zed\Synchronization\Business\Message\QueueMessageCreatorInterface $synchronizationQueueMessageCreator
-     * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface[] $synchronizationDataPlugins
+     * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface[] $synchronizationDataPlugins
      * @param int $chunkSize
      */
     public function __construct(
@@ -65,17 +67,22 @@ class Exporter implements ExporterInterface
         $plugins = $this->getEffectivePlugins($resources);
 
         foreach ($plugins as $plugin) {
-            $this->exportData($ids, $plugin);
+            if ($plugin instanceof SynchronizationDataQueryContainerPluginInterface) {
+                $this->exportDataFromQueryContainer($ids, $plugin);
+            }
+            if ($plugin instanceof SynchronizationDataRepositoryPluginInterface){
+                $this->exportDataFromRepository($ids, $plugin);
+            }
         }
     }
 
     /**
      * @param array $ids
-     * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface $plugin
+     * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface $plugin
      *
      * @return void
      */
-    protected function exportData(array $ids, SynchronizationDataPluginInterface $plugin)
+    protected function exportDataFromQueryContainer(array $ids, SynchronizationDataQueryContainerPluginInterface $plugin)
     {
         $query = $plugin->queryData($ids);
         $count = $query->count();
@@ -83,6 +90,7 @@ class Exporter implements ExporterInterface
         $offset = 0;
 
         for ($i = 0; $i < $loops; $i++) {
+            //TODO ordering
             $synchronizationEntities = $plugin->queryData($ids)
                 ->offset($offset)
                 ->limit($this->chunkSize)
@@ -90,6 +98,26 @@ class Exporter implements ExporterInterface
                 ->getData();
 
             $this->syncData($plugin, $synchronizationEntities);
+            $offset += $this->chunkSize;
+        }
+    }
+
+    /**
+     * @param array $ids
+     * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface $plugin
+     *
+     * @return void
+     */
+    protected function exportDataFromRepository(array $ids, SynchronizationDataRepositoryPluginInterface $plugin)
+    {
+        $synchronizationEntities = $plugin->getData($ids);
+        $count = count($synchronizationEntities);
+        $loops = $count / $this->chunkSize;
+        $offset = 0;
+
+        for ($i = 0; $i < $loops; $i++) {
+            $chunkOfSynchronizationEntitiesTransfers = array_slice($synchronizationEntities, $offset, $this->chunkSize);
+            $this->syncData($plugin, $chunkOfSynchronizationEntitiesTransfers);
             $offset += $this->chunkSize;
         }
     }
@@ -120,7 +148,7 @@ class Exporter implements ExporterInterface
     /**
      * @param array $resources
      *
-     * @return \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface[]
+     * @return \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface[]
      */
     protected function getEffectivePlugins(array $resources)
     {

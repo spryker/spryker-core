@@ -18,4 +18,12 @@ class ProductReviewStorageConfig extends AbstractBundleConfig
     {
         return true;
     }
+
+    /**
+     * @return null|string
+     */
+    public function getProductAbstractReviewSynchronizationPoolName()
+    {
+        return null;
+    }
 }

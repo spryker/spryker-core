@@ -31,19 +31,6 @@ interface SynchronizationDataPluginInterface
 
     /**
      * Specification:
-     *  - Returns query of storage or search entity, provided $ids parameter
-     *    will apply to query to limit the result
-     *
-     * @api
-     *
-     * @param array $ids
-     *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
-     */
-    public function queryData($ids = []);
-
-    /**
-     * Specification:
      *  - Returns array of configuration parameter which needed for Redis or Elasticsearch
      *
      * @api

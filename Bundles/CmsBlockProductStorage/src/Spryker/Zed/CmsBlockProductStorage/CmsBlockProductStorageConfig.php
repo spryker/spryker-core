@@ -18,4 +18,12 @@ class CmsBlockProductStorageConfig extends AbstractBundleConfig
     {
         return true;
     }
+
+    /**
+     * @return string|null
+     */
+    public function getCmsBlockProductSynchronizationPoolName()
+    {
+        return null;
+    }
 }

@@ -9,14 +9,14 @@ namespace Spryker\Zed\CategoryStorage\Communication\Plugin\Synchronization;
 
 use Spryker\Shared\CategoryStorage\CategoryStorageConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface;
+use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
 
 /**
  * @method \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\CategoryStorage\Business\CategoryStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\CategoryStorage\Communication\CategoryStorageCommunicationFactory getFactory()
  */
-class CategoryTreeSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataPluginInterface
+class CategoryTreeSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataQueryContainerPluginInterface
 {
     /**
      * Specification:
@@ -57,9 +57,7 @@ class CategoryTreeSynchronizationDataPlugin extends AbstractPlugin implements Sy
      */
     public function queryData($ids = [])
     {
-        $query = $this->getQueryContainer()->queryCategoryStorage();
-
-        return $query;
+        return $this->getQueryContainer()->queryCategoryStorage();
     }
 
     /**
