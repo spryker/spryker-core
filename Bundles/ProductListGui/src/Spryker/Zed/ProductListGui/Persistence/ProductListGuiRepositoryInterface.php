@@ -20,7 +20,7 @@ interface ProductListGuiRepositoryInterface
      *
      * @return string[] [<category id> => <category name in english locale>]
      */
-    public function getAllCategoriesNames(LocaleTransfer $localeTransfer): array;
+    public function getAllCategoryNames(LocaleTransfer $localeTransfer): array;
 
     /**
      * @api
@@ -31,5 +31,5 @@ interface ProductListGuiRepositoryInterface
      *
      * @return string[] [<product id> => <product name in english locale>]
      */
-    public function getAllProductsNames(LocaleTransfer $localeTransfer): array;
+    public function getAllProductNames(LocaleTransfer $localeTransfer): array;
 }

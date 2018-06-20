@@ -33,7 +33,7 @@ class ProductListGuiRepository extends AbstractRepository implements ProductList
      *
      * @return string[] [<category id> => <category name in english locale>]
      */
-    public function getAllCategoriesNames(LocaleTransfer $localeTransfer): array
+    public function getAllCategoryNames(LocaleTransfer $localeTransfer): array
     {
         $categoryAttributes = $this->getFactory()
             ->getCategoryAttributeQuery()
@@ -62,7 +62,7 @@ class ProductListGuiRepository extends AbstractRepository implements ProductList
      *
      * @return string[] [<product id> => <product name in english locale>]
      */
-    public function getAllProductsNames(LocaleTransfer $localeTransfer): array
+    public function getAllProductNames(LocaleTransfer $localeTransfer): array
     {
         $productAttributes = $this->getFactory()
             ->getProductAttributeQuery()

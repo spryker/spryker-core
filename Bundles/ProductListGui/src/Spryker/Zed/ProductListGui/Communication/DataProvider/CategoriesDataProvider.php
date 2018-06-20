@@ -53,7 +53,7 @@ class CategoriesDataProvider
     protected function getCategoryList(): array
     {
         $uniqueCategoryNames = [];
-        $categoryNames = $this->facade->getAllCategoriesNames();
+        $categoryNames = $this->facade->getAllCategoryNames();
         foreach ($categoryNames as $idCategory => $categoryName) {
             $categoryKey = sprintf('%s - %s', $idCategory, $categoryName);
             $uniqueCategoryNames[$categoryKey] = $idCategory;

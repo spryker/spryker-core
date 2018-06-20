@@ -22,14 +22,14 @@ class ProductListGuiFacade extends AbstractFacade implements ProductListGuiFacad
      *
      * @return string[] [<category id> => <category name in english locale>]
      */
-    public function getAllCategoriesNames(): array
+    public function getAllCategoryNames(): array
     {
         $localeTransfer = $this->getFactory()
             ->getLocaleFacade()
             ->getCurrentLocale();
 
         return $this->getRepository()
-            ->getAllCategoriesNames($localeTransfer);
+            ->getAllCategoryNames($localeTransfer);
     }
 
     /**
@@ -39,13 +39,13 @@ class ProductListGuiFacade extends AbstractFacade implements ProductListGuiFacad
      *
      * @return string[] [<product id> => <product name in english locale>]
      */
-    public function getAllProductsNames(): array
+    public function getAllProductNames(): array
     {
         $localeTransfer = $this->getFactory()
             ->getLocaleFacade()
             ->getCurrentLocale();
 
         return $this->getRepository()
-            ->getAllProductsNames($localeTransfer);
+            ->getAllProductNames($localeTransfer);
     }
 }

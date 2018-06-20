@@ -43,6 +43,6 @@ class ProductListProductConcreteRelationDataProvider
      */
     protected function getProductList(): array
     {
-        return array_flip($this->facade->getAllProductsNames());
+        return array_flip($this->facade->getAllProductNames());
     }
 }
