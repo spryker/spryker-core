@@ -8,18 +8,6 @@
 namespace Spryker\Zed\ProductList\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductList\Business\Model\ProductListCategoryRelationReader;
-use Spryker\Zed\ProductList\Business\Model\ProductListCategoryRelationReaderInterface;
-use Spryker\Zed\ProductList\Business\Model\ProductListCategoryRelationWriter;
-use Spryker\Zed\ProductList\Business\Model\ProductListCategoryRelationWriterInterface;
-use Spryker\Zed\ProductList\Business\Model\ProductListProductConcreteRelationReader;
-use Spryker\Zed\ProductList\Business\Model\ProductListProductConcreteRelationReaderInterface;
-use Spryker\Zed\ProductList\Business\Model\ProductListProductConcreteRelationWriter;
-use Spryker\Zed\ProductList\Business\Model\ProductListProductConcreteRelationWriterInterface;
-use Spryker\Zed\ProductList\Business\Model\ProductListReader;
-use Spryker\Zed\ProductList\Business\Model\ProductListReaderInterface;
-use Spryker\Zed\ProductList\Business\Model\ProductListWriter;
-use Spryker\Zed\ProductList\Business\Model\ProductListWriterInterface;
 use Spryker\Zed\ProductList\Business\ProductList\ProductListPostSaverInterface;
 use Spryker\Zed\ProductList\Business\ProductList\ProductListReader;
 use Spryker\Zed\ProductList\Business\ProductList\ProductListReaderInterface;
@@ -49,7 +37,9 @@ class ProductListBusinessFactory extends AbstractBusinessFactory
     public function createProductListReader(): ProductListReaderInterface
     {
         return new ProductListReader(
-            $this->getRepository()
+            $this->getRepository(),
+            $this->createProductListCategoryRelationReader(),
+            $this->createProductListProductConcreteRelationReader()
         );
     }
 
@@ -61,18 +51,6 @@ class ProductListBusinessFactory extends AbstractBusinessFactory
         return new ProductListWriter(
             $this->getEntityManager(),
             $this->getProductListPostSaverCollection()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductList\Business\Model\ProductListReaderInterface
-     */
-    public function createProductListReader(): ProductListReaderInterface
-    {
-        return new ProductListReader(
-            $this->getRepository(),
-            $this->createProductListCategoryRelationReader(),
-            $this->createProductListProductConcreteRelationReader()
         );
     }
 

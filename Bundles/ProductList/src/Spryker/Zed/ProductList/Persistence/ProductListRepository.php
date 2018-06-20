@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\ProductList\Persistence;
 
-use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Generated\Shared\Transfer\ProductListTransfer;
+use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductList\Persistence\Map\SpyProductListCategoryTableMap;
 use Orm\Zed\ProductList\Persistence\Map\SpyProductListProductConcreteTableMap;
 use Orm\Zed\ProductList\Persistence\Map\SpyProductListTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
-use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\ProductList\Persistence\Mapper\ProductListMapperInterface;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
  * @method \Spryker\Zed\ProductList\Persistence\ProductListPersistenceFactory getFactory()
