@@ -10,11 +10,11 @@ namespace Spryker\Zed\ProductListSearch;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\ProductListSearch\Communication\Dependency\Facade\ProductListSearchToEventBehaviorFacadeBridge;
-use Spryker\Zed\ProductListSearch\Communication\Dependency\Facade\ProductListSearchToLocaleFacadeBridge;
-use Spryker\Zed\ProductListSearch\Communication\Dependency\Facade\ProductListSearchToProductCategoryFacadeBridge;
-use Spryker\Zed\ProductListSearch\Communication\Dependency\Facade\ProductListSearchToProductListFacadeBridge;
-use Spryker\Zed\ProductListSearch\Communication\Dependency\Facade\ProductListSearchToProductPageSearchFacadeBridge;
+use Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToEventBehaviorFacadeBridge;
+use Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToLocaleFacadeBridge;
+use Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToProductCategoryFacadeBridge;
+use Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToProductListFacadeBridge;
+use Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToProductPageSearchFacadeBridge;
 
 class ProductListSearchDependencyProvider extends AbstractBundleDependencyProvider
 {

@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductListSearch\Communication\Dependency\Facade;
+namespace Spryker\Zed\ProductListStorage\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 
-interface ProductListSearchToLocaleFacadeInterface
+interface ProductListStorageToLocaleFacadeInterface
 {
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer

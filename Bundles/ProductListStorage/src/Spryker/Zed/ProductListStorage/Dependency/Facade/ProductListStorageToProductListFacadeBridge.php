@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductListSearch\Communication\Dependency\Facade;
+namespace Spryker\Zed\ProductListStorage\Dependency\Facade;
 
-class ProductListSearchToProductListFacadeBridge implements ProductListSearchToProductListFacadeInterface
+class ProductListStorageToProductListFacadeBridge implements ProductListStorageToProductListFacadeInterface
 {
     /**
      * @var \Spryker\Zed\ProductList\Business\ProductListFacadeInterface

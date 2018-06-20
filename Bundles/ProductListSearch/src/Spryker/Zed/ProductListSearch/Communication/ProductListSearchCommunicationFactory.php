@@ -8,9 +8,9 @@
 namespace Spryker\Zed\ProductListSearch\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\ProductListSearch\Communication\Dependency\Facade\ProductListSearchToEventBehaviorFacadeInterface;
-use Spryker\Zed\ProductListSearch\Communication\Dependency\Facade\ProductListSearchToProductListFacadeInterface;
-use Spryker\Zed\ProductListSearch\Communication\Dependency\Facade\ProductListSearchToProductPageSearchFacadeInterface;
+use Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToEventBehaviorFacadeInterface;
+use Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToProductListFacadeInterface;
+use Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToProductPageSearchFacadeInterface;
 use Spryker\Zed\ProductListSearch\ProductListSearchDependencyProvider;
 
 /**
@@ -19,7 +19,7 @@ use Spryker\Zed\ProductListSearch\ProductListSearchDependencyProvider;
 class ProductListSearchCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\ProductListSearch\Communication\Dependency\Facade\ProductListSearchToEventBehaviorFacadeInterface
+     * @return \Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToEventBehaviorFacadeInterface
      */
     public function getEventBehaviorFacade(): ProductListSearchToEventBehaviorFacadeInterface
     {
@@ -27,7 +27,7 @@ class ProductListSearchCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductListSearch\Communication\Dependency\Facade\ProductListSearchToProductPageSearchFacadeInterface
+     * @return \Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToProductPageSearchFacadeInterface
      */
     public function getProductPageSearchFacade(): ProductListSearchToProductPageSearchFacadeInterface
     {
@@ -35,7 +35,7 @@ class ProductListSearchCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductListSearch\Communication\Dependency\Facade\ProductListSearchToProductListFacadeInterface
+     * @return \Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToProductListFacadeInterface
      */
     public function getProductListFacade(): ProductListSearchToProductListFacadeInterface
     {

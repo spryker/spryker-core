@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ProductListSearch\Business\ProductAbstract;
 
-use Spryker\Zed\ProductListSearch\Communication\Dependency\Facade\ProductListSearchToLocaleFacadeInterface;
-use Spryker\Zed\ProductListSearch\Communication\Dependency\Facade\ProductListSearchToProductCategoryFacadeInterface;
+use Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToLocaleFacadeInterface;
+use Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToProductCategoryFacadeInterface;
 use Spryker\Zed\ProductListSearch\Persistence\ProductListSearchRepositoryInterface;
 
 class ProductAbstractReader implements ProductAbstractReaderInterface
@@ -19,19 +19,19 @@ class ProductAbstractReader implements ProductAbstractReaderInterface
     protected $productListSearchRepository;
 
     /**
-     * @var \Spryker\Zed\ProductListSearch\Communication\Dependency\Facade\ProductListSearchToProductCategoryFacadeInterface
+     * @var \Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToProductCategoryFacadeInterface
      */
-    protected $categoryFacade;
+    protected $productCategoryFacade;
 
     /**
-     * @var \Spryker\Zed\ProductListSearch\Communication\Dependency\Facade\ProductListSearchToLocaleFacadeInterface
+     * @var \Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToLocaleFacadeInterface
      */
     protected $localeFacade;
 
     /**
      * @param \Spryker\Zed\ProductListSearch\Persistence\ProductListSearchRepositoryInterface $productListSearchRepository
-     * @param \Spryker\Zed\ProductListSearch\Communication\Dependency\Facade\ProductListSearchToProductCategoryFacadeInterface $categoryFacade
-     * @param \Spryker\Zed\ProductListSearch\Communication\Dependency\Facade\ProductListSearchToLocaleFacadeInterface $localeFacade
+     * @param \Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToProductCategoryFacadeInterface $categoryFacade
+     * @param \Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToLocaleFacadeInterface $localeFacade
      */
     public function __construct(
         ProductListSearchRepositoryInterface $productListSearchRepository,
@@ -39,7 +39,7 @@ class ProductAbstractReader implements ProductAbstractReaderInterface
         ProductListSearchToLocaleFacadeInterface $localeFacade
     ) {
         $this->productListSearchRepository = $productListSearchRepository;
-        $this->categoryFacade = $categoryFacade;
+        $this->productCategoryFacade = $categoryFacade;
         $this->localeFacade = $localeFacade;
     }
 
@@ -63,7 +63,7 @@ class ProductAbstractReader implements ProductAbstractReaderInterface
         $productAbstractIds = [];
         $currentLocale = $this->localeFacade->getCurrentLocale();
         foreach ($categoryIds as $categoryId) {
-            $productAbstractTransfers = $this->categoryFacade->getAbstractProductsByIdCategory(
+            $productAbstractTransfers = $this->productCategoryFacade->getAbstractProductsByIdCategory(
                 $categoryId,
                 $currentLocale
             );

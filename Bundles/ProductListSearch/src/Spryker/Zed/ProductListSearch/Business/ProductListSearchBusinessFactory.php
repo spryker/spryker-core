@@ -10,8 +10,8 @@ namespace Spryker\Zed\ProductListSearch\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductListSearch\Business\ProductAbstract\ProductAbstractReader;
 use Spryker\Zed\ProductListSearch\Business\ProductAbstract\ProductAbstractReaderInterface;
-use Spryker\Zed\ProductListSearch\Communication\Dependency\Facade\ProductListSearchToLocaleFacadeInterface;
-use Spryker\Zed\ProductListSearch\Communication\Dependency\Facade\ProductListSearchToProductCategoryFacadeInterface;
+use Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToLocaleFacadeInterface;
+use Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToProductCategoryFacadeInterface;
 use Spryker\Zed\ProductListSearch\ProductListSearchDependencyProvider;
 
 /**
@@ -33,7 +33,7 @@ class ProductListSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductListSearch\Communication\Dependency\Facade\ProductListSearchToLocaleFacadeInterface
+     * @return \Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToLocaleFacadeInterface
      */
     public function getLocaleFacade(): ProductListSearchToLocaleFacadeInterface
     {
@@ -41,7 +41,7 @@ class ProductListSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductListSearch\Communication\Dependency\Facade\ProductListSearchToProductCategoryFacadeInterface
+     * @return \Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToProductCategoryFacadeInterface
      */
     public function getProductCategoryFacade(): ProductListSearchToProductCategoryFacadeInterface
     {
