@@ -19,7 +19,6 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
  * @method \Spryker\Zed\Monitoring\Communication\MonitoringCommunicationFactory getFactory()
- * @method \Spryker\Zed\Monitoring\Business\MonitoringFacadeInterface getFacade()
  */
 class ControllerListener extends AbstractPlugin implements EventSubscriberInterface
 {
@@ -93,7 +92,7 @@ class ControllerListener extends AbstractPlugin implements EventSubscriberInterf
         $this->monitoringService->addCustomParameter('store', $this->storeFacade->getStore()->getName());
         $this->monitoringService->addCustomParameter('locale', $this->localeFacade->getCurrentLocale()->getLocaleName());
 
-        if ($this->ignoreTransaction($transactionName)) {
+        if ($this->isTransactionIgnorable($transactionName)) {
             $this->monitoringService->markIgnoreTransaction();
         }
     }
@@ -103,7 +102,7 @@ class ControllerListener extends AbstractPlugin implements EventSubscriberInterf
      *
      * @return bool
      */
-    protected function ignoreTransaction(string $transaction): bool
+    protected function isTransactionIgnorable(string $transaction): bool
     {
         foreach ($this->ignorableTransactions as $ignorableTransaction) {
             if (strpos($transaction, $ignorableTransaction) !== false) {
