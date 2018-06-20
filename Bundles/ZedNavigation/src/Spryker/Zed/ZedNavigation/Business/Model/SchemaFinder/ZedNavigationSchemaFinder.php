@@ -17,7 +17,7 @@ class ZedNavigationSchemaFinder implements ZedNavigationSchemaFinderInterface
     protected $pathPattern;
 
     /**
-     * @var array
+     * @var string
      */
     protected $fileNamePattern;
 
