@@ -46,9 +46,9 @@ class Monitoring implements MonitoringInterface
      */
     public function setApplicationName(?string $application = null, ?string $store = null, ?string $environment = null): void
     {
-        $application = $application ?? APPLICATION;
-        $store = $store ?? APPLICATION_STORE;
-        $environment = $environment ?? APPLICATION_ENV;
+        $application = $application ?: APPLICATION;
+        $store = $store ?: APPLICATION_STORE;
+        $environment = $environment ?: APPLICATION_ENV;
 
         foreach ($this->monitoringExtensionPlugins as $monitoringExtensionPlugin) {
             $monitoringExtensionPlugin->setApplicationName($application, $store, $environment);
