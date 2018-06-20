@@ -9,11 +9,11 @@ namespace Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
 
-interface PostProductDiscontinuePluginInterface
+interface PostDeleteProductDiscontinuedPluginInterface
 {
     /**
      * Specification:
-     *  - Executes after product marked as discontinued.
+     *  - Executes after ProductDiscontinued deleted.
      *
      * @api
      *

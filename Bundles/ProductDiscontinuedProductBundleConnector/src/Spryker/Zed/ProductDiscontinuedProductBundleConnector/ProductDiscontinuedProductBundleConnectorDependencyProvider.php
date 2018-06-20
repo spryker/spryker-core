@@ -15,7 +15,7 @@ use Spryker\Zed\ProductDiscontinuedProductBundleConnector\Dependency\Facade\Prod
 class ProductDiscontinuedProductBundleConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_PRODUCT_DISCONTINUED = 'FACADE_PRODUCT_DISCONTINUED';
-    public const QUERY_PRODUCT_DISCONTINUED = 'QUERY_PRODUCT_DISCONTINUED';
+    public const PROPEL_QUERY_PRODUCT_DISCONTINUED = 'PROPEL_QUERY_PRODUCT_DISCONTINUED';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -66,7 +66,7 @@ class ProductDiscontinuedProductBundleConnectorDependencyProvider extends Abstra
      */
     protected function addProductDiscontinuedQuery(Container $container): Container
     {
-        $container[static::QUERY_PRODUCT_DISCONTINUED] = function () {
+        $container[static::PROPEL_QUERY_PRODUCT_DISCONTINUED] = function () {
             return SpyProductDiscontinuedQuery::create();
         };
 

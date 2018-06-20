@@ -14,8 +14,8 @@ use Spryker\Zed\ProductDiscontinued\Dependency\Facade\ProductDiscontinuedToProdu
 class ProductDiscontinuedDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
-    public const PLUGINS_POST_CREATE_PRODUCT_DISCONTINUE = 'PLUGINS_POST_CREATE_PRODUCT_DISCONTINUE';
-    public const PLUGINS_POST_DELETE_PRODUCT_DISCONTINUE = 'PLUGINS_POST_DELETE_PRODUCT_DISCONTINUE';
+    public const PLUGINS_POST_PRODUCT_DISCONTINUE = 'PLUGINS_POST_PRODUCT_DISCONTINUE';
+    public const PLUGINS_POST_DELETE_PRODUCT_DISCONTINUED = 'PLUGINS_POST_DELETE_PRODUCT_DISCONTINUED';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -27,8 +27,8 @@ class ProductDiscontinuedDependencyProvider extends AbstractBundleDependencyProv
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addProductFacade($container);
         $container = $this->addProductFacade($container);
-        $container = $this->addPostCreateProductDiscontinuePlugins($container);
-        $container = $this->addPostDeleteProductDiscontinuePlugins($container);
+        $container = $this->addPostProductDiscontinuePlugins($container);
+        $container = $this->addPostDeleteProductDiscontinuedPlugins($container);
 
         return $container;
     }
@@ -52,10 +52,10 @@ class ProductDiscontinuedDependencyProvider extends AbstractBundleDependencyProv
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addPostCreateProductDiscontinuePlugins(Container $container): Container
+    protected function addPostProductDiscontinuePlugins(Container $container): Container
     {
-        $container[static::PLUGINS_POST_CREATE_PRODUCT_DISCONTINUE] = function () {
-            return $this->getPostCreateProductDiscontinuePlugins();
+        $container[static::PLUGINS_POST_PRODUCT_DISCONTINUE] = function () {
+            return $this->getPostProductDiscontinuePlugins();
         };
 
         return $container;
@@ -66,10 +66,10 @@ class ProductDiscontinuedDependencyProvider extends AbstractBundleDependencyProv
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addPostDeleteProductDiscontinuePlugins(Container $container): Container
+    protected function addPostDeleteProductDiscontinuedPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_POST_DELETE_PRODUCT_DISCONTINUE] = function () {
-            return $this->getPostDeleteProductDiscontinuePlugins();
+        $container[static::PLUGINS_POST_DELETE_PRODUCT_DISCONTINUED] = function () {
+            return $this->getPostDeleteProductDiscontinuedPlugins();
         };
 
         return $container;
@@ -78,15 +78,15 @@ class ProductDiscontinuedDependencyProvider extends AbstractBundleDependencyProv
     /**
      * @return \Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PostProductDiscontinuePluginInterface[]
      */
-    protected function getPostCreateProductDiscontinuePlugins(): array
+    protected function getPostProductDiscontinuePlugins(): array
     {
         return [];
     }
 
     /**
-     * @return \Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PostProductDiscontinuePluginInterface[]
+     * @return \Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PostDeleteProductDiscontinuedPluginInterface[]
      */
-    protected function getPostDeleteProductDiscontinuePlugins(): array
+    protected function getPostDeleteProductDiscontinuedPlugins(): array
     {
         return [];
     }

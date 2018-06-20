@@ -9,8 +9,8 @@ namespace Spryker\Zed\ProductDiscontinued\Business;
 
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinued\ProductDiscontinuedDeleter;
-use Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinued\ProductDiscontinuedDeleterInterface;
+use Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinued\ProductDiscontinuedPluginExecutor;
+use Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinued\ProductDiscontinuedPluginExecutorInterface;
 use Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinued\ProductDiscontinuedReader;
 use Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinued\ProductDiscontinuedReaderInterface;
 use Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinued\ProductDiscontinuedWriter;
@@ -37,20 +37,19 @@ class ProductDiscontinuedBusinessFactory extends AbstractBusinessFactory
         return new ProductDiscontinuedWriter(
             $this->getEntityManager(),
             $this->getRepository(),
-            $this->getPostCreateProductDiscontinuePlugins(),
+            $this->createProductDiscontinuedPluginExecutor(),
             $this->getConfig()
         );
     }
 
     /**
-     * @return \Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinued\ProductDiscontinuedDeleterInterface
+     * @return \Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinued\ProductDiscontinuedPluginExecutorInterface
      */
-    public function createProductDiscontinuedDeleter(): ProductDiscontinuedDeleterInterface
+    public function createProductDiscontinuedPluginExecutor(): ProductDiscontinuedPluginExecutorInterface
     {
-        return new ProductDiscontinuedDeleter(
-            $this->getEntityManager(),
-            $this->getRepository(),
-            $this->getPostDeleteProductDiscontinuePlugins()
+        return new ProductDiscontinuedPluginExecutor(
+            $this->getPostProductDiscontinuePlugins(),
+            $this->getPostDeleteProductDiscontinuedPlugins()
         );
     }
 
@@ -98,16 +97,16 @@ class ProductDiscontinuedBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PostProductDiscontinuePluginInterface[]
      */
-    protected function getPostCreateProductDiscontinuePlugins(): array
+    protected function getPostProductDiscontinuePlugins(): array
     {
-        return $this->getProvidedDependency(ProductDiscontinuedDependencyProvider::PLUGINS_POST_CREATE_PRODUCT_DISCONTINUE);
+        return $this->getProvidedDependency(ProductDiscontinuedDependencyProvider::PLUGINS_POST_PRODUCT_DISCONTINUE);
     }
 
     /**
-     * @return \Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PostProductDiscontinuePluginInterface[]
+     * @return \Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PostDeleteProductDiscontinuedPluginInterface[]
      */
-    protected function getPostDeleteProductDiscontinuePlugins(): array
+    protected function getPostDeleteProductDiscontinuedPlugins(): array
     {
-        return $this->getProvidedDependency(ProductDiscontinuedDependencyProvider::PLUGINS_POST_DELETE_PRODUCT_DISCONTINUE);
+        return $this->getProvidedDependency(ProductDiscontinuedDependencyProvider::PLUGINS_POST_DELETE_PRODUCT_DISCONTINUED);
     }
 }

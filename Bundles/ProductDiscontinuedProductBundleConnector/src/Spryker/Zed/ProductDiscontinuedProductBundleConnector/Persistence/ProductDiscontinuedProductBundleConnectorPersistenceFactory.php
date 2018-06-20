@@ -21,6 +21,6 @@ class ProductDiscontinuedProductBundleConnectorPersistenceFactory extends Abstra
      */
     public function createProductDiscontinuedQuery(): SpyProductDiscontinuedQuery
     {
-        return $this->getProvidedDependency(ProductDiscontinuedProductBundleConnectorDependencyProvider::QUERY_PRODUCT_DISCONTINUED);
+        return $this->getProvidedDependency(ProductDiscontinuedProductBundleConnectorDependencyProvider::PROPEL_QUERY_PRODUCT_DISCONTINUED);
     }
 }

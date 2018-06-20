@@ -19,7 +19,7 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 class ProductDiscontinuedProductBundleConnectorRepository extends AbstractRepository implements ProductDiscontinuedProductBundleConnectorRepositoryInterface
 {
     /**
-     * @uses ProductBundle
+     * @module ProductBundle
      *
      * @param int $idProductDiscontinue
      *
@@ -39,6 +39,7 @@ class ProductDiscontinuedProductBundleConnectorRepository extends AbstractReposi
             ->select([ProductDiscontinuedTransfer::FK_PRODUCT])
             ->find()
             ->toArray();
+
         if ($productIds[0] === null) {
             return [];
         }
