@@ -8,11 +8,16 @@
 namespace Spryker\Zed\MerchantRelationshipProductListGui\Communication\Plugin;
 
 use Generated\Shared\Transfer\ProductListTransfer;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListCreateFormExpanderPluginInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class ProductListFormMerchantRelationExpanderPlugin implements ProductListCreateFormExpanderPluginInterface
+/**
+ * @method \Spryker\Zed\MerchantRelationshipProductListGui\Communication\MerchantRelationshipProductListGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\MerchantRelationshipProductListGui\Business\MerchantRelationshipProductListGuiFacadeInterface getFacade()
+ */
+class ProductListFormMerchantRelationExpanderPlugin extends AbstractPlugin implements ProductListCreateFormExpanderPluginInterface
 {
     public const FIELD_NAME = ProductListTransfer::FK_MERCHANT_RELATIONSHIP;
     public const OPTION_MERCHANT_RELATION_LIST = 'merchant-relation-names';
@@ -48,7 +53,7 @@ class ProductListFormMerchantRelationExpanderPlugin implements ProductListCreate
      */
     public function getOptions(array $options): array
     {
-        $options[static::OPTION_MERCHANT_RELATION_LIST] = ['merchant' => 1];
+        $options[static::OPTION_MERCHANT_RELATION_LIST] = $this->getFacade()->listMerchantRelation();
 
         return $options;
     }

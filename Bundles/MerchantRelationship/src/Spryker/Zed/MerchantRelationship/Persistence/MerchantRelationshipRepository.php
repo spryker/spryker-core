@@ -102,4 +102,32 @@ class MerchantRelationshipRepository extends AbstractRepository implements Merch
             ])
             ->findOne();
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @module CompanyBusinessUnit
+     * @module Merchant
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
+     */
+    public function listMerchantRelation(): array
+    {
+        $merchantRelationEntities = $this->getFactory()
+            ->createMerchantRelationshipQuery()
+            ->leftJoinCompanyBusinessUnit()
+            ->leftJoinMerchant()
+            ->find();
+
+        $merchantRelationTransfers = [];
+        foreach ($merchantRelationEntities as $merchantRelationEntity) {
+            $merchantRelationTransfers[] = $this->getFactory()
+                ->createPropelMerchantRelationshipMapper()
+                ->mapEntityToMerchantRelationshipTransfer($merchantRelationEntity, new MerchantRelationshipTransfer());
+        }
+
+        return $merchantRelationTransfers;
+    }
 }

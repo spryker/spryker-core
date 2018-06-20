@@ -8,10 +8,21 @@
 namespace Spryker\Zed\MerchantRelationshipProductListGui\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\MerchantRelationshipGui\Dependency\Facade\MerchantRelationshipGuiToMerchantRelationshipFacadeInterface;
+use Spryker\Zed\MerchantRelationshipProductListGui\MerchantRelationshipProductListGuiDependencyProvider;
 
 /**
  * @method \Spryker\Zed\MerchantRelationshipProductListGui\MerchantRelationshipProductListGuiConfig getConfig()
  */
 class MerchantRelationshipProductListGuiCommunicationFactory extends AbstractCommunicationFactory
 {
+    /**
+     * @return \Spryker\Zed\MerchantRelationshipGui\Dependency\Facade\MerchantRelationshipGuiToMerchantRelationshipFacadeInterface
+     */
+    public function getMerchantRelationFacade(): MerchantRelationshipGuiToMerchantRelationshipFacadeInterface
+    {
+        return $this->getProvidedDependency(
+            MerchantRelationshipProductListGuiDependencyProvider::FACADE_MERCHANT_RELATION
+        );
+    }
 }
