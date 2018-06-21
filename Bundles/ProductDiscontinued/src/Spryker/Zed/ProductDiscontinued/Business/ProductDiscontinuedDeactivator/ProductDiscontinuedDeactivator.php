@@ -64,11 +64,11 @@ class ProductDiscontinuedDeactivator implements ProductDiscontinuedDeactivatorIn
     public function deactivate(): void
     {
         $productDiscontinuedCollectionTransfer = $this->productDiscontinuedRepository->findProductsToDeactivate();
-        if (!$productDiscontinuedCollectionTransfer->getDiscontinueds()->count()) {
+        if (!$productDiscontinuedCollectionTransfer->getDiscontinuedProducts()->count()) {
             return;
         }
 
-        $this->addStartMessage($productDiscontinuedCollectionTransfer->getDiscontinueds()->count());
+        $this->addStartMessage($productDiscontinuedCollectionTransfer->getDiscontinuedProducts()->count());
 
         $this->getTransactionHandler()->handleTransaction(function () use ($productDiscontinuedCollectionTransfer) {
             $this->executeDeactivateTransaction($productDiscontinuedCollectionTransfer);
@@ -82,7 +82,7 @@ class ProductDiscontinuedDeactivator implements ProductDiscontinuedDeactivatorIn
      */
     protected function executeDeactivateTransaction(ProductDiscontinuedCollectionTransfer $productDiscontinuedCollectionTransfer): void
     {
-        foreach ($productDiscontinuedCollectionTransfer->getDiscontinueds() as $productDiscontinuedTransfer) {
+        foreach ($productDiscontinuedCollectionTransfer->getDiscontinuedProducts() as $productDiscontinuedTransfer) {
             $this->productFacade->deactivateProductConcrete($productDiscontinuedTransfer->getFkProduct());
             $this->productDiscontinuedEntityManager->deleteProductDiscontinued($productDiscontinuedTransfer);
             $this->addProductDeactivatedMessage($productDiscontinuedTransfer->getFkProduct());

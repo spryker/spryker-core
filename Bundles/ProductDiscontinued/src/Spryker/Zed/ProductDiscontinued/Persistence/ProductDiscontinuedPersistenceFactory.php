@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductDiscontinued\Persistence;
 
+use Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinuedNoteQuery;
 use Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinuedQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ProductDiscontinued\Persistence\Propel\Mapper\ProductDiscontinuedMapper;
@@ -31,5 +32,13 @@ class ProductDiscontinuedPersistenceFactory extends AbstractPersistenceFactory
     public function createProductDiscontinuedQuery(): SpyProductDiscontinuedQuery
     {
         return SpyProductDiscontinuedQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinuedNoteQuery
+     */
+    public function createProductDiscontinuedNoteQuery(): SpyProductDiscontinuedNoteQuery
+    {
+        return SpyProductDiscontinuedNoteQuery::create();
     }
 }

@@ -14,7 +14,7 @@ use Spryker\Zed\ProductCategoryFilter\Dependency\Service\ProductCategoryFilterTo
 class ProductCategoryFilterTransferGenerator implements ProductCategoryFilterTransferGeneratorInterface
 {
     /**
-     * @var \Spryker\Zed\ProductCategoryFilterGui\Dependency\Service\ProductCategoryFilterGuiToUtilEncodingServiceInterface
+     * @var \Spryker\Zed\ProductCategoryFilter\Dependency\Service\ProductCategoryFilterToUtilEncodingServiceInterface
      */
     protected $utilEncodingService;
 

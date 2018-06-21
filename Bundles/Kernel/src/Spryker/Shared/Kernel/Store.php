@@ -103,7 +103,7 @@ class Store
     protected $storesWithSharedPersistence = [];
 
     /**
-     * @return \Spryker\Shared\Kernel\Store
+     * @return static
      */
     public static function getInstance()
     {

@@ -35,14 +35,14 @@ class ProductDiscontinuedUnpublisher implements ProductDiscontinuedUnpublisherIn
     }
 
     /**
-     * @param array $productDiscontinuedIds
+     * @param int[] $productDiscontinuedIds
      *
      * @return void
      */
     public function unpublish(array $productDiscontinuedIds): void
     {
         $productDiscontinuedStorageEntityTransfers = $this->findProductDiscontinuedStorageEntitiesByIds($productDiscontinuedIds);
-        
+
         foreach ($productDiscontinuedStorageEntityTransfers as $productDiscontinuedStorageEntityTransfer) {
             $this->discontinuedStorageEntityManager->deleteProductDiscontinuedStorageEntity(
                 $productDiscontinuedStorageEntityTransfer

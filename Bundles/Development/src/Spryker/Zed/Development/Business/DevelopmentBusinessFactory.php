@@ -875,7 +875,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      */
     protected function createComposerJsonLicenseUpdater()
     {
-        return new LicenseUpdater('proprietary');
+        return new LicenseUpdater();
     }
 
     /**

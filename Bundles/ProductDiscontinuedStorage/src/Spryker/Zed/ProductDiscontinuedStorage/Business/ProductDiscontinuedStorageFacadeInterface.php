@@ -10,22 +10,24 @@ namespace Spryker\Zed\ProductDiscontinuedStorage\Business;
 interface ProductDiscontinuedStorageFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * Specification:
+     *  - Publishes product discontinued changes to storage.
      *
      * @api
      *
-     * @param array $productDiscontinuedIds
+     * @param int[] $productDiscontinuedIds
      *
      * @return void
      */
     public function publish(array $productDiscontinuedIds): void;
 
     /**
-     * {@inheritdoc}
+     * Specification:
+     *  - Remove product discontinued from storage.
      *
      * @api
      *
-     * @param array $productDiscontinuedIds
+     * @param int[] $productDiscontinuedIds
      *
      * @return void
      */

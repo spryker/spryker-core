@@ -9,12 +9,14 @@ namespace Spryker\Zed\ProductDiscontinued\Business;
 
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinued\ProductDiscontinuedReader;
+use Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinued\ProductDiscontinuedReaderInterface;
+use Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinued\ProductDiscontinuedWriter;
+use Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinued\ProductDiscontinuedWriterInterface;
 use Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinuedDeactivator\ProductDiscontinuedDeactivator;
 use Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinuedDeactivator\ProductDiscontinuedDeactivatorInterface;
-use Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinuedReader\ProductDiscontinuedReader;
-use Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinuedReader\ProductDiscontinuedReaderInterface;
-use Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinuedWriter\ProductDiscontinuedWriter;
-use Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinuedWriter\ProductDiscontinuedWriterInterface;
+use Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinuedNote\ProductDiscontinuedNoteWriter;
+use Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinuedNote\ProductDiscontinuedNoteWriterInterface;
 use Spryker\Zed\ProductDiscontinued\Dependency\Facade\ProductDiscontinuedToProductFacadeInterface;
 use Spryker\Zed\ProductDiscontinued\ProductDiscontinuedDependencyProvider;
 
@@ -26,7 +28,7 @@ use Spryker\Zed\ProductDiscontinued\ProductDiscontinuedDependencyProvider;
 class ProductDiscontinuedBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinuedWriter\ProductDiscontinuedWriterInterface
+     * @return \Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinued\ProductDiscontinuedWriterInterface
      */
     public function createProductDiscontinuedWriter(): ProductDiscontinuedWriterInterface
     {
@@ -38,7 +40,7 @@ class ProductDiscontinuedBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinuedReader\ProductDiscontinuedReaderInterface
+     * @return \Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinued\ProductDiscontinuedReaderInterface
      */
     public function createProductDiscontinuedReader(): ProductDiscontinuedReaderInterface
     {
@@ -57,6 +59,16 @@ class ProductDiscontinuedBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getProductFacade(),
             $logger
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinuedNote\ProductDiscontinuedNoteWriterInterface
+     */
+    public function createProductDiscontinuedNoteWriter(): ProductDiscontinuedNoteWriterInterface
+    {
+        return new ProductDiscontinuedNoteWriter(
+            $this->getEntityManager()
         );
     }
 

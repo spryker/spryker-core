@@ -22,7 +22,7 @@ class CmsToUtilEncodingBridge implements CmsToUtilEncodingInterface
     }
 
     /**
-     * @param mixed $value
+     * @param array $value
      * @param int|null $options
      * @param int|null $depth
      *
