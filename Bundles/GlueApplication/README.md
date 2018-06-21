@@ -2,8 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/glue.svg)](https://travis-ci.org/spryker/glue)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/glue/badge.svg)](https://coveralls.io/github/spryker/glue)
 
-{{ADD DESCRIPTION HERE}}
-
+GlueApplication module provides API infrastucture for spryker features, REST api support. Clients can hook they resources, validators, formatters, commands to this module so that custom logic can be executed. 
 ## Installation
 
 ```
