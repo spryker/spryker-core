@@ -46,7 +46,6 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         $container = $this->addOmsFacade($container);
-
         $container = $this->addMessengerFacade($container);
 
         return $container;
