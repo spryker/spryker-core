@@ -1,0 +1,21 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Zed\PriceProductMerchantRelationship\Persistence\Propel\PriceDimensionQueryExpander;
+
+use Generated\Shared\Transfer\QueryCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
+
+interface MerchantRelationshipPriceQueryExpanderInterface
+{
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\QueryCriteriaTransfer|null
+     */
+    public function buildBusinessUnitPriceDimensionCriteria(PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?QueryCriteriaTransfer;
+}
