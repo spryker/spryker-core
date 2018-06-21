@@ -49,7 +49,7 @@ class GlueRouterTest extends Unit
     {
         $glueRouterPlugin = $this->createGlueRouterPlugin();
 
-        $request = Request::create('http://domain.tld/none/1', Request::METHOD_GET);
+        $request = Request::create('http://localhost/none/1', Request::METHOD_GET);
 
         $routeConfiguration = $glueRouterPlugin->matchRequest($request);
 
@@ -66,7 +66,7 @@ class GlueRouterTest extends Unit
     {
         $glueRouterPlugin = $this->createGlueRouterPlugin();
 
-        $request = Request::create('http://domain.tld/none/1', Request::METHOD_GET);
+        $request = Request::create('http://localhost/none/1', Request::METHOD_GET);
 
         $routeConfiguration = $glueRouterPlugin->matchRequest($request);
 
@@ -83,7 +83,7 @@ class GlueRouterTest extends Unit
     {
         $glueRouterPlugin = $this->createGlueRouterPlugin();
 
-        $request = Request::create('http://domain.tld/tests/1', Request::METHOD_GET);
+        $request = Request::create('http://localhost/tests/1', Request::METHOD_GET);
 
         $routeConfiguration = $glueRouterPlugin->matchRequest($request);
 

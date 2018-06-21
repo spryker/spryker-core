@@ -38,6 +38,14 @@ class OauthFacadeTest extends Unit
     /**
      * @return void
      */
+    public function setUp()
+    {
+        parent::setUp();
+    }
+
+    /**
+     * @return void
+     */
     public function testAccesTokenShouldReturnSuccessWhenValid(): void
     {
         $this->createTestClient();
@@ -128,7 +136,8 @@ class OauthFacadeTest extends Unit
         $spyOauthClientEntityTransfer = (new SpyOauthClientEntityTransfer())
             ->setIdentifier('identifier')
             ->setName('client name')
-            ->setSecret('secret')->setIsConfidental(true)
+            ->setSecret('secret')
+            ->setIsConfidental(true)
             ->setRedirectUri('url');
 
         $spyOauthClientEntityTransfer = $this->getOauthFacade()->saveClient($spyOauthClientEntityTransfer);

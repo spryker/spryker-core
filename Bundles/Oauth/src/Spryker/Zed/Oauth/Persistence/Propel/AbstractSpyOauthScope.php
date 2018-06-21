@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Oauth\Persistence\Propel;
 
-use Orm\Zed\Oauth\Persistence\Base\SpyOauthScopeQuery as BaseSpyOauthScopeQuery;
+use Orm\Zed\Oauth\Persistence\Base\SpyOauthScope as BaseSpyOauthScope;
 
 /**
  * Skeleton subclass for performing query and update operations on the 'spy_oauth_scope' table.
@@ -17,6 +17,6 @@ use Orm\Zed\Oauth\Persistence\Base\SpyOauthScopeQuery as BaseSpyOauthScopeQuery;
  * application requirements. This class will only be generated as
  * long as it does not already exist in the output directory.
  */
-abstract class AbstractSpyOauthScope extends BaseSpyOauthScopeQuery
+abstract class AbstractSpyOauthScope extends BaseSpyOauthScope
 {
 }
