@@ -59,7 +59,6 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
                 $isPassed = false;
             }
         }
-
         return $isPassed;
     }
 
