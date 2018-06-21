@@ -1,0 +1,123 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Zed\ProductDiscontinued\Business;
+
+use Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer;
+use Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductDiscontinuedNoteResponseTransfer;
+use Generated\Shared\Transfer\ProductDiscontinuedNoteTransfer;
+use Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer;
+use Generated\Shared\Transfer\ProductDiscontinueRequestTransfer;
+use Psr\Log\LoggerInterface;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
+
+/**
+ * @method \Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinuedBusinessFactory getFactory()
+ */
+class ProductDiscontinuedFacade extends AbstractFacade implements ProductDiscontinuedFacadeInterface
+{
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductDiscontinueRequestTransfer $productDiscontinueRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer
+     */
+    public function markProductAsDiscontinued(
+        ProductDiscontinueRequestTransfer $productDiscontinueRequestTransfer
+    ): ProductDiscontinuedResponseTransfer {
+        return $this->getFactory()
+            ->createProductDiscontinuedWriter()
+            ->create($productDiscontinueRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductDiscontinueRequestTransfer $productDiscontinueRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer
+     */
+    public function unmarkProductAsDiscontinued(
+        ProductDiscontinueRequestTransfer $productDiscontinueRequestTransfer
+    ): ProductDiscontinuedResponseTransfer {
+        return $this->getFactory()
+            ->createProductDiscontinuedWriter()
+            ->delete($productDiscontinueRequestTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer
+     */
+    public function findProductDiscontinuedByProductId(int $idProduct): ProductDiscontinuedResponseTransfer
+    {
+        return $this->getFactory()
+            ->createProductDiscontinuedReader()
+            ->findProductDiscontinuedByProductId($idProduct);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer $criteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer
+     */
+    public function findProductDiscontinuedCollection(
+        ProductDiscontinuedCriteriaFilterTransfer $criteriaFilterTransfer
+    ): ProductDiscontinuedCollectionTransfer {
+        return $this->getFactory()
+            ->createProductDiscontinuedReader()
+            ->findProductDiscontinuedCollection($criteriaFilterTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductDiscontinuedNoteTransfer $discontinuedNoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductDiscontinuedNoteResponseTransfer
+     */
+    public function saveDiscontinuedNote(
+        ProductDiscontinuedNoteTransfer $discontinuedNoteTransfer
+    ): ProductDiscontinuedNoteResponseTransfer {
+        return $this->getFactory()
+            ->createProductDiscontinuedNoteWriter()
+            ->saveNote($discontinuedNoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Psr\Log\LoggerInterface|null $logger
+     *
+     * @return void
+     */
+    public function deactivateDiscontinuedProducts(?LoggerInterface $logger = null): void
+    {
+        $this->getFactory()
+            ->createProductDiscontinuedDeactivator($logger)
+            ->deactivate();
+    }
+}

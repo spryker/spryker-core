@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="ProductDiscontinued">
+        <property name="idProductDiscontinued" type="int"/>
+        <property name="fkProduct" type="int"/>
+        <property name="sku" type="string"/>
+        <property name="activeUntil" type="string"/>
+        <property name="discontinuedOn" type="string"/>
+        <property name="ProductDiscontinuedNotes" type="ProductDiscontinuedNote[]" singular="ProductDiscontinuedNote"/>
+    </transfer>
+
+    <transfer name="ProductDiscontinuedNote">
+        <property name="idProductDiscontinuedNote" type="int"/>
+        <property name="fkProductDiscontinued" type="int"/>
+        <property name="fkLocale" type="int"/>
+        <property name="note" type="string"/>
+    </transfer>
+
+    <transfer name="ProductDiscontinuedNoteResponse">
+        <property name="productDiscontinuedNote" type="ProductDiscontinuedNote"/>
+        <property name="isSuccessful" type="bool"/>
+    </transfer>
+
+    <transfer name="ProductDiscontinuedCollection">
+        <property name="DiscontinuedProducts" type="ProductDiscontinued[]" singular="DiscontinuedProduct"/>
+    </transfer>
+
+    <transfer name="ProductDiscontinueRequest">
+        <property name="idProduct" type="int"/>
+    </transfer>
+
+    <transfer name="ProductDiscontinuedResponse">
+        <property name="productDiscontinued" type="ProductDiscontinued"/>
+        <property name="isSuccessful" type="bool"/>
+    </transfer>
+
+    <transfer name="ProductConcrete">
+        <property name="productDiscontinued" type="ProductDiscontinued"/>
+    </transfer>
+
+    <transfer name="ProductDiscontinuedCriteriaFilter">
+        <property name="ids" type="array"/>
+    </transfer>
+
+    <transfer name="ProductConcrete">
+        <property name="discontinuedNotes" type="ProductDiscontinuedNote[]" singular="discontinuedNote"/>
+    </transfer>
+
+</transfers>
