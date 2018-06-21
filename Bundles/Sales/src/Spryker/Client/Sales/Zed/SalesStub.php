@@ -33,7 +33,10 @@ class SalesStub implements SalesStubInterface
      */
     public function getOrders(OrderListTransfer $orderListTransfer)
     {
-        return $this->zedStub->call('/sales/gateway/get-orders', $orderListTransfer);
+        /** @var \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer */
+        $orderListTransfer = $this->zedStub->call('/sales/gateway/get-orders', $orderListTransfer);
+
+        return $orderListTransfer;
     }
 
     /**
@@ -43,7 +46,10 @@ class SalesStub implements SalesStubInterface
      */
     public function getPaginatedOrders(OrderListTransfer $orderListTransfer)
     {
-        return $this->zedStub->call('/sales/gateway/get-paginated-orders', $orderListTransfer);
+        /** @var \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer */
+        $orderListTransfer = $this->zedStub->call('/sales/gateway/get-paginated-orders', $orderListTransfer);
+
+        return $orderListTransfer;
     }
 
     /**
@@ -53,6 +59,9 @@ class SalesStub implements SalesStubInterface
      */
     public function getOrderDetails(OrderTransfer $orderTransfer)
     {
-        return $this->zedStub->call('/sales/gateway/get-order-details', $orderTransfer);
+        /** @var \Generated\Shared\Transfer\OrderTransfer $orderTransfer */
+        $orderTransfer = $this->zedStub->call('/sales/gateway/get-order-details', $orderTransfer);
+
+        return $orderTransfer;
     }
 }
