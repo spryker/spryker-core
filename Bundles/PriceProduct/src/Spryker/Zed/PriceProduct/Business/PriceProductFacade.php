@@ -333,4 +333,20 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
             ->getModuleConfig()
             ->getPriceModeIdentifierForBothType();
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param array $priceData
+     *
+     * @return string
+     */
+    public function generatePriceDataChecksum(array $priceData): string
+    {
+        return $this->getFactory()
+            ->createPriceDataChecksumGenerator()
+            ->generatePriceDataChecksum($priceData);
+    }
 }
