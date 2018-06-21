@@ -21,8 +21,8 @@ class AddCompanyBusinessUnitController extends AbstractController
      */
     protected const URL_BUSINESS_UNIT_LIST = '/company-business-unit-gui/list-company-business-unit';
 
-    protected const MESSAGE_COMPANY_BUSINESS_UNIT_CREATE_SUCCESS = 'Company Business Unit "%s" has been created.';
-    protected const MESSAGE_COMPANY_BUSINESS_UNIT_CREATE_ERROR = 'Company Business Unit "%s" has not been created.';
+    protected const MESSAGE_SUCCESS_COMPANY_BUSINESS_UNIT_CREATE = 'Company Business Unit "%s" has been created.';
+    protected const MESSAGE_ERROR_COMPANY_BUSINESS_UNIT_CREATE = 'Company Business Unit "%s" has not been created.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -49,7 +49,7 @@ class AddCompanyBusinessUnitController extends AbstractController
 
             if (!$companyResponseTransfer->getIsSuccessful()) {
                 $this->addErrorMessage(sprintf(
-                    static::MESSAGE_COMPANY_BUSINESS_UNIT_CREATE_ERROR,
+                    static::MESSAGE_ERROR_COMPANY_BUSINESS_UNIT_CREATE,
                     $companyBusinessUnitTransfer->getName()
                 ));
 
@@ -59,7 +59,7 @@ class AddCompanyBusinessUnitController extends AbstractController
             }
 
             $this->addSuccessMessage(sprintf(
-                static::MESSAGE_COMPANY_BUSINESS_UNIT_CREATE_SUCCESS,
+                static::MESSAGE_SUCCESS_COMPANY_BUSINESS_UNIT_CREATE,
                 $companyBusinessUnitTransfer->getName()
             ));
 
