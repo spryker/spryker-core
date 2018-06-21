@@ -265,6 +265,17 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * @return array
      */
+    public function getGlueIdeAutoCompletionOptions()
+    {
+        $options = $this->getDefaultIdeAutoCompletionOptions();
+        $options[IdeAutoCompletionOptionConstants::APPLICATION_NAME] = 'Resource';
+
+        return $options;
+    }
+
+    /**
+     * @return array
+     */
     public function getServiceIdeAutoCompletionOptions()
     {
         $options = $this->getDefaultIdeAutoCompletionOptions();
