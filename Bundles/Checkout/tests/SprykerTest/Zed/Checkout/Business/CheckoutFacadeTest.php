@@ -306,31 +306,6 @@ class CheckoutFacadeTest extends Unit
     }
 
     /**
-     * @return void
-     */
-    public function testAddCheckoutErrorMessageDoesNotAddDuplicatedMessages(): void
-    {
-        $messageTransfer = $this->tester->getMessageTransfer();
-
-        $storedMessageValues = $this->tester->getStoredMessageValues();
-
-        if (!\in_array(static::CHECKOUT_ERROR_MESSAGE_TRANSFER_VALUE, $storedMessageValues)) {
-            $this->tester->getCheckoutFacade()
-                ->addCheckoutErrorMessage($messageTransfer);
-
-            $this->tester->getCheckoutFacade()
-                ->addCheckoutErrorMessage($messageTransfer);
-
-            $this->assertCount(count($storedMessageValues) + 1, $this->tester->getStoredMessageValues());
-        }
-
-        $this->tester->getCheckoutFacade()
-            ->addCheckoutErrorMessage($messageTransfer);
-
-        $this->assertCount(count($storedMessageValues), $this->tester->getStoredMessageValues());
-    }
-
-    /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function getBaseQuoteTransfer()
