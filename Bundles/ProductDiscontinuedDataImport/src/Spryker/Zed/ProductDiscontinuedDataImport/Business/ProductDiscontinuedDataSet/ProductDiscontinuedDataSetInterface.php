@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductDiscontinuedDataImport\Business\DataSet;
+namespace Spryker\Zed\ProductDiscontinuedDataImport\Business\ProductDiscontinuedDataSet;
 
 interface ProductDiscontinuedDataSetInterface
 {
