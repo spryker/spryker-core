@@ -9,11 +9,13 @@ namespace Spryker\Client\ProductDiscontinuedStorage;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
+use Spryker\Client\ProductDiscontinuedStorage\Dependency\Client\ProductDiscontinuedStorageToGlossaryStorageClientBridge;
 use Spryker\Client\ProductDiscontinuedStorage\Dependency\Client\ProductDiscontinuedStorageToStorageClientBridge;
 use Spryker\Client\ProductDiscontinuedStorage\Dependency\Service\ProductDiscontinuedStorageToSynchronizationServiceBridge;
 
 class ProductDiscontinuedStorageDependencyProvider extends AbstractDependencyProvider
 {
+    public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
 
@@ -25,8 +27,23 @@ class ProductDiscontinuedStorageDependencyProvider extends AbstractDependencyPro
     public function provideServiceLayerDependencies(Container $container): Container
     {
         $container = parent::provideServiceLayerDependencies($container);
+        $container = $this->addGlossaryStorageClient($container);
         $container = $this->addStorageClient($container);
         $container = $this->addSynchronizationService($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addGlossaryStorageClient(Container $container): Container
+    {
+        $container[static::CLIENT_GLOSSARY_STORAGE] = function (Container $container) {
+            return new ProductDiscontinuedStorageToGlossaryStorageClientBridge($container->getLocator()->glossaryStorage()->client());
+        };
 
         return $container;
     }

@@ -12,10 +12,14 @@
     "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
+    "spryker/cart": "*",
     "spryker/code-sniffer": "*",
     "spryker/propel": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/cart": "If you want to use Cart plugins."
   },
   "autoload": {
     "psr-4": {

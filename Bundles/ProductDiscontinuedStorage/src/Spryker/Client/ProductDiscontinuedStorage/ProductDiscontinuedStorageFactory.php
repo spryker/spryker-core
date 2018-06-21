@@ -8,8 +8,11 @@
 namespace Spryker\Client\ProductDiscontinuedStorage;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\ProductDiscontinuedStorage\Dependency\Client\ProductDiscontinuedStorageToGlossaryStorageClientInterface;
 use Spryker\Client\ProductDiscontinuedStorage\Dependency\Client\ProductDiscontinuedStorageToStorageClientInterface;
 use Spryker\Client\ProductDiscontinuedStorage\Dependency\Service\ProductDiscontinuedStorageToSynchronizationServiceInterface;
+use Spryker\Client\ProductDiscontinuedStorage\ProductViewExpander\DiscontinuedOptionsProductViewExpander;
+use Spryker\Client\ProductDiscontinuedStorage\ProductViewExpander\DiscontinuedOptionsProductViewExpanderInterface;
 use Spryker\Client\ProductDiscontinuedStorage\Storage\ProductDiscontinuedStorageReader;
 use Spryker\Client\ProductDiscontinuedStorage\Storage\ProductDiscontinuedStorageReaderInterface;
 
@@ -24,6 +27,25 @@ class ProductDiscontinuedStorageFactory extends AbstractFactory
             $this->getStorageClient(),
             $this->getSynchronizationService()
         );
+    }
+
+    /**
+     * @return \Spryker\Client\ProductDiscontinuedStorage\ProductViewExpander\DiscontinuedOptionsProductViewExpanderInterface
+     */
+    public function createDiscontinuedOptionsProductViewExpander(): DiscontinuedOptionsProductViewExpanderInterface
+    {
+        return new DiscontinuedOptionsProductViewExpander(
+            $this->createProductDiscontinuedStorageReader(),
+            $this->getGlossaryStorageClient()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\ProductDiscontinuedStorage\Dependency\Client\ProductDiscontinuedStorageToGlossaryStorageClientInterface
+     */
+    public function getGlossaryStorageClient(): ProductDiscontinuedStorageToGlossaryStorageClientInterface
+    {
+        return $this->getProvidedDependency(ProductDiscontinuedStorageDependencyProvider::CLIENT_GLOSSARY_STORAGE);
     }
 
     /**
