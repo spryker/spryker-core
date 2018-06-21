@@ -18,4 +18,12 @@ class ProductSetPageSearchConfig extends AbstractBundleConfig
     {
         return true;
     }
+
+    /**
+     * @return null|string
+     */
+    public function getProductSetSynchronizationPoolName()
+    {
+        return null;
+    }
 }

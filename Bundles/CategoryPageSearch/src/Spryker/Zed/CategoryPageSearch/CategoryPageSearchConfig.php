@@ -18,4 +18,12 @@ class CategoryPageSearchConfig extends AbstractBundleConfig
     {
         return true;
     }
+
+    /**
+     * @return null|string
+     */
+    public function getCategoryPageSynchronizationPoolName()
+    {
+        return null;
+    }
 }

@@ -10,8 +10,10 @@ namespace SprykerTest\Zed\Synchronization\Business;
 use Codeception\Test\Unit;
 use Elastica\Exception\NotFoundException;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Synchronization\Business\Message\QueueMessageCreatorInterface;
 use Spryker\Zed\Synchronization\Business\SynchronizationBusinessFactory;
 use Spryker\Zed\Synchronization\Business\SynchronizationFacade;
+use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToQueueClientInterface;
 use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToSearchClientInterface;
 use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToStorageClientInterface;
 use Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingServiceInterface;
@@ -176,6 +178,44 @@ class SynchronizationFacadeTest extends Unit
             'key' => 'testKey',
             'value' => ['data' => 'testValue'],
         ], 'test');
+    }
+
+    /**
+     * @return void
+     */
+    public function testExportSynchronizedData()
+    {
+        $container = new Container();
+        $container[SynchronizationDependencyProvider::CLIENT_QUEUE] = function (Container $container) {
+            return $this->createQueueClientBridge();
+        };
+
+        $container[SynchronizationDependencyProvider::PLUGINS_SYNCHRONIZATION_DATA] = function (Container $container) {
+            return $this->createSynchronizationDataPlugins();
+        };
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function createQueueClientBridge()
+    {
+        return $this->getMockBuilder(SynchronizationToQueueClientInterface::class)
+            ->disableOriginalConstructor()
+            ->setMethods([
+                'sendMessages',
+            ])
+            ->getMock();
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function createSynchronizationDataPlugins()
+    {
+        return [
+
+        ];
     }
 
     /**
