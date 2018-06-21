@@ -35,7 +35,7 @@ class CheckoutToMessengerFacadeBridge implements CheckoutToMessengerFacadeInterf
     }
 
     /**
-     * @return null|\Generated\Shared\Transfer\FlashMessagesTransfer
+     * @return \Generated\Shared\Transfer\FlashMessagesTransfer
      */
     public function getStoredMessages()
     {

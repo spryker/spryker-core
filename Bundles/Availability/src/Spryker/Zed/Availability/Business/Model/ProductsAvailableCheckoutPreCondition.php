@@ -55,15 +55,7 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
 
         foreach ($quoteTransfer->getItems() as $quoteItem) {
             if (!$this->isProductSellable($quoteItem, $storeTransfer)) {
-                /**
-                 * TODO: This check is needed to exclude flash messages for every single product in product bundle.
-                 * TODO: Removing this check will cause flash messages being created for ProductBundle + every product inside.
-                 * TODO: This check must be REPLACED with something else, because it makes Availability module depends on ProductBundle.
-                 * TODO: Replacing check with method_exists check will be not the best solution also.
-                 */
-                if (!$quoteItem->getRelatedBundleItemIdentifier()) {
-                    $this->addAvailabilityErrorToCheckoutResponse($checkoutResponse, $quoteItem);
-                }
+                $this->addAvailabilityErrorToCheckoutResponse($checkoutResponse, $quoteItem);
                 $isPassed = false;
             }
         }
