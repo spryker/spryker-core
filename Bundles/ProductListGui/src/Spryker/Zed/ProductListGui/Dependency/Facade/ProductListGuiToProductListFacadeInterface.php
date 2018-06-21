@@ -23,7 +23,7 @@ interface ProductListGuiToProductListFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductListTransfer
      */
-    public function findProductList(ProductListTransfer $productListTransfer): ProductListTransfer;
+    public function getProductListById(ProductListTransfer $productListTransfer): ProductListTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer

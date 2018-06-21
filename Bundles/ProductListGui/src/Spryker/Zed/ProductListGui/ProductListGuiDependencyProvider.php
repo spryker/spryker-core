@@ -55,8 +55,8 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function providePersistenceLayerDependencies(Container $container): Container
     {
-        $container = $this->addCategoryAttributeQuery($container);
-        $container = $this->addProductAttributeQuery($container);
+        $container = $this->addCategoryAttributePropelQuery($container);
+        $container = $this->addProductAttributePropelQuery($container);
 
         return $container;
     }
@@ -98,7 +98,7 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCategoryAttributeQuery(Container $container): Container
+    protected function addCategoryAttributePropelQuery(Container $container): Container
     {
         $container[static::PROPEL_QUERY_CATEGORY_ATTRIBUTE] = function (Container $container) {
             return new SpyCategoryAttributeQuery();
@@ -112,7 +112,7 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addProductAttributeQuery(Container $container): Container
+    protected function addProductAttributePropelQuery(Container $container): Container
     {
         $container[static::PROPEL_QUERY_PRODUCT_ATTRIBUTE] = function (Container $container) {
             return new SpyProductLocalizedAttributesQuery();

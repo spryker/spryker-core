@@ -102,6 +102,6 @@ class EditController extends AbstractController
 
         return $this->getFactory()
             ->getProductListFacade()
-            ->findProductList($productListTransfer);
+            ->getProductListById($productListTransfer);
     }
 }

@@ -86,10 +86,10 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
      *
      * @return \Generated\Shared\Transfer\ProductListTransfer
      */
-    public function findProductList(ProductListTransfer $productListTransfer): ProductListTransfer
+    public function getProductListById(ProductListTransfer $productListTransfer): ProductListTransfer
     {
         return $this->getFactory()
             ->createProductListReader()
-            ->findProductList($productListTransfer);
+            ->getProductListById($productListTransfer);
     }
 }

@@ -36,7 +36,7 @@ class MerchantRelationshipProductListGuiDependencyProvider extends AbstractBundl
      */
     public function providePersistenceLayerDependencies(Container $container): Container
     {
-        $container = $this->addMerchantRelationQuery($container);
+        $container = $this->addMerchantRelationPropelQuery($container);
         $container = $this->addMerchantRelationFacade($container);
 
         return $container;
@@ -49,7 +49,7 @@ class MerchantRelationshipProductListGuiDependencyProvider extends AbstractBundl
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addMerchantRelationQuery(Container $container): Container
+    protected function addMerchantRelationPropelQuery(Container $container): Container
     {
         $container[static::PROPEL_QUERY_MERCHANT_RELATION] = function (Container $container) {
             return new SpyMerchantRelationshipQuery();

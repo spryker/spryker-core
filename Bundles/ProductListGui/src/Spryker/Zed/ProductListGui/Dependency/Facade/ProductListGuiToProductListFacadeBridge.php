@@ -39,9 +39,9 @@ class ProductListGuiToProductListFacadeBridge implements ProductListGuiToProduct
      *
      * @return \Generated\Shared\Transfer\ProductListTransfer
      */
-    public function findProductList(ProductListTransfer $productListTransfer): ProductListTransfer
+    public function getProductListById(ProductListTransfer $productListTransfer): ProductListTransfer
     {
-        return $this->productListFacade->findProductList($productListTransfer);
+        return $this->productListFacade->getProductListById($productListTransfer);
     }
 
     /**
