@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\Model;
 
-interface PriceProductAbstractPublisherInterface
+interface PriceProductAbstractStorageWriterInterface
 {
     /**
      * @param array $priceProductStoreIds

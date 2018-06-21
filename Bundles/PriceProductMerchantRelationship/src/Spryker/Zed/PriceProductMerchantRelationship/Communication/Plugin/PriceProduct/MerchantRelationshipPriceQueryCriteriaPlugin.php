@@ -9,7 +9,7 @@ namespace Spryker\Zed\PriceProductMerchantRelationship\Communication\Plugin\Pric
 
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
-use Spryker\Shared\PriceProduct\PriceProductMerchantRelationshipConstants;
+use Spryker\Shared\PriceProductMerchantRelationship\PriceProductMerchantRelationshipConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PriceProduct\Dependency\Plugin\PriceDimensionQueryCriteriaPluginInterface;
 

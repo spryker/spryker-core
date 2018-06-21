@@ -9,7 +9,7 @@ namespace Spryker\Client\PriceProductMerchantRelationshipStorage\Storage;
 
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\PriceProductMerchantRelationshipStorage\Dependency\Client\PriceProductMerchantRelationshipStorageToStoreClientInterface;
-use Spryker\Client\PriceProductMerchantRelationshipStorage\Dependency\Service\PriceProductBusinessUnitToSynchornizationServiceInterface;
+use Spryker\Client\PriceProductMerchantRelationshipStorage\Dependency\Service\PriceProductMerchantRelationshipToSynchronizationServiceInterface;
 
 class PriceProductMerchantRelationshipKeyGenerator implements PriceProductMerchantRelationshipKeyGeneratorInterface
 {
@@ -24,11 +24,11 @@ class PriceProductMerchantRelationshipKeyGenerator implements PriceProductMercha
     protected $storeClient;
 
     /**
-     * @param \Spryker\Client\PriceProductMerchantRelationshipStorage\Dependency\Service\PriceProductBusinessUnitToSynchornizationServiceInterface $synchronizationService
+     * @param \Spryker\Client\PriceProductMerchantRelationshipStorage\Dependency\Service\PriceProductMerchantRelationshipToSynchronizationServiceInterface $synchronizationService
      * @param \Spryker\Client\PriceProductMerchantRelationshipStorage\Dependency\Client\PriceProductMerchantRelationshipStorageToStoreClientInterface $storeClient
      */
     public function __construct(
-        PriceProductBusinessUnitToSynchornizationServiceInterface $synchronizationService,
+        PriceProductMerchantRelationshipToSynchronizationServiceInterface $synchronizationService,
         PriceProductMerchantRelationshipStorageToStoreClientInterface $storeClient
     ) {
         $this->synchronizationService = $synchronizationService;
@@ -38,16 +38,16 @@ class PriceProductMerchantRelationshipKeyGenerator implements PriceProductMercha
     /**
      * @param string $resourceName
      * @param int $idProduct
-     * @param int $idBusinessUnit
+     * @param int $idMerchantRelationship
      *
      * @return string
      */
-    public function generateKey(string $resourceName, int $idProduct, int $idBusinessUnit): string
+    public function generateKey(string $resourceName, int $idProduct, int $idMerchantRelationship): string
     {
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer
             ->setStore($this->storeClient->getCurrentStore()->getName())
-            ->setReference($idProduct . ':' . $idBusinessUnit);
+            ->setReference($idProduct . ':' . $idMerchantRelationship);
 
         return $this->synchronizationService
             ->getStorageKeyBuilder($resourceName)

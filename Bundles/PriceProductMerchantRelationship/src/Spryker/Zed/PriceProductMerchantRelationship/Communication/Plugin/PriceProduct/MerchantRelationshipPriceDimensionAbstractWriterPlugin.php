@@ -29,7 +29,7 @@ class MerchantRelationshipPriceDimensionAbstractWriterPlugin extends AbstractPlu
      */
     public function savePrice(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
     {
-        return $this->getFacade()->savePriceProductBusinessUnit($priceProductTransfer);
+        return $this->getFacade()->savePriceProductMerchantRelationship($priceProductTransfer);
     }
 
     /**

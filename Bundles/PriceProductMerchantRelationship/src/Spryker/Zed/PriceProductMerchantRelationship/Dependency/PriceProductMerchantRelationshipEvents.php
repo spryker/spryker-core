@@ -11,27 +11,27 @@ interface PriceProductMerchantRelationshipEvents
 {
     /**
      * Specification
-     * - This event will be used for spy_price_product_business_unit entity creation
+     * - This event will be used for spy_price_product_merchant_relationship entity creation
      *
      * @api
      */
-    public const ENTITY_SPY_PRICE_PRODUCT_MERCHANT_RELATION_CREATE = 'Entity.spy_price_product_business_unit.create';
+    public const ENTITY_SPY_PRICE_PRODUCT_MERCHANT_RELATIONSHIP_CREATE = 'Entity.spy_price_product_merchant_relationship.create';
 
     /**
      * Specification
-     * - This event will be used for spy_price_product_business_unit entity update
+     * - This event will be used for spy_price_product_merchant_relationship entity update
      *
      * @api
      */
-    public const ENTITY_SPY_PRICE_PRODUCT_MERCHANT_RELATION_UPDATE = 'Entity.spy_price_product_business_unit.update';
+    public const ENTITY_SPY_PRICE_PRODUCT_MERCHANT_RELATIONSHIP_UPDATE = 'Entity.spy_price_product_merchant_relationship.update';
 
     /**
      * Specification
-     * - This event will be used for spy_price_product_business_unit entity delete
+     * - This event will be used for spy_price_product_merchant_relationship entity delete
      *
      * @api
      */
-    public const ENTITY_SPY_PRICE_PRODUCT_MERCHANT_RELATION_DELETE = 'Entity.spy_price_product_business_unit.delete';
+    public const ENTITY_SPY_PRICE_PRODUCT_MERCHANT_RELATIONSHIP_DELETE = 'Entity.spy_price_product_merchant_relationship.delete';
 
     /**
      * Specification

@@ -26,7 +26,7 @@ class PriceProductMerchantRelationshipStorageFacade extends AbstractFacade imple
      */
     public function publishConcretePriceProduct(array $priceProductStoreIds): void
     {
-        $this->getFactory()->createPriceProductConcretePublisher()->publish($priceProductStoreIds);
+        $this->getFactory()->createPriceProductConcreteStorageWriter()->publish($priceProductStoreIds);
     }
 
     /**
@@ -40,7 +40,7 @@ class PriceProductMerchantRelationshipStorageFacade extends AbstractFacade imple
      */
     public function publishAbstractPriceProduct(array $priceProductStoreIds): void
     {
-        $this->getFactory()->createPriceProductAbstractPublisher()->publish($priceProductStoreIds);
+        $this->getFactory()->createPriceProductAbstractStorageWriter()->publish($priceProductStoreIds);
     }
 
     /**
@@ -54,7 +54,7 @@ class PriceProductMerchantRelationshipStorageFacade extends AbstractFacade imple
      */
     public function unpublishConcretePriceProduct(array $merchantRelationshipConcreteProducts): void
     {
-        $this->getFactory()->createPriceProductConcretePublisher()->unpublish($merchantRelationshipConcreteProducts);
+        $this->getFactory()->createPriceProductConcreteStorageWriter()->unpublish($merchantRelationshipConcreteProducts);
     }
 
     /**
@@ -68,6 +68,6 @@ class PriceProductMerchantRelationshipStorageFacade extends AbstractFacade imple
      */
     public function unpublishAbstractPriceProduct(array $merchantRelationshipAbstractProducts): void
     {
-        $this->getFactory()->createPriceProductAbstractPublisher()->unpublish($merchantRelationshipAbstractProducts);
+        $this->getFactory()->createPriceProductAbstractStorageWriter()->unpublish($merchantRelationshipAbstractProducts);
     }
 }

@@ -19,11 +19,11 @@ interface MerchantRelationshipPriceWriterInterface
     public function save(PriceProductTransfer $priceProductTransfer): PriceProductTransfer;
 
     /**
-     * @param int $idCompanyBusinessUnit
+     * @param int $idMerchantRelationship
      *
      * @return void
      */
-    public function deleteByIdBusinessUnit(int $idCompanyBusinessUnit): void;
+    public function deleteByIdMerchantRelationship(int $idMerchantRelationship): void;
 
     /**
      * @return void

@@ -11,17 +11,17 @@ use Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProduct
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProductMerchantRelationshipStorageRepository;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProductMerchantRelationshipStorageRepositoryInterface;
 
-class PriceProductConcretePublisher implements PriceProductConcretePublisherInterface
+class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWriterInterface
 {
     /**
      * @var \Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProductMerchantRelationshipStorageEntityManagerInterface
      */
-    protected $PriceProductMerchantRelationshipStorageEntityManager;
+    protected $priceProductMerchantRelationshipStorageEntityManager;
 
     /**
      * @var \Spryker\Zed\PriceProductMerchantRelationship\Persistence\PriceProductMerchantRelationshipRepositoryInterface
      */
-    protected $PriceProductMerchantRelationshipStorageRepository;
+    protected $priceProductMerchantRelationshipStorageRepository;
 
     /**
      * @var \Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\Model\PriceGrouperInterface
@@ -29,17 +29,17 @@ class PriceProductConcretePublisher implements PriceProductConcretePublisherInte
     protected $priceGrouper;
 
     /**
-     * @param \Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProductMerchantRelationshipStorageEntityManagerInterface $PriceProductMerchantRelationshipStorageEntityManager
-     * @param \Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProductMerchantRelationshipStorageRepositoryInterface $PriceProductMerchantRelationshipStorageRepository
+     * @param \Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProductMerchantRelationshipStorageEntityManagerInterface $priceProductMerchantRelationshipStorageEntityManager
+     * @param \Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProductMerchantRelationshipStorageRepositoryInterface $priceProductMerchantRelationshipStorageRepository
      * @param \Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\Model\PriceGrouperInterface $priceGrouper
      */
     public function __construct(
-        PriceProductMerchantRelationshipStorageEntityManagerInterface $PriceProductMerchantRelationshipStorageEntityManager,
-        PriceProductMerchantRelationshipStorageRepositoryInterface $PriceProductMerchantRelationshipStorageRepository,
+        PriceProductMerchantRelationshipStorageEntityManagerInterface $priceProductMerchantRelationshipStorageEntityManager,
+        PriceProductMerchantRelationshipStorageRepositoryInterface $priceProductMerchantRelationshipStorageRepository,
         PriceGrouperInterface $priceGrouper
     ) {
-        $this->PriceProductMerchantRelationshipStorageEntityManager = $PriceProductMerchantRelationshipStorageEntityManager;
-        $this->PriceProductMerchantRelationshipStorageRepository = $PriceProductMerchantRelationshipStorageRepository;
+        $this->priceProductMerchantRelationshipStorageEntityManager = $priceProductMerchantRelationshipStorageEntityManager;
+        $this->priceProductMerchantRelationshipStorageRepository = $priceProductMerchantRelationshipStorageRepository;
         $this->priceGrouper = $priceGrouper;
     }
 
@@ -50,7 +50,7 @@ class PriceProductConcretePublisher implements PriceProductConcretePublisherInte
      */
     public function publish(array $priceProductStoreIds): void
     {
-        $concreteProducts = $this->PriceProductMerchantRelationshipStorageRepository
+        $concreteProducts = $this->priceProductMerchantRelationshipStorageRepository
             ->findPriceProductStoreListByIdsForConcrete($priceProductStoreIds);
 
         $groupedPrices = $this->priceGrouper->getGroupedPrices(
@@ -63,12 +63,12 @@ class PriceProductConcretePublisher implements PriceProductConcretePublisherInte
             return;
         }
 
-        $PriceProductMerchantRelationshipStorageEntityMap = $this->PriceProductMerchantRelationshipStorageRepository
+        $priceProductMerchantRelationshipStorageEntityMap = $this->priceProductMerchantRelationshipStorageRepository
             ->findExistingPriceProductConcreteMerchantRelationshipStorageEntities($concreteProducts);
 
-        $this->PriceProductMerchantRelationshipStorageEntityManager->writePriceProductConcrete(
+        $this->priceProductMerchantRelationshipStorageEntityManager->writePriceProductConcrete(
             $groupedPrices,
-            $PriceProductMerchantRelationshipStorageEntityMap
+            $priceProductMerchantRelationshipStorageEntityMap
         );
     }
 
@@ -81,7 +81,7 @@ class PriceProductConcretePublisher implements PriceProductConcretePublisherInte
     {
         foreach ($merchantRelationshipConcreteProducts as $idMerchantRelationship => $idProducts) {
             foreach ($idProducts as $idProduct) {
-                $this->PriceProductMerchantRelationshipStorageEntityManager
+                $this->priceProductMerchantRelationshipStorageEntityManager
                     ->deletePriceProductConcreteByMerchantRelationshipAndIdProduct($idMerchantRelationship, $idProduct);
             }
         }

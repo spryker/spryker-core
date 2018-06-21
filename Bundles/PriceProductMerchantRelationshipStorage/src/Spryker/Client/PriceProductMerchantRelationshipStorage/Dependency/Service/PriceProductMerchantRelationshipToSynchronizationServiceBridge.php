@@ -9,7 +9,7 @@ namespace Spryker\Client\PriceProductMerchantRelationshipStorage\Dependency\Serv
 
 use Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface;
 
-class PriceProductMerchantRelationshipToSynchronizationServiceBridge implements PriceProductBusinessUnitToSynchornizationServiceInterface
+class PriceProductMerchantRelationshipToSynchronizationServiceBridge implements PriceProductMerchantRelationshipToSynchronizationServiceInterface
 {
     /**
      * @var \Spryker\Service\Synchronization\SynchronizationServiceInterface

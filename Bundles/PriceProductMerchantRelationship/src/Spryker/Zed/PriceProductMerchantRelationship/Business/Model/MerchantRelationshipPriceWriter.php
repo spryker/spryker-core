@@ -18,12 +18,12 @@ class MerchantRelationshipPriceWriter implements MerchantRelationshipPriceWriter
     /**
      * @var \Spryker\Zed\PriceProductMerchantRelationship\Persistence\PriceProductMerchantRelationshipEntityManagerInterface
      */
-    protected $priceProductBusinessUnitEntityManager;
+    protected $priceProductMerchantRelationshipEntityManager;
 
     /**
      * @var \Spryker\Zed\PriceProductMerchantRelationship\Persistence\PriceProductMerchantRelationshipRepositoryInterface
      */
-    protected $priceProductBusinessUnitRepository;
+    protected $priceProductMerchantRelationshipRepository;
 
     /**
      * @var \Spryker\Zed\PriceProductMerchantRelationship\Dependency\Facade\PriceProductMerchantRelationshipToPriceProductFacadeInterface
@@ -31,17 +31,17 @@ class MerchantRelationshipPriceWriter implements MerchantRelationshipPriceWriter
     protected $priceProductFacade;
 
     /**
-     * @param \Spryker\Zed\PriceProductMerchantRelationship\Persistence\PriceProductMerchantRelationshipEntityManagerInterface $priceProductBusinessUnitEntityManager
-     * @param \Spryker\Zed\PriceProductMerchantRelationship\Persistence\PriceProductMerchantRelationshipRepositoryInterface $priceProductBusinessUnitRepository
+     * @param \Spryker\Zed\PriceProductMerchantRelationship\Persistence\PriceProductMerchantRelationshipEntityManagerInterface $priceProductMerchantRelationshipEntityManager
+     * @param \Spryker\Zed\PriceProductMerchantRelationship\Persistence\PriceProductMerchantRelationshipRepositoryInterface $priceProductMerchantRelationshipRepository
      * @param \Spryker\Zed\PriceProductMerchantRelationship\Dependency\Facade\PriceProductMerchantRelationshipToPriceProductFacadeInterface $priceProductFacade
      */
     public function __construct(
-        PriceProductMerchantRelationshipEntityManagerInterface $priceProductBusinessUnitEntityManager,
-        PriceProductMerchantRelationshipRepositoryInterface $priceProductBusinessUnitRepository,
+        PriceProductMerchantRelationshipEntityManagerInterface $priceProductMerchantRelationshipEntityManager,
+        PriceProductMerchantRelationshipRepositoryInterface $priceProductMerchantRelationshipRepository,
         PriceProductMerchantRelationshipToPriceProductFacadeInterface $priceProductFacade
     ) {
-        $this->priceProductBusinessUnitEntityManager = $priceProductBusinessUnitEntityManager;
-        $this->priceProductBusinessUnitRepository = $priceProductBusinessUnitRepository;
+        $this->priceProductMerchantRelationshipEntityManager = $priceProductMerchantRelationshipEntityManager;
+        $this->priceProductMerchantRelationshipRepository = $priceProductMerchantRelationshipRepository;
         $this->priceProductFacade = $priceProductFacade;
     }
 
@@ -57,7 +57,7 @@ class MerchantRelationshipPriceWriter implements MerchantRelationshipPriceWriter
             ->requirePriceDimension();
 
         $priceDimensionTransfer = $priceProductTransfer->getPriceDimension();
-        $priceDimensionTransfer->requireIdBusinessUnit();
+        $priceDimensionTransfer->requireIdMerchantRelationship();
 
         $idPriceProductStoreBeforeUpdate = $priceProductTransfer->getMoneyValue()->getIdEntity();
 
@@ -68,26 +68,26 @@ class MerchantRelationshipPriceWriter implements MerchantRelationshipPriceWriter
         }
 
         if ($idPriceProductStoreBeforeUpdate) {
-            $this->priceProductBusinessUnitEntityManager->deleteByIdPriceProductStoreAndIdMerchantRelationship(
+            $this->priceProductMerchantRelationshipEntityManager->deleteByIdPriceProductStoreAndIdMerchantRelationship(
                 $idPriceProductStoreBeforeUpdate,
-                $priceDimensionTransfer->getIdBusinessUnit()
+                $priceDimensionTransfer->getIdMerchantRelationship()
             );
         }
 
-        $priceProductBusinessUnitEntityTransfer = $this->getPriceProductBusinessUnitEntityTransfer($priceProductTransfer);
-        $this->priceProductBusinessUnitEntityManager->saveEntity($priceProductBusinessUnitEntityTransfer);
+        $priceProductMerchantRelationshipEntityTransfer = $this->getPriceProductMerchantRelationshipEntityTransfer($priceProductTransfer);
+        $this->priceProductMerchantRelationshipEntityManager->saveEntity($priceProductMerchantRelationshipEntityTransfer);
 
         return $priceProductTransfer;
     }
 
     /**
-     * @param int $idCompanyBusinessUnit
+     * @param int $idMerchantRelationship
      *
      * @return void
      */
-    public function deleteByIdBusinessUnit(int $idCompanyBusinessUnit): void
+    public function deleteByIdMerchantRelationship(int $idMerchantRelationship): void
     {
-        $this->priceProductBusinessUnitEntityManager->deleteByIdMerchantRelationship($idCompanyBusinessUnit);
+        $this->priceProductMerchantRelationshipEntityManager->deleteByIdMerchantRelationship($idMerchantRelationship);
     }
 
     /**
@@ -95,7 +95,7 @@ class MerchantRelationshipPriceWriter implements MerchantRelationshipPriceWriter
      */
     public function deleteAll(): void
     {
-        $this->priceProductBusinessUnitEntityManager->deleteAll();
+        $this->priceProductMerchantRelationshipEntityManager->deleteAll();
     }
 
     /**
@@ -114,18 +114,18 @@ class MerchantRelationshipPriceWriter implements MerchantRelationshipPriceWriter
      *
      * @return \Generated\Shared\Transfer\SpyPriceProductMerchantRelationshipEntityTransfer
      */
-    protected function getPriceProductBusinessUnitEntityTransfer(PriceProductTransfer $priceProductTransfer): SpyPriceProductMerchantRelationshipEntityTransfer
+    protected function getPriceProductMerchantRelationshipEntityTransfer(PriceProductTransfer $priceProductTransfer): SpyPriceProductMerchantRelationshipEntityTransfer
     {
-        $priceProductBusinessUnitEntityTransfer = (new SpyPriceProductMerchantRelationshipEntityTransfer())
-            ->setFkCompanyBusinessUnit($priceProductTransfer->getPriceDimension()->getIdBusinessUnit())
+        $priceProductMerchantRelationshipEntityTransfer = (new SpyPriceProductMerchantRelationshipEntityTransfer())
+            ->setFkMerchantRelationship($priceProductTransfer->getPriceDimension()->getIdMerchantRelationship())
             ->setFkPriceProductStore($priceProductTransfer->getMoneyValue()->getIdEntity());
 
         if ($priceProductTransfer->getIdProductAbstract()) {
-            $priceProductBusinessUnitEntityTransfer->setFkProductAbstract($priceProductTransfer->getIdProductAbstract());
+            $priceProductMerchantRelationshipEntityTransfer->setFkProductAbstract($priceProductTransfer->getIdProductAbstract());
         } else {
-            $priceProductBusinessUnitEntityTransfer->setFkProduct($priceProductTransfer->getIdProduct());
+            $priceProductMerchantRelationshipEntityTransfer->setFkProduct($priceProductTransfer->getIdProduct());
         }
 
-        return $priceProductBusinessUnitEntityTransfer;
+        return $priceProductMerchantRelationshipEntityTransfer;
     }
 }

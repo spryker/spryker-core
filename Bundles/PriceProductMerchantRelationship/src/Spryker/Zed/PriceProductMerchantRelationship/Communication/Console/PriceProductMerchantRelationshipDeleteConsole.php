@@ -16,24 +16,24 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @method \Spryker\Zed\PriceProductMerchantRelationship\Business\PriceProductMerchantRelationshipFacadeInterface getFacade()
  * @method \Spryker\Zed\PriceProductMerchantRelationship\Communication\PriceProductMerchantRelationshipCommunicationFactory getFactory()
  */
-class PriceProductMerchantRelationshipCleanConsole extends Console
+class PriceProductMerchantRelationshipDeleteConsole extends Console
 {
-    public const COMMAND_NAME = 'price-product-business-unit:clean';
-    public const COMMAND_DESCRIPTION = 'Will delete all connections between product prices and company business units.';
+    public const COMMAND_NAME = 'price-product-merchant-relationship:delete';
+    public const COMMAND_DESCRIPTION = 'Will delete all connections between product prices and merchant relations.';
 
-    public const ARGUMENT_BUSINESS_UNIT_ID = 'business-unit-id';
+    public const ARGUMENT_MERCHANT_RELATIONSHIP_ID = 'merchant-relationship-id';
 
     /**
      * @return void
      */
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
         $this
             ->setName(static::COMMAND_NAME)
             ->setDescription(static::COMMAND_DESCRIPTION)
-            ->addOption(static::ARGUMENT_BUSINESS_UNIT_ID, 'b', InputArgument::OPTIONAL);
+            ->addOption(static::ARGUMENT_MERCHANT_RELATIONSHIP_ID, 'm', InputArgument::OPTIONAL);
     }
 
     /**
@@ -42,17 +42,17 @@ class PriceProductMerchantRelationshipCleanConsole extends Console
      *
      * @return int
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
-        $idBusinessUnit = $input->getOption(static::ARGUMENT_BUSINESS_UNIT_ID);
-        if ($idBusinessUnit !== null) {
+        $idMerchantRelationship = $input->getOption(static::ARGUMENT_MERCHANT_RELATIONSHIP_ID);
+        if ($idMerchantRelationship !== null) {
             $this->getFacade()
-                ->deletePriceProductBusinessUnitByIdBusinessUnit((int)$idBusinessUnit);
+                ->deletePriceProductMerchantRelationshipByIdMerchantRelationship((int)$idMerchantRelationship);
 
             return static::CODE_SUCCESS;
         }
 
-        $this->getFacade()->deleteAllPriceProductBusinessUnit();
+        $this->getFacade()->deleteAllPriceProductMerchantRelationship();
 
         return static::CODE_SUCCESS;
     }

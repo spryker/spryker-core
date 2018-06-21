@@ -10,10 +10,10 @@ namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\Model\PriceGrouper;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\Model\PriceGrouperInterface;
-use Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\Model\PriceProductAbstractPublisher;
-use Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\Model\PriceProductAbstractPublisherInterface;
-use Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\Model\PriceProductConcretePublisher;
-use Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\Model\PriceProductConcretePublisherInterface;
+use Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\Model\PriceProductAbstractStorageWriter;
+use Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\Model\PriceProductAbstractStorageWriterInterface;
+use Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\Model\PriceProductConcreteStorageWriter;
+use Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\Model\PriceProductConcreteStorageWriterInterface;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\Dependency\Facade\PriceProductMerchantRelationshipStorageToPriceProductFacadeInterface;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\Dependency\Facade\PriceProductMerchantRelationshipStorageToStoreFacadeInterface;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageDependencyProvider;
@@ -26,11 +26,11 @@ use Spryker\Zed\PriceProductMerchantRelationshipStorage\PriceProductMerchantRela
 class PriceProductMerchantRelationshipStorageBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\Model\PriceProductAbstractPublisherInterface
+     * @return \Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\Model\PriceProductAbstractStorageWriterInterface
      */
-    public function createPriceProductAbstractPublisher(): PriceProductAbstractPublisherInterface
+    public function createPriceProductAbstractStorageWriter(): PriceProductAbstractStorageWriterInterface
     {
-        return new PriceProductAbstractPublisher(
+        return new PriceProductAbstractStorageWriter(
             $this->getEntityManager(),
             $this->getRepository(),
             $this->createPriceGrouper()
@@ -38,11 +38,11 @@ class PriceProductMerchantRelationshipStorageBusinessFactory extends AbstractBus
     }
 
     /**
-     * @return \Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\Model\PriceProductConcretePublisherInterface
+     * @return \Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\Model\PriceProductConcreteStorageWriterInterface
      */
-    public function createPriceProductConcretePublisher(): PriceProductConcretePublisherInterface
+    public function createPriceProductConcreteStorageWriter(): PriceProductConcreteStorageWriterInterface
     {
-        return new PriceProductConcretePublisher(
+        return new PriceProductConcreteStorageWriter(
             $this->getEntityManager(),
             $this->getRepository(),
             $this->createPriceGrouper()

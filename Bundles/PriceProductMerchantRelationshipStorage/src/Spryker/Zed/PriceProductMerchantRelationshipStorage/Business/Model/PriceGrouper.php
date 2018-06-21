@@ -10,7 +10,7 @@ namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\Model;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer;
 use Orm\Zed\PriceProductMerchantRelationship\Persistence\Map\SpyPriceProductMerchantRelationshipTableMap;
-use Spryker\Shared\PriceProduct\PriceProductMerchantRelationshipConstants;
+use Spryker\Shared\PriceProductMerchantRelationship\PriceProductMerchantRelationshipConstants;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\Dependency\Facade\PriceProductMerchantRelationshipStorageToPriceProductFacadeInterface;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\Dependency\Facade\PriceProductMerchantRelationshipStorageToStoreFacadeInterface;
 
@@ -63,7 +63,7 @@ class PriceGrouper implements PriceGrouperInterface
 
             $priceProductDimensionTransfer->setIdMerchantRelationship($idMerchantRelationship);
             $storeTransfer = $this->storeFacade->getStoreById($product[static::COL_STORE_ID]);
-            $prices = $this->priceProductFacade->findPricesWithTiersBySkuGrouped(
+            $prices = $this->priceProductFacade->findPricesBySkuGroupedForCurrentStore(
                 $product[$productSkuIdentifier],
                 $priceProductDimensionTransfer
             );

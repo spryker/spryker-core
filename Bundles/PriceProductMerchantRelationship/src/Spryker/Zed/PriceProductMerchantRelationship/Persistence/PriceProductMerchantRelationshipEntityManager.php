@@ -28,7 +28,7 @@ class PriceProductMerchantRelationshipEntityManager extends AbstractEntityManage
         SpyPriceProductMerchantRelationshipEntityTransfer $SpyPriceProductMerchantRelationshipEntityTransfer
     ): EntityTransferInterface {
         $entity = $this->getFactory()->createPriceProductMerchantRelationshipQuery()
-            ->filterByFkCompanyBusinessUnit($SpyPriceProductMerchantRelationshipEntityTransfer->getFkCompanyBusinessUnit())
+            ->filterByFkMerchantRelationship($SpyPriceProductMerchantRelationshipEntityTransfer->getFkMerchantRelationship())
             ->filterByFkPriceProductStore($SpyPriceProductMerchantRelationshipEntityTransfer->getFkPriceProductStore())
             ->filterByFkProductAbstract($SpyPriceProductMerchantRelationshipEntityTransfer->getFkProductAbstract())
             ->filterByFkProduct($SpyPriceProductMerchantRelationshipEntityTransfer->getFkProduct())
@@ -50,13 +50,13 @@ class PriceProductMerchantRelationshipEntityManager extends AbstractEntityManage
         int $idMerchantRelationship
     ): void {
 
-        $priceProductBusinessUnitEnitity = $this->getFactory()->createPriceProductMerchantRelationshipQuery()
-            ->filterByFkCompanyBusinessUnit($idMerchantRelationship)
+        $priceProductMerchantRelationshipEnitity = $this->getFactory()->createPriceProductMerchantRelationshipQuery()
+            ->filterByFkMerchantRelationship($idMerchantRelationship)
             ->filterByFkPriceProductStore($idPriceProductStore)
             ->findOne();
 
-        if ($priceProductBusinessUnitEnitity) {
-            $priceProductBusinessUnitEnitity->delete();
+        if ($priceProductMerchantRelationshipEnitity) {
+            $priceProductMerchantRelationshipEnitity->delete();
         }
     }
 
@@ -68,12 +68,12 @@ class PriceProductMerchantRelationshipEntityManager extends AbstractEntityManage
     public function deleteByIdMerchantRelationship(int $idMerchantRelationship): void
     {
 
-        $priceProductBusinessUnitEntities = $this->getFactory()
+        $priceProductMerchantRelationshipEntities = $this->getFactory()
             ->createPriceProductMerchantRelationshipQuery()
-            ->filterByFkCompanyBusinessUnit($idMerchantRelationship)
+            ->filterByFkMerchantRelationship($idMerchantRelationship)
             ->find();
 
-        $this->deleteEntitiesAndTriggerEvents($priceProductBusinessUnitEntities);
+        $this->deleteEntitiesAndTriggerEvents($priceProductMerchantRelationshipEntities);
     }
 
     /**
@@ -81,22 +81,22 @@ class PriceProductMerchantRelationshipEntityManager extends AbstractEntityManage
      */
     public function deleteAll(): void
     {
-        $priceProductBusinessUnitEntities = $this->getFactory()
+        $priceProductMerchantRelationshipEntities = $this->getFactory()
             ->createPriceProductMerchantRelationshipQuery()
             ->find();
 
-        $this->deleteEntitiesAndTriggerEvents($priceProductBusinessUnitEntities);
+        $this->deleteEntitiesAndTriggerEvents($priceProductMerchantRelationshipEntities);
     }
 
     /**
-     * @param \Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationship[] $priceProductBusinessUnitEntities
+     * @param \Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationship[] $priceProductMerchantRelationshipEntities
      *
      * @return void
      */
-    protected function deleteEntitiesAndTriggerEvents(Traversable $priceProductBusinessUnitEntities): void
+    protected function deleteEntitiesAndTriggerEvents($priceProductMerchantRelationshipEntities): void
     {
-        foreach ($priceProductBusinessUnitEntities as $priceProductBusinessUnitEntity) {
-            $priceProductBusinessUnitEntity->delete();
+        foreach ($priceProductMerchantRelationshipEntities as $priceProductMerchantRelationshipEntity) {
+            $priceProductMerchantRelationshipEntity->delete();
         }
     }
 }

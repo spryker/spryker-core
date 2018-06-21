@@ -41,19 +41,19 @@ interface PriceProductMerchantRelationshipFacadeInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
-    public function savePriceProductBusinessUnit(PriceProductTransfer $priceProductTransfer): PriceProductTransfer;
+    public function savePriceProductMerchantRelationship(PriceProductTransfer $priceProductTransfer): PriceProductTransfer;
 
     /**
      * Specification:
-     *  - Deletes connection records between spy_price_product_store and spy_price_product_business_unit by idCompanyBusinessUnit
+     *  - Deletes connection records between spy_price_product_store and spy_price_product_business_unit by idMerchantRelationship
      *
      * @api
      *
-     * @param int $idCompanyBusinessUnit
+     * @param int $idMerchantRelationship
      *
      * @return void
      */
-    public function deletePriceProductBusinessUnitByIdBusinessUnit(int $idCompanyBusinessUnit): void;
+    public function deletePriceProductMerchantRelationshipByIdMerchantRelationship(int $idMerchantRelationship): void;
 
     /**
      * Specification:
@@ -63,5 +63,5 @@ interface PriceProductMerchantRelationshipFacadeInterface
      *
      * @return void
      */
-    public function deleteAllPriceProductBusinessUnit(): void;
+    public function deleteAllPriceProductMerchantRelationship(): void;
 }

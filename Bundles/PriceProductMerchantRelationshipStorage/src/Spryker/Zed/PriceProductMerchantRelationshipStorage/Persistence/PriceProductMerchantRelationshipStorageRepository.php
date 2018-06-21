@@ -128,15 +128,15 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
         }
 
         $query->where($whereGroups, Criteria::LOGICAL_OR);
-        $PriceProductMerchantRelationshipStorageEntityCollection = $query->find();
+        $priceProductMerchantRelationshipStorageEntityCollection = $query->find();
 
-        $PriceProductMerchantRelationshipStorageEntityMap = [];
-        foreach ($PriceProductMerchantRelationshipStorageEntityCollection as $PriceProductMerchantRelationshipStorageEntity) {
-            $identifier = $PriceProductMerchantRelationshipStorageEntity->getPriceKey();
-            $PriceProductMerchantRelationshipStorageEntityMap[$identifier] = $PriceProductMerchantRelationshipStorageEntity;
+        $priceProductMerchantRelationshipStorageEntityMap = [];
+        foreach ($priceProductMerchantRelationshipStorageEntityCollection as $priceProductMerchantRelationshipStorageEntity) {
+            $identifier = $priceProductMerchantRelationshipStorageEntity->getPriceKey();
+            $priceProductMerchantRelationshipStorageEntityMap[$identifier] = $priceProductMerchantRelationshipStorageEntity;
         }
 
-        return $PriceProductMerchantRelationshipStorageEntityMap;
+        return $priceProductMerchantRelationshipStorageEntityMap;
     }
 
     /**
@@ -173,17 +173,17 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
             $whereGroups[] = $combineConditionName;
         }
 
-        $PriceProductMerchantRelationshipStorageEntityCollection = $query
+        $priceProductMerchantRelationshipStorageEntityCollection = $query
             ->where($whereGroups, Criteria::LOGICAL_OR)
             ->find();
 
-        $PriceProductMerchantRelationshipStorageEntityMap = [];
-        foreach ($PriceProductMerchantRelationshipStorageEntityCollection as $PriceProductMerchantRelationshipStorageEntity) {
-            $identifier = $PriceProductMerchantRelationshipStorageEntity->getPriceKey();
-            $PriceProductMerchantRelationshipStorageEntityMap[$identifier] = $PriceProductMerchantRelationshipStorageEntity;
+        $priceProductMerchantRelationshipStorageEntityMap = [];
+        foreach ($priceProductMerchantRelationshipStorageEntityCollection as $priceProductMerchantRelationshipStorageEntity) {
+            $identifier = $priceProductMerchantRelationshipStorageEntity->getPriceKey();
+            $priceProductMerchantRelationshipStorageEntityMap[$identifier] = $priceProductMerchantRelationshipStorageEntity;
         }
 
-        return $PriceProductMerchantRelationshipStorageEntityMap;
+        return $priceProductMerchantRelationshipStorageEntityMap;
     }
 
     /**

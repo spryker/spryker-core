@@ -32,7 +32,7 @@ class PriceProductMerchantRelationshipFacade extends AbstractFacade implements P
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
     ): ?MoneyValueTransfer {
         return $this->getFactory()
-            ->createBusinessUnitPriceDecision()
+            ->createMerchantRelationshipPriceDecision()
             ->matchValue($priceProductStoreEntityTransferCollection, $priceProductCriteriaTransfer);
     }
 
@@ -45,10 +45,10 @@ class PriceProductMerchantRelationshipFacade extends AbstractFacade implements P
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
-    public function savePriceProductBusinessUnit(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
+    public function savePriceProductMerchantRelationship(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
     {
         return $this->getFactory()
-            ->createBusinessUnitPriceWriter()
+            ->createMerchantRelationshipPriceWriter()
             ->save($priceProductTransfer);
     }
 
@@ -57,15 +57,15 @@ class PriceProductMerchantRelationshipFacade extends AbstractFacade implements P
      *
      * @api
      *
-     * @param int $idCompanyBusinessUnit
+     * @param int $idMerchantRelationship
      *
      * @return void
      */
-    public function deletePriceProductBusinessUnitByIdBusinessUnit(int $idCompanyBusinessUnit): void
+    public function deletePriceProductMerchantRelationshipByIdMerchantRelationship(int $idMerchantRelationship): void
     {
         $this->getFactory()
-            ->createBusinessUnitPriceWriter()
-            ->deleteByIdBusinessUnit($idCompanyBusinessUnit);
+            ->createMerchantRelationshipPriceWriter()
+            ->deleteByIdMerchantRelationship($idMerchantRelationship);
     }
 
     /**
@@ -75,10 +75,10 @@ class PriceProductMerchantRelationshipFacade extends AbstractFacade implements P
      *
      * @return void
      */
-    public function deleteAllPriceProductBusinessUnit(): void
+    public function deleteAllPriceProductMerchantRelationship(): void
     {
         $this->getFactory()
-            ->createBusinessUnitPriceWriter()
+            ->createMerchantRelationshipPriceWriter()
             ->deleteAll();
     }
 }

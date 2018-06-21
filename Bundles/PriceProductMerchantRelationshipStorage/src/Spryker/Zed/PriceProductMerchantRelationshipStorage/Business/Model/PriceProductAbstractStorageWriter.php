@@ -11,17 +11,17 @@ use Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProduct
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProductMerchantRelationshipStorageRepository;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProductMerchantRelationshipStorageRepositoryInterface;
 
-class PriceProductAbstractPublisher implements PriceProductAbstractPublisherInterface
+class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWriterInterface
 {
     /**
      * @var \Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProductMerchantRelationshipStorageEntityManagerInterface
      */
-    protected $PriceProductMerchantRelationshipStorageEntityManager;
+    protected $priceProductMerchantRelationshipStorageEntityManager;
 
     /**
      * @var \Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProductMerchantRelationshipStorageRepositoryInterface
      */
-    protected $PriceProductMerchantRelationshipStorageRepository;
+    protected $priceProductMerchantRelationshipStorageRepository;
 
     /**
      * @var \Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\Model\PriceGrouperInterface
@@ -29,17 +29,17 @@ class PriceProductAbstractPublisher implements PriceProductAbstractPublisherInte
     protected $priceGrouper;
 
     /**
-     * @param \Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProductMerchantRelationshipStorageEntityManagerInterface $PriceProductMerchantRelationshipStorageEntityManager
-     * @param \Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProductMerchantRelationshipStorageRepositoryInterface $PriceProductMerchantRelationshipStorageRepository
+     * @param \Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProductMerchantRelationshipStorageEntityManagerInterface $priceProductMerchantRelationshipStorageEntityManager
+     * @param \Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProductMerchantRelationshipStorageRepositoryInterface $priceProductMerchantRelationshipStorageRepository
      * @param \Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\Model\PriceGrouperInterface $priceGrouper
      */
     public function __construct(
-        PriceProductMerchantRelationshipStorageEntityManagerInterface $PriceProductMerchantRelationshipStorageEntityManager,
-        PriceProductMerchantRelationshipStorageRepositoryInterface $PriceProductMerchantRelationshipStorageRepository,
+        PriceProductMerchantRelationshipStorageEntityManagerInterface $priceProductMerchantRelationshipStorageEntityManager,
+        PriceProductMerchantRelationshipStorageRepositoryInterface $priceProductMerchantRelationshipStorageRepository,
         PriceGrouperInterface $priceGrouper
     ) {
-        $this->PriceProductMerchantRelationshipStorageEntityManager = $PriceProductMerchantRelationshipStorageEntityManager;
-        $this->PriceProductMerchantRelationshipStorageRepository = $PriceProductMerchantRelationshipStorageRepository;
+        $this->priceProductMerchantRelationshipStorageEntityManager = $priceProductMerchantRelationshipStorageEntityManager;
+        $this->priceProductMerchantRelationshipStorageRepository = $priceProductMerchantRelationshipStorageRepository;
         $this->priceGrouper = $priceGrouper;
     }
 
@@ -50,26 +50,26 @@ class PriceProductAbstractPublisher implements PriceProductAbstractPublisherInte
      */
     public function publish(array $priceProductStoreIds): void
     {
-        $abstractProducts = $this->PriceProductMerchantRelationshipStorageRepository
+        $abstractProducts = $this->priceProductMerchantRelationshipStorageRepository
             ->findPriceProductStoreListByIdsForAbstract($priceProductStoreIds);
 
-        $PriceProductMerchantRelationshipStorageTransferCollection = $this->priceGrouper->getGroupedPrices(
+        $priceProductMerchantRelationshipStorageTransferCollection = $this->priceGrouper->getGroupedPrices(
             $abstractProducts,
             PriceProductMerchantRelationshipStorageRepository::COL_PRODUCT_ABSTRACT_ID_PRODUCT,
             PriceProductMerchantRelationshipStorageRepository::COL_PRODUCT_ABSTRACT_SKU
         );
 
-        if (count($PriceProductMerchantRelationshipStorageTransferCollection) === 0) {
+        if (count($priceProductMerchantRelationshipStorageTransferCollection) === 0) {
             return;
         }
 
         // if we have few prices new prices will not be published
-        $PriceProductMerchantRelationshipStorageEntityMap = $this->PriceProductMerchantRelationshipStorageRepository
+        $priceProductMerchantRelationshipStorageEntityMap = $this->priceProductMerchantRelationshipStorageRepository
             ->findExistingPriceProductAbstractMerchantRelationshipStorageEntities($abstractProducts);
 
-        $this->PriceProductMerchantRelationshipStorageEntityManager->writePriceProductAbstract(
-            $PriceProductMerchantRelationshipStorageTransferCollection,
-            $PriceProductMerchantRelationshipStorageEntityMap
+        $this->priceProductMerchantRelationshipStorageEntityManager->writePriceProductAbstract(
+            $priceProductMerchantRelationshipStorageTransferCollection,
+            $priceProductMerchantRelationshipStorageEntityMap
         );
     }
 
@@ -82,7 +82,7 @@ class PriceProductAbstractPublisher implements PriceProductAbstractPublisherInte
     {
         foreach ($merchantRelationshipAbstractProducts as $idMerchantRelationship => $idAbstractProducts) {
             foreach ($idAbstractProducts as $idProductAbstract) {
-                $this->PriceProductMerchantRelationshipStorageEntityManager
+                $this->priceProductMerchantRelationshipStorageEntityManager
                     ->deletePriceProductAbstractByMerchantRelationshipAndIdProductAbstract($idMerchantRelationship, $idProductAbstract);
             }
         }

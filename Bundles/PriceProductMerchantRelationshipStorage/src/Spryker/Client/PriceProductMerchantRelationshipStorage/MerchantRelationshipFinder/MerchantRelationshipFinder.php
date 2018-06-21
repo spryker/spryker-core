@@ -49,7 +49,7 @@ class MerchantRelationshipFinder implements MerchantRelationshipFinderInterface
         }
 
         //todo find merchant relationships by business unit
-        static::$businessUnitCache = $companyTransfer->getFkCompanyBusinessUnit();
+        static::$businessUnitCache = $companyTransfer->getFkCompanyMerchantRelationship();
 
         return static::$businessUnitCache;
     }

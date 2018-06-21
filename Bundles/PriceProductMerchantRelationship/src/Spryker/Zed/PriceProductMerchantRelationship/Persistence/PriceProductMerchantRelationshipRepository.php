@@ -29,6 +29,6 @@ class PriceProductMerchantRelationshipRepository extends AbstractRepository impl
 
         return $this->getFactory()
             ->createMerchantRelationshipPriceQueryExpander()
-            ->buildBusinessUnitPriceDimensionCriteria($priceProductCriteriaTransfer);
+            ->buildMerchantRelationshipPriceDimensionQueryCriteria($priceProductCriteriaTransfer);
     }
 }

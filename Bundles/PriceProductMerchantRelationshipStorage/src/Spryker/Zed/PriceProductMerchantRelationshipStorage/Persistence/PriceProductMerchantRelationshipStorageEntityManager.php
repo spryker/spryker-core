@@ -55,83 +55,83 @@ class PriceProductMerchantRelationshipStorageEntityManager extends AbstractEntit
     }
 
     /**
-     * @param array $PriceProductMerchantRelationshipStorageEntityMap
+     * @param array $priceProductMerchantRelationshipStorageEntityMap
      * @param string $priceKey
      * @param string $priceProductStorageEntityClass
      *
      * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface|\Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductAbstractMerchantRelationshipStorage|\Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorage
      */
     protected function getPriceProductMerchantRelationshipStorageEntity(
-        array $PriceProductMerchantRelationshipStorageEntityMap,
+        array $priceProductMerchantRelationshipStorageEntityMap,
         string $priceKey,
         string $priceProductStorageEntityClass
     ): ActiveRecordInterface {
 
-        if (isset($PriceProductMerchantRelationshipStorageEntityMap[$priceKey])) {
-            return $PriceProductMerchantRelationshipStorageEntityMap[$priceKey];
+        if (isset($priceProductMerchantRelationshipStorageEntityMap[$priceKey])) {
+            return $priceProductMerchantRelationshipStorageEntityMap[$priceKey];
         }
 
         return new $priceProductStorageEntityClass();
     }
 
     /**
-     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $PriceProductMerchantRelationshipStorageEntity
+     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $priceProductMerchantRelationshipStorageEntity
      * @param int $idProduct
      *
      * @return void
      */
     protected function setProductForeignKey(
-        ActiveRecordInterface $PriceProductMerchantRelationshipStorageEntity,
+        ActiveRecordInterface $priceProductMerchantRelationshipStorageEntity,
         int $idProduct
     ): void {
 
-        if ($PriceProductMerchantRelationshipStorageEntity instanceof SpyPriceProductConcreteMerchantRelationshipStorage) {
-            $PriceProductMerchantRelationshipStorageEntity->setFkProduct($idProduct);
+        if ($priceProductMerchantRelationshipStorageEntity instanceof SpyPriceProductConcreteMerchantRelationshipStorage) {
+            $priceProductMerchantRelationshipStorageEntity->setFkProduct($idProduct);
             return;
         }
 
-        if ($PriceProductMerchantRelationshipStorageEntity instanceof SpyPriceProductAbstractMerchantRelationshipStorage) {
-            $PriceProductMerchantRelationshipStorageEntity->setFkProductAbstract($idProduct);
+        if ($priceProductMerchantRelationshipStorageEntity instanceof SpyPriceProductAbstractMerchantRelationshipStorage) {
+            $priceProductMerchantRelationshipStorageEntity->setFkProductAbstract($idProduct);
         }
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[] $PriceProductMerchantRelationshipStorageTransferCollection
+     * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[] $priceProductMerchantRelationshipStorageTransferCollection
      * @param array $existingPriceProductMerchantRelationshipStorageEntityMap
      * @param string $priceProductStorageEntityClass
      *
      * @return void
      */
     protected function writePriceProductMerchantRelationshipStorage(
-        array $PriceProductMerchantRelationshipStorageTransferCollection,
+        array $priceProductMerchantRelationshipStorageTransferCollection,
         array $existingPriceProductMerchantRelationshipStorageEntityMap,
         string $priceProductStorageEntityClass
     ): void {
-        foreach ($PriceProductMerchantRelationshipStorageTransferCollection as $PriceProductMerchantRelationshipStorageTransfer) {
-            $priceKey = $this->buildPriceKey($PriceProductMerchantRelationshipStorageTransfer);
+        foreach ($priceProductMerchantRelationshipStorageTransferCollection as $priceProductMerchantRelationshipStorageTransfer) {
+            $priceKey = $this->buildPriceKey($priceProductMerchantRelationshipStorageTransfer);
 
-            $PriceProductMerchantRelationshipStorageEntity = $this->getPriceProductMerchantRelationshipStorageEntity(
+            $priceProductMerchantRelationshipStorageEntity = $this->getPriceProductMerchantRelationshipStorageEntity(
                 $existingPriceProductMerchantRelationshipStorageEntityMap,
                 $priceKey,
                 $priceProductStorageEntityClass
             );
 
-            if (!$PriceProductMerchantRelationshipStorageTransfer->getPrices()) {
-                if (!$PriceProductMerchantRelationshipStorageEntity->isNew()) {
-                    $PriceProductMerchantRelationshipStorageEntity->delete();
+            if (!$priceProductMerchantRelationshipStorageTransfer->getPrices()) {
+                if (!$priceProductMerchantRelationshipStorageEntity->isNew()) {
+                    $priceProductMerchantRelationshipStorageEntity->delete();
                 }
                 continue;
             }
 
-            $PriceProductMerchantRelationshipStorageEntity
+            $priceProductMerchantRelationshipStorageEntity
                 ->setPriceKey($priceKey)
-                ->setFkMerchantRelationship($PriceProductMerchantRelationshipStorageTransfer->getIdMerchantRelationship())
-                ->setData($PriceProductMerchantRelationshipStorageTransfer->getPrices())
+                ->setFkMerchantRelationship($priceProductMerchantRelationshipStorageTransfer->getIdMerchantRelationship())
+                ->setData($priceProductMerchantRelationshipStorageTransfer->getPrices())
                 ->setIsSendingToQueue(true);
 
-            $this->setProductForeignKey($PriceProductMerchantRelationshipStorageEntity, $PriceProductMerchantRelationshipStorageTransfer->getIdProduct());
+            $this->setProductForeignKey($priceProductMerchantRelationshipStorageEntity, $priceProductMerchantRelationshipStorageTransfer->getIdProduct());
 
-            $PriceProductMerchantRelationshipStorageEntity->save();
+            $priceProductMerchantRelationshipStorageEntity->save();
         }
     }
 
@@ -180,16 +180,16 @@ class PriceProductMerchantRelationshipStorageEntityManager extends AbstractEntit
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer $PriceProductMerchantRelationshipStorageTransfer
+     * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer
      *
      * @return string
      */
-    protected function buildPriceKey(PriceProductMerchantRelationshipStorageTransfer $PriceProductMerchantRelationshipStorageTransfer): string
+    protected function buildPriceKey(PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer): string
     {
         return implode(':', [
-            $PriceProductMerchantRelationshipStorageTransfer->getStoreName(),
-            $PriceProductMerchantRelationshipStorageTransfer->getIdProduct(),
-            $PriceProductMerchantRelationshipStorageTransfer->getIdMerchantRelationship(),
+            $priceProductMerchantRelationshipStorageTransfer->getStoreName(),
+            $priceProductMerchantRelationshipStorageTransfer->getIdProduct(),
+            $priceProductMerchantRelationshipStorageTransfer->getIdMerchantRelationship(),
         ]);
     }
 }
