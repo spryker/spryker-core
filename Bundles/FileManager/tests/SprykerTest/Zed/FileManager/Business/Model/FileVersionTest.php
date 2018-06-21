@@ -10,8 +10,8 @@ namespace SprykerTest\Zed\FileManager\Business\Model;
 use Codeception\Test\Unit;
 use Orm\Zed\FileManager\Persistence\SpyFile;
 use Orm\Zed\FileManager\Persistence\SpyFileInfo;
-use Spryker\Zed\FileManager\Business\Model\FileLoaderInterface;
 use Spryker\Zed\FileManager\Business\Model\FileVersion;
+use Spryker\Zed\FileManager\Persistence\FileManagerRepositoryInterface;
 
 /**
  * Auto-generated group annotations
@@ -41,9 +41,9 @@ class FileVersionTest extends Unit
     /**
      * @return \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface
      */
-    protected function createFileFinderMock()
+    protected function createFileManagerRepositoryMock()
     {
-        return $this->getMockBuilder(FileLoaderInterface::class)->getMock();
+        return $this->getMockBuilder(FileManagerRepositoryInterface::class)->getMock();
     }
 
     /**
@@ -67,13 +67,13 @@ class FileVersionTest extends Unit
      */
     public function testGetNewVersionNumber()
     {
-        $fileFinderMock = $this->createFileFinderMock();
+        $fileManagerRepositoryMock = $this->createFileManagerRepositoryMock();
 
-        $fileFinderMock->expects($this->once())
-            ->method('getLatestFileInfoByFkFile')
+        $fileManagerRepositoryMock->expects($this->once())
+            ->method('getLatestFileInfoByIdFile')
             ->willReturn($this->getMockedFileInfo());
 
-        $fileVersion = new FileVersion($fileFinderMock);
+        $fileVersion = new FileVersion($fileManagerRepositoryMock);
 
         $this->assertEquals(2, $fileVersion->getNextVersionNumber(1));
     }
@@ -83,8 +83,8 @@ class FileVersionTest extends Unit
      */
     public function testGetNewVersionName()
     {
-        $fileFinderMock = $this->createFileFinderMock();
-        $fileVersion = new FileVersion($fileFinderMock);
+        $fileManagerRepositoryMock = $this->createFileManagerRepositoryMock();
+        $fileVersion = new FileVersion($fileManagerRepositoryMock);
 
         $this->assertEquals('v.2', $fileVersion->getNextVersionName(2));
     }

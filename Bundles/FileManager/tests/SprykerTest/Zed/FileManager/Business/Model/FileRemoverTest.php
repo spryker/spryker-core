@@ -8,13 +8,12 @@
 namespace SprykerTest\Zed\FileManager\Business\Model;
 
 use Codeception\Test\Unit;
-use Orm\Zed\FileManager\Persistence\SpyFile;
-use Orm\Zed\FileManager\Persistence\SpyFileInfo;
-use Propel\Runtime\Propel;
+use Generated\Shared\Transfer\FileInfoTransfer;
+use Generated\Shared\Transfer\FileTransfer;
 use Spryker\Zed\FileManager\Business\Model\FileContentInterface;
-use Spryker\Zed\FileManager\Business\Model\FileLoaderInterface;
 use Spryker\Zed\FileManager\Business\Model\FileRemover;
-use Spryker\Zed\FileManager\Persistence\FileManagerQueryContainer;
+use Spryker\Zed\FileManager\Persistence\FileManagerEntityManagerInterface;
+use Spryker\Zed\FileManager\Persistence\FileManagerRepositoryInterface;
 
 /**
  * Auto-generated group annotations
@@ -40,17 +39,17 @@ class FileRemoverTest extends Unit
     /**
      * @return \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface
      */
-    protected function createFileFinderMock()
+    protected function createFileRepositoryMock()
     {
-        return $this->getMockBuilder(FileLoaderInterface::class)->getMock();
+        return $this->getMockBuilder(FileManagerRepositoryInterface::class)->getMock();
     }
 
     /**
-     * @return \Spryker\Zed\FileManager\Persistence\FileManagerQueryContainer
+     * @return \Spryker\Zed\FileManager\Persistence\FileManagerEntityManagerInterface
      */
-    protected function createFileManagerQueryContainerMock()
+    protected function createFileManagerEntityManagerMock()
     {
-        return $this->getMockBuilder(FileManagerQueryContainer::class)->getMock();
+        return $this->getMockBuilder(FileManagerEntityManagerInterface::class)->getMock();
     }
 
     /**
@@ -58,11 +57,11 @@ class FileRemoverTest extends Unit
      */
     protected function getMockedFile()
     {
-        $file = new SpyFile();
-        $file->setFileName('test.txt');
-        $file->setIdFile(1);
+        $fileTransfer = new FileTransfer();
+        $fileTransfer->setFileName('test.txt');
+        $fileTransfer->setIdFile(1);
 
-        return $file;
+        return $fileTransfer;
     }
 
     /**
@@ -70,15 +69,14 @@ class FileRemoverTest extends Unit
      */
     protected function getMockedFileInfo()
     {
-        $fileInfo = new SpyFileInfo();
-        $fileInfo->setExtension('txt');
-        $fileInfo->setVersionName('v. 1');
-        $fileInfo->setVersion(1);
-        $fileInfo->setSize(1024);
-        $fileInfo->setStorageFileName('report.txt');
-        $fileInfo->setFile($this->getMockedFile());
+        $fileInfoTransfer = new FileInfoTransfer();
+        $fileInfoTransfer->setExtension('txt');
+        $fileInfoTransfer->setVersionName('v. 1');
+        $fileInfoTransfer->setVersion(1);
+        $fileInfoTransfer->setSize(1024);
+        $fileInfoTransfer->setStorageFileName('report.txt');
 
-        return $fileInfo;
+        return $fileInfoTransfer;
     }
 
     /**
@@ -87,25 +85,25 @@ class FileRemoverTest extends Unit
     public function testDelete()
     {
         $fileContentMock = $this->createFileContentMock();
-        $fileFinderMock = $this->createFileFinderMock();
-        $fileManagerQueryContainerMock = $this->createFileManagerQueryContainerMock();
+        $fileRepositoryMock = $this->createFileRepositoryMock();
+        $fileManagerEntityManagerMock = $this->createFileManagerEntityManagerMock();
 
-        $fileFinderMock
-            ->method('getFile')
+        $fileRepositoryMock
+            ->method('getFileByIdFile')
             ->willReturn($this->getMockedFile());
 
         $fileContentMock
             ->method('delete')
             ->willReturn(null);
 
-        $fileManagerQueryContainerMock
-            ->method('getConnection')
-            ->willReturn(Propel::getConnection());
+        $fileManagerEntityManagerMock
+            ->method('deleteFile')
+            ->willReturn(true);
 
         $fileRemover = new FileRemover(
-            $fileFinderMock,
-            $fileContentMock,
-            $fileManagerQueryContainerMock
+            $fileRepositoryMock,
+            $fileManagerEntityManagerMock,
+            $fileContentMock
         );
 
         $this->assertTrue($fileRemover->delete(1));
@@ -117,10 +115,10 @@ class FileRemoverTest extends Unit
     public function testDeleteFileInfo()
     {
         $fileContentMock = $this->createFileContentMock();
-        $fileFinderMock = $this->createFileFinderMock();
-        $fileManagerQueryContainerMock = $this->createFileManagerQueryContainerMock();
+        $fileRepositoryMock = $this->createFileRepositoryMock();
+        $fileManagerEntityManagerMock = $this->createFileManagerEntityManagerMock();
 
-        $fileFinderMock
+        $fileRepositoryMock
             ->method('getFileInfo')
             ->willReturn($this->getMockedFileInfo());
 
@@ -128,14 +126,14 @@ class FileRemoverTest extends Unit
             ->method('delete')
             ->willReturn(null);
 
-        $fileManagerQueryContainerMock
-            ->method('getConnection')
-            ->willReturn(Propel::getConnection());
+        $fileManagerEntityManagerMock
+            ->method('deleteFileInfo')
+            ->willReturn(true);
 
         $fileRemover = new FileRemover(
-            $fileFinderMock,
-            $fileContentMock,
-            $fileManagerQueryContainerMock
+            $fileRepositoryMock,
+            $fileManagerEntityManagerMock,
+            $fileContentMock
         );
 
         $this->assertTrue($fileRemover->deleteFileInfo(1));

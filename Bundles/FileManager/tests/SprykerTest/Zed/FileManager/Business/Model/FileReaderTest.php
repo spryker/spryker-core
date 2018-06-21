@@ -8,11 +8,12 @@
 namespace SprykerTest\Zed\FileManager\Business\Model;
 
 use Codeception\Test\Unit;
-use Orm\Zed\FileManager\Persistence\SpyFile;
-use Orm\Zed\FileManager\Persistence\SpyFileInfo;
+use Generated\Shared\Transfer\FileInfoTransfer;
+use Generated\Shared\Transfer\FileManagerDataTransfer;
+use Generated\Shared\Transfer\FileTransfer;
 use Spryker\Zed\FileManager\Business\Model\FileContentInterface;
-use Spryker\Zed\FileManager\Business\Model\FileLoaderInterface;
 use Spryker\Zed\FileManager\Business\Model\FileReader;
+use Spryker\Zed\FileManager\Persistence\FileManagerRepositoryInterface;
 
 /**
  * Auto-generated group annotations
@@ -38,9 +39,9 @@ class FileReaderTest extends Unit
     /**
      * @return \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface
      */
-    protected function createFileFinderMock()
+    protected function createFileManagerRepositoryMock()
     {
-        return $this->getMockBuilder(FileLoaderInterface::class)->getMock();
+        return $this->getMockBuilder(FileManagerRepositoryInterface::class)->getMock();
     }
 
     /**
@@ -48,43 +49,44 @@ class FileReaderTest extends Unit
      */
     protected function getMockedFile()
     {
-        $file = new SpyFile();
-        $file->setFileName('test.txt');
-        $file->setIdFile(1);
+        $fileTransfer = new FileTransfer();
+        $fileTransfer->setFileName('test.txt');
+        $fileTransfer->setIdFile(1);
 
-        return $file;
+        $fileTransfer->addFileInfo($this->getMockedFileInfo());
+
+        return $fileTransfer;
     }
 
     /**
-     * @return \Orm\Zed\FileManager\Persistence\SpyFileInfo
+     * @return \Generated\Shared\Transfer\FileInfoTransfer
      */
     protected function getMockedFileInfo()
     {
-        $fileInfo = new SpyFileInfo();
-        $fileInfo->setExtension('txt');
-        $fileInfo->setVersionName('v. 1');
-        $fileInfo->setVersion(1);
-        $fileInfo->setSize(1024);
-        $fileInfo->setStorageFileName('report.txt');
-        $fileInfo->setFile($this->getMockedFile());
+        $fileInfoTransfer = new FileInfoTransfer();
+        $fileInfoTransfer->setIdFileInfo(1);
+        $fileInfoTransfer->setExtension('txt');
+        $fileInfoTransfer->setVersionName('v. 1');
+        $fileInfoTransfer->setVersion(1);
+        $fileInfoTransfer->setSize(1024);
+        $fileInfoTransfer->setStorageFileName('report.txt');
 
-        return $fileInfo;
+        return $fileInfoTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\FileManagerDataTransfer $fileInfo
+     * @param \Generated\Shared\Transfer\FileManagerDataTransfer $fileManagerDataTransfer
      *
      * @return void
      */
-    protected function assertFileInfo($fileInfo)
+    protected function assertFileInfo(FileManagerDataTransfer $fileManagerDataTransfer)
     {
-        $this->assertEquals('the content of the file', $fileInfo->getContent());
-        $this->assertEquals('test.txt', $fileInfo->getFile()->getFileName());
-        $this->assertEquals('v. 1', $fileInfo->getFileInfo()->getVersionName());
-        $this->assertEquals(1024, $fileInfo->getFileInfo()->getSize());
-        $this->assertEquals(1, $fileInfo->getFileInfo()->getVersion());
-        $this->assertEquals('txt', $fileInfo->getFileInfo()->getExtension());
-        $this->assertEquals('report.txt', $fileInfo->getFileInfo()->getStorageFileName());
+        $this->assertEquals('the content of the file', $fileManagerDataTransfer->getContent());
+        $this->assertEquals('v. 1', $fileManagerDataTransfer->getFileInfo()->getVersionName());
+        $this->assertEquals(1024, $fileManagerDataTransfer->getFileInfo()->getSize());
+        $this->assertEquals(1, $fileManagerDataTransfer->getFileInfo()->getVersion());
+        $this->assertEquals('txt', $fileManagerDataTransfer->getFileInfo()->getExtension());
+        $this->assertEquals('report.txt', $fileManagerDataTransfer->getFileInfo()->getStorageFileName());
     }
 
     /**
@@ -93,18 +95,18 @@ class FileReaderTest extends Unit
     public function testRead()
     {
         $fileContentMock = $this->createFileContentMock();
-        $fileFinderMock = $this->createFileFinderMock();
+        $fileManagerRepositoryMock = $this->createFileManagerRepositoryMock();
 
-        $fileFinderMock->expects($this->once())
-            ->method('getFileInfo')
-            ->willReturn($this->getMockedFileInfo());
+        $fileManagerRepositoryMock->expects($this->once())
+            ->method('getFileByIdFileInfo')
+            ->willReturn($this->getMockedFile());
 
         $fileContentMock
             ->method('read')
             ->willReturn('the content of the file');
 
-        $fileReader = new FileReader($fileFinderMock, $fileContentMock);
-        $this->assertFileInfo($fileReader->read(1));
+        $fileReader = new FileReader($fileManagerRepositoryMock, $fileContentMock);
+        $this->assertFileInfo($fileReader->readFileByIdFileInfo(1));
     }
 
     /**
@@ -113,17 +115,17 @@ class FileReaderTest extends Unit
     public function testReadLatestByFileId()
     {
         $fileContentMock = $this->createFileContentMock();
-        $fileFinderMock = $this->createFileFinderMock();
+        $fileManagerRepositoryMock = $this->createFileManagerRepositoryMock();
 
-        $fileFinderMock->expects($this->once())
-            ->method('getLatestFileInfoByFkFile')
+        $fileManagerRepositoryMock->expects($this->once())
+            ->method('getLatestFileInfoByIdFile')
             ->willReturn($this->getMockedFileInfo());
 
         $fileContentMock->expects($this->once())
             ->method('read')
             ->willReturn('the content of the file');
 
-        $fileReader = new FileReader($fileFinderMock, $fileContentMock);
+        $fileReader = new FileReader($fileManagerRepositoryMock, $fileContentMock);
         $this->assertFileInfo($fileReader->readLatestByFileId(1));
     }
 }

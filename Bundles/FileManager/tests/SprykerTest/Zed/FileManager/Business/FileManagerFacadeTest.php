@@ -259,15 +259,15 @@ class FileManagerFacadeTest extends Unit
      */
     public function testRead()
     {
-        $fileTransfer = $this->facade->readFile(1);
-        $this->assertEquals('first version of the file', $fileTransfer->getContent());
-        $this->assertEquals('customer.txt', $fileTransfer->getFile()->getFileName());
-        $this->assertEquals(1, $fileTransfer->getFile()->getIdFile());
-        $this->assertEquals('customer_v1.txt', $fileTransfer->getFileInfo()->getStorageFileName());
-        $this->assertEquals('txt', $fileTransfer->getFileInfo()->getExtension());
-        $this->assertEquals('1', $fileTransfer->getFileInfo()->getVersion());
-        $this->assertEquals('v. 1', $fileTransfer->getFileInfo()->getVersionName());
-        $this->assertEquals(10, $fileTransfer->getFileInfo()->getSize());
+        $fileManagerDataTransfer = $this->facade->findFileByIdFile(1);
+        $this->assertEquals('first version of the file', $fileManagerDataTransfer->getContent());
+        $this->assertEquals('customer.txt', $fileManagerDataTransfer->getFile()->getFileName());
+        $this->assertEquals(1, $fileManagerDataTransfer->getFile()->getIdFile());
+        $this->assertEquals('customer_v1.txt', $fileManagerDataTransfer->getFileInfo()->getStorageFileName());
+        $this->assertEquals('txt', $fileManagerDataTransfer->getFileInfo()->getExtension());
+        $this->assertEquals('1', $fileManagerDataTransfer->getFileInfo()->getVersion());
+        $this->assertEquals('v. 1', $fileManagerDataTransfer->getFileInfo()->getVersionName());
+        $this->assertEquals(10, $fileManagerDataTransfer->getFileInfo()->getSize());
     }
 
     /**
@@ -308,10 +308,10 @@ class FileManagerFacadeTest extends Unit
         $fileManagerDataTransfer->setFile($file);
         $fileManagerDataTransfer->setFileInfo($fileInfo);
 
-        $savedFileId = $this->facade->saveFile($fileManagerDataTransfer);
+        $fileManagerDataTransfer = $this->facade->saveFile($fileManagerDataTransfer);
         $file = SpyFileQuery::create()->findOneByFileName('newcustomer.txt');
 
-        $this->assertEquals(2, $savedFileId);
+        $this->assertEquals(2, $fileManagerDataTransfer->getFile()->getIdFile());
         $this->assertInstanceOf(SpyFile::class, $file);
     }
 
@@ -320,16 +320,14 @@ class FileManagerFacadeTest extends Unit
      */
     public function testRollback()
     {
-        $this->facade->rollbackFile(1, 1);
-        $fileTransfer = $this->facade->readLatestFileVersion(1);
-        $this->assertEquals('first version of the file', $fileTransfer->getContent());
-        $this->assertEquals('customer.txt', $fileTransfer->getFile()->getFileName());
-        $this->assertEquals(1, $fileTransfer->getFile()->getIdFile());
-        $this->assertEquals('customer_v1.txt', $fileTransfer->getFileInfo()->getStorageFileName());
-        $this->assertEquals('txt', $fileTransfer->getFileInfo()->getExtension());
-        $this->assertEquals('3', $fileTransfer->getFileInfo()->getVersion());
-        $this->assertEquals('v.3', $fileTransfer->getFileInfo()->getVersionName());
-        $this->assertEquals(10, $fileTransfer->getFileInfo()->getSize());
+        $this->facade->rollbackFile(1);
+        $fileManagerDataTransfer = $this->facade->readLatestFileVersion(1);
+        $this->assertEquals('first version of the file', $fileManagerDataTransfer->getContent());
+        $this->assertEquals('customer_v1.txt', $fileManagerDataTransfer->getFileInfo()->getStorageFileName());
+        $this->assertEquals('txt', $fileManagerDataTransfer->getFileInfo()->getExtension());
+        $this->assertEquals('3', $fileManagerDataTransfer->getFileInfo()->getVersion());
+        $this->assertEquals('v.3', $fileManagerDataTransfer->getFileInfo()->getVersionName());
+        $this->assertEquals(10, $fileManagerDataTransfer->getFileInfo()->getSize());
     }
 
     /**
@@ -362,8 +360,8 @@ class FileManagerFacadeTest extends Unit
         $fileManagerDataTransfer->setFile($file);
         $fileManagerDataTransfer->setFileInfo($fileInfo);
 
-        $fileId = $this->facade->saveFile($fileManagerDataTransfer);
-        $this->assertInternalType('int', $fileId);
+        $fileManagerDataTransfer = $this->facade->saveFile($fileManagerDataTransfer);
+        $this->assertInternalType('int', $fileManagerDataTransfer->getFile()->getIdFile());
         $this->assertFileExists($this->getDocumentFullFileName($fileDirectoryId . '/2-v.1.txt'));
     }
 
