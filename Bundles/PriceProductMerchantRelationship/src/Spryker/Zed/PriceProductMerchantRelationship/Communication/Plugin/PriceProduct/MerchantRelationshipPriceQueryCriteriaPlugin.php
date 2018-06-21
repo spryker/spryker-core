@@ -7,12 +7,11 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationship\Communication\Plugin\PriceProduct;
 
-use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
+use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Spryker\Shared\PriceProduct\PriceProductMerchantRelationshipConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PriceProduct\Dependency\Plugin\PriceDimensionQueryCriteriaPluginInterface;
-use Spryker\Zed\PriceProductMerchantRelationship\PriceProductMerchantRelationshipConfig;
 
 /**
  * @method \Spryker\Zed\PriceProductMerchantRelationship\Persistence\PriceProductMerchantRelationshipRepositoryInterface getRepository()
@@ -30,7 +29,7 @@ class MerchantRelationshipPriceQueryCriteriaPlugin extends AbstractPlugin implem
      *
      * @return \Generated\Shared\Transfer\QueryCriteriaTransfer|null
      */
-    public function buildPriceDimensionCriteria(PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?QueryCriteriaTransfer
+    public function buildPriceDimensionQueryCriteria(PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?QueryCriteriaTransfer
     {
         return $this->getRepository()->buildMerchantRelationshipPriceDimensionCriteria($priceProductCriteriaTransfer);
     }

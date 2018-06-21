@@ -150,16 +150,16 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
         $joinType = null
     ): ?QueryCriteriaTransfer {
 
-        $priceDimensionCriteriaTransfer = $priceProductDimensionQueryExpanderPlugin
-            ->buildPriceDimensionCriteria($priceProductCriteriaTransfer);
+        $priceDimensionQueryCriteriaTransfer = $priceProductDimensionQueryExpanderPlugin
+            ->buildPriceDimensionQueryCriteria($priceProductCriteriaTransfer);
 
-        if (!$priceDimensionCriteriaTransfer) {
+        if (!$priceDimensionQueryCriteriaTransfer) {
             return null;
         }
-        $this->addJoin($priceProductStoreQuery, $priceDimensionCriteriaTransfer, $joinType);
-        $this->addWithColumns($priceProductStoreQuery, $priceDimensionCriteriaTransfer);
+        $this->addJoin($priceProductStoreQuery, $priceDimensionQueryCriteriaTransfer, $joinType);
+        $this->addWithColumns($priceProductStoreQuery, $priceDimensionQueryCriteriaTransfer);
 
-        return $priceDimensionCriteriaTransfer;
+        return $priceDimensionQueryCriteriaTransfer;
     }
 
     /**

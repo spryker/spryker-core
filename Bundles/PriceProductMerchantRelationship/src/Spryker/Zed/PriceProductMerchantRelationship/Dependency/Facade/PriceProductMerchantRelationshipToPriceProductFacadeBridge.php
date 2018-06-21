@@ -7,9 +7,7 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationship\Dependency\Facade;
 
-use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
-use Generated\Shared\Transfer\SpyPriceProductStoreEntityTransfer;
 
 class PriceProductMerchantRelationshipToPriceProductFacadeBridge implements PriceProductMerchantRelationshipToPriceProductFacadeInterface
 {

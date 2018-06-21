@@ -9,27 +9,20 @@ namespace Spryker\Service\PriceProductMerchantRelationship\Plugin;
 
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Service\Kernel\AbstractPlugin;
 use Spryker\Service\PriceProduct\Dependency\Plugin\PriceProductDecisionPluginInterface;
 
-/**
- * @method \Spryker\Zed\PriceProductMerchantRelationship\Business\PriceProductMerchantRelationshipFacadeInterface getFacade()
- * @method \Spryker\Zed\PriceProductMerchantRelationship\Communication\PriceProductMerchantRelationshipCommunicationFactory getFactory()
- */
 class MerchantRelationshipPriceDecisionPlugin extends AbstractPlugin implements PriceProductDecisionPluginInterface
 {
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\SpyPriceProductStoreEntityTransfer[] $priceProductStoreEntityTransferCollection
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransferCollection
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MoneyValueTransfer|null
      */
-    public function matchValue(array $priceProductStoreEntityTransferCollection, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?MoneyValueTransfer
+    public function matchValue(array $priceProductTransferCollection, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?MoneyValueTransfer
     {
-        return $this->getFacade()->matchValue($priceProductStoreEntityTransferCollection, $priceProductCriteriaTransfer);
+        //TODO implement logic from BusinessUnitPriceDimensionDecision  but using $priceProductTransferCollection
+        return null;
     }
 }

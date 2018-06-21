@@ -9,7 +9,6 @@ namespace Spryker\Zed\PriceProductMerchantRelationship;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\PriceProductMerchantRelationship\Dependency\Facade\PriceProductMerchantRelationshipToCompanyBusinessUnitFacadeBridge;
 use Spryker\Zed\PriceProductMerchantRelationship\Dependency\Facade\PriceProductMerchantRelationshipToPriceProductFacadeBridge;
 
 class PriceProductMerchantRelationshipDependencyProvider extends AbstractBundleDependencyProvider

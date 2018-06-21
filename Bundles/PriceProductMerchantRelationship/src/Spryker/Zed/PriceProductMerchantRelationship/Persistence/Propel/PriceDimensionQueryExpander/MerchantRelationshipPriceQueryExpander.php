@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationship\Persistence\Propel\PriceDimensionQueryExpander;
 
-use Generated\Shared\Transfer\QueryCriteriaTransfer;
-use Generated\Shared\Transfer\QueryJoinTransfer;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
+use Generated\Shared\Transfer\QueryCriteriaTransfer;
+use Generated\Shared\Transfer\QueryJoinTransfer;
 use Orm\Zed\PriceProductMerchantRelationship\Persistence\Map\SpyPriceProductMerchantRelationshipTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 

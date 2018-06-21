@@ -23,7 +23,7 @@ interface PriceDimensionQueryCriteriaPluginInterface
      *
      * @return \Generated\Shared\Transfer\QueryCriteriaTransfer|null
      */
-    public function buildPriceDimensionCriteria(
+    public function buildPriceDimensionQueryCriteria(
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
     ): ?QueryCriteriaTransfer;
 

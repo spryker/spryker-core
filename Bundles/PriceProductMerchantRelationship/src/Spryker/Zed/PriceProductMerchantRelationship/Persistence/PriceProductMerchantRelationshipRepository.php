@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationship\Persistence;
 
-use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
+use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
