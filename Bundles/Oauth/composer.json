@@ -1,0 +1,34 @@
+{
+  "name": "spryker/oauth",
+  "description": "Oauth module",
+  "license": "proprietary",
+  "require": {
+    "spryker/kernel": "^3.0.0",
+    "spryker/zed-request": "^3.0.0",
+    "league/oauth2-server": "^7.1"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}
