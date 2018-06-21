@@ -43,7 +43,7 @@ class OauthFacade extends AbstractFacade implements OauthFacadeInterface
      * {@inheritdoc}
      *
      * @param \Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer
-     *
+     *BundleConfigResolver
      * @return \Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer
      */
     public function validateAccessToken(OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer): OauthAccessTokenValidationResponseTransfer
@@ -58,7 +58,7 @@ class OauthFacade extends AbstractFacade implements OauthFacadeInterface
      *
      * @param \Generated\Shared\Transfer\SpyOauthScopeEntityTransfer $spyOauthScopeEntityTransfer
      *
-     * @return \Generated\Shared\Transfer\SpyOauthScopeEntityTransfer|\Spryker\Shared\Kernel\Transfer\EntityTransferInterface
+     * @return \Generated\Shared\Transfer\SpyOauthScopeEntityTransfer
      */
     public function saveScope(SpyOauthScopeEntityTransfer $spyOauthScopeEntityTransfer): SpyOauthScopeEntityTransfer
     {
@@ -72,7 +72,7 @@ class OauthFacade extends AbstractFacade implements OauthFacadeInterface
      *
      * @param \Generated\Shared\Transfer\SpyOauthClientEntityTransfer $spyOauthClientEntityTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\EntityTransferInterface|\Generated\Shared\Transfer\SpyOauthClientEntityTransfer
+     * @return \Generated\Shared\Transfer\SpyOauthClientEntityTransfer
      */
     public function saveClient(SpyOauthClientEntityTransfer $spyOauthClientEntityTransfer): SpyOauthClientEntityTransfer
     {

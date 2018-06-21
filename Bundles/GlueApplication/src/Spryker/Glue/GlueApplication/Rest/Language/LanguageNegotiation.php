@@ -7,7 +7,8 @@
 
 namespace Spryker\Glue\GlueApplication\Rest\Language;
 
-use Negotiation\AbstractNegotiator;
+use Negotiation\AcceptLanguage;
+use Negotiation\LanguageNegotiator;
 use Spryker\Glue\GlueApplication\Dependency\Client\GlueApplicationToStoreClientInterface;
 
 class LanguageNegotiation implements LanguageNegotiationInterface
@@ -24,9 +25,9 @@ class LanguageNegotiation implements LanguageNegotiationInterface
 
     /**
      * @param \Spryker\Glue\GlueApplication\Dependency\Client\GlueApplicationToStoreClientInterface $storeClient
-     * @param \Negotiation\AbstractNegotiator $negotiator
+     * @param \Negotiation\LanguageNegotiator $negotiator
      */
-    public function __construct(GlueApplicationToStoreClientInterface $storeClient, AbstractNegotiator $negotiator)
+    public function __construct(GlueApplicationToStoreClientInterface $storeClient, LanguageNegotiator $negotiator)
     {
         $this->storeClient = $storeClient;
         $this->negotiator = $negotiator;
@@ -46,11 +47,25 @@ class LanguageNegotiation implements LanguageNegotiationInterface
             return array_shift($storeLocaleCodes);
         }
 
-        $language = $this->negotiator->getBest($acceptLanguage, array_keys($storeLocaleCodes));
+        $language = $this->findAcceptLanguage($acceptLanguage, $storeLocaleCodes);
         if (!$language) {
             return array_shift($storeLocaleCodes);
         }
 
         return $storeLocaleCodes[$language->getType()];
+    }
+
+    /**
+     * @param string $acceptLanguage
+     * @param array $storeLocaleCodes
+     *
+     * @return \Negotiation\AcceptLanguage|null
+     */
+    protected function findAcceptLanguage(string $acceptLanguage, array $storeLocaleCodes): ?AcceptLanguage
+    {
+        /* @var $accepteLanguage \Negotiation\AcceptLanguage  */
+        $accepteLanguage = $this->negotiator->getBest($acceptLanguage, array_keys($storeLocaleCodes));
+
+        return $accepteLanguage;
     }
 }

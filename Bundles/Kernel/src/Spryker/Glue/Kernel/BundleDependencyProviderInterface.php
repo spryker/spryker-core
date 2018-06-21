@@ -10,9 +10,9 @@ namespace Spryker\Glue\Kernel;
 interface BundleDependencyProviderInterface
 {
     /**
-     * @param \Spryker\Yves\Kernel\Container $container
+     * @param \Spryker\Glue\Kernel\Container $container
      *
-     * @return \Spryker\Yves\Kernel\Container
+     * @return \Spryker\Glue\Kernel\Container
      */
     public function provideDependencies(Container $container);
 }

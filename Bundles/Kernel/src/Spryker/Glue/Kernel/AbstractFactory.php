@@ -81,7 +81,7 @@ abstract class AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\Kernel\Container|\Spryker\Shared\Kernel\ContainerInterface
+     * @return \Spryker\Glue\Kernel\Container
      */
     protected function createContainerWithProvidedDependencies()
     {
@@ -90,6 +90,7 @@ abstract class AbstractFactory
 
         $container = $this->provideDependencies($dependencyProvider, $container);
 
+        /** @var \Spryker\Glue\Kernel\Container $container */
         $container = $this->overwriteForTesting($container);
 
         return $container;

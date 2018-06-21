@@ -30,7 +30,7 @@ class AbstractRestResource
     }
 
     /**
-     * @return \Spryker\Glue\Kernel\ClassResolver\Factory\FactoryResolver
+     * @return \Spryker\Glue\Kernel\AbstractFactory
      */
     protected function getFactory()
     {
@@ -42,7 +42,7 @@ class AbstractRestResource
     }
 
     /**
-     * @return \Spryker\Glue\Kernel\ClassResolver\Factory\FactoryResolver
+     * @return \Spryker\Glue\Kernel\AbstractFactory
      */
     private function resolveFactory()
     {

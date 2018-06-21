@@ -31,7 +31,7 @@ class OauthStub implements OauthStubInterface
     /**
      * @param \Generated\Shared\Transfer\OauthRequestTransfer $oauthRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\OauthResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\OauthResponseTransfer
      */
     public function processAccessTokenRequest(OauthRequestTransfer $oauthRequestTransfer): OauthResponseTransfer
     {
@@ -41,7 +41,7 @@ class OauthStub implements OauthStubInterface
     /**
      * @param \Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @return \Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer
      */
     public function validateAccessToken(OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer): OauthAccessTokenValidationResponseTransfer
     {

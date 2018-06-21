@@ -24,7 +24,11 @@ class FactoryResolver extends AbstractClassResolver
     {
         $this->setCallerClass($callerClass);
         if ($this->canResolve()) {
-            return $this->getResolvedClassInstance();
+
+            /** @var \Spryker\Glue\Kernel\AbstractFactory $class */
+            $class = $this->getResolvedClassInstance();
+
+            return $class;
         }
 
         throw new FactoryNotFoundException($this->getClassInfo());

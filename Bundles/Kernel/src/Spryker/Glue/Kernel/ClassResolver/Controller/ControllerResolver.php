@@ -8,6 +8,7 @@
 namespace Spryker\Glue\Kernel\ClassResolver\Controller;
 
 use Spryker\Shared\Kernel\ClassResolver\Controller\AbstractControllerResolver;
+use Spryker\Shared\Kernel\Communication\BundleControllerActionInterface;
 
 class ControllerResolver extends AbstractControllerResolver
 {
@@ -19,5 +20,17 @@ class ControllerResolver extends AbstractControllerResolver
     protected function getClassNamePattern()
     {
         return self::CLASS_NAME_PATTERN;
+    }
+
+    /**
+     * @param \Spryker\Shared\Kernel\Communication\BundleControllerActionInterface $bundleControllerAction
+     *
+     * @throws \Spryker\Shared\Kernel\ClassResolver\Controller\ControllerNotFoundException
+     *
+     * @return object|\Spryker\Glue\Kernel\Controller\AbstractController
+     */
+    public function resolve(BundleControllerActionInterface $bundleControllerAction)
+    {
+        return parent::resolve($bundleControllerAction);
     }
 }

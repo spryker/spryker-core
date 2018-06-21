@@ -13,6 +13,7 @@ use Spryker\Glue\GlueApplication\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Glue\GlueApplication\Dependency\Plugin\ResourceVersionableInterface;
 use Spryker\Glue\GlueApplication\Dependency\Plugin\ResourceWithParentPluginInterface;
 use Spryker\Glue\GlueApplication\Rest\Version\VersionResolverInterface;
+use Spryker\Glue\Kernel\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Request;
 
 class ResourceRouteLoader implements ResourceRouteLoaderInterface
@@ -60,7 +61,7 @@ class ResourceRouteLoader implements ResourceRouteLoaderInterface
 
         $resourceConfiguration = [
             RequestConstantsInterface::ATTRIBUTE_TYPE => $resourceType,
-            RequestConstantsInterface::ATTRIBUTE_MODULE => $resourcePlugin->getModuleName(),
+            RequestConstantsInterface::ATTRIBUTE_MODULE => $this->getModuleName($resourcePlugin),
             RequestConstantsInterface::ATTRIBUTE_CONTROLLER => $resourcePlugin->getController(),
             RequestConstantsInterface::ATTRIBUTE_CONFIGURATION => $resourceRouteCollection->get($method),
             RequestConstantsInterface::ATTRIBUTE_RESOURCE_FQCN => $resourcePlugin->getResourceAttributesClassName(),
@@ -179,11 +180,11 @@ class ResourceRouteLoader implements ResourceRouteLoaderInterface
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Dependency\Plugin\ResourceRoutePluginInterface[] $resourcePlugins
+     * @param \Spryker\Glue\GlueApplication\Dependency\Plugin\ResourceRoutePluginInterface[]|\Spryker\Glue\GlueApplication\Dependency\Plugin\ResourceVersionableInterface[] $resourcePlugins
      *
-     * @return null|\Spryker\Glue\GlueApplication\Dependency\Plugin\ResourceVersionableInterface|\Spryker\Glue\GlueApplication\Dependency\Plugin\ResourceRoutePluginInterface
+     * @return null|\Spryker\Glue\GlueApplication\Dependency\Plugin\ResourceRoutePluginInterface
      */
-    protected function findNewestPluginVersion(array $resourcePlugins): ?ResourceVersionableInterface
+    protected function findNewestPluginVersion(array $resourcePlugins): ?ResourceRoutePluginInterface
     {
         $newestVersionPlugin = null;
         foreach ($resourcePlugins as $resourcePlugin) {
@@ -203,5 +204,15 @@ class ResourceRouteLoader implements ResourceRouteLoaderInterface
             }
         }
         return $newestVersionPlugin;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\AbstractPlugin $resourcePlugin
+     *
+     * @return string
+     */
+    protected function getModuleName(AbstractPlugin $resourcePlugin): string
+    {
+        return $resourcePlugin->getModuleName();
     }
 }

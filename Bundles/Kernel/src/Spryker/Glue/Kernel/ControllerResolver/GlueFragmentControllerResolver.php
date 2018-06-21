@@ -43,6 +43,7 @@ class GlueFragmentControllerResolver extends SilexControllerResolver
     {
         $controllerResolver = new ControllerResolver();
 
+        /** @var \Spryker\Glue\Kernel\Controller\AbstractController $controller */
         $controller = $controllerResolver->resolve($bundleControllerAction);
         $controller->setApplication($this->app);
         $controller->initialize();

@@ -21,7 +21,7 @@ interface OauthEntityManagerInterface
      *
      * @param \Generated\Shared\Transfer\SpyOauthAccessTokenEntityTransfer $spyOauthAccessTokenEntityTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\EntityTransferInterface|\Generated\Shared\Transfer\SpyOauthAccessTokenEntityTransfer
+     * @return \Generated\Shared\Transfer\SpyOauthAccessTokenEntityTransfer
      */
     public function saveAccessToken(SpyOauthAccessTokenEntityTransfer $spyOauthAccessTokenEntityTransfer): SpyOauthAccessTokenEntityTransfer;
 
@@ -30,7 +30,7 @@ interface OauthEntityManagerInterface
      *
      * @param \Generated\Shared\Transfer\SpyOauthClientEntityTransfer $spyOauthClientEntityTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\EntityTransferInterface|\Generated\Shared\Transfer\SpyOauthClientEntityTransfer
+     * @return \Generated\Shared\Transfer\SpyOauthClientEntityTransfer
      */
     public function saveClient(SpyOauthClientEntityTransfer $spyOauthClientEntityTransfer): SpyOauthClientEntityTransfer;
 
@@ -39,7 +39,7 @@ interface OauthEntityManagerInterface
      *
      * @param \Generated\Shared\Transfer\SpyOauthScopeEntityTransfer $spyOauthScopeEntityTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\EntityTransferInterface|\Generated\Shared\Transfer\SpyOauthScopeEntityTransfer
+     * @return \Generated\Shared\Transfer\SpyOauthScopeEntityTransfer
      */
     public function saveScope(SpyOauthScopeEntityTransfer $spyOauthScopeEntityTransfer): SpyOauthScopeEntityTransfer;
 

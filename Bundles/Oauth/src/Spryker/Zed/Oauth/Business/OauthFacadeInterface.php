@@ -48,7 +48,7 @@ interface OauthFacadeInterface
      *
      * @param \Generated\Shared\Transfer\SpyOauthScopeEntityTransfer $spyOauthScopeEntityTransfer
      *
-     * @return \Generated\Shared\Transfer\SpyOauthScopeEntityTransfer|\Spryker\Shared\Kernel\Transfer\EntityTransferInterface
+     * @return \Generated\Shared\Transfer\SpyOauthScopeEntityTransfer
      */
     public function saveScope(SpyOauthScopeEntityTransfer $spyOauthScopeEntityTransfer): SpyOauthScopeEntityTransfer;
 
@@ -59,7 +59,7 @@ interface OauthFacadeInterface
      *
      * @param \Generated\Shared\Transfer\SpyOauthClientEntityTransfer $spyOauthClientEntityTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\EntityTransferInterface|\Generated\Shared\Transfer\SpyOauthClientEntityTransfer
+     * @return \Generated\Shared\Transfer\SpyOauthClientEntityTransfer
      */
     public function saveClient(SpyOauthClientEntityTransfer $spyOauthClientEntityTransfer): SpyOauthClientEntityTransfer;
 }
