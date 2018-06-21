@@ -15,7 +15,7 @@ use Spryker\Zed\MerchantRelationshipProductListGui\Dependency\Facade\MerchantRel
 class MerchantRelationshipProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_MERCHANT_RELATION = 'FACADE_MERCHANT_RELATION';
-    public const QUERY_MERCHANT_RELATION = 'QUERY_MERCHANT_RELATION';
+    public const PROPEL_QUERY_MERCHANT_RELATION = 'PROPEL_QUERY_MERCHANT_RELATION';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -51,7 +51,7 @@ class MerchantRelationshipProductListGuiDependencyProvider extends AbstractBundl
      */
     protected function addMerchantRelationQuery(Container $container): Container
     {
-        $container[static::QUERY_MERCHANT_RELATION] = function (Container $container) {
+        $container[static::PROPEL_QUERY_MERCHANT_RELATION] = function (Container $container) {
             return new SpyMerchantRelationshipQuery();
         };
 

@@ -18,8 +18,8 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_LOCALE = 'FACADE_LOCALE';
     public const FACADE_PRODUCT_LIST = 'FACADE_PRODUCT_LIST';
-    public const QUERY_CATEGORY_ATTRIBUTE = 'QUERY_CATEGORY_ATTRIBUTE';
-    public const QUERY_PRODUCT_ATTRIBUTE = 'QUERY_PRODUCT_ATTRIBUTE';
+    public const PROPEL_QUERY_CATEGORY_ATTRIBUTE = 'PROPEL_QUERY_CATEGORY_ATTRIBUTE';
+    public const PROPEL_QUERY_PRODUCT_ATTRIBUTE = 'PROPEL_QUERY_PRODUCT_ATTRIBUTE';
     public const PLUGINS_FORM_EXTENSION = 'PLUGINS_FORM_EXTENSION';
 
     /**
@@ -100,7 +100,7 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCategoryAttributeQuery(Container $container): Container
     {
-        $container[static::QUERY_CATEGORY_ATTRIBUTE] = function (Container $container) {
+        $container[static::PROPEL_QUERY_CATEGORY_ATTRIBUTE] = function (Container $container) {
             return new SpyCategoryAttributeQuery();
         };
 
@@ -114,7 +114,7 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductAttributeQuery(Container $container): Container
     {
-        $container[static::QUERY_PRODUCT_ATTRIBUTE] = function (Container $container) {
+        $container[static::PROPEL_QUERY_PRODUCT_ATTRIBUTE] = function (Container $container) {
             return new SpyProductLocalizedAttributesQuery();
         };
 

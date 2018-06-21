@@ -18,16 +18,16 @@ class ProductListGuiPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery
      */
-    public function getCategoryAttributeQuery()
+    public function getCategoryAttributePropelQuery()
     {
-        return $this->getProvidedDependency(ProductListGuiDependencyProvider::QUERY_CATEGORY_ATTRIBUTE);
+        return $this->getProvidedDependency(ProductListGuiDependencyProvider::PROPEL_QUERY_CATEGORY_ATTRIBUTE);
     }
 
     /**
      * @return \Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery
      */
-    public function getProductAttributeQuery()
+    public function getProductAttributePropelQuery()
     {
-        return $this->getProvidedDependency(ProductListGuiDependencyProvider::QUERY_PRODUCT_ATTRIBUTE);
+        return $this->getProvidedDependency(ProductListGuiDependencyProvider::PROPEL_QUERY_PRODUCT_ATTRIBUTE);
     }
 }

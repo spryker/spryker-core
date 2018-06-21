@@ -15,15 +15,15 @@ class ProductListDataProvider
     /**
      * @var \Spryker\Zed\MerchantRelationshipProductListGui\Dependency\Facade\MerchantRelationshipProductListGuiToMerchantRelationshipFacadeInterface
      */
-    protected $facade;
+    protected $merchantRelationshipFacade;
 
     /**
-     * @param \Spryker\Zed\MerchantRelationshipProductListGui\Dependency\Facade\MerchantRelationshipProductListGuiToMerchantRelationshipFacadeInterface $facade
+     * @param \Spryker\Zed\MerchantRelationshipProductListGui\Dependency\Facade\MerchantRelationshipProductListGuiToMerchantRelationshipFacadeInterface $merchantRelationshipFacade
      */
     public function __construct(
-        MerchantRelationshipProductListGuiToMerchantRelationshipFacadeInterface $facade
+        MerchantRelationshipProductListGuiToMerchantRelationshipFacadeInterface $merchantRelationshipFacade
     ) {
-        $this->facade = $facade;
+        $this->merchantRelationshipFacade = $merchantRelationshipFacade;
     }
 
     /**
@@ -33,7 +33,7 @@ class ProductListDataProvider
      */
     public function getOptions(array $options): array
     {
-        $merchantRelationTransfers = $this->facade->listMerchantRelation();
+        $merchantRelationTransfers = $this->merchantRelationshipFacade->listMerchantRelation();
 
         $merchantRelationNames = [];
         foreach ($merchantRelationTransfers as $merchantRelationTransfer) {

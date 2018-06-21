@@ -36,7 +36,7 @@ class ProductListGuiRepository extends AbstractRepository implements ProductList
     public function getAllCategoryNames(LocaleTransfer $localeTransfer): array
     {
         $categoryAttributes = $this->getFactory()
-            ->getCategoryAttributeQuery()
+            ->getCategoryAttributePropelQuery()
             ->select([
                 static::COLUMN_ID_CATEGORY,
                 static::COLUMN_CATEGORY_NAME,
@@ -65,7 +65,7 @@ class ProductListGuiRepository extends AbstractRepository implements ProductList
     public function getAllProductNames(LocaleTransfer $localeTransfer): array
     {
         $productAttributes = $this->getFactory()
-            ->getProductAttributeQuery()
+            ->getProductAttributePropelQuery()
             ->select([
                 static::COLUMN_ID_PRODUCT,
                 static::COLUMN_PRODUCT_NAME,
