@@ -74,7 +74,7 @@ class SalesToOmsBridge implements SalesToOmsInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return string[]
+     * @return \Spryker\Zed\Oms\Business\Process\EventInterface[]
      */
     public function getManualEventsByIdSalesOrder($idSalesOrder)
     {

@@ -1,0 +1,22 @@
+<td>{{ productAlternative.idProduct }}</td>
+<td>{{ productAlternative.name }}</td>
+<td>{{ productAlternative.sku }}</td>
+<td>
+    {% for category in productAlternative.categories %}
+        <p>{{ category }}</p>
+    {% endfor %}
+</td>
+<td>{{ productAlternative.type | capitalize | trans }}</td>
+<td>
+    {% if productAlternative.status %}
+        <span class="label label-info">{{ 'Active' | trans }}</span>
+    {% else %}
+        <span class="label label-danger">{{ 'Inactive' | trans }}</span>
+    {% endif %}
+</td>
+<td>
+    <a class="safe-submit btn btn-xs btn-outline btn-danger" href="{{ url('/product-alternative-gui/delete/delete-alternative', {'id-product-alternative': productAlternative.idProductAlternative}) }}">
+        <i class="fa fa-trash"></i>
+        {{ 'Delete' | trans }}
+    </a>
+</td>

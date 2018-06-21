@@ -29,7 +29,7 @@ class ProductReviewTable extends AbstractTable
     protected $localeTransfer;
 
     /**
-     * @var \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface
+     * @var \Spryker\Zed\ProductReviewGui\Dependency\Service\ProductReviewGuiToUtilDateTimeInterface
      */
     protected $utilDateTimeService;
 
@@ -325,7 +325,7 @@ class ProductReviewTable extends AbstractTable
     /**
      * @param \Orm\Zed\ProductReview\Persistence\SpyProductReview $productReviewEntity
      *
-     * @return string
+     * @return string|\DateTime
      */
     protected function getCreatedAt(SpyProductReview $productReviewEntity)
     {
