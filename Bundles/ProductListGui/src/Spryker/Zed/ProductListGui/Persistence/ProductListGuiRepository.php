@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class ProductListGuiRepository extends AbstractRepository implements ProductListGuiRepositoryInterface
 {
     /** @see \Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap::COL_FK_CATEGORY */
-    public const COLUMN_ID_CATEGORY = 'fk_category';
+    public const COLUMN_FK_CATEGORY = 'fk_category';
     /** @see \Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap::COL_NAME */
     public const COLUMN_CATEGORY_NAME = 'name';
     /** @see \Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT */
@@ -38,7 +38,7 @@ class ProductListGuiRepository extends AbstractRepository implements ProductList
         $categoryAttributes = $this->getFactory()
             ->getCategoryAttributePropelQuery()
             ->select([
-                static::COLUMN_ID_CATEGORY,
+                static::COLUMN_FK_CATEGORY,
                 static::COLUMN_CATEGORY_NAME,
             ])
             ->filterByFkLocale($localeTransfer->getIdLocale())
@@ -46,7 +46,7 @@ class ProductListGuiRepository extends AbstractRepository implements ProductList
 
         $categoryNames = [];
         foreach ($categoryAttributes as $categoryAttribute) {
-            $idCategory = $categoryAttribute[static::COLUMN_ID_CATEGORY];
+            $idCategory = $categoryAttribute[static::COLUMN_FK_CATEGORY];
             $categoryNames[$idCategory] = $categoryAttribute[static::COLUMN_CATEGORY_NAME];
         }
 
