@@ -102,18 +102,38 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
      */
     protected function addAvailabilityErrorToCheckoutResponse(CheckoutResponseTransfer $checkoutResponseTransfer, ItemTransfer $quoteItem): void
     {
-        $messageTransfer = $this->createMessageTransfer()
-            ->setValue(static::CHECKOUT_PRODUCT_UNAVAILABLE_TRANSLATION_KEY)
-            ->setParameters([
-                static::CHECKOUT_PRODUCT_UNAVAILABLE_PARAMETER_SKU => $quoteItem->getSku(),
-            ]);
-
-        $checkoutErrorTransfer = $this->createCheckoutErrorTransfer()
-            ->setErrorCode($this->availabilityConfig->getProductUnavailableErrorCode())
-            ->setDetailedMessage($messageTransfer);
+        $checkoutErrorTransfer = $this->createPreparedCheckoutErrorTransfer(
+            $this->createPreparedMessageTransfer($quoteItem)
+        );
 
         $checkoutResponseTransfer
             ->setIsSuccess(false)
             ->addError($checkoutErrorTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MessageTransfer $messageTransfer
+     *
+     * @return \Generated\Shared\Transfer\CheckoutErrorTransfer
+     */
+    protected function createPreparedCheckoutErrorTransfer(MessageTransfer $messageTransfer): CheckoutErrorTransfer
+    {
+        return $this->createCheckoutErrorTransfer()
+            ->setErrorCode($this->availabilityConfig->getProductUnavailableErrorCode())
+            ->setDetailedMessage($messageTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $quoteItem
+     *
+     * @return \Generated\Shared\Transfer\MessageTransfer
+     */
+    protected function createPreparedMessageTransfer(ItemTransfer $quoteItem): MessageTransfer
+    {
+        return $this->createMessageTransfer()
+            ->setValue(static::CHECKOUT_PRODUCT_UNAVAILABLE_TRANSLATION_KEY)
+            ->setParameters([
+                static::CHECKOUT_PRODUCT_UNAVAILABLE_PARAMETER_SKU => $quoteItem->getSku(),
+            ]);
     }
 }
