@@ -7,12 +7,11 @@
         chartData.push({
             name: '{{ trace.name }}',
             type: '{{ chartType }}',
-            // hole: .3,
             labels: {{ trace.labels | json_encode | raw }},
             values: {{ trace.values | json_encode | raw }}
         });
     {% endfor %}
-    /*]]>*/</script>
+/*]]>*/</script>
 
 {% include '@Chart/_partials/plotly-chart.twig' with {
     chartType: chartType,
