@@ -10,7 +10,7 @@ namespace Spryker\Zed\Monitoring\Communication\Plugin\ServiceProvider;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @method \Spryker\Zed\Monitoring\Communication\MonitoringCommunicationFactory getFactory()
@@ -64,9 +64,9 @@ class MonitoringRequestTransactionServiceProvider extends AbstractPlugin impleme
     /**
      * @param \Silex\Application $app
      *
-     * @return \Symfony\Component\EventDispatcher\EventDispatcher
+     * @return \Symfony\Component\EventDispatcher\EventDispatcherInterface
      */
-    protected function getDispatcher(Application $app): EventDispatcher
+    protected function getDispatcher(Application $app): EventDispatcherInterface
     {
         return $app['dispatcher'];
     }

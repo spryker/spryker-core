@@ -10,7 +10,7 @@ namespace Spryker\Yves\Monitoring\Plugin\ServiceProvider;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @method \Spryker\Yves\Monitoring\MonitoringFactory getFactory()
@@ -51,9 +51,9 @@ class MonitoringRequestTransactionServiceProvider extends AbstractPlugin impleme
     /**
      * @param \Silex\Application $app
      *
-     * @return \Symfony\Component\EventDispatcher\EventDispatcher
+     * @return \Symfony\Component\EventDispatcher\EventDispatcherInterface
      */
-    protected function getDispatcher(Application $app): EventDispatcher
+    protected function getDispatcher(Application $app): EventDispatcherInterface
     {
         return $app['dispatcher'];
     }
