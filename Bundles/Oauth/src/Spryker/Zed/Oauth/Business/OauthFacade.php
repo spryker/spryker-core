@@ -43,7 +43,7 @@ class OauthFacade extends AbstractFacade implements OauthFacadeInterface
      * {@inheritdoc}
      *
      * @param \Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer
-     *BundleConfigResolver
+     *
      * @return \Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer
      */
     public function validateAccessToken(OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer): OauthAccessTokenValidationResponseTransfer

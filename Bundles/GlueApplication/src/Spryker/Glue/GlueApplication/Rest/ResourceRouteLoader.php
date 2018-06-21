@@ -13,7 +13,7 @@ use Spryker\Glue\GlueApplication\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Glue\GlueApplication\Dependency\Plugin\ResourceVersionableInterface;
 use Spryker\Glue\GlueApplication\Dependency\Plugin\ResourceWithParentPluginInterface;
 use Spryker\Glue\GlueApplication\Rest\Version\VersionResolverInterface;
-use Spryker\Glue\Kernel\AbstractPlugin;
+use Spryker\Glue\Kernel\ModuleNameAwareInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class ResourceRouteLoader implements ResourceRouteLoaderInterface
@@ -207,11 +207,11 @@ class ResourceRouteLoader implements ResourceRouteLoaderInterface
     }
 
     /**
-     * @param \Spryker\Glue\Kernel\AbstractPlugin $resourcePlugin
+     * @param \Spryker\Glue\Kernel\ModuleNameAwareInterface $resourcePlugin
      *
      * @return string
      */
-    protected function getModuleName(AbstractPlugin $resourcePlugin): string
+    protected function getModuleName(ModuleNameAwareInterface $resourcePlugin): string
     {
         return $resourcePlugin->getModuleName();
     }

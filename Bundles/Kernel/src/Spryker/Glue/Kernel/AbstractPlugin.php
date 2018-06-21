@@ -10,7 +10,7 @@ namespace Spryker\Glue\Kernel;
 use Spryker\Glue\Kernel\ClassResolver\Config\BundleConfigResolver;
 use Spryker\Glue\Kernel\ClassResolver\Factory\FactoryResolver;
 
-abstract class AbstractPlugin
+abstract class AbstractPlugin implements ModuleNameAwareInterface
 {
     /**
      * @var \Spryker\Glue\Kernel\AbstractFactory

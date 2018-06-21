@@ -4,9 +4,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Glue\GlueApplication\Stub;
+namespace Spryker\Glue\Kernel;
 
-interface ModuleName
+interface ModuleNameAwareInterface
 {
     /**
      * @return string
