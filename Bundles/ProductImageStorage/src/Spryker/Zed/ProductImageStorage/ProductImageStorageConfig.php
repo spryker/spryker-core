@@ -18,4 +18,12 @@ class ProductImageStorageConfig extends AbstractBundleConfig
     {
         return true;
     }
+
+    /**
+     * @return null|string
+     */
+    public function getProductImageSynchronizationPoolName()
+    {
+        return null;
+    }
 }

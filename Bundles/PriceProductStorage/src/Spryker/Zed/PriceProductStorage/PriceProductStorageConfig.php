@@ -18,4 +18,20 @@ class PriceProductStorageConfig extends AbstractBundleConfig
     {
         return true;
     }
+
+    /**
+     * @return string|null
+     */
+    public function getPriceProductAbstractSynchronizationPoolName()
+    {
+        return null;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPriceProductConcreteSynchronizationPoolName()
+    {
+        return null;
+    }
 }

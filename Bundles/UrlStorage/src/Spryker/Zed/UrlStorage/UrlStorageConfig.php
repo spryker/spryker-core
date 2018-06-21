@@ -18,4 +18,20 @@ class UrlStorageConfig extends AbstractBundleConfig
     {
         return true;
     }
+
+    /**
+     * @return null|string
+     */
+    public function getUrlSynchronizationPoolName()
+    {
+        return null;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getUrlRedirectSynchronizationPoolName()
+    {
+        return null;
+    }
 }
