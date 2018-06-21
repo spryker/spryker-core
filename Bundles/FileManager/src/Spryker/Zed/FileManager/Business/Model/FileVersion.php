@@ -37,13 +37,14 @@ class FileVersion implements FileVersionInterface
         if ($idFile === null) {
             return static::INITIAL_VERSION_NUMBER;
         }
-        $fileInfo = $this->repository->getLatestFileInfoByIdFile($idFile);
 
-        if ($fileInfo === null) {
+        $fileInfoTransfer = $this->repository->getLatestFileInfoByIdFile($idFile);
+
+        if ($fileInfoTransfer === null) {
             return static::INITIAL_VERSION_NUMBER;
         }
 
-        return $fileInfo->getVersion() + 1;
+        return $fileInfoTransfer->getVersion() + 1;
     }
 
     /**

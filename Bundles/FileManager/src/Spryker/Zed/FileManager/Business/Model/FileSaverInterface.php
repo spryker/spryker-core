@@ -14,7 +14,7 @@ interface FileSaverInterface
     /**
      * @param \Generated\Shared\Transfer\FileManagerDataTransfer $fileManagerDataTransfer
      *
-     * @return int
+     * @return \Generated\Shared\Transfer\FileManagerDataTransfer
      */
     public function save(FileManagerDataTransfer $fileManagerDataTransfer);
 }

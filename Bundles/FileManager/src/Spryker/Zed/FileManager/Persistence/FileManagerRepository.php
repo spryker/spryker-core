@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\FileInfoTransfer;
 use Generated\Shared\Transfer\FileTransfer;
 use Generated\Shared\Transfer\MimeTypeCollectionTransfer;
 use Generated\Shared\Transfer\MimeTypeTransfer;
-use Generated\Shared\Transfer\SpyFileInfoEntityTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -90,7 +89,7 @@ class FileManagerRepository extends AbstractRepository implements FileManagerRep
     /**
      * @param int $idFile
      *
-     * @return \Generated\Shared\Transfer\SpyFileInfoEntityTransfer|null
+     * @return \Generated\Shared\Transfer\FileInfoTransfer|null
      */
     public function getLatestFileInfoByIdFile(int $idFile)
     {
@@ -107,7 +106,7 @@ class FileManagerRepository extends AbstractRepository implements FileManagerRep
 
         return $this->getFactory()
             ->createFileManagerMapper()
-            ->mapFileInfoEntityToEntityTransfer($fileInfoEntity, new SpyFileInfoEntityTransfer());
+            ->mapFileInfoEntityToTransfer($fileInfoEntity, new FileInfoTransfer());
     }
 
     /**

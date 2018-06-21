@@ -56,13 +56,13 @@ class FileReader implements FileReaderInterface
      */
     public function readFileByIdFileInfo(int $idFileInfo)
     {
-        $fileInfo = $this->repository->getFileByIdFileInfo($idFileInfo);
+        $fileTransfer = $this->repository->getFileByIdFileInfo($idFileInfo);
 
-        if ($fileInfo === null) {
+        if ($fileTransfer === null) {
             return new FileManagerDataTransfer();
         }
 
-        return $this->createResponseTransfer($fileInfo, $idFileInfo);
+        return $this->createResponseTransfer($fileTransfer, $idFileInfo);
     }
 
     /**
@@ -72,13 +72,16 @@ class FileReader implements FileReaderInterface
      */
     public function readLatestByFileId(int $idFile)
     {
-        $fileInfo = $this->repository->getLatestFileInfoByIdFile($idFile);
+        $fileTransfer = new FileTransfer();
+        $fileInfoTransfer = $this->repository->getLatestFileInfoByIdFile($idFile);
 
-        if ($fileInfo === null) {
+        if ($fileInfoTransfer === null) {
             return new FileManagerDataTransfer();
         }
 
-        return $this->createResponseTransfer($fileInfo);
+        $fileTransfer->addFileInfo($fileInfoTransfer);
+
+        return $this->createResponseTransfer($fileTransfer);
     }
 
     /**
@@ -91,11 +94,6 @@ class FileReader implements FileReaderInterface
     {
         $fileManagerDataTransfer = new FileManagerDataTransfer();
         $fileManagerDataTransfer->setFile($fileTransfer);
-
-        if (!$idFileInfo) {
-            return $fileManagerDataTransfer;
-        }
-
         $fileInfoTransfer = $this->getRequestedFileInfo($fileTransfer, $idFileInfo);
         $fileManagerDataTransfer->setFileInfo($fileInfoTransfer);
         $fileManagerDataTransfer->setContent(
@@ -107,12 +105,16 @@ class FileReader implements FileReaderInterface
 
     /**
      * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
-     * @param int $idFileInfo
+     * @param int|null $idFileInfo
      *
      * @return \Generated\Shared\Transfer\FileInfoTransfer|null
      */
-    protected function getRequestedFileInfo(FileTransfer $fileTransfer, int $idFileInfo)
+    protected function getRequestedFileInfo(FileTransfer $fileTransfer, ?int $idFileInfo = null)
     {
+        if ($idFileInfo === null) {
+            return $fileTransfer->getFileInfo()[0] ?? null;
+        }
+
         foreach ($fileTransfer->getFileInfo() as $fileInfoTransfer) {
             if ($fileInfoTransfer->getIdFileInfo() === $idFileInfo) {
                 return $fileInfoTransfer;

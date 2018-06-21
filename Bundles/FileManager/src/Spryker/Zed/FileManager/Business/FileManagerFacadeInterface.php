@@ -28,7 +28,7 @@ interface FileManagerFacadeInterface
      *
      * @param \Generated\Shared\Transfer\FileManagerDataTransfer $fileManagerDataTransfer
      *
-     * @return int
+     * @return \Generated\Shared\Transfer\FileManagerDataTransfer
      */
     public function saveFile(FileManagerDataTransfer $fileManagerDataTransfer);
 

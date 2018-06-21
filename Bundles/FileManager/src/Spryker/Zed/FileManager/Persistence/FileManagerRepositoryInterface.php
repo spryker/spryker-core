@@ -35,7 +35,7 @@ interface FileManagerRepositoryInterface
     /**
      * @param int $idFile
      *
-     * @return \Generated\Shared\Transfer\SpyFileInfoEntityTransfer|null
+     * @return \Generated\Shared\Transfer\FileInfoTransfer|null
      */
     public function getLatestFileInfoByIdFile(int $idFile);
 
