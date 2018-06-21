@@ -231,7 +231,7 @@ class RequestFormatter implements RequestFormatterInterface
      * @param \Spryker\Glue\GlueApplication\Rest\Request\RequestBuilderInterface $requestBuilder
      * @param array $queryParameters
      *
-     * @return mixed
+     * @return void
      */
     protected function setIncludeFields(
         RequestBuilderInterface $requestBuilder,

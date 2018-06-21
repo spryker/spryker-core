@@ -20,7 +20,7 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
      * @param \League\OAuth2\Server\Entities\ScopeEntityInterface[] $scopes
      * @param mixed $userIdentifier
      *
-     * @return \League\OAuth2\Server\Entities\AccessTokenEntityInterface
+     * @return void
      */
     public function getNewToken(ClientEntityInterface $clientEntity, array $scopes, $userIdentifier = null)
     {

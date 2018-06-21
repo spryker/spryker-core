@@ -21,7 +21,7 @@ class GlueBootstrap extends Framework
     }
 
     /**
-     * @return mixed
+     * @return void
      */
     public function boot()
     {
