@@ -24,13 +24,23 @@ class PriceConcreteStorageReader implements PriceConcreteStorageReaderInterface
     protected $priceStorageKeyGenerator;
 
     /**
+     * @var \Spryker\Client\PriceProductStorage\Dependency\Plugin\PriceProductStoragePriceDimensionPluginInterface[]
+     */
+    protected $priceDimensionPlugins;
+
+    /**
      * @param \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToStorageInterface $storageClient
      * @param \Spryker\Client\PriceProductStorage\Storage\PriceProductStorageKeyGeneratorInterface $priceStorageKeyGenerator
+     * @param \Spryker\Client\PriceProductStorage\Dependency\Plugin\PriceProductStoragePriceDimensionPluginInterface[] $priceDimensionPlugins
      */
-    public function __construct(PriceProductStorageToStorageInterface $storageClient, PriceProductStorageKeyGeneratorInterface $priceStorageKeyGenerator)
-    {
+    public function __construct(
+        PriceProductStorageToStorageInterface $storageClient,
+        PriceProductStorageKeyGeneratorInterface $priceStorageKeyGenerator,
+        array $priceDimensionPlugins
+    ) {
         $this->storageClient = $storageClient;
         $this->priceStorageKeyGenerator = $priceStorageKeyGenerator;
+        $this->priceDimensionPlugins = $priceDimensionPlugins;
     }
 
     /**

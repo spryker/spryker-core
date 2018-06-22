@@ -17,5 +17,5 @@ interface DefaultPriceQueryExpanderInterface
      *
      * @return \Generated\Shared\Transfer\QueryCriteriaTransfer|null
      */
-    public function buildDefaultPriceDimensionCriteria(PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?QueryCriteriaTransfer;
+    public function buildDefaultPriceDimensionQueryCriteria(PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?QueryCriteriaTransfer;
 }

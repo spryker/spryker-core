@@ -5,21 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\PriceProduct\Model\PriceDecision;
+namespace Spryker\Service\PriceProduct\Model;
 
-use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 
 interface PriceProductMatcherInterface
 {
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransferCollection
-     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\MoneyValueTransfer|null
+     * @return int|null
      */
     public function matchPriceValue(
         array $priceProductTransferCollection,
-        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-    ): ?MoneyValueTransfer;
+        ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+    ): ?int;
 }

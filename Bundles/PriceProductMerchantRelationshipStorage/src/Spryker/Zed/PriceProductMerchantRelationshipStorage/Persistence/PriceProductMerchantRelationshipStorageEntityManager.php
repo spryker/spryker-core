@@ -123,10 +123,14 @@ class PriceProductMerchantRelationshipStorageEntityManager extends AbstractEntit
                 continue;
             }
 
+            $data = [
+                'prices' => $priceProductMerchantRelationshipStorageTransfer->getPrices(),
+            ];
+
             $priceProductMerchantRelationshipStorageEntity
                 ->setPriceKey($priceKey)
                 ->setFkMerchantRelationship($priceProductMerchantRelationshipStorageTransfer->getIdMerchantRelationship())
-                ->setData($priceProductMerchantRelationshipStorageTransfer->getPrices())
+                ->setData($data)
                 ->setIsSendingToQueue(true);
 
             $this->setProductForeignKey($priceProductMerchantRelationshipStorageEntity, $priceProductMerchantRelationshipStorageTransfer->getIdProduct());

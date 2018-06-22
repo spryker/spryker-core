@@ -72,7 +72,7 @@ interface PriceProductRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\QueryCriteriaTransfer|null
      */
-    public function buildDefaultPriceDimensionCriteria(
+    public function buildDefaultPriceDimensionQueryCriteria(
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
     ): ?QueryCriteriaTransfer;
 

@@ -7,10 +7,12 @@
 
 namespace Spryker\Client\PriceProductStorage\Expander;
 
+use Generated\Shared\Transfer\MoneyValueTransfer;
+use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
-use Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToPriceProductInterface;
 use Spryker\Client\PriceProductStorage\Storage\PriceAbstractStorageReaderInterface;
 use Spryker\Client\PriceProductStorage\Storage\PriceConcreteStorageReaderInterface;
+use Spryker\Service\PriceProduct\PriceProductServiceInterface;
 
 class ProductViewPriceExpander implements ProductViewPriceExpanderInterface
 {
@@ -25,23 +27,23 @@ class ProductViewPriceExpander implements ProductViewPriceExpanderInterface
     protected $priceConcreteStorageReader;
 
     /**
-     * @var \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToPriceProductInterface
+     * @var \Spryker\Service\PriceProduct\PriceProductServiceInterface
      */
-    protected $priceProductClient;
+    protected $priceProductService;
 
     /**
      * @param \Spryker\Client\PriceProductStorage\Storage\PriceAbstractStorageReaderInterface $priceAbstractStorageReader
      * @param \Spryker\Client\PriceProductStorage\Storage\PriceConcreteStorageReaderInterface $priceConcreteStorageReader
-     * @param \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToPriceProductInterface $priceProductClient
+     * @param \Spryker\Service\PriceProduct\PriceProductServiceInterface $priceProductService
      */
     public function __construct(
         PriceAbstractStorageReaderInterface $priceAbstractStorageReader,
         PriceConcreteStorageReaderInterface $priceConcreteStorageReader,
-        PriceProductStorageToPriceProductInterface $priceProductClient
+        PriceProductServiceInterface $priceProductService
     ) {
         $this->priceAbstractStorageReader = $priceAbstractStorageReader;
         $this->priceConcreteStorageReader = $priceConcreteStorageReader;
-        $this->priceProductClient = $priceProductClient;
+        $this->priceProductService = $priceProductService;
     }
 
     /**
@@ -51,25 +53,37 @@ class ProductViewPriceExpander implements ProductViewPriceExpanderInterface
      */
     public function expandProductViewPriceData(ProductViewTransfer $productViewTransfer)
     {
-        $productViewPriceData = $this->getProductViewPrices($productViewTransfer);
+        $priceProductTransferCollection = $this->getProductViewPrices($productViewTransfer);
 
-        if ($productViewTransfer->getIdProductConcrete()) {
-            $currentProductPriceTransfer = $this->priceProductClient->resolveProductConcretePriceByPriceDimension(
-                $productViewPriceData,
-                $productViewTransfer->getIdProductAbstract(),
-                $productViewTransfer->getIdProductConcrete()
-            );
-        } else {
-            $currentProductPriceTransfer = $this->priceProductClient->resolveProductAbstractPriceByPriceDimension(
-                $productViewPriceData,
-                $productViewTransfer->getIdProductAbstract()
-            );
-        }
+        $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
+            ->setIdStore(1)
+            ->setIdCurrency(1)
+            ->setPriceMode()
+            ->setPriceType('DEFAULT');
+        $moneyValueTransfer = $this->priceProductService->resolveProductPrice($priceProductTransferCollection, $priceProductCriteriaTransfer);
 
-        $productViewTransfer->setPrices($currentProductPriceTransfer->getPrices());
-        $productViewTransfer->setPrice($currentProductPriceTransfer->getPrice());
+        //$productViewTransfer->setPrices($currentProductPriceTransfer->getPrices());
+        //todo resolve gross/net, currency
+        $productViewTransfer->setPrice($moneyValueTransfer->getGrossAmount());
 
         return $productViewTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
+     *
+     * @return int|null
+     */
+    protected function findPriceByPriceMode(
+        PriceProductCriteriaTransfer $priceProductCriteriaTransfer,
+        MoneyValueTransfer $moneyValueTransfer
+    ) {
+        if ($priceProductCriteriaTransfer->getPriceMode() === $this->priceProductMapper->getNetPriceModeIdentifier()) {
+            return $moneyValueTransfer->getNetAmount();
+        }
+
+        return $moneyValueTransfer->getGrossAmount();
     }
 
     /**

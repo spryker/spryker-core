@@ -19,15 +19,17 @@ class PriceProductConfig extends AbstractSharedConfig
     /**
      * @return string
      */
-    public function getPriceTypeDefaultName()
+    protected const PRICE_TYPE_DEFAULT = 'DEFAULT';
+
+    public function getPriceTypeDefaultName(): string
     {
-        return 'DEFAULT';
+        return static::PRICE_TYPE_DEFAULT;
     }
 
     /**
      * @return string
      */
-    public function getPriceModeIdentifierForBothType()
+    public function getPriceModeIdentifierForBothType(): string
     {
         return static::PRICE_MODE_BOTH;
     }

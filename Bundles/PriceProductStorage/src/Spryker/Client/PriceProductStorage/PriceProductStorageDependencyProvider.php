@@ -21,6 +21,7 @@ class PriceProductStorageDependencyProvider extends AbstractDependencyProvider
     public const CLIENT_PRICE_PRODUCT = 'CLIENT_PRICE_PRODUCT';
 
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
+    public const SERVICE_PRICE_PRODUCT = 'SERVICE_PRICE_PRODUCT';
 
     public const PLUGIN_STORAGE_PRICE_DIMENSION = 'PLUGIN_STORAGE_PRICE_DIMENSION';
 
@@ -32,10 +33,11 @@ class PriceProductStorageDependencyProvider extends AbstractDependencyProvider
     public function provideServiceLayerDependencies(Container $container): Container
     {
         $container = $this->addStorageClient($container);
-        $container = $this->addPriceProductClient($container);
+        $container = $this->addPriceProductClient($container); //todo remove if not needed
         $container = $this->addSynchronizationService($container);
         $container = $this->addStoreClient($container);
         $container = $this->addPriceDimensionPlugins($container);
+        $container = $this->addPriceProductService($container);
 
         return $container;
     }
@@ -118,5 +120,20 @@ class PriceProductStorageDependencyProvider extends AbstractDependencyProvider
     public function getPriceDimensionPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    public function addPriceProductService($container): Container
+    {
+        $container[static::SERVICE_PRICE_PRODUCT] = function (Container $container) {
+            //todo create bridge
+            return $container->getLocator()->store()->client();
+        };
+
+        return $container;
     }
 }

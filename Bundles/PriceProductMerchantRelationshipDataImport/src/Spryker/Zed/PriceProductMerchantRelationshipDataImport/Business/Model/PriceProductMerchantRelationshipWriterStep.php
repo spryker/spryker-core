@@ -53,17 +53,12 @@ class PriceProductMerchantRelationshipWriterStep extends PublishAwareStep implem
         $priceProductStoreEntity = $this->findExistingPriceProductStoreEntity($dataSet);
 
         if (!$priceProductStoreEntity) {
-            return $this->getNewPriceProductStoreEntity($dataSet);
+            return $this->getPriceProductStoreEntity($dataSet);
         }
 
         $netPrice = (int)$dataSet[PriceProductMerchantRelationshipDataSetInterface::PRICE_NET];
         $grossPrice = (int)$dataSet[PriceProductMerchantRelationshipDataSetInterface::PRICE_GROSS];
         if ($priceProductStoreEntity->getGrossPrice() === $grossPrice && $priceProductStoreEntity->getNetPrice() === $netPrice) {
-            $this->addPublishEvents(
-                static::ENTITY_SPY_PRICE_PRODUCT_STORE_UPDATE,
-                $priceProductStoreEntity->getPrimaryKey()
-            );
-
             return $priceProductStoreEntity;
         }
 
@@ -73,7 +68,7 @@ class PriceProductMerchantRelationshipWriterStep extends PublishAwareStep implem
             $priceProductStoreEntity->getIdPriceProductStore()
         );
 
-        return $this->getNewPriceProductStoreEntity($dataSet);
+        return $this->getPriceProductStoreEntity($dataSet);
     }
 
     /**
@@ -144,7 +139,7 @@ class PriceProductMerchantRelationshipWriterStep extends PublishAwareStep implem
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore
      */
-    protected function getNewPriceProductStoreEntity(DataSetInterface $dataSet): SpyPriceProductStore
+    protected function getPriceProductStoreEntity(DataSetInterface $dataSet): SpyPriceProductStore
     {
         $netPrice = (int)$dataSet[PriceProductMerchantRelationshipDataSetInterface::PRICE_NET];
         $grossPrice = (int)$dataSet[PriceProductMerchantRelationshipDataSetInterface::PRICE_GROSS];
@@ -157,16 +152,16 @@ class PriceProductMerchantRelationshipWriterStep extends PublishAwareStep implem
             ->filterByGrossPrice($grossPrice)
             ->findOneOrCreate();
 
-        $isNewRecord = $priceProductStoreEntity->isNew();
+        $eventName = $priceProductStoreEntity->isNew()
+            ? static::ENTITY_SPY_PRICE_PRODUCT_STORE_CREATE
+            : static::ENTITY_SPY_PRICE_PRODUCT_STORE_UPDATE;
 
         $priceProductStoreEntity->save();
 
-        if ($isNewRecord) {
-            $this->addPublishEvents(
-                static::ENTITY_SPY_PRICE_PRODUCT_STORE_CREATE,
-                $priceProductStoreEntity->getPrimaryKey()
-            );
-        }
+        $this->addPublishEvents(
+            $eventName,
+            $priceProductStoreEntity->getPrimaryKey()
+        );
 
         return $priceProductStoreEntity;
     }

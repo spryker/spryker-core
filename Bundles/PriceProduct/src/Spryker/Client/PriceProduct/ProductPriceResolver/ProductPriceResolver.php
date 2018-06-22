@@ -12,6 +12,9 @@ use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToCurrencyClientIn
 use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToPriceClientInterface;
 use Spryker\Client\PriceProduct\PriceProductConfig;
 
+/**
+ * @deprecated Use PriceProductService::resolvePriceProduct() instead
+ */
 class ProductPriceResolver implements ProductPriceResolverInterface
 {
     /**
@@ -70,47 +73,4 @@ class ProductPriceResolver implements ProductPriceResolverInterface
             ->setPrice($price)
             ->setPrices($prices);
     }
-
-//    /**
-//     * @param array $priceMap
-//     * @param int $idProductAbstract
-//     *
-//     * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
-//     */
-//    public function resolveProductAbstractPriceByPriceDimension(array $priceMap, int $idProductAbstract)
-//    {
-//        foreach ($this->priceDimensionPlugins as $priceDimensionPlugin) {
-//            $priceProductAbstractDimensionTransfer = $priceDimensionPlugin->findProductAbstractPrice($idProductAbstract);
-//
-//            if ($priceProductAbstractDimensionTransfer) {
-//                $priceMap = array_replace_recursive($priceMap, $priceProductAbstractDimensionTransfer->getPrices());
-//            }
-//        }
-//
-//        return $this->resolve($priceMap);
-//    }
-//
-//    /**
-//     * @param array $priceMap
-//     * @param int $idProductAbstract
-//     * @param int $idProductConcrete
-//     *
-//     * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
-//     */
-//    public function resolveProductConcretePriceByPriceDimension(array $priceMap, int $idProductAbstract, int $idProductConcrete)
-//    {
-//        foreach ($this->priceDimensionPlugins as $priceDimensionPlugin) {
-//            $priceProductDimensionTransfer = $priceDimensionPlugin->findProductConcretePrice($idProductConcrete);
-//
-//            if ($priceProductDimensionTransfer === null) {
-//                $priceProductDimensionTransfer = $priceDimensionPlugin->findProductAbstractPrice($idProductAbstract);
-//            }
-//
-//            if ($priceProductDimensionTransfer) {
-//                $priceMap = array_replace_recursive($priceMap, $priceProductDimensionTransfer->getPrices());
-//            }
-//        }
-//
-//        return $this->resolve($priceMap);
-//    }
 }

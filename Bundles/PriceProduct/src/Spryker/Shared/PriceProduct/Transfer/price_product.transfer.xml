@@ -46,6 +46,7 @@
         <property name="priceMode" type="string" />
         <property name="storeName" type="string" />
         <property name="priceTypeName" type="string" />
+        <property name="priceDimension" type="PriceProductDimension" />
         <property name="sku" type="string" />
         <property name="quote" type="Quote" />
         <property name="item" type="Item" />

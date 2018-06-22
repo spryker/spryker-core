@@ -15,21 +15,4 @@ interface ProductPriceResolverInterface
      * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */
     public function resolve(array $priceMap);
-
-    /**
-     * @param array $priceMap
-     * @param int $idProductAbstract
-     *
-     * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
-     */
-    public function resolveProductAbstractPriceByPriceDimension(array $priceMap, int $idProductAbstract);
-
-    /**
-     * @param array $priceMap
-     * @param int $idProductAbstract
-     * @param int $idProductConcrete
-     *
-     * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
-     */
-    public function resolveProductConcretePriceByPriceDimension(array $priceMap, int $idProductAbstract, int $idProductConcrete);
 }

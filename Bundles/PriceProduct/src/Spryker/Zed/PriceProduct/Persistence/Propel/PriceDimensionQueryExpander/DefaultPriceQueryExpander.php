@@ -24,7 +24,7 @@ class DefaultPriceQueryExpander implements DefaultPriceQueryExpanderInterface
      *
      * @return \Generated\Shared\Transfer\QueryCriteriaTransfer|null
      */
-    public function buildDefaultPriceDimensionCriteria(
+    public function buildDefaultPriceDimensionQueryCriteria(
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
     ): ?QueryCriteriaTransfer {
         return (new QueryCriteriaTransfer())

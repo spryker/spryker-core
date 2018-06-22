@@ -20,7 +20,11 @@ class PriceProductStorageFactory extends AbstractFactory
      */
     public function createProductViewPriceExpander()
     {
-        return new ProductViewPriceExpander($this->createPriceAbstractStorageReader(), $this->createPriceConcreteStorageReader(), $this->getPriceProductClient());
+        return new ProductViewPriceExpander(
+            $this->createPriceAbstractStorageReader(),
+            $this->createPriceConcreteStorageReader(),
+            $this->getPriceProductService()
+        );
     }
 
     /**
@@ -28,7 +32,11 @@ class PriceProductStorageFactory extends AbstractFactory
      */
     protected function createPriceAbstractStorageReader()
     {
-        return new PriceAbstractStorageReader($this->getStorage(), $this->createPriceProductStorageKeyGenerator());
+        return new PriceAbstractStorageReader(
+            $this->getStorage(),
+            $this->createPriceProductStorageKeyGenerator(),
+            $this->getPriceDimensionPlugins()
+        );
     }
 
     /**
@@ -36,7 +44,11 @@ class PriceProductStorageFactory extends AbstractFactory
      */
     protected function createPriceConcreteStorageReader()
     {
-        return new PriceConcreteStorageReader($this->getStorage(), $this->createPriceProductStorageKeyGenerator());
+        return new PriceConcreteStorageReader(
+            $this->getStorage(),
+            $this->createPriceProductStorageKeyGenerator(),
+            $this->getPriceDimensionPlugins()
+        );
     }
 
     /**
@@ -77,5 +89,18 @@ class PriceProductStorageFactory extends AbstractFactory
     protected function getSynchronizationService()
     {
         return $this->getProvidedDependency(PriceProductStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
+    }
+
+    /**
+     * @return \Spryker\Client\PriceProductStorage\Dependency\Plugin\PriceProductStoragePriceDimensionPluginInterface[]
+     */
+    public function getPriceDimensionPlugins(): array
+    {
+        return $this->getProvidedDependency(PriceProductStorageDependencyProvider::PLUGIN_STORAGE_PRICE_DIMENSION);
+    }
+
+    public function getPriceProductService()
+    {
+        return $this->getProvidedDependency(PriceProductStorageDependencyProvider::SERVICE_PRICE_PRODUCT);
     }
 }

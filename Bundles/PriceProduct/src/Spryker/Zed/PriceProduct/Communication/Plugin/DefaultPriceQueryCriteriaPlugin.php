@@ -32,7 +32,7 @@ class DefaultPriceQueryCriteriaPlugin extends AbstractPlugin implements PriceDim
     public function buildPriceDimensionQueryCriteria(
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
     ): ?QueryCriteriaTransfer {
-        return $this->getRepository()->buildDefaultPriceDimensionCriteria($priceProductCriteriaTransfer);
+        return $this->getRepository()->buildDefaultPriceDimensionQueryCriteria($priceProductCriteriaTransfer);
     }
 
     /**

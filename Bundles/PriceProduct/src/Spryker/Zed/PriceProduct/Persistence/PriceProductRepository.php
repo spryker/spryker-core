@@ -113,11 +113,11 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
      *
      * @return \Generated\Shared\Transfer\QueryCriteriaTransfer|null
      */
-    public function buildDefaultPriceDimensionCriteria(PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?QueryCriteriaTransfer
+    public function buildDefaultPriceDimensionQueryCriteria(PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?QueryCriteriaTransfer
     {
         return $this->getFactory()
             ->createDefaultPriceQueryExpander()
-            ->buildDefaultPriceDimensionCriteria($priceProductCriteriaTransfer);
+            ->buildDefaultPriceDimensionQueryCriteria($priceProductCriteriaTransfer);
     }
 
     /**
