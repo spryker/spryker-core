@@ -62,7 +62,7 @@ class NewRelicConsolePlugin extends AbstractPlugin implements EventSubscriberInt
     /**
      * @param \Symfony\Component\Console\Event\ConsoleTerminateEvent $event
      *
-     * @return array
+     * @return void
      */
     protected function addArgumentsAsCustomParameter(ConsoleTerminateEvent $event)
     {
@@ -72,7 +72,7 @@ class NewRelicConsolePlugin extends AbstractPlugin implements EventSubscriberInt
     /**
      * @param \Symfony\Component\Console\Event\ConsoleTerminateEvent $event
      *
-     * @return array
+     * @return void
      */
     protected function addOptionsAsCustomParameter(ConsoleTerminateEvent $event)
     {
