@@ -81,11 +81,11 @@ class PriceProductMatcher implements PriceProductMatcherInterface
         }
 
         if ($priceProductCriteriaTransfer->getPriceMode() === null) {
-            $priceProductCriteriaTransfer->setPriceMode();
+            $priceProductCriteriaTransfer->setPriceMode($defaultProductCriteriaTransfer->getPriceMode());
         }
 
         if ($priceProductCriteriaTransfer->getPriceType() === null) {
-            $priceProductCriteriaTransfer->setPriceType('DEFAULT');
+            $priceProductCriteriaTransfer->setPriceType($defaultProductCriteriaTransfer->getPriceType());
         }
 
         return $priceProductCriteriaTransfer;
@@ -99,14 +99,6 @@ class PriceProductMatcher implements PriceProductMatcherInterface
      */
     protected function findPriceValueByCriteria(MoneyValueTransfer $moneyValueTransfer, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?int
     {
-        if ($moneyValueTransfer->getFkStore() !== $priceProductCriteriaTransfer->getIdStore()) {
-            return null;
-        }
-
-        if ($moneyValueTransfer->getFkCurrency() !== $priceProductCriteriaTransfer->getIdCurrency()) {
-            return null;
-        }
-
         if ($priceProductCriteriaTransfer->getPriceMode() === 'GROSS_MODE') {
             return $moneyValueTransfer->getGrossAmount();
         }
