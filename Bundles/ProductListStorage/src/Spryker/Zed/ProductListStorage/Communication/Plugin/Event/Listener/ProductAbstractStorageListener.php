@@ -51,11 +51,13 @@ class ProductAbstractStorageListener extends AbstractPlugin implements EventBulk
                 ->getEventBehaviorFacade()
                 ->getEventTransferIds($eventTransfers);
 
-            return $this->getFacade()->findProductAbstractIdsByProductConcreteIds($productConcreteIds);
+            return array_unique($this->getFacade()->findProductAbstractIdsByProductConcreteIds($productConcreteIds));
         }
 
-        return $this->getFactory()
+        $productAbstractIds = $this->getFactory()
             ->getEventBehaviorFacade()
             ->getEventTransferForeignKeys($eventTransfers, SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT);
+
+        return array_unique($productAbstractIds);
     }
 }

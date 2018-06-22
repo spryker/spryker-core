@@ -35,11 +35,11 @@ class ProductListProductAbstractStorageListener extends AbstractPlugin implement
     {
         $this->preventTransaction();
 
-        $this->getFacade()->publishProductAbstract(
-            $this->getFacade()->findProductAbstractIdsByProductConcreteIds(
-                $this->getProductConcreteIds($eventTransfers, $eventName)
-            )
+        $productAbstractIds = $this->getFacade()->findProductAbstractIdsByProductConcreteIds(
+            $this->getProductConcreteIds($eventTransfers, $eventName)
         );
+
+        $this->getFacade()->publishProductAbstract(array_unique($productAbstractIds));
     }
 
     /**

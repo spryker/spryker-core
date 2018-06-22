@@ -36,7 +36,7 @@ class ProductCategoryAbstractStorageListener extends AbstractPlugin implements E
         $categoryIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
         $this->getFacade()->publishProductAbstract(
-            $this->getFacade()->findProductAbstractIdsByCategoryIds($categoryIds)
+            array_unique($this->getFacade()->findProductAbstractIdsByCategoryIds($categoryIds))
         );
     }
 }
