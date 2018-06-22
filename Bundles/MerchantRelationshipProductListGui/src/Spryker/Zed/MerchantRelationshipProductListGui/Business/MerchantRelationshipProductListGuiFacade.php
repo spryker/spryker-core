@@ -14,4 +14,15 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class MerchantRelationshipProductListGuiFacade extends AbstractFacade implements MerchantRelationshipProductListGuiFacadeInterface
 {
+    /**
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
+     */
+    public function listMerchantRelation(): array
+    {
+        return $this->getFactory()
+            ->getMerchantRelationshipFacade()
+            ->listMerchantRelation();
+    }
 }

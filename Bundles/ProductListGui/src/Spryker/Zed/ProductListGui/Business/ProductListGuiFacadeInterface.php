@@ -9,4 +9,21 @@ namespace Spryker\Zed\ProductListGui\Business;
 
 interface ProductListGuiFacadeInterface
 {
+    /**
+     * @api
+     *
+     * @module Category
+     *
+     * @return string[] [<category id> => <category name in english locale>]
+     */
+    public function getAllCategoryNames(): array;
+
+    /**
+     * @api
+     *
+     * @module Product
+     *
+     * @return string[] [<product id> => <product name in english locale>]
+     */
+    public function getAllProductNames(): array;
 }

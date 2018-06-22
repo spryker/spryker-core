@@ -37,7 +37,9 @@ class ProductListBusinessFactory extends AbstractBusinessFactory
     public function createProductListReader(): ProductListReaderInterface
     {
         return new ProductListReader(
-            $this->getRepository()
+            $this->getRepository(),
+            $this->createProductListCategoryRelationReader(),
+            $this->createProductListProductConcreteRelationReader()
         );
     }
 

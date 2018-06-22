@@ -67,4 +67,17 @@ interface ProductListFacadeInterface
      * @return int[]
      */
     public function getProductAbstractWhitelistIdsByIdProductAbstract(int $idProductAbstract): array;
+
+    /**
+     * Specification:
+     * - Finds a Product List by ProductListTransfer::idProductList in the transfer.
+     * - Hydrate ProductListTransfer and relations to products and categories.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListTransfer
+     */
+    public function getProductListById(ProductListTransfer $productListTransfer): ProductListTransfer;
 }

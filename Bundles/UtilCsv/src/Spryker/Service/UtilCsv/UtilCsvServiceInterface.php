@@ -7,6 +7,19 @@
 
 namespace Spryker\Service\UtilCsv;
 
+use SplFileObject;
+
 interface UtilCsvServiceInterface
 {
+    /**
+     * Specification:
+     * - Get string[][] from file object
+     *
+     * @api
+     *
+     * @param \SplFileObject $file
+     *
+     * @return array
+     */
+    public function readFile(SplFileObject $file): array;
 }

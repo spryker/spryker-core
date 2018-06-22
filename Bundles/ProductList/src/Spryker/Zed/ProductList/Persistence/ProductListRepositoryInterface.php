@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductList\Persistence;
 
+use Generated\Shared\Transfer\ProductListTransfer;
+
 interface ProductListRepositoryInterface
 {
     /**
@@ -22,6 +24,13 @@ interface ProductListRepositoryInterface
      * @return int[]
      */
     public function getRelatedProductConcreteIdsByIdProductList(int $idProductList): array;
+
+    /**
+     * @param int $idProductList
+     *
+     * @return \Generated\Shared\Transfer\ProductListTransfer
+     */
+    public function getProductListById(int $idProductList): ProductListTransfer;
 
     /**
      * @param int $idProductAbstract

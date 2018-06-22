@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductList\Business\ProductList;
 
+use Generated\Shared\Transfer\ProductListTransfer;
+
 interface ProductListReaderInterface
 {
     /**
@@ -22,4 +24,11 @@ interface ProductListReaderInterface
      * @return array
      */
     public function getProductAbstractWhitelistIdsByIdProductAbstract(int $idProductAbstract): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListTransfer
+     */
+    public function getProductListById(ProductListTransfer $productListTransfer): ProductListTransfer;
 }

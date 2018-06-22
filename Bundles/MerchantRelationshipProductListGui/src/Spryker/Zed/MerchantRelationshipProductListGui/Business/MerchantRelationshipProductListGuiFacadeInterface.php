@@ -9,4 +9,10 @@ namespace Spryker\Zed\MerchantRelationshipProductListGui\Business;
 
 interface MerchantRelationshipProductListGuiFacadeInterface
 {
+    /**
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
+     */
+    public function listMerchantRelation(): array;
 }

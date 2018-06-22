@@ -1,0 +1,36 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% block section_title 'Edit Product List' | trans %}
+
+{% block action %}
+    {{ backActionButton(url('/product-list-gui'), 'Back to product list' | trans) }}
+    {{ removeActionButton(
+        url('/product-list-gui/delete', {'id-product-list': idProductList}),
+        'Delete product list' | trans
+    ) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Edit Product List' | trans } %}
+
+        {% block widget_content %}
+            {{ form_start(form) }}
+                {{ tabs(productListFormTabs, {
+                    'form': form,
+                    'categoryForm': form.productListCategoryRelation,
+                    'productsForm': form.productListProductConcreteRelation,
+                    'productConcreteFormTabs': productConcreteFormTabs,
+                    'productTable': productTable,
+                    'assignedProductConcreteTabs': assignedProductConcreteTabs,
+                    'productAssignedTable': productAssignedTable,
+                    'plugins': plugins,
+                }) }}
+
+                <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}" />
+            {{ form_end(form) }}
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}
