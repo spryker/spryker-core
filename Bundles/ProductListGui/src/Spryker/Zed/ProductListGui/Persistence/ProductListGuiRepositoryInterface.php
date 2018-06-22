@@ -32,4 +32,11 @@ interface ProductListGuiRepositoryInterface
      * @return string[] [<product id> => <product name in english locale>]
      */
     public function getAllProductNames(LocaleTransfer $localeTransfer): array;
+
+    /**
+     * @param string ...$skus
+     *
+     * @return int[] product ids
+     */
+    public function getProductsIdsFromSkus(string ... $skus): array;
 }

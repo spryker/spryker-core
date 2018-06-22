@@ -5,18 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\UtilCsv;
+namespace Spryker\Zed\ProductListGui\Dependency\Service;
 
 use SplFileObject;
 
-interface UtilCsvServiceInterface
+interface ProductListGuiToUtilCsvServiceInterface
 {
     /**
-     * Specification:
-     * - Get string[][] from file object
-     *
-     * @api
-     *
      * @param \SplFileObject $file
      *
      * @return array

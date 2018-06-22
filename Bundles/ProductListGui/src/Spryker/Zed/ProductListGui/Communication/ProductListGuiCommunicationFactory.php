@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductListGui\Communication\DataProvider\CategoryDataProvider;
 use Spryker\Zed\ProductListGui\Communication\DataProvider\ProductListDataProvider;
 use Spryker\Zed\ProductListGui\Communication\DataProvider\ProductListProductConcreteRelationDataProvider;
+use Spryker\Zed\ProductListGui\Communication\DataTransformer\CsvToProductsConcreteTransformer;
 use Spryker\Zed\ProductListGui\Communication\Form\ProductListForm;
 use Spryker\Zed\ProductListGui\Communication\Table\ProductConcreteTable;
 use Spryker\Zed\ProductListGui\Communication\Table\ProductListTable;
@@ -20,12 +21,14 @@ use Spryker\Zed\ProductListGui\Communication\Tabs\ProductConcreteTabs;
 use Spryker\Zed\ProductListGui\Communication\Tabs\ProductListTabs;
 use Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToLocaleFacadeInterface;
 use Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToProductListFacadeInterface;
+use Spryker\Zed\ProductListGui\Dependency\Service\ProductListGuiToUtilCsvServiceInterface;
 use Spryker\Zed\ProductListGui\ProductListGuiDependencyProvider;
 use Symfony\Component\Form\FormInterface;
 
 /**
  * @method \Spryker\Zed\ProductListGui\Business\ProductListGuiFacadeInterface getFacade();
  * @method \Spryker\Zed\ProductListGui\ProductListGuiConfig getConfig()
+ * @method \Spryker\Zed\ProductListGui\Persistence\ProductListGuiRepositoryInterface getRepository()
  */
 class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -125,6 +128,17 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductListGui\Communication\DataTransformer\CsvToProductsConcreteTransformer
+     */
+    public function createCsvToProductsConcreteTransformer(): CsvToProductsConcreteTransformer
+    {
+        return new CsvToProductsConcreteTransformer(
+            $this->getUtilCsvService(),
+            $this->getRepository()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToProductListFacadeInterface
      */
     public function getProductListFacade(): ProductListGuiToProductListFacadeInterface
@@ -146,5 +160,13 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getLocaleFacade(): ProductListGuiToLocaleFacadeInterface
     {
         return $this->getProvidedDependency(ProductListGuiDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductListGui\Dependency\Service\ProductListGuiToUtilCsvServiceInterface
+     */
+    public function getUtilCsvService(): ProductListGuiToUtilCsvServiceInterface
+    {
+        return $this->getProvidedDependency(ProductListGuiDependencyProvider::SERVICE_UTIL_CSV);
     }
 }

@@ -9,10 +9,12 @@ namespace Spryker\Zed\ProductListGui;
 
 use Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery;
 use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery;
+use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToLocaleFacadeBridge;
 use Spryker\Zed\ProductListGui\Dependency\Facade\ProductListGuiToProductListFacadeBridge;
+use Spryker\Zed\ProductListGui\Dependency\Service\ProductListGuiToUtilCsvServiceBridge;
 
 class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -20,7 +22,9 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_PRODUCT_LIST = 'FACADE_PRODUCT_LIST';
     public const PROPEL_QUERY_CATEGORY_ATTRIBUTE = 'PROPEL_QUERY_CATEGORY_ATTRIBUTE';
     public const PROPEL_QUERY_PRODUCT_ATTRIBUTE = 'PROPEL_QUERY_PRODUCT_ATTRIBUTE';
+    public const PROPEL_QUERY_PRODUCT = 'PROPEL_QUERY_PRODUCT';
     public const PLUGINS_FORM_EXTENSION = 'PLUGINS_FORM_EXTENSION';
+    public const SERVICE_UTIL_CSV = 'SERVICE_UTIL_CSV';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -116,6 +120,36 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::PROPEL_QUERY_PRODUCT_ATTRIBUTE] = function (Container $container) {
             return new SpyProductLocalizedAttributesQuery();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductPropelQuery(Container $container): Container
+    {
+        $container[static::PROPEL_QUERY_PRODUCT] = function (Container $container) {
+            return new SpyProductQuery();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilCsvService(Container $container): Container
+    {
+        $container[static::SERVICE_UTIL_CSV] = function (Container $container) {
+            return new ProductListGuiToUtilCsvServiceBridge(
+                $container->getLocator()->utilCsv()->service()
+            );
         };
 
         return $container;

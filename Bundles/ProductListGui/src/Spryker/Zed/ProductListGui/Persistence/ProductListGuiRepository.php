@@ -20,7 +20,9 @@ class ProductListGuiRepository extends AbstractRepository implements ProductList
     /** @see \Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap::COL_NAME */
     public const COLUMN_CATEGORY_NAME = 'name';
     /** @see \Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT */
-    public const COLUMN_ID_PRODUCT = 'fk_product';
+    public const COLUMN_FK_PRODUCT = 'fk_product';
+    /** @see \Orm\Zed\Product\Persistence\Map\SpyProductTableMap::COL_ID_PRODUCT */
+    public const COLUMN_ID_PRODUCT = 'id_product';
     /** @see \Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap::COL_NAME */
     public const COLUMN_PRODUCT_NAME = 'name';
 
@@ -67,7 +69,7 @@ class ProductListGuiRepository extends AbstractRepository implements ProductList
         $productAttributes = $this->getFactory()
             ->getProductAttributePropelQuery()
             ->select([
-                static::COLUMN_ID_PRODUCT,
+                static::COLUMN_FK_PRODUCT,
                 static::COLUMN_PRODUCT_NAME,
             ])
             ->filterByFkLocale($localeTransfer->getIdLocale())
@@ -75,10 +77,26 @@ class ProductListGuiRepository extends AbstractRepository implements ProductList
 
         $productNames = [];
         foreach ($productAttributes as $productAttribute) {
-            $idProduct = $productAttribute[static::COLUMN_ID_PRODUCT];
+            $idProduct = $productAttribute[static::COLUMN_FK_PRODUCT];
             $productNames[$idProduct] = $productAttribute[static::COLUMN_PRODUCT_NAME];
         }
 
         return $productNames;
+    }
+
+    /**
+     * @param string ...$skus
+     *
+     * @return int[] product ids
+     */
+    public function getProductsIdsFromSkus(string ... $skus): array
+    {
+        return $this->getFactory()
+            ->getProductQuery()
+            ->filterBySku_In($skus)
+            ->select([
+                static::COLUMN_ID_PRODUCT,
+            ])
+            ->find();
     }
 }

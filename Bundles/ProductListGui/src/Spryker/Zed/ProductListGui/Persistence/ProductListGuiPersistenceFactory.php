@@ -30,4 +30,12 @@ class ProductListGuiPersistenceFactory extends AbstractPersistenceFactory
     {
         return $this->getProvidedDependency(ProductListGuiDependencyProvider::PROPEL_QUERY_PRODUCT_ATTRIBUTE);
     }
+
+    /**
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    public function getProductQuery()
+    {
+        return $this->getProvidedDependency(ProductListGuiDependencyProvider::PROPEL_QUERY_PRODUCT);
+    }
 }

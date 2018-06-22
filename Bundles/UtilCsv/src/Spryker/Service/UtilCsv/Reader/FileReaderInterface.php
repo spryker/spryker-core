@@ -5,18 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\UtilCsv;
+namespace Spryker\Service\UtilCsv\Reader;
 
 use SplFileObject;
 
-interface UtilCsvServiceInterface
+interface FileReaderInterface
 {
     /**
-     * Specification:
-     * - Get string[][] from file object
-     *
-     * @api
-     *
      * @param \SplFileObject $file
      *
      * @return array

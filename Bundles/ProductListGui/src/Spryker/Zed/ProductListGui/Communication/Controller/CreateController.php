@@ -9,6 +9,9 @@ namespace Spryker\Zed\ProductListGui\Communication\Controller;
 
 use Generated\Shared\Transfer\ProductListTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Spryker\Zed\ProductListGui\Communication\Form\ProductListForm;
+use Spryker\Zed\ProductListGui\Communication\Form\ProductListProductConcreteRelationType;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -40,7 +43,7 @@ class CreateController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $productListTransfer = $form->getData();
+            $productListTransfer = $this->getTransferFromForm($form);
             $productListTransfer = $this->getFactory()
                 ->getProductListFacade()
                 ->saveProductList($productListTransfer);
@@ -81,5 +84,32 @@ class CreateController extends AbstractController
         return $this->jsonResponse(
             $productConcreteTable->fetchData()
         );
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $form
+     *
+     * @return \Generated\Shared\Transfer\ProductListTransfer
+     */
+    protected function getTransferFromForm(FormInterface $form): ProductListTransfer
+    {
+        /** @var \Generated\Shared\Transfer\ProductListTransfer $productListTransfer */
+        $productListTransfer = $form->getData();
+
+        /** @var \SplFileObject $productsCsvFile */
+        $productsCsvFile = $form
+            ->get(ProductListForm::FIELD_PRODUCTS)
+            ->get(ProductListProductConcreteRelationType::FIELD_FILE_UPLOAD)
+            ->getData();
+        if ($productsCsvFile) {
+            $productListProductConcreteRelationTransfer = $productListTransfer->getProductListProductConcreteRelation();
+            $productListProductConcreteRelationTransfer = $this->getFactory()
+                ->createCsvToProductsConcreteTransformer()
+                ->applyCsvFile($productsCsvFile, $productListProductConcreteRelationTransfer);
+
+            $productListTransfer->setProductListProductConcreteRelation($productListProductConcreteRelationTransfer);
+        }
+
+        return $productListTransfer;
     }
 }
