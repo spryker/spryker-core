@@ -54,7 +54,7 @@ class ProductListDataProvider
             ProductListForm::FIELD_CATEGORIES => $this->categoryDataProvider->getOptions(),
             ProductListForm::FIELD_PRODUCTS => $this->productConcreteRelationDataProvider->getOptions(),
             ProductListForm::OPTION_DISABLE_GENERAL => $productListTransfer && $productListTransfer->getIdProductList(),
-            ProductListForm::OPTION_OWNER_TYPES => $this->getOwnerTypes(),
+            ProductListForm::OPTION_OWNER_TYPES => $this->getOwnerTypes(), //todo
         ];
 
         return $this->updateOptions($options);

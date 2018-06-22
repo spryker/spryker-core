@@ -6,8 +6,10 @@
     'productTable': productTable,
 }) }}
 
-<h3>Assigned products</h3>
+{% if assignedProductConcreteTabs is defined %}
+    <h3>Assigned products</h3>
 
-{{ tabs(assignedProductConcreteTabs, {
-    'productTable': productAssignedTable,
-}) }}
+    {{ tabs(assignedProductConcreteTabs, {
+        'productTable': productAssignedTable,
+    }) }}
+{% endif %}

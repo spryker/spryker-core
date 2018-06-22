@@ -118,7 +118,7 @@ class MerchantRelationshipRepository extends AbstractRepository implements Merch
         $merchantRelationEntities = $this->getFactory()
             ->createMerchantRelationshipQuery()
             ->leftJoinCompanyBusinessUnit()
-            ->leftJoinMerchant()
+            ->innerJoinWithMerchant()
             ->find();
 
         $merchantRelationTransfers = [];

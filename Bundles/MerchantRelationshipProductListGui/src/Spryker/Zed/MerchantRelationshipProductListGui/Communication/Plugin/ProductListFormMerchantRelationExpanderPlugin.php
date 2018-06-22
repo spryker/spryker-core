@@ -53,8 +53,8 @@ class ProductListFormMerchantRelationExpanderPlugin extends AbstractPlugin imple
      */
     public function getOptions(array $options): array
     {
-        $options[static::OPTION_MERCHANT_RELATION_LIST] = $this->getFacade()->listMerchantRelation();
-
-        return $options;
+        return $this->getFactory()
+            ->createPluginListMerchantRelationDataProvider()
+            ->getOptions($options);
     }
 }

@@ -60,12 +60,14 @@ class CreateController extends AbstractController
         $tabs = $this->getFactory()->createProductListTabs();
         $productConcreteTable = $this->getFactory()->createProductConcreteTable();
         $productConcreteTabs = $this->getFactory()->createProductConcreteTabs();
+        $plugins = $this->getFactory()->getProductListCreateFormExpanderPlugins();
 
         return $this->viewResponse([
             'form' => $form->createView(),
             'productListFormTabs' => $tabs->createView(),
             'productConcreteFormTabs' => $productConcreteTabs->createView(),
             'productTable' => $productConcreteTable->render(),
+            'plugins' => $plugins,
         ]);
     }
 
