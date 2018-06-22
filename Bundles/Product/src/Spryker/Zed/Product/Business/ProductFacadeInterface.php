@@ -170,6 +170,20 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
+     * - Returns the abstract product ID of the given concrete product ID if it exists.
+     * - Throws exception if no abstract product is found.
+     *
+     * @api
+     *
+     * @param int $idConcrete
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
+     *
+     * @return int
+     */
+    public function getProductAbstractIdByConcreteId($idConcrete);
+    /**
+     * Specification:
      * - Adds concrete product with attributes and localized attributes.
      * - Throws exception if a concrete product with the same SKU exists.
      * - Triggers "before" and "after" CREATE plugins.

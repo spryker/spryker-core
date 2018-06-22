@@ -44,6 +44,7 @@ class EntityDefinitionNormalizer extends DefinitionNormalizer
         $filter = new UnderscoreToCamelCase();
         foreach ($transferDefinitions as $transferDefinition) {
             $transferName = $filter->filter($transferDefinition[self::KEY_NAME]) . static::KEY_ENTITY;
+            if (!isset($transferDefinition[self::KEY_COLUMN])) continue;
             $properties = $this->normalizeAttributes($transferDefinition[self::KEY_COLUMN], $transferDefinition[self::KEY_BUNDLE]);
             if (isset($transferDefinition[self::KEY_FOREIGN_KEY])) {
                 $properties = $this->normalizeForeignKeys($transferDefinition[self::KEY_FOREIGN_KEY], $properties, $transferDefinition[self::KEY_BUNDLE]);

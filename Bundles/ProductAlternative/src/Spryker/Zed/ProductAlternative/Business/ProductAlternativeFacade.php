@@ -64,4 +64,20 @@ class ProductAlternativeFacade extends AbstractFacade implements ProductAlternat
             ->createProductAlternativeWriter()
             ->deleteProductAlternativeByIdProductAlternative($idProductAlternative);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $productIds
+     *
+     * @return bool
+     */
+    public function doAllConcreteProductsHaveAlternatives(array $productIds): bool
+    {
+        return $this->getFactory()
+            ->getRepository()
+            ->doAllConcreteProductsHaveAlternatives($productIds);
+    }
 }

@@ -27,6 +27,19 @@ interface ProductLabelFacadeInterface
 
     /**
      * Specification:
+     * - Finds a product label for the given NAME in the database
+     * - Returns a product-label transfer or null in case it does not exist
+     *
+     * @api
+     *
+     * @param string $labelName
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelTransfer|null
+     */
+    public function findLabelByLabelName($labelName);
+
+    /**
+     * Specification:
      * - Finds all existing product labels in the database
      * - Returns a collection of product-label transfers
      *

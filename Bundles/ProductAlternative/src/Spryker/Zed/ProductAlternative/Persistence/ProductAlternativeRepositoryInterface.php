@@ -41,6 +41,18 @@ interface ProductAlternativeRepositoryInterface
 
     /**
      * Specification:
+     * - Checks if all given products have alternatives
+     *
+     * @api
+     *
+     * @param int[] $productIds
+     *
+     * @return bool
+     */
+    public function doAllConcreteProductsHaveAlternatives(array $productIds);
+
+    /**
+     * Specification:
      * - Collects all abstract product data for product alternative and map it to ProductAlternativeListItemTransfer.
      * - ProductAlternativeListItem transfer acts as a data row for Product Alternatives table view.
      * - Requires id and isActive values passed in $productAbstractTransfer.

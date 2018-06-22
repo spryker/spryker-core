@@ -50,4 +50,16 @@ interface ProductAlternativeFacadeInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function persistProductAlternative(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
+
+    /**
+     * Specification:
+     * - Checks if all given fk_product have alternatives.
+     *
+     * @api
+     *
+     * @param int[] $productIds
+     *
+     * @return bool
+     */
+    public function doAllConcreteProductsHaveAlternatives(array $productIds): bool;
 }

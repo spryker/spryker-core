@@ -279,6 +279,34 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     }
 
     /**
+     * @param int $idProductConcrete
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
+
+     * @return int
+     */
+    public function getProductAbstractIdByConcreteId($idProductConcrete)
+    {
+        $productConcrete = $this->productQueryContainer
+            ->queryProduct()
+            ->filterByIdProduct($idProductConcrete)
+            ->findOne();
+
+        if (!$productConcrete) {
+            throw new MissingProductException(
+                sprintf(
+                    'Tried to retrieve a product concrete with id %s, but it does not exist.',
+                    $idProductConcrete
+                )
+            );
+        }
+
+        return $productConcrete->getFkProductAbstract();
+    }
+
+
+
+    /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *

@@ -17,6 +17,13 @@ interface LabelReaderInterface
     public function findByIdProductLabel($idProductLabel);
 
     /**
+     * @param string $labelName
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelTransfer|null
+     */
+    public function findByNameProductLabel($labelName);
+
+    /**
      * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
      */
     public function findAll();

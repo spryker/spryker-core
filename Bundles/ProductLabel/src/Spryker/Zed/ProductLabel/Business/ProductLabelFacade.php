@@ -40,6 +40,23 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
      *
      * @api
      *
+     * @param string $labelName
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelTransfer|null
+     */
+    public function findLabelByLabelName($labelName)
+    {
+        return $this
+            ->getFactory()
+            ->createLabelReader()
+            ->findByNameProductLabel($labelName);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
      */
     public function findAllLabels()

@@ -58,6 +58,25 @@ class LabelReader implements LabelReaderInterface
     }
 
     /**
+     * @param string $labelName
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelTransfer|null
+     */
+    public function findByNameProductLabel($labelName)
+    {
+        $productLabelEntity = $this->findEntityByNameProductLabel($labelName);
+
+        if (!$productLabelEntity) {
+            return null;
+        }
+
+        $productLabelTransfer = $this->createTransferFromEntity($productLabelEntity);
+        $this->addLocalizedAttributes($productLabelTransfer);
+
+        return $productLabelTransfer;
+    }
+
+    /**
      * @param int $idProductLabel
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabel|null
@@ -67,6 +86,19 @@ class LabelReader implements LabelReaderInterface
         return $this
             ->queryContainer
             ->queryProductLabelById($idProductLabel)
+            ->findOne();
+    }
+
+    /**
+     * @param string $labelName
+     *
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabel|null
+     */
+    protected function findEntityByNameProductLabel($labelName)
+    {
+        return $this
+            ->queryContainer
+            ->queryProductLabelByName($labelName)
             ->findOne();
     }
 
