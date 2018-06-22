@@ -47,7 +47,7 @@ class FileManagerStorageRepository extends AbstractRepository implements FileMan
     /**
      * @param array $fileStorageIds
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\SpyFileStorageEntityTransfer[]
+     * @return \ArrayObject|\Generated\Shared\Transfer\FileStorageTransfer[]
      */
     public function getFileStoragesByIds(array $fileStorageIds)
     {

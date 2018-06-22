@@ -12,14 +12,14 @@ interface FileManagerStorageRepositoryInterface
     /**
      * @param array $fileIds
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\SpyFileEntityTransfer[]
+     * @return \ArrayObject|\Generated\Shared\Transfer\FileTransfer[]
      */
     public function getFilesByIds(array $fileIds);
 
     /**
      * @param array $fileStorageIds
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\SpyFileStorageEntityTransfer[]
+     * @return \ArrayObject|\Generated\Shared\Transfer\FileStorageTransfer[]
      */
     public function getFileStoragesByIds(array $fileStorageIds);
 }

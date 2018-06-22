@@ -93,11 +93,11 @@ class FileDirectoryRemover implements FileDirectoryRemoverInterface
 
         $fileSystemDeleteDirectoryTransfer = new FileSystemDeleteDirectoryTransfer();
         $fileSystemDeleteDirectoryTransfer->setFileSystemName($this->config->getStorageName());
-        $fileSystemDeleteDirectoryTransfer->setPath($idFileDirectory);
+        $fileSystemDeleteDirectoryTransfer->setPath((string)$idFileDirectory);
 
         $fileSystemQueryTransfer = new FileSystemQueryTransfer();
         $fileSystemQueryTransfer->setFileSystemName($this->config->getStorageName());
-        $fileSystemQueryTransfer->setPath($idFileDirectory);
+        $fileSystemQueryTransfer->setPath((string)$idFileDirectory);
 
         if ($this->fileSystemService->has($fileSystemQueryTransfer)) {
             $this->fileSystemService->deleteDirectory($fileSystemDeleteDirectoryTransfer);

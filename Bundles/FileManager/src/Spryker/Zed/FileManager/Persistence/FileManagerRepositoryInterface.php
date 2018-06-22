@@ -63,14 +63,14 @@ interface FileManagerRepositoryInterface
     /**
      * @param int $idMimeType
      *
-     * @return \Generated\Shared\Transfer\MimeTypeResponseTransfer
+     * @return \Generated\Shared\Transfer\MimeTypeTransfer|null
      */
     public function getMimeType(int $idMimeType);
 
     /**
      * @param \Generated\Shared\Transfer\MimeTypeTransfer $mimeTypeTransfer
      *
-     * @return \Generated\Shared\Transfer\MimeTypeResponseTransfer
+     * @return \Generated\Shared\Transfer\MimeTypeTransfer|null
      */
     public function getMimeTypeByIdMimeTypeAndName(MimeTypeTransfer $mimeTypeTransfer);
 

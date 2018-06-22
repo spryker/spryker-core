@@ -31,7 +31,7 @@ class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileMan
     /**
      * @param \Generated\Shared\Transfer\FileManagerDataTransfer $fileManagerDataTransfer
      *
-     * @return int
+     * @return \Generated\Shared\Transfer\FileManagerDataTransfer
      */
     public function saveFile(FileManagerDataTransfer $fileManagerDataTransfer)
     {
@@ -133,7 +133,7 @@ class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileMan
     /**
      * @api
      *
-     * @return \Generated\Shared\Transfer\FileManagerDataTransfer
+     * @return \Generated\Shared\Transfer\FileDirectoryTreeTransfer
      */
     public function findFileDirectoryTree()
     {

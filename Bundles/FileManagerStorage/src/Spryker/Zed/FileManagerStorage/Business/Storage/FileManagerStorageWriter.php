@@ -66,7 +66,7 @@ class FileManagerStorageWriter implements FileManagerStorageWriterInterface
     /**
      * @param array $fileIds
      *
-     * @return void
+     * @return bool
      */
     public function publish(array $fileIds)
     {
@@ -94,16 +94,16 @@ class FileManagerStorageWriter implements FileManagerStorageWriterInterface
 
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\FileTransfer[] $fileTransfers
-     * @param \ArrayObject|\Generated\Shared\Transfer\SpyFileStorageEntityTransfer[] $fileStorageEntityTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\FileStorageTransfer[] $fileStorageTransfers
      *
      * @return bool
      */
-    protected function executePublishTransaction(ArrayObject $fileTransfers, ArrayObject $fileStorageEntityTransfers)
+    protected function executePublishTransaction(ArrayObject $fileTransfers, ArrayObject $fileStorageTransfers)
     {
         $availableLocales = $this->localeFacade->getLocaleCollection();
 
         foreach ($availableLocales as $locale) {
-            $this->storeDataSet($fileTransfers, $fileStorageEntityTransfers, $locale);
+            $this->storeDataSet($fileTransfers, $fileStorageTransfers, $locale);
         }
 
         return true;

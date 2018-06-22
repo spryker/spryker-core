@@ -60,7 +60,7 @@ class DeleteFileController extends AbstractController
     {
         $referer = $request
             ->headers
-            ->get(static::REFERER_PARAM);
+            ->get(static::REFERER_PARAM, '/', true);
 
         return $this->redirectResponse($referer);
     }

@@ -213,7 +213,7 @@ class FileManagerRepository extends AbstractRepository implements FileManagerRep
     /**
      * @param \Generated\Shared\Transfer\MimeTypeTransfer $mimeTypeTransfer
      *
-     * @return \Generated\Shared\Transfer\MimeTypeResponseTransfer
+     * @return \Generated\Shared\Transfer\MimeTypeTransfer|null
      */
     public function getMimeTypeByIdMimeTypeAndName(MimeTypeTransfer $mimeTypeTransfer)
     {

@@ -12,14 +12,14 @@ interface FileManagerStorageWriterInterface
     /**
      * @param array $fileIds
      *
-     * @return void
+     * @return bool
      */
     public function publish(array $fileIds);
 
     /**
      * @param array $fileIds
      *
-     * @return void
+     * @return bool
      */
     public function unpublish(array $fileIds);
 }

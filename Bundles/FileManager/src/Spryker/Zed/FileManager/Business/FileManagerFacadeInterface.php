@@ -151,7 +151,7 @@ interface FileManagerFacadeInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\FileManagerDataTransfer
+     * @return \Generated\Shared\Transfer\FileDirectoryTreeTransfer
      */
     public function findFileDirectoryTree();
 

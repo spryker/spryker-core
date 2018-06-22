@@ -18,7 +18,7 @@ interface FileManagerGuiToFileManagerFacadeInterface
     /**
      * @param \Generated\Shared\Transfer\FileManagerDataTransfer $fileManagerDataTransfer
      *
-     * @return int
+     * @return \Generated\Shared\Transfer\FileManagerDataTransfer
      */
     public function saveFile(FileManagerDataTransfer $fileManagerDataTransfer);
 
@@ -99,7 +99,7 @@ interface FileManagerGuiToFileManagerFacadeInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\FileManagerDataTransfer
+     * @return \Generated\Shared\Transfer\FileDirectoryTreeTransfer
      */
     public function findFileDirectoryTree();
 

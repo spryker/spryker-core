@@ -170,7 +170,7 @@ class FileReader implements FileReaderInterface
         $this->keyGenerator->setResource(static::TYPE_FILE);
 
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
-        $synchronizationDataTransfer->setReference($idFile);
+        $synchronizationDataTransfer->setReference((string)$idFile);
         $synchronizationDataTransfer->setLocale(
             $this->localeClient->getCurrentLocale()
         );

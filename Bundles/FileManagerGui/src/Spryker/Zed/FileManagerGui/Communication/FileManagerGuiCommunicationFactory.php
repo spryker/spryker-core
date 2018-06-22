@@ -68,7 +68,7 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\FileManagerGui\Communication\Table\FileTable
+     * @return \Spryker\Zed\FileManagerGui\Communication\Table\MimeTypeSettingsTable
      */
     public function createMimeTypeSettingsTable()
     {
