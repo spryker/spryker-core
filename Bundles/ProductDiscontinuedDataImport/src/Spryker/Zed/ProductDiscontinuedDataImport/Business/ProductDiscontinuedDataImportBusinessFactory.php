@@ -10,9 +10,9 @@ namespace Spryker\Zed\ProductDiscontinuedDataImport\Business;
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
-use Spryker\Zed\ProductDiscontinuedDataImport\Business\Step\ConcreteSkuToIdProductStep;
-use Spryker\Zed\ProductDiscontinuedDataImport\Business\Step\NoteExtractorStep;
-use Spryker\Zed\ProductDiscontinuedDataImport\Business\Step\ProductDiscontinuedWriterStep;
+use Spryker\Zed\ProductDiscontinuedDataImport\Business\ProductDiscontinuedImportStep\ConcreteSkuToIdProductStep;
+use Spryker\Zed\ProductDiscontinuedDataImport\Business\ProductDiscontinuedImportStep\NoteExtractorStep;
+use Spryker\Zed\ProductDiscontinuedDataImport\Business\ProductDiscontinuedImportStep\ProductDiscontinuedWriterStep;
 
 /**
  * @method \Spryker\Zed\ProductDiscontinuedDataImport\ProductDiscontinuedDataImportConfig getConfig()

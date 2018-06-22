@@ -1,0 +1,25 @@
+{% set productAlternatives = form.vars.data.productAlternatives %}
+
+{# TODO: Translations must be checked. #}
+
+<div class="well">
+    {% filter trans|raw %}
+        <h3>Product Alternatives</h3>
+        <p>This is a list of alternative products that current Concrete Product has.</p>
+        <p><i>Note: You can add new product alternative using text field below.</i></p>
+    {% endfilter %}
+</div>
+
+<div class="form-group">
+    {{ form_label(form['alternative_products']) }}
+    {{ form_errors(form['alternative_products']) }}
+    {{ form_widget(form['alternative_products']) }}
+</div>
+
+<div id="items" class="col-sm-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+    <div>
+        {% include '@ProductAlternativeGui/ProductAlternative/blocks/product-alternatives-table.twig' %}
+    </div>
+</div>
+
+<script src="/assets/js/spryker-zed-roductalternative-assign.js"></script>
