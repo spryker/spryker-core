@@ -35,18 +35,26 @@ class ProductDiscontinuedWriter implements ProductDiscontinuedWriterInterface
     protected $productDiscontinuedRepository;
 
     /**
+     * @var \Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinued\ProductDiscontinuedPluginExecutorInterface
+     */
+    protected $productDiscontinuedPluginExecutor;
+
+    /**
      * @param \Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedEntityManagerInterface $productDiscontinuedEntityManager
      * @param \Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedRepositoryInterface $productDiscontinuedRepository
+     * @param \Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinued\ProductDiscontinuedPluginExecutorInterface $productDiscontinuedPluginExecutor
      * @param \Spryker\Zed\ProductDiscontinued\ProductDiscontinuedConfig $productDiscontinuedConfig
      */
     public function __construct(
         ProductDiscontinuedEntityManagerInterface $productDiscontinuedEntityManager,
         ProductDiscontinuedRepositoryInterface $productDiscontinuedRepository,
+        ProductDiscontinuedPluginExecutorInterface $productDiscontinuedPluginExecutor,
         ProductDiscontinuedConfig $productDiscontinuedConfig
     ) {
         $this->productDiscontinuedEntityManager = $productDiscontinuedEntityManager;
         $this->productDiscontinuedConfig = $productDiscontinuedConfig;
         $this->productDiscontinuedRepository = $productDiscontinuedRepository;
+        $this->productDiscontinuedPluginExecutor = $productDiscontinuedPluginExecutor;
     }
 
     /**
@@ -100,6 +108,7 @@ class ProductDiscontinuedWriter implements ProductDiscontinuedWriterInterface
 
         $productDiscontinuedTransfer = $this->productDiscontinuedEntityManager
             ->saveProductDiscontinued($productDiscontinuedTransfer);
+        $this->productDiscontinuedPluginExecutor->executePostProductDiscontinuePlugins($productDiscontinuedTransfer);
 
         return (new ProductDiscontinuedResponseTransfer())
             ->setProductDiscontinued($productDiscontinuedTransfer)
@@ -116,6 +125,7 @@ class ProductDiscontinuedWriter implements ProductDiscontinuedWriterInterface
     ): ProductDiscontinuedResponseTransfer {
         $this->productDiscontinuedEntityManager->deleteProductDiscontinuedNotes($productDiscontinuedTransfer);
         $this->productDiscontinuedEntityManager->deleteProductDiscontinued($productDiscontinuedTransfer);
+        $this->productDiscontinuedPluginExecutor->executePostDeleteProductDiscontinuedPlugins($productDiscontinuedTransfer);
 
         return (new ProductDiscontinuedResponseTransfer())->setIsSuccessful(true);
     }
