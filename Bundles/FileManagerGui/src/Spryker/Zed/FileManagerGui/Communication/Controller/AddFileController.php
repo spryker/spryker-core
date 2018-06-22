@@ -9,17 +9,15 @@ namespace Spryker\Zed\FileManagerGui\Communication\Controller;
 
 use Exception;
 use Generated\Shared\Transfer\FileInfoTransfer;
-use Generated\Shared\Transfer\FileManagerDataTransfer;
 use Generated\Shared\Transfer\FileTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\FileManagerGui\Communication\FileManagerGuiCommunicationFactory getFactory()
  */
-class AddFileController extends AbstractController
+class AddFileController extends AbstractUploadFileController
 {
     protected const FILE_DIRECTORY_ID = 'file-directory-id';
 
@@ -73,24 +71,6 @@ class AddFileController extends AbstractController
     /**
      * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
      *
-     * @return \Generated\Shared\Transfer\FileManagerDataTransfer
-     */
-    protected function createFileManagerDataTransfer(FileTransfer $fileTransfer)
-    {
-        $fileManagerDataTransfer = new FileManagerDataTransfer();
-        $this->setFileName($fileTransfer);
-
-        $fileManagerDataTransfer->setFile($fileTransfer);
-        $fileManagerDataTransfer->setFileInfo($this->createFileInfoTransfer($fileTransfer));
-        $fileManagerDataTransfer->setContent($this->getFileContent($fileTransfer));
-        $fileManagerDataTransfer->setFileLocalizedAttributes($fileTransfer->getLocalizedAttributes());
-
-        return $fileManagerDataTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
-     *
      * @return \Generated\Shared\Transfer\FileInfoTransfer
      */
     protected function createFileInfoTransfer(FileTransfer $fileTransfer)
@@ -120,19 +100,6 @@ class AddFileController extends AbstractController
         }
 
         return $fileTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
-     *
-     * @return bool|string
-     */
-    protected function getFileContent(FileTransfer $fileTransfer)
-    {
-        /** @var \Symfony\Component\HttpFoundation\File\UploadedFile $uploadedFile */
-        $uploadedFile = $fileTransfer->getFileContent();
-
-        return file_get_contents($uploadedFile->getRealPath());
     }
 
     /**

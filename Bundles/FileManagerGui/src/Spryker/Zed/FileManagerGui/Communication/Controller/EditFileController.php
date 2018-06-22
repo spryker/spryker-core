@@ -9,18 +9,16 @@ namespace Spryker\Zed\FileManagerGui\Communication\Controller;
 
 use Exception;
 use Generated\Shared\Transfer\FileInfoTransfer;
-use Generated\Shared\Transfer\FileManagerDataTransfer;
 use Generated\Shared\Transfer\FileTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\FileManagerGui\Communication\Form\FileForm;
-use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\FileManagerGui\Communication\FileManagerGuiCommunicationFactory getFactory()
  */
-class EditFileController extends AbstractController
+class EditFileController extends AbstractUploadFileController
 {
     protected const URL_PARAM_ID_FILE = 'id-file';
 
@@ -89,24 +87,6 @@ class EditFileController extends AbstractController
     /**
      * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
      *
-     * @return \Generated\Shared\Transfer\FileManagerDataTransfer
-     */
-    protected function createFileManagerDataTransfer(FileTransfer $fileTransfer)
-    {
-        $fileManagerDataTransfer = new FileManagerDataTransfer();
-        $this->setFileName($fileTransfer);
-
-        $fileManagerDataTransfer->setFile($fileTransfer);
-        $fileManagerDataTransfer->setFileInfo($this->createFileInfoTransfer($fileTransfer));
-        $fileManagerDataTransfer->setContent($this->getFileContent($fileTransfer));
-        $fileManagerDataTransfer->setFileLocalizedAttributes($fileTransfer->getLocalizedAttributes());
-
-        return $fileManagerDataTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
-     *
      * @return \Generated\Shared\Transfer\FileTransfer
      */
     protected function setFileName(FileTransfer $fileTransfer)
@@ -157,22 +137,5 @@ class EditFileController extends AbstractController
         $fileTransfer->setIdFile($data[FileForm::FIELD_ID_FILE]);
 
         return $fileTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
-     *
-     * @return bool|string
-     */
-    protected function getFileContent(FileTransfer $fileTransfer)
-    {
-        /** @var \Symfony\Component\HttpFoundation\File\UploadedFile $uploadedFile */
-        $uploadedFile = $fileTransfer->getFileContent();
-
-        if ($uploadedFile === null) {
-            return null;
-        }
-
-        return file_get_contents($uploadedFile->getRealPath());
     }
 }
