@@ -8,10 +8,15 @@
 namespace Spryker\Zed\MerchantRelationshipProductListGui\Communication\DataProvider;
 
 use Spryker\Zed\MerchantRelationshipProductListGui\Communication\Form\ProductListMerchantRelationForm;
+use Spryker\Zed\MerchantRelationshipProductListGui\Communication\Plugin\ProductListFormMerchantRelationExpanderPlugin;
 use Spryker\Zed\MerchantRelationshipProductListGui\Dependency\Facade\MerchantRelationshipProductListGuiToMerchantRelationshipFacadeInterface;
 
 class ProductListDataProvider
 {
+    /** @see \Spryker\Zed\ProductListGui\Communication\Form\ProductListForm::OPTION_OWNER_TYPES */
+    protected const OPTION_OWNER_TYPES = 'OPTION_OWNER_TYPES';
+    protected const OWNER_TYPES_NAME = 'Merchant Relation';
+
     /**
      * @var \Spryker\Zed\MerchantRelationshipProductListGui\Dependency\Facade\MerchantRelationshipProductListGuiToMerchantRelationshipFacadeInterface
      */
@@ -46,6 +51,21 @@ class ProductListDataProvider
         }
 
         $options[ProductListMerchantRelationForm::OPTION_MERCHANT_RELATION_LIST] = $merchantRelationNames;
+        $options = $this->addOwnerTypeNameOption($options);
+
+        return $options;
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return array
+     */
+    protected function addOwnerTypeNameOption(array $options): array
+    {
+        $ownerTypeNames = $options[static::OPTION_OWNER_TYPES];
+        $ownerTypeNames[static::OWNER_TYPES_NAME] = ProductListFormMerchantRelationExpanderPlugin::FIELD_NAME;
+        $options[static::OPTION_OWNER_TYPES] = $ownerTypeNames;
 
         return $options;
     }

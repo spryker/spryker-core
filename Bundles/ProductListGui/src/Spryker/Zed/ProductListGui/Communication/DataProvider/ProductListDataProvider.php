@@ -54,7 +54,7 @@ class ProductListDataProvider
             ProductListForm::FIELD_CATEGORIES => $this->categoryDataProvider->getOptions(),
             ProductListForm::FIELD_PRODUCTS => $this->productConcreteRelationDataProvider->getOptions(),
             ProductListForm::OPTION_DISABLE_GENERAL => $productListTransfer && $productListTransfer->getIdProductList(),
-            ProductListForm::OPTION_OWNER_TYPES => $this->getOwnerTypes(), //todo
+            ProductListForm::OPTION_OWNER_TYPES => [],
         ];
 
         return $this->updateOptions($options);
@@ -68,20 +68,6 @@ class ProductListDataProvider
     public function getData(ProductListTransfer $productListTransfer): ProductListTransfer
     {
         return $productListTransfer;
-    }
-
-    /**
-     * @return array
-     */
-    protected function getOwnerTypes(): array
-    {
-        $ownerTypeNames = [];
-
-        foreach ($this->productListCreateFormExpanderPlugins as $productListCreateFormExpanderPlugin) {
-            $ownerTypeNames[] = $productListCreateFormExpanderPlugin->getName();
-        }
-
-        return $ownerTypeNames;
     }
 
     /**
