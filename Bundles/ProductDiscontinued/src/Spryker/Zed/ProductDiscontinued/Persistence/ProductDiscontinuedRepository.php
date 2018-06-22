@@ -19,6 +19,8 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 class ProductDiscontinuedRepository extends AbstractRepository implements ProductDiscontinuedRepositoryInterface
 {
     /**
+     * @uses Product
+     *
      * @param \Generated\Shared\Transfer\ProductDiscontinuedTransfer $productDiscontinuedTransfer
      *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedTransfer|null
@@ -26,15 +28,17 @@ class ProductDiscontinuedRepository extends AbstractRepository implements Produc
     public function findProductDiscontinuedByProductId(
         ProductDiscontinuedTransfer $productDiscontinuedTransfer
     ): ?ProductDiscontinuedTransfer {
-        $productDiscontinuedQuery = $this->getFactory()
+        $productDiscontinuedEntity = $this->getFactory()
             ->createProductDiscontinuedQuery()
-            ->filterByFkProduct($productDiscontinuedTransfer->getFkProduct());
+            ->leftJoinWithSpyProductDiscontinuedNote()
+            ->leftJoinWithProduct()
+            ->filterByFkProduct($productDiscontinuedTransfer->getFkProduct())
+            ->find();
 
-        $productDiscontinuedEntityTransfer = $this->buildQueryFromCriteria($productDiscontinuedQuery)->findOne();
-        if ($productDiscontinuedEntityTransfer) {
+        if ($productDiscontinuedEntity->count()) {
             return $this->getFactory()
                 ->createProductDiscontinuedMapper()
-                ->mapProductDiscontinuedTransfer($productDiscontinuedEntityTransfer);
+                ->mapProductDiscontinuedTransfer($productDiscontinuedEntity->getFirst());
         }
 
         return null;
@@ -45,21 +49,23 @@ class ProductDiscontinuedRepository extends AbstractRepository implements Produc
      */
     public function findProductsToDeactivate(): ProductDiscontinuedCollectionTransfer
     {
-        $productDiscontinuedQuery = $this->getFactory()
+        $productDiscontinuedEntityCollection = $this->getFactory()
             ->createProductDiscontinuedQuery()
-            ->filterByActiveUntil(['max' => time()], Criteria::LESS_THAN);
-        $productDiscontinuedEntityTransfer = $this->buildQueryFromCriteria($productDiscontinuedQuery)->find();
+            ->filterByActiveUntil(['max' => time()], Criteria::LESS_THAN)
+            ->find();
 
-        if ($productDiscontinuedEntityTransfer) {
+        if ($productDiscontinuedEntityCollection->count()) {
             return $this->getFactory()
                 ->createProductDiscontinuedMapper()
-                ->mapTransferCollection($productDiscontinuedEntityTransfer);
+                ->mapTransferCollection($productDiscontinuedEntityCollection);
         }
 
         return new ProductDiscontinuedCollectionTransfer();
     }
 
     /**
+     * @uses Product
+     *
      * @param \Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer $criteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer
@@ -69,6 +75,7 @@ class ProductDiscontinuedRepository extends AbstractRepository implements Produc
     ): ProductDiscontinuedCollectionTransfer {
         $productDiscontinuedQuery = $this->getFactory()
             ->createProductDiscontinuedQuery()
+            ->leftJoinWithSpyProductDiscontinuedNote()
             ->leftJoinWithProduct();
 
         if ($criteriaFilterTransfer->getIds()) {
@@ -76,12 +83,12 @@ class ProductDiscontinuedRepository extends AbstractRepository implements Produc
                 ->filterByIdProductDiscontinued_In($criteriaFilterTransfer->getIds());
         }
 
-        $productDiscontinuedEntityTransfer = $this->buildQueryFromCriteria($productDiscontinuedQuery)->find();
+        $productDiscontinuedEntityCollection = $productDiscontinuedQuery->find();
 
-        if ($productDiscontinuedEntityTransfer) {
+        if ($productDiscontinuedEntityCollection->count()) {
             return $this->getFactory()
                 ->createProductDiscontinuedMapper()
-                ->mapTransferCollection($productDiscontinuedEntityTransfer);
+                ->mapTransferCollection($productDiscontinuedEntityCollection);
         }
 
         return new ProductDiscontinuedCollectionTransfer();

@@ -3,7 +3,7 @@
 $autoloader = function ($className) {
 
     $namespaces = [
-        'Spryker'
+        'Spryker',
     ];
 
     $codeceptionSupportDirectories = [

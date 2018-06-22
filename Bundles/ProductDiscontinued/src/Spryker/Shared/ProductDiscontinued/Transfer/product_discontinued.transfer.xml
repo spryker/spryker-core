@@ -9,13 +9,26 @@
         <property name="sku" type="string"/>
         <property name="activeUntil" type="string"/>
         <property name="discontinuedOn" type="string"/>
+        <property name="ProductDiscontinuedNotes" type="ProductDiscontinuedNote[]" singular="ProductDiscontinuedNote"/>
+    </transfer>
+
+    <transfer name="ProductDiscontinuedNote">
+        <property name="idProductDiscontinuedNote" type="int"/>
+        <property name="fkProductDiscontinued" type="int"/>
+        <property name="fkLocale" type="int"/>
+        <property name="note" type="string"/>
+    </transfer>
+
+    <transfer name="ProductDiscontinuedNoteResponse">
+        <property name="productDiscontinuedNote" type="ProductDiscontinuedNote"/>
+        <property name="isSuccessful" type="bool"/>
     </transfer>
 
     <transfer name="ProductDiscontinuedCollection">
-        <property name="discontinueds" type="ProductDiscontinued[]" singular="discontinued"/>
+        <property name="DiscontinuedProducts" type="ProductDiscontinued[]" singular="DiscontinuedProduct"/>
     </transfer>
 
-    <transfer name="ProductDiscontinuedRequest">
+    <transfer name="ProductDiscontinueRequest">
         <property name="idProduct" type="int"/>
     </transfer>
 
@@ -30,6 +43,10 @@
 
     <transfer name="ProductDiscontinuedCriteriaFilter">
         <property name="ids" type="array"/>
+    </transfer>
+
+    <transfer name="ProductConcrete">
+        <property name="discontinuedNotes" type="ProductDiscontinuedNote[]" singular="discontinuedNote"/>
     </transfer>
 
 </transfers>

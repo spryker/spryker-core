@@ -7,6 +7,7 @@
 
 namespace Spryker\Yves\CmsBlock;
 
+use RuntimeException;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 
@@ -29,9 +30,12 @@ class CmsBlockDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @throws \RuntimeException
+     *
      * @return \Spryker\Yves\CmsContentWidget\Plugin\CmsTwigContentRendererPluginInterface
      */
     protected function getCmsBlockTwigContentRendererPlugin()
     {
+        throw new RuntimeException('Implement getCmsBlockTwigContentRendererPlugin().');
     }
 }

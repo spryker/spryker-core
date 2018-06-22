@@ -25,7 +25,7 @@ class ProductDiscontinuedStorageFactory extends AbstractFactory
             $this->getSynchronizationService()
         );
     }
-    
+
     /**
      * @return \Spryker\Client\ProductDiscontinuedStorage\Dependency\Client\ProductDiscontinuedStorageToStorageClientInterface
      */

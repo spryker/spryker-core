@@ -25,7 +25,10 @@ interface ShoppingListClientInterface
 {
     /**
      * Specification:
-     * TODO: specs
+     *  - Makes Zed request.
+     *  - Create new shopping list entity if it does not exist.
+     *  - Updates customer permissions.
+     *  - Get messages from zed request and put them to session.
      *
      * @api
      *
@@ -37,7 +40,10 @@ interface ShoppingListClientInterface
 
     /**
      * Specification:
-     * TODO: specs
+     *  - Makes Zed request.
+     *  - Update shopping list entity if it exist or create new.
+     *  - Updates customer permissions.
+     *  - Get messages from zed request and put them to session.
      *
      * @api
      *
@@ -49,7 +55,10 @@ interface ShoppingListClientInterface
 
     /**
      * Specification:
-     * TODO: Specs
+     *  - Makes Zed request.
+     *  - Remove shopping list.
+     *  - Updates customer permissions.
+     *  - Get messages from zed request and put them to session.
      *
      * @api
      *
@@ -61,7 +70,10 @@ interface ShoppingListClientInterface
 
     /**
      * Specification:
-     * TODO: Specs
+     *  - Makes Zed request.
+     *  - Add item to shopping list.
+     *  - Updates customer permissions.
+     *  - Get messages from zed request and put them to session.
      *
      * @api
      *
@@ -73,7 +85,10 @@ interface ShoppingListClientInterface
 
     /**
      * Specification:
-     * TODO: Specs
+     *  - Makes Zed request.
+     *  - Remove item by id.
+     *  - Updates customer permissions.
+     *  - Get messages from zed request and put them to session.
      *
      * @api
      *
@@ -85,7 +100,10 @@ interface ShoppingListClientInterface
 
     /**
      * Specification:
-     * TODO: Specs
+     *  - Makes Zed request.
+     *  - Load shopping list by id.
+     *  - Updates customer permissions.
+     *  - Get messages from zed request and put them to session.
      *
      * @api
      *
@@ -97,7 +115,9 @@ interface ShoppingListClientInterface
 
     /**
      * Specification:
-     * TODO: Specs
+     *  - Makes Zed request.
+     *  - Create new shopping list entity if it does not exist.
+     *  - Updates customer permissions.
      *
      * @api
      *
@@ -109,7 +129,9 @@ interface ShoppingListClientInterface
 
     /**
      * Specification:
-     * TODO: Specs
+     *  - Makes Zed request.
+     *  - Get shopping list detail information.
+     *  - Updates customer permissions.
      *
      * @api
      *
@@ -121,7 +143,8 @@ interface ShoppingListClientInterface
 
     /**
      * Specification:
-     * TODO: Specs
+     *  - Makes Zed request.
+     *  - Get shopping list collection by customer.
      *
      * @api
      *
@@ -131,7 +154,8 @@ interface ShoppingListClientInterface
 
     /**
      * Specification:
-     * TODO: Specs
+     *  - Makes Zed request.
+     *  - Add shopping list items to cart.
      *
      * @api
      *
@@ -143,7 +167,9 @@ interface ShoppingListClientInterface
 
     /**
      * Specification:
-     * TODO: Specs
+     *  - Makes Zed request.
+     *  - Get items collection for shopping list collection.
+     *  - Updates customer permissions.
      *
      * @api
      *
@@ -155,7 +181,9 @@ interface ShoppingListClientInterface
 
     /**
      * Specification:
-     * TODO: Specs
+     *  - Makes Zed request.
+     *  - Get shopping list item collection by ids.
+     *  - Updates customer permissions.
      *
      * @api
      *
@@ -167,7 +195,9 @@ interface ShoppingListClientInterface
 
     /**
      * Specification:
-     * TODO: Specs
+     *  - Makes Zed request.
+     *  - Update shopping list item.
+     *  - Updates customer permissions.
      *
      * @api
      *
@@ -179,7 +209,10 @@ interface ShoppingListClientInterface
 
     /**
      * Specification:
-     * TODO: Specs
+     *  - Makes Zed request.
+     *  - Push items from quote to shopping list.
+     *  - Updates customer permissions.
+     *  - Get messages from zed request and put them to session.
      *
      * @api
      *
@@ -191,7 +224,9 @@ interface ShoppingListClientInterface
 
     /**
      * Specification:
-     * TODO: Specs
+     *  - Makes Zed request.
+     *  - Get shopping list permission groups.
+     *  - Updates customer permissions.
      *
      * @api
      *
@@ -201,7 +236,9 @@ interface ShoppingListClientInterface
 
     /**
      * Specification:
-     * TODO: Specs
+     *  - Makes Zed request.
+     *  - Share shopping list with company users from business unit or exact company user.
+     *  - Updates customer permissions.
      *
      * @api
      *

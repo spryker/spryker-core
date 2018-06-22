@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Product\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
@@ -101,5 +102,18 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
 
         return $productAbstractQuery->find()
             ->toArray();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return bool
+     */
+    public function isProductConcreteActive(ProductConcreteTransfer $productConcreteTransfer): bool
+    {
+        return $this->getFactory()
+            ->createProductQuery()
+            ->findOneBySku($productConcreteTransfer->getSku())
+            ->getIsActive();
     }
 }

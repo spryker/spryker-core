@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductDiscontinued\Persistence;
 
+use Generated\Shared\Transfer\ProductDiscontinuedNoteTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
 
 interface ProductDiscontinuedEntityManagerInterface
@@ -23,12 +24,19 @@ interface ProductDiscontinuedEntityManagerInterface
      *
      * @return void
      */
-    public function deleteProductDiscontinuedByProductId(ProductDiscontinuedTransfer $productDiscontinuedTransfer): void;
+    public function deleteProductDiscontinued(ProductDiscontinuedTransfer $productDiscontinuedTransfer): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductDiscontinuedNoteTransfer $discontinuedNoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductDiscontinuedNoteTransfer
+     */
+    public function saveProductDiscontinuedNote(ProductDiscontinuedNoteTransfer $discontinuedNoteTransfer): ProductDiscontinuedNoteTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ProductDiscontinuedTransfer $productDiscontinuedTransfer
      *
      * @return void
      */
-    public function deleteProductDiscontinued(ProductDiscontinuedTransfer $productDiscontinuedTransfer): void;
+    public function deleteProductDiscontinuedNotes(ProductDiscontinuedTransfer $productDiscontinuedTransfer): void;
 }

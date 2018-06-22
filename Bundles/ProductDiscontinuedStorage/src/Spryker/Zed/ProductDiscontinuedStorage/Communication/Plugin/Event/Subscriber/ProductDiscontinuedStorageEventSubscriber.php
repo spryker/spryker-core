@@ -11,6 +11,7 @@ use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductDiscontinued\Dependency\ProductDiscontinuedEvents;
+use Spryker\Zed\ProductDiscontinuedStorage\Communication\Plugin\Event\Listener\ProductDiscontinuedNoteStorageListener;
 use Spryker\Zed\ProductDiscontinuedStorage\Communication\Plugin\Event\Listener\ProductDiscontinuedStorageListener;
 
 /**
@@ -28,13 +29,36 @@ class ProductDiscontinuedStorageEventSubscriber extends AbstractPlugin implement
      */
     public function getSubscribedEvents(EventCollectionInterface $eventCollection)
     {
+        $this->addProductDiscontinuedListeners($eventCollection);
+        $this->addProductDiscontinuedNoteListeners($eventCollection);
+
+        return $eventCollection;
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductDiscontinuedListeners(EventCollectionInterface $eventCollection): void
+    {
         $this->addProductDiscontinuedPublishListener($eventCollection);
         $this->addProductDiscontinuedUnpublishListener($eventCollection);
         $this->addProductDiscontinuedCreateListener($eventCollection);
         $this->addProductDiscontinuedUpdateListener($eventCollection);
         $this->addProductDiscontinuedDeleteListener($eventCollection);
+    }
 
-        return $eventCollection;
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductDiscontinuedNoteListeners(EventCollectionInterface $eventCollection): void
+    {
+        $this->addProductDiscontinuedNoteCreateListener($eventCollection);
+        $this->addProductDiscontinuedNoteUpdateListener($eventCollection);
+        $this->addProductDiscontinuedNoteDeleteListener($eventCollection);
     }
 
     /**
@@ -90,5 +114,38 @@ class ProductDiscontinuedStorageEventSubscriber extends AbstractPlugin implement
     {
         $eventCollection
             ->addListenerQueued(ProductDiscontinuedEvents::ENTITY_SPY_PRODUCT_DISCONTINUED_DELETE, new ProductDiscontinuedStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductDiscontinuedNoteCreateListener(EventCollectionInterface $eventCollection): void
+    {
+        $eventCollection
+            ->addListenerQueued(ProductDiscontinuedEvents::ENTITY_SPY_PRODUCT_DISCONTINUED_NOTE_CREATE, new ProductDiscontinuedNoteStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductDiscontinuedNoteUpdateListener(EventCollectionInterface $eventCollection): void
+    {
+        $eventCollection
+            ->addListenerQueued(ProductDiscontinuedEvents::ENTITY_SPY_PRODUCT_DISCONTINUED_NOTE_UPDATE, new ProductDiscontinuedNoteStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductDiscontinuedNoteDeleteListener(EventCollectionInterface $eventCollection): void
+    {
+        $eventCollection
+            ->addListenerQueued(ProductDiscontinuedEvents::ENTITY_SPY_PRODUCT_DISCONTINUED_NOTE_DELETE, new ProductDiscontinuedNoteStorageListener());
     }
 }

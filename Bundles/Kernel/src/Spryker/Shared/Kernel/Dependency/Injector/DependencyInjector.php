@@ -12,7 +12,7 @@ use Spryker\Shared\Kernel\ContainerInterface;
 class DependencyInjector implements DependencyInjectorInterface
 {
     /**
-     * @var \Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorCollection
+     * @var \Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface
      */
     private $dependencyInjectorCollection;
 

@@ -1,3 +1,11 @@
+<div class="well">
+    {% filter trans|raw %}
+        <h3>Discontinue</h3>
+        <p>You can discontinue product on this tab and add a note - why this product become discontinued.</p>
+        <p><i>Note: Discontinued product still will be visible in the shop and would have stock, but it will be impossible to buy it.</i></p>
+    {% endfilter %}
+</div>
+
 {% set discontinued = form.vars.data.productDiscontinued %}
 
 {% if discontinued is not empty %}
@@ -12,6 +20,26 @@
         {{ 'Days left:' | trans }}
         <span class="badge"><strong>{{ date(discontinued.activeUntil|date).diff(date('now'|date('Y-m-d')) ).days }}</strong></span>
     </div>
+    <div class="form-group">
+    <h3>{{ 'Add note' | trans }}</h3>
+    {% for localeTransfer in localeCollection %}
+        {% set formKey = localeTransfer.idLocale %}
+        {% if form.discontinued_notes[formKey] is defined %}
+            {% embed '@Gui/Partials/localized-ibox.twig' with {'collapsed': (not loop.first), 'localeName': localeTransfer.localeName} %}
+                {% block content %}
+                    {% for input in form.discontinued_notes[formKey] %}
+                        <div class="form-group {% if input.vars.errors|length %}has-error{% endif %}">
+                            {{ form_label(input) }}
+                            {{ form_widget(input, {'attr': {'class': 'name-translation'}}) }}
+                            {{ form_errors(input) }}
+                        </div>
+                    {% endfor %}
+                {% endblock %}
+            {% endembed %}
+        {% endif %}
+    {% endfor %}
+    </div>
 {% else %}
+    {% do form.discontinued_notes.setRendered %}
     <a href="{{ url('/product-discontinued-gui/index/discontinue', {'id-product-concrete': idProduct}) }}" class="btn btn-outline safe-submit btn-back">{{ 'Discontinue' | trans }}</a>
 {% endif %}

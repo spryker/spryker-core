@@ -5,11 +5,7 @@ parameters:
     - '#Constant T_SEMICOLON not found.#'
     - '#Constant T_OPEN_PARENTHESIS not found.#'
     - '#Constant T_OPEN_SQUARE_BRACKET not found.#'
-    - '#Instantiated class PHP_CodeSniffer not found.#'
-    - '#Call to method process\(\) on an unknown class PHP_CodeSniffer.#'
-    - '#Instantiated class PHP_CodeSniffer_File not found.#'
-    - '#Call to method start\(\) on an unknown class PHP_CodeSniffer_File.#'
-    - '#Method Spryker\\Zed\\Development\\Business\\DependencyTree\\DependencyFinder\\ExternalDependency::getFile\(\) should return PHP_CodeSniffer\\Files\\File but returns PHP_CodeSniffer_File.#'
+    - '#Parameter .+ of class Symfony\\Component\\Finder\\SplFileInfo constructor expects string, null given.#'
 
 services:
     -

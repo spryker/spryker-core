@@ -1,4 +1,4 @@
-{% extends '@Gui/Layout/layout.twig' %}
+{% extends '@CompanyBusinessUnitGui/_layout/layout.twig' %}
 
 {% set widget_title = 'Create Company Business Unit' %}
 
@@ -6,7 +6,7 @@
 {% block section_title widget_title %}
 
 {% block action %}
-    {{ backActionButton(url('/company-business-unit-gui/list-company-business-unit'), 'Back to Company Business Units' | trans) }}
+    {{ backActionButton(url(backButton), 'Back to Company Business Units' | trans) }}
 {% endblock %}
 
 {% block content %}

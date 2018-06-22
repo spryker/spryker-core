@@ -21,4 +21,26 @@
         </foreign-key>
     </table>
 
+    <table name="spy_product_discontinued_note" idMethod="native" allowPkInsert="true" phpName="SpyProductDiscontinuedNote">
+        <column name="id_product_discontinued_note" type="INTEGER" required="true" primaryKey="true" autoIncrement="true"/>
+        <column name="fk_product_discontinued" type="INTEGER" required="true"/>
+        <column name="fk_locale" type="INTEGER" required="true"/>
+        <column name="note" type="VARCHAR" required="false"/>
+
+        <foreign-key name="spy_product_discontinued_note-fk_product_discontinued" foreignTable="spy_product_discontinued" phpName="ProductDiscontinued">
+            <reference local="fk_product_discontinued" foreign="id_product_discontinued"/>
+        </foreign-key>
+        <foreign-key name="spy_product_discontinued_note-fk_locale" foreignTable="spy_locale" phpName="Locale">
+            <reference local="fk_locale" foreign="id_locale"/>
+        </foreign-key>
+
+        <unique name="spy_product_discontinued_note-unique-fk_product_discontinued">
+            <unique-column name="fk_product_discontinued"/>
+            <unique-column name="fk_locale"/>
+        </unique>
+
+        <behavior name="timestampable"/>
+        <id-method-parameter value="id_product_discontinued_note_pk_seq"/>
+    </table>
+
 </database>

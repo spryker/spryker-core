@@ -9,8 +9,10 @@ namespace Spryker\Zed\ProductDiscontinued\Business;
 
 use Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer;
-use Generated\Shared\Transfer\ProductDiscontinuedRequestTransfer;
+use Generated\Shared\Transfer\ProductDiscontinuedNoteResponseTransfer;
+use Generated\Shared\Transfer\ProductDiscontinuedNoteTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer;
+use Generated\Shared\Transfer\ProductDiscontinueRequestTransfer;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -24,12 +26,12 @@ interface ProductDiscontinuedFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductDiscontinuedRequestTransfer $productDiscontinuedRequestTransfer
+     * @param \Generated\Shared\Transfer\ProductDiscontinueRequestTransfer $productDiscontinueRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer
      */
     public function markProductAsDiscontinued(
-        ProductDiscontinuedRequestTransfer $productDiscontinuedRequestTransfer
+        ProductDiscontinueRequestTransfer $productDiscontinueRequestTransfer
     ): ProductDiscontinuedResponseTransfer;
 
     /**
@@ -38,12 +40,12 @@ interface ProductDiscontinuedFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductDiscontinuedRequestTransfer $productDiscontinuedRequestTransfer
+     * @param \Generated\Shared\Transfer\ProductDiscontinueRequestTransfer $productDiscontinueRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer
      */
     public function unmarkProductAsDiscontinued(
-        ProductDiscontinuedRequestTransfer $productDiscontinuedRequestTransfer
+        ProductDiscontinueRequestTransfer $productDiscontinueRequestTransfer
     ): ProductDiscontinuedResponseTransfer;
 
     /**
@@ -52,13 +54,11 @@ interface ProductDiscontinuedFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductDiscontinuedRequestTransfer $productDiscontinuedRequestTransfer
+     * @param int $idProduct
      *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer
      */
-    public function findProductDiscontinuedByProductId(
-        ProductDiscontinuedRequestTransfer $productDiscontinuedRequestTransfer
-    ): ProductDiscontinuedResponseTransfer;
+    public function findProductDiscontinuedByProductId(int $idProduct): ProductDiscontinuedResponseTransfer;
 
     /**
      * Specification:
@@ -76,7 +76,22 @@ interface ProductDiscontinuedFacadeInterface
 
     /**
      * Specification:
+     * - Saves product discontinued note.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductDiscontinuedNoteTransfer $discontinuedNoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductDiscontinuedNoteResponseTransfer
+     */
+    public function saveDiscontinuedNote(
+        ProductDiscontinuedNoteTransfer $discontinuedNoteTransfer
+    ): ProductDiscontinuedNoteResponseTransfer;
+
+    /**
+     * Specification:
      * - Deactivates discontinued products when active until date passed.
+     * - Remove discontinued flag for deactivated products.
      *
      * @api
      *
