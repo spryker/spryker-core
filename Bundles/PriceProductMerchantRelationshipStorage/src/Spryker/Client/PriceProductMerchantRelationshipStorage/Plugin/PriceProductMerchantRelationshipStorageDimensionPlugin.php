@@ -7,8 +7,10 @@
 
 namespace Spryker\Client\PriceProductMerchantRelationshipStorage\Plugin;
 
+use Generated\Shared\Transfer\PriceProductStorageTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\PriceProductStorage\Dependency\Plugin\PriceProductStoragePriceDimensionPluginInterface;
+use Spryker\Shared\PriceProductMerchantRelationship\PriceProductMerchantRelationshipConstants;
 
 /**
  * @method \Spryker\Client\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageClientInterface getClient()
@@ -23,9 +25,9 @@ class PriceProductMerchantRelationshipStorageDimensionPlugin extends AbstractPlu
      *
      * @param int $idProductConcrete
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return \Generated\Shared\Transfer\PriceProductStorageTransfer|null
      */
-    public function findProductConcretePrices(int $idProductConcrete): array
+    public function findProductConcretePrices(int $idProductConcrete): ?PriceProductStorageTransfer
     {
         $idMerchantRelationship = $this->getFactory()
             ->createMerchantRelationshipFinder()
@@ -50,9 +52,9 @@ class PriceProductMerchantRelationshipStorageDimensionPlugin extends AbstractPlu
      *
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
+     * @return \Generated\Shared\Transfer\PriceProductStorageTransfer|null
      */
-    public function findProductAbstractPrices(int $idProductAbstract): array
+    public function findProductAbstractPrices(int $idProductAbstract): ?PriceProductStorageTransfer
     {
         $idMerchantRelationship = $this->getFactory()
             ->createMerchantRelationshipFinder()
@@ -68,5 +70,17 @@ class PriceProductMerchantRelationshipStorageDimensionPlugin extends AbstractPlu
                 $idProductAbstract,
                 $idMerchantRelationship
             );
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getDimensionName(): string
+    {
+        return PriceProductMerchantRelationshipConstants::PRICE_DIMENSION_MERCHANT_RELATIONSHIP;
     }
 }
