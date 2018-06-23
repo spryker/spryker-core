@@ -18,19 +18,6 @@ interface PriceProductMerchantRelationshipFacadeInterface
 {
     /**
      * Specification:
-     *  - Filters applicable prices for current price filter.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\SpyPriceProductStoreEntityTransfer[] $priceProductStoreEntityTransferCollection
-     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\MoneyValueTransfer|null
-     */
-    public function matchValue(array $priceProductStoreEntityTransferCollection, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?MoneyValueTransfer;
-
-    /**
-     * Specification:
      *  - Saves price for given product price configuration
      *  - Creates spy_price_product_store entry if does not exist,
      *  - Creates connection between spy_price_product_store and spy_price_product_business_unit

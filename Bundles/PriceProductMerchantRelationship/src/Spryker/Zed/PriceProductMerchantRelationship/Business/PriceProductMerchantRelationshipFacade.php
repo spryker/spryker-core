@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationship\Business;
 
-use Generated\Shared\Transfer\MoneyValueTransfer;
-use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -17,25 +15,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class PriceProductMerchantRelationshipFacade extends AbstractFacade implements PriceProductMerchantRelationshipFacadeInterface
 {
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\SpyPriceProductStoreEntityTransfer[] $priceProductStoreEntityTransferCollection
-     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\MoneyValueTransfer|null
-     */
-    public function matchValue(
-        array $priceProductStoreEntityTransferCollection,
-        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-    ): ?MoneyValueTransfer {
-        return $this->getFactory()
-            ->createMerchantRelationshipPriceDecision()
-            ->matchValue($priceProductStoreEntityTransferCollection, $priceProductCriteriaTransfer);
-    }
-
     /**
      * {@inheritdoc}
      *
