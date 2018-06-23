@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\ProductMeasurementUnitStorage\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\SpyProductMeasurementUnitEntityTransfer;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 
@@ -55,20 +56,16 @@ class ProductMeasurementUnitStorageFacadeTest extends Unit
      */
     public function testPublishProductMeasurementUnitDoesNotThrowException(): void
     {
-        // TODO: temporary disable until P&S is able to handle storage tests
-//        // Assign
-//        $code = 'MYCODE' . random_int(1, 100);
-//        $productMeasurementUnitTransfer = $this->tester->haveProductMeasurementUnit([
-//            SpyProductMeasurementUnitEntityTransfer::CODE => $code,
-//        ]);
-//
-//        $measurementUnitIds = [$productMeasurementUnitTransfer->getIdProductMeasurementUnit()];
-//
-//        // Act
-//        $this->productMeasurementUnitStorageFacade->publishProductMeasurementUnit($measurementUnitIds);
-//
-//        // Assert
-//        $this->assertTrue(true);
+        $code = 'MYCODE' . random_int(1, 100);
+        $productMeasurementUnitTransfer = $this->tester->haveProductMeasurementUnit([
+            SpyProductMeasurementUnitEntityTransfer::CODE => $code,
+        ]);
+
+        $measurementUnitIds = [$productMeasurementUnitTransfer->getIdProductMeasurementUnit()];
+
+        $this->productMeasurementUnitStorageFacade->publishProductMeasurementUnit($measurementUnitIds);
+
+        $this->assertTrue(true);
     }
 
     /**
@@ -76,25 +73,21 @@ class ProductMeasurementUnitStorageFacadeTest extends Unit
      */
     public function testPublishProductConcreteMeasurementUnitDoesNotThrowException(): void
     {
-        // TODO: temporary disable until P&S is able to handle storage tests
-//        // Assign
-//        $code = 'MYCODE' . random_int(1, 100);
-//        $productTransfer = $this->tester->haveProduct();
-//        $productMeasurementUnitTransfer = $this->tester->haveProductMeasurementUnit([
-//            SpyProductMeasurementUnitEntityTransfer::CODE => $code,
-//        ]);
-//
-//        $this->tester->haveProductMeasurementBaseUnit(
-//            $productTransfer->getFkProductAbstract(),
-//            $productMeasurementUnitTransfer->getIdProductMeasurementUnit()
-//        );
-//
-//        $productIds = [$productTransfer->getIdProductConcrete()];
-//
-//        // Act
-//        $this->productMeasurementUnitStorageFacade->publishProductConcreteMeasurementUnit($productIds);
-//
-//        // Assert
-//        $this->assertTrue(true);
+        $code = 'MYCODE' . random_int(1, 100);
+        $productTransfer = $this->tester->haveProduct();
+        $productMeasurementUnitTransfer = $this->tester->haveProductMeasurementUnit([
+            SpyProductMeasurementUnitEntityTransfer::CODE => $code,
+        ]);
+
+        $this->tester->haveProductMeasurementBaseUnit(
+            $productTransfer->getFkProductAbstract(),
+            $productMeasurementUnitTransfer->getIdProductMeasurementUnit()
+        );
+
+        $productIds = [$productTransfer->getIdProductConcrete()];
+
+        $this->productMeasurementUnitStorageFacade->publishProductConcreteMeasurementUnit($productIds);
+
+        $this->assertTrue(true);
     }
 }
