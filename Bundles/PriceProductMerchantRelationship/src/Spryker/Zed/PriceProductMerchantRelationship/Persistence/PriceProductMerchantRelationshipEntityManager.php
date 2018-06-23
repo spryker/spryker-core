@@ -10,7 +10,6 @@ namespace Spryker\Zed\PriceProductMerchantRelationship\Persistence;
 use Generated\Shared\Transfer\SpyPriceProductMerchantRelationshipEntityTransfer;
 use Spryker\Shared\Kernel\Transfer\EntityTransferInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
-use Traversable;
 
 /**
  * @method \Spryker\Zed\PriceProductMerchantRelationship\Persistence\PriceProductMerchantRelationshipPersistenceFactory getFactory()

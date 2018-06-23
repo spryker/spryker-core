@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationship\Business;
 
-use Generated\Shared\Transfer\MoneyValueTransfer;
-use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 
 /**
