@@ -70,6 +70,8 @@
         <column name="fk_locale" required="true" type="INTEGER"/>
         <column name="title" type="VARCHAR" size="255" required="true"/>
 
+        <behavior name="timestampable"/>
+
         <foreign-key foreignTable="spy_file_directory" onDelete="CASCADE">
             <reference foreign="id_file_directory" local="fk_file_directory"/>
         </foreign-key>
