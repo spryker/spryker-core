@@ -66,7 +66,7 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
      * @param int $idProductConcrete
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore[]
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore[]|ObjectCollection
      */
     public function findProductConcretePricesByIdAndCriteria(
         int $idProductConcrete,
@@ -89,7 +89,7 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]|ObjectCollection
      */
     public function findProductAbstractPricesByIdAndCriteria(
         int $idProductAbstract,

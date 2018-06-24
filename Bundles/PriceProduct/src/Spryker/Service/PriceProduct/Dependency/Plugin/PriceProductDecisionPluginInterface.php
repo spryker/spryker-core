@@ -7,8 +7,9 @@
 
 namespace Spryker\Service\PriceProduct\Dependency\Plugin;
 
-use Generated\Shared\Transfer\MoneyValueTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductFilterTransfer;
 
 interface PriceProductDecisionPluginInterface
 {
@@ -22,7 +23,31 @@ interface PriceProductDecisionPluginInterface
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransferCollection
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\MoneyValueTransfer|null
+     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
-    public function matchValue(array $priceProductTransferCollection, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?MoneyValueTransfer;
+    public function matchPriceByPriceProductCriteria(array $priceProductTransferCollection, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?PriceProductTransfer;
+
+    /**
+     * Specification:
+     *  - Price decision plugins receive price product collection and should make decision about if it can use any of provided prices,
+     *    if it finds one then returns MoneyValueTransfer otherwise null.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransferCollection
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
+     */
+    public function matchPriceByPriceProductFilter(array $priceProductTransferCollection, PriceProductFilterTransfer $priceProductFilterTransfer): ?PriceProductTransfer;
+
+    /**
+     * Specification:
+     *  - Returns dimension name.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getDimensionName(): string;
 }

@@ -7,14 +7,17 @@
 
 namespace Spryker\Client\PriceProduct\ProductPriceResolver;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\CurrentProductPriceTransfer;
+use Generated\Shared\Transfer\MoneyValueTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
+use Generated\Shared\Transfer\PriceProductDimensionTransfer;
+use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToCurrencyClientInterface;
 use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToPriceClientInterface;
 use Spryker\Client\PriceProduct\PriceProductConfig;
+use Spryker\Service\PriceProduct\PriceProductServiceInterface;
 
-/**
- * @deprecated Use PriceProductService::resolvePriceProduct() instead
- */
 class ProductPriceResolver implements ProductPriceResolverInterface
 {
     /**
@@ -33,18 +36,26 @@ class ProductPriceResolver implements ProductPriceResolverInterface
     protected $priceProductConfig;
 
     /**
+     * @var \Spryker\Service\PriceProduct\PriceProductServiceInterface
+     */
+    protected $priceProductService;
+
+    /**
      * @param \Spryker\Client\PriceProduct\Dependency\Client\PriceProductToPriceClientInterface $priceClient
      * @param \Spryker\Client\PriceProduct\Dependency\Client\PriceProductToCurrencyClientInterface $currencyClient
      * @param \Spryker\Client\PriceProduct\PriceProductConfig $priceProductConfig
+     * @param \Spryker\Service\PriceProduct\PriceProductServiceInterface $priceProductService
      */
     public function __construct(
         PriceProductToPriceClientInterface $priceClient,
         PriceProductToCurrencyClientInterface $currencyClient,
-        PriceProductConfig $priceProductConfig
+        PriceProductConfig $priceProductConfig,
+        PriceProductServiceInterface $priceProductService
     ) {
         $this->priceProductConfig = $priceProductConfig;
         $this->priceClient = $priceClient;
         $this->currencyClient = $currencyClient;
+        $this->priceProductService = $priceProductService;
     }
 
     /**
@@ -52,25 +63,104 @@ class ProductPriceResolver implements ProductPriceResolverInterface
      *
      * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */
-    public function resolve(array $priceMap)
+    public function resolve(array $priceMap): CurrentProductPriceTransfer
     {
         $currentProductPriceTransfer = new CurrentProductPriceTransfer();
-
-        $currencyIsoCode = $this->currencyClient->getCurrent()->getCode();
-        $currentPriceMode = $this->priceClient->getCurrentPriceMode();
-        if (!isset($priceMap[$currencyIsoCode][$currentPriceMode])) {
+        if (!$priceMap) {
             return $currentProductPriceTransfer;
         }
 
-        $price = null;
-        $prices = $priceMap[$currencyIsoCode][$currentPriceMode];
-        $defaultProductPriceType = $this->priceProductConfig->getPriceTypeDefaultName();
-        if (isset($prices[$defaultProductPriceType])) {
-            $price = $prices[$defaultProductPriceType];
+        $priceProductTransferCollection = $this->convertPriceMapToPriceProductTransferCollection($priceMap);
+        $priceProductFilter = $this->buildPriceProductFilterWithCurrentValues();
+
+        $price = $this->priceProductService->resolveProductPriceByPriceProductFilter(
+            $priceProductTransferCollection,
+            $priceProductFilter
+        );
+
+        if (!$price) {
+            return $currentProductPriceTransfer;
         }
 
+        $currentProductPriceTransfer
+            ->setPrice($price);
+
+        $priceProductDimension = $this->priceProductService->resolvePriceProductDimensionByPriceProductFilter(
+            $priceProductTransferCollection,
+            $priceProductFilter
+        );
+
+        if (!$priceProductDimension) {
+            return $currentProductPriceTransfer;
+        }
+
+        $currencyIsoCode = $priceProductFilter->getCurrencyIsoCode();
+        $priceMode = $priceProductFilter->getPriceMode();
+
+        $prices = $priceMap[$priceProductDimension->getType()][$currencyIsoCode][$priceMode];
+
         return $currentProductPriceTransfer
-            ->setPrice($price)
             ->setPrices($prices);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\PriceProductFilterTransfer
+     */
+    protected function buildPriceProductFilterWithCurrentValues(): PriceProductFilterTransfer
+    {
+        $currencyIsoCode = $this->currencyClient->getCurrent()->getCode();
+        $priceMode = $this->priceClient->getCurrentPriceMode();
+        $priceTypeName = $this->priceProductConfig->getPriceTypeDefaultName();
+
+        return (new PriceProductFilterTransfer())
+            ->setPriceMode($priceMode)
+            ->setCurrencyIsoCode($currencyIsoCode)
+            ->setPriceTypeName($priceTypeName);
+            //->setQuote();
+    }
+
+    /**
+     * @param array $priceMap
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    protected function convertPriceMapToPriceProductTransferCollection(array $priceMap): array
+    {
+        /** @var \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransferCollection */
+        $priceProductTransferCollection = [];
+
+        foreach ($priceMap as $priceDimension => $priceData) {
+            foreach ($priceData as $currencyCode => $prices) {
+                foreach ($prices as $priceMode => $priceTypes) {
+                    foreach ($priceTypes as $priceType => $priceAmount) {
+                        $index = implode('-', [
+                            $priceDimension,
+                            $currencyCode,
+                            $priceType,
+                        ]);
+                        if (!isset($priceProductTransferCollection[$index])) {
+                            $priceProductTransferCollection[$index] = (new PriceProductTransfer())
+                                ->setPriceDimension(
+                                    (new PriceProductDimensionTransfer())
+                                        ->setType($priceDimension)
+                                )
+                                ->setMoneyValue(
+                                    (new MoneyValueTransfer())
+                                        ->setCurrency((new CurrencyTransfer())->setCode($currencyCode))
+                                )
+                                ->setPriceTypeName($priceType);
+                        }
+                        if ($priceMode === 'GROSS_MODE') {
+                            $priceProductTransferCollection[$index]->getMoneyValue()->setGrossAmount($priceAmount);
+                            continue;
+                        }
+
+                        $priceProductTransferCollection[$index]->getMoneyValue()->setNetAmount($priceAmount);
+                    }
+                }
+            }
+        }
+
+        return $priceProductTransferCollection;
     }
 }

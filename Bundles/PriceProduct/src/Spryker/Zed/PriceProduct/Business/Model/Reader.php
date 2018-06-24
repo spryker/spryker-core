@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\PriceProduct\Business\Model;
 
-use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
@@ -366,23 +365,6 @@ class Reader implements ReaderInterface
         }
 
         return false;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-     * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
-     *
-     * @return int|null
-     */
-    protected function findPriceByPriceMode(
-        PriceProductCriteriaTransfer $priceProductCriteriaTransfer,
-        MoneyValueTransfer $moneyValueTransfer
-    ) {
-        if ($priceProductCriteriaTransfer->getPriceMode() === $this->priceProductMapper->getNetPriceModeIdentifier()) {
-            return $moneyValueTransfer->getNetAmount();
-        }
-
-        return $moneyValueTransfer->getGrossAmount();
     }
 
     /**

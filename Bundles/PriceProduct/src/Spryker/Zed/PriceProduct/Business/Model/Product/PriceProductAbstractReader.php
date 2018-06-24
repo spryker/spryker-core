@@ -90,16 +90,10 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
      */
     public function hasPriceForProductAbstract($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): bool
     {
-        $moneyValueTransfer = $this->findPriceForProductAbstract($sku, $priceProductCriteriaTransfer);
-        if (!$moneyValueTransfer) {
-            return false;
-        }
+        $priceProductStoreEntities = $this->priceProductRepository
+            ->findProductAbstractPricesBySkuAndCriteria($sku, $priceProductCriteriaTransfer);
 
-        if ($priceProductCriteriaTransfer->getPriceMode() === $this->priceProductMapper->getNetPriceModeIdentifier()) {
-            return $moneyValueTransfer->getNetAmount() !== null;
-        }
-
-        return $moneyValueTransfer->getGrossAmount() !== null;
+        return $priceProductStoreEntities->count() > 0;
     }
 
     /**
@@ -161,7 +155,7 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
             $priceProductCriteriaTransfer
         );
 
-        return $this->priceProductService->resolveProductPrice($priceProductTransferCollection, $priceProductCriteriaTransfer);
+        return $this->priceProductService->resolveProductPriceByPriceProductCriteria($priceProductTransferCollection, $priceProductCriteriaTransfer);
     }
 
     /**
@@ -173,8 +167,11 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
     public function findProductAbstractPricesById($idProductAbstract, ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null): array
     {
         if (!$priceProductCriteriaTransfer) {
-            $priceProductCriteriaTransfer = $this->priceProductCriteriaBuilder
-                ->buildCriteriaWithPriceDimension(PriceProductConstants::PRICE_DIMENSION_DEFAULT);
+            $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
+                ->setPriceDimension(
+                    (new PriceProductDimensionTransfer())
+                        ->setType(PriceProductConstants::PRICE_DIMENSION_DEFAULT)
+                );
         }
 
         $priceProductEntities = $this->priceProductRepository

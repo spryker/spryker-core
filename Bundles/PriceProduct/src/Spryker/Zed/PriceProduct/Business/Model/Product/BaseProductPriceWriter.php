@@ -7,16 +7,16 @@
 
 namespace Spryker\Zed\PriceProduct\Business\Model\Product;
 
-use Generated\Shared\Transfer\MoneyValueTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 
 class BaseProductPriceWriter
 {
     /**
-     * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $moneyValueTransfer
      *
      * @return bool
      */
-    protected function isEmptyMoneyValue(MoneyValueTransfer $moneyValueTransfer)
+    protected function isEmptyMoneyValue(PriceProductTransfer $moneyValueTransfer)
     {
         return (!$moneyValueTransfer->getIdEntity() && $moneyValueTransfer->getNetAmount() === null && $moneyValueTransfer->getGrossAmount() === null);
     }

@@ -220,8 +220,12 @@ class PriceProductMapper implements PriceProductMapperInterface
         SpyPriceProductStore $priceProductStoreEntity,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
     ): PriceProductDimensionTransfer {
+        $priceDimensionType = $priceProductCriteriaTransfer->getPriceDimension()
+            ? $priceProductCriteriaTransfer->getPriceDimension()->getType()
+            : null;
+
         return (new PriceProductDimensionTransfer())
-            ->setType($priceProductCriteriaTransfer->getPriceDimension()->getType())
+            ->setType($priceDimensionType)
             ->fromArray(
                 $priceProductStoreEntity->getVirtualColumns(),
                 true

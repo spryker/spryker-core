@@ -23,7 +23,7 @@ class PriceProductStorageFactory extends AbstractFactory
         return new ProductViewPriceExpander(
             $this->createPriceAbstractStorageReader(),
             $this->createPriceConcreteStorageReader(),
-            $this->getPriceProductService()
+            $this->getPriceProductClient()
         );
     }
 
@@ -97,10 +97,5 @@ class PriceProductStorageFactory extends AbstractFactory
     public function getPriceDimensionPlugins(): array
     {
         return $this->getProvidedDependency(PriceProductStorageDependencyProvider::PLUGIN_STORAGE_PRICE_DIMENSION);
-    }
-
-    public function getPriceProductService()
-    {
-        return $this->getProvidedDependency(PriceProductStorageDependencyProvider::SERVICE_PRICE_PRODUCT);
     }
 }

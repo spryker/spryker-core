@@ -26,7 +26,8 @@ class PriceProductFactory extends AbstractFactory
         return new ProductPriceResolver(
             $this->getPriceClient(),
             $this->getCurrencyClient(),
-            $this->getConfig()
+            $this->getConfig(),
+            $this->getPriceProductService()
         );
     }
 

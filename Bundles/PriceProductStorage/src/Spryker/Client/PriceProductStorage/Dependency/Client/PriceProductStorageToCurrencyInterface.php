@@ -7,12 +7,12 @@
 
 namespace Spryker\Client\PriceProductStorage\Dependency\Client;
 
-interface PriceProductStorageToPriceProductInterface
+use Generated\Shared\Transfer\CurrencyTransfer;
+
+interface PriceProductStorageToCurrencyInterface
 {
     /**
-     * @param array $priceMap
-     *
-     * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
+     * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function resolveProductPrice(array $priceMap);
+    public function getCurrent(): CurrencyTransfer;
 }

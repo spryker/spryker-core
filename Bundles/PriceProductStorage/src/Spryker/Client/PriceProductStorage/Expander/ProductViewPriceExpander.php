@@ -7,12 +7,10 @@
 
 namespace Spryker\Client\PriceProductStorage\Expander;
 
-use Generated\Shared\Transfer\MoneyValueTransfer;
-use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
+use Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToPriceProductInterface;
 use Spryker\Client\PriceProductStorage\Storage\PriceAbstractStorageReaderInterface;
 use Spryker\Client\PriceProductStorage\Storage\PriceConcreteStorageReaderInterface;
-use Spryker\Service\PriceProduct\PriceProductServiceInterface;
 
 class ProductViewPriceExpander implements ProductViewPriceExpanderInterface
 {
@@ -27,23 +25,23 @@ class ProductViewPriceExpander implements ProductViewPriceExpanderInterface
     protected $priceConcreteStorageReader;
 
     /**
-     * @var \Spryker\Service\PriceProduct\PriceProductServiceInterface
+     * @var \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToPriceProductInterface
      */
-    protected $priceProductService;
+    protected $priceProductClient;
 
     /**
      * @param \Spryker\Client\PriceProductStorage\Storage\PriceAbstractStorageReaderInterface $priceAbstractStorageReader
      * @param \Spryker\Client\PriceProductStorage\Storage\PriceConcreteStorageReaderInterface $priceConcreteStorageReader
-     * @param \Spryker\Service\PriceProduct\PriceProductServiceInterface $priceProductService
+     * @param \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToPriceProductInterface $priceProductClient
      */
     public function __construct(
         PriceAbstractStorageReaderInterface $priceAbstractStorageReader,
         PriceConcreteStorageReaderInterface $priceConcreteStorageReader,
-        PriceProductServiceInterface $priceProductService
+        PriceProductStorageToPriceProductInterface $priceProductClient
     ) {
         $this->priceAbstractStorageReader = $priceAbstractStorageReader;
         $this->priceConcreteStorageReader = $priceConcreteStorageReader;
-        $this->priceProductService = $priceProductService;
+        $this->priceProductClient = $priceProductClient;
     }
 
     /**
@@ -53,37 +51,15 @@ class ProductViewPriceExpander implements ProductViewPriceExpanderInterface
      */
     public function expandProductViewPriceData(ProductViewTransfer $productViewTransfer)
     {
-        $priceProductTransferCollection = $this->getProductViewPrices($productViewTransfer);
+        $productViewPriceData = $this->getProductViewPrices($productViewTransfer);
+        $currentProductPriceTransfer = $this->priceProductClient->resolveProductPrice(
+            $productViewPriceData
+        );
 
-        $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
-            ->setIdStore(1)
-            ->setIdCurrency(1)
-            ->setPriceMode()
-            ->setPriceType('DEFAULT');
-        $moneyValueTransfer = $this->priceProductService->resolveProductPrice($priceProductTransferCollection, $priceProductCriteriaTransfer);
-
-        //$productViewTransfer->setPrices($currentProductPriceTransfer->getPrices());
-        //todo resolve gross/net, currency
-        $productViewTransfer->setPrice($moneyValueTransfer->getGrossAmount());
+        $productViewTransfer->setPrices($currentProductPriceTransfer->getPrices());
+        $productViewTransfer->setPrice($currentProductPriceTransfer->getPrice());
 
         return $productViewTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-     * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
-     *
-     * @return int|null
-     */
-    protected function findPriceByPriceMode(
-        PriceProductCriteriaTransfer $priceProductCriteriaTransfer,
-        MoneyValueTransfer $moneyValueTransfer
-    ) {
-        if ($priceProductCriteriaTransfer->getPriceMode() === $this->priceProductMapper->getNetPriceModeIdentifier()) {
-            return $moneyValueTransfer->getNetAmount();
-        }
-
-        return $moneyValueTransfer->getGrossAmount();
     }
 
     /**

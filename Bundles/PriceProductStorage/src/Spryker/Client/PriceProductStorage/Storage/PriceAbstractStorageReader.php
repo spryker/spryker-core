@@ -48,20 +48,41 @@ class PriceAbstractStorageReader implements PriceAbstractStorageReaderInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductStorageTransfer|null
      */
-    public function findPriceAbstractStorageTransfer($idProductAbstract)
+    public function findPriceAbstractStorageTransfer($idProductAbstract): ?PriceProductStorageTransfer
     {
-        $key = $this->priceStorageKeyGenerator->generateKey(PriceProductStorageConstants::PRICE_ABSTRACT_RESOURCE_NAME, $idProductAbstract);
+        $prices = [];
 
-        return $this->findPriceProductStorageTransfer($key);
+        foreach ($this->priceDimensionPlugins as $priceDimensionPlugin) {
+            $priceProductStorageTransfer = $priceDimensionPlugin->findProductAbstractPrices($idProductAbstract);
+
+            if ($priceProductStorageTransfer !== null) {
+                $prices[$priceDimensionPlugin->getDimensionName()] = $priceProductStorageTransfer->getPrices();
+            }
+        }
+
+        $priceProductStorageTransfer = $this->findDefaultPriceDimensionPriceProductStorageTransfer($idProductAbstract);
+        if ($priceProductStorageTransfer) {
+            $prices[PriceProductStorageConstants::PRICE_DIMENSION_DEFAULT] = $priceProductStorageTransfer->getPrices();
+        }
+
+        if (!$prices) {
+            return null;
+        }
+
+        $priceProductStorageTransfer = new PriceProductStorageTransfer();
+        $priceProductStorageTransfer->setPrices($prices);
+
+        return $priceProductStorageTransfer;
     }
 
     /**
-     * @param string $key
+     * @param int $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\PriceProductStorageTransfer|null
      */
-    protected function findPriceProductStorageTransfer($key)
+    protected function findDefaultPriceDimensionPriceProductStorageTransfer(int $idProductAbstract): ?PriceProductStorageTransfer
     {
+        $key = $this->priceStorageKeyGenerator->generateKey(PriceProductStorageConstants::PRICE_ABSTRACT_RESOURCE_NAME, $idProductAbstract);
         $priceData = $this->storageClient->get($key);
 
         if (!$priceData) {

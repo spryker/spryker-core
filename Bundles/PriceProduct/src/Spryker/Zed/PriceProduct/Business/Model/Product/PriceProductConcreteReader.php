@@ -72,16 +72,10 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
      */
     public function hasPriceForProductConcrete($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer)
     {
-        $moneyValueTransfer = $this->findPriceForProductConcrete($sku, $priceProductCriteriaTransfer);
-        if (!$moneyValueTransfer) {
-            return false;
-        }
+        $priceProductStoreEntities = $this->priceProductRepository
+            ->findProductConcretePricesBySkuAndCriteria($sku, $priceProductCriteriaTransfer);
 
-        if ($priceProductCriteriaTransfer->getPriceMode() === $this->priceProductMapper->getNetPriceModeIdentifier()) {
-            return $moneyValueTransfer->getNetAmount() !== null;
-        }
-
-        return $moneyValueTransfer->getGrossAmount() !== null;
+        return $priceProductStoreEntities->count() > 0;
     }
 
     /**
@@ -153,7 +147,7 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
             $priceProductCriteriaTransfer
         );
 
-        return $this->priceProductService->resolveProductPrice($priceProductTransferCollection, $priceProductCriteriaTransfer);
+        return $this->priceProductService->resolveProductPriceByPriceProductCriteria($priceProductTransferCollection, $priceProductCriteriaTransfer);
     }
 
     /**

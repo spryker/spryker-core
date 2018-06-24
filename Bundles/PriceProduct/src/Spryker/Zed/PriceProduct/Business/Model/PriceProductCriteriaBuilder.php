@@ -104,24 +104,6 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
     }
 
     /**
-     * @param string|null $priceDimensionType
-     *
-     * @return \Generated\Shared\Transfer\PriceProductCriteriaTransfer
-     */
-    public function buildCriteriaWithPriceDimension(?string $priceDimensionType = null): PriceProductCriteriaTransfer
-    {
-        if (!$priceDimensionType) {
-            $priceDimensionType = PriceProductConstants::PRICE_DIMENSION_DEFAULT;
-        }
-
-        $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
-            ->setType($priceDimensionType);
-
-        return (new PriceProductCriteriaTransfer())
-            ->setPriceDimension($priceProductDimensionTransfer);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceFilterTransfer
      *
      * @return string

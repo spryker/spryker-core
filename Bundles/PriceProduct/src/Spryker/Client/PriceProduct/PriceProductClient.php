@@ -40,8 +40,6 @@ class PriceProductClient extends AbstractClient implements PriceProductClientInt
      */
     public function resolveProductPrice(array $priceMap)
     {
-        //todo will be replaced with ProductPriceService->resolveProductPrice()
-
         return $this->getFactory()
             ->createProductPriceResolver()
             ->resolve($priceMap);

@@ -9,50 +9,46 @@ namespace Spryker\Service\PriceProduct\Model;
 
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductDimensionTransfer;
+use Generated\Shared\Transfer\PriceProductFilterTransfer;
 
 class PriceProductMatcher implements PriceProductMatcherInterface
 {
-    /**
-     * @var \Spryker\Service\PriceProduct\Model\PriceProductCriteriaBuilderInterface
-     */
-    protected $priceProductCriteriaBuilder;
+    protected const PRICE_NET_MODE = 'NET_MODE';
 
     /**
      * @var \Spryker\Service\PriceProduct\Dependency\Plugin\PriceProductDecisionPluginInterface[]
      */
     protected $priceProductDecisionPlugins = [];
 
-    /**
-     * @param \Spryker\Service\PriceProduct\Model\PriceProductCriteriaBuilderInterface $priceProductCriteriaBuilder
-     * @param \Spryker\Service\PriceProduct\Dependency\Plugin\PriceProductDecisionPluginInterface[] $priceProductDecisionPlugins
-     */
-    public function __construct(PriceProductCriteriaBuilderInterface $priceProductCriteriaBuilder, array $priceProductDecisionPlugins)
+    public function __construct(array $priceProductDecisionPlugins)
     {
-        $this->priceProductCriteriaBuilder = $priceProductCriteriaBuilder;
         $this->priceProductDecisionPlugins = $priceProductDecisionPlugins;
     }
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransferCollection
-     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
      * @return int|null
      */
-    public function matchPriceValue(
+    public function matchPriceValueByPriceProductCriteria(
         array $priceProductTransferCollection,
-        ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
+        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
     ): ?int {
+        $priceProductCriteriaTransfer
+            ->requirePriceMode()
+            ->requirePriceType()
+            ->requireIdCurrency();
 
         if (count($priceProductTransferCollection) === 0) {
             return null;
         }
 
-        $priceProductCriteriaTransfer = $this->preparePriceProductCriteria($priceProductCriteriaTransfer);
-
         foreach ($this->priceProductDecisionPlugins as $priceProductDecisionPlugin) {
-            $moneyValueTransfer = $priceProductDecisionPlugin->matchValue($priceProductTransferCollection, $priceProductCriteriaTransfer);
-            if ($moneyValueTransfer) {
-                return $this->findPriceValueByCriteria($moneyValueTransfer, $priceProductCriteriaTransfer);
+            $priceProductTransfer = $priceProductDecisionPlugin->matchPriceByPriceProductCriteria($priceProductTransferCollection, $priceProductCriteriaTransfer);
+            if ($priceProductTransfer) {
+                return $this->findPriceValueByPriceMode($priceProductTransfer->getMoneyValue(), $priceProductCriteriaTransfer->getPriceMode());
             }
         }
 
@@ -60,49 +56,72 @@ class PriceProductMatcher implements PriceProductMatcherInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransferCollection
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductCriteriaTransfer
+     * @return int|null
      */
-    protected function preparePriceProductCriteria(?PriceProductCriteriaTransfer $priceProductCriteriaTransfer): PriceProductCriteriaTransfer
-    {
-        if ($priceProductCriteriaTransfer === null) {
-            return $this->priceProductCriteriaBuilder->buildCriteriaWithDefaultValues();
+    public function matchPriceValueByPriceProductFilter(
+        array $priceProductTransferCollection,
+        PriceProductFilterTransfer $priceProductFilterTransfer
+    ): ?int {
+        $priceProductFilterTransfer
+            ->requirePriceTypeName()
+            ->requireCurrencyIsoCode()
+            ->requirePriceMode();
+
+        if (count($priceProductTransferCollection) === 0) {
+            return null;
         }
 
-        $defaultProductCriteriaTransfer = $this->priceProductCriteriaBuilder->buildCriteriaWithDefaultValues();
-
-        if ($priceProductCriteriaTransfer->getIdStore() === null) {
-            $priceProductCriteriaTransfer->setIdStore($defaultProductCriteriaTransfer->getIdStore());
+        foreach ($this->priceProductDecisionPlugins as $priceProductDecisionPlugin) {
+            $priceProductTransfer = $priceProductDecisionPlugin->matchPriceByPriceProductFilter($priceProductTransferCollection, $priceProductFilterTransfer);
+            if ($priceProductTransfer) {
+                return $this->findPriceValueByPriceMode($priceProductTransfer->getMoneyValue(), $priceProductFilterTransfer->getPriceMode());
+            }
         }
 
-        if ($priceProductCriteriaTransfer->getIdCurrency() === null) {
-            $priceProductCriteriaTransfer->setIdCurrency($defaultProductCriteriaTransfer->getIdCurrency());
-        }
-
-        if ($priceProductCriteriaTransfer->getPriceMode() === null) {
-            $priceProductCriteriaTransfer->setPriceMode($defaultProductCriteriaTransfer->getPriceMode());
-        }
-
-        if ($priceProductCriteriaTransfer->getPriceType() === null) {
-            $priceProductCriteriaTransfer->setPriceType($defaultProductCriteriaTransfer->getPriceType());
-        }
-
-        return $priceProductCriteriaTransfer;
+        return null;
     }
 
     /**
      * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
-     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     * @param string $priceMode
      *
      * @return int|null
      */
-    protected function findPriceValueByCriteria(MoneyValueTransfer $moneyValueTransfer, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?int
+    protected function findPriceValueByPriceMode(MoneyValueTransfer $moneyValueTransfer, string $priceMode): ?int
     {
-        if ($priceProductCriteriaTransfer->getPriceMode() === 'GROSS_MODE') {
-            return $moneyValueTransfer->getGrossAmount();
+        if ($priceMode === static::PRICE_NET_MODE) {
+            return $moneyValueTransfer->getNetAmount();
         }
 
-        return $moneyValueTransfer->getNetAmount();
+        return $moneyValueTransfer->getGrossAmount();
+    }
+
+
+    /**
+     * @param array $priceProductTransferCollection
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductDimensionTransfer|null
+     */
+    public function matchPriceProductDimensionByPriceProductFilter(
+        array $priceProductTransferCollection,
+        PriceProductFilterTransfer $priceProductFilterTransfer
+    ): ?PriceProductDimensionTransfer {
+        $priceProductFilterTransfer
+            ->requirePriceTypeName()
+            ->requireCurrencyIsoCode()
+            ->requirePriceMode();
+
+        foreach ($this->priceProductDecisionPlugins as $priceProductDecisionPlugin) {
+            $priceProductTransfer = $priceProductDecisionPlugin->matchPriceByPriceProductFilter($priceProductTransferCollection, $priceProductFilterTransfer);
+            if ($priceProductTransfer) {
+                return $priceProductTransfer->getPriceDimension();
+            }
+        }
+
+        return null;
     }
 }

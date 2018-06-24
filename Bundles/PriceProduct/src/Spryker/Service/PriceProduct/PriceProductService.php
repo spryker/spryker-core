@@ -8,6 +8,8 @@
 namespace Spryker\Service\PriceProduct;
 
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductDimensionTransfer;
+use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Spryker\Service\Kernel\AbstractService;
 
 /**
@@ -17,16 +19,46 @@ class PriceProductService extends AbstractService implements PriceProductService
 {
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransferCollection
-     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
      * @return int|null
      */
-    public function resolveProductPrice(
+    public function resolveProductPriceByPriceProductCriteria(
         array $priceProductTransferCollection,
-        ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
+        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
     ): ?int {
         return $this->getFactory()
             ->createPriceProductMatcher()
-            ->matchPriceValue($priceProductTransferCollection, $priceProductCriteriaTransfer);
+            ->matchPriceValueByPriceProductCriteria($priceProductTransferCollection, $priceProductCriteriaTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransferCollection
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
+     *
+     * @return int|null
+     */
+    public function resolveProductPriceByPriceProductFilter(
+        array $priceProductTransferCollection,
+        PriceProductFilterTransfer $priceProductFilterTransfer
+    ): ?int {
+        return $this->getFactory()
+            ->createPriceProductMatcher()
+            ->matchPriceValueByPriceProductFilter($priceProductTransferCollection, $priceProductFilterTransfer);
+    }
+
+    /**
+     * @param array $priceProductTransferCollection
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductDimensionTransfer
+     */
+    public function resolvePriceProductDimensionByPriceProductFilter(
+        array $priceProductTransferCollection,
+        PriceProductFilterTransfer $priceProductFilterTransfer
+    ): PriceProductDimensionTransfer {
+        return $this->getFactory()
+            ->createPriceProductMatcher()
+            ->matchPriceProductDimensionByPriceProductFilter($priceProductTransferCollection, $priceProductFilterTransfer);
     }
 }

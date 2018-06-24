@@ -25,11 +25,4 @@ interface PriceProductCriteriaBuilderInterface
      * @return \Generated\Shared\Transfer\PriceProductCriteriaTransfer
      */
     public function buildCriteriaWithDefaultValues($priceTypeName = null): PriceProductCriteriaTransfer;
-
-    /**
-     * @param string|null $priceDimensionType
-     *
-     * @return \Generated\Shared\Transfer\PriceProductCriteriaTransfer
-     */
-    public function buildCriteriaWithPriceDimension(?string $priceDimensionType = null): PriceProductCriteriaTransfer;
 }
