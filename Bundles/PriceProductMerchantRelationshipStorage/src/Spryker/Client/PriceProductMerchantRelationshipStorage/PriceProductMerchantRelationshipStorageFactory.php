@@ -11,7 +11,7 @@ use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\PriceProductMerchantRelationshipStorage\Dependency\Client\PriceProductMerchantRelationshipStorageToCustomerClientInterface;
 use Spryker\Client\PriceProductMerchantRelationshipStorage\Dependency\Client\PriceProductMerchantRelationshipStorageToStorageClientInterface;
 use Spryker\Client\PriceProductMerchantRelationshipStorage\Dependency\Client\PriceProductMerchantRelationshipStorageToStoreClientInterface;
-use Spryker\Client\PriceProductMerchantRelationshipStorage\Dependency\Service\PriceProductMerchantRelationshipToSynchornizationServiceInterface;
+use Spryker\Client\PriceProductMerchantRelationshipStorage\Dependency\Service\PriceProductMerchantRelationshipToSynchronizationServiceInterface;
 use Spryker\Client\PriceProductMerchantRelationshipStorage\MerchantRelationshipFinder\MerchantRelationshipFinder;
 use Spryker\Client\PriceProductMerchantRelationshipStorage\MerchantRelationshipFinder\MerchantRelationshipFinderInterface;
 use Spryker\Client\PriceProductMerchantRelationshipStorage\Storage\PriceProductMerchantRelationshipAbstractReader;
@@ -89,9 +89,9 @@ class PriceProductMerchantRelationshipStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\PriceProductMerchantRelationshipStorage\Dependency\Service\PriceProductMerchantRelationshipToSynchornizationServiceInterface
+     * @return \Spryker\Client\PriceProductMerchantRelationshipStorage\Dependency\Service\PriceProductMerchantRelationshipToSynchronizationServiceInterface
      */
-    public function getSynchronizationService(): PriceProductMerchantRelationshipToSynchornizationServiceInterface
+    public function getSynchronizationService(): PriceProductMerchantRelationshipToSynchronizationServiceInterface
     {
         return $this->getProvidedDependency(PriceProductMerchantRelationshipStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
     }
