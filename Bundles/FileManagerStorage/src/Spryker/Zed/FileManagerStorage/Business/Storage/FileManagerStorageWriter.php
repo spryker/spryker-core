@@ -64,7 +64,7 @@ class FileManagerStorageWriter implements FileManagerStorageWriterInterface
     }
 
     /**
-     * @param array $fileIds
+     * @param int[] $fileIds
      *
      * @return bool
      */
@@ -79,7 +79,7 @@ class FileManagerStorageWriter implements FileManagerStorageWriterInterface
     }
 
     /**
-     * @param array $fileIds
+     * @param int[] $fileIds
      *
      * @return bool
      */

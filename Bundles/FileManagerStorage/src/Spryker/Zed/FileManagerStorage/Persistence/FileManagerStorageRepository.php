@@ -31,6 +31,8 @@ class FileManagerStorageRepository extends AbstractRepository implements FileMan
         $mapper = $this->getFactory()->createFileManagerStorageMapper();
         $query = $this->getFactory()
             ->createFileQuery()
+            ->joinWithSpyFileInfo()
+            ->joinWithSpyFileLocalizedAttributes()
             ->filterByIdFile($fileIds, Criteria::IN);
 
         $fileEntityCollection = $query->find();

@@ -15,7 +15,7 @@ interface FileManagerStorageFacadeInterface
      *
      * @api
      *
-     * @param array $fileIds
+     * @param int[] $fileIds
      *
      * @return void
      */
@@ -27,7 +27,7 @@ interface FileManagerStorageFacadeInterface
      *
      * @api
      *
-     * @param array $fileIds
+     * @param int[] $fileIds
      *
      * @return void
      */

@@ -8,28 +8,17 @@
 namespace Spryker\Zed\FileManagerStorage\Communication\Plugin\Event\Listener;
 
 use Spryker\Zed\FileManager\Dependency\FileManagerEvents;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\FileManagerStorage\Communication\FileManagerStorageCommunicationFactory getFactory()
  */
 class FileListener extends AbstractFileManagerListener
 {
-    use DatabaseTransactionHandlerTrait;
-
     /**
-     * Specification
-     *  - Listeners needs to implement this interface to execute the codes for more
-     *  than one event at same time (Bulk Operation)
-     *
      * @api
      *
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $eventTransfers
      * @param string $eventName
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
-     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
-     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
      *
      * @return void
      */
