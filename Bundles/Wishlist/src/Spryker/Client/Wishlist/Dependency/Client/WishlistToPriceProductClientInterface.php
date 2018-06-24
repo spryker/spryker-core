@@ -7,8 +7,6 @@
 
 namespace Spryker\Client\Wishlist\Dependency\Client;
 
-use Generated\Shared\Transfer\CurrentProductPriceTransfer;
-
 interface WishlistToPriceProductClientInterface
 {
     /**
@@ -17,17 +15,4 @@ interface WishlistToPriceProductClientInterface
      * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */
     public function resolveProductPrice(array $priceMap);
-
-    /**
-     * @param array $defaultPriceMap
-     * @param int $idProductAbstract
-     * @param int $idProductConcrete
-     *
-     * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
-     */
-    public function resolveProductConcretePriceByPriceDimension(
-        array $defaultPriceMap,
-        int $idProductAbstract,
-        int $idProductConcrete
-    ): CurrentProductPriceTransfer;
 }

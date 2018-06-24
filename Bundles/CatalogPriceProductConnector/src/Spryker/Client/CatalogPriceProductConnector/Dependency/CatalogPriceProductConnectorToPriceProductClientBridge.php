@@ -33,21 +33,6 @@ class CatalogPriceProductConnectorToPriceProductClientBridge implements CatalogP
     }
 
     /**
-     * @param array $defaultPriceMap
-     * @param int $idProductAbstract
-     *
-     * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
-     */
-    public function resolveProductAbstractPriceByPriceDimension(array $defaultPriceMap, int $idProductAbstract)
-    {
-        if (!method_exists($this->priceProductClient, 'resolveProductAbstractPriceByPriceDimension')) {
-            return $this->priceProductClient->resolveProductPrice($defaultPriceMap);
-        }
-
-        return $this->priceProductClient->resolveProductAbstractPriceByPriceDimension($defaultPriceMap, $idProductAbstract);
-    }
-
-    /**
      * @return string
      */
     public function getPriceTypeDefaultName()

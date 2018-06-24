@@ -16,14 +16,5 @@
         <property name="originUnitNetPrice" type="int" />
     </transfer>
 
-    <transfer name="PriceProductFilter">
-        <property name="currencyIsoCode" type="string" />
-        <property name="priceMode" type="string" />
-        <property name="storeName" type="string" />
-        <property name="priceTypeName" type="string" />
-        <property name="sku" type="string" />
-        <property name="item" type="Item" />
-        <property name="quote" type="Quote" />
-    </transfer>
-
 </transfers>
+

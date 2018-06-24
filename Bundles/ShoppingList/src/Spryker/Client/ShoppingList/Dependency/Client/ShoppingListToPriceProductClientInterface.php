@@ -17,17 +17,4 @@ interface ShoppingListToPriceProductClientInterface
      * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */
     public function resolveProductPrice(array $priceMap): CurrentProductPriceTransfer;
-
-    /**
-     * @param array $defaultPriceMap
-     * @param int $idProductAbstract
-     * @param int $idProductConcrete
-     *
-     * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
-     */
-    public function resolveProductConcretePriceByPriceDimension(
-        array $defaultPriceMap,
-        int $idProductAbstract,
-        int $idProductConcrete
-    ): CurrentProductPriceTransfer;
 }

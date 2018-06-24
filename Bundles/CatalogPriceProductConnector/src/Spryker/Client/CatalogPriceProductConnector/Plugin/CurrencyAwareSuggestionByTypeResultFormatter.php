@@ -16,6 +16,8 @@ use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\AbstractElasticse
  */
 class CurrencyAwareSuggestionByTypeResultFormatter extends AbstractElasticsearchResultFormatterPlugin
 {
+    protected const PRICE_DIMENSION_DEFAULT = 'PRICE_DIMENSION_DEFAULT';
+
     /**
      * @var \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface
      */
@@ -45,9 +47,8 @@ class CurrencyAwareSuggestionByTypeResultFormatter extends AbstractElasticsearch
 
         $priceProductClient = $this->getFactory()->getPriceProductClient();
         foreach ($results['product_abstract'] as &$product) {
-            $currentProductPriceTransfer = $priceProductClient->resolveProductAbstractPriceByPriceDimension(
-                $product['prices'],
-                $product['id_product_abstract']
+            $currentProductPriceTransfer = $priceProductClient->resolveProductPrice(
+                [static::PRICE_DIMENSION_DEFAULT => $product['prices']]
             );
             $product['price'] = $currentProductPriceTransfer->getPrice();
             $product['prices'] = $currentProductPriceTransfer->getPrices();

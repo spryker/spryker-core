@@ -102,10 +102,7 @@ class ProductRelationStorage implements ProductRelationStorageInterface
 
         $storageProductAbstractRelationTransfer->fromArray($productAbstract, true);
 
-        $currentProductPriceTransfer = $this->priceProductClient->resolveProductAbstractPriceByPriceDimension(
-            $productAbstract['prices'],
-            $productAbstract['idProductAbstract']
-        );
+        $currentProductPriceTransfer = $this->priceProductClient->resolveProductPrice($productAbstract['prices']);
 
         $storageProductAbstractRelationTransfer->setPrices($currentProductPriceTransfer->getPrices());
         $storageProductAbstractRelationTransfer->setPrice($currentProductPriceTransfer->getPrice());
