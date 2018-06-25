@@ -8,8 +8,8 @@
 namespace Spryker\Service\PriceProduct;
 
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
-use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 
 interface PriceProductServiceInterface
 {
@@ -22,12 +22,12 @@ interface PriceProductServiceInterface
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransferCollection
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return int|null
+     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
     public function resolveProductPriceByPriceProductCriteria(
         array $priceProductTransferCollection,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-    ): ?int;
+    ): ?PriceProductTransfer;
 
     /**
      * Specification:
@@ -38,21 +38,10 @@ interface PriceProductServiceInterface
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransferCollection
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
-     * @return int|null
+     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
     public function resolveProductPriceByPriceProductFilter(
         array $priceProductTransferCollection,
         PriceProductFilterTransfer $priceProductFilterTransfer
-    ): ?int;
-
-    /**
-     * @param array $priceProductTransferCollection
-     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\PriceProductDimensionTransfer
-     */
-    public function resolvePriceProductDimensionByPriceProductFilter(
-        array $priceProductTransferCollection,
-        PriceProductFilterTransfer $priceProductFilterTransfer
-    ): PriceProductDimensionTransfer;
+    ): ?PriceProductTransfer;
 }

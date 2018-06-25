@@ -15,11 +15,15 @@ use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToCurrencyClientInterface;
 use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToPriceClientInterface;
+use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToQuoteClientInterface;
 use Spryker\Client\PriceProduct\PriceProductConfig;
 use Spryker\Service\PriceProduct\PriceProductServiceInterface;
 
 class ProductPriceResolver implements ProductPriceResolverInterface
 {
+    protected const PRICE_NET_MODE = 'NET_MODE';
+    protected const PRICE_GROSS_MODE = 'GROSS_MODE';
+
     /**
      * @var \Spryker\Client\PriceProduct\Dependency\Client\PriceProductToPriceClientInterface
      */
@@ -36,6 +40,11 @@ class ProductPriceResolver implements ProductPriceResolverInterface
     protected $priceProductConfig;
 
     /**
+     * @var \Spryker\Client\PriceProduct\PriceProductConfig
+     */
+    protected $quoteClient;
+
+    /**
      * @var \Spryker\Service\PriceProduct\PriceProductServiceInterface
      */
     protected $priceProductService;
@@ -44,17 +53,20 @@ class ProductPriceResolver implements ProductPriceResolverInterface
      * @param \Spryker\Client\PriceProduct\Dependency\Client\PriceProductToPriceClientInterface $priceClient
      * @param \Spryker\Client\PriceProduct\Dependency\Client\PriceProductToCurrencyClientInterface $currencyClient
      * @param \Spryker\Client\PriceProduct\PriceProductConfig $priceProductConfig
+     * @param \Spryker\Client\PriceProduct\Dependency\Client\PriceProductToQuoteClientInterface $quoteClient
      * @param \Spryker\Service\PriceProduct\PriceProductServiceInterface $priceProductService
      */
     public function __construct(
         PriceProductToPriceClientInterface $priceClient,
         PriceProductToCurrencyClientInterface $currencyClient,
         PriceProductConfig $priceProductConfig,
+        PriceProductToQuoteClientInterface $quoteClient,
         PriceProductServiceInterface $priceProductService
     ) {
         $this->priceProductConfig = $priceProductConfig;
         $this->priceClient = $priceClient;
         $this->currencyClient = $currencyClient;
+        $this->quoteClient = $quoteClient;
         $this->priceProductService = $priceProductService;
     }
 
@@ -73,34 +85,28 @@ class ProductPriceResolver implements ProductPriceResolverInterface
         $priceProductTransferCollection = $this->convertPriceMapToPriceProductTransferCollection($priceMap);
         $priceProductFilter = $this->buildPriceProductFilterWithCurrentValues();
 
-        // todo get price product transfer
-        $price = $this->priceProductService->resolveProductPriceByPriceProductFilter(
+        $priceProductTransfer = $this->priceProductService->resolveProductPriceByPriceProductFilter(
             $priceProductTransferCollection,
             $priceProductFilter
         );
 
-        if (!$price) {
-            return $currentProductPriceTransfer;
-        }
-
-        $currentProductPriceTransfer
-            ->setPrice($price);
-
-        $priceProductDimension = $this->priceProductService->resolvePriceProductDimensionByPriceProductFilter(
-            $priceProductTransferCollection,
-            $priceProductFilter
-        );
-
-        if (!$priceProductDimension) {
+        if (!$priceProductTransfer) {
             return $currentProductPriceTransfer;
         }
 
         $currencyIsoCode = $priceProductFilter->getCurrencyIsoCode();
         $priceMode = $priceProductFilter->getPriceMode();
 
-        $prices = $priceMap[$priceProductDimension->getType()][$currencyIsoCode][$priceMode];
+        $price = $this->getPriceValueByPriceMode($priceProductTransfer->getMoneyValue(), $priceMode);
+
+        if (!$price) {
+            return $currentProductPriceTransfer;
+        }
+
+        $prices = $priceMap[$priceProductTransfer->getPriceDimension()->getType()][$currencyIsoCode][$priceMode] ?? [];
 
         return $currentProductPriceTransfer
+            ->setPrice($price)
             ->setPrices($prices);
     }
 
@@ -112,12 +118,13 @@ class ProductPriceResolver implements ProductPriceResolverInterface
         $currencyIsoCode = $this->currencyClient->getCurrent()->getCode();
         $priceMode = $this->priceClient->getCurrentPriceMode();
         $priceTypeName = $this->priceProductConfig->getPriceTypeDefaultName();
+        $quote = $this->quoteClient->getQuote();
 
         return (new PriceProductFilterTransfer())
             ->setPriceMode($priceMode)
             ->setCurrencyIsoCode($currencyIsoCode)
-            ->setPriceTypeName($priceTypeName);
-            //->setQuote();
+            ->setPriceTypeName($priceTypeName)
+            ->setQuote($quote);
     }
 
     /**
@@ -151,17 +158,32 @@ class ProductPriceResolver implements ProductPriceResolverInterface
                                 )
                                 ->setPriceTypeName($priceType);
                         }
-                        if ($priceMode === 'GROSS_MODE') {
-                            $priceProductTransferCollection[$index]->getMoneyValue()->setGrossAmount($priceAmount);
+                        if ($priceMode === static::PRICE_NET_MODE) {
+                            $priceProductTransferCollection[$index]->getMoneyValue()->setNetAmount($priceAmount);
                             continue;
                         }
 
-                        $priceProductTransferCollection[$index]->getMoneyValue()->setNetAmount($priceAmount);
+                        $priceProductTransferCollection[$index]->getMoneyValue()->setGrossAmount($priceAmount);
                     }
                 }
             }
         }
 
         return $priceProductTransferCollection;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
+     * @param string $priceMode
+     *
+     * @return int|null
+     */
+    protected function getPriceValueByPriceMode(MoneyValueTransfer $moneyValueTransfer, string $priceMode): ?int
+    {
+        if ($priceMode === static::PRICE_NET_MODE) {
+            return $moneyValueTransfer->getNetAmount();
+        }
+
+        return $moneyValueTransfer->getGrossAmount();
     }
 }

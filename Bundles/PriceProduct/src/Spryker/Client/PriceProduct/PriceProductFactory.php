@@ -10,6 +10,7 @@ namespace Spryker\Client\PriceProduct;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToCurrencyClientInterface;
 use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToPriceClientInterface;
+use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToQuoteClientInterface;
 use Spryker\Client\PriceProduct\ProductPriceResolver\ProductPriceResolver;
 use Spryker\Service\PriceProduct\PriceProductServiceInterface;
 
@@ -27,6 +28,7 @@ class PriceProductFactory extends AbstractFactory
             $this->getPriceClient(),
             $this->getCurrencyClient(),
             $this->getConfig(),
+            $this->getQuoteClient(),
             $this->getPriceProductService()
         );
     }
@@ -53,6 +55,14 @@ class PriceProductFactory extends AbstractFactory
     public function getCurrencyClient(): PriceProductToCurrencyClientInterface
     {
         return $this->getProvidedDependency(PriceProductDependencyProvider::CLIENT_CURRENCY);
+    }
+
+    /**
+     * @return \Spryker\Client\PriceProduct\Dependency\Client\PriceProductToQuoteClientInterface
+     */
+    protected function getQuoteClient(): PriceProductToQuoteClientInterface
+    {
+        return $this->getProvidedDependency(PriceProductDependencyProvider::CLIENT_QUOTE);
     }
 
     /**
