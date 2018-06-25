@@ -18,7 +18,7 @@ interface PriceProductMerchantRelationshipStorageToPriceProductFacadeInterface
      * @return array
      */
     public function findPricesBySkuGroupedForCurrentStore(
-        $sku,
+        string $sku,
         ?PriceProductDimensionTransfer $priceProductDimensionTransfer = null
     ): array;
 }

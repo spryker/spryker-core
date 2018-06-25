@@ -23,7 +23,7 @@ class PriceProductMerchantRelationshipStoragePersistenceFactory extends Abstract
      */
     public function getPropelPriceProductStoreQuery(): SpyPriceProductStoreQuery
     {
-        return $this->getProvidedDependency(PriceProductMerchantRelationshipStorageDependencyProvider::QUERY_PROPEL_PRICE_PRODUCT_STORE);
+        return $this->getProvidedDependency(PriceProductMerchantRelationshipStorageDependencyProvider::PROPEL_QUERY_PRICE_PRODUCT_STORE);
     }
 
     /**

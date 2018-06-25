@@ -103,7 +103,7 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function findProductAbstractPricesBySkuForCurrentStore(
-        $sku,
+        string $sku,
         PriceProductDimensionTransfer $priceProductDimensionTransfer
     ) {
 

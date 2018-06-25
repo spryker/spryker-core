@@ -16,7 +16,7 @@ use Spryker\Zed\PriceProductMerchantRelationshipStorage\Dependency\Facade\PriceP
 
 class PriceProductMerchantRelationshipStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const QUERY_PROPEL_PRICE_PRODUCT_STORE = 'QUERY_PROPEL_PRICE_PRODUCT_STORE';
+    public const PROPEL_QUERY_PRICE_PRODUCT_STORE = 'PROPEL_QUERY_PRICE_PRODUCT_STORE';
 
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     public const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';
@@ -82,7 +82,7 @@ class PriceProductMerchantRelationshipStorageDependencyProvider extends Abstract
      */
     protected function addPropelPriceProductStoreQuery(Container $container): Container
     {
-        $container[static::QUERY_PROPEL_PRICE_PRODUCT_STORE] = function () {
+        $container[static::PROPEL_QUERY_PRICE_PRODUCT_STORE] = function () {
             return SpyPriceProductStoreQuery::create();
         };
 

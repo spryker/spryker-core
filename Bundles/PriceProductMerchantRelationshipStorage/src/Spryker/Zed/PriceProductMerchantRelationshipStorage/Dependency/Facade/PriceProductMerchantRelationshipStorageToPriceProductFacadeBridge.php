@@ -31,7 +31,7 @@ class PriceProductMerchantRelationshipStorageToPriceProductFacadeBridge implemen
      * @return array
      */
     public function findPricesBySkuGroupedForCurrentStore(
-        $sku,
+        string $sku,
         ?PriceProductDimensionTransfer $priceProductDimensionTransfer = null
     ): array {
         return $this->priceProductFacade->findPricesBySkuGroupedForCurrentStore($sku, $priceProductDimensionTransfer);

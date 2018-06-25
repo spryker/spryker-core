@@ -197,7 +197,7 @@ class Reader implements ReaderInterface
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function findPricesBySkuForCurrentStore(
-        $sku,
+        string $sku,
         ?PriceProductDimensionTransfer $priceProductDimensionTransfer = null
     ) {
         $priceProductDimensionTransfer = $this->getPriceProductDimensionTransfer($priceProductDimensionTransfer);

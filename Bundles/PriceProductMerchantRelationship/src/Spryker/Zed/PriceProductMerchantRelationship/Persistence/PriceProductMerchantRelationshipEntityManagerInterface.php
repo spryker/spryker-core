@@ -13,12 +13,12 @@ use Spryker\Shared\Kernel\Transfer\EntityTransferInterface;
 interface PriceProductMerchantRelationshipEntityManagerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SpyPriceProductMerchantRelationshipEntityTransfer $SpyPriceProductMerchantRelationshipEntityTransfer
+     * @param \Generated\Shared\Transfer\SpyPriceProductMerchantRelationshipEntityTransfer $spyPriceProductMerchantRelationshipEntityTransfer
      *
      * @return \Spryker\Shared\Kernel\Transfer\EntityTransferInterface
      */
     public function saveEntity(
-        SpyPriceProductMerchantRelationshipEntityTransfer $SpyPriceProductMerchantRelationshipEntityTransfer
+        SpyPriceProductMerchantRelationshipEntityTransfer $spyPriceProductMerchantRelationshipEntityTransfer
     ): EntityTransferInterface;
 
     /**
