@@ -42,7 +42,6 @@ class CompanyBusinessUnitTable extends AbstractTable
      * @see DeleteCompanyBusinessUnitController::indexAction()
      */
     protected const URL_COMPANY_BUSINESS_UNIT_DELETE = '/company-business-unit-gui/delete-company-business-unit';
-    protected const FORMAT_ADDRESS = '%s, %s, %s, %s, %s';
 
     /**
      * @var \Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery
