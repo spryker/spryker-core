@@ -16,23 +16,26 @@ class PriceProductMatcher implements PriceProductMatcherInterface
     protected const PRICE_NET_MODE = 'NET_MODE';
 
     /**
-     * @var \Spryker\Service\PriceProduct\Dependency\Plugin\PriceProductDecisionPluginInterface[]
+     * @var \Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductDecisionPluginInterface[]
      */
     protected $priceProductDecisionPlugins = [];
 
+    /**
+     * @param \Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductDecisionPluginInterface[] $priceProductDecisionPlugins
+     */
     public function __construct(array $priceProductDecisionPlugins)
     {
         $this->priceProductDecisionPlugins = $priceProductDecisionPlugins;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransferCollection
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
     public function matchPriceValueByPriceProductCriteria(
-        array $priceProductTransferCollection,
+        array $priceProductTransfers,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
     ): ?PriceProductTransfer {
         $priceProductCriteriaTransfer
@@ -40,12 +43,12 @@ class PriceProductMatcher implements PriceProductMatcherInterface
             ->requirePriceType()
             ->requireIdCurrency();
 
-        if (count($priceProductTransferCollection) === 0) {
+        if (count($priceProductTransfers) === 0) {
             return null;
         }
 
         foreach ($this->priceProductDecisionPlugins as $priceProductDecisionPlugin) {
-            $priceProductTransfer = $priceProductDecisionPlugin->matchPriceByPriceProductCriteria($priceProductTransferCollection, $priceProductCriteriaTransfer);
+            $priceProductTransfer = $priceProductDecisionPlugin->matchPriceByPriceProductCriteria($priceProductTransfers, $priceProductCriteriaTransfer);
             if ($priceProductTransfer) {
                 return $priceProductTransfer;
             }
@@ -55,13 +58,13 @@ class PriceProductMatcher implements PriceProductMatcherInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransferCollection
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
     public function matchPriceValueByPriceProductFilter(
-        array $priceProductTransferCollection,
+        array $priceProductTransfers,
         PriceProductFilterTransfer $priceProductFilterTransfer
     ): ?PriceProductTransfer {
         $priceProductFilterTransfer
@@ -69,12 +72,12 @@ class PriceProductMatcher implements PriceProductMatcherInterface
             ->requireCurrencyIsoCode()
             ->requirePriceMode();
 
-        if (count($priceProductTransferCollection) === 0) {
+        if (count($priceProductTransfers) === 0) {
             return null;
         }
 
         foreach ($this->priceProductDecisionPlugins as $priceProductDecisionPlugin) {
-            $priceProductTransfer = $priceProductDecisionPlugin->matchPriceByPriceProductFilter($priceProductTransferCollection, $priceProductFilterTransfer);
+            $priceProductTransfer = $priceProductDecisionPlugin->matchPriceByPriceProductFilter($priceProductTransfers, $priceProductFilterTransfer);
             if ($priceProductTransfer) {
                 return $priceProductTransfer;
             }

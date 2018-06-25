@@ -136,15 +136,12 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
         $priceProductStoreEntities = $this->priceProductRepository
             ->findProductConcretePricesBySkuAndCriteria($sku, $priceProductCriteriaTransfer);
 
-        $priceProductTransferCollection = $this->priceProductMapper->mapPriceProductStoreEntitiesToPriceProductTransfers(
+        $priceProductTransfers = $this->priceProductMapper->mapPriceProductStoreEntitiesToPriceProductTransfers(
             $priceProductStoreEntities,
             $priceProductCriteriaTransfer
         );
 
-        return $this->priceProductService->resolveProductPriceByPriceProductCriteria(
-            $priceProductTransferCollection,
-            $priceProductCriteriaTransfer
-        );
+        return $this->priceProductService->resolveProductPriceByPriceProductCriteria($priceProductTransfers, $priceProductCriteriaTransfer);
     }
 
     /**

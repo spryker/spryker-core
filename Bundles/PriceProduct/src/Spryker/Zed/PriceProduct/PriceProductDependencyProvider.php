@@ -18,11 +18,11 @@ use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToTouchFacadeBridge;
 
 class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const FACADE_TOUCH = 'facade touch';
-    public const FACADE_PRODUCT = 'product facade';
-    public const FACADE_CURRENCY = 'currency facade';
-    public const FACADE_PRICE = 'price facade';
-    public const FACADE_STORE = 'store facade';
+    public const FACADE_TOUCH = 'FACADE_TOUCH';
+    public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+    public const FACADE_CURRENCY = 'FACADE_CURRENCY';
+    public const FACADE_PRICE = 'FACADE_PRICE';
+    public const FACADE_STORE = 'FACADE_STORE';
 
     public const SERVICE_PRICE_PRODUCT = 'SERVICE_PRICE_PRODUCT';
 

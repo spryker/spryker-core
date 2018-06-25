@@ -92,7 +92,7 @@ class PriceProductStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\PriceProductStorage\Dependency\Plugin\PriceProductStoragePriceDimensionPluginInterface[]
+     * @return \Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductStoragePriceDimensionPluginInterface[]
      */
     public function getPriceDimensionPlugins(): array
     {

@@ -18,32 +18,32 @@ use Spryker\Service\Kernel\AbstractService;
 class PriceProductService extends AbstractService implements PriceProductServiceInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransferCollection
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
     public function resolveProductPriceByPriceProductCriteria(
-        array $priceProductTransferCollection,
+        array $priceProductTransfers,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
     ): ?PriceProductTransfer {
         return $this->getFactory()
             ->createPriceProductMatcher()
-            ->matchPriceValueByPriceProductCriteria($priceProductTransferCollection, $priceProductCriteriaTransfer);
+            ->matchPriceValueByPriceProductCriteria($priceProductTransfers, $priceProductCriteriaTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransferCollection
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
-     * @return int|null
+     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
     public function resolveProductPriceByPriceProductFilter(
-        array $priceProductTransferCollection,
+        array $priceProductTransfers,
         PriceProductFilterTransfer $priceProductFilterTransfer
     ): ?PriceProductTransfer {
         return $this->getFactory()
             ->createPriceProductMatcher()
-            ->matchPriceValueByPriceProductFilter($priceProductTransferCollection, $priceProductFilterTransfer);
+            ->matchPriceValueByPriceProductFilter($priceProductTransfers, $priceProductFilterTransfer);
     }
 }

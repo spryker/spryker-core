@@ -6,7 +6,6 @@
  */
 namespace Spryker\Zed\PriceProductDataImport\Business\Model;
 
-use Generated\Shared\Transfer\SpyPriceProductDefaultEntityTransfer;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceTypeTableMap;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
@@ -78,7 +77,6 @@ class PriceProductWriterStep extends PublishAwareStep implements DataImportStepI
         $priceProductStoreEntity->save();
 
         $this->savePriceProductDefault($priceProductStoreEntity->getPrimaryKey());
-
     }
 
     /**

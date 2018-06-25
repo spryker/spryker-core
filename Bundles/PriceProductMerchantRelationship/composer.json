@@ -3,6 +3,7 @@
   "description": "PriceProductMerchantRelationship module",
   "license": "proprietary",
   "require": {
+    "spryker/price-product-extension": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
