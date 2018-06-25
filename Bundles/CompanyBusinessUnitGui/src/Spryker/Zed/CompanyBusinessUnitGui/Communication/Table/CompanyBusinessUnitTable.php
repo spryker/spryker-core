@@ -139,14 +139,20 @@ class CompanyBusinessUnitTable extends AbstractTable
         if (!$spyCompanyUnitAddress->isEmpty()) {
             $address = $spyCompanyUnitAddress[0]->getCompanyUnitAddress();
 
-            $result = sprintf(
-                static::FORMAT_ADDRESS,
+            $addressArray = [
                 $address->getZipCode(),
                 $address->getCity(),
                 $address->getAddress1(),
-                $address->getAddress2(),
-                $address->getAddress3()
-            );
+            ];
+
+            if ($address->getAddress2()) {
+                $addressArray[] = $address->getAddress2();
+            }
+            if ($address->getAddress3()) {
+                $addressArray[] = $address->getAddress3();
+            }
+
+            $result = implode(', ', $addressArray);
         }
 
         return $result;
