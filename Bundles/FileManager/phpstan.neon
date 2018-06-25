@@ -3,7 +3,6 @@ parameters:
         - '#Parameter \#1 \$idFileInfo of method .+FileInfoTransfer::setIdFileInfo\(\) expects int, null given.#'
         - '#Strict comparison using === between [a-zA-Z\\]* and null will always evaluate to false.#'
         - '#Strict comparison using !== between [a-zA-Z\\]* and null will always evaluate to true.#'
-        - '#Call to an undefined method .+SynchronizationKeyGeneratorPluginInterface::setResource().#'
 
     bootstrap: %rootDir%/../../../phpstan-bootstrap.php
 

@@ -159,7 +159,7 @@ class FileReader implements FileReaderInterface
     protected function generateKey(int $idFile): string
     {
         $synchronizationDataTransfer = (new SynchronizationDataTransfer())
-            ->setReference($idFile)
+            ->setReference((string)$idFile)
             ->setLocale($this->localeClient->getCurrentLocale());
 
         return $this->synchronizationService
