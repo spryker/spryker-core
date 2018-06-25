@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\FileStorageTransfer;
 use Generated\Shared\Transfer\FileTransfer;
 use Orm\Zed\FileManagerStorage\Persistence\Map\SpyFileStorageTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Spryker\Shared\FileManagerStorage\FileManagerStorageConstants;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -54,16 +53,17 @@ class FileManagerStorageRepository extends AbstractRepository implements FileMan
     public function getFileStoragesByIds(array $fileStorageIds)
     {
         $fileStorageTransferCollection = new ArrayObject();
+        $storageCompositeKey = $this->getFactory()->getConfig()->getStorageCompositeKey();
         $mapper = $this->getFactory()->createFileManagerStorageMapper();
         $query = $this->getFactory()
             ->createFileStorageQuery()
             ->filterByFkFile_In($fileStorageIds)
             ->withColumn(
                 "CONCAT(" . SpyFileStorageTableMap::COL_FK_FILE . ", '_', " . SpyFileStorageTableMap::COL_LOCALE . ")",
-                FileManagerStorageConstants::STORAGE_COMPOSITE_KEY
+                $storageCompositeKey
             );
 
-        $fileStorageEntityCollection = $query->find()->toKeyIndex(FileManagerStorageConstants::STORAGE_COMPOSITE_KEY);
+        $fileStorageEntityCollection = $query->find()->toKeyIndex($storageCompositeKey);
 
         foreach ($fileStorageEntityCollection as $compositeKey => $fileStorageEntity) {
             $fileStorageTransferCollection[$compositeKey] = $mapper->mapFileStorageEntityToTransfer($fileStorageEntity, new FileStorageTransfer());

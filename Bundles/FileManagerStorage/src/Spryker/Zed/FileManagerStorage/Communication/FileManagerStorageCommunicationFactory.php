@@ -10,6 +10,9 @@ namespace Spryker\Zed\FileManagerStorage\Communication;
 use Spryker\Zed\FileManagerStorage\FileManagerStorageDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
+/**
+ * @method \Spryker\Zed\FileManagerStorage\FileManagerStorageConfig getConfig()
+ */
 class FileManagerStorageCommunicationFactory extends AbstractCommunicationFactory
 {
     /**

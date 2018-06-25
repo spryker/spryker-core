@@ -12,6 +12,9 @@ use Orm\Zed\FileManagerStorage\Persistence\SpyFileStorageQuery;
 use Spryker\Zed\FileManagerStorage\Persistence\Mapper\FileManagerStorageMapper;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
+/**
+ * @method \Spryker\Zed\FileManagerStorage\FileManagerStorageConfig getConfig()
+ */
 class FileManagerStoragePersistenceFactory extends AbstractPersistenceFactory
 {
     /**

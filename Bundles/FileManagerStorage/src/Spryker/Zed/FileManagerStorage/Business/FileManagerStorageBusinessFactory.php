@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\FileManagerStorage\Persistence\FileManagerStorageEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\FileManagerStorage\FileManagerStorageConfig getConfig()
  */
 class FileManagerStorageBusinessFactory extends AbstractBusinessFactory
 {
