@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence;
 
+use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductStoreTableMap;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery;
 use Orm\Zed\PriceProductMerchantRelationship\Persistence\Map\SpyPriceProductMerchantRelationshipTableMap;
 use Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\Map\SpyPriceProductAbstractMerchantRelationshipStorageTableMap;
@@ -19,10 +20,24 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class PriceProductMerchantRelationshipStorageRepository extends AbstractRepository implements PriceProductMerchantRelationshipStorageRepositoryInterface
 {
-    public const COL_STORE_ID = 'spy_price_product_store.fk_store';
+    /**
+     * @uses \Orm\Zed\Product\Persistence\Map\SpyProductTableMap::COL_SKU
+     */
     public const COL_PRODUCT_CONCRETE_SKU = 'spy_product.sku';
+
+    /**
+     * @uses \Orm\Zed\Product\Persistence\Map\SpyProductTableMap::COL_ID_PRODUCT
+     */
     public const COL_PRODUCT_CONCRETE_ID_PRODUCT = 'spy_product.id_product';
+
+    /**
+     * @uses \Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap::COL_SKU
+     */
     public const COL_PRODUCT_ABSTRACT_SKU = 'spy_product_abstract.sku';
+
+    /**
+     * @uses \Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT
+     */
     public const COL_PRODUCT_ABSTRACT_ID_PRODUCT = 'spy_product_abstract.id_product_abstract';
 
     /**
@@ -39,7 +54,7 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
             ->select([
                 static::COL_PRODUCT_CONCRETE_SKU,
                 static::COL_PRODUCT_CONCRETE_ID_PRODUCT,
-                static::COL_STORE_ID,
+                SpyPriceProductStoreTableMap::COL_FK_STORE,
                 SpyPriceProductMerchantRelationshipTableMap::COL_FK_MERCHANT_RELATIONSHIP,
             ])->groupBy(static::COL_PRODUCT_CONCRETE_SKU);
 
@@ -60,7 +75,7 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
             ->select([
                 static::COL_PRODUCT_ABSTRACT_SKU,
                 static::COL_PRODUCT_ABSTRACT_ID_PRODUCT,
-                static::COL_STORE_ID,
+                SpyPriceProductStoreTableMap::COL_FK_STORE,
                 SpyPriceProductMerchantRelationshipTableMap::COL_FK_MERCHANT_RELATIONSHIP,
             ])->groupBy(static::COL_PRODUCT_ABSTRACT_SKU);
 
