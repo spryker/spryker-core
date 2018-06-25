@@ -10,7 +10,7 @@ namespace Spryker\Client\PriceProductMerchantRelationshipStorage\MerchantRelatio
 interface MerchantRelationshipFinderInterface
 {
     /**
-     * @return int|null
+     * @return array
      */
-    public function findCurrentCustomerMerchantRelationshipId(): ?int;
+    public function findCurrentCustomerMerchantRelationshipIds(): array;
 }

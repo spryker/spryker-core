@@ -57,12 +57,29 @@ class MerchantRelationshipPriceQueryExpander implements MerchantRelationshipPric
             return null;
         }
 
-        if (!$customerTransfer->getCompanyUserTransfer()) {
+        $companyUserTransfer = $customerTransfer->getCompanyUserTransfer();
+        if (!$companyUserTransfer) {
             return null;
         }
 
-        //TODO need to get merchantIds by CompanyMerchantRelationship
-        return $customerTransfer->getCompanyUserTransfer()->getFkMerchantRelationship();
+        $businessUnit = $companyUserTransfer->getCompanyBusinessUnit();
+        if (!$businessUnit) {
+            return null;
+        }
+
+        $idMerchantRelationshipCollection = [];
+        foreach ($businessUnit->getMerchantRelationships() as $merchantRelationshipTransfer) {
+            $idMerchantRelationship = $merchantRelationshipTransfer->getIdMerchantRelationship();
+            //todo temporary
+            return $idMerchantRelationship;
+
+            if (isset($idMerchantRelationshipCollection[$idMerchantRelationship])) {
+                continue;
+            }
+            $idMerchantRelationshipCollection[$idMerchantRelationship] = $idMerchantRelationship;
+        }
+
+        return $idMerchantRelationshipCollection;
     }
 
     /**

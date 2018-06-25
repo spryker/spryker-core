@@ -45,7 +45,7 @@ class MerchantRelationshipPriceDecisionPlugin extends AbstractPlugin implements 
             $priceProductTransfer->getMoneyValue()->requireCurrency();
             $priceProductTransfer->getMoneyValue()->getCurrency()->requireIdCurrency();
 
-            if ($priceProductTransfer->getPriceDimension()->getType() === $this->getDimensionName()) {
+            if ($priceProductTransfer->getPriceDimension()->getIdMerchantRelationship()) {
                 if ($priceProductTransfer->getMoneyValue()->getCurrency()->getIdCurrency() !== $priceProductCriteriaTransfer->getIdCurrency()) {
                     continue;
                 }

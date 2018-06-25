@@ -73,6 +73,8 @@ class ProductPriceResolver implements ProductPriceResolverInterface
         $priceProductTransferCollection = $this->convertPriceMapToPriceProductTransferCollection($priceMap);
         $priceProductFilter = $this->buildPriceProductFilterWithCurrentValues();
 
+
+        // todo get price product transfer
         $price = $this->priceProductService->resolveProductPriceByPriceProductFilter(
             $priceProductTransferCollection,
             $priceProductFilter

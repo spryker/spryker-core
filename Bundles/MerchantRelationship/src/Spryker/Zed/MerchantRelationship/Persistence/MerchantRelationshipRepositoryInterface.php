@@ -35,6 +35,16 @@ interface MerchantRelationshipRepositoryInterface
     public function getIdAssignedBusinessUnitsByMerchantRelationshipId(int $idMerchantRelationship): array;
 
     /**
+     * Specification:
+     * - Returns collection of MerchantRelationshipTransfer where business unit is assigned to.
+     *
+     * @param int $idBusinessUnit
+     *
+     * @return MerchantRelationshipTransfer[]
+     */
+    public function getMerchantRelationshipCollectionByIdAssignedBusinessUnit(int $idBusinessUnit): array;
+
+    /**
      * @param string $candidate
      *
      * @return bool

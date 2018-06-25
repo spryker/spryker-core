@@ -45,7 +45,7 @@ class DefaultPriceDimensionDecisionPlugin extends AbstractPlugin implements Pric
             $priceProductTransfer->getMoneyValue()->getCurrency()->requireIdCurrency();
 
 
-            if ($priceProductTransfer->getPriceDimension()->getType() === $this->getDimensionName()) {
+            if ($priceProductTransfer->getPriceDimension()->getIdPriceProductDefault()) {
                 if ($priceProductTransfer->getMoneyValue()->getCurrency()->getIdCurrency() !== $priceProductCriteriaTransfer->getIdCurrency()) {
                     continue;
                 }

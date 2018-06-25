@@ -10,9 +10,9 @@ namespace Spryker\Client\PriceProductMerchantRelationshipStorage\MerchantRelatio
 class MerchantRelationshipFinder implements MerchantRelationshipFinderInterface
 {
     /**
-     * @var null|int
+     * @var array
      */
-    protected static $businessUnitCache = 0;
+    protected static $merchantRelationshipCache;
 
     /**
      * @var \Spryker\Client\PriceProductMerchantRelationshipStorage\Dependency\Client\PriceProductMerchantRelationshipStorageToCustomerClientInterface
@@ -28,29 +28,42 @@ class MerchantRelationshipFinder implements MerchantRelationshipFinderInterface
     }
 
     /**
-     * @return int|null
+     * @return int[]
      */
-    public function findCurrentCustomerMerchantRelationshipId(): ?int
+    public function findCurrentCustomerMerchantRelationshipIds(): array
     {
-        if (static::$businessUnitCache !== 0) {
-            return static::$businessUnitCache;
+        if (static::$merchantRelationshipCache !== null) {
+            return static::$merchantRelationshipCache;
         }
 
         $customerTransfer = $this->customerClient->getCustomer();
         if (!$customerTransfer) {
-            static::$businessUnitCache = null;
-            return null;
+            return static::$merchantRelationshipCache = [];
         }
 
         $companyTransfer = $customerTransfer->getCompanyUserTransfer();
         if (!$companyTransfer) {
-            static::$businessUnitCache = null;
-            return null;
+            return static::$merchantRelationshipCache = [];
         }
 
-        //todo find merchant relationships by business unit
-        static::$businessUnitCache = $companyTransfer->getFkCompanyMerchantRelationship();
+        $businessUnit = $companyTransfer->getCompanyBusinessUnit();
+        if (!$businessUnit) {
+            return static::$merchantRelationshipCache = [];
+        }
 
-        return static::$businessUnitCache;
+        if ($businessUnit->getMerchantRelationships()->count() === 0) {
+            return static::$merchantRelationshipCache = [];
+        }
+
+        $idMerchantRelationshipCollection = [];
+        foreach ($businessUnit->getMerchantRelationships() as $merchantRelationshipTransfer) {
+            $idMerchantRelationship = $merchantRelationshipTransfer->getIdMerchantRelationship();
+            if (isset($idMerchantRelationshipCollection[$idMerchantRelationship])) {
+                continue;
+            }
+            $idMerchantRelationshipCollection[$idMerchantRelationship] = $idMerchantRelationship;
+        }
+
+        return static::$merchantRelationshipCache = $idMerchantRelationshipCollection;
     }
 }

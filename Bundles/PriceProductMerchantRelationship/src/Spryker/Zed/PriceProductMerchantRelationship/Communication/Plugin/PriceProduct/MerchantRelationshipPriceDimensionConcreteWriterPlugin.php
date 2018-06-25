@@ -8,7 +8,7 @@
 namespace Spryker\Zed\PriceProductMerchantRelationship\Communication\Plugin\PriceProduct;
 
 use Generated\Shared\Transfer\PriceProductTransfer;
-use Spryker\Shared\PriceProduct\PriceProductMerchantRelationshipConstants;
+use Spryker\Shared\PriceProductMerchantRelationship\PriceProductMerchantRelationshipConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PriceProduct\Dependency\Plugin\PriceDimensionConcreteSaverPluginInterface;
 
