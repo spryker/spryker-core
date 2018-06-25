@@ -73,10 +73,10 @@ class MerchantRelationshipPriceQueryExpander implements MerchantRelationshipPric
             //todo temporary
             return $idMerchantRelationship;
 
-            if (isset($idMerchantRelationshipCollection[$idMerchantRelationship])) {
-                continue;
-            }
-            $idMerchantRelationshipCollection[$idMerchantRelationship] = $idMerchantRelationship;
+//            if (isset($idMerchantRelationshipCollection[$idMerchantRelationship])) {
+//                continue;
+//            }
+//            $idMerchantRelationshipCollection[$idMerchantRelationship] = $idMerchantRelationship;
         }
 
         return $idMerchantRelationshipCollection;

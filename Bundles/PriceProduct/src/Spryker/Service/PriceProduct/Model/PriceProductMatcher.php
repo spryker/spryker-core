@@ -20,6 +20,9 @@ class PriceProductMatcher implements PriceProductMatcherInterface
      */
     protected $priceProductDecisionPlugins = [];
 
+    /**
+     * @param \Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductDecisionPluginInterface[] $priceProductDecisionPlugins
+     */
     public function __construct(array $priceProductDecisionPlugins)
     {
         $this->priceProductDecisionPlugins = $priceProductDecisionPlugins;

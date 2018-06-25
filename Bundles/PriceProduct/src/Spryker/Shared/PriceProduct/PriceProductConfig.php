@@ -21,6 +21,9 @@ class PriceProductConfig extends AbstractSharedConfig
      */
     protected const PRICE_TYPE_DEFAULT = 'DEFAULT';
 
+    /**
+     * @return string
+     */
     public function getPriceTypeDefaultName(): string
     {
         return static::PRICE_TYPE_DEFAULT;

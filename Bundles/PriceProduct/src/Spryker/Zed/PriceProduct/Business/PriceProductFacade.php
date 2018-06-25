@@ -310,7 +310,7 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
     ) {
         return $this->getFactory()
             ->createReaderModel()
-            ->findProductConcretePrices($idProductConcrete, $idProductAbstract, $priceProductCriteriaTransfer = null);
+            ->findProductConcretePrices($idProductConcrete, $idProductAbstract, $priceProductCriteriaTransfer);
     }
 
     /**
