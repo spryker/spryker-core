@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantRelationshipProductListGui\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\MerchantRelationshipProductListGui\Communication\DataProvider\ProductListDataProvider;
+use Spryker\Zed\MerchantRelationshipProductListGui\Communication\Table\ProductListTable;
 use Spryker\Zed\MerchantRelationshipProductListGui\Dependency\Facade\MerchantRelationshipProductListGuiToMerchantRelationshipFacadeInterface;
 use Spryker\Zed\MerchantRelationshipProductListGui\MerchantRelationshipProductListGuiDependencyProvider;
 
@@ -35,5 +36,13 @@ class MerchantRelationshipProductListGuiCommunicationFactory extends AbstractCom
         return $this->getProvidedDependency(
             MerchantRelationshipProductListGuiDependencyProvider::FACADE_MERCHANT_RELATION
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantRelationshipProductListGui\Communication\Table\ProductListTable
+     */
+    public function createProductListTable(): ProductListTable
+    {
+        return new ProductListTable();
     }
 }
