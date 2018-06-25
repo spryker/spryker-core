@@ -40,6 +40,10 @@ use Spryker\Glue\GlueApplication\Rest\Response\ResponseFormatter;
 use Spryker\Glue\GlueApplication\Rest\Response\ResponseFormatterInterface;
 use Spryker\Glue\GlueApplication\Rest\Response\ResponseHeaders;
 use Spryker\Glue\GlueApplication\Rest\Response\ResponseHeadersInterface;
+use Spryker\Glue\GlueApplication\Rest\Response\ResponsePagination;
+use Spryker\Glue\GlueApplication\Rest\Response\ResponsePaginationInterface;
+use Spryker\Glue\GlueApplication\Rest\Response\ResponseRelationship;
+use Spryker\Glue\GlueApplication\Rest\Response\ResponseRelationshipInterface;
 use Spryker\Glue\GlueApplication\Rest\Serialize\Decoder\DecoderInterface;
 use Spryker\Glue\GlueApplication\Rest\Serialize\Decoder\JsonDecoder;
 use Spryker\Glue\GlueApplication\Rest\Serialize\DecoderMatcher;
@@ -130,8 +134,9 @@ class GlueApplicationFactory extends AbstractFactory
     protected function createResponseBuilder(): ResponseBuilderInterface
     {
         return new ResponseBuilder(
-            $this->createResourceRelationshipLoader(),
-            $this->getConfig()->getGlueDomainName()
+            $this->getConfig()->getGlueDomainName(),
+            $this->createResponsePagination(),
+            $this->createResponseRelationship()
         );
     }
 
@@ -280,6 +285,22 @@ class GlueApplicationFactory extends AbstractFactory
     protected function createNegotiator(): LanguageNegotiator
     {
         return new LanguageNegotiator();
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\Response\ResponsePaginationInterface
+     */
+    protected function createResponsePagination(): ResponsePaginationInterface
+    {
+        return new ResponsePagination($this->getConfig()->getGlueDomainName());
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\Response\ResponseRelationshipInterface
+     */
+    protected function createResponseRelationship(): ResponseRelationshipInterface
+    {
+        return new ResponseRelationship($this->createResourceRelationshipLoader());
     }
 
     /**

@@ -18,10 +18,10 @@ use Generated\Shared\Transfer\OauthResponseTransfer;
 interface OauthClientInterface
 {
     /**
-     * @api
-     *
      * Specification:
      *  - Process access tokens request, makes RPC ZED call to retrieve new access token
+     *
+     * @api
      *
      * @param \Generated\Shared\Transfer\OauthRequestTransfer $oauthRequestTransfer
      *
@@ -30,10 +30,10 @@ interface OauthClientInterface
     public function processAccessTokenRequest(OauthRequestTransfer $oauthRequestTransfer): OauthResponseTransfer;
 
     /**
-     * @api
-     *
      * Specification:
      *  - Validates JWT token, checks if fingerprint is valid using public key, does not go to ZED.
+     *
+     * @api
      *
      * @param \Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer
      *

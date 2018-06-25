@@ -19,9 +19,9 @@ use Spryker\Client\Kernel\AbstractClient;
 class OauthClient extends AbstractClient implements OauthClientInterface
 {
     /**
-     * @api
-     *
      * {@inheritdoc}
+     *
+     * @api
      *
      * @param \Generated\Shared\Transfer\OauthRequestTransfer $oauthRequestTransfer
      *
@@ -33,9 +33,9 @@ class OauthClient extends AbstractClient implements OauthClientInterface
     }
 
     /**
-     * @api
-     *
      * {@inheritdoc}
+     *
+     * @api
      *
      * @param \Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer
      *

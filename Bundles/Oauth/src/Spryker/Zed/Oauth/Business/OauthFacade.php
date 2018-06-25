@@ -24,9 +24,9 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class OauthFacade extends AbstractFacade implements OauthFacadeInterface
 {
     /**
-     * @api
-     *
      * {@inheritdoc}
+     *
+     * @api
      *
      * @param \Generated\Shared\Transfer\OauthRequestTransfer $oauthRequestTransfer
      *
@@ -38,9 +38,9 @@ class OauthFacade extends AbstractFacade implements OauthFacadeInterface
     }
 
     /**
-     * @api
-     *
      * {@inheritdoc}
+     *
+     * @api
      *
      * @param \Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer
      *
@@ -52,9 +52,9 @@ class OauthFacade extends AbstractFacade implements OauthFacadeInterface
     }
 
     /**
-     * @api
-     *
      * {@inheritdoc}
+     *
+     * @api
      *
      * @param \Generated\Shared\Transfer\OauthScopeTransfer $oauthScopeTransfer
      *
@@ -66,9 +66,9 @@ class OauthFacade extends AbstractFacade implements OauthFacadeInterface
     }
 
     /**
-     * @api
-     *
      * {@inheritdoc}
+     *
+     * @api
      *
      * @param \Generated\Shared\Transfer\OauthClientTransfer $oauthClientTransfer
      *

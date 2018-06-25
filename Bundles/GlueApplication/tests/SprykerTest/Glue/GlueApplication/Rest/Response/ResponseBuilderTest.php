@@ -9,11 +9,10 @@ namespace SprykerTest\Glue\GlueApplication\Rest\Response;
 
 use Codeception\Test\Unit;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilder;
-use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\GlueApplication\Rest\ResourceRelationshipLoaderInterface;
 use Spryker\Glue\GlueApplication\Rest\Response\ResponseBuilder;
 use Spryker\Glue\GlueApplication\Rest\Response\ResponseBuilderInterface;
-use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface;
+use Spryker\Glue\GlueApplication\Rest\Response\ResponsePaginationInterface;
+use Spryker\Glue\GlueApplication\Rest\Response\ResponseRelationshipInterface;
 use SprykerTest\Glue\GlueApplication\Stub\RestRequest;
 
 /**
@@ -36,27 +35,16 @@ class ResponseBuilderTest extends Unit
     {
         $restResponseBuilder = new RestResourceBuilder();
 
-        $relationshipLoaderMock = $this->createRelationshipLoaderMock();
+        $responsePaginationMock = $this->createResponsePaginationMock();
 
-        $relationshipPluginMock = $this->createResourceRelationshipPluginMock();
+        $responsePaginationMock->expects($this->once())
+            ->method('buildPaginationLinks');
 
-        $relationshipPluginMock
-            ->method('addResourceRelationships')
-            ->willReturnCallback(
-                function (array $resources, RestRequestInterface $restRequest) use ($restResponseBuilder) {
-                    foreach ($resources as $resource) {
-                        $resource->addRelationship(
-                            $restResponseBuilder->createRestResource('related', 1)
-                        );
-                    }
-                }
-            );
+        $responseRelationMock = $this->createResponseRelationshipMock();
 
-        $relationshipLoaderMock
-            ->method('load')
-            ->willReturn([$relationshipPluginMock]);
+        $responseRelationMock->expects($this->once())->method('processIncluded');
 
-        $responseBuilder = $this->createResponseBuilder($relationshipLoaderMock);
+        $responseBuilder = $this->createResponseBuilder($responsePaginationMock, $responseRelationMock);
 
         $restResponse = $restResponseBuilder->createRestResponse(20);
 
@@ -70,53 +58,37 @@ class ResponseBuilderTest extends Unit
         $this->assertArrayHasKey('data', $response);
         $this->assertEquals('1', $response['data']['id']);
         $this->assertEquals('tests', $response['data']['type']);
-
-        $this->assertCount(1, $response['data']['relationships']);
-        $this->assertArrayHasKey('related', $response['data']['relationships']);
-
-        $this->assertCount(1, $response['data']['relationships']['related']['data']);
-        $this->assertEquals(1, $response['data']['relationships']['related']['data'][0]['id']);
-        $this->assertEquals('related', $response['data']['relationships']['related']['data'][0]['type']);
-
-        $this->assertArrayHasKey('included', $response);
-        $this->assertCount(1, $response['included']);
-
-        $this->assertArrayHasKey('links', $response);
-        $this->assertArrayHasKey('first', $response['links']);
-        $this->assertArrayHasKey('last', $response['links']);
-        $this->assertArrayHasKey('next', $response['links']);
-        $this->assertArrayHasKey('prev', $response['links']);
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\ResourceRelationshipLoaderInterface $relationshipLoaderMock
+     * @param \Spryker\Glue\GlueApplication\Rest\Response\ResponsePaginationInterface $responsePaginationMock
+     * @param \Spryker\Glue\GlueApplication\Rest\Response\ResponseRelationshipInterface $responseRelationshipMock
      *
      * @return \Spryker\Glue\GlueApplication\Rest\Response\ResponseBuilderInterface
      */
     protected function createResponseBuilder(
-        ResourceRelationshipLoaderInterface $relationshipLoaderMock
+        ResponsePaginationInterface $responsePaginationMock,
+        ResponseRelationshipInterface $responseRelationshipMock
     ): ResponseBuilderInterface {
 
-        return new ResponseBuilder($relationshipLoaderMock, '');
+        return new ResponseBuilder('', $responsePaginationMock, $responseRelationshipMock);
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\GlueApplication\Rest\ResourceRelationshipLoaderInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\GlueApplication\Rest\Response\ResponsePaginationInterface
      */
-    protected function createRelationshipLoaderMock(): ResourceRelationshipLoaderInterface
+    protected function createResponsePaginationMock(): ResponsePaginationInterface
     {
-        return $this->getMockBuilder(ResourceRelationshipLoaderInterface::class)
-            ->setMethods(['load'])
+        return $this->getMockBuilder(ResponsePaginationInterface::class)
             ->getMock();
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\GlueApplication\Rest\Response\ResponseRelationshipInterface
      */
-    protected function createResourceRelationshipPluginMock(): ResourceRelationshipPluginInterface
+    protected function createResponseRelationshipMock(): ResponseRelationshipInterface
     {
-        return $this->getMockBuilder(ResourceRelationshipPluginInterface::class)
-            ->setMethods(['addResourceRelationships', 'getRelationshipResourceType'])
+        return $this->getMockBuilder(ResponseRelationshipInterface::class)
             ->getMock();
     }
 }

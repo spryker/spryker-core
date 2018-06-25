@@ -25,7 +25,7 @@ class DevelopmentConfig extends AbstractBundleConfig
         'Shared',
         'Yves',
         'Zed',
-        'Glue'
+        'Glue',
     ];
 
     /**
