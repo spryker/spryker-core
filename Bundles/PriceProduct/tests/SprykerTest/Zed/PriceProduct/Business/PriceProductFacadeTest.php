@@ -627,7 +627,10 @@ class PriceProductFacadeTest extends Unit
      */
     protected function createPriceProductCriteriaTransfer()
     {
+        $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
+            ->setType(PriceProductConstants::PRICE_DIMENSION_DEFAULT);
+
         return (new PriceProductCriteriaTransfer())
-            ->setPriceDimension(PriceProductConstants::PRICE_DIMENSION_DEFAULT);
+            ->setPriceDimension($priceProductDimensionTransfer);
     }
 }
