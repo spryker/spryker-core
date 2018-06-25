@@ -9,9 +9,9 @@ namespace Spryker\Zed\PriceProduct\Business\Model\Product;
 
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
 use Spryker\Service\PriceProduct\PriceProductServiceInterface;
-use Spryker\Shared\PriceProduct\PriceProductConstants;
 use Spryker\Zed\PriceProduct\Business\Model\PriceProductCriteriaBuilderInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreFacadeInterface;
@@ -90,10 +90,7 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
      */
     public function hasPriceForProductAbstract($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): bool
     {
-        $priceProductStoreEntities = $this->priceProductRepository
-            ->findProductAbstractPricesBySkuAndCriteria($sku, $priceProductCriteriaTransfer);
-
-        return $priceProductStoreEntities->count() > 0;
+        return $this->findPriceForProductAbstract($sku, $priceProductCriteriaTransfer) !== null;
     }
 
     /**
@@ -143,9 +140,9 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return int|null
+     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
-    public function findPriceForProductAbstract($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer)
+    public function findPriceForProductAbstract($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?PriceProductTransfer
     {
         $priceProductStoreEntities = $this->priceProductRepository
             ->findProductAbstractPricesBySkuAndCriteria($sku, $priceProductCriteriaTransfer);
@@ -167,11 +164,7 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
     public function findProductAbstractPricesById($idProductAbstract, ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null): array
     {
         if (!$priceProductCriteriaTransfer) {
-            $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
-                ->setPriceDimension(
-                    (new PriceProductDimensionTransfer())
-                        ->setType(PriceProductConstants::PRICE_DIMENSION_DEFAULT)
-                );
+            $priceProductCriteriaTransfer = new PriceProductCriteriaTransfer();
         }
 
         $priceProductEntities = $this->priceProductRepository

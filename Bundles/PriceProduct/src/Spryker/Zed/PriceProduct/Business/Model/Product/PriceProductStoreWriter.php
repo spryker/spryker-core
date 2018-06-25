@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProduct\Business\Model\Product;
 
+use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductEntityManagerInterface;
@@ -79,13 +80,13 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $moneyValueTransfer
+     * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore
      */
     protected function findPriceProductStoreEntity(
         PriceProductTransfer $priceProductTransfer,
-        PriceProductTransfer $moneyValueTransfer
+        MoneyValueTransfer $moneyValueTransfer
     ): SpyPriceProductStore {
 
         return $this->priceProductQueryContainer
