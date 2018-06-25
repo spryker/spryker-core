@@ -6,8 +6,8 @@
 
 namespace Spryker\Glue\GlueApplication\Plugin\Rest;
 
-use Spryker\Glue\GlueApplication\Dependency\Plugin\ControllerBeforeActionPluginInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ControllerBeforeActionPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 use Spryker\Shared\Kernel\Store;
 

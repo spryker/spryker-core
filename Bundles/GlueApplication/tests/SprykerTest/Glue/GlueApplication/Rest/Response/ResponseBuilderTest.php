@@ -8,12 +8,12 @@
 namespace SprykerTest\Glue\GlueApplication\Rest\Response;
 
 use Codeception\Test\Unit;
-use Spryker\Glue\GlueApplication\Dependency\Plugin\ResourceRelationshipPluginInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilder;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplication\Rest\ResourceRelationshipLoaderInterface;
 use Spryker\Glue\GlueApplication\Rest\Response\ResponseBuilder;
 use Spryker\Glue\GlueApplication\Rest\Response\ResponseBuilderInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface;
 use SprykerTest\Glue\GlueApplication\Stub\RestRequest;
 
 /**
@@ -111,7 +111,7 @@ class ResponseBuilderTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\GlueApplication\Dependency\Plugin\ResourceRelationshipPluginInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface
      */
     protected function createResourceRelationshipPluginMock(): ResourceRelationshipPluginInterface
     {

@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 class ResponseHeaders implements ResponseHeadersInterface
 {
     /**
-     * @var \Spryker\Glue\GlueApplication\Dependency\Plugin\FormatResponseHeadersPluginInterface[]
+     * @var \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormatResponseHeadersPluginInterface[]
      */
     protected $formatResponseHeadersPlugins = [];
 
@@ -25,7 +25,7 @@ class ResponseHeaders implements ResponseHeadersInterface
     protected $contentTypeResolver;
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Dependency\Plugin\FormatResponseHeadersPluginInterface[] $formatResponseHeadersPlugins
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormatResponseHeadersPluginInterface[] $formatResponseHeadersPlugins
      * @param \Spryker\Glue\GlueApplication\Rest\ContentType\ContentTypeResolverInterface $contentTypeResolver
      */
     public function __construct(

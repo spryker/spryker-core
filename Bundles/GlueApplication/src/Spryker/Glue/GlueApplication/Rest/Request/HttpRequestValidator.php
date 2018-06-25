@@ -15,12 +15,12 @@ use Symfony\Component\HttpFoundation\Response;
 class HttpRequestValidator implements HttpRequestValidatorInterface
 {
     /**
-     * @var \Spryker\Glue\GlueApplication\Dependency\Plugin\ValidateHttpRequestPluginInterface[]
+     * @var \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateHttpRequestPluginInterface[]
      */
     protected $requestValidatorPlugins = [];
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Dependency\Plugin\ValidateHttpRequestPluginInterface[] $requestValidatorPlugins
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateHttpRequestPluginInterface[] $requestValidatorPlugins
      */
     public function __construct(array $requestValidatorPlugins)
     {

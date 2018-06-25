@@ -63,7 +63,7 @@ class LanguageNegotiation implements LanguageNegotiationInterface
      */
     protected function findAcceptLanguage(string $acceptLanguage, array $storeLocaleCodes): ?AcceptLanguage
     {
-        /* @var $accepteLanguage \Negotiation\AcceptLanguage  */
+        /** @var \Negotiation\AcceptLanguage $accepteLanguage */
         $accepteLanguage = $this->negotiator->getBest($acceptLanguage, array_keys($storeLocaleCodes));
 
         return $accepteLanguage;

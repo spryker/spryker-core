@@ -9,10 +9,10 @@ namespace Spryker\Zed\Oauth\Business;
 
 use Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer;
 use Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer;
+use Generated\Shared\Transfer\OauthClientTransfer;
 use Generated\Shared\Transfer\OauthRequestTransfer;
 use Generated\Shared\Transfer\OauthResponseTransfer;
-use Generated\Shared\Transfer\SpyOauthClientEntityTransfer;
-use Generated\Shared\Transfer\SpyOauthScopeEntityTransfer;
+use Generated\Shared\Transfer\OauthScopeTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -56,13 +56,13 @@ class OauthFacade extends AbstractFacade implements OauthFacadeInterface
      *
      * {@inheritdoc}
      *
-     * @param \Generated\Shared\Transfer\SpyOauthScopeEntityTransfer $spyOauthScopeEntityTransfer
+     * @param \Generated\Shared\Transfer\OauthScopeTransfer $oauthScopeTransfer
      *
-     * @return \Generated\Shared\Transfer\SpyOauthScopeEntityTransfer
+     * @return \Generated\Shared\Transfer\OauthScopeTransfer
      */
-    public function saveScope(SpyOauthScopeEntityTransfer $spyOauthScopeEntityTransfer): SpyOauthScopeEntityTransfer
+    public function saveScope(OauthScopeTransfer $oauthScopeTransfer): OauthScopeTransfer
     {
-        return $this->getEntityManager()->saveScope($spyOauthScopeEntityTransfer);
+        return $this->getFactory()->createOauthScopeWriter()->save($oauthScopeTransfer);
     }
 
     /**
@@ -70,12 +70,12 @@ class OauthFacade extends AbstractFacade implements OauthFacadeInterface
      *
      * {@inheritdoc}
      *
-     * @param \Generated\Shared\Transfer\SpyOauthClientEntityTransfer $spyOauthClientEntityTransfer
+     * @param \Generated\Shared\Transfer\OauthClientTransfer $oauthClientTransfer
      *
-     * @return \Generated\Shared\Transfer\SpyOauthClientEntityTransfer
+     * @return \Generated\Shared\Transfer\OauthClientTransfer
      */
-    public function saveClient(SpyOauthClientEntityTransfer $spyOauthClientEntityTransfer): SpyOauthClientEntityTransfer
+    public function saveClient(OauthClientTransfer $oauthClientTransfer): OauthClientTransfer
     {
-        return $this->getEntityManager()->saveClient($spyOauthClientEntityTransfer);
+        return $this->getFactory()->createOauthClientWriter()->save($oauthClientTransfer);
     }
 }

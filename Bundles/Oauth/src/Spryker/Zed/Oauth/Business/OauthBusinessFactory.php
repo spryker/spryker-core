@@ -21,6 +21,10 @@ use Spryker\Zed\Oauth\Business\Model\League\RepositoryBuilder;
 use Spryker\Zed\Oauth\Business\Model\League\RepositoryBuilderInterface;
 use Spryker\Zed\Oauth\Business\Model\League\ResourceServerBuilder;
 use Spryker\Zed\Oauth\Business\Model\League\ResourceServerBuilderInterface;
+use Spryker\Zed\Oauth\Business\Model\OauthClientWriter;
+use Spryker\Zed\Oauth\Business\Model\OauthClientWriterInterface;
+use Spryker\Zed\Oauth\Business\Model\OauthScopeWriter;
+use Spryker\Zed\Oauth\Business\Model\OauthScopeWriterInterface;
 use Spryker\Zed\Oauth\OauthConfig;
 use Spryker\Zed\Oauth\OauthDependencyProvider;
 
@@ -75,6 +79,22 @@ class OauthBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Oauth\Business\Model\OauthScopeWriterInterface
+     */
+    public function createOauthScopeWriter(): OauthScopeWriterInterface
+    {
+        return new OauthScopeWriter($this->getEntityManager());
+    }
+
+    /**
+     * @return \Spryker\Zed\Oauth\Business\Model\OauthClientWriterInterface
+     */
+    public function createOauthClientWriter(): OauthClientWriterInterface
+    {
+        return new OauthClientWriter($this->getEntityManager());
+    }
+
+    /**
      * @return \Spryker\Zed\Oauth\Business\Model\League\RepositoryBuilderInterface
      */
     protected function createRepositoryBuilder(): RepositoryBuilderInterface
@@ -104,7 +124,7 @@ class OauthBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Oauth\Dependency\Plugin\UserProviderPluginInterface[]
+     * @return \Spryker\Zed\OauthExtension\Dependency\Plugin\UserProviderPluginInterface[]
      */
     public function getUserProviderPlugins(): array
     {
@@ -112,7 +132,7 @@ class OauthBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Oauth\Dependency\Plugin\ScopeProviderPluginInterface[]
+     * @return \Spryker\Zed\OauthExtension\Dependency\Plugin\ScopeProviderPluginInterface[]
      */
     public function getScopeProviderPlugins(): array
     {

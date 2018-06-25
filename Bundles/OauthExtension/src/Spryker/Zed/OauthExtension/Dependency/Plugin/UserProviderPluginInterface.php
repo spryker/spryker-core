@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Oauth\Dependency\Plugin;
+namespace Spryker\Zed\OauthExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\OauthUserTransfer;
 

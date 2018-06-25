@@ -11,7 +11,7 @@ interface ResourceRelationshipLoaderInterface
     /**
      * @param string $resourceName
      *
-     * @return \Spryker\Glue\GlueApplication\Dependency\Plugin\ResourceRelationshipPluginInterface[]
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface[]
      */
     public function load(string $resourceName): array;
 }

@@ -2,8 +2,8 @@
 
 namespace SprykerTest\Glue\GlueApplication\Stub;
 
-use Spryker\Glue\GlueApplication\Dependency\Plugin\ResourceRouteCollectionInterface;
-use Spryker\Glue\GlueApplication\Dependency\Plugin\ResourceRoutePluginInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 class TestResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
@@ -11,9 +11,9 @@ class TestResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePlu
     /**
      * @api
      *
-     * @param \Spryker\Glue\GlueApplication\Dependency\Plugin\ResourceRouteCollectionInterface $resourceRouteCollection
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface $resourceRouteCollection
      *
-     * @return \Spryker\Glue\GlueApplication\Dependency\Plugin\ResourceRouteCollectionInterface
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface
      */
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {

@@ -7,9 +7,9 @@
 namespace Spryker\Glue\GlueApplication;
 
 use Spryker\Glue\GlueApplication\Dependency\Client\GlueApplicationToStoreClientBridge;
-use Spryker\Glue\GlueApplication\Dependency\Plugin\ResourceRelationshipCollection;
-use Spryker\Glue\GlueApplication\Dependency\Plugin\ResourceRelationshipCollectionInterface;
 use Spryker\Glue\GlueApplication\Dependency\Service\GlueApplicationToUtilEncodingServiceBridge;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipCollection;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipCollectionInterface;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 use Spryker\Glue\Kernel\Plugin\Pimple;
@@ -225,7 +225,7 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * Rest resource route plugin stack
      *
-     * @return \Spryker\Glue\GlueApplication\Dependency\Plugin\ResourceRoutePluginInterface[]
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface[]
      */
     protected function getResourceRoutePlugins(): array
     {
@@ -235,9 +235,9 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * Rest resource relation provider plugin collection, plugins must construct full resource by resource ids.
      *
-     * @param \Spryker\Glue\GlueApplication\Dependency\Plugin\ResourceRelationshipCollectionInterface $resourceRelationshipCollection
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipCollectionInterface $resourceRelationshipCollection
      *
-     * @return \Spryker\Glue\GlueApplication\Dependency\Plugin\ResourceRelationshipCollectionInterface
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipCollectionInterface
      */
     protected function getResourceRelationshipPlugins(
         ResourceRelationshipCollectionInterface $resourceRelationshipCollection
@@ -248,7 +248,7 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * Validate http request plugins
      *
-     * @return \Spryker\Glue\GlueApplication\Dependency\Plugin\ValidateHttpRequestPluginInterface[]
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateHttpRequestPluginInterface[]
      */
     protected function getValidateHttpRequestPlugins(): array
     {
@@ -258,7 +258,7 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * Format/Parse http request to internal rest resource request
      *
-     * @return \Spryker\Glue\GlueApplication\Dependency\Plugin\FormatRequestPluginInterface[]
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormatRequestPluginInterface[]
      */
     protected function getFormatRequestPlugins(): array
     {
@@ -268,7 +268,7 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * Format response data the data which will send with http response
      *
-     * @return \Spryker\Glue\GlueApplication\Dependency\Plugin\FormatResponseDataPluginInterface[]
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormatResponseDataPluginInterface[]
      */
     protected function getFormatResponseDataPlugins(): array
     {
@@ -278,7 +278,7 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * Format/add additional response headers
      *
-     * @return \Spryker\Glue\GlueApplication\Dependency\Plugin\FormatResponseHeadersPluginInterface[]
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormatResponseHeadersPluginInterface[]
      */
     protected function getFormatResponseHeadersPlugins(): array
     {
@@ -286,7 +286,7 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Glue\GlueApplication\Dependency\Plugin\ValidateRestRequestPluginInterface[]
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateRestRequestPluginInterface[]
      */
     protected function getValidateRestRequestPlugins(): array
     {
@@ -296,7 +296,7 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * Called before invoking controller action
      *
-     * @return \Spryker\Glue\GlueApplication\Dependency\Plugin\ControllerBeforeActionPluginInterface[]
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ControllerBeforeActionPluginInterface[]
      */
     protected function getControllerBeforeActionPlugins(): array
     {
@@ -306,7 +306,7 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * Called after done processing controller action
      *
-     * @return \Spryker\Glue\GlueApplication\Dependency\Plugin\ControllerAfterActionPluginInterface[]
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ControllerAfterActionPluginInterface[]
      */
     protected function getControllerAfterActionPlugins(): array
     {

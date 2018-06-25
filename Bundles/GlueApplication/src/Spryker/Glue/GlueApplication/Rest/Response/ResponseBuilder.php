@@ -101,22 +101,11 @@ class ResponseBuilder implements ResponseBuilderInterface
         RestRequestInterface $restRequest
     ): void {
 
-        if ($restRequest->getExcludeRelationship() === true) {
+        if (isset($this->alreadyLoadedResources[$resourceName]) || $restRequest->getExcludeRelationship() === true) {
             return;
         }
 
-        if (isset($this->alreadyLoadedResources[$resourceName])) {
-            return;
-        }
-
-        $relationshipPlugins = $this->resourceRelationshipProviderLoader->load($resourceName);
-        foreach ($relationshipPlugins as $relationshipPlugin) {
-            if (!$this->hasRelationship($relationshipPlugin->getRelationshipResourceType(), $restRequest)) {
-                continue;
-            }
-
-            $relationshipPlugin->addResourceRelationships($resources, $restRequest);
-        }
+        $resources = $this->applyRelationshipPlugins($resourceName, $resources, $restRequest);
 
         $this->alreadyLoadedResources[$resourceName] = true;
 
@@ -345,5 +334,26 @@ class ResponseBuilder implements ResponseBuilderInterface
 
         $includes = $restRequest->getInclude();
         return (count($includes) > 0 && isset($includes[$type])) || (count($includes) === 0 && !$restRequest->getExcludeRelationship());
+    }
+
+    /**
+     * @param string $resourceName
+     * @param array $resources
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return array
+     */
+    protected function applyRelationshipPlugins(string $resourceName, array $resources, RestRequestInterface $restRequest): array
+    {
+        $relationshipPlugins = $this->resourceRelationshipProviderLoader->load($resourceName);
+        foreach ($relationshipPlugins as $relationshipPlugin) {
+            if (!$this->hasRelationship($relationshipPlugin->getRelationshipResourceType(), $restRequest)) {
+                continue;
+            }
+
+            $relationshipPlugin->addResourceRelationships($resources, $restRequest);
+        }
+
+        return $resources;
     }
 }

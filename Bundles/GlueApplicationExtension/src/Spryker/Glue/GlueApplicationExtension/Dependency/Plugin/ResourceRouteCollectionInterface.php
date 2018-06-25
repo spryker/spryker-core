@@ -4,7 +4,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\GlueApplication\Dependency\Plugin;
+namespace Spryker\Glue\GlueApplicationExtension\Dependency\Plugin;
 
 interface ResourceRouteCollectionInterface
 {
@@ -15,7 +15,7 @@ interface ResourceRouteCollectionInterface
      * @param bool $isProtected
      * @param array $context
      *
-     * @return \Spryker\Glue\GlueApplication\Dependency\Plugin\ResourceRouteCollectionInterface
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface
      */
     public function addGet(string $actionName, bool $isProtected = true, array $context = []): self;
 
@@ -26,7 +26,7 @@ interface ResourceRouteCollectionInterface
      * @param bool $isProtected
      * @param array $context
      *
-     * @return \Spryker\Glue\GlueApplication\Dependency\Plugin\ResourceRouteCollectionInterface
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface
      */
     public function addPost(string $actionName, bool $isProtected = true, array $context = []): self;
 

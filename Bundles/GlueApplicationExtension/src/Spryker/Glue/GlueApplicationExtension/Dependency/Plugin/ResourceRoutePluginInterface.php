@@ -4,7 +4,7 @@
  * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
-namespace Spryker\Glue\GlueApplication\Dependency\Plugin;
+namespace Spryker\Glue\GlueApplicationExtension\Dependency\Plugin;
 
 interface ResourceRoutePluginInterface
 {
@@ -14,9 +14,9 @@ interface ResourceRoutePluginInterface
      * Configuration for resource routing, how http methods map to controller actions, is action is protected, also possible
      * to add additional contextual data for action for later access when processing controller action.
      *
-     * @param \Spryker\Glue\GlueApplication\Dependency\Plugin\ResourceRouteCollectionInterface $resourceRouteCollection
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface $resourceRouteCollection
      *
-     * @return \Spryker\Glue\GlueApplication\Dependency\Plugin\ResourceRouteCollectionInterface
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface
      */
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface;
 

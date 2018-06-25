@@ -13,12 +13,12 @@ use Symfony\Component\HttpFoundation\Request;
 class RestRequestValidator implements RestRequestValidatorInterface
 {
     /**
-     * @var \Spryker\Glue\GlueApplication\Dependency\Plugin\ValidateRestRequestPluginInterface[]
+     * @var \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateRestRequestPluginInterface[]
      */
     protected $restRequestValidatorPlugins = [];
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Dependency\Plugin\ValidateRestRequestPluginInterface[] $restRequestValidatorPlugins
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateRestRequestPluginInterface[] $restRequestValidatorPlugins
      */
     public function __construct(array $restRequestValidatorPlugins)
     {

@@ -69,7 +69,7 @@ class ResourceRouter implements ResourceRouterInterface
 
         $resourceType = $this->getMainResource($resources);
         if ($httpRequest->getMethod() === Request::METHOD_OPTIONS) {
-            $route = $this->createRoute('GlueApplication', 'Options', 'resourceType-options');
+            $route = $this->createRoute('GlueApplication', 'Options', 'resource-options');
             $route[RequestConstantsInterface::ATTRIBUTE_TYPE] = $resourceType[RequestConstantsInterface::ATTRIBUTE_TYPE];
             return $route;
         }

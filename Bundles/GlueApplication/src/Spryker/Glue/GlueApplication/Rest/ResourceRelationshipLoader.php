@@ -6,17 +6,17 @@
 
 namespace Spryker\Glue\GlueApplication\Rest;
 
-use Spryker\Glue\GlueApplication\Dependency\Plugin\ResourceRelationshipCollectionInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipCollectionInterface;
 
 class ResourceRelationshipLoader implements ResourceRelationshipLoaderInterface
 {
     /**
-     * @var \Spryker\Glue\GlueApplication\Dependency\Plugin\ResourceRelationshipCollectionInterface
+     * @var \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipCollectionInterface
      */
     protected $resourceRelationship;
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Dependency\Plugin\ResourceRelationshipCollectionInterface $resourceRelationshipCollection
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipCollectionInterface $resourceRelationshipCollection
      */
     public function __construct(ResourceRelationshipCollectionInterface $resourceRelationshipCollection)
     {
@@ -26,7 +26,7 @@ class ResourceRelationshipLoader implements ResourceRelationshipLoaderInterface
     /**
      * @param string $resourceName
      *
-     * @return \Spryker\Glue\GlueApplication\Dependency\Plugin\ResourceRelationshipPluginInterface[]
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface[]
      */
     public function load(string $resourceName): array
     {

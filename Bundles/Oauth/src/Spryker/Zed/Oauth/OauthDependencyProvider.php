@@ -57,7 +57,7 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Oauth\Dependency\Plugin\UserProviderPluginInterface[]
+     * @return \Spryker\Zed\OauthExtension\Dependency\Plugin\UserProviderPluginInterface[]
      */
     protected function getUserProviderPlugins(): array
     {
@@ -65,7 +65,7 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Oauth\Dependency\Plugin\ScopeProviderPluginInterface[]
+     * @return \Spryker\Zed\OauthExtension\Dependency\Plugin\ScopeProviderPluginInterface[]
      */
     protected function getScopeProviderPlugins(): array
     {

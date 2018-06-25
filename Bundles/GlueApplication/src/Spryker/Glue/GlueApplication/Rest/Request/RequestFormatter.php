@@ -34,7 +34,7 @@ class RequestFormatter implements RequestFormatterInterface
     protected $restResourceBuilder;
 
     /**
-     * @var \Spryker\Glue\GlueApplication\Dependency\Plugin\FormatRequestPluginInterface[]
+     * @var \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormatRequestPluginInterface[]
      */
     protected $requestFormatterPlugins = [];
 
@@ -42,7 +42,7 @@ class RequestFormatter implements RequestFormatterInterface
      * @param \Spryker\Glue\GlueApplication\Rest\Request\RequestMetaDataExtractorInterface $requestMetaDataExtractor
      * @param \Spryker\Glue\GlueApplication\Rest\Serialize\DecoderMatcherInterface $decoderMatcher
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\GlueApplication\Dependency\Plugin\FormatRequestPluginInterface[] $requestFormatterPlugins
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormatRequestPluginInterface[] $requestFormatterPlugins
      */
     public function __construct(
         RequestMetaDataExtractorInterface $requestMetaDataExtractor,
@@ -133,6 +133,34 @@ class RequestFormatter implements RequestFormatterInterface
         HttpRequest $httpRequest,
         MetadataInterface $metadata
     ): ?RestResourceInterface {
+
+        $requestData = $this->readRequestData($httpRequest, $metadata);
+        if (!$requestData) {
+            return null;
+        }
+
+        $data = $requestData[RestResourceInterface::RESOURCE_DATA];
+
+        $idResource = '';
+        if (isset($data[RestResourceInterface::RESOURCE_ID])) {
+            $idResource = $data[RestResourceInterface::RESOURCE_ID];
+        }
+
+        return $this->restResourceBuilder->createRestResource(
+            $data[RestResourceInterface::RESOURCE_TYPE],
+            $idResource,
+            $this->mapEntityTransfer($httpRequest, $data)
+        );
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $httpRequest
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\MetadataInterface $metadata
+     *
+     * @return array|null
+     */
+    protected function readRequestData(HttpRequest $httpRequest, MetadataInterface $metadata): ?array
+    {
         $rawPostData = $httpRequest->getContent();
 
         if (!$rawPostData) {
@@ -149,28 +177,29 @@ class RequestFormatter implements RequestFormatterInterface
             return null;
         }
 
-        $data = $requestData[RestResourceInterface::RESOURCE_DATA];
+        return $requestData;
+    }
 
-        $idResource = '';
-        if (isset($data[RestResourceInterface::RESOURCE_ID])) {
-            $idResource = $data[RestResourceInterface::RESOURCE_ID];
-        }
-
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $httpRequest
+     * @param array $data
+     *
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|null
+     */
+    protected function mapEntityTransfer(HttpRequest $httpRequest, array $data): ?TransferInterface
+    {
         $classname = $httpRequest->attributes->get(RequestConstantsInterface::ATTRIBUTE_RESOURCE_FQCN);
 
-        $restResourceAttributesTransfer = null;
-        if ($classname) {
-            $restResourceAttributesTransfer = new $classname();
-            if ($restResourceAttributesTransfer instanceof TransferInterface) {
-                $restResourceAttributesTransfer->fromArray($data[RestResourceInterface::RESOURCE_ATTRIBUTES], true);
-            }
+        if (!$classname) {
+            return null;
         }
 
-        return $this->restResourceBuilder->createRestResource(
-            $data[RestResourceInterface::RESOURCE_TYPE],
-            $idResource,
-            $restResourceAttributesTransfer
-        );
+        $restResourceAttributesTransfer = new $classname();
+        if ($restResourceAttributesTransfer instanceof TransferInterface) {
+            $restResourceAttributesTransfer->fromArray($data[RestResourceInterface::RESOURCE_ATTRIBUTES], true);
+        }
+
+        return $restResourceAttributesTransfer;
     }
 
     /**

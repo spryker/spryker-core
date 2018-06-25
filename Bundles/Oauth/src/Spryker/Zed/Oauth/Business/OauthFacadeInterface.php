@@ -9,10 +9,10 @@ namespace Spryker\Zed\Oauth\Business;
 
 use Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer;
 use Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer;
+use Generated\Shared\Transfer\OauthClientTransfer;
 use Generated\Shared\Transfer\OauthRequestTransfer;
 use Generated\Shared\Transfer\OauthResponseTransfer;
-use Generated\Shared\Transfer\SpyOauthClientEntityTransfer;
-use Generated\Shared\Transfer\SpyOauthScopeEntityTransfer;
+use Generated\Shared\Transfer\OauthScopeTransfer;
 
 /**
  * @method \Spryker\Zed\Oauth\Business\OauthBusinessFactory getFactory()
@@ -22,7 +22,12 @@ interface OauthFacadeInterface
     /**
      * @api
      *
-     * {@inheritdoc}
+     * Specification:
+     *  - Process token request
+     *  - Returns new access token when user provider return valid user
+     *  - Executes scope plugins
+     *  - Executes user plugins
+     *  - Saves issues access token in database for auditing
      *
      * @param \Generated\Shared\Transfer\OauthRequestTransfer $oauthRequestTransfer
      *
@@ -33,7 +38,8 @@ interface OauthFacadeInterface
     /**
      * @api
      *
-     * {@inheritdoc}
+     * Specification:
+     *  - Validates access JWT token agains siganture and token
      *
      * @param \Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer
      *
@@ -44,22 +50,24 @@ interface OauthFacadeInterface
     /**
      * @api
      *
-     * {@inheritdoc}
+     * Specification:
+     *  - Creates new scope in database
      *
-     * @param \Generated\Shared\Transfer\SpyOauthScopeEntityTransfer $spyOauthScopeEntityTransfer
+     * @param \Generated\Shared\Transfer\OauthScopeTransfer $oauthScopeTransfer
      *
-     * @return \Generated\Shared\Transfer\SpyOauthScopeEntityTransfer
+     * @return \Generated\Shared\Transfer\OauthScopeTransfer
      */
-    public function saveScope(SpyOauthScopeEntityTransfer $spyOauthScopeEntityTransfer): SpyOauthScopeEntityTransfer;
+    public function saveScope(OauthScopeTransfer $oauthScopeTransfer): OauthScopeTransfer;
 
     /**
      * @api
      *
-     * {@inheritdoc}
+     * Specification:
+     * - Creates new client in database
      *
-     * @param \Generated\Shared\Transfer\SpyOauthClientEntityTransfer $spyOauthClientEntityTransfer
+     * @param \Generated\Shared\Transfer\OauthClientTransfer $oauthClientTransfer
      *
-     * @return \Generated\Shared\Transfer\SpyOauthClientEntityTransfer
+     * @return \Generated\Shared\Transfer\OauthClientTransfer
      */
-    public function saveClient(SpyOauthClientEntityTransfer $spyOauthClientEntityTransfer): SpyOauthClientEntityTransfer;
+    public function saveClient(OauthClientTransfer $oauthClientTransfer): OauthClientTransfer;
 }

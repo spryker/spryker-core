@@ -4,7 +4,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\GlueApplication\Dependency\Plugin;
+namespace Spryker\Glue\GlueApplicationExtension\Dependency\Plugin;
 
 class ResourceRelationshipCollection implements ResourceRelationshipCollectionInterface
 {
@@ -15,9 +15,9 @@ class ResourceRelationshipCollection implements ResourceRelationshipCollectionIn
 
     /**
      * @param string $resourceType
-     * @param \Spryker\Glue\GlueApplication\Dependency\Plugin\ResourceRelationshipPluginInterface $resourceRelationshipsPlugin
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface $resourceRelationshipsPlugin
      *
-     * @return \Spryker\Glue\GlueApplication\Dependency\Plugin\ResourceRelationshipCollectionInterface
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipCollectionInterface
      */
     public function addRelationship(string $resourceType, ResourceRelationshipPluginInterface $resourceRelationshipsPlugin): ResourceRelationshipCollectionInterface
     {
@@ -39,7 +39,7 @@ class ResourceRelationshipCollection implements ResourceRelationshipCollectionIn
     /**
      * @param string $resourceType
      *
-     * @return \Spryker\Glue\GlueApplication\Dependency\Plugin\ResourceRelationshipPluginInterface[]
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface[]
      */
     public function getRelationships(string $resourceType): array
     {

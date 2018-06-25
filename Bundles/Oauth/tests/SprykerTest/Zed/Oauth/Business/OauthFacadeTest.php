@@ -9,14 +9,14 @@ namespace SprykerTest\Zed\Oauth\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer;
+use Generated\Shared\Transfer\OauthClientTransfer;
 use Generated\Shared\Transfer\OauthRequestTransfer;
+use Generated\Shared\Transfer\OauthScopeTransfer;
 use Generated\Shared\Transfer\OauthUserTransfer;
-use Generated\Shared\Transfer\SpyOauthClientEntityTransfer;
-use Generated\Shared\Transfer\SpyOauthScopeEntityTransfer;
 use Orm\Zed\Oauth\Persistence\SpyOauthClient;
 use Spryker\Zed\Oauth\Business\OauthFacadeInterface;
-use Spryker\Zed\Oauth\Dependency\Plugin\UserProviderPluginInterface;
 use Spryker\Zed\Oauth\OauthDependencyProvider;
+use Spryker\Zed\OauthExtension\Dependency\Plugin\UserProviderPluginInterface;
 
 /**
  * Auto-generated group annotations
@@ -119,13 +119,13 @@ class OauthFacadeTest extends Unit
      */
     public function testSaveScopeShouldPersist(): void
     {
-        $spyOauthScopeEntityTransfer = (new SpyOauthScopeEntityTransfer())
+        $oauthScopeTransfer = (new OauthScopeTransfer())
             ->setIdentifier('identifier')
             ->setDescription('test scope');
 
-        $spyOauthScopeEntityTransfer = $this->getOauthFacade()->saveScope($spyOauthScopeEntityTransfer);
+        $oauthScopeTransfer = $this->getOauthFacade()->saveScope($oauthScopeTransfer);
 
-        $this->assertNotEmpty($spyOauthScopeEntityTransfer->getIdOauthScope());
+        $this->assertNotEmpty($oauthScopeTransfer->getIdOauthScope());
     }
 
     /**
@@ -133,16 +133,16 @@ class OauthFacadeTest extends Unit
      */
     public function testSaveClientShouldPersist(): void
     {
-        $spyOauthClientEntityTransfer = (new SpyOauthClientEntityTransfer())
+        $oauthClientTransfer = (new OauthClientTransfer())
             ->setIdentifier('identifier')
             ->setName('client name')
             ->setSecret('secret')
             ->setIsConfidental(true)
             ->setRedirectUri('url');
 
-        $spyOauthClientEntityTransfer = $this->getOauthFacade()->saveClient($spyOauthClientEntityTransfer);
+        $oauthClientTransfer = $this->getOauthFacade()->saveClient($oauthClientTransfer);
 
-        $this->assertNotEmpty($spyOauthClientEntityTransfer->getIdOauthClient());
+        $this->assertNotEmpty($oauthClientTransfer->getIdOauthClient());
     }
 
     /**

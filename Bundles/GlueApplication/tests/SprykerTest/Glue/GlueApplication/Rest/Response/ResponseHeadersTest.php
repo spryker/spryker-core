@@ -7,12 +7,12 @@
 namespace SprykerTest\Glue\GlueApplication\Rest\Response;
 
 use Codeception\Test\Unit;
-use Spryker\Glue\GlueApplication\Dependency\Plugin\FormatResponseHeadersPluginInterface;
 use Spryker\Glue\GlueApplication\Rest\ContentType\ContentTypeResolverInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplication\Rest\Response\ResponseHeaders;
 use Spryker\Glue\GlueApplication\Rest\Response\ResponseHeadersInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormatResponseHeadersPluginInterface;
 use SprykerTest\Glue\GlueApplication\Stub\RestRequest;
 use SprykerTest\Glue\GlueApplication\Stub\RestResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -68,7 +68,7 @@ class ResponseHeadersTest extends Unit
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Dependency\Plugin\FormatResponseHeadersPluginInterface[] $plugins
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormatResponseHeadersPluginInterface[] $plugins
      *
      * @return \Spryker\Glue\GlueApplication\Rest\Response\ResponseHeadersInterface
      */
@@ -86,7 +86,7 @@ class ResponseHeadersTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\GlueApplication\Dependency\Plugin\FormatResponseHeadersPluginInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormatResponseHeadersPluginInterface
      */
     protected function createFormatResponseHeadersPluginMock(): FormatResponseHeadersPluginInterface
     {

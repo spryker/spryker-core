@@ -8,9 +8,9 @@
 namespace SprykerTest\Glue\GlueApplication\Rest\Request;
 
 use Codeception\Test\Unit;
-use Spryker\Glue\GlueApplication\Dependency\Plugin\ValidateHttpRequestPluginInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\HttpRequestValidator;
 use Spryker\Glue\GlueApplication\Rest\Request\HttpRequestValidatorInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateHttpRequestPluginInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -68,7 +68,7 @@ class HttpRequestValidatorTest extends Unit
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Dependency\Plugin\ValidateHttpRequestPluginInterface[] $validatorPlugins
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateHttpRequestPluginInterface[] $validatorPlugins
      *
      * @return \Spryker\Glue\GlueApplication\Rest\Request\HttpRequestValidatorInterface
      */

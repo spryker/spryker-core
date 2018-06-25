@@ -6,10 +6,8 @@
 
 namespace Spryker\Glue\GlueApplication;
 
-use Negotiation\AbstractNegotiator;
 use Negotiation\LanguageNegotiator;
 use Spryker\Glue\GlueApplication\Dependency\Client\GlueApplicationToStoreClientInterface;
-use Spryker\Glue\GlueApplication\Dependency\Plugin\ResourceRelationshipCollectionInterface;
 use Spryker\Glue\GlueApplication\Dependency\Service\GlueApplicationToUtilEncodingServiceInterface;
 use Spryker\Glue\GlueApplication\Plugin\Rest\GlueControllerListenerPlugin;
 use Spryker\Glue\GlueApplication\Rest\ContentType\ContentTypeResolver;
@@ -54,6 +52,7 @@ use Spryker\Glue\GlueApplication\Rest\Uri\UriParser;
 use Spryker\Glue\GlueApplication\Rest\Uri\UriParserInterface;
 use Spryker\Glue\GlueApplication\Rest\Version\VersionResolver;
 use Spryker\Glue\GlueApplication\Rest\Version\VersionResolverInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipCollectionInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\Kernel\Application;
 
@@ -276,15 +275,15 @@ class GlueApplicationFactory extends AbstractFactory
     }
 
     /**
-     * @return \Negotiation\AbstractNegotiator
+     * @return \Negotiation\LanguageNegotiator
      */
-    protected function createNegotiator(): AbstractNegotiator
+    protected function createNegotiator(): LanguageNegotiator
     {
         return new LanguageNegotiator();
     }
 
     /**
-     * @return \Spryker\Glue\GlueApplication\Dependency\Plugin\ValidateRestRequestPluginInterface[]
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateRestRequestPluginInterface[]
      */
     protected function getValidateRestRequestPlugins(): array
     {
@@ -316,7 +315,7 @@ class GlueApplicationFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\GlueApplication\Dependency\Plugin\ResourceRelationshipCollectionInterface
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipCollectionInterface
      */
     protected function getResourceProviderPlugins(): ResourceRelationshipCollectionInterface
     {
@@ -324,7 +323,7 @@ class GlueApplicationFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\GlueApplication\Dependency\Plugin\ValidateHttpRequestPluginInterface[]
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateHttpRequestPluginInterface[]
      */
     protected function getValidateRequestPlugins(): array
     {
@@ -332,7 +331,7 @@ class GlueApplicationFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\GlueApplication\Dependency\Plugin\FormatRequestPluginInterface[]
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormatRequestPluginInterface[]
      */
     protected function getFormatRequestPlugins(): array
     {
@@ -340,7 +339,7 @@ class GlueApplicationFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\GlueApplication\Dependency\Plugin\FormatResponseDataPluginInterface[]
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormatResponseDataPluginInterface[]
      */
     protected function getFormatResponseDataPlugins(): array
     {
@@ -348,7 +347,7 @@ class GlueApplicationFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\GlueApplication\Dependency\Plugin\FormatResponseHeadersPluginInterface[]
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormatResponseHeadersPluginInterface[]
      */
     protected function getFormatResponseHeadersPlugins(): array
     {
@@ -364,7 +363,7 @@ class GlueApplicationFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\GlueApplication\Dependency\Plugin\ControllerBeforeActionPluginInterface[]
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ControllerBeforeActionPluginInterface[]
      */
     protected function getControllerBeforeActionPlugins(): array
     {
@@ -372,7 +371,7 @@ class GlueApplicationFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\GlueApplication\Dependency\Plugin\ControllerAfterActionPluginInterface[]
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ControllerAfterActionPluginInterface[]
      */
     protected function getControllerAfterActionPlugins(): array
     {

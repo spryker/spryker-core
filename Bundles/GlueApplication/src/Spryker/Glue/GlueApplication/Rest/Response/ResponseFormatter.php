@@ -28,14 +28,14 @@ class ResponseFormatter implements ResponseFormatterInterface
     protected $restResponseBuilder;
 
     /**
-     * @var \Spryker\Glue\GlueApplication\Dependency\Plugin\FormatResponseDataPluginInterface[]
+     * @var \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormatResponseDataPluginInterface[]
      */
     protected $formatDataResponsePlugins = [];
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Serialize\EncoderMatcherInterface $encoderMatcher
      * @param \Spryker\Glue\GlueApplication\Rest\Response\ResponseBuilderInterface $responseBuilder
-     * @param \Spryker\Glue\GlueApplication\Dependency\Plugin\FormatResponseDataPluginInterface[] $formatDataResponsePlugins
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormatResponseDataPluginInterface[] $formatDataResponsePlugins
      */
     public function __construct(
         EncoderMatcherInterface $encoderMatcher,
