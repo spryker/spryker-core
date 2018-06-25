@@ -9,9 +9,9 @@ namespace Spryker\Zed\PriceProduct\Business\Model\Product;
 
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
 use Spryker\Service\PriceProduct\PriceProductServiceInterface;
-use Spryker\Shared\PriceProduct\PriceProductConstants;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreFacadeInterface;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductRepositoryInterface;
@@ -72,10 +72,7 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
      */
     public function hasPriceForProductConcrete($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer)
     {
-        $priceProductStoreEntities = $this->priceProductRepository
-            ->findProductConcretePricesBySkuAndCriteria($sku, $priceProductCriteriaTransfer);
-
-        return $priceProductStoreEntities->count() > 0;
+        return $this->findPriceForProductConcrete($sku, $priceProductCriteriaTransfer) !== null;
     }
 
     /**
@@ -115,9 +112,6 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
     ) {
         if (!$priceProductCriteriaTransfer) {
             $priceProductCriteriaTransfer = new PriceProductCriteriaTransfer();
-            $priceProductDimension = (new PriceProductDimensionTransfer())
-                ->setType(PriceProductConstants::PRICE_DIMENSION_DEFAULT);
-            $priceProductCriteriaTransfer->setPriceDimension($priceProductDimension);
         }
 
         $priceProductStoreEntities = $this->priceProductRepository->findProductConcretePricesByIdAndCriteria(
@@ -135,9 +129,9 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return int|null
+     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
-    public function findPriceForProductConcrete($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer)
+    public function findPriceForProductConcrete($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?PriceProductTransfer
     {
         $priceProductStoreEntities = $this->priceProductRepository
             ->findProductConcretePricesBySkuAndCriteria($sku, $priceProductCriteriaTransfer);
@@ -147,7 +141,10 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
             $priceProductCriteriaTransfer
         );
 
-        return $this->priceProductService->resolveProductPriceByPriceProductCriteria($priceProductTransferCollection, $priceProductCriteriaTransfer);
+        return $this->priceProductService->resolveProductPriceByPriceProductCriteria(
+            $priceProductTransferCollection,
+            $priceProductCriteriaTransfer
+        );
     }
 
     /**

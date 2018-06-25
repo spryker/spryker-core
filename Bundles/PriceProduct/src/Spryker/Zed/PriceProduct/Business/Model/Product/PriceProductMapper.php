@@ -146,8 +146,7 @@ class PriceProductMapper implements PriceProductMapperInterface
     ): array {
         $productPriceCollection = [];
         foreach ($priceProductStoreEntities as $priceProductStoreEntity) {
-            $index = $this->createProductPriceGroupingIndex($priceProductStoreEntity);
-            $productPriceCollection[$index] = $this->mapPriceProductStoreEntityToTransfer(
+            $productPriceCollection[] = $this->mapPriceProductStoreEntityToTransfer(
                 $priceProductStoreEntity,
                 $priceProductCriteriaTransfer
             );
@@ -176,8 +175,7 @@ class PriceProductMapper implements PriceProductMapperInterface
         $moneyValueTransfer = $this->mapMoneyValueTransfer($priceProductStoreEntity);
 
         $priceProductDimensionTransfer = $this->getPriceProductDimensionTransfer(
-            $priceProductStoreEntity,
-            $priceProductCriteriaTransfer
+            $priceProductStoreEntity
         );
 
         return (new PriceProductTransfer())
@@ -193,39 +191,13 @@ class PriceProductMapper implements PriceProductMapperInterface
     /**
      * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore $priceProductStoreEntity
      *
-     * @return string
-     */
-    protected function createProductPriceGroupingIndex(SpyPriceProductStore $priceProductStoreEntity)
-    {
-        $priceProductEntity = $priceProductStoreEntity->getPriceProduct();
-
-        return implode(
-            '-',
-            [
-                $priceProductStoreEntity->getFkStore(),
-                $priceProductStoreEntity->getFkCurrency(),
-                $priceProductEntity->getPriceType()->getName(),
-                $priceProductEntity->getPriceType()->getPriceModeConfiguration(),
-            ]
-        );
-    }
-
-    /**
-     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore $priceProductStoreEntity
-     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-     *
      * @return \Generated\Shared\Transfer\PriceProductDimensionTransfer
      */
     protected function getPriceProductDimensionTransfer(
-        SpyPriceProductStore $priceProductStoreEntity,
-        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+        SpyPriceProductStore $priceProductStoreEntity
     ): PriceProductDimensionTransfer {
-        $priceDimensionType = $priceProductCriteriaTransfer->getPriceDimension()
-            ? $priceProductCriteriaTransfer->getPriceDimension()->getType()
-            : null;
 
         return (new PriceProductDimensionTransfer())
-            ->setType($priceDimensionType)
             ->fromArray(
                 $priceProductStoreEntity->getVirtualColumns(),
                 true

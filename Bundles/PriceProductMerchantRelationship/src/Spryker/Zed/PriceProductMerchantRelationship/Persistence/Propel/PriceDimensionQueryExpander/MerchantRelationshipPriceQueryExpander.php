@@ -70,8 +70,6 @@ class MerchantRelationshipPriceQueryExpander implements MerchantRelationshipPric
         $idMerchantRelationshipCollection = [];
         foreach ($businessUnit->getMerchantRelationships() as $merchantRelationshipTransfer) {
             $idMerchantRelationship = $merchantRelationshipTransfer->getIdMerchantRelationship();
-            //todo temporary
-            return $idMerchantRelationship;
 
             if (isset($idMerchantRelationshipCollection[$idMerchantRelationship])) {
                 continue;
@@ -79,7 +77,7 @@ class MerchantRelationshipPriceQueryExpander implements MerchantRelationshipPric
             $idMerchantRelationshipCollection[$idMerchantRelationship] = $idMerchantRelationship;
         }
 
-        return $idMerchantRelationshipCollection;
+        return $idMerchantRelationshipCollection ? $businessUnit->getMerchantRelationships()[0]->getIdMerchantRelationship() : null;
     }
 
     /**

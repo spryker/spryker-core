@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProduct\Business\Model;
 
+use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
@@ -336,15 +337,36 @@ class Reader implements ReaderInterface
             ->findPriceForProductConcrete($sku, $priceProductCriteriaTransfer);
 
         if ($priceProductConcrete !== null) {
-            return $priceProductConcrete;
+            return $this->getPriceByPriceMode($priceProductConcrete->getMoneyValue(), $priceProductCriteriaTransfer->getPriceMode());
         }
 
         if ($this->productFacade->hasProductConcrete($sku)) {
             $sku = $this->productFacade->getAbstractSkuFromProductConcrete($sku);
         }
 
-        return $this->priceProductAbstractReader
+        $priceProductAbstract = $this->priceProductAbstractReader
             ->findPriceForProductAbstract($sku, $priceProductCriteriaTransfer);
+
+        if (!$priceProductAbstract) {
+            return null;
+        }
+
+        return $this->getPriceByPriceMode($priceProductAbstract->getMoneyValue(), $priceProductCriteriaTransfer->getPriceMode());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
+     * @param string $priceMode
+     *
+     * @return int|null
+     */
+    protected function getPriceByPriceMode(MoneyValueTransfer $moneyValueTransfer, string $priceMode): ?int
+    {
+        if ($priceMode === $this->priceProductMapper->getNetPriceModeIdentifier()) {
+            return $moneyValueTransfer->getNetAmount();
+        }
+
+        return $moneyValueTransfer->getGrossAmount();
     }
 
     /**
