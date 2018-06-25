@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductPackagingUnitGui\Communication\Controller;
 
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\ProductPackagingUnitGui\Communication\Table\ProductPackagingUnitTypeTableConstantsInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,8 +20,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 abstract class AbstractProductPackagingUnitGuiController extends AbstractController
 {
-    protected const PARAM_REDIRECT_URL = 'redirect-url';
-
     protected const MESSAGE_SUCCESS_PACKAGING_UNIT_TYPE_CREATE = 'Product packaging unit type created successfully.';
     protected const MESSAGE_ERROR_PACKAGING_UNIT_TYPE_CREATE = 'Product packaging unit type has not been created.';
 
@@ -48,15 +47,30 @@ abstract class AbstractProductPackagingUnitGuiController extends AbstractControl
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string|null $default
      *
      * @return string
      */
-    protected function getSuccessRedirectUrl(Request $request): string
+    protected function getRequestRedirectUrl(Request $request, ?string $default = null): string
     {
-        if ($request->query->get(static::PARAM_REDIRECT_URL)) {
-            return $request->query->get(static::PARAM_REDIRECT_URL);
+        $redirectUrl = $request->query->get(ProductPackagingUnitTypeTableConstantsInterface::REQUEST_PARAM_REDIRECT_URL);
+        if ($redirectUrl) {
+            return $redirectUrl;
         }
 
-        return ProductPackagingUnitTypeTableConstantsInterface::URL_PRODUCT_PACKAGING_UNIT_TYPE_LIST;
+        return $default ?? ProductPackagingUnitTypeTableConstantsInterface::URL_PRODUCT_PACKAGING_UNIT_TYPE_LIST;
+    }
+
+    /**
+     * @param int $idProductPackagingUnitType
+     *
+     * @return string
+     */
+    protected function getEditPageForId(int $idProductPackagingUnitType): string
+    {
+        return Url::generate(
+            ProductPackagingUnitTypeTableConstantsInterface::URL_PRODUCT_PACKAGING_UNIT_TYPE_EDIT,
+            [ProductPackagingUnitTypeTableConstantsInterface::REQUEST_ID_PRODUCT_PACKAGING_UNIT_TYPE => $idProductPackagingUnitType]
+        )->build();
     }
 }

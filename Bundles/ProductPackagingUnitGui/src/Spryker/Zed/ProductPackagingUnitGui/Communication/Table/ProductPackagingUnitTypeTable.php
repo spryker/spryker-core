@@ -152,6 +152,7 @@ class ProductPackagingUnitTypeTable extends AbstractTable
         $idProductPackagingUnitType = $productPackagingUnitType->getIdProductPackagingUnitType();
         $actionButtons = [
             $this->createEditButton($idProductPackagingUnitType),
+            $this->createDeleteButton($idProductPackagingUnitType),
         ];
 
         return implode(' ', $actionButtons);
@@ -172,6 +173,25 @@ class ProductPackagingUnitTypeTable extends AbstractTable
                 ]
             ),
             'Edit'
+        );
+    }
+
+    /**
+     * @param int $idProductPackagingUnitType
+     *
+     * @return string
+     */
+    protected function createDeleteButton($idProductPackagingUnitType): string
+    {
+        return $this->generateEditButton(
+            Url::generate(
+                ProductPackagingUnitTypeTableConstantsInterface::URL_PRODUCT_PACKAGING_UNIT_TYPE_DELETE,
+                [
+                    ProductPackagingUnitTypeTableConstantsInterface::REQUEST_ID_PRODUCT_PACKAGING_UNIT_TYPE => $idProductPackagingUnitType,
+                    ProductPackagingUnitTypeTableConstantsInterface::REQUEST_PARAM_REDIRECT_URL => ProductPackagingUnitTypeTableConstantsInterface::URL_PRODUCT_PACKAGING_UNIT_TYPE_LIST,
+                ]
+            ),
+            'Delete'
         );
     }
 }
