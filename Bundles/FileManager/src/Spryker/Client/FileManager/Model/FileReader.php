@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\FileManager\Dependency\Client\FileManagerToLocaleClientInterface;
 use Spryker\Client\FileManager\Dependency\Client\FileManagerToStorageClientInterface;
 use Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface;
-use Spryker\Shared\Kernel\Store;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class FileReader implements FileReaderInterface
@@ -39,28 +38,21 @@ class FileReader implements FileReaderInterface
     protected $localeClient;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
-     */
-    protected $store;
-
-    /**
      * FileReader constructor.
      *
      * @param \Spryker\Client\FileManager\Dependency\Client\FileManagerToStorageClientInterface $storageClient
      * @param \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface $keyGenerator
      * @param \Spryker\Client\FileManager\Dependency\Client\FileManagerToLocaleClientInterface $localeClient
-     * @param \Spryker\Shared\Kernel\Store $store
      */
     public function __construct(
         FileManagerToStorageClientInterface $storageClient,
         SynchronizationKeyGeneratorPluginInterface $keyGenerator,
-        FileManagerToLocaleClientInterface $localeClient,
-        Store $store
-    ) {
+        FileManagerToLocaleClientInterface $localeClient
+    )
+    {
         $this->storageClient = $storageClient;
         $this->keyGenerator = $keyGenerator;
         $this->localeClient = $localeClient;
-        $this->store = $store;
     }
 
     /**
@@ -68,7 +60,7 @@ class FileReader implements FileReaderInterface
      *
      * @return \Generated\Shared\Transfer\FileManagerDataTransfer
      */
-    public function readFileVersion($idFile)
+    public function readLatestFileVersion($idFile)
     {
         $fileArray = $this->fetchFileFromStorage($idFile);
         $versions = $this->mapVersionsArrayToTransfer($fileArray);
@@ -173,9 +165,6 @@ class FileReader implements FileReaderInterface
         $synchronizationDataTransfer->setReference((string)$idFile);
         $synchronizationDataTransfer->setLocale(
             $this->localeClient->getCurrentLocale()
-        );
-        $synchronizationDataTransfer->setStore(
-            $this->store->getStoreName()
         );
 
         return $this->keyGenerator->generateKey($synchronizationDataTransfer);

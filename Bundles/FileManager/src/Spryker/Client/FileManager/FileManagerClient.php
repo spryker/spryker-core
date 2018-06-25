@@ -28,7 +28,7 @@ class FileManagerClient extends AbstractClient implements FileManagerClientInter
     {
         return $this->getFactory()
             ->createFileReader()
-            ->readFileVersion(
+            ->readLatestFileVersion(
                 $readFileTransfer->getIdFile()
             );
     }

@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\FileStorageDataTransfer;
 use Generated\Shared\Transfer\FileStorageTransfer;
 use Generated\Shared\Transfer\FileTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\FileManager\Exception\FileStorageNotFoundException;
 use Spryker\Zed\FileManagerStorage\Dependency\Facade\FileManagerStorageToLocaleFacadeInterface;
 use Spryker\Zed\FileManagerStorage\Persistence\FileManagerStorageEntityManagerInterface;
@@ -41,26 +40,19 @@ class FileManagerStorageWriter implements FileManagerStorageWriterInterface
     protected $localeFacade;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
-     */
-    protected $store;
-
-    /**
      * @param \Spryker\Zed\FileManagerStorage\Persistence\FileManagerStorageEntityManagerInterface $entityManager
      * @param \Spryker\Zed\FileManagerStorage\Persistence\FileManagerStorageRepositoryInterface $repository
      * @param \Spryker\Zed\FileManagerStorage\Dependency\Facade\FileManagerStorageToLocaleFacadeInterface $localeFacade
-     * @param \Spryker\Shared\Kernel\Store $store
      */
     public function __construct(
         FileManagerStorageEntityManagerInterface $entityManager,
         FileManagerStorageRepositoryInterface $repository,
-        FileManagerStorageToLocaleFacadeInterface $localeFacade,
-        Store $store
-    ) {
+        FileManagerStorageToLocaleFacadeInterface $localeFacade
+    )
+    {
         $this->entityManager = $entityManager;
         $this->repository = $repository;
         $this->localeFacade = $localeFacade;
-        $this->store = $store;
     }
 
     /**
@@ -160,7 +152,6 @@ class FileManagerStorageWriter implements FileManagerStorageWriterInterface
         $fileStorageTransfer->setFileName($fileTransfer->getFileName());
         $fileStorageTransfer->setLocale($localeTransfer->getLocaleName());
         $fileStorageTransfer->setFkFile($fileTransfer->getIdFile());
-        $fileStorageTransfer->setStore($this->store->getStoreName());
         $fileStorageTransfer->setData(
             $this->mapToFileStorageDataTransfer($fileTransfer, $localeTransfer)
         );

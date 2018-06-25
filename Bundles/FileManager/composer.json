@@ -3,6 +3,7 @@
   "description": "FileManager module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker/file-system": "^1.0.2",
     "spryker/kernel": "^3.16.0",
     "spryker/locale": "^3.1.0",

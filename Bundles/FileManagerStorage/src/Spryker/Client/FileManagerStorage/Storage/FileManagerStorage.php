@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\FileStorageDataTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\FileManagerStorage\Dependency\Client\FileManagerStorageToStorageClientInterface;
 use Spryker\Client\FileManagerStorage\Dependency\Service\FileManagerStorageToSynchronizationServiceInterface;
-use Spryker\Client\Store\StoreClient;
 
 class FileManagerStorage implements FileManagerStorageInterface
 {
@@ -70,16 +69,7 @@ class FileManagerStorage implements FileManagerStorageInterface
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer->setReference($keyName);
         $synchronizationDataTransfer->setLocale($localeName);
-        $synchronizationDataTransfer->setStore($this->getStoreName());
 
         return $this->synchronizationService->getStorageKeyBuilder(static::RESOURCE_NAME)->generateKey($synchronizationDataTransfer);
-    }
-
-    /**
-     * @return string
-     */
-    protected function getStoreName()
-    {
-        return StoreClient::getCurrentStore()->getName();
     }
 }

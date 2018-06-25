@@ -22,8 +22,7 @@ class FileManagerFactory extends AbstractFactory
         return new FileReader(
             $this->getStorageClient(),
             $this->createKeyGenerator(),
-            $this->getLocaleClient(),
-            $this->getStore()
+            $this->getLocaleClient()
         );
     }
 
@@ -59,13 +58,5 @@ class FileManagerFactory extends AbstractFactory
     protected function getLocaleClient()
     {
         return $this->getProvidedDependency(FileManagerDependencyProvider::CLIENT_LOCALE);
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    protected function getStore()
-    {
-        return $this->getProvidedDependency(FileManagerDependencyProvider::STORE);
     }
 }

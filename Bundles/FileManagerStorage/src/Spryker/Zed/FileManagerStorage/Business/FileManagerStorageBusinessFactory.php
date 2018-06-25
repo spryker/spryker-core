@@ -24,8 +24,7 @@ class FileManagerStorageBusinessFactory extends AbstractBusinessFactory
         return new FileManagerStorageWriter(
             $this->getEntityManager(),
             $this->getRepository(),
-            $this->getLocaleFacade(),
-            $this->getStore()
+            $this->getLocaleFacade()
         );
     }
 
@@ -35,13 +34,5 @@ class FileManagerStorageBusinessFactory extends AbstractBusinessFactory
     public function getLocaleFacade()
     {
         return $this->getProvidedDependency(FileManagerStorageDependencyProvider::FACADE_LOCALE);
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    public function getStore()
-    {
-        return $this->getProvidedDependency(FileManagerStorageDependencyProvider::STORE);
     }
 }

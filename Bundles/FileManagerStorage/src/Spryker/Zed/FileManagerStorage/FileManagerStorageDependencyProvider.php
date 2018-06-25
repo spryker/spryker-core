@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\FileManagerStorage;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\FileManagerStorage\Dependency\Facade\FileManagerStorageToEventBehaviorFacadeBridge;
 use Spryker\Zed\FileManagerStorage\Dependency\Facade\FileManagerStorageToLocaleFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
@@ -18,8 +17,6 @@ class FileManagerStorageDependencyProvider extends AbstractBundleDependencyProvi
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     public const FACADE_LOCALE = 'FACADE_LOCALE';
 
-    public const STORE = 'STORE';
-
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -28,7 +25,6 @@ class FileManagerStorageDependencyProvider extends AbstractBundleDependencyProvi
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container = $this->addLocaleFacade($container);
-        $container = $this->addStore($container);
 
         return $container;
     }
@@ -42,20 +38,6 @@ class FileManagerStorageDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container = $this->addEventBehaviorFacade($container);
         $container = $this->addLocaleFacade($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addStore(Container $container)
-    {
-        $container[static::STORE] = function (Container $container) {
-            return Store::getInstance();
-        };
 
         return $container;
     }

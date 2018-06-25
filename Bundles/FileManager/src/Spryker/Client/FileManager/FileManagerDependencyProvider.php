@@ -11,13 +11,11 @@ use Spryker\Client\FileManager\Dependency\Client\FileManagerToLocaleClientBridge
 use Spryker\Client\FileManager\Dependency\Client\FileManagerToStorageClientBridge;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
-use Spryker\Shared\Kernel\Store;
 
 class FileManagerDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
     public const CLIENT_LOCALE = 'CLIENT_LOCALE';
-    public const STORE = 'STORE';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -28,21 +26,6 @@ class FileManagerDependencyProvider extends AbstractDependencyProvider
     {
         $container = $this->addStorageClient($container);
         $container = $this->addLocaleClient($container);
-        $container = $this->addStore($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Client\Kernel\Container $container
-     *
-     * @return \Spryker\Client\Kernel\Container
-     */
-    protected function addStore(Container $container): Container
-    {
-        $container[static::STORE] = function () {
-            return Store::getInstance();
-        };
 
         return $container;
     }

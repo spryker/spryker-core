@@ -21,10 +21,14 @@
         <column name="storage_name" type="VARCHAR" size="255"/>
         <column name="storage_file_name" type="VARCHAR" size="255"/>
         <column name="extension" type="VARCHAR" size="255" required="true"/>
+
         <foreign-key name="spy_file_info-fk_file" foreignTable="spy_file" phpName="File" onDelete="CASCADE">
             <reference foreign="id_file" local="fk_file"/>
         </foreign-key>
+
         <id-method-parameter value="spy_file_info_pk_seq"/>
+
+        <behavior name="timestampable"/>
     </table>
 
     <table name="spy_file_localized_attributes" idMethod="native" allowPkInsert="true"  phpName="SpyFileLocalizedAttributes">
@@ -33,16 +37,20 @@
         <column name="fk_locale" required="true" type="INTEGER"/>
         <column name="title" required="false" type="VARCHAR" default="NULL" size="255" />
         <column name="alt" required="false" type="LONGVARCHAR" default="NULL" />
+
         <foreign-key name="spy_file_localized_attributes-fk_file" foreignTable="spy_file" onDelete="CASCADE" onUpdate="CASCADE">
             <reference local="fk_file" foreign="id_file"/>
         </foreign-key>
+
         <foreign-key name="spy_file_localized_attributes-fk_locale" foreignTable="spy_locale" phpName="Locale">
             <reference local="fk_locale" foreign="id_locale"/>
         </foreign-key>
+
         <unique name="spy_file_localized_attributes-unique-fk_file">
             <unique-column name="fk_file"/>
             <unique-column name="fk_locale"/>
         </unique>
+
         <id-method-parameter value="spy_file_localized_attributes_pk_seq"/>
     </table>
 
@@ -70,8 +78,6 @@
         <column name="fk_locale" required="true" type="INTEGER"/>
         <column name="title" type="VARCHAR" size="255" required="true"/>
 
-        <behavior name="timestampable"/>
-
         <foreign-key foreignTable="spy_file_directory" onDelete="CASCADE">
             <reference foreign="id_file_directory" local="fk_file_directory"/>
         </foreign-key>
@@ -81,6 +87,8 @@
         </foreign-key>
 
         <id-method-parameter value="spy_file_directory_localized_attributes_pk_seq"/>
+
+        <behavior name="timestampable"/>
     </table>
 
     <table name="spy_mime_type" phpName="SpyMimeType">

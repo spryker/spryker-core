@@ -14,5 +14,5 @@ interface FileReaderInterface
      *
      * @return \Generated\Shared\Transfer\FileManagerDataTransfer
      */
-    public function readFileVersion($idFile);
+    public function readLatestFileVersion($idFile);
 }
