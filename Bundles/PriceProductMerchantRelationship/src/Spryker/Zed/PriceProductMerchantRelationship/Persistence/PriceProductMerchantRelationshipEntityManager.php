@@ -19,23 +19,23 @@ class PriceProductMerchantRelationshipEntityManager extends AbstractEntityManage
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\SpyPriceProductMerchantRelationshipEntityTransfer $spyPriceProductMerchantRelationshipEntityTransfer
+     * @param \Generated\Shared\Transfer\SpyPriceProductMerchantRelationshipEntityTransfer $priceProductMerchantRelationshipEntityTransfer
      *
      * @return \Spryker\Shared\Kernel\Transfer\EntityTransferInterface
      */
     public function saveEntity(
-        SpyPriceProductMerchantRelationshipEntityTransfer $spyPriceProductMerchantRelationshipEntityTransfer
+        SpyPriceProductMerchantRelationshipEntityTransfer $priceProductMerchantRelationshipEntityTransfer
     ): EntityTransferInterface {
         $entity = $this->getFactory()->createPriceProductMerchantRelationshipQuery()
-            ->filterByFkMerchantRelationship($spyPriceProductMerchantRelationshipEntityTransfer->getFkMerchantRelationship())
-            ->filterByFkPriceProductStore($spyPriceProductMerchantRelationshipEntityTransfer->getFkPriceProductStore())
-            ->filterByFkProductAbstract($spyPriceProductMerchantRelationshipEntityTransfer->getFkProductAbstract())
-            ->filterByFkProduct($spyPriceProductMerchantRelationshipEntityTransfer->getFkProduct())
+            ->filterByFkMerchantRelationship($priceProductMerchantRelationshipEntityTransfer->getFkMerchantRelationship())
+            ->filterByFkPriceProductStore($priceProductMerchantRelationshipEntityTransfer->getFkPriceProductStore())
+            ->filterByFkProductAbstract($priceProductMerchantRelationshipEntityTransfer->getFkProductAbstract())
+            ->filterByFkProduct($priceProductMerchantRelationshipEntityTransfer->getFkProduct())
             ->findOneOrCreate();
 
         $entity->save();
 
-        return $spyPriceProductMerchantRelationshipEntityTransfer;
+        return $priceProductMerchantRelationshipEntityTransfer;
     }
 
     /**
