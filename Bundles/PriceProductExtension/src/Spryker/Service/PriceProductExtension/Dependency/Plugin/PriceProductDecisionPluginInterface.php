@@ -20,12 +20,12 @@ interface PriceProductDecisionPluginInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransferCollection
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
-    public function matchPriceByPriceProductCriteria(array $priceProductTransferCollection, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?PriceProductTransfer;
+    public function matchPriceByPriceProductCriteria(array $priceProductTransfers, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?PriceProductTransfer;
 
     /**
      * Specification:
@@ -34,12 +34,12 @@ interface PriceProductDecisionPluginInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransferCollection
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
-    public function matchPriceByPriceProductFilter(array $priceProductTransferCollection, PriceProductFilterTransfer $priceProductFilterTransfer): ?PriceProductTransfer;
+    public function matchPriceByPriceProductFilter(array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer): ?PriceProductTransfer;
 
     /**
      * Specification:

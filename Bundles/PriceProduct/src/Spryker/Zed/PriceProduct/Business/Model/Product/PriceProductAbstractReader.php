@@ -150,12 +150,12 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
         $priceProductStoreEntities = $this->priceProductRepository
             ->findProductAbstractPricesBySkuAndCriteria($sku, $priceProductCriteriaTransfer);
 
-        $priceProductTransferCollection = $this->priceProductMapper->mapPriceProductStoreEntitiesToPriceProductTransfers(
+        $priceProductTransfers = $this->priceProductMapper->mapPriceProductStoreEntitiesToPriceProductTransfers(
             $priceProductStoreEntities,
             $priceProductCriteriaTransfer
         );
 
-        return $this->priceProductService->resolveProductPriceByPriceProductCriteria($priceProductTransferCollection, $priceProductCriteriaTransfer);
+        return $this->priceProductService->resolveProductPriceByPriceProductCriteria($priceProductTransfers, $priceProductCriteriaTransfer);
     }
 
     /**

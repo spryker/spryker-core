@@ -82,11 +82,11 @@ class ProductPriceResolver implements ProductPriceResolverInterface
             return $currentProductPriceTransfer;
         }
 
-        $priceProductTransferCollection = $this->convertPriceMapToPriceProductTransferCollection($priceMap);
+        $priceProductTransfers = $this->convertPriceMapToPriceProductTransfers($priceMap);
         $priceProductFilter = $this->buildPriceProductFilterWithCurrentValues();
 
         $priceProductTransfer = $this->priceProductService->resolveProductPriceByPriceProductFilter(
-            $priceProductTransferCollection,
+            $priceProductTransfers,
             $priceProductFilter
         );
 
@@ -132,10 +132,10 @@ class ProductPriceResolver implements ProductPriceResolverInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    protected function convertPriceMapToPriceProductTransferCollection(array $priceMap): array
+    protected function convertPriceMapToPriceProductTransfers(array $priceMap): array
     {
-        /** @var \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransferCollection */
-        $priceProductTransferCollection = [];
+        /** @var \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers */
+        $priceProductTransfers = [];
 
         foreach ($priceMap as $priceDimension => $priceData) {
             foreach ($priceData as $currencyCode => $prices) {
@@ -146,8 +146,8 @@ class ProductPriceResolver implements ProductPriceResolverInterface
                             $currencyCode,
                             $priceType,
                         ]);
-                        if (!isset($priceProductTransferCollection[$index])) {
-                            $priceProductTransferCollection[$index] = (new PriceProductTransfer())
+                        if (!isset($priceProductTransfers[$index])) {
+                            $priceProductTransfers[$index] = (new PriceProductTransfer())
                                 ->setPriceDimension(
                                     (new PriceProductDimensionTransfer())
                                         ->setType($priceDimension)
@@ -159,17 +159,17 @@ class ProductPriceResolver implements ProductPriceResolverInterface
                                 ->setPriceTypeName($priceType);
                         }
                         if ($priceMode === static::PRICE_NET_MODE) {
-                            $priceProductTransferCollection[$index]->getMoneyValue()->setNetAmount($priceAmount);
+                            $priceProductTransfers[$index]->getMoneyValue()->setNetAmount($priceAmount);
                             continue;
                         }
 
-                        $priceProductTransferCollection[$index]->getMoneyValue()->setGrossAmount($priceAmount);
+                        $priceProductTransfers[$index]->getMoneyValue()->setGrossAmount($priceAmount);
                     }
                 }
             }
         }
 
-        return $priceProductTransferCollection;
+        return $priceProductTransfers;
     }
 
     /**

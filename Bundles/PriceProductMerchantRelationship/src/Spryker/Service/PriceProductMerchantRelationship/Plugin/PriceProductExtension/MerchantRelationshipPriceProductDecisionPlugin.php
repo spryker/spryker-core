@@ -22,21 +22,21 @@ class MerchantRelationshipPriceProductDecisionPlugin extends AbstractPlugin impl
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransferCollection
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
     public function matchPriceByPriceProductCriteria(
-        array $priceProductTransferCollection,
+        array $priceProductTransfers,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
     ): ?PriceProductTransfer {
 
-        if (empty($priceProductTransferCollection)) {
+        if (empty($priceProductTransfers)) {
             return null;
         }
 
-        foreach ($priceProductTransferCollection as $priceProductTransfer) {
+        foreach ($priceProductTransfers as $priceProductTransfer) {
             $priceProductTransfer
                 ->requirePriceDimension()
                 ->requirePriceTypeName()
@@ -62,18 +62,18 @@ class MerchantRelationshipPriceProductDecisionPlugin extends AbstractPlugin impl
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransferCollection
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
-    public function matchPriceByPriceProductFilter(array $priceProductTransferCollection, PriceProductFilterTransfer $priceProductFilterTransfer): ?PriceProductTransfer
+    public function matchPriceByPriceProductFilter(array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer): ?PriceProductTransfer
     {
-        if (empty($priceProductTransferCollection)) {
+        if (empty($priceProductTransfers)) {
             return null;
         }
 
-        foreach ($priceProductTransferCollection as $priceProductTransfer) {
+        foreach ($priceProductTransfers as $priceProductTransfer) {
             $priceProductTransfer
                 ->requirePriceDimension()
                 ->requirePriceTypeName()
