@@ -11,11 +11,14 @@ use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToCurrencyClientBridge;
 use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToPriceClientBridge;
+use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToQuoteClientBridge;
 
 class PriceProductDependencyProvider extends AbstractDependencyProvider
 {
-    public const CLIENT_PRICE = 'PRICE_CLIENT';
-    public const CLIENT_CURRENCY = 'CURRENCY_CLIENT';
+    public const CLIENT_PRICE = 'CLIENT_PRICE';
+    public const CLIENT_CURRENCY = 'CLIENT_CURRENCY';
+    public const CLIENT_QUOTE = 'CLIENT_QUOTE';
+
     public const SERVICE_PRICE_PRODUCT = 'SERVICE_PRICE_PRODUCT';
 
     /**
@@ -27,6 +30,7 @@ class PriceProductDependencyProvider extends AbstractDependencyProvider
     {
         $container = $this->addPriceProductClient($container);
         $container = $this->addCurrencyClient($container);
+        $container = $this->addQuoteClient($container);
         $container = $this->addPriceProductService($container);
 
         return $container;
@@ -69,6 +73,20 @@ class PriceProductDependencyProvider extends AbstractDependencyProvider
     {
         $container[static::SERVICE_PRICE_PRODUCT] = function (Container $container) {
             return $container->getLocator()->priceProduct()->service();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addQuoteClient($container): Container
+    {
+        $container[static::CLIENT_QUOTE] = function (Container $container) {
+            return new PriceProductToQuoteClientBridge($container->getLocator()->quote()->client());
         };
 
         return $container;

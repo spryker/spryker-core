@@ -8,8 +8,8 @@
 namespace Spryker\Service\PriceProduct;
 
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
-use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Service\Kernel\AbstractService;
 
 /**
@@ -21,12 +21,12 @@ class PriceProductService extends AbstractService implements PriceProductService
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransferCollection
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return int|null
+     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
     public function resolveProductPriceByPriceProductCriteria(
         array $priceProductTransferCollection,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-    ): ?int {
+    ): ?PriceProductTransfer {
         return $this->getFactory()
             ->createPriceProductMatcher()
             ->matchPriceValueByPriceProductCriteria($priceProductTransferCollection, $priceProductCriteriaTransfer);
@@ -41,24 +41,9 @@ class PriceProductService extends AbstractService implements PriceProductService
     public function resolveProductPriceByPriceProductFilter(
         array $priceProductTransferCollection,
         PriceProductFilterTransfer $priceProductFilterTransfer
-    ): ?int {
+    ): ?PriceProductTransfer {
         return $this->getFactory()
             ->createPriceProductMatcher()
             ->matchPriceValueByPriceProductFilter($priceProductTransferCollection, $priceProductFilterTransfer);
-    }
-
-    /**
-     * @param array $priceProductTransferCollection
-     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\PriceProductDimensionTransfer
-     */
-    public function resolvePriceProductDimensionByPriceProductFilter(
-        array $priceProductTransferCollection,
-        PriceProductFilterTransfer $priceProductFilterTransfer
-    ): PriceProductDimensionTransfer {
-        return $this->getFactory()
-            ->createPriceProductMatcher()
-            ->matchPriceProductDimensionByPriceProductFilter($priceProductTransferCollection, $priceProductFilterTransfer);
     }
 }

@@ -7,9 +7,9 @@
 
 namespace Spryker\Service\PriceProduct\Dependency\Plugin;
 
-use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 
 interface PriceProductDecisionPluginInterface
 {

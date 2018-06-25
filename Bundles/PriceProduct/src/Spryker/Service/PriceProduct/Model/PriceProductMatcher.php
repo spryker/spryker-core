@@ -7,10 +7,9 @@
 
 namespace Spryker\Service\PriceProduct\Model;
 
-use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
-use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 
 class PriceProductMatcher implements PriceProductMatcherInterface
 {
@@ -30,12 +29,12 @@ class PriceProductMatcher implements PriceProductMatcherInterface
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransferCollection
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return int|null
+     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
     public function matchPriceValueByPriceProductCriteria(
         array $priceProductTransferCollection,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-    ): ?int {
+    ): ?PriceProductTransfer {
         $priceProductCriteriaTransfer
             ->requirePriceMode()
             ->requirePriceType()
@@ -48,7 +47,7 @@ class PriceProductMatcher implements PriceProductMatcherInterface
         foreach ($this->priceProductDecisionPlugins as $priceProductDecisionPlugin) {
             $priceProductTransfer = $priceProductDecisionPlugin->matchPriceByPriceProductCriteria($priceProductTransferCollection, $priceProductCriteriaTransfer);
             if ($priceProductTransfer) {
-                return $this->findPriceValueByPriceMode($priceProductTransfer->getMoneyValue(), $priceProductCriteriaTransfer->getPriceMode());
+                return $priceProductTransfer;
             }
         }
 
@@ -59,12 +58,12 @@ class PriceProductMatcher implements PriceProductMatcherInterface
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransferCollection
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
-     * @return int|null
+     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
     public function matchPriceValueByPriceProductFilter(
         array $priceProductTransferCollection,
         PriceProductFilterTransfer $priceProductFilterTransfer
-    ): ?int {
+    ): ?PriceProductTransfer {
         $priceProductFilterTransfer
             ->requirePriceTypeName()
             ->requireCurrencyIsoCode()
@@ -77,48 +76,7 @@ class PriceProductMatcher implements PriceProductMatcherInterface
         foreach ($this->priceProductDecisionPlugins as $priceProductDecisionPlugin) {
             $priceProductTransfer = $priceProductDecisionPlugin->matchPriceByPriceProductFilter($priceProductTransferCollection, $priceProductFilterTransfer);
             if ($priceProductTransfer) {
-                return $this->findPriceValueByPriceMode($priceProductTransfer->getMoneyValue(), $priceProductFilterTransfer->getPriceMode());
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
-     * @param string $priceMode
-     *
-     * @return int|null
-     */
-    protected function findPriceValueByPriceMode(MoneyValueTransfer $moneyValueTransfer, string $priceMode): ?int
-    {
-        if ($priceMode === static::PRICE_NET_MODE) {
-            return $moneyValueTransfer->getNetAmount();
-        }
-
-        return $moneyValueTransfer->getGrossAmount();
-    }
-
-
-    /**
-     * @param array $priceProductTransferCollection
-     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\PriceProductDimensionTransfer|null
-     */
-    public function matchPriceProductDimensionByPriceProductFilter(
-        array $priceProductTransferCollection,
-        PriceProductFilterTransfer $priceProductFilterTransfer
-    ): ?PriceProductDimensionTransfer {
-        $priceProductFilterTransfer
-            ->requirePriceTypeName()
-            ->requireCurrencyIsoCode()
-            ->requirePriceMode();
-
-        foreach ($this->priceProductDecisionPlugins as $priceProductDecisionPlugin) {
-            $priceProductTransfer = $priceProductDecisionPlugin->matchPriceByPriceProductFilter($priceProductTransferCollection, $priceProductFilterTransfer);
-            if ($priceProductTransfer) {
-                return $priceProductTransfer->getPriceDimension();
+                return $priceProductTransfer;
             }
         }
 
