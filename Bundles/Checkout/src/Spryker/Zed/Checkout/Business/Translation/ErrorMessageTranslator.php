@@ -24,8 +24,6 @@ class ErrorMessageTranslator implements ErrorMessageTranslatorInterface
     protected $glossaryFacade;
 
     /**
-     * ErrorMessageTranslator constructor.
-     *
      * @param \Spryker\Zed\Checkout\Dependency\Facade\CheckoutToGlossaryFacadeInterface $glossaryFacade
      */
     public function __construct(CheckoutToGlossaryFacadeInterface $glossaryFacade)
@@ -40,17 +38,13 @@ class ErrorMessageTranslator implements ErrorMessageTranslatorInterface
      */
     public function translateCheckoutErrorMessages(CheckoutResponseTransfer $checkoutResponseTransfer): TranslatedCheckoutErrorMessagesTransfer
     {
-        $translatedCheckoutErrorMessages = new TranslatedCheckoutErrorMessagesTransfer();
+        $translatedCheckoutErrorMessages = [];
 
         foreach ($checkoutResponseTransfer->getErrors() as $checkoutErrorTransfer) {
-            $translatedCheckoutErrorMessages->addErrorMessage(
-                $this->translateSingleCheckoutErrorMessage(
-                    $checkoutErrorTransfer
-                )
-            );
+            $translatedCheckoutErrorMessages[] = $this->translateSingleCheckoutErrorMessage($checkoutErrorTransfer);
         }
 
-        return $translatedCheckoutErrorMessages;
+        return $this->mapTranslatedCheckoutErrorMessagesArrayToTransfer($translatedCheckoutErrorMessages);
     }
 
     /**
@@ -67,6 +61,19 @@ class ErrorMessageTranslator implements ErrorMessageTranslatorInterface
             );
         }
 
-        return $this->glossaryFacade->translate($checkoutErrorTransfer->getMessage());
+        return $this->glossaryFacade->translate(
+            $checkoutErrorTransfer->getMessage()
+        );
+    }
+
+    /**
+     * @param array $translatedCheckoutErrorMessages
+     *
+     * @return \Generated\Shared\Transfer\TranslatedCheckoutErrorMessagesTransfer
+     */
+    protected function mapTranslatedCheckoutErrorMessagesArrayToTransfer(array $translatedCheckoutErrorMessages): TranslatedCheckoutErrorMessagesTransfer
+    {
+        return (new TranslatedCheckoutErrorMessagesTransfer())
+            ->setErrorMessages($translatedCheckoutErrorMessages);
     }
 }
