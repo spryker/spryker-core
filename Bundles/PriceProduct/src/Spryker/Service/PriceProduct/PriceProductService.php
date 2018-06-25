@@ -36,7 +36,7 @@ class PriceProductService extends AbstractService implements PriceProductService
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
-     * @return int|null
+     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
     public function resolveProductPriceByPriceProductFilter(
         array $priceProductTransfers,
