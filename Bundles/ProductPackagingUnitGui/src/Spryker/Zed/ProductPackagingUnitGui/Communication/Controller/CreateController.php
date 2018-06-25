@@ -62,7 +62,7 @@ class CreateController extends AbstractProductPackagingUnitGuiController
 
         if (!$productPackagingUnitTypeTransfer->getIdProductPackagingUnitType()) {
             $this->addErrorMessage(sprintf(
-                static::MESSAGE_PACKAGING_UNIT_TYPE_CREATE_ERROR,
+                static::MESSAGE_ERROR_PACKAGING_UNIT_TYPE_CREATE,
                 $productPackagingUnitTypeTransfer->getName()
             ));
 
@@ -72,7 +72,7 @@ class CreateController extends AbstractProductPackagingUnitGuiController
         }
 
         $this->addSuccessMessage(sprintf(
-            static::MESSAGE_PACKAGING_UNIT_TYPE_CREATE_SUCCESS,
+            static::MESSAGE_SUCCESS_PACKAGING_UNIT_TYPE_CREATE,
             $productPackagingUnitTypeTransfer->getName()
         ));
 

@@ -9,28 +9,28 @@ namespace Spryker\Zed\ProductPackagingUnitGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTranslationTransfer;
-use Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToLocaleInterface;
-use Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToProductPackagingUnitInterface;
+use Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToLocaleFacadeInterface;
+use Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToProductPackagingUnitFacadeInterface;
 
-class ProductPackagingUnitTypeDataProvider
+class ProductPackagingUnitTypeDataProvider implements ProductPackagingUnitTypeDataProviderInterface
 {
     /**
-     * @var \Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToProductPackagingUnitInterface
+     * @var \Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToProductPackagingUnitFacadeInterface
      */
     protected $productPackagingUnitFacade;
 
     /**
-     * @var \Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToLocaleInterface
+     * @var \Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToLocaleFacadeInterface
      */
     protected $localeFacade;
 
     /**
-     * @param \Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToProductPackagingUnitInterface $productPackagingUnitFacade
-     * @param \Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToLocaleInterface $localeFacade
+     * @param \Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToProductPackagingUnitFacadeInterface $productPackagingUnitFacade
+     * @param \Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToLocaleFacadeInterface $localeFacade
      */
     public function __construct(
-        ProductPackagingUnitGuiToProductPackagingUnitInterface $productPackagingUnitFacade,
-        ProductPackagingUnitGuiToLocaleInterface $localeFacade
+        ProductPackagingUnitGuiToProductPackagingUnitFacadeInterface $productPackagingUnitFacade,
+        ProductPackagingUnitGuiToLocaleFacadeInterface $localeFacade
     ) {
         $this->productPackagingUnitFacade = $productPackagingUnitFacade;
         $this->localeFacade = $localeFacade;

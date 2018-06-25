@@ -14,7 +14,7 @@ interface ProductPackagingUnitFacadeInterface
 {
     /**
      * Specification:
-     *  - Add infrastructural packaging unit type list to persistence.
+     * - Add infrastructural packaging unit type list to persistence.
      *
      * @api
      *
@@ -24,13 +24,13 @@ interface ProductPackagingUnitFacadeInterface
 
     /**
      * Specification:
-     *  - Retrieves infrastructural packaging unit type list as an array of strings.
+     * - Retrieves the list of infrastructural packaging unit type names.
      *
      * @api
      *
      * @return string[]
      */
-    public function getInfrastructuralPackagingUnitTypeKeys(): array;
+    public function getInfrastructuralPackagingUnitTypeNames(): array;
 
     /**
      * Specification:
@@ -86,7 +86,7 @@ interface ProductPackagingUnitFacadeInterface
 
     /**
      * Specification:
-     *  - Retrieves product packaging units count for a given product packaging unit type.
+     * - Retrieves the count of existing packaging units for a given product packaging unit type.
      *
      * @api
      *
@@ -94,7 +94,7 @@ interface ProductPackagingUnitFacadeInterface
      *
      * @return int
      */
-    public function getCountProductPackagingUnitsForType(
+    public function countProductPackagingUnitsByTypeId(
         ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
     ): int;
 
@@ -112,7 +112,7 @@ interface ProductPackagingUnitFacadeInterface
 
     /**
      * Specification:
-     *  - Creates product packaging unit type.
+     * - Creates product packaging unit type.
      *
      * @api
      *
@@ -126,7 +126,7 @@ interface ProductPackagingUnitFacadeInterface
 
     /**
      * Specification:
-     *  - Updates product packaging unit type.
+     * - Updates product packaging unit type.
      *
      * @api
      *
@@ -140,7 +140,7 @@ interface ProductPackagingUnitFacadeInterface
 
     /**
      * Specification:
-     *  - Deletes a product packaging unit type.
+     * - Deletes a product packaging unit type.
      *
      * @api
      *

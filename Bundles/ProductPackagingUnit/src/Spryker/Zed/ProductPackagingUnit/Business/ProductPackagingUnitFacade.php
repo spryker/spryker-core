@@ -37,11 +37,11 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      *
      * @return string[]
      */
-    public function getInfrastructuralPackagingUnitTypeKeys(): array
+    public function getInfrastructuralPackagingUnitTypeNames(): array
     {
         return $this->getFactory()
             ->getConfig()
-            ->getInfrastructuralPackagingUnitTypeKeys();
+            ->getInfrastructuralPackagingUnitTypeNames();
     }
 
     /**
@@ -99,12 +99,12 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      *
      * @return int
      */
-    public function getCountProductPackagingUnitsForType(
+    public function countProductPackagingUnitsByTypeId(
         ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
     ): int {
         return $this->getFactory()
             ->createProductPackagingUnitTypeReader()
-            ->getCountProductPackagingUnitsForType($productPackagingUnitTypeTransfer);
+            ->countProductPackagingUnitsByTypeId($productPackagingUnitTypeTransfer);
     }
 
     /**

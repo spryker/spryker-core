@@ -7,42 +7,45 @@
 
 namespace Spryker\Zed\ProductPackagingUnitGui\Communication\Table;
 
-use Generated\Shared\Transfer\LocaleTransfer;
-use Orm\Zed\ProductPackagingUnit\Persistence\Map\SpyProductPackagingUnitTypeTableMap;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitType;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitTypeQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToLocaleInterface;
-use Spryker\Zed\ProductPackagingUnitGui\Persistence\ProductPackagingUnitGuiRepositoryInterface;
+use Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToLocaleFacadeInterface;
 
 class ProductPackagingUnitTypeTable extends AbstractTable
 {
     protected const TABLE_IDENTIFIER = 'product-packaging-unit-type-table';
-    protected const COL_ID = SpyProductPackagingUnitTypeTableMap::COL_ID_PRODUCT_PACKAGING_UNIT_TYPE;
-    protected const COL_NAME = SpyProductPackagingUnitTypeTableMap::COL_NAME;
+    /**
+     * @uses \Orm\Zed\ProductPackagingUnit\Persistence\Map\SpyProductPackagingUnitTypeTableMap::COL_ID_PRODUCT_PACKAGING_UNIT_TYPE
+     */
+    protected const COL_ID = 'id_product_packaging_unit_type';
+    /**
+     * @uses \Orm\Zed\ProductPackagingUnit\Persistence\Map\SpyProductPackagingUnitTypeTableMap::COL_NAME
+     */
+    protected const COL_NAME = 'name';
     protected const COL_ACTIONS = 'actions';
 
     /**
-     * @var \Spryker\Zed\ProductPackagingUnitGui\Persistence\ProductPackagingUnitGuiRepositoryInterface
+     * @var \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitTypeQuery
      */
-    protected $productPackagingUnitGuiRepository;
+    protected $packagingUnitTypeQuery;
 
     /**
-     * @var \Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToLocaleInterface
+     * @var \Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToLocaleFacadeInterface
      */
     protected $localeFacade;
 
     /**
-     * @param \Spryker\Zed\ProductPackagingUnitGui\Persistence\ProductPackagingUnitGuiRepositoryInterface $productPackagingUnitGuiRepository
-     * @param \Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToLocaleInterface $localeFacade
+     * @param \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitTypeQuery $packagingUnitTypeQuery
+     * @param \Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToLocaleFacadeInterface $localeFacade
      */
     public function __construct(
-        ProductPackagingUnitGuiRepositoryInterface $productPackagingUnitGuiRepository,
-        ProductPackagingUnitGuiToLocaleInterface $localeFacade
+        SpyProductPackagingUnitTypeQuery $packagingUnitTypeQuery,
+        ProductPackagingUnitGuiToLocaleFacadeInterface $localeFacade
     ) {
-        $this->productPackagingUnitGuiRepository = $productPackagingUnitGuiRepository;
+        $this->packagingUnitTypeQuery = $packagingUnitTypeQuery;
         $this->localeFacade = $localeFacade;
     }
 
@@ -113,16 +116,6 @@ class ProductPackagingUnitTypeTable extends AbstractTable
     }
 
     /**
-     * @return \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitTypeQuery
-     */
-    protected function prepareQuery(): SpyProductPackagingUnitTypeQuery
-    {
-        $localeTransfer = $this->localeFacade->getCurrentLocale();
-
-        return $this->prepareTableQuery($localeTransfer);
-    }
-
-    /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return array
@@ -132,7 +125,7 @@ class ProductPackagingUnitTypeTable extends AbstractTable
         $results = [];
         /** @var \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitType[] $productPackagingUnitTypes */
         $productPackagingUnitTypes = $this->runQuery(
-            $this->prepareQuery(),
+            $this->packagingUnitTypeQuery,
             $config,
             true
         );
@@ -147,17 +140,6 @@ class ProductPackagingUnitTypeTable extends AbstractTable
         unset($productPackagingUnitTypes);
 
         return $results;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitTypeQuery
-     */
-    protected function prepareTableQuery(LocaleTransfer $localeTransfer): SpyProductPackagingUnitTypeQuery
-    {
-        return $this->productPackagingUnitGuiRepository
-            ->queryProductPackagingUnitTypes();
     }
 
     /**

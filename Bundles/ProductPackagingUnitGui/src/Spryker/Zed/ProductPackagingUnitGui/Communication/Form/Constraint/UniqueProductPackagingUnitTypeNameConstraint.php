@@ -12,12 +12,12 @@ use Symfony\Component\Validator\Constraint;
 
 class UniqueProductPackagingUnitTypeNameConstraint extends Constraint
 {
-    const OPTION_REPOSITORY = 'repository';
+    const OPTION_FACADE = 'facade';
 
     /**
-     * @var \Spryker\Zed\ProductPackagingUnitGui\Persistence\ProductPackagingUnitGuiRepositoryInterface
+     * @var \Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToProductPackagingUnitFacadeInterface
      */
-    protected $repository;
+    protected $facade;
 
     /**
      * @param string $name
@@ -26,10 +26,8 @@ class UniqueProductPackagingUnitTypeNameConstraint extends Constraint
      */
     public function findProductPackagingUnitTypeByName(string $name): ?SpyProductPackagingUnitType
     {
-        return $this->repository
-            ->queryProductPackagingUnitTypes()
-            ->filterByName($name)
-            ->findOne();
+        return $this->facade
+            ->getProductPackagingUnitTypeByName($name);
     }
 
     /**
@@ -39,10 +37,8 @@ class UniqueProductPackagingUnitTypeNameConstraint extends Constraint
      */
     public function findProductPackagingUnitTypeById(int $id): ?SpyProductPackagingUnitType
     {
-        return $this->repository
-            ->queryProductPackagingUnitTypes()
-            ->filterByIdProductPackagingUnitType($id)
-            ->findOne();
+        return $this->facade
+            ->getProductPackagingUnitTypeById($id);
     }
 
     /**

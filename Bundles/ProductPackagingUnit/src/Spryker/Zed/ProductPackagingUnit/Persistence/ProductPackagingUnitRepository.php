@@ -43,16 +43,16 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
     }
 
     /**
-     * @param int $productPackagingUnitTypeId
+     * @param int $idProductPackagingUnitType
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer|null
      */
     public function getProductPackagingUnitTypeById(
-        int $productPackagingUnitTypeId
+        int $idProductPackagingUnitType
     ): ?ProductPackagingUnitTypeTransfer {
         $productPackagingUnitTypeEntity = $this->getFactory()
             ->createProductPackagingUnitTypeQuery()
-            ->filterByIdProductPackagingUnitType($productPackagingUnitTypeId)
+            ->filterByIdProductPackagingUnitType($idProductPackagingUnitType)
             ->findOne();
 
         if ($productPackagingUnitTypeEntity) {
@@ -68,16 +68,16 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
     }
 
     /**
-     * @param int $productPackagingUnitTypeId
+     * @param int $idProductPackagingUnitType
      *
      * @return int
      */
-    public function getCountProductPackagingUnitsForTypeById(
-        int $productPackagingUnitTypeId
+    public function countProductPackagingUnitsByTypeId(
+        int $idProductPackagingUnitType
     ): int {
         return $this->getFactory()
             ->createProductPackagingUnitQuery()
-            ->filterByFkProductPackagingUnitType($productPackagingUnitTypeId)
+            ->filterByFkProductPackagingUnitType($idProductPackagingUnitType)
             ->count();
     }
 
@@ -109,6 +109,8 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
     }
 
     /**
+     * @uses Product
+     *
      * @param array $productPackagingUnitTypeIds
      *
      * @return array

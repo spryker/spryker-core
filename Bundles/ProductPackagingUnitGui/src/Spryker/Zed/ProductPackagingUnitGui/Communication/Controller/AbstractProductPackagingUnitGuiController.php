@@ -21,14 +21,14 @@ abstract class AbstractProductPackagingUnitGuiController extends AbstractControl
 {
     protected const PARAM_REDIRECT_URL = 'redirect-url';
 
-    protected const MESSAGE_PACKAGING_UNIT_TYPE_CREATE_SUCCESS = 'Product packaging unit type created successfully.';
-    protected const MESSAGE_PACKAGING_UNIT_TYPE_CREATE_ERROR = 'Product packaging unit type has not been created.';
+    protected const MESSAGE_SUCCESS_PACKAGING_UNIT_TYPE_CREATE = 'Product packaging unit type created successfully.';
+    protected const MESSAGE_ERROR_PACKAGING_UNIT_TYPE_CREATE = 'Product packaging unit type has not been created.';
 
-    protected const MESSAGE_PACKAGING_UNIT_TYPE_DELETE_SUCCESS = 'Product packaging type "%s" successfully deleted.';
-    protected const MESSAGE_PACKAGING_UNIT_TYPE_DELETE_ERROR = 'Product packaging unit type "%s" has not been deleted.';
+    protected const MESSAGE_SUCCESS_PACKAGING_UNIT_TYPE_DELETE = 'Product packaging type "%s" successfully deleted.';
+    protected const MESSAGE_ERROR_PACKAGING_UNIT_TYPE_DELETE = 'Product packaging unit type "%s" has not been deleted.';
 
-    protected const MESSAGE_PACKAGING_UNIT_TYPE_UPDATE_SUCCESS = 'Product packaging type "%s" successfully updated.';
-    protected const MESSAGE_PACKAGING_UNIT_TYPE_UPDATE_ERROR = 'Product packaging unit type "%s" has not been updated.';
+    protected const MESSAGE_SUCCESS_PACKAGING_UNIT_TYPE_UPDATE = 'Product packaging type "%s" successfully updated.';
+    protected const MESSAGE_ERROR_PACKAGING_UNIT_TYPE_UPDATE = 'Product packaging unit type "%s" has not been updated.';
 
     /**
      * @param int $idProductPackagingUnitType

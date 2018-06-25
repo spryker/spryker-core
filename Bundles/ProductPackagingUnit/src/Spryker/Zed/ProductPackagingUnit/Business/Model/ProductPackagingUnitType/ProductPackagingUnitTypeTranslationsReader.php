@@ -9,28 +9,28 @@ namespace Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitTy
 
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTranslationTransfer;
-use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToGlossaryInterface;
-use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToLocaleInterface;
+use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToGlossaryFacadeInterface;
+use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToLocaleFacadeInterface;
 
 class ProductPackagingUnitTypeTranslationsReader implements ProductPackagingUnitTypeTranslationsReaderInterface
 {
     /**
-     * @var \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToLocaleInterface
+     * @var \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToLocaleFacadeInterface
      */
     protected $localeFacade;
 
     /**
-     * @var \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToGlossaryInterface
+     * @var \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToGlossaryFacadeInterface
      */
     protected $glossaryFacade;
 
     /**
-     * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToLocaleInterface $localeFacade
-     * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToGlossaryInterface $glossaryFacade
+     * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToLocaleFacadeInterface $localeFacade
+     * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToGlossaryFacadeInterface $glossaryFacade
      */
     public function __construct(
-        ProductPackagingUnitToLocaleInterface $localeFacade,
-        ProductPackagingUnitToGlossaryInterface $glossaryFacade
+        ProductPackagingUnitToLocaleFacadeInterface $localeFacade,
+        ProductPackagingUnitToGlossaryFacadeInterface $glossaryFacade
     ) {
         $this->localeFacade = $localeFacade;
         $this->glossaryFacade = $glossaryFacade;

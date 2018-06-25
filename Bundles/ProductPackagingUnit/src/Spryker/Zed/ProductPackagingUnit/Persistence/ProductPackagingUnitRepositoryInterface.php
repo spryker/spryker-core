@@ -22,21 +22,21 @@ interface ProductPackagingUnitRepositoryInterface
     ): ?ProductPackagingUnitTypeTransfer;
 
     /**
-     * @param int $productPackagingUnitTypeId
+     * @param int $idProductPackagingUnitType
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer|null
      */
     public function getProductPackagingUnitTypeById(
-        int $productPackagingUnitTypeId
+        int $idProductPackagingUnitType
     ): ?ProductPackagingUnitTypeTransfer;
 
     /**
-     * @param int $productPackagingUnitTypeId
+     * @param int $idProductPackagingUnitType
      *
      * @return int
      */
-    public function getCountProductPackagingUnitsForTypeById(
-        int $productPackagingUnitTypeId
+    public function countProductPackagingUnitsByTypeId(
+        int $idProductPackagingUnitType
     ): int;
 
     /**

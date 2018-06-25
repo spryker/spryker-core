@@ -34,7 +34,7 @@ class EditController extends AbstractProductPackagingUnitGuiController
             ->createProductPackagingUnitTypeDataProvider();
 
         $productPackagingUnitTypeTransfer = $productPackagingUnitTypeDataProvider->getData($idProductPackagingUnitType);
-        $allowDelete = $this->getCountProductPackagingUnitsForType($productPackagingUnitTypeTransfer) > 0;
+        $allowDelete = $this->countProductPackagingUnitsByTypeId($productPackagingUnitTypeTransfer) > 0;
 
         $productPackagingUnitTypeForm = $this->getFactory()
             ->getProductPackagingUnitTypeForm(
@@ -60,11 +60,11 @@ class EditController extends AbstractProductPackagingUnitGuiController
      *
      * @return int
      */
-    protected function getCountProductPackagingUnitsForType(ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer): int
+    protected function countProductPackagingUnitsByTypeId(ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer): int
     {
         return $this->getFactory()
             ->getProductPackagingUnitFacade()
-            ->getCountProductPackagingUnitsForType($productPackagingUnitTypeTransfer);
+            ->countProductPackagingUnitsByTypeId($productPackagingUnitTypeTransfer);
     }
 
     /**
@@ -83,7 +83,7 @@ class EditController extends AbstractProductPackagingUnitGuiController
                 ->updateProductPackagingUnitType($productPackagingUnitTypeTransfer);
         } catch (Throwable $throwable) {
             $this->addErrorMessage(sprintf(
-                static::MESSAGE_PACKAGING_UNIT_TYPE_UPDATE_ERROR,
+                static::MESSAGE_ERROR_PACKAGING_UNIT_TYPE_UPDATE,
                 $productPackagingUnitTypeTransfer->getName()
             ));
 
@@ -91,7 +91,7 @@ class EditController extends AbstractProductPackagingUnitGuiController
         }
 
         $this->addSuccessMessage(sprintf(
-            static::MESSAGE_PACKAGING_UNIT_TYPE_UPDATE_SUCCESS,
+            static::MESSAGE_SUCCESS_PACKAGING_UNIT_TYPE_UPDATE,
             $productPackagingUnitTypeTransfer->getName()
         ));
     }

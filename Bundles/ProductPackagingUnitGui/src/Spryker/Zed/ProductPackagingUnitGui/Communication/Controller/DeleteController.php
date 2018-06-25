@@ -32,7 +32,7 @@ class DeleteController extends AbstractProductPackagingUnitGuiController
 
         if ($this->deleteProductPackagingUnitType($productPackagingUnitTypeTransfer)) {
             $this->addSuccessMessage(sprintf(
-                static::MESSAGE_PACKAGING_UNIT_TYPE_DELETE_SUCCESS,
+                static::MESSAGE_SUCCESS_PACKAGING_UNIT_TYPE_DELETE,
                 $productPackagingUnitTypeTransfer->getName()
             ));
 
@@ -40,7 +40,7 @@ class DeleteController extends AbstractProductPackagingUnitGuiController
         }
 
         $this->addErrorMessage(sprintf(
-            static::MESSAGE_PACKAGING_UNIT_TYPE_DELETE_ERROR,
+            static::MESSAGE_ERROR_PACKAGING_UNIT_TYPE_DELETE,
             $productPackagingUnitTypeTransfer->getName()
         ));
 

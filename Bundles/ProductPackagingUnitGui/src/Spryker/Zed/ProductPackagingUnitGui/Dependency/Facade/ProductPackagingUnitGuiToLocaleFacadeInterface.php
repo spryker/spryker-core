@@ -5,21 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductPackagingUnit\Dependency\Facade;
+namespace Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade;
 
-use Generated\Shared\Transfer\LocaleTransfer;
-
-interface ProductPackagingUnitToLocaleInterface
+interface ProductPackagingUnitGuiToLocaleFacadeInterface
 {
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
-    public function getLocaleCollection(): array;
+    public function getLocaleCollection();
 
     /**
-     * @param string $localeCode
-     *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getLocaleByCode(string $localeCode): LocaleTransfer;
+    public function getCurrentLocale();
 }

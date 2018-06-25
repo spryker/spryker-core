@@ -19,7 +19,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  * @method \Spryker\Zed\ProductPackagingUnitGui\Business\ProductPackagingUnitGuiFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductPackagingUnitGui\Communication\ProductPackagingUnitGuiCommunicationFactory getFactory()
  */
-class ProductPackagingUnitTypeFormTypeTranslationForm extends AbstractType
+class ProductPackagingUnitTypeTranslationFormType extends AbstractType
 {
     const FIELD_TRANSLATION = 'translation';
     const FIELD_LOCALE_CODE = 'localeCode';
@@ -55,7 +55,7 @@ class ProductPackagingUnitTypeFormTypeTranslationForm extends AbstractType
      */
     protected function addTranslationField(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_TRANSLATION, TextType::class, [
+        $builder->add(static::FIELD_TRANSLATION, TextType::class, [
             'label' => 'Name: *',
             'required' => true,
             'constraints' => [
@@ -74,7 +74,7 @@ class ProductPackagingUnitTypeFormTypeTranslationForm extends AbstractType
     protected function addLocalCode(FormBuilderInterface $builder)
     {
         $builder->add(
-            self::FIELD_LOCALE_CODE,
+            static::FIELD_LOCALE_CODE,
             HiddenType::class
         );
 
