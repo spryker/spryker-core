@@ -8,14 +8,11 @@
 namespace Spryker\Zed\Synchronization\Business\Export;
 
 use Generated\Shared\Transfer\SynchronizationQueueMessageTransfer;
-use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Spryker\Zed\Synchronization\Business\Message\QueueMessageCreatorInterface;
 use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToQueueClientInterface;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface;
-use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
-use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRepositoryPluginInterface;
 
-class Exporter implements ExporterInterface
+abstract class Exporter implements ExporterInterface
 {
     /**
      * @var \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToQueueClientInterface
@@ -40,7 +37,7 @@ class Exporter implements ExporterInterface
     /**
      * @param \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToQueueClientInterface $queueClient
      * @param \Spryker\Zed\Synchronization\Business\Message\QueueMessageCreatorInterface $synchronizationQueueMessageCreator
-     * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface[] $synchronizationDataPlugins
+     * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface[] $synchronizationDataPlugins
      * @param int $chunkSize
      */
     public function __construct(
@@ -56,69 +53,17 @@ class Exporter implements ExporterInterface
     }
 
     /**
-     * @param string[] $resources
+     * @param array $plugins
      * @param int[] $ids
      *
      * @return void
      */
-    public function exportSynchronizedData(array $resources, array $ids = [])
+    public function exportSynchronizedData(array $plugins, array $ids = [])
     {
-        $this->mapPluginsByResourceName();
-        $plugins = $this->getEffectivePlugins($resources);
-
         foreach ($plugins as $plugin) {
-            if ($plugin instanceof SynchronizationDataQueryContainerPluginInterface) {
-                $this->exportDataFromQueryContainer($ids, $plugin);
+            if ($plugin instanceof SynchronizationDataPluginInterface) {
+                $this->exportData($ids, $plugin);
             }
-            if ($plugin instanceof SynchronizationDataRepositoryPluginInterface) {
-                $this->exportDataFromRepository($ids, $plugin);
-            }
-        }
-    }
-
-    /**
-     * @param array $ids
-     * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface $plugin
-     *
-     * @return void
-     */
-    protected function exportDataFromQueryContainer(array $ids, SynchronizationDataQueryContainerPluginInterface $plugin)
-    {
-        $query = $plugin->queryData($ids);
-        $count = $query->count();
-        $loops = $count / $this->chunkSize;
-        $offset = 0;
-
-        for ($i = 0; $i < $loops; $i++) {
-            //TODO ordering
-            $synchronizationEntities = $plugin->queryData($ids)
-                ->offset($offset)
-                ->limit($this->chunkSize)
-                ->find()
-                ->getData();
-
-            $this->syncData($plugin, $synchronizationEntities);
-            $offset += $this->chunkSize;
-        }
-    }
-
-    /**
-     * @param array $ids
-     * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface $plugin
-     *
-     * @return void
-     */
-    protected function exportDataFromRepository(array $ids, SynchronizationDataRepositoryPluginInterface $plugin)
-    {
-        $synchronizationEntities = $plugin->getData($ids);
-        $count = count($synchronizationEntities);
-        $loops = $count / $this->chunkSize;
-        $offset = 0;
-
-        for ($i = 0; $i < $loops; $i++) {
-            $chunkOfSynchronizationEntitiesTransfers = array_slice($synchronizationEntities, $offset, $this->chunkSize);
-            $this->syncData($plugin, $chunkOfSynchronizationEntitiesTransfers);
-            $offset += $this->chunkSize;
         }
     }
 
@@ -177,20 +122,5 @@ class Exporter implements ExporterInterface
         }
 
         $this->synchronizationDataPlugins = $mappedDataPlugins;
-    }
-
-    /**
-     * @param bool $hasStore
-     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $entity
-     *
-     * @return string|null
-     */
-    protected function getStore($hasStore, ActiveRecordInterface $entity)
-    {
-        if ($hasStore) {
-            return $entity->getStore();
-        }
-
-        return null;
     }
 }

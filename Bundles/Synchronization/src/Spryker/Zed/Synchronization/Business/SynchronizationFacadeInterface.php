@@ -66,16 +66,11 @@ interface SynchronizationFacadeInterface
     public function searchDelete(array $data, $queueName);
 
     /**
-     * Specification:
-     * - Queries all synchronization resource tables
-     * - Exports data into synchronization queues
-     *
      * @api
      *
      * @param string[] $resources
-     * @param int[] $ids
      *
      * @return void
      */
-    public function exportSynchronizedData(array $resources, array $ids = []);
+    public function executeResolvedPluginsBySources(array $resources);
 }

@@ -75,17 +75,14 @@ class SynchronizationFacade extends AbstractFacade implements SynchronizationFac
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @api
      *
      * @param string[] $resources
-     * @param int[] $ids
      *
      * @return void
      */
-    public function exportSynchronizedData(array $resources, array $ids = [])
+    public function executeResolvedPluginsBySources(array $resources)
     {
-        $this->getFactory()->createExporter()->exportSynchronizedData($resources, $ids);
+        $this->getFactory()->createExporterPluginResolver()->executeResolvedPluginsBySources($resources);
     }
 }

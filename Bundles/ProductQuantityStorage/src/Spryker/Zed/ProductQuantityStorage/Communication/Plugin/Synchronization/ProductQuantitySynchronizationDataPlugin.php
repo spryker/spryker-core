@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductQuantityStorage\Communication\Plugin\Synchronization;
 
+use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Orm\Zed\ProductQuantityStorage\Persistence\SpyProductQuantityStorage;
 use Spryker\Shared\ProductQuantityStorage\ProductQuantityStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -58,7 +59,7 @@ class ProductQuantitySynchronizationDataPlugin extends AbstractPlugin implements
      */
     public function getData($ids = [])
     {
-        $productQuantityEntities = [];
+        $synchronizationDataTransfers = [];
         $productQuantityTransfers = $this->getRepository()->findProductQuantityStorageEntitiesByProductIds($ids);
 
         if (empty($ids)) {
@@ -66,12 +67,13 @@ class ProductQuantitySynchronizationDataPlugin extends AbstractPlugin implements
         }
 
         foreach ($productQuantityTransfers as $productQuantityTransfer) {
-            $productQuantityEntity = new SpyProductQuantityStorage();
-            $productQuantityEntity->fromArray($productQuantityTransfer->toArray());
-            $productQuantityEntities[] = $productQuantityEntity;
+            $synchronizationDataTransfer = new SynchronizationDataTransfer();
+            $synchronizationDataTransfer->setData($productQuantityTransfer->getData());
+            $synchronizationDataTransfer->setKey($productQuantityTransfer->getKey());
+            $synchronizationDataTransfers[] = $synchronizationDataTransfer;
         }
 
-        return $productQuantityEntities;
+        return $synchronizationDataTransfers;
     }
 
     /**

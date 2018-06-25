@@ -217,7 +217,7 @@ class SynchronizationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testExportSynchronizedData()
+    public function testExecuteResolvedPluginsBySources()
     {
         $container = new Container();
         $container[SynchronizationDependencyProvider::CLIENT_QUEUE] = function (Container $container) {
@@ -239,7 +239,7 @@ class SynchronizationFacadeTest extends Unit
         };
 
         $this->prepareFacade($container);
-        $this->synchronizationFacade->exportSynchronizedData([], []);
+        $this->synchronizationFacade->executeResolvedPluginsBySources([]);
     }
 
     /**

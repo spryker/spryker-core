@@ -47,6 +47,6 @@ class ExportSynchronizedDataConsole extends Console
             $resources = explode(',', $resourceString);
         }
 
-        $this->getFacade()->exportSynchronizedData($resources);
+        $this->getFacade()->executeResolvedPluginsBySources($resources);
     }
 }

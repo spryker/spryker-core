@@ -8,7 +8,9 @@
 namespace Spryker\Zed\Synchronization\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Synchronization\Business\Export\Exporter;
+use Spryker\Zed\Synchronization\Business\Export\ExporterPluginResolver;
+use Spryker\Zed\Synchronization\Business\Export\QueryContainerExporter;
+use Spryker\Zed\Synchronization\Business\Export\RepositoryExporter;
 use Spryker\Zed\Synchronization\Business\Message\QueueMessageCreator;
 use Spryker\Zed\Synchronization\Business\Search\SynchronizationSearch;
 use Spryker\Zed\Synchronization\Business\Storage\SynchronizationStorage;
@@ -44,15 +46,40 @@ class SynchronizationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Synchronization\Business\Export\ExporterInterface
+     * @return \Spryker\Zed\Synchronization\Business\Export\RepositoryExporter
      */
-    public function createExporter()
+    public function createRepositoryExporter()
     {
-        return new Exporter(
+        return new RepositoryExporter(
             $this->getQueueClient(),
             $this->createQueueMessageCreator(),
             $this->getSynchronizationDataPlugins(),
             $this->getConfig()->getSyncExportChunkSize()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Synchronization\Business\Export\QueryContainerExporter
+     */
+    public function createQueryContainerExporter()
+    {
+        return new QueryContainerExporter(
+            $this->getQueueClient(),
+            $this->createQueueMessageCreator(),
+            $this->getSynchronizationDataPlugins(),
+            $this->getConfig()->getSyncExportChunkSize()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Synchronization\Business\Export\ExporterPluginResolver
+     */
+    public function createExporterPluginResolver()
+    {
+        return new ExporterPluginResolver(
+            $this->getSynchronizationDataPlugins(),
+            $this->createQueryContainerExporter(),
+            $this->createRepositoryExporter()
         );
     }
 

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductMeasurementUnitStorage\Communication\Plugin\Synchronization;
 
+use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Orm\Zed\ProductMeasurementUnitStorage\Persistence\SpyProductMeasurementUnitStorage;
 use Spryker\Shared\ProductMeasurementUnitStorage\ProductMeasurementUnitStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -58,7 +59,7 @@ class ProductMeasurementUnitSynchronizationDataPlugin extends AbstractPlugin imp
      */
     public function getData($ids = [])
     {
-        $productMeasurementUnitEntities = [];
+        $synchronizationDataTransfers = [];
         $productMeasurementUnitTransfers = $this->getRepository()->findProductMeasurementUnitStorageEntities($ids);
 
         if (empty($ids)) {
@@ -66,12 +67,13 @@ class ProductMeasurementUnitSynchronizationDataPlugin extends AbstractPlugin imp
         }
 
         foreach ($productMeasurementUnitTransfers as $productMeasurementUnitTransfer) {
-            $productMeasurementUnitEntity = new SpyProductMeasurementUnitStorage();
-            $productMeasurementUnitEntity->fromArray($productMeasurementUnitTransfer->toArray());
-            $productMeasurementUnitEntities[] = $productMeasurementUnitEntity;
+            $synchronizationDataTransfer = new SynchronizationDataTransfer();
+            $synchronizationDataTransfer->setData($productMeasurementUnitTransfer->getData());
+            $synchronizationDataTransfer->setKey($productMeasurementUnitTransfer->getKey());
+            $synchronizationDataTransfers[] = $synchronizationDataTransfer;
         }
 
-        return $productMeasurementUnitEntities;
+        return $synchronizationDataTransfers;
     }
 
     /**
