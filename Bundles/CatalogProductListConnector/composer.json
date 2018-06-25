@@ -1,0 +1,35 @@
+{
+  "name": "spryker/catalog-product-list-connector",
+  "description": "CatalogProductListConnector module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1",
+    "spryker/customer": "^7.0.0",
+    "spryker/kernel": "^3.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/elastica": "*",
+    "spryker/search": "*",
+    "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/search": "If you want to use Search plugins, minimum required version: 7.0.0",
+    "spryker/elastica": "If you want to use Elastica plugins."
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

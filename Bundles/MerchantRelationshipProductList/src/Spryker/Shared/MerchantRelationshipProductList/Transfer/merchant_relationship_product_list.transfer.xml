@@ -7,4 +7,18 @@
         <property name="fkMerchantRelationship" type="int"/>
     </transfer>
 
+    <transfer name="Customer">
+        <property name="customerProductListCollection" type="CustomerProductListCollection"/>
+    </transfer>
+
+    <transfer name="CustomerProductListCollection">
+        <property name="blacklists" type="ProductList[]" singular="blacklist"/>
+        <property name="whitelists" type="ProductList[]" singular="whitelist"/>
+    </transfer>
+
+
+    <transfer name="ProductListCollection">
+        <property name="productLists" type="ProductList[]" singular="productList"/>
+    </transfer>
+
 </transfers>
