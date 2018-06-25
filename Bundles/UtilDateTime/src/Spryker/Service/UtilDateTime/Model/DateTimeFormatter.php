@@ -33,7 +33,7 @@ class DateTimeFormatter implements DateTimeFormatterInterface
     }
 
     /**
-     * @param string $dateTime
+     * @param \DateTime|string $dateTime
      *
      * @return string
      */
@@ -43,7 +43,7 @@ class DateTimeFormatter implements DateTimeFormatterInterface
     }
 
     /**
-     * @param string $dateTime
+     * @param \DateTime|string $dateTime
      *
      * @return string
      */
@@ -53,7 +53,7 @@ class DateTimeFormatter implements DateTimeFormatterInterface
     }
 
     /**
-     * @param string $dateTime
+     * @param \DateTime|string $dateTime
      *
      * @return string
      */

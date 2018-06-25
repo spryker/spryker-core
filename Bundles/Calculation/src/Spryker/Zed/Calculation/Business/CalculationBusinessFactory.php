@@ -311,7 +311,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface[]
+     * @return \Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface[]|\Spryker\Zed\Calculation\Dependency\Plugin\CalculationPluginInterface[]
      */
     protected function getProvidedOrderCalculatorPluginStack()
     {
