@@ -1,10 +1,10 @@
 {
-  "name": "spryker/price-product-extension",
-  "description": "PriceProductExtension module",
+  "name": "spryker/price-product-storage-extension",
+  "description": "PriceProductStorageExtension module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/price-product": "^1.0.0"
+    "spryker/price-product-storage": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
