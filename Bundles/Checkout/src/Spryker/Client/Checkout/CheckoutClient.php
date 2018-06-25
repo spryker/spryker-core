@@ -18,7 +18,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class CheckoutClient extends AbstractClient implements CheckoutClientInterface
 {
     /**
-     * {@inheritdoc}
+     * Places the order
      *
      * @api
      *
