@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductAlternativeProductLabelConnector\Business\Installer;
 
+use Generated\Shared\Transfer\ProductLabelTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductLabelInterface;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Persistence\ProductAlternativeProductLabelConnectorEntityManagerInterface;
@@ -40,7 +41,8 @@ class ProductAlternativeProductLabelConnectorInstaller implements ProductAlterna
         ProductAlternativeProductLabelConnectorConfig $config,
         ProductAlternativeProductLabelConnectorEntityManagerInterface $entityManager,
         ProductAlternativeProductLabelConnectorToProductLabelInterface $productLabelFacade
-    ) {
+    )
+    {
         $this->config = $config;
         $this->entityManager = $entityManager;
         $this->productLabelFacade = $productLabelFacade;
@@ -51,6 +53,20 @@ class ProductAlternativeProductLabelConnectorInstaller implements ProductAlterna
      */
     public function install(): void
     {
-        $this->productLabelFacade->createLabel();
+        $this->getTransactionHandler()->handleTransaction(function () {
+
+            if ($this->productLabelFacade->findLabelByLabelName($this->config->getProductAlternativesLabel())) {
+                $this->productLabelFacade->updateLabel(
+                    $this->productLabelFacade->findLabelByLabelName($this->config->getProductAlternativesLabel())
+                );
+            } else {
+                $this->productLabelFacade->createLabel(
+                    (new ProductLabelTransfer())
+                        ->setIsActive(true)
+                        ->setIsExclusive(false)
+                        ->setName($this->config->getProductAlternativesLabel())
+                );
+            }
+        });
     }
 }

@@ -24,9 +24,33 @@ interface ProductAlternativeProductLabelConnectorToProductLabelInterface
     public function createLabel(ProductLabelTransfer $productLabelTransfer): void;
 
     /**
+     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
+     *
+     * @return void
+     */
+    public function updateLabel(ProductLabelTransfer $productLabelTransfer): void;
+
+    /**
      * @param string $labelName
      *
-     * @return string
+     * @return \Generated\Shared\Transfer\ProductLabelTransfer|null
      */
-    public function findLabelByLabelName(string $labelName): string;
+    public function findLabelByLabelName(string $labelName): ?ProductLabelTransfer;
+
+    /**
+     * @param int $idProductLabel
+     * @param int[] $idsProductAbstract
+     *
+     * @return void
+     */
+    public function removeProductAbstractRelationsForLabel($idProductLabel, array $idsProductAbstract): void;
+
+    /**
+     * @param int $idProductLabel
+     * @param int[] $idsProductAbstract
+     *
+     * @return void
+     */
+    public function addAbstractProductRelationsForLabel($idProductLabel, array $idsProductAbstract): void;
+
 }

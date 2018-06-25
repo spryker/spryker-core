@@ -8,7 +8,8 @@ namespace Spryker\Zed\ProductAlternativeProductLabelConnector;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductFacadeBridge;
+use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductAlternativeFacadeBridge;
+use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductBridge;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductLabelBridge;
 
 class ProductAlternativeProductLabelConnectorDependencyProvider extends AbstractBundleDependencyProvider
@@ -51,9 +52,27 @@ class ProductAlternativeProductLabelConnectorDependencyProvider extends Abstract
     protected function addProductFacade(Container $container)
     {
         $container[static::FACADE_PRODUCT] = function (Container $container) {
-            return new ProductAlternativeProductLabelConnectorToProductFacadeBridge(
+            return new ProductAlternativeProductLabelConnectorToProductBridge(
                 $container->getLocator()->product()->facade()
             );
         };
     }
+
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductAlternativeFacade(Container $container): Container
+    {
+        $container[static::FACADE_PRODUCT_ALTERNATIVE] = function (Container $container) {
+            return new ProductAlternativeProductLabelConnectorToProductAlternativeFacadeBridge(
+                $container->getLocator()->productAlternative()->facade()
+            );
+        };
+
+        return $container;
+    }
+
 }

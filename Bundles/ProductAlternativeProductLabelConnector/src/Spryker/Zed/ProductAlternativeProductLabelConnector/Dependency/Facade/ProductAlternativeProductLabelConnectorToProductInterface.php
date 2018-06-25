@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade;
 
-interface ProductAlternativeProductLabelConnectorToProductFacadeBridgeInterface
+interface ProductAlternativeProductLabelConnectorToProductInterface
 {
     /**
      * @param int $idProduct

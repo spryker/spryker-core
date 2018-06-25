@@ -49,12 +49,9 @@ class ProductAlternativeProductLabelConnectorFacade extends AbstractFacade imple
      */
     public function updateAbstractProductWithAlternativesAvailableLabel(int $idProduct): void
     {
-/*
-        $idProductAbstract = $this->getFactory()->getProductFacade()->getProductAbstractIdByConcreteId($idProduct);
-        $productConcreteTransfer = $this->getFactory()
-            ->getProductFacade()
-            ->getConcreteProductsByAbstractProductId($idProductAbstract);
 
-        $this->getFactory()->getProductLabelFacade()->findLabelByLabelName();*/
+        return $this->getFactory()
+            ->createProductAlternativeProductLabelWriter()
+            ->updateAbstractProductWithAlternativesAvailableLabel($idProduct);
     }
 }

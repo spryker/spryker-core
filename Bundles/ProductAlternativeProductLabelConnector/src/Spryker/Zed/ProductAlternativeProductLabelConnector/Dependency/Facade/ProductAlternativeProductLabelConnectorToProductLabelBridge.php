@@ -48,12 +48,45 @@ class ProductAlternativeProductLabelConnectorToProductLabelBridge implements Pro
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
+     *
+     * @return void
+     */
+    public function updateLabel(ProductLabelTransfer $productLabelTransfer): void
+    {
+        $this->productLabelFacade->updateLabel($productLabelTransfer);
+    }
+
+    /**
      * @param string $labelName
      *
-     * @return string
+     * @return \Generated\Shared\Transfer\ProductLabelTransfer|null
      */
-    public function findLabelByLabelName(string $labelName): string
+    public function findLabelByLabelName(string $labelName): ?ProductLabelTransfer
     {
         return $this->productLabelFacade->findLabelByLabelName($labelName);
+    }
+
+    /**
+     * @param int $idProductLabel
+     * @param int[] $idsProductAbstract
+     *
+     * @return void
+     */
+    public function removeProductAbstractRelationsForLabel($idProductLabel, array $idsProductAbstract): void
+    {
+        $this->productLabelFacade->removeProductAbstractRelationsForLabel($idProductLabel, $idsProductAbstract);
+    }
+
+
+    /**
+     * @param int $idProductLabel
+     * @param int[] $idsProductAbstract
+     *
+     * @return void
+     */
+    public function addAbstractProductRelationsForLabel($idProductLabel, array $idsProductAbstract): void
+    {
+        $this->productLabelFacade->addAbstractProductRelationsForLabel($idProductLabel, $idsProductAbstract);
     }
 }

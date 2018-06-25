@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade;
 
-class ProductAlternativeProductLabelConnectorToProductFacadeBridge implements ProductAlternativeProductLabelConnectorToProductFacadeBridgeInterface
+class ProductAlternativeProductLabelConnectorToProductBridge implements ProductAlternativeProductLabelConnectorToProductInterface
 {
     /**
      * @var \Spryker\Zed\Product\Business\ProductFacadeInterface
