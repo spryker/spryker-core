@@ -16,7 +16,11 @@
     <transfer name="CheckoutError">
         <property name="errorCode" type="int" />
         <property name="message" type="string" />
-        <property name="detailedMessage" type="Message"/>
+        <property name="parameters" type="array"/>
+    </transfer>
+
+    <transfer name="TranslatedCheckoutErrorMessages">
+        <property name="errorMessages" type="string[]" singular="errorMessage"/>
     </transfer>
 
     <transfer name="CheckoutResponse">
@@ -76,11 +80,6 @@
         <property name="billingSameAsShipping" type="bool"/>
         <property name="customer" type="Customer" />
         <property name="orderReference" type="string" />
-    </transfer>
-
-    <transfer name="Message">
-        <property name="value" type="string"/>
-        <property name="parameters" type="array"/>
     </transfer>
 
 </transfers>

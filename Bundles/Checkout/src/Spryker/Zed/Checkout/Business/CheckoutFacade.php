@@ -7,8 +7,9 @@
 
 namespace Spryker\Zed\Checkout\Business;
 
-use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\TranslatedCheckoutErrorMessagesTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -36,18 +37,16 @@ class CheckoutFacade extends AbstractFacade implements CheckoutFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MessageTransfer $messageTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\TranslatedCheckoutErrorMessagesTransfer
      */
-    public function addCheckoutErrorMessage(MessageTransfer $messageTransfer): void
+    public function translateCheckoutErrorMessages(CheckoutResponseTransfer $checkoutResponseTransfer): TranslatedCheckoutErrorMessagesTransfer
     {
-        $this->getFactory()
-            ->createStatusMessageHandler()
-            ->addErrorMessage($messageTransfer);
+        return $this->getFactory()
+            ->createErrorMessageTranslator()
+            ->translateCheckoutErrorMessages($checkoutResponseTransfer);
     }
 }

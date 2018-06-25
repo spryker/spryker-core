@@ -7,8 +7,9 @@
 
 namespace Spryker\Client\Checkout;
 
-use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\TranslatedCheckoutErrorMessagesTransfer;
 
 interface CheckoutClientInterface
 {
@@ -26,13 +27,14 @@ interface CheckoutClientInterface
 
     /**
      * Specification:
-     * - Sends a request to Checkout controller to save error message for future use.
+     * - Translates all error messages in checkout response and returns an array of translated strings.
+     * - Handles error messages duplication, so returned array has unique messages.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MessageTransfer $messageTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\TranslatedCheckoutErrorMessagesTransfer
      */
-    public function addCheckoutErrorMessage(MessageTransfer $messageTransfer): void;
+    public function translateCheckoutErrorMessages(CheckoutResponseTransfer $checkoutResponseTransfer): TranslatedCheckoutErrorMessagesTransfer;
 }

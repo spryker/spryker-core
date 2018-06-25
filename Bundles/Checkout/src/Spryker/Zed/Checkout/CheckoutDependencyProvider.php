@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Checkout;
 
-use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToMessengerFacadeBridge;
+use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToGlossaryFacadeBridge;
 use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -20,7 +20,7 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
     const CHECKOUT_PRE_SAVE_HOOKS = 'checkout_pre_save_hooks';
     const FACADE_OMS = 'FACADE_OMS';
 
-    public const FACADE_MESSENGER = 'FACADE_MESSENGER';
+    public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -46,7 +46,7 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         $container = $this->addOmsFacade($container);
-        $container = $this->addMessengerFacade($container);
+        $container = $this->addGlossaryFacade($container);
 
         return $container;
     }
@@ -70,11 +70,11 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addMessengerFacade(Container $container): Container
+    protected function addGlossaryFacade(Container $container): Container
     {
-        $container[static::FACADE_MESSENGER] = function (Container $container) {
-            return new CheckoutToMessengerFacadeBridge(
-                $container->getLocator()->messenger()->facade()
+        $container[static::FACADE_GLOSSARY] = function (Container $container) {
+            return new CheckoutToGlossaryFacadeBridge(
+                $container->getLocator()->glossary()->facade()
             );
         };
 

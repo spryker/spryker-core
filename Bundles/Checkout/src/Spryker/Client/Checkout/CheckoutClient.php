@@ -7,8 +7,9 @@
 
 namespace Spryker\Client\Checkout;
 
-use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\TranslatedCheckoutErrorMessagesTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -35,13 +36,13 @@ class CheckoutClient extends AbstractClient implements CheckoutClientInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MessageTransfer $messageTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\TranslatedCheckoutErrorMessagesTransfer
      */
-    public function addCheckoutErrorMessage(MessageTransfer $messageTransfer): void
+    public function translateCheckoutErrorMessages(CheckoutResponseTransfer $checkoutResponseTransfer): TranslatedCheckoutErrorMessagesTransfer
     {
-        $this->getZedStub()->addCheckoutErrorMessage($messageTransfer);
+        return $this->getZedStub()->translateCheckoutErrorMessages($checkoutResponseTransfer);
     }
 
     /**

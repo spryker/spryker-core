@@ -1,0 +1,72 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Zed\Checkout\Business\Translation;
+
+use Generated\Shared\Transfer\CheckoutErrorTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\TranslatedCheckoutErrorMessagesTransfer;
+use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToGlossaryFacadeInterface;
+
+class ErrorMessageTranslator implements ErrorMessageTranslatorInterface
+{
+    protected const SINGLE_PRODUCT_ERROR_MESSAGE_PARAMETER_SKU = '%sku';
+    protected const PRODUCT_BUNDLE_ERROR_MESSAGE_PARAMETER_PRODUCT_SKU = '%productSku%';
+    protected const PRODUCT_BUNDLE_ERROR_MESSAGE_PARAMETER_BUNDLE_SKU = '%bundleSku%';
+
+    /**
+     * @var \Spryker\Zed\Checkout\Dependency\Facade\CheckoutToGlossaryFacadeInterface
+     */
+    protected $glossaryFacade;
+
+    /**
+     * ErrorMessageTranslator constructor.
+     *
+     * @param \Spryker\Zed\Checkout\Dependency\Facade\CheckoutToGlossaryFacadeInterface $glossaryFacade
+     */
+    public function __construct(CheckoutToGlossaryFacadeInterface $glossaryFacade)
+    {
+        $this->glossaryFacade = $glossaryFacade;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\TranslatedCheckoutErrorMessagesTransfer
+     */
+    public function translateCheckoutErrorMessages(CheckoutResponseTransfer $checkoutResponseTransfer): TranslatedCheckoutErrorMessagesTransfer
+    {
+        $translatedCheckoutErrorMessages = new TranslatedCheckoutErrorMessagesTransfer();
+
+        foreach ($checkoutResponseTransfer->getErrors() as $checkoutErrorTransfer) {
+            $translatedCheckoutErrorMessages->addErrorMessage(
+                $this->translateSingleCheckoutErrorMessage(
+                    $checkoutErrorTransfer
+                )
+            );
+        }
+
+        return $translatedCheckoutErrorMessages;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CheckoutErrorTransfer $checkoutErrorTransfer
+     *
+     * @return string
+     */
+    protected function translateSingleCheckoutErrorMessage(CheckoutErrorTransfer $checkoutErrorTransfer): string
+    {
+        if ($checkoutErrorTransfer->getParameters()) {
+            return $this->glossaryFacade->translate(
+                $checkoutErrorTransfer->getMessage(),
+                $checkoutErrorTransfer->getParameters()
+            );
+        }
+
+        return $this->glossaryFacade->translate($checkoutErrorTransfer->getMessage());
+    }
+}

@@ -5,25 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Checkout\Zed;
+namespace Spryker\Zed\Checkout\Business\Translation;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TranslatedCheckoutErrorMessagesTransfer;
 
-interface CheckoutStubInterface
+interface ErrorMessageTranslatorInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
-     */
-    public function placeOrder(QuoteTransfer $quoteTransfer);
-
     /**
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\TranslatedCheckoutErrorMessagesTransfer
+     * @return \Generated\Shared\Transfer\TranslatedCheckoutErrorMessagesTransfer
      */
     public function translateCheckoutErrorMessages(CheckoutResponseTransfer $checkoutResponseTransfer): TranslatedCheckoutErrorMessagesTransfer;
 }

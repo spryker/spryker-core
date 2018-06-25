@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\Checkout\Business;
 
-use Spryker\Zed\Checkout\Business\StatusMessage\StatusMessageHandler;
-use Spryker\Zed\Checkout\Business\StatusMessage\StatusMessageHandlerInterface;
+use Spryker\Zed\Checkout\Business\Translation\ErrorMessageTranslator;
+use Spryker\Zed\Checkout\Business\Translation\ErrorMessageTranslatorInterface;
 use Spryker\Zed\Checkout\Business\Workflow\CheckoutWorkflow;
 use Spryker\Zed\Checkout\CheckoutDependencyProvider;
-use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToMessengerFacadeInterface;
+use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToGlossaryFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -34,12 +34,12 @@ class CheckoutBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Checkout\Business\StatusMessage\StatusMessageHandlerInterface
+     * @return \Spryker\Zed\Checkout\Business\Translation\ErrorMessageTranslatorInterface
      */
-    public function createStatusMessageHandler(): StatusMessageHandlerInterface
+    public function createErrorMessageTranslator(): ErrorMessageTranslatorInterface
     {
-        return new StatusMessageHandler(
-            $this->getMessengerFacade()
+        return new ErrorMessageTranslator(
+            $this->getGlossaryFacade()
         );
     }
 
@@ -52,10 +52,10 @@ class CheckoutBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Checkout\Dependency\Facade\CheckoutToMessengerFacadeInterface
+     * @return \Spryker\Zed\Checkout\Dependency\Facade\CheckoutToGlossaryFacadeInterface
      */
-    protected function getMessengerFacade(): CheckoutToMessengerFacadeInterface
+    protected function getGlossaryFacade(): CheckoutToGlossaryFacadeInterface
     {
-        return $this->getProvidedDependency(CheckoutDependencyProvider::FACADE_MESSENGER);
+        return $this->getProvidedDependency(CheckoutDependencyProvider::FACADE_GLOSSARY);
     }
 }
