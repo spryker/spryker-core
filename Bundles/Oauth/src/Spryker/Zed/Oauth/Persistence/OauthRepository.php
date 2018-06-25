@@ -17,8 +17,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class OauthRepository extends AbstractRepository implements OauthRepositoryInterface
 {
     /**
-     * @api
-     *
      * @param string $identifer
      *
      * @return \Generated\Shared\Transfer\SpyOauthClientEntityTransfer|null
@@ -33,11 +31,7 @@ class OauthRepository extends AbstractRepository implements OauthRepositoryInter
     }
 
     /**
-     * @api
-     *
      * @param string $identifier
-     *
-     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
      *
      * @return \Generated\Shared\Transfer\SpyOauthScopeEntityTransfer|null
      */

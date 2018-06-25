@@ -161,7 +161,7 @@ class RequestFormatter implements RequestFormatterInterface
      */
     protected function readRequestData(HttpRequest $httpRequest, MetadataInterface $metadata): ?array
     {
-        $rawPostData = $httpRequest->getContent();
+        $rawPostData = (string)$httpRequest->getContent();
 
         if (!$rawPostData) {
             return null;
@@ -303,7 +303,7 @@ class RequestFormatter implements RequestFormatterInterface
             return;
         }
 
-        foreach ((array)$queryParameters[RequestConstantsInterface::QUERY_FIELDS] as $resource => $fields) {
+        foreach ($queryParameters[RequestConstantsInterface::QUERY_FIELDS] as $resource => $fields) {
             $requestBuilder->addFields($resource, explode(',', $fields));
         }
     }
@@ -338,7 +338,7 @@ class RequestFormatter implements RequestFormatterInterface
             return;
         }
 
-        foreach ((array)$queryParameters[RequestConstantsInterface::QUERY_FILTER] as $key => $value) {
+        foreach ($queryParameters[RequestConstantsInterface::QUERY_FILTER] as $key => $value) {
             [$resource, $field] = explode('.', $key);
             $requestBuilder->addFilter($resource, $field, $value);
         }

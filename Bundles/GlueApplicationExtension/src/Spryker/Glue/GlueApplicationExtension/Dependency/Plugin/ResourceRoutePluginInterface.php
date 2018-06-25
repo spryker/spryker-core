@@ -6,7 +6,9 @@
  */
 namespace Spryker\Glue\GlueApplicationExtension\Dependency\Plugin;
 
-interface ResourceRoutePluginInterface
+use Spryker\Glue\Kernel\ModuleNameAwareInterface;
+
+interface ResourceRoutePluginInterface extends ModuleNameAwareInterface
 {
     /**
      * @api

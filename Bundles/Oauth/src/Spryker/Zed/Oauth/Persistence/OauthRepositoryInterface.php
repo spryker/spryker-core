@@ -16,8 +16,6 @@ use Generated\Shared\Transfer\SpyOauthScopeEntityTransfer;
 interface OauthRepositoryInterface
 {
     /**
-     * @api
-     *
      * @param string $identifer
      *
      * @return \Generated\Shared\Transfer\SpyOauthClientEntityTransfer|null
@@ -25,11 +23,7 @@ interface OauthRepositoryInterface
     public function findClientByIdentifer(string $identifer): ?SpyOauthClientEntityTransfer;
 
     /**
-     * @api
-     *
      * @param string $identifier
-     *
-     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
      *
      * @return \Generated\Shared\Transfer\SpyOauthScopeEntityTransfer|null
      */

@@ -18,46 +18,45 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class OauthEntityManager extends AbstractEntityManager implements OauthEntityManagerInterface
 {
     /**
-     * @api
-     *
-     * {@inheritdoc}
-     *
      * @param \Generated\Shared\Transfer\SpyOauthAccessTokenEntityTransfer $spyOauthAccessTokenEntityTransfer
      *
      * @return \Generated\Shared\Transfer\SpyOauthAccessTokenEntityTransfer
      */
     public function saveAccessToken(SpyOauthAccessTokenEntityTransfer $spyOauthAccessTokenEntityTransfer): SpyOauthAccessTokenEntityTransfer
     {
-        return $this->save($spyOauthAccessTokenEntityTransfer);
+        /** @var \Generated\Shared\Transfer\SpyOauthAccessTokenEntityTransfer $spyOauthAccessTokenEntityTransfer */
+        $spyOauthAccessTokenEntityTransfer = $this->save($spyOauthAccessTokenEntityTransfer);
+
+        return $spyOauthAccessTokenEntityTransfer;
     }
 
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\SpyOauthClientEntityTransfer $spyOauthClientEntityTransfer
      *
      * @return \Generated\Shared\Transfer\SpyOauthClientEntityTransfer
      */
     public function saveClient(SpyOauthClientEntityTransfer $spyOauthClientEntityTransfer): SpyOauthClientEntityTransfer
     {
-        return $this->save($spyOauthClientEntityTransfer);
+        /** @var \Generated\Shared\Transfer\SpyOauthClientEntityTransfer $spyOauthClientEntityTransfer */
+        $spyOauthClientEntityTransfer = $this->save($spyOauthClientEntityTransfer);
+
+        return $spyOauthClientEntityTransfer;
     }
 
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\SpyOauthScopeEntityTransfer $spyOauthScopeEntityTransfer
      *
      * @return \Generated\Shared\Transfer\SpyOauthScopeEntityTransfer
      */
     public function saveScope(SpyOauthScopeEntityTransfer $spyOauthScopeEntityTransfer): SpyOauthScopeEntityTransfer
     {
-        return $this->save($spyOauthScopeEntityTransfer);
+        /** @var \Generated\Shared\Transfer\SpyOauthScopeEntityTransfer $spyOauthScopeEntityTransfer */
+        $spyOauthScopeEntityTransfer = $this->save($spyOauthScopeEntityTransfer);
+
+        return $spyOauthScopeEntityTransfer;
     }
 
     /**
-     * @api
-     *
      * @param string $identifier
      *
      * @return void

@@ -19,7 +19,7 @@ class LanguageNegotiation implements LanguageNegotiationInterface
     protected $storeClient;
 
     /**
-     * @var \Negotiation\Negotiator
+     * @var \Negotiation\LanguageNegotiator
      */
     protected $negotiator;
 

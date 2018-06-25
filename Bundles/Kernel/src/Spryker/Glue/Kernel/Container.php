@@ -13,7 +13,7 @@ use Spryker\Shared\Kernel\ContainerInterface;
 class Container extends Pimple implements ContainerInterface
 {
     /**
-     * @return \Generated\Resource\Ide\AutoCompletion|\Spryker\Shared\Kernel\LocatorLocatorInterface
+     * @return \Generated\Glue\Ide\AutoCompletion|\Spryker\Shared\Kernel\LocatorLocatorInterface
      */
     public function getLocator()
     {

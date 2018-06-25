@@ -35,7 +35,7 @@ class VersionResolver implements VersionResolverInterface
     {
         $restVersionTransfer = new RestVersionTransfer();
 
-        $contentType = $request->headers->get(RequestConstantsInterface::HEADER_CONTENT_TYPE);
+        $contentType = (string)$request->headers->get(RequestConstantsInterface::HEADER_CONTENT_TYPE);
 
         if (!$contentType) {
             return $restVersionTransfer;

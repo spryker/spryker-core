@@ -72,7 +72,7 @@ class RequestMetaDataExtractor implements RequestMetaDataExtractorInterface
      */
     protected function findContentTypeFormat(Request $request): string
     {
-        $contentType = $request->headers->get(RequestConstantsInterface::HEADER_CONTENT_TYPE);
+        $contentType = (string)$request->headers->get(RequestConstantsInterface::HEADER_CONTENT_TYPE);
         $headerParts = $this->contentTypeResolver->matchContentType($contentType);
 
         if (count($headerParts) < 2) {
@@ -89,7 +89,7 @@ class RequestMetaDataExtractor implements RequestMetaDataExtractorInterface
      */
     public function findAcceptFormat(Request $request): string
     {
-        $accept = $request->headers->get(RequestConstantsInterface::HEADER_ACCEPT);
+        $accept = (string)$request->headers->get(RequestConstantsInterface::HEADER_ACCEPT);
 
         $headerParts = $this->contentTypeResolver->matchContentType($accept);
 
@@ -107,7 +107,7 @@ class RequestMetaDataExtractor implements RequestMetaDataExtractorInterface
      */
     protected function getLocale(Request $request): string
     {
-        $acceptLanguage = $request->headers->get(RequestConstantsInterface::HEADER_ACCEPT_LANGUAGE, '');
+        $acceptLanguage = (string)$request->headers->get(RequestConstantsInterface::HEADER_ACCEPT_LANGUAGE, '');
         return $this->languageNegotiation->getLanguageIsoCode($acceptLanguage);
     }
 

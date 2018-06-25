@@ -23,7 +23,7 @@ class RestRequest implements RestRequestInterface
     protected $sort;
 
     /**
-     * @var \Spryker\Glue\GlueApplication\Rest\Request\Data\PageInterface
+     * @var \Spryker\Glue\GlueApplication\Rest\Request\Data\PageInterface|null
      */
     protected $page;
 
@@ -58,12 +58,12 @@ class RestRequest implements RestRequestInterface
     protected $include = [];
 
     /**
-     * @var \Spryker\Glue\GlueApplication\Rest\Request\Data\FilterInterface[]
+     * @var array
      */
     protected $filters = [];
 
     /**
-     * @var \Spryker\Glue\GlueApplication\Rest\Request\Data\UserInterface
+     * @var \Spryker\Glue\GlueApplication\Rest\Request\Data\UserInterface|null
      */
     protected $user;
 
@@ -144,7 +144,7 @@ class RestRequest implements RestRequestInterface
     /**
      * @param string $resource
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\Request\Data\FilterInterface[]
+     * @return array
      */
     public function getFiltersByResource(string $resource): array
     {

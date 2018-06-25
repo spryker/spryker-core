@@ -8,7 +8,9 @@ namespace Spryker\Glue\GlueApplication\Plugin\Rest\ServiceProvider;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
+use Spryker\Glue\GlueApplication\Exception\GlueApplicationBootstrapException;
 use Spryker\Glue\Kernel\AbstractPlugin;
+use Spryker\Glue\Kernel\Application as GlueApplication;
 use Spryker\Glue\Kernel\ControllerResolver\GlueFragmentControllerResolver;
 use Spryker\Glue\Kernel\Plugin\Pimple;
 use Spryker\Shared\Config\Config;
@@ -36,10 +38,18 @@ class GlueApplicationServiceProvider extends AbstractPlugin implements ServicePr
     }
 
     /**
+     * @throws \Spryker\Glue\GlueApplication\Exception\GlueApplicationBootstrapException
+     *
      * @return void
      */
     protected function setPimpleApplication()
     {
+        if (!($this->application instanceof GlueApplication)) {
+            throw new GlueApplicationBootstrapException(
+                sprintf("Silex application must extend Glue application '%s'.", GlueApplication::class)
+            );
+        }
+
         $pimplePlugin = new Pimple();
         $pimplePlugin->setApplication($this->application);
     }
@@ -69,6 +79,5 @@ class GlueApplicationServiceProvider extends AbstractPlugin implements ServicePr
      */
     public function boot(Application $app)
     {
-        // TODO: Implement boot() method.
     }
 }

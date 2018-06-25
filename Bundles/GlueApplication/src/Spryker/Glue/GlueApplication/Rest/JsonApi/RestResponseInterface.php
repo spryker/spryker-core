@@ -48,7 +48,7 @@ interface RestResponseInterface
     public function addResource(RestResourceInterface $restResource): self;
 
     /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResource[]
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
     public function getResources(): array;
 

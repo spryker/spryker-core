@@ -89,7 +89,7 @@ class ResourceRouteLoader implements ResourceRouteLoaderInterface
         $resourcePlugin = $this->findResourcePlugin($resourceType, $httpRequest);
 
         if ($resourcePlugin === null) {
-            return null;
+            return [];
         }
 
         $resourceRouteCollection = $resourcePlugin->configure($this->createResourceRouteCollection());
@@ -151,8 +151,8 @@ class ResourceRouteLoader implements ResourceRouteLoaderInterface
 
         $resourceVersion = $resourceRoutePlugin->getVersion();
 
-        return ((int)$resourceVersion->getMajor() === (int)$requestedVersionTransfer->getMajor() &&
-            (int)$resourceVersion->getMinor() === (int)$requestedVersionTransfer->getMinor());
+        return ($resourceVersion->getMajor() === $requestedVersionTransfer->getMajor() &&
+               $resourceVersion->getMinor() === $requestedVersionTransfer->getMinor());
     }
 
     /**
@@ -192,8 +192,8 @@ class ResourceRouteLoader implements ResourceRouteLoaderInterface
                 $newestVersionPlugin = $resourcePlugin;
             }
 
-            $resourceVersion = (int)$resourcePlugin->getVersion()->getMajor() . $resourcePlugin->getVersion()->getMinor();
-            $newestVersion = (int)$newestVersionPlugin->getVersion()->getMajor() . $newestVersionPlugin->getVersion()->getMinor();
+            $resourceVersion = $resourcePlugin->getVersion()->getMajor() . $resourcePlugin->getVersion()->getMinor();
+            $newestVersion = $newestVersionPlugin->getVersion()->getMajor() . $newestVersionPlugin->getVersion()->getMinor();
 
             if ($resourceVersion > $newestVersion) {
                 $newestVersionPlugin = $resourcePlugin;

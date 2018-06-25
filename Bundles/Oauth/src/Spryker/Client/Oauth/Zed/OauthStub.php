@@ -35,7 +35,10 @@ class OauthStub implements OauthStubInterface
      */
     public function processAccessTokenRequest(OauthRequestTransfer $oauthRequestTransfer): OauthResponseTransfer
     {
-        return $this->zedRequestClient->call('/oauth/gateway/process-access-token-request', $oauthRequestTransfer);
+        /** @var \Generated\Shared\Transfer\OauthResponseTransfer $oauthResponseTransfer */
+        $oauthResponseTransfer = $this->zedRequestClient->call('/oauth/gateway/process-access-token-request', $oauthRequestTransfer);
+
+        return $oauthResponseTransfer;
     }
 
     /**
@@ -45,6 +48,9 @@ class OauthStub implements OauthStubInterface
      */
     public function validateAccessToken(OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer): OauthAccessTokenValidationResponseTransfer
     {
-        return $this->zedRequestClient->call('/oauth/gateway/validate-access-token', $authAccessTokenValidationRequestTransfer);
+        /** @var \Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer $oauthAccessTokenValidationResponseTransfer   */
+        $oauthAccessTokenValidationResponseTransfer = $this->zedRequestClient->call('/oauth/gateway/validate-access-token', $authAccessTokenValidationRequestTransfer);
+
+        return $oauthAccessTokenValidationResponseTransfer;
     }
 }

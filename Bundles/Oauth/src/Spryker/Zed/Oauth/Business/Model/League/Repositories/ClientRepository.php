@@ -27,8 +27,6 @@ class ClientRepository implements ClientRepositoryInterface
     }
 
     /**
-     * Get a client.
-     *
      * @param string $clientIdentifier The client's identifier
      * @param null|string $grantType The grant type used (if sent)
      * @param null|string $clientSecret The client's secret (if sent)
@@ -40,6 +38,7 @@ class ClientRepository implements ClientRepositoryInterface
     public function getClientEntity($clientIdentifier, $grantType = null, $clientSecret = null, $mustValidateSecret = true)
     {
         $oauthClientEntityTransfer = $this->oauthRepository->findClientByIdentifer($clientIdentifier);
+        $clientEntity = new ClientEntity();
 
         if (!$oauthClientEntityTransfer) {
             return;
@@ -52,7 +51,6 @@ class ClientRepository implements ClientRepositoryInterface
             return;
         }
 
-        $clientEntity = new ClientEntity();
         $clientEntity->setIdentifier($oauthClientEntityTransfer->getIdentifier());
         $clientEntity->setName($oauthClientEntityTransfer->getName());
         $clientEntity->setRedirectUri($oauthClientEntityTransfer->getRedirectUri());

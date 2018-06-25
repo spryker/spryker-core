@@ -23,7 +23,7 @@ class ResourceRouter implements ResourceRouterInterface
     protected $requestHeaderValidator;
 
     /**
-     * @var \Spryker\Shared\Kernel\Communication\Application
+     * @var \Spryker\Glue\Kernel\Application
      */
     protected $application;
 

@@ -269,7 +269,7 @@ class DevelopmentConfig extends AbstractBundleConfig
     public function getGlueIdeAutoCompletionOptions()
     {
         $options = $this->getDefaultIdeAutoCompletionOptions();
-        $options[IdeAutoCompletionOptionConstants::APPLICATION_NAME] = 'Resource';
+        $options[IdeAutoCompletionOptionConstants::APPLICATION_NAME] = 'Glue';
 
         return $options;
     }

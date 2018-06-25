@@ -73,8 +73,8 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
         $spyAccessTokenEntityTransfer = new SpyOauthAccessTokenEntityTransfer();
         $spyAccessTokenEntityTransfer
             ->setIdentifier($accessTokenEntity->getIdentifier())
-            ->setUserIdentifier($accessTokenEntity->getUserIdentifier())
-            ->setExpirityDate($accessTokenEntity->getExpiryDateTime())
+            ->setUserIdentifier((string)$accessTokenEntity->getUserIdentifier())
+            ->setExpirityDate($accessTokenEntity->getExpiryDateTime()->format('Y-m-d H:i:s'))
             ->setFkOauthClient($accessTokenEntity->getClient()->getIdentifier())
             ->setScopes(json_encode($accessTokenEntity->getScopes()));
 

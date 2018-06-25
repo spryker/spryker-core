@@ -12,7 +12,7 @@ use League\OAuth2\Server\Entities\UserEntityInterface;
 class UserEntity implements UserEntityInterface
 {
     /**
-     * @var int
+     * @var string
      */
     protected $identifier;
 
@@ -27,7 +27,7 @@ class UserEntity implements UserEntityInterface
     /**
      * Return the user's identifier.
      *
-     * @return mixed
+     * @return string
      */
     public function getIdentifier()
     {

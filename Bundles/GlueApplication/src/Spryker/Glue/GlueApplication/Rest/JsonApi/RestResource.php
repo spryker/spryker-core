@@ -31,7 +31,7 @@ class RestResource implements RestResourceInterface
     protected $relationships = [];
 
     /**
-     * @var \Spryker\Shared\Kernel\Transfer\TransferInterface
+     * @var \Spryker\Shared\Kernel\Transfer\TransferInterface|null
      */
     protected $attributes;
 

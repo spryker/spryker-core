@@ -11,14 +11,9 @@ use Generated\Shared\Transfer\SpyOauthAccessTokenEntityTransfer;
 use Generated\Shared\Transfer\SpyOauthClientEntityTransfer;
 use Generated\Shared\Transfer\SpyOauthScopeEntityTransfer;
 
-/**
- * @method \Spryker\Zed\Oauth\Persistence\OauthPersistenceFactory getFactory()
- */
 interface OauthEntityManagerInterface
 {
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\SpyOauthAccessTokenEntityTransfer $spyOauthAccessTokenEntityTransfer
      *
      * @return \Generated\Shared\Transfer\SpyOauthAccessTokenEntityTransfer
@@ -26,8 +21,6 @@ interface OauthEntityManagerInterface
     public function saveAccessToken(SpyOauthAccessTokenEntityTransfer $spyOauthAccessTokenEntityTransfer): SpyOauthAccessTokenEntityTransfer;
 
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\SpyOauthClientEntityTransfer $spyOauthClientEntityTransfer
      *
      * @return \Generated\Shared\Transfer\SpyOauthClientEntityTransfer
@@ -35,8 +28,6 @@ interface OauthEntityManagerInterface
     public function saveClient(SpyOauthClientEntityTransfer $spyOauthClientEntityTransfer): SpyOauthClientEntityTransfer;
 
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\SpyOauthScopeEntityTransfer $spyOauthScopeEntityTransfer
      *
      * @return \Generated\Shared\Transfer\SpyOauthScopeEntityTransfer
@@ -44,8 +35,6 @@ interface OauthEntityManagerInterface
     public function saveScope(SpyOauthScopeEntityTransfer $spyOauthScopeEntityTransfer): SpyOauthScopeEntityTransfer;
 
     /**
-     * @api
-     *
      * @param string $identifier
      *
      * @return void

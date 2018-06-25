@@ -104,7 +104,7 @@ class RestResponse implements RestResponseInterface
     }
 
     /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResource[]
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
     public function getResources(): array
     {

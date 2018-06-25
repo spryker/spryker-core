@@ -1086,7 +1086,9 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     protected function createGlueAutoCompletionMethodBuilderStack()
     {
         return [
-           $this->createIdeAutoCompletionResourceMetodBuild(),
+            $this->createIdeAutoCompletionResourceMetodBuild(),
+            $this->createIdeAutoCompletionClientMethodBuilder(),
+            $this->createIdeAutoCompletionServiceMethodBuilder(),
         ];
     }
 

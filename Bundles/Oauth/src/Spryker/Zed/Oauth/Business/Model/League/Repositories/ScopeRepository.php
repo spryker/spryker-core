@@ -83,7 +83,7 @@ class ScopeRepository implements ScopeRepositoryInterface
      * @param array $scopes
      * @param string $grantType
      * @param \League\OAuth2\Server\Entities\ClientEntityInterface $clientEntity
-     * @param string $userIdentifier
+     * @param string|null $userIdentifier
      *
      * @return \Generated\Shared\Transfer\OauthScopeRequestTransfer
      */
@@ -91,14 +91,17 @@ class ScopeRepository implements ScopeRepositoryInterface
         array $scopes,
         string $grantType,
         ClientEntityInterface $clientEntity,
-        string $userIdentifier
+        ?string $userIdentifier = null
     ): OauthScopeRequestTransfer {
 
         $oauthScopeRequestTransfer = (new OauthScopeRequestTransfer())
-            ->setUserIdentifier($userIdentifier)
             ->setGrantType($grantType)
             ->setClientId($clientEntity->getIdentifier())
             ->setClientName($clientEntity->getName());
+
+        if ($userIdentifier) {
+            $oauthScopeRequestTransfer->setUserIdentifier($userIdentifier);
+        }
 
         foreach ($scopes as $scope) {
             $authScopeTransfer = new OauthScopeTransfer();

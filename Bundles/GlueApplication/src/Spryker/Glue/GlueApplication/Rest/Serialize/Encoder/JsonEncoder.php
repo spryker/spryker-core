@@ -35,6 +35,6 @@ class JsonEncoder implements EncoderInterface
             return '';
         }
 
-        return $this->utilEncodingService->encodeJson($data);
+        return (string)$this->utilEncodingService->encodeJson($data);
     }
 }
