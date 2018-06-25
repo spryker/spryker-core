@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\FileTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\FileManager\Dependency\Client\FileManagerToLocaleClientInterface;
 use Spryker\Client\FileManager\Dependency\Client\FileManagerToStorageClientInterface;
-use Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface;
+use Spryker\Client\FileManager\Dependency\Client\FileManagerToSynchronizationServiceInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class FileReader implements FileReaderInterface
@@ -28,9 +28,9 @@ class FileReader implements FileReaderInterface
     protected $storageClient;
 
     /**
-     * @var \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface
+     * @var \Spryker\Client\FileManager\Dependency\Client\FileManagerToSynchronizationServiceInterface
      */
-    protected $keyGenerator;
+    protected $synchronizationService;
 
     /**
      * @var \Spryker\Client\FileManager\Dependency\Client\FileManagerToLocaleClientInterface
@@ -41,17 +41,16 @@ class FileReader implements FileReaderInterface
      * FileReader constructor.
      *
      * @param \Spryker\Client\FileManager\Dependency\Client\FileManagerToStorageClientInterface $storageClient
-     * @param \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface $keyGenerator
+     * @param \Spryker\Client\FileManager\Dependency\Client\FileManagerToSynchronizationServiceInterface $synchronizationService
      * @param \Spryker\Client\FileManager\Dependency\Client\FileManagerToLocaleClientInterface $localeClient
      */
     public function __construct(
         FileManagerToStorageClientInterface $storageClient,
-        SynchronizationKeyGeneratorPluginInterface $keyGenerator,
+        FileManagerToSynchronizationServiceInterface $synchronizationService,
         FileManagerToLocaleClientInterface $localeClient
-    )
-    {
+    ) {
         $this->storageClient = $storageClient;
-        $this->keyGenerator = $keyGenerator;
+        $this->synchronizationService = $synchronizationService;
         $this->localeClient = $localeClient;
     }
 
@@ -96,7 +95,7 @@ class FileReader implements FileReaderInterface
     protected function fetchFileFromStorage(int $idFile)
     {
         $fileArray = $this->storageClient->get(
-            $this->convertIdToKey($idFile)
+            $this->generateKey($idFile)
         );
 
         if ($fileArray === null) {
@@ -157,16 +156,14 @@ class FileReader implements FileReaderInterface
      *
      * @return string
      */
-    protected function convertIdToKey(int $idFile): string
+    protected function generateKey(int $idFile): string
     {
-        $this->keyGenerator->setResource(static::TYPE_FILE);
+        $synchronizationDataTransfer = (new SynchronizationDataTransfer())
+            ->setReference($idFile)
+            ->setLocale($this->localeClient->getCurrentLocale());
 
-        $synchronizationDataTransfer = new SynchronizationDataTransfer();
-        $synchronizationDataTransfer->setReference((string)$idFile);
-        $synchronizationDataTransfer->setLocale(
-            $this->localeClient->getCurrentLocale()
-        );
-
-        return $this->keyGenerator->generateKey($synchronizationDataTransfer);
+        return $this->synchronizationService
+            ->getStorageKeyBuilder(static::TYPE_FILE)
+            ->generateKey($synchronizationDataTransfer);
     }
 }

@@ -9,8 +9,6 @@ namespace Spryker\Client\FileManager;
 
 use Spryker\Client\FileManager\Model\FileReader;
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Service\Synchronization\Model\KeyFilter;
-use Spryker\Service\Synchronization\Plugin\DefaultKeyGeneratorPlugin;
 
 class FileManagerFactory extends AbstractFactory
 {
@@ -21,33 +19,23 @@ class FileManagerFactory extends AbstractFactory
     {
         return new FileReader(
             $this->getStorageClient(),
-            $this->createKeyGenerator(),
+            $this->getSynchronizationService(),
             $this->getLocaleClient()
         );
     }
 
     /**
-     * @return \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface
+     * @return \Spryker\Client\FileManager\Dependency\Client\FileManagerToSynchronizationServiceInterface
      */
-    protected function createKeyGenerator()
+    public function getSynchronizationService()
     {
-        return new DefaultKeyGeneratorPlugin(
-            $this->createKeyFilter()
-        );
-    }
-
-    /**
-     * @return \Spryker\Service\Synchronization\Model\KeyFilterInterface
-     */
-    protected function createKeyFilter()
-    {
-        return new KeyFilter();
+        return $this->getProvidedDependency(FileManagerDependencyProvider::SERVICE_SYNCHRONIZATION);
     }
 
     /**
      * @return \Spryker\Client\FileManager\Dependency\Client\FileManagerToStorageClientInterface
      */
-    protected function getStorageClient()
+    public function getStorageClient()
     {
         return $this->getProvidedDependency(FileManagerDependencyProvider::CLIENT_STORAGE);
     }
@@ -55,7 +43,7 @@ class FileManagerFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\FileManager\Dependency\Client\FileManagerToLocaleClientInterface
      */
-    protected function getLocaleClient()
+    public function getLocaleClient()
     {
         return $this->getProvidedDependency(FileManagerDependencyProvider::CLIENT_LOCALE);
     }

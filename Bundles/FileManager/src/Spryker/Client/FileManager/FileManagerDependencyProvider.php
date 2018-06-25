@@ -9,6 +9,7 @@ namespace Spryker\Client\FileManager;
 
 use Spryker\Client\FileManager\Dependency\Client\FileManagerToLocaleClientBridge;
 use Spryker\Client\FileManager\Dependency\Client\FileManagerToStorageClientBridge;
+use Spryker\Client\FileManager\Dependency\Client\FileManagerToSynchronizationServiceBridge;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 
@@ -16,6 +17,8 @@ class FileManagerDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
     public const CLIENT_LOCALE = 'CLIENT_LOCALE';
+
+    public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -26,6 +29,7 @@ class FileManagerDependencyProvider extends AbstractDependencyProvider
     {
         $container = $this->addStorageClient($container);
         $container = $this->addLocaleClient($container);
+        $container = $this->addSynchronizationService($container);
 
         return $container;
     }
@@ -56,6 +60,22 @@ class FileManagerDependencyProvider extends AbstractDependencyProvider
         $container[static::CLIENT_LOCALE] = function (Container $container) {
             return new FileManagerToLocaleClientBridge(
                 $container->getLocator()->locale()->client()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addSynchronizationService(Container $container): Container
+    {
+        $container[static::SERVICE_SYNCHRONIZATION] = function (Container $container) {
+            return new FileManagerToSynchronizationServiceBridge(
+                $container->getLocator()->synchronization()->service()
             );
         };
 

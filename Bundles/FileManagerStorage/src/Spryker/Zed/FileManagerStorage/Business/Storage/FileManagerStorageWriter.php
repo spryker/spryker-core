@@ -48,8 +48,7 @@ class FileManagerStorageWriter implements FileManagerStorageWriterInterface
         FileManagerStorageEntityManagerInterface $entityManager,
         FileManagerStorageRepositoryInterface $repository,
         FileManagerStorageToLocaleFacadeInterface $localeFacade
-    )
-    {
+    ) {
         $this->entityManager = $entityManager;
         $this->repository = $repository;
         $this->localeFacade = $localeFacade;
