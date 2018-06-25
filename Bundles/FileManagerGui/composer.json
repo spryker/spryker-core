@@ -3,6 +3,7 @@
   "description": "FileManagerGui module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker/file-manager": "^1.0.0",
     "spryker/gui": "^3.13.0",
     "spryker/kernel": "^3.16.0",

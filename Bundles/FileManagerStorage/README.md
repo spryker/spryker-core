@@ -1,6 +1,6 @@
 # FileManagerStorage Module
-[![Build Status](https://travis-ci.org/spryker/FileManagerStorage.svg)](https://travis-ci.org/spryker/FileManagerStorage)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/FileManagerStorage/badge.svg)](https://coveralls.io/github/spryker/FileManagerStorage)
+[![Build Status](https://travis-ci.org/spryker/file-manager-storage.svg)](https://travis-ci.org/spryker/file-manager-storage)
+[![Coverage Status](https://coveralls.io/repos/github/spryker/file-manager-storage/badge.svg)](https://coveralls.io/github/spryker/file-manager-storage)
 
 {{ADD DESCRIPTION HERE}}
 
