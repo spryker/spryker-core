@@ -70,7 +70,7 @@ class Exporter implements ExporterInterface
             if ($plugin instanceof SynchronizationDataQueryContainerPluginInterface) {
                 $this->exportDataFromQueryContainer($ids, $plugin);
             }
-            if ($plugin instanceof SynchronizationDataRepositoryPluginInterface){
+            if ($plugin instanceof SynchronizationDataRepositoryPluginInterface) {
                 $this->exportDataFromRepository($ids, $plugin);
             }
         }

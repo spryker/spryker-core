@@ -9,16 +9,8 @@ namespace SprykerTest\Zed\Synchronization\Business;
 
 use Codeception\Test\Unit;
 use Elastica\Exception\NotFoundException;
-use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Synchronization\CategoryPageSynchronizationDataPlugin;
-use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Synchronization\Business\SynchronizationBusinessFactory;
-use Spryker\Zed\Synchronization\Business\SynchronizationFacade;
-use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToQueueClientInterface;
-use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToSearchClientInterface;
-use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToStorageClientInterface;
-use Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingServiceInterface;
-use Spryker\Zed\Synchronization\SynchronizationDependencyProvider;
 use Spryker\Zed\AvailabilityStorage\Communication\Plugin\Synchronization\AvailabilitySynchronizationDataPlugin;
+use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Synchronization\CategoryPageSynchronizationDataPlugin;
 use Spryker\Zed\CategoryStorage\Communication\Plugin\Synchronization\CategoryNodeSynchronizationDataPlugin;
 use Spryker\Zed\CategoryStorage\Communication\Plugin\Synchronization\CategoryTreeSynchronizationDataPlugin;
 use Spryker\Zed\CmsBlockCategoryStorage\Communication\Plugin\Synchronization\CmsBlockCategorySynchronizationDataPlugin;
@@ -27,6 +19,7 @@ use Spryker\Zed\CmsBlockStorage\Communication\Plugin\Synchronization\CmsBlockSyn
 use Spryker\Zed\CmsPageSearch\Communication\Plugin\Synchronization\CmsPageSynchronizationDataPlugin;
 use Spryker\Zed\CmsStorage\Communication\Plugin\Synchronization\CmsSynchronizationDataPlugin;
 use Spryker\Zed\GlossaryStorage\Communication\Plugin\Synchronization\GlossarySynchronizationDataPlugin;
+use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\NavigationStorage\Communication\Plugin\Synchronization\NavigationSynchronizationDataPlugin;
 use Spryker\Zed\PriceProductStorage\Communication\Plugin\Synchronization\PriceProductAbstractSynchronizationDataPlugin;
 use Spryker\Zed\PriceProductStorage\Communication\Plugin\Synchronization\PriceProductConcreteSynchronizationDataPlugin;
@@ -50,6 +43,13 @@ use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Synchronization\Produc
 use Spryker\Zed\ProductSetStorage\Communication\Plugin\Synchronization\ProductSetSynchronizationDataPlugin;
 use Spryker\Zed\ProductStorage\Communication\Plugin\Synchronization\ProductAbstractSynchronizationDataPlugin;
 use Spryker\Zed\ProductStorage\Communication\Plugin\Synchronization\ProductConcreteSynchronizationDataPlugin;
+use Spryker\Zed\Synchronization\Business\SynchronizationBusinessFactory;
+use Spryker\Zed\Synchronization\Business\SynchronizationFacade;
+use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToQueueClientInterface;
+use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToSearchClientInterface;
+use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToStorageClientInterface;
+use Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingServiceInterface;
+use Spryker\Zed\Synchronization\SynchronizationDependencyProvider;
 use Spryker\Zed\UrlStorage\Communication\Plugin\Synchronization\UrlRedirectSynchronizationDataPlugin;
 use Spryker\Zed\UrlStorage\Communication\Plugin\Synchronization\UrlSynchronizationDataPlugin;
 
@@ -222,7 +222,14 @@ class SynchronizationFacadeTest extends Unit
         $container = new Container();
         $container[SynchronizationDependencyProvider::CLIENT_QUEUE] = function (Container $container) {
             $queueMock = $this->createQueueClientBridge();
-            $queueMock->expects($this->atLeastOnce())->method('sendMessages');
+            $synchronizationPlugins = $this->createSynchronizationDataPlugins();
+
+            if (count($synchronizationPlugins)) {
+                $queueMock->expects($this->atLeastOnce())->method('sendMessages');
+                return $queueMock;
+            }
+
+            $queueMock->expects($this->never())->method('sendMessages');
 
             return $queueMock;
         };
