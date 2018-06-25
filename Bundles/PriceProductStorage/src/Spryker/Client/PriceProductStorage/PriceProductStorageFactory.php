@@ -26,7 +26,7 @@ class PriceProductStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\PriceProductStorage\Storage\PriceAbstractStorageReaderInterface
      */
-    protected function createPriceAbstractStorageReader()
+    public function createPriceAbstractStorageReader()
     {
         return new PriceAbstractStorageReader($this->getStorage(), $this->createPriceProductStorageKeyGenerator());
     }
@@ -34,7 +34,7 @@ class PriceProductStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\PriceProductStorage\Storage\PriceConcreteStorageReaderInterface
      */
-    protected function createPriceConcreteStorageReader()
+    public function createPriceConcreteStorageReader()
     {
         return new PriceConcreteStorageReader($this->getStorage(), $this->createPriceProductStorageKeyGenerator());
     }
