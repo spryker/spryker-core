@@ -110,7 +110,7 @@ class MerchantRelationshipRepository extends AbstractRepository implements Merch
      *
      * @param int $idBusinessUnit
      *
-     * @return MerchantRelationshipTransfer[]
+     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
      */
     public function getMerchantRelationshipCollectionByIdAssignedBusinessUnit(int $idBusinessUnit): array
     {

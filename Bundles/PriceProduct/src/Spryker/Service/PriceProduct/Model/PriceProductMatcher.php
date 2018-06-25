@@ -17,7 +17,7 @@ class PriceProductMatcher implements PriceProductMatcherInterface
     protected const PRICE_NET_MODE = 'NET_MODE';
 
     /**
-     * @var \Spryker\Service\PriceProduct\Dependency\Plugin\PriceProductDecisionPluginInterface[]
+     * @var \Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductDecisionPluginInterface[]
      */
     protected $priceProductDecisionPlugins = [];
 
@@ -98,7 +98,6 @@ class PriceProductMatcher implements PriceProductMatcherInterface
 
         return $moneyValueTransfer->getGrossAmount();
     }
-
 
     /**
      * @param array $priceProductTransferCollection

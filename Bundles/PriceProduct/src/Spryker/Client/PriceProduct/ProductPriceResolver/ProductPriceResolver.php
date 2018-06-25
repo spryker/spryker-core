@@ -10,9 +10,9 @@ namespace Spryker\Client\PriceProduct\ProductPriceResolver;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\CurrentProductPriceTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
-use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToCurrencyClientInterface;
 use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToPriceClientInterface;
 use Spryker\Client\PriceProduct\PriceProductConfig;
@@ -72,7 +72,6 @@ class ProductPriceResolver implements ProductPriceResolverInterface
 
         $priceProductTransferCollection = $this->convertPriceMapToPriceProductTransferCollection($priceMap);
         $priceProductFilter = $this->buildPriceProductFilterWithCurrentValues();
-
 
         // todo get price product transfer
         $price = $this->priceProductService->resolveProductPriceByPriceProductFilter(

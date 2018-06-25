@@ -42,7 +42,7 @@ class PriceProductFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\PriceProduct\Dependency\Client\PriceProductToPriceClientInterface
      */
-    protected function getPriceClient(): PriceProductToPriceClientInterface
+    public function getPriceClient(): PriceProductToPriceClientInterface
     {
         return $this->getProvidedDependency(PriceProductDependencyProvider::CLIENT_PRICE);
     }
@@ -50,7 +50,7 @@ class PriceProductFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\PriceProduct\Dependency\Client\PriceProductToCurrencyClientInterface
      */
-    protected function getCurrencyClient(): PriceProductToCurrencyClientInterface
+    public function getCurrencyClient(): PriceProductToCurrencyClientInterface
     {
         return $this->getProvidedDependency(PriceProductDependencyProvider::CLIENT_CURRENCY);
     }

@@ -14,7 +14,6 @@ use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
-use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Propel;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -67,7 +66,7 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
      * @param int $idProductConcrete
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore[]|ObjectCollection
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore[]|\Propel\Runtime\Collection\ObjectCollection
      */
     public function findProductConcretePricesByIdAndCriteria(
         int $idProductConcrete,
@@ -90,7 +89,7 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]|ObjectCollection
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]|\Propel\Runtime\Collection\ObjectCollection
      */
     public function findProductAbstractPricesByIdAndCriteria(
         int $idProductAbstract,

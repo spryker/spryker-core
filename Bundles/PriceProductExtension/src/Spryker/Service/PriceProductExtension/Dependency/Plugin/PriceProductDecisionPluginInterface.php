@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\PriceProduct\Dependency\Plugin;
+namespace Spryker\Service\PriceProductExtension\Dependency\Plugin;
 
-use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 
 interface PriceProductDecisionPluginInterface
 {

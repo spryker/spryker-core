@@ -14,8 +14,8 @@ use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToPriceClientBridg
 
 class PriceProductDependencyProvider extends AbstractDependencyProvider
 {
-    public const CLIENT_PRICE = 'PRICE_CLIENT';
-    public const CLIENT_CURRENCY = 'CURRENCY_CLIENT';
+    public const CLIENT_PRICE = 'CLIENT_PRICE';
+    public const CLIENT_CURRENCY = 'CLIENT_CURRENCY';
     public const SERVICE_PRICE_PRODUCT = 'SERVICE_PRICE_PRODUCT';
 
     /**

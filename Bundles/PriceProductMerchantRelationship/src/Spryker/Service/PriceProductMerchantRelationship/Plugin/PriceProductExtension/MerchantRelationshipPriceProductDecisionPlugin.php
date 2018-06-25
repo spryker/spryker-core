@@ -5,17 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\PriceProductMerchantRelationship\Plugin;
+namespace Spryker\Service\PriceProductMerchantRelationship\Plugin\PriceProductExtension;
 
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Service\Kernel\AbstractPlugin;
-use Spryker\Service\PriceProduct\Dependency\Plugin\PriceProductDecisionPluginInterface;
+use Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductDecisionPluginInterface;
 use Spryker\Shared\PriceProductMerchantRelationship\PriceProductMerchantRelationshipConstants;
 
-class MerchantRelationshipPriceDecisionPlugin extends AbstractPlugin implements PriceProductDecisionPluginInterface
+class MerchantRelationshipPriceProductDecisionPlugin extends AbstractPlugin implements PriceProductDecisionPluginInterface
 {
     /**
      * {@inheritdoc}

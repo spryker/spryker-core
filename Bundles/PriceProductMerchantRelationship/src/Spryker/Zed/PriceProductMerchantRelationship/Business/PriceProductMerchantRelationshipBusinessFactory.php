@@ -45,7 +45,7 @@ class PriceProductMerchantRelationshipBusinessFactory extends AbstractBusinessFa
     /**
      * @return \Spryker\Zed\PriceProductMerchantRelationship\Dependency\Facade\PriceProductMerchantRelationshipToPriceProductFacadeInterface
      */
-    protected function getPriceProductFacade(): PriceProductMerchantRelationshipToPriceProductFacadeInterface
+    public function getPriceProductFacade(): PriceProductMerchantRelationshipToPriceProductFacadeInterface
     {
         return $this->getProvidedDependency(PriceProductMerchantRelationshipDependencyProvider::FACADE_PRICE_PRODUCT);
     }

@@ -49,7 +49,7 @@ class PriceProductMerchantRelationshipStorageDimensionPlugin extends AbstractPlu
                 return $priceProductStorageTransfer;
             }
         }
-        
+
         return null;
     }
 

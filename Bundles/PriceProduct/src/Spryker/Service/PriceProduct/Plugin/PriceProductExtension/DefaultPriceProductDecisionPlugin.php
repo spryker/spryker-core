@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\PriceProduct\Plugin;
+namespace Spryker\Service\PriceProduct\Plugin\PriceProductExtension;
 
-use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Service\Kernel\AbstractPlugin;
-use Spryker\Service\PriceProduct\Dependency\Plugin\PriceProductDecisionPluginInterface;
+use Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductDecisionPluginInterface;
 use Spryker\Shared\PriceProduct\PriceProductConstants;
 
-class DefaultPriceDimensionDecisionPlugin extends AbstractPlugin implements PriceProductDecisionPluginInterface
+class DefaultPriceProductDecisionPlugin extends AbstractPlugin implements PriceProductDecisionPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -43,7 +43,6 @@ class DefaultPriceDimensionDecisionPlugin extends AbstractPlugin implements Pric
 
             $priceProductTransfer->getMoneyValue()->requireCurrency();
             $priceProductTransfer->getMoneyValue()->getCurrency()->requireIdCurrency();
-
 
             if ($priceProductTransfer->getPriceDimension()->getIdPriceProductDefault()) {
                 if ($priceProductTransfer->getMoneyValue()->getCurrency()->getIdCurrency() !== $priceProductCriteriaTransfer->getIdCurrency()) {
@@ -93,7 +92,6 @@ class DefaultPriceDimensionDecisionPlugin extends AbstractPlugin implements Pric
 
         return null;
     }
-
 
     /**
      * {@inheritdoc}

@@ -258,7 +258,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductDefaultWriterInterface
      */
-    protected function createPriceProductDefaultWriter(): PriceProductDefaultWriterInterface
+    public function createPriceProductDefaultWriter(): PriceProductDefaultWriterInterface
     {
         return new PriceProductDefaultWriter(
             $this->createPriceProductStoreWriter(),
@@ -270,7 +270,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeInterface
      */
-    protected function getProductFacade(): PriceProductToProductFacadeInterface
+    public function getProductFacade(): PriceProductToProductFacadeInterface
     {
         return $this->getProvidedDependency(PriceProductDependencyProvider::FACADE_PRODUCT);
     }
@@ -278,7 +278,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToTouchFacadeInterface
      */
-    protected function getTouchFacade(): PriceProductToTouchFacadeInterface
+    public function getTouchFacade(): PriceProductToTouchFacadeInterface
     {
         return $this->getProvidedDependency(PriceProductDependencyProvider::FACADE_TOUCH);
     }
@@ -286,7 +286,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyFacadeInterface
      */
-    protected function getCurrencyFacade(): PriceProductToCurrencyFacadeInterface
+    public function getCurrencyFacade(): PriceProductToCurrencyFacadeInterface
     {
         return $this->getProvidedDependency(PriceProductDependencyProvider::FACADE_CURRENCY);
     }
@@ -294,7 +294,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceFacadeInterface
      */
-    protected function getPriceFacade(): PriceProductToPriceFacadeInterface
+    public function getPriceFacade(): PriceProductToPriceFacadeInterface
     {
         return $this->getProvidedDependency(PriceProductDependencyProvider::FACADE_PRICE);
     }
@@ -302,7 +302,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreFacadeInterface
      */
-    protected function getStoreFacade(): PriceProductToStoreFacadeInterface
+    public function getStoreFacade(): PriceProductToStoreFacadeInterface
     {
         return $this->getProvidedDependency(PriceProductDependencyProvider::FACADE_STORE);
     }
