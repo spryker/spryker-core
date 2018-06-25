@@ -14,10 +14,6 @@ use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToGlossaryFacadeInterface;
 
 class ErrorMessageTranslator implements ErrorMessageTranslatorInterface
 {
-    protected const SINGLE_PRODUCT_ERROR_MESSAGE_PARAMETER_SKU = '%sku';
-    protected const PRODUCT_BUNDLE_ERROR_MESSAGE_PARAMETER_PRODUCT_SKU = '%productSku%';
-    protected const PRODUCT_BUNDLE_ERROR_MESSAGE_PARAMETER_BUNDLE_SKU = '%bundleSku%';
-
     /**
      * @var \Spryker\Zed\Checkout\Dependency\Facade\CheckoutToGlossaryFacadeInterface
      */
