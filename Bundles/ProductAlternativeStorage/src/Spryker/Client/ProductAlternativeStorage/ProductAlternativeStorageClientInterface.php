@@ -7,8 +7,9 @@
 
 namespace Spryker\Client\ProductAlternativeStorage;
 
-use Generated\Shared\Transfer\ProductAlternativeTransfer;
+use Generated\Shared\Transfer\ProductAlternativeStorageTransfer;
 use Generated\Shared\Transfer\ProductReplacementStorageTransfer;
+use Generated\Shared\Transfer\ProductViewTransfer;
 
 /**
  * @method \Spryker\Client\ProductAlternativeStorage\ProductAlternativeStorageFactory getFactory()
@@ -24,9 +25,9 @@ interface ProductAlternativeStorageClientInterface
      *
      * @param string $concreteSku
      *
-     * @return \Generated\Shared\Transfer\ProductAlternativeTransfer|null
+     * @return \Generated\Shared\Transfer\ProductAlternativeStorageTransfer|null
      */
-    public function findProductAlternativeStorage(string $concreteSku): ?ProductAlternativeTransfer;
+    public function findProductAlternativeStorage(string $concreteSku): ?ProductAlternativeStorageTransfer;
 
     /**
      * Specification:
@@ -40,4 +41,17 @@ interface ProductAlternativeStorageClientInterface
      * @return \Generated\Shared\Transfer\ProductReplacementStorageTransfer|null
      */
     public function findProductReplacementForStorage(string $sku): ?ProductReplacementStorageTransfer;
+
+    /**
+     * Specification:
+     * - Checks if alternative products should be shown for product.
+     * - Call stack of plugins AlternativeProductApplicableCheckPluginInterface.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     *
+     * @return bool
+     */
+    public function isAlternativeProductApplicable(ProductViewTransfer $productViewTransfer): bool;
 }

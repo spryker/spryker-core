@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\ProductAlternativeStorage\Storage;
 
-use Generated\Shared\Transfer\ProductAlternativeTransfer;
+use Generated\Shared\Transfer\ProductAlternativeStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\ProductAlternativeStorage\Dependency\Client\ProductAlternativeStorageToStorageClientInterface;
 use Spryker\Client\ProductAlternativeStorage\Dependency\Service\ProductAlternativeStorageToSynchronizationServiceInterface;
@@ -40,9 +40,9 @@ class ProductAlternativeStorageReader implements ProductAlternativeStorageReader
     /**
      * @param string $concreteSku
      *
-     * @return \Generated\Shared\Transfer\ProductAlternativeTransfer|null
+     * @return \Generated\Shared\Transfer\ProductAlternativeStorageTransfer|null
      */
-    public function findProductAlternativeStorage(string $concreteSku): ?ProductAlternativeTransfer
+    public function findProductAlternativeStorage(string $concreteSku): ?ProductAlternativeStorageTransfer
     {
         $key = $this->generateKey($concreteSku);
         $productAlternativeStorageData = $this->storageClient->get($key);
@@ -57,11 +57,11 @@ class ProductAlternativeStorageReader implements ProductAlternativeStorageReader
     /**
      * @param array $productAlternativeStorageData
      *
-     * @return \Generated\Shared\Transfer\ProductAlternativeTransfer
+     * @return \Generated\Shared\Transfer\ProductAlternativeStorageTransfer
      */
-    protected function mapToProductAlternativeStorage(array $productAlternativeStorageData): ProductAlternativeTransfer
+    protected function mapToProductAlternativeStorage(array $productAlternativeStorageData): ProductAlternativeStorageTransfer
     {
-        return (new ProductAlternativeTransfer())
+        return (new ProductAlternativeStorageTransfer())
             ->fromArray($productAlternativeStorageData, true);
     }
 

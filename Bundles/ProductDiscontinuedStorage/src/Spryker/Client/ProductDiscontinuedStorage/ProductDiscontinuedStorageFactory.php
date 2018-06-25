@@ -9,6 +9,7 @@ namespace Spryker\Client\ProductDiscontinuedStorage;
 
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\ProductDiscontinuedStorage\Dependency\Client\ProductDiscontinuedStorageToGlossaryStorageClientInterface;
+use Spryker\Client\ProductDiscontinuedStorage\Dependency\Client\ProductDiscontinuedStorageToLocaleClientInterface;
 use Spryker\Client\ProductDiscontinuedStorage\Dependency\Client\ProductDiscontinuedStorageToStorageClientInterface;
 use Spryker\Client\ProductDiscontinuedStorage\Dependency\Service\ProductDiscontinuedStorageToSynchronizationServiceInterface;
 use Spryker\Client\ProductDiscontinuedStorage\ProductViewExpander\DiscontinuedOptionsProductViewExpander;
@@ -46,6 +47,14 @@ class ProductDiscontinuedStorageFactory extends AbstractFactory
     public function getGlossaryStorageClient(): ProductDiscontinuedStorageToGlossaryStorageClientInterface
     {
         return $this->getProvidedDependency(ProductDiscontinuedStorageDependencyProvider::CLIENT_GLOSSARY_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Client\ProductDiscontinuedStorage\Dependency\Client\ProductDiscontinuedStorageToLocaleClientInterface
+     */
+    public function getLocaleClient(): ProductDiscontinuedStorageToLocaleClientInterface
+    {
+        return $this->getProvidedDependency(ProductDiscontinuedStorageDependencyProvider::CLIENT_LOCALE);
     }
 
     /**

@@ -8,6 +8,8 @@
 namespace Spryker\Client\ProductAlternativeStorage;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\ProductAlternativeStorage\AlternativeProductApplicableCheck\AlternativeProductApplicableCheck;
+use Spryker\Client\ProductAlternativeStorage\AlternativeProductApplicableCheck\AlternativeProductApplicableCheckInterface;
 use Spryker\Client\ProductAlternativeStorage\Dependency\Client\ProductAlternativeStorageToStorageClientInterface;
 use Spryker\Client\ProductAlternativeStorage\Dependency\Service\ProductAlternativeStorageToSynchronizationServiceInterface;
 use Spryker\Client\ProductAlternativeStorage\Storage\ProductAlternativeStorageReader;
@@ -38,6 +40,16 @@ class ProductAlternativeStorageFactory extends AbstractFactory
             $this->getSynchronizationService()
         );
     }
+
+    /**
+     * @return \Spryker\Client\ProductAlternativeStorage\AlternativeProductApplicableCheck\AlternativeProductApplicableCheckInterface
+     */
+    public function createAlternativeProductApplicableCheck(): AlternativeProductApplicableCheckInterface
+    {
+        return new AlternativeProductApplicableCheck(
+            $this->getAlternativeProductApplicableCheckPlugins()
+        );
+    }
     
     /**
      * @return \Spryker\Client\ProductAlternativeStorage\Dependency\Client\ProductAlternativeStorageToStorageClientInterface
@@ -53,5 +65,13 @@ class ProductAlternativeStorageFactory extends AbstractFactory
     public function getSynchronizationService(): ProductAlternativeStorageToSynchronizationServiceInterface
     {
         return $this->getProvidedDependency(ProductAlternativeStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
+    }
+
+    /**
+     * @return \Spryker\Client\ProductAlternativeStorageExtension\Dependency\Plugin\AlternativeProductApplicableCheckPluginInterface[]
+     */
+    protected function getAlternativeProductApplicableCheckPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductAlternativeStorageDependencyProvider::PLUGINS_ALTERNATIVE_PRODUCT_APPLICABLE_CHECK);
     }
 }

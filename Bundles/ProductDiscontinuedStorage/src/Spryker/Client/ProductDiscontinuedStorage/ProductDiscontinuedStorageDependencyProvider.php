@@ -10,6 +10,7 @@ namespace Spryker\Client\ProductDiscontinuedStorage;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\ProductDiscontinuedStorage\Dependency\Client\ProductDiscontinuedStorageToGlossaryStorageClientBridge;
+use Spryker\Client\ProductDiscontinuedStorage\Dependency\Client\ProductDiscontinuedStorageToLocaleClientBridge;
 use Spryker\Client\ProductDiscontinuedStorage\Dependency\Client\ProductDiscontinuedStorageToStorageClientBridge;
 use Spryker\Client\ProductDiscontinuedStorage\Dependency\Service\ProductDiscontinuedStorageToSynchronizationServiceBridge;
 
@@ -18,6 +19,7 @@ class ProductDiscontinuedStorageDependencyProvider extends AbstractDependencyPro
     public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
+    public const CLIENT_LOCALE = 'CLIENT_LOCALE';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -28,6 +30,7 @@ class ProductDiscontinuedStorageDependencyProvider extends AbstractDependencyPro
     {
         $container = parent::provideServiceLayerDependencies($container);
         $container = $this->addGlossaryStorageClient($container);
+        $container = $this->addLocaleClient($container);
         $container = $this->addStorageClient($container);
         $container = $this->addSynchronizationService($container);
 
@@ -43,6 +46,20 @@ class ProductDiscontinuedStorageDependencyProvider extends AbstractDependencyPro
     {
         $container[static::CLIENT_GLOSSARY_STORAGE] = function (Container $container) {
             return new ProductDiscontinuedStorageToGlossaryStorageClientBridge($container->getLocator()->glossaryStorage()->client());
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addLocaleClient(Container $container): Container
+    {
+        $container[static::CLIENT_LOCALE] = function (Container $container) {
+            return new ProductDiscontinuedStorageToLocaleClientBridge($container->getLocator()->locale()->client());
         };
 
         return $container;
