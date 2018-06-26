@@ -14,6 +14,7 @@ use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Propel;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -30,12 +31,12 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
      * @param string $concreteSku
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore[]
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore[]|\Propel\Runtime\Collection\ObjectCollection
      */
     public function findProductConcretePricesBySkuAndCriteria(
         string $concreteSku,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-    ): array {
+    ): ObjectCollection {
         $priceProductStoreQuery = $this->createBasePriceProductStoreQuery($priceProductCriteriaTransfer);
         $this->addJoinProductConcreteBySku($priceProductStoreQuery, $concreteSku);
 
@@ -48,12 +49,12 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
      * @param string $abstractSku
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore[]
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore[]|\Propel\Runtime\Collection\ObjectCollection
      */
     public function findProductAbstractPricesBySkuAndCriteria(
         string $abstractSku,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-    ): array {
+    ): ObjectCollection {
         $priceProductStoreQuery = $this->createBasePriceProductStoreQuery($priceProductCriteriaTransfer);
         $this->addJoinProductAbstractBySku($priceProductStoreQuery, $abstractSku);
 
@@ -71,7 +72,7 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
     public function findProductConcretePricesByIdAndCriteria(
         int $idProductConcrete,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-    ) {
+    ): ObjectCollection {
         $priceProductStoreQuery = $this->createBasePriceProductStoreQuery($priceProductCriteriaTransfer)
             ->joinWith(static::PRICE_PRODUCT_RELATION_NAME)
             ->addJoinCondition(
@@ -89,12 +90,12 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore[]|\Propel\Runtime\Collection\ObjectCollection
      */
     public function findProductAbstractPricesByIdAndCriteria(
         int $idProductAbstract,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-    ) {
+    ): ObjectCollection {
         $priceProductStoreQuery = $this->createBasePriceProductStoreQuery($priceProductCriteriaTransfer)
             ->joinWith(static::PRICE_PRODUCT_RELATION_NAME)
             ->addJoinCondition(
