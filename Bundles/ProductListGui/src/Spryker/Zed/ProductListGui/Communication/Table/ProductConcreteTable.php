@@ -53,6 +53,10 @@ class ProductConcreteTable extends AbstractTable
         $this->localeTransfer = $localeTransfer;
         $this->productListTransfer = $productListTransfer;
         $this->notInList = $notInList;
+        $this->setTableIdentifier(self::TABLE_IDENTIFIER);
+        if (!$this->notInList) {
+            $this->setTableIdentifier(self::TABLE_IDENTIFIER . '-deassigned');
+        }
     }
 
     /**

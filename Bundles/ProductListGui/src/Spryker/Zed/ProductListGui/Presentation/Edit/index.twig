@@ -34,3 +34,9 @@
     {% endembed %}
 
 {% endblock %}
+
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-productlist-assign.js"></script>
+{% endblock %}

@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductListProductConcreteRelationTransfer;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -18,6 +19,7 @@ class ProductListProductConcreteRelationType extends AbstractType
 {
     const FIELD_PRODUCTS = ProductListProductConcreteRelationTransfer::PRODUCT_IDS;
     const FIELD_FILE_UPLOAD = 'products_upload';
+    const FIELD_ASSIGNED_PRODUCTS = 'assigned_products';
     const OPTION_PRODUCT_NAMES = 'option-product-names';
 
     /**
@@ -53,7 +55,8 @@ class ProductListProductConcreteRelationType extends AbstractType
     {
         $this
             ->addProductsField($builder, $options[static::OPTION_PRODUCT_NAMES])
-            ->addUploadFileFile($builder);
+            ->addUploadFileFile($builder)
+            ->addAssignedProductsId($builder);
     }
 
     /**
@@ -87,6 +90,22 @@ class ProductListProductConcreteRelationType extends AbstractType
             'label' => 'Select csv',
             'required' => false,
             'mapped' => false,
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addAssignedProductsId(FormBuilderInterface $builder): self
+    {
+        $builder->add(static::FIELD_ASSIGNED_PRODUCTS, HiddenType::class, [
+            'mapped' => false,
+            'data' => '1',
+            'attr' => ['data-fake-table' => htmlentities('[["6", "006_30692993", "Canon IXUS 175"],["11", "011_30775359", "Canon IXUS 180"]]')],
         ]);
 
         return $this;

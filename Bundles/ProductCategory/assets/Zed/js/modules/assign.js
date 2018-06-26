@@ -88,7 +88,7 @@ function TableHandler(sourceTable, destinationTable, checkBoxNamePrefix, labelCa
     tableHandler.selectAll = function() {
         var nodes = sourceTable.dataTable().fnGetNodes();
         $('input[type="checkbox"]', nodes).prop('checked', true);
-
+        
         var sourceTableData = sourceTable.DataTable().rows().data();
         sourceTableData.each(function(cellData, index) {
             tableHandler.addSelectedProduct(cellData[0], cellData[1], cellData[2]);
@@ -214,10 +214,11 @@ $(document).ready(function() {
 
     $('#product-table').DataTable().on('draw', function(event, settings) {
         $('.all-products-checkbox').off('change');
+
         $('.all-products-checkbox').on('change', function() {
             var $checkbox = $(this);
             var info = $.parseJSON($checkbox.attr('data-info'));
-
+            
             if ($checkbox.prop('checked')) {
                 allProductsTable.addSelectedProduct(info.id, info.sku, info.name);
             } else {
