@@ -57,7 +57,7 @@ class ProductAlternativeReader implements ProductAlternativeReaderInterface
         $productAlternativeCollection = $this->productAlternativeRepository
             ->getProductAlternativesForProductConcrete($idProductConcrete);
 
-        return $this->hydrateProductAlternativeList(
+        return $this->mapProductAlternativeToProductAlternativeItemTransfer(
             $productAlternativeCollection,
             new ProductAlternativeListTransfer()
         );
@@ -69,20 +69,20 @@ class ProductAlternativeReader implements ProductAlternativeReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeListTransfer
      */
-    protected function hydrateProductAlternativeList(
+    protected function mapProductAlternativeToProductAlternativeItemTransfer(
         ProductAlternativeCollectionTransfer $productAlternativeCollectionTransfer,
         ProductAlternativeListTransfer $productAlternativeListTransfer
     ): ProductAlternativeListTransfer {
         foreach ($productAlternativeCollectionTransfer->getProductAlternatives() as $productAlternativeTransfer) {
             if ($productAlternativeTransfer->getIdProductAbstractAlternative()) {
-                $productAlternativeListItemTransfer = $this->hydrateProductAbstractListItemTransfer(
+                $productAlternativeListItemTransfer = $this->getProductAbstractListItemTransfer(
                     $productAlternativeTransfer
                 );
                 $productAlternativeListTransfer->addProductAlternative($productAlternativeListItemTransfer);
                 continue;
             }
 
-            $productAlternativeListItemTransfer = $this->hydrateProductConcreteListItemTransfer(
+            $productAlternativeListItemTransfer = $this->getProductConcreteListItemTransfer(
                 $productAlternativeTransfer
             );
             $productAlternativeListTransfer->addProductAlternative($productAlternativeListItemTransfer);
@@ -96,7 +96,7 @@ class ProductAlternativeReader implements ProductAlternativeReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeListItemTransfer
      */
-    protected function hydrateProductAbstractListItemTransfer(
+    protected function getProductAbstractListItemTransfer(
         ProductAlternativeTransfer $productAlternativeTransfer
     ): ProductAlternativeListItemTransfer {
         $idProductAbstractAlternative = $productAlternativeTransfer->getIdProductAbstractAlternative();
@@ -116,7 +116,7 @@ class ProductAlternativeReader implements ProductAlternativeReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeListItemTransfer
      */
-    protected function hydrateProductConcreteListItemTransfer(
+    protected function getProductConcreteListItemTransfer(
         ProductAlternativeTransfer $productAlternativeTransfer
     ): ProductAlternativeListItemTransfer {
         $productConcreteListItemTransfer = $this->productAlternativeRepository
