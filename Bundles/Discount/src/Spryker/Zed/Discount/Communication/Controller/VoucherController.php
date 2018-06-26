@@ -77,7 +77,7 @@ class VoucherController extends AbstractController
         }
 
         return new RedirectResponse(
-            $this->createEditDiscountRedirectUrl($idDiscount)
+            $this->createViewDiscountRedirectUrl($idDiscount)
         );
     }
 
@@ -137,6 +137,20 @@ class VoucherController extends AbstractController
                 self::URL_PARAM_ID_DISCOUNT => $idDiscount,
             ]
         )->build();
+
+        return $redirectUrl;
+    }
+
+    /**
+     * @param int $idDiscount
+     *
+     * @return string
+     */
+    protected function createViewDiscountRedirectUrl($idDiscount)
+    {
+        $redirectUrl = Url::generate('/discount/index/view', [
+            self::URL_PARAM_ID_DISCOUNT => $idDiscount,
+        ])->build();
 
         return $redirectUrl;
     }

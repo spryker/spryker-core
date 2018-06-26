@@ -253,6 +253,9 @@ class DiscountsTable extends AbstractTable
             '/discount/index/edit',
             [
                 static::URL_PARAM_ID_DISCOUNT => $discountEntity->getIdDiscount(),
+            ],
+            [
+                Url::FRAGMENT => 'tab-content-voucher',
             ]
         );
 
