@@ -24,7 +24,7 @@ interface PriceProductRepositoryInterface
     public function findProductConcretePricesBySkuAndCriteria(
         string $concreteSku,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-    );
+    ): array;
 
     /**
      * @api
@@ -63,7 +63,7 @@ interface PriceProductRepositoryInterface
     public function findProductAbstractPricesByIdAndCriteria(
         int $idProductAbstract,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-    );
+    ): array;
 
     /**
      * @api

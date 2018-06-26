@@ -102,7 +102,7 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
     public function findProductAbstractPricesBySkuForCurrentStore(
         string $sku,
         PriceProductDimensionTransfer $priceProductDimensionTransfer
-    ) {
+    ): array {
 
         $abstractSku = $this->findAbstractSku($sku);
 
@@ -142,7 +142,7 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
-    public function findPriceForProductAbstract($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?PriceProductTransfer
+    public function findPriceForProductAbstract(string $sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?PriceProductTransfer
     {
         $priceProductStoreEntities = $this->priceProductRepository
             ->findProductAbstractPricesBySkuAndCriteria($sku, $priceProductCriteriaTransfer);

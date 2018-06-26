@@ -108,12 +108,13 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
      *
      * @return string
      */
-    protected function getPriceModeFromFilter(PriceProductFilterTransfer $priceFilterTransfer)
+    protected function getPriceModeFromFilter(PriceProductFilterTransfer $priceFilterTransfer): string
     {
         $priceMode = $priceFilterTransfer->getPriceMode();
         if (!$priceMode) {
             return $this->priceFacade->getDefaultPriceMode();
         }
+
         return $priceMode;
     }
 
