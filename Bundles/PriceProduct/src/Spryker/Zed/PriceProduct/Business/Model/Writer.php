@@ -113,7 +113,7 @@ class Writer implements WriterInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
-    public function createPriceForProduct(PriceProductTransfer $priceProductTransfer)
+    public function createPriceForProduct(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
     {
         $priceProductTransfer
             ->requireMoneyValue()
@@ -224,7 +224,7 @@ class Writer implements WriterInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
-    protected function savePriceProductEntity(PriceProductTransfer $priceProductTransfer, SpyPriceProduct $priceProductEntity)
+    protected function savePriceProductEntity(PriceProductTransfer $priceProductTransfer, SpyPriceProduct $priceProductEntity): PriceProductTransfer
     {
         $priceType = $this->priceTypeReader->getPriceTypeByName($priceProductTransfer->getPriceTypeName());
         $priceProductEntity->setPriceType($priceType);

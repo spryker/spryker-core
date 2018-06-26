@@ -53,7 +53,7 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
     public function findProductAbstractPricesBySkuAndCriteria(
         string $abstractSku,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-    ) {
+    ): array {
         $priceProductStoreQuery = $this->createBasePriceProductStoreQuery($priceProductCriteriaTransfer);
         $this->addJoinProductAbstractBySku($priceProductStoreQuery, $abstractSku);
 

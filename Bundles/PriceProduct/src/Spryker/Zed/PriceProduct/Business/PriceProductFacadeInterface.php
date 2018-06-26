@@ -234,7 +234,7 @@ interface PriceProductFacadeInterface
      *
      * @return array
      */
-    public function findPricesBySkuGroupedForCurrentStore($sku, ?PriceProductDimensionTransfer $priceProductDimensionTransfer = null);
+    public function findPricesBySkuGroupedForCurrentStore(string $sku, ?PriceProductDimensionTransfer $priceProductDimensionTransfer = null): array;
 
     /**
      * Specification:
@@ -270,9 +270,9 @@ interface PriceProductFacadeInterface
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function findProductAbstractPrices(
-        $idProductAbstract,
+        int $idProductAbstract,
         ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
-    );
+    ): array;
 
     /**
      * Specification:
@@ -288,10 +288,10 @@ interface PriceProductFacadeInterface
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function findProductConcretePrices(
-        $idProductConcrete,
-        $idProductAbstract,
+        int $idProductConcrete,
+        int $idProductAbstract,
         ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
-    );
+    ): array;
 
     /**
      * Specification:

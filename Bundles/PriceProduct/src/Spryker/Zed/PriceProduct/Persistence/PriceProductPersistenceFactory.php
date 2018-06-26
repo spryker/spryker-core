@@ -43,7 +43,7 @@ class PriceProductPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery
      */
-    public function createPriceProductDefaultQuery()
+    public function createPriceProductDefaultQuery(): SpyPriceProductDefaultQuery
     {
         return SpyPriceProductDefaultQuery::create();
     }

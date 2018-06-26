@@ -27,7 +27,7 @@ interface PriceProductConcreteReaderInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findProductConcretePricesBySkuForCurrentStore($sku, PriceProductDimensionTransfer $priceProductDimensionTransfer);
+    public function findProductConcretePricesBySkuForCurrentStore(string $sku, PriceProductDimensionTransfer $priceProductDimensionTransfer): array;
 
     /**
      * @param int $idProductConcrete
@@ -35,7 +35,7 @@ interface PriceProductConcreteReaderInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findProductConcretePricesById($idProductConcrete, ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null);
+    public function findProductConcretePricesById(int $idProductConcrete, ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null): array;
 
     /**
      * @param string $sku
@@ -43,7 +43,7 @@ interface PriceProductConcreteReaderInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
-    public function findPriceForProductConcrete($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?PriceProductTransfer;
+    public function findPriceForProductConcrete(string $sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?PriceProductTransfer;
 
     /**
      * @param string $sku
