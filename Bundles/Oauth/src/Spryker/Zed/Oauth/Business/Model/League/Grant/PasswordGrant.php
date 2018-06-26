@@ -62,8 +62,8 @@ class PasswordGrant implements GrantInterface
             ->setIsValid(false);
 
         try {
-            $acessTokenRequest = new ServerRequest('POST', '', []);
-            $acessTokenRequest = $acessTokenRequest->withParsedBody($oauthRequestTransfer->toArray());
+            $accessTokenRequest = new ServerRequest('POST', '', []);
+            $accessTokenRequest = $accessTokenRequest->withParsedBody($oauthRequestTransfer->toArray());
 
             $passwordGrant = new LeaguePasswordGrant(
                 $this->repositoryBuilder->createUserRepository(),
@@ -79,7 +79,7 @@ class PasswordGrant implements GrantInterface
                 new DateInterval($this->oauthConfig->getAccessTokenTTL())
             );
 
-            $response = $this->authorizationServer->respondToAccessTokenRequest($acessTokenRequest, new Response());
+            $response = $this->authorizationServer->respondToAccessTokenRequest($accessTokenRequest, new Response());
 
             $data = (string)$response->getBody();
 

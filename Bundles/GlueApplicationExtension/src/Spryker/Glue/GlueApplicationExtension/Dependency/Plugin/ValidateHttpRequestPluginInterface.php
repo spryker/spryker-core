@@ -14,7 +14,8 @@ interface ValidateHttpRequestPluginInterface
     /**
      * @api
      *
-     * Validates HTTP request before further processing, terminates on first failure. If null returned proceeds to other validator
+     * Specification:
+     *  - Validates HTTP request before further processing, terminates on first failure. If null returned proceeds to other validator
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *

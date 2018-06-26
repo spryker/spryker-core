@@ -13,7 +13,8 @@ interface ResourceRoutePluginInterface extends ModuleNameAwareInterface
     /**
      * @api
      *
-     * Configuration for resource routing, how http methods map to controller actions, is action is protected, also possible
+     * Specification:
+     *  - Configuration for resource routing, how http methods map to controller actions, is action is protected, also possible
      * to add additional contextual data for action for later access when processing controller action.
      *
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface $resourceRouteCollection
@@ -25,7 +26,8 @@ interface ResourceRoutePluginInterface extends ModuleNameAwareInterface
     /**
      * @api
      *
-     * Resource name this plugins handles, must be plural string. This name also is matched with request path where resource
+     * Specification:
+     *  - Resource name this plugins handles, must be plural string. This name also is matched with request path where resource
      * is provided.
      *
      * @return string
@@ -35,7 +37,8 @@ interface ResourceRoutePluginInterface extends ModuleNameAwareInterface
     /**
      * @api
      *
-     * Module controller name, separated by dashes. cart-items-resource would point to CartItemsResourceController
+     * Specification:
+     *  - Module controller name, separated by dashes. cart-items-resource would point to CartItemsResourceController
      *
      * @return string
      */
@@ -44,7 +47,8 @@ interface ResourceRoutePluginInterface extends ModuleNameAwareInterface
     /**
      * @api
      *
-     * This method should return FQCN to transfer object. This object it will be automatically populated from POST/PATCH
+     * Specification:
+     *  - This method should return FQCN to transfer object. This object it will be automatically populated from POST/PATCH
      * requests, and passed to REST controller actions as first argument. It is also used when creating JSONAPI resource objects.
      *
      * @return string

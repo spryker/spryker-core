@@ -13,6 +13,10 @@ use Symfony\Component\HttpFoundation\Request;
 
 class VersionResolver implements VersionResolverInterface
 {
+    public const PART_VERSION_NUMBER = 2;
+    public const PART_VERSION_MINOR = 1;
+    public const PART_VERSION_MAJOR = 0;
+
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\ContentType\ContentTypeResolverInterface
      */
@@ -42,14 +46,14 @@ class VersionResolver implements VersionResolverInterface
         }
 
         $headerParts = $this->contentTypeResolver->matchContentType($contentType);
-        if (!isset($headerParts[2])) {
+        if (!isset($headerParts[static::PART_VERSION_NUMBER])) {
             return $restVersionTransfer;
         }
 
-        $versionParts = explode('.', $headerParts[2]);
+        $versionParts = explode('.', $headerParts[static::PART_VERSION_NUMBER]);
 
-        $restVersionTransfer->setMajor((int)$versionParts[0])
-            ->setMinor(isset($versionParts[1]) ? (int)$versionParts[1] : 0);
+        $restVersionTransfer->setMajor((int)$versionParts[static::PART_VERSION_MAJOR])
+            ->setMinor(isset($versionParts[static::PART_VERSION_MINOR]) ? (int)$versionParts[static::PART_VERSION_MINOR] : 0);
 
         return $restVersionTransfer;
     }

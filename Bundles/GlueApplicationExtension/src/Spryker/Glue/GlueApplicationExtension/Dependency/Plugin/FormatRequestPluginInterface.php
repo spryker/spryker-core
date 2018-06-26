@@ -14,7 +14,8 @@ interface FormatRequestPluginInterface
     /**
      * @api
      *
-     * Format http request to internal RestRequest resource
+     * Specification:
+     *  - Format http request to internal RestRequest resource
      *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\RequestBuilderInterface $requestBuilder
      * @param \Symfony\Component\HttpFoundation\Request $request

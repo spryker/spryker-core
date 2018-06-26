@@ -71,7 +71,7 @@
         <property name="name" type="string" />
         <property name="redirectUri" type="string" />
         <property name="secret" type="string" />
-        <property name="isConfidental" type="bool" />
+        <property name="isConfidential" type="bool" />
     </transfer>
 
 </transfers>

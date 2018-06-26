@@ -17,15 +17,15 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class OauthRepository extends AbstractRepository implements OauthRepositoryInterface
 {
     /**
-     * @param string $identifer
+     * @param string $identifier
      *
      * @return \Generated\Shared\Transfer\SpyOauthClientEntityTransfer|null
      */
-    public function findClientByIdentifer(string $identifer): ?SpyOauthClientEntityTransfer
+    public function findClientByIdentifier(string $identifier): ?SpyOauthClientEntityTransfer
     {
         $query = $this->getFactory()
             ->createOauthClientQuery()
-            ->filterByIdentifier($identifer);
+            ->filterByIdentifier($identifier);
 
         return $this->buildQueryFromCriteria($query)->findOne();
     }

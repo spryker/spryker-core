@@ -18,12 +18,9 @@ use Symfony\Component\Routing\RequestContext;
 class GlueRouterPlugin extends AbstractPlugin implements RequestMatcherInterface, UrlGeneratorInterface
 {
     /**
-     * {@inheritdoc}
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request The request to match
-     *
-     *
-     * @return array An array of parameters
+     * @return array
      */
     public function matchRequest(Request $request)
     {
@@ -56,7 +53,6 @@ class GlueRouterPlugin extends AbstractPlugin implements RequestMatcherInterface
      * {@inheritdoc}
      *
      * @return void
-     *                                             it does not match the requirement
      */
     public function generate($name, $parameters = [], $referenceType = self::ABSOLUTE_PATH)
     {

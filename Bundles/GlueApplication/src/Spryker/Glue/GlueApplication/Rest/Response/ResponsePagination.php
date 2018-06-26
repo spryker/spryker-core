@@ -49,7 +49,7 @@ class ResponsePagination implements ResponsePaginationInterface
             $limit = '&page[limit]=' . $pageOffsetsTransfer->getLimit();
         }
 
-        $ofsetLinks = [
+        $offsetLinks = [
             'next' => $domain . $pageOffsetsTransfer->getNextOffset() . $limit,
             'prev' => $domain . $pageOffsetsTransfer->getPrevOffset() . $limit,
             'last' => $domain . $pageOffsetsTransfer->getLastOffset() . $limit,
@@ -57,7 +57,7 @@ class ResponsePagination implements ResponsePaginationInterface
         ];
 
         return array_merge(
-            $ofsetLinks,
+            $offsetLinks,
             $restResponse->getLinks()
         );
     }

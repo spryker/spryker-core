@@ -16,11 +16,11 @@ use Generated\Shared\Transfer\SpyOauthScopeEntityTransfer;
 interface OauthRepositoryInterface
 {
     /**
-     * @param string $identifer
+     * @param string $identifier
      *
      * @return \Generated\Shared\Transfer\SpyOauthClientEntityTransfer|null
      */
-    public function findClientByIdentifer(string $identifer): ?SpyOauthClientEntityTransfer;
+    public function findClientByIdentifier(string $identifier): ?SpyOauthClientEntityTransfer;
 
     /**
      * @param string $identifier

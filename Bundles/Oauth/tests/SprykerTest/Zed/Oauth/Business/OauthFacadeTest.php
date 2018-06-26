@@ -16,7 +16,7 @@ use Generated\Shared\Transfer\OauthUserTransfer;
 use Orm\Zed\Oauth\Persistence\SpyOauthClient;
 use Spryker\Zed\Oauth\Business\OauthFacadeInterface;
 use Spryker\Zed\Oauth\OauthDependencyProvider;
-use Spryker\Zed\OauthExtension\Dependency\Plugin\UserProviderPluginInterface;
+use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserProviderPluginInterface;
 
 /**
  * Auto-generated group annotations
@@ -150,7 +150,7 @@ class OauthFacadeTest extends Unit
      */
     protected function setUserProviderPluginMock(): void
     {
-        $userProviderPluginMock = $this->getMockBuilder(UserProviderPluginInterface::class)
+        $userProviderPluginMock = $this->getMockBuilder(OauthUserProviderPluginInterface::class)
             ->setMethods(['getUser', 'accept'])
             ->getMock();
 

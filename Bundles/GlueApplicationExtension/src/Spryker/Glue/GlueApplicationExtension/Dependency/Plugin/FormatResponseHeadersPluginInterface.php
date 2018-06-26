@@ -15,7 +15,8 @@ interface FormatResponseHeadersPluginInterface
     /**
      * @api
      *
-     * Format/add additional httpResponse headers
+     * Specification:
+     *  - Format/add additional httpResponse headers
      *
      * @param \Symfony\Component\HttpFoundation\Response $httpResponse
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse

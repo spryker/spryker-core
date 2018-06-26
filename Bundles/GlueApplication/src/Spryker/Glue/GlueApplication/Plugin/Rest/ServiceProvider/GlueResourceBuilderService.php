@@ -32,6 +32,5 @@ class GlueResourceBuilderService extends AbstractPlugin implements ServiceProvid
      */
     public function boot(Application $app)
     {
-        // TODO: Implement boot() method.
     }
 }

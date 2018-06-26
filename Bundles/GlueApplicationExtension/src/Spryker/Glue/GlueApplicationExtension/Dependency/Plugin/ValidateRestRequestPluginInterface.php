@@ -15,7 +15,8 @@ interface ValidateRestRequestPluginInterface
     /**
      * @api
      *
-     * Validates Rest resource request request before further processing, it is executed after formatting http request to resource.
+     * Specification:
+     *  - Validates Rest resource request request before further processing, it is executed after formatting http request to resource.
      * Terminates on first failure. Proceeds to next plugin if null returned.
      *
      * @param \Symfony\Component\HttpFoundation\Request $httpRequest

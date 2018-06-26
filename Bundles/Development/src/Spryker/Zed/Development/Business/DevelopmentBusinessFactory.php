@@ -1086,7 +1086,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     protected function createGlueAutoCompletionMethodBuilderStack()
     {
         return [
-            $this->createIdeAutoCompletionResourceMetodBuild(),
+            $this->createIdeAutoCompletionResourceMethodBuild(),
             $this->createIdeAutoCompletionClientMethodBuilder(),
             $this->createIdeAutoCompletionServiceMethodBuilder(),
         ];
@@ -1147,7 +1147,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\BundleMethodBuilderInterface
      */
-    protected function createIdeAutoCompletionResourceMetodBuild()
+    protected function createIdeAutoCompletionResourceMethodBuild()
     {
         return new ResourceMethodBuilder($this->createIdeAutoCompletionNamespaceExtractor());
     }

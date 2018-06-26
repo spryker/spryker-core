@@ -9,12 +9,13 @@ namespace Spryker\Zed\OauthExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\OauthScopeRequestTransfer;
 
-interface ScopeProviderPluginInterface
+interface OauthScopeProviderPluginInterface
 {
     /**
      * @api
      *
-     * Method which should return if it can handle oauth client request
+     * Specification:
+     *  - Method which should return if it can handle oauth client request
      *
      * @param \Generated\Shared\Transfer\OauthScopeRequestTransfer $oauthScopeRequestTransfer
      *
@@ -25,7 +26,8 @@ interface ScopeProviderPluginInterface
     /**
      * @api
      *
-     * Method should return array of scopes which is valid for current request, merge with OauthScopeRequestTransfer.defaultScopes if you want to keep them
+     * Specification:
+     *  - Method should return array of scopes which is valid for current request, merge with OauthScopeRequestTransfer.defaultScopes if you want to keep them
      *
      * @param \Generated\Shared\Transfer\OauthScopeRequestTransfer $oauthScopeRequestTransfer
      *

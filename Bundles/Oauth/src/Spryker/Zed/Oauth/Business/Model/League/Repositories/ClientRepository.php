@@ -37,7 +37,7 @@ class ClientRepository implements ClientRepositoryInterface
      */
     public function getClientEntity($clientIdentifier, $grantType = null, $clientSecret = null, $mustValidateSecret = true)
     {
-        $oauthClientEntityTransfer = $this->oauthRepository->findClientByIdentifer($clientIdentifier);
+        $oauthClientEntityTransfer = $this->oauthRepository->findClientByIdentifier($clientIdentifier);
         $clientEntity = new ClientEntity();
 
         if (!$oauthClientEntityTransfer) {

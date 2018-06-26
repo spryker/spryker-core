@@ -33,12 +33,12 @@ class RepositoryBuilder implements RepositoryBuilderInterface
     protected $oauthEntityManager;
 
     /**
-     * @var \Spryker\Zed\OauthExtension\Dependency\Plugin\UserProviderPluginInterface[]
+     * @var \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserProviderPluginInterface[]
      */
     protected $userProviderPlugins;
 
     /**
-     * @var \Spryker\Zed\OauthExtension\Dependency\Plugin\ScopeProviderPluginInterface[]
+     * @var \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthScopeProviderPluginInterface[]
      */
     protected $scopeProviderPlugins;
 
@@ -46,7 +46,7 @@ class RepositoryBuilder implements RepositoryBuilderInterface
      * @param \Spryker\Zed\Oauth\Persistence\OauthRepositoryInterface $oauthRepository
      * @param \Spryker\Zed\Oauth\Persistence\OauthEntityManagerInterface $oauthEntityManager
      * @param array $userProviderPlugins
-     * @param \Spryker\Zed\OauthExtension\Dependency\Plugin\ScopeProviderPluginInterface[] $scopeProviderPlugins
+     * @param \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthScopeProviderPluginInterface[] $scopeProviderPlugins
      */
     public function __construct(
         OauthRepositoryInterface $oauthRepository,
