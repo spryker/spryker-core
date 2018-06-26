@@ -16,6 +16,12 @@ class FileManagerService extends AbstractService implements FileManagerServiceIn
 {
     /**
      * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $fileName
+     *
+     * @return \Generated\Shared\Transfer\FileManagerDataTransfer
      */
     public function read(string $fileName)
     {
@@ -26,6 +32,12 @@ class FileManagerService extends AbstractService implements FileManagerServiceIn
 
     /**
      * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $fileName
+     *
+     * @return mixed
      */
     public function readStream(string $fileName)
     {

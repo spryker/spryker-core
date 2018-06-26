@@ -1,6 +1,6 @@
 # FileManagerGui Module
-[![Build Status](https://travis-ci.org/spryker/FileManagerGui.svg)](https://travis-ci.org/spryker/FileManagerGui)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/FileManagerGui/badge.svg)](https://coveralls.io/github/spryker/FileManagerGui)
+[![Build Status](https://travis-ci.org/spryker/file-manager-gui.svg)](https://travis-ci.org/spryker/file-manager-gui)
+[![Coverage Status](https://coveralls.io/repos/github/spryker/file-manager-gui/badge.svg)](https://coveralls.io/github/spryker/file-manager-gui)
 
 {{ADD DESCRIPTION HERE}}
 

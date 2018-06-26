@@ -13,7 +13,7 @@ use Spryker\Service\Kernel\Container;
 
 class FileManagerDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const FILE_SYSTEM_SERVICE = 'FILE_SYSTEM_SERVICE';
+    public const SERVICE_FILE_SYSTEM = 'SERVICE_FILE_SYSTEM';
 
     /**
      * @param \Spryker\Service\Kernel\Container $container
@@ -34,7 +34,7 @@ class FileManagerDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addFileSystemService(Container $container)
     {
-        $container[static::FILE_SYSTEM_SERVICE] = function ($container) {
+        $container[static::SERVICE_FILE_SYSTEM] = function ($container) {
             return new FileManagerToFileSystemBridge(
                 $container->getLocator()->fileSystem()->service()
             );

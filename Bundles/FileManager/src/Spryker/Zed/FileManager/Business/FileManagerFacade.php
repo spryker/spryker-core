@@ -20,9 +20,13 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
-     * {@inheritdoc}
+     * @param \Generated\Shared\Transfer\FileManagerDataTransfer $fileManagerDataTransfer
+     *
+     * @return \Generated\Shared\Transfer\FileManagerDataTransfer
      */
     public function saveFile(FileManagerDataTransfer $fileManagerDataTransfer)
     {
@@ -30,9 +34,13 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
-     * {@inheritdoc}
+     * @param \Generated\Shared\Transfer\FileDirectoryTransfer $fileDirectoryTransfer
+     *
+     * @return int
      */
     public function saveDirectory(FileDirectoryTransfer $fileDirectoryTransfer)
     {
@@ -40,9 +48,13 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
-     * {@inheritdoc}
+     * @param int $idFile
+     *
+     * @return \Generated\Shared\Transfer\FileManagerDataTransfer
      */
     public function readLatestFileVersion($idFile)
     {
@@ -50,9 +62,13 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
-     * {@inheritdoc}
+     * @param int $idFile
+     *
+     * @return bool
      */
     public function deleteFile($idFile)
     {
@@ -60,9 +76,13 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
-     * {@inheritdoc}
+     * @param int $idFileInfo
+     *
+     * @return bool
      */
     public function deleteFileInfo($idFileInfo)
     {
@@ -70,9 +90,13 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
-     * {@inheritdoc}
+     * @param int $idFileInfo
+     *
+     * @return void
      */
     public function rollbackFile($idFileInfo)
     {
@@ -80,9 +104,13 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
-     * {@inheritdoc}
+     * @param int $idFile
+     *
+     * @return \Generated\Shared\Transfer\FileManagerDataTransfer
      */
     public function findFileByIdFile($idFile)
     {
@@ -90,9 +118,13 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
-     * {@inheritdoc}
+     * @param int $idFileInfo
+     *
+     * @return \Generated\Shared\Transfer\FileManagerDataTransfer
      */
     public function findFileByIdFileInfo($idFileInfo)
     {
@@ -100,9 +132,13 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
-     * {@inheritdoc}
+     * @param int $idFileDirectory
+     *
+     * @return \Generated\Shared\Transfer\FileDirectoryTransfer|null
      */
     public function findFileDirectory($idFileDirectory)
     {
@@ -110,9 +146,11 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
-     * {@inheritdoc}
+     * @return \Generated\Shared\Transfer\FileDirectoryTreeTransfer
      */
     public function findFileDirectoryTree()
     {
@@ -122,9 +160,13 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
-     * {@inheritdoc}
+     * @param \Generated\Shared\Transfer\FileDirectoryTreeTransfer $fileDirectoryTreeTransfer
+     *
+     * @return void
      */
     public function updateFileDirectoryTreeHierarchy(FileDirectoryTreeTransfer $fileDirectoryTreeTransfer)
     {
@@ -134,21 +176,29 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
-     * {@inheritdoc}
+     * @param int $idFileDirectory
+     *
+     * @return bool
      */
     public function deleteFileDirectory($idFileDirectory)
     {
-        $this->getFactory()
+        return $this->getFactory()
             ->createFileDirectoryRemover()
             ->delete($idFileDirectory);
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
-     * {@inheritdoc}
+     * @param \Generated\Shared\Transfer\MimeTypeCollectionTransfer $mimeTypeCollectionTransfer
+     *
+     * @return void
      */
     public function updateMimeTypeSettings(MimeTypeCollectionTransfer $mimeTypeCollectionTransfer)
     {
@@ -158,9 +208,13 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
-     * {@inheritdoc}
+     * @param int $idMimeType
+     *
+     * @return \Generated\Shared\Transfer\MimeTypeResponseTransfer
      */
     public function findMimeType($idMimeType)
     {
@@ -170,9 +224,13 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
-     * {@inheritdoc}
+     * @param \Generated\Shared\Transfer\MimeTypeTransfer $mimeTypeTransfer
+     *
+     * @return \Generated\Shared\Transfer\MimeTypeResponseTransfer
      */
     public function saveMimeType(MimeTypeTransfer $mimeTypeTransfer)
     {
@@ -182,9 +240,13 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
-     * {@inheritdoc}
+     * @param \Generated\Shared\Transfer\MimeTypeTransfer $mimeTypeTransfer
+     *
+     * @return \Generated\Shared\Transfer\MimeTypeResponseTransfer
      */
     public function deleteMimeType(MimeTypeTransfer $mimeTypeTransfer)
     {
@@ -194,9 +256,11 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
-     * {@inheritdoc}
+     * @return \Generated\Shared\Transfer\MimeTypeCollectionTransfer
      */
     public function findAllowedMimeTypes()
     {

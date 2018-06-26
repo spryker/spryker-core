@@ -28,6 +28,6 @@ class FileManagerServiceFactory extends AbstractServiceFactory
      */
     protected function getFileSystemService()
     {
-        return $this->getProvidedDependency(FileManagerDependencyProvider::FILE_SYSTEM_SERVICE);
+        return $this->getProvidedDependency(FileManagerDependencyProvider::SERVICE_FILE_SYSTEM);
     }
 }

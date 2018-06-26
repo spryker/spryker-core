@@ -24,10 +24,10 @@ class FileManagerStorageClient extends AbstractClient implements FileManagerStor
      *
      * @return \Generated\Shared\Transfer\FileStorageDataTransfer
      */
-    public function findFileById($fileId, $localeName)
+    public function findFileById(int $idFile, string $localeName)
     {
         return $this->getFactory()
             ->createFileStorage()
-            ->findFileById($fileId, $localeName);
+            ->findFileById($idFile, $localeName);
     }
 }

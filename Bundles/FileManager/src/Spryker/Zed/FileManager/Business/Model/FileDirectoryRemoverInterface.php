@@ -12,7 +12,7 @@ interface FileDirectoryRemoverInterface
     /**
      * @param int $idFileDirectory
      *
-     * @return void
+     * @return bool
      */
     public function delete($idFileDirectory);
 }

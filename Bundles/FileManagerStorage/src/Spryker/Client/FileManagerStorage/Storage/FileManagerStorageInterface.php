@@ -10,10 +10,10 @@ namespace Spryker\Client\FileManagerStorage\Storage;
 interface FileManagerStorageInterface
 {
     /**
-     * @param int $fileId
+     * @param int $idFile
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\FileStorageDataTransfer
      */
-    public function findFileById($fileId, $localeName);
+    public function findFileById(int $idFile, string $localeName);
 }

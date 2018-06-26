@@ -11,15 +11,14 @@ interface FileManagerStorageClientInterface
 {
     /**
      * Specification:
-     * - Finds navigation tree in the Key-Value Storage.
-     * - Returns the navigation tree with all the stored data if found, NULL otherwise.
+     * - Finds file data in the key-value storage.
      *
      * @api
      *
-     * @param int $fileId
+     * @param int $idFile
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\FileStorageDataTransfer|null
      */
-    public function findFileById($fileId, $localeName);
+    public function findFileById(int $idFile, string $localeName);
 }

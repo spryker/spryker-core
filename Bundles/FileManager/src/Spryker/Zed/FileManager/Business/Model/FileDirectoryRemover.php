@@ -62,7 +62,7 @@ class FileDirectoryRemover implements FileDirectoryRemoverInterface
     /**
      * @param int $idFileDirectory
      *
-     * @return boolean
+     * @return bool
      */
     public function delete($idFileDirectory)
     {

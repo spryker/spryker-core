@@ -40,14 +40,16 @@ class FileReader implements FileReaderInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @param string $fileName
+     *
+     * @return \Generated\Shared\Transfer\FileManagerDataTransfer
      */
     public function read(string $fileName)
     {
         $fileManagerDataTransfer = new FileManagerDataTransfer();
         $fileSystemQueryTransfer = $this->createFileSystemQueryTransfer($fileName);
 
-        $fileContent = $this->getReadFileContentFromStorage($fileSystemQueryTransfer);
+        $fileContent = $this->getReadFileContentFromFileSystem($fileSystemQueryTransfer);
         $fileManagerDataTransfer->setContent($fileContent);
 
         $fileManagerDataTransfer->setFile($this->createFileTransfer($fileName));
@@ -57,7 +59,9 @@ class FileReader implements FileReaderInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @param string $fileName
+     *
+     * @return mixed
      */
     public function readStream(string $fileName)
     {
@@ -71,7 +75,7 @@ class FileReader implements FileReaderInterface
      *
      * @return string
      */
-    protected function getReadFileContentFromStorage(FileSystemQueryTransfer $fileSystemQueryTransfer)
+    protected function getReadFileContentFromFileSystem(FileSystemQueryTransfer $fileSystemQueryTransfer)
     {
         return $this->fileSystem->read($fileSystemQueryTransfer);
     }

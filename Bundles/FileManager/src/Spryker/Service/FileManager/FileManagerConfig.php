@@ -13,7 +13,7 @@ use Spryker\Shared\FileManager\FileManagerConstants;
 class FileManagerConfig extends AbstractBundleConfig
 {
     /**
-     * @return mixed
+     * @return string
      */
     public function getStorageName()
     {

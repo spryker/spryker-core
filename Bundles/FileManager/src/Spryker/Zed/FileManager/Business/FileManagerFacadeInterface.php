@@ -164,7 +164,7 @@ interface FileManagerFacadeInterface
      *
      * @param \Generated\Shared\Transfer\FileDirectoryTreeTransfer $fileDirectoryTreeTransfer
      *
-     * @return \Generated\Shared\Transfer\FileManagerDataTransfer
+     * @return void
      */
     public function updateFileDirectoryTreeHierarchy(FileDirectoryTreeTransfer $fileDirectoryTreeTransfer);
 
