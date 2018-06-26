@@ -29,6 +29,6 @@ class ProductPackagingUnitQuantityPersistentCartChangeExpanderPlugin extends Abs
     public function extend(PersistentCartChangeTransfer $persistentCartChangeTransfer, array $params = []): PersistentCartChangeTransfer
     {
         return $this->getClient()
-            ->expandproductPackagingUnitQuantityForPersistentCartChange($persistentCartChangeTransfer, $params);
+            ->expandProductPackagingUnitQuantityForPersistentCartChange($persistentCartChangeTransfer, $params);
     }
 }

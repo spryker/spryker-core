@@ -29,6 +29,6 @@ class ProductPackagingUnitQuantityCartChangeRequestExpanderPlugin extends Abstra
     public function expand(CartChangeTransfer $cartChangeTransfer, array $params = []): CartChangeTransfer
     {
         return $this->getClient()
-            ->expandproductPackagingUnitQuantityForCartChangeRequest($cartChangeTransfer, $params);
+            ->expandProductPackagingUnitQuantityForCartChangeRequest($cartChangeTransfer, $params);
     }
 }

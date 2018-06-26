@@ -27,11 +27,11 @@ class ProductPackagingUnitClient extends AbstractClient implements ProductPackag
      *
      * @return \Generated\Shared\Transfer\PersistentCartChangeTransfer
      */
-    public function expandproductPackagingUnitQuantityForPersistentCartChange(PersistentCartChangeTransfer $persistentCartChangeTransfer, array $params = []): PersistentCartChangeTransfer
+    public function expandProductPackagingUnitQuantityForPersistentCartChange(PersistentCartChangeTransfer $persistentCartChangeTransfer, array $params = []): PersistentCartChangeTransfer
     {
         return $this->getFactory()
             ->createProductPackagingUnitQuantityExpander()
-            ->expandproductPackagingUnitQuantityForPersistentCartChange($persistentCartChangeTransfer, $params);
+            ->expandProductPackagingUnitQuantityForPersistentCartChange($persistentCartChangeTransfer, $params);
     }
 
     /**
@@ -46,10 +46,10 @@ class ProductPackagingUnitClient extends AbstractClient implements ProductPackag
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function expandproductPackagingUnitQuantityForCartChangeRequest(CartChangeTransfer $cartChangeTransfer, array $params = []): CartChangeTransfer
+    public function expandProductPackagingUnitQuantityForCartChangeRequest(CartChangeTransfer $cartChangeTransfer, array $params = []): CartChangeTransfer
     {
         return $this->getFactory()
             ->createProductPackagingUnitQuantityExpander()
-            ->expandproductPackagingUnitQuantityForCartChangeRequest($cartChangeTransfer, $params);
+            ->expandProductPackagingUnitQuantityForCartChangeRequest($cartChangeTransfer, $params);
     }
 }
