@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductPackagingUnitGui\Communication\Controller;
 
-use Spryker\Zed\ProductPackagingUnitGui\Communication\Table\ProductPackagingUnitTypeTableConstantsInterface;
+use Spryker\Zed\ProductPackagingUnitGui\ProductPackagingUnitGuiConfig;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -54,7 +54,7 @@ class CreateController extends AbstractProductPackagingUnitGuiController
      */
     protected function createProductPackagingUnitType(Request $request, FormInterface $productPackagingUnitTypeForm)
     {
-        $redirectUrl = $request->get(static::PARAM_REDIRECT_URL, ProductPackagingUnitTypeTableConstantsInterface::URL_PRODUCT_PACKAGING_UNIT_TYPE_LIST);
+        $redirectUrl = $request->get(static::PARAM_REDIRECT_URL, ProductPackagingUnitGuiConfig::URL_PRODUCT_PACKAGING_UNIT_TYPE_LIST);
         $productPackagingUnitTypeTransfer = $productPackagingUnitTypeForm->getData();
         $productPackagingUnitTypeTransfer = $this->getFactory()
             ->getProductPackagingUnitFacade()

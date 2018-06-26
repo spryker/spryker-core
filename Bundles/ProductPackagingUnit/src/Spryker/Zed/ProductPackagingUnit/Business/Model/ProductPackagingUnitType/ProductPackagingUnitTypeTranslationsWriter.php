@@ -66,6 +66,8 @@ class ProductPackagingUnitTypeTranslationsWriter implements ProductPackagingUnit
      */
     public function deleteTranslations(ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer): bool
     {
+        $productPackagingUnitTypeTransfer->requireName();
+
         $translationKey = $productPackagingUnitTypeTransfer->getName();
 
         return $this->glossaryFacade->deleteKey($translationKey);

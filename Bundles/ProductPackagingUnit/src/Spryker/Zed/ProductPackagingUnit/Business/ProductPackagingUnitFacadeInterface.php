@@ -44,7 +44,7 @@ interface ProductPackagingUnitFacadeInterface
 
     /**
      * Specification:
-     *  - Retrieves a product packaging unit type by ProductPackagingUnitTypeTransfer::name in the transfer.
+     * - Retrieves a product packaging unit type by the provided name within the provided transfer.
      *
      * @api
      *
@@ -72,7 +72,7 @@ interface ProductPackagingUnitFacadeInterface
 
     /**
      * Specification:
-     *  - Retrieves a product packaging unit type by ProductPackagingUnitTypeTransfer::idProductPackagingUnitType in the transfer.
+     * - Retrieves a product packaging unit type by provided product packaging type ID within the provided transfer.
      *
      * @api
      *
