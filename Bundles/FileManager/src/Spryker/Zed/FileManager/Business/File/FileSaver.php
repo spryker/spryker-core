@@ -9,8 +9,6 @@ namespace Spryker\Zed\FileManager\Business\File;
 
 use Generated\Shared\Transfer\FileManagerDataTransfer;
 use Generated\Shared\Transfer\FileTransfer;
-use Orm\Zed\FileManager\Persistence\SpyFileInfo;
-use Spryker\Shared\FileManager\FileManagerConstants;
 use Spryker\Zed\FileManager\Business\FileContent\FileContentInterface;
 use Spryker\Zed\FileManager\Business\FileLocalizedAttributes\FileLocalizedAttributesSaverInterface;
 use Spryker\Zed\FileManager\Business\FileName\FileNameResolverTrait;
@@ -194,45 +192,11 @@ class FileSaver implements FileSaverInterface
     {
         if ($fileManagerDataTransfer->getContent() !== null) {
             $fileTransfer = $fileManagerDataTransfer->getFile();
-            $fileInfoTransfer = $fileManagerDataTransfer->getFileInfo();
-
             $fileTransfer->setFileContent($fileManagerDataTransfer->getContent());
             $fileTransfer->setFileName(
                 $fileManagerDataTransfer->getFileInfo()->getStorageFileName()
             );
             $this->fileContent->save($fileTransfer);
         }
-    }
-
-    /**
-     * @param \Orm\Zed\FileManager\Persistence\SpyFileInfo $fileInfo
-     * @param string $newFileName
-     *
-     * @return void
-     */
-    protected function addStorageInfo(SpyFileInfo $fileInfo, string $newFileName)
-    {
-        $fileInfo->setStorageName($this->config->getStorageName());
-        $fileInfo->setStorageFileName($newFileName);
-
-        $fileInfo->save();
-    }
-
-    /**
-     * @param int $idFile
-     * @param string $versionName
-     * @param string $fileExtension
-     *
-     * @return string
-     */
-    protected function getNewFileName(int $idFile, string $versionName, string $fileExtension): string
-    {
-        return sprintf(
-            static::FILE_NAME_PATTERN,
-            $idFile,
-            FileManagerConstants::FILE_NAME_VERSION_DELIMITER,
-            $versionName,
-            $fileExtension
-        );
     }
 }

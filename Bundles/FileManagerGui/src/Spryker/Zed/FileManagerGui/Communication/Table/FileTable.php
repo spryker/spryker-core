@@ -11,7 +11,6 @@ use Orm\Zed\FileManager\Persistence\Map\SpyFileTableMap;
 use Orm\Zed\FileManager\Persistence\SpyFileQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Shared\FileManagerGui\FileManagerGuiConstants;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -21,10 +20,15 @@ class FileTable extends AbstractTable
     protected const COL_FILE_NAME = SpyFileTableMap::COL_FILE_NAME;
     protected const COL_ACTIONS = 'Actions';
 
-    protected const REQUEST_ID_FILE = 'id-file';
+    protected const URL_FILE_MANAGER_GUI_VIEW = '/file-manager-gui/view-file';
+    protected const URL_FILE_MANAGER_GUI_EDIT = '/file-manager-gui/edit-file';
+    protected const URL_FILE_MANAGER_GUI_DELETE = '/file-manager-gui/delete-file/file';
+
     protected const VIEW_TITLE = 'View';
     protected const EDIT_TITLE = 'Edit';
     protected const DELETE_TITLE = 'Delete';
+
+    protected const REQUEST_ID_FILE = 'id-file';
 
     /**
      * @var \Orm\Zed\FileManager\Persistence\SpyFileQuery
@@ -175,19 +179,19 @@ class FileTable extends AbstractTable
         $buttons = [];
 
         $buttons[] = $this->generateViewButton(
-            Url::generate(FileManagerGuiConstants::FILE_MANAGER_GUI_VIEW_URL, [
+            Url::generate(static::URL_FILE_MANAGER_GUI_VIEW, [
                 static::REQUEST_ID_FILE => $item[static::COL_ID_FILE],
             ]),
             static::VIEW_TITLE
         );
         $buttons[] = $this->generateEditButton(
-            Url::generate(FileManagerGuiConstants::FILE_MANAGER_GUI_EDIT_URL, [
+            Url::generate(static::URL_FILE_MANAGER_GUI_EDIT, [
                 static::REQUEST_ID_FILE => $item[static::COL_ID_FILE],
             ]),
             static::EDIT_TITLE
         );
         $buttons[] = $this->generateRemoveButton(
-            Url::generate(FileManagerGuiConstants::FILE_MANAGER_GUI_DELETE_URL, [
+            Url::generate(static::URL_FILE_MANAGER_GUI_DELETE, [
                 static::REQUEST_ID_FILE => $item[static::COL_ID_FILE],
             ]),
             static::DELETE_TITLE

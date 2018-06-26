@@ -8,7 +8,6 @@
 namespace Spryker\Zed\FileManager\Business\File;
 
 use Generated\Shared\Transfer\FileInfoTransfer;
-use Spryker\Zed\FileManager\Exception\FileInfoNotFoundException;
 use Spryker\Zed\FileManager\Persistence\FileManagerEntityManagerInterface;
 use Spryker\Zed\FileManager\Persistence\FileManagerRepositoryInterface;
 
@@ -69,23 +68,5 @@ class FileRollback implements FileRollbackInterface
         $fileInfoTransfer->setVersionName($nextVersionName);
 
         $this->entityManager->saveFileInfo($fileInfoTransfer);
-    }
-
-    /**
-     * @param int $idFileInfo
-     *
-     * @throws \Spryker\Zed\FileManager\Exception\FileInfoNotFoundException
-     *
-     * @return \Generated\Shared\Transfer\FileInfoTransfer
-     */
-    protected function getFileInfo(int $idFileInfo)
-    {
-        $fileInfoTransfer = $this->repository->getFileInfo($idFileInfo);
-
-        if ($fileInfoTransfer === null) {
-            throw new FileInfoNotFoundException(sprintf('Target file info with id %s not found', $idFileInfo));
-        }
-
-        return $fileInfoTransfer;
     }
 }

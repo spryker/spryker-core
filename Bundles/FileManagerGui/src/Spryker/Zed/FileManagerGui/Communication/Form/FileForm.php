@@ -8,7 +8,6 @@
 namespace Spryker\Zed\FileManagerGui\Communication\Form;
 
 use Generated\Shared\Transfer\FileTransfer;
-use Spryker\Shared\FileManagerGui\FileManagerGuiConstants;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -22,6 +21,7 @@ use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
+ * @method \Spryker\Zed\FileManagerGui\FileManagerGuiConfig getConfig()
  * @method \Spryker\Zed\FileManagerGui\Communication\FileManagerGuiCommunicationFactory getFactory()
  */
 class FileForm extends AbstractType
@@ -35,6 +35,11 @@ class FileForm extends AbstractType
     public const OPTION_DATA_CLASS = 'data_class';
     public const OPTION_AVAILABLE_LOCALES = 'option_available_locales';
     public const OPTION_ALLOWED_MIME_TYPES = 'option_allowed_mime_types';
+
+    protected const ERROR_MIME_TYPE_MESSAGE = 'File type is not allowed for uploading';
+    protected const ERROR_FILE_MISSED_EDIT_MESSAGE = 'Upload a file or specify a new file name';
+    protected const ERROR_FILE_MISSED_ADD_MESSAGE = 'Upload a file';
+    protected const ERROR_FILE_NAME_MISSED_ADD_MESSAGE = 'Specify a file name or use real one';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -78,13 +83,13 @@ class FileForm extends AbstractType
         $fileNameCallback = function ($object, ExecutionContextInterface $context) use ($formData) {
             if (!empty($formData[static::FIELD_ID_FILE])) {
                 if (empty($formData[static::FIELD_FILE_CONTENT]) && empty($formData[static::FIELD_FILE_NAME])) {
-                    $context->addViolation(FileManagerGuiConstants::ERROR_FILE_MISSED_EDIT_MESSAGE);
+                    $context->addViolation(static::ERROR_FILE_MISSED_EDIT_MESSAGE);
                 }
             } else {
                 if (empty($formData[static::FIELD_FILE_CONTENT])) {
-                    $context->addViolation(FileManagerGuiConstants::ERROR_FILE_MISSED_ADD_MESSAGE);
+                    $context->addViolation(static::ERROR_FILE_MISSED_ADD_MESSAGE);
                 } elseif (empty($formData[static::FIELD_FILE_NAME]) && empty($formData[static::FIELD_USE_REAL_NAME])) {
-                    $context->addViolation(FileManagerGuiConstants::ERROR_FILE_NAME_MISSED_ADD_MESSAGE);
+                    $context->addViolation(static::ERROR_FILE_NAME_MISSED_ADD_MESSAGE);
                 }
             }
         };
@@ -124,9 +129,9 @@ class FileForm extends AbstractType
             'required' => empty($formData[static::FIELD_ID_FILE]),
             'constraints' => [
                 new File([
-                    'maxSize' => FileManagerGuiConstants::DEFAULT_MAX_FILE_SIZE,
+                    'maxSize' => $this->getConfig()->getDefaultFileMaxSize(),
                     'mimeTypes' => $options[static::OPTION_ALLOWED_MIME_TYPES],
-                    'mimeTypesMessage' => FileManagerGuiConstants::ERROR_MIME_TYPE_MESSAGE,
+                    'mimeTypesMessage' => static::ERROR_MIME_TYPE_MESSAGE,
                 ]),
             ],
         ]);

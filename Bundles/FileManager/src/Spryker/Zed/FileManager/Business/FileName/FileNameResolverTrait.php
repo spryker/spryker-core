@@ -18,7 +18,7 @@ trait FileNameResolverTrait
      *
      * @return string
      */
-    public function buildFilename(FileInfoTransfer $fileInfoTransfer, ?int $idFileDirectory = null)
+    protected function buildFilename(FileInfoTransfer $fileInfoTransfer, ?int $idFileDirectory = null)
     {
         $fileName = sprintf(
             '%u%s%s.%s',

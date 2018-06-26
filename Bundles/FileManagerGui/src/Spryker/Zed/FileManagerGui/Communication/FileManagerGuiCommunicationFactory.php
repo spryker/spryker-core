@@ -94,14 +94,6 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
-    public function getCurrentLocale()
-    {
-        return $this->getLocaleFacade()->getCurrentLocale();
-    }
-
-    /**
      * @return \Spryker\Zed\FileManagerGui\Communication\Form\FileLocalizedAttributesForm
      */
     public function createFileLocalizedAttributesForm()

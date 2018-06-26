@@ -19,7 +19,7 @@ class FileManagerStorageClient extends AbstractClient implements FileManagerStor
      *
      * @api
      *
-     * @param int $fileId
+     * @param int $idFile
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\FileStorageDataTransfer

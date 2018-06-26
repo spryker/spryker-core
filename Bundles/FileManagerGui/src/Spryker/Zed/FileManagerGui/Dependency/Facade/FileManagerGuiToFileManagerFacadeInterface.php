@@ -59,15 +59,6 @@ interface FileManagerGuiToFileManagerFacadeInterface
     /**
      * @api
      *
-     * @param int $idFileInfo
-     *
-     * @return void
-     */
-    public function rollbackFile($idFileInfo);
-
-    /**
-     * @api
-     *
      * @param int $idFile
      *
      * @return \Generated\Shared\Transfer\FileManagerDataTransfer
@@ -105,8 +96,7 @@ interface FileManagerGuiToFileManagerFacadeInterface
 
     /**
      * Specification:
-     * - Finds a file info
-     * - Returns a file meta info and a file content with a specified version
+     * - Updates file directory tree hierarchy
      *
      * @api
      *
@@ -115,7 +105,7 @@ interface FileManagerGuiToFileManagerFacadeInterface
      * @throws \Propel\Runtime\Exception\PropelException
      * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
      *
-     * @return \Generated\Shared\Transfer\FileManagerDataTransfer
+     * @return void
      */
     public function updateFileDirectoryTreeHierarchy(FileDirectoryTreeTransfer $fileDirectoryTreeTransfer);
 

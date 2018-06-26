@@ -1,3 +1,3 @@
 # FileManagerGui Changelog
 
-[Release Changelog](https://github.com/spryker/FileManagerGui/releases)
+[Release Changelog](https://github.com/spryker/file-manager-gui/releases)

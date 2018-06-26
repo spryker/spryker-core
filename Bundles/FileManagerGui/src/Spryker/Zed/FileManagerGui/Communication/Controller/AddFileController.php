@@ -64,7 +64,7 @@ class AddFileController extends AbstractUploadFileController
         return $this->viewResponse([
             'form' => $form->createView(),
             'availableLocales' => $this->getFactory()->getLocaleFacade()->getLocaleCollection(),
-            'currentLocale' => $this->getFactory()->getCurrentLocale(),
+            'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale(),
         ]);
     }
 

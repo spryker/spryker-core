@@ -87,18 +87,6 @@ class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileMan
     /**
      * @api
      *
-     * @param int $idFileInfo
-     *
-     * @return void
-     */
-    public function rollbackFile($idFileInfo)
-    {
-        $this->fileManagerFacade->rollbackFile($idFileInfo);
-    }
-
-    /**
-     * @api
-     *
      * @param int $idFile
      *
      * @return \Generated\Shared\Transfer\FileManagerDataTransfer
@@ -145,11 +133,11 @@ class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileMan
      *
      * @param \Generated\Shared\Transfer\FileDirectoryTreeTransfer $fileDirectoryTreeTransfer
      *
-     * @return \Generated\Shared\Transfer\FileManagerDataTransfer
+     * @return void
      */
     public function updateFileDirectoryTreeHierarchy(FileDirectoryTreeTransfer $fileDirectoryTreeTransfer)
     {
-        return $this->fileManagerFacade->updateFileDirectoryTreeHierarchy($fileDirectoryTreeTransfer);
+        $this->fileManagerFacade->updateFileDirectoryTreeHierarchy($fileDirectoryTreeTransfer);
     }
 
     /**

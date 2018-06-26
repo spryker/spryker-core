@@ -34,12 +34,12 @@ var config = {
  */
 function initialize() {
     $treeOrderSaveBtn.on('click', onTreeSaveOrderClick);
-    $treeSearchField.keyup(onTreeSearchKeyup);
+    $treeSearchField.on('keyup', onTreeSearchKeyup);
 
     initJsTree();
 
     // Enable save order button on tree change
-    $(document).bind('dnd_stop.vakata', function () {
+    $(document).on('dnd_stop.vakata', function () {
         $treeOrderSaveBtn.removeAttr('disabled');
     });
 }

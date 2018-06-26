@@ -44,7 +44,7 @@ class AddDirectoryController extends AbstractController
         return $this->viewResponse([
             'form' => $form->createView(),
             'availableLocales' => $this->getFactory()->getLocaleFacade()->getLocaleCollection(),
-            'currentLocale' => $this->getFactory()->getCurrentLocale(),
+            'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale(),
         ]);
     }
 }

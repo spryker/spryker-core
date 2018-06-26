@@ -60,7 +60,7 @@ class EditFileController extends AbstractUploadFileController
             'fileInfoTable' => $fileInfoTable->render(),
             'fileForm' => $form->createView(),
             'availableLocales' => $this->getFactory()->getLocaleFacade()->getLocaleCollection(),
-            'currentLocale' => $this->getFactory()->getCurrentLocale(),
+            'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale(),
         ];
     }
 

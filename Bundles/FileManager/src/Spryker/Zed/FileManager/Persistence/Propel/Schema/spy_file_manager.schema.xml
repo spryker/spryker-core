@@ -86,6 +86,11 @@
             <reference foreign="id_locale" local="fk_locale"/>
         </foreign-key>
 
+        <unique name="spy_file_directory_localized_attributes-unique-fk_file_directory-fk_locale">
+            <unique-column name="fk_file_directory"/>
+            <unique-column name="fk_locale"/>
+        </unique>
+
         <id-method-parameter value="spy_file_directory_localized_attributes_pk_seq"/>
 
         <behavior name="timestampable"/>
