@@ -27,7 +27,7 @@ class SumGrossPriceCalculator implements CalculatorInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $expenses
+     * @param \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[] $expenses
      *
      * @return void
      */
