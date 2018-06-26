@@ -31,7 +31,7 @@ class DefaultPriceProductDecisionPlugin extends AbstractPlugin implements PriceP
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
     ): ?PriceProductTransfer {
 
-        if (empty($priceProductTransfers)) {
+        if (!$priceProductTransfers) {
             return null;
         }
 
@@ -68,7 +68,7 @@ class DefaultPriceProductDecisionPlugin extends AbstractPlugin implements PriceP
      */
     public function matchPriceByPriceProductFilter(array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer): ?PriceProductTransfer
     {
-        if (empty($priceProductTransfers)) {
+        if (!$priceProductTransfers) {
             return null;
         }
 
