@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProduct\Business\Model;
 
+use Generated\Shared\Transfer\MoneyValueTransfer;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapperInterface;
 
 class PriceGrouper implements PriceGrouperInterface
@@ -59,6 +60,7 @@ class PriceGrouper implements PriceGrouperInterface
             $priceType = $priceProductTransfer->getPriceType()->getName();
             $currencyIsoCode = $priceMoneyValueTransfer->getCurrency()->getCode();
 
+            $prices[$currencyIsoCode][MoneyValueTransfer::PRICE_DATA] = $priceMoneyValueTransfer->getPriceData();
             if ($priceMoneyValueTransfer->getGrossAmount() !== null) {
                 $prices[$currencyIsoCode][$this->priceProductMapper->getGrossPriceModeIdentifier()][$priceType] = $priceMoneyValueTransfer->getGrossAmount();
             }
