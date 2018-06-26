@@ -40,7 +40,9 @@ class ErrorMessageTranslator implements ErrorMessageTranslatorInterface
             $translatedCheckoutErrorMessages[] = $this->translateSingleCheckoutErrorMessage($checkoutErrorTransfer);
         }
 
-        return $this->mapTranslatedCheckoutErrorMessagesArrayToTransfer($translatedCheckoutErrorMessages);
+        return $this->mapTranslatedCheckoutErrorMessagesArrayToTransfer(
+            array_unique($translatedCheckoutErrorMessages)
+        );
     }
 
     /**
