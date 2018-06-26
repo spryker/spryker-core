@@ -16,8 +16,6 @@ use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\AbstractElasticse
  */
 class CurrencyAwareSuggestionByTypeResultFormatter extends AbstractElasticsearchResultFormatterPlugin
 {
-    protected const PRICE_DIMENSION_DEFAULT = 'PRICE_DIMENSION_DEFAULT';
-
     /**
      * @var \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface
      */
