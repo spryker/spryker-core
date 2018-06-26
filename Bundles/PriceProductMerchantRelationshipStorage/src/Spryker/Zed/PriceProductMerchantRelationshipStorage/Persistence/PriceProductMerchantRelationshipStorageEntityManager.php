@@ -17,6 +17,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 class PriceProductMerchantRelationshipStorageEntityManager extends AbstractEntityManager implements PriceProductMerchantRelationshipStorageEntityManagerInterface
 {
+    protected const PRICE_KEY_SEPARATOR = ':';
+
     /**
      * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[] $priceProductMerchantRelationshipStorageTransferCollection
      * @param array $existingPriceProductMerchantRelationshipStorageEntityMap
@@ -190,7 +192,7 @@ class PriceProductMerchantRelationshipStorageEntityManager extends AbstractEntit
      */
     protected function buildPriceKey(PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer): string
     {
-        return implode(':', [
+        return implode(static::PRICE_KEY_SEPARATOR, [
             $priceProductMerchantRelationshipStorageTransfer->getStoreName(),
             $priceProductMerchantRelationshipStorageTransfer->getIdProduct(),
             $priceProductMerchantRelationshipStorageTransfer->getIdMerchantRelationship(),

@@ -23,6 +23,7 @@ class ProductPriceResolver implements ProductPriceResolverInterface
 {
     protected const PRICE_NET_MODE = 'NET_MODE';
     protected const PRICE_GROSS_MODE = 'GROSS_MODE';
+    protected const PRICE_KEY_SEPARATOR = '-';
 
     /**
      * @var \Spryker\Client\PriceProduct\Dependency\Client\PriceProductToPriceClientInterface
@@ -141,7 +142,7 @@ class ProductPriceResolver implements ProductPriceResolverInterface
             foreach ($priceData as $currencyCode => $prices) {
                 foreach ($prices as $priceMode => $priceTypes) {
                     foreach ($priceTypes as $priceType => $priceAmount) {
-                        $index = implode('-', [
+                        $index = implode(static::PRICE_KEY_SEPARATOR, [
                             $priceDimension,
                             $currencyCode,
                             $priceType,
