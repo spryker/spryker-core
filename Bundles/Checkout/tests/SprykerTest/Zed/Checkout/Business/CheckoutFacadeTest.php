@@ -10,6 +10,8 @@ namespace SprykerTest\Zed\Checkout\Business;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CheckoutErrorTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -20,6 +22,7 @@ use Generated\Shared\Transfer\ShipmentTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
+use Generated\Shared\Transfer\TranslatedCheckoutErrorMessagesTransfer;
 use Orm\Zed\Country\Persistence\SpyCountry;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Orm\Zed\Product\Persistence\SpyProduct;
@@ -32,6 +35,7 @@ use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Availability\Communication\Plugin\ProductsAvailableCheckoutPreConditionPlugin;
 use Spryker\Zed\Checkout\Business\CheckoutBusinessFactory;
 use Spryker\Zed\Checkout\Business\CheckoutFacade;
+use Spryker\Zed\Checkout\Business\CheckoutFacadeInterface;
 use Spryker\Zed\Checkout\CheckoutConfig;
 use Spryker\Zed\Checkout\CheckoutDependencyProvider;
 use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsFacadeBridge;
@@ -67,6 +71,13 @@ use Spryker\Zed\Sales\SalesDependencyProvider;
  */
 class CheckoutFacadeTest extends Unit
 {
+    protected const CHECKOUT_ERROR_TRANSFER_MESSAGE_KEY = 'product.unavailable';
+
+    protected const CHECKOUT_ERROR_TRANSFER_PARAMETER_SKU_KEY = '%sku%';
+    protected const CHECKOUT_ERROR_TRANSFER_PARAMETER_SKU_VALUE = 'TEST_SKU';
+
+    protected const CHECKOUT_ERROR_TRANSFER_MESSAGE_EXPECTED = 'Product \'TEST_SKU\' is not available at the moment.';
+
     /**
      * @var \Spryker\Zed\Checkout\Business\CheckoutFacade
      */
@@ -281,6 +292,100 @@ class CheckoutFacadeTest extends Unit
 
         $this->assertNotEquals($omsConfig->getInitialStatus(), $orderItem1->getState()->getName());
         $this->assertEquals('waiting for payment', $orderItem2->getState()->getName());
+    }
+
+    /**
+     * @return void
+     */
+    public function testTranslateCheckoutErrorMessages(): void
+    {
+        $checkoutResponseTransferWithError = $this->getCheckoutResponseTransferWithError();
+
+        $translatedCheckoutErrorMessagesTransfer = $this->getInjectedCheckoutFacade()
+            ->translateCheckoutErrorMessages($checkoutResponseTransferWithError);
+
+        $this->assertTrue(
+            $this->checkTranslatedCheckoutErrorMessagesTransfer($translatedCheckoutErrorMessagesTransfer)
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testTranslateCheckoutErrorMessagesReturnsNoDuplications(): void
+    {
+        $checkoutResponseTransferWithDuplicatedError = $this->getCheckoutResponseTransferWithDuplicatedError();
+
+        $translatedCheckoutErrorMessagesTransfer = $this->getInjectedCheckoutFacade()
+            ->translateCheckoutErrorMessages($checkoutResponseTransferWithDuplicatedError);
+
+        $this->assertTrue(
+            $this->checkTranslatedCheckoutErrorMessagesTransfer($translatedCheckoutErrorMessagesTransfer)
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Checkout\Business\CheckoutFacadeInterface
+     */
+    protected function getInjectedCheckoutFacade(): CheckoutFacadeInterface
+    {
+        return $this->tester->getLocator()->checkout()->facade();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\TranslatedCheckoutErrorMessagesTransfer $translatedCheckoutErrorMessagesTransfer
+     *
+     * @return bool
+     */
+    protected function checkTranslatedCheckoutErrorMessagesTransfer(
+        TranslatedCheckoutErrorMessagesTransfer $translatedCheckoutErrorMessagesTransfer
+    ): bool {
+        $errorMessages = $translatedCheckoutErrorMessagesTransfer->getErrorMessages();
+
+        if (empty($errorMessages) || count($errorMessages) > 1) {
+            return false;
+        }
+
+        $testErrorMessage = reset($errorMessages);
+
+        return $testErrorMessage === static::CHECKOUT_ERROR_TRANSFER_MESSAGE_EXPECTED;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     */
+    protected function getCheckoutResponseTransferWithError(): CheckoutResponseTransfer
+    {
+        return (new CheckoutResponseTransfer())
+            ->addError(
+                $this->getCheckoutErrorTransfer()
+            );
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     */
+    protected function getCheckoutResponseTransferWithDuplicatedError(): CheckoutResponseTransfer
+    {
+        return (new CheckoutResponseTransfer())
+            ->addError(
+                $this->getCheckoutErrorTransfer()
+            )
+            ->addError(
+                $this->getCheckoutErrorTransfer()
+            );
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CheckoutErrorTransfer
+     */
+    protected function getCheckoutErrorTransfer(): CheckoutErrorTransfer
+    {
+        return (new CheckoutErrorTransfer())
+            ->setMessage(static::CHECKOUT_ERROR_TRANSFER_MESSAGE_KEY)
+            ->setParameters([
+                static::CHECKOUT_ERROR_TRANSFER_PARAMETER_SKU_KEY => static::CHECKOUT_ERROR_TRANSFER_PARAMETER_SKU_VALUE,
+            ]);
     }
 
     /**
