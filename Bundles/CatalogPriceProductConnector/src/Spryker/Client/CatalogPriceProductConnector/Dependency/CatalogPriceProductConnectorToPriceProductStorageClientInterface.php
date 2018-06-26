@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\PriceProductStorage;
+namespace Spryker\Client\CatalogPriceProductConnector\Dependency;
 
 use Generated\Shared\Transfer\PriceProductStorageTransfer;
 
-interface PriceProductStorageClientInterface
+interface CatalogPriceProductConnectorToPriceProductStorageClientInterface
 {
     /**
      * Specification:
@@ -22,16 +22,4 @@ interface PriceProductStorageClientInterface
      * @return \Generated\Shared\Transfer\PriceProductStorageTransfer|null
      */
     public function getPriceProductAbstractStorageTransfer(int $idProductAbstract): ?PriceProductStorageTransfer;
-
-    /**
-     * Specification:
-     *  - Returns concrete product prices from Storage.
-     *
-     * @api
-     *
-     * @param int $idProductConcrete
-     *
-     * @return \Generated\Shared\Transfer\PriceProductStorageTransfer|null
-     */
-    public function getPriceProductConcreteStorageTransfer(int $idProductConcrete): ?PriceProductStorageTransfer;
 }

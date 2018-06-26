@@ -30,7 +30,7 @@ class PriceProductStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\PriceProductStorage\Storage\PriceAbstractStorageReaderInterface
      */
-    protected function createPriceAbstractStorageReader()
+    public function createPriceAbstractStorageReader()
     {
         return new PriceAbstractStorageReader(
             $this->getStorage(),
@@ -42,7 +42,7 @@ class PriceProductStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\PriceProductStorage\Storage\PriceConcreteStorageReaderInterface
      */
-    protected function createPriceConcreteStorageReader()
+    public function createPriceConcreteStorageReader()
     {
         return new PriceConcreteStorageReader(
             $this->getStorage(),
@@ -54,7 +54,7 @@ class PriceProductStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToStorageInterface
      */
-    protected function getStorage()
+    public function getStorage()
     {
         return $this->getProvidedDependency(PriceProductStorageDependencyProvider::CLIENT_STORAGE);
     }
@@ -62,7 +62,7 @@ class PriceProductStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToPriceProductInterface
      */
-    protected function getPriceProductClient()
+    public function getPriceProductClient()
     {
         return $this->getProvidedDependency(PriceProductStorageDependencyProvider::CLIENT_PRICE_PRODUCT);
     }
@@ -70,7 +70,7 @@ class PriceProductStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToStoreClientInterface
      */
-    protected function getStoreClient()
+    public function getStoreClient()
     {
         return $this->getProvidedDependency(PriceProductStorageDependencyProvider::CLIENT_STORE);
     }
@@ -78,7 +78,7 @@ class PriceProductStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\PriceProductStorage\Storage\PriceProductStorageKeyGeneratorInterface
      */
-    protected function createPriceProductStorageKeyGenerator()
+    public function createPriceProductStorageKeyGenerator()
     {
         return new PriceProductStorageKeyGenerator($this->getSynchronizationService(), $this->getStoreClient());
     }
@@ -86,7 +86,7 @@ class PriceProductStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\PriceProductStorage\Dependency\Service\PriceProductStorageToSynchronizationServiceBridge
      */
-    protected function getSynchronizationService()
+    public function getSynchronizationService()
     {
         return $this->getProvidedDependency(PriceProductStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
     }
