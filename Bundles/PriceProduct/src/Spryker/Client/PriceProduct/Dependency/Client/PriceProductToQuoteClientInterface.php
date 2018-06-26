@@ -7,10 +7,12 @@
 
 namespace Spryker\Client\PriceProduct\Dependency\Client;
 
+use Generated\Shared\Transfer\QuoteTransfer;
+
 interface PriceProductToQuoteClientInterface
 {
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getQuote();
+    public function getQuote(): QuoteTransfer;
 }
