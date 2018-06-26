@@ -23,6 +23,9 @@ use Spryker\Shared\Price\PriceConfig;
 use Spryker\Shared\PriceProduct\PriceProductConstants;
 use Spryker\Zed\Currency\Business\CurrencyFacade;
 use Spryker\Zed\PriceProduct\Business\PriceProductFacade;
+use Spryker\Zed\PriceProduct\Communication\Plugin\DefaultPriceQueryCriteriaPlugin;
+use Spryker\Zed\PriceProduct\PriceProductDependencyProvider;
+use Spryker\Zed\PriceProductMerchantRelationship\Communication\Plugin\PriceProduct\MerchantRelationshipPriceQueryCriteriaPlugin;
 use Spryker\Zed\Store\Business\StoreFacade;
 
 /**
@@ -43,6 +46,21 @@ class PriceProductFacadeTest extends Unit
      * @var \SprykerTest\Zed\PriceProduct\PriceProductBusinessTester
      */
     protected $tester;
+
+    /**
+     * @return void
+     */
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $priceDimensionQueryCriteriaPlugins = [
+            new DefaultPriceQueryCriteriaPlugin(),
+            new MerchantRelationshipPriceQueryCriteriaPlugin(),
+        ];
+
+        $this->tester->setDependency(PriceProductDependencyProvider::PLUGIN_PRICE_DIMENSION_QUERY_CRITERIA, $priceDimensionQueryCriteriaPlugins);
+    }
 
     /**
      * @return void
@@ -437,6 +455,63 @@ class PriceProductFacadeTest extends Unit
 
         // Assert
         $this->assertEquals($expectedResult, $actualResult);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetPriceModeIdentifierForBothType()
+    {
+        $priceProductFacade = $this->getPriceProductFacade();
+
+        $actualResult = $priceProductFacade->getPriceModeIdentifierForBothType();
+
+        $this->assertEquals('BOTH', $actualResult);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGeneratePriceDataChecksum()
+    {
+        $priceProductFacade = $this->getPriceProductFacade();
+
+        $actualResult = $priceProductFacade->generatePriceDataChecksum(['11', '22']);
+
+        $this->assertEquals('3b513d6f', $actualResult);
+    }
+
+    /**
+     * @return void
+     */
+    public function testPersistPriceProductStore()
+    {
+        $priceProductFacade = $this->getPriceProductFacade();
+
+        $priceProductTransfer = $this->createProductWithAmount(50, 40);
+        $actualResult = $priceProductFacade->persistPriceProductStore($priceProductTransfer);
+
+        $this->assertEquals($priceProductTransfer, $actualResult);
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeleteOrphanPriceProductStoreEntitiesNotFails()
+    {
+        $priceProductFacade = $this->getPriceProductFacade();
+
+        $priceProductFacade->deleteOrphanPriceProductStoreEntities();
+    }
+
+    /**
+     * @return void
+     */
+    public function testInstallNotFails()
+    {
+        $priceProductFacade = $this->getPriceProductFacade();
+
+        $priceProductFacade->install();
     }
 
     /**
