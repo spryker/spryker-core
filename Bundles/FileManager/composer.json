@@ -7,10 +7,7 @@
     "spryker/file-system": "^1.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/locale": "^3.0.0",
-    "spryker/propel-orm": "^1.0.0",
-    "spryker/storage": "^3.0.0",
-    "spryker/symfony": "^3.0.0",
-    "spryker/synchronization": "0.2.1"
+    "spryker/propel-orm": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
