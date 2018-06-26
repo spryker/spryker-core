@@ -34,7 +34,8 @@ class ProductAlternativeStorageListener extends AbstractPlugin implements EventB
 
         $eventBehaviorFacade = $this->getFactory()->getEventBehaviorFacade();
         $productIds = $eventBehaviorFacade->getEventTransferForeignKeys(
-            $eventTransfers, SpyProductAlternativeTableMap::COL_FK_PRODUCT
+            $eventTransfers,
+            SpyProductAlternativeTableMap::COL_FK_PRODUCT
         );
 
         if (empty($productIds)) {
