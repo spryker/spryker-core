@@ -209,11 +209,11 @@ class Reader implements ReaderInterface
         $concretePriceProductTransfers = $this->priceProductConcreteReader
             ->findProductConcretePricesBySkuForCurrentStore($sku, $priceProductDimensionTransfer);
 
-        if (empty($concretePriceProductTransfers)) {
+        if (!$concretePriceProductTransfers) {
             return $abstractPriceProductTransfers;
         }
 
-        if (empty($abstractPriceProductTransfers)) {
+        if (!$abstractPriceProductTransfers) {
             return $concretePriceProductTransfers;
         }
 
