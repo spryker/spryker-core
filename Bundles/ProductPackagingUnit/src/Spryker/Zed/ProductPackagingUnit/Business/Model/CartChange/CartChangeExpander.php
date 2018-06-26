@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductPackagingUnit\Business\Model\CartChange;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ProductPackagingUnitTransfer;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface;
 
 class CartChangeExpander implements CartChangeExpanderInterface
@@ -40,32 +39,40 @@ class CartChangeExpander implements CartChangeExpanderInterface
                 continue;
             }
 
-            $itemTransfer->getQuantityPackagingUnit()->requireIdProductPackagingUnit();
+            $itemTransfer->getQuantityPackagingUnit()->requireStockAmount();
 
-            $productPackagingUnitTransfer = $this->productPackagingUnitReader
-                ->getProductPackagingUnitById(
-                    $itemTransfer->getQuantityPackagingUnit()->getIdProductPackagingUnit()
-                );
-
-            $this->expandWithAmount($productPackagingUnitTransfer, $itemTransfer);
-
-            $itemTransfer->setQuantityPackagingUnit($productPackagingUnitTransfer);
+            $this->expandItem($itemTransfer);
         }
 
         return $cartChangeTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductPackagingUnitTransfer $productPackagingUnitTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer
+     * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    protected function expandWithAmount(ProductPackagingUnitTransfer $productPackagingUnitTransfer, ItemTransfer $itemTransfer)
+    protected function expandItem(ItemTransfer $itemTransfer)
     {
-        $itemAmount = $productPackagingUnitTransfer->getProductPackagingUnitAmount()->getDefaultAmount() * $itemTransfer->getQuantity();
-        $productPackagingUnitTransfer->getProductPackagingUnitAmount()->setAmount($itemAmount);
+        $productPackagingUnitTransfer = $this->productPackagingUnitReader
+            ->getProductPackagingUnitBySku(
+                $itemTransfer->getSku()
+            );
 
-        return $productPackagingUnitTransfer;
+        $productPackagingLeadProductTransfer = $this->productPackagingUnitReader
+            ->getProductPackagingLeadProductByProductPackagingSku(
+                $itemTransfer->getSku()
+            );
+
+        $quantityPackagingUnit = $itemTransfer->getQuantityPackagingUnit();
+        $quantityPackagingUnit
+            ->setProductPackagingUnit($productPackagingUnitTransfer)
+            ->setProductPackagingUnitLeadProduct($productPackagingLeadProductTransfer);
+
+        $itemTransfer->setQuantityPackagingUnit(
+            $quantityPackagingUnit
+        );
+
+        return $itemTransfer;
     }
 }

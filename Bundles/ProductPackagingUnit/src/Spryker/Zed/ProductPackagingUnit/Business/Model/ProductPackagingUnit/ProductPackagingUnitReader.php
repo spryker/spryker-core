@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit;
 
+use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitAmountTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTransfer;
 use Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface;
@@ -48,10 +49,49 @@ class ProductPackagingUnitReader implements ProductPackagingUnitReaderInterface
         $productPackagingUnitTransfer = $this->repository->getProductPackagingUnitById($productPackagingUnitId);
 
         if ($productPackagingUnitTransfer && !$productPackagingUnitTransfer->getProductPackagingUnitAmount()) {
-            $productPackagingUnitTransfer->setProductPackagingUnitAmount(
-                $this->createDefaultProductPackagingUnitAmountTransfer()
-            );
+            $this->hydrateWithDefaultAmount($productPackagingUnitTransfer);
         }
+
+        return $productPackagingUnitTransfer;
+    }
+
+    /**
+     * @param string $productPackagingUnitSku
+     *
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer|null
+     */
+    public function getProductPackagingUnitBySku(
+        string $productPackagingUnitSku
+    ): ?ProductPackagingUnitTransfer {
+        $productPackagingUnitTransfer = $this->repository->getProductPackagingUnitBySku($productPackagingUnitSku);
+
+        if ($productPackagingUnitTransfer && !$productPackagingUnitTransfer->getProductPackagingUnitAmount()) {
+            $this->hydrateWithDefaultAmount($productPackagingUnitTransfer);
+        }
+
+        return $productPackagingUnitTransfer;
+    }
+
+    /**
+     * @param string $productPackagingUnitSku
+     *
+     * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null
+     */
+    public function getProductPackagingLeadProductByProductPackagingSku(string $productPackagingUnitSku): ?ProductPackagingLeadProductTransfer
+    {
+        return $this->repository->getProductPackagingLeadProductByProductPackagingSku($productPackagingUnitSku);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductPackagingUnitTransfer $productPackagingUnitTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer
+     */
+    protected function hydrateWithDefaultAmount(ProductPackagingUnitTransfer $productPackagingUnitTransfer): ProductPackagingUnitTransfer
+    {
+        $productPackagingUnitTransfer->setProductPackagingUnitAmount(
+            $this->createDefaultProductPackagingUnitAmountTransfer()
+        );
 
         return $productPackagingUnitTransfer;
     }

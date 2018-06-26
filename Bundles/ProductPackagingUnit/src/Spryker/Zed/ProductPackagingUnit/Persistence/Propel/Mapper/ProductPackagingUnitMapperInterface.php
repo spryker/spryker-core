@@ -19,14 +19,12 @@ interface ProductPackagingUnitMapperInterface
     /**
      * @param \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnit $productPackagingUnitEntity
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTransfer $productPackagingUnitTransfer
-     * @param \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null $productPackagingLeadProductTransfer
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer
      */
     public function mapProductPackagingUnitTransfer(
         SpyProductPackagingUnit $productPackagingUnitEntity,
-        ProductPackagingUnitTransfer $productPackagingUnitTransfer,
-        ?ProductPackagingLeadProductTransfer $productPackagingLeadProductTransfer = null
+        ProductPackagingUnitTransfer $productPackagingUnitTransfer
     ): ProductPackagingUnitTransfer;
 
     /**

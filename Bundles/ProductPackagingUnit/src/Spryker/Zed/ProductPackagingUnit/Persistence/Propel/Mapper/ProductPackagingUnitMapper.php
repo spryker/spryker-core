@@ -20,14 +20,12 @@ class ProductPackagingUnitMapper implements ProductPackagingUnitMapperInterface
     /**
      * @param \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnit $productPackagingUnitEntity
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTransfer $productPackagingUnitTransfer
-     * @param \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null $productPackagingLeadProductTransfer
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer
      */
     public function mapProductPackagingUnitTransfer(
         SpyProductPackagingUnit $productPackagingUnitEntity,
-        ProductPackagingUnitTransfer $productPackagingUnitTransfer,
-        ?ProductPackagingLeadProductTransfer $productPackagingLeadProductTransfer = null
+        ProductPackagingUnitTransfer $productPackagingUnitTransfer
     ): ProductPackagingUnitTransfer {
         $productPackagingUnitAmountEntity = $productPackagingUnitEntity->getSpyProductPackagingUnitAmounts()->getFirst();
 
@@ -45,12 +43,6 @@ class ProductPackagingUnitMapper implements ProductPackagingUnitMapperInterface
                 new ProductPackagingUnitTypeTransfer()
             )
         );
-
-        if ($productPackagingLeadProductTransfer) {
-            $productPackagingUnitTransfer->setProductPackagingUnitLeadProduct(
-                $productPackagingLeadProductTransfer
-            );
-        }
 
         return $productPackagingUnitTransfer;
     }

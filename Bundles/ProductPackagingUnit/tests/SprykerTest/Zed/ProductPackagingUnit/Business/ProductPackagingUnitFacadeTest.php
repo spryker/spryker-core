@@ -10,7 +10,7 @@ namespace SprykerTest\Zed\ProductPackagingUnit\Business;
 use Generated\Shared\DataBuilder\ProductPackagingUnitTypeBuilder;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ProductPackagingUnitTransfer;
+use Generated\Shared\Transfer\ProductPackagingUnitQuantityTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTranslationTransfer;
 use Generated\Shared\Transfer\SpyProductAbstractEntityTransfer;
 use Generated\Shared\Transfer\SpyProductEntityTransfer;
@@ -36,7 +36,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
     protected const PACKAGING_TYPE = 'box';
 
     protected const ITEM_QUANTITY = 2;
-    protected const PACKAGE_AMOUNT = 2;
+    protected const PACKAGE_AMOUNT = 4;
 
     /**
      * @var \SprykerTest\Zed\ProductPackagingUnit\ProductPackagingUnitBusinessTester
@@ -198,17 +198,20 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         $cartChange = (new CartChangeTransfer())
             ->addItem(
                 (new ItemTransfer())
+                    ->setSku($boxProductConcreteTransfer->getSku())
                     ->setQuantity(static::ITEM_QUANTITY)
                     ->setQuantityPackagingUnit(
-                        (new ProductPackagingUnitTransfer())
-                            ->setIdProductPackagingUnit($boxProductPackagingUnit->getIdProductPackagingUnit())
+                        (new ProductPackagingUnitQuantityTransfer())
+                            ->setStockAmount(static::PACKAGE_AMOUNT)
                     )
             );
 
         $this->getFacade()->expandCartChangeWithQuantityPackagingUnit($cartChange);
         foreach ($cartChange->getItems() as $itemTransfer) {
             $this->assertNotNull($itemTransfer->getQuantityPackagingUnit());
-            $this->assertEquals(static::ITEM_QUANTITY * static::PACKAGE_AMOUNT, $itemTransfer->getQuantityPackagingUnit()->getProductPackagingUnitAmount()->getAmount());
+            $this->assertNotNull($itemTransfer->getQuantityPackagingUnit()->getProductPackagingUnit());
+            $this->assertNotNull($itemTransfer->getQuantityPackagingUnit()->getProductPackagingUnitLeadProduct());
+            $this->assertEquals($itemProductConcreteTransfer->getSku(), $itemTransfer->getQuantityPackagingUnit()->getProductPackagingUnitLeadProduct()->getSkuProduct());
         }
     }
 

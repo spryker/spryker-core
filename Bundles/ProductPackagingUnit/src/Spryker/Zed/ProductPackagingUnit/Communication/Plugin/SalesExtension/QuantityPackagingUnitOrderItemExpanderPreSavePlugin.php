@@ -36,8 +36,7 @@ class QuantityPackagingUnitOrderItemExpanderPreSavePlugin implements OrderItemEx
             ->getSkuProduct();
 
         $packagingUnitAmount = $itemTransfer->getQuantityPackagingUnit()
-            ->getProductPackagingUnitAmount()
-            ->getAmount();
+            ->getStockAmount();
 
         $packagingUnitLeadProductAmount = $packagingUnitAmount / $itemTransfer->getQuantity();
 

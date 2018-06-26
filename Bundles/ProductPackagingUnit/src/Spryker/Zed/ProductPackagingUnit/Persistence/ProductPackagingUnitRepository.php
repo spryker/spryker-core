@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
+use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -111,6 +112,37 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
     }
 
     /**
+     * @param string $productPackagingUnitSku
+     *
+     * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null
+     */
+    public function getProductPackagingLeadProductByProductPackagingSku(
+        string $productPackagingUnitSku
+    ): ?ProductPackagingLeadProductTransfer {
+        $productPackagingLeadProductEntity = $this->getFactory()
+            ->createProductPackagingLeadProductQuery()
+            ->useSpyProductAbstractQuery()
+                ->useSpyProductQuery()
+                    ->filterBySku($productPackagingUnitSku)
+                ->endUse()
+            ->endUse()
+            ->findOne();
+
+        if (!$productPackagingLeadProductEntity) {
+            return null;
+        }
+
+        $productPackagingLeadProductTransfer = $this->getFactory()
+            ->createProductPackagingUnitMapper()
+            ->mapProductPackagingLeadProductTransfer(
+                $productPackagingLeadProductEntity,
+                new ProductPackagingLeadProductTransfer()
+            );
+
+        return $productPackagingLeadProductTransfer;
+    }
+
+    /**
      * @param array $productPackagingUnitTypeIds
      *
      * @return array
@@ -142,29 +174,59 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
     public function getProductPackagingUnitById(
         int $productPackagingUnitId
     ): ?ProductPackagingUnitTransfer {
-        $productPackagingUnitEntity = $this->getFactory()
-            ->createProductPackagingUnitQuery()
-            ->filterByIdProductPackagingUnit($productPackagingUnitId)
-            ->innerJoinProductPackagingUnitType()
-            ->leftJoinSpyProductPackagingUnitAmount()
+        $productPackagingUnitEntity = $this->getProductPackagingUnitCriteria()
+            ->findOneByIdProductPackagingUnit($productPackagingUnitId);
+
+        if (!$productPackagingUnitEntity) {
+            return null;
+        }
+
+        $productPackagingUnitTransfer = $this->getFactory()
+            ->createProductPackagingUnitMapper()
+            ->mapProductPackagingUnitTransfer(
+                $productPackagingUnitEntity,
+                new ProductPackagingUnitTransfer()
+            );
+
+        return $productPackagingUnitTransfer;
+    }
+
+    /**
+     * @param string $productPackagingUnitSku
+     *
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer|null
+     */
+    public function getProductPackagingUnitBySku(
+        string $productPackagingUnitSku
+    ): ?ProductPackagingUnitTransfer {
+        $productPackagingUnitEntity = $this->getProductPackagingUnitCriteria()
+            ->useProductQuery()
+                ->filterBySku($productPackagingUnitSku)
+            ->endUse()
             ->findOne();
 
         if (!$productPackagingUnitEntity) {
             return null;
         }
 
-        $productPackagingLeadProductTransfer = $this->getProductPackagingLeadProductByIdProductAbstract(
-            $productPackagingUnitEntity->getProduct()->getFkProductAbstract()
-        );
-
         $productPackagingUnitTransfer = $this->getFactory()
             ->createProductPackagingUnitMapper()
             ->mapProductPackagingUnitTransfer(
                 $productPackagingUnitEntity,
-                new ProductPackagingUnitTransfer(),
-                $productPackagingLeadProductTransfer
+                new ProductPackagingUnitTransfer()
             );
 
         return $productPackagingUnitTransfer;
+    }
+
+    /**
+     * @return \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitQuery
+     */
+    protected function getProductPackagingUnitCriteria(): SpyProductPackagingUnitQuery
+    {
+        return $this->getFactory()
+            ->createProductPackagingUnitQuery()
+            ->innerJoinProductPackagingUnitType()
+            ->leftJoinSpyProductPackagingUnitAmount();
     }
 }
