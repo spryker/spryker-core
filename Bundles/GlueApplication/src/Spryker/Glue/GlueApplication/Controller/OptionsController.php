@@ -18,15 +18,9 @@ class OptionsController extends AbstractRestController
      */
     public function resourceOptionsAction(): RestResponseInterface
     {
-        $request = $this->getRestRequest();
+        $restRequest = $this->getRestRequest();
+        $restResponse = $this->getFactory()->getResourceBuilder()->createRestResponse();
 
-        $availableMethods = $this->getFactory()
-            ->createResourceRouteLoader()
-            ->getAvailableMethods($request->getResource()->getType(), $request->getHttpRequest());
-
-        $response = $this->getFactory()->getResourceBuilder()->createRestResponse();
-        $response->addHeader('Allow', implode(', ', $availableMethods));
-
-        return $response;
+        return $this->getFactory()->createCorsResponse()->addCorsHeaders($restRequest, $restResponse);
     }
 }

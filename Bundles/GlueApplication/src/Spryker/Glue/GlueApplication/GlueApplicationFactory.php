@@ -16,6 +16,8 @@ use Spryker\Glue\GlueApplication\Rest\ControllerCallbacks;
 use Spryker\Glue\GlueApplication\Rest\ControllerCallbacksInterface;
 use Spryker\Glue\GlueApplication\Rest\ControllerFilter;
 use Spryker\Glue\GlueApplication\Rest\ControllerFilterInterface;
+use Spryker\Glue\GlueApplication\Rest\Cors\CorsResponse;
+use Spryker\Glue\GlueApplication\Rest\Cors\CorsResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilder;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\Language\LanguageNegotiation;
@@ -269,6 +271,14 @@ class GlueApplicationFactory extends AbstractFactory
     public function createContentTypeResolver(): ContentTypeResolverInterface
     {
         return new ContentTypeResolver();
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\Cors\CorsResponseInterface
+     */
+    public function createCorsResponse(): CorsResponseInterface
+    {
+        return new CorsResponse($this->createResourceRouteLoader(), $this->getConfig());
     }
 
     /**

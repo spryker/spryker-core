@@ -123,7 +123,12 @@ class ResourceRouteLoader implements ResourceRouteLoaderInterface
             return $resourcePlugins[0];
         }
 
-        return $this->findNewestPluginVersion($resourcePlugins);
+        $resourcePlugin = $this->findNewestPluginVersion($resourcePlugins);
+        if (!($resourcePlugin instanceof ResourceRoutePluginInterface)) {
+            return null;
+        }
+
+        return $resourcePlugin;
     }
 
     /**
@@ -176,13 +181,14 @@ class ResourceRouteLoader implements ResourceRouteLoaderInterface
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface[]|\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceVersionableInterface[] $resourcePlugins
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceVersionableInterface[] $resourcePlugins
      *
-     * @return null|\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface
+     * @return null|\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceVersionableInterface
      */
-    protected function findNewestPluginVersion(array $resourcePlugins): ?ResourceRoutePluginInterface
+    protected function findNewestPluginVersion(array $resourcePlugins): ?ResourceVersionableInterface
     {
         $newestVersionPlugin = null;
+
         foreach ($resourcePlugins as $resourcePlugin) {
             if (!($resourcePlugin instanceof ResourceVersionableInterface)) {
                 continue;
