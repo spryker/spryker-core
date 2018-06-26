@@ -10,14 +10,13 @@ namespace Spryker\Client\CatalogPriceProductConnector\Plugin;
 use Elastica\ResultSet;
 use Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface;
 use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\AbstractElasticsearchResultFormatterPlugin;
+use Spryker\Shared\CatalogPriceProductConnector\CatalogPriceProductConnectorConstants;
 
 /**
  * @method \Spryker\Client\CatalogPriceProductConnector\CatalogPriceProductConnectorFactory getFactory()
  */
 class CurrencyAwareSuggestionByTypeResultFormatter extends AbstractElasticsearchResultFormatterPlugin
 {
-    protected const PRICE_DIMENSION_DEFAULT = 'PRICE_DIMENSION_DEFAULT';
-
     /**
      * @var \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface
      */
@@ -48,7 +47,7 @@ class CurrencyAwareSuggestionByTypeResultFormatter extends AbstractElasticsearch
         $priceProductClient = $this->getFactory()->getPriceProductClient();
         foreach ($results['product_abstract'] as &$product) {
             $currentProductPriceTransfer = $priceProductClient->resolveProductPrice(
-                [static::PRICE_DIMENSION_DEFAULT => $product['prices']]
+                [CatalogPriceProductConnectorConstants::PRICE_DIMENSION_DEFAULT => $product['prices']]
             );
             $product['price'] = $currentProductPriceTransfer->getPrice();
             $product['prices'] = $currentProductPriceTransfer->getPrices();

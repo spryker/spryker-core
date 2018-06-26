@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence;
 
-use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductStoreTableMap;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery;
 use Orm\Zed\PriceProductMerchantRelationship\Persistence\Map\SpyPriceProductMerchantRelationshipTableMap;
 use Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\Map\SpyPriceProductAbstractMerchantRelationshipStorageTableMap;
 use Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\Map\SpyPriceProductConcreteMerchantRelationshipStorageTableMap;
+use Spryker\Shared\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConstants;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
@@ -54,7 +54,7 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
             ->select([
                 static::COL_PRODUCT_CONCRETE_SKU,
                 static::COL_PRODUCT_CONCRETE_ID_PRODUCT,
-                SpyPriceProductStoreTableMap::COL_FK_STORE,
+                PriceProductMerchantRelationshipStorageConstants::COL_PRICE_PRODUCT_STORE_FK_STORE,
                 SpyPriceProductMerchantRelationshipTableMap::COL_FK_MERCHANT_RELATIONSHIP,
             ])->groupBy(static::COL_PRODUCT_CONCRETE_SKU);
 
@@ -75,7 +75,7 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
             ->select([
                 static::COL_PRODUCT_ABSTRACT_SKU,
                 static::COL_PRODUCT_ABSTRACT_ID_PRODUCT,
-                SpyPriceProductStoreTableMap::COL_FK_STORE,
+                PriceProductMerchantRelationshipStorageConstants::COL_PRICE_PRODUCT_STORE_FK_STORE,
                 SpyPriceProductMerchantRelationshipTableMap::COL_FK_MERCHANT_RELATIONSHIP,
             ])->groupBy(static::COL_PRODUCT_ABSTRACT_SKU);
 
