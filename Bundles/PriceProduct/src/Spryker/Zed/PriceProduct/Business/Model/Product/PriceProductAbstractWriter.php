@@ -93,12 +93,12 @@ class PriceProductAbstractWriter extends BaseProductPriceWriter implements Price
             ->getIdProductAbstract();
 
         foreach ($productAbstractTransfer->getPrices() as $priceProductTransfer) {
-            $priceProductTransfer->requirePriceDimension();
-
             $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
             if ($this->isEmptyMoneyValue($moneyValueTransfer)) {
                 continue;
             }
+
+            $priceProductTransfer->requirePriceDimension();
 
             $this->persistProductAbstractPriceEntity($priceProductTransfer, $idProductAbstract);
 

@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProduct;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore;
+use Spryker\Shared\PriceProduct\PriceProductConstants;
 use Spryker\Zed\PriceProduct\Business\Model\PriceType\ProductPriceTypeMapperInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyFacadeInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceFacadeInterface;
@@ -21,6 +22,8 @@ use Spryker\Zed\PriceProduct\PriceProductConfig;
 
 class PriceProductMapper implements PriceProductMapperInterface
 {
+    protected const PRICE_KEY_SEPARATOR = '-';
+
     /**
      * @var string
      */
@@ -146,7 +149,8 @@ class PriceProductMapper implements PriceProductMapperInterface
     ): array {
         $productPriceCollection = [];
         foreach ($priceProductStoreEntities as $priceProductStoreEntity) {
-            $productPriceCollection[] = $this->mapPriceProductStoreEntityToTransfer(
+            $index = $this->createProductPriceGroupingIndex($priceProductStoreEntity);
+            $productPriceCollection[$index] = $this->mapPriceProductStoreEntityToTransfer(
                 $priceProductStoreEntity,
                 $priceProductCriteriaTransfer
             );
@@ -201,6 +205,26 @@ class PriceProductMapper implements PriceProductMapperInterface
             ->fromArray(
                 $priceProductStoreEntity->getVirtualColumns(),
                 true
-            );
+            )->setType(PriceProductConstants::PRICE_DIMENSION_DEFAULT);
+    }
+
+    /**
+     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore $priceProductStoreEntity
+     *
+     * @return string
+     */
+    protected function createProductPriceGroupingIndex(SpyPriceProductStore $priceProductStoreEntity)
+    {
+        $priceType = $priceProductStoreEntity->getPriceProduct()->getPriceType();
+
+        return implode(
+            static::PRICE_KEY_SEPARATOR,
+            [
+                $priceProductStoreEntity->getFkStore(),
+                $priceProductStoreEntity->getFkCurrency(),
+                $priceType->getName(),
+                $priceType->getPriceModeConfiguration(),
+            ]
+        );
     }
 }

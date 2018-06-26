@@ -8,9 +8,6 @@ namespace Spryker\Service\PriceProduct;
 
 use Spryker\Service\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Service\Kernel\Container;
-use Spryker\Service\PriceProduct\Dependency\Facade\PriceProductToCurrencyFacadeBridge;
-use Spryker\Service\PriceProduct\Dependency\Facade\PriceProductToPriceFacadeBridge;
-use Spryker\Service\PriceProduct\Dependency\Facade\PriceProductToStoreFacadeBridge;
 use Spryker\Service\PriceProduct\Plugin\PriceProductExtension\DefaultPriceProductDecisionPlugin;
 
 class PriceProductDependencyProvider extends AbstractBundleDependencyProvider

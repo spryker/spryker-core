@@ -92,12 +92,12 @@ class PriceProductConcreteWriter extends BaseProductPriceWriter implements Price
             ->getIdProductConcrete();
 
         foreach ($productConcreteTransfer->getPrices() as $priceProductTransfer) {
-            $priceProductTransfer->requirePriceDimension();
-
             $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
             if ($this->isEmptyMoneyValue($moneyValueTransfer)) {
                 continue;
             }
+
+            $priceProductTransfer->requirePriceDimension();
 
             $this->persistProductConcretePriceEntity($priceProductTransfer, $idProductConcrete);
 
