@@ -89,6 +89,11 @@ class ProductAlternativePublisher implements ProductAlternativePublisherInterfac
         $concreteAlternatives = $this->productAlternativeStorageRepository->findConcreteAlternativesIdsByConcreteProductId($productId);
         $sku = $this->productAlternativeStorageRepository->findProductSkuById($productId);
 
+        if (empty($concreteAlternatives) && empty($abstractAlternatives) && $productAlternativeStorageEntity) {
+            $this->productAlternativeStorageEntityManager->deleteProductAlternativeStorageEntity($productAlternativeStorageEntity);
+            return;
+        }
+
         $productAlternativeStorageEntity
             ->setFkProduct($productId)
             ->setSku($sku)
