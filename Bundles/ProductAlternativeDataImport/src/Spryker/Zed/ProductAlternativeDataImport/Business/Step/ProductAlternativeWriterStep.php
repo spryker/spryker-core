@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductAlternativeDataImport\Business;
+namespace Spryker\Zed\ProductAlternativeDataImport\Business\Step;
 
 use Orm\Zed\ProductAlternative\Persistence\SpyProductAlternativeQuery;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;

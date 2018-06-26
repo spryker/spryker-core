@@ -11,7 +11,7 @@ use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductAlternative\Persistence\SpyProductAlternativeQuery;
 use Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorageQuery;
-use Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementStorageQuery;
+use Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorageQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ProductAlternativeStorage\ProductAlternativeStorageDependencyProvider;
 
@@ -29,11 +29,11 @@ class ProductAlternativeStoragePersistenceFactory extends AbstractPersistenceFac
     }
 
     /**
-     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementStorageQuery
+     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorageQuery
      */
-    public function createProductReplacementStoragePropelQuery(): SpyProductReplacementStorageQuery
+    public function createProductReplacementForStoragePropelQuery(): SpyProductReplacementForStorageQuery
     {
-        return SpyProductReplacementStorageQuery::create();
+        return SpyProductReplacementForStorageQuery::create();
     }
 
     /**

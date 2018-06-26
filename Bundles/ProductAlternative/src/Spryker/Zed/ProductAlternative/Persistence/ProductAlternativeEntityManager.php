@@ -28,6 +28,7 @@ class ProductAlternativeEntityManager extends AbstractEntityManager implements P
             ->filterByFkProduct($idProduct)
             ->filterByFkProductAbstractAlternative($idProductAbstractAlternative)
             ->findOneOrCreate();
+        $productAlternativeEntity->save();
 
         return $this->getFactory()
             ->createProductAlternativeMapper()
@@ -47,6 +48,7 @@ class ProductAlternativeEntityManager extends AbstractEntityManager implements P
             ->filterByFkProduct($idProduct)
             ->filterByFkProductConcreteAlternative($idProductConcreteAlternative)
             ->findOneOrCreate();
+        $productAlternativeEntity->save();
 
         return $this->getFactory()
             ->createProductAlternativeMapper()

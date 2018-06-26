@@ -34,7 +34,6 @@ class ProductAlternativeBusinessFactory extends AbstractBusinessFactory
             $this->getProductFacade()
         );
     }
-    
 
     /**
      * @return \Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeReaderInterface

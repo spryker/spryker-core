@@ -9,10 +9,10 @@ namespace Spryker\Zed\ProductAlternativeStorage\Persistence;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\SpyProductReplacementStorageEntityTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\ProductAlternative\Persistence\Map\SpyProductAlternativeTableMap;
+use Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
@@ -24,18 +24,23 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     /**
      * @param int[] $productIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer[]
+     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage[]
      */
     public function findProductAlternativeStorageEntities(array $productIds): array
     {
         if (!$productIds) {
             return [];
         }
-        $query = $this->getFactory()
+        $productAlternativeStorageEntities = $this->getFactory()
             ->createProductAlternativeStoragePropelQuery()
-            ->filterByFkProduct_In($productIds);
+            ->filterByFkProduct_In($productIds)
+            ->find();
 
-        return $this->buildQueryFromCriteria($query)->find();
+        if ($productAlternativeStorageEntities) {
+            return $productAlternativeStorageEntities->getArrayCopy();
+        }
+
+        return [];
     }
 
     /**
@@ -129,15 +134,14 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     /**
      * @param string $sku
      *
-     * @return \Generated\Shared\Transfer\SpyProductReplacementStorageEntityTransfer|null
+     * @return null|\Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage
      */
-    public function findProductReplacementStorageEntitiesBySku(string $sku): ?SpyProductReplacementStorageEntityTransfer
+    public function findProductReplacementStorageEntitiesBySku(string $sku): ?SpyProductReplacementForStorage
     {
-        $productReplacementStorageQuery = $this->getFactory()
-            ->createProductReplacementStoragePropelQuery()
-            ->filterBySku_Like($sku);
-
-        return $this->buildQueryFromCriteria($productReplacementStorageQuery)->findOne();
+        return $this->getFactory()
+            ->createProductReplacementForStoragePropelQuery()
+            ->filterBySku_Like($sku)
+            ->findOne();
     }
 
     /**

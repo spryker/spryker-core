@@ -12,6 +12,7 @@ use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductAlternative\Dependency\ProductAlternativeEvents;
 use Spryker\Zed\ProductAlternativeStorage\Communication\Plugin\Event\Listener\ProductAbstractReplacementStorageListener;
+use Spryker\Zed\ProductAlternativeStorage\Communication\Plugin\Event\Listener\ProductAlternativePublishStorageListener;
 use Spryker\Zed\ProductAlternativeStorage\Communication\Plugin\Event\Listener\ProductAlternativeReplacementStorageListener;
 use Spryker\Zed\ProductAlternativeStorage\Communication\Plugin\Event\Listener\ProductAlternativeStorageListener;
 use Spryker\Zed\ProductAlternativeStorage\Communication\Plugin\Event\Listener\ProductConcreteReplacementStorageListener;
@@ -59,7 +60,7 @@ class ProductAlternativeStorageEventSubscriber extends AbstractPlugin implements
     protected function addProductAlternativePublishListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection
-            ->addListenerQueued(ProductAlternativeEvents::PRODUCT_ALTERNATIVE_PUBLISH, new ProductAlternativeStorageListener());
+            ->addListenerQueued(ProductAlternativeEvents::PRODUCT_ALTERNATIVE_PUBLISH, new ProductAlternativePublishStorageListener());
     }
 
     /**

@@ -38,7 +38,7 @@ class ProductAlternativeStorageFactory extends AbstractFactory
             $this->getSynchronizationService()
         );
     }
-    
+
     /**
      * @return \Spryker\Client\ProductAlternativeStorage\Dependency\Client\ProductAlternativeStorageToStorageClientInterface
      */

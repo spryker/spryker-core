@@ -12,6 +12,7 @@ use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
 use Spryker\Zed\ProductAlternativeDataImport\Business\Step\AlternativeProductAbstractSkuToProductIdStep;
 use Spryker\Zed\ProductAlternativeDataImport\Business\Step\AlternativeProductConcreteSkuToProductIdStep;
 use Spryker\Zed\ProductAlternativeDataImport\Business\Step\DataValidationStep;
+use Spryker\Zed\ProductAlternativeDataImport\Business\Step\ProductAlternativeWriterStep;
 use Spryker\Zed\ProductAlternativeDataImport\Business\Step\ProductSkuToProductIdStep;
 
 /**
@@ -24,8 +25,10 @@ class ProductAlternativeDataImportBusinessFactory extends DataImportBusinessFact
      */
     public function getProductAlternativeDataImport(): DataImporterInterface
     {
+        /** @var \Spryker\Zed\DataImport\Business\Model\DataImporter $dataImporter */
         $dataImporter = $this->getCsvDataImporterFromConfig($this->getConfig()->getProductAlternativeDataImporterConfiguration());
 
+        /** @var \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerTransactionAware $dataSetStepBroker */
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
         $dataSetStepBroker
             ->addStep($this->createDataValidationStep())

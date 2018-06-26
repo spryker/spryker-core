@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductAlternativeStorage\Business\ProductAlternativePublisher;
 
 use Generated\Shared\Transfer\ProductAlternativeStorageTransfer;
-use Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer;
+use Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage;
 use Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageEntityManagerInterface;
 use Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface;
 
@@ -43,12 +43,11 @@ class ProductAlternativePublisher implements ProductAlternativePublisherInterfac
      */
     public function publish(array $productIds): void
     {
-        $indexedProductAlternativeEntityTransfers =
-            $this->findIndexedProductAlternativeStorageEntities($productIds);
+        $indexedProductAlternativeEntityTransfers = $this->findIndexedProductAlternativeStorageEntities($productIds);
 
         foreach ($productIds as $idProduct) {
             if (!isset($indexedProductAlternativeEntityTransfers[$idProduct])) {
-                $indexedProductAlternativeEntityTransfers[$idProduct] = new SpyProductAlternativeStorageEntityTransfer();
+                $indexedProductAlternativeEntityTransfers[$idProduct] = new SpyProductAlternativeStorage();
             }
 
             $this->saveStorageEntity($indexedProductAlternativeEntityTransfers[$idProduct], $idProduct);
@@ -58,29 +57,29 @@ class ProductAlternativePublisher implements ProductAlternativePublisherInterfac
     /**
      * @param int[] $productIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer[]
+     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage[]
      */
     protected function findIndexedProductAlternativeStorageEntities(array $productIds): array
     {
-        $productAlternativeStorageEntityTransfers = $this->productAlternativeStorageRepository
+        $productAlternativeStorageEntities = $this->productAlternativeStorageRepository
             ->findProductAlternativeStorageEntities($productIds);
 
-        $mappedProductAlternativeStorageEntityTransfers = [];
-        foreach ($productAlternativeStorageEntityTransfers as $productAlternativeStorageEntityTransfer) {
-            $mappedProductAlternativeStorageEntityTransfers[$productAlternativeStorageEntityTransfer->getFkProduct()] = $productAlternativeStorageEntityTransfer;
+        $indexedProductAlternativeStorageEntities = [];
+        foreach ($productAlternativeStorageEntities as $productAlternativeStorageEntity) {
+            $indexedProductAlternativeStorageEntities[$productAlternativeStorageEntity->getFkProduct()] = $productAlternativeStorageEntity;
         }
 
-        return $mappedProductAlternativeStorageEntityTransfers;
+        return $indexedProductAlternativeStorageEntities;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer $productAlternativeStorageEntity
+     * @param \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage $productAlternativeStorageEntity
      * @param int $productId
      *
      * @return void
      */
     protected function saveStorageEntity(
-        SpyProductAlternativeStorageEntityTransfer $productAlternativeStorageEntity,
+        SpyProductAlternativeStorage $productAlternativeStorageEntity,
         int $productId
     ): void {
         $abstractAlternatives = $this->productAlternativeStorageRepository->findAbstractAlternativesIdsByConcreteProductId($productId);

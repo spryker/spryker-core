@@ -18,7 +18,7 @@ class ProductDiscontinuedStoragePersistenceFactory extends AbstractPersistenceFa
     /**
      * @return \Orm\Zed\ProductDiscontinuedStorage\Persistence\SpyProductDiscontinuedStorageQuery
      */
-    public function createProductDiscontinuedStorageQuery(): SpyProductDiscontinuedStorageQuery
+    public function createProductDiscontinuedStoragePropelQuery(): SpyProductDiscontinuedStorageQuery
     {
         return SpyProductDiscontinuedStorageQuery::create();
     }

@@ -12,7 +12,7 @@ interface ProductDiscontinuedStorageRepositoryInterface
     /**
      * @param int[] $productDiscontinuedIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductDiscontinuedStorageEntityTransfer[]
+     * @return \Orm\Zed\ProductDiscontinuedStorage\Persistence\SpyProductDiscontinuedStorage[]
      */
     public function findProductDiscontinuedStorageEntitiesByIds(array $productDiscontinuedIds): array;
 }

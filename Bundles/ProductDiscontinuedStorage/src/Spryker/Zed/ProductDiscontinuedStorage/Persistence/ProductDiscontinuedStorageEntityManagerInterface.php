@@ -7,25 +7,21 @@
 
 namespace Spryker\Zed\ProductDiscontinuedStorage\Persistence;
 
-use Generated\Shared\Transfer\SpyProductDiscontinuedStorageEntityTransfer;
+use Orm\Zed\ProductDiscontinuedStorage\Persistence\SpyProductDiscontinuedStorage;
 
 interface ProductDiscontinuedStorageEntityManagerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SpyProductDiscontinuedStorageEntityTransfer $productDiscontinuedStorageEntityTransfer
+     * @param \Orm\Zed\ProductDiscontinuedStorage\Persistence\SpyProductDiscontinuedStorage $productDiscontinuedStorageEntity
      *
      * @return void
      */
-    public function saveProductDiscontinuedStorageEntity(
-        SpyProductDiscontinuedStorageEntityTransfer $productDiscontinuedStorageEntityTransfer
-    ): void;
+    public function saveProductDiscontinuedStorageEntity(SpyProductDiscontinuedStorage $productDiscontinuedStorageEntity): void;
 
     /**
-     * @param \Generated\Shared\Transfer\SpyProductDiscontinuedStorageEntityTransfer $productDiscontinuedStorageEntityTransfer
+     * @param \Orm\Zed\ProductDiscontinuedStorage\Persistence\SpyProductDiscontinuedStorage $productDiscontinuedStorageEntity
      *
      * @return void
      */
-    public function deleteProductDiscontinuedStorageEntity(
-        SpyProductDiscontinuedStorageEntityTransfer $productDiscontinuedStorageEntityTransfer
-    ): void;
+    public function deleteProductDiscontinuedStorageEntity(SpyProductDiscontinuedStorage $productDiscontinuedStorageEntity): void;
 }

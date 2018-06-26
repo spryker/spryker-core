@@ -12,8 +12,6 @@ use Spryker\Zed\ProductAlternativeStorage\Business\ProductAlternativePublisher\P
 use Spryker\Zed\ProductAlternativeStorage\Business\ProductAlternativePublisher\ProductAlternativePublisherInterface;
 use Spryker\Zed\ProductAlternativeStorage\Business\ProductAlternativePublisher\ProductReplacementPublisher;
 use Spryker\Zed\ProductAlternativeStorage\Business\ProductAlternativePublisher\ProductReplacementPublisherInterface;
-use Spryker\Zed\ProductAlternativeStorage\Business\ProductAlternativeUnpublisher\ProductAlternativeUnpublisher;
-use Spryker\Zed\ProductAlternativeStorage\Business\ProductAlternativeUnpublisher\ProductAlternativeUnpublisherInterface;
 
 /**
  * @method \Spryker\Zed\ProductAlternativeStorage\ProductAlternativeStorageConfig getConfig()
@@ -30,17 +28,6 @@ class ProductAlternativeStorageBusinessFactory extends AbstractBusinessFactory
         return new ProductAlternativePublisher(
             $this->getRepository(),
             $this->getEntityManager()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductAlternativeStorage\Business\ProductAlternativeUnpublisher\ProductAlternativeUnpublisherInterface
-     */
-    public function createProductAlternativeUnublisher(): ProductAlternativeUnpublisherInterface
-    {
-        return new ProductAlternativeUnpublisher(
-            $this->getEntityManager(),
-            $this->getRepository()
         );
     }
 

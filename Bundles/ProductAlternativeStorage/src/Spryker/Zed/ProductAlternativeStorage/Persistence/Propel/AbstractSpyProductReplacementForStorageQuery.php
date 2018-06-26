@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ProductAlternativeStorage\Persistence\Propel;
 
-use Orm\Zed\ProductAlternativeStorage\Persistence\Base\SpyProductReplacementStorageQuery as BaseSpyProductReplacementStorageQuery;
+use Orm\Zed\ProductAlternativeStorage\Persistence\Base\SpyProductReplacementForStorageQuery as BaseSpyProductReplacementStorageQuery;
 
-abstract class AbstractSpyProductReplacementStorageQuery extends BaseSpyProductReplacementStorageQuery
+abstract class AbstractSpyProductReplacementForStorageQuery extends BaseSpyProductReplacementStorageQuery
 {
 }
