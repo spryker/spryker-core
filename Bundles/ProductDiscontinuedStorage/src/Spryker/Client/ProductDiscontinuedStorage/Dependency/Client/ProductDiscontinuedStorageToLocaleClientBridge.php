@@ -25,7 +25,7 @@ class ProductDiscontinuedStorageToLocaleClientBridge implements ProductDiscontin
     /**
      * @return string
      */
-    public function getCurrentLocale(): string
+    public function getCurrentLocale()
     {
         return $this->localeClient->getCurrentLocale();
     }

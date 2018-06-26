@@ -29,7 +29,7 @@ class ProductDiscontinuedStorageToGlossaryStorageClientBridge implements Product
      *
      * @return string
      */
-    public function translate($id, $localeName, array $parameters = []): string
+    public function translate($id, $localeName, array $parameters = [])
     {
         return $this->glossaryStorageClient->translate($id, $localeName, $parameters);
     }
