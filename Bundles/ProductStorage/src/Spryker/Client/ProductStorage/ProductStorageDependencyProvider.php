@@ -21,6 +21,8 @@ class ProductStorageDependencyProvider extends AbstractDependencyProvider
     const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
     const STORE = 'STORE';
     const PLUGIN_PRODUCT_VIEW_EXPANDERS = 'PLUGIN_STORAGE_PRODUCT_EXPANDERS';
+    const PLUGINS_PRODUCT_ABSTRACT_RESTRICTION = 'PLUGINS_PRODUCT_ABSTRACT_RESTRICTION';
+    const PLUGINS_PRODUCT_CONCRETE_RESTRICTION = 'PLUGINS_PRODUCT_CONCRETE_RESTRICTION';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -34,6 +36,8 @@ class ProductStorageDependencyProvider extends AbstractDependencyProvider
         $container = $this->addLocaleClient($container);
         $container = $this->addStore($container);
         $container = $this->addProductViewExpanderPlugins($container);
+        $container = $this->addProductAbstractRestrictionPlugins($container);
+        $container = $this->addProductConcreteRestrictionPlugins($container);
 
         return $container;
     }
@@ -109,9 +113,53 @@ class ProductStorageDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addProductAbstractRestrictionPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_PRODUCT_ABSTRACT_RESTRICTION] = function () {
+            return $this->getProductAbstractRestrictionPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addProductConcreteRestrictionPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_PRODUCT_CONCRETE_RESTRICTION] = function () {
+            return $this->getProductConcreteRestrictionPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface[]
      */
     protected function getProductViewExpanderPlugins()
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Client\ProductStorage\Dependency\Plugin\ProductAbstractRestrictionPluginInterface[]
+     */
+    protected function getProductAbstractRestrictionPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Client\ProductStorage\Dependency\Plugin\ProductConcreteRestrictionPluginInterface[]
+     */
+    protected function getProductConcreteRestrictionPlugins(): array
     {
         return [];
     }

@@ -7,10 +7,13 @@
 
 namespace Spryker\Zed\CartProductListConnector\Business;
 
+use Spryker\Zed\CartProductListConnector\Business\ProductListRestrictionValidator\ProductListRestrictionValidator;
+use Spryker\Zed\CartProductListConnector\Business\ProductListRestrictionValidator\ProductListRestrictionValidatorInterface;
 use Spryker\Zed\CartProductListConnector\Business\RestrictedItemsFilter\RestrictedItemsFilter;
 use Spryker\Zed\CartProductListConnector\Business\RestrictedItemsFilter\RestrictedItemsFilterInterface;
 use Spryker\Zed\CartProductListConnector\CartProductListConnectorDependencyProvider;
 use Spryker\Zed\CartProductListConnector\Dependency\Facade\CartProductListConnectorToMessengerFacadeInterface;
+use Spryker\Zed\CartProductListConnector\Dependency\Facade\CartProductListConnectorToProductFacadeInterface;
 use Spryker\Zed\CartProductListConnector\Dependency\Facade\CartProductListConnectorToProductListFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -23,6 +26,17 @@ class CartProductListConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new RestrictedItemsFilter(
             $this->getMessengerFacade(),
+            $this->createProductListRestrictionValidator()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CartProductListConnector\Business\ProductListRestrictionValidator\ProductListRestrictionValidatorInterface
+     */
+    public function createProductListRestrictionValidator(): ProductListRestrictionValidatorInterface
+    {
+        return new ProductListRestrictionValidator(
+            $this->getProductFacade(),
             $this->getProductListFacade()
         );
     }
@@ -33,6 +47,14 @@ class CartProductListConnectorBusinessFactory extends AbstractBusinessFactory
     public function getMessengerFacade(): CartProductListConnectorToMessengerFacadeInterface
     {
         return $this->getProvidedDependency(CartProductListConnectorDependencyProvider::FACADE_MESSENGER);
+    }
+
+    /**
+     * @return \Spryker\Zed\CartProductListConnector\Dependency\Facade\CartProductListConnectorToProductFacadeInterface
+     */
+    public function getProductFacade(): CartProductListConnectorToProductFacadeInterface
+    {
+        return $this->getProvidedDependency(CartProductListConnectorDependencyProvider::FACADE_PRODUCT);
     }
 
     /**

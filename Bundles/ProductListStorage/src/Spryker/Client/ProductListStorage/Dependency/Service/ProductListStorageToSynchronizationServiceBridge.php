@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\ProductListStorage\Dependency\Service;
 
+use Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface;
+
 class ProductListStorageToSynchronizationServiceBridge implements ProductListStorageToSynchronizationServiceInterface
 {
     /**
@@ -20,5 +22,15 @@ class ProductListStorageToSynchronizationServiceBridge implements ProductListSto
     public function __construct($synchronizationService)
     {
         $this->synchronizationService = $synchronizationService;
+    }
+
+    /**
+     * @param string $resourceName
+     *
+     * @return \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface
+     */
+    public function getStorageKeyBuilder(string $resourceName): SynchronizationKeyGeneratorPluginInterface
+    {
+        return $this->synchronizationService->getStorageKeyBuilder($resourceName);
     }
 }

@@ -10,13 +10,13 @@ namespace Spryker\Zed\CartProductListConnector\Business\RestrictedItemsFilter;
 use Generated\Shared\Transfer\CustomerProductListCollectionTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\CartProductListConnector\Business\ProductListRestrictionValidator\ProductListRestrictionValidatorInterface;
 use Spryker\Zed\CartProductListConnector\Dependency\Facade\CartProductListConnectorToMessengerFacadeInterface;
-use Spryker\Zed\CartProductListConnector\Dependency\Facade\CartProductListConnectorToProductListFacadeInterface;
 
 class RestrictedItemsFilter implements RestrictedItemsFilterInterface
 {
     protected const MESSAGE_PARAM_SKU = '%sku%';
-    protected const MESSAGE_INFO_CONCRETE_INACTIVE_PRODUCT_REMOVED = 'product-cart.info.concrete-product-inactive.removed';
+    protected const MESSAGE_INFO_RESTRICTED_PRODUCT_REMOVED = 'product-cart.info.restricted-product.removed';
 
     /**
      * @var \Spryker\Zed\CartProductListConnector\Dependency\Facade\CartProductListConnectorToMessengerFacadeInterface
@@ -24,20 +24,20 @@ class RestrictedItemsFilter implements RestrictedItemsFilterInterface
     protected $messengerFacade;
 
     /**
-     * @var \Spryker\Zed\CartProductListConnector\Dependency\Facade\CartProductListConnectorToProductListFacadeInterface
+     * @var \Spryker\Zed\CartProductListConnector\Business\ProductListRestrictionValidator\ProductListRestrictionValidatorInterface
      */
-    protected $productListFacade;
+    protected $productListRestrictionValidator;
 
     /**
      * @param \Spryker\Zed\CartProductListConnector\Dependency\Facade\CartProductListConnectorToMessengerFacadeInterface $messengerFacade
-     * @param \Spryker\Zed\CartProductListConnector\Dependency\Facade\CartProductListConnectorToProductListFacadeInterface $productListFacade
+     * @param \Spryker\Zed\CartProductListConnector\Business\ProductListRestrictionValidator\ProductListRestrictionValidatorInterface $productListRestrictionValidator
      */
     public function __construct(
         CartProductListConnectorToMessengerFacadeInterface $messengerFacade,
-        CartProductListConnectorToProductListFacadeInterface $productListFacade
+        ProductListRestrictionValidatorInterface $productListRestrictionValidator
     ) {
         $this->messengerFacade = $messengerFacade;
-        $this->productListFacade = $productListFacade;
+        $this->productListRestrictionValidator = $productListRestrictionValidator;
     }
 
     /**
@@ -68,32 +68,12 @@ class RestrictedItemsFilter implements RestrictedItemsFilterInterface
     {
         if ($customerBlacklistIds || $customerWhitelistIds) {
             foreach ($quoteTransfer->getItems() as $key => $itemTransfer) {
-                if ($this->isProductAbstractRestricted($itemTransfer->getIdProductAbstract(), $customerWhitelistIds, $customerBlacklistIds)) {
+                if ($this->productListRestrictionValidator->isProductAbstractRestricted($itemTransfer->getIdProductAbstract(), $customerWhitelistIds, $customerBlacklistIds)) {
                     $quoteTransfer->getItems()->offsetUnset($key);
                     $this->addFilterMessage($itemTransfer->getSku());
                 }
             }
         }
-    }
-
-    /**
-     * @param int $idProductAbstract
-     * @param int[] $customerWhitelistIds
-     * @param int[] $customerBlacklistIds
-     *
-     * @return bool
-     */
-    protected function isProductAbstractRestricted(
-        int $idProductAbstract,
-        array $customerWhitelistIds,
-        array $customerBlacklistIds
-    ): bool {
-        $productAbstractBlacklistIds = $this->productListFacade->getProductAbstractBlacklistIdsByIdProductAbstract($idProductAbstract);
-        $productAbstractWhitelistIds = $this->productListFacade->getProductAbstractWhitelistIdsByIdProductAbstract($idProductAbstract);
-        $isProductInBlacklist = count(array_intersect($productAbstractBlacklistIds, $customerBlacklistIds));
-        $isProductInWhitelist = count(array_intersect($productAbstractWhitelistIds, $customerWhitelistIds));
-
-        return !$isProductInBlacklist && $isProductInWhitelist;
     }
 
     /**
@@ -136,7 +116,7 @@ class RestrictedItemsFilter implements RestrictedItemsFilterInterface
     protected function addFilterMessage(string $sku): void
     {
         $messageTransfer = new MessageTransfer();
-        $messageTransfer->setValue(static::MESSAGE_INFO_CONCRETE_INACTIVE_PRODUCT_REMOVED);
+        $messageTransfer->setValue(static::MESSAGE_INFO_RESTRICTED_PRODUCT_REMOVED);
         $messageTransfer->setParameters([
             static::MESSAGE_PARAM_SKU => $sku,
         ]);

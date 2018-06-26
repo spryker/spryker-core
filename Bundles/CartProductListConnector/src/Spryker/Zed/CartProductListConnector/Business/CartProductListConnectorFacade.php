@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CartProductListConnector\Business;
 
+use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -29,5 +31,21 @@ class CartProductListConnectorFacade extends AbstractFacade implements CartProdu
         return $this->getFactory()
             ->createRestrictedItemsFilter()
             ->filterRestrictedItems($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     */
+    public function validateItemAddProductListRestrictions(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
+    {
+        return $this->getFactory()
+            ->createProductListRestrictionValidator()
+            ->validateItemAddition($cartChangeTransfer);
     }
 }

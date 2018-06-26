@@ -11,4 +11,19 @@ use Spryker\Shared\Kernel\AbstractBundleConfig;
 
 class ProductListStorageConfig extends AbstractBundleConfig
 {
+    /**
+     * Specification:
+     * - Key generation resource name of product abstract lists.
+     *
+     * @api
+     */
+    public const PRODUCT_LIST_ABSTRACT_RESOURCE_NAME = 'product_abstract_product_lists';
+
+    /**
+     * Specification:
+     * - Key generation resource name of product concrete lists.
+     *
+     * @api
+     */
+    public const PRODUCT_LIST_CONCRETE_RESOURCE_NAME = 'product_concrete_product_lists';
 }

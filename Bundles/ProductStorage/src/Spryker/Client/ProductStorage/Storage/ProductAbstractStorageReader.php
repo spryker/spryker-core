@@ -31,21 +31,31 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
     protected $store;
 
     /**
+     * @var \Spryker\Client\ProductStorage\Dependency\Plugin\ProductAbstractRestrictionPluginInterface[]
+     */
+    protected $productAbstractRestrictionPlugins;
+
+    /**
      * @param \Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceInterface $synchronizationService
      * @param \Spryker\Shared\Kernel\Store $store
+     * @param \Spryker\Client\ProductStorage\Dependency\Plugin\ProductAbstractRestrictionPluginInterface[] $productAbstractRestrictionPlugins
      */
     public function __construct(
         ProductStorageToStorageClientInterface $storageClient,
         ProductStorageToSynchronizationServiceInterface $synchronizationService,
-        Store $store
+        Store $store,
+        array $productAbstractRestrictionPlugins = []
     ) {
         $this->storageClient = $storageClient;
         $this->synchronizationService = $synchronizationService;
         $this->store = $store;
+        $this->productAbstractRestrictionPlugins = $productAbstractRestrictionPlugins;
     }
 
     /**
+     * @deprecated Use findProductAbstractStorageData(int $idProductAbstract, string $localeName): ?array
+     *
      * @param int $idProductAbstract
      * @param string $localeName
      *
@@ -53,6 +63,21 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
      */
     public function getProductAbstractStorageData($idProductAbstract, $localeName)
     {
+        return $this->findProductAbstractStorageData($idProductAbstract, $localeName);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     * @param string $localeName
+     *
+     * @return array|null
+     */
+    public function findProductAbstractStorageData(int $idProductAbstract, string $localeName): ?array
+    {
+        if ($this->isProductAbstractRestricted($idProductAbstract)) {
+            return null;
+        }
+
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer
             ->setReference($idProductAbstract)
@@ -64,5 +89,21 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
             ->generateKey($synchronizationDataTransfer);
 
         return $this->storageClient->get($key);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return bool
+     */
+    public function isProductAbstractRestricted(int $idProductAbstract): bool
+    {
+        foreach ($this->productAbstractRestrictionPlugins as $productAbstractRestrictionPlugin) {
+            if ($productAbstractRestrictionPlugin->isRestricted($idProductAbstract)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

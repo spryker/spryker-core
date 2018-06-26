@@ -1,0 +1,152 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Zed\CartProductListConnector\Business\ProductListRestrictionValidator;
+
+use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
+use Generated\Shared\Transfer\CustomerProductListCollectionTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
+use Spryker\Zed\CartProductListConnector\Dependency\Facade\CartProductListConnectorToProductFacadeInterface;
+use Spryker\Zed\CartProductListConnector\Dependency\Facade\CartProductListConnectorToProductListFacadeInterface;
+
+class ProductListRestrictionValidator implements ProductListRestrictionValidatorInterface
+{
+    protected const MESSAGE_PARAM_SKU = '%sku%';
+    protected const MESSAGE_INFO_RESTRICTED_PRODUCT_REMOVED = 'product-cart.info.restricted-product.removed';
+
+    /**
+     * @var \Spryker\Zed\CartProductListConnector\Dependency\Facade\CartProductListConnectorToProductListFacadeInterface
+     */
+    protected $productListFacade;
+
+    /**
+     * @var \Spryker\Zed\CartProductListConnector\Dependency\Facade\CartProductListConnectorToProductFacadeInterface
+     */
+    protected $productFacade;
+
+    /**
+     * @param \Spryker\Zed\CartProductListConnector\Dependency\Facade\CartProductListConnectorToProductFacadeInterface $productFacade
+     * @param \Spryker\Zed\CartProductListConnector\Dependency\Facade\CartProductListConnectorToProductListFacadeInterface $productListFacade
+     */
+    public function __construct(
+        CartProductListConnectorToProductFacadeInterface $productFacade,
+        CartProductListConnectorToProductListFacadeInterface $productListFacade
+    ) {
+        $this->productListFacade = $productListFacade;
+        $this->productFacade = $productFacade;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     */
+    public function validateItemAddition(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
+    {
+        $responseTransfer = (new CartPreCheckResponseTransfer())->setIsSuccess(true);
+        $customerProductListCollectionTransfer = $cartChangeTransfer->getQuote()->getCustomer()->getCustomerProductListCollection();
+        $customerBlacklistIds = $this->getCustomerBlacklistIds($customerProductListCollectionTransfer);
+        $customerWhitelistIds = $this->getCustomerWhitelistIds($customerProductListCollectionTransfer);
+
+        foreach ($cartChangeTransfer->getItems() as $item) {
+            $this->validateItem($item, $responseTransfer, $customerWhitelistIds, $customerBlacklistIds);
+        }
+
+        return $responseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $item
+     * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $responseTransfer
+     * @param int[] $customerWhitelistIds
+     * @param int[] $customerBlacklistIds
+     *
+     * @return void
+     */
+    protected function validateItem(
+        ItemTransfer $item,
+        CartPreCheckResponseTransfer $responseTransfer,
+        array $customerWhitelistIds,
+        array $customerBlacklistIds
+    ): void {
+        $idProductAbstract = $this->productFacade->getProductAbstractIdByConcreteSku($item->getSku());
+        if ($this->isProductAbstractRestricted($idProductAbstract, $customerWhitelistIds, $customerBlacklistIds)) {
+            $this->addViolation(static::MESSAGE_INFO_RESTRICTED_PRODUCT_REMOVED, $item->getSku(), $responseTransfer);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerProductListCollectionTransfer $customerProductListCollectionTransfer
+     *
+     * @return array
+     */
+    protected function getCustomerBlacklistIds(CustomerProductListCollectionTransfer $customerProductListCollectionTransfer): array
+    {
+        $customerBlacklistIds = [];
+
+        foreach ($customerProductListCollectionTransfer->getBlacklists() as $productListTransfer) {
+            $customerBlacklistIds[] = $productListTransfer->getIdProductList();
+        }
+
+        return $customerBlacklistIds;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerProductListCollectionTransfer $customerProductListCollectionTransfer
+     *
+     * @return array
+     */
+    protected function getCustomerWhitelistIds(CustomerProductListCollectionTransfer $customerProductListCollectionTransfer): array
+    {
+        $customerWhitelistIds = [];
+
+        foreach ($customerProductListCollectionTransfer->getWhitelists() as $productListTransfer) {
+            $customerWhitelistIds[] = $productListTransfer->getIdProductList();
+        }
+
+        return $customerWhitelistIds;
+    }
+
+    /**
+     * @param int $idProductAbstract
+     * @param int[] $customerWhitelistIds
+     * @param int[] $customerBlacklistIds
+     *
+     * @return bool
+     */
+    public function isProductAbstractRestricted(
+        int $idProductAbstract,
+        array $customerWhitelistIds,
+        array $customerBlacklistIds
+    ): bool {
+        $productAbstractBlacklistIds = $this->productListFacade->getProductAbstractBlacklistIdsByIdProductAbstract($idProductAbstract);
+        $productAbstractWhitelistIds = $this->productListFacade->getProductAbstractWhitelistIdsByIdProductAbstract($idProductAbstract);
+        $isProductInBlacklist = count(array_intersect($productAbstractBlacklistIds, $customerBlacklistIds));
+        $isProductInWhitelist = count(array_intersect($productAbstractWhitelistIds, $customerWhitelistIds));
+
+        return $isProductInBlacklist || !$isProductInWhitelist;
+    }
+
+    /**
+     * @param string $message
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $responseTransfer
+     *
+     * @return void
+     */
+    protected function addViolation(string $message, string $sku, CartPreCheckResponseTransfer $responseTransfer): void
+    {
+        $responseTransfer->setIsSuccess(false);
+        $responseTransfer->addMessage(
+            (new MessageTransfer())
+                ->setValue($message)
+                ->setParameters(['%sku%' => $sku])
+        );
+    }
+}

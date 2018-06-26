@@ -46,7 +46,8 @@ class ProductStorageFactory extends AbstractFactory
     {
         return new ProductConcreteStorageReader(
             $this->getStorageClient(),
-            $this->getSynchronizationService()
+            $this->getSynchronizationService(),
+            $this->getProductConcreteRestrictionPlugins()
         );
     }
 
@@ -58,7 +59,8 @@ class ProductStorageFactory extends AbstractFactory
         return new ProductAbstractStorageReader(
             $this->getStorageClient(),
             $this->getSynchronizationService(),
-            $this->getStore()
+            $this->getStore(),
+            $this->getProductAbstractRestrictionPlugins()
         );
     }
 
@@ -92,5 +94,21 @@ class ProductStorageFactory extends AbstractFactory
     public function getStore()
     {
         return $this->getProvidedDependency(ProductStorageDependencyProvider::STORE);
+    }
+
+    /**
+     * @return \Spryker\Client\ProductStorage\Dependency\Plugin\ProductAbstractRestrictionPluginInterface[]
+     */
+    public function getProductAbstractRestrictionPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductStorageDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_RESTRICTION);
+    }
+
+    /**
+     * @return \Spryker\Client\ProductStorage\Dependency\Plugin\ProductConcreteRestrictionPluginInterface[]
+     */
+    public function getProductConcreteRestrictionPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductStorageDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_RESTRICTION);
     }
 }

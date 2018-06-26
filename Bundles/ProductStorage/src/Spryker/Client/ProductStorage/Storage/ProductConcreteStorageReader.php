@@ -25,18 +25,28 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
     protected $storageClient;
 
     /**
+     * @var \Spryker\Client\ProductStorage\Dependency\Plugin\ProductConcreteRestrictionPluginInterface[]
+     */
+    protected $productConcreteRestrictionPlugins;
+
+    /**
      * @param \Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceInterface $synchronizationService
+     * @param \Spryker\Client\ProductStorage\Dependency\Plugin\ProductConcreteRestrictionPluginInterface[] $productConcreteRestrictionPlugins
      */
     public function __construct(
         ProductStorageToStorageClientInterface $storageClient,
-        ProductStorageToSynchronizationServiceInterface $synchronizationService
+        ProductStorageToSynchronizationServiceInterface $synchronizationService,
+        array $productConcreteRestrictionPlugins = []
     ) {
         $this->storageClient = $storageClient;
         $this->synchronizationService = $synchronizationService;
+        $this->productConcreteRestrictionPlugins = $productConcreteRestrictionPlugins;
     }
 
     /**
+     * @deprecated Use findProductConcreteStorageData($idProductConcrete, $localeName): ?array
+     *
      * @param int $idProductConcrete
      * @param string $localeName
      *
@@ -44,6 +54,21 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
      */
     public function getProductConcreteStorageData($idProductConcrete, $localeName)
     {
+        return $this->findProductConcreteStorageData($idProductConcrete, $localeName);
+    }
+
+    /**
+     * @param int $idProductConcrete
+     * @param string $localeName
+     *
+     * @return array|null
+     */
+    public function findProductConcreteStorageData($idProductConcrete, $localeName): ?array
+    {
+        if ($this->isProductConcreteRestricted($idProductConcrete)) {
+            return null;
+        }
+
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer
             ->setLocale($localeName)
@@ -54,5 +79,21 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
             ->generateKey($synchronizationDataTransfer);
 
         return $this->storageClient->get($key);
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return bool
+     */
+    public function isProductConcreteRestricted(int $idProductConcrete): bool
+    {
+        foreach ($this->productConcreteRestrictionPlugins as $productConcreteRestrictionPlugin) {
+            if ($productConcreteRestrictionPlugin->isRestricted($idProductConcrete)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
