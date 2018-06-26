@@ -70,7 +70,7 @@ class HttpRequestValidatorTest extends Unit
     }
 
     /**
-     * @return \Spryker\Glue\GlueApplication\Rest\ResourceRouteLoaderInterface|\PHPUnit\Framework\MockObject\MockObject|
+     * @return \Spryker\Glue\GlueApplication\Rest\ResourceRouteLoaderInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function createResourceRouteLoaderMock(): ResourceRouteLoaderInterface
     {
