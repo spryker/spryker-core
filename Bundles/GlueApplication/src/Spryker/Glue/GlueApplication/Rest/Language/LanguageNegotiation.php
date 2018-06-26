@@ -47,7 +47,7 @@ class LanguageNegotiation implements LanguageNegotiationInterface
             return array_shift($storeLocaleCodes);
         }
 
-        $language = $this->findAcceptLanguage($acceptLanguage, $storeLocaleCodes);
+        $language = $this->findAcceptedLanguage($acceptLanguage, $storeLocaleCodes);
         if (!$language) {
             return array_shift($storeLocaleCodes);
         }
@@ -61,11 +61,11 @@ class LanguageNegotiation implements LanguageNegotiationInterface
      *
      * @return \Negotiation\AcceptLanguage|null
      */
-    protected function findAcceptLanguage(string $acceptLanguage, array $storeLocaleCodes): ?AcceptLanguage
+    protected function findAcceptedLanguage(string $acceptLanguage, array $storeLocaleCodes): ?AcceptLanguage
     {
-        /** @var \Negotiation\AcceptLanguage $accepteLanguage */
-        $accepteLanguage = $this->negotiator->getBest($acceptLanguage, array_keys($storeLocaleCodes));
+        /** @var \Negotiation\AcceptLanguage $acceptedLanguage */
+        $acceptedLanguage = $this->negotiator->getBest($acceptLanguage, array_keys($storeLocaleCodes));
 
-        return $accepteLanguage;
+        return $acceptedLanguage;
     }
 }

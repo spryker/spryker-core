@@ -6,6 +6,7 @@
     "php": ">=7.1"
   },
   "require-dev": {
+    "spryker/kernel": "*",
     "spryker/code-sniffer": "*",
     "spryker/glue-application": "*",
     "spryker/symfony": "*",
@@ -13,7 +14,8 @@
   },
   "suggest": {
     "spryker/glue-application": "If you want to use plugins with glue application.",
-    "spryker/symfony": "If you want to plugins with symfony components."
+    "spryker/symfony": "If you want to plugins with symfony components.",
+    "spryker/kernel": "If you want to use kernel functionality with certain plugins"
   },
   "autoload": {
     "psr-4": {

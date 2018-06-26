@@ -13,18 +13,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Auto-generated group annotations
- * @group SprykerTest
- * @group Glue
- * @group GlueApplication
- * @group Rest
- * @group Uri
- * @group UriParserTest
- *
- * Add your own group annotations below this line
- */
-
-/**
- * Auto-generated group annotations
  * @group Spryker
  * @group Glue
  * @group GlueApplication
