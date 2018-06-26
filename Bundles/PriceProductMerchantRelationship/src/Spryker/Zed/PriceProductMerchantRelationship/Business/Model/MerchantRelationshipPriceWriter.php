@@ -104,7 +104,7 @@ class MerchantRelationshipPriceWriter implements MerchantRelationshipPriceWriter
      *
      * @return bool
      */
-    protected function isPriceStoreRelationChanged(PriceProductTransfer $priceProductTransfer, $idPriceProductStoreBeforeUpdate): bool
+    protected function isPriceStoreRelationChanged(PriceProductTransfer $priceProductTransfer, ?int $idPriceProductStoreBeforeUpdate): bool
     {
         return !$idPriceProductStoreBeforeUpdate || $priceProductTransfer->getMoneyValue()->getIdEntity() !== $idPriceProductStoreBeforeUpdate;
     }
