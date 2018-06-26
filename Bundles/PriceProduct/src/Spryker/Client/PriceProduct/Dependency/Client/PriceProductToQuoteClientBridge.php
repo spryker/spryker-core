@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\PriceProduct\Dependency\Client;
 
+use Generated\Shared\Transfer\QuoteTransfer;
+
 class PriceProductToQuoteClientBridge implements PriceProductToQuoteClientInterface
 {
     /**
@@ -25,7 +27,7 @@ class PriceProductToQuoteClientBridge implements PriceProductToQuoteClientInterf
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getQuote()
+    public function getQuote(): QuoteTransfer
     {
         return $this->quoteClient->getQuote();
     }
