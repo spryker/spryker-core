@@ -18,12 +18,10 @@ class AlternativeProductConcreteSkuToProductIdStep implements DataImportStepInte
     /**
      * @var int[]
      */
-    protected $idProductAlternativeCache = [];
+    protected $idProductConcreteCache = [];
 
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     *
-     * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException
      *
      * @return void
      */
@@ -33,20 +31,33 @@ class AlternativeProductConcreteSkuToProductIdStep implements DataImportStepInte
             return;
         }
 
-        $productAlternativeSku = $dataSet[ProductAlternativeDataSetInterface::KEY_COLUMN_ALTERNATIVE_PRODUCT_CONCRETE_SKU];
+        $this->addAlternativeProductConcreteId($dataSet);
+    }
 
-        if (!isset($this->idProductAlternativeCache[$productAlternativeSku])) {
-            $productAlternativeEntity = SpyProductQuery::create()->findOneBySku($productAlternativeSku);
-            if (!$productAlternativeEntity) {
-                throw new EntityNotFoundException(sprintf(
-                    'Could not find product by sku "%s"',
-                    $productAlternativeSku
-                ));
+    /**
+     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
+     *
+     * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException
+     *
+     * @return void
+     */
+    protected function addAlternativeProductConcreteId(DataSetInterface $dataSet): void
+    {
+        $productConcreteSku = $dataSet[ProductAlternativeDataSetInterface::KEY_COLUMN_ALTERNATIVE_PRODUCT_CONCRETE_SKU];
+
+        if (!isset($this->idProductConcreteCache[$productConcreteSku])) {
+            $productConcreteEntity = SpyProductQuery::create()->findOneBySku($productConcreteSku);
+            if (!$productConcreteEntity) {
+                throw new EntityNotFoundException(
+                    sprintf(
+                        'Could not find product by sku "%s"',
+                        $productConcreteSku
+                    )
+                );
             }
 
-            $this->idProductAlternativeCache[$productAlternativeSku] = $productAlternativeEntity->getIdProduct();
+            $this->idProductConcreteCache[$productConcreteSku] = $productConcreteEntity->getIdProduct();
         }
-        $dataSet[ProductAlternativeDataSetInterface::FK_PRODUCT_CONCRETE_ALTERNATIVE] =
-            $this->idProductAlternativeCache[$productAlternativeSku];
+        $dataSet[ProductAlternativeDataSetInterface::FK_PRODUCT_CONCRETE_ALTERNATIVE] = $this->idProductConcreteCache[$productConcreteSku];
     }
 }

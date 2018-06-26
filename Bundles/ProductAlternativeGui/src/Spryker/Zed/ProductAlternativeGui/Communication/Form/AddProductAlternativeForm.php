@@ -63,23 +63,27 @@ class AddProductAlternativeForm extends AbstractType
     protected function getProductAlternativeSearchPreSubmitCallback(): callable
     {
         return function (FormEvent $e) {
-              $data = $e->getData();
-              $form = $e->getForm();
+            $data = $e->getData();
+            $form = $e->getForm();
             if (empty($data[static::FIELD_PRODUCT_ALTERNATIVE])) {
                 return;
             }
             if ($form->has(static::FIELD_PRODUCT_ALTERNATIVE)) {
                 $form->remove(static::FIELD_PRODUCT_ALTERNATIVE);
             }
-              $form->add(static::FIELD_PRODUCT_ALTERNATIVE, SelectType::class, [
-                  'label' => 'Add Product Alternative by Name or SKU',
-                  'attr' => [
-                      'placeholder' => 'Type three letters of name or sku for suggestions.',
-                  ],
-                  'required' => false,
-                  'choices' => $data[static::FIELD_PRODUCT_ALTERNATIVE],
-                  'multiple' => true,
-              ]);
+            $form->add(
+                static::FIELD_PRODUCT_ALTERNATIVE,
+                SelectType::class,
+                [
+                    'label' => 'Add Product Alternative by Name or SKU',
+                    'attr' => [
+                        'placeholder' => 'Type three letters of name or sku for suggestions.',
+                    ],
+                    'required' => false,
+                    'choices' => $data[static::FIELD_PRODUCT_ALTERNATIVE],
+                    'multiple' => true,
+                ]
+            );
         };
     }
 }

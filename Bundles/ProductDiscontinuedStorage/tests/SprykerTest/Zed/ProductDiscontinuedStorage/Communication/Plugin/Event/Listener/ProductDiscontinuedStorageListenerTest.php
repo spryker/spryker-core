@@ -9,7 +9,7 @@ namespace SprykerTest\Zed\ProductDiscontinuedStorage\Communication\Plugin\Event\
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
-use Generated\Shared\Transfer\ProductDiscontinuedRequestTransfer;
+use Generated\Shared\Transfer\ProductDiscontinueRequestTransfer;
 use PHPUnit\Framework\SkippedTestError;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
@@ -70,7 +70,7 @@ class ProductDiscontinuedStorageListenerTest extends Unit
         $this->productDiscontinuedStorageListener->setFacade($this->tester->getFacade());
 
         $productConcrete = $this->tester->haveProduct();
-        $productDiscontinuedRequestTransfer = (new ProductDiscontinuedRequestTransfer())
+        $productDiscontinuedRequestTransfer = (new ProductDiscontinueRequestTransfer())
             ->setIdProduct($productConcrete->getIdProductConcrete());
         $this->productDiscontinuedTransfer = $this->tester->getProductDiscontinuedFacade()->markProductAsDiscontinued(
             $productDiscontinuedRequestTransfer

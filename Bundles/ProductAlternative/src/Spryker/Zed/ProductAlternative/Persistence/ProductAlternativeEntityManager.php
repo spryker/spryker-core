@@ -16,10 +16,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class ProductAlternativeEntityManager extends AbstractEntityManager implements ProductAlternativeEntityManagerInterface
 {
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param int $idProduct
      * @param int $idProductAbstractAlternative
      *
@@ -28,15 +24,11 @@ class ProductAlternativeEntityManager extends AbstractEntityManager implements P
     public function saveProductAbstractAlternative(int $idProduct, int $idProductAbstractAlternative): ProductAlternativeTransfer
     {
         $productAlternativeEntity = $this->getFactory()
-            ->createProductAlternativeQuery()
+            ->createProductAlternativePropelQuery()
             ->filterByFkProduct($idProduct)
             ->filterByFkProductAbstractAlternative($idProductAbstractAlternative)
             ->findOneOrCreate();
-
-        $productAlternativeEntity
-            ->setFkProduct($idProduct)
-            ->setFkProductAbstractAlternative($idProductAbstractAlternative)
-            ->save();
+        $productAlternativeEntity->save();
 
         return $this->getFactory()
             ->createProductAlternativeMapper()
@@ -44,10 +36,6 @@ class ProductAlternativeEntityManager extends AbstractEntityManager implements P
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param int $idProduct
      * @param int $idProductConcreteAlternative
      *
@@ -56,15 +44,11 @@ class ProductAlternativeEntityManager extends AbstractEntityManager implements P
     public function saveProductConcreteAlternative(int $idProduct, int $idProductConcreteAlternative): ProductAlternativeTransfer
     {
         $productAlternativeEntity = $this->getFactory()
-            ->createProductAlternativeQuery()
+            ->createProductAlternativePropelQuery()
             ->filterByFkProduct($idProduct)
             ->filterByFkProductConcreteAlternative($idProductConcreteAlternative)
             ->findOneOrCreate();
-
-        $productAlternativeEntity
-            ->setFkProduct($idProduct)
-            ->setFkProductConcreteAlternative($idProductConcreteAlternative)
-            ->save();
+        $productAlternativeEntity->save();
 
         return $this->getFactory()
             ->createProductAlternativeMapper()
@@ -72,10 +56,6 @@ class ProductAlternativeEntityManager extends AbstractEntityManager implements P
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ProductAlternativeTransfer $productAlternativeTransfer
      *
      * @return void
@@ -83,7 +63,7 @@ class ProductAlternativeEntityManager extends AbstractEntityManager implements P
     public function deleteProductAlternative(ProductAlternativeTransfer $productAlternativeTransfer): void
     {
         $productAlternative = $this->getFactory()
-            ->createProductAlternativeQuery()
+            ->createProductAlternativePropelQuery()
             ->filterByIdProductAlternative(
                 $productAlternativeTransfer->getIdProductAlternative()
             )->findOne();

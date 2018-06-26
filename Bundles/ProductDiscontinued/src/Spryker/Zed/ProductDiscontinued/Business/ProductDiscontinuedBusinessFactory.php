@@ -107,7 +107,7 @@ class ProductDiscontinuedBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PostProductDiscontinuePluginInterface[]
      */
-    protected function getPostProductDiscontinuePlugins(): array
+    public function getPostProductDiscontinuePlugins(): array
     {
         return $this->getProvidedDependency(ProductDiscontinuedDependencyProvider::PLUGINS_POST_PRODUCT_DISCONTINUE);
     }
@@ -115,7 +115,7 @@ class ProductDiscontinuedBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PostDeleteProductDiscontinuedPluginInterface[]
      */
-    protected function getPostDeleteProductDiscontinuedPlugins(): array
+    public function getPostDeleteProductDiscontinuedPlugins(): array
     {
         return $this->getProvidedDependency(ProductDiscontinuedDependencyProvider::PLUGINS_POST_DELETE_PRODUCT_DISCONTINUED);
     }

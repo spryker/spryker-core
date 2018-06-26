@@ -9,7 +9,6 @@ namespace Spryker\Zed\Product\Business\Product\Suggest;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
-use Spryker\Zed\Product\Persistence\ProductRepository;
 use Spryker\Zed\Product\Persistence\ProductRepositoryInterface;
 use Spryker\Zed\Product\ProductConfig;
 
@@ -53,18 +52,13 @@ class ProductSuggester implements ProductSuggesterInterface
      */
     public function suggestProductAbstract(string $suggestion, ?int $limit = null): array
     {
-        $limit = $limit ?? $this->config->getFilteredProductsLimitDefault();
+        $limit = $limit ?: $this->config->getFilteredProductsLimitDefault();
 
-        $productAbstractNames = $this->collectFilteredResults(
-            $this->productRepository
-                ->findProductAbstractDataBySkuOrLocalizedName(
-                    $suggestion,
-                    $this->getCurrentLocale(),
-                    $limit
-                )
+        return $this->productRepository->findProductAbstractDataBySkuOrLocalizedName(
+            $suggestion,
+            $this->getCurrentLocale(),
+            $limit
         );
-
-        return $productAbstractNames;
     }
 
     /**
@@ -75,18 +69,13 @@ class ProductSuggester implements ProductSuggesterInterface
      */
     public function suggestProductConcrete(string $suggestion, ?int $limit = null): array
     {
-        $limit = $limit ?? $this->config->getFilteredProductsLimitDefault();
+        $limit = $limit ?: $this->config->getFilteredProductsLimitDefault();
 
-        $productConcreteNames = $this->collectFilteredResults(
-            $this->productRepository
-                ->findProductConcreteDataBySkuOrLocalizedName(
-                    $suggestion,
-                    $this->getCurrentLocale(),
-                    $limit
-                )
+        return $this->productRepository->findProductConcreteDataBySkuOrLocalizedName(
+            $suggestion,
+            $this->getCurrentLocale(),
+            $limit
         );
-
-        return $productConcreteNames;
     }
 
     /**
@@ -95,21 +84,5 @@ class ProductSuggester implements ProductSuggesterInterface
     protected function getCurrentLocale(): LocaleTransfer
     {
         return $this->localeFacade->getCurrentLocale();
-    }
-
-    /**
-     * @param array $products
-     *
-     * @return array
-     */
-    protected function collectFilteredResults(array $products): array
-    {
-        $results = [];
-
-        foreach ($products as $product) {
-            $results[$product[ProductRepository::KEY_FILTERED_PRODUCTS_RESULT]] = $product[ProductRepository::KEY_FILTERED_PRODUCTS_PRODUCT_NAME];
-        }
-
-        return $results;
     }
 }

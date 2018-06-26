@@ -9,10 +9,10 @@ namespace Spryker\Zed\ProductAlternativeStorage\Persistence;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\SpyProductReplacementStorageEntityTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\ProductAlternative\Persistence\Map\SpyProductAlternativeTableMap;
+use Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
@@ -22,27 +22,28 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 class ProductAlternativeStorageRepository extends AbstractRepository implements ProductAlternativeStorageRepositoryInterface
 {
     /**
-     * @api
-     *
      * @param int[] $productIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer[]
+     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage[]
      */
     public function findProductAlternativeStorageEntities(array $productIds): array
     {
         if (!$productIds) {
             return [];
         }
-        $query = $this->getFactory()
-            ->createProductAlternativeStorageQuery()
-            ->filterByFkProduct_In($productIds);
+        $productAlternativeStorageEntities = $this->getFactory()
+            ->createProductAlternativeStoragePropelQuery()
+            ->filterByFkProduct_In($productIds)
+            ->find();
 
-        return $this->buildQueryFromCriteria($query)->find();
+        if ($productAlternativeStorageEntities) {
+            return $productAlternativeStorageEntities->getArrayCopy();
+        }
+
+        return [];
     }
 
     /**
-     * @api
-     *
      * @module Product
      *
      * @param int $idProduct
@@ -52,15 +53,13 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     public function findProductSkuById($idProduct): string
     {
         return $this->getFactory()
-            ->getProductQuery()
+            ->getProductPropelQuery()
             ->filterByIdProduct($idProduct)
             ->select([SpyProductTableMap::COL_SKU])
             ->findOne();
     }
 
     /**
-     * @api
-     *
      * @module ProductAlternative
      *
      * @param int $idProduct
@@ -70,7 +69,7 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     public function findAbstractAlternativesIdsByConcreteProductId($idProduct): array
     {
         return $this->getFactory()
-            ->getProductAlternativeQuery()
+            ->getProductAlternativePropelQuery()
             ->filterByFkProduct($idProduct)
             ->filterByFkProductAbstractAlternative(null, Criteria::ISNOTNULL)
             ->select([SpyProductAlternativeTableMap::COL_FK_PRODUCT_ABSTRACT_ALTERNATIVE])
@@ -79,8 +78,6 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     }
 
     /**
-     * @api
-     *
      * @module ProductAlternative
      *
      * @param int $idProduct
@@ -90,7 +87,7 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     public function findConcreteAlternativesIdsByConcreteProductId($idProduct): array
     {
         return $this->getFactory()
-            ->getProductAlternativeQuery()
+            ->getProductAlternativePropelQuery()
             ->filterByFkProduct($idProduct)
             ->filterByFkProductConcreteAlternative(null, Criteria::ISNOTNULL)
             ->select([SpyProductAlternativeTableMap::COL_FK_PRODUCT_CONCRETE_ALTERNATIVE])
@@ -99,8 +96,6 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     }
 
     /**
-     * @api
-     *
      * @module Product
      *
      * @param int[] $productIds
@@ -110,7 +105,7 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     public function getIndexedProductConcreteIdToSkusByProductIds(array $productIds): array
     {
         return $this->getFactory()
-            ->getProductQuery()
+            ->getProductPropelQuery()
             ->filterByIdProduct_In($productIds)
             ->addAsColumn(ProductConcreteTransfer::SKU, SpyProductTableMap::COL_SKU)
             ->select([SpyProductTableMap::COL_ID_PRODUCT, ProductConcreteTransfer::SKU])
@@ -119,8 +114,6 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     }
 
     /**
-     * @api
-     *
      * @module Product
      *
      * @param int[] $productIds
@@ -130,7 +123,7 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     public function getIndexedProductAbstractIdToSkusByProductIds(array $productIds): array
     {
         return $this->getFactory()
-            ->getProductAbstractQuery()
+            ->getProductAbstractPropelQuery()
             ->filterByIdProductAbstract_In($productIds)
             ->addAsColumn(ProductAbstractTransfer::SKU, SpyProductAbstractTableMap::COL_SKU)
             ->select([SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, ProductAbstractTransfer::SKU])
@@ -139,24 +132,19 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     }
 
     /**
-     * @api
-     *
      * @param string $sku
      *
-     * @return \Generated\Shared\Transfer\SpyProductReplacementStorageEntityTransfer|null
+     * @return null|\Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage
      */
-    public function findProductReplacementStorageEntitiesBySku(string $sku): ?SpyProductReplacementStorageEntityTransfer
+    public function findProductReplacementStorageEntitiesBySku(string $sku): ?SpyProductReplacementForStorage
     {
-        $productReplacementStorageQuery = $this->getFactory()
-            ->createProductReplacementStorageQuery()
-            ->filterBySku_Like($sku);
-
-        return $this->buildQueryFromCriteria($productReplacementStorageQuery)->findOne();
+        return $this->getFactory()
+            ->createProductReplacementForStoragePropelQuery()
+            ->filterBySku_Like($sku)
+            ->findOne();
     }
 
     /**
-     * @api
-     *
      * @module ProductAlternative
      *
      * @param int $idProductAbstract
@@ -166,7 +154,7 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     public function getReplacementsByAbstractProductId(int $idProductAbstract): array
     {
         return $this->getFactory()
-            ->getProductAlternativeQuery()
+            ->getProductAlternativePropelQuery()
             ->filterByFkProductAbstractAlternative($idProductAbstract)
             ->select([SpyProductAlternativeTableMap::COL_FK_PRODUCT])
             ->find()
@@ -174,8 +162,6 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     }
 
     /**
-     * @api
-     *
      * @module ProductAlternative
      *
      * @param int $idProductConcrete
@@ -185,7 +171,7 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     public function getReplacementsByConcreteProductId(int $idProductConcrete): array
     {
         return $this->getFactory()
-            ->getProductAlternativeQuery()
+            ->getProductAlternativePropelQuery()
             ->filterByFkProductConcreteAlternative($idProductConcrete)
             ->select([SpyProductAlternativeTableMap::COL_FK_PRODUCT])
             ->find()

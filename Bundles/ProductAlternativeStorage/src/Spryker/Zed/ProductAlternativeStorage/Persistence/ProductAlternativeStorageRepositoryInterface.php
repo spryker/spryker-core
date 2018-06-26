@@ -7,22 +7,18 @@
 
 namespace Spryker\Zed\ProductAlternativeStorage\Persistence;
 
-use Generated\Shared\Transfer\SpyProductReplacementStorageEntityTransfer;
+use Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage;
 
 interface ProductAlternativeStorageRepositoryInterface
 {
     /**
-     * @api
-     *
      * @param int[] $productIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer[]
+     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage[]
      */
     public function findProductAlternativeStorageEntities(array $productIds): array;
 
     /**
-     * @api
-     *
      * @module Product
      *
      * @param int $idProduct
@@ -32,8 +28,6 @@ interface ProductAlternativeStorageRepositoryInterface
     public function findProductSkuById($idProduct): string;
 
     /**
-     * @api
-     *
      * @module ProductAlternative
      *
      * @param int $idProduct
@@ -43,8 +37,6 @@ interface ProductAlternativeStorageRepositoryInterface
     public function findAbstractAlternativesIdsByConcreteProductId($idProduct): array;
 
     /**
-     * @api
-     *
      * @module ProductAlternative
      *
      * @param int $idProduct
@@ -54,8 +46,6 @@ interface ProductAlternativeStorageRepositoryInterface
     public function findConcreteAlternativesIdsByConcreteProductId($idProduct): array;
 
     /**
-     * @api
-     *
      * @module Product
      *
      * @param int[] $productIds
@@ -65,8 +55,6 @@ interface ProductAlternativeStorageRepositoryInterface
     public function getIndexedProductConcreteIdToSkusByProductIds(array $productIds): array;
 
     /**
-     * @api
-     *
      * @module Product
      *
      * @param int[] $productIds
@@ -76,17 +64,13 @@ interface ProductAlternativeStorageRepositoryInterface
     public function getIndexedProductAbstractIdToSkusByProductIds(array $productIds): array;
 
     /**
-     * @api
-     *
      * @param string $sku
      *
-     * @return \Generated\Shared\Transfer\SpyProductReplacementStorageEntityTransfer|null
+     * @return null|\Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage
      */
-    public function findProductReplacementStorageEntitiesBySku(string $sku): ?SpyProductReplacementStorageEntityTransfer;
+    public function findProductReplacementStorageEntitiesBySku(string $sku): ?SpyProductReplacementForStorage;
 
     /**
-     * @api
-     *
      * @module ProductAlternative
      *
      * @param int $idProductAbstract
@@ -96,8 +80,6 @@ interface ProductAlternativeStorageRepositoryInterface
     public function getReplacementsByAbstractProductId(int $idProductAbstract): array;
 
     /**
-     * @api
-     *
      * @module ProductAlternative
      *
      * @param int $idProductConcrete

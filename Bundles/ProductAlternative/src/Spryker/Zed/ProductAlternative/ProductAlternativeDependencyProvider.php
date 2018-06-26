@@ -18,8 +18,8 @@ class ProductAlternativeDependencyProvider extends AbstractBundleDependencyProvi
 {
     public const FACADE_LOCALE = 'FACADE_LOCALE';
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
-    public const QUERY_PRODUCT = 'QUERY_PRODUCT';
-    public const QUERY_PRODUCT_ABSTRACT = 'QUERY_PRODUCT_ABSTRACT';
+    public const PROPEL_QUERY_PRODUCT = 'PROPEL_QUERY_PRODUCT';
+    public const PROPEL_QUERY_PRODUCT_ABSTRACT = 'QUERY_PRODUCT_ABSTRACT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -43,8 +43,8 @@ class ProductAlternativeDependencyProvider extends AbstractBundleDependencyProvi
     public function providePersistenceLayerDependencies(Container $container): Container
     {
         $container = parent::providePersistenceLayerDependencies($container);
-        $container = $this->addProductQuery($container);
-        $container = $this->addProductAbstractQuery($container);
+        $container = $this->addProductPropelQuery($container);
+        $container = $this->addProductAbstractPropelQuery($container);
 
         return $container;
     }
@@ -86,9 +86,9 @@ class ProductAlternativeDependencyProvider extends AbstractBundleDependencyProvi
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addProductQuery(Container $container): Container
+    protected function addProductPropelQuery(Container $container): Container
     {
-        $container[static::QUERY_PRODUCT] = function () {
+        $container[static::PROPEL_QUERY_PRODUCT] = function () {
             return SpyProductQuery::create();
         };
 
@@ -100,9 +100,9 @@ class ProductAlternativeDependencyProvider extends AbstractBundleDependencyProvi
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addProductAbstractQuery(Container $container): Container
+    protected function addProductAbstractPropelQuery(Container $container): Container
     {
-        $container[static::QUERY_PRODUCT_ABSTRACT] = function () {
+        $container[static::PROPEL_QUERY_PRODUCT_ABSTRACT] = function () {
             return SpyProductAbstractQuery::create();
         };
 

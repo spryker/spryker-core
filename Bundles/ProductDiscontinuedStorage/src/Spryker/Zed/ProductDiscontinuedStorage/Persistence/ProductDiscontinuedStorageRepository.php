@@ -17,7 +17,7 @@ class ProductDiscontinuedStorageRepository extends AbstractRepository implements
     /**
      * @param int[] $productDiscontinuedIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductDiscontinuedStorageEntityTransfer[]
+     * @return \Orm\Zed\ProductDiscontinuedStorage\Persistence\SpyProductDiscontinuedStorage[]
      */
     public function findProductDiscontinuedStorageEntitiesByIds(array $productDiscontinuedIds): array
     {
@@ -25,10 +25,15 @@ class ProductDiscontinuedStorageRepository extends AbstractRepository implements
             return [];
         }
 
-        $query = $this->getFactory()
-            ->createProductDiscontinuedStorageQuery()
-            ->filterByFkProductDiscontinued_In($productDiscontinuedIds);
+        $productDiscontinuedStorageEntities = $this->getFactory()
+            ->createProductDiscontinuedStoragePropelQuery()
+            ->filterByFkProductDiscontinued_In($productDiscontinuedIds)
+            ->find();
 
-        return $this->buildQueryFromCriteria($query)->find();
+        if ($productDiscontinuedStorageEntities) {
+            return $productDiscontinuedStorageEntities->getArrayCopy();
+        }
+
+        return [];
     }
 }

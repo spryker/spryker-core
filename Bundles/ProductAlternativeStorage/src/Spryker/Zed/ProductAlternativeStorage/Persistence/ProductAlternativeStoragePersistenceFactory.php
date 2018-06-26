@@ -11,7 +11,7 @@ use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductAlternative\Persistence\SpyProductAlternativeQuery;
 use Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorageQuery;
-use Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementStorageQuery;
+use Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorageQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ProductAlternativeStorage\ProductAlternativeStorageDependencyProvider;
 
@@ -23,23 +23,23 @@ class ProductAlternativeStoragePersistenceFactory extends AbstractPersistenceFac
     /**
      * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorageQuery
      */
-    public function createProductAlternativeStorageQuery(): SpyProductAlternativeStorageQuery
+    public function createProductAlternativeStoragePropelQuery(): SpyProductAlternativeStorageQuery
     {
         return SpyProductAlternativeStorageQuery::create();
     }
 
     /**
-     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementStorageQuery
+     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorageQuery
      */
-    public function createProductReplacementStorageQuery(): SpyProductReplacementStorageQuery
+    public function createProductReplacementForStoragePropelQuery(): SpyProductReplacementForStorageQuery
     {
-        return SpyProductReplacementStorageQuery::create();
+        return SpyProductReplacementForStorageQuery::create();
     }
 
     /**
      * @return \Orm\Zed\ProductAlternative\Persistence\SpyProductAlternativeQuery
      */
-    public function getProductAlternativeQuery(): SpyProductAlternativeQuery
+    public function getProductAlternativePropelQuery(): SpyProductAlternativeQuery
     {
         return $this->getProvidedDependency(ProductAlternativeStorageDependencyProvider::PROPEL_QUERY_PRODUCT_ALTERNATIVE);
     }
@@ -47,7 +47,7 @@ class ProductAlternativeStoragePersistenceFactory extends AbstractPersistenceFac
     /**
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
-    public function getProductQuery(): SpyProductQuery
+    public function getProductPropelQuery(): SpyProductQuery
     {
         return $this->getProvidedDependency(ProductAlternativeStorageDependencyProvider::PROPEL_QUERY_PRODUCT);
     }
@@ -55,7 +55,7 @@ class ProductAlternativeStoragePersistenceFactory extends AbstractPersistenceFac
     /**
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    public function getProductAbstractQuery(): SpyProductAbstractQuery
+    public function getProductAbstractPropelQuery(): SpyProductAbstractQuery
     {
         return $this->getProvidedDependency(ProductAlternativeStorageDependencyProvider::PROPEL_QUERY_PRODUCT_ABSTRACT);
     }

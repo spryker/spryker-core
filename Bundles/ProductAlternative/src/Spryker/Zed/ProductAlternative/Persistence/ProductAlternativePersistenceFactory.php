@@ -11,8 +11,8 @@ use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductAlternative\Persistence\SpyProductAlternativeQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\ProductAlternative\Persistence\Mapper\ProductAlternativeMapper;
-use Spryker\Zed\ProductAlternative\Persistence\Mapper\ProductAlternativeMapperInterface;
+use Spryker\Zed\ProductAlternative\Persistence\Propel\Mapper\ProductAlternativeMapper;
+use Spryker\Zed\ProductAlternative\Persistence\Propel\Mapper\ProductAlternativeMapperInterface;
 use Spryker\Zed\ProductAlternative\ProductAlternativeDependencyProvider;
 
 /**
@@ -24,13 +24,13 @@ class ProductAlternativePersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\ProductAlternative\Persistence\SpyProductAlternativeQuery
      */
-    public function createProductAlternativeQuery(): SpyProductAlternativeQuery
+    public function createProductAlternativePropelQuery(): SpyProductAlternativeQuery
     {
         return SpyProductAlternativeQuery::create();
     }
 
     /**
-     * @return \Spryker\Zed\ProductAlternative\Persistence\Mapper\ProductAlternativeMapperInterface
+     * @return \Spryker\Zed\ProductAlternative\Persistence\Propel\Mapper\ProductAlternativeMapperInterface
      */
     public function createProductAlternativeMapper(): ProductAlternativeMapperInterface
     {
@@ -40,16 +40,16 @@ class ProductAlternativePersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
-    public function createProductQuery(): SpyProductQuery
+    public function createProductPropelQuery(): SpyProductQuery
     {
-        return $this->getProvidedDependency(ProductAlternativeDependencyProvider::QUERY_PRODUCT);
+        return $this->getProvidedDependency(ProductAlternativeDependencyProvider::PROPEL_QUERY_PRODUCT);
     }
 
     /**
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    public function createProductAbstractQuery(): SpyProductAbstractQuery
+    public function createProductAbstractPropelQuery(): SpyProductAbstractQuery
     {
-        return $this->getProvidedDependency(ProductAlternativeDependencyProvider::QUERY_PRODUCT_ABSTRACT);
+        return $this->getProvidedDependency(ProductAlternativeDependencyProvider::PROPEL_QUERY_PRODUCT_ABSTRACT);
     }
 }

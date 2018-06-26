@@ -27,10 +27,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class ProductAlternativeRepository extends AbstractRepository implements ProductAlternativeRepositoryInterface
 {
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param int $idProductConcrete
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeCollectionTransfer
@@ -38,7 +34,7 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
     public function getProductAlternativesForProductConcrete(int $idProductConcrete): ProductAlternativeCollectionTransfer
     {
         $productAlternativeEntities = $this->getFactory()
-            ->createProductAlternativeQuery()
+            ->createProductAlternativePropelQuery()
             ->filterByFkProduct($idProductConcrete)
             ->find();
 
@@ -48,10 +44,6 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param int $idProductAlternative
      *
      * @return null|\Generated\Shared\Transfer\ProductAlternativeTransfer
@@ -59,7 +51,7 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
     public function findProductAlternativeByIdProductAlternative(int $idProductAlternative): ?ProductAlternativeTransfer
     {
         $alternativeProductEntity = $this->getFactory()
-            ->createProductAlternativeQuery()
+            ->createProductAlternativePropelQuery()
             ->filterByIdProductAlternative($idProductAlternative)
             ->findOne();
 
@@ -73,9 +65,8 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
+     * @modules Product
+     * @modules Category
      *
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -107,9 +98,8 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
+     * @modules Product
+     * @modules Category
      *
      * @param int $idProduct
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -143,10 +133,7 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
     }
 
     /**
-     * @uses SpyProductAbstractLocalizedAttributesQuery
-     * @uses SpyProductCategoryQuery
-     * @uses SpyCategoryQuery
-     * @uses SpyProductCategoryAttributeQuery
+     * @modules Product
      *
      * @param int $idProduct
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -155,14 +142,30 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
      */
     protected function prepareProductQuery(int $idProduct, LocaleTransfer $localeTransfer): SpyProductQuery
     {
-        return $this->getFactory()
-            ->createProductQuery()
+        $productQuery = $this->getFactory()
+            ->createProductPropelQuery()
             ->filterByIdProduct($idProduct)
             ->joinSpyProductLocalizedAttributes(null, Criteria::LEFT_JOIN)
             ->addJoinCondition(
                 'SpyProductLocalizedAttributes',
                 sprintf('%s = %s', SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE, $localeTransfer->getIdLocale())
-            )
+            );
+
+        return $this->addCategoriesToProductQuery($productQuery, $localeTransfer);
+    }
+
+    /**
+     * @modules Category
+     * @modules ProductCategory
+     *
+     * @param \Orm\Zed\Product\Persistence\SpyProductQuery $productQuery
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    protected function addCategoriesToProductQuery(SpyProductQuery $productQuery, LocaleTransfer $localeTransfer): SpyProductQuery
+    {
+        $productQuery
             ->useSpyProductAbstractQuery(null, Criteria::LEFT_JOIN)
                 ->useSpyProductCategoryQuery(null, Criteria::LEFT_JOIN)
                     ->useSpyCategoryQuery(null, Criteria::LEFT_JOIN)
@@ -174,13 +177,12 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
                     ->endUse()
                 ->endUse()
             ->endUse();
+
+        return $productQuery;
     }
 
     /**
-     * @uses SpyProductAbstractLocalizedAttributesQuery
-     * @uses SpyProductCategoryQuery
-     * @uses SpyCategoryQuery
-     * @uses SpyProductCategoryAttributeQuery
+     * @modules Product
      *
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -189,14 +191,30 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
      */
     protected function prepareProductAbstractQuery(int $idProductAbstract, LocaleTransfer $localeTransfer): SpyProductAbstractQuery
     {
-        return $this->getFactory()
-            ->createProductAbstractQuery()
+        $productAbstractQuery = $this->getFactory()
+            ->createProductAbstractPropelQuery()
             ->filterByIdProductAbstract($idProductAbstract)
             ->joinSpyProductAbstractLocalizedAttributes(null, Criteria::LEFT_JOIN)
             ->addJoinCondition(
                 'SpyProductAbstractLocalizedAttributes',
                 sprintf('%s = %s', SpyProductAbstractLocalizedAttributesTableMap::COL_FK_LOCALE, $localeTransfer->getIdLocale())
-            )
+            );
+
+        return $this->addCategoriesToProductAbstractQuery($productAbstractQuery, $localeTransfer);
+    }
+
+    /**
+     * @modules Category
+     * @modules ProductCategory
+     *
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $productAbstractQuery
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
+    protected function addCategoriesToProductAbstractQuery(SpyProductAbstractQuery $productAbstractQuery, LocaleTransfer $localeTransfer): SpyProductAbstractQuery
+    {
+        $productAbstractQuery
             ->useSpyProductCategoryQuery(null, Criteria::LEFT_JOIN)
                 ->useSpyCategoryQuery(null, Criteria::LEFT_JOIN)
                     ->joinAttribute(null, Criteria::LEFT_JOIN)
@@ -206,5 +224,7 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
                     )
                 ->endUse()
             ->endUse();
+
+        return $productAbstractQuery;
     }
 }

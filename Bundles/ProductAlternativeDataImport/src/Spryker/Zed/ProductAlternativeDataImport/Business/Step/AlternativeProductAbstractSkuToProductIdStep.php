@@ -18,12 +18,10 @@ class AlternativeProductAbstractSkuToProductIdStep implements DataImportStepInte
     /**
      * @var int[]
      */
-    protected $idProductAlternativeCache = [];
+    protected $idProductAbstractCache = [];
 
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     *
-     * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException
      *
      * @return void
      */
@@ -33,20 +31,33 @@ class AlternativeProductAbstractSkuToProductIdStep implements DataImportStepInte
             return;
         }
 
+        $this->addAlternativeProductAbstractId($dataSet);
+    }
+
+    /**
+     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
+     *
+     * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException
+     *
+     * @return void
+     */
+    protected function addAlternativeProductAbstractId(DataSetInterface $dataSet): void
+    {
         $productAlternativeSku = $dataSet[ProductAlternativeDataSetInterface::KEY_COLUMN_ALTERNATIVE_PRODUCT_ABSTRACT_SKU];
 
-        if (!isset($this->idProductAlternativeCache[$productAlternativeSku])) {
-            $productAlternativeEntity = SpyProductAbstractQuery::create()->findOneBySku($productAlternativeSku);
-            if (!$productAlternativeEntity) {
-                throw new EntityNotFoundException(sprintf(
-                    'Could not find product by sku "%s"',
-                    $productAlternativeSku
-                ));
+        if (!isset($this->idProductAbstractCache[$productAlternativeSku])) {
+            $productAbstractEntity = SpyProductAbstractQuery::create()->findOneBySku($productAlternativeSku);
+            if (!$productAbstractEntity) {
+                throw new EntityNotFoundException(
+                    sprintf(
+                        'Could not find product by sku "%s"',
+                        $productAlternativeSku
+                    )
+                );
             }
 
-            $this->idProductAlternativeCache[$productAlternativeSku] = $productAlternativeEntity->getIdProductAbstract();
+            $this->idProductAbstractCache[$productAlternativeSku] = $productAbstractEntity->getIdProductAbstract();
         }
-        $dataSet[ProductAlternativeDataSetInterface::FK_PRODUCT_ABSTRACT_ALTERNATIVE] =
-            $this->idProductAlternativeCache[$productAlternativeSku];
+        $dataSet[ProductAlternativeDataSetInterface::FK_PRODUCT_ABSTRACT_ALTERNATIVE] = $this->idProductAbstractCache[$productAlternativeSku];
     }
 }

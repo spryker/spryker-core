@@ -25,11 +25,8 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     public const KEY_FILTERED_PRODUCTS_PRODUCT_NAME = 'name';
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param string $search
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param int $limit
      *
      * @return array
@@ -60,16 +57,14 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
                  static::KEY_FILTERED_PRODUCTS_PRODUCT_NAME,
              ]);
 
-        return $productAbstractQuery->find()
-            ->toArray();
+        return $this->collectFilteredResults(
+            $productAbstractQuery->find()->toArray()
+        );
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param string $search
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param int $limit
      *
      * @return array
@@ -83,7 +78,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
             Criteria::LIKE
         );
 
-        $productAbstractQuery = $this->getFactory()
+        $productConcreteQuery = $this->getFactory()
             ->createProductQuery()
             ->leftJoinSpyProductLocalizedAttributes()
             ->addJoinCondition(
@@ -100,8 +95,9 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
                  static::KEY_FILTERED_PRODUCTS_PRODUCT_NAME,
              ]);
 
-        return $productAbstractQuery->find()
-            ->toArray();
+        return $this->collectFilteredResults(
+            $productConcreteQuery->find()->toArray()
+        );
     }
 
     /**
@@ -115,5 +111,21 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
             ->createProductQuery()
             ->findOneBySku($productConcreteTransfer->getSku())
             ->getIsActive();
+    }
+
+    /**
+     * @param array $products
+     *
+     * @return array
+     */
+    protected function collectFilteredResults(array $products): array
+    {
+        $results = [];
+
+        foreach ($products as $product) {
+            $results[$product[static::KEY_FILTERED_PRODUCTS_RESULT]] = $product[static::KEY_FILTERED_PRODUCTS_PRODUCT_NAME];
+        }
+
+        return $results;
     }
 }

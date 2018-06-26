@@ -7,44 +7,44 @@
 
 namespace Spryker\Zed\ProductAlternativeStorage\Persistence;
 
-use Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer;
-use Generated\Shared\Transfer\SpyProductReplacementStorageEntityTransfer;
+use Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage;
+use Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage;
 
 interface ProductAlternativeStorageEntityManagerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer $productAlternativeStorageEntityTransfer
+     * @param \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage $productAlternativeStorageEntity
      *
      * @return void
      */
     public function saveProductAlternativeStorageEntity(
-        SpyProductAlternativeStorageEntityTransfer $productAlternativeStorageEntityTransfer
+        SpyProductAlternativeStorage $productAlternativeStorageEntity
     ): void;
 
     /**
-     * @param \Generated\Shared\Transfer\SpyProductAlternativeStorageEntityTransfer $productAlternativeStorageEntityTransfer
+     * @param \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage $productAlternativeStorageEntity
      *
      * @return void
      */
     public function deleteProductAlternativeStorageEntity(
-        SpyProductAlternativeStorageEntityTransfer $productAlternativeStorageEntityTransfer
+        SpyProductAlternativeStorage $productAlternativeStorageEntity
     ): void;
 
     /**
-     * @param \Generated\Shared\Transfer\SpyProductReplacementStorageEntityTransfer $productReplacementStorageEntityTransfer
+     * @param \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage $productReplacementStorageForEntity
      *
      * @return void
      */
-    public function saveProductReplacementStorage(
-        SpyProductReplacementStorageEntityTransfer $productReplacementStorageEntityTransfer
+    public function saveProductReplacementForStorage(
+        SpyProductReplacementForStorage $productReplacementStorageForEntity
     ): void;
 
     /**
-     * @param \Generated\Shared\Transfer\SpyProductReplacementStorageEntityTransfer $productReplacementStorageEntityTransfer
+     * @param \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage $productReplacementStorageForEntity
      *
      * @return void
      */
-    public function deleteProductReplacementStorage(
-        SpyProductReplacementStorageEntityTransfer $productReplacementStorageEntityTransfer
+    public function deleteProductReplacementForStorage(
+        SpyProductReplacementForStorage $productReplacementStorageForEntity
     ): void;
 }

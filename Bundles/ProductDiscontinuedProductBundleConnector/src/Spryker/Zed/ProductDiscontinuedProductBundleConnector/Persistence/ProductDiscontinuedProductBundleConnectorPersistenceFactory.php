@@ -19,7 +19,7 @@ class ProductDiscontinuedProductBundleConnectorPersistenceFactory extends Abstra
     /**
      * @return \Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinuedQuery
      */
-    public function createProductDiscontinuedQuery(): SpyProductDiscontinuedQuery
+    public function createProductDiscontinuedPropelQuery(): SpyProductDiscontinuedQuery
     {
         return $this->getProvidedDependency(ProductDiscontinuedProductBundleConnectorDependencyProvider::PROPEL_QUERY_PRODUCT_DISCONTINUED);
     }
