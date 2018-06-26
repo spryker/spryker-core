@@ -14,7 +14,7 @@ use Spryker\Client\ProductPackagingUnit\Model\ProductPackagingUnitAmountExpander
 class ProductPackagingUnitFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Client\ProductPackagingUnit\ProductPackagingUnit\ProductPackagingUnitAmountExpanderInterface
+     * @return \Spryker\Client\ProductPackagingUnit\Model\ProductPackagingUnitAmountExpanderInterface
      */
     public function createProductPackagingUnitAmountExpander(): ProductPackagingUnitAmountExpanderInterface
     {
