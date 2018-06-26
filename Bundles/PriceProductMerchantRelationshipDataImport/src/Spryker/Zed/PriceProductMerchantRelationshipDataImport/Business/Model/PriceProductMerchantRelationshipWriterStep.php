@@ -10,10 +10,10 @@ namespace Spryker\Zed\PriceProductMerchantRelationshipDataImport\Business\Model;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery;
 use Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationshipQuery;
+use Spryker\Shared\PriceProductMerchantRelationshipDataImport\PriceProductMerchantRelationshipDataImportConstants;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\PriceProductMerchantRelationship\Dependency\PriceProductMerchantRelationshipEvents;
 use Spryker\Zed\PriceProductMerchantRelationshipDataImport\Business\Model\DataSet\PriceProductMerchantRelationshipDataSetInterface;
 
 class PriceProductMerchantRelationshipWriterStep extends PublishAwareStep implements DataImportStepInterface
@@ -101,7 +101,7 @@ class PriceProductMerchantRelationshipWriterStep extends PublishAwareStep implem
 
         foreach ($priceProductMerchantRelationshipEntities as $priceProductMerchantRelationshipEntity) {
             $this->addPublishEvents(
-                PriceProductMerchantRelationshipEvents::ENTITY_SPY_PRICE_PRODUCT_MERCHANT_RELATIONSHIP_DELETE,
+                PriceProductMerchantRelationshipDataImportConstants::ENTITY_SPY_PRICE_PRODUCT_MERCHANT_RELATIONSHIP_DELETE,
                 $priceProductMerchantRelationshipEntity->getPrimaryKey()
             );
 
@@ -145,8 +145,8 @@ class PriceProductMerchantRelationshipWriterStep extends PublishAwareStep implem
             ->findOneOrCreate();
 
         $eventName = $priceProductStoreEntity->isNew()
-            ? PriceProductMerchantRelationshipEvents::ENTITY_SPY_PRICE_PRODUCT_STORE_CREATE
-            : PriceProductMerchantRelationshipEvents::ENTITY_SPY_PRICE_PRODUCT_STORE_UPDATE;
+            ? PriceProductMerchantRelationshipDataImportConstants::ENTITY_SPY_PRICE_PRODUCT_STORE_CREATE
+            : PriceProductMerchantRelationshipDataImportConstants::ENTITY_SPY_PRICE_PRODUCT_STORE_UPDATE;
 
         $priceProductStoreEntity->save();
 
