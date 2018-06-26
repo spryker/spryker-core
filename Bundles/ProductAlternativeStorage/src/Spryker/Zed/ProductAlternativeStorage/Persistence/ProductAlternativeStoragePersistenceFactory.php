@@ -23,7 +23,7 @@ class ProductAlternativeStoragePersistenceFactory extends AbstractPersistenceFac
     /**
      * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorageQuery
      */
-    public function createProductAlternativeStorageQuery(): SpyProductAlternativeStorageQuery
+    public function createProductAlternativeStoragePropelQuery(): SpyProductAlternativeStorageQuery
     {
         return SpyProductAlternativeStorageQuery::create();
     }
@@ -31,7 +31,7 @@ class ProductAlternativeStoragePersistenceFactory extends AbstractPersistenceFac
     /**
      * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementStorageQuery
      */
-    public function createProductReplacementStorageQuery(): SpyProductReplacementStorageQuery
+    public function createProductReplacementStoragePropelQuery(): SpyProductReplacementStorageQuery
     {
         return SpyProductReplacementStorageQuery::create();
     }
@@ -39,7 +39,7 @@ class ProductAlternativeStoragePersistenceFactory extends AbstractPersistenceFac
     /**
      * @return \Orm\Zed\ProductAlternative\Persistence\SpyProductAlternativeQuery
      */
-    public function getProductAlternativeQuery(): SpyProductAlternativeQuery
+    public function getProductAlternativePropelQuery(): SpyProductAlternativeQuery
     {
         return $this->getProvidedDependency(ProductAlternativeStorageDependencyProvider::PROPEL_QUERY_PRODUCT_ALTERNATIVE);
     }
@@ -47,7 +47,7 @@ class ProductAlternativeStoragePersistenceFactory extends AbstractPersistenceFac
     /**
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
-    public function getProductQuery(): SpyProductQuery
+    public function getProductPropelQuery(): SpyProductQuery
     {
         return $this->getProvidedDependency(ProductAlternativeStorageDependencyProvider::PROPEL_QUERY_PRODUCT);
     }
@@ -55,7 +55,7 @@ class ProductAlternativeStoragePersistenceFactory extends AbstractPersistenceFac
     /**
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    public function getProductAbstractQuery(): SpyProductAbstractQuery
+    public function getProductAbstractPropelQuery(): SpyProductAbstractQuery
     {
         return $this->getProvidedDependency(ProductAlternativeStorageDependencyProvider::PROPEL_QUERY_PRODUCT_ABSTRACT);
     }

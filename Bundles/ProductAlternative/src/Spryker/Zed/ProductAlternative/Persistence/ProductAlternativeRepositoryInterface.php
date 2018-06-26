@@ -15,11 +15,6 @@ use Generated\Shared\Transfer\ProductAlternativeTransfer;
 interface ProductAlternativeRepositoryInterface
 {
     /**
-     * Specification:
-     * - Retrieves all alternative concrete products for concrete product with id = $idProductConcrete
-     *
-     * @api
-     *
      * @param int $idProductConcrete
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeCollectionTransfer
@@ -27,12 +22,6 @@ interface ProductAlternativeRepositoryInterface
     public function getProductAlternativesForProductConcrete(int $idProductConcrete): ProductAlternativeCollectionTransfer;
 
     /**
-     * Specification:
-     * - Retrieves product alternative object by concrete product id
-     * - Uses $productAlternativeTransfer to extract concrete product id
-     *
-     * @api
-     *
      * @param int $idProductAlternative
      *
      * @return null|\Generated\Shared\Transfer\ProductAlternativeTransfer
@@ -40,13 +29,6 @@ interface ProductAlternativeRepositoryInterface
     public function findProductAlternativeByIdProductAlternative(int $idProductAlternative): ?ProductAlternativeTransfer;
 
     /**
-     * Specification:
-     * - Collects all abstract product data for product alternative and map it to ProductAlternativeListItemTransfer.
-     * - ProductAlternativeListItem transfer acts as a data row for Product Alternatives table view.
-     * - Requires id and isActive values passed in $productAbstractTransfer.
-     *
-     * @api
-     *
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
@@ -58,11 +40,6 @@ interface ProductAlternativeRepositoryInterface
     ): ProductAlternativeListItemTransfer;
 
     /**
-     * Specification:
-     * - Collects all concrete product data for product alternative and map it to ProductAlternativeListItemTransfer.
-     * - ProductAlternativeListItem transfer acts as a data row for Product Alternatives table view.
-     * - Required id value passed in $productConcreteTransfer.
-     *
      * @api
      *
      * @param int $idProduct

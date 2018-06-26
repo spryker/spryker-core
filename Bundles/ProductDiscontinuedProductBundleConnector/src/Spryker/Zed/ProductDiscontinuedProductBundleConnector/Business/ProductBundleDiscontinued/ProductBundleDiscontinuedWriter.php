@@ -17,7 +17,7 @@ class ProductBundleDiscontinuedWriter implements ProductBundleDiscontinuedWriter
     /**
      * @var \Spryker\Zed\ProductDiscontinuedProductBundleConnector\Persistence\ProductDiscontinuedProductBundleConnectorRepositoryInterface
      */
-    protected $productBundleConnectorRepository;
+    protected $productDiscontinuedProductBundleConnectorRepository;
 
     /**
      * @var \Spryker\Zed\ProductDiscontinuedProductBundleConnector\Dependency\Facade\ProductDiscontinuedProductBundleConnectorToProductDiscontinuedFacadeInterface
@@ -25,17 +25,15 @@ class ProductBundleDiscontinuedWriter implements ProductBundleDiscontinuedWriter
     protected $productDiscontinuedFacade;
 
     /**
-     * ProductBundleDiscontinuedWriter constructor.
-     *
-     * @param \Spryker\Zed\ProductDiscontinuedProductBundleConnector\Persistence\ProductDiscontinuedProductBundleConnectorRepositoryInterface $productBundleConnectorRepository
+     * @param \Spryker\Zed\ProductDiscontinuedProductBundleConnector\Persistence\ProductDiscontinuedProductBundleConnectorRepositoryInterface $productDiscontinuedProductBundleConnectorRepository
      * @param \Spryker\Zed\ProductDiscontinuedProductBundleConnector\Dependency\Facade\ProductDiscontinuedProductBundleConnectorToProductDiscontinuedFacadeInterface $productDiscontinuedFacade
      */
     public function __construct(
-        ProductDiscontinuedProductBundleConnectorRepositoryInterface $productBundleConnectorRepository,
+        ProductDiscontinuedProductBundleConnectorRepositoryInterface $productDiscontinuedProductBundleConnectorRepository,
         ProductDiscontinuedProductBundleConnectorToProductDiscontinuedFacadeInterface $productDiscontinuedFacade
     ) {
-        $this->productBundleConnectorRepository = $productBundleConnectorRepository;
         $this->productDiscontinuedFacade = $productDiscontinuedFacade;
+        $this->productDiscontinuedProductBundleConnectorRepository = $productDiscontinuedProductBundleConnectorRepository;
     }
 
     /**
@@ -45,7 +43,7 @@ class ProductBundleDiscontinuedWriter implements ProductBundleDiscontinuedWriter
      */
     public function discontinueRelatedBundle(ProductDiscontinuedTransfer $productDiscontinuedTransfer): void
     {
-        $relatedBundleProductsIds = $this->productBundleConnectorRepository
+        $relatedBundleProductsIds = $this->productDiscontinuedProductBundleConnectorRepository
             ->findRelatedBundleProductsIds($productDiscontinuedTransfer->getIdProductDiscontinued());
 
         if (count($relatedBundleProductsIds)) {

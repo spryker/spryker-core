@@ -52,7 +52,6 @@ class ProductAlternativePublisher implements ProductAlternativePublisherInterfac
             }
 
             $this->saveStorageEntity($indexedProductAlternativeEntityTransfers[$idProduct], $idProduct);
-            unset($indexedProductAlternativeEntityTransfers[$idProduct]);
         }
     }
 
@@ -84,13 +83,13 @@ class ProductAlternativePublisher implements ProductAlternativePublisherInterfac
         SpyProductAlternativeStorageEntityTransfer $productAlternativeStorageEntity,
         int $productId
     ): void {
-
         $abstractAlternatives = $this->productAlternativeStorageRepository->findAbstractAlternativesIdsByConcreteProductId($productId);
         $concreteAlternatives = $this->productAlternativeStorageRepository->findConcreteAlternativesIdsByConcreteProductId($productId);
         $sku = $this->productAlternativeStorageRepository->findProductSkuById($productId);
 
-        if (empty($concreteAlternatives) && empty($abstractAlternatives) && $productAlternativeStorageEntity) {
+        if ($productAlternativeStorageEntity && !count($concreteAlternatives) && !count($abstractAlternatives)) {
             $this->productAlternativeStorageEntityManager->deleteProductAlternativeStorageEntity($productAlternativeStorageEntity);
+
             return;
         }
 

@@ -5,17 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductAlternative\Persistence\Mapper;
+namespace Spryker\Zed\ProductAlternative\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\ProductAlternativeCollectionTransfer;
 use Generated\Shared\Transfer\ProductAlternativeListItemTransfer;
 use Generated\Shared\Transfer\ProductAlternativeTransfer;
 use Orm\Zed\ProductAlternative\Persistence\SpyProductAlternative;
 use Propel\Runtime\Collection\Collection;
-use Spryker\Shared\ProductAlternative\ProductAlternativeConstants;
 
 class ProductAlternativeMapper implements ProductAlternativeMapperInterface
 {
+    public const PRODUCT_TYPE_ABSTRACT = 'Abstract';
+    public const PRODUCT_TYPE_CONCRETE = 'Concrete';
+
     /**
      * @param \Orm\Zed\ProductAlternative\Persistence\SpyProductAlternative $productAlternativeEntity
      *
@@ -38,7 +40,7 @@ class ProductAlternativeMapper implements ProductAlternativeMapperInterface
     public function mapProductAlternativeCollectionTransfer(?Collection $productAlternativeEntities): ProductAlternativeCollectionTransfer
     {
         $productAlternativeCollectionTransfer = new ProductAlternativeCollectionTransfer();
-        if (!$productAlternativeEntities->count()) {
+        if (!$productAlternativeEntities) {
             return $productAlternativeCollectionTransfer;
         }
 
@@ -59,7 +61,7 @@ class ProductAlternativeMapper implements ProductAlternativeMapperInterface
     public function mapProductAbstractDataToProductAlternativeListItemTransfer(array $productAbstractData): ProductAlternativeListItemTransfer
     {
         return $this->mapProductDataToProductAlternativeListItemTransfer($productAbstractData)
-            ->setType(ProductAlternativeConstants::FIELD_PRODUCT_TYPE_ABSTRACT);
+            ->setType(static::PRODUCT_TYPE_ABSTRACT);
     }
 
     /**
@@ -70,7 +72,7 @@ class ProductAlternativeMapper implements ProductAlternativeMapperInterface
     public function mapProductConcreteDataToProductAlternativeListItemTransfer(array $productConcreteData): ProductAlternativeListItemTransfer
     {
         return $this->mapProductDataToProductAlternativeListItemTransfer($productConcreteData)
-            ->setType(ProductAlternativeConstants::FIELD_PRODUCT_TYPE_CONCRETE);
+            ->setType(static::PRODUCT_TYPE_CONCRETE);
     }
 
     /**

@@ -36,7 +36,7 @@ class ProductAlternativeStorageEntityManager extends AbstractEntityManager imple
         SpyProductAlternativeStorageEntityTransfer $productAlternativeStorageEntityTransfer
     ): void {
         $this->getFactory()
-            ->createProductAlternativeStorageQuery()
+            ->createProductAlternativeStoragePropelQuery()
             ->filterByIdProductAlternativeStorage($productAlternativeStorageEntityTransfer->getIdProductAlternativeStorage())
             ->findOne()
             ->delete();
@@ -62,7 +62,7 @@ class ProductAlternativeStorageEntityManager extends AbstractEntityManager imple
         SpyProductReplacementStorageEntityTransfer $productReplacementStorageEntityTransfer
     ): void {
         $this->getFactory()
-            ->createProductReplacementStorageQuery()
+            ->createProductReplacementStoragePropelQuery()
             ->filterByIdProductReplacementStorage($productReplacementStorageEntityTransfer->getIdProductReplacementStorage())
             ->findOne()
             ->delete();
