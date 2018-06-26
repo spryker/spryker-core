@@ -30,7 +30,7 @@ class ProductPackagingUnitClient extends AbstractClient implements ProductPackag
     public function expandProductPackagingUnitQuantityForPersistentCartChange(PersistentCartChangeTransfer $persistentCartChangeTransfer, array $params = []): PersistentCartChangeTransfer
     {
         return $this->getFactory()
-            ->createProductPackagingUnitQuantityExpander()
+            ->createProductPackagingUnitAmountExpander()
             ->expandProductPackagingUnitQuantityForPersistentCartChange($persistentCartChangeTransfer, $params);
     }
 
@@ -49,7 +49,7 @@ class ProductPackagingUnitClient extends AbstractClient implements ProductPackag
     public function expandProductPackagingUnitQuantityForCartChangeRequest(CartChangeTransfer $cartChangeTransfer, array $params = []): CartChangeTransfer
     {
         return $this->getFactory()
-            ->createProductPackagingUnitQuantityExpander()
+            ->createProductPackagingUnitAmountExpander()
             ->expandProductPackagingUnitQuantityForCartChangeRequest($cartChangeTransfer, $params);
     }
 }

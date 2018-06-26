@@ -10,7 +10,7 @@ namespace Spryker\Client\ProductPackagingUnit\Model;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 
-interface ProductPackagingUnitQuantityExpanderInterface
+interface ProductPackagingUnitAmountExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer

@@ -35,13 +35,8 @@
         <property name="skuProduct" type="string"/>
     </transfer>
 
-    <transfer name="ProductPackagingUnitQuantity">
-        <property name="productPackagingUnit" type="ProductPackagingUnit"/>
-        <property name="productPackagingUnitLeadProduct" type="ProductPackagingLeadProduct"/>
-        <property name="stockAmount" type="int"/>
-    </transfer>
-
     <transfer name="Item">
-        <property name="quantityPackagingUnit" type="ProductPackagingUnitQuantity"/>
+        <property name="amountLeadProduct" type="ProductPackagingLeadProduct"/>
+        <property name="amount" type="int"/>
     </transfer>
 </transfers>

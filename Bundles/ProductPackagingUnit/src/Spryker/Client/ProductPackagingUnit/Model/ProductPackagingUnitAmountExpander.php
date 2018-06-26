@@ -9,11 +9,10 @@ namespace Spryker\Client\ProductPackagingUnit\Model;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
-use Generated\Shared\Transfer\ProductPackagingUnitQuantityTransfer;
 
-class ProductPackagingUnitQuantityExpander implements ProductPackagingUnitQuantityExpanderInterface
+class ProductPackagingUnitAmountExpander implements ProductPackagingUnitAmountExpanderInterface
 {
-    protected const PARAM_AMOUNT_PACKAGING_UNIT = 'amount-product-packaging-unit';
+    protected const PARAM_AMOUNT_PACKAGING_UNIT_HASH = 'amount-packaging-unit';
 
     /**
      * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
@@ -23,15 +22,12 @@ class ProductPackagingUnitQuantityExpander implements ProductPackagingUnitQuanti
      */
     public function expandProductPackagingUnitQuantityForPersistentCartChange(PersistentCartChangeTransfer $persistentCartChangeTransfer, array $params = []): PersistentCartChangeTransfer
     {
-        $packagingUnitAmount = $this->getPackagingUnitAmount($params);
-        if (!$packagingUnitAmount) {
-            return $persistentCartChangeTransfer;
-        }
-
         foreach ($persistentCartChangeTransfer->getItems() as $itemTransfer) {
-            $itemTransfer->setQuantityPackagingUnit(
-                $this->createPackagingUnitTransfer($packagingUnitAmount)
-            );
+            $packagingUnitAmount = $this->getPackagingUnitAmount($params, $itemTransfer->getSku());
+
+            if ($packagingUnitAmount) {
+                $itemTransfer->setAmount($packagingUnitAmount);
+            }
         }
 
         return $persistentCartChangeTransfer;
@@ -45,15 +41,12 @@ class ProductPackagingUnitQuantityExpander implements ProductPackagingUnitQuanti
      */
     public function expandProductPackagingUnitQuantityForCartChangeRequest(CartChangeTransfer $cartChangeTransfer, array $params = []): CartChangeTransfer
     {
-        $packagingUnitAmount = $this->getPackagingUnitAmount($params);
-        if (!$packagingUnitAmount) {
-            return $cartChangeTransfer;
-        }
-
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            $itemTransfer->setQuantityPackagingUnit(
-                $this->createPackagingUnitTransfer($packagingUnitAmount)
-            );
+            $packagingUnitAmount = $this->getPackagingUnitAmount($params, $itemTransfer->getSku());
+
+            if ($packagingUnitAmount) {
+                $itemTransfer->setAmount($packagingUnitAmount);
+            }
         }
 
         return $cartChangeTransfer;
@@ -61,26 +54,16 @@ class ProductPackagingUnitQuantityExpander implements ProductPackagingUnitQuanti
 
     /**
      * @param array $params
+     * @param string $sku
      *
      * @return int|null
      */
-    protected function getPackagingUnitAmount(array $params): ?int
+    protected function getPackagingUnitAmount(array $params, string $sku): ?int
     {
-        if (empty($params[static::PARAM_AMOUNT_PACKAGING_UNIT])) {
+        if (empty($params[static::PARAM_AMOUNT_PACKAGING_UNIT_HASH][$sku])) {
             return null;
         }
 
-        return (int)$params[static::PARAM_AMOUNT_PACKAGING_UNIT];
-    }
-
-    /**
-     * @param int $packagingUnitAmount
-     *
-     * @return \Generated\Shared\Transfer\ProductPackagingUnitQuantityTransfer
-     */
-    protected function createPackagingUnitTransfer(int $packagingUnitAmount): ProductPackagingUnitQuantityTransfer
-    {
-        return (new ProductPackagingUnitQuantityTransfer())
-            ->setStockAmount($packagingUnitAmount);
+        return (int)$params[static::PARAM_AMOUNT_PACKAGING_UNIT_HASH][$sku];
     }
 }

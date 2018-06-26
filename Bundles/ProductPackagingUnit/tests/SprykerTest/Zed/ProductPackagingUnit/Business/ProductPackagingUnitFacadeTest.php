@@ -10,7 +10,6 @@ namespace SprykerTest\Zed\ProductPackagingUnit\Business;
 use Generated\Shared\DataBuilder\ProductPackagingUnitTypeBuilder;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ProductPackagingUnitQuantityTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTranslationTransfer;
 use Generated\Shared\Transfer\SpyProductAbstractEntityTransfer;
 use Generated\Shared\Transfer\SpyProductEntityTransfer;
@@ -200,18 +199,14 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
                 (new ItemTransfer())
                     ->setSku($boxProductConcreteTransfer->getSku())
                     ->setQuantity(static::ITEM_QUANTITY)
-                    ->setQuantityPackagingUnit(
-                        (new ProductPackagingUnitQuantityTransfer())
-                            ->setStockAmount(static::PACKAGE_AMOUNT)
-                    )
+                    ->setAmount(static::PACKAGE_AMOUNT)
             );
 
         $this->getFacade()->expandCartChangeWithQuantityPackagingUnit($cartChange);
         foreach ($cartChange->getItems() as $itemTransfer) {
-            $this->assertNotNull($itemTransfer->getQuantityPackagingUnit());
-            $this->assertNotNull($itemTransfer->getQuantityPackagingUnit()->getProductPackagingUnit());
-            $this->assertNotNull($itemTransfer->getQuantityPackagingUnit()->getProductPackagingUnitLeadProduct());
-            $this->assertEquals($itemProductConcreteTransfer->getSku(), $itemTransfer->getQuantityPackagingUnit()->getProductPackagingUnitLeadProduct()->getSkuProduct());
+            $this->assertNotNull($itemTransfer->getAmountLeadProduct());
+            $this->assertNotNull($itemTransfer->getAmountLeadProduct()->getSkuProduct());
+            $this->assertEquals($itemProductConcreteTransfer->getSku(), $itemTransfer->getAmountLeadProduct()->getSkuProduct());
         }
     }
 

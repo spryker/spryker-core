@@ -35,11 +35,9 @@ class CartChangeExpander implements CartChangeExpanderInterface
     public function expandWithQuantityPackagingUnit(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            if (!$itemTransfer->getQuantityPackagingUnit()) {
+            if (!$itemTransfer->getAmount()) {
                 continue;
             }
-
-            $itemTransfer->getQuantityPackagingUnit()->requireStockAmount();
 
             $this->expandItem($itemTransfer);
         }
@@ -54,24 +52,10 @@ class CartChangeExpander implements CartChangeExpanderInterface
      */
     protected function expandItem(ItemTransfer $itemTransfer)
     {
-        $productPackagingUnitTransfer = $this->productPackagingUnitReader
-            ->getProductPackagingUnitBySku(
-                $itemTransfer->getSku()
-            );
-
         $productPackagingLeadProductTransfer = $this->productPackagingUnitReader
-            ->getProductPackagingLeadProductByProductPackagingSku(
-                $itemTransfer->getSku()
-            );
+            ->getProductPackagingLeadProductByProductPackagingSku($itemTransfer->getSku());
 
-        $quantityPackagingUnit = $itemTransfer->getQuantityPackagingUnit();
-        $quantityPackagingUnit
-            ->setProductPackagingUnit($productPackagingUnitTransfer)
-            ->setProductPackagingUnitLeadProduct($productPackagingLeadProductTransfer);
-
-        $itemTransfer->setQuantityPackagingUnit(
-            $quantityPackagingUnit
-        );
+        $itemTransfer->setAmountLeadProduct($productPackagingLeadProductTransfer);
 
         return $itemTransfer;
     }

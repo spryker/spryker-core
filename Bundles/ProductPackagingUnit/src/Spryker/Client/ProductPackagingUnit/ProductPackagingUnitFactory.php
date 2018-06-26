@@ -8,16 +8,16 @@
 namespace Spryker\Client\ProductPackagingUnit;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\ProductPackagingUnit\Model\ProductPackagingUnitQuantityExpander;
-use Spryker\Client\ProductPackagingUnit\Model\ProductPackagingUnitQuantityExpanderInterface;
+use Spryker\Client\ProductPackagingUnit\Model\ProductPackagingUnitAmountExpander;
+use Spryker\Client\ProductPackagingUnit\Model\ProductPackagingUnitAmountExpanderInterface;
 
 class ProductPackagingUnitFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Client\ProductPackagingUnit\ProductPackagingUnit\ProductPackagingUnitQuantityExpanderInterface
+     * @return \Spryker\Client\ProductPackagingUnit\ProductPackagingUnit\ProductPackagingUnitAmountExpanderInterface
      */
-    public function createProductPackagingUnitQuantityExpander(): ProductPackagingUnitQuantityExpanderInterface
+    public function createProductPackagingUnitAmountExpander(): ProductPackagingUnitAmountExpanderInterface
     {
-        return new ProductPackagingUnitQuantityExpander();
+        return new ProductPackagingUnitAmountExpander();
     }
 }

@@ -27,16 +27,12 @@ class QuantityPackagingUnitOrderItemExpanderPreSavePlugin implements OrderItemEx
      */
     public function expandOrderItem(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, SpySalesOrderItemEntityTransfer $salesOrderItemEntity): SpySalesOrderItemEntityTransfer
     {
-        if (!$itemTransfer->getQuantityPackagingUnit()) {
+        if (!$itemTransfer->getAmountLeadProduct()) {
             return $salesOrderItemEntity;
         }
 
-        $packagingUnitLeadProductSku = $itemTransfer->getQuantityPackagingUnit()
-            ->getProductPackagingUnitLeadProduct()
-            ->getSkuProduct();
-
-        $packagingUnitAmount = $itemTransfer->getQuantityPackagingUnit()
-            ->getStockAmount();
+        $packagingUnitLeadProductSku = $itemTransfer->getAmountLeadProduct()->getSkuProduct();
+        $packagingUnitAmount = $itemTransfer->getAmount();
 
         $packagingUnitLeadProductAmount = $packagingUnitAmount / $itemTransfer->getQuantity();
 
