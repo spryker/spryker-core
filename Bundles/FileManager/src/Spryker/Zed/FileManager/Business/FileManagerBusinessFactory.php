@@ -7,22 +7,22 @@
 
 namespace Spryker\Zed\FileManager\Business;
 
-use Spryker\Zed\FileManager\Business\Model\FileContent;
-use Spryker\Zed\FileManager\Business\Model\FileDirectoryLocalizedAttributesSaver;
-use Spryker\Zed\FileManager\Business\Model\FileDirectoryReader;
-use Spryker\Zed\FileManager\Business\Model\FileDirectoryRemover;
-use Spryker\Zed\FileManager\Business\Model\FileDirectorySaver;
-use Spryker\Zed\FileManager\Business\Model\FileLocalizedAttributesSaver;
-use Spryker\Zed\FileManager\Business\Model\FileReader;
-use Spryker\Zed\FileManager\Business\Model\FileRemover;
-use Spryker\Zed\FileManager\Business\Model\FileRollback;
-use Spryker\Zed\FileManager\Business\Model\FileSaver;
-use Spryker\Zed\FileManager\Business\Model\FileVersion;
-use Spryker\Zed\FileManager\Business\Model\MimeTypeReader;
-use Spryker\Zed\FileManager\Business\Model\MimeTypeRemover;
-use Spryker\Zed\FileManager\Business\Model\MimeTypeSaver;
-use Spryker\Zed\FileManager\Business\Tree\FileDirectoryTreeHierarchyUpdater;
-use Spryker\Zed\FileManager\Business\Tree\FileDirectoryTreeReader;
+use Spryker\Zed\FileManager\Business\File\FileReader;
+use Spryker\Zed\FileManager\Business\File\FileRemover;
+use Spryker\Zed\FileManager\Business\File\FileRollback;
+use Spryker\Zed\FileManager\Business\File\FileSaver;
+use Spryker\Zed\FileManager\Business\File\FileVersion;
+use Spryker\Zed\FileManager\Business\FileContent\FileContent;
+use Spryker\Zed\FileManager\Business\FileDirectory\FileDirectoryReader;
+use Spryker\Zed\FileManager\Business\FileDirectory\FileDirectoryRemover;
+use Spryker\Zed\FileManager\Business\FileDirectory\FileDirectorySaver;
+use Spryker\Zed\FileManager\Business\FileDirectoryLocalizedAttributes\FileDirectoryLocalizedAttributesSaver;
+use Spryker\Zed\FileManager\Business\FileDirectoryTree\FileDirectoryTreeHierarchyUpdater;
+use Spryker\Zed\FileManager\Business\FileDirectoryTree\FileDirectoryTreeReader;
+use Spryker\Zed\FileManager\Business\FileLocalizedAttributes\FileLocalizedAttributesSaver;
+use Spryker\Zed\FileManager\Business\MimeType\MimeTypeReader;
+use Spryker\Zed\FileManager\Business\MimeType\MimeTypeRemover;
+use Spryker\Zed\FileManager\Business\MimeType\MimeTypeSaver;
 use Spryker\Zed\FileManager\FileManagerDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -32,7 +32,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 class FileManagerBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\FileManager\Business\Model\FileSaverInterface
+     * @return \Spryker\Zed\FileManager\Business\File\FileSaverInterface
      */
     public function createFileSaver()
     {
@@ -46,27 +46,18 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\FileManager\Business\Model\FileDirectorySaverInterface
+     * @return \Spryker\Zed\FileManager\Business\File\FileReaderInterface
      */
-    public function createFileDirectorySaver()
+    public function createFileReader()
     {
-        return new FileDirectorySaver(
-            $this->getEntityManager(),
+        return new FileReader(
             $this->getRepository(),
-            $this->createFileDirectoryLocalizedAttributesSaver()
+            $this->createFileContent()
         );
     }
 
     /**
-     * @return \Spryker\Zed\FileManager\Business\Model\FileDirectoryReaderInterface
-     */
-    public function createFileDirectoryReader()
-    {
-        return new FileDirectoryReader($this->getRepository());
-    }
-
-    /**
-     * @return \Spryker\Zed\FileManager\Business\Model\FileRollbackInterface
+     * @return \Spryker\Zed\FileManager\Business\File\FileRollbackInterface
      */
     public function createFileRollback()
     {
@@ -78,7 +69,7 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\FileManager\Business\Model\FileRemoverInterface
+     * @return \Spryker\Zed\FileManager\Business\File\FileRemoverInterface
      */
     public function createFileRemover()
     {
@@ -90,7 +81,27 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\FileManager\Business\Model\FileDirectoryRemoverInterface
+     * @return \Spryker\Zed\FileManager\Business\FileDirectory\FileDirectorySaverInterface
+     */
+    public function createFileDirectorySaver()
+    {
+        return new FileDirectorySaver(
+            $this->getEntityManager(),
+            $this->getRepository(),
+            $this->createFileDirectoryLocalizedAttributesSaver()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\FileManager\Business\FileDirectory\FileDirectoryReaderInterface
+     */
+    public function createFileDirectoryReader()
+    {
+        return new FileDirectoryReader($this->getRepository());
+    }
+
+    /**
+     * @return \Spryker\Zed\FileManager\Business\FileDirectory\FileDirectoryRemoverInterface
      */
     public function createFileDirectoryRemover()
     {
@@ -103,7 +114,7 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\FileManager\Business\Model\FileLocalizedAttributesSaverInterface
+     * @return \Spryker\Zed\FileManager\Business\FileLocalizedAttributes\FileLocalizedAttributesSaverInterface
      */
     public function createLocalizedAttributesSaver()
     {
@@ -111,7 +122,7 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\FileManager\Business\Model\FileDirectoryLocalizedAttributesSaverInterface
+     * @return \Spryker\Zed\FileManager\Business\FileDirectoryLocalizedAttributes\FileDirectoryLocalizedAttributesSaverInterface
      */
     public function createFileDirectoryLocalizedAttributesSaver()
     {
@@ -119,18 +130,7 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\FileManager\Business\Model\FileReaderInterface
-     */
-    public function createFileReader()
-    {
-        return new FileReader(
-            $this->getRepository(),
-            $this->createFileContent()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\FileManager\Business\Model\FileVersionInterface
+     * @return \Spryker\Zed\FileManager\Business\File\FileVersionInterface
      */
     public function createFileVersion()
     {
@@ -138,7 +138,7 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\FileManager\Business\Model\FileContentInterface
+     * @return \Spryker\Zed\FileManager\Business\FileContent\FileContentInterface
      */
     public function createFileContent()
     {
@@ -157,7 +157,7 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\FileManager\Business\Tree\FileDirectoryTreeReaderInterface
+     * @return \Spryker\Zed\FileManager\Business\FileDirectoryTree\FileDirectoryTreeReaderInterface
      */
     public function createFileDirectoryTreeReader()
     {
@@ -165,7 +165,7 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\FileManager\Business\Tree\FileDirectoryTreeHierarchyUpdaterInterface
+     * @return \Spryker\Zed\FileManager\Business\FileDirectoryTree\FileDirectoryTreeHierarchyUpdaterInterface
      */
     public function createFileDirectoryTreeHierarchyUpdater()
     {
@@ -176,7 +176,7 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\FileManager\Business\Model\MimeTypeSaverInterface
+     * @return \Spryker\Zed\FileManager\Business\MimeType\MimeTypeSaverInterface
      */
     public function createMimeTypeSaver()
     {
@@ -187,7 +187,7 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\FileManager\Business\Model\MimeTypeRemoverInterface
+     * @return \Spryker\Zed\FileManager\Business\MimeType\MimeTypeRemoverInterface
      */
     public function createMimeTypeRemover()
     {
@@ -195,7 +195,7 @@ class FileManagerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\FileManager\Business\Model\MimeTypeReaderInterface
+     * @return \Spryker\Zed\FileManager\Business\MimeType\MimeTypeReaderInterface
      */
     public function createMimeTypeReader()
     {

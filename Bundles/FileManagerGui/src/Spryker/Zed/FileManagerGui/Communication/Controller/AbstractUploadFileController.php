@@ -60,7 +60,11 @@ abstract class AbstractUploadFileController extends AbstractController
 
         $fileManagerDataTransfer->setFile($fileTransfer);
         $fileManagerDataTransfer->setFileInfo($this->createFileInfoTransfer($fileTransfer));
-        $fileManagerDataTransfer->setContent($this->getFileContent($fileTransfer));
+
+        if ($fileTransfer->getFileContent() !== null) {
+            $fileManagerDataTransfer->setContent($this->getFileContent($fileTransfer));
+        }
+
         $fileManagerDataTransfer->setFileLocalizedAttributes($fileTransfer->getLocalizedAttributes());
 
         return $fileManagerDataTransfer;
