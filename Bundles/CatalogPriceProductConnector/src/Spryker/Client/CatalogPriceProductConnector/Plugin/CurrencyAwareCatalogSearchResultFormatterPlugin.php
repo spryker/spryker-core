@@ -40,8 +40,11 @@ class CurrencyAwareCatalogSearchResultFormatterPlugin extends AbstractElasticsea
         $result = $this->rawCatalogSearchResultFormatterPlugin->formatResult($searchResult, $requestParameters);
 
         $priceProductClient = $this->getFactory()->getPriceProductClient();
+        $priceProductStorageClient = $this->getFactory()->getPriceProductStorageClient();
         foreach ($result as &$product) {
-            $currentProductPriceTransfer = $priceProductClient->resolveProductPrice($product['prices']);
+            $priceProductStorageTransfer = $priceProductStorageClient->getPriceProductAbstractStorageTransfer($product['id_product_abstract']);
+            $priceMapFromStorage = $priceProductStorageTransfer ? $priceProductStorageTransfer->getPrices() : [];
+            $currentProductPriceTransfer = $priceProductClient->resolveProductPrice($priceMapFromStorage);
             $product['price'] = $currentProductPriceTransfer->getPrice();
             $product['prices'] = $currentProductPriceTransfer->getPrices();
         }

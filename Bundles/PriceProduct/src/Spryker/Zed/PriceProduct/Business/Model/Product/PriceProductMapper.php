@@ -8,12 +8,16 @@
 namespace Spryker\Zed\PriceProduct\Business\Model\Product;
 
 use Generated\Shared\Transfer\MoneyValueTransfer;
+use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Generated\Shared\Transfer\PriceTypeTransfer;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProduct;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore;
 use Spryker\Zed\PriceProduct\Business\Model\PriceType\ProductPriceTypeMapperInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyFacadeInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceFacadeInterface;
+use Spryker\Zed\PriceProduct\PriceProductConfig;
 
 class PriceProductMapper implements PriceProductMapperInterface
 {
@@ -43,18 +47,26 @@ class PriceProductMapper implements PriceProductMapperInterface
     protected $priceFacade;
 
     /**
+     * @var \Spryker\Zed\PriceProduct\PriceProductConfig
+     */
+    protected $config;
+
+    /**
      * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyFacadeInterface $currencyFacade
      * @param \Spryker\Zed\PriceProduct\Business\Model\PriceType\ProductPriceTypeMapperInterface $priceProductTypeMapper
      * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceFacadeInterface $priceFacade
+     * @param \Spryker\Zed\PriceProduct\PriceProductConfig $config
      */
     public function __construct(
         PriceProductToCurrencyFacadeInterface $currencyFacade,
         ProductPriceTypeMapperInterface $priceProductTypeMapper,
-        PriceProductToPriceFacadeInterface $priceFacade
+        PriceProductToPriceFacadeInterface $priceFacade,
+        PriceProductConfig $config
     ) {
         $this->currencyFacade = $currencyFacade;
         $this->priceProductTypeMapper = $priceProductTypeMapper;
         $this->priceFacade = $priceFacade;
+        $this->config = $config;
     }
 
     /**
@@ -78,27 +90,6 @@ class PriceProductMapper implements PriceProductMapperInterface
             ->setPriceTypeName($priceTypeTransfer->getName())
             ->setPriceType($priceTypeTransfer)
             ->setMoneyValue($moneyValueTransfer);
-    }
-
-    /**
-     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProduct[] $priceProductEntities
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
-     */
-    public function mapPriceProductTransferCollection($priceProductEntities)
-    {
-        $productPriceCollection = [];
-        foreach ($priceProductEntities as $priceProductEntity) {
-            foreach ($priceProductEntity->getPriceProductStores() as $priceProductStoreEntity) {
-                $index = $this->createProductPriceGroupingIndex($priceProductStoreEntity, $priceProductEntity);
-                $productPriceCollection[$index] = $this->mapProductPriceTransfer(
-                    $priceProductStoreEntity,
-                    $priceProductEntity
-                );
-            }
-        }
-
-        return $productPriceCollection;
     }
 
     /**
@@ -144,23 +135,72 @@ class PriceProductMapper implements PriceProductMapperInterface
     }
 
     /**
-     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore $priceProductStoreEntity
-     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProduct $priceProductEntity
+     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore[] $priceProductStoreEntities
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return string
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    protected function createProductPriceGroupingIndex(
+    public function mapPriceProductStoreEntitiesToPriceProductTransfers(
+        $priceProductStoreEntities,
+        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+    ): array {
+        $productPriceCollection = [];
+        foreach ($priceProductStoreEntities as $priceProductStoreEntity) {
+            $productPriceCollection[] = $this->mapPriceProductStoreEntityToTransfer(
+                $priceProductStoreEntity,
+                $priceProductCriteriaTransfer
+            );
+        }
+
+        return $productPriceCollection;
+    }
+
+    /**
+     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore $priceProductStoreEntity
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    public function mapPriceProductStoreEntityToTransfer(
         SpyPriceProductStore $priceProductStoreEntity,
-        SpyPriceProduct $priceProductEntity
-    ) {
-        return implode(
-            '-',
-            [
-                $priceProductStoreEntity->getFkStore(),
-                $priceProductStoreEntity->getFkCurrency(),
-                $priceProductEntity->getPriceType()->getName(),
-                $priceProductEntity->getPriceType()->getPriceModeConfiguration(),
-            ]
+        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+    ): PriceProductTransfer {
+
+        $priceProductEntity = $priceProductStoreEntity->getPriceProduct();
+
+        $priceTypeTransfer = (new PriceTypeTransfer())
+            ->setName($priceProductEntity->getPriceType()->getName())
+            ->setPriceModeConfiguration($priceProductEntity->getPriceType()->getPriceModeConfiguration());
+
+        $moneyValueTransfer = $this->mapMoneyValueTransfer($priceProductStoreEntity);
+
+        $priceProductDimensionTransfer = $this->getPriceProductDimensionTransfer(
+            $priceProductStoreEntity
         );
+
+        return (new PriceProductTransfer())
+            ->fromArray($priceProductEntity->toArray(), true)
+            ->setIdProduct($priceProductEntity->getFkProduct())
+            ->setIdProductAbstract($priceProductEntity->getFkProductAbstract())
+            ->setPriceType($priceTypeTransfer)
+            ->setPriceTypeName($priceTypeTransfer->getName())
+            ->setMoneyValue($moneyValueTransfer)
+            ->setPriceDimension($priceProductDimensionTransfer);
+    }
+
+    /**
+     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore $priceProductStoreEntity
+     *
+     * @return \Generated\Shared\Transfer\PriceProductDimensionTransfer
+     */
+    protected function getPriceProductDimensionTransfer(
+        SpyPriceProductStore $priceProductStoreEntity
+    ): PriceProductDimensionTransfer {
+
+        return (new PriceProductDimensionTransfer())
+            ->fromArray(
+                $priceProductStoreEntity->getVirtualColumns(),
+                true
+            );
     }
 }

@@ -8,7 +8,9 @@
 namespace Spryker\Zed\PriceProduct\Business\Model;
 
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
+use Spryker\Shared\PriceProduct\PriceProductConstants;
 use Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyFacadeInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceFacadeInterface;
@@ -59,9 +61,12 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
      *
      * @return \Generated\Shared\Transfer\PriceProductCriteriaTransfer
      */
-    public function buildCriteriaFromFilter(PriceProductFilterTransfer $priceProductFilterTransfer)
+    public function buildCriteriaFromFilter(PriceProductFilterTransfer $priceProductFilterTransfer): PriceProductCriteriaTransfer
     {
-        return (new PriceProductCriteriaTransfer())
+        $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
+            ->fromArray($priceProductFilterTransfer->toArray(), true);
+
+        return $priceProductCriteriaTransfer
             ->setIdCurrency(
                 $this->getCurrencyFromFilter($priceProductFilterTransfer)->getIdCurrency()
             )->setIdStore(
@@ -78,7 +83,7 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
      *
      * @return \Generated\Shared\Transfer\PriceProductCriteriaTransfer
      */
-    public function buildCriteriaWithDefaultValues($priceTypeName = null)
+    public function buildCriteriaWithDefaultValues($priceTypeName = null): PriceProductCriteriaTransfer
     {
         return (new PriceProductCriteriaTransfer())
         ->setPriceMode(
@@ -92,6 +97,9 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
         )
         ->setPriceType(
             $this->priceProductTypeReader->handleDefaultPriceType($priceTypeName)
+        )
+        ->setPriceDimension(
+            (new PriceProductDimensionTransfer())->setType(PriceProductConstants::PRICE_DIMENSION_DEFAULT)
         );
     }
 
@@ -100,12 +108,13 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
      *
      * @return string
      */
-    protected function getPriceModeFromFilter(PriceProductFilterTransfer $priceFilterTransfer)
+    protected function getPriceModeFromFilter(PriceProductFilterTransfer $priceFilterTransfer): string
     {
         $priceMode = $priceFilterTransfer->getPriceMode();
         if (!$priceMode) {
-            $priceMode = $this->priceFacade->getDefaultPriceMode();
+            return $this->priceFacade->getDefaultPriceMode();
         }
+
         return $priceMode;
     }
 

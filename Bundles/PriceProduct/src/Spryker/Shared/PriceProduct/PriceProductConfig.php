@@ -14,20 +14,25 @@ class PriceProductConfig extends AbstractSharedConfig
     /**
      * Price mode for price type when its applicable to gross and net price modes.
      */
-    const PRICE_MODE_BOTH = 'BOTH';
+    protected const PRICE_MODE_BOTH = 'BOTH';
 
     /**
      * @return string
      */
-    public function getPriceTypeDefaultName()
+    protected const PRICE_TYPE_DEFAULT = 'DEFAULT';
+
+    /**
+     * @return string
+     */
+    public function getPriceTypeDefaultName(): string
     {
-        return 'DEFAULT';
+        return static::PRICE_TYPE_DEFAULT;
     }
 
     /**
      * @return string
      */
-    public function getPriceModeIdentifierForBothType()
+    public function getPriceModeIdentifierForBothType(): string
     {
         return static::PRICE_MODE_BOTH;
     }

@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\PriceProduct\Business\Model;
 
+use Generated\Shared\Transfer\PriceProductDimensionTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
+use Spryker\Shared\PriceProduct\PriceProductConstants;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapperInterface;
 
 class PriceGrouper implements PriceGrouperInterface
@@ -35,12 +38,21 @@ class PriceGrouper implements PriceGrouperInterface
 
     /**
      * @param string $sku
+     * @param \Generated\Shared\Transfer\PriceProductDimensionTransfer|null $priceProductDimensionTransfer
      *
      * @return array
      */
-    public function findPricesBySkuGroupedForCurrentStore($sku)
-    {
-        $priceProductTransfers = $this->priceReader->findPricesBySkuForCurrentStore($sku);
+    public function findPricesBySkuGroupedForCurrentStore(
+        string $sku,
+        ?PriceProductDimensionTransfer $priceProductDimensionTransfer = null
+    ): array {
+
+        if (!$priceProductDimensionTransfer) {
+            $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
+                ->setType(PriceProductConstants::PRICE_DIMENSION_DEFAULT);
+        }
+
+        $priceProductTransfers = $this->priceReader->findPricesBySkuForCurrentStore($sku, $priceProductDimensionTransfer);
 
         return $this->groupPriceProduct($priceProductTransfers);
     }
@@ -54,18 +66,31 @@ class PriceGrouper implements PriceGrouperInterface
     {
         $prices = [];
         foreach ($priceProductTransfers as $priceProductTransfer) {
-            $priceMoneyValueTransfer = $priceProductTransfer->getMoneyValue();
+            $prices = $this->groupPriceByCurrencyAndStore($priceProductTransfer, $prices);
+        }
 
-            $priceType = $priceProductTransfer->getPriceType()->getName();
-            $currencyIsoCode = $priceMoneyValueTransfer->getCurrency()->getCode();
+        return $prices;
+    }
 
-            if ($priceMoneyValueTransfer->getGrossAmount() !== null) {
-                $prices[$currencyIsoCode][$this->priceProductMapper->getGrossPriceModeIdentifier()][$priceType] = $priceMoneyValueTransfer->getGrossAmount();
-            }
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param array $prices
+     *
+     * @return array
+     */
+    protected function groupPriceByCurrencyAndStore(PriceProductTransfer $priceProductTransfer, array $prices): array
+    {
+        $priceMoneyValueTransfer = $priceProductTransfer->getMoneyValue();
 
-            if ($priceMoneyValueTransfer->getNetAmount() !== null) {
-                $prices[$currencyIsoCode][$this->priceProductMapper->getNetPriceModeIdentifier()][$priceType] = $priceMoneyValueTransfer->getNetAmount();
-            }
+        $priceType = $priceProductTransfer->getPriceType()->getName();
+        $currencyIsoCode = $priceMoneyValueTransfer->getCurrency()->getCode();
+
+        if ($priceMoneyValueTransfer->getGrossAmount() !== null) {
+            $prices[$currencyIsoCode][$this->priceProductMapper->getGrossPriceModeIdentifier()][$priceType] = $priceMoneyValueTransfer->getGrossAmount();
+        }
+
+        if ($priceMoneyValueTransfer->getNetAmount() !== null) {
+            $prices[$currencyIsoCode][$this->priceProductMapper->getNetPriceModeIdentifier()][$priceType] = $priceMoneyValueTransfer->getNetAmount();
         }
 
         return $prices;

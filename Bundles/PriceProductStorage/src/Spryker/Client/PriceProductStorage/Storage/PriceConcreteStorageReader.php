@@ -24,13 +24,23 @@ class PriceConcreteStorageReader implements PriceConcreteStorageReaderInterface
     protected $priceStorageKeyGenerator;
 
     /**
+     * @var \Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductStoragePriceDimensionPluginInterface[]
+     */
+    protected $priceDimensionPlugins;
+
+    /**
      * @param \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToStorageInterface $storageClient
      * @param \Spryker\Client\PriceProductStorage\Storage\PriceProductStorageKeyGeneratorInterface $priceStorageKeyGenerator
+     * @param \Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductStoragePriceDimensionPluginInterface[] $priceDimensionPlugins
      */
-    public function __construct(PriceProductStorageToStorageInterface $storageClient, PriceProductStorageKeyGeneratorInterface $priceStorageKeyGenerator)
-    {
+    public function __construct(
+        PriceProductStorageToStorageInterface $storageClient,
+        PriceProductStorageKeyGeneratorInterface $priceStorageKeyGenerator,
+        array $priceDimensionPlugins
+    ) {
         $this->storageClient = $storageClient;
         $this->priceStorageKeyGenerator = $priceStorageKeyGenerator;
+        $this->priceDimensionPlugins = $priceDimensionPlugins;
     }
 
     /**
@@ -38,20 +48,41 @@ class PriceConcreteStorageReader implements PriceConcreteStorageReaderInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductStorageTransfer|null
      */
-    public function findPriceConcreteStorageTransfer($idProductConcrete)
+    public function findPriceConcreteStorageTransfer($idProductConcrete): ?PriceProductStorageTransfer
     {
-        $key = $this->priceStorageKeyGenerator->generateKey(PriceProductStorageConstants::PRICE_CONCRETE_RESOURCE_NAME, $idProductConcrete);
+        $prices = [];
 
-        return $this->findPriceProductStorageTransfer($key);
+        foreach ($this->priceDimensionPlugins as $priceDimensionPlugin) {
+            $priceProductStorageTransfer = $priceDimensionPlugin->findProductConcretePrices($idProductConcrete);
+
+            if ($priceProductStorageTransfer !== null) {
+                $prices[$priceDimensionPlugin->getDimensionName()] = $priceProductStorageTransfer->getPrices();
+            }
+        }
+
+        $priceProductStorageTransfer = $this->findDefaultPriceDimensionPriceProductStorageTransfer($idProductConcrete);
+        if ($priceProductStorageTransfer) {
+            $prices[PriceProductStorageConstants::PRICE_DIMENSION_DEFAULT] = $priceProductStorageTransfer->getPrices();
+        }
+
+        if (!$prices) {
+            return null;
+        }
+
+        $priceProductStorageTransfer = new PriceProductStorageTransfer();
+        $priceProductStorageTransfer->setPrices($prices);
+
+        return $priceProductStorageTransfer;
     }
 
     /**
-     * @param string $key
+     * @param int $idProductConcrete
      *
      * @return \Generated\Shared\Transfer\PriceProductStorageTransfer|null
      */
-    protected function findPriceProductStorageTransfer($key)
+    protected function findDefaultPriceDimensionPriceProductStorageTransfer(int $idProductConcrete): ?PriceProductStorageTransfer
     {
+        $key = $this->priceStorageKeyGenerator->generateKey(PriceProductStorageConstants::PRICE_CONCRETE_RESOURCE_NAME, $idProductConcrete);
         $priceData = $this->storageClient->get($key);
 
         if (!$priceData) {

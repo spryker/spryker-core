@@ -11,10 +11,12 @@ use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery;
 use Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationshipQuery;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
+use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
+use Spryker\Zed\PriceProductMerchantRelationship\Dependency\PriceProductMerchantRelationshipEvents;
 use Spryker\Zed\PriceProductMerchantRelationshipDataImport\Business\Model\DataSet\PriceProductMerchantRelationshipDataSetInterface;
 
-class PriceProductMerchantRelationshipWriterStep implements DataImportStepInterface
+class PriceProductMerchantRelationshipWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
@@ -43,7 +45,7 @@ class PriceProductMerchantRelationshipWriterStep implements DataImportStepInterf
         $priceProductStoreEntity = $this->findExistingPriceProductStoreEntity($dataSet);
 
         if (!$priceProductStoreEntity) {
-            return $this->getNewPriceProductStoreEntity($dataSet);
+            return $this->getPriceProductStoreEntity($dataSet);
         }
 
         $netPrice = (int)$dataSet[PriceProductMerchantRelationshipDataSetInterface::PRICE_NET];
@@ -52,12 +54,13 @@ class PriceProductMerchantRelationshipWriterStep implements DataImportStepInterf
             return $priceProductStoreEntity;
         }
 
+        //todo check if it correctly trigger event in listener
         $this->removeNotActualRelation(
             $dataSet[PriceProductMerchantRelationshipDataSetInterface::ID_MERCHANT_RELATIONSHIP],
             $priceProductStoreEntity->getIdPriceProductStore()
         );
 
-        return $this->getNewPriceProductStoreEntity($dataSet);
+        return $this->getPriceProductStoreEntity($dataSet);
     }
 
     /**
@@ -79,6 +82,7 @@ class PriceProductMerchantRelationshipWriterStep implements DataImportStepInterf
         }
 
         $priceProductMerchantRelationshipEntity = $priceProductMerchantRelationshipQuery->findOneOrCreate();
+
         $priceProductMerchantRelationshipEntity->save();
     }
 
@@ -90,10 +94,19 @@ class PriceProductMerchantRelationshipWriterStep implements DataImportStepInterf
      */
     protected function removeNotActualRelation(int $idMerchantRelationship, string $idPriceProductStoreEntity): void
     {
-        SpyPriceProductMerchantRelationshipQuery::create()
+        $priceProductMerchantRelationshipEntities = SpyPriceProductMerchantRelationshipQuery::create()
             ->filterByFkMerchantRelationship($idMerchantRelationship)
             ->filterByFkPriceProductStore($idPriceProductStoreEntity)
-            ->delete();
+            ->find();
+
+        foreach ($priceProductMerchantRelationshipEntities as $priceProductMerchantRelationshipEntity) {
+            $this->addPublishEvents(
+                PriceProductMerchantRelationshipEvents::ENTITY_SPY_PRICE_PRODUCT_MERCHANT_RELATIONSHIP_DELETE,
+                $priceProductMerchantRelationshipEntity->getPrimaryKey()
+            );
+
+            $priceProductMerchantRelationshipEntity->delete();
+        }
     }
 
     /**
@@ -118,7 +131,7 @@ class PriceProductMerchantRelationshipWriterStep implements DataImportStepInterf
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore
      */
-    protected function getNewPriceProductStoreEntity(DataSetInterface $dataSet): SpyPriceProductStore
+    protected function getPriceProductStoreEntity(DataSetInterface $dataSet): SpyPriceProductStore
     {
         $netPrice = (int)$dataSet[PriceProductMerchantRelationshipDataSetInterface::PRICE_NET];
         $grossPrice = (int)$dataSet[PriceProductMerchantRelationshipDataSetInterface::PRICE_GROSS];
@@ -131,7 +144,16 @@ class PriceProductMerchantRelationshipWriterStep implements DataImportStepInterf
             ->filterByGrossPrice($grossPrice)
             ->findOneOrCreate();
 
+        $eventName = $priceProductStoreEntity->isNew()
+            ? PriceProductMerchantRelationshipEvents::ENTITY_SPY_PRICE_PRODUCT_STORE_CREATE
+            : PriceProductMerchantRelationshipEvents::ENTITY_SPY_PRICE_PRODUCT_STORE_UPDATE;
+
         $priceProductStoreEntity->save();
+
+        $this->addPublishEvents(
+            $eventName,
+            $priceProductStoreEntity->getPrimaryKey()
+        );
 
         return $priceProductStoreEntity;
     }

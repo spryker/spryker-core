@@ -7,6 +7,7 @@
 namespace Spryker\Zed\PriceProductDataImport\Business\Model;
 
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceTypeTableMap;
+use Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceTypeQuery;
@@ -27,7 +28,7 @@ class PriceProductWriterStep extends PublishAwareStep implements DataImportStepI
      *
      * @return void
      */
-    public function execute(DataSetInterface $dataSet)
+    public function execute(DataSetInterface $dataSet): void
     {
         $priceTypeEntity = SpyPriceTypeQuery::create()
             ->filterByName($dataSet[PriceProductDataSet::KEY_PRICE_TYPE])
@@ -74,5 +75,23 @@ class PriceProductWriterStep extends PublishAwareStep implements DataImportStepI
         $priceProductStoreEntity->setPriceDataChecksum($dataSet[PriceProductDataSet::KEY_PRICE_DATA_CHECKSUM]);
 
         $priceProductStoreEntity->save();
+
+        $this->savePriceProductDefault($priceProductStoreEntity->getPrimaryKey());
+    }
+
+    /**
+     * @param int $idPriceProductStore
+     *
+     * @return void
+     */
+    protected function savePriceProductDefault(int $idPriceProductStore): void
+    {
+        $priceProductDefaultEntity = SpyPriceProductDefaultQuery::create()
+            ->filterByFkPriceProductStore($idPriceProductStore)
+            ->findOneOrCreate();
+
+        if ($priceProductDefaultEntity->isNew()) {
+            $priceProductDefaultEntity->save();
+        }
     }
 }

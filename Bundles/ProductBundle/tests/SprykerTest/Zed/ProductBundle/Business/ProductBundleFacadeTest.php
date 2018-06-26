@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
+use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
@@ -24,6 +25,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundleQuery;
+use Spryker\Shared\PriceProduct\PriceProductConstants;
 use Spryker\Zed\Kernel\Locator;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartItemGroupKeyExpander;
 use Spryker\Zed\ProductBundle\Business\ProductBundleFacade;
@@ -463,6 +465,11 @@ class ProductBundleFacadeTest extends Unit
             ->setGrossAmount($price);
 
         $priceProductTransfer->setMoneyValue($moneyValueTransfer);
+
+        $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
+            ->setType(PriceProductConstants::PRICE_DIMENSION_DEFAULT);
+
+        $priceProductTransfer->setPriceDimension($priceProductDimensionTransfer);
 
         $productAbstractTransfer->addPrice($priceProductTransfer);
         $productAbstractTransfer->setAttributes([]);
