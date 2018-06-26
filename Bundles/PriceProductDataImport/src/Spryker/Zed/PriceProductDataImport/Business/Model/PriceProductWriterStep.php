@@ -80,11 +80,11 @@ class PriceProductWriterStep extends PublishAwareStep implements DataImportStepI
     }
 
     /**
-     * @param int $idPriceProductStore
+     * @param string $idPriceProductStore
      *
      * @return void
      */
-    protected function savePriceProductDefault(int $idPriceProductStore): void
+    protected function savePriceProductDefault(string $idPriceProductStore): void
     {
         $priceProductDefaultEntity = SpyPriceProductDefaultQuery::create()
             ->filterByFkPriceProductStore($idPriceProductStore)

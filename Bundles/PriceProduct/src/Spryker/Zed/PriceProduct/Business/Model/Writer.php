@@ -113,7 +113,7 @@ class Writer implements WriterInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
-    public function createPriceForProduct(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
+    public function createPriceForProduct(PriceProductTransfer $priceProductTransfer)
     {
         $priceProductTransfer
             ->requireMoneyValue()
