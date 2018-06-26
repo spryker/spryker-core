@@ -8,8 +8,10 @@
 namespace SprykerTest\Glue\GlueApplication\Rest\Request;
 
 use Codeception\Test\Unit;
+use Spryker\Glue\GlueApplication\GlueApplicationConfig;
 use Spryker\Glue\GlueApplication\Rest\Request\HttpRequestValidator;
 use Spryker\Glue\GlueApplication\Rest\Request\HttpRequestValidatorInterface;
+use Spryker\Glue\GlueApplication\Rest\ResourceRouteLoaderInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateHttpRequestPluginInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -68,12 +70,20 @@ class HttpRequestValidatorTest extends Unit
     }
 
     /**
+     * @return \Spryker\Glue\GlueApplication\Rest\ResourceRouteLoaderInterface|\PHPUnit\Framework\MockObject\MockObject|
+     */
+    protected function createResourceRouteLoaderMock(): ResourceRouteLoaderInterface
+    {
+        return $this->getMockBuilder(ResourceRouteLoaderInterface::class)->getMock();
+    }
+
+    /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateHttpRequestPluginInterface[] $validatorPlugins
      *
      * @return \Spryker\Glue\GlueApplication\Rest\Request\HttpRequestValidatorInterface
      */
     public function createHttpRequestValidator(array $validatorPlugins = []): HttpRequestValidatorInterface
     {
-        return new HttpRequestValidator($validatorPlugins);
+        return new HttpRequestValidator($validatorPlugins, $this->createResourceRouteLoaderMock(), new GlueApplicationConfig());
     }
 }

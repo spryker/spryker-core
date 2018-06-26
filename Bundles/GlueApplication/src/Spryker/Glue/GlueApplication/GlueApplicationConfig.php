@@ -39,7 +39,7 @@ class GlueApplicationConfig extends AbstractBundleConfig
     /**
      * @return array
      */
-    public function getCorsAllowHeaders(): array
+    public function getCorsAllowedHeaders(): array
     {
         return [
             RequestConstantsInterface::HEADER_ACCEPT,

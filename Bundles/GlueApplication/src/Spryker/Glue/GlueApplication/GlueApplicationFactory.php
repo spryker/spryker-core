@@ -149,7 +149,8 @@ class GlueApplicationFactory extends AbstractFactory
     {
         return new ResponseHeaders(
             $this->getFormatResponseHeadersPlugins(),
-            $this->createContentTypeResolver()
+            $this->createContentTypeResolver(),
+            $this->getConfig()
         );
     }
 
@@ -222,7 +223,7 @@ class GlueApplicationFactory extends AbstractFactory
      */
     protected function createHttpRequestValidator(): HttpRequestValidatorInterface
     {
-        return new HttpRequestValidator($this->getValidateRequestPlugins());
+        return new HttpRequestValidator($this->getValidateRequestPlugins(), $this->createResourceRouteLoader(), $this->getConfig());
     }
 
     /**

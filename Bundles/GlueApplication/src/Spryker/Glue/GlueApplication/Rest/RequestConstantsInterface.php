@@ -28,6 +28,8 @@ interface RequestConstantsInterface
     public const HEADER_ACCESS_CONTROL_ALLOW_METHODS = 'access-control-allow-methods';
     public const HEADER_ACCESS_CONTROL_ALLOW_ORIGIN = 'access-control-allow-origin';
     public const HEADER_ACCESS_CONTROL_ALLOW_HEADERS = 'access-control-allow-headers';
+    public const HEADER_ACCESS_CONTROL_REQUEST_METHOD = 'access-control-request-method';
+    public const HEADER_ACCESS_CONTROL_REQUEST_HEADER = 'access-control-request-header';
 
     public const QUERY_INCLUDE = 'include';
     public const QUERY_FIELDS = 'fields';

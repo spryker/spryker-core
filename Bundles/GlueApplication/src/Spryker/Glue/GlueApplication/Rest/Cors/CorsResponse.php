@@ -52,8 +52,7 @@ class CorsResponse implements CorsResponseInterface
             );
 
         $restResponse->addHeader(RequestConstantsInterface::HEADER_ACCESS_CONTROL_ALLOW_METHODS, implode(', ', $availableMethods));
-        $restResponse->addHeader(RequestConstantsInterface::HEADER_ACCESS_CONTROL_ALLOW_ORIGIN, $this->config->getCorsAllowOrigin());
-        $restResponse->addHeader(RequestConstantsInterface::HEADER_ACCESS_CONTROL_ALLOW_HEADERS, implode(', ', $this->config->getCorsAllowHeaders()));
+        $restResponse->addHeader(RequestConstantsInterface::HEADER_ACCESS_CONTROL_ALLOW_HEADERS, implode(', ', $this->config->getCorsAllowedHeaders()));
 
         return $restResponse;
     }

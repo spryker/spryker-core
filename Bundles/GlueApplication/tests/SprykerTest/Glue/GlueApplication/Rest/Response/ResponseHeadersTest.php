@@ -7,6 +7,7 @@
 namespace SprykerTest\Glue\GlueApplication\Rest\Response;
 
 use Codeception\Test\Unit;
+use Spryker\Glue\GlueApplication\GlueApplicationConfig;
 use Spryker\Glue\GlueApplication\Rest\ContentType\ContentTypeResolverInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -74,7 +75,7 @@ class ResponseHeadersTest extends Unit
      */
     protected function createResponseHeaders(array $plugins): ResponseHeadersInterface
     {
-        return new ResponseHeaders($plugins, $this->createContentTypeMock());
+        return new ResponseHeaders($plugins, $this->createContentTypeMock(), new GlueApplicationConfig());
     }
 
     /**

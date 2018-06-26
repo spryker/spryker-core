@@ -6,6 +6,7 @@
 
 namespace Spryker\Glue\GlueApplication\Rest\Response;
 
+use Spryker\Glue\GlueApplication\GlueApplicationConfig;
 use Spryker\Glue\GlueApplication\Rest\ContentType\ContentTypeResolverInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -25,15 +26,23 @@ class ResponseHeaders implements ResponseHeadersInterface
     protected $contentTypeResolver;
 
     /**
+     * @var \Spryker\Glue\GlueApplication\GlueApplicationConfig
+     */
+    protected $config;
+
+    /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormatResponseHeadersPluginInterface[] $formatResponseHeadersPlugins
      * @param \Spryker\Glue\GlueApplication\Rest\ContentType\ContentTypeResolverInterface $contentTypeResolver
+     * @param \Spryker\Glue\GlueApplication\GlueApplicationConfig $config
      */
     public function __construct(
         array $formatResponseHeadersPlugins,
-        ContentTypeResolverInterface $contentTypeResolver
+        ContentTypeResolverInterface $contentTypeResolver,
+        GlueApplicationConfig $config
     ) {
         $this->formatResponseHeadersPlugins = $formatResponseHeadersPlugins;
         $this->contentTypeResolver = $contentTypeResolver;
+        $this->config = $config;
     }
 
     /**
@@ -54,6 +63,11 @@ class ResponseHeaders implements ResponseHeadersInterface
         $httpResponse->headers->set(
             RequestConstantsInterface::HEADER_CONTENT_LANGUAGE,
             $restRequest->getMetadata()->getLocale()
+        );
+
+        $httpResponse->headers->set(
+            RequestConstantsInterface::HEADER_ACCESS_CONTROL_ALLOW_ORIGIN,
+            $this->config->getCorsAllowOrigin()
         );
 
         $httpResponse = $this->executeResponseHeaderPlugins($httpResponse, $restResponse, $restRequest);
