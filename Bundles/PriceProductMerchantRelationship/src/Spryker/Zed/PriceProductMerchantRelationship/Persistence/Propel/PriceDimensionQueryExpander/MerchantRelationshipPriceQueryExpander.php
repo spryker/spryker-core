@@ -70,17 +70,17 @@ class MerchantRelationshipPriceQueryExpander implements MerchantRelationshipPric
             return null;
         }
 
-        $idMerchantRelationshipCollection = [];
+        $idMerchantRelationships = [];
         foreach ($businessUnit->getMerchantRelationships() as $merchantRelationshipTransfer) {
             $idMerchantRelationship = $merchantRelationshipTransfer->getIdMerchantRelationship();
+            if (isset($idMerchantRelationships[$idMerchantRelationship])) {
+                continue;
+            }
 
-//            if (isset($idMerchantRelationshipCollection[$idMerchantRelationship])) {
-//                continue;
-//            }
-//            $idMerchantRelationshipCollection[$idMerchantRelationship] = $idMerchantRelationship;
+            $idMerchantRelationships[$idMerchantRelationship] = $idMerchantRelationship;
         }
 
-        return $idMerchantRelationshipCollection ? $businessUnit->getMerchantRelationships()[0]->getIdMerchantRelationship() : null;
+        return $idMerchantRelationships ? $businessUnit->getMerchantRelationships()[0]->getIdMerchantRelationship() : null;
     }
 
     /**

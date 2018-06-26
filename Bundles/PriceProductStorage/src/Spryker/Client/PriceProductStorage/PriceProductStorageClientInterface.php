@@ -7,6 +7,31 @@
 
 namespace Spryker\Client\PriceProductStorage;
 
+use Generated\Shared\Transfer\PriceProductStorageTransfer;
+
 interface PriceProductStorageClientInterface
 {
+    /**
+     * Specification:
+     *  - Returns abstract product prices from Storage.
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\PriceProductStorageTransfer|null
+     */
+    public function getPriceProductAbstractStorageTransfer(int $idProductAbstract): ?PriceProductStorageTransfer;
+
+    /**
+     * Specification:
+     *  - Returns concrete product prices from Storage.
+     *
+     * @api
+     *
+     * @param int $idProductConcrete
+     *
+     * @return \Generated\Shared\Transfer\PriceProductStorageTransfer|null
+     */
+    public function getPriceProductConcreteStorageTransfer(int $idProductConcrete): ?PriceProductStorageTransfer;
 }
