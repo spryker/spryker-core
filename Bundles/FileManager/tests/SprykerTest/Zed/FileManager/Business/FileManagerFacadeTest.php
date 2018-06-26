@@ -7,7 +7,6 @@
 
 namespace SprykerTest\Zed\FileManager\Business;
 
-use Codeception\Configuration;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\FileDirectoryTransfer;
 use Generated\Shared\Transfer\FileDirectoryTreeNodeTransfer;
@@ -19,12 +18,8 @@ use Generated\Shared\Transfer\MimeTypeCollectionTransfer;
 use Generated\Shared\Transfer\MimeTypeResponseTransfer;
 use Generated\Shared\Transfer\MimeTypeTransfer;
 use Orm\Zed\FileManager\Persistence\SpyFile;
-use Orm\Zed\FileManager\Persistence\SpyFileDirectory;
-use Orm\Zed\FileManager\Persistence\SpyFileInfo;
 use Orm\Zed\FileManager\Persistence\SpyFileQuery;
-use Orm\Zed\FileManager\Persistence\SpyMimeType;
 use Orm\Zed\FileManager\Persistence\SpyMimeTypeQuery;
-use Propel\Runtime\Propel;
 use Spryker\Service\FileSystem\FileSystemDependencyProvider;
 use Spryker\Service\FileSystem\FileSystemService;
 use Spryker\Service\FileSystem\FileSystemServiceFactory;
@@ -58,9 +53,10 @@ use SprykerTest\Zed\FileManager\Stub\FlysystemConfigStub;
  */
 class FileManagerFacadeTest extends Unit
 {
-    protected const PATH_DOCUMENT = 'documents/';
-    protected const FILE_CONTENT = 'Spryker is awesome';
-    protected const ROOT_DIRECTORY = 'fileSystemRoot/uploads/';
+    /**
+     * @var \SprykerTest\Zed\FileManager\FileManagerBusinessTester
+     */
+    protected $tester;
 
     /**
      * @var \Spryker\Zed\FileManager\Business\FileManagerFacade
@@ -75,12 +71,12 @@ class FileManagerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 
-        file_put_contents($this->getDocumentFullFileName('customer_v1.txt'), 'first version of the file');
-        file_put_contents($this->getDocumentFullFileName('customer_v2.txt'), 'second version of the file');
+        file_put_contents($this->tester->getDocumentFullFileName('customer_v1.txt'), 'first version of the file');
+        file_put_contents($this->tester->getDocumentFullFileName('customer_v2.txt'), 'second version of the file');
 
         $serviceContainer = new ServiceContainer();
         $serviceContainer = $this->setupContainerAndFlysystemService($serviceContainer);
@@ -106,82 +102,7 @@ class FileManagerFacadeTest extends Unit
         $this->facade = new FileManagerFacade();
         $this->facade->setFactory($factory);
 
-        $this->insertDbRecords();
-    }
-
-    /**
-     * @return void
-     */
-    protected function resetDb()
-    {
-        Propel::getConnection()->exec('TRUNCATE TABLE spy_file CASCADE;');
-        Propel::getConnection()->exec('TRUNCATE TABLE spy_mime_type CASCADE;');
-        Propel::getConnection()->exec('TRUNCATE TABLE spy_file_directory CASCADE;');
-        Propel::getConnection()->exec('ALTER SEQUENCE spy_file_pk_seq RESTART WITH 1;');
-        Propel::getConnection()->exec('ALTER SEQUENCE spy_mime_type_pk_seq RESTART WITH 1;');
-        Propel::getConnection()->exec('ALTER SEQUENCE spy_file_info_pk_seq RESTART WITH 1;');
-        Propel::getConnection()->exec('ALTER SEQUENCE spy_file_directory_pk_seq RESTART WITH 1;');
-    }
-
-    /**
-     * @return void
-     */
-    protected function insertDbRecords()
-    {
-        $this->resetDb();
-        $file = new SpyFile();
-        $file->setFileName('customer.txt');
-        $file->save();
-        $file->reload();
-
-        $mimeType = new SpyMimeType();
-        $mimeType->setName('text/plain');
-        $mimeType->setComment('comment');
-        $mimeType->setIsAllowed(true);
-        $mimeType->save();
-
-        $fileInfo = new SpyFileInfo();
-        $fileInfo->setFile($file);
-        $fileInfo->setSize(10);
-        $fileInfo->setType('text');
-        $fileInfo->setVersion(1);
-        $fileInfo->setVersionName('v. 1');
-        $fileInfo->setStorageFileName('customer_v1.txt');
-        $fileInfo->setExtension('txt');
-        $fileInfo->setCreatedAt('2017-06-06 00:00:00');
-        $fileInfo->setUpdatedAt('2017-06-06 00:00:00');
-        $fileInfo->save();
-
-        $fileInfo = new SpyFileInfo();
-        $fileInfo->setFile($file);
-        $fileInfo->setSize(10);
-        $fileInfo->setType('text');
-        $fileInfo->setVersion(2);
-        $fileInfo->setVersionName('v. 2');
-        $fileInfo->setStorageFileName('customer_v2.txt');
-        $fileInfo->setExtension('txt');
-        $fileInfo->setCreatedAt('2017-07-07 00:00:00');
-        $fileInfo->setUpdatedAt('2017-07-07 00:00:00');
-        $fileInfo->save();
-
-        $fileDirectory = new SpyFileDirectory();
-        $fileDirectory->setName('first_directory');
-        $fileDirectory->setPosition(1);
-        $fileDirectory->setIsActive(true);
-        $fileDirectory->save();
-
-        $fileDirectory2 = new SpyFileDirectory();
-        $fileDirectory2->setName('second_directory');
-        $fileDirectory2->setPosition(2);
-        $fileDirectory2->setIsActive(true);
-        $fileDirectory2->save();
-
-        $fileSubDirectory = new SpyFileDirectory();
-        $fileSubDirectory->setName('subdirectory');
-        $fileSubDirectory->setIsActive(true);
-        $fileSubDirectory->setPosition(1);
-        $fileSubDirectory->setParentFileDirectory($fileDirectory);
-        $fileSubDirectory->save();
+        $this->tester->insertDbRecords();
     }
 
     /**
@@ -189,8 +110,8 @@ class FileManagerFacadeTest extends Unit
      */
     protected function tearDown()
     {
-        $this->resetDb();
-        exec('rm -rf ' . $this->getDocumentFullFileName('*'));
+        $this->tester->resetDb();
+        $this->tester->clearFiles();
     }
 
     /**
@@ -242,16 +163,6 @@ class FileManagerFacadeTest extends Unit
         };
 
         return $container;
-    }
-
-    /**
-     * @param string $fileName
-     *
-     * @return string
-     */
-    protected function getDocumentFullFileName($fileName)
-    {
-        return Configuration::dataDir() . static::ROOT_DIRECTORY . static::PATH_DOCUMENT . $fileName;
     }
 
     /**
@@ -362,7 +273,7 @@ class FileManagerFacadeTest extends Unit
 
         $fileManagerDataTransfer = $this->facade->saveFile($fileManagerDataTransfer);
         $this->assertInternalType('int', $fileManagerDataTransfer->getFile()->getIdFile());
-        $this->assertFileExists($this->getDocumentFullFileName($fileDirectoryId . '/2-v.1.txt'));
+        $this->assertFileExists($this->tester->getDocumentFullFileName($fileDirectoryId . '/2-v.1.txt'));
     }
 
     /**
