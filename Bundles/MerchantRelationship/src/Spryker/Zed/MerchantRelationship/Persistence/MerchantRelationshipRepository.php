@@ -120,7 +120,7 @@ class MerchantRelationshipRepository extends AbstractRepository implements Merch
                 ->filterByFkCompanyBusinessUnit($idBusinessUnit)
             ->endUse()
             ->find();
-        if ($merchantRelationshipEntities->count() === 0) {
+        if ($merchantRelationshipEntities->isEmpty()) {
             return [];
         }
 

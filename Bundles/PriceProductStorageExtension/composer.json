@@ -3,8 +3,7 @@
   "description": "PriceProductStorageExtension module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
-    "spryker/price-product-storage": "^1.0.0"
+    "php": ">=7.1"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

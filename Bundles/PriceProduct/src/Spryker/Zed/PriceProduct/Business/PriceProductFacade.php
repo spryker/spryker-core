@@ -253,9 +253,9 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      * @return array
      */
     public function findPricesBySkuGroupedForCurrentStore(
-        $sku,
+        string $sku,
         ?PriceProductDimensionTransfer $priceProductDimensionTransfer = null
-    ) {
+    ): array {
         return $this->getFactory()
             ->createPriceGrouper()
             ->findPricesBySkuGroupedForCurrentStore($sku, $priceProductDimensionTransfer);
@@ -285,9 +285,9 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function findProductAbstractPrices(
-        $idProductAbstract,
+        int $idProductAbstract,
         ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
-    ) {
+    ): array {
         return $this->getFactory()
             ->createPriceProductAbstractReader()
             ->findProductAbstractPricesById($idProductAbstract, $priceProductCriteriaTransfer);
@@ -304,10 +304,10 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function findProductConcretePrices(
-        $idProductConcrete,
-        $idProductAbstract,
+        int $idProductConcrete,
+        int $idProductAbstract,
         ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
-    ) {
+    ): array {
         return $this->getFactory()
             ->createReaderModel()
             ->findProductConcretePrices($idProductConcrete, $idProductAbstract, $priceProductCriteriaTransfer);

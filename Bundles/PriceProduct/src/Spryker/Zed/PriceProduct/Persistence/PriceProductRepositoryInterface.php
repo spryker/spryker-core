@@ -10,6 +10,7 @@ namespace Spryker\Zed\PriceProduct\Persistence;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Generated\Shared\Transfer\SpyPriceProductDefaultEntityTransfer;
+use Propel\Runtime\Collection\ObjectCollection;
 
 interface PriceProductRepositoryInterface
 {
@@ -19,12 +20,12 @@ interface PriceProductRepositoryInterface
      * @param string $concreteSku
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore[]
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore[]|\Propel\Runtime\Collection\ObjectCollection
      */
     public function findProductConcretePricesBySkuAndCriteria(
         string $concreteSku,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-    );
+    ): ObjectCollection;
 
     /**
      * @api
@@ -37,7 +38,7 @@ interface PriceProductRepositoryInterface
     public function findProductAbstractPricesBySkuAndCriteria(
         string $abstractSku,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-    );
+    ): ObjectCollection;
 
     /**
      * @api
@@ -50,7 +51,7 @@ interface PriceProductRepositoryInterface
     public function findProductConcretePricesByIdAndCriteria(
         int $idProductConcrete,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-    );
+    ): ObjectCollection;
 
     /**
      * @api
@@ -58,12 +59,12 @@ interface PriceProductRepositoryInterface
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore[]
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore[]|\Propel\Runtime\Collection\ObjectCollection
      */
     public function findProductAbstractPricesByIdAndCriteria(
         int $idProductAbstract,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-    );
+    ): ObjectCollection;
 
     /**
      * @api

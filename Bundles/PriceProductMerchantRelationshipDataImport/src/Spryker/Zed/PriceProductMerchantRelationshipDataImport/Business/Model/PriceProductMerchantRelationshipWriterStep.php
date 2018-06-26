@@ -13,19 +13,11 @@ use Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchant
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
+use Spryker\Zed\PriceProductMerchantRelationship\Dependency\PriceProductMerchantRelationshipEvents;
 use Spryker\Zed\PriceProductMerchantRelationshipDataImport\Business\Model\DataSet\PriceProductMerchantRelationshipDataSetInterface;
 
 class PriceProductMerchantRelationshipWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
-    /**
-     * @see \Spryker\Zed\PriceProductMerchantRelationship\Dependency\PriceProductMerchantRelationshipEvents;
-     */
-    protected const ENTITY_SPY_PRICE_PRODUCT_STORE_CREATE = 'Entity.spy_price_product_store.create';
-    protected const ENTITY_SPY_PRICE_PRODUCT_STORE_UPDATE = 'Entity.spy_price_product_store.update';
-    protected const ENTITY_SPY_PRICE_PRODUCT_MERCHANT_RELATIONSHIP_CREATE = 'Entity.spy_price_product_merchant_relationship.create';
-    protected const ENTITY_SPY_PRICE_PRODUCT_MERCHANT_RELATIONSHIP_UPDATE = 'Entity.spy_price_product_merchant_relationship.update';
-    protected const ENTITY_SPY_PRICE_PRODUCT_MERCHANT_RELATIONSHIP_DELETE = 'Entity.spy_price_product_merchant_relationship.delete';
-
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
@@ -109,7 +101,7 @@ class PriceProductMerchantRelationshipWriterStep extends PublishAwareStep implem
 
         foreach ($priceProductMerchantRelationshipEntities as $priceProductMerchantRelationshipEntity) {
             $this->addPublishEvents(
-                static::ENTITY_SPY_PRICE_PRODUCT_MERCHANT_RELATIONSHIP_DELETE,
+                PriceProductMerchantRelationshipEvents::ENTITY_SPY_PRICE_PRODUCT_MERCHANT_RELATIONSHIP_DELETE,
                 $priceProductMerchantRelationshipEntity->getPrimaryKey()
             );
 
@@ -153,8 +145,8 @@ class PriceProductMerchantRelationshipWriterStep extends PublishAwareStep implem
             ->findOneOrCreate();
 
         $eventName = $priceProductStoreEntity->isNew()
-            ? static::ENTITY_SPY_PRICE_PRODUCT_STORE_CREATE
-            : static::ENTITY_SPY_PRICE_PRODUCT_STORE_UPDATE;
+            ? PriceProductMerchantRelationshipEvents::ENTITY_SPY_PRICE_PRODUCT_STORE_CREATE
+            : PriceProductMerchantRelationshipEvents::ENTITY_SPY_PRICE_PRODUCT_STORE_UPDATE;
 
         $priceProductStoreEntity->save();
 

@@ -82,9 +82,9 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function findProductConcretePricesBySkuForCurrentStore(
-        $sku,
+        string $sku,
         PriceProductDimensionTransfer $priceProductDimensionTransfer
-    ) {
+    ): array {
         $idStore = $this->storeFacade->getCurrentStore()->getIdStore();
 
         $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
@@ -107,9 +107,9 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function findProductConcretePricesById(
-        $idProductConcrete,
+        int $idProductConcrete,
         ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
-    ) {
+    ): array {
         if (!$priceProductCriteriaTransfer) {
             $priceProductCriteriaTransfer = new PriceProductCriteriaTransfer();
         }
@@ -131,7 +131,7 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
-    public function findPriceForProductConcrete($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?PriceProductTransfer
+    public function findPriceForProductConcrete(string $sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?PriceProductTransfer
     {
         $priceProductStoreEntities = $this->priceProductRepository
             ->findProductConcretePricesBySkuAndCriteria($sku, $priceProductCriteriaTransfer);

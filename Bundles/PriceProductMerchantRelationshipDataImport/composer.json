@@ -19,7 +19,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Zed\\PriceProductMerchantRelationshipDataImport\\Helper\\": "tests/SprykerTest/Zed/PriceProductMerchantRelationshipDataImport/_support/Helper/"
     }
   },
   "autoload-dev": {
@@ -29,6 +30,12 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/spryker/price-product-merchant-relationship"
+    }
+  ],
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"
@@ -36,11 +43,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/spryker/price-product-merchant-relationship"
-    }
-  ]
+  }
 }

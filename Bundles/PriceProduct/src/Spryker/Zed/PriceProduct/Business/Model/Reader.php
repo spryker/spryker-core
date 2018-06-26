@@ -115,10 +115,10 @@ class Reader implements ReaderInterface
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function findProductConcretePrices(
-        $idProductConcrete,
-        $idProductAbstract,
+        int $idProductConcrete,
+        int $idProductAbstract,
         ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
-    ) {
+    ): array {
         $abstractPriceProductTransfers = $this->priceProductAbstractReader
             ->findProductAbstractPricesById($idProductAbstract, $priceProductCriteriaTransfer);
 
@@ -198,9 +198,9 @@ class Reader implements ReaderInterface
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function findPricesBySkuForCurrentStore(
-        $sku,
+        string $sku,
         ?PriceProductDimensionTransfer $priceProductDimensionTransfer = null
-    ) {
+    ): array {
         $priceProductDimensionTransfer = $this->getPriceProductDimensionTransfer($priceProductDimensionTransfer);
 
         $abstractPriceProductTransfers = $this->priceProductAbstractReader
@@ -331,7 +331,7 @@ class Reader implements ReaderInterface
      *
      * @return int|null
      */
-    protected function findProductPrice($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer)
+    protected function findProductPrice(string $sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?int
     {
         $priceProductConcrete = $this->priceProductConcreteReader
             ->findPriceForProductConcrete($sku, $priceProductCriteriaTransfer);
