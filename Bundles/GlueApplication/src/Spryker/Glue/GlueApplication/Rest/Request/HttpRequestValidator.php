@@ -70,12 +70,12 @@ class HttpRequestValidator implements HttpRequestValidatorInterface
     {
         $headerData = $request->headers->all();
 
-        $restErrorMessageTransfer = $this->validateAccessControlRequestMethod($headerData, $request);
+        $restErrorMessageTransfer = $this->validateAccessControlRequestMethod($request);
         if ($restErrorMessageTransfer) {
             return $restErrorMessageTransfer;
         }
 
-        $restErrorMessageTransfer = $this->validateAccessControllRequestHeader($headerData);
+        $restErrorMessageTransfer = $this->validateAccessControllRequestHeader($request);
         if ($restErrorMessageTransfer) {
             return $restErrorMessageTransfer;
         }
@@ -96,25 +96,23 @@ class HttpRequestValidator implements HttpRequestValidatorInterface
     }
 
     /**
-     * @param array $headerData
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Generated\Shared\Transfer\RestErrorMessageTransfer|null
      */
-    protected function validateAccessControlRequestMethod(array $headerData, Request $request): ?RestErrorMessageTransfer
+    protected function validateAccessControlRequestMethod(Request $request): ?RestErrorMessageTransfer
     {
-        if (!isset($headerData[RequestConstantsInterface::HEADER_ACCESS_CONTROL_REQUEST_METHOD])) {
+        $requestedMethod = strtoupper((string)$request->headers->get(RequestConstantsInterface::HEADER_ACCESS_CONTROL_REQUEST_METHOD));
+        if (!$requestedMethod) {
             return null;
         }
-
-        $requestedMethod = strtoupper((string)$headerData[RequestConstantsInterface::HEADER_ACCESS_CONTROL_REQUEST_METHOD]);
 
         $availableMethods = $this->resourceRouteLoader->getAvailableMethods(
             $request->attributes->get(RequestConstantsInterface::ATTRIBUTE_TYPE),
             $request
         );
 
-        if (!\in_array($requestedMethod, $availableMethods, true)) {
+        if (!\in_array($requestedMethod, $availableMethods, false)) {
             return (new RestErrorMessageTransfer())
                 ->setDetail('Not allowed.')
                 ->setStatus(Response::HTTP_FORBIDDEN);
@@ -124,29 +122,30 @@ class HttpRequestValidator implements HttpRequestValidatorInterface
     }
 
     /**
-     * @param array $headerData
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Generated\Shared\Transfer\RestErrorMessageTransfer|null
      */
-    protected function validateAccessControllRequestHeader(array $headerData): ?RestErrorMessageTransfer
+    protected function validateAccessControllRequestHeader(Request $request): ?RestErrorMessageTransfer
     {
-        if (!isset($headerData[RequestConstantsInterface::HEADER_ACCESS_CONTROL_REQUEST_HEADER])) {
+        $requestedHeaders = strtolower((string)$request->headers->get(RequestConstantsInterface::HEADER_ACCESS_CONTROL_REQUEST_HEADER));
+        if (!$requestedHeaders) {
             return null;
         }
 
-        $requestedHeaders = explode(
-            ',',
-            strtolower((string)$headerData[RequestConstantsInterface::HEADER_ACCESS_CONTROL_REQUEST_HEADER])
-        );
+        $requestedHeaders = explode(',', $requestedHeaders);
 
         $allowedHeaders = $this->config->getCorsAllowedHeaders();
 
-        if (!\in_array($requestedHeaders, $allowedHeaders, true)) {
+        foreach ($requestedHeaders as $requestedHeader) {
+            if (\in_array($requestedHeader, $allowedHeaders, false)) {
+                continue;
+            }
+
             return (new RestErrorMessageTransfer())
                 ->setDetail('Not allowed.')
                 ->setStatus(Response::HTTP_FORBIDDEN);
         }
-
         return null;
     }
 
