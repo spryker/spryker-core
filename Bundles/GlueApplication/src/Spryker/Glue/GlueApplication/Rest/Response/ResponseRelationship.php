@@ -47,7 +47,7 @@ class ResponseRelationship implements ResponseRelationshipInterface
         RestRequestInterface $restRequest
     ): void {
 
-        if (isset($this->alreadyLoadedResources[$resourceName]) || $restRequest->getExcludeRelationship() === true) {
+        if (!$this->canLoadResource($resourceName, $restRequest)) {
             return;
         }
 
@@ -82,29 +82,29 @@ class ResponseRelationship implements ResponseRelationshipInterface
     }
 
     /**
-     * @param array $relations
+     * @param array $relationships
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param array $included
      *
      * @return array
      */
     protected function processRelationships(
-        array $relations,
+        array $relationships,
         RestRequestInterface $restRequest,
         array $included = []
     ): array {
 
-        foreach ($relations as $type => $typeRelationships) {
-            if (!$this->hasRelationship($type, $restRequest)) {
+        /** @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $typeRelationships */
+        foreach ($relationships as $resourceType => $typeRelationships) {
+            if (!$this->hasRelationship($resourceType, $restRequest)) {
                 continue;
             }
             foreach ($typeRelationships as $resource) {
-                $haveRelations = count($resource->getRelationships()) > 0;
-                if ($haveRelations) {
+                if ($resource->getRelationships()) {
                     $included = $this->processRelationships($resource->getRelationships(), $restRequest, $included);
                 }
 
-                $resourceIdentifier = $type . ':' . $resource->getId();
+                $resourceIdentifier = $resourceType . ':' . $resource->getId();
                 if (isset($this->includedResources[$resourceIdentifier])) {
                     continue;
                 }
@@ -152,5 +152,16 @@ class ResponseRelationship implements ResponseRelationshipInterface
         }
 
         return $resources;
+    }
+
+    /**
+     * @param string $resourceName
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return bool
+     */
+    protected function canLoadResource(string $resourceName, RestRequestInterface $restRequest): bool
+    {
+        return !isset($this->alreadyLoadedResources[$resourceName]) && $restRequest->getExcludeRelationship() === false;
     }
 }

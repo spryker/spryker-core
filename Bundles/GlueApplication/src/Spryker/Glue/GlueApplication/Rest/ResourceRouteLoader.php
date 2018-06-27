@@ -108,14 +108,7 @@ class ResourceRouteLoader implements ResourceRouteLoaderInterface
      */
     protected function findResourcePlugin(string $resourceType, array $resources, Request $httpRequest): ?ResourceRoutePluginInterface
     {
-        $resourcePlugins = [];
-        foreach ($this->resourcePlugins as $resourceRoutePlugin) {
-            if (!$this->isCurrentResourceRoutePlugin($resourceRoutePlugin, $resourceType, $resources)) {
-                continue;
-            }
-
-            $resourcePlugins[] = $resourceRoutePlugin;
-        }
+        $resourcePlugins = $this->filterResourcePlugins($resourceType, $resources);
 
         $requestedVersionTransfer = $this->versionResolver->findVersion($httpRequest);
         if ($requestedVersionTransfer->getMajor()) {
@@ -260,5 +253,24 @@ class ResourceRouteLoader implements ResourceRouteLoaderInterface
     protected function getModuleName(ModuleNameAwareInterface $resourcePlugin): string
     {
         return $resourcePlugin->getModuleName();
+    }
+
+    /**
+     * @param string $resourceType
+     * @param array $resources
+     *
+     * @return array
+     */
+    protected function filterResourcePlugins(string $resourceType, array $resources): array
+    {
+        $resourcePlugins = [];
+        foreach ($this->resourcePlugins as $resourceRoutePlugin) {
+            if (!$this->isCurrentResourceRoutePlugin($resourceRoutePlugin, $resourceType, $resources)) {
+                continue;
+            }
+
+            $resourcePlugins[] = $resourceRoutePlugin;
+        }
+        return $resourcePlugins;
     }
 }

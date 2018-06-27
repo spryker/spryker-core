@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\OauthRequestTransfer;
 use Generated\Shared\Transfer\OauthScopeTransfer;
 use Generated\Shared\Transfer\OauthUserTransfer;
 use Orm\Zed\Oauth\Persistence\SpyOauthClient;
+use Orm\Zed\Oauth\Persistence\SpyOauthClientQuery;
 use Spryker\Zed\Oauth\Business\OauthFacadeInterface;
 use Spryker\Zed\Oauth\OauthDependencyProvider;
 use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserProviderPluginInterface;
@@ -180,9 +181,12 @@ class OauthFacadeTest extends Unit
      */
     protected function createTestClient(): void
     {
-        (new SpyOauthClient())
+        $oauthClientEntity = SpyOauthClientQuery::create()
+            ->filterByIdentifier('frontend')
+            ->findOneOrCreate();
+
+        $oauthClientEntity
             ->setName('frontend api client')
-            ->setIdentifier('frontend')
             ->setSecret('$2y$10$gkKxj9iHzIAtza98kT4Ipe0/bxHV1XIEvLROcqaC6YdHJThUFrexS')
             ->setIsConfidential(true)
             ->save();

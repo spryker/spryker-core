@@ -9,6 +9,7 @@ namespace SprykerTest\Glue\GlueApplication\Rest\Request;
 use Codeception\Test\Unit;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilder;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
+use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\RequestFormatter;
 use Spryker\Glue\GlueApplication\Rest\Request\RequestFormatterInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\RequestMetaDataExtractorInterface;
@@ -37,31 +38,7 @@ class RequestFormatterTest extends Unit
     {
         $requestFormatter = $this->createRequestFormatter(new RestResourceBuilder());
 
-        $request = Request::create(
-            '/',
-            Request::METHOD_GET,
-            [
-                'fields' => [
-                    'items' => 'att1,att2,att3',
-                ],
-                'filter' => [
-                    'items.name' => 'item name',
-                ],
-                'page' => [
-                    'limit' => 1,
-                    'offset' => 10,
-                ],
-                'include' => 'resource1,resource2',
-                'sort' => 'attr1,-attr2',
-            ],
-            [],
-            [],
-            [
-                'HTTP_CONTENT-TYPE' => 'application/vnd.api+json; version=1.0',
-                'HTTP_ACCEPT' => 'application/vnd.api+json; version=1.0',
-                'Accept-Language' => 'en; de;q=0.5',
-            ]
-        );
+        $request = $this->createRequest();
 
         $request->attributes->add([
             RequestConstantsInterface::ATTRIBUTE_TYPE => 'tests',
@@ -70,43 +47,13 @@ class RequestFormatterTest extends Unit
 
         $restRequest = $requestFormatter->formatRequest($request);
 
-        $this->assertCount(1, $restRequest->getFields());
-        $this->assertCount(3, $restRequest->getFields()['items']->getAttributes());
-        $this->assertEquals('items', $restRequest->getFields()['items']->getResource());
-        $this->assertTrue($restRequest->hasField('items'));
-        $this->assertCount(3, $restRequest->getField('items')->getAttributes());
-        $this->assertEquals('items', $restRequest->getField('items')->getResource());
-
-        $this->assertCount(1, $restRequest->getFilters());
-        $this->assertEquals('name', $restRequest->getFilters()['items'][0]->getField());
-        $this->assertEquals('items', $restRequest->getFilters()['items'][0]->getResource());
-        $this->assertEquals('item name', $restRequest->getFilters()['items'][0]->getValue());
-
-        $this->assertTrue($restRequest->hasFilters('items'));
-        $this->assertCount(1, $restRequest->getFiltersByResource('items'));
-
-        $this->assertEquals('json', $restRequest->getMetadata()->getAcceptFormat());
-        $this->assertEquals('json', $restRequest->getMetadata()->getContentTypeFormat());
-        $this->assertEquals('DE', $restRequest->getMetadata()->getLocale());
-        $this->assertEquals('GET', $restRequest->getMetadata()->getMethod());
-        $this->assertEquals(1, $restRequest->getMetadata()->getVersion()->getMajor());
-        $this->assertEquals(1, $restRequest->getMetadata()->getVersion()->getMinor());
-
-        $this->assertEquals(1, $restRequest->getPage()->getLimit());
-        $this->assertEquals(10, $restRequest->getPage()->getOffset());
-
-        $this->assertCount(2, $restRequest->getSort());
-        $this->assertEquals('attr1', $restRequest->getSort()[0]->getField());
-        $this->assertEquals('ASC', $restRequest->getSort()[0]->getDirection());
-        $this->assertEquals('attr2', $restRequest->getSort()[1]->getField());
-        $this->assertEquals('DESC', $restRequest->getSort()[1]->getDirection());
-
-        $this->assertCount(2, $restRequest->getInclude());
-        $this->assertArrayHasKey('resource1', $restRequest->getInclude());
-        $this->assertArrayHasKey('resource2', $restRequest->getInclude());
-
-        $this->assertEquals('tests', $restRequest->getResource()->getType());
-        $this->assertEquals(1, $restRequest->getResource()->getId());
+        $this->assertItems($restRequest);
+        $this->assertFilters($restRequest);
+        $this->assertMetadata($restRequest);
+        $this->assertPage($restRequest);
+        $this->assertSort($restRequest);
+        $this->assertInclude($restRequest);
+        $this->assertResource($restRequest);
     }
 
     /**
@@ -171,5 +118,131 @@ class RequestFormatterTest extends Unit
     protected function createDecoderMatcherMock(): DecoderMatcherInterface
     {
         return $this->getMockBuilder(DecoderMatcherInterface::class)->getMock();
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Request
+     */
+    protected function createRequest(): Request
+    {
+        return Request::create(
+            '/',
+            Request::METHOD_GET,
+            [
+                'fields' => [
+                    'items' => 'att1,att2,att3',
+                ],
+                'filter' => [
+                    'items.name' => 'item name',
+                ],
+                'page' => [
+                    'limit' => 1,
+                    'offset' => 10,
+                ],
+                'include' => 'resource1,resource2',
+                'sort' => 'attr1,-attr2',
+            ],
+            [],
+            [],
+            [
+                'HTTP_CONTENT-TYPE' => 'application/vnd.api+json; version=1.0',
+                'HTTP_ACCEPT' => 'application/vnd.api+json; version=1.0',
+                'Accept-Language' => 'en; de;q=0.5',
+            ]
+        );
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return void
+     */
+    protected function assertItems(RestRequestInterface $restRequest): void
+    {
+        $this->assertCount(1, $restRequest->getFields());
+        $this->assertCount(3, $restRequest->getFields()['items']->getAttributes());
+        $this->assertEquals('items', $restRequest->getFields()['items']->getResource());
+        $this->assertTrue($restRequest->hasField('items'));
+        $this->assertCount(3, $restRequest->getField('items')->getAttributes());
+        $this->assertEquals('items', $restRequest->getField('items')->getResource());
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return void
+     */
+    protected function assertFilters(RestRequestInterface $restRequest): void
+    {
+        $this->assertCount(1, $restRequest->getFilters());
+        $this->assertEquals('name', $restRequest->getFilters()['items'][0]->getField());
+        $this->assertEquals('items', $restRequest->getFilters()['items'][0]->getResource());
+        $this->assertEquals('item name', $restRequest->getFilters()['items'][0]->getValue());
+
+        $this->assertTrue($restRequest->hasFilters('items'));
+        $this->assertCount(1, $restRequest->getFiltersByResource('items'));
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return void
+     */
+    protected function assertMetadata(RestRequestInterface $restRequest): void
+    {
+        $this->assertEquals('json', $restRequest->getMetadata()->getAcceptFormat());
+        $this->assertEquals('json', $restRequest->getMetadata()->getContentTypeFormat());
+        $this->assertEquals('DE', $restRequest->getMetadata()->getLocale());
+        $this->assertEquals('GET', $restRequest->getMetadata()->getMethod());
+        $this->assertEquals(1, $restRequest->getMetadata()->getVersion()->getMajor());
+        $this->assertEquals(1, $restRequest->getMetadata()->getVersion()->getMinor());
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return void
+     */
+    protected function assertPage(RestRequestInterface $restRequest): void
+    {
+        $this->assertEquals(1, $restRequest->getPage()->getLimit());
+        $this->assertEquals(10, $restRequest->getPage()->getOffset());
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return void
+     */
+    protected function assertSort(RestRequestInterface $restRequest): void
+    {
+        $this->assertCount(2, $restRequest->getSort());
+        $this->assertEquals('attr1', $restRequest->getSort()[0]->getField());
+        $this->assertEquals('ASC', $restRequest->getSort()[0]->getDirection());
+        $this->assertEquals('attr2', $restRequest->getSort()[1]->getField());
+        $this->assertEquals('DESC', $restRequest->getSort()[1]->getDirection());
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return void
+     */
+    protected function assertInclude(RestRequestInterface $restRequest): void
+    {
+        $this->assertCount(2, $restRequest->getInclude());
+        $this->assertArrayHasKey('resource1', $restRequest->getInclude());
+        $this->assertArrayHasKey('resource2', $restRequest->getInclude());
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return void
+     */
+    protected function assertResource(RestRequestInterface $restRequest): void
+    {
+        $this->assertEquals('tests', $restRequest->getResource()->getType());
+        $this->assertEquals(1, $restRequest->getResource()->getId());
     }
 }
