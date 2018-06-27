@@ -45,7 +45,7 @@ class ClientRepository implements ClientRepositoryInterface
         }
 
         if ($mustValidateSecret === true
-            && $oauthClientEntityTransfer->getIsConfidental() === true
+            && $oauthClientEntityTransfer->getIsConfidential() === true
             && password_verify($clientSecret, $oauthClientEntityTransfer->getSecret()) === false
         ) {
             return;

@@ -60,7 +60,7 @@ class OauthFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAccessTokenShouldReturfailureWhenClientCredentialsInValid(): void
+    public function testAccessTokenShouldReturnFailureWhenClientCredentialsInValid(): void
     {
         $this->createTestClient();
         $this->setUserProviderPluginMock();
@@ -137,7 +137,7 @@ class OauthFacadeTest extends Unit
             ->setIdentifier('identifier')
             ->setName('client name')
             ->setSecret('secret')
-            ->setIsConfidental(true)
+            ->setIsConfidential(true)
             ->setRedirectUri('url');
 
         $oauthClientTransfer = $this->getOauthFacade()->saveClient($oauthClientTransfer);
@@ -184,7 +184,7 @@ class OauthFacadeTest extends Unit
             ->setName('frontend api client')
             ->setIdentifier('frontend')
             ->setSecret('$2y$10$gkKxj9iHzIAtza98kT4Ipe0/bxHV1XIEvLROcqaC6YdHJThUFrexS')
-            ->setIsConfidental(true)
+            ->setIsConfidential(true)
             ->save();
     }
 
