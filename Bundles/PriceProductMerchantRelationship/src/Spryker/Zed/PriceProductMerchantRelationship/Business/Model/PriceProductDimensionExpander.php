@@ -8,10 +8,23 @@
 namespace Spryker\Zed\PriceProductMerchantRelationship\Business\Model;
 
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
-use Spryker\Shared\PriceProductMerchantRelationship\PriceProductMerchantRelationshipConstants;
+use Spryker\Zed\PriceProductMerchantRelationship\PriceProductMerchantRelationshipConfig;
 
 class PriceProductDimensionExpander implements PriceProductDimensionExpanderInterface
 {
+    /**
+     * @var \Spryker\Zed\PriceProductMerchantRelationship\PriceProductMerchantRelationshipConfig
+     */
+    protected $priceProductMerchantRelationshipConfig;
+
+    /**
+     * @param \Spryker\Zed\PriceProductMerchantRelationship\PriceProductMerchantRelationshipConfig $priceProductMerchantRelationshipConfig
+     */
+    public function __construct(PriceProductMerchantRelationshipConfig $priceProductMerchantRelationshipConfig)
+    {
+        $this->priceProductMerchantRelationshipConfig = $priceProductMerchantRelationshipConfig;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\PriceProductDimensionTransfer $priceProductDimensionTransfer
      *
@@ -19,7 +32,7 @@ class PriceProductDimensionExpander implements PriceProductDimensionExpanderInte
      */
     public function expand(PriceProductDimensionTransfer $priceProductDimensionTransfer): PriceProductDimensionTransfer
     {
-        $priceProductDimensionTransfer->setType(PriceProductMerchantRelationshipConstants::PRICE_DIMENSION_MERCHANT_RELATIONSHIP);
+        $priceProductDimensionTransfer->setType($this->priceProductMerchantRelationshipConfig->getPriceDimensionMerchantRelationship());
 
         return $priceProductDimensionTransfer;
     }

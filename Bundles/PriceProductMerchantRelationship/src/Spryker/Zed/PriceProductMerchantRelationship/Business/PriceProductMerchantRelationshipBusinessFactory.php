@@ -38,7 +38,9 @@ class PriceProductMerchantRelationshipBusinessFactory extends AbstractBusinessFa
      */
     public function createPriceProductDimensionExpander()
     {
-        return new PriceProductDimensionExpander();
+        return new PriceProductDimensionExpander(
+            $this->getConfig()
+        );
     }
 
     /**
