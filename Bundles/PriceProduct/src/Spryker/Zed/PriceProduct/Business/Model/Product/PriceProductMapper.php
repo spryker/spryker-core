@@ -22,8 +22,6 @@ use Spryker\Zed\PriceProduct\PriceProductConfig;
 
 class PriceProductMapper implements PriceProductMapperInterface
 {
-    protected const PRICE_KEY_SEPARATOR = '-';
-
     /**
      * @var string
      */
@@ -149,8 +147,7 @@ class PriceProductMapper implements PriceProductMapperInterface
     ): array {
         $productPriceCollection = [];
         foreach ($priceProductStoreEntities as $priceProductStoreEntity) {
-            $index = $this->createProductPriceGroupingIndex($priceProductStoreEntity);
-            $productPriceCollection[$index] = $this->mapPriceProductStoreEntityToTransfer(
+            $productPriceCollection[] = $this->mapPriceProductStoreEntityToTransfer(
                 $priceProductStoreEntity,
                 $priceProductCriteriaTransfer
             );
@@ -206,25 +203,5 @@ class PriceProductMapper implements PriceProductMapperInterface
                 $priceProductStoreEntity->getVirtualColumns(),
                 true
             )->setType(PriceProductConstants::PRICE_DIMENSION_DEFAULT);
-    }
-
-    /**
-     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore $priceProductStoreEntity
-     *
-     * @return string
-     */
-    protected function createProductPriceGroupingIndex(SpyPriceProductStore $priceProductStoreEntity)
-    {
-        $priceType = $priceProductStoreEntity->getPriceProduct()->getPriceType();
-
-        return implode(
-            static::PRICE_KEY_SEPARATOR,
-            [
-                $priceProductStoreEntity->getFkStore(),
-                $priceProductStoreEntity->getFkCurrency(),
-                $priceType->getName(),
-                $priceType->getPriceModeConfiguration(),
-            ]
-        );
     }
 }
