@@ -3,6 +3,7 @@
   "description": "AuthRestApi module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker/config": "^3.0.0",
     "spryker/glue-application": "^1.0.0",
     "spryker/glue-application-extension": "^1.0.0",
@@ -17,11 +18,6 @@
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",

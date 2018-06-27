@@ -6,9 +6,9 @@
     "php": ">=7.1"
   },
   "require-dev": {
-    "spryker/kernel": "*",
     "spryker/code-sniffer": "*",
     "spryker/glue-application": "*",
+    "spryker/kernel": "*",
     "spryker/symfony": "*",
     "spryker/testify": "*"
   },

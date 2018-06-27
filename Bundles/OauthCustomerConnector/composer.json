@@ -3,6 +3,7 @@
   "description": "OauthCustomerConnector module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1",
     "spryker/customer": "^7.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/oauth": "^1.0.0",
