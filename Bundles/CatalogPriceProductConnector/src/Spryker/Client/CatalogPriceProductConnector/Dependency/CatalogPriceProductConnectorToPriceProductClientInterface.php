@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\CatalogPriceProductConnector\Dependency;
 
+use Generated\Shared\Transfer\CurrentProductPriceTransfer;
+
 interface CatalogPriceProductConnectorToPriceProductClientInterface
 {
     /**
@@ -15,6 +17,13 @@ interface CatalogPriceProductConnectorToPriceProductClientInterface
      * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */
     public function resolveProductPrice(array $priceMap);
+
+    /**
+     * @param array $priceProductTransfers
+     *
+     * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
+     */
+    public function resolveProductPriceTransfer(array $priceProductTransfers): CurrentProductPriceTransfer;
 
     /**
      * @return string
