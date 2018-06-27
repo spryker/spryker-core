@@ -8,8 +8,10 @@
 namespace Spryker\Zed\ProductPackagingUnit\Persistence;
 
 use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
+use Generated\Shared\Transfer\ProductPackagingUnitTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
+use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -32,7 +34,7 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
 
         if ($productPackagingUnitTypeEntity) {
             return $this->getFactory()
-                ->createProductPackagingUnitTypeMapper()
+                ->createProductPackagingUnitMapper()
                 ->mapProductPackagingUnitTypeTransfer(
                     $productPackagingUnitTypeEntity,
                     new ProductPackagingUnitTypeTransfer()
@@ -57,7 +59,7 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
 
         if ($productPackagingUnitTypeEntity) {
             return $this->getFactory()
-                ->createProductPackagingUnitTypeMapper()
+                ->createProductPackagingUnitMapper()
                 ->mapProductPackagingUnitTypeTransfer(
                     $productPackagingUnitTypeEntity,
                     new ProductPackagingUnitTypeTransfer()
@@ -92,6 +94,7 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
         $productPackagingLeadProductEntity = $this->getFactory()
             ->createProductPackagingLeadProductQuery()
             ->filterByFkProductAbstract($idProductAbstract)
+            ->innerJoinSpyProduct()
             ->findOne();
 
         if (!$productPackagingLeadProductEntity) {
@@ -99,7 +102,38 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
         }
 
         $productPackagingLeadProductTransfer = $this->getFactory()
-            ->createProductPackagingLeadProductMapper()
+            ->createProductPackagingUnitMapper()
+            ->mapProductPackagingLeadProductTransfer(
+                $productPackagingLeadProductEntity,
+                new ProductPackagingLeadProductTransfer()
+            );
+
+        return $productPackagingLeadProductTransfer;
+    }
+
+    /**
+     * @param string $productPackagingUnitSku
+     *
+     * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null
+     */
+    public function getProductPackagingLeadProductByProductPackagingSku(
+        string $productPackagingUnitSku
+    ): ?ProductPackagingLeadProductTransfer {
+        $productPackagingLeadProductEntity = $this->getFactory()
+            ->createProductPackagingLeadProductQuery()
+            ->useSpyProductAbstractQuery()
+                ->useSpyProductQuery()
+                    ->filterBySku($productPackagingUnitSku)
+                ->endUse()
+            ->endUse()
+            ->findOne();
+
+        if (!$productPackagingLeadProductEntity) {
+            return null;
+        }
+
+        $productPackagingLeadProductTransfer = $this->getFactory()
+            ->createProductPackagingUnitMapper()
             ->mapProductPackagingLeadProductTransfer(
                 $productPackagingLeadProductEntity,
                 new ProductPackagingLeadProductTransfer()
@@ -132,5 +166,69 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
             ->endUse();
 
         return $this->buildQueryFromCriteria($query)->find();
+    }
+
+    /**
+     * @param int $productPackagingUnitId
+     *
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer|null
+     */
+    public function getProductPackagingUnitById(
+        int $productPackagingUnitId
+    ): ?ProductPackagingUnitTransfer {
+        $productPackagingUnitEntity = $this->getProductPackagingUnitCriteria()
+            ->findOneByIdProductPackagingUnit($productPackagingUnitId);
+
+        if (!$productPackagingUnitEntity) {
+            return null;
+        }
+
+        $productPackagingUnitTransfer = $this->getFactory()
+            ->createProductPackagingUnitMapper()
+            ->mapProductPackagingUnitTransfer(
+                $productPackagingUnitEntity,
+                new ProductPackagingUnitTransfer()
+            );
+
+        return $productPackagingUnitTransfer;
+    }
+
+    /**
+     * @param string $productPackagingUnitSku
+     *
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer|null
+     */
+    public function getProductPackagingUnitBySku(
+        string $productPackagingUnitSku
+    ): ?ProductPackagingUnitTransfer {
+        $productPackagingUnitEntity = $this->getProductPackagingUnitCriteria()
+            ->useProductQuery()
+                ->filterBySku($productPackagingUnitSku)
+            ->endUse()
+            ->findOne();
+
+        if (!$productPackagingUnitEntity) {
+            return null;
+        }
+
+        $productPackagingUnitTransfer = $this->getFactory()
+            ->createProductPackagingUnitMapper()
+            ->mapProductPackagingUnitTransfer(
+                $productPackagingUnitEntity,
+                new ProductPackagingUnitTransfer()
+            );
+
+        return $productPackagingUnitTransfer;
+    }
+
+    /**
+     * @return \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitQuery
+     */
+    protected function getProductPackagingUnitCriteria(): SpyProductPackagingUnitQuery
+    {
+        return $this->getFactory()
+            ->createProductPackagingUnitQuery()
+            ->innerJoinProductPackagingUnitType()
+            ->leftJoinSpyProductPackagingUnitAmount();
     }
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductPackagingUnit\Business;
 
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 
@@ -151,4 +152,16 @@ interface ProductPackagingUnitFacadeInterface
     public function deleteProductPackagingUnitType(
         ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
     ): bool;
+
+    /**
+     * Specification:
+     * - Expands CartChangeTransfer with QuantityPackagingUnit.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function expandCartChangeWithQuantityPackagingUnit(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
 }
