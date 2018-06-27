@@ -8,6 +8,8 @@ namespace Spryker\Zed\ProductAlternativeProductLabelConnector;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToGlossaryFacadeBridge;
+use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToLocaleFacadeBridge;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductAlternativeFacadeBridge;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductBridge;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductLabelBridge;
@@ -17,6 +19,8 @@ class ProductAlternativeProductLabelConnectorDependencyProvider extends Abstract
     public const FACADE_PRODUCT_LABEL = 'FACADE_PRODUCT_LABEL';
     public const FACADE_PRODUCT_ALTERNATIVE = 'FACADE_PRODUCT_ALTERNATIVE';
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+    public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
+    public const FACADE_LOCALE = 'FACADE_LOCALE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -26,6 +30,10 @@ class ProductAlternativeProductLabelConnectorDependencyProvider extends Abstract
     public function provideBusinessLayerDependencies(Container $container)
     {
         $this->addProductLabelFacade($container);
+        $this->addProductFacade($container);
+        $this->addProductAlternativeFacade($container);
+        $this->addGlossaryFacade($container);
+        $this->addLocaleFacade($container);
 
         return $container;
     }
@@ -35,7 +43,7 @@ class ProductAlternativeProductLabelConnectorDependencyProvider extends Abstract
      *
      * @return void
      */
-    protected function addProductLabelFacade(Container $container)
+    protected function addProductLabelFacade(Container $container): void
     {
         $container[static::FACADE_PRODUCT_LABEL] = function (Container $container) {
             return new ProductAlternativeProductLabelConnectorToProductLabelBridge(
@@ -47,9 +55,9 @@ class ProductAlternativeProductLabelConnectorDependencyProvider extends Abstract
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Kernel\Container
+     * @return void
      */
-    protected function addProductFacade(Container $container)
+    protected function addProductFacade(Container $container): void
     {
         $container[static::FACADE_PRODUCT] = function (Container $container) {
             return new ProductAlternativeProductLabelConnectorToProductBridge(
@@ -58,21 +66,45 @@ class ProductAlternativeProductLabelConnectorDependencyProvider extends Abstract
         };
     }
 
-
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Kernel\Container
+     * @return void
      */
-    protected function addProductAlternativeFacade(Container $container): Container
+    protected function addProductAlternativeFacade(Container $container): void
     {
         $container[static::FACADE_PRODUCT_ALTERNATIVE] = function (Container $container) {
             return new ProductAlternativeProductLabelConnectorToProductAlternativeFacadeBridge(
                 $container->getLocator()->productAlternative()->facade()
             );
         };
-
-        return $container;
     }
 
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function addGlossaryFacade(Container $container): void
+    {
+        $container[static::FACADE_GLOSSARY] = function (Container $container) {
+            return new ProductAlternativeProductLabelConnectorToGlossaryFacadeBridge(
+                $container->getLocator()->glossary()->facade()
+            );
+        };
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
+    protected function addLocaleFacade(Container $container): void
+    {
+        $container[static::FACADE_LOCALE] = function (Container $container) {
+            return new ProductAlternativeProductLabelConnectorToLocaleFacadeBridge(
+                $container->getLocator()->locale()->facade()
+            );
+        };
+    }
 }

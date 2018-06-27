@@ -14,8 +14,6 @@ use Spryker\Zed\ProductAlternativeProductLabelConnector\Business\ProductAlternat
 use Spryker\Zed\ProductAlternativeProductLabelConnector\ProductAlternativeProductLabelConnectorDependencyProvider;
 
 /**
- * @method \Spryker\Zed\ProductAlternativeProductLabelConnector\Persistence\ProductAlternativeProductLabelConnectorEntityManagerInterface getEntityManager()
- * @method \Spryker\Zed\ProductAlternativeProductLabelConnector\Persistence\ProductAlternativeProductLabelConnectorRepositoryInterface getRepository()
  * @method \Spryker\Zed\ProductAlternativeProductLabelConnector\ProductAlternativeProductLabelConnectorConfig getConfig()
  */
 class ProductAlternativeProductLabelConnectorBusinessFactory extends AbstractBusinessFactory
@@ -25,7 +23,25 @@ class ProductAlternativeProductLabelConnectorBusinessFactory extends AbstractBus
      */
     public function createProductAlternativeProductLabelConnectorInstaller(): ProductAlternativeProductLabelConnectorInstallerInterface
     {
-        return new ProductAlternativeProductLabelConnectorInstaller($this->getConfig(), $this->getEntityManager(), $this->getProductLabelFacade());
+        return new ProductAlternativeProductLabelConnectorInstaller(
+            $this->getConfig(),
+            $this->getProductLabelFacade(),
+            $this->getGlossaryFacade(),
+            $this->getLocaleFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductAlternativeProductLabelConnector\Business\ProductAlternativeProductLabelWriter\ProductAlternativeProductLabelWriter
+     */
+    public function createProductAlternativeProductLabelWriter()
+    {
+        return new ProductAlternativeProductLabelWriter(
+            $this->getProductFacade(),
+            $this->getProductLabelFacade(),
+            $this->getProductAlternativeFacade(),
+            $this->getConfig()
+        );
     }
 
     /**
@@ -45,20 +61,26 @@ class ProductAlternativeProductLabelConnectorBusinessFactory extends AbstractBus
     }
 
     /**
-     * @return \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductInterface
+     * @return \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductAlternativeFacadeInterface
      */
     public function getProductAlternativeFacade()
     {
         return $this->getProvidedDependency(ProductAlternativeProductLabelConnectorDependencyProvider::FACADE_PRODUCT_ALTERNATIVE);
     }
 
-    public function createProductAlternativeProductLabelWriter()
+    /**
+     * @return \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToGlossaryFacadeInterface
+     */
+    public function getGlossaryFacade()
     {
-        return new ProductAlternativeProductLabelWriter(
-            $this->getProductFacade(),
-            $this->getProductLabelFacade(),
-            $this->getProductAlternativeFacade(),
-            $this->getConfig()
-        );
+        return $this->getProvidedDependency(ProductAlternativeProductLabelConnectorDependencyProvider::FACADE_GLOSSARY);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToLocaleFacadeInterface
+     */
+    public function getLocaleFacade()
+    {
+        return $this->getProvidedDependency(ProductAlternativeProductLabelConnectorDependencyProvider::FACADE_LOCALE);
     }
 }

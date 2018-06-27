@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
+ * @method \Spryker\Zed\ProductAlternative\Persistence\ProductAlternativeRepositoryInterface getRepository()
  * @method \Spryker\Zed\ProductAlternative\Business\ProductAlternativeBusinessFactory getFactory()
  */
 class ProductAlternativeFacade extends AbstractFacade implements ProductAlternativeFacadeInterface
@@ -76,8 +77,7 @@ class ProductAlternativeFacade extends AbstractFacade implements ProductAlternat
      */
     public function doAllConcreteProductsHaveAlternatives(array $productIds): bool
     {
-        return $this->getFactory()
-            ->getRepository()
+        return $this->getRepository()
             ->doAllConcreteProductsHaveAlternatives($productIds);
     }
 }

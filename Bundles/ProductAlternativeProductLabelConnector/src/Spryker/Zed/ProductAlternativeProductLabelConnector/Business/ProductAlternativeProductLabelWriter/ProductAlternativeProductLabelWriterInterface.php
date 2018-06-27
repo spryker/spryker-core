@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductAlternativeProductLabelConnector\Business\ProductAlternativeProductLabelWriter;
 
-
 interface ProductAlternativeProductLabelWriterInterface
 {
     /**
@@ -16,4 +15,11 @@ interface ProductAlternativeProductLabelWriterInterface
      * @return void
      */
     public function updateAbstractProductWithAlternativesAvailableLabel(int $idProduct): void;
+
+    /**
+     * @param int $idProduct
+     *
+     * @return void
+     */
+    public function removeProductAbstractRelationsForLabel(int $idProduct): void;
 }

@@ -78,7 +78,6 @@ class ProductAlternativeProductLabelConnectorToProductLabelBridge implements Pro
         $this->productLabelFacade->removeProductAbstractRelationsForLabel($idProductLabel, $idsProductAbstract);
     }
 
-
     /**
      * @param int $idProductLabel
      * @param int[] $idsProductAbstract

@@ -7,10 +7,8 @@
 
 namespace Spryker\Zed\ProductAlternativeProductLabelConnector\Business\ProductAlternativeProductLabelWriter;
 
-
 class ProductAlternativeProductLabelWriter implements ProductAlternativeProductLabelWriterInterface
 {
-
     /**
      * @var \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductBridge
      */
@@ -31,13 +29,18 @@ class ProductAlternativeProductLabelWriter implements ProductAlternativeProductL
      */
     protected $config;
 
+    /**
+     * @param \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductInterface $productFacade
+     * @param \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductLabelInterface $productLabelFacade
+     * @param \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductAlternativeFacadeInterface $productAlternativeFacade
+     * @param \Spryker\Zed\ProductAlternativeProductLabelConnector\ProductAlternativeProductLabelConnectorConfig $config
+     */
     public function __construct(
         $productFacade,
         $productLabelFacade,
         $productAlternativeFacade,
         $config
-    )
-    {
+    ) {
         $this->productFacade = $productFacade;
         $this->productLabelFacade = $productLabelFacade;
         $this->productAlternativeFacade = $productAlternativeFacade;
@@ -59,13 +62,27 @@ class ProductAlternativeProductLabelWriter implements ProductAlternativeProductL
         }
 
         $idProductLabel = $this->productLabelFacade->findLabelByLabelName(
-            $this->config->getProductAlternativesLabel()
+            $this->config->getProductAlternativesLabelName()
         )->getIdProductLabel();
 
         if ($this->productAlternativeFacade->doAllConcreteProductsHaveAlternatives($concreteIds)) {
-            $this->productLabelFacade->addAbstractProductRelationsForLabel($idProductLabel, $idProductAbstract);
+            $this->productLabelFacade->addAbstractProductRelationsForLabel($idProductLabel, [$idProductAbstract]);
         } else {
-            $this->productLabelFacade->removeProductAbstractRelationsForLabel($idProductLabel, $idProductAbstract);
+            $this->productLabelFacade->removeProductAbstractRelationsForLabel($idProductLabel, [$idProductAbstract]);
         }
+    }
+
+    /**
+     * @param int $idProduct
+     *
+     * @return void
+     */
+    public function removeProductAbstractRelationsForLabel(int $idProduct): void
+    {
+        $idProductLabel = $this->productLabelFacade->findLabelByLabelName(
+            $this->config->getProductAlternativesLabelName()
+        )->getIdProductLabel();
+        $idProductAbstract = $this->productFacade->getProductAbstractIdByConcreteId($idProduct);
+        $this->productLabelFacade->removeProductAbstractRelationsForLabel($idProductLabel, [$idProductAbstract]);
     }
 }

@@ -52,5 +52,4 @@ interface ProductAlternativeProductLabelConnectorToProductLabelInterface
      * @return void
      */
     public function addAbstractProductRelationsForLabel($idProductLabel, array $idsProductAbstract): void;
-
 }

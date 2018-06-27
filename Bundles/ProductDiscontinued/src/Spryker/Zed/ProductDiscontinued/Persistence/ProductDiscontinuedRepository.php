@@ -45,6 +45,26 @@ class ProductDiscontinuedRepository extends AbstractRepository implements Produc
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param array $productIds
+     *
+     * @return bool
+     */
+    public function areAllConcreteProductsDiscontinued(array $productIds)
+    {
+        foreach ($productIds as $productId) {
+            if (!$this->getFactory()->createProductDiscontinuedQuery()->filterByFkProduct($productId)->find()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer
      */
     public function findProductsToDeactivate(): ProductDiscontinuedCollectionTransfer

@@ -31,4 +31,13 @@ interface ProductAlternativeProductLabelConnectorFacadeInterface
      * @return void
      */
     public function updateAbstractProductWithAlternativesAvailableLabel(int $idProduct): void;
+
+    /**
+     * @api
+     *
+     * @param int $idProduct
+     *
+     * @return void
+     */
+    public function removeProductAbstractRelationsForLabel(int $idProduct): void;
 }

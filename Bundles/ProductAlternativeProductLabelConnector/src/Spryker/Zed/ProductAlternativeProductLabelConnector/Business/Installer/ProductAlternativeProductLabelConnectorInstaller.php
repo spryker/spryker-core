@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\ProductAlternativeProductLabelConnector\Business\Installer;
 
+use Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
+use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToGlossaryFacadeInterface;
+use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToLocaleFacadeInterface;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductLabelInterface;
-use Spryker\Zed\ProductAlternativeProductLabelConnector\Persistence\ProductAlternativeProductLabelConnectorEntityManagerInterface;
 use Spryker\Zed\ProductAlternativeProductLabelConnector\ProductAlternativeProductLabelConnectorConfig;
 
 class ProductAlternativeProductLabelConnectorInstaller implements ProductAlternativeProductLabelConnectorInstallerInterface
@@ -23,29 +25,36 @@ class ProductAlternativeProductLabelConnectorInstaller implements ProductAlterna
     protected $config;
 
     /**
-     * @var \Spryker\Zed\ProductAlternativeProductLabelConnector\Persistence\ProductAlternativeProductLabelConnectorEntityManagerInterface
-     */
-    protected $entityManager;
-
-    /**
      * @var \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductLabelInterface
      */
     protected $productLabelFacade;
 
     /**
+     * @var \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToGlossaryFacadeInterface
+     */
+    protected $glossaryFacade;
+
+    /**
+     * @var \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToLocaleFacadeInterface
+     */
+    protected $localeFacade;
+
+    /**
      * @param \Spryker\Zed\ProductAlternativeProductLabelConnector\ProductAlternativeProductLabelConnectorConfig $config
-     * @param \Spryker\Zed\ProductAlternativeProductLabelConnector\Persistence\ProductAlternativeProductLabelConnectorEntityManagerInterface $entityManager
      * @param \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToProductLabelInterface $productLabelFacade
+     * @param \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToGlossaryFacadeInterface $glossaryFacade
+     * @param \Spryker\Zed\ProductAlternativeProductLabelConnector\Dependency\Facade\ProductAlternativeProductLabelConnectorToLocaleFacadeInterface $localeFacade
      */
     public function __construct(
         ProductAlternativeProductLabelConnectorConfig $config,
-        ProductAlternativeProductLabelConnectorEntityManagerInterface $entityManager,
-        ProductAlternativeProductLabelConnectorToProductLabelInterface $productLabelFacade
-    )
-    {
+        ProductAlternativeProductLabelConnectorToProductLabelInterface $productLabelFacade,
+        ProductAlternativeProductLabelConnectorToGlossaryFacadeInterface $glossaryFacade,
+        ProductAlternativeProductLabelConnectorToLocaleFacadeInterface $localeFacade
+    ) {
         $this->config = $config;
-        $this->entityManager = $entityManager;
         $this->productLabelFacade = $productLabelFacade;
+        $this->glossaryFacade = $glossaryFacade;
+        $this->localeFacade = $localeFacade;
     }
 
     /**
@@ -55,18 +64,45 @@ class ProductAlternativeProductLabelConnectorInstaller implements ProductAlterna
     {
         $this->getTransactionHandler()->handleTransaction(function () {
 
-            if ($this->productLabelFacade->findLabelByLabelName($this->config->getProductAlternativesLabel())) {
-                $this->productLabelFacade->updateLabel(
-                    $this->productLabelFacade->findLabelByLabelName($this->config->getProductAlternativesLabel())
-                );
+            if ($this->productLabelFacade->findLabelByLabelName($this->config->getProductAlternativesLabelName())) {
+                $productLabelTransfer = $this->productLabelFacade->findLabelByLabelName($this->config->getProductAlternativesLabelName());
+                $this->addDataToProductLabelTransfer($productLabelTransfer);
+                $this->productLabelFacade->updateLabel($productLabelTransfer);
             } else {
+                $productLabelTransfer = new ProductLabelTransfer();
+                $productLabelTransfer->setName($this->config->getProductAlternativesLabelName());
+                $this->addDataToProductLabelTransfer($productLabelTransfer);
                 $this->productLabelFacade->createLabel(
-                    (new ProductLabelTransfer())
-                        ->setIsActive(true)
-                        ->setIsExclusive(false)
-                        ->setName($this->config->getProductAlternativesLabel())
+                    $productLabelTransfer
                 );
             }
         });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelTransfer
+     */
+    protected function addDataToProductLabelTransfer(ProductLabelTransfer $productLabelTransfer): ProductLabelTransfer
+    {
+        $productLabelTransfer
+            ->setIsActive(true)
+            ->setIsExclusive(false)
+            ->setIsPublished(true);
+
+        foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
+            $localizedAttributesTransfer = new ProductLabelLocalizedAttributesTransfer();
+            $localizedAttributesTransfer->setFkLocale($localeTransfer->getIdLocale());
+            $localizedAttributesTransfer->setFkProductLabel($productLabelTransfer->getIdProductLabel());
+            $localizedAttributesTransfer->setLocale($localeTransfer);
+            $localizedAttributesTransfer->setName(
+                $this->glossaryFacade->translate($this->config->getProductAlternativesLabelKey(), [], $localeTransfer)
+            );
+
+            $productLabelTransfer->addLocalizedAttributes($localizedAttributesTransfer);
+        }
+
+        return $productLabelTransfer;
     }
 }

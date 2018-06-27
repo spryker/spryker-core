@@ -38,18 +38,26 @@ class ProductAlternativeWriter implements ProductAlternativeWriterInterface
     protected $productAlternativeRepository;
 
     /**
+     * @var \Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativePluginExecutorInterface
+     */
+    protected $productAlternativePluginExecutor;
+
+    /**
      * @param \Spryker\Zed\ProductAlternative\Persistence\ProductAlternativeEntityManagerInterface $productAlternativeEntityManager
      * @param \Spryker\Zed\ProductAlternative\Persistence\ProductAlternativeRepositoryInterface $productAlternativeRepository
      * @param \Spryker\Zed\ProductAlternative\Dependency\Facade\ProductAlternativeToProductFacadeInterface $productFacade
+     * @param \Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativePluginExecutorInterface $productAlternativePluginExecutor
      */
     public function __construct(
         ProductAlternativeEntityManagerInterface $productAlternativeEntityManager,
         ProductAlternativeRepositoryInterface $productAlternativeRepository,
-        ProductAlternativeToProductFacadeInterface $productFacade
+        ProductAlternativeToProductFacadeInterface $productFacade,
+        ProductAlternativePluginExecutorInterface $productAlternativePluginExecutor
     ) {
         $this->productAlternativeEntityManager = $productAlternativeEntityManager;
         $this->productFacade = $productFacade;
         $this->productAlternativeRepository = $productAlternativeRepository;
+        $this->productAlternativePluginExecutor = $productAlternativePluginExecutor;
     }
 
     /**
@@ -88,6 +96,8 @@ class ProductAlternativeWriter implements ProductAlternativeWriterInterface
         $this->productAlternativeEntityManager
             ->deleteProductAlternative($productAlternativeTransfer);
 
+        $this->productAlternativePluginExecutor->executePostDeleteProductAlternativePlugins($productAlternativeTransfer);
+
         return $productAlternativeResponseTransfer
             ->setIsSuccessful(true);
     }
@@ -122,11 +132,15 @@ class ProductAlternativeWriter implements ProductAlternativeWriterInterface
      */
     protected function createProductAbstractAlternative(int $idProduct, int $idProductAbstractAlternative): ProductAlternativeTransfer
     {
-        return $this->productAlternativeEntityManager
+        $productAlternativeTransfer = $this->productAlternativeEntityManager
             ->saveProductAbstractAlternative(
                 $idProduct,
                 $idProductAbstractAlternative
             );
+
+        $this->productAlternativePluginExecutor->executePostProductAlternativePlugins($productAlternativeTransfer);
+
+        return $productAlternativeTransfer;
     }
 
     /**
@@ -137,10 +151,14 @@ class ProductAlternativeWriter implements ProductAlternativeWriterInterface
      */
     protected function createProductConcreteAlternative(int $idProduct, int $idProductConcreteAlternative): ProductAlternativeTransfer
     {
-        return $this->productAlternativeEntityManager
+        $productAlternativeTransfer = $this->productAlternativeEntityManager
             ->saveProductConcreteAlternative(
                 $idProduct,
                 $idProductConcreteAlternative
             );
+
+        $this->productAlternativePluginExecutor->executePostProductAlternativePlugins($productAlternativeTransfer);
+
+        return $productAlternativeTransfer;
     }
 }

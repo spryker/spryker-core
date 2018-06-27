@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductAlternativeStorage\Communication\Plugin\Event\Listener;
 
+use Orm\Zed\ProductAlternative\Persistence\Map\SpyProductAlternativeTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
@@ -31,7 +32,10 @@ class ProductAlternativeStorageListener extends AbstractPlugin implements EventB
     {
         $this->preventTransaction();
 
-        $productIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
+        $eventBehaviorFacade = $this->getFactory()->getEventBehaviorFacade();
+        $productIds = $eventBehaviorFacade->getEventTransferForeignKeys(
+            $eventTransfers, SpyProductAlternativeTableMap::COL_FK_PRODUCT
+        );
 
         if (empty($productIds)) {
             return;

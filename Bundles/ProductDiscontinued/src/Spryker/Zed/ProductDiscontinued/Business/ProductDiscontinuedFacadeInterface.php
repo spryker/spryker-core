@@ -62,6 +62,18 @@ interface ProductDiscontinuedFacadeInterface
 
     /**
      * Specification:
+     * - Checks if all given products are discontinued
+     *
+     * @api
+     *
+     * @param int[] $productIds
+     *
+     * @return bool
+     */
+    public function areAllConcreteProductsDiscontinued(array $productIds): bool;
+
+    /**
+     * Specification:
      *  - Find product discontinued by filters.
      *
      * @api

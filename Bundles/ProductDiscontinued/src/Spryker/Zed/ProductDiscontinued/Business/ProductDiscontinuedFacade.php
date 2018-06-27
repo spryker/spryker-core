@@ -17,6 +17,7 @@ use Psr\Log\LoggerInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
+ * @method \Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedRepositoryInterface getRepository()
  * @method \Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinuedBusinessFactory getFactory()
  */
 class ProductDiscontinuedFacade extends AbstractFacade implements ProductDiscontinuedFacadeInterface
@@ -69,6 +70,21 @@ class ProductDiscontinuedFacade extends AbstractFacade implements ProductDiscont
         return $this->getFactory()
             ->createProductDiscontinuedReader()
             ->findProductDiscontinuedByProductId($idProduct);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $productIds
+     *
+     * @return bool
+     */
+    public function areAllConcreteProductsDiscontinued(array $productIds): bool
+    {
+        return $this->getRepository()
+            ->areAllConcreteProductsDiscontinued($productIds);
     }
 
     /**
