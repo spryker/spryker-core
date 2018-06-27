@@ -128,10 +128,12 @@ class ProductPackagingUnitTypeWriter implements ProductPackagingUnitTypeWriterIn
     ): bool {
         $productPackagingUnitTypeTransfer->requireIdProductPackagingUnitType();
 
-        if ($this->repository
-                ->getCountProductPackagingUnitsForTypeById(
-                    $productPackagingUnitTypeTransfer->getIdProductPackagingUnitType()
-                ) <= 0) {
+        $countProductPackagingUnitsByTypeId = $this->repository
+            ->countProductPackagingUnitsByTypeId(
+                $productPackagingUnitTypeTransfer->getIdProductPackagingUnitType()
+            );
+
+        if ($countProductPackagingUnitsByTypeId <= 0) {
             $this->translationWriter->deleteTranslations($productPackagingUnitTypeTransfer);
 
             return $this->entityManager->deleteProductPackagingUnitType($productPackagingUnitTypeTransfer);

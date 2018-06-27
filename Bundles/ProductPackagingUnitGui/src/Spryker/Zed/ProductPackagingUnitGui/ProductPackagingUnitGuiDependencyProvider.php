@@ -10,8 +10,8 @@ namespace Spryker\Zed\ProductPackagingUnitGui;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitTypeQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToLocaleBridge;
-use Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToProductPackagingUnitBridge;
+use Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToLocaleFacadeBridge;
+use Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToProductPackagingUnitFacadeBridge;
 
 class ProductPackagingUnitGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -28,32 +28,7 @@ class ProductPackagingUnitGuiDependencyProvider extends AbstractBundleDependency
     {
         $container = $this->addProductPackagingUnitFacade($container);
         $container = $this->addLocaleFacade($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    public function provideBusinessLayerDependencies(Container $container)
-    {
-        $container = $this->addProductPackagingUnitFacade($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    public function providePersistenceLayerDependencies(Container $container)
-    {
-        $container[static::PROPEL_QUERY_PRODUCT_PACKAGING_UNIT_TYPE] = function (Container $container) {
-            return new SpyProductPackagingUnitTypeQuery();
-        };
+        $container = $this->addProductPackagingUnitTypePropelQuery($container);
 
         return $container;
     }
@@ -66,7 +41,7 @@ class ProductPackagingUnitGuiDependencyProvider extends AbstractBundleDependency
     protected function addProductPackagingUnitFacade(Container $container): Container
     {
         $container[static::FACADE_PRODUCT_PACKAGING_UNIT] = function (Container $container) {
-            return new ProductPackagingUnitGuiToProductPackagingUnitBridge(
+            return new ProductPackagingUnitGuiToProductPackagingUnitFacadeBridge(
                 $container->getLocator()->productPackagingUnit()->facade()
             );
         };
@@ -82,9 +57,23 @@ class ProductPackagingUnitGuiDependencyProvider extends AbstractBundleDependency
     protected function addLocaleFacade(Container $container): Container
     {
         $container[static::FACADE_LOCALE] = function (Container $container) {
-            return new ProductPackagingUnitGuiToLocaleBridge(
+            return new ProductPackagingUnitGuiToLocaleFacadeBridge(
                 $container->getLocator()->locale()->facade()
             );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductPackagingUnitTypePropelQuery(Container $container): Container
+    {
+        $container[static::PROPEL_QUERY_PRODUCT_PACKAGING_UNIT_TYPE] = function (Container $container) {
+            return new SpyProductPackagingUnitTypeQuery();
         };
 
         return $container;

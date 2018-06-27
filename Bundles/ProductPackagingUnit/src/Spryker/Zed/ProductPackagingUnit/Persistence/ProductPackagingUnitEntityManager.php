@@ -44,6 +44,8 @@ class ProductPackagingUnitEntityManager extends AbstractEntityManager implements
     public function deleteProductPackagingUnitType(
         ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
     ): bool {
+        $productPackagingUnitTypeTransfer->requireIdProductPackagingUnitType();
+
         return $this->getFactory()
                 ->createProductPackagingUnitTypeQuery()
                 ->filterByIdProductPackagingUnitType($productPackagingUnitTypeTransfer->getIdProductPackagingUnitType())

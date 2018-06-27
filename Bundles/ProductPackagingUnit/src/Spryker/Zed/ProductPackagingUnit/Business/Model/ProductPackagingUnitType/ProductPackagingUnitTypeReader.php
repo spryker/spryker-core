@@ -74,12 +74,12 @@ class ProductPackagingUnitTypeReader implements ProductPackagingUnitTypeReaderIn
         ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
     ): ProductPackagingUnitTypeTransfer {
         $productPackagingUnitTypeTransfer->requireIdProductPackagingUnitType();
-        $productPackagingUnitTypeId = $productPackagingUnitTypeTransfer->getIdProductPackagingUnitType();
-        $productPackagingUnitTypeTransfer = $this->repository->getProductPackagingUnitTypeById($productPackagingUnitTypeId);
+        $idProductPackagingUnitType = $productPackagingUnitTypeTransfer->getIdProductPackagingUnitType();
+        $productPackagingUnitTypeTransfer = $this->repository->getProductPackagingUnitTypeById($idProductPackagingUnitType);
 
         if ($productPackagingUnitTypeTransfer === null) {
             throw new ProductPackagingUnitTypeNotFoundException(
-                sprintf(static::ERROR_NO_PRODUCT_PACKAGING_UNIT_TYPE_BY_ID, $productPackagingUnitTypeId)
+                sprintf(static::ERROR_NO_PRODUCT_PACKAGING_UNIT_TYPE_BY_ID, $idProductPackagingUnitType)
             );
         }
 
@@ -93,12 +93,12 @@ class ProductPackagingUnitTypeReader implements ProductPackagingUnitTypeReaderIn
      *
      * @return int
      */
-    public function getCountProductPackagingUnitsForType(
+    public function countProductPackagingUnitsByTypeId(
         ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
     ): int {
         $productPackagingUnitTypeTransfer->requireIdProductPackagingUnitType();
 
-        return $this->repository->getCountProductPackagingUnitsForTypeById($productPackagingUnitTypeTransfer->getIdProductPackagingUnitType());
+        return $this->repository->countProductPackagingUnitsByTypeId($productPackagingUnitTypeTransfer->getIdProductPackagingUnitType());
     }
 
     /**

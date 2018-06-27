@@ -9,8 +9,8 @@ namespace Spryker\Zed\ProductPackagingUnit;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToGlossaryBridge;
-use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToLocaleBridge;
+use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToGlossaryFacadeBridge;
+use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToLocaleFacadeBridge;
 
 class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -37,7 +37,7 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
     protected function addLocaleFacade(Container $container): Container
     {
         $container[static::FACADE_LOCALE] = function (Container $container) {
-            return new ProductPackagingUnitToLocaleBridge(
+            return new ProductPackagingUnitToLocaleFacadeBridge(
                 $container->getLocator()->locale()->facade()
             );
         };
@@ -53,7 +53,7 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
     protected function addGlossaryFacade(Container $container): Container
     {
         $container[static::FACADE_GLOSSARY] = function (Container $container) {
-            return new ProductPackagingUnitToGlossaryBridge(
+            return new ProductPackagingUnitToGlossaryFacadeBridge(
                 $container->getLocator()->glossary()->facade()
             );
         };

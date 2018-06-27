@@ -59,7 +59,7 @@ class ProductPackagingUnitTypeFormType extends AbstractType
             /** @var \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer */
             $productPackagingUnitTypeTransfer = $event->getData();
             $form = $event->getForm();
-            if (in_array($productPackagingUnitTypeTransfer->getName(), $this->getFacade()->getInfrastructuralPackagingUnitTypeKeys())) {
+            if (in_array($productPackagingUnitTypeTransfer->getName(), $this->getFactory()->getProductPackagingUnitFacade()->getInfrastructuralPackagingUnitTypeNames())) {
                 $infrastructuralPackagingUnitType = true;
             }
             $this->addNameField($form, $infrastructuralPackagingUnitType);
@@ -102,7 +102,7 @@ class ProductPackagingUnitTypeFormType extends AbstractType
     protected function addGroupNameTranslationFields(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_PRODUCT_PACKAGING_UNIT_TYPE_NAME_TRANSLATIONS, CollectionType::class, [
-            'entry_type' => ProductPackagingUnitTypeFormTypeTranslationForm::class,
+            'entry_type' => ProductPackagingUnitTypeTranslationFormType::class,
             'allow_add' => false,
             'allow_delete' => false,
             'prototype' => true,

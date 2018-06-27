@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductPackagingUnitGui\Communication\Controller;
 
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
-use Spryker\Zed\ProductPackagingUnitGui\Communication\Table\ProductPackagingUnitTypeTableConstantsInterface;
+use Spryker\Zed\ProductPackagingUnitGui\ProductPackagingUnitGuiConfig;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Throwable;
@@ -27,14 +27,14 @@ class EditController extends AbstractProductPackagingUnitGuiController
      */
     public function indexAction(Request $request)
     {
-        $idProductPackagingUnitType = $this->castId($request->query->get(ProductPackagingUnitTypeTableConstantsInterface::REQUEST_ID_PRODUCT_PACKAGING_UNIT_TYPE));
+        $idProductPackagingUnitType = $this->castId($request->query->get(ProductPackagingUnitGuiConfig::REQUEST_ID_PRODUCT_PACKAGING_UNIT_TYPE));
         $availableLocales = $this->getFactory()->getLocaleFacade()->getLocaleCollection();
 
         $productPackagingUnitTypeDataProvider = $this->getFactory()
             ->createProductPackagingUnitTypeDataProvider();
 
         $productPackagingUnitTypeTransfer = $productPackagingUnitTypeDataProvider->getData($idProductPackagingUnitType);
-        $allowDelete = $this->getCountProductPackagingUnitsForType($productPackagingUnitTypeTransfer) > 0;
+        $allowDelete = $this->countProductPackagingUnitsByTypeId($productPackagingUnitTypeTransfer) > 0;
 
         $productPackagingUnitTypeForm = $this->getFactory()
             ->getProductPackagingUnitTypeForm(
@@ -60,11 +60,11 @@ class EditController extends AbstractProductPackagingUnitGuiController
      *
      * @return int
      */
-    protected function getCountProductPackagingUnitsForType(ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer): int
+    protected function countProductPackagingUnitsByTypeId(ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer): int
     {
         return $this->getFactory()
             ->getProductPackagingUnitFacade()
-            ->getCountProductPackagingUnitsForType($productPackagingUnitTypeTransfer);
+            ->countProductPackagingUnitsByTypeId($productPackagingUnitTypeTransfer);
     }
 
     /**
@@ -83,7 +83,7 @@ class EditController extends AbstractProductPackagingUnitGuiController
                 ->updateProductPackagingUnitType($productPackagingUnitTypeTransfer);
         } catch (Throwable $throwable) {
             $this->addErrorMessage(sprintf(
-                static::MESSAGE_PACKAGING_UNIT_TYPE_UPDATE_ERROR,
+                static::MESSAGE_ERROR_PACKAGING_UNIT_TYPE_UPDATE,
                 $productPackagingUnitTypeTransfer->getName()
             ));
 
@@ -91,7 +91,7 @@ class EditController extends AbstractProductPackagingUnitGuiController
         }
 
         $this->addSuccessMessage(sprintf(
-            static::MESSAGE_PACKAGING_UNIT_TYPE_UPDATE_SUCCESS,
+            static::MESSAGE_SUCCESS_PACKAGING_UNIT_TYPE_UPDATE,
             $productPackagingUnitTypeTransfer->getName()
         ));
     }
