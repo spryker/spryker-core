@@ -13,6 +13,7 @@ use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToLocaleFacadeInterface;
+use Spryker\Zed\ProductPackagingUnitGui\ProductPackagingUnitGuiConfig;
 
 class ProductPackagingUnitTypeTable extends AbstractTable
 {
@@ -167,9 +168,9 @@ class ProductPackagingUnitTypeTable extends AbstractTable
     {
         return $this->generateEditButton(
             Url::generate(
-                ProductPackagingUnitTypeTableConstantsInterface::URL_PRODUCT_PACKAGING_UNIT_TYPE_EDIT,
+                ProductPackagingUnitGuiConfig::URL_PRODUCT_PACKAGING_UNIT_TYPE_EDIT,
                 [
-                    ProductPackagingUnitTypeTableConstantsInterface::REQUEST_ID_PRODUCT_PACKAGING_UNIT_TYPE => $idProductPackagingUnitType,
+                    ProductPackagingUnitGuiConfig::REQUEST_ID_PRODUCT_PACKAGING_UNIT_TYPE => $idProductPackagingUnitType,
                 ]
             ),
             'Edit'
@@ -185,10 +186,10 @@ class ProductPackagingUnitTypeTable extends AbstractTable
     {
         return $this->generateEditButton(
             Url::generate(
-                ProductPackagingUnitTypeTableConstantsInterface::URL_PRODUCT_PACKAGING_UNIT_TYPE_DELETE,
+                ProductPackagingUnitGuiConfig::URL_PRODUCT_PACKAGING_UNIT_TYPE_DELETE,
                 [
-                    ProductPackagingUnitTypeTableConstantsInterface::REQUEST_ID_PRODUCT_PACKAGING_UNIT_TYPE => $idProductPackagingUnitType,
-                    ProductPackagingUnitTypeTableConstantsInterface::REQUEST_PARAM_REDIRECT_URL => ProductPackagingUnitTypeTableConstantsInterface::URL_PRODUCT_PACKAGING_UNIT_TYPE_LIST,
+                    ProductPackagingUnitGuiConfig::REQUEST_ID_PRODUCT_PACKAGING_UNIT_TYPE => $idProductPackagingUnitType,
+                    ProductPackagingUnitGuiConfig::REQUEST_PARAM_REDIRECT_URL => ProductPackagingUnitGuiConfig::URL_PRODUCT_PACKAGING_UNIT_TYPE_LIST,
                 ]
             ),
             'Delete'

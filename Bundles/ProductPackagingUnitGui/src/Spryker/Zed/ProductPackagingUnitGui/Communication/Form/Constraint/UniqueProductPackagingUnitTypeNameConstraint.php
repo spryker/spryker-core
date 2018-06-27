@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductPackagingUnitGui\Communication\Form\Constraint;
 
-use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitType;
+use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 use Symfony\Component\Validator\Constraint;
 
 class UniqueProductPackagingUnitTypeNameConstraint extends Constraint
@@ -20,25 +20,27 @@ class UniqueProductPackagingUnitTypeNameConstraint extends Constraint
     protected $facade;
 
     /**
-     * @param string $name
+     * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
-     * @return \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitType|null
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer|null
      */
-    public function findProductPackagingUnitTypeByName(string $name): ?SpyProductPackagingUnitType
-    {
+    public function findProductPackagingUnitTypeByName(
+        ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+    ): ?ProductPackagingUnitTypeTransfer {
         return $this->facade
-            ->getProductPackagingUnitTypeByName($name);
+            ->getProductPackagingUnitTypeByName($productPackagingUnitTypeTransfer);
     }
 
     /**
-     * @param int $id
+     * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
-     * @return \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitType|null
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer|null
      */
-    public function findProductPackagingUnitTypeById(int $id): ?SpyProductPackagingUnitType
-    {
+    public function findProductPackagingUnitTypeById(
+        ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+    ): ?ProductPackagingUnitTypeTransfer {
         return $this->facade
-            ->getProductPackagingUnitTypeById($id);
+            ->getProductPackagingUnitTypeById($productPackagingUnitTypeTransfer);
     }
 
     /**

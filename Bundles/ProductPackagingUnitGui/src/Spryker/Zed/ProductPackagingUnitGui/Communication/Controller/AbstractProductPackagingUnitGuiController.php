@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductPackagingUnitGui\Communication\Controller;
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\ProductPackagingUnitGui\Communication\Table\ProductPackagingUnitTypeTableConstantsInterface;
+use Spryker\Zed\ProductPackagingUnitGui\ProductPackagingUnitGuiConfig;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -53,12 +53,12 @@ abstract class AbstractProductPackagingUnitGuiController extends AbstractControl
      */
     protected function getRequestRedirectUrl(Request $request, ?string $default = null): string
     {
-        $redirectUrl = $request->query->get(ProductPackagingUnitTypeTableConstantsInterface::REQUEST_PARAM_REDIRECT_URL);
+        $redirectUrl = $request->query->get(ProductPackagingUnitGuiConfig::REQUEST_PARAM_REDIRECT_URL);
         if ($redirectUrl) {
             return $redirectUrl;
         }
 
-        return $default ?? ProductPackagingUnitTypeTableConstantsInterface::URL_PRODUCT_PACKAGING_UNIT_TYPE_LIST;
+        return $default ?? ProductPackagingUnitGuiConfig::URL_PRODUCT_PACKAGING_UNIT_TYPE_LIST;
     }
 
     /**
@@ -69,8 +69,8 @@ abstract class AbstractProductPackagingUnitGuiController extends AbstractControl
     protected function getEditPageForId(int $idProductPackagingUnitType): string
     {
         return Url::generate(
-            ProductPackagingUnitTypeTableConstantsInterface::URL_PRODUCT_PACKAGING_UNIT_TYPE_EDIT,
-            [ProductPackagingUnitTypeTableConstantsInterface::REQUEST_ID_PRODUCT_PACKAGING_UNIT_TYPE => $idProductPackagingUnitType]
+            ProductPackagingUnitGuiConfig::URL_PRODUCT_PACKAGING_UNIT_TYPE_EDIT,
+            [ProductPackagingUnitGuiConfig::REQUEST_ID_PRODUCT_PACKAGING_UNIT_TYPE => $idProductPackagingUnitType]
         )->build();
     }
 }

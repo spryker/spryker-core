@@ -17,7 +17,7 @@ class UniqueProductPackagingUnitTypeNameConstraintValidator extends ConstraintVa
 {
     /**
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $value
-     * @param \Symfony\Component\Validator\Constraint|\Spryker\Zed\ProductPackagingUnitGui\Communication\Form\Constraint\UniqueProductPackagingUnitTypeNameConstraint $constraint
+     * @param \Spryker\Zed\ProductPackagingUnitGui\Communication\Form\Constraint\UniqueProductPackagingUnitTypeNameConstraint $constraint
      *
      * @return void
      */
@@ -77,16 +77,19 @@ class UniqueProductPackagingUnitTypeNameConstraintValidator extends ConstraintVa
      */
     protected function isNameChanged(
         ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer,
-        UniqueProductPackagingUnitTypeNameConstraint $constraint
+        Constraint $constraint
     ) {
-        $idProductPackagingUnitType = $productPackagingUnitTypeTransfer->getIdProductPackagingUnitType();
-        if (!$idProductPackagingUnitType) {
+        if (!$productPackagingUnitTypeTransfer->getIdProductPackagingUnitType()) {
             return true;
         }
 
-        $productPackagingUnitTypeEntity = $constraint->findProductPackagingUnitTypeById($idProductPackagingUnitType);
+        $productPackagingUnitTypeTransfer = $constraint->findProductPackagingUnitTypeById($productPackagingUnitTypeTransfer);
 
-        return ($productPackagingUnitTypeEntity->getName() !== $productPackagingUnitTypeTransfer->getName());
+        if (!$productPackagingUnitTypeTransfer) {
+            return true;
+        }
+
+        return $productPackagingUnitTypeTransfer->getName() !== $productPackagingUnitTypeTransfer->getName();
     }
 
     /**
@@ -97,10 +100,10 @@ class UniqueProductPackagingUnitTypeNameConstraintValidator extends ConstraintVa
      */
     protected function isUniqueName(
         ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer,
-        UniqueProductPackagingUnitTypeNameConstraint $constraint
+        Constraint $constraint
     ) {
-        $productPackagingUnitTypeEntity = $constraint->findProductPackagingUnitTypeByName($productPackagingUnitTypeTransfer->getName());
+        $productPackagingUnitTypeTransfer = $constraint->findProductPackagingUnitTypeByName($productPackagingUnitTypeTransfer);
 
-        return ($productPackagingUnitTypeEntity ? false : true);
+        return $productPackagingUnitTypeTransfer ? false : true;
     }
 }
