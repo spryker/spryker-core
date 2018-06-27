@@ -325,6 +325,8 @@ class Customer implements CustomerInterface
      */
     protected function sendPasswordRestoreConfirmation(CustomerTransfer $customerTransfer)
     {
+        $customerTransfer = $this->get($customerTransfer);
+
         $mailTransfer = new MailTransfer();
         $mailTransfer->setType(CustomerRestoredPasswordConfirmationMailTypePlugin::MAIL_TYPE);
         $mailTransfer->setCustomer($customerTransfer);
@@ -392,8 +394,6 @@ class Customer implements CustomerInterface
      */
     public function restorePassword(CustomerTransfer $customerTransfer)
     {
-        $customerTransfer = $this->get($customerTransfer);
-
         $customerTransfer = $this->encryptPassword($customerTransfer);
 
         $customerResponseTransfer = $this->createCustomerResponseTransfer();
