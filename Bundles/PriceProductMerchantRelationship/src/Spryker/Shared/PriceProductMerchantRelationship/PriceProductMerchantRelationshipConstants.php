@@ -9,5 +9,4 @@ namespace Spryker\Shared\PriceProductMerchantRelationship;
 
 interface PriceProductMerchantRelationshipConstants
 {
-    public const PRICE_DIMENSION_MERCHANT_RELATIONSHIP = 'PRICE_DIMENSION_MERCHANT_RELATIONSHIP';
 }

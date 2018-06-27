@@ -9,10 +9,10 @@ namespace Spryker\Zed\PriceProduct\Business\Model\Product;
 
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Spryker\Shared\PriceProduct\PriceProductConstants;
 use Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInterface;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductEntityManagerInterface;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface;
+use Spryker\Zed\PriceProduct\PriceProductConfig;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class PriceProductConcreteWriter extends BaseProductPriceWriter implements PriceProductConcreteWriterInterface
@@ -45,24 +45,32 @@ class PriceProductConcreteWriter extends BaseProductPriceWriter implements Price
     protected $priceProductEntityManager;
 
     /**
+     * @var \Spryker\Zed\PriceProduct\PriceProductConfig
+     */
+    protected $config;
+
+    /**
      * @param \Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInterface $priceTypeReader
      * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface $priceProductQueryContainer
      * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductDefaultWriterInterface $priceProductDefaultWriter
      * @param \Spryker\Zed\PriceProduct\Dependency\Plugin\PriceDimensionConcreteSaverPluginInterface[] $priceDimensionConcreteSaverPlugins
      * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductEntityManagerInterface $priceProductEntityManager
+     * @param \Spryker\Zed\PriceProduct\PriceProductConfig $config
      */
     public function __construct(
         PriceProductTypeReaderInterface $priceTypeReader,
         PriceProductQueryContainerInterface $priceProductQueryContainer,
         PriceProductDefaultWriterInterface $priceProductDefaultWriter,
         array $priceDimensionConcreteSaverPlugins,
-        PriceProductEntityManagerInterface $priceProductEntityManager
+        PriceProductEntityManagerInterface $priceProductEntityManager,
+        PriceProductConfig $config
     ) {
         $this->priceTypeReader = $priceTypeReader;
         $this->priceProductQueryContainer = $priceProductQueryContainer;
         $this->priceProductDefaultWriter = $priceProductDefaultWriter;
         $this->priceDimensionConcreteSaverPlugins = $priceDimensionConcreteSaverPlugins;
         $this->priceProductEntityManager = $priceProductEntityManager;
+        $this->config = $config;
     }
 
     /**
@@ -134,7 +142,8 @@ class PriceProductConcreteWriter extends BaseProductPriceWriter implements Price
     ): PriceProductTransfer {
 
         $priceDimensionType = $priceProductTransfer->getPriceDimension()->getType();
-        if ($priceDimensionType === PriceProductConstants::PRICE_DIMENSION_DEFAULT) {
+
+        if ($priceDimensionType === $this->config->getPriceDimensionDefault()) {
             $priceProductDefaultEntityTransfer = $this->priceProductDefaultWriter->persistPriceProductDefault($priceProductTransfer);
             $priceProductTransfer->getPriceDimension()->setIdPriceProductDefault(
                 $priceProductDefaultEntityTransfer->getIdPriceProductDefault()
@@ -161,7 +170,7 @@ class PriceProductConcreteWriter extends BaseProductPriceWriter implements Price
      */
     protected function persistProductConcretePriceEntity(
         PriceProductTransfer $priceProductTransfer,
-        $idProductConcrete
+        int $idProductConcrete
     ): PriceProductTransfer {
 
         $priceTypeEntity = $this->priceTypeReader->getPriceTypeByName($priceProductTransfer->getPriceType()->getName());

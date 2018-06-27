@@ -17,8 +17,16 @@ class PriceProductConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getPriceTypeDefaultName()
+    public function getPriceTypeDefaultName(): string
     {
         return $this->getSharedConfig()->getPriceTypeDefaultName();
+    }
+
+    /**
+     * @return string
+     */
+    public function getPriceDimensionDefault(): string
+    {
+        return $this->getSharedConfig()->getPriceDimensionDefault();
     }
 }

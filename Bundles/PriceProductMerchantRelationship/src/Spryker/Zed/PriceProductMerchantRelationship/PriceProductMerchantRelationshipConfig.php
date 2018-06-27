@@ -9,6 +9,16 @@ namespace Spryker\Zed\PriceProductMerchantRelationship;
 
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
+/**
+ * @method \Spryker\Shared\PriceProductMerchantRelationship\PriceProductMerchantRelationshipConfig getSharedConfig()
+ */
 class PriceProductMerchantRelationshipConfig extends AbstractBundleConfig
 {
+    /**
+     * @return string
+     */
+    public function getPriceDimensionMerchantRelationship()
+    {
+        return $this->getSharedConfig()->getPriceDimensionMerchantRelationship();
+    }
 }

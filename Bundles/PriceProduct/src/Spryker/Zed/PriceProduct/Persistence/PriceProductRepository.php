@@ -26,8 +26,6 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
     public const PRICE_PRODUCT_RELATION_NAME = 'PriceProduct';
 
     /**
-     * @api
-     *
      * @param string $concreteSku
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
@@ -44,8 +42,6 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
     }
 
     /**
-     * @api
-     *
      * @param string $abstractSku
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
@@ -62,8 +58,6 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
     }
 
     /**
-     * @api
-     *
      * @param int $idProductConcrete
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
@@ -85,8 +79,6 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
     }
 
     /**
-     * @api
-     *
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
@@ -108,8 +100,6 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
     }
 
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\QueryCriteriaTransfer|null

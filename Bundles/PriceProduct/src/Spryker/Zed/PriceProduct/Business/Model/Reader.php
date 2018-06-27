@@ -12,12 +12,12 @@ use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
-use Spryker\Shared\PriceProduct\PriceProductConstants;
 use Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInterface;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductAbstractReaderInterface;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductConcreteReaderInterface;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapperInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeInterface;
+use Spryker\Zed\PriceProduct\PriceProductConfig;
 
 class Reader implements ReaderInterface
 {
@@ -57,12 +57,18 @@ class Reader implements ReaderInterface
     protected $priceProductMapper;
 
     /**
+     * @var \Spryker\Zed\PriceProduct\PriceProductConfig
+     */
+    protected $config;
+
+    /**
      * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInterface $priceProductTypeReader
      * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductConcreteReaderInterface $priceProductConcreteReader
      * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductAbstractReaderInterface $priceProductAbstractReader
      * @param \Spryker\Zed\PriceProduct\Business\Model\PriceProductCriteriaBuilderInterface $priceProductCriteriaBuilder
      * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapperInterface $priceProductMapper
+     * @param \Spryker\Zed\PriceProduct\PriceProductConfig $config
      */
     public function __construct(
         PriceProductToProductFacadeInterface $productFacade,
@@ -70,7 +76,8 @@ class Reader implements ReaderInterface
         PriceProductConcreteReaderInterface $priceProductConcreteReader,
         PriceProductAbstractReaderInterface $priceProductAbstractReader,
         PriceProductCriteriaBuilderInterface $priceProductCriteriaBuilder,
-        PriceProductMapperInterface $priceProductMapper
+        PriceProductMapperInterface $priceProductMapper,
+        PriceProductConfig $config
     ) {
         $this->productFacade = $productFacade;
         $this->priceProductTypeReader = $priceProductTypeReader;
@@ -78,6 +85,7 @@ class Reader implements ReaderInterface
         $this->priceProductAbstractReader = $priceProductAbstractReader;
         $this->priceProductCriteriaBuilder = $priceProductCriteriaBuilder;
         $this->priceProductMapper = $priceProductMapper;
+        $this->config = $config;
     }
 
     /**
@@ -398,7 +406,7 @@ class Reader implements ReaderInterface
     {
         if (!$priceProductDimensionTransfer) {
             $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
-                ->setType(PriceProductConstants::PRICE_DIMENSION_DEFAULT);
+                ->setType($this->config->getPriceDimensionDefault());
         }
 
         return $priceProductDimensionTransfer;

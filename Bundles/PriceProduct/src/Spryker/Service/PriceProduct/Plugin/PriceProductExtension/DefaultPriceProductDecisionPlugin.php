@@ -12,8 +12,10 @@ use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Service\Kernel\AbstractPlugin;
 use Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductDecisionPluginInterface;
-use Spryker\Shared\PriceProduct\PriceProductConstants;
 
+/**
+ * @method \Spryker\Service\PriceProduct\PriceProductConfig getConfig()
+ */
 class DefaultPriceProductDecisionPlugin extends AbstractPlugin implements PriceProductDecisionPluginInterface
 {
     /**
@@ -102,6 +104,6 @@ class DefaultPriceProductDecisionPlugin extends AbstractPlugin implements PriceP
      */
     public function getDimensionName(): string
     {
-        return PriceProductConstants::PRICE_DIMENSION_DEFAULT;
+        return $this->getConfig()->getPriceDimensionDefault();
     }
 }

@@ -10,11 +10,11 @@ namespace Spryker\Zed\PriceProduct\Business\Model;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
-use Spryker\Shared\PriceProduct\PriceProductConstants;
 use Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyFacadeInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceFacadeInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreFacadeInterface;
+use Spryker\Zed\PriceProduct\PriceProductConfig;
 
 class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterface
 {
@@ -39,21 +39,29 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
     protected $priceProductTypeReader;
 
     /**
+     * @var \Spryker\Zed\PriceProduct\PriceProductConfig
+     */
+    protected $config;
+
+    /**
      * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyFacadeInterface $currencyFacade
      * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceFacadeInterface $priceFacade
      * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInterface $priceProductTypeReader
+     * @param \Spryker\Zed\PriceProduct\PriceProductConfig $config
      */
     public function __construct(
         PriceProductToCurrencyFacadeInterface $currencyFacade,
         PriceProductToPriceFacadeInterface $priceFacade,
         PriceProductToStoreFacadeInterface $storeFacade,
-        PriceProductTypeReaderInterface $priceProductTypeReader
+        PriceProductTypeReaderInterface $priceProductTypeReader,
+        PriceProductConfig $config
     ) {
         $this->currencyFacade = $currencyFacade;
         $this->priceFacade = $priceFacade;
         $this->storeFacade = $storeFacade;
         $this->priceProductTypeReader = $priceProductTypeReader;
+        $this->config = $config;
     }
 
     /**
@@ -99,7 +107,7 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
             $this->priceProductTypeReader->handleDefaultPriceType($priceTypeName)
         )
         ->setPriceDimension(
-            (new PriceProductDimensionTransfer())->setType(PriceProductConstants::PRICE_DIMENSION_DEFAULT)
+            (new PriceProductDimensionTransfer())->setType($this->config->getPriceDimensionDefault())
         );
     }
 

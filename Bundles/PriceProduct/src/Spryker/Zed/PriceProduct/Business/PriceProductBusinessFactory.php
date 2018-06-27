@@ -73,7 +73,8 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->createPriceProductConcreteReader(),
             $this->createPriceProductAbstractReader(),
             $this->createProductCriteriaBuilder(),
-            $this->createPriceProductMapper()
+            $this->createPriceProductMapper(),
+            $this->getConfig()
         );
     }
 
@@ -182,7 +183,8 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->getCurrencyFacade(),
             $this->getPriceFacade(),
             $this->getStoreFacade(),
-            $this->createPriceTypeReader()
+            $this->createPriceTypeReader(),
+            $this->getConfig()
         );
     }
 
@@ -214,7 +216,11 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
      */
     public function createPriceGrouper(): PriceGrouperInterface
     {
-        return new PriceGrouper($this->createReaderModel(), $this->createPriceProductMapper());
+        return new PriceGrouper(
+            $this->createReaderModel(),
+            $this->createPriceProductMapper(),
+            $this->getConfig()
+        );
     }
 
     /**
@@ -235,7 +241,8 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->createPriceProductDefaultWriter(),
             $this->getPriceDimensionAbstractSaverPlugins(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
+            $this->getConfig()
         );
     }
 
@@ -249,7 +256,8 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->createPriceProductDefaultWriter(),
             $this->getPriceDimensionConcreteSaverPlugins(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
+            $this->getConfig()
         );
     }
 

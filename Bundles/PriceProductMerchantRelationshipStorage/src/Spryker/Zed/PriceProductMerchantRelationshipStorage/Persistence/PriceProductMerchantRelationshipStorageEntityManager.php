@@ -142,8 +142,6 @@ class PriceProductMerchantRelationshipStorageEntityManager extends AbstractEntit
     }
 
     /**
-     * @api
-     *
      * @param int $idMerchantRelationship
      * @param int $idProductAbstract
      *
@@ -164,8 +162,6 @@ class PriceProductMerchantRelationshipStorageEntityManager extends AbstractEntit
     }
 
     /**
-     * @api
-     *
      * @param int $idMerchantRelationship
      * @param int $idProduct
      *

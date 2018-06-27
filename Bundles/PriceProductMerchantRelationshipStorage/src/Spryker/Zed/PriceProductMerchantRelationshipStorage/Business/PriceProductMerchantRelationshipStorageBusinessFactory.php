@@ -54,7 +54,11 @@ class PriceProductMerchantRelationshipStorageBusinessFactory extends AbstractBus
      */
     public function createPriceGrouper(): PriceGrouperInterface
     {
-        return new PriceGrouper($this->getPriceProductFacade(), $this->getStoreFacade());
+        return new PriceGrouper(
+            $this->getPriceProductFacade(),
+            $this->getStoreFacade(),
+            $this->getConfig()
+        );
     }
 
     /**
