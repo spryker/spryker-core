@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/product-alternative-storage-extension.svg)](https://travis-ci.org/spryker/product-alternative-storage-extension)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/product-alternative-storage-extension/badge.svg)](https://coveralls.io/github/spryker/product-alternative-storage-extension)
 
-{{ADD DESCRIPTION HERE}}
+Holds all extension points (plugins) of ProductAlternativeStorage module.
 
 ## Installation
 

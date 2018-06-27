@@ -70,7 +70,7 @@ class ProductAlternativeStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ProductAlternativeStorageExtension\Dependency\Plugin\AlternativeProductApplicableCheckPluginInterface[]
      */
-    protected function getAlternativeProductApplicableCheckPlugins(): array
+    public function getAlternativeProductApplicableCheckPlugins(): array
     {
         return $this->getProvidedDependency(ProductAlternativeStorageDependencyProvider::PLUGINS_ALTERNATIVE_PRODUCT_APPLICABLE_CHECK);
     }

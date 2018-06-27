@@ -17,6 +17,7 @@ class DiscontinuedOptionsProductViewExpander implements DiscontinuedOptionsProdu
     protected const GLOSSARY_KEY_SUPER_ATTRIBUTE_DISCONTINUED = 'product_discontinued.super_attribute_discontinued';
     protected const PATTERN_DISCONTINUED_ATTRIBUTE_NAME = '%s - %s';
     protected const PATTERN_ATTRIBUTE_KEY_VALUE_KEY = '%s:%s';
+    protected const ID_PRODUCT_CONCRETE = 'id_product_concrete';
 
     /**
      * @var \Spryker\Client\ProductDiscontinuedStorage\Storage\ProductDiscontinuedStorageReaderInterface
@@ -27,12 +28,6 @@ class DiscontinuedOptionsProductViewExpander implements DiscontinuedOptionsProdu
      * @var \Spryker\Client\ProductDiscontinuedStorage\Dependency\Client\ProductDiscontinuedStorageToGlossaryStorageClientInterface
      */
     protected $glossaryStorageClient;
-
-    /**
-     * @param \Spryker\Client\ProductDiscontinuedStorage\Storage\ProductDiscontinuedStorageReaderInterface $productDiscontinuedStorageReader
-     * @param \Spryker\Client\ProductDiscontinuedStorage\Dependency\Client\ProductDiscontinuedStorageToGlossaryStorageClientInterface $glossaryStorageClient
-     */
-    protected const ID_PRODUCT_CONCRETE = 'id_product_concrete';
 
     /**
      * @param \Spryker\Client\ProductDiscontinuedStorage\Storage\ProductDiscontinuedStorageReaderInterface $productDiscontinuedStorageReader
@@ -54,6 +49,9 @@ class DiscontinuedOptionsProductViewExpander implements DiscontinuedOptionsProdu
      */
     public function expandDiscontinuedProductOptions(ProductViewTransfer $productViewTransfer, string $localeName): ProductViewTransfer
     {
+        if (!$productViewTransfer->getAttributeMap()) {
+            return $productViewTransfer;
+        }
         $superAttributes = $productViewTransfer->getAttributeMap()->getSuperAttributes();
         $selectedAttributes = $productViewTransfer->getSelectedAttributes();
         if (count($superAttributes) - count($selectedAttributes) > 1) {
