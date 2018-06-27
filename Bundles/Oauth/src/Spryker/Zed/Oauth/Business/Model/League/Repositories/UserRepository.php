@@ -42,6 +42,52 @@ class UserRepository implements UserRepositoryInterface
         ClientEntityInterface $clientEntity
     ) {
 
+        $oauthUserTransfer = $this->createOauthUserTransfer($username, $password, $grantType, $clientEntity);
+        $oauthUserTransfer = $this->findUser($oauthUserTransfer);
+
+        if ($oauthUserTransfer && $oauthUserTransfer->getIsSuccess() && $oauthUserTransfer->getUserIdentifier()) {
+            return new UserEntity($oauthUserTransfer->getUserIdentifier());
+        }
+
+        return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OauthUserTransfer $oauthUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\OauthUserTransfer|null
+     */
+    protected function findUser(OauthUserTransfer $oauthUserTransfer): ?OauthUserTransfer
+    {
+        foreach ($this->userProviderPlugins as $userProviderPlugin) {
+            if (!$userProviderPlugin->accept($oauthUserTransfer)) {
+                continue;
+            }
+
+            $oauthUserTransfer = $userProviderPlugin->getUser($oauthUserTransfer);
+            if ($oauthUserTransfer->getIsSuccess()) {
+                return $oauthUserTransfer;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param string $username
+     * @param string $password
+     * @param string $grantType
+     * @param \League\OAuth2\Server\Entities\ClientEntityInterface $clientEntity
+     *
+     * @return \Generated\Shared\Transfer\OauthUserTransfer
+     */
+    protected function createOauthUserTransfer(
+        string $username,
+        string $password,
+        string $grantType,
+        ClientEntityInterface $clientEntity
+    ): OauthUserTransfer {
+
         $oauthUserTransfer = new OauthUserTransfer();
         $oauthUserTransfer
             ->setIsSuccess(false)
@@ -51,19 +97,6 @@ class UserRepository implements UserRepositoryInterface
             ->setGrantType($grantType)
             ->setClientName($clientEntity->getName());
 
-        foreach ($this->userProviderPlugins as $userProviderPlugin) {
-            if (!$userProviderPlugin->accept($oauthUserTransfer)) {
-                continue;
-            }
-            $oauthUserTransfer = $userProviderPlugin->getUser($oauthUserTransfer);
-
-            if (!$oauthUserTransfer->getIsSuccess()) {
-                return null;
-            }
-        }
-
-        if ($oauthUserTransfer->getIsSuccess() && $oauthUserTransfer->getUserIdentifier()) {
-            return new UserEntity($oauthUserTransfer->getUserIdentifier());
-        }
+        return $oauthUserTransfer;
     }
 }

@@ -48,6 +48,7 @@ class CorsResponse implements CorsResponseInterface
         $availableMethods = $this->resourceRouteLoader
             ->getAvailableMethods(
                 $restRequest->getResource()->getType(),
+                $restRequest->getParentResources(),
                 $restRequest->getHttpRequest()
             );
 

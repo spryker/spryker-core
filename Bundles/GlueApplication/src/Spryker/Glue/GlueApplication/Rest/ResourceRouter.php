@@ -72,7 +72,11 @@ class ResourceRouter implements ResourceRouterInterface
             return $this->createOptionsRoute($resourceType);
         }
 
-        $route = $this->resourceRouteLoader->load($resourceType[RequestConstantsInterface::ATTRIBUTE_TYPE], $httpRequest);
+        $route = $this->resourceRouteLoader->load(
+            $resourceType[RequestConstantsInterface::ATTRIBUTE_TYPE],
+            $resources,
+            $httpRequest
+        );
 
         if (!$route) {
             return $this->createResourceNotFoundRoute();
