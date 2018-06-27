@@ -26,7 +26,7 @@ interface ProductPackagingUnitClientInterface
      *
      * @return \Generated\Shared\Transfer\PersistentCartChangeTransfer
      */
-    public function expandProductPackagingUnitQuantityForPersistentCartChange(PersistentCartChangeTransfer $persistentCartChangeTransfer, array $params = []): PersistentCartChangeTransfer;
+    public function expandProductPackagingUnitAmountForPersistentCartChange(PersistentCartChangeTransfer $persistentCartChangeTransfer, array $params = []): PersistentCartChangeTransfer;
 
     /**
      * Specification:
@@ -42,5 +42,5 @@ interface ProductPackagingUnitClientInterface
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function expandProductPackagingUnitQuantityForCartChangeRequest(CartChangeTransfer $cartChangeTransfer, array $params = []): CartChangeTransfer;
+    public function expandProductPackagingUnitAmountForCartChangeRequest(CartChangeTransfer $cartChangeTransfer, array $params = []): CartChangeTransfer;
 }

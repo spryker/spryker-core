@@ -14,7 +14,7 @@ use Spryker\Client\PersistentCartExtension\Dependency\Plugin\PersistentCartChang
 /**
  * @method \Spryker\Client\ProductPackagingUnit\ProductPackagingUnitClientInterface getClient()
  */
-class ProductPackagingUnitQuantityPersistentCartChangeExpanderPlugin extends AbstractPlugin implements PersistentCartChangeExpanderPluginInterface
+class ProductPackagingUnitAmountPersistentCartChangeExpanderPlugin extends AbstractPlugin implements PersistentCartChangeExpanderPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -29,6 +29,6 @@ class ProductPackagingUnitQuantityPersistentCartChangeExpanderPlugin extends Abs
     public function extend(PersistentCartChangeTransfer $persistentCartChangeTransfer, array $params = []): PersistentCartChangeTransfer
     {
         return $this->getClient()
-            ->expandProductPackagingUnitQuantityForPersistentCartChange($persistentCartChangeTransfer, $params);
+            ->expandProductPackagingUnitAmountForPersistentCartChange($persistentCartChangeTransfer, $params);
     }
 }

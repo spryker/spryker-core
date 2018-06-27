@@ -14,7 +14,7 @@ use Spryker\Client\Kernel\AbstractPlugin;
 /**
  * @method \Spryker\Client\ProductPackagingUnit\ProductPackagingUnitClientInterface getClient()
  */
-class ProductPackagingUnitQuantityCartChangeRequestExpanderPlugin extends AbstractPlugin implements CartChangeRequestExpanderPluginInterface
+class ProductPackagingUnitAmountCartChangeRequestExpanderPlugin extends AbstractPlugin implements CartChangeRequestExpanderPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -29,6 +29,6 @@ class ProductPackagingUnitQuantityCartChangeRequestExpanderPlugin extends Abstra
     public function expand(CartChangeTransfer $cartChangeTransfer, array $params = []): CartChangeTransfer
     {
         return $this->getClient()
-            ->expandProductPackagingUnitQuantityForCartChangeRequest($cartChangeTransfer, $params);
+            ->expandProductPackagingUnitAmountForCartChangeRequest($cartChangeTransfer, $params);
     }
 }

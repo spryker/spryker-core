@@ -20,7 +20,7 @@ class ProductPackagingUnitAmountExpander implements ProductPackagingUnitAmountEx
      *
      * @return \Generated\Shared\Transfer\PersistentCartChangeTransfer
      */
-    public function expandProductPackagingUnitQuantityForPersistentCartChange(PersistentCartChangeTransfer $persistentCartChangeTransfer, array $params = []): PersistentCartChangeTransfer
+    public function expandProductPackagingUnitAmountForPersistentCartChange(PersistentCartChangeTransfer $persistentCartChangeTransfer, array $params = []): PersistentCartChangeTransfer
     {
         foreach ($persistentCartChangeTransfer->getItems() as $itemTransfer) {
             $packagingUnitAmount = $this->getPackagingUnitAmount($params, $itemTransfer->getSku());
@@ -39,7 +39,7 @@ class ProductPackagingUnitAmountExpander implements ProductPackagingUnitAmountEx
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function expandProductPackagingUnitQuantityForCartChangeRequest(CartChangeTransfer $cartChangeTransfer, array $params = []): CartChangeTransfer
+    public function expandProductPackagingUnitAmountForCartChangeRequest(CartChangeTransfer $cartChangeTransfer, array $params = []): CartChangeTransfer
     {
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             $packagingUnitAmount = $this->getPackagingUnitAmount($params, $itemTransfer->getSku());
