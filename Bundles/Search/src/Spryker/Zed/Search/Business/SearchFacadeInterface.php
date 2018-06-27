@@ -234,6 +234,16 @@ interface SearchFacadeInterface
 
     /**
      * Specification:
+     * - Opens an Index.
+     *
+     * @api
+     *
+     * @return mixed
+     */
+    public function openIndex();
+
+    /**
+     * Specification:
      * - Closes all indices.
      *
      * @api

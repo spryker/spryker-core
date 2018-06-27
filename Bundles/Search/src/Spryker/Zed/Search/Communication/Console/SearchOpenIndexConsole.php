@@ -14,10 +14,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * @method \Spryker\Zed\Search\Business\SearchFacadeInterface getFacade()
  */
-class SearchCloseIndexConsole extends Console
+class SearchOpenIndexConsole extends Console
 {
-    const COMMAND_NAME = 'search:index:close';
-    const DESCRIPTION = 'This command will close an index.';
+    const COMMAND_NAME = 'search:index:open';
+    const DESCRIPTION = 'This command will open an index.';
 
     /**
      * @return void
@@ -38,13 +38,13 @@ class SearchCloseIndexConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if ($this->getFacade()->closeIndex()) {
-            $this->info('Search index closed.');
+        if ($this->getFacade()->openIndex()) {
+            $this->info('Search index opened.');
 
             return static::CODE_SUCCESS;
         }
 
-        $this->error('Search index could not be closed.');
+        $this->error('Search index could not be opened.');
 
         return static::CODE_ERROR;
     }

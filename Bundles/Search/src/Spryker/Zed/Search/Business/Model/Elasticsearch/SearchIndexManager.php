@@ -83,4 +83,12 @@ class SearchIndexManager implements SearchIndexManagerInterface
     {
         return $this->index->close()->isOk();
     }
+
+    /**
+     * @return bool
+     */
+    public function open()
+    {
+        return $this->index->open()->isOk();
+    }
 }
