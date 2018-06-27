@@ -7,6 +7,10 @@
         <column name="glossary_key_name" required="false" size="255" type="VARCHAR"/>
         <column name="is_active" type="BOOLEAN" default="true" required="true"/>
 
+        <unique name="spy_shipment_carrier-unique-glossary_key_name">
+            <unique-column name="glossary_key_name"/>
+        </unique>
+
         <index name="spy_shipment_carrier-is_active">
             <index-column name="is_active"/>
         </index>
