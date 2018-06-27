@@ -18,7 +18,6 @@ use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToPriceClientInter
 use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToQuoteClientInterface;
 use Spryker\Client\PriceProduct\PriceProductConfig;
 use Spryker\Service\PriceProduct\PriceProductServiceInterface;
-use Spryker\Shared\PriceProduct\PriceProductConstants;
 
 class ProductPriceResolver implements ProductPriceResolverInterface
 {
@@ -194,7 +193,7 @@ class ProductPriceResolver implements ProductPriceResolverInterface
                                 )
                                 ->setPriceTypeName($priceType);
                         }
-                        if ($priceMode === PriceProductConstants::PRICE_NET_MODE) {
+                        if ($priceMode === $this->priceProductConfig->getPriceModeIdentifierForNetType()) {
                             $priceProductTransfers[$index]->getMoneyValue()->setNetAmount($priceAmount);
                             continue;
                         }
@@ -216,7 +215,7 @@ class ProductPriceResolver implements ProductPriceResolverInterface
      */
     protected function getPriceValueByPriceMode(MoneyValueTransfer $moneyValueTransfer, string $priceMode): ?int
     {
-        if ($priceMode === PriceProductConstants::PRICE_NET_MODE) {
+        if ($priceMode === $this->priceProductConfig->getPriceModeIdentifierForNetType()) {
             return $moneyValueTransfer->getNetAmount();
         }
 

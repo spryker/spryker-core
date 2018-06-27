@@ -23,5 +23,5 @@ interface WriterInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
-    public function createPriceForProduct(PriceProductTransfer $priceProductTransfer): PriceProductTransfer;
+    public function createPriceForProduct(PriceProductTransfer $priceProductTransfer);
 }

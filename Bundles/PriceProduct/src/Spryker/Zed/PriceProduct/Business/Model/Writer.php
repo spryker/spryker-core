@@ -10,7 +10,6 @@ namespace Spryker\Zed\PriceProduct\Business\Model;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProduct;
-use Spryker\Shared\PriceProduct\PriceProductConstants;
 use Spryker\Zed\PriceProduct\Business\Exception\MissingPriceException;
 use Spryker\Zed\PriceProduct\Business\Exception\ProductPriceChangeException;
 use Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInterface;
@@ -113,7 +112,7 @@ class Writer implements WriterInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
-    public function createPriceForProduct(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
+    public function createPriceForProduct(PriceProductTransfer $priceProductTransfer)
     {
         $priceProductTransfer
             ->requireMoneyValue()
@@ -386,14 +385,26 @@ class Writer implements WriterInterface
     ): PriceProductTransfer {
 
         $priceDimensionType = $priceProductTransfer->getPriceDimension()->getType();
-        if ($priceDimensionType === PriceProductConstants::PRICE_DIMENSION_DEFAULT) {
-            $priceProductDefaultEntityTransfer = $this->priceProductDefaultWriter->persistPriceProductDefault($priceProductTransfer);
-            $priceProductTransfer->getPriceDimension()->setIdPriceProductDefault(
-                $priceProductDefaultEntityTransfer->getIdPriceProductDefault()
-            );
 
-            return $priceProductTransfer;
+        if ($priceDimensionType === $this->priceConfig->getPriceDimensionDefault()) {
+            return $this->persistPriceProductIfDimensionTypeDefault($priceProductTransfer);
         }
+
+        return $this->savePrice($priceProductTransfer, $priceDimensionSaverPlugins, $priceDimensionType);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param array $priceDimensionSaverPlugins
+     * @param string $priceDimensionType
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function savePrice(
+        PriceProductTransfer $priceProductTransfer,
+        array $priceDimensionSaverPlugins,
+        string $priceDimensionType
+    ): PriceProductTransfer {
 
         foreach ($priceDimensionSaverPlugins as $priceDimensionSaverPlugin) {
             if ($priceDimensionSaverPlugin->getDimensionName() !== $priceDimensionType) {
@@ -402,6 +413,22 @@ class Writer implements WriterInterface
 
             return $priceDimensionSaverPlugin->savePrice($priceProductTransfer);
         }
+
+        return $priceProductTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function persistPriceProductIfDimensionTypeDefault(PriceProductTransfer $priceProductTransfer
+    ): PriceProductTransfer
+    {
+        $priceProductDefaultEntityTransfer = $this->priceProductDefaultWriter->persistPriceProductDefault($priceProductTransfer);
+        $priceProductTransfer->getPriceDimension()->setIdPriceProductDefault(
+            $priceProductDefaultEntityTransfer->getIdPriceProductDefault()
+        );
 
         return $priceProductTransfer;
     }

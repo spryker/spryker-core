@@ -13,8 +13,6 @@ use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery;
 interface PriceProductDimensionQueryExpanderInterface
 {
     /**
-     * @api
-     *
      * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery $priceProductStoreQuery
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
@@ -26,8 +24,6 @@ interface PriceProductDimensionQueryExpanderInterface
     ): SpyPriceProductStoreQuery;
 
     /**
-     * @api
-     *
      * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery $priceProductStoreQuery
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *

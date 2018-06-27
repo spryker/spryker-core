@@ -15,8 +15,6 @@ use Propel\Runtime\Collection\ObjectCollection;
 interface PriceProductRepositoryInterface
 {
     /**
-     * @api
-     *
      * @param string $concreteSku
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
@@ -28,8 +26,6 @@ interface PriceProductRepositoryInterface
     ): ObjectCollection;
 
     /**
-     * @api
-     *
      * @param string $abstractSku
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
@@ -41,8 +37,6 @@ interface PriceProductRepositoryInterface
     ): ObjectCollection;
 
     /**
-     * @api
-     *
      * @param int $idProductConcrete
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
@@ -54,8 +48,6 @@ interface PriceProductRepositoryInterface
     ): ObjectCollection;
 
     /**
-     * @api
-     *
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
@@ -67,8 +59,6 @@ interface PriceProductRepositoryInterface
     ): ObjectCollection;
 
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\QueryCriteriaTransfer|null

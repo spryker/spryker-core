@@ -9,8 +9,8 @@ namespace Spryker\Zed\PriceProduct\Business\Model;
 
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
-use Spryker\Shared\PriceProduct\PriceProductConstants;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapperInterface;
+use Spryker\Zed\PriceProduct\PriceProductConfig;
 
 class PriceGrouper implements PriceGrouperInterface
 {
@@ -25,15 +25,23 @@ class PriceGrouper implements PriceGrouperInterface
     protected $priceProductMapper;
 
     /**
+     * @var \Spryker\Zed\PriceProduct\PriceProductConfig
+     */
+    protected $config;
+
+    /**
      * @param \Spryker\Zed\PriceProduct\Business\Model\ReaderInterface $priceReader
      * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapperInterface $priceProductMapper
+     * @param \Spryker\Zed\PriceProduct\PriceProductConfig $config
      */
     public function __construct(
         ReaderInterface $priceReader,
-        PriceProductMapperInterface $priceProductMapper
+        PriceProductMapperInterface $priceProductMapper,
+        PriceProductConfig $config
     ) {
         $this->priceReader = $priceReader;
         $this->priceProductMapper = $priceProductMapper;
+        $this->config = $config;
     }
 
     /**
@@ -49,7 +57,7 @@ class PriceGrouper implements PriceGrouperInterface
 
         if (!$priceProductDimensionTransfer) {
             $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
-                ->setType(PriceProductConstants::PRICE_DIMENSION_DEFAULT);
+                ->setType($this->config->getPriceDimensionDefault());
         }
 
         $priceProductTransfers = $this->priceReader->findPricesBySkuForCurrentStore($sku, $priceProductDimensionTransfer);

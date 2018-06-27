@@ -8,6 +8,7 @@
 namespace Spryker\Zed\PriceProductMerchantRelationship\Persistence;
 
 use Generated\Shared\Transfer\SpyPriceProductMerchantRelationshipEntityTransfer;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Shared\Kernel\Transfer\EntityTransferInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
@@ -66,7 +67,6 @@ class PriceProductMerchantRelationshipEntityManager extends AbstractEntityManage
      */
     public function deleteByIdMerchantRelationship(int $idMerchantRelationship): void
     {
-
         $priceProductMerchantRelationshipEntities = $this->getFactory()
             ->createPriceProductMerchantRelationshipQuery()
             ->filterByFkMerchantRelationship($idMerchantRelationship)
@@ -88,11 +88,11 @@ class PriceProductMerchantRelationshipEntityManager extends AbstractEntityManage
     }
 
     /**
-     * @param \Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationship[] $priceProductMerchantRelationshipEntities
+     * @param \Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationship[]|\Propel\Runtime\Collection\ObjectCollection $priceProductMerchantRelationshipEntities
      *
      * @return void
      */
-    protected function deleteEntitiesAndTriggerEvents($priceProductMerchantRelationshipEntities): void
+    protected function deleteEntitiesAndTriggerEvents(ObjectCollection $priceProductMerchantRelationshipEntities): void
     {
         foreach ($priceProductMerchantRelationshipEntities as $priceProductMerchantRelationshipEntity) {
             $priceProductMerchantRelationshipEntity->delete();

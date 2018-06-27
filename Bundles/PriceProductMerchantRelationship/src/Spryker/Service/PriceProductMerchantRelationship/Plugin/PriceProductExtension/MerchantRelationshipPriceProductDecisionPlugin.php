@@ -13,8 +13,10 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Service\Kernel\AbstractPlugin;
 use Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductDecisionPluginInterface;
-use Spryker\Shared\PriceProductMerchantRelationship\PriceProductMerchantRelationshipConstants;
 
+/**
+ * @method \Spryker\Service\PriceProductMerchantRelationship\PriceProductMerchantRelationshipConfig getConfig()
+ */
 class MerchantRelationshipPriceProductDecisionPlugin extends AbstractPlugin implements PriceProductDecisionPluginInterface
 {
     /**
@@ -110,7 +112,7 @@ class MerchantRelationshipPriceProductDecisionPlugin extends AbstractPlugin impl
      */
     public function getDimensionName(): string
     {
-        return PriceProductMerchantRelationshipConstants::PRICE_DIMENSION_MERCHANT_RELATIONSHIP;
+        return $this->getConfig()->getPriceDimensionMerchantRelationship();
     }
 
     /**

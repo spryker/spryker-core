@@ -12,7 +12,7 @@
     "spryker/locale": "^3.0.0",
     "spryker/log": "^3.0.0",
     "spryker/money": "^2.0.0",
-    "spryker/price-product": "^1.0.0 || ^2.0.0",
+    "spryker/price-product": "^1.0.0",
     "spryker/product": "^5.0.0 || ^6.0.0",
     "spryker/product-category": "^4.0.0",
     "spryker/product-image": "^3.0.0",

@@ -17,8 +17,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class PriceProductEntityManager extends AbstractEntityManager implements PriceProductEntityManagerInterface
 {
     /**
-     * @api
-     *
      * @return void
      */
     public function deleteOrphanPriceProductStoreEntities(): void

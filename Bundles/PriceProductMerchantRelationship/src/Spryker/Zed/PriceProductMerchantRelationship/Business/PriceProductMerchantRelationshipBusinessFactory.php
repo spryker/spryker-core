@@ -8,10 +8,9 @@
 namespace Spryker\Zed\PriceProductMerchantRelationship\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\PriceProductMerchantRelationship\Business\Model\MerchantRelationshipPriceDecisionInterface;
-use Spryker\Zed\PriceProductMerchantRelationship\Business\Model\MerchantRelationshipPriceDimensionDecision;
 use Spryker\Zed\PriceProductMerchantRelationship\Business\Model\MerchantRelationshipPriceWriter;
 use Spryker\Zed\PriceProductMerchantRelationship\Business\Model\MerchantRelationshipPriceWriterInterface;
+use Spryker\Zed\PriceProductMerchantRelationship\Business\Model\PriceProductDimensionExpander;
 use Spryker\Zed\PriceProductMerchantRelationship\Dependency\Facade\PriceProductMerchantRelationshipToPriceProductFacadeInterface;
 use Spryker\Zed\PriceProductMerchantRelationship\PriceProductMerchantRelationshipDependencyProvider;
 
@@ -23,14 +22,6 @@ use Spryker\Zed\PriceProductMerchantRelationship\PriceProductMerchantRelationshi
 class PriceProductMerchantRelationshipBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\PriceProductMerchantRelationship\Business\Model\MerchantRelationshipPriceDecisionInterface
-     */
-    public function createMerchantRelationshipPriceDecision(): MerchantRelationshipPriceDecisionInterface
-    {
-        return new MerchantRelationshipPriceDimensionDecision($this->getPriceProductFacade());
-    }
-
-    /**
      * @return \Spryker\Zed\PriceProductMerchantRelationship\Business\Model\MerchantRelationshipPriceWriterInterface
      */
     public function createMerchantRelationshipPriceWriter(): MerchantRelationshipPriceWriterInterface
@@ -39,6 +30,16 @@ class PriceProductMerchantRelationshipBusinessFactory extends AbstractBusinessFa
             $this->getEntityManager(),
             $this->getRepository(),
             $this->getPriceProductFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductMerchantRelationship\Business\Model\PriceProductDimensionExpanderInterface
+     */
+    public function createPriceProductDimensionExpander()
+    {
+        return new PriceProductDimensionExpander(
+            $this->getConfig()
         );
     }
 

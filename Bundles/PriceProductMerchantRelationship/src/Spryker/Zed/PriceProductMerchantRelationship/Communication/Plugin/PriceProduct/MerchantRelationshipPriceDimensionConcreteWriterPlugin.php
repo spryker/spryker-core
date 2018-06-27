@@ -8,13 +8,13 @@
 namespace Spryker\Zed\PriceProductMerchantRelationship\Communication\Plugin\PriceProduct;
 
 use Generated\Shared\Transfer\PriceProductTransfer;
-use Spryker\Shared\PriceProductMerchantRelationship\PriceProductMerchantRelationshipConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PriceProduct\Dependency\Plugin\PriceDimensionConcreteSaverPluginInterface;
 
 /**
  * @method \Spryker\Zed\PriceProductMerchantRelationship\Business\PriceProductMerchantRelationshipFacadeInterface getFacade()
  * @method \Spryker\Zed\PriceProductMerchantRelationship\Communication\PriceProductMerchantRelationshipCommunicationFactory getFactory()
+ * @method \Spryker\Zed\PriceProductMerchantRelationship\PriceProductMerchantRelationshipConfig getConfig()
  */
 class MerchantRelationshipPriceDimensionConcreteWriterPlugin extends AbstractPlugin implements PriceDimensionConcreteSaverPluginInterface
 {
@@ -41,6 +41,6 @@ class MerchantRelationshipPriceDimensionConcreteWriterPlugin extends AbstractPlu
      */
     public function getDimensionName(): string
     {
-        return PriceProductMerchantRelationshipConstants::PRICE_DIMENSION_MERCHANT_RELATIONSHIP;
+        return $this->getConfig()->getPriceDimensionMerchantRelationship();
     }
 }

@@ -43,8 +43,6 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
     public const COL_PRODUCT_ABSTRACT_ID_PRODUCT = 'spy_product_abstract.id_product_abstract';
 
     /**
-     * @api
-     *
      * @param array $priceProductStoreIds
      *
      * @return array
@@ -124,8 +122,6 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
     }
 
     /**
-     * @api
-     *
      * @param array $concreteProducts
      *
      * @return \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorage[]

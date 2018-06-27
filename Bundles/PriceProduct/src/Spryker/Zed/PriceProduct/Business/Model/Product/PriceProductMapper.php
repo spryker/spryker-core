@@ -8,7 +8,6 @@
 namespace Spryker\Zed\PriceProduct\Business\Model\Product;
 
 use Generated\Shared\Transfer\MoneyValueTransfer;
-use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
@@ -136,19 +135,16 @@ class PriceProductMapper implements PriceProductMapperInterface
 
     /**
      * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore[] $priceProductStoreEntities
-     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function mapPriceProductStoreEntitiesToPriceProductTransfers(
-        $priceProductStoreEntities,
-        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+        $priceProductStoreEntities
     ): array {
         $productPriceCollection = [];
         foreach ($priceProductStoreEntities as $priceProductStoreEntity) {
             $productPriceCollection[] = $this->mapPriceProductStoreEntityToTransfer(
-                $priceProductStoreEntity,
-                $priceProductCriteriaTransfer
+                $priceProductStoreEntity
             );
         }
 
@@ -157,13 +153,11 @@ class PriceProductMapper implements PriceProductMapperInterface
 
     /**
      * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore $priceProductStoreEntity
-     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
-    public function mapPriceProductStoreEntityToTransfer(
-        SpyPriceProductStore $priceProductStoreEntity,
-        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+    protected function mapPriceProductStoreEntityToTransfer(
+        SpyPriceProductStore $priceProductStoreEntity
     ): PriceProductTransfer {
 
         $priceProductEntity = $priceProductStoreEntity->getPriceProduct();
@@ -197,10 +191,12 @@ class PriceProductMapper implements PriceProductMapperInterface
         SpyPriceProductStore $priceProductStoreEntity
     ): PriceProductDimensionTransfer {
 
-        return (new PriceProductDimensionTransfer())
+        $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
             ->fromArray(
                 $priceProductStoreEntity->getVirtualColumns(),
                 true
             );
+
+        return $priceProductDimensionTransfer;
     }
 }

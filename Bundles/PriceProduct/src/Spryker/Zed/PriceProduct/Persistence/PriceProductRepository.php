@@ -60,8 +60,6 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
     }
 
     /**
-     * @api
-     *
      * @param int $idProductConcrete
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
@@ -83,8 +81,6 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
     }
 
     /**
-     * @api
-     *
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
@@ -106,8 +102,6 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
     }
 
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\QueryCriteriaTransfer|null

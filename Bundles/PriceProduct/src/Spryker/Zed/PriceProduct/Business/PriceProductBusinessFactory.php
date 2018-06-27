@@ -35,6 +35,8 @@ use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductConcreteWriter;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductConcreteWriterInterface;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductDefaultWriter;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductDefaultWriterInterface;
+use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductExpander;
+use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductExpanderInterface;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapper;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapperInterface;
 use Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductStoreWriter;
@@ -71,7 +73,8 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->createPriceProductConcreteReader(),
             $this->createPriceProductAbstractReader(),
             $this->createProductCriteriaBuilder(),
-            $this->createPriceProductMapper()
+            $this->createPriceProductMapper(),
+            $this->getConfig()
         );
     }
 
@@ -137,6 +140,16 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductExpanderInterface
+     */
+    public function createPriceProductExpander(): PriceProductExpanderInterface
+    {
+        return new PriceProductExpander(
+            $this->getPriceProductDimensionExpanderStrategyPlugins()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\PriceProduct\Business\Model\PriceType\ProductPriceTypeMapperInterface
      */
     public function createPriceTypeMapper(): ProductPriceTypeMapperInterface
@@ -156,7 +169,8 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->createProductCriteriaBuilder(),
             $this->getStoreFacade(),
             $this->getRepository(),
-            $this->getPriceProductService()
+            $this->getPriceProductService(),
+            $this->createPriceProductExpander()
         );
     }
 
@@ -169,7 +183,8 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->getCurrencyFacade(),
             $this->getPriceFacade(),
             $this->getStoreFacade(),
-            $this->createPriceTypeReader()
+            $this->createPriceTypeReader(),
+            $this->getConfig()
         );
     }
 
@@ -183,7 +198,8 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->createPriceProductMapper(),
             $this->getStoreFacade(),
             $this->getRepository(),
-            $this->getPriceProductService()
+            $this->getPriceProductService(),
+            $this->createPriceProductExpander()
         );
     }
 
@@ -200,7 +216,11 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
      */
     public function createPriceGrouper(): PriceGrouperInterface
     {
-        return new PriceGrouper($this->createReaderModel(), $this->createPriceProductMapper());
+        return new PriceGrouper(
+            $this->createReaderModel(),
+            $this->createPriceProductMapper(),
+            $this->getConfig()
+        );
     }
 
     /**
@@ -221,7 +241,8 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->createPriceProductDefaultWriter(),
             $this->getPriceDimensionAbstractSaverPlugins(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
+            $this->getConfig()
         );
     }
 
@@ -235,7 +256,8 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->createPriceProductDefaultWriter(),
             $this->getPriceDimensionConcreteSaverPlugins(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
+            $this->getConfig()
         );
     }
 
@@ -337,5 +359,13 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     public function getPriceDimensionConcreteSaverPlugins(): array
     {
         return $this->getProvidedDependency(PriceProductDependencyProvider::PLUGIN_PRICE_DIMENSION_CONCRETE_SAVER);
+    }
+
+    /**
+     * @return \Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductDimensionExpanderStrategyPluginInterface[]
+     */
+    public function getPriceProductDimensionExpanderStrategyPlugins(): array
+    {
+        return $this->getProvidedDependency(PriceProductDependencyProvider::PLUGIN_PRICE_PRODUCT_DIMENSION_TRANSFER_EXPANDER);
     }
 }

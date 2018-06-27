@@ -20,7 +20,7 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\Price\PriceConfig;
-use Spryker\Shared\PriceProduct\PriceProductConstants;
+use Spryker\Shared\PriceProduct\PriceProductConfig;
 use Spryker\Zed\Currency\Business\CurrencyFacade;
 use Spryker\Zed\PriceProduct\Business\PriceProductFacade;
 use Spryker\Zed\PriceProduct\Communication\Plugin\DefaultPriceQueryCriteriaPlugin;
@@ -555,8 +555,10 @@ class PriceProductFacadeTest extends Unit
              ->setSkuProductAbstract($skuAbstract)
              ->setSkuProduct($skuConcrete);
 
+        $config = $this->createSharedPriceProductConfig();
         $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
-            ->setType(PriceProductConstants::PRICE_DIMENSION_DEFAULT);
+            ->setType($config->getPriceDimensionDefault());
+
         $priceProductTransfer->setPriceDimension($priceProductDimensionTransfer);
 
         if (!$skuAbstract || !$skuConcrete) {
@@ -603,6 +605,14 @@ class PriceProductFacadeTest extends Unit
     }
 
     /**
+     * @return \Spryker\Shared\PriceProduct\PriceProductConfig
+     */
+    protected function createSharedPriceProductConfig()
+    {
+        return new PriceProductConfig();
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param \Generated\Shared\Transfer\PriceTypeTransfer $priceTypeTransfer
      * @param int $netPrice
@@ -618,8 +628,9 @@ class PriceProductFacadeTest extends Unit
         $grossPrice,
         $currencyIsoCode
     ) {
+        $config = $this->createSharedPriceProductConfig();
         $priceDimensionTransfer = (new PriceProductDimensionTransfer())
-            ->setType(PriceProductConstants::PRICE_DIMENSION_DEFAULT);
+            ->setType($config->getPriceDimensionDefault());
 
         $priceProductTransfer = (new PriceProductTransfer())
             ->setIdProduct($productConcreteTransfer->getIdProductConcrete())
@@ -702,8 +713,9 @@ class PriceProductFacadeTest extends Unit
      */
     protected function createPriceProductCriteriaTransfer()
     {
+        $config = $this->createSharedPriceProductConfig();
         $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
-            ->setType(PriceProductConstants::PRICE_DIMENSION_DEFAULT);
+            ->setType($config->getPriceDimensionDefault());
 
         return (new PriceProductCriteriaTransfer())
             ->setPriceDimension($priceProductDimensionTransfer);
