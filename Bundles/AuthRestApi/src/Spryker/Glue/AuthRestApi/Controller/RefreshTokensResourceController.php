@@ -23,7 +23,7 @@ class RefreshTokensResourceController extends AbstractRestController
     public function postAction(RestRefreshTokensAttributesTransfer $restResfresTokensAttributesTransfer): RestResponseInterface
     {
         return $this->getFactory()
-            ->createRefreshTokenReader()
+            ->createRefreshTokensReader()
             ->processAccessTokenRequest($restResfresTokensAttributesTransfer);
     }
 }

@@ -18,7 +18,9 @@ interface OauthCustomerConnectorFacadeInterface
     /**
      * @api
      *
-     * {@inheritdoc}
+     * Specification:
+     *  - Authenticates customer.
+     *  - Reads customer data and provides it for access token.
      *
      * @param \Generated\Shared\Transfer\OauthUserTransfer $oauthUserTransfer
      *
@@ -29,7 +31,8 @@ interface OauthCustomerConnectorFacadeInterface
     /**
      * @api
      *
-     * {@inheritdoc}
+     * Specification:
+     *  - Reads customer scopes.
      *
      * @param \Generated\Shared\Transfer\OauthScopeRequestTransfer $oauthScopeRequestTransfer
      *
@@ -41,7 +44,7 @@ interface OauthCustomerConnectorFacadeInterface
      * @api
      *
      * Specification:
-     *  Installs inital oauth data
+     *  - Installs initial oauth data.
      *
      * @return void
      */
@@ -51,7 +54,7 @@ interface OauthCustomerConnectorFacadeInterface
      * @api
      *
      * Specification:
-     *  - Reads customer client secret
+     *  - Reads customer client secret.
      *
      * @return string
      */
@@ -61,7 +64,7 @@ interface OauthCustomerConnectorFacadeInterface
      * @api
      *
      * Specification:
-     *  - Reads customer client identifier
+     *  - Reads customer client identifier.
      *
      * @return string
      */

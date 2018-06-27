@@ -55,7 +55,7 @@ class Installer implements InstallerInterface
         $oauthClientTransfer->setSecret(
             password_hash($this->oauthCustomerConnectorConfig->getClientSecret(), PASSWORD_BCRYPT)
         );
-        $oauthClientTransfer->setIsConfidental(true);
+        $oauthClientTransfer->setIsConfidential(true);
         $oauthClientTransfer->setName('Customer client');
 
         $this->oauthFacade->saveClient($oauthClientTransfer);

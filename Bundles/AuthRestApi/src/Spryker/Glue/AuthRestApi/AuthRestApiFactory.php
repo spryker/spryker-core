@@ -24,7 +24,7 @@ class AuthRestApiFactory extends AbstractFactory
     /**
      * @return \Spryker\Glue\AuthRestApi\Processor\AccessTokens\AccessTokensReaderInterface
      */
-    public function createAccessTokenReader(): AccessTokensReaderInterface
+    public function createAccessTokensReader(): AccessTokensReaderInterface
     {
         return new AccessTokensReader(
             $this->getOauthClient(),
@@ -36,7 +36,7 @@ class AuthRestApiFactory extends AbstractFactory
     /**
      * @return \Spryker\Glue\AuthRestApi\Processor\RefreshTokens\RefreshTokensReaderInterface
      */
-    public function createRefreshTokenReader(): RefreshTokensReaderInterface
+    public function createRefreshTokensReader(): RefreshTokensReaderInterface
     {
         return new RefreshTokensReader(
             $this->getOauthClient(),

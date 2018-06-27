@@ -24,7 +24,7 @@ class AccessTokensResourceController extends AbstractRestController
     public function postAction(RestAccessTokensAttributesTransfer $restAccessTokensAttributesTransfer): RestResponseInterface
     {
         return $this->getFactory()
-            ->createAccessTokenReader()
+            ->createAccessTokensReader()
             ->processAccessTokenRequest($restAccessTokensAttributesTransfer);
     }
 }
