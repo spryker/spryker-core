@@ -73,6 +73,18 @@ class ProductOptionStorageQueryContainer extends AbstractQueryContainer implemen
     /**
      * @api
      *
+     * @return \Orm\Zed\ProductOption\Persistence\SpyProductAbstractProductOptionGroupQuery
+     */
+    public function queryProductOptions()
+    {
+        return $this->getFactory()
+            ->getProductOptionQuery()
+            ->queryAllProductAbstractProductOptionGroups();
+    }
+
+    /**
+     * @api
+     *
      * @param array $productOptionGroupsIds
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductAbstractProductOptionGroupQuery

@@ -23,6 +23,13 @@ interface CmsBlockStorageQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
+     */
+    public function queryCmsBlock();
+
+    /**
+     * @api
+     *
      * @param array $cmsBlockIds
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery

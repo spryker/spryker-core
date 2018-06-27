@@ -48,6 +48,13 @@ interface ProductLabelStorageQueryContainerInterface extends QueryContainerInter
     /**
      * @api
      *
+     * @return \Spryker\Zed\ProductLabel\Persistence\Propel\SpyProductLabelProductAbstractQuery
+     */
+    public function queryProductLabelProductAbstract();
+
+    /**
+     * @api
+     *
      * @return \Spryker\Zed\ProductLabel\Persistence\Propel\SpyProductLabelLocalizedAttributesQuery
      */
     public function queryProductLabelLocalizedAttributes();

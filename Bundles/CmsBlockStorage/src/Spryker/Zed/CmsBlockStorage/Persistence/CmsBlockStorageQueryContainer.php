@@ -53,4 +53,15 @@ class CmsBlockStorageQueryContainer extends AbstractQueryContainer implements Cm
 
         return $query;
     }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
+     */
+    public function queryCmsBlock()
+    {
+        return $this->getFactory()
+            ->createCmsBlockQuery();
+    }
 }

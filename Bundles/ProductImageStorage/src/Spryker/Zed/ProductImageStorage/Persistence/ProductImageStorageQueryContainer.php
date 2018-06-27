@@ -158,4 +158,18 @@ class ProductImageStorageQueryContainer extends AbstractQueryContainer implement
 
         return $query;
     }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
+     */
+    public function queryProductImages()
+    {
+        $query = $this->getFactory()
+            ->getProductImageQueryContainer()
+            ->queryProductImageSet();
+
+        return $query;
+    }
 }

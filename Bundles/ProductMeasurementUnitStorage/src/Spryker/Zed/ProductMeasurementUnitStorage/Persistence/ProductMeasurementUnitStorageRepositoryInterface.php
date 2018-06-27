@@ -32,4 +32,9 @@ interface ProductMeasurementUnitStorageRepositoryInterface
      * @return \Generated\Shared\Transfer\SpyProductConcreteMeasurementUnitStorageEntityTransfer[]
      */
     public function findAllProductConcreteMeasurementUnitStorageEntities(): array;
+
+    /**
+     * @return array|\Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
+     */
+    public function findAllProductMeasurementUnitTransfers(): array;
 }

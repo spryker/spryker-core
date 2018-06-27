@@ -26,4 +26,11 @@ interface GlossaryStorageQueryContainerInterface
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
      */
     public function queryGlossaryTranslation(array $glossaryKeyIds);
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
+     */
+    public function queryGlossaryKeys();
 }

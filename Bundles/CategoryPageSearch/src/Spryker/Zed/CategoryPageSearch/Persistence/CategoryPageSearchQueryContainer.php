@@ -123,4 +123,18 @@ class CategoryPageSearchQueryContainer extends AbstractQueryContainer implements
             ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, static::ID_CATEGORY_NODE)
             ->select([static::ID_CATEGORY_NODE]);
     }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
+     */
+    public function queryAllCategoryNodes()
+    {
+        $query = $this->getFactory()
+            ->getCategoryQueryContainer()
+            ->queryAllCategoryNodes();
+
+        return $query;
+    }
 }

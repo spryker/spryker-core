@@ -44,7 +44,7 @@ class CmsBlockProductEventResourcePlugin extends AbstractPlugin implements Event
      */
     public function queryData()
     {
-        return $this->getQueryContainer()->queryCmsBlockProducts([]);
+        return $this->getQueryContainer()->queryAllCmsBlockProducts();
     }
 
     /**

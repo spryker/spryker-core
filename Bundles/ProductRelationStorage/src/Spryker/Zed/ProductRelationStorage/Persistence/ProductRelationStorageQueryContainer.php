@@ -75,4 +75,16 @@ class ProductRelationStorageQueryContainer extends AbstractQueryContainer implem
             ->queryAllProductRelations()
             ->filterByFkProductAbstract_In($productAbstractIds);
     }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery
+     */
+    public function queryAllProductRelations()
+    {
+        return $this->getFactory()
+            ->getProductRelationQuery()
+            ->queryAllProductRelations();
+    }
 }

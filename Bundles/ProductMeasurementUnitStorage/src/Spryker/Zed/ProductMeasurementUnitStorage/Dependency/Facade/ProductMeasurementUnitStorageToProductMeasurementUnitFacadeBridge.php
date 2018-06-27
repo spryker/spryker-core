@@ -33,6 +33,14 @@ class ProductMeasurementUnitStorageToProductMeasurementUnitFacadeBridge implemen
     }
 
     /**
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     */
+    public function getSalesUnits(): array
+    {
+        return $this->productMeasurementUnitFacade->getSalesUnits();
+    }
+
+    /**
      * @param int[] $productMeasurementUnitIds
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
@@ -40,5 +48,13 @@ class ProductMeasurementUnitStorageToProductMeasurementUnitFacadeBridge implemen
     public function findProductMeasurementUnitTransfers(array $productMeasurementUnitIds): array
     {
         return $this->productMeasurementUnitFacade->findProductMeasurementUnitTransfers($productMeasurementUnitIds);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
+     */
+    public function findAllProductMeasurementUnitTransfers(): array
+    {
+        return $this->productMeasurementUnitFacade->findAllProductMeasurementUnitTransfers();
     }
 }

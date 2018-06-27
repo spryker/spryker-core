@@ -27,6 +27,16 @@ interface ProductMeasurementUnitFacadeInterface
 
     /**
      * Specification:
+     * - Retrieves all product measurement sales units.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     */
+    public function getSalesUnits(): array;
+
+    /**
+     * Specification:
      * - Returns the expanded group key if item has a sales unit.
      * - Returns the provided group key otherwise.
      *
@@ -73,6 +83,16 @@ interface ProductMeasurementUnitFacadeInterface
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
      */
     public function findProductMeasurementUnitTransfers(array $productMeasurementUnitIds): array;
+
+    /**
+     * Specification:
+     * - Retrieves a collection of product measurement unit entities.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
+     */
+    public function findAllProductMeasurementUnitTransfers(): array;
 
     /**
      * Specification:

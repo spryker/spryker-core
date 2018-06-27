@@ -13,4 +13,9 @@ interface ProductImageStorageToProductImageQueryContainerInterface
      * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery
      */
     public function queryProductImageSetToProductImage();
+
+    /**
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
+     */
+    public function queryProductImageSet();
 }

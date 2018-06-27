@@ -55,4 +55,16 @@ class ProductReviewStorageQueryContainer extends AbstractQueryContainer implemen
             ->select([static::FIELD_FK_PRODUCT_ABSTRACT, static::FIELD_AVERAGE_RATING, static::FIELD_COUNT])
             ->groupBy(SpyProductReviewTableMap::COL_FK_PRODUCT_ABSTRACT);
     }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductReview\Persistence\SpyProductReviewQuery
+     */
+    public function queryProductReviews()
+    {
+        return $this->getFactory()
+            ->getProductReviewQuery()
+            ->queryProductReview();
+    }
 }

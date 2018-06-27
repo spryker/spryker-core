@@ -15,4 +15,11 @@ interface GlossaryStorageToGlossaryQueryContainerInterface
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
      */
     public function queryTranslations();
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
+     */
+    public function queryKeys();
 }

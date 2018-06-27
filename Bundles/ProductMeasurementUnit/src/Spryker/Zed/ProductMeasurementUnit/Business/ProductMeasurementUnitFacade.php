@@ -71,6 +71,20 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
      *
      * @api
      *
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     */
+    public function getSalesUnits(): array
+    {
+        return $this->getFactory()
+            ->createProductMeasurementSalesUnitReader()
+            ->getProductMeasurementSalesUnitTransfers();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param int[] $productMeasurementUnitIds
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
@@ -78,6 +92,18 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
     public function findProductMeasurementUnitTransfers(array $productMeasurementUnitIds): array
     {
         return $this->getRepository()->findProductMeasurementUnitTransfers($productMeasurementUnitIds);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
+     */
+    public function findAllProductMeasurementUnitTransfers(): array
+    {
+        return $this->getRepository()->findAllProductMeasurementUnitTransfers();
     }
 
     /**

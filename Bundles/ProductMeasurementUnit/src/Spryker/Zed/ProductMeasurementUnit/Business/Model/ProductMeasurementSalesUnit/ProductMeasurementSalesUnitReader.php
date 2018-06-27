@@ -56,6 +56,21 @@ class ProductMeasurementSalesUnitReader implements ProductMeasurementSalesUnitRe
     }
 
     /**
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     */
+    public function getProductMeasurementSalesUnitTransfers(): array
+    {
+        $productMeasurementSalesUnitTransfers = $this->productMeasurementUnitRepository
+            ->getProductMeasurementSalesUnitTransfers();
+
+        foreach ($productMeasurementSalesUnitTransfers as $productMeasurementSalesUnitTransfer) {
+            $this->setDefaults($productMeasurementSalesUnitTransfer);
+        }
+
+        return $productMeasurementSalesUnitTransfers;
+    }
+
+    /**
      * @param int $idProductMeasurementSalesUnit
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer

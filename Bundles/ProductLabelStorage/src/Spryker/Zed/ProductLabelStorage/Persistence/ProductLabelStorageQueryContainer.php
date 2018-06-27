@@ -81,6 +81,18 @@ class ProductLabelStorageQueryContainer extends AbstractQueryContainer implement
     /**
      * @api
      *
+     * @return \Spryker\Zed\ProductLabel\Persistence\Propel\SpyProductLabelProductAbstractQuery
+     */
+    public function queryProductLabelProductAbstract()
+    {
+        return $this->getFactory()
+            ->getProductLabelQuery()
+            ->queryAllProductLabelProductAbstractRelations();
+    }
+
+    /**
+     * @api
+     *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributesQuery
      */
     public function queryProductLabelLocalizedAttributes()

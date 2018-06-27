@@ -55,4 +55,11 @@ interface ProductGroupStorageQueryContainerInterface extends QueryContainerInter
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
      */
     public function queryProductAbstractLocalizedByIds(array $productAbstractIds);
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductGroup\Persistence\SpyProductAbstractGroupQuery
+     */
+    public function queryProductAbstractGroup();
 }

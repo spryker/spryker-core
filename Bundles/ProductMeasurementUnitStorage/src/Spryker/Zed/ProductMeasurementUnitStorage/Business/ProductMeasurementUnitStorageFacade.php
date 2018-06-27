@@ -41,4 +41,20 @@ class ProductMeasurementUnitStorageFacade extends AbstractFacade implements Prod
     {
         $this->getFactory()->createProductConcreteMeasurementUnitStorageWriter()->publish($productIds);
     }
+
+    /**
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
+     */
+    public function findAllProductMeasurementUnitTransfers()
+    {
+        return $this->getFactory()->getProductMeasurementUnitFacade()->findAllProductMeasurementUnitTransfers();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
+     */
+    public function getSalesUnits()
+    {
+        return $this->getFactory()->getProductMeasurementUnitFacade()->getSalesUnits();
+    }
 }

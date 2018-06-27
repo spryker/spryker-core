@@ -47,4 +47,16 @@ class GlossaryStorageQueryContainer extends AbstractQueryContainer implements Gl
             ->addAnd('fk_glossary_key', $glossaryKeyIds, Criteria::IN)
             ->setFormatter(ModelCriteria::FORMAT_ARRAY);
     }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
+     */
+    public function queryGlossaryKeys()
+    {
+        return $this->getFactory()
+            ->getGlossaryQueryContainer()
+            ->queryKeys();
+    }
 }

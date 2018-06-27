@@ -9,7 +9,9 @@ namespace Spryker\Zed\CmsBlockStorage\Communication\Plugin\Event;
 
 use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTableMap;
 use Orm\Zed\CmsBlockProductConnector\Persistence\Map\SpyCmsBlockProductConnectorTableMap;
+use Orm\Zed\CmsBlockStorage\Persistence\Map\SpyCmsBlockStorageTableMap;
 use Spryker\Shared\CmsBlockStorage\CmsBlockStorageConstants;
+use Spryker\Zed\CmsBlock\Dependency\CmsBlockEvents;
 use Spryker\Zed\CmsBlockProductConnector\Dependency\CmsBlockProductConnectorEvents;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourcePluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -45,7 +47,7 @@ class CmsBlockEventResourcePlugin extends AbstractPlugin implements EventResourc
      */
     public function queryData()
     {
-        return null;
+        return $this->getQueryContainer()->queryCmsBlock();
     }
 
     /**
@@ -58,7 +60,7 @@ class CmsBlockEventResourcePlugin extends AbstractPlugin implements EventResourc
      */
     public function getEventName()
     {
-        return CmsBlockProductConnectorEvents::CMS_BLOCK_PRODUCT_CONNECTOR_PUBLISH;
+        return CmsBlockEvents::CMS_BLOCK_PUBLISH;
     }
 
     /**

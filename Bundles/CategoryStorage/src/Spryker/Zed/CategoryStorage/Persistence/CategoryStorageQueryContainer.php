@@ -61,6 +61,20 @@ class CategoryStorageQueryContainer extends AbstractQueryContainer implements Ca
     /**
      * @api
      *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
+     */
+    public function queryAllCategoryNodes()
+    {
+        $query = $this->getFactory()
+            ->getCategoryQueryContainer()
+            ->queryAllCategoryNodes();
+
+        return $query;
+    }
+
+    /**
+     * @api
+     *
      * @param int $idLocale
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery

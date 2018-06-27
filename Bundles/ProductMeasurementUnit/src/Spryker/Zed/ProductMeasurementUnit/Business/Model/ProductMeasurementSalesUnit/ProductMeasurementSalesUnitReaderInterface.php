@@ -24,4 +24,9 @@ interface ProductMeasurementSalesUnitReaderInterface
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
      */
     public function getProductMeasurementSalesUnitTransfersByIdProduct(int $idProduct): array;
+
+    /**
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     */
+    public function getProductMeasurementSalesUnitTransfers(): array;
 }

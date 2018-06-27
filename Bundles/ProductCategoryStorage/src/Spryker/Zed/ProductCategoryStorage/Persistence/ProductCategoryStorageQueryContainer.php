@@ -44,6 +44,25 @@ class ProductCategoryStorageQueryContainer extends AbstractQueryContainer implem
     /**
      * @api
      *
+     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
+     */
+    public function queryProductCategory()
+    {
+        return $this->getFactory()
+            ->getProductCategoryQueryContainer()
+            ->queryProductCategoryMappings()
+            ->innerJoinSpyCategory()
+            ->addAnd(
+                SpyCategoryTableMap::COL_IS_ACTIVE,
+                true,
+                Criteria::EQUAL
+            )
+            ->orderByProductOrder();
+    }
+
+    /**
+     * @api
+     *
      * @param int $idNode
      * @param int $idLocale
      * @param bool $excludeRootNode

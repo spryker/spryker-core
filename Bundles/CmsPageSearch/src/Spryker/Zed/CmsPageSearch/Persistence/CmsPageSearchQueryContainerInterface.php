@@ -37,4 +37,11 @@ interface CmsPageSearchQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Locale\Persistence\SpyLocaleQuery
      */
     public function queryLocalesWithLocaleNames(array $localeNames);
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
+     */
+    public function queryCmsPage();
 }

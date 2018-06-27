@@ -47,4 +47,18 @@ class CmsBlockProductStorageQueryContainer extends AbstractQueryContainer implem
             ->withColumn(SpyCmsBlockTableMap::COL_NAME, static::NAME)
             ->filterByFkProductAbstract_In($productIds);
     }
+
+    /**
+     * @api
+     *
+     * @return $this|\Orm\Zed\CmsBlockProductConnector\Persistence\SpyCmsBlockProductConnectorQuery
+     */
+    public function queryAllCmsBlockProducts()
+    {
+        return $this->getFactory()
+            ->getCmsBlockProductConnectorQuery()
+            ->queryCmsBlockProductConnector()
+            ->innerJoinCmsBlock()
+            ->withColumn(SpyCmsBlockTableMap::COL_NAME, static::NAME);
+    }
 }

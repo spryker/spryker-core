@@ -105,4 +105,18 @@ class ProductSetStorageQueryContainer extends AbstractQueryContainer implements 
 
         return $query;
     }
+
+    /**
+     * @api
+     *
+     * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery
+     */
+    public function queryProductSet()
+    {
+        $query = $this->getFactory()
+            ->getProductSetQueryContainer()
+            ->queryProductSet();
+
+        return $query;
+    }
 }

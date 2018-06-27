@@ -29,4 +29,12 @@ class NavigationStorageToNavigationQueryContainerBridge implements NavigationSto
     {
         return $this->navigationQueryContainer->queryNavigationNode();
     }
+
+    /**
+     * @return \Orm\Zed\Navigation\Persistence\SpyNavigationQuery
+     */
+    public function queryNavigation()
+    {
+        return $this->navigationQueryContainer->queryNavigation();
+    }
 }
