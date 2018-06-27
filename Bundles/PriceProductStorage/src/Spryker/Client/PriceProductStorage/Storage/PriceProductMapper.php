@@ -1,24 +1,21 @@
 <?php
+
 /**
- * Created by PhpStorm.
- * User: matveyev
- * Date: 6/26/18
- * Time: 19:36
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\PriceProductStorage\Storage;
-
 
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductStorageTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
-use Spryker\Shared\PriceProduct\PriceProductConstants;
+use Spryker\Shared\PriceProductStorage\PriceProductStorageConstants;
 
 class PriceProductMapper
 {
-
     /**
      * @param \Generated\Shared\Transfer\PriceProductStorageTransfer $priceProductStorageTransfer
      *
@@ -41,7 +38,7 @@ class PriceProductMapper
                         $priceProductTransfers[$index] = (new PriceProductTransfer())
                             ->setPriceDimension(
                                 (new PriceProductDimensionTransfer())
-                                    ->setType(PriceProductConstants::PRICE_DIMENSION_DEFAULT)
+                                    ->setType(PriceProductStorageConstants::PRICE_DIMENSION_DEFAULT)
                             )
                             ->setMoneyValue(
                                 (new MoneyValueTransfer())

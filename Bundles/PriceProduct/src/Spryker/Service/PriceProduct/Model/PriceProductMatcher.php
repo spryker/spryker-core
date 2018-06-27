@@ -43,7 +43,7 @@ class PriceProductMatcher implements PriceProductMatcherInterface
             ->requirePriceType()
             ->requireIdCurrency();
 
-        if (count($priceProductTransfers) === 0) {
+        if (!$priceProductTransfers) {
             return null;
         }
 

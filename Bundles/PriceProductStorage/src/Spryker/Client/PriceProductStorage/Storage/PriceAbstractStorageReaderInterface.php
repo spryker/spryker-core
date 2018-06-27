@@ -7,8 +7,6 @@
 
 namespace Spryker\Client\PriceProductStorage\Storage;
 
-use Generated\Shared\Transfer\PriceProductStorageTransfer;
-
 interface PriceAbstractStorageReaderInterface
 {
     /**

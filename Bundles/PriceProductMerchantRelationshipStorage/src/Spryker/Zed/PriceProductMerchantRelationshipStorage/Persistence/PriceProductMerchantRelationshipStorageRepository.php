@@ -8,7 +8,7 @@
 namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence;
 
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
-use Orm\Zed\ManualOrderEntry\Persistence\Map\SpyMerchantRelationshipToCompanyBusinessUnitTableMap;
+use Orm\Zed\MerchantRelationship\Persistence\Map\SpyMerchantRelationshipToCompanyBusinessUnitTableMap;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery;
 use Orm\Zed\PriceProductMerchantRelationship\Persistence\Map\SpyPriceProductMerchantRelationshipTableMap;
 use Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\Map\SpyPriceProductAbstractMerchantRelationshipStorageTableMap;
@@ -88,11 +88,12 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
         return $priceProductStoreQuery->find()->toArray();
     }
 
-
+    /**
+     * @return void
+     */
     public function findPriceProductStoresByCompanyBusinessUnitIds($businessUnitProducts)
     {
         $priceProductStoreQuery = $this->queryPriceProductStoreByCompanyBusinessUnitProducts($businessUnitProducts);
-
     }
 
     /**
@@ -209,7 +210,6 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
 
         return $priceProductMerchantRelationshipStorageEntityMap;
     }
-
 
     /**
      * @param array $priceProductStoreIds

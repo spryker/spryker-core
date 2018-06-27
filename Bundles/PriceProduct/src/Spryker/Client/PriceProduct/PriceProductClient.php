@@ -46,6 +46,8 @@ class PriceProductClient extends AbstractClient implements PriceProductClientInt
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */
     public function resolveProductPriceTransfer(array $priceProductTransfers)

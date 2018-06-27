@@ -7,13 +7,8 @@
 
 namespace Spryker\Client\PriceProductMerchantRelationshipStorage\Storage;
 
-use Generated\Shared\Transfer\CurrencyTransfer;
-use Generated\Shared\Transfer\MoneyValueTransfer;
-use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductStorageTransfer;
-use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Client\PriceProductMerchantRelationshipStorage\Dependency\Client\PriceProductMerchantRelationshipStorageToStorageClientInterface;
-use Spryker\Shared\PriceProductMerchantRelationship\PriceProductMerchantRelationshipConstants;
 use Spryker\Shared\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConstants;
 
 class PriceProductMerchantRelationshipAbstractReader implements PriceProductMerchantRelationshipAbstractReaderInterface

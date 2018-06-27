@@ -20,6 +20,7 @@ interface PriceProductStorageToPriceProductInterface
 
     /**
      * @param array $priceProductTransfers
+     *
      * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */
     public function resolveProductPriceTransfer(array $priceProductTransfers): CurrentProductPriceTransfer;

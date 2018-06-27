@@ -7,12 +7,7 @@
 
 namespace Spryker\Client\PriceProductStorage\Expander;
 
-use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\CurrentProductPriceTransfer;
-use Generated\Shared\Transfer\MoneyValueTransfer;
-use Generated\Shared\Transfer\PriceProductDimensionTransfer;
-use Generated\Shared\Transfer\PriceProductStorageTransfer;
-use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToPriceProductInterface;
 use Spryker\Client\PriceProductStorage\Storage\PriceAbstractStorageReaderInterface;

@@ -7,12 +7,11 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Communication\Plugin\Event\Listener;
 
-use Orm\Zed\ManualOrderEntry\Persistence\Map\SpyMerchantRelationshipToCompanyBusinessUnitTableMap;
+use Orm\Zed\MerchantRelationship\Persistence\Map\SpyMerchantRelationshipToCompanyBusinessUnitTableMap;
 use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipToCompanyBusinessUnitQuery;
 use Orm\Zed\PriceProductMerchantRelationship\Persistence\Map\SpyPriceProductMerchantRelationshipTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\PriceProductMerchantRelationship\Dependency\PriceProductMerchantRelationshipEvents;
 
 /**
  * @method \Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\PriceProductMerchantRelationshipStorageFacadeInterface getFacade()
@@ -34,7 +33,6 @@ class PriceProductMerchantRelationshipAbstractListener extends AbstractPlugin im
     {
         $businessUnitProducts = $this->getMerchantRelationshipAbstractProducts($eventTransfers);
         $this->getFacade()->publishAbstractPriceProduct($businessUnitProducts);
-
     }
 
     /**
@@ -64,7 +62,6 @@ class PriceProductMerchantRelationshipAbstractListener extends AbstractPlugin im
             foreach ($businessUnitIds as $businessUnitId) {
                 $businessUnitProducts[$businessUnitId][$idProductAbstract] = $idProductAbstract;
             }
-
         }
 
         return $businessUnitProducts;

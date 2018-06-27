@@ -1,20 +1,17 @@
 <?php
+
 /**
- * Created by PhpStorm.
- * User: matveyev
- * Date: 6/27/18
- * Time: 11:23
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\PriceProductMerchantRelationshipStorage\Storage;
-
 
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductStorageTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
-use Spryker\Shared\PriceProductMerchantRelationship\PriceProductMerchantRelationshipConstants;
 
 class PriceProductMapper
 {
@@ -42,7 +39,7 @@ class PriceProductMapper
                             $priceProductTransfers[$index] = (new PriceProductTransfer())
                                 ->setPriceDimension(
                                     (new PriceProductDimensionTransfer())
-                                        ->setType(PriceProductMerchantRelationshipConstants::PRICE_DIMENSION_MERCHANT_RELATIONSHIP)
+                                        ->setType('PRICE_DIMENSION_MERCHANT_RELATIONSHIP')
                                         ->setIdMerchantRelationship($idMerchantRelationship)
                                 )
                                 ->setMoneyValue(

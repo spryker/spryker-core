@@ -12,8 +12,8 @@ use Spryker\Client\PriceProductMerchantRelationshipStorage\Dependency\Client\Pri
 use Spryker\Client\PriceProductMerchantRelationshipStorage\Dependency\Client\PriceProductMerchantRelationshipStorageToStorageClientInterface;
 use Spryker\Client\PriceProductMerchantRelationshipStorage\Dependency\Client\PriceProductMerchantRelationshipStorageToStoreClientInterface;
 use Spryker\Client\PriceProductMerchantRelationshipStorage\Dependency\Service\PriceProductMerchantRelationshipToSynchronizationServiceInterface;
-use Spryker\Client\PriceProductMerchantRelationshipStorage\MerchantRelationshipFinder\MerchantRelationshipFinder;
-use Spryker\Client\PriceProductMerchantRelationshipStorage\MerchantRelationshipFinder\MerchantRelationshipFinderInterface;
+use Spryker\Client\PriceProductMerchantRelationshipStorage\MerchantRelationshipFinder\CompanyBusinessUnitFinder;
+use Spryker\Client\PriceProductMerchantRelationshipStorage\MerchantRelationshipFinder\CompanyBusinessUnitFinderInterface;
 use Spryker\Client\PriceProductMerchantRelationshipStorage\Storage\PriceProductMerchantRelationshipAbstractReader;
 use Spryker\Client\PriceProductMerchantRelationshipStorage\Storage\PriceProductMerchantRelationshipAbstractReaderInterface;
 use Spryker\Client\PriceProductMerchantRelationshipStorage\Storage\PriceProductMerchantRelationshipConcreteReader;
@@ -46,11 +46,11 @@ class PriceProductMerchantRelationshipStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\PriceProductMerchantRelationshipStorage\MerchantRelationshipFinder\MerchantRelationshipFinderInterface
+     * @return \Spryker\Client\PriceProductMerchantRelationshipStorage\MerchantRelationshipFinder\CompanyBusinessUnitFinderInterface
      */
-    public function createMerchantRelationshipFinder(): MerchantRelationshipFinderInterface
+    public function createCompanyBusinessUnitFinder(): CompanyBusinessUnitFinderInterface
     {
-        return new MerchantRelationshipFinder($this->getCustomerClient());
+        return new CompanyBusinessUnitFinder($this->getCustomerClient());
     }
 
     /**
@@ -94,5 +94,13 @@ class PriceProductMerchantRelationshipStorageFactory extends AbstractFactory
     public function getSynchronizationService(): PriceProductMerchantRelationshipToSynchronizationServiceInterface
     {
         return $this->getProvidedDependency(PriceProductMerchantRelationshipStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
+    }
+
+    /**
+     * @return \Spryker\Client\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConfig
+     */
+    public function getBundleConfig(): PriceProductMerchantRelationshipStorageConfig
+    {
+        return $this->getConfig();
     }
 }

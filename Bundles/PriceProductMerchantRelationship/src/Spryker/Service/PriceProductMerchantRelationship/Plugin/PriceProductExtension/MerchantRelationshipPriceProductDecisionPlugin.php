@@ -33,13 +33,7 @@ class MerchantRelationshipPriceProductDecisionPlugin extends AbstractPlugin impl
         array $priceProductTransfers,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
     ): ?PriceProductTransfer {
-
-        if (empty($priceProductTransfers)) {
-            return null;
-        }
-
-        //todo rename
-        $price = null;
+        $matchedPriceProductTransfer = null;
 
         foreach ($priceProductTransfers as $priceProductTransfer) {
             $priceProductTransfer
@@ -47,23 +41,24 @@ class MerchantRelationshipPriceProductDecisionPlugin extends AbstractPlugin impl
                 ->requirePriceTypeName()
                 ->requireMoneyValue();
 
-            $priceProductTransfer->getMoneyValue()->requireCurrency();
-            $priceProductTransfer->getMoneyValue()->getCurrency()->requireIdCurrency();
-
             if (!$priceProductTransfer->getPriceDimension()->getIdMerchantRelationship()) {
                 continue;
             }
+
+            $priceProductTransfer->getMoneyValue()->requireCurrency();
 
             if ($priceProductTransfer->getMoneyValue()->getCurrency()->getIdCurrency() !== $priceProductCriteriaTransfer->getIdCurrency()) {
                 continue;
             }
 
-            if ($price === null || $price->getMoneyValue()->getGrossAmount() > $priceProductTransfer->getMoneyValue()->getGrossAmount()) {
-                $price = $priceProductTransfer;
+            if ($matchedPriceProductTransfer === null ||
+                $matchedPriceProductTransfer->getMoneyValue()->getGrossAmount() > $priceProductTransfer->getMoneyValue()->getGrossAmount()
+            ) {
+                $matchedPriceProductTransfer = $priceProductTransfer;
             }
         }
 
-        return $price;
+        return $matchedPriceProductTransfer;
     }
 
     /**

@@ -234,4 +234,19 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
             $priceProductStoreQuery->addAnd($field, null, Criteria::ISNULL);
         }
     }
+
+    /**
+     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery $priceProductStoreQuery
+     * @param \Generated\Shared\Transfer\QueryCriteriaTransfer $queryCriteriaTransfer
+     *
+     * @return void
+     */
+    protected function ignoreEmptyDimensions(
+        SpyPriceProductStoreQuery $priceProductStoreQuery,
+        QueryCriteriaTransfer $queryCriteriaTransfer
+    ): void {
+        foreach ($queryCriteriaTransfer->getWithColumns() as $field => $value) {
+            $priceProductStoreQuery->addAnd($field, null, Criteria::ISNOTNULL);
+        }
+    }
 }

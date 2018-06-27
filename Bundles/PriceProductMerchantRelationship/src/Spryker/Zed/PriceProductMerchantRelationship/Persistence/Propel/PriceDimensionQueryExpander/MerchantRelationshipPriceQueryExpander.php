@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\QueryConditionTransfer;
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Generated\Shared\Transfer\QueryJoinTransfer;
-use Orm\Zed\ManualOrderEntry\Persistence\Map\SpyMerchantRelationshipToCompanyBusinessUnitTableMap;
+use Orm\Zed\MerchantRelationship\Persistence\Map\SpyMerchantRelationshipToCompanyBusinessUnitTableMap;
 use Orm\Zed\PriceProductMerchantRelationship\Persistence\Map\SpyPriceProductMerchantRelationshipTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 
@@ -30,7 +30,11 @@ class MerchantRelationshipPriceQueryExpander implements MerchantRelationshipPric
      */
     public function buildMerchantRelationshipPriceDimensionQueryCriteria(PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?QueryCriteriaTransfer
     {
-        $idBusinessUnit = $this->findIdBusinessUnit($priceProductCriteriaTransfer);
+        $currentCustomerCompanyBusinessUnitId = $this->findIdCompanyBusinessUnit($priceProductCriteriaTransfer);
+
+        if (!$currentCustomerCompanyBusinessUnitId) {
+            return null;
+        }
 
         return (new QueryCriteriaTransfer())
             ->addJoin(
@@ -43,7 +47,7 @@ class MerchantRelationshipPriceQueryExpander implements MerchantRelationshipPric
                 (new QueryConditionTransfer())
                     ->setName('')
                     ->setColumn(SpyMerchantRelationshipToCompanyBusinessUnitTableMap::COL_FK_COMPANY_BUSINESS_UNIT)
-                    ->setValue($idBusinessUnit)
+                    ->setValue($currentCustomerCompanyBusinessUnitId)
                     ->setComparison('=')
             );
     }
@@ -53,7 +57,7 @@ class MerchantRelationshipPriceQueryExpander implements MerchantRelationshipPric
      *
      * @return int|null
      */
-    protected function findIdBusinessUnit(PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?int
+    protected function findIdCompanyBusinessUnit(PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?int
     {
         if (!$priceProductCriteriaTransfer->getQuote()) {
             return null;

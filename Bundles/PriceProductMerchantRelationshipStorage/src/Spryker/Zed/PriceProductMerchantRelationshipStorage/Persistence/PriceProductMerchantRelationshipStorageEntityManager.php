@@ -8,8 +8,6 @@
 namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence;
 
 use Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer;
-use Orm\Zed\MerchantRelationship\Persistence\Map\SpyMerchantRelationshipToCompanyBusinessUnitTableMap;
-use Orm\Zed\PriceProductMerchantRelationship\Persistence\Map\SpyPriceProductMerchantRelationshipTableMap;
 use Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductAbstractMerchantRelationshipStorage;
 use Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductAbstractMerchantRelationshipStorageQuery;
 use Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorage;
@@ -118,7 +116,7 @@ class PriceProductMerchantRelationshipStorageEntityManager extends AbstractEntit
         }
 
         foreach ($groupedPrices as $idProduct => $pricesPerProduct) {
-            /** @var PriceProductMerchantRelationshipStorageTransfer[] $storageTransfers */
+            /** @var \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[] $storageTransfers */
             foreach ($pricesPerProduct as $idCompanyBusinessUnit => $storageTransfers) {
                 $prices = [];
                 foreach ($storageTransfers as $storageTransfer) {

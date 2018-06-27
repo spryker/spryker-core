@@ -111,6 +111,7 @@ class ProductPriceResolver implements ProductPriceResolverInterface
 
     /**
      * @param array $priceProductTransfers
+     *
      * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */
     public function resolveTransfer(array $priceProductTransfers): CurrentProductPriceTransfer
@@ -137,7 +138,7 @@ class ProductPriceResolver implements ProductPriceResolverInterface
             return $currentProductPriceTransfer;
         }
 
-        //todo get price types from $priceProductTransfer
+        //todo How to get price types (ORIGINAL) from service?
         $prices = ['DEFAULT' => $price];
 
         return $currentProductPriceTransfer

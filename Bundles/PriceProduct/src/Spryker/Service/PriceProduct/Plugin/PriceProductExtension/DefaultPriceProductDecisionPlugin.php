@@ -32,11 +32,6 @@ class DefaultPriceProductDecisionPlugin extends AbstractPlugin implements PriceP
         array $priceProductTransfers,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
     ): ?PriceProductTransfer {
-
-        if (!$priceProductTransfers) {
-            return null;
-        }
-
         foreach ($priceProductTransfers as $priceProductTransfer) {
             $priceProductTransfer
                 ->requirePriceDimension()
