@@ -15,8 +15,6 @@ use Generated\Shared\Transfer\SpyPriceProductDefaultEntityTransfer;
 interface PriceProductEntityManagerInterface
 {
     /**
-     * @api
-     *
      * @return void
      */
     public function deleteOrphanPriceProductStoreEntities(): void;

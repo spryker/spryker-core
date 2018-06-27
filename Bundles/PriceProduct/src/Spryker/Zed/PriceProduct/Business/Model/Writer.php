@@ -395,6 +395,22 @@ class Writer implements WriterInterface
             return $priceProductTransfer;
         }
 
+        return $this->getPriceProductTransfer($priceProductTransfer, $priceDimensionSaverPlugins, $priceDimensionType);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param array $priceDimensionSaverPlugins
+     * @param string $priceDimensionType
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function getPriceProductTransfer(
+        PriceProductTransfer $priceProductTransfer,
+        array $priceDimensionSaverPlugins,
+        string $priceDimensionType
+    ): PriceProductTransfer {
+
         foreach ($priceDimensionSaverPlugins as $priceDimensionSaverPlugin) {
             if ($priceDimensionSaverPlugin->getDimensionName() !== $priceDimensionType) {
                 continue;
