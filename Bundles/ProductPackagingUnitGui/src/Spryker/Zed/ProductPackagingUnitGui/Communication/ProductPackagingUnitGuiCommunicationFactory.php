@@ -8,13 +8,15 @@
 namespace Spryker\Zed\ProductPackagingUnitGui\Communication;
 
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
+use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitTypeQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductPackagingUnitGui\Communication\Form\Constraint\UniqueProductPackagingUnitTypeNameConstraint;
 use Spryker\Zed\ProductPackagingUnitGui\Communication\Form\DataProvider\ProductPackagingUnitTypeDataProvider;
+use Spryker\Zed\ProductPackagingUnitGui\Communication\Form\DataProvider\ProductPackagingUnitTypeDataProviderInterface;
 use Spryker\Zed\ProductPackagingUnitGui\Communication\Form\ProductPackagingUnitTypeFormType;
 use Spryker\Zed\ProductPackagingUnitGui\Communication\Table\ProductPackagingUnitTypeTable;
-use Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToLocaleInterface;
-use Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToProductPackagingUnitInterface;
+use Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToLocaleFacadeInterface;
+use Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToProductPackagingUnitFacadeInterface;
 use Spryker\Zed\ProductPackagingUnitGui\ProductPackagingUnitGuiDependencyProvider;
 use Symfony\Component\Form\FormInterface;
 
@@ -25,9 +27,9 @@ use Symfony\Component\Form\FormInterface;
 class ProductPackagingUnitGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToProductPackagingUnitInterface
+     * @return \Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToProductPackagingUnitFacadeInterface
      */
-    public function getProductPackagingUnitFacade(): ProductPackagingUnitGuiToProductPackagingUnitInterface
+    public function getProductPackagingUnitFacade(): ProductPackagingUnitGuiToProductPackagingUnitFacadeInterface
     {
         return $this->getProvidedDependency(ProductPackagingUnitGuiDependencyProvider::FACADE_PRODUCT_PACKAGING_UNIT);
     }
@@ -38,23 +40,23 @@ class ProductPackagingUnitGuiCommunicationFactory extends AbstractCommunicationF
     public function createProductPackagingUnitTypeTable(): ProductPackagingUnitTypeTable
     {
         return new ProductPackagingUnitTypeTable(
-            $this->getRepository(),
+            $this->getProductPackagingUnitTypePropelQuery(),
             $this->getLocaleFacade()
         );
     }
 
     /**
-     * @return \Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToLocaleInterface
+     * @return \Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToLocaleFacadeInterface
      */
-    public function getLocaleFacade(): ProductPackagingUnitGuiToLocaleInterface
+    public function getLocaleFacade(): ProductPackagingUnitGuiToLocaleFacadeInterface
     {
         return $this->getProvidedDependency(ProductPackagingUnitGuiDependencyProvider::FACADE_LOCALE);
     }
 
     /**
-     * @return \Spryker\Zed\ProductPackagingUnitGui\Communication\Form\DataProvider\ProductPackagingUnitTypeDataProvider
+     * @return \Spryker\Zed\ProductPackagingUnitGui\Communication\Form\DataProvider\ProductPackagingUnitTypeDataProviderInterface
      */
-    public function createProductPackagingUnitTypeDataProvider(): ProductPackagingUnitTypeDataProvider
+    public function createProductPackagingUnitTypeDataProvider(): ProductPackagingUnitTypeDataProviderInterface
     {
         return new ProductPackagingUnitTypeDataProvider(
             $this->getProductPackagingUnitFacade(),
@@ -79,7 +81,15 @@ class ProductPackagingUnitGuiCommunicationFactory extends AbstractCommunicationF
     public function createUniqueProductPackagingUnitTypeNameConstraint()
     {
         return new UniqueProductPackagingUnitTypeNameConstraint([
-            UniqueProductPackagingUnitTypeNameConstraint::OPTION_REPOSITORY => $this->getRepository(),
+            UniqueProductPackagingUnitTypeNameConstraint::OPTION_FACADE => $this->getProductPackagingUnitFacade(),
         ]);
+    }
+
+    /**
+     * @return \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitTypeQuery
+     */
+    public function getProductPackagingUnitTypePropelQuery(): SpyProductPackagingUnitTypeQuery
+    {
+        return $this->getProvidedDependency(ProductPackagingUnitGuiDependencyProvider::PROPEL_QUERY_PRODUCT_PACKAGING_UNIT_TYPE);
     }
 }

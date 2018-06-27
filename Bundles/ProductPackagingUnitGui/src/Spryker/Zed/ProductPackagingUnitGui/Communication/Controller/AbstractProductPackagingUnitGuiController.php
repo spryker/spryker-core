@@ -8,8 +8,9 @@
 namespace Spryker\Zed\ProductPackagingUnitGui\Communication\Controller;
 
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\ProductPackagingUnitGui\Communication\Table\ProductPackagingUnitTypeTableConstantsInterface;
+use Spryker\Zed\ProductPackagingUnitGui\ProductPackagingUnitGuiConfig;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -19,16 +20,14 @@ use Symfony\Component\HttpFoundation\Request;
  */
 abstract class AbstractProductPackagingUnitGuiController extends AbstractController
 {
-    protected const PARAM_REDIRECT_URL = 'redirect-url';
+    protected const MESSAGE_SUCCESS_PACKAGING_UNIT_TYPE_CREATE = 'Product packaging unit type created successfully.';
+    protected const MESSAGE_ERROR_PACKAGING_UNIT_TYPE_CREATE = 'Product packaging unit type has not been created.';
 
-    protected const MESSAGE_PACKAGING_UNIT_TYPE_CREATE_SUCCESS = 'Product packaging unit type created successfully.';
-    protected const MESSAGE_PACKAGING_UNIT_TYPE_CREATE_ERROR = 'Product packaging unit type has not been created.';
+    protected const MESSAGE_SUCCESS_PACKAGING_UNIT_TYPE_DELETE = 'Product packaging type "%s" successfully deleted.';
+    protected const MESSAGE_ERROR_PACKAGING_UNIT_TYPE_DELETE = 'Product packaging unit type "%s" has not been deleted.';
 
-    protected const MESSAGE_PACKAGING_UNIT_TYPE_DELETE_SUCCESS = 'Product packaging type "%s" successfully deleted.';
-    protected const MESSAGE_PACKAGING_UNIT_TYPE_DELETE_ERROR = 'Product packaging unit type "%s" has not been deleted.';
-
-    protected const MESSAGE_PACKAGING_UNIT_TYPE_UPDATE_SUCCESS = 'Product packaging type "%s" successfully updated.';
-    protected const MESSAGE_PACKAGING_UNIT_TYPE_UPDATE_ERROR = 'Product packaging unit type "%s" has not been updated.';
+    protected const MESSAGE_SUCCESS_PACKAGING_UNIT_TYPE_UPDATE = 'Product packaging type "%s" successfully updated.';
+    protected const MESSAGE_ERROR_PACKAGING_UNIT_TYPE_UPDATE = 'Product packaging unit type "%s" has not been updated.';
 
     /**
      * @param int $idProductPackagingUnitType
@@ -48,15 +47,30 @@ abstract class AbstractProductPackagingUnitGuiController extends AbstractControl
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string|null $default
      *
      * @return string
      */
-    protected function getSuccessRedirectUrl(Request $request): string
+    protected function getRequestRedirectUrl(Request $request, ?string $default = null): string
     {
-        if ($request->query->get(static::PARAM_REDIRECT_URL)) {
-            return $request->query->get(static::PARAM_REDIRECT_URL);
+        $redirectUrl = $request->query->get(ProductPackagingUnitGuiConfig::REQUEST_PARAM_REDIRECT_URL);
+        if ($redirectUrl) {
+            return $redirectUrl;
         }
 
-        return ProductPackagingUnitTypeTableConstantsInterface::URL_PRODUCT_PACKAGING_UNIT_TYPE_LIST;
+        return $default ?? ProductPackagingUnitGuiConfig::URL_PRODUCT_PACKAGING_UNIT_TYPE_LIST;
+    }
+
+    /**
+     * @param int $idProductPackagingUnitType
+     *
+     * @return string
+     */
+    protected function getEditPageForId(int $idProductPackagingUnitType): string
+    {
+        return Url::generate(
+            ProductPackagingUnitGuiConfig::URL_PRODUCT_PACKAGING_UNIT_TYPE_EDIT,
+            [ProductPackagingUnitGuiConfig::REQUEST_ID_PRODUCT_PACKAGING_UNIT_TYPE => $idProductPackagingUnitType]
+        )->build();
     }
 }

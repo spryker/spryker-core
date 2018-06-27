@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 
-class ProductPackagingUnitGuiToProductPackagingUnitBridge implements ProductPackagingUnitGuiToProductPackagingUnitInterface
+class ProductPackagingUnitGuiToProductPackagingUnitFacadeBridge implements ProductPackagingUnitGuiToProductPackagingUnitFacadeInterface
 {
     /**
      * @var \Spryker\Zed\ProductPackagingUnit\Business\ProductPackagingUnitFacadeInterface
@@ -25,18 +25,14 @@ class ProductPackagingUnitGuiToProductPackagingUnitBridge implements ProductPack
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return string[]
      */
-    public function getInfrastructuralPackagingUnitTypeKeys(): array
+    public function getInfrastructuralPackagingUnitTypeNames(): array
     {
-        return $this->productPackagingUnitFacade->getInfrastructuralPackagingUnitTypeKeys();
+        return $this->productPackagingUnitFacade->getInfrastructuralPackagingUnitTypeNames();
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
@@ -48,21 +44,28 @@ class ProductPackagingUnitGuiToProductPackagingUnitBridge implements ProductPack
     }
 
     /**
-     * {@inheritdoc}
+     * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
+     */
+    public function getProductPackagingUnitTypeByName(
+        ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+    ): ProductPackagingUnitTypeTransfer {
+        return $this->productPackagingUnitFacade->getProductPackagingUnitTypeByName($productPackagingUnitTypeTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
      * @return int
      */
-    public function getCountProductPackagingUnitsForType(
+    public function countProductPackagingUnitsByTypeId(
         ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
     ): int {
-        return $this->productPackagingUnitFacade->getCountProductPackagingUnitsForType($productPackagingUnitTypeTransfer);
+        return $this->productPackagingUnitFacade->countProductPackagingUnitsByTypeId($productPackagingUnitTypeTransfer);
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
@@ -74,8 +77,6 @@ class ProductPackagingUnitGuiToProductPackagingUnitBridge implements ProductPack
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
@@ -87,8 +88,6 @@ class ProductPackagingUnitGuiToProductPackagingUnitBridge implements ProductPack
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
      * @return bool

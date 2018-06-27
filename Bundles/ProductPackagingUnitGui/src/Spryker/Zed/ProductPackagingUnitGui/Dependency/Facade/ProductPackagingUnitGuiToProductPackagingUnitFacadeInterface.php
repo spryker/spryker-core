@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 
-interface ProductPackagingUnitGuiToProductPackagingUnitInterface
+interface ProductPackagingUnitGuiToProductPackagingUnitFacadeInterface
 {
     /**
      * Specification:
@@ -19,7 +19,7 @@ interface ProductPackagingUnitGuiToProductPackagingUnitInterface
      *
      * @return string[]
      */
-    public function getInfrastructuralPackagingUnitTypeKeys(): array;
+    public function getInfrastructuralPackagingUnitTypeNames(): array;
 
     /**
      * Specification:
@@ -37,6 +37,20 @@ interface ProductPackagingUnitGuiToProductPackagingUnitInterface
 
     /**
      * Specification:
+     *  - Retrieves a product packaging unit type by ProductPackagingUnitTypeTransfer::name in the transfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
+     */
+    public function getProductPackagingUnitTypeByName(
+        ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+    ): ProductPackagingUnitTypeTransfer;
+
+    /**
+     * Specification:
      *  - Retrieves product packaging units count for a given product packaging unit type.
      *
      * @api
@@ -45,7 +59,7 @@ interface ProductPackagingUnitGuiToProductPackagingUnitInterface
      *
      * @return int
      */
-    public function getCountProductPackagingUnitsForType(
+    public function countProductPackagingUnitsByTypeId(
         ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
     ): int;
 

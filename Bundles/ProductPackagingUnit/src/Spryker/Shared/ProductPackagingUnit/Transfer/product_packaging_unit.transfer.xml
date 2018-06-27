@@ -32,5 +32,11 @@
     <transfer name="ProductPackagingLeadProduct">
         <property name="idProductAbstract" type="int"/>
         <property name="idProduct" type="int"/>
+        <property name="skuProduct" type="string"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="amountLeadProduct" type="ProductPackagingLeadProduct"/>
+        <property name="amount" type="int"/>
     </transfer>
 </transfers>

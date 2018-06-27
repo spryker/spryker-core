@@ -11,10 +11,8 @@ use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingLeadProductQuery
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitQuery;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitTypeQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\ProductPackagingUnit\Persistence\Propel\Mapper\ProductPackagingLeadProductMapper;
-use Spryker\Zed\ProductPackagingUnit\Persistence\Propel\Mapper\ProductPackagingLeadProductMapperInterface;
-use Spryker\Zed\ProductPackagingUnit\Persistence\Propel\Mapper\ProductPackagingUnitTypeMapper;
-use Spryker\Zed\ProductPackagingUnit\Persistence\Propel\Mapper\ProductPackagingUnitTypeMapperInterface;
+use Spryker\Zed\ProductPackagingUnit\Persistence\Propel\Mapper\ProductPackagingUnitMapper;
+use Spryker\Zed\ProductPackagingUnit\Persistence\Propel\Mapper\ProductPackagingUnitMapperInterface;
 
 /**
  * @method \Spryker\Zed\ProductPackagingUnit\ProductPackagingUnitConfig getConfig()
@@ -38,14 +36,6 @@ class ProductPackagingUnitPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductPackagingUnit\Persistence\Propel\Mapper\ProductPackagingUnitTypeMapperInterface
-     */
-    public function createProductPackagingUnitTypeMapper(): ProductPackagingUnitTypeMapperInterface
-    {
-        return new ProductPackagingUnitTypeMapper();
-    }
-
-    /**
      * @return \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingLeadProductQuery
      */
     public function createProductPackagingLeadProductQuery(): SpyProductPackagingLeadProductQuery
@@ -54,10 +44,10 @@ class ProductPackagingUnitPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductPackagingUnit\Persistence\Propel\Mapper\ProductPackagingLeadProductMapperInterface
+     * @return \Spryker\Zed\ProductPackagingUnit\Persistence\Propel\Mapper\ProductPackagingUnitMapperInterface
      */
-    public function createProductPackagingLeadProductMapper(): ProductPackagingLeadProductMapperInterface
+    public function createProductPackagingUnitMapper(): ProductPackagingUnitMapperInterface
     {
-        return new ProductPackagingLeadProductMapper();
+        return new ProductPackagingUnitMapper();
     }
 }

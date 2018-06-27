@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductPackagingUnit\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 
-class ProductPackagingUnitToLocaleBridge implements ProductPackagingUnitToLocaleInterface
+class ProductPackagingUnitToLocaleFacadeBridge implements ProductPackagingUnitToLocaleFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Locale\Business\LocaleFacadeInterface

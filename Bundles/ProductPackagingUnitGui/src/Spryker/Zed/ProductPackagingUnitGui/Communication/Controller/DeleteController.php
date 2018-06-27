@@ -8,8 +8,7 @@
 namespace Spryker\Zed\ProductPackagingUnitGui\Communication\Controller;
 
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
-use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Zed\ProductPackagingUnitGui\Communication\Table\ProductPackagingUnitTypeTableConstantsInterface;
+use Spryker\Zed\ProductPackagingUnitGui\ProductPackagingUnitGuiConfig;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -27,38 +26,37 @@ class DeleteController extends AbstractProductPackagingUnitGuiController
      */
     public function indexAction(Request $request): RedirectResponse
     {
-        $idProductPackagingUnitType = $this->castId($request->query->get(ProductPackagingUnitTypeTableConstantsInterface::REQUEST_ID_PRODUCT_PACKAGING_UNIT_TYPE));
+        $idProductPackagingUnitType = $this->castId($request->query->get(ProductPackagingUnitGuiConfig::REQUEST_ID_PRODUCT_PACKAGING_UNIT_TYPE));
         $productPackagingUnitTypeTransfer = $this->findProductPackagingUnitTypeById($idProductPackagingUnitType);
 
         if ($this->deleteProductPackagingUnitType($productPackagingUnitTypeTransfer)) {
             $this->addSuccessMessage(sprintf(
-                static::MESSAGE_PACKAGING_UNIT_TYPE_DELETE_SUCCESS,
+                static::MESSAGE_SUCCESS_PACKAGING_UNIT_TYPE_DELETE,
                 $productPackagingUnitTypeTransfer->getName()
             ));
 
-            return $this->redirectResponse($this->getSuccessRedirectUrl($request));
+            return $this->redirectResponse($this->getRequestRedirectUrl($request));
         }
 
         $this->addErrorMessage(sprintf(
-            static::MESSAGE_PACKAGING_UNIT_TYPE_DELETE_ERROR,
+            static::MESSAGE_ERROR_PACKAGING_UNIT_TYPE_DELETE,
             $productPackagingUnitTypeTransfer->getName()
         ));
 
-        return $this->redirectResponse($this->getErorrRedirectUrl($idProductPackagingUnitType));
+        return $this->redirectResponse($this->getErorrRedirectUrl($idProductPackagingUnitType, $request));
     }
 
     /**
      * @param int $idProductPackagingUnitType
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return string
      */
     protected function getErorrRedirectUrl(
-        int $idProductPackagingUnitType
+        int $idProductPackagingUnitType,
+        Request $request
     ): string {
-        return Url::generate(
-            ProductPackagingUnitTypeTableConstantsInterface::URL_PRODUCT_PACKAGING_UNIT_TYPE_EDIT,
-            [ ProductPackagingUnitTypeTableConstantsInterface::REQUEST_ID_PRODUCT_PACKAGING_UNIT_TYPE => $idProductPackagingUnitType]
-        );
+        return $this->getRequestRedirectUrl($request, $this->getEditPageForId($idProductPackagingUnitType));
     }
 
     /**

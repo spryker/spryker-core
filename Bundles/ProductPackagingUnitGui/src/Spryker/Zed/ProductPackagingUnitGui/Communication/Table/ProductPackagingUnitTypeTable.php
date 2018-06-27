@@ -7,42 +7,46 @@
 
 namespace Spryker\Zed\ProductPackagingUnitGui\Communication\Table;
 
-use Generated\Shared\Transfer\LocaleTransfer;
-use Orm\Zed\ProductPackagingUnit\Persistence\Map\SpyProductPackagingUnitTypeTableMap;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitType;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitTypeQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToLocaleBridge;
-use Spryker\Zed\ProductPackagingUnitGui\Persistence\ProductPackagingUnitGuiRepositoryInterface;
+use Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToLocaleFacadeInterface;
+use Spryker\Zed\ProductPackagingUnitGui\ProductPackagingUnitGuiConfig;
 
 class ProductPackagingUnitTypeTable extends AbstractTable
 {
     protected const TABLE_IDENTIFIER = 'product-packaging-unit-type-table';
-    protected const COL_ID = SpyProductPackagingUnitTypeTableMap::COL_ID_PRODUCT_PACKAGING_UNIT_TYPE;
-    protected const COL_NAME = SpyProductPackagingUnitTypeTableMap::COL_NAME;
+    /**
+     * @uses \Orm\Zed\ProductPackagingUnit\Persistence\Map\SpyProductPackagingUnitTypeTableMap::COL_ID_PRODUCT_PACKAGING_UNIT_TYPE
+     */
+    protected const COL_ID = 'id_product_packaging_unit_type';
+    /**
+     * @uses \Orm\Zed\ProductPackagingUnit\Persistence\Map\SpyProductPackagingUnitTypeTableMap::COL_NAME
+     */
+    protected const COL_NAME = 'name';
     protected const COL_ACTIONS = 'actions';
 
     /**
-     * @var \Spryker\Zed\ProductPackagingUnitGui\Persistence\ProductPackagingUnitGuiRepositoryInterface
+     * @var \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitTypeQuery
      */
-    protected $productPackagingUnitGuiRepository;
+    protected $packagingUnitTypeQuery;
 
     /**
-     * @var \Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToLocaleInterface
+     * @var \Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToLocaleFacadeInterface
      */
     protected $localeFacade;
 
     /**
-     * @param \Spryker\Zed\ProductPackagingUnitGui\Persistence\ProductPackagingUnitGuiRepositoryInterface $productPackagingUnitGuiRepository
-     * @param \Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToLocaleInterface $localeFacade
+     * @param \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitTypeQuery $packagingUnitTypeQuery
+     * @param \Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToLocaleFacadeInterface $localeFacade
      */
     public function __construct(
-        ProductPackagingUnitGuiRepositoryInterface $productPackagingUnitGuiRepository,
-        ProductPackagingUnitGuiToLocaleBridge $localeFacade
+        SpyProductPackagingUnitTypeQuery $packagingUnitTypeQuery,
+        ProductPackagingUnitGuiToLocaleFacadeInterface $localeFacade
     ) {
-        $this->productPackagingUnitGuiRepository = $productPackagingUnitGuiRepository;
+        $this->packagingUnitTypeQuery = $packagingUnitTypeQuery;
         $this->localeFacade = $localeFacade;
     }
 
@@ -113,16 +117,6 @@ class ProductPackagingUnitTypeTable extends AbstractTable
     }
 
     /**
-     * @return \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitTypeQuery
-     */
-    protected function prepareQuery(): SpyProductPackagingUnitTypeQuery
-    {
-        $localeTransfer = $this->localeFacade->getCurrentLocale();
-
-        return $this->prepareTableQuery($localeTransfer);
-    }
-
-    /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return array
@@ -132,7 +126,7 @@ class ProductPackagingUnitTypeTable extends AbstractTable
         $results = [];
         /** @var \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitType[] $productPackagingUnitTypes */
         $productPackagingUnitTypes = $this->runQuery(
-            $this->prepareQuery(),
+            $this->packagingUnitTypeQuery,
             $config,
             true
         );
@@ -150,17 +144,6 @@ class ProductPackagingUnitTypeTable extends AbstractTable
     }
 
     /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitTypeQuery
-     */
-    protected function prepareTableQuery(LocaleTransfer $localeTransfer): SpyProductPackagingUnitTypeQuery
-    {
-        return $this->productPackagingUnitGuiRepository
-            ->queryProductPackagingUnitTypes();
-    }
-
-    /**
      * @param \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitType $productPackagingUnitType
      *
      * @return string
@@ -170,6 +153,7 @@ class ProductPackagingUnitTypeTable extends AbstractTable
         $idProductPackagingUnitType = $productPackagingUnitType->getIdProductPackagingUnitType();
         $actionButtons = [
             $this->createEditButton($idProductPackagingUnitType),
+            $this->createDeleteButton($idProductPackagingUnitType),
         ];
 
         return implode(' ', $actionButtons);
@@ -184,12 +168,31 @@ class ProductPackagingUnitTypeTable extends AbstractTable
     {
         return $this->generateEditButton(
             Url::generate(
-                ProductPackagingUnitTypeTableConstantsInterface::URL_PRODUCT_PACKAGING_UNIT_TYPE_EDIT,
+                ProductPackagingUnitGuiConfig::URL_PRODUCT_PACKAGING_UNIT_TYPE_EDIT,
                 [
-                    ProductPackagingUnitTypeTableConstantsInterface::REQUEST_ID_PRODUCT_PACKAGING_UNIT_TYPE => $idProductPackagingUnitType,
+                    ProductPackagingUnitGuiConfig::REQUEST_ID_PRODUCT_PACKAGING_UNIT_TYPE => $idProductPackagingUnitType,
                 ]
             ),
             'Edit'
+        );
+    }
+
+    /**
+     * @param int $idProductPackagingUnitType
+     *
+     * @return string
+     */
+    protected function createDeleteButton($idProductPackagingUnitType): string
+    {
+        return $this->generateEditButton(
+            Url::generate(
+                ProductPackagingUnitGuiConfig::URL_PRODUCT_PACKAGING_UNIT_TYPE_DELETE,
+                [
+                    ProductPackagingUnitGuiConfig::REQUEST_ID_PRODUCT_PACKAGING_UNIT_TYPE => $idProductPackagingUnitType,
+                    ProductPackagingUnitGuiConfig::REQUEST_PARAM_REDIRECT_URL => ProductPackagingUnitGuiConfig::URL_PRODUCT_PACKAGING_UNIT_TYPE_LIST,
+                ]
+            ),
+            'Delete'
         );
     }
 }
