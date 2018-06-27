@@ -392,6 +392,8 @@ class Customer implements CustomerInterface
      */
     public function restorePassword(CustomerTransfer $customerTransfer)
     {
+        $customerTransfer = $this->get($customerTransfer);
+
         $customerTransfer = $this->encryptPassword($customerTransfer);
 
         $customerResponseTransfer = $this->createCustomerResponseTransfer();
