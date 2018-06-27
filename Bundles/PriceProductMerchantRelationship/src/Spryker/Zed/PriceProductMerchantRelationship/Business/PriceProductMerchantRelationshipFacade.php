@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationship\Business;
 
+use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -59,5 +60,21 @@ class PriceProductMerchantRelationshipFacade extends AbstractFacade implements P
         $this->getFactory()
             ->createMerchantRelationshipPriceWriter()
             ->deleteAll();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductDimensionTransfer $priceProductDimensionTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductDimensionTransfer
+     */
+    public function expandPriceProductDimension(PriceProductDimensionTransfer $priceProductDimensionTransfer): PriceProductDimensionTransfer
+    {
+        return $this->getFactory()
+            ->createPriceProductDimensionExpander()
+            ->expand($priceProductDimensionTransfer);
     }
 }

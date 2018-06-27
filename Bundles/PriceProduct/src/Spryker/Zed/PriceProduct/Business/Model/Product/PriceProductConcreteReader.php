@@ -44,24 +44,32 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
     protected $priceProductService;
 
     /**
+     * @var \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductExpanderInterface
+     */
+    protected $priceProductExpander;
+
+    /**
      * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface $priceProductQueryContainer
      * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapperInterface $priceProductMapper
      * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductRepositoryInterface $priceProductRepository
      * @param \Spryker\Service\PriceProduct\PriceProductServiceInterface $priceProductService
+     * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductExpanderInterface $priceProductExpander
      */
     public function __construct(
         PriceProductQueryContainerInterface $priceProductQueryContainer,
         PriceProductMapperInterface $priceProductMapper,
         PriceProductToStoreFacadeInterface $storeFacade,
         PriceProductRepositoryInterface $priceProductRepository,
-        PriceProductServiceInterface $priceProductService
+        PriceProductServiceInterface $priceProductService,
+        PriceProductExpanderInterface $priceProductExpander
     ) {
         $this->priceProductQueryContainer = $priceProductQueryContainer;
         $this->priceProductMapper = $priceProductMapper;
         $this->storeFacade = $storeFacade;
         $this->priceProductRepository = $priceProductRepository;
         $this->priceProductService = $priceProductService;
+        $this->priceProductExpander = $priceProductExpander;
     }
 
     /**
@@ -94,9 +102,13 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
         $priceProductStoreEntities = $this->priceProductRepository
             ->findProductConcretePricesBySkuAndCriteria($sku, $priceProductCriteriaTransfer);
 
-        return $this->priceProductMapper->mapPriceProductStoreEntitiesToPriceProductTransfers(
+        $priceProductTransfers = $this->priceProductMapper->mapPriceProductStoreEntitiesToPriceProductTransfers(
             $priceProductStoreEntities
         );
+
+        $priceProductTransfers = $this->priceProductExpander->expandPriceProductTransfers($priceProductTransfers);
+
+        return $priceProductTransfers;
     }
 
     /**
@@ -118,9 +130,13 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
             $priceProductCriteriaTransfer
         );
 
-        return $this->priceProductMapper->mapPriceProductStoreEntitiesToPriceProductTransfers(
+        $priceProductTransfers = $this->priceProductMapper->mapPriceProductStoreEntitiesToPriceProductTransfers(
             $priceProductStoreEntities
         );
+
+        $priceProductTransfers = $this->priceProductExpander->expandPriceProductTransfers($priceProductTransfers);
+
+        return $priceProductTransfers;
     }
 
     /**
@@ -137,6 +153,8 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
         $priceProductTransfers = $this->priceProductMapper->mapPriceProductStoreEntitiesToPriceProductTransfers(
             $priceProductStoreEntities
         );
+
+        $priceProductTransfers = $this->priceProductExpander->expandPriceProductTransfers($priceProductTransfers);
 
         return $this->priceProductService->resolveProductPriceByPriceProductCriteria($priceProductTransfers, $priceProductCriteriaTransfer);
     }

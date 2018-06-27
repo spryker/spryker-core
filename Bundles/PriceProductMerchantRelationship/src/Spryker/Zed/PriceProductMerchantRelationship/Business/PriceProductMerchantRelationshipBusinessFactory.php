@@ -10,6 +10,7 @@ namespace Spryker\Zed\PriceProductMerchantRelationship\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\PriceProductMerchantRelationship\Business\Model\MerchantRelationshipPriceWriter;
 use Spryker\Zed\PriceProductMerchantRelationship\Business\Model\MerchantRelationshipPriceWriterInterface;
+use Spryker\Zed\PriceProductMerchantRelationship\Business\Model\PriceProductDimensionExpander;
 use Spryker\Zed\PriceProductMerchantRelationship\Dependency\Facade\PriceProductMerchantRelationshipToPriceProductFacadeInterface;
 use Spryker\Zed\PriceProductMerchantRelationship\PriceProductMerchantRelationshipDependencyProvider;
 
@@ -30,6 +31,14 @@ class PriceProductMerchantRelationshipBusinessFactory extends AbstractBusinessFa
             $this->getRepository(),
             $this->getPriceProductFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductMerchantRelationship\Business\Model\PriceProductDimensionExpanderInterface
+     */
+    public function createPriceProductDimensionExpander()
+    {
+        return new PriceProductDimensionExpander();
     }
 
     /**

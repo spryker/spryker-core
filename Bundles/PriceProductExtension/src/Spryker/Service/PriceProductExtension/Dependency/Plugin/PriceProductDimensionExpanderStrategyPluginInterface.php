@@ -7,12 +7,12 @@
 
 namespace Spryker\Service\PriceProductExtension\Dependency\Plugin;
 
-use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
-use Generated\Shared\Transfer\PriceProductFilterTransfer;
-use Generated\Shared\Transfer\PriceProductTransfer;
 
-interface PriceProductDimensionTypeStrategyPluginInterface
+/**
+ * Just first applicable plugin will be executed.
+ */
+interface PriceProductDimensionExpanderStrategyPluginInterface
 {
     /**
      * Specification:
@@ -28,11 +28,13 @@ interface PriceProductDimensionTypeStrategyPluginInterface
 
     /**
      * Specification:
-     *  - Returns strategy type string
+     *  - Returns expanded transfer.
      *
      * @api
      *
-     * @return string
+     * @param \Generated\Shared\Transfer\PriceProductDimensionTransfer $priceProductDimensionTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductDimensionTransfer
      */
-    public function getType(): string;
+    public function expand(PriceProductDimensionTransfer $priceProductDimensionTransfer): PriceProductDimensionTransfer;
 }

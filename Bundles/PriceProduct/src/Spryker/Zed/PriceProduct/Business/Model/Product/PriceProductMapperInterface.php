@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\PriceProduct\Business\Model\Product;
 
-use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
-use Generated\Shared\Transfer\PriceProductTransfer;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProduct;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore;
 

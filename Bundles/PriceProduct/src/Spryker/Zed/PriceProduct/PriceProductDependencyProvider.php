@@ -46,7 +46,7 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addPriceProductService($container);
         $container = $this->addPriceDimensionAbstractSaverPlugins($container);
         $container = $this->addPriceDimensionConcreteSaverPlugins($container);
-        $container = $this->addPriceProductDimensionTypeStrategyPlugins($container);
+        $container = $this->addPriceProductDimensionExpanderStrategyPlugins($container);
 
         return $container;
     }
@@ -180,10 +180,10 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addPriceProductDimensionTypeStrategyPlugins(Container $container): Container
+    protected function addPriceProductDimensionExpanderStrategyPlugins(Container $container): Container
     {
         $container[static::PLUGIN_PRICE_PRODUCT_DIMENSION_TRANSFER_EXPANDER] = function (Container $container) {
-            return $this->getPriceProductDimensionTypeStrategyPlugins();
+            return $this->getPriceProductDimensionExpanderStrategyPlugins();
         };
 
         return $container;
@@ -222,9 +222,9 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductDimensionTypeStrategyPluginInterface[]
+     * @return \Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductDimensionExpanderStrategyPluginInterface[]
      */
-    protected function getPriceProductDimensionTypeStrategyPlugins(): array
+    protected function getPriceProductDimensionExpanderStrategyPlugins(): array
     {
         return [];
     }

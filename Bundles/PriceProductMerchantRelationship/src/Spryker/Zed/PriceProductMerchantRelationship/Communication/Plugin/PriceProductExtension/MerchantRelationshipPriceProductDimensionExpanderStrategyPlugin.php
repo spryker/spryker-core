@@ -8,8 +8,7 @@
 namespace Spryker\Zed\PriceProductMerchantRelationship\Communication\Plugin\PriceProductExtension;
 
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
-use Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductDimensionTypeStrategyPluginInterface;
-use Spryker\Shared\PriceProductMerchantRelationship\PriceProductMerchantRelationshipConstants;
+use Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductDimensionExpanderStrategyPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
@@ -17,7 +16,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\PriceProductMerchantRelationship\Business\PriceProductMerchantRelationshipFacadeInterface getFacade()
  * @method \Spryker\Zed\PriceProductMerchantRelationship\Communication\PriceProductMerchantRelationshipCommunicationFactory getFactory()
  */
-class SetMerchantRelationshipPriceProductDimensionTypeStrategyPlugin extends AbstractPlugin implements PriceProductDimensionTypeStrategyPluginInterface
+class MerchantRelationshipPriceProductDimensionExpanderStrategyPlugin extends AbstractPlugin implements PriceProductDimensionExpanderStrategyPluginInterface
 {
     /**
      * Specification:
@@ -36,14 +35,16 @@ class SetMerchantRelationshipPriceProductDimensionTypeStrategyPlugin extends Abs
 
     /**
      * Specification:
-     *  - Returns strategy type string
+     *  - Returns expanded transfer.
      *
      * @api
      *
-     * @return string
+     * @param \Generated\Shared\Transfer\PriceProductDimensionTransfer $priceProductDimensionTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductDimensionTransfer
      */
-    public function getType(): string
+    public function expand(PriceProductDimensionTransfer $priceProductDimensionTransfer): PriceProductDimensionTransfer
     {
-        return PriceProductMerchantRelationshipConstants::PRICE_DIMENSION_MERCHANT_RELATIONSHIP;
+        return $this->getFacade()->expandPriceProductDimension($priceProductDimensionTransfer);
     }
 }

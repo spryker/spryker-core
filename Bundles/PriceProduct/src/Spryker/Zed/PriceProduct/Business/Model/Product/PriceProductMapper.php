@@ -8,13 +8,11 @@
 namespace Spryker\Zed\PriceProduct\Business\Model\Product;
 
 use Generated\Shared\Transfer\MoneyValueTransfer;
-use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProduct;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore;
-use Spryker\Shared\PriceProduct\PriceProductConstants;
 use Spryker\Zed\PriceProduct\Business\Model\PriceType\ProductPriceTypeMapperInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyFacadeInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceFacadeInterface;
@@ -53,29 +51,21 @@ class PriceProductMapper implements PriceProductMapperInterface
     protected $config;
 
     /**
-     * @var \Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductDimensionTypeStrategyPluginInterface[]
-     */
-    protected $priceProductDimensionTypeStrategyPlugins;
-
-    /**
      * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyFacadeInterface $currencyFacade
      * @param \Spryker\Zed\PriceProduct\Business\Model\PriceType\ProductPriceTypeMapperInterface $priceProductTypeMapper
      * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceFacadeInterface $priceFacade
      * @param \Spryker\Zed\PriceProduct\PriceProductConfig $config
-     * @param \Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductDimensionTypeStrategyPluginInterface[] $priceProductDimensionTypeStrategyPlugins
      */
     public function __construct(
         PriceProductToCurrencyFacadeInterface $currencyFacade,
         ProductPriceTypeMapperInterface $priceProductTypeMapper,
         PriceProductToPriceFacadeInterface $priceFacade,
-        PriceProductConfig $config,
-        array $priceProductDimensionTypeStrategyPlugins
+        PriceProductConfig $config
     ) {
         $this->currencyFacade = $currencyFacade;
         $this->priceProductTypeMapper = $priceProductTypeMapper;
         $this->priceFacade = $priceFacade;
         $this->config = $config;
-        $this->priceProductDimensionTypeStrategyPlugins = $priceProductDimensionTypeStrategyPlugins;
     }
 
     /**
@@ -206,28 +196,6 @@ class PriceProductMapper implements PriceProductMapperInterface
                 $priceProductStoreEntity->getVirtualColumns(),
                 true
             );
-
-        $priceProductDimensionTransfer = $this->setPriceProductDimensionType($priceProductDimensionTransfer);
-
-        return $priceProductDimensionTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductDimensionTransfer $priceProductDimensionTransfer
-     *
-     * @return \Generated\Shared\Transfer\PriceProductDimensionTransfer
-     */
-    protected function setPriceProductDimensionType(PriceProductDimensionTransfer $priceProductDimensionTransfer)
-    {
-        foreach ($this->priceProductDimensionTypeStrategyPlugins as $priceProductDimensionTypeStrategyPlugin) {
-            if ($priceProductDimensionTypeStrategyPlugin->isApplicable($priceProductDimensionTransfer)) {
-                $priceProductDimensionTransfer->setType($priceProductDimensionTypeStrategyPlugin->getType());
-
-                return $priceProductDimensionTransfer;
-            }
-        }
-
-        $priceProductDimensionTransfer->setType(PriceProductConstants::PRICE_DIMENSION_DEFAULT);
 
         return $priceProductDimensionTransfer;
     }
