@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\Shipment\Communication\Form;
 
-use Propel\Runtime\ActiveQuery\Criteria;
-use Spryker\Zed\Gui\Communication\Form\Type\AutosuggestType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -57,7 +55,6 @@ class CarrierForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addNameField($builder)
-            ->addGlossaryKeyField($builder)
             ->addIsActiveField($builder)
             ->addIdCarrierField($builder);
     }
@@ -75,27 +72,6 @@ class CarrierForm extends AbstractType
                 new NotBlank(),
                 new Callback([
                     'callback' => [$this, 'uniqueCarrierNameCheck'],
-                ]),
-            ],
-        ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addGlossaryKeyField(FormBuilderInterface $builder)
-    {
-        $builder->add(self::FIELD_NAME_GLOSSARY_FIELD, AutosuggestType::class, [
-            'label' => 'Name glossary key',
-            'url' => '/glossary/ajax/keys',
-            'constraints' => [
-                new NotBlank(),
-                new Callback([
-                    'callback' => [$this, 'uniqueCarrierGlossaryKeyNameCheck'],
                 ]),
             ],
         ]);
@@ -147,22 +123,6 @@ class CarrierForm extends AbstractType
     }
 
     /**
-     * @param string $glossaryKeyName
-     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
-     *
-     * @return void
-     */
-    public function uniqueCarrierGlossaryKeyNameCheck(string $glossaryKeyName, ExecutionContextInterface $context): void
-    {
-        $formData = $context->getRoot()->getData();
-        $idCarrier = $formData[static::FIELD_ID_CARRIER] ?: null;
-
-        if ($this->hasExistingCarrierGlossaryKeyName($glossaryKeyName, $idCarrier)) {
-            $context->addViolation('Carrier with the same glossary key already exists.');
-        }
-    }
-
-    /**
      * @param string $carrierName
      * @param int|null $idCarrier
      *
@@ -175,24 +135,5 @@ class CarrierForm extends AbstractType
             ->count();
 
         return $count > 0;
-    }
-
-    /**
-     * @param string $glossaryKeyName
-     * @param int|null $idCarrier
-     *
-     * @return bool
-     */
-    protected function hasExistingCarrierGlossaryKeyName(string $glossaryKeyName, ?int $idCarrier = null): bool
-    {
-        $shipmentCarrierQuery = $this->getQueryContainer()
-            ->queryCarriers()
-            ->filterByGlossaryKeyName($glossaryKeyName);
-
-        if ($idCarrier !== null) {
-            $shipmentCarrierQuery->filterByIdShipmentCarrier($idCarrier, Criteria::NOT_EQUAL);
-        }
-
-        return $shipmentCarrierQuery->count() > 0;
     }
 }

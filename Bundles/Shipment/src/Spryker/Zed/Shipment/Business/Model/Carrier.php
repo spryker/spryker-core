@@ -22,7 +22,6 @@ class Carrier implements CarrierInterface
         $carrierEntity = new SpyShipmentCarrier();
         $carrierEntity
             ->setName($carrierTransfer->getName())
-            ->setGlossaryKeyName($carrierTransfer->getGlossaryKeyName())
             ->setIsActive($carrierTransfer->getIsActive())
             ->save();
 
