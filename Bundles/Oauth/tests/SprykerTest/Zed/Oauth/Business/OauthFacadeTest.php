@@ -46,7 +46,7 @@ class OauthFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAccesTokenShouldReturnSuccessWhenValid(): void
+    public function testAccessTokenShouldReturnSuccessWhenValid(): void
     {
         $this->createTestClient();
         $this->setUserProviderPluginMock();
@@ -60,7 +60,7 @@ class OauthFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAccesTokenShouldReturfailureWhenClientCredentialsInValid(): void
+    public function testAccessTokenShouldReturfailureWhenClientCredentialsInValid(): void
     {
         $this->createTestClient();
         $this->setUserProviderPluginMock();

@@ -62,8 +62,8 @@ class RefreshTokenGrant implements GrantInterface
             ->setIsValid(false);
 
         try {
-            $acessTokenRequest = new ServerRequest('POST', '', []);
-            $acessTokenRequest = $acessTokenRequest->withParsedBody($oauthRequestTransfer->toArray());
+            $accessTokenRequest = new ServerRequest('POST', '', []);
+            $accessTokenRequest = $accessTokenRequest->withParsedBody($oauthRequestTransfer->toArray());
 
             $refreshTokenGrant = new LeagueRefreshTokenGrant(
                 $this->repositoryBuilder->createRefreshTokenRepository()
@@ -78,7 +78,7 @@ class RefreshTokenGrant implements GrantInterface
                 new DateInterval($this->oauthConfig->getAccessTokenTTL())
             );
 
-            $response = $this->authorizationServer->respondToAccessTokenRequest($acessTokenRequest, new Response());
+            $response = $this->authorizationServer->respondToAccessTokenRequest($accessTokenRequest, new Response());
 
             $data = (string)$response->getBody();
 

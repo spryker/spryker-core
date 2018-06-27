@@ -118,7 +118,7 @@ class OauthBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Oauth\Business\Model\League\AccessTokenValidatorInterface
      */
-    public function createAcessTokenReader(): AccessTokenValidatorInterface
+    public function createAccessTokenReader(): AccessTokenValidatorInterface
     {
         return new AccessTokenValidator($this->createResourceServerBuilder()->build());
     }

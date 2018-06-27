@@ -41,7 +41,7 @@ class AccessTokenValidator implements AccessTokenValidatorInterface
             ->requireAccessToken()
             ->requireType();
 
-        $oauthAcessTokenValidationResponseTransfer = (new OauthAccessTokenValidationResponseTransfer())
+        $oauthAccessTokenValidationResponseTransfer = (new OauthAccessTokenValidationResponseTransfer())
             ->setIsValid(false);
 
         try {
@@ -55,7 +55,7 @@ class AccessTokenValidator implements AccessTokenValidatorInterface
 
             $response = $this->resourceServer->validateAuthenticatedRequest($request);
 
-            $oauthAcessTokenValidationResponseTransfer
+            $oauthAccessTokenValidationResponseTransfer
                 ->fromArray($response->getAttributes(), true)
                 ->setIsValid(true);
         } catch (OAuthServerException $exception) {
@@ -63,9 +63,9 @@ class AccessTokenValidator implements AccessTokenValidatorInterface
                 ->setErrorType($exception->getErrorType())
                 ->setMessage($exception->getMessage());
 
-            $oauthAcessTokenValidationResponseTransfer->setError($oauthErrorTransfer);
+            $oauthAccessTokenValidationResponseTransfer->setError($oauthErrorTransfer);
         }
 
-        return $oauthAcessTokenValidationResponseTransfer;
+        return $oauthAccessTokenValidationResponseTransfer;
     }
 }

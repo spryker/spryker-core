@@ -30,7 +30,7 @@ class RestRequestValidatorTest extends Unit
     /**
      * @return void
      */
-    public function testValidatePostRequestShouldReturnErorWhenDataMissing(): void
+    public function testValidatePostRequestShouldReturnErrorWhenDataMissing(): void
     {
         $restRequestValidator = $this->createRestRequestValidator();
 

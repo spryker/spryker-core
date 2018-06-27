@@ -47,7 +47,7 @@ class OauthConfig extends AbstractSharedConfig
     }
 
     /**
-     * Timespan interval for how long is the refresh token is valid, this will be feed to \DateTime object
+     * Interval for how long is the refresh token is valid, this will be feed to \DateTime object
      *
      * @return string
      */
@@ -57,7 +57,7 @@ class OauthConfig extends AbstractSharedConfig
     }
 
     /**
-     * Timespan interval for how long is the access token is valid, this will be feed to \DateTime object
+     *  Interval for how long is the access token is valid, this will be feed to \DateTime object
      *
      * @return string
      */
