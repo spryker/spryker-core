@@ -26,6 +26,7 @@ use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\Pro
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeWriterInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToGlossaryFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToLocaleFacadeInterface;
+use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToProductMeasurementUnitFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\ProductPackagingUnitDependencyProvider;
 
 /**
@@ -118,16 +119,6 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface
-     */
-    public function createProductPackagingUnitReader(): ProductPackagingUnitReaderInterface
-    {
-        return new ProductPackagingUnitReader(
-            $this->getRepository()
-        );
-    }
-
-    /**
      * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\CartChange\CartChangeExpanderInterface
      */
     public function createCartChangeExpander(): CartChangeExpanderInterface
@@ -135,5 +126,24 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
         return new CartChangeExpander(
             $this->createProductPackagingUnitReader()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface
+     */
+    public function createProductPackagingUnitReader(): ProductPackagingUnitReaderInterface
+    {
+        return new ProductPackagingUnitReader(
+            $this->getRepository(),
+            $this->getProductMeasurementUnitFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToProductMeasurementUnitFacadeInterface
+     */
+    public function getProductMeasurementUnitFacade(): ProductPackagingUnitToProductMeasurementUnitFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductPackagingUnitDependencyProvider::FACADE_PRODUCT_MEASUREMENT_UNIT);
     }
 }

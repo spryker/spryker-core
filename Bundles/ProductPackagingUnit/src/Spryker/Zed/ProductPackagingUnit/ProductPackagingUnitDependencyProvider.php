@@ -11,11 +11,13 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToGlossaryFacadeBridge;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToLocaleFacadeBridge;
+use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToProductMeasurementUnitFacadeBridge;
 
 class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_LOCALE = 'FACADE_LOCALE';
     public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
+    public const FACADE_PRODUCT_MEASUREMENT_UNIT = 'FACADE_PRODUCT_MEASUREMENT_UNIT';
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -25,6 +27,7 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
     {
         $container = $this->addLocaleFacade($container);
         $container = $this->addGlossaryFacade($container);
+        $container = $this->addProductMeasurementUnitFacade($container);
 
         return $container;
     }
@@ -55,6 +58,22 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
         $container[static::FACADE_GLOSSARY] = function (Container $container) {
             return new ProductPackagingUnitToGlossaryFacadeBridge(
                 $container->getLocator()->glossary()->facade()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductMeasurementUnitFacade(Container $container): Container
+    {
+        $container[static::FACADE_PRODUCT_MEASUREMENT_UNIT] = function (Container $container) {
+            return new ProductPackagingUnitToProductMeasurementUnitFacadeBridge(
+                $container->getLocator()->productMeasurementUnit()->facade()
             );
         };
 

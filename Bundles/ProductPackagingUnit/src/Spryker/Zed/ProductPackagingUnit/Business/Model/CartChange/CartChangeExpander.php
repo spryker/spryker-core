@@ -35,7 +35,7 @@ class CartChangeExpander implements CartChangeExpanderInterface
     public function expandWithQuantityPackagingUnit(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            if (!$itemTransfer->getAmount()) {
+            if (!$itemTransfer->getAmount() || !$itemTransfer->getAmountSalesUnit()) {
                 continue;
             }
 
@@ -56,6 +56,11 @@ class CartChangeExpander implements CartChangeExpanderInterface
             ->getProductPackagingLeadProductByProductPackagingSku($itemTransfer->getSku());
 
         $itemTransfer->setAmountLeadProduct($productPackagingLeadProductTransfer);
+
+        $productMeasurementUnitTransfer = $this->productPackagingUnitReader
+            ->getProductMeasurementSalesUnitTransfer($itemTransfer->getAmountSalesUnit()->getIdProductMeasurementSalesUnit());
+
+        $itemTransfer->setAmountSalesUnit($productMeasurementUnitTransfer);
 
         return $itemTransfer;
     }

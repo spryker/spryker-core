@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductMeasurementUnit\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -64,6 +65,18 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
         return $this->getFactory()
             ->createProductMeasurementSalesUnitReader()
             ->getProductMeasurementSalesUnitTransfersByIdProduct($idProduct);
+    }
+
+    /**
+     * @param int $idProductMeasurementSalesUnit
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer
+     */
+    public function getProductMeasurementSalesUnitTransfer(int $idProductMeasurementSalesUnit): ProductMeasurementSalesUnitTransfer
+    {
+        return $this->getFactory()
+            ->createProductMeasurementSalesUnitReader()
+            ->getProductMeasurementSalesUnitTransfer($idProductMeasurementSalesUnit);
     }
 
     /**
