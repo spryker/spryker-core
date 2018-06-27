@@ -9,13 +9,13 @@ namespace Spryker\Zed\OauthCustomerConnector\Communication\Plugin\Oauth;
 
 use Generated\Shared\Transfer\OauthScopeRequestTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\OauthExtension\Dependency\Plugin\ScopeProviderPluginInterface;
+use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthScopeProviderPluginInterface;
 
 /**
  * @method \Spryker\Zed\OauthCustomerConnector\Business\OauthCustomerConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\OauthCustomerConnector\OauthCustomerConnectorConfig getConfig()
  */
-class CustomerScopeProviderPlugin extends AbstractPlugin implements ScopeProviderPluginInterface
+class CustomerScopeProviderPlugin extends AbstractPlugin implements OauthScopeProviderPluginInterface
 {
     /**
      * @api

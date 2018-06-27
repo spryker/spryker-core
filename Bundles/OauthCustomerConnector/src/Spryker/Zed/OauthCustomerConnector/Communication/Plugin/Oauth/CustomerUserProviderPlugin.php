@@ -9,13 +9,13 @@ namespace Spryker\Zed\OauthCustomerConnector\Communication\Plugin\Oauth;
 
 use Generated\Shared\Transfer\OauthUserTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\OauthExtension\Dependency\Plugin\UserProviderPluginInterface;
+use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserProviderPluginInterface;
 
 /**
  * @method \Spryker\Zed\OauthCustomerConnector\Business\OauthCustomerConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\OauthCustomerConnector\OauthCustomerConnectorConfig getConfig()
  */
-class CustomerUserProviderPlugin extends AbstractPlugin implements UserProviderPluginInterface
+class CustomerUserProviderPlugin extends AbstractPlugin implements OauthUserProviderPluginInterface
 {
     /**
      * @api
