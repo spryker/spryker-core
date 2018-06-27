@@ -9,7 +9,6 @@ namespace Spryker\Zed\PriceProduct\Communication\Plugin;
 
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
-use Spryker\Shared\PriceProduct\PriceProductConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PriceProduct\Dependency\Plugin\PriceDimensionQueryCriteriaPluginInterface;
 
@@ -17,6 +16,7 @@ use Spryker\Zed\PriceProduct\Dependency\Plugin\PriceDimensionQueryCriteriaPlugin
  * @method \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface getFacade()
  * @method \Spryker\Zed\PriceProduct\Persistence\PriceProductRepositoryInterface getRepository()
  * @method \Spryker\Zed\PriceProduct\Communication\PriceProductCommunicationFactory getFactory()
+ * @method \Spryker\Zed\PriceProduct\PriceProductConfig getConfig()
  */
 class DefaultPriceQueryCriteriaPlugin extends AbstractPlugin implements PriceDimensionQueryCriteriaPluginInterface
 {
@@ -44,6 +44,6 @@ class DefaultPriceQueryCriteriaPlugin extends AbstractPlugin implements PriceDim
      */
     public function getDimensionName(): string
     {
-        return PriceProductConstants::PRICE_DIMENSION_DEFAULT;
+        return $this->getConfig()->getPriceDimensionDefault();
     }
 }

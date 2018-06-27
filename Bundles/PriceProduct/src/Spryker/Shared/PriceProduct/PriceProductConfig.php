@@ -17,7 +17,22 @@ class PriceProductConfig extends AbstractSharedConfig
     protected const PRICE_MODE_BOTH = 'BOTH';
 
     /**
-     * @return string
+     * @uses \Spryker\Shared\Price\PriceConfig::PRICE_MODE_NET
+     */
+    protected const PRICE_NET_MODE = 'NET_MODE';
+
+    /**
+     * @uses \Spryker\Shared\Price\PriceConfig::PRICE_MODE_GROSS
+     */
+    public const PRICE_GROSS_MODE = 'GROSS_MODE';
+
+    /**
+     * Price Dimension Default
+     */
+    public const PRICE_DIMENSION_DEFAULT = 'PRICE_DIMENSION_DEFAULT';
+
+    /**
+     * Price type default
      */
     protected const PRICE_TYPE_DEFAULT = 'DEFAULT';
 
@@ -32,8 +47,32 @@ class PriceProductConfig extends AbstractSharedConfig
     /**
      * @return string
      */
+    public function getPriceDimensionDefault(): string
+    {
+        return static::PRICE_DIMENSION_DEFAULT;
+    }
+
+    /**
+     * @return string
+     */
     public function getPriceModeIdentifierForBothType(): string
     {
         return static::PRICE_MODE_BOTH;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPriceModeIdentifierForNetType(): string
+    {
+        return static::PRICE_NET_MODE;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPriceModeIdentifierForGrossType(): string
+    {
+        return static::PRICE_GROSS_MODE;
     }
 }

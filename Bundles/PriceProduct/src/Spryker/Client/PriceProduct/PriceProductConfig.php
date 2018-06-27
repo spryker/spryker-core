@@ -21,4 +21,12 @@ class PriceProductConfig extends AbstractBundleConfig
     {
         return $this->getSharedConfig()->getPriceTypeDefaultName();
     }
+
+    /**
+     * @return string
+     */
+    public function getPriceModeIdentifierForNetType()
+    {
+        return $this->getSharedConfig()->getPriceModeIdentifierForNetType();
+    }
 }
