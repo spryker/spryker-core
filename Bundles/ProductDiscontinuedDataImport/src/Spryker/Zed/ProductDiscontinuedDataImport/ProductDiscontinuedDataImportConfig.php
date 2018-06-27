@@ -12,6 +12,11 @@ use Spryker\Zed\DataImport\DataImportConfig;
 
 class ProductDiscontinuedDataImportConfig extends DataImportConfig
 {
+    /**
+     * @use \Spryker\Zed\ProductDiscontinued\ProductDiscontinuedConfig
+     */
+    public const DEFAULT_DAYS_AMOUNT_BEFORE_PRODUCT_DEACTIVATE = 180;
+
     public const IMPORT_TYPE_PRODUCT_DISCONTINUED = 'product-discontinued';
 
     /**
