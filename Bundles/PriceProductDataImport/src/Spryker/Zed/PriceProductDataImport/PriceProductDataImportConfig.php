@@ -12,7 +12,7 @@ use Spryker\Zed\DataImport\DataImportConfig;
 
 class PriceProductDataImportConfig extends DataImportConfig
 {
-    const IMPORT_TYPE_PRODUCT_PRICE = 'product-price';
+    public const IMPORT_TYPE_PRODUCT_PRICE = 'product-price';
 
     /**
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer

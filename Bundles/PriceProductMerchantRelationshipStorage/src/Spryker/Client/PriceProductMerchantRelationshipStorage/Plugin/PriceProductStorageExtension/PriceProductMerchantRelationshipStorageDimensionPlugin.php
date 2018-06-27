@@ -10,11 +10,11 @@ namespace Spryker\Client\PriceProductMerchantRelationshipStorage\Plugin\PricePro
 use Generated\Shared\Transfer\PriceProductStorageTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductStoragePriceDimensionPluginInterface;
-use Spryker\Shared\PriceProductMerchantRelationship\PriceProductMerchantRelationshipConstants;
 
 /**
  * @method \Spryker\Client\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageClientInterface getClient()
  * @method \Spryker\Client\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageFactory getFactory()
+ * @method \Spryker\Client\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConfig getConfig()
  */
 class PriceProductMerchantRelationshipStorageDimensionPlugin extends AbstractPlugin implements PriceProductStoragePriceDimensionPluginInterface
 {
@@ -97,6 +97,6 @@ class PriceProductMerchantRelationshipStorageDimensionPlugin extends AbstractPlu
      */
     public function getDimensionName(): string
     {
-        return PriceProductMerchantRelationshipConstants::PRICE_DIMENSION_MERCHANT_RELATIONSHIP;
+        return $this->getConfig()->getPriceDimensionMerchantRelationship();
     }
 }

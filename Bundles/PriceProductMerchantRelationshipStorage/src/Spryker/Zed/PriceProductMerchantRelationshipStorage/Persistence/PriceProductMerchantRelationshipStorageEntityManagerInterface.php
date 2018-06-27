@@ -10,8 +10,6 @@ namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence;
 interface PriceProductMerchantRelationshipStorageEntityManagerInterface
 {
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[] $priceProductMerchantRelationshipStorageTransferCollection
      * @param array $existingPriceProductMerchantRelationshipStorageEntityMap
      *
@@ -23,8 +21,6 @@ interface PriceProductMerchantRelationshipStorageEntityManagerInterface
     ): void;
 
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[] $priceProductMerchantRelationshipStorageTransferCollection
      * @param array $existingPriceProductMerchantRelationshipStorageEntityMap
      *
@@ -36,8 +32,6 @@ interface PriceProductMerchantRelationshipStorageEntityManagerInterface
     ): void;
 
     /**
-     * @api
-     *
      * @param int $idMerchantRelationship
      * @param int $idProductAbstract
      *
@@ -49,8 +43,6 @@ interface PriceProductMerchantRelationshipStorageEntityManagerInterface
     ): void;
 
     /**
-     * @api
-     *
      * @param int $idMerchantRelationship
      * @param int $idProduct
      *

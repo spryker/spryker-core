@@ -10,10 +10,10 @@ namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\Model;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer;
 use Orm\Zed\PriceProductMerchantRelationship\Persistence\Map\SpyPriceProductMerchantRelationshipTableMap;
-use Spryker\Shared\PriceProductMerchantRelationship\PriceProductMerchantRelationshipConstants;
 use Spryker\Shared\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConstants;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\Dependency\Facade\PriceProductMerchantRelationshipStorageToPriceProductFacadeInterface;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\Dependency\Facade\PriceProductMerchantRelationshipStorageToStoreFacadeInterface;
+use Spryker\Zed\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConfig;
 
 class PriceGrouper implements PriceGrouperInterface
 {
@@ -28,15 +28,23 @@ class PriceGrouper implements PriceGrouperInterface
     protected $storeFacade;
 
     /**
+     * @var \Spryker\Zed\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConfig
+     */
+    protected $config;
+
+    /**
      * @param \Spryker\Zed\PriceProductMerchantRelationshipStorage\Dependency\Facade\PriceProductMerchantRelationshipStorageToPriceProductFacadeInterface $priceProductFacade
      * @param \Spryker\Zed\PriceProductMerchantRelationshipStorage\Dependency\Facade\PriceProductMerchantRelationshipStorageToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConfig $config
      */
     public function __construct(
         PriceProductMerchantRelationshipStorageToPriceProductFacadeInterface $priceProductFacade,
-        PriceProductMerchantRelationshipStorageToStoreFacadeInterface $storeFacade
+        PriceProductMerchantRelationshipStorageToStoreFacadeInterface $storeFacade,
+        PriceProductMerchantRelationshipStorageConfig $config
     ) {
         $this->priceProductFacade = $priceProductFacade;
         $this->storeFacade = $storeFacade;
+        $this->config = $config;
     }
 
     /**
@@ -49,7 +57,7 @@ class PriceGrouper implements PriceGrouperInterface
     public function getGroupedPrices(array $products, string $productPrimaryIdentifier, string $productSkuIdentifier): array
     {
         $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
-            ->setType(PriceProductMerchantRelationshipConstants::PRICE_DIMENSION_MERCHANT_RELATIONSHIP);
+            ->setType($this->config->getPriceDimensionMerchantRelationship());
 
         $groupedPrices = [];
         foreach ($products as $product) {
