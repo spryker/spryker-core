@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\TaxSetTransfer;
 use Orm\Zed\Tax\Persistence\SpyTaxRate;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
 use Propel\Runtime\Collection\Collection;
+use Spryker\Zed\Tax\Business\Model\Exception\DuplicateResourceException;
 use Spryker\Zed\Tax\Business\Model\Exception\MissingTaxRateException;
 use Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException;
 use Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface;
@@ -90,10 +91,18 @@ class TaxWriter implements TaxWriterInterface
     /**
      * @param \Generated\Shared\Transfer\TaxSetTransfer $taxSetTransfer
      *
+     * @throws \Spryker\Zed\Tax\Business\Model\Exception\DuplicateResourceException
+     *
      * @return \Generated\Shared\Transfer\TaxSetTransfer
      */
     public function createTaxSet(TaxSetTransfer $taxSetTransfer)
     {
+        $taxSetEntity = $this->queryContainer->queryTaxSetByName($taxSetTransfer->getName())->findOne();
+
+        if ($taxSetEntity !== null) {
+            throw new DuplicateResourceException();
+        }
+
         $taxSetEntity = new SpyTaxSet();
         $taxSetEntity->setName($taxSetTransfer->getName());
 
@@ -114,6 +123,7 @@ class TaxWriter implements TaxWriterInterface
     /**
      * @param \Generated\Shared\Transfer\TaxSetTransfer $taxSetTransfer
      *
+     * @throws \Spryker\Zed\Tax\Business\Model\Exception\DuplicateResourceException
      * @throws \Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException
      *
      * @return int
@@ -124,6 +134,14 @@ class TaxWriter implements TaxWriterInterface
 
         if ($taxSetEntity === null) {
             throw new ResourceNotFoundException();
+        }
+
+        $tryAnotherTaxSets = $this->queryContainer->queryTaxSetByName($taxSetTransfer->getName())->find();
+
+        foreach ($tryAnotherTaxSets as $anotherTaxSet) {
+            if ($taxSetTransfer->getIdTaxSet() !== $anotherTaxSet->getIdTaxSet()) {
+                throw new DuplicateResourceException();
+            }
         }
 
         $taxSetEntity->setName($taxSetTransfer->getName())->setSpyTaxRates(new Collection());

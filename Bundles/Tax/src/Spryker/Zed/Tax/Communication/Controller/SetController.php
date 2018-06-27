@@ -9,7 +9,9 @@ namespace Spryker\Zed\Tax\Communication\Controller;
 
 use Propel\Runtime\Exception\PropelException;
 use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Shared\Tax\TaxConstants;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Spryker\Zed\Tax\Business\Model\Exception\DuplicateResourceException;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -35,21 +37,31 @@ class SetController extends AbstractController
         if ($request->request->count() > 0) {
             $taxSetForm->handleRequest($request);
 
-            if ($taxSetForm->isSubmitted() && $taxSetForm->isValid()) {
-                $taxSetTransfer = $this->getFacade()->createTaxSet($taxSetForm->getData());
-                $this->addSuccessMessage(sprintf('Tax set %d was created successfully.', $taxSetTransfer->getIdTaxSet()));
-                $redirectUrl = Url::generate('/tax/set/edit', [
-                    static::PARAM_URL_ID_TAX_SET => $taxSetTransfer->getIdTaxSet(),
-                ])->build();
+            if ($taxSetForm->isSubmitted()) {
+                if (!$taxSetForm->isValid()) {
+                    $this->addErrorMessage(TaxConstants::ERROR_MESSAGE_TAX_SET_CREATE_ERROR);
+                    return [
+                        'form' => $taxSetForm->createView(),
+                    ];
+                }
+                try {
+                    $taxSetTransfer = $this->getFacade()->createTaxSet($taxSetForm->getData());
+                    $this->addSuccessMessage(
+                        sprintf(TaxConstants::SUCCESS_MESSAGE_TAX_SET_CREATED, $taxSetTransfer->getIdTaxSet())
+                    );
+                    $redirectUrl = Url::generate('/tax/set/edit', [
+                        static::PARAM_URL_ID_TAX_SET => $taxSetTransfer->getIdTaxSet(),
+                    ])->build();
 
-                return $this->redirectResponse($redirectUrl);
+                    return $this->redirectResponse($redirectUrl);
+                } catch (DuplicateResourceException $e) {
+                    $this->addErrorMessage(TaxConstants::ERROR_MESSAGE_TAX_SET_EXISTS);
+                }
             }
-
-            $this->addErrorMessage('Tax set is not created. Please fill-in all required fields.');
         }
 
         return [
-          'form' => $taxSetForm->createView(),
+            'form' => $taxSetForm->createView(),
         ];
     }
 
@@ -72,13 +84,17 @@ class SetController extends AbstractController
             if ($taxSetForm->isSubmitted() && $taxSetForm->isValid()) {
                 $taxSetTransfer = $taxSetForm->getData();
                 $taxSetTransfer->setIdTaxSet($idTaxSet);
-                $rowsAffected = $this->getFacade()->updateTaxSet($taxSetForm->getData());
-
-                if ($rowsAffected > 0) {
-                    $this->addSuccessMessage(sprintf('Tax set %d was updated successfully.', $idTaxSet));
+                try {
+                    $rowsAffected = $this->getFacade()->updateTaxSet($taxSetForm->getData());
+                    if ($rowsAffected > 0) {
+                        $this->addSuccessMessage(sprintf(TaxConstants::SUCCESS_MESSAGE_TAX_SET_UPDATED, $idTaxSet));
+                    }
+                } catch (DuplicateResourceException $e) {
+                    $this->addErrorMessage(TaxConstants::ERROR_MESSAGE_TAX_SET_EXISTS);
+                } catch (PropelException $e) {
                 }
             } else {
-                $this->addErrorMessage('Tax set is not updated. Please fill-in all required fields.');
+                $this->addErrorMessage(TaxConstants::ERROR_MESSAGE_TAX_SET_UPDATE_ERROR);
             }
         }
 
