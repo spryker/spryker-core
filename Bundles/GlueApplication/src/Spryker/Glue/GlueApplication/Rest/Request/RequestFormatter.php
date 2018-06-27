@@ -188,13 +188,13 @@ class RequestFormatter implements RequestFormatterInterface
      */
     protected function mapEntityTransfer(HttpRequest $httpRequest, array $data): ?TransferInterface
     {
-        $classname = $httpRequest->attributes->get(RequestConstantsInterface::ATTRIBUTE_RESOURCE_FQCN);
+        $className = $httpRequest->attributes->get(RequestConstantsInterface::ATTRIBUTE_RESOURCE_FQCN);
 
-        if (!$classname) {
+        if (!$className) {
             return null;
         }
 
-        $restResourceAttributesTransfer = new $classname();
+        $restResourceAttributesTransfer = new $className();
         if ($restResourceAttributesTransfer instanceof TransferInterface) {
             $restResourceAttributesTransfer->fromArray($data[RestResourceInterface::RESOURCE_ATTRIBUTES], true);
         }

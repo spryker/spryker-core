@@ -22,11 +22,11 @@ use SprykerTest\Glue\GlueApplication\Stub\RestRequest;
  * @group GlueApplication
  * @group Rest
  * @group Response
- * @group ResponseRelationshopTest
+ * @group ResponseRelationshipTest
  *
  * Add your own group annotations below this line
  */
-class ResponseRelationshopTest extends Unit
+class ResponseRelationshipTest extends Unit
 {
     /**
      * @return void
@@ -94,13 +94,13 @@ class ResponseRelationshopTest extends Unit
     /**
      * @return void
      */
-    public function testHasRelationshipShouldReturnTrueWhenIncludedOmited(): void
+    public function testHasRelationshipShouldReturnTrueWhenIncludedOmitted(): void
     {
-        $responseRelationhip = $this->createResponseRelationship();
+        $responseRelationship = $this->createResponseRelationship();
 
         $restRequest = (new RestRequest)->createRestRequest();
 
-        $this->assertTrue($responseRelationhip->hasRelationship('test', $restRequest));
+        $this->assertTrue($responseRelationship->hasRelationship('test', $restRequest));
     }
 
     /**

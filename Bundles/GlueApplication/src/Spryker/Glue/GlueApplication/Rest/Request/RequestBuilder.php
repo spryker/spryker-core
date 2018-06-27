@@ -196,13 +196,13 @@ class RequestBuilder implements RequestBuilderInterface
     }
 
     /**
-     * @param bool $exludeRelationship
+     * @param bool $excludeRelationship
      *
      * @return \Spryker\Glue\GlueApplication\Rest\Request\RequestBuilderInterface
      */
-    public function setExcludeRelationship(bool $exludeRelationship): RequestBuilderInterface
+    public function setExcludeRelationship(bool $excludeRelationship): RequestBuilderInterface
     {
-        $this->excludeRelationship = $exludeRelationship;
+        $this->excludeRelationship = $excludeRelationship;
 
         return $this;
     }

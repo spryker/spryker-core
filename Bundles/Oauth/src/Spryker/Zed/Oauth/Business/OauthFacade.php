@@ -48,7 +48,7 @@ class OauthFacade extends AbstractFacade implements OauthFacadeInterface
      */
     public function validateAccessToken(OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer): OauthAccessTokenValidationResponseTransfer
     {
-        return $this->getFactory()->createAcessTokenReader()->validate($authAccessTokenValidationRequestTransfer);
+        return $this->getFactory()->createAccessTokenReader()->validate($authAccessTokenValidationRequestTransfer);
     }
 
     /**

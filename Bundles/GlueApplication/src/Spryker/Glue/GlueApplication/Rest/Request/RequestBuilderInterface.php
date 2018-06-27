@@ -93,9 +93,9 @@ interface RequestBuilderInterface
     public function build(): RestRequestInterface;
 
     /**
-     * @param bool $exludeRelationship
+     * @param bool $excludeRelationship
      *
      * @return \Spryker\Glue\GlueApplication\Rest\Request\RequestBuilderInterface
      */
-    public function setExcludeRelationship(bool $exludeRelationship): self;
+    public function setExcludeRelationship(bool $excludeRelationship): self;
 }

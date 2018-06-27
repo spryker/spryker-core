@@ -57,7 +57,7 @@ class GlueControllerFilterPluginTest extends Unit
     /**
      * @return void
      */
-    public function testFilterWhenUnsuportedMediaTypeProvidedShouldReturnError(): void
+    public function testFilterWhenUnsupportedMediaTypeProvidedShouldReturnError(): void
     {
         $request = Request::create(static::URL_TEST_RESOURCE, Request::METHOD_GET);
 

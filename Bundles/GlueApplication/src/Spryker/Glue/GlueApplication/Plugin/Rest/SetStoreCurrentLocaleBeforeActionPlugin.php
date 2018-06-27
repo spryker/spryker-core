@@ -12,7 +12,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 use Spryker\Shared\Kernel\Store;
 
 /**
- * @metod \Spryker\Glue\GlueApplication\GlueApplicationFactory getFactory()
+ * @method \Spryker\Glue\GlueApplication\GlueApplicationFactory getFactory()
  */
 class SetStoreCurrentLocaleBeforeActionPlugin extends AbstractPlugin implements ControllerBeforeActionPluginInterface
 {
