@@ -25,6 +25,8 @@ abstract class AbstractPersistenceFactory extends AbstractFactory implements Per
         Container $container
     ) {
         $dependencyProvider->providePersistenceLayerDependencies($container);
+
+        return $container;
     }
 
     /**

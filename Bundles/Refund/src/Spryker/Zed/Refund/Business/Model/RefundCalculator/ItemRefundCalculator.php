@@ -57,7 +57,6 @@ class ItemRefundCalculator extends AbstractRefundCalculator
     {
         foreach ($refundTransfer->getItems() as $itemTransfer) {
             $this->calculateProductOptionCanceledAmount($itemTransfer);
-
             $itemTransfer->setCanceledAmount($itemTransfer->getRefundableAmount());
         }
     }

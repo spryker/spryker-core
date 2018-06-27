@@ -117,6 +117,10 @@
         <property name="stateHistory" type="ItemState[]" />
     </transfer>
 
+    <transfer name="ItemCollection">
+        <property name="items" type="Item[]" singular="item" />
+    </transfer>
+
     <transfer name="Expense">
         <property name="unitGrossPrice" type="int" />
     </transfer>

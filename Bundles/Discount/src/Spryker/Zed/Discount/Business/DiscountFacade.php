@@ -9,6 +9,7 @@ namespace Spryker\Zed\Discount\Business;
 
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
+use Generated\Shared\Transfer\DiscountableItemTransformerTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\DiscountVoucherTransfer;
@@ -676,5 +677,22 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     public function checkDiscountChanges(QuoteTransfer $resultQuoteTransfer, QuoteTransfer $sourceQuoteTransfer): void
     {
         $this->getFactory()->createQuoteChangeObserver()->checkDiscountChanges($resultQuoteTransfer, $sourceQuoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DiscountableItemTransformerTransfer $discountableItemTransformerTransfer
+     *
+     * @return \Generated\Shared\Transfer\DiscountableItemTransformerTransfer
+     */
+    public function transformDiscountableItemPerQuantity(
+        DiscountableItemTransformerTransfer $discountableItemTransformerTransfer
+    ): DiscountableItemTransformerTransfer {
+        return $this->getFactory()
+            ->createDiscountableItemTransformer()
+            ->transformDiscountableItemPerQuantity($discountableItemTransformerTransfer);
     }
 }

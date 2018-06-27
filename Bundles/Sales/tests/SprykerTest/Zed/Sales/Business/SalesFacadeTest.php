@@ -8,6 +8,7 @@ namespace SprykerTest\Zed\Sales\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
@@ -134,6 +135,24 @@ class SalesFacadeTest extends Unit
         $grandTotal = $orderTransfer->getTotals()->getGrandTotal();
 
         $this->assertSame(1350, $grandTotal);
+    }
+
+    /**
+     * @return void
+     */
+    public function testTransformItemShouldSplitPerItem(): void
+    {
+        $quantity = 5;
+
+        $itemTransfer = (new ItemTransfer())->setQuantity($quantity);
+        $salesFacade = $this->createSalesFacade();
+        $itemCollectionTransfer = $salesFacade->transformItemPerQuantity($itemTransfer);
+
+        $this->assertSame($itemCollectionTransfer->getItems()->count(), $quantity);
+
+        foreach ($itemCollectionTransfer->getItems() as $itemTransfer) {
+            $this->assertSame($itemTransfer->getQuantity(), 1);
+        }
     }
 
     /**

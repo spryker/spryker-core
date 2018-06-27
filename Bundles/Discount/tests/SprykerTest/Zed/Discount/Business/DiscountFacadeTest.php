@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\DiscountableItemTransfer;
+use Generated\Shared\Transfer\DiscountableItemTransformerTransfer;
 use Generated\Shared\Transfer\DiscountCalculatorTransfer;
 use Generated\Shared\Transfer\DiscountConditionTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
@@ -45,6 +46,8 @@ use Spryker\Zed\Kernel\Container;
  */
 class DiscountFacadeTest extends Unit
 {
+    protected const QUANTITY = 5;
+
     /**
      * @var \SprykerTest\Zed\Discount\BusinessTester
      */
@@ -790,6 +793,59 @@ class DiscountFacadeTest extends Unit
         $voucherCodeEntity = $voucherCodes[0];
 
         $this->assertEquals(1, $voucherCodeEntity->getNumberOfUses());
+    }
+
+    /**
+     * @return void
+     */
+    public function testTransformDiscountableItemShouldBeUsedSingleQuantityBasedTransformation(): void
+    {
+        $discountFacade = $this->createDiscountFacade();
+
+        $discountableItemTransfer = $this->createDiscountableItemTransfer();
+        $discountableItemTransformerTransfer = $this->createDiscountableItemTransformerTransfer($discountableItemTransfer);
+
+        $discountFacade->transformDiscountableItemPerQuantity($discountableItemTransformerTransfer);
+
+        $this->assertSame($discountableItemTransfer->getOriginalItemCalculatedDiscounts()->count(), static::QUANTITY);
+
+        foreach ($discountableItemTransfer->getOriginalItemCalculatedDiscounts() as $resultedDiscountableItemTransfer) {
+            $this->assertSame($resultedDiscountableItemTransfer->getUnitAmount(), 10);
+            $this->assertSame($resultedDiscountableItemTransfer->getQuantity(), 1);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DiscountableItemTransfer $discountableItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\DiscountableItemTransformerTransfer
+     */
+    protected function createDiscountableItemTransformerTransfer(DiscountableItemTransfer $discountableItemTransfer)
+    {
+        $discountTransfer = (new DiscountTransfer())->setIdDiscount(1);
+        $totalDiscountAmount = 10;
+        $totalAmount = 100;
+
+        $discountableItemTransformerTransfer = new DiscountableItemTransformerTransfer();
+        $discountableItemTransformerTransfer->setDiscountableItem($discountableItemTransfer)
+            ->setDiscount($discountTransfer)
+            ->setTotalDiscountAmount($totalDiscountAmount)
+            ->setTotalAmount($totalAmount)
+            ->setQuantity(static::QUANTITY);
+
+        return $discountableItemTransformerTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\DiscountableItemTransfer
+     */
+    protected function createDiscountableItemTransfer(): DiscountableItemTransfer
+    {
+        $discountableItemTransfer = new DiscountableItemTransfer();
+        $discountableItemTransfer->setUnitPrice(100)
+            ->setQuantity(static::QUANTITY);
+
+        return $discountableItemTransfer;
     }
 
     /**

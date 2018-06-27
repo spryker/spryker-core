@@ -333,7 +333,6 @@ class SalesOrderSaver implements SalesOrderSaverInterface
         $salesOrderItemEntity->setFkOmsOrderItemState($initialStateEntity->getIdOmsOrderItemState());
         $salesOrderItemEntity->setGrossPrice($itemTransfer->getSumGrossPrice());
         $salesOrderItemEntity->setNetPrice($itemTransfer->getSumNetPrice());
-
         $salesOrderItemEntity->setPrice($itemTransfer->getSumPrice());
         $salesOrderItemEntity->setPriceToPayAggregation($itemTransfer->getSumPriceToPayAggregation());
         $salesOrderItemEntity->setSubtotalAggregation($itemTransfer->getSumSubtotalAggregation());
