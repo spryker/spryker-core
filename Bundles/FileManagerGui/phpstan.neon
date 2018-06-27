@@ -1,9 +1,8 @@
 parameters:
     ignoreErrors:
         - '#Parameter \#1 \$url of method .+AbstractController::redirectResponse\(\) expects string, array|string given.#'
-        - '#Instanceof between string and .+UploadedFile will always evaluate to false.#'
-        - '#Strict comparison using === between .+UploadedFile and null will always evaluate to false.#'
-        - '#Strict comparison using !== between string and null will always evaluate to true.#'
+        - '#Strict comparison using !== between .+UploadedFileTransfer and null will always evaluate to true.#'
+        - '#Strict comparison using === between .+UploadedFileTransfer and null will always evaluate to false.#'
 
     bootstrap: %rootDir%/../../../phpstan-bootstrap.php
 

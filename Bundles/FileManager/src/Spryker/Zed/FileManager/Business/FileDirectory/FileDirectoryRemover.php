@@ -143,4 +143,12 @@ class FileDirectoryRemover implements FileDirectoryRemoverInterface
             $this->entityManager->saveFile($fileTransfer);
         }
     }
+
+    /**
+     * @return string
+     */
+    protected function getFileNameVersionDelimiter()
+    {
+        return $this->config->getFileNameVersionDelimiter();
+    }
 }

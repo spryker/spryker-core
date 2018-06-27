@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\FileInfoTransfer;
 use Generated\Shared\Transfer\FileTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\FileManagerGui\Communication\Form\FileForm;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -92,10 +91,10 @@ class EditFileController extends AbstractUploadFileController
     protected function setFileName(FileTransfer $fileTransfer)
     {
         if (!$fileTransfer->getFileName()) {
-            $uploadedFile = $fileTransfer->getFileContent();
+            $uploadedFileTransfer = $fileTransfer->getUploadedFile();
 
-            if ($uploadedFile instanceof UploadedFile) {
-                $fileTransfer->setFileName($uploadedFile->getClientOriginalName());
+            if ($uploadedFileTransfer !== null) {
+                $fileTransfer->setFileName($uploadedFileTransfer->getClientOriginalName());
             }
         }
 
@@ -109,18 +108,17 @@ class EditFileController extends AbstractUploadFileController
      */
     protected function createFileInfoTransfer(FileTransfer $fileTransfer)
     {
-        /** @var \Symfony\Component\HttpFoundation\File\UploadedFile $uploadedFile */
-        $uploadedFile = $fileTransfer->getFileContent();
+        $uploadedFileTransfer = $fileTransfer->getUploadedFile();
         $fileInfoTransfer = new FileInfoTransfer();
 
-        if ($uploadedFile === null) {
+        if ($uploadedFileTransfer === null) {
             return $fileInfoTransfer;
         }
 
         $fileInfoTransfer->setFkFile($fileTransfer->getIdFile());
-        $fileInfoTransfer->setExtension($uploadedFile->getClientOriginalExtension());
-        $fileInfoTransfer->setSize($uploadedFile->getSize());
-        $fileInfoTransfer->setType($uploadedFile->getMimeType());
+        $fileInfoTransfer->setExtension($uploadedFileTransfer->getClientOriginalExtension());
+        $fileInfoTransfer->setSize($uploadedFileTransfer->getSize());
+        $fileInfoTransfer->setType($uploadedFileTransfer->getMimeType());
 
         return $fileInfoTransfer;
     }

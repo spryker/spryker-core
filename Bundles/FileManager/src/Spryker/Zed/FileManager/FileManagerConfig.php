@@ -19,4 +19,12 @@ class FileManagerConfig extends AbstractBundleConfig
     {
         return $this->get(FileManagerConstants::STORAGE_NAME);
     }
+
+    /**
+     * @return string
+     */
+    public function getFileNameVersionDelimiter()
+    {
+        return $this->get(FileManagerConstants::FILE_NAME_VERSION_DELIMITER);
+    }
 }

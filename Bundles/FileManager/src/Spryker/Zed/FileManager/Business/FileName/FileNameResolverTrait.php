@@ -8,10 +8,14 @@
 namespace Spryker\Zed\FileManager\Business\FileName;
 
 use Generated\Shared\Transfer\FileInfoTransfer;
-use Spryker\Shared\FileManager\FileManagerConstants;
 
 trait FileNameResolverTrait
 {
+    /**
+     * @return string
+     */
+    abstract protected function getFileNameVersionDelimiter();
+
     /**
      * @param \Generated\Shared\Transfer\FileInfoTransfer $fileInfoTransfer
      * @param int|null $idFileDirectory
@@ -23,7 +27,7 @@ trait FileNameResolverTrait
         $fileName = sprintf(
             '%u%s%s.%s',
             $fileInfoTransfer->getFkFile(),
-            FileManagerConstants::FILE_NAME_VERSION_DELIMITER,
+            $this->getFileNameVersionDelimiter(),
             $fileInfoTransfer->getVersionName(),
             $fileInfoTransfer->getExtension()
         );

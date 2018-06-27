@@ -199,4 +199,12 @@ class FileSaver implements FileSaverInterface
             $this->fileContent->save($fileTransfer);
         }
     }
+
+    /**
+     * @return string
+     */
+    protected function getFileNameVersionDelimiter()
+    {
+        return $this->config->getFileNameVersionDelimiter();
+    }
 }

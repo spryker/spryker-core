@@ -9,6 +9,7 @@ namespace Spryker\Zed\FileManagerGui\Communication\Controller;
 
 use Generated\Shared\Transfer\FileManagerDataTransfer;
 use Generated\Shared\Transfer\FileTransfer;
+use Generated\Shared\Transfer\UploadedFileTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 
@@ -29,20 +30,18 @@ abstract class AbstractUploadFileController extends AbstractController
     abstract protected function createFileInfoTransfer(FileTransfer $fileTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\FileTransfer $fileTransfer
+     * @param \Generated\Shared\Transfer\UploadedFileTransfer $uploadedFileTransfer
      *
      * @throws \Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException
      *
      * @return string
      */
-    protected function getFileContent(FileTransfer $fileTransfer)
+    protected function getFileContent(UploadedFileTransfer $uploadedFileTransfer)
     {
-        /** @var \Symfony\Component\HttpFoundation\File\UploadedFile $uploadedFile */
-        $uploadedFile = $fileTransfer->getFileContent();
-        $fileContent = file_get_contents($uploadedFile->getRealPath());
+        $fileContent = file_get_contents($uploadedFileTransfer->getRealPath());
 
         if ($fileContent === false) {
-            throw new FileNotFoundException($uploadedFile->getRealPath());
+            throw new FileNotFoundException($uploadedFileTransfer->getRealPath());
         }
 
         return $fileContent;
@@ -61,8 +60,10 @@ abstract class AbstractUploadFileController extends AbstractController
         $fileManagerDataTransfer->setFile($fileTransfer);
         $fileManagerDataTransfer->setFileInfo($this->createFileInfoTransfer($fileTransfer));
 
-        if ($fileTransfer->getFileContent() !== null) {
-            $fileManagerDataTransfer->setContent($this->getFileContent($fileTransfer));
+        if ($fileTransfer->getUploadedFile() !== null) {
+            $fileManagerDataTransfer->setContent(
+                $this->getFileContent($fileTransfer->getUploadedFile())
+            );
         }
 
         $fileManagerDataTransfer->setFileLocalizedAttributes($fileTransfer->getLocalizedAttributes());

@@ -75,13 +75,12 @@ class AddFileController extends AbstractUploadFileController
      */
     protected function createFileInfoTransfer(FileTransfer $fileTransfer)
     {
-        /** @var \Symfony\Component\HttpFoundation\File\UploadedFile $uploadedFile */
-        $uploadedFile = $fileTransfer->getFileContent();
         $fileInfo = new FileInfoTransfer();
+        $uploadedFileTransfer = $fileTransfer->getUploadedFile();
 
-        $fileInfo->setExtension($uploadedFile->getClientOriginalExtension());
-        $fileInfo->setSize($uploadedFile->getSize());
-        $fileInfo->setType($uploadedFile->getMimeType());
+        $fileInfo->setExtension($uploadedFileTransfer->getClientOriginalExtension());
+        $fileInfo->setSize($uploadedFileTransfer->getSize());
+        $fileInfo->setType($uploadedFileTransfer->getMimeType());
 
         return $fileInfo;
     }
@@ -94,9 +93,9 @@ class AddFileController extends AbstractUploadFileController
     protected function setFileName(FileTransfer $fileTransfer)
     {
         if ($fileTransfer->getUseRealName()) {
-            /** @var \Symfony\Component\HttpFoundation\File\UploadedFile $uploadedFile */
-            $uploadedFile = $fileTransfer->getFileContent();
-            $fileTransfer->setFileName($uploadedFile->getClientOriginalName());
+            $fileTransfer->setFileName(
+                $fileTransfer->getUploadedFile()->getClientOriginalName()
+            );
         }
 
         return $fileTransfer;

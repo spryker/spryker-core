@@ -8,16 +8,19 @@
 namespace Spryker\Zed\FileManagerGui\Communication\Form;
 
 use Generated\Shared\Transfer\FileTransfer;
+use Generated\Shared\Transfer\UploadedFileTransfer;
+use Spryker\Zed\FileManagerGui\Communication\Form\Validator\Constraints\File;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Callback;
-use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
@@ -27,7 +30,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 class FileForm extends AbstractType
 {
     public const FIELD_FILE_NAME = 'fileName';
-    public const FIELD_FILE_CONTENT = 'fileContent';
+    public const FIELD_UPLOADED_FILE = 'uploadedFile';
     public const FIELD_ID_FILE = 'idFile';
     public const FIELD_USE_REAL_NAME = 'useRealName';
     public const FILE_LOCALIZED_ATTRIBUTES = 'localizedAttributes';
@@ -54,7 +57,7 @@ class FileForm extends AbstractType
             ->addIdFileField($builder)
             ->addUseRealNameOption($builder)
             ->addFileLocalizedAttributesForm($builder, $options)
-            ->addFileContentField($builder, $options);
+            ->addUploadedFileField($builder, $options);
     }
 
     /**
@@ -82,11 +85,11 @@ class FileForm extends AbstractType
         $formData = $builder->getData();
         $fileNameCallback = function ($object, ExecutionContextInterface $context) use ($formData) {
             if (!empty($formData[static::FIELD_ID_FILE])) {
-                if (empty($formData[static::FIELD_FILE_CONTENT]) && empty($formData[static::FIELD_FILE_NAME])) {
+                if (empty($formData[static::FIELD_UPLOADED_FILE]) && empty($formData[static::FIELD_FILE_NAME])) {
                     $context->addViolation(static::ERROR_FILE_MISSED_EDIT_MESSAGE);
                 }
             } else {
-                if (empty($formData[static::FIELD_FILE_CONTENT])) {
+                if (empty($formData[static::FIELD_UPLOADED_FILE])) {
                     $context->addViolation(static::ERROR_FILE_MISSED_ADD_MESSAGE);
                 } elseif (empty($formData[static::FIELD_FILE_NAME]) && empty($formData[static::FIELD_USE_REAL_NAME])) {
                     $context->addViolation(static::ERROR_FILE_NAME_MISSED_ADD_MESSAGE);
@@ -122,10 +125,10 @@ class FileForm extends AbstractType
      *
      * @return $this
      */
-    protected function addFileContentField(FormBuilderInterface $builder, array $options)
+    protected function addUploadedFileField(FormBuilderInterface $builder, array $options)
     {
         $formData = $builder->getData();
-        $builder->add(static::FIELD_FILE_CONTENT, FileType::class, [
+        $builder->add(static::FIELD_UPLOADED_FILE, FileType::class, [
             'required' => empty($formData[static::FIELD_ID_FILE]),
             'constraints' => [
                 new File([
@@ -135,6 +138,18 @@ class FileForm extends AbstractType
                 ]),
             ],
         ]);
+
+        $builder->get(static::FIELD_UPLOADED_FILE)
+            ->addModelTransformer(
+                new CallbackTransformer(
+                    function ($data) {
+                        return $data;
+                    },
+                    function (?UploadedFile $uploadedFile = null) {
+                        return $this->mapUploadedFileToTransfer($uploadedFile);
+                    }
+                )
+            );
 
         return $this;
     }
@@ -180,5 +195,26 @@ class FileForm extends AbstractType
         ]);
 
         return $this;
+    }
+
+    /**
+     * @param null|\Symfony\Component\HttpFoundation\File\UploadedFile $uploadedFile
+     *
+     * @return null|\Generated\Shared\Transfer\UploadedFileTransfer
+     */
+    protected function mapUploadedFileToTransfer(?UploadedFile $uploadedFile = null)
+    {
+        if ($uploadedFile === null) {
+            return $uploadedFile;
+        }
+
+        $uploadedFileTransfer = new UploadedFileTransfer();
+        $uploadedFileTransfer->setClientOriginalName($uploadedFile->getClientOriginalName());
+        $uploadedFileTransfer->setRealPath($uploadedFile->getRealPath());
+        $uploadedFileTransfer->setMimeType($uploadedFile->getMimeType());
+        $uploadedFileTransfer->setClientOriginalExtension($uploadedFile->getClientOriginalExtension());
+        $uploadedFileTransfer->setSize($uploadedFile->getSize());
+
+        return $uploadedFileTransfer;
     }
 }
