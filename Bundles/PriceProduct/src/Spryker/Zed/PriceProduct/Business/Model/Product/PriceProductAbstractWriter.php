@@ -87,28 +87,39 @@ class PriceProductAbstractWriter extends BaseProductPriceWriter implements Price
     protected function executePersistProductAbstractPriceCollectionTransaction(
         ProductAbstractTransfer $productAbstractTransfer
     ): ProductAbstractTransfer {
-
-        $idProductAbstract = $productAbstractTransfer
-            ->requireIdProductAbstract()
-            ->getIdProductAbstract();
-
         foreach ($productAbstractTransfer->getPrices() as $priceProductTransfer) {
             $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
             if ($this->isEmptyMoneyValue($moneyValueTransfer)) {
                 continue;
             }
 
-            $priceProductTransfer->requirePriceDimension();
-
-            $this->persistProductAbstractPriceEntity($priceProductTransfer, $idProductAbstract);
-
-            $priceProductTransfer->setIdProductAbstract($idProductAbstract);
-            $priceProductTransfer = $this->executePriceDimensionAbstractSaverPlugins($priceProductTransfer);
-
-            $priceProductTransfer->setIdProductAbstract($productAbstractTransfer->getIdProductAbstract());
+            $this->executePersistProductAbstractPrice($productAbstractTransfer, $priceProductTransfer);
         }
 
         return $productAbstractTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function executePersistProductAbstractPrice(
+        ProductAbstractTransfer $productAbstractTransfer,
+        PriceProductTransfer $priceProductTransfer
+    ): PriceProductTransfer {
+        $idProductAbstract = $productAbstractTransfer
+            ->requireIdProductAbstract()
+            ->getIdProductAbstract();
+
+        $priceProductTransfer->requirePriceDimension();
+
+        $this->persistProductAbstractPriceEntity($priceProductTransfer, $idProductAbstract);
+        $priceProductTransfer->setIdProductAbstract($idProductAbstract);
+        $priceProductTransfer = $this->executePriceDimensionAbstractSaverPlugins($priceProductTransfer);
+
+        return $priceProductTransfer;
     }
 
     /**

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PriceProductMerchantRelationship\Communication\Plugin\PriceProductExtension;
+namespace Spryker\Zed\PriceProductMerchantRelationship\Communication\Plugin\PriceProduct;
 
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductDimensionExpanderStrategyPluginInterface;
