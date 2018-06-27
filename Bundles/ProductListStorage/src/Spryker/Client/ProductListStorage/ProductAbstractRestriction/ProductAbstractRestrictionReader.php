@@ -64,6 +64,10 @@ class ProductAbstractRestrictionReader implements ProductAbstractRestrictionRead
         array $customerWhitelistIds,
         array $customerBlacklistIds
     ): bool {
+        if (!$customerBlacklistIds && !$customerWhitelistIds) {
+            return false;
+        }
+
         $productListProductAbstractStorageTransfer = $this->productListProductAbstractStorageReader->findProductAbstractProductListStorage($idProductAbstract);
 
         if ($productListProductAbstractStorageTransfer) {

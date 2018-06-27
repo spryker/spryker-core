@@ -64,6 +64,10 @@ class ProductConcreteRestrictionReader implements ProductConcreteRestrictionRead
         array $customerWhitelistIds,
         array $customerBlacklistIds
     ): bool {
+        if (!$customerBlacklistIds && !$customerWhitelistIds) {
+            return false;
+        }
+
         $productListProductConcreteStorageTransfer = $this->productListProductConcreteStorageReader->findProductConcreteProductListStorage($idProductConcrete);
 
         if ($productListProductConcreteStorageTransfer) {

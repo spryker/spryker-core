@@ -125,8 +125,13 @@ class ProductListRestrictionValidator implements ProductListRestrictionValidator
         array $customerWhitelistIds,
         array $customerBlacklistIds
     ): bool {
+        if (!$customerBlacklistIds && !$customerWhitelistIds) {
+            return false;
+        }
+
         $productAbstractBlacklistIds = $this->productListFacade->getProductAbstractBlacklistIdsByIdProductAbstract($idProductAbstract);
         $productAbstractWhitelistIds = $this->productListFacade->getProductAbstractWhitelistIdsByIdProductAbstract($idProductAbstract);
+
         $isProductInBlacklist = count(array_intersect($productAbstractBlacklistIds, $customerBlacklistIds));
         $isProductInWhitelist = count(array_intersect($productAbstractWhitelistIds, $customerWhitelistIds));
 
