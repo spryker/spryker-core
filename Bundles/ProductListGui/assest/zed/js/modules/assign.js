@@ -5,12 +5,12 @@
 
 'use strict';
 
-var selectedProductsAPI = {
-    selectedProductsData: [],
-    removeBtnSelector: '.js-remove-item',
-    removeBtnTemplate: '<a href="#" class="js-remove-item btn-xs">Remove</a>',
-    counterSelector: '.js-counter',
-    counterTemplate: '<span class="js-counter"></span>',
+var SelectTableAPI = function() {
+    this.selectedProductsData = [];
+    this.removeBtnSelector = '.js-remove-item';
+    this.removeBtnTemplate = '<a href="#" class="js-remove-item btn-xs">Remove</a>';
+    this.counterSelector = '.js-counter';
+    this.counterTemplate = '<span class="js-counter"></span>';
     
     /**
      * Init all table adding functionality.
@@ -20,7 +20,7 @@ var selectedProductsAPI = {
      * @param {string} counterLabelSelector - Tabs label where will be added count of select products.
      * @param {string} inputWithSelectedProducts - In this input will putted all selected product ids.
      */
-    init: function(productTable, selectedProductsTable, checkboxSelector, counterLabelSelector, inputWithSelectedProducts) {
+    this.init = function(productTable, selectedProductsTable, checkboxSelector, counterLabelSelector, inputWithSelectedProducts) {
         this.$productTable = $(productTable);
         this.$selectedProductsTable = $(selectedProductsTable);
         this.$counterLabel = $(counterLabelSelector);
@@ -30,9 +30,9 @@ var selectedProductsAPI = {
         this.drawProductsTable();
         this.addRemoveButtonClickHandler();
         this.addCounterToLabel();
-    },
+    };
 
-    selectProductsOnLoad: function(initialSelectedProductsData) {
+    this.selectProductsOnLoad = function(initialSelectedProductsData) {
         var productTable = this.$productTable.DataTable(),
             productTableData = productTable.data(),
             data = initialSelectedProductsData.replace(/&quot;/g, '"');
@@ -45,12 +45,12 @@ var selectedProductsAPI = {
                 this.addRow(parsedData[i]);
             }
         }
-    },
+    };
 
     /**
      * Draw method of DataTable. Fires every time table rerender.
      */
-    drawProductsTable: function() {
+    this.drawProductsTable = function() {
         var self = this,
             productTableData = self.$productTable.DataTable();
 
@@ -69,14 +69,14 @@ var selectedProductsAPI = {
                 }
             }
         });
-    },
+    };
 
     /**
      * Add change event for all checkboxes checkbox. Fires every time, when product table redraws.
      * @param {object} productTableData - DataTable options ( get by $(element).DataTable() ).
      * @param {collectionNodes} checkboxes - Collection of all checkboxes in Product Table.
      */
-    mapEventsToCheckboxes: function(productTableData, checkboxes) {
+    this.mapEventsToCheckboxes = function(productTableData, checkboxes) {
         var self = this;
 
         checkboxes.off('change');
@@ -91,12 +91,12 @@ var selectedProductsAPI = {
 
             return self.removeRow(id);
         });
-    },
+    };
 
     /**
      * Check for selected products in product table.
      */
-    updateCheckboxes: function() {
+    this.updateCheckboxes = function() {
         var productTable = this.$productTable.DataTable(),
             productTableData = productTable.data();
 
@@ -109,14 +109,14 @@ var selectedProductsAPI = {
 
             this.findSelectedProductsInTable(checkBox, productItemId);
         }
-    },
+    };
 
     /**
      * Check for selected products in product table.
      * @param {object} checkBox - Jquery object with checkbox.
      * @param {number} productItemId - Id if product row.
      */
-    findSelectedProductsInTable: function(checkBox,productItemId) {
+    this.findSelectedProductsInTable = function(checkBox,productItemId) {
         for(var j = 0; j < this.selectedProductsData.length; j++) {
             var selectedProductId = this.selectedProductsData[j][0];
 
@@ -125,12 +125,12 @@ var selectedProductsAPI = {
                 break;
             }
         }
-    },
+    };
 
     /**
      * Update counter.
      */
-    updateCounter: function() {
+    this.updateCounter = function() {
         var counterText = '';
 
         if(this.selectedProductsData.length) {
@@ -138,36 +138,36 @@ var selectedProductsAPI = {
         }
 
         $(this.counterSelector).html(counterText);
-    },
+    };
 
     /**
      * Update selected products input value.
      * @param {number} id - Selected product id.
      */
-    updateSelectedProductsInputValue: function() {
+    this.updateSelectedProductsInputValue = function() {
         var inputValue = this.selectedProductsData.reduce(function(concat, current, index) {
             return index ? concat + ',' + current[0] : current[0];
         }, '');
 
         this.$inputWithSelectedProducts.val(inputValue);
-    },
+    };
 
     /**
      * Add selected product to array with all selected items.
      * @param {array} rowData - Array of all data selected product.
      */
-    addRow: function(rowData) {
+    this.addRow = function(rowData) {
         var productItem = rowData.slice();
         productItem[rowData.length - 1] = this.removeBtnTemplate.replace('#', productItem[0]);
         this.selectedProductsData.push(productItem);
         this.renderSelectedItemsTable(productItem);
-    },
+    };
 
     /**
      * Remove row from array with all selected items.
      * @param {number} id - Products id which should be deleted.
      */
-    removeRow: function(id) {
+    this.removeRow = function(id) {
         var self = this;
 
         this.selectedProductsData.every(function(elem,index) {
@@ -179,12 +179,12 @@ var selectedProductsAPI = {
         });
 
         self.renderSelectedItemsTable();
-    },
+    };
 
     /**
      * Add event for remove button to remove row from array with all selected items.
      */
-    addRemoveButtonClickHandler: function() {
+    this.addRemoveButtonClickHandler = function() {
         var self = this,
             selectedTable = this.$selectedProductsTable;
 
@@ -196,19 +196,19 @@ var selectedProductsAPI = {
             self.removeRow(id);
             self.updateCheckboxes();
         });
-    },
+    };
 
     /**
      * Add counter template on init.
      */
-    addCounterToLabel: function() {
+    this.addCounterToLabel = function() {
         this.$counterLabel.append(this.counterTemplate);
-    },
+    };
 
     /**
      * Redraw table with selected items.
      */
-    renderSelectedItemsTable: function() {
+    this.renderSelectedItemsTable = function() {
         this.$selectedProductsTable
         .DataTable()
         .clear()
@@ -218,11 +218,12 @@ var selectedProductsAPI = {
         this.updateCounter();
         this.updateSelectedProductsInputValue();
         this.updateCheckboxes();
-    }
+    };
 }
 
 $(document).ready(function() {
-    selectedProductsAPI.init(
+    var selectedProductsTable = new SelectTableAPI();
+    selectedProductsTable.init(
         '#product-table',
         '#selectedProductsTable',
         '.all-products-checkbox',
