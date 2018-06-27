@@ -34,13 +34,13 @@ class PriceProductMerchantRelationshipStorageFacade extends AbstractFacade imple
      *
      * @api
      *
-     * @param array $priceProductStoreIds
+     * @param array $businessUnitProducts
      *
      * @return void
      */
-    public function publishAbstractPriceProduct(array $priceProductStoreIds): void
+    public function publishAbstractPriceProduct(array $businessUnitProducts): void
     {
-        $this->getFactory()->createPriceProductAbstractStorageWriter()->publish($priceProductStoreIds);
+        $this->getFactory()->createPriceProductAbstractStorageWriter()->publish($businessUnitProducts);
     }
 
     /**

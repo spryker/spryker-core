@@ -38,16 +38,16 @@ class PriceProductMerchantRelationshipKeyGenerator implements PriceProductMercha
     /**
      * @param string $resourceName
      * @param int $idProduct
-     * @param int $idMerchantRelationship
+     * @param int $idCompanyBusinessUnit
      *
      * @return string
      */
-    public function generateKey(string $resourceName, int $idProduct, int $idMerchantRelationship): string
+    public function generateKey(string $resourceName, int $idProduct, int $idCompanyBusinessUnit): string
     {
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer
             ->setStore($this->storeClient->getCurrentStore()->getName())
-            ->setReference($idProduct . ':' . $idMerchantRelationship);
+            ->setReference($idProduct . ':' . $idCompanyBusinessUnit);
 
         return $this->synchronizationService
             ->getStorageKeyBuilder($resourceName)

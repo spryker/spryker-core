@@ -10,11 +10,11 @@ namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\Model;
 interface PriceProductAbstractStorageWriterInterface
 {
     /**
-     * @param array $priceProductStoreIds
+     * @param array $businessUnitProducts
      *
      * @return void
      */
-    public function publish(array $priceProductStoreIds): void;
+    public function publish(array $businessUnitProducts): void;
 
     /**
      * @param array $merchantRelationshipAbstractProducts

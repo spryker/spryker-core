@@ -8,6 +8,8 @@
 namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence;
 
 use Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer;
+use Orm\Zed\MerchantRelationship\Persistence\Map\SpyMerchantRelationshipToCompanyBusinessUnitTableMap;
+use Orm\Zed\PriceProductMerchantRelationship\Persistence\Map\SpyPriceProductMerchantRelationshipTableMap;
 use Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductAbstractMerchantRelationshipStorage;
 use Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductAbstractMerchantRelationshipStorageQuery;
 use Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorage;
@@ -98,46 +100,59 @@ class PriceProductMerchantRelationshipStorageEntityManager extends AbstractEntit
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[] $priceProductMerchantRelationshipStorageTransferCollection
+     * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[] $priceProductMerchantRelationshipStorageTransfers
      * @param array $existingPriceProductMerchantRelationshipStorageEntityMap
      * @param string $priceProductStorageEntityClass
      *
      * @return void
      */
     protected function writePriceProductMerchantRelationshipStorage(
-        array $priceProductMerchantRelationshipStorageTransferCollection,
+        array $priceProductMerchantRelationshipStorageTransfers,
         array $existingPriceProductMerchantRelationshipStorageEntityMap,
         string $priceProductStorageEntityClass
     ): void {
-        foreach ($priceProductMerchantRelationshipStorageTransferCollection as $priceProductMerchantRelationshipStorageTransfer) {
-            $priceKey = $this->buildPriceKey($priceProductMerchantRelationshipStorageTransfer);
+        $groupedPrices = [];
 
-            $priceProductMerchantRelationshipStorageEntity = $this->getPriceProductMerchantRelationshipStorageEntity(
-                $existingPriceProductMerchantRelationshipStorageEntityMap,
-                $priceKey,
-                $priceProductStorageEntityClass
-            );
+        foreach ($priceProductMerchantRelationshipStorageTransfers as $storageTransfer) {
+            $groupedPrices[$storageTransfer->getIdProduct()][$storageTransfer->getIdCompanyBusinessUnit()][] = $storageTransfer;
+        }
 
-            if (!$priceProductMerchantRelationshipStorageTransfer->getPrices()) {
-                if (!$priceProductMerchantRelationshipStorageEntity->isNew()) {
-                    $priceProductMerchantRelationshipStorageEntity->delete();
+        foreach ($groupedPrices as $idProduct => $pricesPerProduct) {
+            /** @var PriceProductMerchantRelationshipStorageTransfer[] $storageTransfers */
+            foreach ($pricesPerProduct as $idCompanyBusinessUnit => $storageTransfers) {
+                $prices = [];
+                foreach ($storageTransfers as $storageTransfer) {
+                    $prices[$storageTransfer->getIdMerchantRelationship()] = $storageTransfer->getPrices();
                 }
-                continue;
+
+                $priceKey = $this->buildPriceKey($storageTransfers[0]);
+
+                $priceProductMerchantRelationshipStorageEntity = $this->getPriceProductMerchantRelationshipStorageEntity(
+                    $existingPriceProductMerchantRelationshipStorageEntityMap,
+                    $priceKey,
+                    $priceProductStorageEntityClass
+                );
+
+                if (!$prices) {
+                    if (!$priceProductMerchantRelationshipStorageEntity->isNew()) {
+                        $priceProductMerchantRelationshipStorageEntity->delete();
+                    }
+                }
+
+                $data = [
+                    'prices' => $prices,
+                ];
+
+                $priceProductMerchantRelationshipStorageEntity
+                    ->setPriceKey($priceKey)
+                    ->setFkCompanyBusinessUnit($idCompanyBusinessUnit)
+                    ->setData($data)
+                    ->setIsSendingToQueue(true);
+
+                $this->setProductForeignKey($priceProductMerchantRelationshipStorageEntity, $idProduct);
+
+                $priceProductMerchantRelationshipStorageEntity->save();
             }
-
-            $data = [
-                'prices' => $priceProductMerchantRelationshipStorageTransfer->getPrices(),
-            ];
-
-            $priceProductMerchantRelationshipStorageEntity
-                ->setPriceKey($priceKey)
-                ->setFkMerchantRelationship($priceProductMerchantRelationshipStorageTransfer->getIdMerchantRelationship())
-                ->setData($data)
-                ->setIsSendingToQueue(true);
-
-            $this->setProductForeignKey($priceProductMerchantRelationshipStorageEntity, $priceProductMerchantRelationshipStorageTransfer->getIdProduct());
-
-            $priceProductMerchantRelationshipStorageEntity->save();
         }
     }
 
@@ -176,7 +191,7 @@ class PriceProductMerchantRelationshipStorageEntityManager extends AbstractEntit
         int $idProduct
     ): void {
         $priceProductConcreteMerchantRelationshipStorageEntities = SpyPriceProductConcreteMerchantRelationshipStorageQuery::create()
-            ->filterByFkMerchantRelationship($idMerchantRelationship)
+            ->filterByFkCompanyBusinessUnit()
             ->filterByFkProduct($idProduct)
             ->find();
 
@@ -195,7 +210,7 @@ class PriceProductMerchantRelationshipStorageEntityManager extends AbstractEntit
         return implode(static::PRICE_KEY_SEPARATOR, [
             $priceProductMerchantRelationshipStorageTransfer->getStoreName(),
             $priceProductMerchantRelationshipStorageTransfer->getIdProduct(),
-            $priceProductMerchantRelationshipStorageTransfer->getIdMerchantRelationship(),
+            $priceProductMerchantRelationshipStorageTransfer->getIdCompanyBusinessUnit(),
         ]);
     }
 }

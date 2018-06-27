@@ -111,6 +111,42 @@ class ProductPriceResolver implements ProductPriceResolverInterface
     }
 
     /**
+     * @param array $priceProductTransfers
+     * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
+     */
+    public function resolveTransfer(array $priceProductTransfers): CurrentProductPriceTransfer
+    {
+        $currentProductPriceTransfer = new CurrentProductPriceTransfer();
+        if (!$priceProductTransfers) {
+            return $currentProductPriceTransfer;
+        }
+
+        $priceProductFilter = $this->buildPriceProductFilterWithCurrentValues();
+        $priceProductTransfer = $this->priceProductService->resolveProductPriceByPriceProductFilter(
+            $priceProductTransfers,
+            $priceProductFilter
+        );
+
+        if (!$priceProductTransfer) {
+            return $currentProductPriceTransfer;
+        }
+
+        $priceMode = $priceProductFilter->getPriceMode();
+        $price = $this->getPriceValueByPriceMode($priceProductTransfer->getMoneyValue(), $priceMode);
+
+        if (!$price) {
+            return $currentProductPriceTransfer;
+        }
+
+        //todo get price types from $priceProductTransfer
+        $prices = ['DEFAULT' => $price];
+
+        return $currentProductPriceTransfer
+            ->setPrice($price)
+            ->setPrices($prices);
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\PriceProductFilterTransfer
      */
     protected function buildPriceProductFilterWithCurrentValues(): PriceProductFilterTransfer

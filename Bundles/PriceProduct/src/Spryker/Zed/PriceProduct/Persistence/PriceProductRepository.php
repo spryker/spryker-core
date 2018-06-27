@@ -26,8 +26,6 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
     public const PRICE_PRODUCT_RELATION_NAME = 'PriceProduct';
 
     /**
-     * @api
-     *
      * @param string $concreteSku
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
@@ -40,12 +38,12 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
         $priceProductStoreQuery = $this->createBasePriceProductStoreQuery($priceProductCriteriaTransfer);
         $this->addJoinProductConcreteBySku($priceProductStoreQuery, $concreteSku);
 
+        $priceProductStores = $priceProductStoreQuery->find();
+
         return $priceProductStoreQuery->find();
     }
 
     /**
-     * @api
-     *
      * @param string $abstractSku
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *

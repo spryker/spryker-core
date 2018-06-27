@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\Model;
 
+use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer;
+use Orm\Zed\MerchantRelationship\Persistence\Map\SpyMerchantRelationshipToCompanyBusinessUnitTableMap;
 use Orm\Zed\PriceProductMerchantRelationship\Persistence\Map\SpyPriceProductMerchantRelationshipTableMap;
 use Spryker\Shared\PriceProductMerchantRelationship\PriceProductMerchantRelationshipConstants;
 use Spryker\Shared\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConstants;
@@ -55,6 +57,7 @@ class PriceGrouper implements PriceGrouperInterface
         foreach ($products as $product) {
             $idProduct = $product[$productPrimaryIdentifier];
             $idMerchantRelationship = $product[SpyPriceProductMerchantRelationshipTableMap::COL_FK_MERCHANT_RELATIONSHIP];
+            $idCompanyBusinessUnit = $product[MerchantRelationshipTransfer::FK_COMPANY_BUSINESS_UNIT];
 
             if (!$idMerchantRelationship || !$idProduct) {
                 continue;
@@ -69,6 +72,7 @@ class PriceGrouper implements PriceGrouperInterface
 
             $groupedPrices[] = (new PriceProductMerchantRelationshipStorageTransfer())
                 ->setStoreName($storeTransfer->getName())
+                ->setIdCompanyBusinessUnit($idCompanyBusinessUnit)
                 ->setIdMerchantRelationship($idMerchantRelationship)
                 ->setIdProduct($idProduct)
                 ->setPrices($prices);

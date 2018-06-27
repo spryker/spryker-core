@@ -24,6 +24,10 @@ interface PriceProductClientInterface
     public function getPriceTypeDefaultName();
 
     /**
+     * @deprecated
+     *
+     * //todo get priceproductTransfer collection
+     *
      * Specification:
      *  - Resolves current product price as per current customer state, it will try to resolve price based on customer selected currency and price mode.
      *  - Defaults to price mode defined in environment configuration if customer not yet selected.
@@ -35,4 +39,12 @@ interface PriceProductClientInterface
      * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */
     public function resolveProductPrice(array $priceMap);
+
+
+    /**
+     * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
+     */
+    public function resolveProductPriceTransfer(array $priceProductTransfers);
+
+
 }

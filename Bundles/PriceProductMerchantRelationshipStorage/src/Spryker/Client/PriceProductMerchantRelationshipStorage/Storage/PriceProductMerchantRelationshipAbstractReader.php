@@ -7,8 +7,13 @@
 
 namespace Spryker\Client\PriceProductMerchantRelationshipStorage\Storage;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\MoneyValueTransfer;
+use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductStorageTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Client\PriceProductMerchantRelationshipStorage\Dependency\Client\PriceProductMerchantRelationshipStorageToStorageClientInterface;
+use Spryker\Shared\PriceProductMerchantRelationship\PriceProductMerchantRelationshipConstants;
 use Spryker\Shared\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConstants;
 
 class PriceProductMerchantRelationshipAbstractReader implements PriceProductMerchantRelationshipAbstractReaderInterface
@@ -37,37 +42,37 @@ class PriceProductMerchantRelationshipAbstractReader implements PriceProductMerc
 
     /**
      * @param int $idProductAbstract
-     * @param int $idMerchantRelationship
+     * @param int $idCompanyBusinessUnit
      *
-     * @return \Generated\Shared\Transfer\PriceProductStorageTransfer|null
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findPriceMerchantRelationshipAbstract(int $idProductAbstract, int $idMerchantRelationship): ?PriceProductStorageTransfer
+    public function findProductAbstractPrices(int $idProductAbstract, int $idCompanyBusinessUnit): array
     {
         $key = $this->priceStorageKeyGenerator->generateKey(
             PriceProductMerchantRelationshipStorageConstants::PRICE_PRODUCT_ABSTRACT_MERCHANT_RELATIONSHIP_RESOURCE_NAME,
             $idProductAbstract,
-            $idMerchantRelationship
+            $idCompanyBusinessUnit
         );
 
-        return $this->findPriceProductStorageTransfer($key);
+        return $this->findPriceProductTransfers($key);
     }
 
     /**
      * @param string $key
      *
-     * @return \Generated\Shared\Transfer\PriceProductStorageTransfer|null
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    protected function findPriceProductStorageTransfer(string $key): ?PriceProductStorageTransfer
+    protected function findPriceProductTransfers(string $key): array
     {
         $priceData = $this->storageClient->get($key);
 
         if (!$priceData) {
-            return null;
+            return [];
         }
 
         $priceProductStorageTransfer = new PriceProductStorageTransfer();
         $priceProductStorageTransfer->fromArray($priceData, true);
 
-        return $priceProductStorageTransfer;
+        return (new PriceProductMapper())->mapPriceProductStorageTransferToPriceProductTransfers($priceProductStorageTransfer);
     }
 }

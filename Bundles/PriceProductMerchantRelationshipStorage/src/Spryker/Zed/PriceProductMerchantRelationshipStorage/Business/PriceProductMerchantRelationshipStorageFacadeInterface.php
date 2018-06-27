@@ -43,11 +43,11 @@ interface PriceProductMerchantRelationshipStorageFacadeInterface
      *
      * @api
      *
-     * @param array $priceProductStoreIds
+     * @param array $businessUnitProducts
      *
      * @return void
      */
-    public function publishAbstractPriceProduct(array $priceProductStoreIds): void;
+    public function publishAbstractPriceProduct(array $businessUnitProducts): void;
 
     /**
      * Specification:

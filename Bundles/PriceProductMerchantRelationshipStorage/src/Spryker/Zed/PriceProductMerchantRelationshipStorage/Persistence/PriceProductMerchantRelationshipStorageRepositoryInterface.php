@@ -13,8 +13,6 @@ namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence;
 interface PriceProductMerchantRelationshipStorageRepositoryInterface
 {
     /**
-     * @api
-     *
      * @param array $priceProductStoreIds
      *
      * @return array
@@ -22,8 +20,6 @@ interface PriceProductMerchantRelationshipStorageRepositoryInterface
     public function findPriceProductStoreListByIdsForConcrete(array $priceProductStoreIds): array;
 
     /**
-     * @api
-     *
      * @param array $priceProductStoreIds
      *
      * @return array
@@ -31,8 +27,6 @@ interface PriceProductMerchantRelationshipStorageRepositoryInterface
     public function findPriceProductStoreListByIdsForAbstract(array $priceProductStoreIds): array;
 
     /**
-     * @api
-     *
      * @param array $concreteProducts
      *
      * @return \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorage[]
@@ -40,8 +34,6 @@ interface PriceProductMerchantRelationshipStorageRepositoryInterface
     public function findExistingPriceProductConcreteMerchantRelationshipStorageEntities(array $concreteProducts): array;
 
     /**
-     * @api
-     *
      * @param array $concreteProducts
      *
      * @return \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorage[]

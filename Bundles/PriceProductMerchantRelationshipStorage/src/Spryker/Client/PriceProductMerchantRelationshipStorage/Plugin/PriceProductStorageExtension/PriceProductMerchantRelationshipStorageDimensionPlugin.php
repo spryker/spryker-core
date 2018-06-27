@@ -27,28 +27,38 @@ class PriceProductMerchantRelationshipStorageDimensionPlugin extends AbstractPlu
      *
      * @return \Generated\Shared\Transfer\PriceProductStorageTransfer|null
      */
-    public function findProductConcretePrices(int $idProductConcrete): ?PriceProductStorageTransfer
+    public function findProductConcretePrices(int $idProductConcrete): array
     {
-        $merchantRelationshipIds = $this->getFactory()
-            ->createMerchantRelationshipFinder()
-            ->findCurrentCustomerMerchantRelationshipIds();
+        $idBusinessUnitFromCurrentCustomer = 1;
 
-        if (!$merchantRelationshipIds) {
-            return null;
-        }
-
-        // how to get min price? and how to use volume prices from which MR?
-        foreach ($merchantRelationshipIds as $idMerchantRelationship) {
-            $priceProductStorageTransfer = $this->getFactory()
+        return $this->getFactory()
             ->createPriceProductMerchantRelationshipConcreteReader()
             ->findPriceMerchantRelationshipConcrete(
                 $idProductConcrete,
-                $idMerchantRelationship
+                $idBusinessUnitFromCurrentCustomer
             );
-            if ($priceProductStorageTransfer) {
-                return $priceProductStorageTransfer;
-            }
-        }
+
+
+//        $merchantRelationshipIds = $this->getFactory()
+//            ->createMerchantRelationshipFinder()
+//            ->findCurrentCustomerMerchantRelationshipIds();
+//
+//        if (!$merchantRelationshipIds) {
+//            return null;
+//        }
+
+
+//        foreach ($merchantRelationshipIds as $idMerchantRelationship) {
+//            $priceProductStorageTransfer = $this->getFactory()
+//            ->createPriceProductMerchantRelationshipConcreteReader()
+//            ->findPriceMerchantRelationshipConcrete(
+//                $idProductConcrete,
+//                $idMerchantRelationship
+//            );
+//            if ($priceProductStorageTransfer) {
+//                return $priceProductStorageTransfer;
+//            }
+//        }
 
         return null;
     }
@@ -60,30 +70,40 @@ class PriceProductMerchantRelationshipStorageDimensionPlugin extends AbstractPlu
      *
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\PriceProductStorageTransfer|null
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findProductAbstractPrices(int $idProductAbstract): ?PriceProductStorageTransfer
+    public function findProductAbstractPrices(int $idProductAbstract): array
     {
-        $merchantRelationshipIds = $this->getFactory()
-            ->createMerchantRelationshipFinder()
-            ->findCurrentCustomerMerchantRelationshipIds();
+        // todo
+        $idBusinessUnitFromCurrentCustomer = 1;
 
-        if (!$merchantRelationshipIds) {
-            return null;
-        }
+        return $this->getFactory()
+            ->createPriceProductMerchantRelationshipAbstractReader()
+            ->findProductAbstractPrices(
+                $idProductAbstract,
+                $idBusinessUnitFromCurrentCustomer
+            );
 
-        // how to get min price? and how to use volume prices from which MR?
-        foreach ($merchantRelationshipIds as $idMerchantRelationship) {
-            $priceProductStorageTransfer = $this->getFactory()
-                ->createPriceProductMerchantRelationshipAbstractReader()
-                ->findPriceMerchantRelationshipAbstract(
-                    $idProductAbstract,
-                    $idMerchantRelationship
-                );
-            if ($priceProductStorageTransfer) {
-                return $priceProductStorageTransfer;
-            }
-        }
+//        $merchantRelationshipIds = $this->getFactory()
+//            ->createMerchantRelationshipFinder()
+//            ->findCurrentCustomerMerchantRelationshipIds();
+//
+//        if (!$merchantRelationshipIds) {
+//            return null;
+//        }
+
+//
+//        foreach ($merchantRelationshipIds as $idMerchantRelationship) {
+//            $priceProductStorageTransfer = $this->getFactory()
+//                ->createPriceProductMerchantRelationshipAbstractReader()
+//                ->findPriceMerchantRelationshipAbstract(
+//                    $idProductAbstract,
+//                    $idMerchantRelationship
+//                );
+//            if ($priceProductStorageTransfer) {
+//                return $priceProductStorageTransfer;
+//            }
+//        }
 
         return null;
     }

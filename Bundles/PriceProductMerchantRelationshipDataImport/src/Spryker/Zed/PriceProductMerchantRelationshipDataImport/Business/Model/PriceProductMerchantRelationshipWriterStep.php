@@ -54,7 +54,6 @@ class PriceProductMerchantRelationshipWriterStep extends PublishAwareStep implem
             return $priceProductStoreEntity;
         }
 
-        //todo check if it correctly trigger event in listener
         $this->removeNotActualRelation(
             $dataSet[PriceProductMerchantRelationshipDataSetInterface::ID_MERCHANT_RELATIONSHIP],
             $priceProductStoreEntity->getIdPriceProductStore()
@@ -100,11 +99,6 @@ class PriceProductMerchantRelationshipWriterStep extends PublishAwareStep implem
             ->find();
 
         foreach ($priceProductMerchantRelationshipEntities as $priceProductMerchantRelationshipEntity) {
-            $this->addPublishEvents(
-                PriceProductMerchantRelationshipDataImportConstants::ENTITY_SPY_PRICE_PRODUCT_MERCHANT_RELATIONSHIP_DELETE,
-                $priceProductMerchantRelationshipEntity->getPrimaryKey()
-            );
-
             $priceProductMerchantRelationshipEntity->delete();
         }
     }

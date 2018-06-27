@@ -19,9 +19,9 @@ interface PriceProductStoragePriceDimensionPluginInterface
      *
      * @param int $idProductConcrete
      *
-     * @return \Generated\Shared\Transfer\PriceProductStorageTransfer|null
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findProductConcretePrices(int $idProductConcrete): ?PriceProductStorageTransfer;
+    public function findProductConcretePrices(int $idProductConcrete): array; //todo change to collection transfer
 
     /**
      * * Specification:
@@ -31,9 +31,9 @@ interface PriceProductStoragePriceDimensionPluginInterface
      *
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\PriceProductStorageTransfer|null
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findProductAbstractPrices(int $idProductAbstract): ?PriceProductStorageTransfer;
+    public function findProductAbstractPrices(int $idProductAbstract): array ;
 
     /**
      * Specification:

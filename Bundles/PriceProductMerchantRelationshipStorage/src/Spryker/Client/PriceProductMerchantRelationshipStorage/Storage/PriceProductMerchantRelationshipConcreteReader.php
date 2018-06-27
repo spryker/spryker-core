@@ -37,16 +37,16 @@ class PriceProductMerchantRelationshipConcreteReader implements PriceProductMerc
 
     /**
      * @param int $idProductAbstract
-     * @param int $idMerchantRelationship
+     * @param int $idCompanyBusinessUnit
      *
-     * @return \Generated\Shared\Transfer\PriceProductStorageTransfer|null
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findPriceMerchantRelationshipConcrete(int $idProductAbstract, int $idMerchantRelationship): ?PriceProductStorageTransfer
+    public function findPriceMerchantRelationshipConcrete(int $idProductAbstract, int $idCompanyBusinessUnit): array
     {
         $key = $this->priceStorageKeyGenerator->generateKey(
             PriceProductMerchantRelationshipStorageConstants::PRICE_PRODUCT_CONCRETE_MERCHANT_RELATIONSHIP_RESOURCE_NAME,
             $idProductAbstract,
-            $idMerchantRelationship
+            $idCompanyBusinessUnit
         );
 
         return $this->findPriceProductStorageTransfer($key);
@@ -55,19 +55,19 @@ class PriceProductMerchantRelationshipConcreteReader implements PriceProductMerc
     /**
      * @param string $key
      *
-     * @return \Generated\Shared\Transfer\PriceProductStorageTransfer|null
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    protected function findPriceProductStorageTransfer(string $key): ?PriceProductStorageTransfer
+    protected function findPriceProductStorageTransfer(string $key): array
     {
         $priceData = $this->storageClient->get($key);
 
         if (!$priceData) {
-            return null;
+            return [];
         }
 
         $priceProductStorageTransfer = new PriceProductStorageTransfer();
         $priceProductStorageTransfer->fromArray($priceData, true);
 
-        return $priceProductStorageTransfer;
+        return (new PriceProductMapper())->mapPriceProductStorageTransferToPriceProductTransfers($priceProductStorageTransfer);
     }
 }

@@ -30,15 +30,6 @@ class PriceProductMerchantRelationshipConcreteListener extends AbstractPlugin im
      */
     public function handleBulk(array $eventTransfers, $eventName): void
     {
-        if ($eventName === PriceProductMerchantRelationshipEvents::ENTITY_SPY_PRICE_PRODUCT_MERCHANT_RELATIONSHIP_DELETE) {
-            $merchantRelationshipProducts = $this->getMerchantRelationshipConcreteProducts($eventTransfers);
-            if ($merchantRelationshipProducts) {
-                $this->getFacade()->unpublishConcretePriceProduct($merchantRelationshipProducts);
-            }
-
-            return;
-        }
-
         $priceProductStoreIds = $this->getFactory()
             ->getEventBehaviorFacade()
             ->getEventTransferForeignKeys(

@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\PriceProductStorage;
 
-use Generated\Shared\Transfer\PriceProductStorageTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -22,11 +21,13 @@ class PriceProductStorageClient extends AbstractClient implements PriceProductSt
      *
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\PriceProductStorageTransfer|null
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function getPriceProductAbstractStorageTransfer(int $idProductAbstract): ?PriceProductStorageTransfer
+    public function getPriceProductAbstractTransfers(int $idProductAbstract): array
     {
-        return $this->getFactory()->createPriceAbstractStorageReader()->findPriceAbstractStorageTransfer($idProductAbstract);
+        return $this->getFactory()
+            ->createPriceAbstractStorageReader()
+            ->findPriceProductAbstractTransfers($idProductAbstract);
     }
 
     /**
@@ -36,10 +37,12 @@ class PriceProductStorageClient extends AbstractClient implements PriceProductSt
      *
      * @param int $idProductConcrete
      *
-     * @return \Generated\Shared\Transfer\PriceProductStorageTransfer|null
+     * @return \Generated\Shared\Transfer\PriceProductStorageTransfer[]
      */
-    public function getPriceProductConcreteStorageTransfer(int $idProductConcrete): ?PriceProductStorageTransfer
+    public function getPriceProductConcreteTransfers(int $idProductConcrete): array
     {
-        return $this->getFactory()->createPriceConcreteStorageReader()->findPriceConcreteStorageTransfer($idProductConcrete);
+        return $this->getFactory()
+            ->createPriceConcreteStorageReader()
+            ->findPriceProductConcreteTransfers($idProductConcrete);
     }
 }

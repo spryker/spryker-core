@@ -46,52 +46,38 @@ class PriceConcreteStorageReader implements PriceConcreteStorageReaderInterface
     /**
      * @param int $idProductConcrete
      *
-     * @return \Generated\Shared\Transfer\PriceProductStorageTransfer|null
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findPriceConcreteStorageTransfer($idProductConcrete): ?PriceProductStorageTransfer
+    public function findPriceProductConcreteTransfers($idProductConcrete): array
     {
-        $prices = [];
+        $priceProductTransfers = [];
 
         foreach ($this->priceDimensionPlugins as $priceDimensionPlugin) {
-            $priceProductStorageTransfer = $priceDimensionPlugin->findProductConcretePrices($idProductConcrete);
-
-            if ($priceProductStorageTransfer !== null) {
-                $prices[$priceDimensionPlugin->getDimensionName()] = $priceProductStorageTransfer->getPrices();
-            }
+            $priceProductTransfers = array_merge($priceProductTransfers, $priceDimensionPlugin->findProductConcretePrices($idProductConcrete));
         }
 
-        $priceProductStorageTransfer = $this->findDefaultPriceDimensionPriceProductStorageTransfer($idProductConcrete);
-        if ($priceProductStorageTransfer) {
-            $prices[PriceProductStorageConstants::PRICE_DIMENSION_DEFAULT] = $priceProductStorageTransfer->getPrices();
-        }
+        $priceProductTransfers = array_merge($priceProductTransfers, $this->findDefaultPriceDimensionPriceProductTransfers($idProductConcrete));
 
-        if (!$prices) {
-            return null;
-        }
-
-        $priceProductStorageTransfer = new PriceProductStorageTransfer();
-        $priceProductStorageTransfer->setPrices($prices);
-
-        return $priceProductStorageTransfer;
+        return $priceProductTransfers;
     }
 
     /**
      * @param int $idProductConcrete
      *
-     * @return \Generated\Shared\Transfer\PriceProductStorageTransfer|null
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    protected function findDefaultPriceDimensionPriceProductStorageTransfer(int $idProductConcrete): ?PriceProductStorageTransfer
+    protected function findDefaultPriceDimensionPriceProductTransfers(int $idProductConcrete): array
     {
         $key = $this->priceStorageKeyGenerator->generateKey(PriceProductStorageConstants::PRICE_CONCRETE_RESOURCE_NAME, $idProductConcrete);
         $priceData = $this->storageClient->get($key);
 
         if (!$priceData) {
-            return null;
+            return [];
         }
 
         $priceProductStorageTransfer = new PriceProductStorageTransfer();
         $priceProductStorageTransfer->fromArray($priceData, true);
 
-        return $priceProductStorageTransfer;
+        return (new PriceProductMapper())->mapPriceProductStorageTransferToPriceProductTransfers($priceProductStorageTransfer);
     }
 }

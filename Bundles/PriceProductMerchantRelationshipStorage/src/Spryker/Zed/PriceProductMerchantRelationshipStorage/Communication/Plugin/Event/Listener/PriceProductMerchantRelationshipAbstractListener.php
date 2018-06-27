@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Communication\Plugin\Event\Listener;
 
+use Orm\Zed\ManualOrderEntry\Persistence\Map\SpyMerchantRelationshipToCompanyBusinessUnitTableMap;
+use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipToCompanyBusinessUnitQuery;
 use Orm\Zed\PriceProductMerchantRelationship\Persistence\Map\SpyPriceProductMerchantRelationshipTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -30,22 +32,9 @@ class PriceProductMerchantRelationshipAbstractListener extends AbstractPlugin im
      */
     public function handleBulk(array $eventTransfers, $eventName): void
     {
-        if ($eventName === PriceProductMerchantRelationshipEvents::ENTITY_SPY_PRICE_PRODUCT_MERCHANT_RELATIONSHIP_DELETE) {
-            $merchantRelationshipProducts = $this->getMerchantRelationshipAbstractProducts($eventTransfers);
-            if ($merchantRelationshipProducts) {
-                $this->getFacade()->unpublishAbstractPriceProduct($merchantRelationshipProducts);
-            }
+        $businessUnitProducts = $this->getMerchantRelationshipAbstractProducts($eventTransfers);
+        $this->getFacade()->publishAbstractPriceProduct($businessUnitProducts);
 
-            return;
-        }
-
-        $priceProductStoreIds = $this->getFactory()
-            ->getEventBehaviorFacade()
-            ->getEventTransferForeignKeys(
-                $eventTransfers,
-                SpyPriceProductMerchantRelationshipTableMap::COL_FK_PRICE_PRODUCT_STORE
-            );
-        $this->getFacade()->publishAbstractPriceProduct($priceProductStoreIds);
     }
 
     /**
@@ -55,7 +44,7 @@ class PriceProductMerchantRelationshipAbstractListener extends AbstractPlugin im
      */
     protected function getMerchantRelationshipAbstractProducts(array $eventTransfers): array
     {
-        $merchantRelationshipProducts = [];
+        $businessUnitProducts = [];
 
         foreach ($eventTransfers as $eventTransfer) {
             $foreignKeys = $eventTransfer->getForeignKeys();
@@ -64,11 +53,20 @@ class PriceProductMerchantRelationshipAbstractListener extends AbstractPlugin im
                 continue;
             }
             $idMerchantRelationship = $foreignKeys[SpyPriceProductMerchantRelationshipTableMap::COL_FK_MERCHANT_RELATIONSHIP];
-            if (!isset($merchantRelationshipProducts[$idMerchantRelationship][$idProductAbstract])) {
-                $merchantRelationshipProducts[$idMerchantRelationship][$idProductAbstract] = $idProductAbstract;
+
+            $businessUnits = SpyMerchantRelationshipToCompanyBusinessUnitQuery::create()
+                ->filterByFkMerchantRelationship($idMerchantRelationship)
+
+                ->find()
+                ->toArray();
+
+            $businessUnitIds = array_column($businessUnits, SpyMerchantRelationshipToCompanyBusinessUnitTableMap::COL_FK_COMPANY_BUSINESS_UNIT);
+            foreach ($businessUnitIds as $businessUnitId) {
+                $businessUnitProducts[$businessUnitId][$idProductAbstract] = $idProductAbstract;
             }
+
         }
 
-        return $merchantRelationshipProducts;
+        return $businessUnitProducts;
     }
 }

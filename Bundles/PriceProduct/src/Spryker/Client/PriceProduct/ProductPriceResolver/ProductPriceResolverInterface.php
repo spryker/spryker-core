@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\PriceProduct\ProductPriceResolver;
 
+use Generated\Shared\Transfer\CurrentProductPriceTransfer;
+
 interface ProductPriceResolverInterface
 {
     /**
@@ -15,4 +17,10 @@ interface ProductPriceResolverInterface
      * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */
     public function resolve(array $priceMap);
+
+    /**
+     * @param array $priceProductTransfers
+     * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
+     */
+    public function resolveTransfer(array $priceProductTransfers): CurrentProductPriceTransfer;
 }

@@ -44,13 +44,15 @@ class DefaultPriceProductDecisionPlugin extends AbstractPlugin implements PriceP
             $priceProductTransfer->getMoneyValue()->requireCurrency();
             $priceProductTransfer->getMoneyValue()->getCurrency()->requireIdCurrency();
 
-            if ($priceProductTransfer->getPriceDimension()->getIdPriceProductDefault()) {
-                if ($priceProductTransfer->getMoneyValue()->getCurrency()->getIdCurrency() !== $priceProductCriteriaTransfer->getIdCurrency()) {
-                    continue;
-                }
-
-                return $priceProductTransfer;
+            if (!$priceProductTransfer->getPriceDimension()->getIdPriceProductDefault()) {
+                continue;
             }
+
+            if ($priceProductTransfer->getMoneyValue()->getCurrency()->getIdCurrency() !== $priceProductCriteriaTransfer->getIdCurrency()) {
+                continue;
+            }
+
+            return $priceProductTransfer;
         }
 
         return null;

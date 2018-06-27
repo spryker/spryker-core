@@ -36,6 +36,9 @@ class MerchantRelationshipPriceProductDecisionPlugin extends AbstractPlugin impl
             return null;
         }
 
+        //todo rename
+        $price = null;
+
         foreach ($priceProductTransfers as $priceProductTransfer) {
             $priceProductTransfer
                 ->requirePriceDimension()
@@ -45,16 +48,20 @@ class MerchantRelationshipPriceProductDecisionPlugin extends AbstractPlugin impl
             $priceProductTransfer->getMoneyValue()->requireCurrency();
             $priceProductTransfer->getMoneyValue()->getCurrency()->requireIdCurrency();
 
-            if ($priceProductTransfer->getPriceDimension()->getIdMerchantRelationship()) {
-                if ($priceProductTransfer->getMoneyValue()->getCurrency()->getIdCurrency() !== $priceProductCriteriaTransfer->getIdCurrency()) {
-                    continue;
-                }
+            if (!$priceProductTransfer->getPriceDimension()->getIdMerchantRelationship()) {
+                continue;
+            }
 
-                return $priceProductTransfer;
+            if ($priceProductTransfer->getMoneyValue()->getCurrency()->getIdCurrency() !== $priceProductCriteriaTransfer->getIdCurrency()) {
+                continue;
+            }
+
+            if ($price === null || $price->getMoneyValue()->getGrossAmount() > $priceProductTransfer->getMoneyValue()->getGrossAmount()) {
+                $price = $priceProductTransfer;
             }
         }
 
-        return null;
+        return $price;
     }
 
     /**
