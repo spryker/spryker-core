@@ -1,13 +1,13 @@
 <?php
+
 /**
- * This file is part of the Spryker Demoshop.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ProductPackagingUnit\Dependency\Facade;
 
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
-use Spryker\Zed\ProductMeasurementUnit\Business\ProductMeasurementUnitFacadeInterface;
 
 class ProductPackagingUnitToProductMeasurementUnitFacadeBridge implements ProductPackagingUnitToProductMeasurementUnitFacadeInterface
 {
@@ -19,7 +19,7 @@ class ProductPackagingUnitToProductMeasurementUnitFacadeBridge implements Produc
     /**
      * @param \Spryker\Zed\ProductMeasurementUnit\Business\ProductMeasurementUnitFacadeInterface $productMeasurementUnitFacade
      */
-    public function __construct(ProductMeasurementUnitFacadeInterface $productMeasurementUnitFacade)
+    public function __construct($productMeasurementUnitFacade)
     {
         $this->productMeasurementUnitFacade = $productMeasurementUnitFacade;
     }
@@ -33,5 +33,4 @@ class ProductPackagingUnitToProductMeasurementUnitFacadeBridge implements Produc
     {
         return $this->productMeasurementUnitFacade->getProductMeasurementSalesUnitTransfer($idProductMeasurementSalesUnit);
     }
-
 }

@@ -10,7 +10,8 @@
     "spryker/locale": "^3.0.0",
     "spryker/persistent-cart-extension": "^1.0.0",
     "spryker/product": "^6.0.0",
-    "spryker/sales-extension": "^1.1.0"
+    "spryker/sales-extension": "^1.1.0",
+    "spryker/product-measurement-unit": "^1.0.0"
   },
   "require-dev": {
     "spryker/cart": "*",

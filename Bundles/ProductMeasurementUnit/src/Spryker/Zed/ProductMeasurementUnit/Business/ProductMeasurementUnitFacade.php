@@ -68,6 +68,10 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param int $idProductMeasurementSalesUnit
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer

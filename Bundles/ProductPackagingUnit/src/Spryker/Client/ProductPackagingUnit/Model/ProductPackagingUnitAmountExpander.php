@@ -96,6 +96,7 @@ class ProductPackagingUnitAmountExpander implements ProductPackagingUnitAmountEx
 
     /**
      * @param array $params
+     *
      * @return int|null
      */
     protected function getAmountSalesUnit(array $params): ?int
