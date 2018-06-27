@@ -17,6 +17,7 @@ use Spryker\Glue\GlueApplication\Rest\Version\VersionResolverInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceVersionableInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
 use SprykerTest\Glue\GlueApplication\Stub\RestTestAttributesTransfer;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -44,7 +45,7 @@ class ResourceRouteLoaderTest extends Unit
 
         $resourceRouteLoader = $this->createResourceLoader([$resourceRoutePluginMock], $versionResolverMock);
 
-        $route = $resourceRouteLoader->load('tests', Request::create('/tests/1'));
+        $route = $resourceRouteLoader->load('tests', [], Request::create('/tests/1'));
 
         $this->assertEquals('test-resource', $route[RequestConstantsInterface::ATTRIBUTE_CONTROLLER]);
         $this->assertEquals('testsRestApi', $route[RequestConstantsInterface::ATTRIBUTE_MODULE]);
@@ -81,7 +82,7 @@ class ResourceRouteLoaderTest extends Unit
 
         $resourceRouteLoader = $this->createResourceLoader([$resourceRoutePluginMock1, $resourceRoutePluginMock2], $versionResolverMock);
 
-        $route = $resourceRouteLoader->load('tests', Request::create('/tests/1'));
+        $route = $resourceRouteLoader->load('tests', [], Request::create('/tests/1'));
 
         $this->assertSame(2, $route[RequestConstantsInterface::ATTRIBUTE_RESOURCE_VERSION]->getMajor());
     }
@@ -112,9 +113,39 @@ class ResourceRouteLoaderTest extends Unit
 
         $resourceRouteLoader = $this->createResourceLoader([$resourceRoutePluginMock1, $resourceRoutePluginMock2], $versionResolverMock);
 
-        $route = $resourceRouteLoader->load('tests', Request::create('/tests/1'));
+        $route = $resourceRouteLoader->load('tests', [], Request::create('/tests/1'));
 
         $this->assertSame(1, $route[RequestConstantsInterface::ATTRIBUTE_RESOURCE_VERSION]->getMajor());
+    }
+
+    /**
+     * @return void
+     */
+    public function testLoadUsingSameResourceNameWithDifferentParents(): void
+    {
+        $versionResolverMock = $this->createVersionResolverMock();
+        $resourceRoutePluginMock1 = $this->createResourceRoutePluginWithParent();
+        $this->configureBaseRouteMock($resourceRoutePluginMock1);
+
+        $resourceRoutePluginMock1
+            ->method('getParentResourceType')
+            ->willReturn('parent-resource1');
+
+        $resourceRoutePluginMock2 = $this->createResourceRoutePluginWithParent();
+        $this->configureBaseRouteMock($resourceRoutePluginMock2);
+
+        $resourceRoutePluginMock2
+            ->method('getParentResourceType')
+            ->willReturn('parent-resource2');
+
+        $resourceRouteLoader = $this->createResourceLoader([$resourceRoutePluginMock1, $resourceRoutePluginMock2], $versionResolverMock);
+
+        $parents[][RequestConstantsInterface::ATTRIBUTE_TYPE] = 'parent-resource2';
+
+        $route = $resourceRouteLoader->load('tests', $parents, Request::create('/tests/1'));
+
+        $this->assertEquals('test-resource', $route[RequestConstantsInterface::ATTRIBUTE_CONTROLLER]);
+        $this->assertEquals('testsRestApi', $route[RequestConstantsInterface::ATTRIBUTE_MODULE]);
     }
 
     /**
@@ -148,6 +179,17 @@ class ResourceRouteLoaderTest extends Unit
         return $this->getMockBuilder([
             ResourceRoutePluginInterface::class,
             ResourceVersionableInterface::class,
+        ])->getMock();
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface
+     */
+    protected function createResourceRoutePluginWithParent(): ResourceRoutePluginInterface
+    {
+        return $this->getMockBuilder([
+            ResourceRoutePluginInterface::class,
+            ResourceWithParentPluginInterface::class,
         ])->getMock();
     }
 
@@ -205,19 +247,5 @@ class ResourceRouteLoaderTest extends Unit
                     return $resourceRouteCollection;
                 }
             );
-    }
-
-    /**
-     * @return array
-     */
-    protected function getBaseRoutePluginMethods(): array
-    {
-        return [
-            'configure',
-            'getResourceType',
-            'getController',
-            'getResourceAttributesClassName',
-            'getModuleName',
-        ];
     }
 }

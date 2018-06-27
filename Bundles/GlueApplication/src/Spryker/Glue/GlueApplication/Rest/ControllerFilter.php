@@ -101,8 +101,6 @@ class ControllerFilter implements ControllerFilterInterface
      * @param string $action
      * @param \Symfony\Component\HttpFoundation\Request $httpRequest
      *
-     * @throws \Exception
-     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function filter(AbstractRestController $controller, string $action, HttpRequest $httpRequest): Response
@@ -118,15 +116,7 @@ class ControllerFilter implements ControllerFilterInterface
             $restErrorMessageTransfer = $this->restRequestValidator->validate($httpRequest, $restRequest);
 
             if (!$restErrorMessageTransfer) {
-                $this->controllerCallbacks->beforeAction($action, $restRequest);
-
-                if ($controller instanceof ErrorController) {
-                    $restResponse = $controller->$action();
-                } else {
-                    $restResponse = $this->processResource($controller, $action, $restRequest);
-                }
-
-                $this->controllerCallbacks->afterAction($action, $restRequest, $restResponse);
+                $restResponse = $this->executeAction($controller, $action, $restRequest);
             } else {
                 $restResponse = $this->restResourceBuilder
                     ->createRestResponse()
@@ -137,15 +127,7 @@ class ControllerFilter implements ControllerFilterInterface
 
             return $this->responseHeaders->addHeaders($httpResponse, $restResponse, $restRequest);
         } catch (Exception $exception) {
-            if (!$this->applicationConfig->getIsRestDebug()) {
-                $this->logException($exception);
-                return new Response(
-                    Response::$statusTexts[Response::HTTP_INTERNAL_SERVER_ERROR],
-                    Response::HTTP_INTERNAL_SERVER_ERROR
-                );
-            }
-
-            throw $exception;
+            return $this->handleException($exception);
         }
     }
 
@@ -165,6 +147,53 @@ class ControllerFilter implements ControllerFilterInterface
         $controller->setRestRequest($restRequest);
 
         return $controller->$action($restRequest->getResource()->getAttributes());
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Controller\AbstractRestController $controller
+     * @param string $action
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function executeAction(
+        AbstractRestController $controller,
+        string $action,
+        RestRequestInterface $restRequest
+    ): RestResponseInterface {
+
+        $this->controllerCallbacks->beforeAction($action, $restRequest);
+
+        if ($controller instanceof ErrorController) {
+            $restResponse = $controller->$action();
+        } else {
+            $restResponse = $this->processResource($controller, $action, $restRequest);
+        }
+
+        $this->controllerCallbacks->afterAction($action, $restRequest, $restResponse);
+
+        return $restResponse;
+    }
+
+    /**
+     * @param \Exception $exception
+     *
+     * @throws \Exception
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    protected function handleException(Exception $exception): Response
+    {
+        if ($this->applicationConfig->getIsRestDebug()) {
+            throw $exception;
+        }
+
+        $this->logException($exception);
+
+        return new Response(
+            Response::$statusTexts[Response::HTTP_INTERNAL_SERVER_ERROR],
+            Response::HTTP_INTERNAL_SERVER_ERROR
+        );
     }
 
     /**

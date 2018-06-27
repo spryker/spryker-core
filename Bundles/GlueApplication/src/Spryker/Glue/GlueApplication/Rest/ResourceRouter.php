@@ -72,13 +72,17 @@ class ResourceRouter implements ResourceRouterInterface
             return $this->createOptionsRoute($resourceType);
         }
 
-        $route = $this->resourceRouteLoader->load($resourceType[RequestConstantsInterface::ATTRIBUTE_TYPE], $httpRequest);
+        $route = $this->resourceRouteLoader->load(
+            $resourceType[RequestConstantsInterface::ATTRIBUTE_TYPE],
+            $resources,
+            $httpRequest
+        );
 
         if (!$route) {
             return $this->createResourceNotFoundRoute();
         }
 
-        if (isset($route[RequestConstantsInterface::ATTRIBUTE_PARENT_RESOURCE]) && !$this->isValidPath($resources, $route)) {
+        if (!$this->isParentValid($route, $resources)) {
             return $this->createResourceNotFoundRoute();
         }
 
@@ -194,5 +198,16 @@ class ResourceRouter implements ResourceRouterInterface
         $route[RequestConstantsInterface::ATTRIBUTE_TYPE] = $resourceType[RequestConstantsInterface::ATTRIBUTE_TYPE];
 
         return $route;
+    }
+
+    /**
+     * @param array $route
+     * @param array $resources
+     *
+     * @return bool
+     */
+    protected function isParentValid(array $route, array $resources): bool
+    {
+        return !isset($route[RequestConstantsInterface::ATTRIBUTE_PARENT_RESOURCE]) || $this->isValidPath($resources, $route);
     }
 }

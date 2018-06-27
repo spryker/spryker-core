@@ -40,13 +40,14 @@ class ResourceRouteLoader implements ResourceRouteLoaderInterface
 
     /**
      * @param string $resourceType
+     * @param array $resources
      * @param \Symfony\Component\HttpFoundation\Request $httpRequest
      *
      * @return null|array
      */
-    public function load(string $resourceType, Request $httpRequest): ?array
+    public function load(string $resourceType, array $resources, Request $httpRequest): ?array
     {
-        $resourcePlugin = $this->findResourcePlugin($resourceType, $httpRequest);
+        $resourcePlugin = $this->findResourcePlugin($resourceType, $resources, $httpRequest);
 
         if ($resourcePlugin === null) {
             return null;
@@ -80,13 +81,14 @@ class ResourceRouteLoader implements ResourceRouteLoaderInterface
 
     /**
      * @param string $resourceType
+     * @param array $resources
      * @param \Symfony\Component\HttpFoundation\Request $httpRequest
      *
      * @return array
      */
-    public function getAvailableMethods(string $resourceType, Request $httpRequest): array
+    public function getAvailableMethods(string $resourceType, array $resources, Request $httpRequest): array
     {
-        $resourcePlugin = $this->findResourcePlugin($resourceType, $httpRequest);
+        $resourcePlugin = $this->findResourcePlugin($resourceType, $resources, $httpRequest);
 
         if ($resourcePlugin === null) {
             return [];
@@ -99,20 +101,14 @@ class ResourceRouteLoader implements ResourceRouteLoaderInterface
 
     /**
      * @param string $resourceType
+     * @param array $resources
      * @param \Symfony\Component\HttpFoundation\Request $httpRequest
      *
      * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface|null
      */
-    protected function findResourcePlugin(string $resourceType, Request $httpRequest): ?ResourceRoutePluginInterface
+    protected function findResourcePlugin(string $resourceType, array $resources, Request $httpRequest): ?ResourceRoutePluginInterface
     {
-        $resourcePlugins = [];
-        foreach ($this->resourcePlugins as $resourceProviderPlugin) {
-            if ($resourceProviderPlugin->getResourceType() !== $resourceType) {
-                continue;
-            }
-
-            $resourcePlugins[] = $resourceProviderPlugin;
-        }
+        $resourcePlugins = $this->filterResourcePlugins($resourceType, $resources);
 
         $requestedVersionTransfer = $this->versionResolver->findVersion($httpRequest);
         if ($requestedVersionTransfer->getMajor()) {
@@ -129,6 +125,47 @@ class ResourceRouteLoader implements ResourceRouteLoaderInterface
         }
 
         return $resourcePlugin;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $resourceRoutePlugin
+     * @param string $resourceType
+     * @param array $resources
+     *
+     * @return bool
+     */
+    protected function isCurrentResourceRoutePlugin(
+        ResourceRoutePluginInterface $resourceRoutePlugin,
+        string $resourceType,
+        array $resources
+    ): bool {
+
+        if ($resourceRoutePlugin->getResourceType() !== $resourceType) {
+            return false;
+        }
+
+        if ($resourceRoutePlugin instanceof ResourceWithParentPluginInterface) {
+            $parentResourceType = $resourceRoutePlugin->getParentResourceType();
+            return $this->isParentResourceMatching($resources, $parentResourceType);
+        }
+
+        return true;
+    }
+
+    /**
+     * @param array $resources
+     * @param string $parentResourceType
+     *
+     * @return bool
+     */
+    protected function isParentResourceMatching(array $resources, string $parentResourceType): bool
+    {
+        foreach ($resources as $resource) {
+            if ($resource[RequestConstantsInterface::ATTRIBUTE_TYPE] === $parentResourceType) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -216,5 +253,24 @@ class ResourceRouteLoader implements ResourceRouteLoaderInterface
     protected function getModuleName(ModuleNameAwareInterface $resourcePlugin): string
     {
         return $resourcePlugin->getModuleName();
+    }
+
+    /**
+     * @param string $resourceType
+     * @param array $resources
+     *
+     * @return array
+     */
+    protected function filterResourcePlugins(string $resourceType, array $resources): array
+    {
+        $resourcePlugins = [];
+        foreach ($this->resourcePlugins as $resourceRoutePlugin) {
+            if (!$this->isCurrentResourceRoutePlugin($resourceRoutePlugin, $resourceType, $resources)) {
+                continue;
+            }
+
+            $resourcePlugins[] = $resourceRoutePlugin;
+        }
+        return $resourcePlugins;
     }
 }

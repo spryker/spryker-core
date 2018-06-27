@@ -20,6 +20,11 @@ class ResponsePagination implements ResponsePaginationInterface
     /**
      * @param string $domainName
      */
+    public const HARD_LIMIT = 500;
+
+    /**
+     * @param string $domainName
+     */
     public function __construct(string $domainName)
     {
         $this->domainName = $domainName;
@@ -77,27 +82,87 @@ class ResponsePagination implements ResponsePaginationInterface
             return null;
         }
 
-        $limit = $restResponse->getLimit() ? $restResponse->getLimit() : $restRequest->getPage()->getLimit();
+        $limit = $this->getLimit($restRequest, $restResponse);
         $offset = $restRequest->getPage()->getOffset();
 
-        $totalPages = floor($restResponse->getTotals() / $limit);
+        $totalPages = $this->calculateTotalPages($restResponse, $limit);
+        $prevOffset = $this->calculatePreviousOffset($offset, $limit);
+        $nextOffset = $this->calculateNextOffset($offset, $limit, $totalPages);
+        $lastOffset = $this->calculateLastOffset($restResponse, $limit);
 
+        return (new RestPageOffsetsTransfer())
+            ->setLimit($limit)
+            ->setLastOffset($lastOffset)
+            ->setNextOffset($nextOffset)
+            ->setPrevOffset($prevOffset);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     *
+     * @return int
+     */
+    protected function getLimit(RestRequestInterface $restRequest, RestResponseInterface $restResponse): int
+    {
+        $inputPageLimit = static::HARD_LIMIT;
+        if ($restRequest->getPage()) {
+            $inputPageLimit = $restRequest->getPage()->getLimit();
+        }
+
+        return $restResponse->getLimit() ? $restResponse->getLimit() : $inputPageLimit;
+    }
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     * @param int $totalPages
+     *
+     * @return int
+     */
+    protected function calculateNextOffset(int $offset, int $limit, int $totalPages): int
+    {
+        $nextOffset = $offset + $limit;
+        if ($nextOffset > $totalPages) {
+            $nextOffset = (int)(($totalPages / $limit) * $limit);
+        }
+        return $nextOffset;
+    }
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return int
+     */
+    protected function calculatePreviousOffset(int $offset, int $limit): int
+    {
         $prevOffset = $offset - $limit;
         if ($prevOffset < 0) {
             $prevOffset = 0;
         }
+        return $prevOffset;
+    }
 
-        $nextOffset = $offset + $limit;
-        if ($nextOffset > $totalPages) {
-            $nextOffset = ($totalPages / $limit) * $limit;
-        }
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     * @param int $limit
+     *
+     * @return int
+     */
+    protected function calculateTotalPages(RestResponseInterface $restResponse, $limit): int
+    {
+        return (int)($restResponse->getTotals() / $limit);
+    }
 
-        $restPageOffsetsTransfer = (new RestPageOffsetsTransfer())
-            ->setLimit($limit)
-            ->setLastOffset($restResponse->getTotals() - $limit)
-            ->setNextOffset($nextOffset)
-            ->setPrevOffset($prevOffset);
-
-        return $restPageOffsetsTransfer;
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     * @param int $limit
+     *
+     * @return int
+     */
+    protected function calculateLastOffset(RestResponseInterface $restResponse, $limit): int
+    {
+        return $restResponse->getTotals() - $limit;
     }
 }

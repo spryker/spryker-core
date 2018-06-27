@@ -11,18 +11,20 @@ use Symfony\Component\HttpFoundation\Request;
 interface ResourceRouteLoaderInterface
 {
     /**
-     * @param string $resource
+     * @param string $resourceType
+     * @param array $resources
      * @param \Symfony\Component\HttpFoundation\Request $httpRequest
      *
      * @return null|array
      */
-    public function load(string $resource, Request $httpRequest): ?array;
+    public function load(string $resourceType, array $resources, Request $httpRequest): ?array;
 
     /**
      * @param string $resourceType
+     * @param array $resources
      * @param \Symfony\Component\HttpFoundation\Request $httpRequest
      *
      * @return array
      */
-    public function getAvailableMethods(string $resourceType, Request $httpRequest): array;
+    public function getAvailableMethods(string $resourceType, array $resources, Request $httpRequest): array;
 }

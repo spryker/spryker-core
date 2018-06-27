@@ -251,36 +251,11 @@ class GlueControllerFilterPluginTest extends Unit
 
         $content = json_decode($response->getContent(), true);
 
-        $this->assertArrayHasKey(RestResponseInterface::RESPONSE_LINKS, $content);
-        $this->assertArrayHasKey('first', $content[RestResponseInterface::RESPONSE_LINKS]);
-        $this->assertArrayHasKey('last', $content[RestResponseInterface::RESPONSE_LINKS]);
-        $this->assertArrayHasKey('next', $content[RestResponseInterface::RESPONSE_LINKS]);
-        $this->assertArrayHasKey('prev', $content[RestResponseInterface::RESPONSE_LINKS]);
-
-        $queryParts = [];
-        $link = parse_url($content[RestResponseInterface::RESPONSE_LINKS]['first']);
-        parse_str($link['query'], $queryParts);
-
-        $this->assertEquals(2, $queryParts['page']['limit']);
-        $this->assertEquals(0, $queryParts['page']['offset']);
-
-        $link = parse_url($content[RestResponseInterface::RESPONSE_LINKS]['last']);
-        parse_str($link['query'], $queryParts);
-
-        $this->assertEquals(2, $queryParts['page']['limit']);
-        $this->assertEquals(18, $queryParts['page']['offset']);
-
-        $link = parse_url($content[RestResponseInterface::RESPONSE_LINKS]['next']);
-        parse_str($link['query'], $queryParts);
-
-        $this->assertEquals(2, $queryParts['page']['limit']);
-        $this->assertEquals(2, $queryParts['page']['offset']);
-
-        $link = parse_url($content[RestResponseInterface::RESPONSE_LINKS]['prev']);
-        parse_str($link['query'], $queryParts);
-
-        $this->assertEquals(2, $queryParts['page']['limit']);
-        $this->assertEquals(0, $queryParts['page']['offset']);
+        $this->assertPaginationKeys($content);
+        $this->assertUri($content, 'first', 2, 0);
+        $this->assertUri($content, 'last', 2, 18);
+        $this->assertUri($content, 'next', 2, 2);
+        $this->assertUri($content, 'prev', 2, 0);
     }
 
     /**
@@ -289,5 +264,37 @@ class GlueControllerFilterPluginTest extends Unit
     protected function createGlueControllerListenerPlugin(): GlueControllerListenerPlugin
     {
         return new GlueControllerListenerPlugin();
+    }
+
+    /**
+     * @param array $content
+     *
+     * @return void
+     */
+    protected function assertPaginationKeys(array $content): void
+    {
+        $this->assertArrayHasKey(RestResponseInterface::RESPONSE_LINKS, $content);
+        $this->assertArrayHasKey('first', $content[RestResponseInterface::RESPONSE_LINKS]);
+        $this->assertArrayHasKey('last', $content[RestResponseInterface::RESPONSE_LINKS]);
+        $this->assertArrayHasKey('next', $content[RestResponseInterface::RESPONSE_LINKS]);
+        $this->assertArrayHasKey('prev', $content[RestResponseInterface::RESPONSE_LINKS]);
+    }
+
+    /**
+     * @param array $content
+     * @param string $field
+     * @param int $limit
+     * @param int $offset
+     *
+     * @return void
+     */
+    protected function assertUri(array $content, string $field, int $limit, int $offset): void
+    {
+        $queryParts = [];
+
+        $link = parse_url($content[RestResponseInterface::RESPONSE_LINKS][$field]);
+        parse_str($link['query'], $queryParts);
+        $this->assertEquals($limit, $queryParts['page']['limit']);
+        $this->assertEquals($offset, $queryParts['page']['offset']);
     }
 }
