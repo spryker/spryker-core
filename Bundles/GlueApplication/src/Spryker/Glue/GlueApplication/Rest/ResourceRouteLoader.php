@@ -7,8 +7,8 @@
 namespace Spryker\Glue\GlueApplication\Rest;
 
 use Generated\Shared\Transfer\RestVersionTransfer;
+use Spryker\Glue\GlueApplication\Rest\Collection\ResourceRouteCollection;
 use Spryker\Glue\GlueApplication\Rest\Version\VersionResolverInterface;
-use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollection;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceVersionableInterface;

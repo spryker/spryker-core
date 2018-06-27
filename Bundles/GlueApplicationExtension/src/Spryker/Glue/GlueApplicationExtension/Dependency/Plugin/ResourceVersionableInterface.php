@@ -13,7 +13,8 @@ interface ResourceVersionableInterface
     /**
      * @api
      *
-     * Provide rest version transfer for resource, is additional interface for ResourceRoutePluginInterface
+     * Specification:
+     *  - Provide rest version transfer for resource, is additional interface for ResourceRoutePluginInterface
      * The version will be used when deciding which resource to serve on client request.
      *
      * This must be used together with resource routing plugin

@@ -37,7 +37,7 @@ interface OauthFacadeInterface
 
     /**
      * Specification:
-     *  - Validates access JWT token agains siganture and token
+     *  - Validates access JWT token against signature and token
      *
      * @api
      *

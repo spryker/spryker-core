@@ -22,7 +22,7 @@ class ScopeRepository implements ScopeRepositoryInterface
     protected $oauthRepository;
 
     /**
-     * @var \Spryker\Zed\OauthExtension\Dependency\Plugin\ScopeProviderPluginInterface[]
+     * @var \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthScopeProviderPluginInterface[]
      */
     protected $scopeProviderPlugins;
 

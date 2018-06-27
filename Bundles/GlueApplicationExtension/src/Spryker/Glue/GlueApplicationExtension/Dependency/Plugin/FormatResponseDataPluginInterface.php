@@ -13,7 +13,8 @@ interface FormatResponseDataPluginInterface
     /**
      * @api
      *
-     * Format/edit response data as in http body, preparedResponseData is the array you need to modify.
+     * Specification:
+     *  - Format/edit response data as in http body, preparedResponseData is the array you need to modify.
      *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $request
      * @param array $preparedResponseData

@@ -4,8 +4,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\GlueApplicationExtension\Dependency\Plugin;
+namespace Spryker\Glue\GlueApplication\Rest\Collection;
 
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class ResourceRouteCollection implements ResourceRouteCollectionInterface

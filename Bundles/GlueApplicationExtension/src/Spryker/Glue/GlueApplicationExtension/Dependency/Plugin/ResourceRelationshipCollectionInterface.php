@@ -9,7 +9,8 @@ namespace Spryker\Glue\GlueApplicationExtension\Dependency\Plugin;
 interface ResourceRelationshipCollectionInterface
 {
     /**
-     * Add relation provider plugins, if any resourceType have relationships added which references the name provided here, this plugin will be called to populate data for that resourceType.
+     * Specification:
+     *  - Add relation provider plugins, if any resourceType have relationships added which references the name provided here, this plugin will be called to populate data for that resourceType.
      * The data will be added to included field as per JSONAPI specification
      *
      * e.g resource name = ("items", new CartItemsProductsResourceRelationship()). This relationship must add products to each cart item.

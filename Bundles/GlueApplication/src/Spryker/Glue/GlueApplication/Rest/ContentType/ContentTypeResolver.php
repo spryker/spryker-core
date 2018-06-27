@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ContentTypeResolver implements ContentTypeResolverInterface
 {
-    protected const CONTENT_TYPE_REGULAR_EXPRESION = '/application\/vnd.api\+([a-z]+)(?:;\s(?:version=([\d]+\.?[\d]+)))?/i';
+    protected const CONTENT_TYPE_REGULAR_EXPRESSION = '/application\/vnd.api\+([a-z]+)(?:;\s(?:version=([\d]+\.?[\d]+)))?/i';
     protected const RESPONSE_CONTENT_TYPE = 'application/vnd.api+%s';
 
     /**
@@ -24,7 +24,7 @@ class ContentTypeResolver implements ContentTypeResolverInterface
     public function matchContentType(string $contentType): array
     {
         $contentTypeParts = [];
-        preg_match(static::CONTENT_TYPE_REGULAR_EXPRESION, $contentType, $contentTypeParts);
+        preg_match(static::CONTENT_TYPE_REGULAR_EXPRESSION, $contentType, $contentTypeParts);
 
         return $contentTypeParts;
     }

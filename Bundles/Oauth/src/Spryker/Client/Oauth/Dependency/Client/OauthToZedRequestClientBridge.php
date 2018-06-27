@@ -31,7 +31,7 @@ class OauthToZedRequestClientBridge implements OauthToZedRequestClientInterface
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
-    public function call($url, TransferInterface $object, $requestOptions = null)
+    public function call($url, TransferInterface $object, $requestOptions = null): TransferInterface
     {
         return $this->zedRequestClient->call($url, $object, $requestOptions);
     }

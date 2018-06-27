@@ -13,7 +13,8 @@ interface ControllerBeforeActionPluginInterface
     /**
      * @api
      *
-     * Called before calling controller action
+     * Specification:
+     *  - Called before calling controller action
      *
      * @param string $action
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest

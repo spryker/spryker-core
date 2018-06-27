@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Oauth\Business\Model\League;
 
+use Generated\Shared\Transfer\OauthErrorTransfer;
 use Generated\Shared\Transfer\OauthRequestTransfer;
 use Generated\Shared\Transfer\OauthResponseTransfer;
 
@@ -33,7 +34,12 @@ class AccessGrantExecutor implements AccessGrantExecutorInterface
     public function executeByRequest(OauthRequestTransfer $oauthRequestTransfer): OauthResponseTransfer
     {
         if (!isset($this->grants[$oauthRequestTransfer->getGrantType()])) {
-            //create error
+            $oauthResponseTransfer = new OauthResponseTransfer();
+            $oauthErrorTransfer = new OauthErrorTransfer();
+            $oauthErrorTransfer->setMessage(sprintf('Grant type "%s" not found', $oauthRequestTransfer->getGrantType()));
+            $oauthResponseTransfer->setError($oauthErrorTransfer);
+
+            return $oauthResponseTransfer;
         }
 
         $grantType = $this->grants[$oauthRequestTransfer->getGrantType()];

@@ -75,7 +75,7 @@ class HttpRequestValidator implements HttpRequestValidatorInterface
             return $restErrorMessageTransfer;
         }
 
-        $restErrorMessageTransfer = $this->validateAccessControllRequestHeader($request);
+        $restErrorMessageTransfer = $this->validateAccessControlRequestHeader($request);
         if ($restErrorMessageTransfer) {
             return $restErrorMessageTransfer;
         }
@@ -88,7 +88,7 @@ class HttpRequestValidator implements HttpRequestValidatorInterface
 
         if (!isset($headerData[RequestConstantsInterface::HEADER_CONTENT_TYPE])) {
             return (new RestErrorMessageTransfer())
-                ->setDetail('Unsuported media type.')
+                ->setDetail('Unsupported media type.')
                 ->setStatus(Response::HTTP_UNSUPPORTED_MEDIA_TYPE);
         }
 
@@ -126,7 +126,7 @@ class HttpRequestValidator implements HttpRequestValidatorInterface
      *
      * @return \Generated\Shared\Transfer\RestErrorMessageTransfer|null
      */
-    protected function validateAccessControllRequestHeader(Request $request): ?RestErrorMessageTransfer
+    protected function validateAccessControlRequestHeader(Request $request): ?RestErrorMessageTransfer
     {
         $requestedHeaders = strtolower((string)$request->headers->get(RequestConstantsInterface::HEADER_ACCESS_CONTROL_REQUEST_HEADER));
         if (!$requestedHeaders) {

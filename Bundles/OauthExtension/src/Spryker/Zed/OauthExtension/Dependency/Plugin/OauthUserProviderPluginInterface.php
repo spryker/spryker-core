@@ -9,12 +9,13 @@ namespace Spryker\Zed\OauthExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\OauthUserTransfer;
 
-interface UserProviderPluginInterface
+interface OauthUserProviderPluginInterface
 {
     /**
      * @api
      *
-     * Returns oauth user based on data provided by authorizing client
+     * Specification:
+     *  - Returns oauth user based on data provided by authorizing client
      *
      * @param \Generated\Shared\Transfer\OauthUserTransfer $oauthUserTransfer
      *
@@ -25,7 +26,8 @@ interface UserProviderPluginInterface
     /**
      * @api
      *
-     * Method which should return if it can handle oauth client request
+     * Specification:
+     *  - Method which should return if it can handle oauth client request
      *
      * @param \Generated\Shared\Transfer\OauthUserTransfer $oauthUserTransfer
      *

@@ -14,7 +14,8 @@ interface ControllerAfterActionPluginInterface
     /**
      * @api
      *
-     * Called after controller action
+     * Specification:
+     *  - Called after controller action
      *
      * @param string $action
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest

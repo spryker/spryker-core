@@ -10,12 +10,16 @@ namespace Spryker\Shared\GlueApplication;
 interface GlueApplicationConstants
 {
     /**
+     * @api
+     *
      * Specification:
      *   The domain name used for glue application
      */
     public const GLUE_APPLICATION_DOMAIN = 'GLUE_APPLICATION_DOMAIN';
 
     /**
+     * @api
+     *
      *  Specification:
      *    Is rest debug is enabled, will show exception stack traces instead of 500 errors
      */

@@ -74,7 +74,7 @@ class RestResponse implements RestResponseInterface
      * @param string $name
      * @param string $uri
      *
-     * @return $this
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function addLink(string $name, string $uri): RestResponseInterface
     {
@@ -86,7 +86,7 @@ class RestResponse implements RestResponseInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $restResource
      *
-     * @return $this
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function addResource(RestResourceInterface $restResource): RestResponseInterface
     {
