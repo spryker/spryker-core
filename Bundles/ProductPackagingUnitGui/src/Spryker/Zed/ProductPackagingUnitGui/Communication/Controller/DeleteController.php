@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductPackagingUnitGui\Communication\Controller;
 
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
-use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\ProductPackagingUnitGui\ProductPackagingUnitGuiConfig;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,7 +35,7 @@ class DeleteController extends AbstractProductPackagingUnitGuiController
                 $productPackagingUnitTypeTransfer->getName()
             ));
 
-            return $this->redirectResponse($this->getSuccessRedirectUrl($request));
+            return $this->redirectResponse($this->getRequestRedirectUrl($request));
         }
 
         $this->addErrorMessage(sprintf(
@@ -44,21 +43,20 @@ class DeleteController extends AbstractProductPackagingUnitGuiController
             $productPackagingUnitTypeTransfer->getName()
         ));
 
-        return $this->redirectResponse($this->getErorrRedirectUrl($idProductPackagingUnitType));
+        return $this->redirectResponse($this->getErorrRedirectUrl($idProductPackagingUnitType, $request));
     }
 
     /**
      * @param int $idProductPackagingUnitType
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return string
      */
     protected function getErorrRedirectUrl(
-        int $idProductPackagingUnitType
+        int $idProductPackagingUnitType,
+        Request $request
     ): string {
-        return Url::generate(
-            ProductPackagingUnitGuiConfig::URL_PRODUCT_PACKAGING_UNIT_TYPE_EDIT,
-            [ ProductPackagingUnitGuiConfig::REQUEST_ID_PRODUCT_PACKAGING_UNIT_TYPE => $idProductPackagingUnitType]
-        )->build();
+        return $this->getRequestRedirectUrl($request, $this->getEditPageForId($idProductPackagingUnitType));
     }
 
     /**
