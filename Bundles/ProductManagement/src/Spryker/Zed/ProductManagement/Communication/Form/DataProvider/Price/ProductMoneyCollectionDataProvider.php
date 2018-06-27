@@ -10,9 +10,11 @@ namespace Spryker\Zed\ProductManagement\Communication\Form\DataProvider\Price;
 use ArrayObject;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
+use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToCurrencyInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceProductInterface;
 
@@ -61,7 +63,8 @@ class ProductMoneyCollectionDataProvider
                 }
             }
         }
-        return $productMoneyValueCollection;
+
+        return $this->mapProductMoneyValueCollection($productMoneyValueCollection);
     }
 
     /**
@@ -74,11 +77,36 @@ class ProductMoneyCollectionDataProvider
         $storeCurrencyCollection = $this->currencyFacade->getAllStoresWithCurrencies();
         $existingCurrencyMap = $this->createCurrencyIndexMap($currentFormMoneyValueCollection);
 
+        $currentFormMoneyValueCollection = $this->mapProductMoneyValueCollection($currentFormMoneyValueCollection);
+
         return $this->mergeMultiStoreMoneyCollection(
             $currentFormMoneyValueCollection,
             $storeCurrencyCollection,
             $existingCurrencyMap
         );
+    }
+
+    /**
+     * @param \ArrayObject $productMoneyValueCollection
+     *
+     * @return \ArrayObject
+     */
+    protected function mapProductMoneyValueCollection(ArrayObject $productMoneyValueCollection)
+    {
+        $mappedProductMoneyValueCollection = new ArrayObject();
+
+        foreach ($productMoneyValueCollection as $priceProductTransfer) {
+            $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
+            $identifier = $this->buildItemIdentifier(
+                $moneyValueTransfer->getFkStore(),
+                $priceProductTransfer->getPriceType(),
+                $moneyValueTransfer->getCurrency()
+            );
+
+            $mappedProductMoneyValueCollection[$identifier] = $priceProductTransfer;
+        }
+
+        return $mappedProductMoneyValueCollection;
     }
 
     /**
@@ -140,10 +168,14 @@ class ProductMoneyCollectionDataProvider
             ->setFkCurrency($currencyTransfer->getIdCurrency())
             ->setFkStore($storeTransfer->getIdStore());
 
+        $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
+            ->setType(ProductManagementConstants::PRICE_DIMENSION_DEFAULT);
+
         return (new PriceProductTransfer())
             ->setMoneyValue($moneyValueTransfer)
             ->setFkPriceType($priceTypeTransfer->getIdPriceType())
-            ->setPriceType($priceTypeTransfer);
+            ->setPriceType($priceTypeTransfer)
+            ->setPriceDimension($priceProductDimensionTransfer);
     }
 
     /**

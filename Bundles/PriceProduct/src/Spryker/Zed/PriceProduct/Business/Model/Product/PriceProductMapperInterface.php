@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\PriceProduct\Business\Model\Product;
 
-use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
-use Generated\Shared\Transfer\PriceProductTransfer;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProduct;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore;
 
@@ -33,24 +31,11 @@ interface PriceProductMapperInterface
     public function getNetPriceModeIdentifier();
 
     /**
-     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore $priceProductStoreEntity
-     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer
-     */
-    public function mapPriceProductStoreEntityToTransfer(
-        SpyPriceProductStore $priceProductStoreEntity,
-        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-    ): PriceProductTransfer;
-
-    /**
      * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore[] $priceProductStoreEntities
-     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function mapPriceProductStoreEntitiesToPriceProductTransfers(
-        $priceProductStoreEntities,
-        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+        $priceProductStoreEntities
     ): array;
 }

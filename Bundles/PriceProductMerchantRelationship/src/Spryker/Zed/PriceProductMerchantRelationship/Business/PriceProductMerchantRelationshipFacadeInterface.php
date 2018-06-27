@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationship\Business;
 
+use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 
 /**
@@ -49,4 +50,16 @@ interface PriceProductMerchantRelationshipFacadeInterface
      * @return void
      */
     public function deleteAllPriceProductMerchantRelationship(): void;
+
+    /**
+     * Specification:
+     *  - Adds specific dimension type to the PriceProductDimensionTransfer
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductDimensionTransfer $priceProductDimensionTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductDimensionTransfer
+     */
+    public function expandPriceProductDimension(PriceProductDimensionTransfer $priceProductDimensionTransfer): PriceProductDimensionTransfer;
 }

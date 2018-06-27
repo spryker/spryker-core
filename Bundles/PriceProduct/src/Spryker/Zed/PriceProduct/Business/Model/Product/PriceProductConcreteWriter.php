@@ -95,28 +95,41 @@ class PriceProductConcreteWriter extends BaseProductPriceWriter implements Price
     protected function executePersistProductConcretePriceCollectionTransaction(
         ProductConcreteTransfer $productConcreteTransfer
     ): ProductConcreteTransfer {
-        $idProductConcrete = $productConcreteTransfer
-            ->requireIdProductConcrete()
-            ->getIdProductConcrete();
-
         foreach ($productConcreteTransfer->getPrices() as $priceProductTransfer) {
-            $priceProductTransfer->requirePriceDimension();
-
             $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
             if ($this->isEmptyMoneyValue($moneyValueTransfer)) {
                 continue;
             }
 
-            $this->persistProductConcretePriceEntity($priceProductTransfer, $idProductConcrete);
-
-            $priceProductTransfer->setIdProduct($idProductConcrete);
-            $priceProductTransfer = $this->executePriceDimensionConcreteSaverPlugins($priceProductTransfer);
-
-            $priceProductTransfer->setIdProductAbstract($productConcreteTransfer->getFkProductAbstract());
-            $priceProductTransfer->setIdProduct($productConcreteTransfer->getIdProductConcrete());
+            $this->executePersistProductConcretePrice($productConcreteTransfer, $priceProductTransfer);
         }
 
         return $productConcreteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function executePersistProductConcretePrice(
+        ProductConcreteTransfer $productConcreteTransfer,
+        PriceProductTransfer $priceProductTransfer
+    ): PriceProductTransfer {
+        $idProductConcrete = $productConcreteTransfer
+            ->requireIdProductConcrete()
+            ->getIdProductConcrete();
+
+        $priceProductTransfer->requirePriceDimension();
+
+        $this->persistProductConcretePriceEntity($priceProductTransfer, $idProductConcrete);
+
+        $priceProductTransfer->setIdProduct($idProductConcrete);
+        $priceProductTransfer->setIdProductAbstract($productConcreteTransfer->getFkProductAbstract());
+        $priceProductTransfer = $this->executePriceDimensionConcreteSaverPlugins($priceProductTransfer);
+
+        return $priceProductTransfer;
     }
 
     /**
