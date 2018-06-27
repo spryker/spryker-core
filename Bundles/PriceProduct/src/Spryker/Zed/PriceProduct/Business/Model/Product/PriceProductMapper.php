@@ -53,21 +53,29 @@ class PriceProductMapper implements PriceProductMapperInterface
     protected $config;
 
     /**
+     * @var \Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductDimensionTypeStrategyPluginInterface[]
+     */
+    protected $priceProductDimensionTypeStrategyPlugins;
+
+    /**
      * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyFacadeInterface $currencyFacade
      * @param \Spryker\Zed\PriceProduct\Business\Model\PriceType\ProductPriceTypeMapperInterface $priceProductTypeMapper
      * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceFacadeInterface $priceFacade
      * @param \Spryker\Zed\PriceProduct\PriceProductConfig $config
+     * @param \Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductDimensionTypeStrategyPluginInterface[] $priceProductDimensionTypeStrategyPlugins
      */
     public function __construct(
         PriceProductToCurrencyFacadeInterface $currencyFacade,
         ProductPriceTypeMapperInterface $priceProductTypeMapper,
         PriceProductToPriceFacadeInterface $priceFacade,
-        PriceProductConfig $config
+        PriceProductConfig $config,
+        array $priceProductDimensionTypeStrategyPlugins
     ) {
         $this->currencyFacade = $currencyFacade;
         $this->priceProductTypeMapper = $priceProductTypeMapper;
         $this->priceFacade = $priceFacade;
         $this->config = $config;
+        $this->priceProductDimensionTypeStrategyPlugins = $priceProductDimensionTypeStrategyPlugins;
     }
 
     /**
@@ -137,19 +145,16 @@ class PriceProductMapper implements PriceProductMapperInterface
 
     /**
      * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore[] $priceProductStoreEntities
-     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function mapPriceProductStoreEntitiesToPriceProductTransfers(
-        $priceProductStoreEntities,
-        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+        $priceProductStoreEntities
     ): array {
         $productPriceCollection = [];
         foreach ($priceProductStoreEntities as $priceProductStoreEntity) {
             $productPriceCollection[] = $this->mapPriceProductStoreEntityToTransfer(
-                $priceProductStoreEntity,
-                $priceProductCriteriaTransfer
+                $priceProductStoreEntity
             );
         }
 
@@ -158,13 +163,11 @@ class PriceProductMapper implements PriceProductMapperInterface
 
     /**
      * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore $priceProductStoreEntity
-     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
-    public function mapPriceProductStoreEntityToTransfer(
-        SpyPriceProductStore $priceProductStoreEntity,
-        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+    protected function mapPriceProductStoreEntityToTransfer(
+        SpyPriceProductStore $priceProductStoreEntity
     ): PriceProductTransfer {
 
         $priceProductEntity = $priceProductStoreEntity->getPriceProduct();
@@ -198,10 +201,34 @@ class PriceProductMapper implements PriceProductMapperInterface
         SpyPriceProductStore $priceProductStoreEntity
     ): PriceProductDimensionTransfer {
 
-        return (new PriceProductDimensionTransfer())
+        $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
             ->fromArray(
                 $priceProductStoreEntity->getVirtualColumns(),
                 true
-            )->setType(PriceProductConstants::PRICE_DIMENSION_DEFAULT);
+            );
+
+        $priceProductDimensionTransfer = $this->setPriceProductDimensionType($priceProductDimensionTransfer);
+
+        return $priceProductDimensionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductDimensionTransfer $priceProductDimensionTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductDimensionTransfer
+     */
+    protected function setPriceProductDimensionType(PriceProductDimensionTransfer $priceProductDimensionTransfer)
+    {
+        foreach ($this->priceProductDimensionTypeStrategyPlugins as $priceProductDimensionTypeStrategyPlugin) {
+            if ($priceProductDimensionTypeStrategyPlugin->isApplicable($priceProductDimensionTransfer)) {
+                $priceProductDimensionTransfer->setType($priceProductDimensionTypeStrategyPlugin->getType());
+
+                return $priceProductDimensionTransfer;
+            }
+        }
+
+        $priceProductDimensionTransfer->setType(PriceProductConstants::PRICE_DIMENSION_DEFAULT);
+
+        return $priceProductDimensionTransfer;
     }
 }

@@ -33,24 +33,11 @@ interface PriceProductMapperInterface
     public function getNetPriceModeIdentifier();
 
     /**
-     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore $priceProductStoreEntity
-     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer
-     */
-    public function mapPriceProductStoreEntityToTransfer(
-        SpyPriceProductStore $priceProductStoreEntity,
-        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-    ): PriceProductTransfer;
-
-    /**
      * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore[] $priceProductStoreEntities
-     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function mapPriceProductStoreEntitiesToPriceProductTransfers(
-        $priceProductStoreEntities,
-        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+        $priceProductStoreEntities
     ): array;
 }

@@ -116,8 +116,7 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
             ->findProductAbstractPricesBySkuAndCriteria($abstractSku, $priceProductCriteriaTransfer);
 
         return $this->priceProductMapper->mapPriceProductStoreEntitiesToPriceProductTransfers(
-            $priceProductStoreEntities,
-            $priceProductCriteriaTransfer
+            $priceProductStoreEntities
         );
     }
 
@@ -148,8 +147,7 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
             ->findProductAbstractPricesBySkuAndCriteria($sku, $priceProductCriteriaTransfer);
 
         $priceProductTransfers = $this->priceProductMapper->mapPriceProductStoreEntitiesToPriceProductTransfers(
-            $priceProductStoreEntities,
-            $priceProductCriteriaTransfer
+            $priceProductStoreEntities
         );
 
         return $this->priceProductService->resolveProductPriceByPriceProductCriteria($priceProductTransfers, $priceProductCriteriaTransfer);
@@ -170,7 +168,7 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
         $priceProductEntities = $this->priceProductRepository
             ->findProductAbstractPricesByIdAndCriteria($idProductAbstract, $priceProductCriteriaTransfer);
 
-        return $this->priceProductMapper->mapPriceProductStoreEntitiesToPriceProductTransfers($priceProductEntities, $priceProductCriteriaTransfer);
+        return $this->priceProductMapper->mapPriceProductStoreEntitiesToPriceProductTransfers($priceProductEntities);
     }
 
     /**

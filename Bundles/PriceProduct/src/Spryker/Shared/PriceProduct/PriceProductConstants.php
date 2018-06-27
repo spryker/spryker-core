@@ -20,7 +20,7 @@ interface PriceProductConstants
     public const PRICE_GROSS_MODE = 'GROSS_MODE';
 
     /**
-     * @uses \Spryker\Shared\PriceProduct\PriceProductConstants::PRICE_DIMENSION_DEFAULT
+     * @uses \Spryker\Shared\PriceProductStorage\PriceProductStorageConstants::PRICE_DIMENSION_DEFAULT
      */
     public const PRICE_DIMENSION_DEFAULT = 'PRICE_DIMENSION_DEFAULT';
 }

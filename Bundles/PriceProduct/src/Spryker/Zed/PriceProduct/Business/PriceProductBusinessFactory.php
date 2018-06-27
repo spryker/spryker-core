@@ -132,7 +132,8 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->getCurrencyFacade(),
             $this->createPriceTypeMapper(),
             $this->getPriceFacade(),
-            $this->getConfig()
+            $this->getConfig(),
+            $this->getPriceProductDimensionTypeStrategyPlugins()
         );
     }
 
@@ -337,5 +338,13 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     public function getPriceDimensionConcreteSaverPlugins(): array
     {
         return $this->getProvidedDependency(PriceProductDependencyProvider::PLUGIN_PRICE_DIMENSION_CONCRETE_SAVER);
+    }
+
+    /**
+     * @return \Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductDimensionTypeStrategyPluginInterface[]
+     */
+    public function getPriceProductDimensionTypeStrategyPlugins(): array
+    {
+        return $this->getProvidedDependency(PriceProductDependencyProvider::PLUGIN_PRICE_PRODUCT_DIMENSION_TRANSFER_EXPANDER);
     }
 }

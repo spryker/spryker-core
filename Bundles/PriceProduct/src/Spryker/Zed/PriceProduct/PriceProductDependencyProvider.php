@@ -29,6 +29,7 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGIN_PRICE_DIMENSION_QUERY_CRITERIA = 'PLUGIN_PRICE_DIMENSION_QUERY_CRITERIA';
     public const PLUGIN_PRICE_DIMENSION_ABSTRACT_SAVER = 'PLUGIN_PRICE_DIMENSION_ABSTRACT_SAVER';
     public const PLUGIN_PRICE_DIMENSION_CONCRETE_SAVER = 'PLUGIN_PRICE_DIMENSION_CONCRETE_SAVER';
+    public const PLUGIN_PRICE_PRODUCT_DIMENSION_TRANSFER_EXPANDER = 'PLUGIN_PRICE_PRODUCT_DIMENSION_TRANSFER_EXPANDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -45,6 +46,7 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addPriceProductService($container);
         $container = $this->addPriceDimensionAbstractSaverPlugins($container);
         $container = $this->addPriceDimensionConcreteSaverPlugins($container);
+        $container = $this->addPriceProductDimensionTypeStrategyPlugins($container);
 
         return $container;
     }
@@ -174,6 +176,20 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPriceProductDimensionTypeStrategyPlugins(Container $container): Container
+    {
+        $container[static::PLUGIN_PRICE_PRODUCT_DIMENSION_TRANSFER_EXPANDER] = function (Container $container) {
+            return $this->getPriceProductDimensionTypeStrategyPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
      * The plugins in this stack will provide additional criteria to main price product query.
      *
      * @return \Spryker\Zed\PriceProduct\Dependency\Plugin\PriceDimensionQueryCriteriaPluginInterface[]
@@ -201,6 +217,14 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\PriceProduct\Dependency\Plugin\PriceDimensionConcreteSaverPluginInterface[]
      */
     protected function getPriceDimensionConcreteSaverPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductDimensionTypeStrategyPluginInterface[]
+     */
+    protected function getPriceProductDimensionTypeStrategyPlugins(): array
     {
         return [];
     }
