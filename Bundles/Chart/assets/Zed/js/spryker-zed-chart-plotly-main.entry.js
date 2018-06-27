@@ -7,4 +7,4 @@
 
 var Plotly = require('plotly.js');
 
-window.Plotly = Plotly;
+window.ChartPlotly = Plotly;
