@@ -189,7 +189,7 @@ class CarrierForm extends AbstractType
             ->queryCarriers()
             ->filterByGlossaryKeyName($glossaryKeyName);
 
-        if ($idCarrier) {
+        if ($idCarrier !== null) {
             $shipmentCarrierQuery->filterByIdShipmentCarrier($idCarrier, Criteria::NOT_EQUAL);
         }
 
