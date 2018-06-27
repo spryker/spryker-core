@@ -23,6 +23,7 @@ class VoucherController extends AbstractController
     const URL_PARAM_ID_POOL = 'id-pool';
     const URL_PARAM_ID_DISCOUNT = 'id-discount';
     const URL_PARAM_ID_VOUCHER = 'id-voucher';
+    public const URL_PARAM_DELETE_REDIRECT_URL = 'delete-redirect-url';
     const CSV_FILENAME = 'vouchers.csv';
 
     /**
@@ -77,7 +78,7 @@ class VoucherController extends AbstractController
         }
 
         return new RedirectResponse(
-            $this->createViewDiscountRedirectUrl($idDiscount)
+            $this->createCodeDeleteRedirectUrl($request)
         );
     }
 
@@ -135,6 +136,9 @@ class VoucherController extends AbstractController
             '/discount/index/edit',
             [
                 self::URL_PARAM_ID_DISCOUNT => $idDiscount,
+            ],
+            [
+                Url::FRAGMENT => 'tab-content-voucher',
             ]
         )->build();
 
@@ -153,5 +157,20 @@ class VoucherController extends AbstractController
         ])->build();
 
         return $redirectUrl;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return string
+     */
+    protected function createCodeDeleteRedirectUrl(Request $request)
+    {
+        $redirectUrl = $request->get(static::URL_PARAM_DELETE_REDIRECT_URL);
+        if ($redirectUrl) {
+            return urldecode($redirectUrl);
+        }
+
+        return $this->createEditDiscountRedirectUrl($this->castId($request->get(static::URL_PARAM_ID_DISCOUNT)));
     }
 }

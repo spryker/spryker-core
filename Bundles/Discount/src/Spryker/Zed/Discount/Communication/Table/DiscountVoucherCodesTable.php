@@ -45,24 +45,32 @@ class DiscountVoucherCodesTable extends AbstractTable
     protected $idDiscount;
 
     /**
+     * @var string $deleteRedirectUrl
+     */
+    protected $deleteRedirectUrl;
+
+    /**
      * @param \Generated\Shared\Transfer\DataTablesTransfer $dataTablesTransfer
      * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainer
      * @param int $idPool
      * @param int $idDiscount
      * @param int|null $batchValue
+     * @param string|null $deleteRedirectUrl
      */
     public function __construct(
         DataTablesTransfer $dataTablesTransfer,
         DiscountQueryContainerInterface $discountQueryContainer,
         $idPool,
         $idDiscount,
-        $batchValue = null
+        $batchValue = null,
+        $deleteRedirectUrl = null
     ) {
         $this->dataTablesTransfer = $dataTablesTransfer;
         $this->discountQueryContainer = $discountQueryContainer;
         $this->idPool = $idPool;
         $this->idDiscount = $idDiscount;
         $this->batchValue = $batchValue;
+        $this->deleteRedirectUrl = $deleteRedirectUrl;
     }
 
     /**
@@ -78,6 +86,7 @@ class DiscountVoucherCodesTable extends AbstractTable
                 'id-pool' => $this->idPool,
                 'id-discount' => $this->idDiscount,
                 'batch' => $this->batchValue,
+                'voucher-delete-redirect-url' => $this->deleteRedirectUrl,
             ]
         );
 
@@ -165,6 +174,7 @@ class DiscountVoucherCodesTable extends AbstractTable
             [
                 'id-discount' => $this->idDiscount,
                 'id-voucher' => $discountVoucherEntity->getIdDiscountVoucher(),
+                'delete-redirect-url' => $this->deleteRedirectUrl,
             ]
         )->build();
 

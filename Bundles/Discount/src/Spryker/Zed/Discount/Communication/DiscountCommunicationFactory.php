@@ -112,17 +112,19 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
      * @param int $idPool
      * @param int $idDiscount
      * @param int $batchValue
+     * @param string $deleteRedirectUrl
      *
      * @return \Spryker\Zed\Discount\Communication\Table\DiscountVoucherCodesTable
      */
-    public function createDiscountVoucherCodesTable(DataTablesTransfer $dataTablesTransfer, $idPool, $idDiscount, $batchValue)
+    public function createDiscountVoucherCodesTable(DataTablesTransfer $dataTablesTransfer, $idPool, $idDiscount, $batchValue, $deleteRedirectUrl)
     {
         return new DiscountVoucherCodesTable(
             $dataTablesTransfer,
             $this->getQueryContainer(),
             $idPool,
             $idDiscount,
-            $batchValue
+            $batchValue,
+            $deleteRedirectUrl
         );
     }
 
