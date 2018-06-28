@@ -68,8 +68,8 @@ class CompanyBusinessUnitTable extends AbstractTable
         $config->setHeader([
             static::COL_ID_COMPANY_BUSINESS_UNIT => 'Id',
             static::COL_COMPANY_NAME => 'Company name',
-            static::COL_NAME => 'BU Name',
             static::COL_PARENT_NAME => 'BU Parent',
+            static::COL_NAME => 'BU Name',
             static::COL_ADDRESS => 'Address',
             static::COL_IBAN => 'IBAN',
             static::COL_BIC => 'BIC',
