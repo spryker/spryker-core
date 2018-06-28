@@ -224,4 +224,20 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
             ->createProductPackagingUnitCartPreCheck()
             ->checkCartAvailability($cartChangeTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $sku
+     *
+     * @return void
+     */
+    public function updateProductPackagingUnitLeadProductAvailability(string $sku): void
+    {
+        $this->getFactory()
+            ->createProductPackagingUnitAvailabilityHandler()
+            ->updateProductPackagingUnitLeadProductAvailability($sku);
+    }
 }

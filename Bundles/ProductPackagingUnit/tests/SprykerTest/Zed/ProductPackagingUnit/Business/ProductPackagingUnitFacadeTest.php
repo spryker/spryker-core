@@ -273,6 +273,42 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
     }
 
     /**
+     * @return void
+     */
+    public function testUpdateProductPackagingUnitLeadProductAvailability(): void
+    {
+        $itemProductConcreteTransfer = $this->tester->haveProduct();
+        $boxProductConcreteTransfer = $this->tester->haveProduct([
+            SpyProductEntityTransfer::FK_PRODUCT_ABSTRACT => $itemProductConcreteTransfer->getFkProductAbstract(),
+        ], [
+            SpyProductAbstractEntityTransfer::ID_PRODUCT_ABSTRACT => $itemProductConcreteTransfer->getFkProductAbstract(),
+        ]);
+
+        $this->tester->haveProductPackagingLeadProduct([
+            SpyProductPackagingLeadProductEntityTransfer::FK_PRODUCT => $itemProductConcreteTransfer->getIdProductConcrete(),
+            SpyProductPackagingLeadProductEntityTransfer::FK_PRODUCT_ABSTRACT => $itemProductConcreteTransfer->getFkProductAbstract(),
+        ]);
+
+        $boxProductPackagingUnitType = $this->tester->haveProductPackagingUnitType([SpyProductPackagingUnitTypeEntityTransfer::NAME => static::PACKAGING_TYPE]);
+        $itemProductPackagingUnitType = $this->tester->haveProductPackagingUnitType([SpyProductPackagingUnitTypeEntityTransfer::NAME => static::PACKAGING_TYPE_DEFAULT]);
+
+        $itemProductPackagingUnit = $this->tester->haveProductPackagingUnit([
+            SpyProductPackagingUnitEntityTransfer::FK_PRODUCT => $itemProductConcreteTransfer->getIdProductConcrete(),
+            SpyProductPackagingUnitEntityTransfer::FK_PRODUCT_PACKAGING_UNIT_TYPE => $itemProductPackagingUnitType->getIdProductPackagingUnitType(),
+        ]);
+
+        $boxProductPackagingUnit = $this->tester->haveProductPackagingUnit([
+            SpyProductPackagingUnitEntityTransfer::FK_PRODUCT => $boxProductConcreteTransfer->getIdProductConcrete(),
+            SpyProductPackagingUnitEntityTransfer::FK_PRODUCT_PACKAGING_UNIT_TYPE => $boxProductPackagingUnitType->getIdProductPackagingUnitType(),
+            SpyProductPackagingUnitEntityTransfer::HAS_LEAD_PRODUCT => true,
+        ], [
+            SpyProductPackagingUnitAmountEntityTransfer::DEFAULT_AMOUNT => static::PACKAGE_AMOUNT,
+        ]);
+
+        $this->getFacade()->updateProductPackagingUnitLeadProductAvailability($boxProductConcreteTransfer->getSku());
+    }
+
+    /**
      * @return \Spryker\Zed\ProductPackagingUnit\Business\ProductPackagingUnitFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade
      */
     protected function getFacade()

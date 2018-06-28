@@ -27,4 +27,13 @@ interface ProductPackagingUnitToAvailabilityFacadeInterface
      * @return bool
      */
     public function isProductSellableForStore(string $sku, int $quantity, StoreTransfer $storeTransfer): bool;
+
+    /**
+     * @param string $sku
+     * @param int $quantity
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return int
+     */
+    public function saveProductAvailabilityForStore(string $sku, int $quantity, StoreTransfer $storeTransfer): int;
 }

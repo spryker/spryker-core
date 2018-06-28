@@ -181,4 +181,16 @@ interface ProductPackagingUnitFacadeInterface
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
     public function preCheckCartAvailability(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Updates the availability of the lead product of a given ProductPackagingUnit.
+     *
+     * @api
+     *
+     * @param string $sku
+     *
+     * @return void
+     */
+    public function updateProductPackagingUnitLeadProductAvailability(string $sku): void;
 }
