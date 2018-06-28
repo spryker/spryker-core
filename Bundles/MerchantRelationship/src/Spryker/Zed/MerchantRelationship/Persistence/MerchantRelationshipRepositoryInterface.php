@@ -16,8 +16,6 @@ interface MerchantRelationshipRepositoryInterface
      * - Returns a MerchantRelationshipTransfer by merchant relationship id.
      * - Returns null in case a record is not found.
      *
-     * @api
-     *
      * @param int $idMerchantRelationship
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer|null
@@ -38,11 +36,11 @@ interface MerchantRelationshipRepositoryInterface
      * Specification:
      * - Returns collection of MerchantRelationshipTransfer where business unit is assigned to.
      *
-     * @param int $idBusinessUnit
+     * @param int $idCompanyBusinessUnit
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
      */
-    public function getMerchantRelationshipCollectionByIdAssignedBusinessUnit(int $idBusinessUnit): array;
+    public function getAssignedMerchantRelationshipsByIdCompanyBusinessUnit(int $idCompanyBusinessUnit): array;
 
     /**
      * @param string $candidate

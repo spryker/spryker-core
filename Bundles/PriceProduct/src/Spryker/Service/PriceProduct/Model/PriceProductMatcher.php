@@ -13,7 +13,10 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 
 class PriceProductMatcher implements PriceProductMatcherInterface
 {
-    protected const PRICE_NET_MODE = 'NET_MODE';
+    /**
+     * @uses \Spryker\Shared\Price\PriceConfig::PRICE_MODE_NET
+     */
+    protected const PRICE_MODE_NET = 'NET_MODE';
 
     /**
      * @var \Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductDecisionPluginInterface[]

@@ -39,7 +39,7 @@ class ProductPriceResolver implements ProductPriceResolverInterface
     protected $priceProductConfig;
 
     /**
-     * @var \Spryker\Client\PriceProduct\PriceProductConfig
+     * @var \Spryker\Client\PriceProduct\Dependency\Client\PriceProductToQuoteClientInterface
      */
     protected $quoteClient;
 

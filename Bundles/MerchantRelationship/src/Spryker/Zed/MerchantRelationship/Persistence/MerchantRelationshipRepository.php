@@ -22,11 +22,7 @@ class MerchantRelationshipRepository extends AbstractRepository implements Merch
     /**
      * {@inheritdoc}
      *
-     * @api
-     *
      * @param int $idMerchantRelationship
-     *
-     * @throws \Spryker\Zed\MerchantRelationship\Business\Exception\MerchantRelationshipNotFoundException
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer|null
      */
@@ -49,8 +45,6 @@ class MerchantRelationshipRepository extends AbstractRepository implements Merch
     /**
      * {@inheritdoc}
      *
-     * @api
-     *
      * @param int $idMerchantRelationship
      *
      * @return int[]
@@ -68,8 +62,6 @@ class MerchantRelationshipRepository extends AbstractRepository implements Merch
     /**
      * {@inheritdoc}
      *
-     * @api
-     *
      * @param string $candidate
      *
      * @return bool
@@ -84,8 +76,6 @@ class MerchantRelationshipRepository extends AbstractRepository implements Merch
 
     /**
      * {@inheritdoc}
-     *
-     * @api
      *
      * @return int
      */
@@ -106,18 +96,16 @@ class MerchantRelationshipRepository extends AbstractRepository implements Merch
     /**
      * {@inheritdoc}
      *
-     * @api
-     *
-     * @param int $idBusinessUnit
+     * @param int $idCompanyBusinessUnit
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
      */
-    public function getMerchantRelationshipCollectionByIdAssignedBusinessUnit(int $idBusinessUnit): array
+    public function getAssignedMerchantRelationshipsByIdCompanyBusinessUnit(int $idCompanyBusinessUnit): array
     {
         $merchantRelationshipEntities = $this->getFactory()
             ->createMerchantRelationshipQuery()
             ->useSpyMerchantRelationshipToCompanyBusinessUnitQuery()
-                ->filterByFkCompanyBusinessUnit($idBusinessUnit)
+                ->filterByFkCompanyBusinessUnit($idCompanyBusinessUnit)
             ->endUse()
             ->find();
         if ($merchantRelationshipEntities->isEmpty()) {

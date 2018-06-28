@@ -19,7 +19,7 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
     protected $priceProductMerchantRelationshipStorageEntityManager;
 
     /**
-     * @var \Spryker\Zed\PriceProductMerchantRelationship\Persistence\PriceProductMerchantRelationshipRepositoryInterface
+     * @var \Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProductMerchantRelationshipStorageRepositoryInterface
      */
     protected $priceProductMerchantRelationshipStorageRepository;
 

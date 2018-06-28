@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\MerchantRelationship\Communication\Plugin\CompanyUser;
 
-use ArrayObject;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserHydrationPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -15,6 +14,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\MerchantRelationship\Persistence\MerchantRelationshipRepositoryInterface getRepository()
  * @method \Spryker\Zed\MerchantRelationship\Business\MerchantRelationshipFacadeInterface getFacade()
+ * @method \Spryker\Zed\MerchantRelationship\Communication\MerchantRelationshipCommunicationFactory getFactory()
  */
 class MerchantRelationshipHydratePlugin extends AbstractPlugin implements CompanyUserHydrationPluginInterface
 {
@@ -27,15 +27,8 @@ class MerchantRelationshipHydratePlugin extends AbstractPlugin implements Compan
      */
     public function hydrate(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer
     {
-        if ($companyUserTransfer->getCompanyBusinessUnit() !== null) {
-            $merchantRelationships = $this->getRepository()->getMerchantRelationshipCollectionByIdAssignedBusinessUnit(
-                $companyUserTransfer->getFkCompanyBusinessUnit()
-            );
-
-            $companyUserTransfer->getCompanyBusinessUnit()
-                ->setMerchantRelationships(new ArrayObject($merchantRelationships));
-        }
-
-        return $companyUserTransfer;
+        return $this->getFactory()
+            ->createMerchantRelationshipHydrator()
+            ->hydrate($companyUserTransfer);
     }
 }

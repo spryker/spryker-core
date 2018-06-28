@@ -79,6 +79,8 @@ class PriceProductMerchantRelationshipStorageDimensionPlugin extends AbstractPlu
      */
     public function getDimensionName(): string
     {
-        return $this->getFactory()->getBundleConfig()->getPriceDimensionMerchantRelationship();
+        return $this->getFactory()
+            ->getPriceProductMerchantRelationshipStorageConfig()
+            ->getPriceDimensionMerchantRelationship();
     }
 }
