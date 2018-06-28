@@ -7,10 +7,7 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Communication\Plugin\Event\Listener;
 
-use Orm\Zed\MerchantRelationship\Persistence\Map\SpyMerchantRelationshipToCompanyBusinessUnitTableMap;
-use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipToCompanyBusinessUnitQuery;
 use Orm\Zed\PriceProductMerchantRelationship\Persistence\Map\SpyPriceProductMerchantRelationshipTableMap;
-use Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationshipQuery;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -57,8 +54,8 @@ class PriceProductMerchantRelationshipConcreteListener extends AbstractPlugin im
                 }
                 $idMerchantRelationship = $foreignKeys[SpyPriceProductMerchantRelationshipTableMap::COL_FK_MERCHANT_RELATIONSHIP];
             } else {
-                $priceProductMerchantRelationship = SpyPriceProductMerchantRelationshipQuery::create()
-                    ->findOneByIdPriceProductMerchantRelationship($eventTransfer->getId());
+                $priceProductMerchantRelationship = $this->getRepository()
+                    ->findPriceProductMerchantRelationship($eventTransfer->getId());
 
                 if (!$priceProductMerchantRelationship || !$priceProductMerchantRelationship->getFkProduct()) {
                     continue;
@@ -67,15 +64,10 @@ class PriceProductMerchantRelationshipConcreteListener extends AbstractPlugin im
                 $idProduct = $priceProductMerchantRelationship->getFkProduct();
                 $idMerchantRelationship = $priceProductMerchantRelationship->getFkMerchantRelationship();
             }
-            $businessUnitIds = SpyMerchantRelationshipToCompanyBusinessUnitQuery::create()
-                ->select([
-                    SpyMerchantRelationshipToCompanyBusinessUnitTableMap::COL_FK_COMPANY_BUSINESS_UNIT,
-                ])
-                ->filterByFkMerchantRelationship($idMerchantRelationship)
-                ->find()
-                ->toArray();
+            $companyBusinessUnitIds = $this->getRepository()
+                ->findCompanyBusinessUnitIdsByMerchantRelationship($idMerchantRelationship);
 
-            foreach ($businessUnitIds as $businessUnitId) {
+            foreach ($companyBusinessUnitIds as $businessUnitId) {
                 $businessUnitProducts[$businessUnitId][$idProduct] = $idProduct;
             }
         }

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence;
 
+use Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationship;
+
 /**
  * @method \Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProductMerchantRelationshipStoragePersistenceFactory getFactory()
  */
@@ -53,4 +55,18 @@ interface PriceProductMerchantRelationshipStorageRepositoryInterface
      * @return \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorage[]
      */
     public function findExistingPriceProductAbstractMerchantRelationshipStorageEntities(array $concreteProducts): array;
+
+    /**
+     * @param int $idMerchantRelationship
+     *
+     * @return array
+     */
+    public function findCompanyBusinessUnitIdsByMerchantRelationship(int $idMerchantRelationship): array;
+
+    /**
+     * @param int $idPriceProductMerchantRelationship
+     *
+     * @return \Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationship
+     */
+    public function findPriceProductMerchantRelationship(int $idPriceProductMerchantRelationship): SpyPriceProductMerchantRelationship;
 }
