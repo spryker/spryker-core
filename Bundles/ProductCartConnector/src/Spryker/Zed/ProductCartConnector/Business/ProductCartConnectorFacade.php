@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductCartConnector\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -50,5 +51,21 @@ class ProductCartConnectorFacade extends AbstractFacade implements ProductCartCo
         return $this->getFactory()
             ->createProductValidator()
             ->validateItems($cartChangeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function filterInactiveItems(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $this->getFactory()
+            ->createInactiveItemsFilter()
+            ->filterInactiveItems($quoteTransfer);
     }
 }

@@ -17,6 +17,17 @@ class CompanyBusinessUnitEditForm extends CompanyBusinessUnitForm
 {
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $choices
+     *
+     * @return \Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyBusinessUnitForm
+     */
+    protected function addCompanyField(FormBuilderInterface $builder, array $choices): CompanyBusinessUnitForm
+    {
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return $this
      */

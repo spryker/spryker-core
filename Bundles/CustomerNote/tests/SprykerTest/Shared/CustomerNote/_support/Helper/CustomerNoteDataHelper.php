@@ -23,7 +23,7 @@ class CustomerNoteDataHelper extends Module
      */
     protected function getCustomerNoteFacade()
     {
-        $this->getLocator()->customerNote()->facade();
+        return $this->getLocator()->customerNote()->facade();
     }
 
     /**
