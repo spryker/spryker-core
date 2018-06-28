@@ -14,6 +14,8 @@ use Spryker\Client\PriceProductMerchantRelationshipStorage\Dependency\Client\Pri
 use Spryker\Client\PriceProductMerchantRelationshipStorage\Dependency\Service\PriceProductMerchantRelationshipToSynchronizationServiceInterface;
 use Spryker\Client\PriceProductMerchantRelationshipStorage\MerchantRelationshipFinder\CompanyBusinessUnitFinder;
 use Spryker\Client\PriceProductMerchantRelationshipStorage\MerchantRelationshipFinder\CompanyBusinessUnitFinderInterface;
+use Spryker\Client\PriceProductMerchantRelationshipStorage\Storage\PriceProductMapper;
+use Spryker\Client\PriceProductMerchantRelationshipStorage\Storage\PriceProductMapperInterface;
 use Spryker\Client\PriceProductMerchantRelationshipStorage\Storage\PriceProductMerchantRelationshipAbstractReader;
 use Spryker\Client\PriceProductMerchantRelationshipStorage\Storage\PriceProductMerchantRelationshipAbstractReaderInterface;
 use Spryker\Client\PriceProductMerchantRelationshipStorage\Storage\PriceProductMerchantRelationshipConcreteReader;
@@ -33,7 +35,8 @@ class PriceProductMerchantRelationshipStorageFactory extends AbstractFactory
     {
         return new PriceProductMerchantRelationshipAbstractReader(
             $this->getStorageClient(),
-            $this->createPriceProductMerchantRelationshipKeyGenerator()
+            $this->createPriceProductMerchantRelationshipKeyGenerator(),
+            $this->createPriceProductMapper()
         );
     }
 
@@ -44,7 +47,8 @@ class PriceProductMerchantRelationshipStorageFactory extends AbstractFactory
     {
         return new PriceProductMerchantRelationshipConcreteReader(
             $this->getStorageClient(),
-            $this->createPriceProductMerchantRelationshipKeyGenerator()
+            $this->createPriceProductMerchantRelationshipKeyGenerator(),
+            $this->createPriceProductMapper()
         );
     }
 
@@ -105,5 +109,13 @@ class PriceProductMerchantRelationshipStorageFactory extends AbstractFactory
     public function getPriceProductMerchantRelationshipStorageConfig(): PriceProductMerchantRelationshipStorageConfig
     {
         return $this->getConfig();
+    }
+
+    /**
+     * @return \Spryker\Client\PriceProductMerchantRelationshipStorage\Storage\PriceProductMapperInterface
+     */
+    public function createPriceProductMapper(): PriceProductMapperInterface
+    {
+        return new PriceProductMapper($this->getPriceProductMerchantRelationshipStorageConfig());
     }
 }

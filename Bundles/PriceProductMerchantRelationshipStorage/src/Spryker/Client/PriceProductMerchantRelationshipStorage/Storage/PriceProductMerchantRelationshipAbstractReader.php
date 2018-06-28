@@ -24,15 +24,23 @@ class PriceProductMerchantRelationshipAbstractReader implements PriceProductMerc
     protected $priceStorageKeyGenerator;
 
     /**
+     * @var \Spryker\Client\PriceProductMerchantRelationshipStorage\Storage\PriceProductMapper
+     */
+    protected $priceProductMapper;
+
+    /**
      * @param \Spryker\Client\PriceProductMerchantRelationshipStorage\Dependency\Client\PriceProductMerchantRelationshipStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\PriceProductMerchantRelationshipStorage\Storage\PriceProductMerchantRelationshipKeyGeneratorInterface $priceStorageKeyGenerator
+     * @param \Spryker\Client\PriceProductMerchantRelationshipStorage\Storage\PriceProductMapperInterface $priceProductMapper
      */
     public function __construct(
         PriceProductMerchantRelationshipStorageToStorageClientInterface $storageClient,
-        PriceProductMerchantRelationshipKeyGeneratorInterface $priceStorageKeyGenerator
+        PriceProductMerchantRelationshipKeyGeneratorInterface $priceStorageKeyGenerator,
+        PriceProductMapperInterface $priceProductMapper
     ) {
         $this->storageClient = $storageClient;
         $this->priceStorageKeyGenerator = $priceStorageKeyGenerator;
+        $this->priceProductMapper = $priceProductMapper;
     }
 
     /**
@@ -68,6 +76,6 @@ class PriceProductMerchantRelationshipAbstractReader implements PriceProductMerc
         $priceProductStorageTransfer = new PriceProductStorageTransfer();
         $priceProductStorageTransfer->fromArray($priceData, true);
 
-        return (new PriceProductMapper())->mapPriceProductStorageTransferToPriceProductTransfers($priceProductStorageTransfer);
+        return $this->priceProductMapper->mapPriceProductStorageTransferToPriceProductTransfers($priceProductStorageTransfer);
     }
 }
