@@ -30,19 +30,17 @@ class MerchantRelationshipPriceQueryExpander implements MerchantRelationshipPric
      */
     public function buildMerchantRelationshipPriceDimensionQueryCriteria(PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?QueryCriteriaTransfer
     {
+        if (!$priceProductCriteriaTransfer->getPriceDimension()) {
+            return $this->createQueryCriteriaTransfer();
+        }
+
         $idMerchantRelationship = null;
         if ($priceProductCriteriaTransfer->getPriceDimension()) {
             $idMerchantRelationship = $priceProductCriteriaTransfer->getPriceDimension()->getIdMerchantRelationship();
         }
 
         if ($idMerchantRelationship) {
-            return (new QueryCriteriaTransfer())
-                ->addJoin(
-                    $this->createJoin($idMerchantRelationship)
-                )
-                ->setWithColumns([
-                    SpyPriceProductMerchantRelationshipTableMap::COL_FK_MERCHANT_RELATIONSHIP => PriceProductDimensionTransfer::ID_MERCHANT_RELATIONSHIP,
-                ]);
+            return $this->createQueryCriteriaTransfer($idMerchantRelationship);
         }
 
         $idCompanyBusinessUnit = null;
@@ -58,20 +56,7 @@ class MerchantRelationshipPriceQueryExpander implements MerchantRelationshipPric
             return null;
         }
 
-        return (new QueryCriteriaTransfer())
-            ->addJoin(
-                $this->createJoin()
-            )
-            ->setWithColumns([
-                SpyPriceProductMerchantRelationshipTableMap::COL_FK_MERCHANT_RELATIONSHIP => PriceProductDimensionTransfer::ID_MERCHANT_RELATIONSHIP,
-            ])
-            ->addCondition(
-                (new QueryConditionTransfer())
-                    ->setName('')
-                    ->setColumn(SpyMerchantRelationshipToCompanyBusinessUnitTableMap::COL_FK_COMPANY_BUSINESS_UNIT)
-                    ->setValue($idCompanyBusinessUnit)
-                    ->setComparison('=')
-            );
+        return $this->createQueryCriteriaTransfer($idMerchantRelationship, $idCompanyBusinessUnit);
     }
 
     /**
@@ -108,7 +93,7 @@ class MerchantRelationshipPriceQueryExpander implements MerchantRelationshipPric
      *
      * @return \Generated\Shared\Transfer\QueryJoinTransfer
      */
-    protected function createJoin(int $idMerchantRelationship = null): QueryJoinTransfer
+    protected function createJoin(?int $idMerchantRelationship = null): QueryJoinTransfer
     {
         $left[] = static::COL_ID_PRICE_PRODUCT_STORE;
         $right[] = SpyPriceProductMerchantRelationshipTableMap::COL_FK_PRICE_PRODUCT_STORE;
@@ -122,5 +107,35 @@ class MerchantRelationshipPriceQueryExpander implements MerchantRelationshipPric
             ->setLeft($left)
             ->setRight($right)
             ->setJoinType(Criteria::LEFT_JOIN);
+    }
+
+    /**
+     * @param int|null $idMerchantRelationship
+     * @param int|null $idCompanyBusinessUnit
+     *
+     * @return \Generated\Shared\Transfer\QueryCriteriaTransfer
+     */
+    protected function createQueryCriteriaTransfer(?int $idMerchantRelationship = null, ?int $idCompanyBusinessUnit = null): QueryCriteriaTransfer
+    {
+        $queryCriteriaTransfer = (new QueryCriteriaTransfer())
+            ->addJoin(
+                $this->createJoin($idMerchantRelationship)
+            )
+            ->setWithColumns([
+                SpyPriceProductMerchantRelationshipTableMap::COL_FK_MERCHANT_RELATIONSHIP => PriceProductDimensionTransfer::ID_MERCHANT_RELATIONSHIP,
+            ]);
+
+        if ($idCompanyBusinessUnit) {
+            $queryCriteriaTransfer
+                ->addCondition(
+                    (new QueryConditionTransfer())
+                        ->setName('')
+                        ->setColumn(SpyMerchantRelationshipToCompanyBusinessUnitTableMap::COL_FK_COMPANY_BUSINESS_UNIT)
+                        ->setValue($idCompanyBusinessUnit)
+                        ->setComparison('=')
+                );
+        }
+
+        return $queryCriteriaTransfer;
     }
 }
