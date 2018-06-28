@@ -14,10 +14,16 @@ interface ResponseRelationshipInterface
      * @param string $resourceName
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param string|null $parentResourceId
      *
      * @return void
      */
-    public function loadRelationships(string $resourceName, array $resources, RestRequestInterface $restRequest): void;
+    public function loadRelationships(
+        string $resourceName,
+        array $resources,
+        RestRequestInterface $restRequest,
+        ?string $parentResourceId = null
+    ): void;
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
