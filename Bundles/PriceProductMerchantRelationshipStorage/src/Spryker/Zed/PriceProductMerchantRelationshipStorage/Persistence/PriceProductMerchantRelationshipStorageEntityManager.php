@@ -131,12 +131,6 @@ class PriceProductMerchantRelationshipStorageEntityManager extends AbstractEntit
                     $priceProductStorageEntityClass
                 );
 
-                if (!$prices) {
-                    if (!$priceProductMerchantRelationshipStorageEntity->isNew()) {
-                        $priceProductMerchantRelationshipStorageEntity->delete();
-                    }
-                }
-
                 $data = [
                     'prices' => $prices,
                 ];
@@ -155,17 +149,17 @@ class PriceProductMerchantRelationshipStorageEntityManager extends AbstractEntit
     }
 
     /**
-     * @param int $idMerchantRelationship
+     * @param int $idCompanyBusinessUnit
      * @param int $idProductAbstract
      *
      * @return void
      */
-    public function deletePriceProductAbstractByMerchantRelationshipAndIdProductAbstract(
-        int $idMerchantRelationship,
+    public function deletePriceProductAbstractByCompanyBusinessUnitAndIdProductAbstract(
+        int $idCompanyBusinessUnit,
         int $idProductAbstract
     ): void {
         $priceProductAbstractMerchantRelationshipStorageEntities = SpyPriceProductAbstractMerchantRelationshipStorageQuery::create()
-            ->filterByFkMerchantRelationship($idMerchantRelationship)
+            ->filterByFkCompanyBusinessUnit($idCompanyBusinessUnit)
             ->filterByFkProductAbstract($idProductAbstract)
             ->find();
 
@@ -175,17 +169,17 @@ class PriceProductMerchantRelationshipStorageEntityManager extends AbstractEntit
     }
 
     /**
-     * @param int $idMerchantRelationship
+     * @param int $idCompanyBusinessUnit
      * @param int $idProduct
      *
      * @return void
      */
-    public function deletePriceProductConcreteByMerchantRelationshipAndIdProduct(
-        int $idMerchantRelationship,
+    public function deletePriceProductConcreteByCompanyBusinessUnitAndIdProduct(
+        int $idCompanyBusinessUnit,
         int $idProduct
     ): void {
         $priceProductConcreteMerchantRelationshipStorageEntities = SpyPriceProductConcreteMerchantRelationshipStorageQuery::create()
-            ->filterByFkCompanyBusinessUnit()
+            ->filterByFkCompanyBusinessUnit($idCompanyBusinessUnit)
             ->filterByFkProduct($idProduct)
             ->find();
 

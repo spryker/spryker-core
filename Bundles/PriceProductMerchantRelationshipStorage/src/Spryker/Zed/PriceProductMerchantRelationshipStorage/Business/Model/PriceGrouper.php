@@ -62,6 +62,7 @@ class PriceGrouper implements PriceGrouperInterface
 
         $groupedPrices = [];
         foreach ($products as $product) {
+            $idStore = $product[PriceProductMerchantRelationshipStorageConstants::COL_PRICE_PRODUCT_STORE_FK_STORE];
             $idProduct = $product[$productPrimaryIdentifier];
             $idMerchantRelationship = $product[SpyPriceProductMerchantRelationshipTableMap::COL_FK_MERCHANT_RELATIONSHIP];
             $idCompanyBusinessUnit = $product[MerchantRelationshipTransfer::FK_COMPANY_BUSINESS_UNIT];
@@ -71,7 +72,7 @@ class PriceGrouper implements PriceGrouperInterface
             }
 
             $priceProductDimensionTransfer->setIdMerchantRelationship($idMerchantRelationship);
-            $storeTransfer = $this->storeFacade->getStoreById($product[PriceProductMerchantRelationshipStorageConstants::COL_PRICE_PRODUCT_STORE_FK_STORE]);
+            $storeTransfer = $this->storeFacade->getStoreById($idStore);
             $prices = $this->priceProductFacade->findPricesBySkuGroupedForCurrentStore(
                 $product[$productSkuIdentifier],
                 $priceProductDimensionTransfer

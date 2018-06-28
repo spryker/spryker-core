@@ -7,13 +7,17 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Communication\Plugin\Event\Listener;
 
+use Orm\Zed\MerchantRelationship\Persistence\Map\SpyMerchantRelationshipToCompanyBusinessUnitTableMap;
+use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipToCompanyBusinessUnitQuery;
 use Orm\Zed\PriceProductMerchantRelationship\Persistence\Map\SpyPriceProductMerchantRelationshipTableMap;
+use Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationshipQuery;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\PriceProductMerchantRelationshipStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\PriceProductMerchantRelationshipStorage\Communication\PriceProductMerchantRelationshipStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProductMerchantRelationshipStorageRepositoryInterface getRepository()
  */
 class PriceProductMerchantRelationshipConcreteListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
@@ -29,14 +33,8 @@ class PriceProductMerchantRelationshipConcreteListener extends AbstractPlugin im
      */
     public function handleBulk(array $eventTransfers, $eventName): void
     {
-        $priceProductStoreIds = $this->getFactory()
-            ->getEventBehaviorFacade()
-            ->getEventTransferForeignKeys(
-                $eventTransfers,
-                SpyPriceProductMerchantRelationshipTableMap::COL_FK_PRICE_PRODUCT_STORE
-            );
-
-        $this->getFacade()->publishConcretePriceProduct($priceProductStoreIds);
+        $businessUnitProducts = $this->getBusinessUnitConcreteProducts($eventTransfers);
+        $this->getFacade()->publishConcretePriceProductByBusinessUnitProducts($businessUnitProducts);
     }
 
     /**
@@ -44,22 +42,44 @@ class PriceProductMerchantRelationshipConcreteListener extends AbstractPlugin im
      *
      * @return array
      */
-    protected function getMerchantRelationshipConcreteProducts(array $eventTransfers): array
+    protected function getBusinessUnitConcreteProducts(array $eventTransfers): array
     {
-        $merchantRelationshipProducts = [];
+        $businessUnitProducts = [];
 
         foreach ($eventTransfers as $eventTransfer) {
             $foreignKeys = $eventTransfer->getForeignKeys();
-            $idProduct = $foreignKeys[SpyPriceProductMerchantRelationshipTableMap::COL_FK_PRODUCT];
-            if (!$idProduct) {
-                continue;
+            $idProduct = null;
+            $idMerchantRelationship = null;
+            if ($foreignKeys) {
+                $idProduct = $foreignKeys[SpyPriceProductMerchantRelationshipTableMap::COL_FK_PRODUCT];
+                if (!$idProduct) {
+                    continue;
+                }
+                $idMerchantRelationship = $foreignKeys[SpyPriceProductMerchantRelationshipTableMap::COL_FK_MERCHANT_RELATIONSHIP];
+            } else {
+                $priceProductMerchantRelationship = SpyPriceProductMerchantRelationshipQuery::create()
+                    ->findOneByIdPriceProductMerchantRelationship($eventTransfer->getId());
+
+                if (!$priceProductMerchantRelationship || !$priceProductMerchantRelationship->getFkProduct()) {
+                    continue;
+                }
+
+                $idProduct = $priceProductMerchantRelationship->getFkProduct();
+                $idMerchantRelationship = $priceProductMerchantRelationship->getFkMerchantRelationship();
             }
-            $idMerchantRelationship = $foreignKeys[SpyPriceProductMerchantRelationshipTableMap::COL_FK_MERCHANT_RELATIONSHIP];
-            if (!isset($merchantRelationshipProducts[$idMerchantRelationship][$idProduct])) {
-                $merchantRelationshipProducts[$idMerchantRelationship][$idProduct] = $idProduct;
+            $businessUnitIds = SpyMerchantRelationshipToCompanyBusinessUnitQuery::create()
+                ->select([
+                    SpyMerchantRelationshipToCompanyBusinessUnitTableMap::COL_FK_COMPANY_BUSINESS_UNIT,
+                ])
+                ->filterByFkMerchantRelationship($idMerchantRelationship)
+                ->find()
+                ->toArray();
+
+            foreach ($businessUnitIds as $businessUnitId) {
+                $businessUnitProducts[$businessUnitId][$idProduct] = $idProduct;
             }
         }
 
-        return $merchantRelationshipProducts;
+        return $businessUnitProducts;
     }
 }

@@ -20,13 +20,13 @@ class PriceProductMerchantRelationshipStorageFacade extends AbstractFacade imple
      *
      * @api
      *
-     * @param array $priceProductStoreIds
+     * @param array $businessUnitProducts
      *
      * @return void
      */
-    public function publishConcretePriceProduct(array $priceProductStoreIds): void
+    public function publishConcretePriceProductByBusinessUnitProducts(array $businessUnitProducts): void
     {
-        $this->getFactory()->createPriceProductConcreteStorageWriter()->publish($priceProductStoreIds);
+        $this->getFactory()->createPriceProductConcreteStorageWriter()->publishByBusinessUnitProducts($businessUnitProducts);
     }
 
     /**
@@ -38,36 +38,8 @@ class PriceProductMerchantRelationshipStorageFacade extends AbstractFacade imple
      *
      * @return void
      */
-    public function publishAbstractPriceProduct(array $businessUnitProducts): void
+    public function publishAbstractPriceProductByBusinessUnitProducts(array $businessUnitProducts): void
     {
-        $this->getFactory()->createPriceProductAbstractStorageWriter()->publish($businessUnitProducts);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param array $merchantRelationshipConcreteProducts
-     *
-     * @return void
-     */
-    public function unpublishConcretePriceProduct(array $merchantRelationshipConcreteProducts): void
-    {
-        $this->getFactory()->createPriceProductConcreteStorageWriter()->unpublish($merchantRelationshipConcreteProducts);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param array $merchantRelationshipAbstractProducts
-     *
-     * @return void
-     */
-    public function unpublishAbstractPriceProduct(array $merchantRelationshipAbstractProducts): void
-    {
-        $this->getFactory()->createPriceProductAbstractStorageWriter()->unpublish($merchantRelationshipAbstractProducts);
+        $this->getFactory()->createPriceProductAbstractStorageWriter()->publishByBusinessUnitProducts($businessUnitProducts);
     }
 }

@@ -44,15 +44,46 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
     }
 
     /**
+     * @param array $businessUnitProducts
+     *
+     * @return void
+     */
+    public function publishByBusinessUnitProducts(array $businessUnitProducts): void
+    {
+        foreach ($businessUnitProducts as $idCompanyBusinessUnit => $productIds) {
+            foreach ($productIds as $idProduct) {
+                $this->priceProductMerchantRelationshipStorageEntityManager
+                    ->deletePriceProductConcreteByCompanyBusinessUnitAndIdProduct($idCompanyBusinessUnit, $idProduct);
+            }
+        }
+
+        // re-publish remaining for BU prices
+        $concreteProducts = $this->priceProductMerchantRelationshipStorageRepository
+            ->findPriceProductStoresByCompanyBusinessUnitConcreteProducts($businessUnitProducts);
+
+        $this->write($concreteProducts);
+    }
+
+    /**
      * @param array $priceProductStoreIds
      *
      * @return void
      */
-    public function publish(array $priceProductStoreIds): void
+    public function publishByPriceProductStoreIds(array $priceProductStoreIds): void
     {
         $concreteProducts = $this->priceProductMerchantRelationshipStorageRepository
             ->findPriceProductStoreListByIdsForConcrete($priceProductStoreIds);
 
+        $this->write($concreteProducts);
+    }
+
+    /**
+     * @param array $concreteProducts
+     *
+     * @return void
+     */
+    protected function write(array $concreteProducts): void
+    {
         $groupedPrices = $this->priceGrouper->getGroupedPrices(
             $concreteProducts,
             PriceProductMerchantRelationshipStorageRepository::COL_PRODUCT_CONCRETE_ID_PRODUCT,
@@ -70,20 +101,5 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
             $groupedPrices,
             $priceProductMerchantRelationshipStorageEntityMap
         );
-    }
-
-    /**
-     * @param array $merchantRelationshipConcreteProducts
-     *
-     * @return void
-     */
-    public function unpublish(array $merchantRelationshipConcreteProducts): void
-    {
-        foreach ($merchantRelationshipConcreteProducts as $idMerchantRelationship => $idProducts) {
-            foreach ($idProducts as $idProduct) {
-                $this->priceProductMerchantRelationshipStorageEntityManager
-                    ->deletePriceProductConcreteByMerchantRelationshipAndIdProduct($idMerchantRelationship, $idProduct);
-            }
-        }
     }
 }

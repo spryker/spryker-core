@@ -27,6 +27,20 @@ interface PriceProductMerchantRelationshipStorageRepositoryInterface
     public function findPriceProductStoreListByIdsForAbstract(array $priceProductStoreIds): array;
 
     /**
+     * @param array $businessUnitProducts
+     *
+     * @return array
+     */
+    public function findPriceProductStoresByCompanyBusinessUnitAbstractProducts(array $businessUnitProducts): array;
+
+    /**
+     * @param array $businessUnitProducts
+     *
+     * @return array
+     */
+    public function findPriceProductStoresByCompanyBusinessUnitConcreteProducts(array $businessUnitProducts): array;
+
+    /**
      * @param array $concreteProducts
      *
      * @return \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorage[]
