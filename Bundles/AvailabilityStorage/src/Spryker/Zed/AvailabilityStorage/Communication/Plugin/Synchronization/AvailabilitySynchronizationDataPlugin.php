@@ -9,14 +9,14 @@ namespace Spryker\Zed\AvailabilityStorage\Communication\Plugin\Synchronization;
 
 use Spryker\Shared\AvailabilityStorage\AvailabilityStorageConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
+use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface;
 
 /**
  * @method \Spryker\Zed\AvailabilityStorage\Persistence\AvailabilityStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\AvailabilityStorage\Business\AvailabilityStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\AvailabilityStorage\Communication\AvailabilityStorageCommunicationFactory getFactory()
  */
-class AvailabilitySynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataQueryContainerPluginInterface
+class AvailabilitySynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataPluginInterface
 {
     /**
      * Specification:

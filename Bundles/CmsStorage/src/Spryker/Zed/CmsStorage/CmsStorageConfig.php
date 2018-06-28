@@ -18,12 +18,4 @@ class CmsStorageConfig extends AbstractBundleConfig
     {
         return true;
     }
-
-    /**
-     * @return string|null
-     */
-    public function getCmsPageSynchronizationPoolName()
-    {
-        return null;
-    }
 }

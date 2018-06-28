@@ -33,16 +33,6 @@ class ProductMeasurementUnitStorageRepository extends AbstractRepository impleme
     }
 
     /**
-     * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer[]
-     */
-    public function findAllProductMeasurementUnitStorageEntities(): array
-    {
-        $query = $this->getFactory()->createProductMeasurementUnitStorageQuery();
-
-        return $this->buildQueryFromCriteria($query)->find();
-    }
-
-    /**
      * @param int[] $productIds
      *
      * @return \Generated\Shared\Transfer\SpyProductConcreteMeasurementUnitStorageEntityTransfer[]
@@ -56,16 +46,6 @@ class ProductMeasurementUnitStorageRepository extends AbstractRepository impleme
         $query = $this->getFactory()
             ->createProductConcreteMeasurementUnitStorageQuery()
             ->filterByFkProduct_In($productIds);
-
-        return $this->buildQueryFromCriteria($query)->find();
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\SpyProductConcreteMeasurementUnitStorageEntityTransfer[]
-     */
-    public function findAllProductConcreteMeasurementUnitStorageEntities(): array
-    {
-        $query = $this->getFactory()->createProductConcreteMeasurementUnitStorageQuery();
 
         return $this->buildQueryFromCriteria($query)->find();
     }

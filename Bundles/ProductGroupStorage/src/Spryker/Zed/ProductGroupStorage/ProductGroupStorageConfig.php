@@ -18,12 +18,4 @@ class ProductGroupStorageConfig extends AbstractBundleConfig
     {
         return true;
     }
-
-    /**
-     * @return null|string
-     */
-    public function getProductGroupSynchronizationPoolName()
-    {
-        return null;
-    }
 }

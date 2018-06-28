@@ -13,22 +13,6 @@ class ProductCategoryStorageConfig extends AbstractBundleConfig
 {
     /**
      * Specification:
-     * - Queue name as used for processing price messages
-     *
-     * @api
-     */
-    const PRODUCT_ABSTRACT_CATEGORY_SYNC_STORAGE_QUEUE = 'sync.storage.product';
-
-    /**
-     * Specification:
-     * - Queue name as used for processing price messages
-     *
-     * @api
-     */
-    const PRODUCT_ABSTRACT_CATEGORY_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.product.error';
-
-    /**
-     * Specification:
      * - Resource name, this will use for key generating
      *
      * @api

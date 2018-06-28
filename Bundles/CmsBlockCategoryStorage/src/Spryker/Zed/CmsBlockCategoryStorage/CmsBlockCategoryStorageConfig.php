@@ -18,12 +18,4 @@ class CmsBlockCategoryStorageConfig extends AbstractBundleConfig
     {
         return true;
     }
-
-    /**
-     * @return string|null
-     */
-    public function getCmsBlockCategorySynchronizationPoolName()
-    {
-        return null;
-    }
 }

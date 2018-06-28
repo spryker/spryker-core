@@ -18,12 +18,4 @@ class ProductSearchConfigStorageConfig extends AbstractBundleConfig
     {
         return true;
     }
-
-    /**
-     * @return null|string
-     */
-    public function getProductSearchConfigSynchronizationPoolName()
-    {
-        return null;
-    }
 }

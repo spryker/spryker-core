@@ -18,12 +18,4 @@ class ProductRelationStorageConfig extends AbstractBundleConfig
     {
         return true;
     }
-
-    /**
-     * @return null|string
-     */
-    public function getProductAbstractRelationSynchronizationPoolName()
-    {
-        return null;
-    }
 }

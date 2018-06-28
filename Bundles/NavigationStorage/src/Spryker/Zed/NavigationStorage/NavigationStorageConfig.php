@@ -18,12 +18,4 @@ class NavigationStorageConfig extends AbstractBundleConfig
     {
         return true;
     }
-
-    /**
-     * @return string|null
-     */
-    public function getNavigationSynchronizationPoolName()
-    {
-        return null;
-    }
 }

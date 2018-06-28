@@ -13,22 +13,6 @@ class ProductMeasurementUnitStorageConfig extends AbstractBundleConfig
 {
     /**
      * Specification:
-     * - Queue name as used for processing price messages
-     *
-     * @api
-     */
-    const PRODUCT_MEASUREMENT_UNIT_SYNC_STORAGE_QUEUE = 'sync.storage.product';
-
-    /**
-     * Specification:
-     * - Queue name as used for processing price messages
-     *
-     * @api
-     */
-    const PRODUCT_MEASUREMENT_UNIT_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.product.error';
-
-    /**
-     * Specification:
      * - Key generation resource name of product measurement unit.
      *
      * @api
