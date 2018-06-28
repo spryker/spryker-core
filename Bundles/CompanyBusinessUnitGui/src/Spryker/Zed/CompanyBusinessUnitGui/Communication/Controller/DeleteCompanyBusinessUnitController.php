@@ -27,8 +27,8 @@ class DeleteCompanyBusinessUnitController extends AbstractController
      */
     protected const URL_BUSINESS_UNIT_LIST = '/company-business-unit-gui/list-company-business-unit';
 
-    protected const MESSAGE_COMPANY_BUSINESS_UNIT_DELETE_SUCCESS = 'Company Business Unit "%d" was deleted.';
-    protected const MESSAGE_COMPANY_BUSINESS_UNIT_DELETE_ERROR = 'You can not delete a business unit "%d" while it contains users';
+    protected const MESSAGE_SUCCESS_COMPANY_BUSINESS_UNIT_DELETE = 'Company Business Unit "%s" was deleted.';
+    protected const MESSAGE_ERROR_COMPANY_BUSINESS_UNIT_DELETE = 'You can not delete a business unit "%s" while it contains users';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -53,16 +53,20 @@ class DeleteCompanyBusinessUnitController extends AbstractController
 
         if ($companyBusinessUnitResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(sprintf(
-                static::MESSAGE_COMPANY_BUSINESS_UNIT_DELETE_SUCCESS,
-                $idCompanyBusinessUnit
+                static::MESSAGE_SUCCESS_COMPANY_BUSINESS_UNIT_DELETE,
+                $companyBusinessUnitResponseTransfer
+                    ->getCompanyBusinessUnitTransfer()
+                    ->getName()
             ));
 
             return $this->redirectResponse($redirectUrl);
         }
 
         $this->addErrorMessage(sprintf(
-            static::MESSAGE_COMPANY_BUSINESS_UNIT_DELETE_ERROR,
-            $idCompanyBusinessUnit
+            static::MESSAGE_ERROR_COMPANY_BUSINESS_UNIT_DELETE,
+            $companyBusinessUnitResponseTransfer
+                ->getCompanyBusinessUnitTransfer()
+                ->getName()
         ));
 
         return $this->redirectResponse($redirectUrl);

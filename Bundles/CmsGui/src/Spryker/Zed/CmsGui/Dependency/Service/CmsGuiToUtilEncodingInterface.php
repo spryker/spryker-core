@@ -10,7 +10,7 @@ namespace Spryker\Zed\CmsGui\Dependency\Service;
 interface CmsGuiToUtilEncodingInterface
 {
     /**
-     * @param string $value
+     * @param array $value
      * @param int|null $options
      * @param int|null $depth
      *
