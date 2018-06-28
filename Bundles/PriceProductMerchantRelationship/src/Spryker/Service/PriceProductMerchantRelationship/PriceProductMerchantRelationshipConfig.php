@@ -14,11 +14,5 @@ use Spryker\Service\Kernel\AbstractBundleConfig;
  */
 class PriceProductMerchantRelationshipConfig extends AbstractBundleConfig
 {
-    /**
-     * @return string
-     */
-    public function getPriceDimensionMerchantRelationship()
-    {
-        return $this->getSharedConfig()->getPriceDimensionMerchantRelationship();
-    }
+
 }

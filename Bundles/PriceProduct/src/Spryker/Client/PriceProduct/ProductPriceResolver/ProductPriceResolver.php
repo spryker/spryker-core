@@ -70,47 +70,21 @@ class ProductPriceResolver implements ProductPriceResolverInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @param array $priceMap
      *
      * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */
     public function resolve(array $priceMap): CurrentProductPriceTransfer
     {
-        $currentProductPriceTransfer = new CurrentProductPriceTransfer();
-        if (!$priceMap) {
-            return $currentProductPriceTransfer;
-        }
-
         $priceProductTransfers = $this->convertPriceMapToPriceProductTransfers($priceMap);
-        $priceProductFilter = $this->buildPriceProductFilterWithCurrentValues();
 
-        $priceProductTransfer = $this->priceProductService->resolveProductPriceByPriceProductFilter(
-            $priceProductTransfers,
-            $priceProductFilter
-        );
-
-        if (!$priceProductTransfer) {
-            return $currentProductPriceTransfer;
-        }
-
-        $currencyIsoCode = $priceProductFilter->getCurrencyIsoCode();
-        $priceMode = $priceProductFilter->getPriceMode();
-
-        $price = $this->getPriceValueByPriceMode($priceProductTransfer->getMoneyValue(), $priceMode);
-
-        if (!$price) {
-            return $currentProductPriceTransfer;
-        }
-
-        $prices = $priceMap[$priceProductTransfer->getPriceDimension()->getType()][$currencyIsoCode][$priceMode] ?? [];
-
-        return $currentProductPriceTransfer
-            ->setPrice($price)
-            ->setPrices($prices);
+        $this->resolveTransfer($priceProductTransfers);
     }
 
     /**
-     * @param array $priceProductTransfers
+     * @param PriceProductTransfer[] $priceProductTransfers
      *
      * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */
@@ -138,8 +112,19 @@ class ProductPriceResolver implements ProductPriceResolverInterface
             return $currentProductPriceTransfer;
         }
 
-        //todo How to get price types (ORIGINAL) from service?
-        $prices = ['DEFAULT' => $price];
+        //find all available prices for all price types
+        $priceProductFilterAllPriceTypes = clone $priceProductFilter;
+        $priceProductFilterAllPriceTypes->setPriceTypeName(null);
+
+        $priceProductAllPriceTypesTransfers = $this->priceProductService->resolveProductPricesByPriceProductFilter(
+            $priceProductTransfers,
+            $priceProductFilterAllPriceTypes
+        );
+
+        $prices = [];
+        foreach ($priceProductAllPriceTypesTransfers as $priceProductOnePriceTypeTransfer) {
+            $prices[$priceProductOnePriceTypeTransfer->getPriceTypeName()] = $this->getPriceValueByPriceMode($priceProductTransfer->getMoneyValue(), $priceMode);
+        }
 
         return $currentProductPriceTransfer
             ->setPrice($price)
@@ -173,34 +158,32 @@ class ProductPriceResolver implements ProductPriceResolverInterface
         /** @var \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers */
         $priceProductTransfers = [];
 
-        foreach ($priceMap as $priceDimension => $priceData) {
-            foreach ($priceData as $currencyCode => $prices) {
-                foreach ($prices as $priceMode => $priceTypes) {
-                    foreach ($priceTypes as $priceType => $priceAmount) {
-                        $index = implode(static::PRICE_KEY_SEPARATOR, [
-                            $priceDimension,
-                            $currencyCode,
-                            $priceType,
-                        ]);
-                        if (!isset($priceProductTransfers[$index])) {
-                            $priceProductTransfers[$index] = (new PriceProductTransfer())
-                                ->setPriceDimension(
-                                    (new PriceProductDimensionTransfer())
-                                        ->setType($priceDimension)
-                                )
-                                ->setMoneyValue(
-                                    (new MoneyValueTransfer())
-                                        ->setCurrency((new CurrencyTransfer())->setCode($currencyCode))
-                                )
-                                ->setPriceTypeName($priceType);
-                        }
-                        if ($priceMode === $this->priceProductConfig->getPriceModeIdentifierForNetType()) {
-                            $priceProductTransfers[$index]->getMoneyValue()->setNetAmount($priceAmount);
-                            continue;
-                        }
+        foreach ($priceMap as $currencyCode => $prices) {
+            foreach ($prices as $priceMode => $priceTypes) {
+                foreach ($priceTypes as $priceType => $priceAmount) {
+                    $index = implode(static::PRICE_KEY_SEPARATOR, [
+                        $currencyCode,
+                        $priceType,
+                    ]);
 
-                        $priceProductTransfers[$index]->getMoneyValue()->setGrossAmount($priceAmount);
+                    if (!isset($priceProductTransfers[$index])) {
+                        $priceProductTransfers[$index] = (new PriceProductTransfer())
+                            ->setPriceDimension(
+                                (new PriceProductDimensionTransfer())
+                                    ->setType(\Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_DIMENSION_DEFAULT)
+                            )
+                            ->setMoneyValue(
+                                (new MoneyValueTransfer())
+                                    ->setCurrency((new CurrencyTransfer())->setCode($currencyCode))
+                            )
+                            ->setPriceTypeName($priceType);
                     }
+                    if ($priceMode === $this->priceProductConfig->getPriceModeIdentifierForNetType()) {
+                        $priceProductTransfers[$index]->getMoneyValue()->setNetAmount($priceAmount);
+                        continue;
+                    }
+
+                    $priceProductTransfers[$index]->getMoneyValue()->setGrossAmount($priceAmount);
                 }
             }
         }

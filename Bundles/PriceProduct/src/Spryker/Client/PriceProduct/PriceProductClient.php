@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\PriceProduct;
 
+use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -46,7 +47,11 @@ class PriceProductClient extends AbstractClient implements PriceProductClientInt
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
+     *
+     * @param PriceProductTransfer[] $priceProductTransfers
      *
      * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */

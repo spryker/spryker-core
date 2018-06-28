@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\CurrentProductPriceTransfer;
 interface ProductPriceResolverInterface
 {
     /**
+     * @deprecated Please use resolveTransfer() instead
+     *
      * @param array $priceMap
      *
      * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer

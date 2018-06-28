@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\PriceProductStorage\Storage;
 
+use Generated\Shared\Transfer\PriceProductStorageTransfer;
+
 interface PriceAbstractStorageReaderInterface
 {
     /**
@@ -15,4 +17,11 @@ interface PriceAbstractStorageReaderInterface
      * @return \Generated\Shared\Transfer\PriceProductStorageTransfer[]
      */
     public function findPriceProductAbstractTransfers($idProductAbstract): array;
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\PriceProductStorageTransfer
+     */
+//    public function findPriceProductAbstractTransfer($idProductAbstract): PriceProductStorageTransfer;
 }

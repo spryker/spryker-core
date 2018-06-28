@@ -24,10 +24,7 @@ interface PriceProductServiceInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
-    public function resolveProductPriceByPriceProductCriteria(
-        array $priceProductTransfers,
-        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-    ): ?PriceProductTransfer;
+    public function resolveProductPriceByPriceProductCriteria(array $priceProductTransfers, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?PriceProductTransfer;
 
     /**
      * Specification:
@@ -40,8 +37,19 @@ interface PriceProductServiceInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
-    public function resolveProductPriceByPriceProductFilter(
-        array $priceProductTransfers,
-        PriceProductFilterTransfer $priceProductFilterTransfer
-    ): ?PriceProductTransfer;
+    public function resolveProductPriceByPriceProductFilter(array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer): ?PriceProductTransfer;
+
+    /**
+     * Specification:
+     *  - Returns matching to price product filter prices
+     *  - Active filter fields:
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function resolveProductPricesByPriceProductFilter(array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer): array;
 }

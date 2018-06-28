@@ -64,6 +64,38 @@ class PriceAbstractStorageReader implements PriceAbstractStorageReaderInterface
     /**
      * @param int $idProductAbstract
      *
+     * @return \Generated\Shared\Transfer\PriceProductStorageTransfer|null
+     */
+//    public function findPriceAbstractStorageTransfer($idProductAbstract): ?PriceProductStorageTransfer
+//    {
+//        $prices = [];
+//
+//        foreach ($this->priceDimensionPlugins as $priceDimensionPlugin) {
+//            $priceProductStorageTransfer = $priceDimensionPlugin->findProductAbstractPrices($idProductAbstract);
+//
+//            if ($priceProductStorageTransfer !== null) {
+//                $prices[$priceDimensionPlugin->getDimensionName()] = $priceProductStorageTransfer->getPrices();
+//            }
+//        }
+//
+//        $priceProductStorageTransfer = $this->findDefaultPriceDimensionPriceProductStorageTransfer($idProductAbstract);
+//        if ($priceProductStorageTransfer) {
+//            $prices[PriceProductStorageConstants::PRICE_DIMENSION_DEFAULT] = $priceProductStorageTransfer->getPrices();
+//        }
+//
+//        if (!$prices) {
+//            return null;
+//        }
+//
+//        $priceProductStorageTransfer = new PriceProductStorageTransfer();
+//        $priceProductStorageTransfer->setPrices($prices);
+//
+//        return $priceProductStorageTransfer;
+//    }
+
+    /**
+     * @param int $idProductAbstract
+     *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     protected function findDefaultPriceDimensionPriceProductTransfers(int $idProductAbstract): array
@@ -78,6 +110,7 @@ class PriceAbstractStorageReader implements PriceAbstractStorageReaderInterface
         $priceProductStorageTransfer = new PriceProductStorageTransfer();
         $priceProductStorageTransfer->fromArray($priceData, true);
 
+        //todo: cleanup
         return (new PriceProductMapper())->mapPriceProductStorageTransferToPriceProductTransfers($priceProductStorageTransfer);
     }
 }

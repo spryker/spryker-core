@@ -7,28 +7,17 @@
 
 namespace Spryker\Client\PriceProductMerchantRelationshipStorage\Storage;
 
+
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductStorageTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
-use Spryker\Client\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConfig;
+use Spryker\Shared\PriceProduct\PriceProductConfig;
+use Spryker\Shared\PriceProductMerchantRelationship\PriceProductMerchantRelationshipConfig;
 
-class PriceProductMapper implements PriceProductMapperInterface
+class PriceProductMapper
 {
-    /**
-     * @var \Spryker\Client\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConfig
-     */
-    protected $config;
-
-    /**
-     * @param \Spryker\Client\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConfig $config
-     */
-    public function __construct(PriceProductMerchantRelationshipStorageConfig $config)
-    {
-        $this->config = $config;
-    }
-
     /**
      * @param \Generated\Shared\Transfer\PriceProductStorageTransfer $priceProductStorageTransfer
      *
@@ -53,7 +42,7 @@ class PriceProductMapper implements PriceProductMapperInterface
                             $priceProductTransfers[$index] = (new PriceProductTransfer())
                                 ->setPriceDimension(
                                     (new PriceProductDimensionTransfer())
-                                        ->setType($this->config->getPriceDimensionMerchantRelationship())
+                                        ->setType(PriceProductMerchantRelationshipConfig::PRICE_DIMENSION_MERCHANT_RELATIONSHIP)
                                         ->setIdMerchantRelationship($idMerchantRelationship)
                                 )
                                 ->setMoneyValue(
@@ -62,7 +51,7 @@ class PriceProductMapper implements PriceProductMapperInterface
                                 )
                                 ->setPriceTypeName($priceType);
                         }
-                        if ($priceMode === 'GROSS_MODE') {
+                        if ($priceMode === PriceProductMerchantRelationshipConfig::PRICE_GROSS_MODE) {
                             $priceProductTransfers[$index]->getMoneyValue()->setGrossAmount($priceAmount);
                             continue;
                         }
