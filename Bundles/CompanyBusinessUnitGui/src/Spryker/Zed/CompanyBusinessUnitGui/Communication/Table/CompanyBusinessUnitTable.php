@@ -42,7 +42,6 @@ class CompanyBusinessUnitTable extends AbstractTable
      * @see DeleteCompanyBusinessUnitController::indexAction()
      */
     protected const URL_COMPANY_BUSINESS_UNIT_DELETE = '/company-business-unit-gui/delete-company-business-unit';
-    protected const FORMAT_ADDRESS = '%s, %s, %s';
 
     /**
      * @var \Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery
@@ -139,12 +138,20 @@ class CompanyBusinessUnitTable extends AbstractTable
         if (!$spyCompanyUnitAddress->isEmpty()) {
             $address = $spyCompanyUnitAddress[0]->getCompanyUnitAddress();
 
-            $result = sprintf(
-                static::FORMAT_ADDRESS,
+            $addressArray = [
+                $address->getZipCode(),
                 $address->getCity(),
                 $address->getAddress1(),
-                $address->getZipCode()
-            );
+            ];
+
+            if ($address->getAddress2()) {
+                $addressArray[] = $address->getAddress2();
+            }
+            if ($address->getAddress3()) {
+                $addressArray[] = $address->getAddress3();
+            }
+
+            $result = implode(', ', $addressArray);
         }
 
         return $result;
