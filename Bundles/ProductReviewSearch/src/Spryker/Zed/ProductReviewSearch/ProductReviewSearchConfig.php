@@ -18,12 +18,4 @@ class ProductReviewSearchConfig extends AbstractBundleConfig
     {
         return true;
     }
-
-    /**
-     * @return null|string
-     */
-    public function getProductReviewSynchronizationPoolName()
-    {
-        return null;
-    }
 }

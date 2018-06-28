@@ -16,21 +16,4 @@ class ProductSetPageSearchConstants
      * @api
      */
     const PRODUCT_SET_RESOURCE_NAME = 'product_set';
-
-
-    /**
-     * Specification:
-     * - Queue name as used for processing Product messages
-     *
-     * @api
-     */
-    const PRODUCT_SET_SYNC_SEARCH_QUEUE = 'sync.search.product';
-
-    /**
-     * Specification:
-     * - Queue name as used for processing Product messages
-     *
-     * @api
-     */
-    const PRODUCT_SET_SYNC_SEARCH_ERROR_QUEUE = 'sync.search.product.error';
 }

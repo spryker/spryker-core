@@ -18,12 +18,4 @@ class ProductPageSearchConfig extends AbstractBundleConfig
     {
         return true;
     }
-
-    /**
-     * @return null|string
-     */
-    public function getProductPageSynchronizationPoolName()
-    {
-        return null;
-    }
 }

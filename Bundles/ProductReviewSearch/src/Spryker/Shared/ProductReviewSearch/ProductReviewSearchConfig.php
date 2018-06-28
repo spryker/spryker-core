@@ -24,20 +24,4 @@ class ProductReviewSearchConfig extends AbstractBundleConfig
      * @api
      */
     const PLUGIN_PRODUCT_PAGE_RATING_DATA = 'PLUGIN_PRODUCT_PAGE_RATING_DATA';
-
-    /**
-     * Specification:
-     * - Queue name as used for processing Product messages
-     *
-     * @api
-     */
-    const PRODUCT_REVIEW_SYNC_SEARCH_QUEUE = 'sync.search.product';
-
-    /**
-     * Specification:
-     * - Queue name as used for processing Product messages
-     *
-     * @api
-     */
-    const PRODUCT_REVIEW_SYNC_SEARCH_ERROR_QUEUE = 'sync.search.product.error';
 }
