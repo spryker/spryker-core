@@ -82,6 +82,8 @@ class ProductMeasurementUnitStorageClient extends AbstractClient implements Prod
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param int $idProductConcrete
