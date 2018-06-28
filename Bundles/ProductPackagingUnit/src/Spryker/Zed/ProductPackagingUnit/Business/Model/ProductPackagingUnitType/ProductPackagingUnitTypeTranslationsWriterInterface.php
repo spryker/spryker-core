@@ -12,16 +12,16 @@ use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 interface ProductPackagingUnitTypeTranslationsWriterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productOptionGroupTransfer
+     * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
      * @return void
      */
-    public function saveTranslations(ProductPackagingUnitTypeTransfer $productOptionGroupTransfer): void;
+    public function saveTranslations(ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer): void;
 
     /**
-     * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productOptionGroupTransfer
+     * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
      * @return bool
      */
-    public function deleteTranslations(ProductPackagingUnitTypeTransfer $productOptionGroupTransfer): bool;
+    public function deleteTranslations(ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer): bool;
 }

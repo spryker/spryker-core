@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductPackagingUnit\Dependency\Facade;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\TranslationTransfer;
 
-class ProductPackagingUnitToGlossaryBridge implements ProductPackagingUnitToGlossaryInterface
+class ProductPackagingUnitToGlossaryFacadeBridge implements ProductPackagingUnitToGlossaryFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Glossary\Business\GlossaryFacadeInterface

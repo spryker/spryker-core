@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade;
 
-class ProductPackagingUnitGuiToLocaleBridge implements ProductPackagingUnitGuiToLocaleInterface
+class ProductPackagingUnitGuiToLocaleFacadeBridge implements ProductPackagingUnitGuiToLocaleFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Locale\Business\LocaleFacadeInterface

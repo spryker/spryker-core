@@ -31,13 +31,15 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
     protected $productPackagingUnitFacade;
 
     /**
+     * @uses \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReader::PRODUCT_ABSTRACT_STORAGE_DEFAULT_VALUES.
+     *
      * default values for packaging unit storage values.
      */
     protected const PRODUCT_ABSTRACT_STORAGE_DEFAULT_VALUES = [
-        'default_amount' => 1,
-        'is_variable' => false,
-        'amount_min' => 1,
-        'amount_interval' => 1,
+        ProductPackagingUnitAmountTransfer::DEFAULT_AMOUNT => 1,
+        ProductPackagingUnitAmountTransfer::IS_VARIABLE => false,
+        ProductPackagingUnitAmountTransfer::AMOUNT_MIN => 1,
+        ProductPackagingUnitAmountTransfer::AMOUNT_INTERVAL => 1,
     ];
 
     /**
@@ -168,7 +170,7 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
             $productConcretePackagingStorageTransfer->setName($this->getDefaultPackagingUnitTypeName());
         }
 
-        $productConcretePackagingStorageTransfer->fromArray($this->createDefaultProductPackagingUnitAmountTransfer(), true);
+        $productConcretePackagingStorageTransfer->fromArray($this->createDefaultProductPackagingUnitAmountTransfer()->toArray(), true);
     }
 
     /**
@@ -191,16 +193,14 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
     }
 
     /**
-     * @return array
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitAmountTransfer
      */
-    protected function createDefaultProductPackagingUnitAmountTransfer(): array
+    protected function createDefaultProductPackagingUnitAmountTransfer(): ProductPackagingUnitAmountTransfer
     {
-        $productPackagingUnitAmount = new ProductPackagingUnitAmountTransfer();
-        $productPackagingUnitAmount
-            ->setDefaultAmount(static::PRODUCT_ABSTRACT_STORAGE_DEFAULT_VALUES['default_amount'])
-            ->setIsVariable(static::PRODUCT_ABSTRACT_STORAGE_DEFAULT_VALUES['is_variable']);
-
-        return $productPackagingUnitAmount->toArray();
+        return (new ProductPackagingUnitAmountTransfer())
+            ->fromArray(
+                static::PRODUCT_ABSTRACT_STORAGE_DEFAULT_VALUES
+            );
     }
 
     /**
@@ -244,8 +244,8 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
 
         if ($productPackagingUnitAmountEntityTransfer->getIsVariable()) {
             $amountMax = $productPackagingUnitAmountEntityTransfer->getAmountMax();
-            $amountMin = $productPackagingUnitAmountEntityTransfer->getAmountMin() ?: static::PRODUCT_ABSTRACT_STORAGE_DEFAULT_VALUES['amount_min'];
-            $amountInterval = $productPackagingUnitAmountEntityTransfer->getAmountInterval() ?: static::PRODUCT_ABSTRACT_STORAGE_DEFAULT_VALUES['amount_interval'];
+            $amountMin = $productPackagingUnitAmountEntityTransfer->getAmountMin() ?: $this->createDefaultProductPackagingUnitAmountTransfer()->getAmountMin();
+            $amountInterval = $productPackagingUnitAmountEntityTransfer->getAmountInterval() ?: $this->createDefaultProductPackagingUnitAmountTransfer()->getAmountInterval();
 
             $productConcretePackagingStorageTransfer
                 ->setAmountMin($amountMin)
