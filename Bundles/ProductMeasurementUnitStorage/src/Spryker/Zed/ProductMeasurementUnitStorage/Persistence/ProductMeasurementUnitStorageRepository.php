@@ -49,24 +49,4 @@ class ProductMeasurementUnitStorageRepository extends AbstractRepository impleme
 
         return $this->buildQueryFromCriteria($query)->find();
     }
-
-    /**
-     * @return array|\Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
-     */
-    public function findAllProductMeasurementUnitTransfers(): array
-    {
-        return $this->getFactory()
-            ->createProductMeasurementUnitRepository()
-            ->findAllProductMeasurementUnitTransfers();
-    }
-
-    /**
-     * @return array|\Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
-     */
-    public function findAllProductConcreteMeasurementUnitTransfers(): array
-    {
-        return $this->getFactory()
-            ->createProductConcreteMeasurementUnitRepository()
-            ->findAllProductMeasurementUnitTransfers();
-    }
 }
