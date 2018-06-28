@@ -22,11 +22,6 @@ class ResponseRelationship implements ResponseRelationshipInterface
     protected $alreadyLoadedResources = [];
 
     /**
-     * @var array
-     */
-    protected $includedResources = [];
-
-    /**
      * @param \Spryker\Glue\GlueApplication\Rest\ResourceRelationshipLoaderInterface $resourceRelationshipProviderLoader
      */
     public function __construct(ResourceRelationshipLoaderInterface $resourceRelationshipProviderLoader)
@@ -80,7 +75,7 @@ class ResponseRelationship implements ResponseRelationshipInterface
             $this->processRelationships($resource->getRelationships(), $restRequest, $included);
         }
 
-        return $included;
+        return array_values($included);
     }
 
     /**
@@ -107,12 +102,7 @@ class ResponseRelationship implements ResponseRelationshipInterface
                 }
 
                 $resourceIdentifier = $resourceType . ':' . $resource->getId();
-                if (isset($this->includedResources[$resourceIdentifier])) {
-                    continue;
-                }
-
-                $this->includedResources[$resourceIdentifier] = true;
-                $included[] = $resource;
+                $included[$resourceIdentifier] = $resource;
             }
         }
     }
