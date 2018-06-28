@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit;
 
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 class ProductMeasurementSalesUnitValue implements ProductMeasurementSalesUnitValueInterface
 {
@@ -68,5 +69,25 @@ class ProductMeasurementSalesUnitValue implements ProductMeasurementSalesUnitVal
     protected function calculateFloatNormalizedValue(int $availabilityValue, float $unitToAvailabilityConversion, int $unitPrecision): float
     {
         return $availabilityValue / $unitToAvailabilityConversion * $unitPrecision;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function calculateSalesUnitValueInQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if (!$itemTransfer->getQuantitySalesUnit()) {
+                continue;
+            }
+
+            $itemTransfer->getQuantitySalesUnit()->setValue(
+                $this->calculateQuantityNormalizedSalesUnitValue($itemTransfer)
+            );
+        }
+
+        return $quoteTransfer;
     }
 }

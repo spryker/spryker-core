@@ -93,6 +93,11 @@ class Store
     protected $currencyIsoCodes = [];
 
     /**
+     * @var array Keys are queue pool names, values are lists of queue connection names.
+     */
+    protected $queuePools = [];
+
+    /**
      * @var string[]
      */
     protected $storesWithSharedPersistence = [];
@@ -404,6 +409,14 @@ class Store
         }
 
         return $defaultCurrencyCode;
+    }
+
+    /**
+     * @return array
+     */
+    public function getQueuePools()
+    {
+        return $this->queuePools;
     }
 
     /**

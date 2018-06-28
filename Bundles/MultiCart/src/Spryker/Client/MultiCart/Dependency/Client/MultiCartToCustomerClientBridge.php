@@ -23,10 +23,6 @@ class MultiCartToCustomerClientBridge implements MultiCartToCustomerClientInterf
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
     public function getCustomer()

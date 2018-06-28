@@ -23,20 +23,4 @@ class CmsBlockStorageCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(CmsBlockStorageDependencyProvider::FACADE_EVENT_BEHAVIOUR);
     }
-
-    /**
-     * @return \Spryker\Zed\CmsBlockStorage\Dependency\Service\CmsBlockStorageToUtilSanitizeServiceInterface
-     */
-    public function getUtilSanitize()
-    {
-        return $this->getProvidedDependency(CmsBlockStorageDependencyProvider::SERVICE_UTIL_SANITIZE);
-    }
-
-    /**
-     * @return \Spryker\Zed\CmsBlockStorage\Dependency\Plugin\CmsBlockStorageDataExpanderPluginInterface[]
-     */
-    public function getContentWidgetDataExpanderPlugins()
-    {
-        return $this->getProvidedDependency(CmsBlockStorageDependencyProvider::PLUGIN_CONTENT_WIDGET_DATA_EXPANDER);
-    }
 }

@@ -9,13 +9,15 @@ namespace Spryker\Zed\ProductCategoryStorage\Communication\Plugin\Event\Listener
 
 use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductCategoryStorage\Communication\ProductCategoryStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductCategoryStorage\Business\ProductCategoryStorageFacadeInterface getFacade()
  */
-class ProductCategoryStorageListener extends AbstractProductCategoryStorageListener implements EventBulkHandlerInterface
+class ProductCategoryStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
@@ -32,6 +34,6 @@ class ProductCategoryStorageListener extends AbstractProductCategoryStorageListe
         $this->preventTransaction();
         $productAbstractIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventTransfers, SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT);
 
-        $this->publish($productAbstractIds);
+        $this->getFacade()->publish($productAbstractIds);
     }
 }

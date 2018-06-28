@@ -7,9 +7,8 @@
 
 namespace Spryker\Zed\SharedCart\Business\Installer;
 
-use Generated\Shared\Transfer\SpyPermissionEntityTransfer;
-use Generated\Shared\Transfer\SpyQuotePermissionGroupEntityTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
+use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToPermissionFacadeInterface;
 use Spryker\Zed\SharedCart\Persistence\SharedCartEntityManagerInterface;
 use Spryker\Zed\SharedCart\SharedCartConfig;
 
@@ -28,13 +27,23 @@ class QuotePermissionGroupInstaller implements QuotePermissionGroupInstallerInte
     protected $sharedCartEntityManager;
 
     /**
+     * @var \Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToPermissionFacadeInterface
+     */
+    protected $permissionFacade;
+
+    /**
      * @param \Spryker\Zed\SharedCart\SharedCartConfig $sharedCartConfig
      * @param \Spryker\Zed\SharedCart\Persistence\SharedCartEntityManagerInterface $sharedCartEntityManager
+     * @param \Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToPermissionFacadeInterface $permissionFacade
      */
-    public function __construct(SharedCartConfig $sharedCartConfig, SharedCartEntityManagerInterface $sharedCartEntityManager)
-    {
+    public function __construct(
+        SharedCartConfig $sharedCartConfig,
+        SharedCartEntityManagerInterface $sharedCartEntityManager,
+        SharedCartToPermissionFacadeInterface $permissionFacade
+    ) {
         $this->sharedCartConfig = $sharedCartConfig;
         $this->sharedCartEntityManager = $sharedCartEntityManager;
+        $this->permissionFacade = $permissionFacade;
     }
 
     /**
@@ -53,27 +62,30 @@ class QuotePermissionGroupInstaller implements QuotePermissionGroupInstallerInte
     protected function executeInstallTransaction(): void
     {
         $quotePermissionGroupTransfers = $this->sharedCartConfig->getQuotePermissionGroups();
+        $this->permissionFacade->syncPermissionPlugins();
 
-        $permissionEntityTransfers = [];
+        $permissionTransferIndex = $this->preparePermissionIndex();
         foreach ($quotePermissionGroupTransfers as $quotePermissionGroupTransfer) {
-            $quotePermissionGroupEntityTransfer = new SpyQuotePermissionGroupEntityTransfer();
-            $quotePermissionGroupEntityTransfer->fromArray($quotePermissionGroupTransfer->modifiedToArray(), true);
-
-            $quotePermissionGroupEntityTransfer = $this->sharedCartEntityManager->saveQuotePermissionGroupEntity($quotePermissionGroupEntityTransfer);
-
+            $quotePermissionGroupEntityTransfer = $this->sharedCartEntityManager->saveQuotePermissionGroup($quotePermissionGroupTransfer);
             foreach ($quotePermissionGroupTransfer->getPermissions() as $permissionTransfer) {
-                if (!isset($permissionEntityTransfers[$permissionTransfer->getKey()])) {
-                    $permissionEntityTransfer = new SpyPermissionEntityTransfer();
-                    $permissionEntityTransfer->fromArray($permissionTransfer->modifiedToArray(), true);
-
-                    $permissionEntityTransfers[$permissionTransfer->getKey()] = $this->sharedCartEntityManager->savePermissionEntity($permissionEntityTransfer);
-                }
-
-                $this->sharedCartEntityManager->saveQuotePermissionGroupToPermissionEntity(
+                $this->sharedCartEntityManager->saveQuotePermissionGroupToPermission(
                     $quotePermissionGroupEntityTransfer,
-                    $permissionEntityTransfers[$permissionTransfer->getKey()]
+                    $permissionTransferIndex[$permissionTransfer->getKey()]
                 );
             }
         }
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\PermissionTransfer[]
+     */
+    protected function preparePermissionIndex(): array
+    {
+        $permissionTransferIndex = [];
+        foreach ($this->permissionFacade->findAll()->getPermissions() as $permissionTransfer) {
+            $permissionTransferIndex[$permissionTransfer->getKey()] = $permissionTransfer;
+        }
+
+        return $permissionTransferIndex;
     }
 }

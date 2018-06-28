@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\OfferGui\Communication\Controller;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\OfferResponseTransfer;
 use Generated\Shared\Transfer\OfferTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
@@ -18,6 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreateController extends AbstractController
 {
+    //If this parameter exist, we create new offer using another one
     public const PARAM_ID_OFFER = 'id-offer';
 
     protected const MESSAGE_OFFER_CREATE_SUCCESS = 'Offer was created successfully.';
@@ -46,7 +48,7 @@ class CreateController extends AbstractController
 
         $offerTransfer = $this->getOfferTransfer($request);
         //When we create customer, this method restores offer data from session.
-        $this->processCustomerRedirect($request, $offerTransfer);
+        $offerTransfer = $this->processCustomerRedirect($request, $offerTransfer);
 
         $form = $this->getFactory()->getOfferForm($offerTransfer, $request);
         $form->handleRequest($request);
@@ -81,9 +83,8 @@ class CreateController extends AbstractController
                     ->getOfferFacade()
                     ->createOffer($offerTransfer);
 
-                $this->addSuccessMessage(static::MESSAGE_OFFER_CREATE_SUCCESS);
-
                 if ($offerResponseTransfer->getIsSuccessful()) {
+                    $this->addSuccessMessage(static::MESSAGE_OFFER_CREATE_SUCCESS);
                     return $this->getSuccessfulRedirect($offerResponseTransfer);
                 }
             }
@@ -140,21 +141,32 @@ class CreateController extends AbstractController
      */
     protected function getOfferTransfer(Request $request)
     {
-        $keyOffer = $request->get(static::PARAM_KEY_INITIAL_OFFER);
+        $idOffer = $request->get(static::PARAM_ID_OFFER);
 
-        $offerJson = $this->getFactory()
-            ->getSessionClient()
-            ->get($keyOffer);
-
-        $offerTransfer = new OfferTransfer();
-
-        if ($offerJson !== null) {
-            $offerTransfer->fromArray(
-                $this->getFactory()
-                    ->getUtilEncoding()
-                    ->decodeJson($offerJson, true)
-            );
+        if ($idOffer === null) {
+            return new OfferTransfer();
         }
+
+        $offerTransfer = (new OfferTransfer())->setIdOffer($idOffer);
+        $offerTransfer = $this->getFactory()
+            ->getOfferFacade()
+            ->getOfferById($offerTransfer);
+
+        $this->cleanupOfferForSession($offerTransfer);
+
+        return $offerTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OfferTransfer $offerTransfer
+     *
+     * @return \Generated\Shared\Transfer\OfferTransfer
+     */
+    protected function cleanupOfferForSession(OfferTransfer $offerTransfer)
+    {
+        $offerTransfer->setIdOffer(null)
+            ->setCustomerReference(null)
+            ->setCustomer(new CustomerTransfer());
 
         return $offerTransfer;
     }
@@ -166,7 +178,7 @@ class CreateController extends AbstractController
      */
     protected function getSuccessfulRedirect(OfferResponseTransfer $offerResponseTransfer)
     {
-        $this->getFactory()->getMessengerFacade()->getStoredMessages();
+        $this->getFactory()->createFlashMessageCleaner()->clearDuplicateMessages();
 
         $redirectUrl = Url::generate(
             static::REDIRECT_URL_OFFER_VIEW,

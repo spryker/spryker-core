@@ -100,9 +100,9 @@ class ProductOptionStorageDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addStore(Container $container): Container
+    protected function addStore(Container $container)
     {
-        $container[self::STORE] = function () {
+        $container[static::STORE] = function () {
             return Store::getInstance();
         };
 

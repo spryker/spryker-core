@@ -9,7 +9,9 @@ namespace Spryker\Client\Cart;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Client\Kernel\PermissionAwareTrait;
@@ -87,12 +89,13 @@ class CartClient extends AbstractClient implements CartClientInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param array $params
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addValidItems(CartChangeTransfer $cartChangeTransfer): QuoteTransfer
+    public function addValidItems(CartChangeTransfer $cartChangeTransfer, array $params = []): QuoteTransfer
     {
-        return $this->getFactory()->getQuoteStorageStrategy()->addValidItems($cartChangeTransfer);
+        return $this->getFactory()->getQuoteStorageStrategy()->addValidItems($cartChangeTransfer, $params);
     }
 
     /**
@@ -231,6 +234,20 @@ class CartClient extends AbstractClient implements CartClientInterface
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function setQuoteCurrency(CurrencyTransfer $currencyTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()->getQuoteStorageStrategy()->setQuoteCurrency($currencyTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return void
      */
     public function addFlashMessagesFromLastZedRequest()
@@ -258,5 +275,21 @@ class CartClient extends AbstractClient implements CartClientInterface
     protected function getQuoteClient()
     {
         return $this->getFactory()->getQuoteClient();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $sku
+     * @param string|null $groupKey
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer|null
+     */
+    public function findQuoteItem(QuoteTransfer $quoteTransfer, string $sku, ?string $groupKey = null): ?ItemTransfer
+    {
+        return $this->getFactory()->getQuoteItemFinderPlugin()->findItem($quoteTransfer, $sku, $groupKey);
     }
 }

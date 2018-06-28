@@ -113,7 +113,7 @@ class ItemType extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
-     * @return \Spryker\Zed\OfferGui\Communication\Form\Item\ItemType
+     * @return $this
      */
     protected function addManualUnitPriceField(FormBuilderInterface $builder, array $options)
     {

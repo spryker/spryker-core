@@ -24,7 +24,7 @@ class OffersTable extends AbstractTable
     protected const URL_OFFER_GUI_EDIT = '/offer-gui/edit/';
     protected const URL_OFFER_GUI_VIEW_DETAILS = '/offer-gui/view/details';
     protected const URL_OFFER_GUI_PRINT_VERSION = '/offer-gui/view/print-version';
-    protected const URL_OFFER_GUI_SUGGEST = '/offer-gui/copy';
+    protected const URL_OFFER_GUI_SUGGEST = '/offer-gui/create';
     protected const URL_OFFER_GUI_PLACE_ORDER = '/offer-gui/place-order/';
     protected const URL_PARAM_ID_OFFER = 'id-offer';
 
@@ -144,17 +144,18 @@ class OffersTable extends AbstractTable
 
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
+     * @param bool $customerExists
      *
      * @return string
      */
-    protected function formatCustomer(?CustomerTransfer $customerTransfer)
+    protected function formatCustomer(?CustomerTransfer $customerTransfer, bool $customerExists)
     {
         if (!$customerTransfer) {
             return 'No reference';
         }
 
         $customer = sprintf(
-            '%s%s %s',
+            '%s. %s %s',
             $customerTransfer->getSalutation(),
             $customerTransfer->getFirstName(),
             $customerTransfer->getLastName()
@@ -166,11 +167,13 @@ class OffersTable extends AbstractTable
             return $customer;
         }
 
-        $url = Url::generate('/customer/view', [
-            'id-customer' => $customerTransfer->getIdCustomer(),
-        ]);
+        if ($customerExists) {
+            $url = Url::generate('/customer/view', [
+                'id-customer' => $customerTransfer->getIdCustomer(),
+            ]);
 
-        $customer = '<a href="' . $url . '">' . $customer . '</a>';
+            $customer = '<a href="' . $url . '">' . $customer . '</a>';
+        }
 
         return $customer;
     }
@@ -339,15 +342,22 @@ class OffersTable extends AbstractTable
         $results = [];
         foreach ($queryResults as $item) {
             $quoteTransfer = $this->mapQuote($item);
-            $customerTransfer = $this->getCustomer($item);
+
+            $customerExists = true;
+            $customerTransfer = $this->getCustomerByReference($item);
+
+            if ($customerTransfer === null) {
+                $customerTransfer = $this->getCustomerFromQuoteTransfer($quoteTransfer);
+                $customerExists = false;
+            }
 
             $results[] = [
                 static::COL_ID_OFFER => $item[SpyOfferTableMap::COL_ID_OFFER],
                 static::COL_CREATED_AT => $this->utilDateTimeService->formatDateTime($item[SpyOfferTableMap::COL_CREATED_AT]),
-                static::COL_CUSTOMER_REFERENCE => $this->formatCustomer($customerTransfer),
+                static::COL_CUSTOMER_REFERENCE => $this->formatCustomer($customerTransfer, $customerExists),
                 static::COL_EMAIL => $this->formatEmailAddress($customerTransfer),
                 static::COL_GRAND_TOTAL => $this->getGrandTotal($quoteTransfer),
-                static::COL_CONTACT_DATE => $this->utilDateTimeService->formatDate($item[SpyOfferTableMap::COL_CONTACT_DATE]),
+                static::COL_CONTACT_DATE => $this->formatContactDate($item[SpyOfferTableMap::COL_CONTACT_DATE]),
                 static::COL_CONTACT_PERSON => $item[SpyOfferTableMap::COL_CONTACT_PERSON],
                 static::COL_STATUS => $item[SpyOfferTableMap::COL_STATUS],
                 static::COL_NOTE => $item[SpyOfferTableMap::COL_NOTE],
@@ -382,10 +392,34 @@ class OffersTable extends AbstractTable
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    protected function getCustomer(array $item): ?CustomerTransfer
+    protected function getCustomerByReference(array $item): ?CustomerTransfer
     {
         return $this->customerFacade->findCustomerByReference(
             $item[SpyOfferTableMap::COL_CUSTOMER_REFERENCE]
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    protected function getCustomerFromQuoteTransfer(QuoteTransfer $quoteTransfer): ?CustomerTransfer
+    {
+        return $quoteTransfer->getCustomer();
+    }
+
+    /**
+     * @param string|null $contactDate
+     *
+     * @return string
+     */
+    protected function formatContactDate(?string $contactDate): string
+    {
+        if (!$contactDate) {
+            return '';
+        }
+
+        return $this->utilDateTimeService->formatDate($contactDate);
     }
 }

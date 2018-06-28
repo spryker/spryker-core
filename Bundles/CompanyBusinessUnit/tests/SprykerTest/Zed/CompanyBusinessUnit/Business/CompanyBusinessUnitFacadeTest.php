@@ -1,9 +1,16 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace SprykerTest\Zed\CompanyBusinessUnit\Business;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\DataBuilder\CompanyBusinessUnitBuilder;
+use Generated\Shared\Transfer\CompanyUserResponseTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use TypeError;
 
 /**
@@ -117,7 +124,27 @@ class CompanyBusinessUnitFacadeTest extends Test
     /**
      * @return void
      */
-    public function testGetCompanyBusinessUnitCollectionshouldReturnTransferObject()
+    public function testAssignDefaultBusinessUnitToCompanyUserShouldAssignFkCompanyBusinessUnitIfIsNotSet()
+    {
+        $companyTransfer = $this->tester->haveCompany();
+        $companyBusinessUnitTransfer = $this->tester->haveCompanyBusinessUnit([
+            CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+        ]);
+        $companyUser = (new CompanyUserTransfer())->setFkCompany($companyTransfer->getIdCompany());
+        $companyUserResponseTransfer = (new CompanyUserResponseTransfer())->setCompanyUser($companyUser);
+
+        $companyUserResponseTransfer = $this->getFacade()->assignDefaultBusinessUnitToCompanyUser($companyUserResponseTransfer);
+
+        $this->assertEquals(
+            $companyBusinessUnitTransfer->getIdCompanyBusinessUnit(),
+            $companyUserResponseTransfer->getCompanyUser()->getFkCompanyBusinessUnit()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCompanyBusinessUnitCollectionShouldReturnTransferObject()
     {
     }
 

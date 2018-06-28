@@ -8,7 +8,6 @@
 namespace Spryker\Zed\SharedCart\Communication\Plugin;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Spryker\Zed\Customer\Dependency\Plugin\CustomerTransferExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -19,48 +18,19 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class QuotePermissionCustomerExpanderPlugin extends AbstractPlugin implements CustomerTransferExpanderPluginInterface
 {
     /**
+     * Specification:
+     *  - Add quote permissions for customer company user to customer.
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function expandTransfer(CustomerTransfer $customerTransfer): CustomerTransfer
     {
-        if ($customerTransfer->getCompanyUserTransfer()) {
-            $permissionCollectionTransfer = $this->getFacade()
-                ->findPermissionsByIdCompanyUser(
-                    $customerTransfer
-                        ->getCompanyUserTransfer()
-                        ->getIdCompanyUser()
-                );
-
-            return $this->addCustomerPermissions($customerTransfer, $permissionCollectionTransfer);
-        }
-
-        return $customerTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     * @param \Generated\Shared\Transfer\PermissionCollectionTransfer $permissionCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
-     */
-    protected function addCustomerPermissions(
-        CustomerTransfer $customerTransfer,
-        PermissionCollectionTransfer $permissionCollectionTransfer
-    ): CustomerTransfer {
-        if (!$customerTransfer->getPermissions()) {
-            $customerTransfer->setPermissions($permissionCollectionTransfer);
-
+        if (!$customerTransfer->getCompanyUserTransfer()) {
             return $customerTransfer;
         }
 
-        $customerPermissionCollectionTransfer = $customerTransfer->getPermissions();
-        foreach ($permissionCollectionTransfer->getPermissions() as $permissionTransfer) {
-            $customerPermissionCollectionTransfer->addPermission($permissionTransfer);
-        }
-        $customerTransfer->setPermissions($customerPermissionCollectionTransfer);
-
-        return $customerTransfer;
+        return $this->getFacade()->expandCustomer($customerTransfer);
     }
 }

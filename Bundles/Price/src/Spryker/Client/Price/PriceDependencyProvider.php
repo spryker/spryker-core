@@ -14,6 +14,7 @@ use Spryker\Client\Price\Dependency\Client\PriceToQuoteClientBridge;
 class PriceDependencyProvider extends AbstractDependencyProvider
 {
     const CLIENT_QUOTE = 'CLIENT_QUOTE';
+    public const PLUGINS_PRICE_MODE_POST_UPDATE = 'PLUGINS_PRICE_MODE_POST_UPDATE';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -23,6 +24,7 @@ class PriceDependencyProvider extends AbstractDependencyProvider
     public function provideServiceLayerDependencies(Container $container)
     {
         $container = $this->addQuoteClient($container);
+        $container = $this->addPriceModePostUpdatePlugins($container);
 
         return $container;
     }
@@ -39,5 +41,27 @@ class PriceDependencyProvider extends AbstractDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addPriceModePostUpdatePlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_PRICE_MODE_POST_UPDATE] = function (Container $container) {
+            return $this->getPriceModePostUpdatePlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Client\PriceExtension\Dependency\Plugin\PriceModePostUpdatePluginInterface[]
+     */
+    protected function getPriceModePostUpdatePlugins(): array
+    {
+        return [];
     }
 }

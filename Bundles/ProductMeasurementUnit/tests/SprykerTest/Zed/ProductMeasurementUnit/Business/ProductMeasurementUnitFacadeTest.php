@@ -11,10 +11,10 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 use Generated\Shared\Transfer\SpyProductMeasurementUnitEntityTransfer;
-use PHPUnit\Framework\SkippedTestError;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductMeasurementUnit
@@ -59,7 +59,7 @@ class ProductMeasurementUnitFacadeTest extends Unit
             ->setGroupKey($dummyGroupKey);
 
         // Act
-        $actualResult = $this->productMeasurementUnitFacade->expandItemGroupKeyWithSalesUnit($itemTransfer);
+        $actualResult = $this->productMeasurementUnitFacade->expandItemGroupKeyWithQuantitySalesUnit($itemTransfer);
 
         // Assert
         $this->assertSame($expectedResult, $actualResult);
@@ -80,7 +80,7 @@ class ProductMeasurementUnitFacadeTest extends Unit
             ->setGroupKey($dummyGroupKey);
 
         // Act
-        $actualResult = $this->productMeasurementUnitFacade->expandItemGroupKeyWithSalesUnit($itemTransfer);
+        $actualResult = $this->productMeasurementUnitFacade->expandItemGroupKeyWithQuantitySalesUnit($itemTransfer);
 
         // Assert
         $this->assertRegExp($expectedPregMatch, $actualResult);
@@ -121,61 +121,16 @@ class ProductMeasurementUnitFacadeTest extends Unit
     {
         // round(1st / 2nd * 3rd) = 4th
         return [
-            [ 7, 1.25, 1000, 5600],
-            [ 7, 1.25,  100,  560],
-            [ 7, 1.25,   10,   56],
-            [ 7, 1.25,    1,    6],
-            [10,    5,    1,    2],
-            [13,    7, 1000, 1857],
-            [13,    7,  100,  186],
-            [13,    7,   10,   19],
-            [13,    7,    1,    2],
+            [7, 1.25, 1000, 5600],
+            [7, 1.25, 100, 560],
+            [7, 1.25, 10, 56],
+            [7, 1.25, 1, 6],
+            [10, 5, 1, 2],
+            [13, 7, 1000, 1857],
+            [13, 7, 100, 186],
+            [13, 7, 10, 19],
+            [13, 7, 1, 2],
         ];
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetBaseUnitByIdProductReturnsCorrespondingBaseUnit()
-    {
-        // Assign
-        $code = 'MYCODE' . rand(1, 100);
-        $productTransfer = $this->tester->haveProduct();
-        $productMeasurementUnitTransfer = $this->tester->haveProductMeasurementUnit([
-            SpyProductMeasurementUnitEntityTransfer::CODE => $code,
-        ]);
-        $productMeasurementBaseUnitTransfer = $this->tester->haveProductMeasurementBaseUnit(
-            $productTransfer->getFkProductAbstract(),
-            $productMeasurementUnitTransfer->getIdProductMeasurementUnit()
-        );
-        $expectedIdBaseUnit = $productMeasurementBaseUnitTransfer->getIdProductMeasurementBaseUnit();
-
-        // Act
-        $productMeasurementBaseUnitTransfer = $this->productMeasurementUnitFacade->getBaseUnitByIdProduct($productTransfer->getIdProductConcrete());
-        $actualIdBaseUnit = $productMeasurementBaseUnitTransfer->getIdProductMeasurementBaseUnit();
-
-        // Assert
-        $this->assertSame($expectedIdBaseUnit, $actualIdBaseUnit);
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetProductMeasurementUnitCodeMapReturnsCodes()
-    {
-        // Assign
-        $code = 'MYCODE' . rand(1, 100);
-        $productMeasurementUnitTransfer = $this->tester->haveProductMeasurementUnit([
-            SpyProductMeasurementUnitEntityTransfer::CODE => $code,
-        ]);
-        $expectedCode = $code;
-        $expectedId = $productMeasurementUnitTransfer->getIdProductMeasurementUnit();
-
-        // Act
-        $codeMap = $this->productMeasurementUnitFacade->getProductMeasurementUnitCodeMap();
-
-        // Assert
-        $this->assertSame($expectedCode, $codeMap[$expectedId]);
     }
 
     /**
@@ -184,14 +139,14 @@ class ProductMeasurementUnitFacadeTest extends Unit
     public function testFindProductMeasurementUnitEntitiesReturnsProductMeasurementUnitEntities()
     {
         // Assign
-        $code = 'MYCODE' . rand(1, 100);
+        $code = 'MYCODE' . random_int(1, 100);
         $productMeasurementUnitTransfer = $this->tester->haveProductMeasurementUnit([
             SpyProductMeasurementUnitEntityTransfer::CODE => $code,
         ]);
         $expectedCode = $code;
 
         // Act
-        $productMeasurementUnitTransfer = $this->productMeasurementUnitFacade->findProductMeasurementUnitEntities([$productMeasurementUnitTransfer->getIdProductMeasurementUnit()]);
+        $productMeasurementUnitTransfer = $this->productMeasurementUnitFacade->findProductMeasurementUnitTransfers([$productMeasurementUnitTransfer->getIdProductMeasurementUnit()]);
         $actualCode = $productMeasurementUnitTransfer[0]->getCode();
 
         // Assert
@@ -201,45 +156,10 @@ class ProductMeasurementUnitFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetSalesUnitEntityRetrievesSalesUnitEntity()
-    {
-        $this->assertDbPgSql();
-
-        // Assign
-        $code = 'MYCODE' . rand(1, 100);
-        $productTransfer = $this->tester->haveProduct();
-        $productMeasurementUnitTransfer = $this->tester->haveProductMeasurementUnit([
-            SpyProductMeasurementUnitEntityTransfer::CODE => $code,
-        ]);
-        $productMeasurementBaseUnitTransfer = $this->tester->haveProductMeasurementBaseUnit(
-            $productTransfer->getFkProductAbstract(),
-            $productMeasurementUnitTransfer->getIdProductMeasurementUnit()
-        );
-        $productMeasurementSalesUnitTransfer = $this->tester->haveProductMeasurementSalesUnit(
-            $productTransfer->getIdProductConcrete(),
-            $productMeasurementUnitTransfer->getIdProductMeasurementUnit(),
-            $productMeasurementBaseUnitTransfer->getIdProductMeasurementBaseUnit()
-        );
-
-        $expectedIdSalesUnit = $productMeasurementSalesUnitTransfer->getIdProductMeasurementSalesUnit();
-
-        // Act
-        $salesUnitTransfer = $this->productMeasurementUnitFacade->getSalesUnitEntity($expectedIdSalesUnit);
-        $actualIdSalesUnit = $salesUnitTransfer->getIdProductMeasurementSalesUnit();
-
-        // Assert
-        $this->assertSame($expectedIdSalesUnit, $actualIdSalesUnit);
-    }
-
-    /**
-     * @return void
-     */
     public function testGetSalesUnitsByIdProductRetrievesAllProductRelatedSalesUnits()
     {
-        $this->assertDbPgSql();
-
         // Assign
-        $code = 'MYCODE' . rand(1, 100);
+        $code = 'MYCODE' . random_int(1, 100);
         $productTransfer = $this->tester->haveProduct();
         $productMeasurementUnitTransfer = $this->tester->haveProductMeasurementUnit([
             SpyProductMeasurementUnitEntityTransfer::CODE => $code,
@@ -274,14 +194,41 @@ class ProductMeasurementUnitFacadeTest extends Unit
     }
 
     /**
-     * @throws \PHPUnit\Framework\SkippedTestError
-     *
      * @return void
      */
-    protected function assertDbPgSql()
+    public function testExpandCartChangeWithQuantitySalesUnitExpandsCartChangeWithQuantitySalesUnit()
     {
-        if (!$this->tester->isDbPgSql()) {
-            throw new SkippedTestError('Warning: no PostgreSQL is detected');
+        // Assign
+        $code = 'MYCODE' . random_int(1, 100);
+        $productTransfer = $this->tester->haveProduct();
+        $productMeasurementUnitTransfer = $this->tester->haveProductMeasurementUnit([
+            SpyProductMeasurementUnitEntityTransfer::CODE => $code,
+        ]);
+
+        $productMeasurementBaseUnitTransfer = $this->tester->haveProductMeasurementBaseUnit(
+            $productTransfer->getFkProductAbstract(),
+            $productMeasurementUnitTransfer->getIdProductMeasurementUnit()
+        );
+
+        $productMeasurementSalesUnitTransfer = $this->tester->haveProductMeasurementSalesUnit(
+            $productTransfer->getIdProductConcrete(),
+            $productMeasurementUnitTransfer->getIdProductMeasurementUnit(),
+            $productMeasurementBaseUnitTransfer->getIdProductMeasurementBaseUnit()
+        );
+
+        $cartChangeTransfer = $this->tester->createEmptyCartChangeTransfer();
+        $cartChangeTransfer = $this->tester->addSkuToCartChangeTransfer(
+            $cartChangeTransfer,
+            $productMeasurementSalesUnitTransfer->getIdProductMeasurementSalesUnit(),
+            $productTransfer->getSku()
+        );
+
+        //Act
+        $cartChangeTransfer = $this->productMeasurementUnitFacade->expandCartChangeWithQuantitySalesUnit($cartChangeTransfer);
+
+        //Assert
+        foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
+            $this->assertNotNull($itemTransfer->getQuantitySalesUnit()->getConversion());
         }
     }
 }

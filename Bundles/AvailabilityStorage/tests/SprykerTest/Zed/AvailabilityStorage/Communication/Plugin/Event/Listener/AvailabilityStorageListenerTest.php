@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2018-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -11,8 +12,6 @@ use Generated\Shared\Transfer\EventEntityTransfer;
 use Orm\Zed\AvailabilityStorage\Persistence\SpyAvailabilityStorageQuery;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use PHPUnit\Framework\SkippedTestError;
-use Propel\Runtime\Propel;
-use Silex\Application;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
 use Spryker\Zed\Availability\Dependency\AvailabilityEvents;
@@ -21,7 +20,6 @@ use Spryker\Zed\AvailabilityStorage\Business\AvailabilityStorageFacade;
 use Spryker\Zed\AvailabilityStorage\Communication\Plugin\Event\Listener\AvailabilityProductStorageListener;
 use Spryker\Zed\AvailabilityStorage\Communication\Plugin\Event\Listener\AvailabilityStorageListener;
 use Spryker\Zed\Product\Dependency\ProductEvents;
-use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 use SprykerTest\Zed\AvailabilityStorage\AvailabilityStorageConfigMock;
 
 /**
@@ -45,14 +43,10 @@ class AvailabilityStorageListenerTest extends Unit
      */
     protected function setUp()
     {
-        $dbType = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
-        if ($dbType !== 'pgsql') {
+        $dbEngine = Config::get(PropelQueryBuilderConstants::ZED_DB_ENGINE);
+        if ($dbEngine !== 'pgsql') {
             throw new SkippedTestError('Warning: no PostgreSQL is detected');
         }
-
-        Propel::disableInstancePooling();
-        $propelServiceProvider = new PropelServiceProvider();
-        $propelServiceProvider->boot(new Application());
     }
 
     /**
@@ -123,7 +117,7 @@ class AvailabilityStorageListenerTest extends Unit
     {
         $availabilityStorageCount = SpyAvailabilityStorageQuery::create()->count();
         $this->assertEquals($previousCount + 2, $availabilityStorageCount);
-        $availabilityStorageEntity = SpyAvailabilityStorageQuery::create()->findOneByFkProductAbstract(1);
+        $availabilityStorageEntity = SpyAvailabilityStorageQuery::create()->orderByIdAvailabilityStorage()->findOneByFkProductAbstract(1);
         $this->assertNotNull($availabilityStorageEntity);
         $data = $availabilityStorageEntity->getData();
         $this->assertEquals(10, $data['quantity']);

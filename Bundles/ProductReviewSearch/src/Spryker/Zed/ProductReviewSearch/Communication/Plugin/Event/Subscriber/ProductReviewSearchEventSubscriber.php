@@ -15,6 +15,7 @@ use Spryker\Zed\ProductReviewSearch\Communication\Plugin\Event\Listener\ProductR
 
 /**
  * @method \Spryker\Zed\ProductReviewSearch\Communication\ProductReviewSearchCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductReviewSearch\Business\ProductReviewSearchFacadeInterface getFacade()
  */
 class ProductReviewSearchEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
@@ -27,13 +28,62 @@ class ProductReviewSearchEventSubscriber extends AbstractPlugin implements Event
      */
     public function getSubscribedEvents(EventCollectionInterface $eventCollection)
     {
-        $eventCollection
-            ->addListenerQueued(ProductReviewEvents::PRODUCT_REVIEW_PUBLISH, new ProductReviewSearchListener())
-            ->addListenerQueued(ProductReviewEvents::PRODUCT_REVIEW_UNPUBLISH, new ProductReviewSearchListener())
-            ->addListenerQueued(ProductReviewEvents::ENTITY_SPY_PRODUCT_REVIEW_CREATE, new ProductReviewSearchListener())
-            ->addListenerQueued(ProductReviewEvents::ENTITY_SPY_PRODUCT_REVIEW_UPDATE, new ProductReviewSearchListener())
-            ->addListenerQueued(ProductReviewEvents::ENTITY_SPY_PRODUCT_REVIEW_DELETE, new ProductReviewSearchListener());
+        $this->addProductReviewPublishSearchListener($eventCollection);
+        $this->addProductReviewUnpublishSearchListener($eventCollection);
+        $this->addProductReviewCreateSearchListener($eventCollection);
+        $this->addProductReviewUpdateSearchListener($eventCollection);
+        $this->addProductReviewDeleteSearchListener($eventCollection);
 
         return $eventCollection;
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductReviewPublishSearchListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(ProductReviewEvents::PRODUCT_REVIEW_PUBLISH, new ProductReviewSearchListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductReviewUnpublishSearchListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(ProductReviewEvents::PRODUCT_REVIEW_UNPUBLISH, new ProductReviewSearchListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductReviewCreateSearchListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(ProductReviewEvents::ENTITY_SPY_PRODUCT_REVIEW_CREATE, new ProductReviewSearchListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductReviewUpdateSearchListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(ProductReviewEvents::ENTITY_SPY_PRODUCT_REVIEW_UPDATE, new ProductReviewSearchListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductReviewDeleteSearchListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(ProductReviewEvents::ENTITY_SPY_PRODUCT_REVIEW_DELETE, new ProductReviewSearchListener());
     }
 }

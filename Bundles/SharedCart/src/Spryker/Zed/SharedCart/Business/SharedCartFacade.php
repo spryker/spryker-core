@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SharedCart\Business;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupResponseTransfer;
@@ -133,5 +134,34 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
     public function deleteShareForQuote(QuoteTransfer $quoteTransfer): void
     {
         $this->getEntityManager()->deleteQuoteCompanyUserByQuote($quoteTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function expandCustomer(CustomerTransfer $customerTransfer): CustomerTransfer
+    {
+        return $this->getFactory()->createCustomerExpander()->expandCustomer($customerTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idQuote
+     * @param int $idCompanyUser
+     *
+     * @return bool
+     */
+    public function isSharedQuoteDefault(int $idQuote, int $idCompanyUser): bool
+    {
+        return $this->getRepository()->isSharedQuoteDefault($idQuote, $idCompanyUser);
     }
 }

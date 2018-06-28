@@ -10,6 +10,8 @@ namespace Spryker\Zed\SharedCart\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\SharedCart\Business\Activator\QuoteActivator;
 use Spryker\Zed\SharedCart\Business\Activator\QuoteActivatorInterface;
+use Spryker\Zed\SharedCart\Business\CustomerExpander\CustomerExpander;
+use Spryker\Zed\SharedCart\Business\CustomerExpander\CustomerExpanderInterface;
 use Spryker\Zed\SharedCart\Business\Installer\QuotePermissionGroupInstaller;
 use Spryker\Zed\SharedCart\Business\Installer\QuotePermissionGroupInstallerInterface;
 use Spryker\Zed\SharedCart\Business\Model\QuoteCompanyUserWriter;
@@ -23,6 +25,8 @@ use Spryker\Zed\SharedCart\Business\QuoteResponseExpander\CustomerShareCartQuote
 use Spryker\Zed\SharedCart\Business\QuoteResponseExpander\QuoteResponseExpander;
 use Spryker\Zed\SharedCart\Business\QuoteResponseExpander\QuoteResponseExpanderInterface;
 use Spryker\Zed\SharedCart\Business\QuoteResponseExpander\QuoteShareDetailsQuoteResponseExpander;
+use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToCustomerFacadeInterface;
+use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToPermissionFacadeInterface;
 use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToQuoteFacadeInterface;
 use Spryker\Zed\SharedCart\SharedCartDependencyProvider;
 
@@ -46,7 +50,7 @@ class SharedCartBusinessFactory extends AbstractBusinessFactory
      */
     public function createCustomerPermissionQuoteResponseExpander(): QuoteResponseExpanderInterface
     {
-        return new CustomerPermissionQuoteResponseExpander($this->getCustomerFacade());
+        return new CustomerPermissionQuoteResponseExpander($this->getCustomerFacade(), $this->getRepository());
     }
 
     /**
@@ -88,7 +92,8 @@ class SharedCartBusinessFactory extends AbstractBusinessFactory
     {
         return new QuotePermissionGroupInstaller(
             $this->getConfig(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
+            $this->getPermissionFacade()
         );
     }
 
@@ -112,9 +117,19 @@ class SharedCartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\SharedCart\Business\CustomerExpander\CustomerExpanderInterface
+     */
+    public function createCustomerExpander(): CustomerExpanderInterface
+    {
+        return new CustomerExpander(
+            $this->getRepository()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToCustomerFacadeInterface
      */
-    public function getCustomerFacade()
+    public function getCustomerFacade(): SharedCartToCustomerFacadeInterface
     {
         return $this->getProvidedDependency(SharedCartDependencyProvider::FACADE_CUSTOMER);
     }
@@ -125,6 +140,14 @@ class SharedCartBusinessFactory extends AbstractBusinessFactory
     public function getQuoteFacade(): SharedCartToQuoteFacadeInterface
     {
         return $this->getProvidedDependency(SharedCartDependencyProvider::FACADE_QUOTE);
+    }
+
+    /**
+     * @return \Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToPermissionFacadeInterface
+     */
+    public function getPermissionFacade(): SharedCartToPermissionFacadeInterface
+    {
+        return $this->getProvidedDependency(SharedCartDependencyProvider::FACADE_PERMISSION);
     }
 
     /**

@@ -7,7 +7,7 @@
     "spryker/kernel": "^3.0.0",
     "spryker/product": "^5.0.0 || ^6.0.0",
     "spryker/product-label": "^2.1.0",
-    "spryker/product-label-storage": "^0.1.0",
+    "spryker/product-label-storage": "^0.1.0 || ^1.0.0",
     "spryker/propel-orm": "^1.1.0",
     "spryker/search": "^7.0.0 || ^8.0.0"
   },

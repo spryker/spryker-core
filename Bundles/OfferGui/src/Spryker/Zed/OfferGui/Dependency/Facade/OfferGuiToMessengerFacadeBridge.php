@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\OfferGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\MessageTransfer;
+
 class OfferGuiToMessengerFacadeBridge implements OfferGuiToMessengerFacadeInterface
 {
     /**
@@ -28,5 +30,35 @@ class OfferGuiToMessengerFacadeBridge implements OfferGuiToMessengerFacadeInterf
     public function getStoredMessages()
     {
         return $this->messengerFacade->getStoredMessages();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MessageTransfer $message
+     *
+     * @return void
+     */
+    public function addSuccessMessage(MessageTransfer $message)
+    {
+        $this->messengerFacade->addSuccessMessage($message);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MessageTransfer $message
+     *
+     * @return void
+     */
+    public function addErrorMessage(MessageTransfer $message)
+    {
+        $this->messengerFacade->addErrorMessage($message);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MessageTransfer $message
+     *
+     * @return void
+     */
+    public function addInfoMessage(MessageTransfer $message)
+    {
+        $this->messengerFacade->addInfoMessage($message);
     }
 }

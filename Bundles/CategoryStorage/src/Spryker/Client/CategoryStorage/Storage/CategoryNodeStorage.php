@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\CategoryStorage\Dependency\Client\CategoryStorageToStorageInterface;
 use Spryker\Client\CategoryStorage\Dependency\Service\CategoryStorageToSynchronizationServiceInterface;
 use Spryker\Shared\CategoryStorage\CategoryStorageConstants;
-use Spryker\Shared\Kernel\Store;
 
 class CategoryNodeStorage implements CategoryNodeStorageInterface
 {
@@ -63,11 +62,8 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
      */
     protected function generateKey($idCategoryNode, $locale)
     {
-        $store = Store::getInstance()->getStoreName();
-
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer->setReference($idCategoryNode);
-        $synchronizationDataTransfer->setStore($store);
         $synchronizationDataTransfer->setLocale($locale);
 
         return $this->synchronizationService->getStorageKeyBuilder(CategoryStorageConstants::CATEGORY_NODE_RESOURCE_NAME)->generateKey($synchronizationDataTransfer);

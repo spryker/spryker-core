@@ -33,4 +33,14 @@ class ProductOptionStorageToProductOptionFacadeBridge implements ProductOptionSt
     {
         return $this->productOptionFacade->getProductOptionValueStorePrices($storePricesRequestTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOptionValueStorePricesRequestTransfer $storePricesRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOptionValueStorePricesResponseTransfer
+     */
+    public function getAllProductOptionValuePrices(ProductOptionValueStorePricesRequestTransfer $storePricesRequestTransfer)
+    {
+        return $this->productOptionFacade->getAllProductOptionValuePrices($storePricesRequestTransfer);
+    }
 }

@@ -12,7 +12,7 @@ interface ProductQuantityStorageToProductQuantityFacadeInterface
     /**
      * @param int[] $productIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductQuantityEntityTransfer[]
+     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
      */
-    public function findProductQuantityEntitiesByProductIds(array $productIds): array;
+    public function findProductQuantityTransfersByProductIds(array $productIds): array;
 }

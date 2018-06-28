@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CmsBlockProductStorage;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\CmsBlockProductStorage\Dependency\Facade\CmsBlockProductStorageToEventBehaviorFacadeBridge;
 use Spryker\Zed\CmsBlockProductStorage\Dependency\QueryContainer\CmsBlockProductStorageToCmsBlockProductConnectorQueryContainerBridge;
 use Spryker\Zed\CmsBlockProductStorage\Dependency\Service\CmsBlockProductStorageToUtilSanitizeServiceBridge;
@@ -19,7 +18,6 @@ class CmsBlockProductStorageDependencyProvider extends AbstractBundleDependencyP
     const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     const QUERY_CONTAINER_CMS_BLOCK_PRODUCT_CONNECTOR = 'QUERY_CONTAINER_CMS_BLOCK_PRODUCT_CONNECTOR';
-    const STORE = 'STORE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -28,16 +26,22 @@ class CmsBlockProductStorageDependencyProvider extends AbstractBundleDependencyP
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[static::SERVICE_UTIL_SANITIZE] = function (Container $container) {
-            return new CmsBlockProductStorageToUtilSanitizeServiceBridge($container->getLocator()->utilSanitize()->service());
-        };
-
         $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
             return new CmsBlockProductStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
         };
 
-        $container[static::STORE] = function (Container $container) {
-            return Store::getInstance();
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideBusinessLayerDependencies(Container $container)
+    {
+        $container[static::SERVICE_UTIL_SANITIZE] = function (Container $container) {
+            return new CmsBlockProductStorageToUtilSanitizeServiceBridge($container->getLocator()->utilSanitize()->service());
         };
 
         return $container;

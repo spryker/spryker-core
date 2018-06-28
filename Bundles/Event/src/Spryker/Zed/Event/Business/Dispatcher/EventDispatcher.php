@@ -64,7 +64,7 @@ class EventDispatcher implements EventDispatcherInterface
     {
         foreach ($this->extractEventListeners($eventName) as $eventListener) {
             if ($eventListener->isHandledInQueue()) {
-                $this->eventQueueProducer->enqueueListener($eventName, $eventTransfer, $eventListener->getListenerName());
+                $this->eventQueueProducer->enqueueListener($eventName, $eventTransfer, $eventListener->getListenerName(), $eventListener->getQueuePoolName());
             } elseif ($eventListener instanceof EventHandlerInterface) {
                 $eventListener->handle($eventTransfer, $eventName);
             }
@@ -75,7 +75,7 @@ class EventDispatcher implements EventDispatcherInterface
     /**
      * @param string $eventName
      *
-     * @return \SplPriorityQueue|\Spryker\Zed\Event\Business\\Dispatcher\EventListenerContextInterface[]
+     * @return \SplPriorityQueue|\Spryker\Zed\Event\Business\Dispatcher\EventListenerContextInterface[]
      */
     protected function extractEventListeners($eventName)
     {

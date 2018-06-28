@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductPageSearch\Dependency\Facade;
 
+use Generated\Shared\Transfer\PriceProductFilterTransfer;
+
 class ProductPageSearchToPriceProductBridge implements ProductPageSearchToPriceProductInterface
 {
     /**
@@ -23,23 +25,32 @@ class ProductPageSearchToPriceProductBridge implements ProductPageSearchToPriceP
     }
 
     /**
-     * @param string $sku
-     * @param string|null $priceTypeName
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceFilterTransfer
      *
-     * @return int
+     * @return int|null
      */
-    public function findPriceBySku($sku, $priceTypeName = null)
+    public function findPriceFor(PriceProductFilterTransfer $priceFilterTransfer)
     {
-        return $this->priceProductFacade->findPriceBySku($sku, $priceTypeName);
+        return $this->priceProductFacade->findPriceFor($priceFilterTransfer);
     }
 
     /**
-     * @param string $sku
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function findProductAbstractPrices($idProductAbstract)
+    {
+        return $this->priceProductFacade->findProductAbstractPrices($idProductAbstract);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
      * @return array
      */
-    public function findPricesBySkuGroupedForCurrentStore($sku)
+    public function groupPriceProductCollection(array $priceProductTransfers)
     {
-        return $this->priceProductFacade->findPricesBySkuGroupedForCurrentStore($sku);
+        return $this->priceProductFacade->groupPriceProductCollection($priceProductTransfers);
     }
 }

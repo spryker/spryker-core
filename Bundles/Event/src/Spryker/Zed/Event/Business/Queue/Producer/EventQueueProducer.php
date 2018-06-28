@@ -42,12 +42,14 @@ class EventQueueProducer implements EventQueueProducerInterface
      * @param string $eventName
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $eventTransfer
      * @param string $listener
+     * @param string|null $queuePoolName
      *
      * @return void
      */
-    public function enqueueListener($eventName, TransferInterface $eventTransfer, $listener)
+    public function enqueueListener($eventName, TransferInterface $eventTransfer, $listener, $queuePoolName = null)
     {
         $messageTransfer = new QueueSendMessageTransfer();
+        $messageTransfer->setQueuePoolName($queuePoolName);
         $messageTransfer->setBody(
             $this->utilEncodingService->encodeJson(
                 $this->mapQueueMessageBody($eventTransfer, $listener, $eventName)

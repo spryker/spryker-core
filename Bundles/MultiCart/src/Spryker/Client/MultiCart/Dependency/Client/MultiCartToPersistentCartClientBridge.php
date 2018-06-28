@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\MultiCart\Dependency\Client;
 
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
 
@@ -30,7 +31,7 @@ class MultiCartToPersistentCartClientBridge implements MultiCartToPersistentCart
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function createQuote(QuoteTransfer $quoteTransfer)
+    public function createQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         return $this->persistentCartClient->createQuote($quoteTransfer);
     }
@@ -40,7 +41,7 @@ class MultiCartToPersistentCartClientBridge implements MultiCartToPersistentCart
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function updateQuote(QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer)
+    public function updateQuote(QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer): QuoteResponseTransfer
     {
         return $this->persistentCartClient->updateQuote($quoteUpdateRequestTransfer);
     }
@@ -50,7 +51,7 @@ class MultiCartToPersistentCartClientBridge implements MultiCartToPersistentCart
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function deleteQuote(QuoteTransfer $quoteTransfer)
+    public function deleteQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         return $this->persistentCartClient->deleteQuote($quoteTransfer);
     }

@@ -23,6 +23,11 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
     protected $storageClient;
 
     /**
+     * @var \Spryker\Shared\Kernel\Store
+     */
+    protected $store;
+
+    /**
      * @var \Spryker\Client\ProductOptionStorage\Dependency\Service\ProductOptionStorageToSynchronizationServiceInterface
      */
     protected $synchronizationService;
@@ -33,26 +38,21 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
     protected $valuePriceReader;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
-     */
-    protected $store;
-
-    /**
      * @param \Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToStorageInterface $storageClient
+     * @param \Spryker\Shared\Kernel\Store $store
      * @param \Spryker\Client\ProductOptionStorage\Dependency\Service\ProductOptionStorageToSynchronizationServiceInterface $synchronizationService
      * @param \Spryker\Client\ProductOptionStorage\Price\ValuePriceReaderInterface $valuePriceReader
-     * @param \Spryker\Shared\Kernel\Store $store
      */
     public function __construct(
         ProductOptionStorageToStorageInterface $storageClient,
+        Store $store,
         ProductOptionStorageToSynchronizationServiceInterface $synchronizationService,
-        ValuePriceReaderInterface $valuePriceReader,
-        Store $store
+        ValuePriceReaderInterface $valuePriceReader
     ) {
         $this->storageClient = $storageClient;
+        $this->store = $store;
         $this->synchronizationService = $synchronizationService;
         $this->valuePriceReader = $valuePriceReader;
-        $this->store = $store;
     }
 
     /**
@@ -63,7 +63,24 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
      */
     public function getProductOptions($idProductAbstract, $locale)
     {
-        $key = $this->generateKey($idProductAbstract, $locale);
+        $key = $this->generateKey($idProductAbstract);
+        $productAbstractOptionStorageData = $this->storageClient->get($key);
+
+        if (!$productAbstractOptionStorageData) {
+            return null;
+        }
+
+        return $this->mapToProductAbstractOptionStorageTransfer($productAbstractOptionStorageData);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer
+     */
+    public function getProductOptionsForCurrentStore($idProductAbstract)
+    {
+        $key = $this->generateKey($idProductAbstract);
         $productAbstractOptionStorageData = $this->storageClient->get($key);
 
         if (!$productAbstractOptionStorageData) {
@@ -92,16 +109,14 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
 
     /**
      * @param int $idProductAbstract
-     * @param string $locale
      *
      * @return string
      */
-    protected function generateKey($idProductAbstract, $locale)
+    protected function generateKey($idProductAbstract)
     {
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer
             ->setStore($this->store->getStoreName())
-            ->setLocale($locale)
             ->setReference($idProductAbstract);
 
         return $this->synchronizationService

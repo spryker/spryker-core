@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToQuoteFacadeInterface;
 
 class QuoteResponseExpander implements QuoteResponseExpanderInterface
@@ -38,8 +39,7 @@ class QuoteResponseExpander implements QuoteResponseExpanderInterface
      */
     public function expand(QuoteResponseTransfer $quoteResponseTransfer): QuoteResponseTransfer
     {
-        $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
-        $customerTransfer = $quoteTransfer->requireCustomer()->getCustomer();
+        $customerTransfer = $quoteResponseTransfer->getCustomer();
 
         $customerQuoteCollectionTransfer = $this->findCustomerQuotes($customerTransfer);
         $quoteResponseTransfer->setCustomerQuotes($customerQuoteCollectionTransfer);
@@ -56,7 +56,7 @@ class QuoteResponseExpander implements QuoteResponseExpanderInterface
     {
         $filterTransfer = new FilterTransfer();
         $filterTransfer
-            ->setOrderBy('name')
+            ->setOrderBy(QuoteTransfer::NAME)
             ->setOrderDirection('ASC');
 
         $quoteCriteriaFilterTransfer = new QuoteCriteriaFilterTransfer();

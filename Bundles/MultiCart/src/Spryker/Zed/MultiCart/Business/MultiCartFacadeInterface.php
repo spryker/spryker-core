@@ -9,6 +9,7 @@ namespace Spryker\Zed\MultiCart\Business;
 
 use Generated\Shared\Transfer\QuoteActivationRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface MultiCartFacadeInterface
 {
@@ -46,7 +47,19 @@ interface MultiCartFacadeInterface
      *
      * @param string $customerReference
      *
-     * @return mixed
+     * @return void
      */
-    public function resetQuoteDefaultFlagByCustomer(string $customerReference);
+    public function resetQuoteDefaultFlagByCustomer(string $customerReference): void;
+
+    /**
+     * Specification:
+     *  - Resolve quote name to make it unique for customer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return string
+     */
+    public function resolveQuoteName(QuoteTransfer $quoteTransfer): string;
 }

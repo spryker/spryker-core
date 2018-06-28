@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductCategoryFilterStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\ProductCategoryFilterStorage\Dependency\Client\ProductCategoryFilterStorageToStorageInterface;
 use Spryker\Client\ProductCategoryFilterStorage\Dependency\Service\ProductCategoryFilterStorageToSynchronizationServiceInterface;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\ProductCategoryFilterStorage\ProductCategoryFilterStorageConfig;
 
 class ProductCategoryFilterStorageReader implements ProductCategoryFilterStorageReaderInterface
@@ -27,20 +26,13 @@ class ProductCategoryFilterStorageReader implements ProductCategoryFilterStorage
     protected $synchronizationService;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
-     */
-    protected $store;
-
-    /**
      * @param \Spryker\Client\ProductCategoryFilterStorage\Dependency\Client\ProductCategoryFilterStorageToStorageInterface $storageClient
      * @param \Spryker\Client\ProductCategoryFilterStorage\Dependency\Service\ProductCategoryFilterStorageToSynchronizationServiceInterface $synchronizationService
-     * @param \Spryker\Shared\Kernel\Store $store
      */
-    public function __construct(ProductCategoryFilterStorageToStorageInterface $storageClient, ProductCategoryFilterStorageToSynchronizationServiceInterface $synchronizationService, Store $store)
+    public function __construct(ProductCategoryFilterStorageToStorageInterface $storageClient, ProductCategoryFilterStorageToSynchronizationServiceInterface $synchronizationService)
     {
         $this->storageClient = $storageClient;
         $this->synchronizationService = $synchronizationService;
-        $this->store = $store;
     }
 
     /**
@@ -69,7 +61,6 @@ class ProductCategoryFilterStorageReader implements ProductCategoryFilterStorage
     {
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer
-            ->setStore($this->store->getStoreName())
             ->setReference($resourceId);
 
         return $this->synchronizationService->getStorageKeyBuilder(ProductCategoryFilterStorageConfig::PRODUCT_CATEGORY_FILTER_RESOURCE_NAME)->generateKey($synchronizationDataTransfer);

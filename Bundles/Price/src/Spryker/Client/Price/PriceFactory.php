@@ -9,6 +9,8 @@ namespace Spryker\Client\Price;
 
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Price\PriceModeResolver\PriceModeResolver;
+use Spryker\Client\Price\PriceModeSwitcher\PriceModeSwitcher;
+use Spryker\Client\Price\PriceModeSwitcher\PriceModeSwitcherInterface;
 
 /**
  * @method \Spryker\Client\Price\PriceConfig getConfig()
@@ -21,6 +23,18 @@ class PriceFactory extends AbstractFactory
     public function createPriceModeResolver()
     {
         return new PriceModeResolver($this->getQuoteClient(), $this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Client\Price\PriceModeSwitcher\PriceModeSwitcherInterface
+     */
+    public function createPriceModeSwitcher(): PriceModeSwitcherInterface
+    {
+        return new PriceModeSwitcher(
+            $this->getQuoteClient(),
+            $this->getConfig(),
+            $this->getPriceModePostUpdatePlugins()
+        );
     }
 
     /**
@@ -37,5 +51,13 @@ class PriceFactory extends AbstractFactory
     public function getModuleConfig()
     {
         return parent::getConfig();
+    }
+
+    /**
+     * @return \Spryker\Client\PriceExtension\Dependency\Plugin\PriceModePostUpdatePluginInterface[]
+     */
+    protected function getPriceModePostUpdatePlugins(): array
+    {
+        return $this->getProvidedDependency(PriceDependencyProvider::PLUGINS_PRICE_MODE_POST_UPDATE);
     }
 }

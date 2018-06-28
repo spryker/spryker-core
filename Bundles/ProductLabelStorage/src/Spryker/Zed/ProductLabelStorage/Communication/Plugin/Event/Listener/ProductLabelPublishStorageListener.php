@@ -8,13 +8,15 @@
 namespace Spryker\Zed\ProductLabelStorage\Communication\Plugin\Event\Listener;
 
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductLabelStorage\Communication\ProductLabelStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacadeInterface getFacade()
  */
-class ProductLabelPublishStorageListener extends AbstractProductLabelStorageListener implements EventBulkHandlerInterface
+class ProductLabelPublishStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
@@ -33,6 +35,6 @@ class ProductLabelPublishStorageListener extends AbstractProductLabelStorageList
             ->getEventBehaviorFacade()
             ->getEventTransferIds($eventTransfers);
 
-        $this->publish($productAbstractIds);
+        $this->getFacade()->publishProductLabel($productAbstractIds);
     }
 }

@@ -14,5 +14,5 @@ interface FinderCompositeInterface extends FinderInterface
      *
      * @return \Spryker\Zed\Development\Business\DependencyTree\Finder\FinderCompositeInterface
      */
-    public function addFinder(FinderInterface $finder): FinderCompositeInterface;
+    public function addFinder(FinderInterface $finder): self;
 }

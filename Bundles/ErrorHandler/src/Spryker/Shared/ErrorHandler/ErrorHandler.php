@@ -8,7 +8,6 @@
 namespace Spryker\Shared\ErrorHandler;
 
 use ErrorException;
-use Exception;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\ErrorRendererInterface;
 use Throwable;
 
@@ -52,8 +51,6 @@ class ErrorHandler
             $this->cleanOutputBuffer();
             echo $this->errorRenderer->render($exception);
         } catch (Throwable $internalException) {
-            $this->errorLogger->log($internalException);
-        } catch (Exception $internalException) {
             $this->errorLogger->log($internalException);
         }
 

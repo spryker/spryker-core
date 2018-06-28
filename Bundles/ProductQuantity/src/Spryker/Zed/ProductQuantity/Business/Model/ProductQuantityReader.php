@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductQuantity\Business\Model;
 
-use Generated\Shared\Transfer\SpyProductQuantityEntityTransfer;
+use Generated\Shared\Transfer\ProductQuantityTransfer;
 use Spryker\Zed\ProductQuantity\Persistence\ProductQuantityRepositoryInterface;
 
 class ProductQuantityReader implements ProductQuantityReaderInterface
@@ -30,48 +30,48 @@ class ProductQuantityReader implements ProductQuantityReaderInterface
     /**
      * @param int[] $productIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductQuantityEntityTransfer[]
+     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
      */
-    public function findProductQuantityEntitiesByProductIds(array $productIds): array
+    public function findProductQuantityTransfersByProductIds(array $productIds): array
     {
-        $productQuantityEntities = $this->productQuantityRepository->findProductQuantityEntitiesByProductIds($productIds);
+        $productQuantityTransfers = $this->productQuantityRepository->findProductQuantityTransfersByProductIds($productIds);
 
-        foreach ($productQuantityEntities as $productQuantityEntity) {
-            $this->filterProductQuantityEntity($productQuantityEntity);
+        foreach ($productQuantityTransfers as $productQuantityTransfer) {
+            $this->filterProductQuantityTransfer($productQuantityTransfer);
         }
 
-        return $productQuantityEntities;
+        return $productQuantityTransfers;
     }
 
     /**
      * @param string[] $productSkus
      *
-     * @return \Generated\Shared\Transfer\SpyProductQuantityEntityTransfer[]
+     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
      */
-    public function findProductQuantityEntitiesByProductSku(array $productSkus): array
+    public function findProductQuantityTransfersByProductSku(array $productSkus): array
     {
-        $productQuantityEntities = $this->productQuantityRepository->findProductQuantityEntitiesByProductSku($productSkus);
+        $productQuantityTransfers = $this->productQuantityRepository->findProductQuantityTransfersByProductSku($productSkus);
 
-        foreach ($productQuantityEntities as $productQuantityEntity) {
-            $this->filterProductQuantityEntity($productQuantityEntity);
+        foreach ($productQuantityTransfers as $productQuantityTransfer) {
+            $this->filterProductQuantityTransfer($productQuantityTransfer);
         }
 
-        return $productQuantityEntities;
+        return $productQuantityTransfers;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyProductQuantityEntityTransfer $productQuantityEntity
+     * @param \Generated\Shared\Transfer\ProductQuantityTransfer $productQuantityTransfer
      *
      * @return void
      */
-    protected function filterProductQuantityEntity(SpyProductQuantityEntityTransfer $productQuantityEntity): void
+    protected function filterProductQuantityTransfer(ProductQuantityTransfer $productQuantityTransfer): void
     {
-        if ($productQuantityEntity->getQuantityInterval() === null) {
-            $productQuantityEntity->setQuantityInterval(static::DEFAULT_INTERVAL);
+        if ($productQuantityTransfer->getQuantityInterval() === null) {
+            $productQuantityTransfer->setQuantityInterval(static::DEFAULT_INTERVAL);
         }
 
-        if ($productQuantityEntity->getQuantityMin() === null) {
-            $productQuantityEntity->setQuantityMin($productQuantityEntity->getQuantityInterval());
+        if ($productQuantityTransfer->getQuantityMin() === null) {
+            $productQuantityTransfer->setQuantityMin($productQuantityTransfer->getQuantityInterval());
         }
     }
 }

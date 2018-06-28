@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SalesReclamation\Communication;
 
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ManualOrderEntryGui\Communication\Form\DataProvider\FormDataProviderInterface;
 use Spryker\Zed\SalesReclamation\Communication\Form\ReclamationDataProvider;
@@ -49,7 +50,7 @@ class SalesReclamationCommunicationFactory extends AbstractCommunicationFactory
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createReclamationForm(Request $request, $quoteTransfer): FormInterface
+    public function createReclamationForm(Request $request, QuoteTransfer $quoteTransfer): FormInterface
     {
         $dataProvider = $this->createReclamationDataProvider($request);
 

@@ -1,8 +1,8 @@
 namespace: SprykerTest
+actor: Tester
 
-#include:
-#    - tests/SprykerTest/Client/CompanyUser
-#    - tests/SprykerTest/Zed/CompanyUser
+include:
+    - tests/SprykerTest/Zed/CompanyUser
 
 paths:
     tests: tests

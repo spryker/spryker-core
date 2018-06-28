@@ -139,4 +139,14 @@ class GatewayController extends AbstractGatewayController
     {
         return $this->getFacade()->updateQuote($quoteUpdateRequestTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer
+     *
+     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function updateAndReloadQuoteAction(QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer): QuoteResponseTransfer
+    {
+        return $this->getFacade()->updateAndReloadQuote($quoteUpdateRequestTransfer);
+    }
 }

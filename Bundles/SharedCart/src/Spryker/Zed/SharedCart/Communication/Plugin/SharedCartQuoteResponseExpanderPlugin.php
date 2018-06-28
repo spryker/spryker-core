@@ -24,7 +24,7 @@ class SharedCartQuoteResponseExpanderPlugin extends AbstractPlugin implements Qu
      */
     public function expand(QuoteResponseTransfer $quoteResponseTransfer): QuoteResponseTransfer
     {
-        if (!$quoteResponseTransfer->getQuoteTransfer()) {
+        if (!$quoteResponseTransfer->getCustomer()) {
             return $quoteResponseTransfer;
         }
 

@@ -122,7 +122,7 @@ class CreditCardSubForm extends AbstractSubForm
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return \Spryker\Yves\DummyPayment\Form\CreditCardSubForm
+     * @return $this
      */
     protected function addCardNumber(FormBuilderInterface $builder)
     {
@@ -144,7 +144,7 @@ class CreditCardSubForm extends AbstractSubForm
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return \Spryker\Yves\DummyPayment\Form\CreditCardSubForm
+     * @return $this
      */
     protected function addNameOnCard(FormBuilderInterface $builder)
     {
@@ -219,7 +219,7 @@ class CreditCardSubForm extends AbstractSubForm
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return \Spryker\Yves\DummyPayment\Form\CreditCardSubForm
+     * @return $this
      */
     protected function addCardSecurityCode(FormBuilderInterface $builder)
     {

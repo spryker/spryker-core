@@ -11,7 +11,7 @@ interface ProductStorageClientInterface
 {
     /**
      * Specification:
-     * - TODO: add specification
+     * - Retrieves a current Store specific ProductAbstract resource from Storage.
      *
      * @api
      *
@@ -24,7 +24,7 @@ interface ProductStorageClientInterface
 
     /**
      * Specification:
-     * - TODO: add specification
+     * - Retrieves a current Store specific ProductConcrete resource from Storage.
      *
      * @api
      *

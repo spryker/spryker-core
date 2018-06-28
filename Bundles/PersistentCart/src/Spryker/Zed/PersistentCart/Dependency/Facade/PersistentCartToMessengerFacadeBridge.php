@@ -35,8 +35,6 @@ class PersistentCartToMessengerFacadeBridge implements PersistentCartToMessenger
     }
 
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\MessageTransfer $message
      *
      * @return void

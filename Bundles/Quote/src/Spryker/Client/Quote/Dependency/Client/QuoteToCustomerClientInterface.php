@@ -10,21 +10,11 @@ namespace Spryker\Client\Quote\Dependency\Client;
 interface QuoteToCustomerClientInterface
 {
     /**
-     * Specification:
-     * - Checks if customer information is present in session.
-     *
-     * @api
-     *
      * @return bool
      */
     public function isLoggedIn();
 
     /**
-     * Specification:
-     * - Returns customer information from session.
-     *
-     * @api
-     *
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
     public function getCustomer();

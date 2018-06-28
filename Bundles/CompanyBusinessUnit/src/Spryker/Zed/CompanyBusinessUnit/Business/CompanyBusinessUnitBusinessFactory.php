@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CompanyBusinessUnit\Business;
 
+use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitAssigner\CompanyBusinessUnitAssigner;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitCreator\CompanyBusinessUnitCreator;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitCreator\CompanyBusinessUnitCreatorInterface;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitPluginExecutor\CompanyBusinessUnitWriterPluginExecutor;
@@ -52,6 +53,16 @@ class CompanyBusinessUnitBusinessFactory extends AbstractBusinessFactory
     {
         return new CompanyBusinessUnitWriterPluginExecutor(
             $this->getCompanyBusinessUnitPostSavePlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitAssigner\CompanyBusinessUnitAssignerInterface
+     */
+    public function createCompanyBusinessUnitAssigner()
+    {
+        return new CompanyBusinessUnitAssigner(
+            $this->getRepository()
         );
     }
 

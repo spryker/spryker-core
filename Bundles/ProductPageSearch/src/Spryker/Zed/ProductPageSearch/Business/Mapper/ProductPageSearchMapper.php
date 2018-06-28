@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductPageSearch\Business\Mapper;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductPageSearchTransfer;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\ProductPageSearch\ProductPageSearchConstants;
 use Spryker\Zed\ProductPageSearch\Business\Attribute\ProductPageAttributeInterface;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchInterface;
@@ -33,22 +32,15 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
     protected $utilEncoding;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
-     */
-    protected $store;
-
-    /**
      * @param \Spryker\Zed\ProductPageSearch\Business\Attribute\ProductPageAttributeInterface $productPageAttributes
      * @param \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchInterface $searchFacade
      * @param \Spryker\Zed\ProductPageSearch\Dependency\Service\ProductPageSearchToUtilEncodingInterface $utilEncoding
-     * @param \Spryker\Shared\Kernel\Store $store
      */
-    public function __construct(ProductPageAttributeInterface $productPageAttributes, ProductPageSearchToSearchInterface $searchFacade, ProductPageSearchToUtilEncodingInterface $utilEncoding, Store $store)
+    public function __construct(ProductPageAttributeInterface $productPageAttributes, ProductPageSearchToSearchInterface $searchFacade, ProductPageSearchToUtilEncodingInterface $utilEncoding)
     {
         $this->productPageAttributes = $productPageAttributes;
         $this->searchFacade = $searchFacade;
         $this->utilEncoding = $utilEncoding;
-        $this->store = $store;
     }
 
     /**
@@ -81,7 +73,6 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
         $productPageSearchTransfer->setType(ProductPageSearchConstants::PRODUCT_ABSTRACT_RESOURCE_NAME);
         $productPageSearchTransfer->setLocale($productAbstractLocalizedData['Locale']['locale_name']);
         $productPageSearchTransfer->setAttributes($attributes);
-        $productPageSearchTransfer->setStore($this->getStoreName());
 
         return $productPageSearchTransfer;
     }
@@ -185,13 +176,5 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
                 $concreteLocalizedAttributes[] = $concreteProductLocalizedAttribute['attributes'];
             }
         }
-    }
-
-    /**
-     * @return string
-     */
-    protected function getStoreName()
-    {
-        return $this->store->getStoreName();
     }
 }

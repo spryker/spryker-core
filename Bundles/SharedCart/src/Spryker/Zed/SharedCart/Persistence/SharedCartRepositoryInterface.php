@@ -60,4 +60,12 @@ interface SharedCartRepositoryInterface
      * @return string
      */
     public function getCustomerIdByReference(string $customerReference): string;
+
+    /**
+     * @param int $idQuote
+     * @param int $idCompanyUser
+     *
+     * @return bool
+     */
+    public function isSharedQuoteDefault(int $idQuote, int $idCompanyUser): bool;
 }

@@ -8,14 +8,16 @@
 namespace Spryker\Zed\PriceProductStorage\Communication\Plugin\Event\Listener;
 
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PriceProduct\Dependency\PriceProductEvents;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\PriceProductStorage\Persistence\PriceProductStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\PriceProductStorage\Communication\PriceProductStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\PriceProductStorage\Business\PriceProductStorageFacadeInterface getFacade()
  */
-class PriceTypeProductConcreteStorageListener extends AbstractPriceProductConcreteStorageListener implements EventBulkHandlerInterface
+class PriceTypeProductConcreteStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
@@ -34,9 +36,9 @@ class PriceTypeProductConcreteStorageListener extends AbstractPriceProductConcre
         $productIds = $this->getQueryContainer()->queryAllProductIdsByPriceTypeIds($priceTypeIds)->find()->getData();
 
         if ($eventName === PriceProductEvents::ENTITY_SPY_PRICE_TYPE_CREATE || $eventName === PriceProductEvents::ENTITY_SPY_PRICE_TYPE_UPDATE) {
-            $this->publish($productIds);
+            $this->getFacade()->publishPriceProductConcrete($productIds);
         } elseif ($eventName === PriceProductEvents::ENTITY_SPY_PRICE_TYPE_DELETE) {
-            $this->unpublish($productIds);
+            $this->getFacade()->unpublishPriceProductConcrete($productIds);
         }
     }
 }

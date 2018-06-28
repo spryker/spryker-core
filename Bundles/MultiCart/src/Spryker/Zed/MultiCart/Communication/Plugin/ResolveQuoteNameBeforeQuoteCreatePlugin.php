@@ -20,6 +20,9 @@ use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface;
 class ResolveQuoteNameBeforeQuoteCreatePlugin extends AbstractPlugin implements QuoteWritePluginInterface
 {
     /**
+     * Specification:
+     *  - Resolve quote name to make it unique for customer before quote save.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
@@ -27,7 +30,7 @@ class ResolveQuoteNameBeforeQuoteCreatePlugin extends AbstractPlugin implements 
     public function execute(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         if ($quoteTransfer->getName()) {
-            $quoteTransfer->setName($this->getRepository()->resolveCustomerQuoteName($quoteTransfer));
+            $quoteTransfer->setName($this->getFacade()->resolveQuoteName($quoteTransfer));
         }
 
         return $quoteTransfer;

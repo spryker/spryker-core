@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -384,6 +385,68 @@ class PriceProductFacadeTest extends Unit
 
         $this->assertSame(9, $priceProductTransfer->getMoneyValue()->getGrossAmount());
         $this->assertSame(10, $priceProductTransfer->getMoneyValue()->getNetAmount());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGroupPriceProductCollectionGroupsProvidedCollection()
+    {
+        // Assign
+        $priceProductFacade = $this->getPriceProductFacade();
+        $expectedResult = [
+            'dummy currency 1' => [
+                'GROSS_MODE' => [
+                    'dummy price type 1' => 100,
+                    'dummy price type 2' => 1100,
+                ],
+                'NET_MODE' => [
+                    'dummy price type 1' => 300,
+                    'dummy price type 2' => 1300,
+                ],
+            ],
+            'dummy currency 2' => [
+                'GROSS_MODE' => [
+                    'dummy price type 1' => 200,
+                    'dummy price type 2' => 1200,
+                ],
+                'NET_MODE' => [
+                    'dummy price type 1' => 400,
+                    'dummy price type 2' => 1400,
+                ],
+            ],
+        ];
+        $priceProductCollection = [];
+        $priceProductCollection[] = $this->createPriceProduct('dummy currency 1', 'dummy price type 1', 100, 300);
+        $priceProductCollection[] = $this->createPriceProduct('dummy currency 1', 'dummy price type 2', 1100, 1300);
+        $priceProductCollection[] = $this->createPriceProduct('dummy currency 2', 'dummy price type 1', 200, 400);
+        $priceProductCollection[] = $this->createPriceProduct('dummy currency 2', 'dummy price type 2', 1200, 1400);
+
+        // Act
+        $actualResult = $priceProductFacade->groupPriceProductCollection($priceProductCollection);
+
+        // Assert
+        $this->assertEquals($expectedResult, $actualResult);
+    }
+
+    /**
+     * @param string $currencyCode
+     * @param string $priceTypeName
+     * @param int $grossAmount
+     * @param int $netAmount
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function createPriceProduct($currencyCode, $priceTypeName, $grossAmount, $netAmount)
+    {
+        return (new PriceProductTransfer())
+            ->setPriceType((new PriceTypeTransfer())->setName($priceTypeName))
+            ->setMoneyValue(
+                (new MoneyValueTransfer())
+                    ->setCurrency((new CurrencyTransfer())->setCode($currencyCode))
+                    ->setGrossAmount($grossAmount)
+                    ->setNetAmount($netAmount)
+            );
     }
 
     /**

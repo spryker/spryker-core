@@ -18,6 +18,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class SkuGroupKeyPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {
+    public const GROUP_KEY_DELIMITER = '_';
+
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
@@ -39,6 +41,10 @@ class SkuGroupKeyPlugin extends AbstractPlugin implements ItemExpanderPluginInte
      */
     protected function buildGroupKey(ItemTransfer $cartItem)
     {
+        if ($cartItem->getGroupKeyPrefix()) {
+            return $cartItem->getGroupKeyPrefix() . static::GROUP_KEY_DELIMITER . $cartItem->getSku();
+        }
+
         return $cartItem->getSku();
     }
 }

@@ -21,10 +21,7 @@ class BundleProductQuoteItemFinder implements BundleProductQuoteItemFinderInterf
      */
     public function findItem(QuoteTransfer $quoteTransfer, $sku, $groupKey = null): ?ItemTransfer
     {
-        $itemTransfer = null;
-        if ($groupKey) {
-            $itemTransfer = $this->findBundleItem($quoteTransfer, $groupKey);
-        }
+        $itemTransfer = $this->findBundleItem($quoteTransfer, $sku, $groupKey);
         if (!$itemTransfer) {
             $itemTransfer = $this->findQuoteItem($quoteTransfer, $sku, $groupKey);
         }
@@ -34,14 +31,15 @@ class BundleProductQuoteItemFinder implements BundleProductQuoteItemFinderInterf
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $groupKey
+     * @param string $sku
+     * @param null|string $groupKey
      *
      * @return \Generated\Shared\Transfer\ItemTransfer|null
      */
-    protected function findBundleItem(QuoteTransfer $quoteTransfer, $groupKey): ?ItemTransfer
+    protected function findBundleItem(QuoteTransfer $quoteTransfer, string $sku, ?string $groupKey = null): ?ItemTransfer
     {
         foreach ($quoteTransfer->getBundleItems() as $itemTransfer) {
-            if ($itemTransfer->getGroupKey() === $groupKey) {
+            if ($this->checkItem($itemTransfer, $sku, $groupKey)) {
                 $itemTransfer = clone $itemTransfer;
                 $itemTransfer->setQuantity($this->getBundledProductTotalQuantity($quoteTransfer, $groupKey));
 
@@ -58,7 +56,7 @@ class BundleProductQuoteItemFinder implements BundleProductQuoteItemFinderInterf
      *
      * @return int
      */
-    protected function getBundledProductTotalQuantity(QuoteTransfer $quoteTransfer, $groupKey): int
+    protected function getBundledProductTotalQuantity(QuoteTransfer $quoteTransfer, string $groupKey): int
     {
         $bundleItemQuantity = 0;
         foreach ($quoteTransfer->getBundleItems() as $bundleItemTransfer) {
@@ -78,15 +76,27 @@ class BundleProductQuoteItemFinder implements BundleProductQuoteItemFinderInterf
      *
      * @return \Generated\Shared\Transfer\ItemTransfer|null
      */
-    protected function findQuoteItem(QuoteTransfer $quoteTransfer, $sku, $groupKey = null): ?ItemTransfer
+    protected function findQuoteItem(QuoteTransfer $quoteTransfer, string $sku, ?string $groupKey = null): ?ItemTransfer
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if (($itemTransfer->getSku() === $sku && $groupKey === null) ||
-                $itemTransfer->getGroupKey() === $groupKey) {
+            if ($this->checkItem($itemTransfer, $sku, $groupKey)) {
                 return $itemTransfer;
             }
         }
 
         return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param string $sku
+     * @param string|null $groupKey
+     *
+     * @return bool
+     */
+    protected function checkItem(ItemTransfer $itemTransfer, string $sku, ?string $groupKey = null): bool
+    {
+        return ($itemTransfer->getSku() === $sku && $groupKey === null) ||
+            $itemTransfer->getGroupKey() === $groupKey;
     }
 }

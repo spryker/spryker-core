@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductManagement\Communication\Form\Product;
 
 use Spryker\Zed\ProductManagement\Communication\Form\AbstractSubForm;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
-use Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\ProductNameRegex;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -53,10 +52,6 @@ class GeneralForm extends AbstractSubForm
                 'required' => true,
                 'constraints' => [
                     new NotBlank([
-                        'groups' => [ProductFormAdd::VALIDATION_GROUP_GENERAL],
-                    ]),
-
-                    new ProductNameRegex([
                         'groups' => [ProductFormAdd::VALIDATION_GROUP_GENERAL],
                     ]),
                 ],

@@ -9,6 +9,7 @@ namespace Spryker\Zed\MultiCart\Business;
 
 use Generated\Shared\Transfer\QuoteActivationRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -57,5 +58,19 @@ class MultiCartFacade extends AbstractFacade implements MultiCartFacadeInterface
     public function resetQuoteDefaultFlagByCustomer(string $customerReference): void
     {
         $this->getEntityManager()->resetQuoteDefaultFlagByCustomer($customerReference);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return string
+     */
+    public function resolveQuoteName(QuoteTransfer $quoteTransfer): string
+    {
+        return $this->getFactory()->createQuoteNameResolver()->resolveCustomerQuoteName($quoteTransfer);
     }
 }

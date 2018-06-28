@@ -10,6 +10,8 @@ namespace Spryker\Zed\MultiCart\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\MultiCart\Business\Activator\QuoteActivator;
 use Spryker\Zed\MultiCart\Business\Activator\QuoteActivatorInterface;
+use Spryker\Zed\MultiCart\Business\Model\QuoteNameResolver;
+use Spryker\Zed\MultiCart\Business\Model\QuoteNameResolverInterface;
 use Spryker\Zed\MultiCart\Business\ResponseExpander\QuoteResponseExpander;
 use Spryker\Zed\MultiCart\Business\ResponseExpander\QuoteResponseExpanderInterface;
 use Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToMessengerFacadeInterface;
@@ -18,6 +20,8 @@ use Spryker\Zed\MultiCart\MultiCartDependencyProvider;
 
 /**
  * @method \Spryker\Zed\MultiCart\MultiCartConfig getConfig()
+ * @method \Spryker\Zed\MultiCart\Persistence\MultiCartEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\MultiCart\Persistence\MultiCartRepositoryInterface getRepository()
  */
 class MultiCartBusinessFactory extends AbstractBusinessFactory
 {
@@ -29,6 +33,16 @@ class MultiCartBusinessFactory extends AbstractBusinessFactory
         return new QuoteActivator(
             $this->getQuoteFacade(),
             $this->getMessengerFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MultiCart\Business\Model\QuoteNameResolverInterface
+     */
+    public function createQuoteNameResolver(): QuoteNameResolverInterface
+    {
+        return new QuoteNameResolver(
+            $this->getRepository()
         );
     }
 
