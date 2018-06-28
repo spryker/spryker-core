@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductPackagingUnit;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToAvailabilityFacadeBridge;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToGlossaryFacadeBridge;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToLocaleFacadeBridge;
 
@@ -16,6 +17,8 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
 {
     public const FACADE_LOCALE = 'FACADE_LOCALE';
     public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
+    public const FACADE_AVAILABILITY = 'FACADE_AVAILABILITY';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -25,6 +28,7 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
     {
         $container = $this->addLocaleFacade($container);
         $container = $this->addGlossaryFacade($container);
+        $container = $this->addAvailabilityFacade($container);
 
         return $container;
     }
@@ -55,6 +59,22 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
         $container[static::FACADE_GLOSSARY] = function (Container $container) {
             return new ProductPackagingUnitToGlossaryFacadeBridge(
                 $container->getLocator()->glossary()->facade()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addAvailabilityFacade(Container $container): Container
+    {
+        $container[static::FACADE_AVAILABILITY] = function (Container $container) {
+            return new ProductPackagingUnitToAvailabilityFacadeBridge(
+                $container->getLocator()->availability()->facade()
             );
         };
 
