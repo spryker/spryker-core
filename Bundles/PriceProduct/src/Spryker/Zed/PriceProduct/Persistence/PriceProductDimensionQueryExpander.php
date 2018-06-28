@@ -62,6 +62,7 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
     ): SpyPriceProductStoreQuery {
 
         foreach ($this->priceProductDimensionQueryExpanders as $priceDimensionQueryCriteriaPlugin) {
+            // need to use separate method for delete query
             $priceDimensionQueryCriteriaTransfer = $this->runPlugin(
                 $priceProductStoreQuery,
                 $priceProductCriteriaTransfer,

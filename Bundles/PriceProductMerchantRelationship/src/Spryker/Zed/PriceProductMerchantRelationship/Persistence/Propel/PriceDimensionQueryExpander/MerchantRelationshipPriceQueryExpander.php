@@ -30,10 +30,6 @@ class MerchantRelationshipPriceQueryExpander implements MerchantRelationshipPric
      */
     public function buildMerchantRelationshipPriceDimensionQueryCriteria(PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?QueryCriteriaTransfer
     {
-        if (!$priceProductCriteriaTransfer->getPriceDimension()) {
-            return $this->createQueryCriteriaTransfer();
-        }
-
         $idMerchantRelationship = null;
         if ($priceProductCriteriaTransfer->getPriceDimension()) {
             $idMerchantRelationship = $priceProductCriteriaTransfer->getPriceDimension()->getIdMerchantRelationship();
