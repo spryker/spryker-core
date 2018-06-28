@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductCategory\Dependency\Service;
 interface ProductCategoryToUtilEncodingInterface
 {
     /**
-     * @param string $value
+     * @param array $value
      * @param int|null $options
      * @param int|null $depth
      *

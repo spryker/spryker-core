@@ -10,7 +10,7 @@ namespace Spryker\Zed\Synchronization\Dependency\Service;
 interface SynchronizationToUtilEncodingInterface
 {
     /**
-     * @param string $value
+     * @param array $value
      * @param int|null $options
      * @param int|null $depth
      *
