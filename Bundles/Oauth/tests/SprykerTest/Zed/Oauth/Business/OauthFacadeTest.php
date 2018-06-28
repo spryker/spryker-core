@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\OauthClientTransfer;
 use Generated\Shared\Transfer\OauthRequestTransfer;
 use Generated\Shared\Transfer\OauthScopeTransfer;
 use Generated\Shared\Transfer\OauthUserTransfer;
-use Orm\Zed\Oauth\Persistence\SpyOauthClient;
 use Orm\Zed\Oauth\Persistence\SpyOauthClientQuery;
 use Spryker\Zed\Oauth\Business\OauthFacadeInterface;
 use Spryker\Zed\Oauth\OauthDependencyProvider;

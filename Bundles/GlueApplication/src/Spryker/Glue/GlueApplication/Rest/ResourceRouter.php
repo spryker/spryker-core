@@ -132,28 +132,40 @@ class ResourceRouter implements ResourceRouterInterface
     }
 
     /**
-     * @param array $allResources
-     * @param array $route
+     * @param array $resources
+     * @param array $currentResource
      *
      * @return bool
      */
-    protected function isValidPath(array $allResources, array $route): bool
+    protected function isValidPath(array $resources, array $currentResource): bool
     {
-        foreach ($allResources as $index => $resource) {
-            if ($resource[RequestConstantsInterface::ATTRIBUTE_TYPE] !== $route[RequestConstantsInterface::ATTRIBUTE_PARENT_RESOURCE]) {
+        foreach ($resources as $resourceNr => $resource) {
+            if ($resource[RequestConstantsInterface::ATTRIBUTE_TYPE] !== $currentResource[RequestConstantsInterface::ATTRIBUTE_PARENT_RESOURCE]) {
                 continue;
             }
 
-            $nextResource = isset($allResources[$index + 1]) ? $allResources[$index + 1] : null;
-            if (!$nextResource) {
-                return false;
-            }
+            return $this->isValidChildParent($resources, $currentResource, $resourceNr);
+        }
 
-            if ($nextResource[RequestConstantsInterface::ATTRIBUTE_TYPE] === $route[RequestConstantsInterface::ATTRIBUTE_TYPE]) {
-                return true;
-            }
+        return false;
+    }
 
+    /**
+     * @param array $resources
+     * @param array $currentResource
+     * @param int $resourceNr
+     *
+     * @return bool
+     */
+    protected function isValidChildParent(array $resources, array $currentResource, int $resourceNr): bool
+    {
+        $nextResource = isset($resources[$resourceNr + 1]) ? $resources[$resourceNr + 1] : null;
+        if (!$nextResource) {
             return false;
+        }
+
+        if ($nextResource[RequestConstantsInterface::ATTRIBUTE_TYPE] === $currentResource[RequestConstantsInterface::ATTRIBUTE_TYPE]) {
+            return true;
         }
 
         return false;
@@ -162,11 +174,11 @@ class ResourceRouter implements ResourceRouterInterface
     /**
      * @param array $route
      * @param array $resource
-     * @param array $allResources
+     * @param array $resources
      *
      * @return array
      */
-    protected function buildRouteParameters(array $route, array $resource, array $allResources): array
+    protected function buildRouteParameters(array $route, array $resource, array $resources): array
     {
         $routeParams = $this->createRoute(
             $route[RequestConstantsInterface::ATTRIBUTE_MODULE],
@@ -178,7 +190,7 @@ class ResourceRouter implements ResourceRouterInterface
             $routeParams,
             $resource,
             [
-                RequestConstantsInterface::ATTRIBUTE_ALL_RESOURCES => $allResources,
+                RequestConstantsInterface::ATTRIBUTE_ALL_RESOURCES => $resources,
                 RequestConstantsInterface::ATTRIBUTE_RESOURCE_FQCN => $route[RequestConstantsInterface::ATTRIBUTE_RESOURCE_FQCN],
                 RequestConstantsInterface::ATTRIBUTE_CONTEXT => $route[RequestConstantsInterface::ATTRIBUTE_CONFIGURATION]['context'],
                 RequestConstantsInterface::ATTRIBUTE_IS_PROTECTED => $route[RequestConstantsInterface::ATTRIBUTE_CONFIGURATION]['is_protected'],

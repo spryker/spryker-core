@@ -75,33 +75,33 @@ class ResponseRelationship implements ResponseRelationshipInterface
     {
         $included = [];
         foreach ($resources as $resource) {
-            $included[] = $this->processRelationships($resource->getRelationships(), $restRequest);
+            $this->processRelationships($resource->getRelationships(), $restRequest, $included);
         }
 
-        return array_merge(...$included);
+        return $included;
     }
 
     /**
-     * @param array $relationships
+     * @param array $resourceRelationships
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param array $included
      *
-     * @return array
+     * @return void
      */
     protected function processRelationships(
-        array $relationships,
+        array $resourceRelationships,
         RestRequestInterface $restRequest,
-        array $included = []
-    ): array {
+        array &$included
+    ): void {
 
-        /** @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $typeRelationships */
-        foreach ($relationships as $resourceType => $typeRelationships) {
+        /** @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources */
+        foreach ($resourceRelationships as $resourceType => $resources) {
             if (!$this->hasRelationship($resourceType, $restRequest)) {
                 continue;
             }
-            foreach ($typeRelationships as $resource) {
+            foreach ($resources as $resource) {
                 if ($resource->getRelationships()) {
-                    $included = $this->processRelationships($resource->getRelationships(), $restRequest, $included);
+                    $this->processRelationships($resource->getRelationships(), $restRequest, $included);
                 }
 
                 $resourceIdentifier = $resourceType . ':' . $resource->getId();
@@ -113,24 +113,22 @@ class ResponseRelationship implements ResponseRelationshipInterface
                 $included[] = $resource;
             }
         }
-
-        return $included;
     }
 
     /**
-     * @param string $type
+     * @param string $resourceType
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return bool
      */
-    public function hasRelationship(string $type, RestRequestInterface $restRequest): bool
+    public function hasRelationship(string $resourceType, RestRequestInterface $restRequest): bool
     {
-        if ($restRequest->getResource()->getType() === $type) {
+        if ($restRequest->getResource()->getType() === $resourceType) {
             return true;
         }
 
         $includes = $restRequest->getInclude();
-        return (count($includes) > 0 && isset($includes[$type])) || (count($includes) === 0 && !$restRequest->getExcludeRelationship());
+        return ($includes && isset($includes[$resourceType])) || (!$includes && !$restRequest->getExcludeRelationship());
     }
 
     /**
