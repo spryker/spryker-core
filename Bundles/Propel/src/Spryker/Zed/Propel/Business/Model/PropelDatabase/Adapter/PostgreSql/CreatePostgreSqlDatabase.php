@@ -38,7 +38,7 @@ class CreatePostgreSqlDatabase implements CreateDatabaseInterface
     }
 
     /**
-     * @return bool
+     * @return void
      */
     protected function createDatabase()
     {
