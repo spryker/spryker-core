@@ -14,10 +14,16 @@ interface ResponseRelationshipInterface
      * @param string $resourceName
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param string|null $parentResourceId
      *
      * @return void
      */
-    public function loadRelationships(string $resourceName, array $resources, RestRequestInterface $restRequest): void;
+    public function loadRelationships(
+        string $resourceName,
+        array $resources,
+        RestRequestInterface $restRequest,
+        ?string $parentResourceId = null
+    ): void;
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
@@ -28,10 +34,10 @@ interface ResponseRelationshipInterface
     public function processIncluded(array $resources, RestRequestInterface $restRequest): array;
 
     /**
-     * @param string $type
+     * @param string $resourceType
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return bool
      */
-    public function hasRelationship(string $type, RestRequestInterface $restRequest): bool;
+    public function hasRelationship(string $resourceType, RestRequestInterface $restRequest): bool;
 }

@@ -22,11 +22,6 @@ class ResponseRelationship implements ResponseRelationshipInterface
     protected $alreadyLoadedResources = [];
 
     /**
-     * @var array
-     */
-    protected $includedResources = [];
-
-    /**
      * @param \Spryker\Glue\GlueApplication\Rest\ResourceRelationshipLoaderInterface $resourceRelationshipProviderLoader
      */
     public function __construct(ResourceRelationshipLoaderInterface $resourceRelationshipProviderLoader)
@@ -38,29 +33,31 @@ class ResponseRelationship implements ResponseRelationshipInterface
      * @param string $resourceName
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param string|null $parentResourceId
      *
      * @return void
      */
     public function loadRelationships(
         string $resourceName,
         array $resources,
-        RestRequestInterface $restRequest
+        RestRequestInterface $restRequest,
+        ?string $parentResourceId = null
     ): void {
 
-        if (!$this->canLoadResource($resourceName, $restRequest)) {
+        if (!$this->canLoadResource($resourceName, $restRequest, $parentResourceId)) {
             return;
         }
 
         $resources = $this->applyRelationshipPlugins($resourceName, $resources, $restRequest);
 
-        $this->alreadyLoadedResources[$resourceName] = true;
+        $this->alreadyLoadedResources[$resourceName . $parentResourceId] = true;
 
         foreach ($resources as $resource) {
-            foreach ($resource->getRelationships() as $type => $resourceRelationships) {
-                if (!$this->hasRelationship($type, $restRequest)) {
+            foreach ($resource->getRelationships() as $resourceType => $resourceRelationships) {
+                if (!$this->hasRelationship($resourceType, $restRequest)) {
                     continue;
                 }
-                $this->loadRelationships($type, $resourceRelationships, $restRequest);
+                $this->loadRelationships($resourceType, $resourceRelationships, $restRequest, $resource->getId());
             }
         }
     }
@@ -75,62 +72,55 @@ class ResponseRelationship implements ResponseRelationshipInterface
     {
         $included = [];
         foreach ($resources as $resource) {
-            $included[] = $this->processRelationships($resource->getRelationships(), $restRequest);
+            $this->processRelationships($resource->getRelationships(), $restRequest, $included);
         }
 
-        return array_merge(...$included);
+        return array_values($included);
     }
 
     /**
-     * @param array $relationships
+     * @param array $resourceRelationships
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param array $included
      *
-     * @return array
+     * @return void
      */
     protected function processRelationships(
-        array $relationships,
+        array $resourceRelationships,
         RestRequestInterface $restRequest,
-        array $included = []
-    ): array {
+        array &$included
+    ): void {
 
-        /** @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $typeRelationships */
-        foreach ($relationships as $resourceType => $typeRelationships) {
+        /** @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources */
+        foreach ($resourceRelationships as $resourceType => $resources) {
             if (!$this->hasRelationship($resourceType, $restRequest)) {
                 continue;
             }
-            foreach ($typeRelationships as $resource) {
+            foreach ($resources as $resource) {
                 if ($resource->getRelationships()) {
-                    $included = $this->processRelationships($resource->getRelationships(), $restRequest, $included);
+                    $this->processRelationships($resource->getRelationships(), $restRequest, $included);
                 }
 
                 $resourceIdentifier = $resourceType . ':' . $resource->getId();
-                if (isset($this->includedResources[$resourceIdentifier])) {
-                    continue;
-                }
-
-                $this->includedResources[$resourceIdentifier] = true;
-                $included[] = $resource;
+                $included[$resourceIdentifier] = $resource;
             }
         }
-
-        return $included;
     }
 
     /**
-     * @param string $type
+     * @param string $resourceType
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return bool
      */
-    public function hasRelationship(string $type, RestRequestInterface $restRequest): bool
+    public function hasRelationship(string $resourceType, RestRequestInterface $restRequest): bool
     {
-        if ($restRequest->getResource()->getType() === $type) {
+        if ($restRequest->getResource()->getType() === $resourceType) {
             return true;
         }
 
         $includes = $restRequest->getInclude();
-        return (count($includes) > 0 && isset($includes[$type])) || (count($includes) === 0 && !$restRequest->getExcludeRelationship());
+        return ($includes && isset($includes[$resourceType])) || (!$includes && !$restRequest->getExcludeRelationship());
     }
 
     /**
@@ -155,13 +145,18 @@ class ResponseRelationship implements ResponseRelationshipInterface
     }
 
     /**
-     * @param string $resourceName
+     * @param string $resourceType
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param string|null $parentResourceId
      *
      * @return bool
      */
-    protected function canLoadResource(string $resourceName, RestRequestInterface $restRequest): bool
-    {
-        return !isset($this->alreadyLoadedResources[$resourceName]) && $restRequest->getExcludeRelationship() === false;
+    protected function canLoadResource(
+        string $resourceType,
+        RestRequestInterface $restRequest,
+        ?string $parentResourceId = null
+    ): bool {
+        $resourceIndex = $resourceType . $parentResourceId;
+        return !isset($this->alreadyLoadedResources[$resourceIndex]) && $restRequest->getExcludeRelationship() === false;
     }
 }
