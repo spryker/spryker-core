@@ -60,7 +60,7 @@ class PriceProductFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\PriceProduct\Dependency\Client\PriceProductToQuoteClientInterface
      */
-    protected function getQuoteClient(): PriceProductToQuoteClientInterface
+    public function getQuoteClient(): PriceProductToQuoteClientInterface
     {
         return $this->getProvidedDependency(PriceProductDependencyProvider::CLIENT_QUOTE);
     }

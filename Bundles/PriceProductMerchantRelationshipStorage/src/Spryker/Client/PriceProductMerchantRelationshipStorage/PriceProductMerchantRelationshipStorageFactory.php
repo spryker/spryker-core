@@ -21,6 +21,9 @@ use Spryker\Client\PriceProductMerchantRelationshipStorage\Storage\PriceProductM
 use Spryker\Client\PriceProductMerchantRelationshipStorage\Storage\PriceProductMerchantRelationshipKeyGenerator;
 use Spryker\Client\PriceProductMerchantRelationshipStorage\Storage\PriceProductMerchantRelationshipKeyGeneratorInterface;
 
+/**
+ * @method \Spryker\Client\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConfig getConfig()
+ */
 class PriceProductMerchantRelationshipStorageFactory extends AbstractFactory
 {
     /**
@@ -94,5 +97,13 @@ class PriceProductMerchantRelationshipStorageFactory extends AbstractFactory
     public function getSynchronizationService(): PriceProductMerchantRelationshipToSynchronizationServiceInterface
     {
         return $this->getProvidedDependency(PriceProductMerchantRelationshipStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
+    }
+
+    /**
+     * @return \Spryker\Client\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConfig
+     */
+    public function getPriceProductMerchantRelationshipStorageConfig(): PriceProductMerchantRelationshipStorageConfig
+    {
+        return $this->getConfig();
     }
 }

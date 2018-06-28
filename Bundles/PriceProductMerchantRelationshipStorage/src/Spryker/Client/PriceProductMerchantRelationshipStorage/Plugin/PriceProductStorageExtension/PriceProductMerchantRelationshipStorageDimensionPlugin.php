@@ -14,7 +14,6 @@ use Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductSt
 /**
  * @method \Spryker\Client\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageClientInterface getClient()
  * @method \Spryker\Client\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageFactory getFactory()
- * @method \Spryker\Client\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConfig getConfig()
  */
 class PriceProductMerchantRelationshipStorageDimensionPlugin extends AbstractPlugin implements PriceProductStoragePriceDimensionPluginInterface
 {
@@ -97,6 +96,8 @@ class PriceProductMerchantRelationshipStorageDimensionPlugin extends AbstractPlu
      */
     public function getDimensionName(): string
     {
-        return $this->getConfig()->getPriceDimensionMerchantRelationship();
+        return $this->getFactory()
+            ->getPriceProductMerchantRelationshipStorageConfig()
+            ->getPriceDimensionMerchantRelationship();
     }
 }
