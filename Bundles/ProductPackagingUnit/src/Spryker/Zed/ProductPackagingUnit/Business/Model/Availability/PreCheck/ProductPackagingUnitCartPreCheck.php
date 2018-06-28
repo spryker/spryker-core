@@ -10,27 +10,11 @@ namespace Spryker\Zed\ProductPackagingUnit\Business\Model\Availability\PreCheck;
 use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
-use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToAvailabilityFacadeInterface;
-use Traversable;
+use Generated\Shared\Transfer\MessageTransfer;
 
-class ProductPackagingUnitCartPreCheck implements ProductPackagingUnitCartPreCheckInterface
+class ProductPackagingUnitCartPreCheck extends ProductPackagingUnitAvailabilityPreCheck implements ProductPackagingUnitCartPreCheckInterface
 {
-    /**
-     * @var \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToAvailabilityFacadeInterface
-     */
-    protected $availabilityFacade;
-
-    /**
-     * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToAvailabilityFacadeInterface $availabilityFacade
-     */
-    public function __construct(
-        ProductPackagingUnitToAvailabilityFacadeInterface $availabilityFacade
-    ) {
-        $this->availabilityFacade = $availabilityFacade;
-    }
-
+    public const CART_PRE_CHECK_ITEM_AVAILABILITY_LEAD_PRODUCT_FAILED = 'cart.pre.check.availability.failed.lead.product';
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
@@ -38,32 +22,34 @@ class ProductPackagingUnitCartPreCheck implements ProductPackagingUnitCartPreChe
      */
     public function checkCartAvailability(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
     {
-        $messages = new ArrayObject();
+        $cartErrorMessages = new ArrayObject();
         $this->assertQuote($cartChangeTransfer);
+        $storeTransfer = $cartChangeTransfer->getQuote()->getStore();
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            if (!$itemTransfer->getAmountLeadProduct()) {
+            if (!$itemTransfer->getAmountLeadProduct() || !$itemTransfer->getAmount()) {
                 continue;
             }
 
-            $this->assertQuantityPackagingUnitExpanded($itemTransfer);
+            $this->assertAmountPackagingUnitExpanded($itemTransfer);
 
-            if (!$this->isPackagingUnitSellable($itemTransfer, $cartChangeTransfer->getQuote()->getStore())) {
-                $messages->append('Create error message'); //TODO
-                continue;
-            }
+            // No need for checking if packaging unit is sellable
+            // it's already checked in the product pre-check
 
-            if ($itemTransfer->getAmountLeadProduct() && $itemTransfer->getAmount() > 0) {
+            if ($itemTransfer->getAmount() > 0) { // It hasLeadProduct
                 if (!$this->isPackagingUnitLeadProductSellable(
                     $itemTransfer,
                     $cartChangeTransfer->getItems(),
-                    $cartChangeTransfer->getQuote()->getStore()
+                    $storeTransfer
                 )) {
-                    $messages->append('Create error message'); //TODO
+                    $cartErrorMessages[] = $this->createMessageTransfer(
+                        static::CART_PRE_CHECK_ITEM_AVAILABILITY_LEAD_PRODUCT_FAILED,
+                        ['sku' => $itemTransfer->getSku()]
+                    );
                 }
             }
         }
 
-        return $this->createCartPreCheckResponseTransfer($messages);
+        return $this->createCartPreCheckResponseTransfer($cartErrorMessages);
     }
 
     /**
@@ -79,105 +65,27 @@ class ProductPackagingUnitCartPreCheck implements ProductPackagingUnitCartPreChe
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param string $message
+     * @param array|null $params
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\MessageTransfer
      */
-    protected function assertQuantityPackagingUnitExpanded(ItemTransfer $itemTransfer): void
+    protected function createMessageTransfer(string $message, array $params = []): MessageTransfer
     {
-        $itemTransfer->requireSku();
-
-        $itemTransfer->requireAmountLeadProduct()
-            ->requireAmount();
-
-        $itemTransfer->getAmountLeadProduct()
-            ->requireSkuProduct();
+        return (new MessageTransfer())
+            ->setValue($message)
+            ->setParameters($params);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return bool
-     */
-    protected function isPackagingUnitSellable(ItemTransfer $itemTransfer, StoreTransfer $storeTransfer): bool
-    {
-        return $this->isProductSellableForStore($itemTransfer->getSku(), $itemTransfer->getQuantity(), $storeTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $items
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return bool
-     */
-    protected function isPackagingUnitLeadProductSellable(ItemTransfer $itemTransfer, Traversable $items, StoreTransfer $storeTransfer): bool
-    {
-        $leadProductSku = $itemTransfer->getAmountLeadProduct()->getSkuProduct();
-        $leadProductQuantity = $itemTransfer->getAmount() +
-            $this->getAccumaltedQuantityForLeadProduct($items, $leadProductSku, $itemTransfer);
-
-        return $this->isProductSellableForStore(
-            $leadProductSku,
-            $leadProductQuantity,
-            $storeTransfer
-        );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $items
-     * @param string $sku
-     * @param \Generated\Shared\Transfer\ItemTransfer $currentItem
-     *
-     * @return int
-     */
-    protected function getAccumaltedQuantityForLeadProduct(Traversable $items, string $sku, ItemTransfer $currentItem): int
-    {
-        $quantity = 0;
-        foreach ($items as $itemTransfer) {
-            if ($itemTransfer->getSku() === $currentItem->getSku()) { // Skip the current item
-                continue;
-            }
-
-            if ($sku === $itemTransfer->getSku()) { // Lead product is in cart as an indivdual items
-                $quantity += $itemTransfer->getQuantity();
-                continue;
-            }
-
-            $productPacakgingLeadProduct = $itemTransfer->getAmountLeadProduct();
-            if ($productPacakgingLeadProduct && // Other items in cart are also a pacakging unit
-                // Lead product is a lead product of another item in cart
-                $productPacakgingLeadProduct->getSkuProduct() === $itemTransfer->getSku()) {
-                $quantity += $itemTransfer->getAmount();
-            }
-        }
-
-        return $quantity;
-    }
-
-    /**
-     * @param string $sku
-     * @param int $quantity
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return int
-     */
-    protected function isProductSellableForStore(string $sku, int $quantity, StoreTransfer $storeTransfer): int
-    {
-        return $this->availabilityFacade
-            ->isProductSellableForStore($sku, $quantity, $storeTransfer);
-    }
-
-    /**
-     * @param \ArrayObject $messages
+     * @param \ArrayObject $cartErrorMessages
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    protected function createCartPreCheckResponseTransfer(ArrayObject $messages)
+    protected function createCartPreCheckResponseTransfer(ArrayObject $cartErrorMessages)
     {
         return (new CartPreCheckResponseTransfer())
-            ->setIsSuccess($messages->count() === 0)
-            ->setMessages($messages);
+            ->setIsSuccess(count($cartErrorMessages) === 0)
+            ->setMessages($cartErrorMessages);
     }
 }

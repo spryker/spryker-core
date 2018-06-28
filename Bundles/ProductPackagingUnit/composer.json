@@ -20,12 +20,14 @@
   },
   "require-dev": {
     "spryker/cart": "*",
+    "spryker/checkout": "*",
     "spryker/code-sniffer": "*",
     "spryker/installer": "*",
     "spryker/testify": "*"
   },
   "suggest": {
     "spryker/cart": "If you want to use cart plugins: ^4.0.0",
+    "spryker/checkout": "If you want to use checkout plugins: ^4.0.0",
     "spryker/installer": "If you want to use Installer plugins: ^4.0.0."
   },
   "autoload": {
