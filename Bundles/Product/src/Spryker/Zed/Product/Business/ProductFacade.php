@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductSuggestionDetailsTransfer;
 use Generated\Shared\Transfer\RawProductAttributesTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -822,5 +823,53 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
         return $this->getFactory()
             ->createAttributeEncoder()
             ->decodeAttributes($attributes);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $suggestion
+     *
+     * @return string[]
+     */
+    public function suggestProductAbstract(string $suggestion): array
+    {
+        return $this->getFactory()
+            ->createProductSuggester()
+            ->suggestProductAbstract($suggestion);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $suggestion
+     *
+     * @return string[]
+     */
+    public function suggestProductConcrete(string $suggestion): array
+    {
+        return $this->getFactory()
+            ->createProductSuggester()
+            ->suggestProductConcrete($suggestion);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $suggestion
+     *
+     * @return \Generated\Shared\Transfer\ProductSuggestionDetailsTransfer
+     */
+    public function getSuggestionDetails(string $suggestion): ProductSuggestionDetailsTransfer
+    {
+        return $this->getFactory()
+            ->createProductSuggestionDetailsProvider()
+            ->getSuggestionDetails($suggestion);
     }
 }

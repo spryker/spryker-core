@@ -12,7 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class DiscontinueNoteProductForm extends AbstractType
+class ProductDiscontinuedNoteForm extends AbstractType
 {
     public const FIELD_FK_LOCALE = 'fkLocale';
     public const FIELD_NOTE = 'note';

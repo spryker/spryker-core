@@ -25,7 +25,7 @@
         <column name="id_product_discontinued_note" type="INTEGER" required="true" primaryKey="true" autoIncrement="true"/>
         <column name="fk_product_discontinued" type="INTEGER" required="true"/>
         <column name="fk_locale" type="INTEGER" required="true"/>
-        <column name="note" type="VARCHAR" required="true"/>
+        <column name="note" type="VARCHAR" required="false"/>
 
         <foreign-key name="spy_product_discontinued_note-fk_product_discontinued" foreignTable="spy_product_discontinued" phpName="ProductDiscontinued">
             <reference local="fk_product_discontinued" foreign="id_product_discontinued"/>

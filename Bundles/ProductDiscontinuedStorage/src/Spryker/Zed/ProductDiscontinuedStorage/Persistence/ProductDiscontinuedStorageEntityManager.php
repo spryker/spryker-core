@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductDiscontinuedStorage\Persistence;
 
-use Generated\Shared\Transfer\SpyProductDiscontinuedStorageEntityTransfer;
+use Orm\Zed\ProductDiscontinuedStorage\Persistence\SpyProductDiscontinuedStorage;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -16,27 +16,25 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class ProductDiscontinuedStorageEntityManager extends AbstractEntityManager implements ProductDiscontinuedStorageEntityManagerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SpyProductDiscontinuedStorageEntityTransfer $productDiscontinuedStorageEntityTransfer
+     * @param \Orm\Zed\ProductDiscontinuedStorage\Persistence\SpyProductDiscontinuedStorage $productDiscontinuedStorageEntity
      *
      * @return void
      */
-    public function saveProductDiscontinuedStorageEntity(
-        SpyProductDiscontinuedStorageEntityTransfer $productDiscontinuedStorageEntityTransfer
-    ): void {
-        $this->save($productDiscontinuedStorageEntityTransfer);
+    public function saveProductDiscontinuedStorageEntity(SpyProductDiscontinuedStorage $productDiscontinuedStorageEntity): void
+    {
+        $productDiscontinuedStorageEntity->save();
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyProductDiscontinuedStorageEntityTransfer $productDiscontinuedStorageEntityTransfer
+     * @param \Orm\Zed\ProductDiscontinuedStorage\Persistence\SpyProductDiscontinuedStorage $productDiscontinuedStorageEntity
      *
      * @return void
      */
-    public function deleteProductDiscontinuedStorageEntity(
-        SpyProductDiscontinuedStorageEntityTransfer $productDiscontinuedStorageEntityTransfer
-    ): void {
+    public function deleteProductDiscontinuedStorageEntity(SpyProductDiscontinuedStorage $productDiscontinuedStorageEntity): void
+    {
         $this->getFactory()
-            ->createProductDiscontinuedStorageQuery()
-            ->findOneByIdProductDiscontinuedStorage($productDiscontinuedStorageEntityTransfer->getIdProductDiscontinuedStorage())
+            ->createProductDiscontinuedStoragePropelQuery()
+            ->findOneByIdProductDiscontinuedStorage($productDiscontinuedStorageEntity->getIdProductDiscontinuedStorage())
             ->delete();
     }
 }
