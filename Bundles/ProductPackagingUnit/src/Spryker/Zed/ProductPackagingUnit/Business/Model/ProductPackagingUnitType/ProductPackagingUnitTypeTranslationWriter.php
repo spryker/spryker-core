@@ -88,6 +88,6 @@ class ProductPackagingUnitTypeTranslationWriter implements ProductPackagingUnitT
 
         $localeTransfer = $this->localeFacade->getLocaleByCode($localeCode);
 
-        return $this->glossaryFacade->saveAndTouchTranslation($key, $value, $localeTransfer);
+        return $this->glossaryFacade->saveTranslation($key, $value, $localeTransfer);
     }
 }

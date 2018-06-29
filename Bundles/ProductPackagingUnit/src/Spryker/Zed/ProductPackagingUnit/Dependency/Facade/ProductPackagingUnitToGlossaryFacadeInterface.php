@@ -43,7 +43,7 @@ interface ProductPackagingUnitToGlossaryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function saveAndTouchTranslation(string $key, string $value, LocaleTransfer $localeTransfer): TranslationTransfer;
+    public function saveTranslation(string $key, string $value, LocaleTransfer $localeTransfer): TranslationTransfer;
 
     /**
      * @api
