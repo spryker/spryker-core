@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductQuantityStorage\Communication\Plugin\Event;
 
 use Orm\Zed\ProductQuantity\Persistence\Map\SpyProductQuantityTableMap;
 use Spryker\Shared\ProductQuantityStorage\ProductQuantityStorageConfig;
-use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourcePluginInterface;
+use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceRepositoryPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductQuantity\Dependency\ProductQuantityEvents;
 
@@ -18,7 +18,7 @@ use Spryker\Zed\ProductQuantity\Dependency\ProductQuantityEvents;
  * @method \Spryker\Zed\ProductQuantityStorage\Business\ProductQuantityStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductQuantityStorage\Communication\ProductQuantityStorageCommunicationFactory getFactory()
  */
-class ProductQuantityEventResourcePlugin extends AbstractPlugin implements EventResourcePluginInterface
+class ProductQuantityEventResourcePlugin extends AbstractPlugin implements EventResourceRepositoryPluginInterface
 {
     /**
      * Specification:
@@ -42,7 +42,7 @@ class ProductQuantityEventResourcePlugin extends AbstractPlugin implements Event
      *
      * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
      */
-    public function queryData()
+    public function getData()
     {
         return $this->getFacade()->findProductQuantityTransfers();
     }

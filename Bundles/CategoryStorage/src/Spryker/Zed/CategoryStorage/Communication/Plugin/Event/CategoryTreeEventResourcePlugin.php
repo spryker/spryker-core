@@ -9,14 +9,14 @@ namespace Spryker\Zed\CategoryStorage\Communication\Plugin\Event;
 
 use Spryker\Shared\CategoryStorage\CategoryStorageConstants;
 use Spryker\Zed\Category\Dependency\CategoryEvents;
-use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourcePluginInterface;
+use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\CategoryStorage\Business\CategoryStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\CategoryStorage\Communication\CategoryStorageCommunicationFactory getFactory()
  */
-class CategoryTreeEventResourcePlugin extends AbstractPlugin implements EventResourcePluginInterface
+class CategoryTreeEventResourcePlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
 {
     /**
      * Specification:

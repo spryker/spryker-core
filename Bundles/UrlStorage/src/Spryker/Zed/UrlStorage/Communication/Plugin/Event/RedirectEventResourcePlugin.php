@@ -9,7 +9,7 @@ namespace Spryker\Zed\UrlStorage\Communication\Plugin\Event;
 
 use Orm\Zed\Url\Persistence\Map\SpyUrlRedirectTableMap;
 use Spryker\Shared\UrlStorage\UrlStorageConstants;
-use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourcePluginInterface;
+use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Url\Dependency\UrlEvents;
 
@@ -18,7 +18,7 @@ use Spryker\Zed\Url\Dependency\UrlEvents;
  * @method \Spryker\Zed\UrlStorage\Business\UrlStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\UrlStorage\Communication\UrlStorageCommunicationFactory getFactory()
  */
-class RedirectEventResourcePlugin extends AbstractPlugin implements EventResourcePluginInterface
+class RedirectEventResourcePlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
 {
     /**
      * Specification:

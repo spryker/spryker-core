@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductMeasurementUnitStorage\Communication\Plugin\Event;
 
 use Orm\Zed\ProductMeasurementUnit\Persistence\Map\SpyProductMeasurementUnitTableMap;
 use Spryker\Shared\ProductMeasurementUnitStorage\ProductMeasurementUnitStorageConfig;
-use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourcePluginInterface;
+use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceRepositoryPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductMeasurementUnit\Dependency\ProductMeasurementUnitEvents;
 
@@ -18,7 +18,7 @@ use Spryker\Zed\ProductMeasurementUnit\Dependency\ProductMeasurementUnitEvents;
  * @method \Spryker\Zed\ProductMeasurementUnitStorage\Business\ProductMeasurementUnitStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductMeasurementUnitStorage\Communication\ProductMeasurementUnitStorageCommunicationFactory getFactory()
  */
-class ProductMeasurementUnitEventResourcePlugin extends AbstractPlugin implements EventResourcePluginInterface
+class ProductMeasurementUnitEventResourcePlugin extends AbstractPlugin implements EventResourceRepositoryPluginInterface
 {
     /**
      * Specification:

@@ -10,7 +10,7 @@ namespace Spryker\Zed\AvailabilityStorage\Communication\Plugin\Event;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Spryker\Shared\AvailabilityStorage\AvailabilityStorageConstants;
 use Spryker\Zed\Availability\Dependency\AvailabilityEvents;
-use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourcePluginInterface;
+use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
@@ -18,7 +18,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\AvailabilityStorage\Business\AvailabilityStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\AvailabilityStorage\Communication\AvailabilityStorageCommunicationFactory getFactory()
  */
-class AvailabilityEventResourcePlugin extends AbstractPlugin implements EventResourcePluginInterface
+class AvailabilityEventResourcePlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
 {
     /**
      * Specification:

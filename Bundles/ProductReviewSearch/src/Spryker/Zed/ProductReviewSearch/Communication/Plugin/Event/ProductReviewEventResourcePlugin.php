@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductReviewSearch\Communication\Plugin\Event;
 
 use Orm\Zed\ProductReview\Persistence\Map\SpyProductReviewTableMap;
 use Spryker\Shared\ProductReviewSearch\ProductReviewSearchConfig;
-use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourcePluginInterface;
+use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductReview\Dependency\ProductReviewEvents;
 
@@ -18,7 +18,7 @@ use Spryker\Zed\ProductReview\Dependency\ProductReviewEvents;
  * @method \Spryker\Zed\ProductReviewSearch\Business\ProductReviewSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductReviewSearch\Communication\ProductReviewSearchCommunicationFactory getFactory()
  */
-class ProductReviewEventResourcePlugin extends AbstractPlugin implements EventResourcePluginInterface
+class ProductReviewEventResourcePlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
 {
     /**
      * Specification:

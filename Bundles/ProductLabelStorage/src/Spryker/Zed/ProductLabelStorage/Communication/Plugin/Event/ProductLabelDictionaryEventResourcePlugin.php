@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductLabelStorage\Communication\Plugin\Event;
 
 use Spryker\Shared\ProductLabelStorage\ProductLabelStorageConfig;
-use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourcePluginInterface;
+use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductLabel\Dependency\ProductLabelEvents;
 
@@ -17,7 +17,7 @@ use Spryker\Zed\ProductLabel\Dependency\ProductLabelEvents;
  * @method \Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductLabelStorage\Communication\ProductLabelStorageCommunicationFactory getFactory()
  */
-class ProductLabelDictionaryEventResourcePlugin extends AbstractPlugin implements EventResourcePluginInterface
+class ProductLabelDictionaryEventResourcePlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
 {
     /**
      * Specification:

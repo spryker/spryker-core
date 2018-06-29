@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\Event;
 
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Spryker\Shared\ProductPageSearch\ProductPageSearchConstants;
-use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourcePluginInterface;
+use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Product\Dependency\ProductEvents;
 
@@ -18,7 +18,7 @@ use Spryker\Zed\Product\Dependency\ProductEvents;
  * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()
  */
-class ProductPageEventResourcePlugin extends AbstractPlugin implements EventResourcePluginInterface
+class ProductPageEventResourcePlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
 {
     /**
      * Specification:

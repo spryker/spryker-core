@@ -9,7 +9,7 @@ namespace Spryker\Zed\NavigationStorage\Communication\Plugin\Event;
 
 use Orm\Zed\Navigation\Persistence\Map\SpyNavigationTableMap;
 use Spryker\Shared\NavigationStorage\NavigationStorageConstants;
-use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourcePluginInterface;
+use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Navigation\Dependency\NavigationEvents;
 
@@ -18,7 +18,7 @@ use Spryker\Zed\Navigation\Dependency\NavigationEvents;
  * @method \Spryker\Zed\NavigationStorage\Business\NavigationStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\NavigationStorage\Communication\NavigationStorageCommunicationFactory getFactory()
  */
-class NavigationEventResourcePlugin extends AbstractPlugin implements EventResourcePluginInterface
+class NavigationEventResourcePlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
 {
     /**
      * Specification:

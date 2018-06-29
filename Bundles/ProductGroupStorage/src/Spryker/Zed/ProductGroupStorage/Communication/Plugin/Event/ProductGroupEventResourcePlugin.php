@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductGroupStorage\Communication\Plugin\Event;
 
 use Orm\Zed\ProductGroup\Persistence\Map\SpyProductAbstractGroupTableMap;
 use Spryker\Shared\ProductGroupStorage\ProductGroupStorageConstants;
-use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourcePluginInterface;
+use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductGroup\Dependency\ProductGroupEvents;
 
@@ -18,7 +18,7 @@ use Spryker\Zed\ProductGroup\Dependency\ProductGroupEvents;
  * @method \Spryker\Zed\ProductGroupStorage\Business\ProductGroupStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductGroupStorage\Communication\ProductGroupStorageCommunicationFactory getFactory()
  */
-class ProductGroupEventResourcePlugin extends AbstractPlugin implements EventResourcePluginInterface
+class ProductGroupEventResourcePlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
 {
     /**
      * Specification:

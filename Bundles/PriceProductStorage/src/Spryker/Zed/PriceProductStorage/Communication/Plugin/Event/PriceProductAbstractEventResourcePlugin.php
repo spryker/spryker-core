@@ -10,7 +10,7 @@ namespace Spryker\Zed\PriceProductStorage\Communication\Plugin\Event;
 use Orm\Zed\Navigation\Persistence\Map\SpyNavigationTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Spryker\Shared\PriceProductStorage\PriceProductStorageConstants;
-use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourcePluginInterface;
+use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Navigation\Dependency\NavigationEvents;
 use Spryker\Zed\PriceProduct\Dependency\PriceProductEvents;
@@ -20,7 +20,7 @@ use Spryker\Zed\PriceProduct\Dependency\PriceProductEvents;
  * @method \Spryker\Zed\PriceProductStorage\Business\PriceProductStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\PriceProductStorage\Communication\PriceProductStorageCommunicationFactory getFactory()
  */
-class PriceProductAbstractEventResourcePlugin extends AbstractPlugin implements EventResourcePluginInterface
+class PriceProductAbstractEventResourcePlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
 {
     /**
      * Specification:

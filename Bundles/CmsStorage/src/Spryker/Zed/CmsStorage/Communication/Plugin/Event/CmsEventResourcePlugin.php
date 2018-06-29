@@ -10,7 +10,7 @@ namespace Spryker\Zed\CmsStorage\Communication\Plugin\Event;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap;
 use Spryker\Shared\CmsStorage\CmsStorageConstants;
 use Spryker\Zed\Cms\Dependency\CmsEvents;
-use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourcePluginInterface;
+use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
@@ -18,7 +18,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\CmsStorage\Business\CmsStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\CmsStorage\Communication\CmsStorageCommunicationFactory getFactory()
  */
-class CmsEventResourcePlugin extends AbstractPlugin implements EventResourcePluginInterface
+class CmsEventResourcePlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
 {
     /**
      * Specification:

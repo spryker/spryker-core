@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductRelationStorage\Communication\Plugin\Event;
 
 use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationTableMap;
 use Spryker\Shared\ProductRelationStorage\ProductRelationStorageConfig;
-use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourcePluginInterface;
+use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductRelation\Dependency\ProductRelationEvents;
 
@@ -18,7 +18,7 @@ use Spryker\Zed\ProductRelation\Dependency\ProductRelationEvents;
  * @method \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductRelationStorage\Communication\ProductRelationStorageCommunicationFactory getFactory()
  */
-class ProductRelationEventResourcePlugin extends AbstractPlugin implements EventResourcePluginInterface
+class ProductRelationEventResourcePlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
 {
     /**
      * Specification:

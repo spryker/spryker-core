@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductCategoryFilterStorage\Communication\Plugin\Event;
 
 use Orm\Zed\ProductCategoryFilter\Persistence\Map\SpyProductCategoryFilterTableMap;
 use Spryker\Shared\ProductCategoryFilterStorage\ProductCategoryFilterStorageConfig;
-use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourcePluginInterface;
+use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductCategoryFilter\Dependency\ProductCategoryFilterEvents;
 
@@ -18,7 +18,7 @@ use Spryker\Zed\ProductCategoryFilter\Dependency\ProductCategoryFilterEvents;
  * @method \Spryker\Zed\ProductCategoryFilterStorage\Business\ProductCategoryFilterStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductCategoryFilterStorage\Communication\ProductCategoryFilterStorageCommunicationFactory getFactory()
  */
-class ProductCategoryFilterEventResourcePlugin extends AbstractPlugin implements EventResourcePluginInterface
+class ProductCategoryFilterEventResourcePlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
 {
     /**
      * Specification:

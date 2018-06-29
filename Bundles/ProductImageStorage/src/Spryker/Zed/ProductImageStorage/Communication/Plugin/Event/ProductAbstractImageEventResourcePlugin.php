@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductImageStorage\Communication\Plugin\Event;
 use Orm\Zed\ProductGroup\Persistence\Map\SpyProductAbstractGroupTableMap;
 use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetTableMap;
 use Spryker\Shared\ProductImageStorage\ProductImageStorageConfig;
-use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourcePluginInterface;
+use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductGroup\Dependency\ProductGroupEvents;
 use Spryker\Zed\ProductImage\Dependency\ProductImageEvents;
@@ -20,7 +20,7 @@ use Spryker\Zed\ProductImage\Dependency\ProductImageEvents;
  * @method \Spryker\Zed\ProductImageStorage\Business\ProductImageStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductImageStorage\Communication\ProductImageStorageCommunicationFactory getFactory()
  */
-class ProductAbstractImageEventResourcePlugin extends AbstractPlugin implements EventResourcePluginInterface
+class ProductAbstractImageEventResourcePlugin extends AbstractPlugin implements EventResourceQueryContainerPluginInterface
 {
     /**
      * Specification:
