@@ -27,12 +27,12 @@ class CustomerAccessCreator implements CustomerAccessCreatorInterface
 
     /**
      * @param string $contentType
-     * @param bool $hasAccess
+     * @param bool $isRestricted
      *
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
-    public function createCustomerAccess($contentType, $hasAccess): CustomerAccessTransfer
+    public function createCustomerAccess(string $contentType, bool $isRestricted): CustomerAccessTransfer
     {
-        return $this->entityManager->createCustomerAccess($contentType, $hasAccess);
+        return $this->entityManager->createCustomerAccess($contentType, $isRestricted);
     }
 }

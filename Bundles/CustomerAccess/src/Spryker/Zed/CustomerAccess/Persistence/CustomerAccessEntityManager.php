@@ -23,17 +23,17 @@ class CustomerAccessEntityManager extends AbstractEntityManager implements Custo
 
     /**
      * @param string $contentType
-     * @param bool $hasAccess
+     * @param bool $isRestricted
      *
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
-    public function createCustomerAccess($contentType, $hasAccess): CustomerAccessTransfer
+    public function createCustomerAccess(string $contentType, bool $isRestricted): CustomerAccessTransfer
     {
         $customerAccessEntity = $this->getFactory()->createPropelCustomerAccessQuery()
             ->filterByContentType($contentType)
             ->findOneOrCreate();
 
-        $customerAccessEntity->setHasAccess($hasAccess);
+        $customerAccessEntity->setIsRestricted($isRestricted);
         $customerAccessEntity->save();
 
         return (new CustomerAccessTransfer())->addContentTypeAccess(
@@ -49,20 +49,20 @@ class CustomerAccessEntityManager extends AbstractEntityManager implements Custo
     public function updateUnauthenticatedCustomerAccess(CustomerAccessTransfer $customerAccessTransfer): CustomerAccessTransfer
     {
         return $this->getTransactionHandler()->handleTransaction(function () use ($customerAccessTransfer) {
-            $this->setAllContentTypesToInaccessible();
-            return $this->setContentTypesToAccessible($customerAccessTransfer);
+            $this->setAllContentTypesToAccessible();
+            return $this->setContentTypesToInaccessible($customerAccessTransfer);
         });
     }
 
     /**
      * @return void
      */
-    protected function setAllContentTypesToInaccessible(): void
+    protected function setAllContentTypesToAccessible(): void
     {
         $customerAccessEntities = $this->getFactory()->createPropelCustomerAccessQuery()->find();
 
         foreach ($customerAccessEntities as $customerAccessEntity) {
-            $customerAccessEntity->setHasAccess(false);
+            $customerAccessEntity->setIsRestricted(false);
             $customerAccessEntity->save();
         }
     }
@@ -72,12 +72,12 @@ class CustomerAccessEntityManager extends AbstractEntityManager implements Custo
      *
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
-    protected function setContentTypesToAccessible(CustomerAccessTransfer $customerAccessTransfer): CustomerAccessTransfer
+    protected function setContentTypesToInaccessible(CustomerAccessTransfer $customerAccessTransfer): CustomerAccessTransfer
     {
         $updatedContentTypeAccessCollection = new ArrayObject();
         foreach ($customerAccessTransfer->getContentTypeAccess() as $contentTypeAccess) {
             $contentTypeAccessEntity = $this->getContentTypeAccessEntity($contentTypeAccess);
-            $contentTypeAccessEntity->setHasAccess(true);
+            $contentTypeAccessEntity->setIsRestricted(true);
             $contentTypeAccessEntity->save();
 
             $updatedContentTypeAccessCollection->append(

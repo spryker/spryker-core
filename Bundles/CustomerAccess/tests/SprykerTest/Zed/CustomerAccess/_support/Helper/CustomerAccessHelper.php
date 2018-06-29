@@ -23,11 +23,11 @@ class CustomerAccessHelper extends Module
         $data = [
             CustomerAccessTransfer::CONTENT_TYPE_ACCESS => [
                 [
-                    ContentTypeAccessTransfer::HAS_ACCESS => true,
+                    ContentTypeAccessTransfer::IS_RESTRICTED => true,
                     ContentTypeAccessTransfer::CONTENT_TYPE => 'test content 1',
                 ],
                 [
-                    ContentTypeAccessTransfer::HAS_ACCESS => false,
+                    ContentTypeAccessTransfer::IS_RESTRICTED => false,
                     ContentTypeAccessTransfer::CONTENT_TYPE => 'test content 2',
                 ],
             ],
@@ -39,7 +39,7 @@ class CustomerAccessHelper extends Module
             $customerAccess = SpyUnauthenticatedCustomerAccessQuery::create()
                 ->filterByContentType($contentType->getContentType())
                 ->findOneOrCreate();
-            $customerAccess->setHasAccess($contentType->getHasAccess());
+            $customerAccess->setIsRestricted($contentType->getIsRestricted());
             $customerAccess->save();
 
             $contentType->fromArray($customerAccess->toArray(), true);

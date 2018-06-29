@@ -51,7 +51,7 @@ class CustomerAccessRepository extends AbstractRepository implements CustomerAcc
     {
         $unauthenticatedCustomerAccessEntity = $this->getFactory()
             ->createPropelCustomerAccessQuery()
-            ->filterByHasAccess(true)
+            ->filterByIsRestricted(false)
             ->find();
 
         return $this->fillCustomerAccessTransferFromEntities($unauthenticatedCustomerAccessEntity);

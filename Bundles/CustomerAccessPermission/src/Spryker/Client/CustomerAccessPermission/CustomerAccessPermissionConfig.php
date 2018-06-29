@@ -11,6 +11,7 @@ use Spryker\Client\CustomerAccessPermission\Exception\PermissionPluginNotFoundEx
 use Spryker\Client\CustomerAccessPermission\Plugin\SeeAddToCartPermissionPlugin;
 use Spryker\Client\CustomerAccessPermission\Plugin\SeeOrderPlaceSubmitPermissionPlugin;
 use Spryker\Client\CustomerAccessPermission\Plugin\SeePricePermissionPlugin;
+use Spryker\Client\CustomerAccessPermission\Plugin\SeeShoppingListPermissionPlugin;
 use Spryker\Client\CustomerAccessPermission\Plugin\SeeWishlistPermissionPlugin;
 use Spryker\Client\Kernel\AbstractBundleConfig;
 
@@ -24,6 +25,7 @@ class CustomerAccessPermissionConfig extends AbstractBundleConfig
         'add-to-cart' => SeeAddToCartPermissionPlugin::KEY,
         'order-place-submit' => SeeOrderPlaceSubmitPermissionPlugin::KEY,
         'wishlist' => SeeWishlistPermissionPlugin::KEY,
+        'shopping-list' => SeeShoppingListPermissionPlugin::KEY,
     ];
 
     protected const MESSAGE_PLUGIN_NOT_FOUND_EXCEPTION = 'Plugin not found';

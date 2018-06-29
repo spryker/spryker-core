@@ -15,6 +15,7 @@ class CustomerAccessConfig extends AbstractBundleConfig
     public const CONTENT_TYPE_ORDER_PLACE_SUBMIT = 'order-place-submit';
     public const CONTENT_TYPE_ADD_TO_CART = 'add-to-cart';
     public const CONTENT_TYPE_WISHLIST = 'wishlist';
+    public const CONTENT_TYPE_SHOPPING_LIST = 'shopping-list';
 
     /**
      * Gets list of content types for which admin will be able to define permissions
@@ -33,6 +34,6 @@ class CustomerAccessConfig extends AbstractBundleConfig
      */
     public function getContentTypeAccessForInstaller(): bool
     {
-        return false;
+        return true;
     }
 }

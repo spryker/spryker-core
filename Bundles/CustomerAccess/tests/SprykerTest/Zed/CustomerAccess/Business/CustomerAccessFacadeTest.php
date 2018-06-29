@@ -43,11 +43,11 @@ class CustomerAccessFacadeTest extends Unit
         $contentType2 = 'test content 2';
         $data = [
             [
-                ContentTypeAccessTransfer::HAS_ACCESS => true,
+                ContentTypeAccessTransfer::IS_RESTRICTED => true,
                 ContentTypeAccessTransfer::CONTENT_TYPE => $contentType1,
             ],
             [
-                ContentTypeAccessTransfer::HAS_ACCESS => false,
+                ContentTypeAccessTransfer::IS_RESTRICTED => false,
                 ContentTypeAccessTransfer::CONTENT_TYPE => $contentType2,
             ],
         ];
@@ -85,11 +85,11 @@ class CustomerAccessFacadeTest extends Unit
 
         foreach ($customerAccessTransferFromDB->getContentTypeAccess() as $contentTypeAccess) {
             if ($contentTypeAccess->getContentType() === $removedContentTypeAccess->getContentType()) {
-                $this->assertFalse($removedContentTypeAccess->getHasAccess());
+                $this->assertTrue($removedContentTypeAccess->getIsRestricted());
                 continue;
             }
 
-            $this->assertTrue($contentTypeAccess->getHasAccess());
+            $this->assertFalse($contentTypeAccess->getIsRestricted());
         }
     }
 

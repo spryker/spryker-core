@@ -13,11 +13,11 @@ interface CustomerAccessEntityManagerInterface
 {
     /**
      * @param string $contentType
-     * @param bool $hasAccess
+     * @param bool $isRestricted
      *
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
-    public function createCustomerAccess($contentType, $hasAccess): CustomerAccessTransfer;
+    public function createCustomerAccess(string $contentType, bool $isRestricted): CustomerAccessTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CustomerAccessTransfer $customerAccessTransfer

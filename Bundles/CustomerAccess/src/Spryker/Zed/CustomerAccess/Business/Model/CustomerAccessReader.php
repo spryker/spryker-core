@@ -31,7 +31,7 @@ class CustomerAccessReader implements CustomerAccessReaderInterface
      *
      * @return \Generated\Shared\Transfer\ContentTypeAccessTransfer|null
      */
-    public function findCustomerAccessByContentType($contentType): ?ContentTypeAccessTransfer
+    public function findCustomerAccessByContentType(string $contentType): ?ContentTypeAccessTransfer
     {
         return $this->customerAccessRepository->findCustomerAccessByContentType($contentType);
     }

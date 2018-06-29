@@ -6,6 +6,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ContentTypeAccessTransfer;
 use Generated\Shared\Transfer\CustomerAccessTransfer;
 use Orm\Zed\CustomerAccessStorage\Persistence\SpyUnauthenticatedCustomerAccessStorage;
+use Orm\Zed\CustomerAccessStorage\Persistence\SpyUnauthenticatedCustomerAccessStorageQuery;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\CustomerAccessStorage\Persistence\CustomerAccessStoragePersistenceFactory;
@@ -45,7 +46,7 @@ class CustomerAccessStorageFacadeTest extends Unit
             [
                 CustomerAccessTransfer::CONTENT_TYPE_ACCESS => [
                     [
-                        ContentTypeAccessTransfer::HAS_ACCESS => false,
+                        ContentTypeAccessTransfer::IS_RESTRICTED => true,
                         ContentTypeAccessTransfer::CONTENT_TYPE => 'price',
                     ],
                 ],
@@ -54,7 +55,7 @@ class CustomerAccessStorageFacadeTest extends Unit
         $this->tester->getFacade()->publish();
         $customerAccessEntity = $this->getUnauthenticatedCustomerAccessEntity();
 
-        $this->assertEquals($customerAccessTransfer->toArray(), $customerAccessEntity->getData());
+        $this->assertContains(json_encode($customerAccessTransfer->getContentTypeAccess()[0]->toArray()), json_encode($customerAccessEntity->getData()));
     }
 
     /**

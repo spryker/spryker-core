@@ -17,7 +17,7 @@ interface CustomerAccessReaderInterface
      *
      * @return \Generated\Shared\Transfer\ContentTypeAccessTransfer|null
      */
-    public function findCustomerAccessByContentType($contentType): ?ContentTypeAccessTransfer;
+    public function findCustomerAccessByContentType(string $contentType): ?ContentTypeAccessTransfer;
 
     /**
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
