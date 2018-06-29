@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\FileManager\Business\Model;
+namespace SprykerTest\Zed\FileManager\Business\File;
 
 use Codeception\Test\Unit;
 use Orm\Zed\FileManager\Persistence\SpyFile;
 use Orm\Zed\FileManager\Persistence\SpyFileInfo;
-use Spryker\Zed\FileManager\Business\Model\FileVersion;
+use Spryker\Zed\FileManager\Business\File\FileVersion;
 use Spryker\Zed\FileManager\Persistence\FileManagerRepositoryInterface;
 
 /**
@@ -20,7 +20,7 @@ use Spryker\Zed\FileManager\Persistence\FileManagerRepositoryInterface;
  * @group Zed
  * @group FileManager
  * @group Business
- * @group Model
+ * @group File
  * @group FileVersionTest
  * Add your own group annotations below this line
  */
@@ -39,7 +39,7 @@ class FileVersionTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface
+     * @return \Spryker\Zed\FileManager\Persistence\FileManagerRepositoryInterface
      */
     protected function createFileManagerRepositoryMock()
     {

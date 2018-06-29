@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\FileManager\Business\Model;
+namespace SprykerTest\Zed\FileManager\Business\File;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\FileInfoTransfer;
 use Generated\Shared\Transfer\FileTransfer;
-use Spryker\Zed\FileManager\Business\Model\FileContentInterface;
-use Spryker\Zed\FileManager\Business\Model\FileRemover;
+use Spryker\Zed\FileManager\Business\File\FileRemover;
+use Spryker\Zed\FileManager\Business\FileContent\FileContentInterface;
 use Spryker\Zed\FileManager\Persistence\FileManagerEntityManagerInterface;
 use Spryker\Zed\FileManager\Persistence\FileManagerRepositoryInterface;
 
@@ -22,14 +22,14 @@ use Spryker\Zed\FileManager\Persistence\FileManagerRepositoryInterface;
  * @group Zed
  * @group FileManager
  * @group Business
- * @group Model
+ * @group File
  * @group FileRemoverTest
  * Add your own group annotations below this line
  */
 class FileRemoverTest extends Unit
 {
     /**
-     * @return \Spryker\Zed\FileManager\Business\Model\FileContentInterface
+     * @return \Spryker\Zed\FileManager\Business\FileContent\FileContentInterface
      */
     protected function createFileContentMock()
     {
@@ -37,7 +37,7 @@ class FileRemoverTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\FileManager\Business\Model\FileLoaderInterface
+     * @return \Spryker\Zed\FileManager\Persistence\FileManagerRepositoryInterface
      */
     protected function createFileRepositoryMock()
     {

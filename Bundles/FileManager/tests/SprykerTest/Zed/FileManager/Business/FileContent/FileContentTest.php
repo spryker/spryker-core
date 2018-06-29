@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\FileManager\Business\Model;
+namespace SprykerTest\Zed\FileManager\Business\FileContent;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\FileTransfer;
-use Spryker\Zed\FileManager\Business\Model\FileContent;
+use Spryker\Zed\FileManager\Business\FileContent\FileContent;
 use Spryker\Zed\FileManager\Dependency\Service\FileManagerToFileSystemServiceInterface;
 use Spryker\Zed\FileManager\FileManagerConfig;
 
@@ -20,7 +20,7 @@ use Spryker\Zed\FileManager\FileManagerConfig;
  * @group Zed
  * @group FileManager
  * @group Business
- * @group Model
+ * @group FileContent
  * @group FileContentTest
  * Add your own group annotations below this line
  */
