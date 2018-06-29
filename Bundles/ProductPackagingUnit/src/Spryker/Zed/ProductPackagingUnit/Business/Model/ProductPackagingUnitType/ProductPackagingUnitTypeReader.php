@@ -41,24 +41,18 @@ class ProductPackagingUnitTypeReader implements ProductPackagingUnitTypeReaderIn
     /**
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
-     * @throws \Spryker\Zed\ProductPackagingUnit\Business\Exception\ProductPackagingUnitTypeNotFoundException
-     *
-     * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer|null
      */
-    public function getProductPackagingUnitTypeByName(
+    public function findProductPackagingUnitTypeByName(
         ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
     ): ProductPackagingUnitTypeTransfer {
         $productPackagingUnitTypeTransfer->requireName();
         $productPackagingUnitTypeName = $productPackagingUnitTypeTransfer->getName();
-        $productPackagingUnitTypeTransfer = $this->repository->getProductPackagingUnitTypeByName($productPackagingUnitTypeName);
+        $productPackagingUnitTypeTransfer = $this->repository->findProductPackagingUnitTypeByName($productPackagingUnitTypeName);
 
-        if ($productPackagingUnitTypeTransfer === null) {
-            throw new ProductPackagingUnitTypeNotFoundException(
-                sprintf(static::ERROR_NO_PRODUCT_PACKAGING_UNIT_TYPE_BY_NAME, $productPackagingUnitTypeName)
-            );
+        if ($productPackagingUnitTypeTransfer) {
+            $productPackagingUnitTypeTransfer = $this->translationsReader->hydrateTranslations($productPackagingUnitTypeTransfer);
         }
-
-        $productPackagingUnitTypeTransfer = $this->translationsReader->hydrateTranslations($productPackagingUnitTypeTransfer);
 
         return $productPackagingUnitTypeTransfer;
     }
@@ -75,7 +69,7 @@ class ProductPackagingUnitTypeReader implements ProductPackagingUnitTypeReaderIn
     ): ProductPackagingUnitTypeTransfer {
         $productPackagingUnitTypeTransfer->requireIdProductPackagingUnitType();
         $idProductPackagingUnitType = $productPackagingUnitTypeTransfer->getIdProductPackagingUnitType();
-        $productPackagingUnitTypeTransfer = $this->repository->getProductPackagingUnitTypeById($idProductPackagingUnitType);
+        $productPackagingUnitTypeTransfer = $this->repository->findProductPackagingUnitTypeById($idProductPackagingUnitType);
 
         if ($productPackagingUnitTypeTransfer === null) {
             throw new ProductPackagingUnitTypeNotFoundException(

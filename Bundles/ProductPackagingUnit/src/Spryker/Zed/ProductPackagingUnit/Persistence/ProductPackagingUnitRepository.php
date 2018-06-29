@@ -24,7 +24,7 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer|null
      */
-    public function getProductPackagingUnitTypeByName(
+    public function findProductPackagingUnitTypeByName(
         string $productPackagingUnitTypeName
     ): ?ProductPackagingUnitTypeTransfer {
         $productPackagingUnitTypeEntity = $this->getFactory()
@@ -49,7 +49,7 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer|null
      */
-    public function getProductPackagingUnitTypeById(
+    public function findProductPackagingUnitTypeById(
         int $idProductPackagingUnitType
     ): ?ProductPackagingUnitTypeTransfer {
         $productPackagingUnitTypeEntity = $this->getFactory()
