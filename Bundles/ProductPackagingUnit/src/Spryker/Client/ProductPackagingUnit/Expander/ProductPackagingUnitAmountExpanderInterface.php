@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ProductPackagingUnit\Model;
+namespace Spryker\Client\ProductPackagingUnit\Expander;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;

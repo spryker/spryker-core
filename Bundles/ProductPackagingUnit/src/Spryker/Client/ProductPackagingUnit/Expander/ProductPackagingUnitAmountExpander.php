@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ProductPackagingUnit\Model;
+namespace Spryker\Client\ProductPackagingUnit\Expander;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 
 class ProductPackagingUnitAmountExpander implements ProductPackagingUnitAmountExpanderInterface
 {
-    protected const PARAM_AMOUNT_PACKAGING_UNIT_HASH = 'amount-packaging-unit';
+    protected const PARAM_AMOUNT = 'amount-packaging-unit';
 
     /**
      * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
@@ -60,10 +60,10 @@ class ProductPackagingUnitAmountExpander implements ProductPackagingUnitAmountEx
      */
     protected function getPackagingUnitAmount(array $params, string $sku): ?int
     {
-        if (empty($params[static::PARAM_AMOUNT_PACKAGING_UNIT_HASH][$sku])) {
+        if (empty($params[static::PARAM_AMOUNT][$sku])) {
             return null;
         }
 
-        return (int)$params[static::PARAM_AMOUNT_PACKAGING_UNIT_HASH][$sku];
+        return (int)$params[static::PARAM_AMOUNT][$sku];
     }
 }
