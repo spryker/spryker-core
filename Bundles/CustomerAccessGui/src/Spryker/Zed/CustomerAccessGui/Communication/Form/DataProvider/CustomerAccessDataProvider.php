@@ -25,10 +25,12 @@ class CustomerAccessDataProvider
 
     /**
      * @param \Spryker\Zed\CustomerAccessGui\Dependency\Facade\CustomerAccessGuiToCustomerAccessFacadeInterface $customerAccessFacade
-     * @param \Generated\Shared\Transfer\CustomerAccessTransfer|null $customerAccessTransfer
+     * @param \Generated\Shared\Transfer\CustomerAccessTransfer $customerAccessTransfer
      */
-    public function __construct(CustomerAccessGuiToCustomerAccessFacadeInterface $customerAccessFacade, ?CustomerAccessTransfer $customerAccessTransfer = null)
-    {
+    public function __construct(
+        CustomerAccessGuiToCustomerAccessFacadeInterface $customerAccessFacade,
+        CustomerAccessTransfer $customerAccessTransfer
+    ) {
         $this->customerAccessFacade = $customerAccessFacade;
         $this->customerAccessTransfer = $customerAccessTransfer;
     }
@@ -48,7 +50,8 @@ class CustomerAccessDataProvider
     {
         return [
             'data_class' => CustomerAccessTransfer::class,
-            CustomerAccessForm::OPTION_CONTENT_TYPE_ACCESS => $this->customerAccessFacade->getAllContentTypes()->getContentTypeAccess(),
+            CustomerAccessForm::OPTION_CONTENT_TYPE_ACCESS
+                => $this->customerAccessFacade->getAllContentTypes()->getContentTypeAccess(),
         ];
     }
 }

@@ -6,17 +6,16 @@
     "php": ">=7.1",
     "spryker/customer-access": "^1.0.0",
     "spryker/kernel": "^3.0.0",
+    "spryker/propel-orm": "^1.0.0",
     "spryker/storage": "^3.0.0",
     "spryker/synchronization": "^0.2.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/event": "*",
-    "spryker/propel-orm": "*"
+    "spryker/event": "*"
   },
   "suggest": {
-    "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0",
-    "spryker/propel-orm": "If you want to use transaction functionality, minimum required version: 1.3.0"
+    "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0"
   },
   "autoload": {
     "psr-4": {

@@ -48,9 +48,9 @@ class CustomerAccessForm extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
-     * @return \Spryker\Zed\CustomerAccessGui\Communication\Form\CustomerAccessForm
+     * @return $this
      */
-    protected function addContentTypeAccess(FormBuilderInterface $builder, array $options): CustomerAccessForm
+    protected function addContentTypeAccess(FormBuilderInterface $builder, array $options): self
     {
         $builder->add(static::FIELD_CONTENT_TYPE_ACCESS, ChoiceType::class, [
             'expanded' => true,

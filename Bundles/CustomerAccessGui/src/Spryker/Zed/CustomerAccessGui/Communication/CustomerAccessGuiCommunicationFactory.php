@@ -27,11 +27,11 @@ class CustomerAccessGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerAccessTransfer|null $customerAccessTransfer
+     * @param \Generated\Shared\Transfer\CustomerAccessTransfer $customerAccessTransfer
      *
      * @return \Spryker\Zed\CustomerAccessGui\Communication\Form\DataProvider\CustomerAccessDataProvider
      */
-    public function createCustomerAccessDataProvider(?CustomerAccessTransfer $customerAccessTransfer = null)
+    public function createCustomerAccessDataProvider(CustomerAccessTransfer $customerAccessTransfer)
     {
         return new CustomerAccessDataProvider($this->getCustomerAccessFacade(), $customerAccessTransfer);
     }
