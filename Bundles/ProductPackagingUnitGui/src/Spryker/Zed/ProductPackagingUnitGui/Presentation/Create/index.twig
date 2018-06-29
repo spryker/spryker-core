@@ -11,7 +11,7 @@
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Packaging Type details' } %}
 
         {% block widget_content %}
-            {{ form_start(productPackagingUnitTypeForm) }}
+            {{ form_start(productPackagingUnitTypeForm, {attr: {novalidate: 'novalidate'}}) }}
             {% do productPackagingUnitTypeForm.nameTranslations.setRendered %}
             {{ form_widget(productPackagingUnitTypeForm) }}
 
