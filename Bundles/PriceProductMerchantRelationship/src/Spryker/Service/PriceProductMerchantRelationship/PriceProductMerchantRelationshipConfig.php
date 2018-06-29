@@ -14,5 +14,4 @@ use Spryker\Service\Kernel\AbstractBundleConfig;
  */
 class PriceProductMerchantRelationshipConfig extends AbstractBundleConfig
 {
-
 }

@@ -69,7 +69,9 @@ class PriceProductExpander implements PriceProductExpanderInterface
             }
         }
 
-        $priceProductDimensionTransfer->setType(PriceProductConstants::PRICE_DIMENSION_DEFAULT);
+        if ($priceProductDimensionTransfer->getIdPriceProductDefault() !== null) {
+            $priceProductDimensionTransfer->setType(PriceProductConstants::PRICE_DIMENSION_DEFAULT);
+        }
 
         return $priceProductDimensionTransfer;
     }
