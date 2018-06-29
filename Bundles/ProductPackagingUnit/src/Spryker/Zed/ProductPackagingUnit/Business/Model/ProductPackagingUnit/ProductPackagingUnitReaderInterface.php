@@ -13,12 +13,12 @@ use Generated\Shared\Transfer\ProductPackagingUnitTransfer;
 interface ProductPackagingUnitReaderInterface
 {
     /**
-     * @param int $productPackagingUnitId
+     * @param int $idProductPackagingUnit
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer|null
      */
     public function getProductPackagingUnitById(
-        int $productPackagingUnitId
+        int $idProductPackagingUnit
     ): ?ProductPackagingUnitTransfer;
 
     /**

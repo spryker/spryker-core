@@ -66,11 +66,11 @@ interface ProductPackagingUnitRepositoryInterface
     public function getIdProductAbstractsByIdProductPackagingUnitTypes(array $productPackagingUnitTypeIds): array;
 
     /**
-     * @param int $productPackagingUnitId
+     * @param int $idProductPackagingUnit
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer|null
      */
     public function findProductPackagingUnitById(
-        int $productPackagingUnitId
+        int $idProductPackagingUnit
     ): ?ProductPackagingUnitTransfer;
 }

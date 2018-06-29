@@ -39,14 +39,14 @@ class ProductPackagingUnitReader implements ProductPackagingUnitReaderInterface
     }
 
     /**
-     * @param int $productPackagingUnitId
+     * @param int $idProductPackagingUnit
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer|null
      */
     public function getProductPackagingUnitById(
-        int $productPackagingUnitId
+        int $idProductPackagingUnit
     ): ?ProductPackagingUnitTransfer {
-        $productPackagingUnitTransfer = $this->repository->findProductPackagingUnitById($productPackagingUnitId);
+        $productPackagingUnitTransfer = $this->repository->findProductPackagingUnitById($idProductPackagingUnit);
 
         if ($productPackagingUnitTransfer && !$productPackagingUnitTransfer->getProductPackagingUnitAmount()) {
             $this->hydrateWithDefaultAmount($productPackagingUnitTransfer);

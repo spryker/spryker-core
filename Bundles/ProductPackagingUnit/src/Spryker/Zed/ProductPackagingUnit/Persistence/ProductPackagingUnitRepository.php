@@ -169,15 +169,15 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
     }
 
     /**
-     * @param int $productPackagingUnitId
+     * @param int $idProductPackagingUnit
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer|null
      */
     public function findProductPackagingUnitById(
-        int $productPackagingUnitId
+        int $idProductPackagingUnit
     ): ?ProductPackagingUnitTransfer {
         $productPackagingUnitEntity = $this->getProductPackagingUnitCriteria()
-            ->findOneByIdProductPackagingUnit($productPackagingUnitId);
+            ->findOneByIdProductPackagingUnit($idProductPackagingUnit);
 
         if (!$productPackagingUnitEntity) {
             return null;
