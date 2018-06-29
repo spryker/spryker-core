@@ -45,7 +45,7 @@ class ProductPackagingUnitCheckoutPreCheck extends ProductPackagingUnitAvailabil
      *
      * @return \ArrayObject
      */
-    protected function getCheckoutAvailabilityFailedItems(QuoteTransfer $quoteTransfer)
+    protected function getCheckoutAvailabilityFailedItems(QuoteTransfer $quoteTransfer): ArrayObject
     {
         $checkoutErrorMessages = new ArrayObject();
 

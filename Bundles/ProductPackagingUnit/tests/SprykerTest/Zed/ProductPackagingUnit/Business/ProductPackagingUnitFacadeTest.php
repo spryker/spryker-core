@@ -120,7 +120,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
     /**
      * @return array
      */
-    public function getProductPackagingUnitTypeData()
+    public function getProductPackagingUnitTypeData(): array
     {
         return [
             [
@@ -156,7 +156,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
     /**
      * @return array
      */
-    public function getProductPackagingUnitTypeDataForNameChange()
+    public function getProductPackagingUnitTypeDataForNameChange(): array
     {
         return [
             [

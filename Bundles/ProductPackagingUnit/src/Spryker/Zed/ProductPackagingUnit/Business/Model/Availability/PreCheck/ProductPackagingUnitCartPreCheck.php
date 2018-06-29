@@ -57,7 +57,7 @@ class ProductPackagingUnitCartPreCheck extends ProductPackagingUnitAvailabilityP
      *
      * @return void
      */
-    protected function assertQuote(CartChangeTransfer $cartChangeTransfer)
+    protected function assertQuote(CartChangeTransfer $cartChangeTransfer): void
     {
         $cartChangeTransfer->requireQuote();
 
@@ -82,7 +82,7 @@ class ProductPackagingUnitCartPreCheck extends ProductPackagingUnitAvailabilityP
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    protected function createCartPreCheckResponseTransfer(ArrayObject $cartErrorMessages)
+    protected function createCartPreCheckResponseTransfer(ArrayObject $cartErrorMessages): CartPreCheckResponseTransfer
     {
         return (new CartPreCheckResponseTransfer())
             ->setIsSuccess(count($cartErrorMessages) === 0)
