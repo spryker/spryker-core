@@ -6,6 +6,7 @@
     <transfer name="PriceProductMerchantRelationshipStorage">
         <property name="storeName" type="string" />
         <property name="idMerchantRelationship" type="int" />
+        <property name="idCompanyBusinessUnit" type="int" />
         <property name="idProduct" type="int" />
         <property name="prices" type="array" />
     </transfer>

@@ -19,10 +19,7 @@ interface PriceProductMatcherInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
-    public function matchPriceValueByPriceProductCriteria(
-        array $priceProductTransfers,
-        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-    ): ?PriceProductTransfer;
+    public function matchPriceValueByPriceProductCriteria(array $priceProductTransfers, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?PriceProductTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
@@ -30,8 +27,13 @@ interface PriceProductMatcherInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
-    public function matchPriceValueByPriceProductFilter(
-        array $priceProductTransfers,
-        PriceProductFilterTransfer $priceProductFilterTransfer
-    ): ?PriceProductTransfer;
+    public function matchPriceByFilter(array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer): ?PriceProductTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function matchPricesByFilter(array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer): array;
 }

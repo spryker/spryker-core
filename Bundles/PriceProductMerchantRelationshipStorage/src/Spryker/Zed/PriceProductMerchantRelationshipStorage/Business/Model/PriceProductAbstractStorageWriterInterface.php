@@ -14,12 +14,12 @@ interface PriceProductAbstractStorageWriterInterface
      *
      * @return void
      */
-    public function publish(array $priceProductStoreIds): void;
+    public function publishByPriceProductStoreIds(array $priceProductStoreIds): void;
 
     /**
-     * @param array $merchantRelationshipAbstractProducts
+     * @param array $businessUnitProducts
      *
      * @return void
      */
-    public function unpublish(array $merchantRelationshipAbstractProducts): void;
+    public function publishByBusinessUnitProducts(array $businessUnitProducts): void;
 }

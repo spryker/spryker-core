@@ -19,8 +19,7 @@ interface PriceProductMerchantRelationshipDataImportConstants
      */
     public const ENTITY_SPY_PRICE_PRODUCT_STORE_UPDATE = 'Entity.spy_price_product_store.update';
 
-    /**
-     * @uses \Spryker\Zed\PriceProductMerchantRelationship\Dependency\PriceProductMerchantRelationshipEvents::ENTITY_SPY_PRICE_PRODUCT_MERCHANT_RELATIONSHIP_DELETE
-     */
-    public const ENTITY_SPY_PRICE_PRODUCT_MERCHANT_RELATIONSHIP_DELETE = 'Entity.spy_price_product_merchant_relationship.delete';
+    public const ENTITY_SPY_PRICE_PRODUCT_MERCHANT_RELATIONSHIP_CREATE = 'Entity.spy_price_product_merchant_relationship.create';
+
+    public const ENTITY_SPY_PRICE_PRODUCT_MERCHANT_RELATIONSHIP_UPDATE = 'Entity.spy_price_product_merchant_relationship.update';
 }

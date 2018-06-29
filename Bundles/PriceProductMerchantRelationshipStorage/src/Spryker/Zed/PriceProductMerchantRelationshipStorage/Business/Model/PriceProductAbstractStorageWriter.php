@@ -48,43 +48,58 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
      *
      * @return void
      */
-    public function publish(array $priceProductStoreIds): void
+    public function publishByPriceProductStoreIds(array $priceProductStoreIds): void
     {
         $abstractProducts = $this->priceProductMerchantRelationshipStorageRepository
             ->findPriceProductStoreListByIdsForAbstract($priceProductStoreIds);
 
-        $priceProductMerchantRelationshipStorageTransferCollection = $this->priceGrouper->getGroupedPrices(
+        $this->write($abstractProducts);
+    }
+
+    /**
+     * @param array $businessUnitProducts
+     *
+     * @return void
+     */
+    public function publishByBusinessUnitProducts(array $businessUnitProducts): void
+    {
+        foreach ($businessUnitProducts as $idCompanyBusinessUnit => $productAbstractIds) {
+            foreach ($productAbstractIds as $idProductAbstract) {
+                $this->priceProductMerchantRelationshipStorageEntityManager
+                    ->deletePriceProductAbstractByCompanyBusinessUnitAndIdProductAbstract($idCompanyBusinessUnit, $idProductAbstract);
+            }
+        }
+
+        // re-publish remaining prices
+        $abstractProducts = $this->priceProductMerchantRelationshipStorageRepository
+            ->findPriceProductStoresByCompanyBusinessUnitAbstractProducts($businessUnitProducts);
+
+        $this->write($abstractProducts);
+    }
+
+    /**
+     * @param array $abstractProducts
+     *
+     * @return void
+     */
+    protected function write(array $abstractProducts): void
+    {
+        $priceProductMerchantRelationshipStorageTransfers = $this->priceGrouper->getGroupedPrices(
             $abstractProducts,
             PriceProductMerchantRelationshipStorageRepository::COL_PRODUCT_ABSTRACT_ID_PRODUCT,
             PriceProductMerchantRelationshipStorageRepository::COL_PRODUCT_ABSTRACT_SKU
         );
 
-        if (count($priceProductMerchantRelationshipStorageTransferCollection) === 0) {
+        if (count($priceProductMerchantRelationshipStorageTransfers) === 0) {
             return;
         }
 
-        // if we have few prices new prices will not be published
         $priceProductMerchantRelationshipStorageEntityMap = $this->priceProductMerchantRelationshipStorageRepository
             ->findExistingPriceProductAbstractMerchantRelationshipStorageEntities($abstractProducts);
 
         $this->priceProductMerchantRelationshipStorageEntityManager->writePriceProductAbstract(
-            $priceProductMerchantRelationshipStorageTransferCollection,
+            $priceProductMerchantRelationshipStorageTransfers,
             $priceProductMerchantRelationshipStorageEntityMap
         );
-    }
-
-    /**
-     * @param array $merchantRelationshipAbstractProducts
-     *
-     * @return void
-     */
-    public function unpublish(array $merchantRelationshipAbstractProducts): void
-    {
-        foreach ($merchantRelationshipAbstractProducts as $idMerchantRelationship => $idAbstractProducts) {
-            foreach ($idAbstractProducts as $idProductAbstract) {
-                $this->priceProductMerchantRelationshipStorageEntityManager
-                    ->deletePriceProductAbstractByMerchantRelationshipAndIdProductAbstract($idMerchantRelationship, $idProductAbstract);
-            }
-        }
     }
 }

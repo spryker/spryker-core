@@ -7,14 +7,12 @@
 
 namespace Spryker\Client\PriceProductStorage\Storage;
 
-use Generated\Shared\Transfer\PriceProductStorageTransfer;
-
 interface PriceConcreteStorageReaderInterface
 {
     /**
      * @param int $idProductConcrete
      *
-     * @return \Generated\Shared\Transfer\PriceProductStorageTransfer|null
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findPriceConcreteStorageTransfer($idProductConcrete): ?PriceProductStorageTransfer;
+    public function findPriceProductConcreteTransfers($idProductConcrete): array;
 }

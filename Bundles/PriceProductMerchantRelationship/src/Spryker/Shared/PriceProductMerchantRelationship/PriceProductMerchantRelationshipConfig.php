@@ -14,7 +14,9 @@ class PriceProductMerchantRelationshipConfig extends AbstractSharedConfig
     /**
      * Price Dimension Merchant Relationship
      */
-    protected const PRICE_DIMENSION_MERCHANT_RELATIONSHIP = 'PRICE_DIMENSION_MERCHANT_RELATIONSHIP';
+    public const PRICE_DIMENSION_MERCHANT_RELATIONSHIP = 'PRICE_DIMENSION_MERCHANT_RELATIONSHIP';
+
+    public const PRICE_GROSS_MODE = 'GROSS_MODE';
 
     /**
      * @return string

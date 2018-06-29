@@ -8,7 +8,6 @@ namespace Spryker\Service\PriceProduct;
 
 use Spryker\Service\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Service\Kernel\Container;
-use Spryker\Service\PriceProduct\Plugin\PriceProductExtension\DefaultPriceProductDecisionPlugin;
 
 class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -43,12 +42,10 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * The plugins in this stack will filter data returned by price query.
      *
-     * @return \Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductDecisionPluginInterface[]
+     * @return \Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductFilterPluginInterface[]
      */
     protected function getPriceProductDecisionPlugins(): array
     {
-        return [
-            new DefaultPriceProductDecisionPlugin(),
-        ];
+        return [];
     }
 }

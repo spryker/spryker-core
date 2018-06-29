@@ -32,24 +32,24 @@ interface PriceProductMerchantRelationshipStorageEntityManagerInterface
     ): void;
 
     /**
-     * @param int $idMerchantRelationship
+     * @param int $idCompanyBusinessUnit
      * @param int $idProductAbstract
      *
      * @return void
      */
-    public function deletePriceProductAbstractByMerchantRelationshipAndIdProductAbstract(
-        int $idMerchantRelationship,
+    public function deletePriceProductAbstractByCompanyBusinessUnitAndIdProductAbstract(
+        int $idCompanyBusinessUnit,
         int $idProductAbstract
     ): void;
 
     /**
-     * @param int $idMerchantRelationship
+     * @param int $idCompanyBusinessUnit
      * @param int $idProduct
      *
      * @return void
      */
-    public function deletePriceProductConcreteByMerchantRelationshipAndIdProduct(
-        int $idMerchantRelationship,
+    public function deletePriceProductConcreteByCompanyBusinessUnitAndIdProduct(
+        int $idCompanyBusinessUnit,
         int $idProduct
     ): void;
 }

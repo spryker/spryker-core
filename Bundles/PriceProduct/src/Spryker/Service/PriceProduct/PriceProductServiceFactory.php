@@ -8,6 +8,8 @@
 namespace Spryker\Service\PriceProduct;
 
 use Spryker\Service\Kernel\AbstractServiceFactory;
+use Spryker\Service\PriceProduct\FilterStrategy\SinglePriceProductFilterMinStrategy;
+use Spryker\Service\PriceProduct\FilterStrategy\SinglePriceProductFilterStrategyInterface;
 use Spryker\Service\PriceProduct\Model\PriceProductMatcher;
 use Spryker\Service\PriceProduct\Model\PriceProductMatcherInterface;
 
@@ -18,11 +20,22 @@ class PriceProductServiceFactory extends AbstractServiceFactory
      */
     public function createPriceProductMatcher(): PriceProductMatcherInterface
     {
-        return new PriceProductMatcher($this->getPriceProductDecisionPlugins());
+        return new PriceProductMatcher(
+            $this->getPriceProductDecisionPlugins(),
+            $this->createSinglePriceProductFilterStrategy()
+        );
     }
 
     /**
-     * @return \Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductDecisionPluginInterface[]
+     * @return \Spryker\Service\PriceProduct\FilterStrategy\SinglePriceProductFilterStrategyInterface
+     */
+    public function createSinglePriceProductFilterStrategy(): SinglePriceProductFilterStrategyInterface
+    {
+        return new SinglePriceProductFilterMinStrategy();
+    }
+
+    /**
+     * @return \Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductFilterPluginInterface[]
      */
     public function getPriceProductDecisionPlugins(): array
     {

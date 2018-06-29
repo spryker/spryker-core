@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\Model;
 
+use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer;
-use Orm\Zed\PriceProductMerchantRelationship\Persistence\Map\SpyPriceProductMerchantRelationshipTableMap;
 use Spryker\Shared\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConstants;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\Dependency\Facade\PriceProductMerchantRelationshipStorageToPriceProductFacadeInterface;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\Dependency\Facade\PriceProductMerchantRelationshipStorageToStoreFacadeInterface;
@@ -61,15 +61,17 @@ class PriceGrouper implements PriceGrouperInterface
 
         $groupedPrices = [];
         foreach ($products as $product) {
+            $idStore = $product[PriceProductMerchantRelationshipStorageConstants::COL_PRICE_PRODUCT_STORE_FK_STORE];
             $idProduct = $product[$productPrimaryIdentifier];
-            $idMerchantRelationship = $product[SpyPriceProductMerchantRelationshipTableMap::COL_FK_MERCHANT_RELATIONSHIP];
+            $idMerchantRelationship = $product[PriceProductMerchantRelationshipStorageConstants::COL_FK_MERCHANT_RELATIONSHIP];
+            $idCompanyBusinessUnit = $product[MerchantRelationshipTransfer::FK_COMPANY_BUSINESS_UNIT];
 
             if (!$idMerchantRelationship || !$idProduct) {
                 continue;
             }
 
             $priceProductDimensionTransfer->setIdMerchantRelationship($idMerchantRelationship);
-            $storeTransfer = $this->storeFacade->getStoreById($product[PriceProductMerchantRelationshipStorageConstants::COL_PRICE_PRODUCT_STORE_FK_STORE]);
+            $storeTransfer = $this->storeFacade->getStoreById($idStore);
             $prices = $this->priceProductFacade->findPricesBySkuGroupedForCurrentStore(
                 $product[$productSkuIdentifier],
                 $priceProductDimensionTransfer
@@ -77,6 +79,7 @@ class PriceGrouper implements PriceGrouperInterface
 
             $groupedPrices[] = (new PriceProductMerchantRelationshipStorageTransfer())
                 ->setStoreName($storeTransfer->getName())
+                ->setIdCompanyBusinessUnit($idCompanyBusinessUnit)
                 ->setIdMerchantRelationship($idMerchantRelationship)
                 ->setIdProduct($idProduct)
                 ->setPrices($prices);

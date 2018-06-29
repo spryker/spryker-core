@@ -54,7 +54,6 @@ class PriceProductMerchantRelationshipWriterStep extends PublishAwareStep implem
             return $priceProductStoreEntity;
         }
 
-        //todo check if it correctly trigger event in listener
         $this->removeNotActualRelation(
             $dataSet[PriceProductMerchantRelationshipDataSetInterface::ID_MERCHANT_RELATIONSHIP],
             $priceProductStoreEntity->getIdPriceProductStore()
@@ -83,7 +82,16 @@ class PriceProductMerchantRelationshipWriterStep extends PublishAwareStep implem
 
         $priceProductMerchantRelationshipEntity = $priceProductMerchantRelationshipQuery->findOneOrCreate();
 
+        $eventName = $priceProductMerchantRelationshipEntity->isNew()
+            ? PriceProductMerchantRelationshipDataImportConstants::ENTITY_SPY_PRICE_PRODUCT_MERCHANT_RELATIONSHIP_CREATE
+            : PriceProductMerchantRelationshipDataImportConstants::ENTITY_SPY_PRICE_PRODUCT_MERCHANT_RELATIONSHIP_UPDATE;
+
         $priceProductMerchantRelationshipEntity->save();
+
+        $this->addPublishEvents(
+            $eventName,
+            $priceProductMerchantRelationshipEntity->getPrimaryKey()
+        );
     }
 
     /**
@@ -100,11 +108,6 @@ class PriceProductMerchantRelationshipWriterStep extends PublishAwareStep implem
             ->find();
 
         foreach ($priceProductMerchantRelationshipEntities as $priceProductMerchantRelationshipEntity) {
-            $this->addPublishEvents(
-                PriceProductMerchantRelationshipDataImportConstants::ENTITY_SPY_PRICE_PRODUCT_MERCHANT_RELATIONSHIP_DELETE,
-                $priceProductMerchantRelationshipEntity->getPrimaryKey()
-            );
-
             $priceProductMerchantRelationshipEntity->delete();
         }
     }
@@ -144,16 +147,7 @@ class PriceProductMerchantRelationshipWriterStep extends PublishAwareStep implem
             ->filterByGrossPrice($grossPrice)
             ->findOneOrCreate();
 
-        $eventName = $priceProductStoreEntity->isNew()
-            ? PriceProductMerchantRelationshipDataImportConstants::ENTITY_SPY_PRICE_PRODUCT_STORE_CREATE
-            : PriceProductMerchantRelationshipDataImportConstants::ENTITY_SPY_PRICE_PRODUCT_STORE_UPDATE;
-
         $priceProductStoreEntity->save();
-
-        $this->addPublishEvents(
-            $eventName,
-            $priceProductStoreEntity->getPrimaryKey()
-        );
 
         return $priceProductStoreEntity;
     }

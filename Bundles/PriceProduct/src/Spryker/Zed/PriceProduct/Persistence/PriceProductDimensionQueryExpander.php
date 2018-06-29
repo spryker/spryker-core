@@ -62,6 +62,7 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
     ): SpyPriceProductStoreQuery {
 
         foreach ($this->priceProductDimensionQueryExpanders as $priceDimensionQueryCriteriaPlugin) {
+            // need to use separate method for delete query
             $priceDimensionQueryCriteriaTransfer = $this->runPlugin(
                 $priceProductStoreQuery,
                 $priceProductCriteriaTransfer,
@@ -150,16 +151,17 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
         $joinType = null
     ): ?QueryCriteriaTransfer {
 
-        $priceDimensionQueryCriteriaTransfer = $priceProductDimensionQueryExpanderPlugin
+        $queryCriteriaTransfer = $priceProductDimensionQueryExpanderPlugin
             ->buildPriceDimensionQueryCriteria($priceProductCriteriaTransfer);
 
-        if (!$priceDimensionQueryCriteriaTransfer) {
+        if (!$queryCriteriaTransfer) {
             return null;
         }
-        $this->addJoin($priceProductStoreQuery, $priceDimensionQueryCriteriaTransfer, $joinType);
-        $this->addWithColumns($priceProductStoreQuery, $priceDimensionQueryCriteriaTransfer);
+        $this->addJoin($priceProductStoreQuery, $queryCriteriaTransfer, $joinType);
+        $this->addWithColumns($priceProductStoreQuery, $queryCriteriaTransfer);
+        $this->addConditions($priceProductStoreQuery, $queryCriteriaTransfer);
 
-        return $priceDimensionQueryCriteriaTransfer;
+        return $queryCriteriaTransfer;
     }
 
     /**
@@ -196,6 +198,26 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
     ): void {
         foreach ($queryCriteriaTransfer->getWithColumns() as $field => $value) {
             $priceProductStoreQuery->withColumn($field, $value);
+        }
+    }
+
+    /**
+     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery $priceProductStoreQuery
+     * @param \Generated\Shared\Transfer\QueryCriteriaTransfer $queryCriteriaTransfer
+     *
+     * @return void
+     */
+    protected function addConditions(
+        SpyPriceProductStoreQuery $priceProductStoreQuery,
+        QueryCriteriaTransfer $queryCriteriaTransfer
+    ): void {
+        foreach ($queryCriteriaTransfer->getConditions() as $queryConditionTransfer) {
+            $priceProductStoreQuery->addCond(
+                $queryConditionTransfer->getName(),
+                $queryConditionTransfer->getColumn(),
+                $queryConditionTransfer->getValue(),
+                $queryConditionTransfer->getComparison()
+            );
         }
     }
 

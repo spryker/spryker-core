@@ -9,6 +9,7 @@ namespace Spryker\Zed\PriceProductMerchantRelationship\Communication\Plugin\Pric
 
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
+use Spryker\Shared\PriceProductMerchantRelationship\PriceProductMerchantRelationshipConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PriceProduct\Dependency\Plugin\PriceDimensionQueryCriteriaPluginInterface;
 
@@ -43,6 +44,6 @@ class MerchantRelationshipPriceQueryCriteriaPlugin extends AbstractPlugin implem
      */
     public function getDimensionName(): string
     {
-        return $this->getConfig()->getPriceDimensionMerchantRelationship();
+        return PriceProductMerchantRelationshipConfig::PRICE_DIMENSION_MERCHANT_RELATIONSHIP;
     }
 }

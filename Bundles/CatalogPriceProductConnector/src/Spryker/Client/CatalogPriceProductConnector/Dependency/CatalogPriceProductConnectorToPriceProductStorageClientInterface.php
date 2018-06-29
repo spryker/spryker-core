@@ -7,8 +7,6 @@
 
 namespace Spryker\Client\CatalogPriceProductConnector\Dependency;
 
-use Generated\Shared\Transfer\PriceProductStorageTransfer;
-
 interface CatalogPriceProductConnectorToPriceProductStorageClientInterface
 {
     /**
@@ -19,7 +17,7 @@ interface CatalogPriceProductConnectorToPriceProductStorageClientInterface
      *
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\PriceProductStorageTransfer|null
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function getPriceProductAbstractStorageTransfer(int $idProductAbstract): ?PriceProductStorageTransfer;
+    public function getPriceProductAbstractTransfers(int $idProductAbstract): array;
 }

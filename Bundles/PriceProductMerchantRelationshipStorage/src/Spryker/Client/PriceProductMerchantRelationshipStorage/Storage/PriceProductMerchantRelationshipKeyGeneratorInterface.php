@@ -12,9 +12,9 @@ interface PriceProductMerchantRelationshipKeyGeneratorInterface
     /**
      * @param string $resourceName
      * @param int $idProduct
-     * @param int $idMerchantRelationship
+     * @param int $idCompanyBusinessUnit
      *
      * @return string
      */
-    public function generateKey(string $resourceName, int $idProduct, int $idMerchantRelationship): string;
+    public function generateKey(string $resourceName, int $idProduct, int $idCompanyBusinessUnit): string;
 }

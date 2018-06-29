@@ -14,50 +14,24 @@ namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Business;
 interface PriceProductMerchantRelationshipStorageFacadeInterface
 {
     /**
-     * Specification:
-     *  - Saves prices in spy_price_product_concrete_business_unit_storage
+     * {@inheritdoc}
      *
      * @api
      *
-     * @param array $priceProductStoreIds
+     * @param array $businessUnitProducts
      *
      * @return void
      */
-    public function publishConcretePriceProduct(array $priceProductStoreIds): void;
+    public function publishConcretePriceProductByBusinessUnitProducts(array $businessUnitProducts): void;
 
     /**
-     * Specification:
-     *  - Removes prices from spy_price_product_concrete_business_unit_storage
+     * {@inheritdoc}
      *
      * @api
      *
-     * @param array $merchantRelationshipConcreteProducts
+     * @param array $businessUnitProducts
      *
      * @return void
      */
-    public function unpublishConcretePriceProduct(array $merchantRelationshipConcreteProducts): void;
-
-    /**
-     * Specification:
-     *  - Saves prices in spy_price_product_abstract_business_unit_storage
-     *
-     * @api
-     *
-     * @param array $priceProductStoreIds
-     *
-     * @return void
-     */
-    public function publishAbstractPriceProduct(array $priceProductStoreIds): void;
-
-    /**
-     * Specification:
-     *  - Removes prices from spy_price_product_abstract_business_unit_storage
-     *
-     * @api
-     *
-     * @param array $merchantRelationshipAbstractProducts
-     *
-     * @return void
-     */
-    public function unpublishAbstractPriceProduct(array $merchantRelationshipAbstractProducts): void;
+    public function publishAbstractPriceProductByBusinessUnitProducts(array $businessUnitProducts): void;
 }

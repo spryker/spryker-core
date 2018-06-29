@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\PriceProductMerchantRelationshipStorage\Plugin\PriceProductStorageExtension;
 
-use Generated\Shared\Transfer\PriceProductStorageTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductStoragePriceDimensionPluginInterface;
 
@@ -24,32 +23,24 @@ class PriceProductMerchantRelationshipStorageDimensionPlugin extends AbstractPlu
      *
      * @param int $idProductConcrete
      *
-     * @return \Generated\Shared\Transfer\PriceProductStorageTransfer|null
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findProductConcretePrices(int $idProductConcrete): ?PriceProductStorageTransfer
+    public function findProductConcretePrices(int $idProductConcrete): array
     {
-        $merchantRelationshipIds = $this->getFactory()
-            ->createMerchantRelationshipFinder()
-            ->findCurrentCustomerMerchantRelationshipIds();
+        $currentCustomerCompanyBusinessUnitId = $this->getFactory()
+            ->createCompanyBusinessUnitFinder()
+            ->findCurrentCustomerCompanyBusinessUnitId();
 
-        if (!$merchantRelationshipIds) {
-            return null;
+        if (!$currentCustomerCompanyBusinessUnitId) {
+            return [];
         }
 
-        // how to get min price? and how to use volume prices from which MR?
-        foreach ($merchantRelationshipIds as $idMerchantRelationship) {
-            $priceProductStorageTransfer = $this->getFactory()
+        return $this->getFactory()
             ->createPriceProductMerchantRelationshipConcreteReader()
             ->findPriceMerchantRelationshipConcrete(
                 $idProductConcrete,
-                $idMerchantRelationship
+                $currentCustomerCompanyBusinessUnitId
             );
-            if ($priceProductStorageTransfer) {
-                return $priceProductStorageTransfer;
-            }
-        }
-
-        return null;
     }
 
     /**
@@ -59,32 +50,24 @@ class PriceProductMerchantRelationshipStorageDimensionPlugin extends AbstractPlu
      *
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\PriceProductStorageTransfer|null
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findProductAbstractPrices(int $idProductAbstract): ?PriceProductStorageTransfer
+    public function findProductAbstractPrices(int $idProductAbstract): array
     {
-        $merchantRelationshipIds = $this->getFactory()
-            ->createMerchantRelationshipFinder()
-            ->findCurrentCustomerMerchantRelationshipIds();
+        $idBusinessUnitFromCurrentCustomer = $this->getFactory()
+            ->createCompanyBusinessUnitFinder()
+            ->findCurrentCustomerCompanyBusinessUnitId();
 
-        if (!$merchantRelationshipIds) {
-            return null;
+        if (!$idBusinessUnitFromCurrentCustomer) {
+            return [];
         }
 
-        // how to get min price? and how to use volume prices from which MR?
-        foreach ($merchantRelationshipIds as $idMerchantRelationship) {
-            $priceProductStorageTransfer = $this->getFactory()
-                ->createPriceProductMerchantRelationshipAbstractReader()
-                ->findPriceMerchantRelationshipAbstract(
-                    $idProductAbstract,
-                    $idMerchantRelationship
-                );
-            if ($priceProductStorageTransfer) {
-                return $priceProductStorageTransfer;
-            }
-        }
-
-        return null;
+        return $this->getFactory()
+            ->createPriceProductMerchantRelationshipAbstractReader()
+            ->findProductAbstractPrices(
+                $idProductAbstract,
+                $idBusinessUnitFromCurrentCustomer
+            );
     }
 
     /**

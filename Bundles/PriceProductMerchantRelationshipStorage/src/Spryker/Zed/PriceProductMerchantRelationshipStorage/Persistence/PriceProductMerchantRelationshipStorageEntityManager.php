@@ -98,61 +98,68 @@ class PriceProductMerchantRelationshipStorageEntityManager extends AbstractEntit
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[] $priceProductMerchantRelationshipStorageTransferCollection
+     * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[] $priceProductMerchantRelationshipStorageTransfers
      * @param array $existingPriceProductMerchantRelationshipStorageEntityMap
      * @param string $priceProductStorageEntityClass
      *
      * @return void
      */
     protected function writePriceProductMerchantRelationshipStorage(
-        array $priceProductMerchantRelationshipStorageTransferCollection,
+        array $priceProductMerchantRelationshipStorageTransfers,
         array $existingPriceProductMerchantRelationshipStorageEntityMap,
         string $priceProductStorageEntityClass
     ): void {
-        foreach ($priceProductMerchantRelationshipStorageTransferCollection as $priceProductMerchantRelationshipStorageTransfer) {
-            $priceKey = $this->buildPriceKey($priceProductMerchantRelationshipStorageTransfer);
+        $groupedPrices = [];
 
-            $priceProductMerchantRelationshipStorageEntity = $this->getPriceProductMerchantRelationshipStorageEntity(
-                $existingPriceProductMerchantRelationshipStorageEntityMap,
-                $priceKey,
-                $priceProductStorageEntityClass
-            );
+        foreach ($priceProductMerchantRelationshipStorageTransfers as $storageTransfer) {
+            $groupedPrices[$storageTransfer->getIdProduct()][$storageTransfer->getIdCompanyBusinessUnit()][] = $storageTransfer;
+        }
 
-            if (!$priceProductMerchantRelationshipStorageTransfer->getPrices()) {
-                if (!$priceProductMerchantRelationshipStorageEntity->isNew()) {
-                    $priceProductMerchantRelationshipStorageEntity->delete();
+        foreach ($groupedPrices as $idProduct => $pricesPerProduct) {
+            /** @var \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[] $storageTransfers */
+            foreach ($pricesPerProduct as $idCompanyBusinessUnit => $storageTransfers) {
+                $prices = [];
+                foreach ($storageTransfers as $storageTransfer) {
+                    $prices[$storageTransfer->getIdMerchantRelationship()] = $storageTransfer->getPrices();
                 }
-                continue;
+
+                $priceKey = $this->buildPriceKey($storageTransfers[0]);
+
+                $priceProductMerchantRelationshipStorageEntity = $this->getPriceProductMerchantRelationshipStorageEntity(
+                    $existingPriceProductMerchantRelationshipStorageEntityMap,
+                    $priceKey,
+                    $priceProductStorageEntityClass
+                );
+
+                $data = [
+                    'prices' => $prices,
+                ];
+
+                $priceProductMerchantRelationshipStorageEntity
+                    ->setPriceKey($priceKey)
+                    ->setFkCompanyBusinessUnit($idCompanyBusinessUnit)
+                    ->setData($data)
+                    ->setIsSendingToQueue(true);
+
+                $this->setProductForeignKey($priceProductMerchantRelationshipStorageEntity, $idProduct);
+
+                $priceProductMerchantRelationshipStorageEntity->save();
             }
-
-            $data = [
-                'prices' => $priceProductMerchantRelationshipStorageTransfer->getPrices(),
-            ];
-
-            $priceProductMerchantRelationshipStorageEntity
-                ->setPriceKey($priceKey)
-                ->setFkMerchantRelationship($priceProductMerchantRelationshipStorageTransfer->getIdMerchantRelationship())
-                ->setData($data)
-                ->setIsSendingToQueue(true);
-
-            $this->setProductForeignKey($priceProductMerchantRelationshipStorageEntity, $priceProductMerchantRelationshipStorageTransfer->getIdProduct());
-
-            $priceProductMerchantRelationshipStorageEntity->save();
         }
     }
 
     /**
-     * @param int $idMerchantRelationship
+     * @param int $idCompanyBusinessUnit
      * @param int $idProductAbstract
      *
      * @return void
      */
-    public function deletePriceProductAbstractByMerchantRelationshipAndIdProductAbstract(
-        int $idMerchantRelationship,
+    public function deletePriceProductAbstractByCompanyBusinessUnitAndIdProductAbstract(
+        int $idCompanyBusinessUnit,
         int $idProductAbstract
     ): void {
         $priceProductAbstractMerchantRelationshipStorageEntities = SpyPriceProductAbstractMerchantRelationshipStorageQuery::create()
-            ->filterByFkMerchantRelationship($idMerchantRelationship)
+            ->filterByFkCompanyBusinessUnit($idCompanyBusinessUnit)
             ->filterByFkProductAbstract($idProductAbstract)
             ->find();
 
@@ -162,17 +169,17 @@ class PriceProductMerchantRelationshipStorageEntityManager extends AbstractEntit
     }
 
     /**
-     * @param int $idMerchantRelationship
+     * @param int $idCompanyBusinessUnit
      * @param int $idProduct
      *
      * @return void
      */
-    public function deletePriceProductConcreteByMerchantRelationshipAndIdProduct(
-        int $idMerchantRelationship,
+    public function deletePriceProductConcreteByCompanyBusinessUnitAndIdProduct(
+        int $idCompanyBusinessUnit,
         int $idProduct
     ): void {
         $priceProductConcreteMerchantRelationshipStorageEntities = SpyPriceProductConcreteMerchantRelationshipStorageQuery::create()
-            ->filterByFkMerchantRelationship($idMerchantRelationship)
+            ->filterByFkCompanyBusinessUnit($idCompanyBusinessUnit)
             ->filterByFkProduct($idProduct)
             ->find();
 
@@ -191,7 +198,7 @@ class PriceProductMerchantRelationshipStorageEntityManager extends AbstractEntit
         return implode(static::PRICE_KEY_SEPARATOR, [
             $priceProductMerchantRelationshipStorageTransfer->getStoreName(),
             $priceProductMerchantRelationshipStorageTransfer->getIdProduct(),
-            $priceProductMerchantRelationshipStorageTransfer->getIdMerchantRelationship(),
+            $priceProductMerchantRelationshipStorageTransfer->getIdCompanyBusinessUnit(),
         ]);
     }
 }

@@ -18,32 +18,53 @@ use Spryker\Service\Kernel\AbstractService;
 class PriceProductService extends AbstractService implements PriceProductServiceInterface
 {
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
-    public function resolveProductPriceByPriceProductCriteria(
-        array $priceProductTransfers,
-        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-    ): ?PriceProductTransfer {
+    public function resolveProductPriceByPriceProductCriteria(array $priceProductTransfers, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?PriceProductTransfer
+    {
         return $this->getFactory()
             ->createPriceProductMatcher()
             ->matchPriceValueByPriceProductCriteria($priceProductTransfers, $priceProductCriteriaTransfer);
     }
 
     /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
-    public function resolveProductPriceByPriceProductFilter(
-        array $priceProductTransfers,
-        PriceProductFilterTransfer $priceProductFilterTransfer
-    ): ?PriceProductTransfer {
+    public function resolveProductPriceByPriceProductFilter(array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer): ?PriceProductTransfer
+    {
         return $this->getFactory()
             ->createPriceProductMatcher()
-            ->matchPriceValueByPriceProductFilter($priceProductTransfers, $priceProductFilterTransfer);
+            ->matchPriceByFilter($priceProductTransfers, $priceProductFilterTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
+     */
+    public function resolveProductPricesByPriceProductFilter(array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer): array
+    {
+        return $this->getFactory()
+            ->createPriceProductMatcher()
+            ->matchPricesByFilter($priceProductTransfers, $priceProductFilterTransfer);
     }
 }

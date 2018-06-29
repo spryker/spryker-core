@@ -10,11 +10,11 @@ namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Communication\Plug
 use Orm\Zed\PriceProductMerchantRelationship\Persistence\Map\SpyPriceProductMerchantRelationshipTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\PriceProductMerchantRelationship\Dependency\PriceProductMerchantRelationshipEvents;
 
 /**
  * @method \Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\PriceProductMerchantRelationshipStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\PriceProductMerchantRelationshipStorage\Communication\PriceProductMerchantRelationshipStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProductMerchantRelationshipStorageRepositoryInterface getRepository()
  */
 class PriceProductMerchantRelationshipAbstractListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
@@ -30,22 +30,8 @@ class PriceProductMerchantRelationshipAbstractListener extends AbstractPlugin im
      */
     public function handleBulk(array $eventTransfers, $eventName): void
     {
-        if ($eventName === PriceProductMerchantRelationshipEvents::ENTITY_SPY_PRICE_PRODUCT_MERCHANT_RELATIONSHIP_DELETE) {
-            $merchantRelationshipProducts = $this->getMerchantRelationshipAbstractProducts($eventTransfers);
-            if ($merchantRelationshipProducts) {
-                $this->getFacade()->unpublishAbstractPriceProduct($merchantRelationshipProducts);
-            }
-
-            return;
-        }
-
-        $priceProductStoreIds = $this->getFactory()
-            ->getEventBehaviorFacade()
-            ->getEventTransferForeignKeys(
-                $eventTransfers,
-                SpyPriceProductMerchantRelationshipTableMap::COL_FK_PRICE_PRODUCT_STORE
-            );
-        $this->getFacade()->publishAbstractPriceProduct($priceProductStoreIds);
+        $businessUnitProducts = $this->getBusinessUnitAbstractProducts($eventTransfers);
+        $this->getFacade()->publishAbstractPriceProductByBusinessUnitProducts($businessUnitProducts);
     }
 
     /**
@@ -53,22 +39,40 @@ class PriceProductMerchantRelationshipAbstractListener extends AbstractPlugin im
      *
      * @return array
      */
-    protected function getMerchantRelationshipAbstractProducts(array $eventTransfers): array
+    protected function getBusinessUnitAbstractProducts(array $eventTransfers): array
     {
-        $merchantRelationshipProducts = [];
+        $businessUnitProducts = [];
 
         foreach ($eventTransfers as $eventTransfer) {
             $foreignKeys = $eventTransfer->getForeignKeys();
-            $idProductAbstract = $foreignKeys[SpyPriceProductMerchantRelationshipTableMap::COL_FK_PRODUCT_ABSTRACT];
-            if (!$idProductAbstract) {
-                continue;
+            $idProductAbstract = null;
+            $idMerchantRelationship = null;
+            if ($foreignKeys) {
+                $idProductAbstract = $foreignKeys[SpyPriceProductMerchantRelationshipTableMap::COL_FK_PRODUCT_ABSTRACT];
+                if (!$idProductAbstract) {
+                    continue;
+                }
+                $idMerchantRelationship = $foreignKeys[SpyPriceProductMerchantRelationshipTableMap::COL_FK_MERCHANT_RELATIONSHIP];
+            } else {
+                $priceProductMerchantRelationship = $this->getRepository()
+                    ->findPriceProductMerchantRelationship($eventTransfer->getId());
+
+                if (!$priceProductMerchantRelationship || !$priceProductMerchantRelationship->getFkProductAbstract()) {
+                    continue;
+                }
+
+                $idProductAbstract = $priceProductMerchantRelationship->getFkProductAbstract();
+                $idMerchantRelationship = $priceProductMerchantRelationship->getFkMerchantRelationship();
             }
-            $idMerchantRelationship = $foreignKeys[SpyPriceProductMerchantRelationshipTableMap::COL_FK_MERCHANT_RELATIONSHIP];
-            if (!isset($merchantRelationshipProducts[$idMerchantRelationship][$idProductAbstract])) {
-                $merchantRelationshipProducts[$idMerchantRelationship][$idProductAbstract] = $idProductAbstract;
+
+            $companyBusinessUnitIds = $this->getRepository()
+                ->findCompanyBusinessUnitIdsByMerchantRelationship($idMerchantRelationship);
+
+            foreach ($companyBusinessUnitIds as $businessUnitId) {
+                $businessUnitProducts[$businessUnitId][$idProductAbstract] = $idProductAbstract;
             }
         }
 
-        return $merchantRelationshipProducts;
+        return $businessUnitProducts;
     }
 }

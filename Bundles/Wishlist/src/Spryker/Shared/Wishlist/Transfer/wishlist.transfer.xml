@@ -56,7 +56,6 @@
 
     <transfer name="StorageProduct">
         <property name="idProductConcrete" type="int" />
-        <property name="idProductAbstract" type="int" />
         <property name="sku" type="string" />
     </transfer>
 

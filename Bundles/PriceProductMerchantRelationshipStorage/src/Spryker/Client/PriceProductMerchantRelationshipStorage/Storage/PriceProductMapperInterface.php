@@ -7,13 +7,14 @@
 
 namespace Spryker\Client\PriceProductMerchantRelationshipStorage\Storage;
 
-interface PriceProductMerchantRelationshipConcreteReaderInterface
+use Generated\Shared\Transfer\PriceProductStorageTransfer;
+
+interface PriceProductMapperInterface
 {
     /**
-     * @param int $idProductAbstract
-     * @param int $idCompanyBusinessUnit
+     * @param \Generated\Shared\Transfer\PriceProductStorageTransfer $priceProductStorageTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findPriceMerchantRelationshipConcrete(int $idProductAbstract, int $idCompanyBusinessUnit): array;
+    public function mapPriceProductStorageTransferToPriceProductTransfers(PriceProductStorageTransfer $priceProductStorageTransfer): array;
 }
