@@ -51,10 +51,11 @@ class MerchantRelationshipPriceProductFilterPlugin extends AbstractPlugin implem
                 if ($minPriceProductTransfer->getMoneyValue()->getGrossAmount() > $priceProductTransfer->getMoneyValue()->getGrossAmount()) {
                     $minPriceProductTransfer = $priceProductTransfer;
                 }
-            } else {
-                if ($minPriceProductTransfer->getMoneyValue()->getNetAmount() > $priceProductTransfer->getMoneyValue()->getNetAmount()) {
-                    $minPriceProductTransfer = $priceProductTransfer;
-                }
+                continue;
+            }
+
+            if ($minPriceProductTransfer->getMoneyValue()->getNetAmount() > $priceProductTransfer->getMoneyValue()->getNetAmount()) {
+                $minPriceProductTransfer = $priceProductTransfer;
             }
         }
 
