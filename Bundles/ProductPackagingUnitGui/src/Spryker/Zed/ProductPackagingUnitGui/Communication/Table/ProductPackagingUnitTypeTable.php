@@ -76,7 +76,7 @@ class ProductPackagingUnitTypeTable extends AbstractTable
     {
         $config->setHeader([
             static::COL_ID => 'Id',
-            static::COL_NAME => 'Name',
+            static::COL_NAME => 'Key',
             static::COL_ACTIONS => 'Actions',
         ]);
     }
