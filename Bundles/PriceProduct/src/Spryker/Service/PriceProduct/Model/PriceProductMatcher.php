@@ -8,7 +8,6 @@
 namespace Spryker\Service\PriceProduct\Model;
 
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
-use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Shared\PriceProduct\PriceProductConfig;
@@ -30,12 +29,14 @@ class PriceProductMatcher implements PriceProductMatcherInterface
 
     /**
      * //todo: check??
+     *
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
-    public function matchPriceValueByPriceProductCriteria(array $priceProductTransfers, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?PriceProductTransfer {
+    public function matchPriceValueByPriceProductCriteria(array $priceProductTransfers, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?PriceProductTransfer
+    {
         $priceProductCriteriaTransfer
             ->requirePriceMode()
             ->requirePriceType()
@@ -56,7 +57,7 @@ class PriceProductMatcher implements PriceProductMatcherInterface
         //apply min strategy on dimension level
         $priceProductFilter = (new PriceProductFilterTransfer())->setPriceMode($priceProductCriteriaTransfer->getPriceMode());
         foreach ($this->priceProductFilterPlugins as $priceProductFilterPlugin) {
-            $priceProductTransfers = $priceProductFilterPlugin->filter($priceProductTransfers, $priceProductFilterPlugin);
+            $priceProductTransfers = $priceProductFilterPlugin->filter($priceProductTransfers, $priceProductFilter);
         }
 
         //apply min strategy overall
@@ -64,12 +65,12 @@ class PriceProductMatcher implements PriceProductMatcherInterface
     }
 
     /**
-     * @param PriceProductTransfer[] $priceProductTransfers
-     * @param PriceProductFilterTransfer $priceProductFilterTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
-     * @return PriceProductTransfer|null
+     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
-    protected function minStrategy(array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer)
+    protected function minStrategy(array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer): ?PriceProductTransfer
     {
         $minPriceProductTransfer = null;
 
@@ -92,7 +93,13 @@ class PriceProductMatcher implements PriceProductMatcherInterface
         return $minPriceProductTransfer;
     }
 
-    protected function checkPriceProductByCriteria(PriceProductTransfer $priceProductTransfer, PriceProductCriteriaTransfer $priceProductCriteriaTransfer)
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     *
+     * @return bool
+     */
+    protected function checkPriceProductByCriteria(PriceProductTransfer $priceProductTransfer, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): bool
     {
         $priceProductTransfer
             ->requirePriceDimension()
@@ -100,7 +107,7 @@ class PriceProductMatcher implements PriceProductMatcherInterface
             ->requireMoneyValue();
 
         if ($priceProductCriteriaTransfer->getPriceDimension() !== null) {
-            if ($priceProductTransfer->getPriceDimension()->getType() !== $priceProductTransfer->getPriceDimension()->getType()) {
+            if ($priceProductCriteriaTransfer->getPriceDimension()->getType() !== $priceProductTransfer->getPriceDimension()->getType()) {
                 return false;
             }
         }
@@ -176,7 +183,7 @@ class PriceProductMatcher implements PriceProductMatcherInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    protected function findPricesByPriceProductFilter(array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer)
+    protected function findPricesByPriceProductFilter(array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer): array
     {
         $matchedPriceProductTransfers = [];
 
@@ -190,12 +197,12 @@ class PriceProductMatcher implements PriceProductMatcherInterface
     }
 
     /**
-     * @param PriceProductTransfer $priceProductTransfer
-     * @param PriceProductFilterTransfer $priceProductFilterTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
      * @return bool
      */
-    protected function checkPriceProductOnFilter(PriceProductTransfer $priceProductTransfer, PriceProductFilterTransfer $priceProductFilterTransfer)
+    protected function checkPriceProductOnFilter(PriceProductTransfer $priceProductTransfer, PriceProductFilterTransfer $priceProductFilterTransfer): bool
     {
         if ($priceProductFilterTransfer->getPriceDimension() !== null) {
             $priceProductTransfer->requirePriceDimension();

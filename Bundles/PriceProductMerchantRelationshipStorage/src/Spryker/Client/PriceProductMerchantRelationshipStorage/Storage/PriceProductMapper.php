@@ -16,7 +16,7 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Shared\PriceProduct\PriceProductConfig;
 use Spryker\Shared\PriceProductMerchantRelationship\PriceProductMerchantRelationshipConfig;
 
-class PriceProductMapper
+class PriceProductMapper implements PriceProductMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\PriceProductStorageTransfer $priceProductStorageTransfer
