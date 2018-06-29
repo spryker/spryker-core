@@ -201,10 +201,10 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function expandCartChangeWithQuantityPackagingUnit(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
+    public function expandCartChangeWithAmountLeadProduct(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         return $this->getFactory()
             ->createCartChangeExpander()
-            ->expandWithQuantityPackagingUnit($cartChangeTransfer);
+            ->expandWithAmountLeadProduct($cartChangeTransfer);
     }
 }

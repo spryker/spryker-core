@@ -14,9 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Throwable;
 
 /**
- * @method \Spryker\Zed\ProductPackagingUnitGui\Business\ProductPackagingUnitGuiFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductPackagingUnitGui\Communication\ProductPackagingUnitGuiCommunicationFactory getFactory()
- * @method \Spryker\Zed\ProductPackagingUnitGui\Persistence\ProductPackagingUnitGuiRepositoryInterface getRepository()
  */
 class EditController extends AbstractProductPackagingUnitGuiController
 {
@@ -27,7 +25,7 @@ class EditController extends AbstractProductPackagingUnitGuiController
      */
     public function indexAction(Request $request)
     {
-        $idProductPackagingUnitType = $this->castId($request->query->get(ProductPackagingUnitGuiConfig::REQUEST_ID_PRODUCT_PACKAGING_UNIT_TYPE));
+        $idProductPackagingUnitType = $this->castId($request->query->get(ProductPackagingUnitGuiConfig::REQUEST_PARAM_ID_PRODUCT_PACKAGING_UNIT_TYPE));
         $availableLocales = $this->getFactory()->getLocaleFacade()->getLocaleCollection();
 
         $productPackagingUnitTypeDataProvider = $this->getFactory()

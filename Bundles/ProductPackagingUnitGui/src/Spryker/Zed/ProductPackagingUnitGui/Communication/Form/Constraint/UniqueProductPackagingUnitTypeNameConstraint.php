@@ -12,12 +12,12 @@ use Symfony\Component\Validator\Constraint;
 
 class UniqueProductPackagingUnitTypeNameConstraint extends Constraint
 {
-    const OPTION_FACADE = 'facade';
+    public const OPTION_FACADE = 'facade';
 
     /**
      * @var \Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToProductPackagingUnitFacadeInterface
      */
-    protected $facade;
+    protected $productPackagingUnitFacade;
 
     /**
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
@@ -27,7 +27,7 @@ class UniqueProductPackagingUnitTypeNameConstraint extends Constraint
     public function findProductPackagingUnitTypeByName(
         ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
     ): ?ProductPackagingUnitTypeTransfer {
-        return $this->facade
+        return $this->productPackagingUnitFacade
             ->getProductPackagingUnitTypeByName($productPackagingUnitTypeTransfer);
     }
 
@@ -39,7 +39,7 @@ class UniqueProductPackagingUnitTypeNameConstraint extends Constraint
     public function findProductPackagingUnitTypeById(
         ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
     ): ?ProductPackagingUnitTypeTransfer {
-        return $this->facade
+        return $this->productPackagingUnitFacade
             ->getProductPackagingUnitTypeById($productPackagingUnitTypeTransfer);
     }
 

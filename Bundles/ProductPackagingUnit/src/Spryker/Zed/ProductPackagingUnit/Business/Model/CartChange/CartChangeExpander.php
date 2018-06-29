@@ -32,7 +32,7 @@ class CartChangeExpander implements CartChangeExpanderInterface
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function expandWithQuantityPackagingUnit(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
+    public function expandWithAmountLeadProduct(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             if (!$itemTransfer->getAmount()) {

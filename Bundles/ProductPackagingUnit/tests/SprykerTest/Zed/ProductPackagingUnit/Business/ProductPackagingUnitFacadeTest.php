@@ -165,7 +165,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
     /**
      * @return void
      */
-    public function testExpandCartChangeTransferWithQuantityPackagingUnit(): void
+    public function testExpandCartChangeTransferWithAmountLeadProduct(): void
     {
         $itemProductConcreteTransfer = $this->tester->haveProduct();
         $boxProductConcreteTransfer = $this->tester->haveProduct([
@@ -202,7 +202,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
                     ->setAmount(static::PACKAGE_AMOUNT)
             );
 
-        $this->getFacade()->expandCartChangeWithQuantityPackagingUnit($cartChange);
+        $this->getFacade()->expandCartChangeWithAmountLeadProduct($cartChange);
         foreach ($cartChange->getItems() as $itemTransfer) {
             $this->assertNotNull($itemTransfer->getAmountLeadProduct());
             $this->assertNotNull($itemTransfer->getAmountLeadProduct()->getSkuProduct());

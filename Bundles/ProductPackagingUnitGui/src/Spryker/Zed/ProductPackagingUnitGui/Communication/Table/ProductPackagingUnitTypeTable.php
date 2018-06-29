@@ -170,7 +170,7 @@ class ProductPackagingUnitTypeTable extends AbstractTable
             Url::generate(
                 ProductPackagingUnitGuiConfig::URL_PRODUCT_PACKAGING_UNIT_TYPE_EDIT,
                 [
-                    ProductPackagingUnitGuiConfig::REQUEST_ID_PRODUCT_PACKAGING_UNIT_TYPE => $idProductPackagingUnitType,
+                    ProductPackagingUnitGuiConfig::REQUEST_PARAM_ID_PRODUCT_PACKAGING_UNIT_TYPE => $idProductPackagingUnitType,
                 ]
             ),
             'Edit'
@@ -188,7 +188,7 @@ class ProductPackagingUnitTypeTable extends AbstractTable
             Url::generate(
                 ProductPackagingUnitGuiConfig::URL_PRODUCT_PACKAGING_UNIT_TYPE_DELETE,
                 [
-                    ProductPackagingUnitGuiConfig::REQUEST_ID_PRODUCT_PACKAGING_UNIT_TYPE => $idProductPackagingUnitType,
+                    ProductPackagingUnitGuiConfig::REQUEST_PARAM_ID_PRODUCT_PACKAGING_UNIT_TYPE => $idProductPackagingUnitType,
                     ProductPackagingUnitGuiConfig::REQUEST_PARAM_REDIRECT_URL => ProductPackagingUnitGuiConfig::URL_PRODUCT_PACKAGING_UNIT_TYPE_LIST,
                 ]
             ),
