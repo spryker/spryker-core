@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\Search\Business\Model\Elasticsearch;
 use Codeception\Test\Unit;
 use Elastica\Client;
 use Elastica\Index;
+use Elastica\Response;
 use Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer;
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionLoaderInterface;
@@ -50,6 +51,7 @@ class IndexInstallerTest extends Unit
         $installer = new IndexInstaller(
             $this->createIndexDefinitionLoaderMock($indexDefinitions),
             $this->createElasticaClientMock($indexMock),
+            $this->getBlacklist(),
             $this->createMessengerMock()
         );
 
@@ -62,24 +64,45 @@ class IndexInstallerTest extends Unit
     public function testIndexInstallerDoesNotCreatesIndexesIfTheyExist()
     {
         $indexDefinitions = [
-            $this->createIndexDefinition('foo'),
+            $this->createIndexDefinition('foo', [
+                'index' => [
+                    'config' => 1,
+                ]
+            ]),
         ];
 
         $indexMock = $this->getMockBuilder(Index::class)
             ->disableOriginalConstructor()
-            ->setMethods(['exists', 'create'])
+            ->setMethods(['exists', 'create', 'setSettings'])
             ->getMock();
 
         $indexMock->method('exists')->willReturn(true);
         $indexMock->expects($this->never())->method('create');
+        $indexMock->method('setSettings')->willReturn(new Response(''));
+        $indexMock->expects($this->once())->method('setSettings');
 
         $installer = new IndexInstaller(
             $this->createIndexDefinitionLoaderMock($indexDefinitions),
             $this->createElasticaClientMock($indexMock),
+            $this->getBlacklist(),
             $this->createMessengerMock()
         );
 
         $installer->install();
+    }
+
+    /**
+     * @return array
+     */
+    protected function getBlacklist()
+    {
+        return [
+            'index.number_of_shards',
+            'index.codec',
+            'index.routing_partition_size',
+            'index.shard.check_on_startup',
+            'analysis',
+        ];
     }
 
     /**
