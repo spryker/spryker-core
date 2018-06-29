@@ -10,11 +10,6 @@ namespace Spryker\Client\PriceProductMerchantRelationshipStorage\MerchantRelatio
 class CompanyBusinessUnitFinder implements CompanyBusinessUnitFinderInterface
 {
     /**
-     * @var int
-     */
-    protected static $companyBusinessUnitCache;
-
-    /**
      * @var \Spryker\Client\PriceProductMerchantRelationshipStorage\Dependency\Client\PriceProductMerchantRelationshipStorageToCustomerClientInterface
      */
     protected $customerClient;
@@ -32,23 +27,19 @@ class CompanyBusinessUnitFinder implements CompanyBusinessUnitFinderInterface
      */
     public function findCurrentCustomerCompanyBusinessUnitId(): ?int
     {
-        if (static::$companyBusinessUnitCache !== null) {
-            return static::$companyBusinessUnitCache;
-        }
-
         $customerTransfer = $this->customerClient->getCustomer();
         if (!$customerTransfer) {
-            return static::$companyBusinessUnitCache = 0;
+            return null;
         }
 
         $companyTransfer = $customerTransfer->getCompanyUserTransfer();
         if (!$companyTransfer) {
-            return static::$companyBusinessUnitCache = 0;
+            return null;
         }
 
         $companyBusinessUnit = $companyTransfer->getCompanyBusinessUnit();
         if ($companyBusinessUnit) {
-            return static::$companyBusinessUnitCache = $companyBusinessUnit->getIdCompanyBusinessUnit();
+            return $companyBusinessUnit->getIdCompanyBusinessUnit();
         }
 
         return null;
