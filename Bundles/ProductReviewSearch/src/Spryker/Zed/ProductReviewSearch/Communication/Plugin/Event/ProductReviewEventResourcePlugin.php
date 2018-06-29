@@ -44,7 +44,7 @@ class ProductReviewEventResourcePlugin extends AbstractPlugin implements EventRe
      */
     public function queryData()
     {
-        return $this->getQueryContainer()->queryProductReviewsByIdProductReviews([]);
+        return $this->getQueryContainer()->queryProductReviews();
     }
 
     /**
