@@ -10,7 +10,6 @@ namespace Spryker\Zed\Cms\Business\Template;
 use Generated\Shared\Transfer\CmsTemplateTransfer;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsTemplateTableMap;
 use Orm\Zed\Cms\Persistence\SpyCmsTemplate;
-use Spryker\Zed\Cms\Business\CmsBusinessFactory;
 use Spryker\Zed\Cms\Business\Exception\MissingTemplateException;
 use Spryker\Zed\Cms\Business\Exception\TemplateExistsException;
 use Spryker\Zed\Cms\Business\Exception\TemplateFileNotFoundException;
@@ -32,23 +31,15 @@ class TemplateManager implements TemplateManagerInterface
     protected $config;
 
     /**
-     * @var \Spryker\Zed\Cms\Business\CmsBusinessFactory
-     */
-    protected $cmsBusinessFactory;
-
-    /**
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $cmsQueryContainer
      * @param \Spryker\Zed\Cms\CmsConfig $config
-     * @param \Spryker\Zed\Cms\Business\CmsBusinessFactory $cmsBusinessFactory
      */
     public function __construct(
         CmsQueryContainerInterface $cmsQueryContainer,
-        CmsConfig $config,
-        CmsBusinessFactory $cmsBusinessFactory
+        CmsConfig $config
     ) {
         $this->cmsQueryContainer = $cmsQueryContainer;
         $this->config = $config;
-        $this->cmsBusinessFactory = $cmsBusinessFactory;
     }
 
     /**
@@ -300,7 +291,7 @@ class TemplateManager implements TemplateManagerInterface
      */
     protected function findTwigFileAndCreateTemplate($cmsTemplateEntityPrefix, $cmsFolderPath)
     {
-        $cmsTemplateFolders = $this->createNewFinderInstanceUsingBusinessFactory()
+        $cmsTemplateFolders = $this->createNewFinderInstance()
             ->in($cmsFolderPath)
             ->directories();
 
@@ -362,7 +353,7 @@ class TemplateManager implements TemplateManagerInterface
      */
     protected function findCmsTemplateFilesInFolder(string $cmsTemplateFolderPath): Finder
     {
-        return $this->createNewFinderInstanceUsingBusinessFactory()
+        return $this->createNewFinderInstance()
             ->in($cmsTemplateFolderPath)
             ->name('*.twig')
             ->depth('0')
@@ -398,9 +389,9 @@ class TemplateManager implements TemplateManagerInterface
     /**
      * @return \Symfony\Component\Finder\Finder
      */
-    protected function createNewFinderInstanceUsingBusinessFactory(): Finder
+    protected function createNewFinderInstance(): Finder
     {
-        return $this->cmsBusinessFactory->createFinder();
+        return Finder::create();
     }
 
     /**

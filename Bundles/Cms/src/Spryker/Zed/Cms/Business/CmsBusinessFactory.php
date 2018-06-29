@@ -61,8 +61,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     {
         return new TemplateManager(
             $this->getQueryContainer(),
-            $this->getConfig(),
-            $this
+            $this->getConfig()
         );
     }
 
