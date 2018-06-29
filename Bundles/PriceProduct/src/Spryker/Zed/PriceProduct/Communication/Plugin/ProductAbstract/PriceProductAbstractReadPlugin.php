@@ -8,7 +8,10 @@
 namespace Spryker\Zed\PriceProduct\Communication\Plugin\ProductAbstract;
 
 use ArrayObject;
+use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Spryker\Shared\PriceProduct\PriceProductConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginReadInterface;
 
@@ -30,9 +33,13 @@ class PriceProductAbstractReadPlugin extends AbstractPlugin implements ProductAb
     public function read(ProductAbstractTransfer $productAbstractTransfer)
     {
         $productAbstractTransfer->requireIdProductAbstract();
-
+        $priceProductCriteria = (new PriceProductCriteriaTransfer())->setPriceDimension(
+            (new PriceProductDimensionTransfer())
+                ->setType(PriceProductConfig::PRICE_DIMENSION_DEFAULT)
+        );
         $priceProductTransfers = $this->getFacade()->findProductAbstractPrices(
-            $productAbstractTransfer->getIdProductAbstract()
+            $productAbstractTransfer->getIdProductAbstract(),
+            $priceProductCriteria
         );
 
         if ($priceProductTransfers) {

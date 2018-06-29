@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\PriceProductStorage;
 
-use Generated\Shared\Transfer\PriceProductStorageTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
