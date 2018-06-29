@@ -24,16 +24,7 @@ interface ProductPackagingUnitReaderInterface
     /**
      * @param string $productPackagingUnitSku
      *
-     * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer|null
-     */
-    public function getProductPackagingUnitBySku(
-        string $productPackagingUnitSku
-    ): ?ProductPackagingUnitTransfer;
-
-    /**
-     * @param string $productPackagingUnitSku
-     *
      * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null
      */
-    public function getProductPackagingLeadProductByProductPackagingSku(string $productPackagingUnitSku): ?ProductPackagingLeadProductTransfer;
+    public function findProductPackagingLeadProductByProductPackagingSku(string $productPackagingUnitSku): ?ProductPackagingLeadProductTransfer;
 }

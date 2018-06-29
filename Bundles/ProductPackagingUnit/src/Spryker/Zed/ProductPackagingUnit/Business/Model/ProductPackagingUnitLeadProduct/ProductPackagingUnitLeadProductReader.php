@@ -31,9 +31,9 @@ class ProductPackagingUnitLeadProductReader implements ProductPackagingUnitLeadP
      *
      * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null
      */
-    public function getProductPackagingLeadProductByIdProductAbstract(
+    public function findProductPackagingLeadProductByIdProductAbstract(
         int $idProductAbstract
     ): ?ProductPackagingLeadProductTransfer {
-        return $this->repository->getProductPackagingLeadProductByIdProductAbstract($idProductAbstract);
+        return $this->repository->findProductPackagingLeadProductByIdProductAbstract($idProductAbstract);
     }
 }

@@ -45,7 +45,7 @@ interface ProductPackagingUnitRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null
      */
-    public function getProductPackagingLeadProductByIdProductAbstract(
+    public function findProductPackagingLeadProductByIdProductAbstract(
         int $idProductAbstract
     ): ?ProductPackagingLeadProductTransfer;
 
@@ -54,7 +54,7 @@ interface ProductPackagingUnitRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null
      */
-    public function getProductPackagingLeadProductByProductPackagingSku(
+    public function findProductPackagingLeadProductByProductPackagingSku(
         string $productPackagingUnitSku
     ): ?ProductPackagingLeadProductTransfer;
 
@@ -70,16 +70,7 @@ interface ProductPackagingUnitRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer|null
      */
-    public function getProductPackagingUnitById(
+    public function findProductPackagingUnitById(
         int $productPackagingUnitId
-    ): ?ProductPackagingUnitTransfer;
-
-    /**
-     * @param string $productPackagingUnitSku
-     *
-     * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer|null
-     */
-    public function getProductPackagingUnitBySku(
-        string $productPackagingUnitSku
     ): ?ProductPackagingUnitTransfer;
 }

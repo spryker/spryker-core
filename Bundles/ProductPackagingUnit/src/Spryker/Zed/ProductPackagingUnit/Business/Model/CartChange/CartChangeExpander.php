@@ -53,7 +53,7 @@ class CartChangeExpander implements CartChangeExpanderInterface
     protected function expandItem(ItemTransfer $itemTransfer)
     {
         $productPackagingLeadProductTransfer = $this->productPackagingUnitReader
-            ->getProductPackagingLeadProductByProductPackagingSku($itemTransfer->getSku());
+            ->findProductPackagingLeadProductByProductPackagingSku($itemTransfer->getSku());
 
         $itemTransfer->setAmountLeadProduct($productPackagingLeadProductTransfer);
 

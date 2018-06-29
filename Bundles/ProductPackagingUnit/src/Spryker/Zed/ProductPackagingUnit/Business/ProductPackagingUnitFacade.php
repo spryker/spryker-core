@@ -117,12 +117,12 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      *
      * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null
      */
-    public function getProductPackagingLeadProductByIdProductAbstract(
+    public function findProductPackagingLeadProductByIdProductAbstract(
         int $idProductAbstract
     ): ?ProductPackagingLeadProductTransfer {
         return $this->getFactory()
             ->createProductPackagingUnitLeadProductReader()
-            ->getProductPackagingLeadProductByIdProductAbstract($idProductAbstract);
+            ->findProductPackagingLeadProductByIdProductAbstract($idProductAbstract);
     }
 
     /**

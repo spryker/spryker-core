@@ -16,7 +16,7 @@ interface ProductPackagingUnitLeadProductReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null
      */
-    public function getProductPackagingLeadProductByIdProductAbstract(
+    public function findProductPackagingLeadProductByIdProductAbstract(
         int $idProductAbstract
     ): ?ProductPackagingLeadProductTransfer;
 }
