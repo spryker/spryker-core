@@ -15,8 +15,10 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Shared\PriceProduct\PriceProductConfig;
 use Spryker\Shared\PriceProductStorage\PriceProductStorageConstants;
 
-class PriceProductMapper
+class PriceProductMapper implements PriceProductMapperInterface
 {
+    protected const INDEX_SEPARATOR = '-';
+
     /**
      * @param \Generated\Shared\Transfer\PriceProductStorageTransfer $priceProductStorageTransfer
      *
@@ -24,38 +26,53 @@ class PriceProductMapper
      */
     public function mapPriceProductStorageTransferToPriceProductTransfers(PriceProductStorageTransfer $priceProductStorageTransfer): array
     {
-        /** @var \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers */
         $priceProductTransfers = [];
 
         foreach ($priceProductStorageTransfer->getPrices() as $currencyCode => $prices) {
             foreach ($prices as $priceMode => $priceTypes) {
                 foreach ($priceTypes as $priceType => $priceAmount) {
-                    $index = implode('-', [
-                        $currencyCode,
-                        $priceType,
-                    ]);
-                    if (!isset($priceProductTransfers[$index])) {
-                        $priceProductTransfers[$index] = (new PriceProductTransfer())
-                            ->setPriceDimension(
-                                (new PriceProductDimensionTransfer())
-                                    ->setType(PriceProductStorageConstants::PRICE_DIMENSION_DEFAULT)
-                            )
-                            ->setMoneyValue(
-                                (new MoneyValueTransfer())
-                                    ->setCurrency((new CurrencyTransfer())->setCode($currencyCode))
-                            )
-                            ->setPriceTypeName($priceType);
-                    }
+                    $priceProductTransfer = $this->findProductTransferInCollection($currencyCode, $priceType, $priceProductTransfers);
+
                     if ($priceMode === PriceProductConfig::PRICE_GROSS_MODE) {
-                        $priceProductTransfers[$index]->getMoneyValue()->setGrossAmount($priceAmount);
+                        $priceProductTransfer->getMoneyValue()->setGrossAmount($priceAmount);
                         continue;
                     }
 
-                    $priceProductTransfers[$index]->getMoneyValue()->setNetAmount($priceAmount);
+                    $priceProductTransfer->getMoneyValue()->setNetAmount($priceAmount);
                 }
             }
         }
 
         return array_values($priceProductTransfers);
+    }
+
+    /**
+     * @param string $currencyCode
+     * @param string $priceType
+     * @param array $priceProductTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function findProductTransferInCollection(string $currencyCode, string $priceType, array &$priceProductTransfers): PriceProductTransfer
+    {
+        $index = implode(static::INDEX_SEPARATOR, [
+            $currencyCode,
+            $priceType,
+        ]);
+
+        if (!isset($priceProductTransfers[$index])) {
+            $priceProductTransfers[$index] = (new PriceProductTransfer())
+                ->setPriceDimension(
+                    (new PriceProductDimensionTransfer())
+                        ->setType(PriceProductStorageConstants::PRICE_DIMENSION_DEFAULT)
+                )
+                ->setMoneyValue(
+                    (new MoneyValueTransfer())
+                        ->setCurrency((new CurrencyTransfer())->setCode($currencyCode))
+                )
+                ->setPriceTypeName($priceType);
+        }
+
+        return $priceProductTransfers[$index];
     }
 }

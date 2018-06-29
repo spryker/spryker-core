@@ -27,7 +27,7 @@ class PriceProductServiceFactory extends AbstractServiceFactory
     }
 
     /**
-     * @return SinglePriceProductFilterStrategyInterface
+     * @return \Spryker\Service\PriceProduct\FilterStrategy\SinglePriceProductFilterStrategyInterface
      */
     public function createSinglePriceProductFilterStrategy(): SinglePriceProductFilterStrategyInterface
     {

@@ -64,10 +64,10 @@ class PriceProductMatcher implements PriceProductMatcherInterface
     }
 
     /**
-     * @param PriceProductTransfer[] $priceProductTransfers
-     * @param PriceProductFilterTransfer $priceProductFilterTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
-     * @return PriceProductTransfer[]
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     protected function applyPriceProductFilerPlugins(array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer)
     {

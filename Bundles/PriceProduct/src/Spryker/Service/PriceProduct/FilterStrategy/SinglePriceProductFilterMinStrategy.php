@@ -1,7 +1,11 @@
 <?php
 
-namespace Spryker\Service\PriceProduct\FilterStrategy;
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
 
+namespace Spryker\Service\PriceProduct\FilterStrategy;
 
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
@@ -10,10 +14,10 @@ use Spryker\Shared\PriceProduct\PriceProductConfig;
 class SinglePriceProductFilterMinStrategy implements SinglePriceProductFilterStrategyInterface
 {
     /**
-     * @param PriceProductTransfer[] $priceProductTransfers
-     * @param PriceProductFilterTransfer $priceProductFilterTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
-     * @return PriceProductTransfer|null
+     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
     public function findOne(array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer): ?PriceProductTransfer
     {
@@ -24,7 +28,6 @@ class SinglePriceProductFilterMinStrategy implements SinglePriceProductFilterStr
                 $minPriceProductTransfer = $priceProductTransfer;
             }
 
-
             if ($this->isMinGreaterThan($minPriceProductTransfer, $priceProductTransfer, $priceProductFilterTransfer->getPriceMode())) {
                 $minPriceProductTransfer = $priceProductTransfer;
             }
@@ -34,8 +37,8 @@ class SinglePriceProductFilterMinStrategy implements SinglePriceProductFilterStr
     }
 
     /**
-     * @param PriceProductTransfer $minPriceProductTransfer
-     * @param PriceProductTransfer $priceProductTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $minPriceProductTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      * @param string $priceMode
      *
      * @return bool
@@ -56,5 +59,4 @@ class SinglePriceProductFilterMinStrategy implements SinglePriceProductFilterStr
 
         return false;
     }
-
 }

@@ -24,6 +24,11 @@ class PriceAbstractStorageReader implements PriceAbstractStorageReaderInterface
     protected $priceStorageKeyGenerator;
 
     /**
+     * @var \Spryker\Client\PriceProductStorage\Storage\PriceProductMapperInterface
+     */
+    protected $priceProductMapper;
+
+    /**
      * @var \Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductStoragePriceDimensionPluginInterface[]
      */
     protected $priceDimensionPlugins;
@@ -31,15 +36,18 @@ class PriceAbstractStorageReader implements PriceAbstractStorageReaderInterface
     /**
      * @param \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToStorageInterface $storageClient
      * @param \Spryker\Client\PriceProductStorage\Storage\PriceProductStorageKeyGeneratorInterface $priceStorageKeyGenerator
+     * @param \Spryker\Client\PriceProductStorage\Storage\PriceProductMapperInterface $priceProductMapper
      * @param \Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductStoragePriceDimensionPluginInterface[] $priceDimensionPlugins
      */
     public function __construct(
         PriceProductStorageToStorageInterface $storageClient,
         PriceProductStorageKeyGeneratorInterface $priceStorageKeyGenerator,
+        PriceProductMapperInterface $priceProductMapper,
         array $priceDimensionPlugins
     ) {
         $this->storageClient = $storageClient;
         $this->priceStorageKeyGenerator = $priceStorageKeyGenerator;
+        $this->priceProductMapper = $priceProductMapper;
         $this->priceDimensionPlugins = $priceDimensionPlugins;
     }
 
@@ -64,38 +72,6 @@ class PriceAbstractStorageReader implements PriceAbstractStorageReaderInterface
     /**
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\PriceProductStorageTransfer|null
-     */
-//    public function findPriceAbstractStorageTransfer($idProductAbstract): ?PriceProductStorageTransfer
-//    {
-//        $prices = [];
-//
-//        foreach ($this->priceDimensionPlugins as $priceDimensionPlugin) {
-//            $priceProductStorageTransfer = $priceDimensionPlugin->findProductAbstractPrices($idProductAbstract);
-//
-//            if ($priceProductStorageTransfer !== null) {
-//                $prices[$priceDimensionPlugin->getDimensionName()] = $priceProductStorageTransfer->getPrices();
-//            }
-//        }
-//
-//        $priceProductStorageTransfer = $this->findDefaultPriceDimensionPriceProductStorageTransfer($idProductAbstract);
-//        if ($priceProductStorageTransfer) {
-//            $prices[PriceProductStorageConstants::PRICE_DIMENSION_DEFAULT] = $priceProductStorageTransfer->getPrices();
-//        }
-//
-//        if (!$prices) {
-//            return null;
-//        }
-//
-//        $priceProductStorageTransfer = new PriceProductStorageTransfer();
-//        $priceProductStorageTransfer->setPrices($prices);
-//
-//        return $priceProductStorageTransfer;
-//    }
-
-    /**
-     * @param int $idProductAbstract
-     *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     protected function findDefaultPriceDimensionPriceProductTransfers(int $idProductAbstract): array
@@ -110,7 +86,6 @@ class PriceAbstractStorageReader implements PriceAbstractStorageReaderInterface
         $priceProductStorageTransfer = new PriceProductStorageTransfer();
         $priceProductStorageTransfer->fromArray($priceData, true);
 
-        //todo: cleanup
-        return (new PriceProductMapper())->mapPriceProductStorageTransferToPriceProductTransfers($priceProductStorageTransfer);
+        return $this->priceProductMapper->mapPriceProductStorageTransferToPriceProductTransfers($priceProductStorageTransfer);
     }
 }

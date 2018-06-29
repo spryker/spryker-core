@@ -11,6 +11,8 @@ use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\PriceProductStorage\Expander\ProductViewPriceExpander;
 use Spryker\Client\PriceProductStorage\Storage\PriceAbstractStorageReader;
 use Spryker\Client\PriceProductStorage\Storage\PriceConcreteStorageReader;
+use Spryker\Client\PriceProductStorage\Storage\PriceProductMapper;
+use Spryker\Client\PriceProductStorage\Storage\PriceProductMapperInterface;
 use Spryker\Client\PriceProductStorage\Storage\PriceProductStorageKeyGenerator;
 
 class PriceProductStorageFactory extends AbstractFactory
@@ -35,6 +37,7 @@ class PriceProductStorageFactory extends AbstractFactory
         return new PriceAbstractStorageReader(
             $this->getStorage(),
             $this->createPriceProductStorageKeyGenerator(),
+            $this->createPriceProductMapper(),
             $this->getPriceDimensionPlugins()
         );
     }
@@ -47,6 +50,7 @@ class PriceProductStorageFactory extends AbstractFactory
         return new PriceConcreteStorageReader(
             $this->getStorage(),
             $this->createPriceProductStorageKeyGenerator(),
+            $this->createPriceProductMapper(),
             $this->getPriceDimensionPlugins()
         );
     }
@@ -97,5 +101,13 @@ class PriceProductStorageFactory extends AbstractFactory
     public function getPriceDimensionPlugins(): array
     {
         return $this->getProvidedDependency(PriceProductStorageDependencyProvider::PLUGIN_STORAGE_PRICE_DIMENSION);
+    }
+
+    /**
+     * @return \Spryker\Client\PriceProductStorage\Storage\PriceProductMapperInterface
+     */
+    public function createPriceProductMapper(): PriceProductMapperInterface
+    {
+        return new PriceProductMapper();
     }
 }

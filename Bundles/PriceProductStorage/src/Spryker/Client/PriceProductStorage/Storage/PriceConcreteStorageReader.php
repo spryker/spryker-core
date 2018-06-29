@@ -24,6 +24,11 @@ class PriceConcreteStorageReader implements PriceConcreteStorageReaderInterface
     protected $priceStorageKeyGenerator;
 
     /**
+     * @var \Spryker\Client\PriceProductStorage\Storage\PriceProductMapperInterface
+     */
+    protected $priceProductMapper;
+
+    /**
      * @var \Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductStoragePriceDimensionPluginInterface[]
      */
     protected $priceDimensionPlugins;
@@ -31,15 +36,18 @@ class PriceConcreteStorageReader implements PriceConcreteStorageReaderInterface
     /**
      * @param \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToStorageInterface $storageClient
      * @param \Spryker\Client\PriceProductStorage\Storage\PriceProductStorageKeyGeneratorInterface $priceStorageKeyGenerator
+     * @param \Spryker\Client\PriceProductStorage\Storage\PriceProductMapperInterface $priceProductMapper
      * @param \Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductStoragePriceDimensionPluginInterface[] $priceDimensionPlugins
      */
     public function __construct(
         PriceProductStorageToStorageInterface $storageClient,
         PriceProductStorageKeyGeneratorInterface $priceStorageKeyGenerator,
+        PriceProductMapperInterface $priceProductMapper,
         array $priceDimensionPlugins
     ) {
         $this->storageClient = $storageClient;
         $this->priceStorageKeyGenerator = $priceStorageKeyGenerator;
+        $this->priceProductMapper = $priceProductMapper;
         $this->priceDimensionPlugins = $priceDimensionPlugins;
     }
 
@@ -78,6 +86,6 @@ class PriceConcreteStorageReader implements PriceConcreteStorageReaderInterface
         $priceProductStorageTransfer = new PriceProductStorageTransfer();
         $priceProductStorageTransfer->fromArray($priceData, true);
 
-        return (new PriceProductMapper())->mapPriceProductStorageTransferToPriceProductTransfers($priceProductStorageTransfer);
+        return $this->priceProductMapper->mapPriceProductStorageTransferToPriceProductTransfers($priceProductStorageTransfer);
     }
 }

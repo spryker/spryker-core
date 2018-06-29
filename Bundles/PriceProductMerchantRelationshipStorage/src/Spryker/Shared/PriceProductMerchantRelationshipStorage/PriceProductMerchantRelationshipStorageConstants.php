@@ -29,4 +29,9 @@ class PriceProductMerchantRelationshipStorageConstants
      * @uses \Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductStoreTableMap::COL_FK_STORE
      */
     public const COL_PRICE_PRODUCT_STORE_FK_STORE = 'spy_price_product_store.fk_store';
+
+    /**
+     * @uses \Orm\Zed\PriceProductMerchantRelationship\Persistence\Map\SpyPriceProductMerchantRelationshipTableMap::COL_FK_MERCHANT_RELATIONSHIP
+     */
+    public const COL_FK_MERCHANT_RELATIONSHIP = 'spy_price_product_merchant_relationship.fk_merchant_relationship';
 }

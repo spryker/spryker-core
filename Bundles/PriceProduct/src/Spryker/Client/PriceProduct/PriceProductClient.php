@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\PriceProduct;
 
+use Generated\Shared\Transfer\CurrentProductPriceTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -54,7 +55,7 @@ class PriceProductClient extends AbstractClient implements PriceProductClientInt
      *
      * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */
-    public function resolveProductPriceTransfer(array $priceProductTransfers)
+    public function resolveProductPriceTransfer(array $priceProductTransfers): CurrentProductPriceTransfer
     {
         return $this->getFactory()
             ->createProductPriceResolver()
