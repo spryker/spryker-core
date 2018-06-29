@@ -193,6 +193,7 @@ class IndexInstaller implements SearchInstallerInterface
 
     /**
      * @param array $settings
+     *
      * @return array
      */
     protected function removeBlacklistedSettings(array $settings)
@@ -207,6 +208,7 @@ class IndexInstaller implements SearchInstallerInterface
     /**
      * @param array $settings
      * @param string $settingPath
+     *
      * @return array
      */
     protected function removeSetting(array $settings, string $settingPath)
