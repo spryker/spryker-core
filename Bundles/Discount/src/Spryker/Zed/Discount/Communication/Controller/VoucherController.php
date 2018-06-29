@@ -23,7 +23,10 @@ class VoucherController extends AbstractController
     const URL_PARAM_ID_POOL = 'id-pool';
     const URL_PARAM_ID_DISCOUNT = 'id-discount';
     const URL_PARAM_ID_VOUCHER = 'id-voucher';
-    public const URL_PARAM_DELETE_REDIRECT_URL = 'delete-redirect-url';
+    public const URL_DISCOUNT_EDIT_PAGE = '/discount/index/edit';
+    public const URL_DISCOUNT_VIEW_PAGE = '/discount/index/view';
+    public const URL_FRAGMENT_TAB_CONTENT_VOUCHER = 'tab-content-voucher';
+    public const REQUEST_HEADER_REFERER = 'referer';
     const CSV_FILENAME = 'vouchers.csv';
 
     /**
@@ -63,7 +66,6 @@ class VoucherController extends AbstractController
      */
     public function deleteVoucherCodeAction(Request $request)
     {
-        $idDiscount = $this->castId($request->query->get(self::URL_PARAM_ID_DISCOUNT));
         $idVoucher = $this->castId($request->query->get(self::URL_PARAM_ID_VOUCHER));
 
         $voucherEntity = $this->getQueryContainer()
@@ -78,7 +80,7 @@ class VoucherController extends AbstractController
         }
 
         return new RedirectResponse(
-            $this->createCodeDeleteRedirectUrl($request)
+            $this->createVoucherCodeDeleteRedirectUrl($request)
         );
     }
 
@@ -138,7 +140,7 @@ class VoucherController extends AbstractController
                 self::URL_PARAM_ID_DISCOUNT => $idDiscount,
             ],
             [
-                Url::FRAGMENT => 'tab-content-voucher',
+                Url::FRAGMENT => static::URL_FRAGMENT_TAB_CONTENT_VOUCHER,
             ]
         )->build();
 
@@ -152,9 +154,15 @@ class VoucherController extends AbstractController
      */
     protected function createViewDiscountRedirectUrl($idDiscount)
     {
-        $redirectUrl = Url::generate('/discount/index/view', [
-            self::URL_PARAM_ID_DISCOUNT => $idDiscount,
-        ])->build();
+        $redirectUrl = Url::generate(
+            static::URL_DISCOUNT_VIEW_PAGE,
+            [
+                static::URL_PARAM_ID_DISCOUNT => $idDiscount,
+            ],
+            [
+                Url::FRAGMENT => static::URL_FRAGMENT_TAB_CONTENT_VOUCHER,
+            ]
+        )->build();
 
         return $redirectUrl;
     }
@@ -164,13 +172,24 @@ class VoucherController extends AbstractController
      *
      * @return string
      */
-    protected function createCodeDeleteRedirectUrl(Request $request)
+    protected function createVoucherCodeDeleteRedirectUrl(Request $request)
     {
-        $redirectUrl = $request->get(static::URL_PARAM_DELETE_REDIRECT_URL);
-        if ($redirectUrl) {
-            return urldecode($redirectUrl);
+        $referrerUrl = $request->headers->get(static::REQUEST_HEADER_REFERER);
+
+        if (strpos($referrerUrl, static::URL_DISCOUNT_EDIT_PAGE) !== false) {
+            $referrerUrl = Url::generate(
+                $referrerUrl,
+                [],
+                [
+                    Url::FRAGMENT => static::URL_FRAGMENT_TAB_CONTENT_VOUCHER,
+                ]
+            )->build();
         }
 
-        return $this->createEditDiscountRedirectUrl($this->castId($request->get(static::URL_PARAM_ID_DISCOUNT)));
+        if ($referrerUrl) {
+            return $referrerUrl;
+        }
+
+        return $this->createViewDiscountRedirectUrl($this->castId($request->get(static::URL_PARAM_ID_DISCOUNT)));
     }
 }

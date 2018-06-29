@@ -28,6 +28,8 @@ class DiscountsTable extends AbstractTable
     const URL_PARAM_VISIBILITY = 'visibility';
     const URL_PARAM_REDIRECT_URL = 'redirect-url';
 
+    public const URL_FRAGMENT_TAB_CONTENT_VOUCHER = 'tab-content-voucher';
+
     const DATE_FORMAT = 'Y-m-d';
     const BUTTON_ACTIVATE = 'Activate';
     const BUTTON_DEACTIVATE = 'Deactivate';
@@ -255,7 +257,7 @@ class DiscountsTable extends AbstractTable
                 static::URL_PARAM_ID_DISCOUNT => $discountEntity->getIdDiscount(),
             ],
             [
-                Url::FRAGMENT => 'tab-content-voucher',
+                Url::FRAGMENT => static::URL_FRAGMENT_TAB_CONTENT_VOUCHER,
             ]
         );
 

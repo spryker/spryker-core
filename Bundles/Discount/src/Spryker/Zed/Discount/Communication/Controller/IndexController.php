@@ -28,7 +28,6 @@ class IndexController extends AbstractController
     const URL_PARAM_ID_POOL = 'id-pool';
     const URL_PARAM_VISIBILITY = 'visibility';
     const URL_PARAM_REDIRECT_URL = 'redirect-url';
-    public const URL_PARAM_VOUCHER_DELETE_REDIRECT_URL = 'voucher-delete-redirect-url';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -283,17 +282,12 @@ class IndexController extends AbstractController
     {
         $batch = $request->query->get(self::URL_PARAM_BATCH_PARAMETER);
         $tableParameters = TableParameters::getTableParameters($request);
-        $voucherDeleteRedirectUrl = $request->query->get(
-            static::URL_PARAM_VOUCHER_DELETE_REDIRECT_URL,
-            $this->getVoucherCodeDeleteRedirectUrl($request)
-        );
 
         return $this->getFactory()->createDiscountVoucherCodesTable(
             $tableParameters,
             $idPool,
             $idDiscount,
-            $batch,
-            $voucherDeleteRedirectUrl
+            $batch
         );
     }
 
@@ -360,54 +354,5 @@ class IndexController extends AbstractController
                 $this->addErrorMessage('Please fill all required fields.');
             }
         }
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return string
-     */
-    protected function getVoucherCodeDeleteRedirectUrl(Request $request)
-    {
-        $idDiscount = $this->castId($request->get(self::URL_PARAM_ID_DISCOUNT));
-        if ($request->getPathInfo() === '/discount/index/view') {
-            return $this->createViewDiscountRedirectUrl($idDiscount);
-        }
-
-        return $this->createEditDiscountRedirectUrl($idDiscount);
-    }
-
-    /**
-     * @param int $idDiscount
-     *
-     * @return string
-     */
-    protected function createEditDiscountRedirectUrl($idDiscount)
-    {
-        $redirectUrl = Url::generate(
-            '/discount/index/edit',
-            [
-                self::URL_PARAM_ID_DISCOUNT => $idDiscount,
-            ],
-            [
-                Url::FRAGMENT => 'tab-content-voucher',
-            ]
-        )->build();
-
-        return $redirectUrl;
-    }
-
-    /**
-     * @param int $idDiscount
-     *
-     * @return string
-     */
-    protected function createViewDiscountRedirectUrl($idDiscount)
-    {
-        $redirectUrl = Url::generate('/discount/index/view', [
-            self::URL_PARAM_ID_DISCOUNT => $idDiscount,
-        ])->build();
-
-        return $redirectUrl;
     }
 }
