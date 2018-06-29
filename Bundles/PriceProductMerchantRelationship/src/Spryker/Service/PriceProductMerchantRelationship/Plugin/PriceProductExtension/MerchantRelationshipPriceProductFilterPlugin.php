@@ -7,10 +7,7 @@
 
 namespace Spryker\Service\PriceProductMerchantRelationship\Plugin\PriceProductExtension;
 
-use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
-use Generated\Shared\Transfer\PriceProductTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Service\Kernel\AbstractPlugin;
 use Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductFilterPluginInterface;
 use Spryker\Shared\PriceProduct\PriceProductConfig;
@@ -26,16 +23,16 @@ class MerchantRelationshipPriceProductFilterPlugin extends AbstractPlugin implem
      *
      * @api
      *
-     * @param PriceProductTransfer[] $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
-     * @return PriceProductTransfer[]
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function filter(array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer): array
     {
         $priceProductFilterTransfer->requirePriceMode();
 
         $resultPriceProductTransfers = [];
-        /** @var PriceProductTransfer $minPriceProductTransfer */
+        /** @var \Generated\Shared\Transfer\PriceProductTransfer $minPriceProductTransfer */
         $minPriceProductTransfer = null;
 
         foreach ($priceProductTransfers as $priceProductTransfer) {
@@ -69,7 +66,6 @@ class MerchantRelationshipPriceProductFilterPlugin extends AbstractPlugin implem
 
         return $resultPriceProductTransfers;
     }
-
 
     /**
      * {@inheritdoc}

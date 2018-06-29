@@ -48,11 +48,11 @@ class MerchantRelationshipPriceQueryExpander implements MerchantRelationshipPric
             $idCompanyBusinessUnit = $this->findIdCompanyBusinessUnit($priceProductCriteriaTransfer);
         }
 
-        if (!$idCompanyBusinessUnit) {
-            return null;
+        if ($idCompanyBusinessUnit) {
+            return $this->createQueryCriteriaTransfer($idMerchantRelationship, $idCompanyBusinessUnit);
         }
 
-        return $this->createQueryCriteriaTransfer($idMerchantRelationship, $idCompanyBusinessUnit);
+        return null;
     }
 
     /**
@@ -123,9 +123,15 @@ class MerchantRelationshipPriceQueryExpander implements MerchantRelationshipPric
 
         if ($idCompanyBusinessUnit) {
             $queryCriteriaTransfer
+                ->addJoin(
+                    (new QueryJoinTransfer())
+                        ->setLeft([SpyPriceProductMerchantRelationshipTableMap::COL_FK_MERCHANT_RELATIONSHIP])
+                        ->setRight([SpyMerchantRelationshipToCompanyBusinessUnitTableMap::COL_FK_MERCHANT_RELATIONSHIP])
+                        ->setJoinType(Criteria::LEFT_JOIN)
+                )
                 ->addCondition(
                     (new QueryConditionTransfer())
-                        ->setName('')
+                        ->setName('idCompanyBusinessUnit')
                         ->setColumn(SpyMerchantRelationshipToCompanyBusinessUnitTableMap::COL_FK_COMPANY_BUSINESS_UNIT)
                         ->setValue($idCompanyBusinessUnit)
                         ->setComparison('=')

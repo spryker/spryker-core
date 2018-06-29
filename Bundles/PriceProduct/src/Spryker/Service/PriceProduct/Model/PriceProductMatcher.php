@@ -46,13 +46,7 @@ class PriceProductMatcher implements PriceProductMatcherInterface
             return null;
         }
 
-        $matchedPriceProductTransfer = [];
-
-        foreach ($priceProductTransfers as $priceProductTransfer) {
-            if ($this->checkPriceProductByCriteria($priceProductTransfer, $priceProductCriteriaTransfer)) {
-                $matchedPriceProductTransfer[] = $priceProductTransfer;
-            }
-        }
+        $priceProductTransfers = $this->findPricesByPriceProductCriteria($priceProductTransfers, $priceProductCriteriaTransfer);
 
         //apply min strategy on dimension level
         $priceProductFilter = (new PriceProductFilterTransfer())->setPriceMode($priceProductCriteriaTransfer->getPriceMode());
@@ -62,6 +56,25 @@ class PriceProductMatcher implements PriceProductMatcherInterface
 
         //apply min strategy overall
         return $this->minStrategy($priceProductTransfers, $priceProductFilter);
+    }
+
+    /**
+     * @param array $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     *
+     * @return array
+     */
+    protected function findPricesByPriceProductCriteria(array $priceProductTransfers, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array
+    {
+        $matchedPriceProductTransfers = [];
+
+        foreach ($priceProductTransfers as $priceProductTransfer) {
+            if ($this->checkPriceProductByCriteria($priceProductTransfer, $priceProductCriteriaTransfer)) {
+                $matchedPriceProductTransfers[] = $priceProductTransfer;
+            }
+        }
+
+        return $matchedPriceProductTransfers;
     }
 
     /**
@@ -105,6 +118,10 @@ class PriceProductMatcher implements PriceProductMatcherInterface
             ->requirePriceDimension()
             ->requirePriceTypeName()
             ->requireMoneyValue();
+
+        if (!$priceProductTransfer->getPriceDimension()->getType()) {
+            return false;
+        }
 
         if ($priceProductCriteriaTransfer->getPriceDimension() !== null) {
             if ($priceProductCriteriaTransfer->getPriceDimension()->getType() !== $priceProductTransfer->getPriceDimension()->getType()) {
