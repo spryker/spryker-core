@@ -42,7 +42,7 @@ class ProductMeasurementUnitEventResourcePlugin extends AbstractPlugin implement
      *
      * @return array|\Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
      */
-    public function queryData()
+    public function getData()
     {
         return $this->getFacade()->findAllProductMeasurementUnitTransfers();
     }
