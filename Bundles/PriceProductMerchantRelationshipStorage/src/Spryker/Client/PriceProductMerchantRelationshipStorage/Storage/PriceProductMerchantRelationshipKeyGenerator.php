@@ -13,6 +13,8 @@ use Spryker\Client\PriceProductMerchantRelationshipStorage\Dependency\Service\Pr
 
 class PriceProductMerchantRelationshipKeyGenerator implements PriceProductMerchantRelationshipKeyGeneratorInterface
 {
+    protected const KEY_SEPARATOR = ':';
+
     /**
      * @var \Spryker\Client\PriceProductStorage\Dependency\Service\PriceProductStorageToSynchronizationServiceInterface
      */
@@ -47,7 +49,7 @@ class PriceProductMerchantRelationshipKeyGenerator implements PriceProductMercha
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer
             ->setStore($this->storeClient->getCurrentStore()->getName())
-            ->setReference($idProduct . ':' . $idCompanyBusinessUnit);
+            ->setReference($idProduct . static::KEY_SEPARATOR . $idCompanyBusinessUnit);
 
         return $this->synchronizationService
             ->getStorageKeyBuilder($resourceName)
