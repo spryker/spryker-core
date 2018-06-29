@@ -22,20 +22,20 @@ class ProductPackagingUnitTypeReader implements ProductPackagingUnitTypeReaderIn
     protected $repository;
 
     /**
-     * @var \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeTranslationsReaderInterface
+     * @var \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeTranslationReaderInterface
      */
-    protected $translationsReader;
+    protected $translationReader;
 
     /**
      * @param \Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface $repository
-     * @param \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeTranslationsReaderInterface $translationsReader
+     * @param \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeTranslationReaderInterface $translationReader
      */
     public function __construct(
         ProductPackagingUnitRepositoryInterface $repository,
-        ProductPackagingUnitTypeTranslationsReaderInterface $translationsReader
+        ProductPackagingUnitTypeTranslationReaderInterface $translationReader
     ) {
         $this->repository = $repository;
-        $this->translationsReader = $translationsReader;
+        $this->translationReader = $translationReader;
     }
 
     /**
@@ -51,7 +51,7 @@ class ProductPackagingUnitTypeReader implements ProductPackagingUnitTypeReaderIn
         $productPackagingUnitTypeTransfer = $this->repository->findProductPackagingUnitTypeByName($productPackagingUnitTypeName);
 
         if ($productPackagingUnitTypeTransfer) {
-            $productPackagingUnitTypeTransfer = $this->translationsReader->hydrateTranslations($productPackagingUnitTypeTransfer);
+            $productPackagingUnitTypeTransfer = $this->translationReader->hydrateTranslations($productPackagingUnitTypeTransfer);
         }
 
         return $productPackagingUnitTypeTransfer;
@@ -77,7 +77,7 @@ class ProductPackagingUnitTypeReader implements ProductPackagingUnitTypeReaderIn
             );
         }
 
-        $productPackagingUnitTypeTransfer = $this->translationsReader->hydrateTranslations($productPackagingUnitTypeTransfer);
+        $productPackagingUnitTypeTransfer = $this->translationReader->hydrateTranslations($productPackagingUnitTypeTransfer);
 
         return $productPackagingUnitTypeTransfer;
     }

@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\TranslationTransfer;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToGlossaryFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToLocaleFacadeInterface;
 
-class ProductPackagingUnitTypeTranslationsWriter implements ProductPackagingUnitTypeTranslationsWriterInterface
+class ProductPackagingUnitTypeTranslationWriter implements ProductPackagingUnitTypeTranslationWriterInterface
 {
     /**
      * @var \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToLocaleFacadeInterface
