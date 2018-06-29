@@ -35,7 +35,7 @@ class CatalogPriceProductConnectorToPriceProductClientBridge implements CatalogP
     }
 
     /**
-     * @param array $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
      * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */
