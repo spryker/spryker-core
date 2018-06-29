@@ -7,8 +7,6 @@
 
 namespace Spryker\Client\PriceProductStorageExtension\Dependency\Plugin;
 
-use Generated\Shared\Transfer\PriceProductStorageTransfer;
-
 interface PriceProductStoragePriceDimensionPluginInterface
 {
     /**
@@ -33,7 +31,7 @@ interface PriceProductStoragePriceDimensionPluginInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findProductAbstractPrices(int $idProductAbstract): array ;
+    public function findProductAbstractPrices(int $idProductAbstract): array;
 
     /**
      * Specification:

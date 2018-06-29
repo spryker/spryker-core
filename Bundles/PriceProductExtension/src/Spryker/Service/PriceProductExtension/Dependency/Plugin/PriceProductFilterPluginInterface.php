@@ -7,9 +7,7 @@
 
 namespace Spryker\Service\PriceProductExtension\Dependency\Plugin;
 
-use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
-use Generated\Shared\Transfer\PriceProductTransfer;
 
 interface PriceProductFilterPluginInterface
 {
@@ -17,10 +15,12 @@ interface PriceProductFilterPluginInterface
      * Specification:
      * - Filters passed prices by the additional business logic
      *
-     * @param PriceProductTransfer[] $priceProductTransfers
-     * @param PriceProductFilterTransfer $priceProductFilterTransfer
+     * @api
      *
-     * @return PriceProductTransfer[]
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function filter(array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer): array;
 
