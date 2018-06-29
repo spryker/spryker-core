@@ -67,7 +67,7 @@ class IndexInstallerTest extends Unit
             $this->createIndexDefinition('foo', [
                 'index' => [
                     'config' => 1,
-                ]
+                ],
             ]),
         ];
 
