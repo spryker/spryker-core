@@ -37,7 +37,7 @@ class DiscontinueProductForm extends AbstractType
     protected function addDiscontinueNoteFormCollection(FormBuilderInterface $builder): self
     {
         $builder->add(static::FIELD_DISCONTINUED_NOTES, CollectionType::class, [
-            'entry_type' => DiscontinueNoteProductForm::class,
+            'entry_type' => ProductDiscontinuedNoteForm::class,
             'allow_add' => true,
             'allow_delete' => true,
             'entry_options' => [

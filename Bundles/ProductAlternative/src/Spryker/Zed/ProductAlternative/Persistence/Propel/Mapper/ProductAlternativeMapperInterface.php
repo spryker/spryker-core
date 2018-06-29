@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductAlternative\Persistence\Mapper;
+namespace Spryker\Zed\ProductAlternative\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\ProductAlternativeCollectionTransfer;
 use Generated\Shared\Transfer\ProductAlternativeListItemTransfer;

@@ -15,8 +15,8 @@ use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\ProductDiscontinued\Dependency\ProductDiscontinuedEvents;
-use Spryker\Zed\ProductDiscontinued\ProductDiscontinuedConfig;
 use Spryker\Zed\ProductDiscontinuedDataImport\Business\ProductDiscontinuedDataSet\ProductDiscontinuedDataSetInterface;
+use Spryker\Zed\ProductDiscontinuedDataImport\ProductDiscontinuedDataImportConfig;
 
 class ProductDiscontinuedWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
@@ -49,7 +49,7 @@ class ProductDiscontinuedWriterStep extends PublishAwareStep implements DataImpo
     protected function getActiveUntilDate(): string
     {
         return (new DateTime())
-            ->modify(sprintf('+%s Days', ProductDiscontinuedConfig::DEFAULT_DAYS_AMOUNT_BEFORE_PRODUCT_DEACTIVATE))
+            ->modify(sprintf('+%s Days', ProductDiscontinuedDataImportConfig::DEFAULT_DAYS_AMOUNT_BEFORE_PRODUCT_DEACTIVATE))
             ->format('Y-m-d');
     }
 

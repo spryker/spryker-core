@@ -12,11 +12,6 @@ use Generated\Shared\Transfer\ProductAlternativeTransfer;
 interface ProductAlternativeEntityManagerInterface
 {
     /**
-     * Specification:
-     * - Creates new or updates existing abstract product alternative for existing product concrete.
-     *
-     * @api
-     *
      * @param int $idProduct
      * @param int $idProductAbstractAlternative
      *
@@ -25,11 +20,6 @@ interface ProductAlternativeEntityManagerInterface
     public function saveProductAbstractAlternative(int $idProduct, int $idProductAbstractAlternative): ProductAlternativeTransfer;
 
     /**
-     * Specification:
-     * - Creates new or updates existing concrete product alternative for existing product concrete.
-     *
-     * @api
-     *
      * @param int $idProduct
      * @param int $idProductConcreteAlternative
      *
@@ -38,11 +28,6 @@ interface ProductAlternativeEntityManagerInterface
     public function saveProductConcreteAlternative(int $idProduct, int $idProductConcreteAlternative): ProductAlternativeTransfer;
 
     /**
-     * Specification:
-     * - Deletes existing product alternative.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ProductAlternativeTransfer $productAlternativeTransfer
      *
      * @return void

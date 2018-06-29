@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductAlternativeStorage\Business\ProductAlternativePubli
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductReplacementStorageTransfer;
-use Generated\Shared\Transfer\SpyProductReplacementStorageEntityTransfer;
+use Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage;
 use Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageEntityManagerInterface;
 use Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface;
 
@@ -70,8 +70,8 @@ class ProductReplacementPublisher implements ProductReplacementPublisherInterfac
         foreach ($indexedSkus as $idProductAbstract => $productAbstractData) {
             $replacementIds = $this->productAlternativeStorageRepository->getReplacementsByAbstractProductId($idProductAbstract);
             $sku = $productAbstractData[ProductAbstractTransfer::SKU];
-            $productReplacementStorageEntityTransfer = $this->productAlternativeStorageRepository->findProductReplacementStorageEntitiesBySku($sku);
-            $this->storeDataSet($sku, $replacementIds, $productReplacementStorageEntityTransfer);
+            $productReplacementStorageEntity = $this->productAlternativeStorageRepository->findProductReplacementStorageEntitiesBySku($sku);
+            $this->storeDataSet($sku, $replacementIds, $productReplacementStorageEntity);
         }
     }
 
@@ -86,41 +86,41 @@ class ProductReplacementPublisher implements ProductReplacementPublisherInterfac
         foreach ($indexedSkus as $idProduct => $productConcreteData) {
             $replacementIds = $this->productAlternativeStorageRepository->getReplacementsByConcreteProductId($idProduct);
             $sku = $productConcreteData[ProductConcreteTransfer::SKU];
-            $productReplacementStorageEntityTransfer = $this->productAlternativeStorageRepository->findProductReplacementStorageEntitiesBySku($sku);
-            $this->storeDataSet($sku, $replacementIds, $productReplacementStorageEntityTransfer);
+            $productReplacementStorageEntity = $this->productAlternativeStorageRepository->findProductReplacementStorageEntitiesBySku($sku);
+            $this->storeDataSet($sku, $replacementIds, $productReplacementStorageEntity);
         }
     }
 
     /**
      * @param string $sku
      * @param int[] $replacementIds
-     * @param \Generated\Shared\Transfer\SpyProductReplacementStorageEntityTransfer|null $productReplacementStorageEntityTransfer
+     * @param null|\Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage $productReplacementStorageEntity
      *
      * @return void
      */
     protected function storeDataSet(
         string $sku,
         array $replacementIds,
-        ?SpyProductReplacementStorageEntityTransfer $productReplacementStorageEntityTransfer
+        ?SpyProductReplacementForStorage $productReplacementStorageEntity
     ): void {
-        if (empty($replacementIds) && $productReplacementStorageEntityTransfer) {
-            $this->productAlternativeStorageEntityManager->deleteProductReplacementStorage($productReplacementStorageEntityTransfer);
+        if (empty($replacementIds) && $productReplacementStorageEntity) {
+            $this->productAlternativeStorageEntityManager->deleteProductReplacementForStorage($productReplacementStorageEntity);
             return;
         }
 
-        if (!$productReplacementStorageEntityTransfer) {
-            $productReplacementStorageEntityTransfer = new SpyProductReplacementStorageEntityTransfer();
+        if (!$productReplacementStorageEntity) {
+            $productReplacementStorageEntity = new SpyProductReplacementForStorage();
         }
 
         $productReplacementStorage = (new ProductReplacementStorageTransfer())
             ->setProductConcreteIds($replacementIds);
 
-        $productReplacementStorageEntityTransfer
+        $productReplacementStorageEntity
             ->setSku($sku)
             ->setData(
                 $productReplacementStorage->toArray()
             );
 
-        $this->productAlternativeStorageEntityManager->saveProductReplacementStorage($productReplacementStorageEntityTransfer);
+        $this->productAlternativeStorageEntityManager->saveProductReplacementForStorage($productReplacementStorageEntity);
     }
 }

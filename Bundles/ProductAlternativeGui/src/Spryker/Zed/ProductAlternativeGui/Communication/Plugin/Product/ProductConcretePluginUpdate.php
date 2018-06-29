@@ -30,7 +30,7 @@ class ProductConcretePluginUpdate extends AbstractPlugin implements ProductConcr
      */
     public function update(ProductConcreteTransfer $productConcreteTransfer)
     {
-        if (!$productConcreteTransfer->getProductAlternativeCreateRequests()) {
+        if (!$productConcreteTransfer->getProductAlternativeCreateRequests()->count()) {
             return $productConcreteTransfer;
         }
 

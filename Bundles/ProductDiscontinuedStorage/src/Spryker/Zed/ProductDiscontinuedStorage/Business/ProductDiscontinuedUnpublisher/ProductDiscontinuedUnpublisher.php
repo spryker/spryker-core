@@ -41,11 +41,11 @@ class ProductDiscontinuedUnpublisher implements ProductDiscontinuedUnpublisherIn
      */
     public function unpublish(array $productDiscontinuedIds): void
     {
-        $productDiscontinuedStorageEntityTransfers = $this->findProductDiscontinuedStorageEntitiesByIds($productDiscontinuedIds);
+        $productDiscontinuedStorageEntities = $this->findProductDiscontinuedStorageEntitiesByIds($productDiscontinuedIds);
 
-        foreach ($productDiscontinuedStorageEntityTransfers as $productDiscontinuedStorageEntityTransfer) {
+        foreach ($productDiscontinuedStorageEntities as $productDiscontinuedStorageEntity) {
             $this->discontinuedStorageEntityManager->deleteProductDiscontinuedStorageEntity(
-                $productDiscontinuedStorageEntityTransfer
+                $productDiscontinuedStorageEntity
             );
         }
     }
@@ -53,7 +53,7 @@ class ProductDiscontinuedUnpublisher implements ProductDiscontinuedUnpublisherIn
     /**
      * @param int[] $productDiscontinuedIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductDiscontinuedStorageEntityTransfer[]
+     * @return \Orm\Zed\ProductDiscontinuedStorage\Persistence\SpyProductDiscontinuedStorage[]
      */
     protected function findProductDiscontinuedStorageEntitiesByIds(array $productDiscontinuedIds): array
     {

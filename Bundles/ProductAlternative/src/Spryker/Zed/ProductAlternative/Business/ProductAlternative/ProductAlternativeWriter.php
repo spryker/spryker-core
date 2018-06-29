@@ -23,11 +23,6 @@ class ProductAlternativeWriter implements ProductAlternativeWriterInterface
     protected $productAlternativeEntityManager;
 
     /**
-     * @var \Spryker\Zed\ProductAlternative\Business\ProductAlternative\ProductAlternativeReaderInterface
-     */
-    protected $productAlternativeReader;
-
-    /**
      * @var \Spryker\Zed\ProductAlternative\Dependency\Facade\ProductAlternativeToProductFacadeInterface
      */
     protected $productFacade;

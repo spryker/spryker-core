@@ -37,20 +37,6 @@ class ProductAlternativeStorageFacade extends AbstractFacade implements ProductA
      *
      * @return void
      */
-    public function unpublishAlternative(array $productIds): void
-    {
-        $this->getFactory()->createProductAlternativeUnublisher()->unpublish($productIds);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param int[] $productIds
-     *
-     * @return void
-     */
     public function publishAbstractReplacements(array $productIds): void
     {
         $this->getFactory()

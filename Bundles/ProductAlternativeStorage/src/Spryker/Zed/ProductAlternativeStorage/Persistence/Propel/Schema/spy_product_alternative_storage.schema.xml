@@ -26,14 +26,14 @@
         <behavior name="timestampable"/>
     </table>
 
-    <table name="spy_product_replacement_storage">
-        <column name="id_product_replacement_storage" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+    <table name="spy_product_replacement_for_storage">
+        <column name="id_product_replacement_for_storage" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="sku" type="VARCHAR" size="255" required="true"/>
         <column name="data" type="LONGVARCHAR" required="false"/>
 
-        <id-method-parameter value="id_product_replacement_storage_pk_seq"/>
+        <id-method-parameter value="id_product_replacement_for_storage_pk_seq"/>
 
-        <index name="spy_product_replacement_storage-sku">
+        <index name="spy_product_replacement_for_storage-sku">
             <index-column name="sku"/>
         </index>
 

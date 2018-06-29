@@ -35,7 +35,7 @@ class SaveDiscontinuedNotesProductConcretePluginUpdate extends AbstractPlugin im
             return $productConcreteTransfer;
         }
         foreach ($productConcreteTransfer->getDiscontinuedNotes() as $discontinuedNoteTransfer) {
-            if ($discontinuedNoteTransfer->getNote()) {
+            if ($discontinuedNoteTransfer->getNote() || $discontinuedNoteTransfer->getIdProductDiscontinuedNote()) {
                 $this->getFacade()->saveDiscontinuedNote($discontinuedNoteTransfer);
             }
         }
