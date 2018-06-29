@@ -5,6 +5,6 @@
 
 'use strict';
 
-var Plotly = require('plotly.js');
-
-window.ChartPlotly = Plotly;
+if (!window.ChartPlotly) {
+    window.ChartPlotly = require('plotly.js');
+}
