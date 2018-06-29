@@ -62,7 +62,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
         return new TemplateManager(
             $this->getQueryContainer(),
             $this->getConfig(),
-            $this->createFinder()
+            $this
         );
     }
 
@@ -83,7 +83,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Symfony\Component\Finder\Finder
      */
-    protected function createFinder()
+    public function createFinder()
     {
         return new Finder();
     }
