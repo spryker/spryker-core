@@ -33,7 +33,7 @@ class DeleteController extends AbstractProductPackagingUnitGuiController
                 $productPackagingUnitTypeTransfer->getName()
             ));
 
-            return $this->redirectResponse($this->getRequestRedirectUrl($request));
+            return $this->redirectResponse(ProductPackagingUnitGuiConfig::URL_PRODUCT_PACKAGING_UNIT_TYPE_LIST);
         }
 
         $this->addErrorMessage(sprintf(
