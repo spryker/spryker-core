@@ -26,7 +26,7 @@ abstract class AbstractFileManagerListener extends AbstractPlugin implements Eve
      */
     protected function publish($fileIds)
     {
-        $this->getFacade()->publish($fileIds);
+        $this->getFacade()->publishFile($fileIds);
     }
 
     /**
@@ -36,6 +36,6 @@ abstract class AbstractFileManagerListener extends AbstractPlugin implements Eve
      */
     protected function unpublish($fileIds)
     {
-        $this->getFacade()->unpublish($fileIds);
+        $this->getFacade()->unpublishFile($fileIds);
     }
 }

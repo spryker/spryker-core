@@ -10,7 +10,7 @@ namespace Spryker\Service\FileManager\Dependency\Service;
 use Generated\Shared\Transfer\FileSystemQueryTransfer;
 use Generated\Shared\Transfer\FileSystemStreamTransfer;
 
-class FileManagerToFileSystemBridge implements FileManagerToFileSystemServiceInterface
+class FileManagerToFileSystemServiceBridge implements FileManagerToFileSystemServiceInterface
 {
     /**
      * @var \Spryker\Service\FileSystem\FileSystemServiceInterface

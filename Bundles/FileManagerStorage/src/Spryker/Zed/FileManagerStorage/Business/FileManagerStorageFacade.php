@@ -18,8 +18,12 @@ class FileManagerStorageFacade extends AbstractFacade implements FileManagerStor
      * @api
      *
      * {@inheritdoc}
+     *
+     * @param int[] $fileIds
+     *
+     * @return void
      */
-    public function publish(array $fileIds)
+    public function publishFile(array $fileIds)
     {
         $this->getFactory()->createFileStorageWriter()->publish($fileIds);
     }
@@ -28,8 +32,12 @@ class FileManagerStorageFacade extends AbstractFacade implements FileManagerStor
      * @api
      *
      * {@inheritdoc}
+     *
+     * @param int[] $fileIds
+     *
+     * @return void
      */
-    public function unpublish(array $fileIds)
+    public function unpublishFile(array $fileIds)
     {
         $this->getFactory()->createFileStorageWriter()->unpublish($fileIds);
     }
