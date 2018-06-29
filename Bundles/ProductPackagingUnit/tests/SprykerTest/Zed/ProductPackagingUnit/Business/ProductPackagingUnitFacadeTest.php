@@ -59,7 +59,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         $facade->installProductPackagingUnitTypes();
 
         // Assert
-        $productPackagingUnitTypeTransfer = $this->getFacade()->getProductPackagingUnitTypeByName($productPackagingUnitTypeTransfer);
+        $productPackagingUnitTypeTransfer = $this->getFacade()->findProductPackagingUnitTypeByName($productPackagingUnitTypeTransfer);
         $this->assertNotNull($productPackagingUnitTypeTransfer->getIdProductPackagingUnitType());
     }
 
@@ -83,7 +83,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
 
         // Action
         $this->getFacade()->createProductPackagingUnitType($productPackagingUnitTypeTransfer);
-        $productPackagingUnitTypeTransfer = $this->getFacade()->getProductPackagingUnitTypeByName($productPackagingUnitTypeTransfer);
+        $productPackagingUnitTypeTransfer = $this->getFacade()->findProductPackagingUnitTypeByName($productPackagingUnitTypeTransfer);
         $this->assertNotNull($productPackagingUnitTypeTransfer->getIdProductPackagingUnitType());
         // Assert translations persisted
         $this->assertCount($productPackagingUnitTypeTransfer->getNameTranslations()->count(), $nameTranslations);

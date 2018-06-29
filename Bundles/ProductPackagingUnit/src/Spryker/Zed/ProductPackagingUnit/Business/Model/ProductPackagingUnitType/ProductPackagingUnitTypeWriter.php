@@ -77,7 +77,7 @@ class ProductPackagingUnitTypeWriter implements ProductPackagingUnitTypeWriterIn
     protected function isUniqueForCreate(
         ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
     ): bool {
-        return $this->repository->getProductPackagingUnitTypeByName($productPackagingUnitTypeTransfer->getName()) === null;
+        return $this->repository->findProductPackagingUnitTypeByName($productPackagingUnitTypeTransfer->getName()) === null;
     }
 
     /**
@@ -112,7 +112,7 @@ class ProductPackagingUnitTypeWriter implements ProductPackagingUnitTypeWriterIn
     protected function isUniqueForUpdate(
         ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
     ): bool {
-        $existingProductPackagingUnitTypeTransfer = $this->repository->getProductPackagingUnitTypeByName($productPackagingUnitTypeTransfer->getName());
+        $existingProductPackagingUnitTypeTransfer = $this->repository->findProductPackagingUnitTypeByName($productPackagingUnitTypeTransfer->getName());
 
         return $existingProductPackagingUnitTypeTransfer === null ||
             $productPackagingUnitTypeTransfer->getIdProductPackagingUnitType() === $existingProductPackagingUnitTypeTransfer->getIdProductPackagingUnitType();

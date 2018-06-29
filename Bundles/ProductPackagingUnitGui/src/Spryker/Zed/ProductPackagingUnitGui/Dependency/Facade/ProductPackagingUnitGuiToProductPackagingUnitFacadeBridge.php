@@ -48,10 +48,10 @@ class ProductPackagingUnitGuiToProductPackagingUnitFacadeBridge implements Produ
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
      */
-    public function getProductPackagingUnitTypeByName(
+    public function findProductPackagingUnitTypeByName(
         ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
     ): ProductPackagingUnitTypeTransfer {
-        return $this->productPackagingUnitFacade->getProductPackagingUnitTypeByName($productPackagingUnitTypeTransfer);
+        return $this->productPackagingUnitFacade->findProductPackagingUnitTypeByName($productPackagingUnitTypeTransfer);
     }
 
     /**
