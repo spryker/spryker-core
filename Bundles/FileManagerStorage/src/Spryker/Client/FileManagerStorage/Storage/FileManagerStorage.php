@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\FileStorageDataTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\FileManagerStorage\Dependency\Client\FileManagerStorageToStorageClientInterface;
 use Spryker\Client\FileManagerStorage\Dependency\Service\FileManagerStorageToSynchronizationServiceInterface;
-use Spryker\Zed\FileManager\Exception\FileStorageNotFoundException;
 
 class FileManagerStorage implements FileManagerStorageInterface
 {
@@ -46,20 +45,18 @@ class FileManagerStorage implements FileManagerStorageInterface
      * @param int $idFile
      * @param string $localeName
      *
-     * @throws \Spryker\Zed\FileManager\Exception\FileStorageNotFoundException
-     *
      * @return \Generated\Shared\Transfer\FileStorageDataTransfer
      */
     public function findFileById(int $idFile, string $localeName)
     {
+        $fileStorageDataTransfer = new FileStorageDataTransfer();
         $storageKey = $this->generateKey((string)$idFile, $localeName);
         $fileContent = $this->storageClient->get($storageKey);
 
         if ($fileContent === null) {
-            throw new FileStorageNotFoundException(sprintf('Target file storage entry with key %s was not found', $storageKey));
+            return $fileStorageDataTransfer;
         }
 
-        $fileStorageDataTransfer = new FileStorageDataTransfer();
         $fileStorageDataTransfer->fromArray(($fileContent), true);
 
         return $fileStorageDataTransfer;
