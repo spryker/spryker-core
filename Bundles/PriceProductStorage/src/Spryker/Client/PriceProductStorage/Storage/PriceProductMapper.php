@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductStorageTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Spryker\Shared\PriceProduct\PriceProductConfig;
 use Spryker\Shared\PriceProductStorage\PriceProductStorageConstants;
 
 class PriceProductMapper
@@ -21,9 +22,8 @@ class PriceProductMapper
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function mapPriceProductStorageTransferToPriceProductTransfers(
-        PriceProductStorageTransfer $priceProductStorageTransfer
-    ): array {
+    public function mapPriceProductStorageTransferToPriceProductTransfers(PriceProductStorageTransfer $priceProductStorageTransfer): array
+    {
         /** @var \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers */
         $priceProductTransfers = [];
 
@@ -46,7 +46,7 @@ class PriceProductMapper
                             )
                             ->setPriceTypeName($priceType);
                     }
-                    if ($priceMode === 'GROSS_MODE') {
+                    if ($priceMode === PriceProductConfig::PRICE_GROSS_MODE) {
                         $priceProductTransfers[$index]->getMoneyValue()->setGrossAmount($priceAmount);
                         continue;
                     }

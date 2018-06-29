@@ -56,7 +56,7 @@ class PriceProductMatcher implements PriceProductMatcherInterface
         //apply min strategy on dimension level
         $priceProductFilter = (new PriceProductFilterTransfer())->setPriceMode($priceProductCriteriaTransfer->getPriceMode());
         foreach ($this->priceProductFilterPlugins as $priceProductFilterPlugin) {
-            $priceProductTransfers = $priceProductFilterPlugin->filter($priceProductTransfers, $priceProductFilterPlugin);
+            $priceProductTransfers = $priceProductFilterPlugin->filter($priceProductTransfers, $priceProductFilter);
         }
 
         //apply min strategy overall
