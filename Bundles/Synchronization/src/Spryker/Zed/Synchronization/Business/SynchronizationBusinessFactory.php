@@ -53,7 +53,6 @@ class SynchronizationBusinessFactory extends AbstractBusinessFactory
         return new RepositoryExporter(
             $this->getQueueClient(),
             $this->createQueueMessageCreator(),
-            $this->getSynchronizationDataPlugins(),
             $this->getConfig()->getSyncExportChunkSize()
         );
     }
@@ -66,7 +65,6 @@ class SynchronizationBusinessFactory extends AbstractBusinessFactory
         return new QueryContainerExporter(
             $this->getQueueClient(),
             $this->createQueueMessageCreator(),
-            $this->getSynchronizationDataPlugins(),
             $this->getConfig()->getSyncExportChunkSize()
         );
     }
