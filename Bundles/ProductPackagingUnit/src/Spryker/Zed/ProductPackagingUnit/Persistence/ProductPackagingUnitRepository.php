@@ -32,16 +32,16 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
             ->filterByName($productPackagingUnitTypeName)
             ->findOne();
 
-        if ($productPackagingUnitTypeEntity) {
-            return $this->getFactory()
-                ->createProductPackagingUnitMapper()
-                ->mapProductPackagingUnitTypeTransfer(
-                    $productPackagingUnitTypeEntity,
-                    new ProductPackagingUnitTypeTransfer()
-                );
+        if (!$productPackagingUnitTypeEntity) {
+            return null;
         }
 
-        return null;
+        return $this->getFactory()
+            ->createProductPackagingUnitMapper()
+            ->mapProductPackagingUnitTypeTransfer(
+                $productPackagingUnitTypeEntity,
+                new ProductPackagingUnitTypeTransfer()
+            );
     }
 
     /**
@@ -57,16 +57,16 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
             ->filterByIdProductPackagingUnitType($idProductPackagingUnitType)
             ->findOne();
 
-        if ($productPackagingUnitTypeEntity) {
-            return $this->getFactory()
-                ->createProductPackagingUnitMapper()
-                ->mapProductPackagingUnitTypeTransfer(
-                    $productPackagingUnitTypeEntity,
-                    new ProductPackagingUnitTypeTransfer()
-                );
+        if (!$productPackagingUnitTypeEntity) {
+            return null;
         }
 
-        return null;
+        return $this->getFactory()
+            ->createProductPackagingUnitMapper()
+            ->mapProductPackagingUnitTypeTransfer(
+                $productPackagingUnitTypeEntity,
+                new ProductPackagingUnitTypeTransfer()
+            );
     }
 
     /**
@@ -84,6 +84,8 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
     }
 
     /**
+     * @uses Product
+     *
      * @param int $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null
@@ -112,6 +114,8 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
     }
 
     /**
+     * @uses Product
+     *
      * @param string $productPackagingUnitSku
      *
      * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null

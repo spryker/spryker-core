@@ -26,7 +26,8 @@ class ProductPackagingUnitToGlossaryFacadeBridge implements ProductPackagingUnit
     }
 
     /**
-     * {@inheritdoc}
+     * @param string $keyName
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return bool
      */
@@ -36,8 +37,6 @@ class ProductPackagingUnitToGlossaryFacadeBridge implements ProductPackagingUnit
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @param string $keyName
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
@@ -49,8 +48,6 @@ class ProductPackagingUnitToGlossaryFacadeBridge implements ProductPackagingUnit
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @param string $key
      * @param string $value
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -63,8 +60,6 @@ class ProductPackagingUnitToGlossaryFacadeBridge implements ProductPackagingUnit
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @param string $keyName
      *
      * @return bool
@@ -75,8 +70,6 @@ class ProductPackagingUnitToGlossaryFacadeBridge implements ProductPackagingUnit
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @param string $keyName
      *
      * @return int
@@ -87,8 +80,6 @@ class ProductPackagingUnitToGlossaryFacadeBridge implements ProductPackagingUnit
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @param string $keyName
      *
      * @return bool
