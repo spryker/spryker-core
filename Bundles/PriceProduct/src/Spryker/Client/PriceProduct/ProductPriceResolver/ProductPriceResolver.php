@@ -18,6 +18,7 @@ use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToPriceClientInter
 use Spryker\Client\PriceProduct\Dependency\Client\PriceProductToQuoteClientInterface;
 use Spryker\Client\PriceProduct\PriceProductConfig;
 use Spryker\Service\PriceProduct\PriceProductServiceInterface;
+use Spryker\Shared\PriceProduct\PriceProductConfig as PriceProductPriceProductConfig;
 
 class ProductPriceResolver implements ProductPriceResolverInterface
 {
@@ -84,7 +85,7 @@ class ProductPriceResolver implements ProductPriceResolverInterface
     }
 
     /**
-     * @param PriceProductTransfer[] $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
      * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */
@@ -170,7 +171,7 @@ class ProductPriceResolver implements ProductPriceResolverInterface
                         $priceProductTransfers[$index] = (new PriceProductTransfer())
                             ->setPriceDimension(
                                 (new PriceProductDimensionTransfer())
-                                    ->setType(\Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_DIMENSION_DEFAULT)
+                                    ->setType(PriceProductPriceProductConfig::PRICE_DIMENSION_DEFAULT)
                             )
                             ->setMoneyValue(
                                 (new MoneyValueTransfer())

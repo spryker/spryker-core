@@ -15,7 +15,7 @@ interface PriceDimensionQueryCriteriaPluginInterface
     /**
      * Specification:
      *  - Builds an expander for default price criteria when querying prices from database,
-     *    it could contain joins and/or selected columns for later filtering
+     *    it could contain joins, selected columns, conditions for later filtering.
      *
      * @api
      *
@@ -29,7 +29,7 @@ interface PriceDimensionQueryCriteriaPluginInterface
 
     /**
      * Specification:
-     *   - Returns dimension name
+     *   - Returns dimension name.
      *
      * @api
      *

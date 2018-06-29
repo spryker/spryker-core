@@ -8,7 +8,6 @@ namespace Spryker\Service\PriceProduct;
 
 use Spryker\Service\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Service\Kernel\Container;
-use Spryker\Service\PriceProduct\Plugin\PriceProductExtension\DefaultPriceProductFilterPlugin;
 
 class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
 {

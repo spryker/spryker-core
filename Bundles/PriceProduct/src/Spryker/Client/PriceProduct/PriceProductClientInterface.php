@@ -7,8 +7,6 @@
 
 namespace Spryker\Client\PriceProduct;
 
-use Generated\Shared\Transfer\PriceProductTransfer;
-
 /**
  * @method \Spryker\Client\PriceProduct\PriceProductFactory getFactory()
  * @method \Spryker\Client\PriceProduct\PriceProductConfig getConfig()
@@ -44,7 +42,6 @@ interface PriceProductClientInterface
      */
     public function resolveProductPrice(array $priceMap);
 
-
     /**
      * Specification:
      *  - Resolves current product price as per current customer state, it will try to resolve price based on customer selected currency and price mode.
@@ -52,7 +49,7 @@ interface PriceProductClientInterface
      *
      * @api
      *
-     * @param PriceProductTransfer[] $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
      * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */

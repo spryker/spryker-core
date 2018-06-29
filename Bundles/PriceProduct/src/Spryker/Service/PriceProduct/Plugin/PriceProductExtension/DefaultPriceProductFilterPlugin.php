@@ -7,9 +7,7 @@
 
 namespace Spryker\Service\PriceProduct\Plugin\PriceProductExtension;
 
-use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
-use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Service\Kernel\AbstractPlugin;
 use Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductFilterPluginInterface;
 
@@ -19,10 +17,12 @@ use Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductFilterPl
 class DefaultPriceProductFilterPlugin extends AbstractPlugin implements PriceProductFilterPluginInterface
 {
     /**
-     * @param PriceProductTransfer[] $priceProductTransfers
-     * @return PriceProductTransfer[]
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function filter(array $priceProductTransfers): array
+    public function filter(array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer): array
     {
 //        $resultPriceProductTransfers = [];
 //        $minPriceProductTransfer = null;
