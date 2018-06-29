@@ -94,6 +94,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
         return new IndexInstaller(
             $this->createJsonIndexDefinitionLoader(),
             $this->getElasticsearchClient(),
+            $this->getBlacklistedSettings(),
             $messenger
         );
     }
@@ -251,5 +252,19 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     protected function getGuzzleClient()
     {
         return $this->getProvidedDependency(SearchDependencyProvider::GUZZLE_CLIENT);
+    }
+
+    /**
+     * @return array
+     */
+    protected function getBlacklistedSettings()
+    {
+        return [
+            'index.number_of_shards',
+            'index.codec',
+            'index.routing_partition_size',
+            'index.shard.check_on_startup',
+            'analysis',
+        ];
     }
 }

@@ -34,15 +34,26 @@ class IndexInstaller implements SearchInstallerInterface
     protected $messenger;
 
     /**
+     * @var array
+     */
+    protected $blacklistedSettings;
+
+    /**
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionLoaderInterface $indexDefinitionLoader
      * @param \Elastica\Client $elasticaClient
+     * @param array $blacklistedSettings
      * @param \Psr\Log\LoggerInterface $messenger
      */
-    public function __construct(IndexDefinitionLoaderInterface $indexDefinitionLoader, Client $elasticaClient, LoggerInterface $messenger)
-    {
+    public function __construct(
+        IndexDefinitionLoaderInterface $indexDefinitionLoader,
+        Client $elasticaClient,
+        array $blacklistedSettings,
+        LoggerInterface $messenger
+    ) {
         $this->indexDefinitionLoader = $indexDefinitionLoader;
         $this->elasticaClient = $elasticaClient;
         $this->messenger = $messenger;
+        $this->blacklistedSettings = $blacklistedSettings;
     }
 
     /**
@@ -172,5 +183,49 @@ class IndexInstaller implements SearchInstallerInterface
         foreach ($indexDefinitionTransfer->getMappings() as $mappingName => $mappingData) {
             $this->sendMapping($index, $mappingName, $mappingData);
         }
+
+        $settings = $indexDefinitionTransfer->getSettings();
+        if ($settings) {
+            $settings = $this->removeBlacklistedSettings($settings);
+            $index->setSettings($settings);
+        }
+    }
+
+    /**
+     * @param array $settings
+     * @return array
+     */
+    protected function removeBlacklistedSettings(array $settings)
+    {
+        foreach ($this->blacklistedSettings as $settingPath) {
+            $settings = $this->removeSetting($settings, $settingPath);
+        }
+
+        return $settings;
+    }
+
+    /**
+     * @param array $settings
+     * @param string $settingPath
+     * @return array
+     */
+    protected function removeSetting(array $settings, string $settingPath)
+    {
+        $settingsElement = &$settings;
+        $settingPathArray = explode('.', $settingPath);
+
+        foreach ($settingPathArray as $pathNumber => $step) {
+            if (!isset($settingsElement[$step])) {
+                break;
+            }
+
+            if ($pathNumber === count($settingPathArray) - 1) {
+                unset($settingsElement[$step]);
+                continue;
+            }
+            $settingsElement = &$settingsElement[$step];
+        }
+
+        return $settings;
     }
 }
