@@ -10,7 +10,7 @@ namespace Spryker\Service\PriceProduct\Model;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
-use Spryker\Shared\PriceProduct\PriceProductConfig;
+use Spryker\Service\PriceProduct\FilterStrategy\SinglePriceProductFilterStrategyInterface;
 
 class PriceProductMatcher implements PriceProductMatcherInterface
 {
@@ -20,16 +20,23 @@ class PriceProductMatcher implements PriceProductMatcherInterface
     protected $priceProductFilterPlugins = [];
 
     /**
-     * @param \Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductFilterPluginInterface[] $priceProductDecisionPlugins
+     * @var \Spryker\Service\PriceProduct\FilterStrategy\SinglePriceProductFilterStrategyInterface
      */
-    public function __construct(array $priceProductDecisionPlugins)
-    {
+    protected $singlePriceProductFilterStrategy;
+
+    /**
+     * @param \Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductFilterPluginInterface[] $priceProductDecisionPlugins
+     * @param \Spryker\Service\PriceProduct\FilterStrategy\SinglePriceProductFilterStrategyInterface $singlePriceProductFilterStrategy
+     */
+    public function __construct(
+        array $priceProductDecisionPlugins,
+        SinglePriceProductFilterStrategyInterface $singlePriceProductFilterStrategy
+    ) {
         $this->priceProductFilterPlugins = $priceProductDecisionPlugins;
+        $this->singlePriceProductFilterStrategy = $singlePriceProductFilterStrategy;
     }
 
     /**
-     * //todo: check??
-     *
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
@@ -48,14 +55,27 @@ class PriceProductMatcher implements PriceProductMatcherInterface
 
         $priceProductTransfers = $this->findPricesByPriceProductCriteria($priceProductTransfers, $priceProductCriteriaTransfer);
 
-        //apply min strategy on dimension level
-        $priceProductFilter = (new PriceProductFilterTransfer())->setPriceMode($priceProductCriteriaTransfer->getPriceMode());
+        $priceProductFilterTransfer = (new PriceProductFilterTransfer())
+            ->setPriceMode($priceProductCriteriaTransfer->getPriceMode());
+
+        $priceProductTransfers = $this->applyPriceProductFilerPlugins($priceProductTransfers, $priceProductFilterTransfer);
+
+        return $this->singlePriceProductFilterStrategy->findOne($priceProductTransfers, $priceProductFilterTransfer);
+    }
+
+    /**
+     * @param PriceProductTransfer[] $priceProductTransfers
+     * @param PriceProductFilterTransfer $priceProductFilterTransfer
+     *
+     * @return PriceProductTransfer[]
+     */
+    protected function applyPriceProductFilerPlugins(array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer)
+    {
         foreach ($this->priceProductFilterPlugins as $priceProductFilterPlugin) {
-            $priceProductTransfers = $priceProductFilterPlugin->filter($priceProductTransfers, $priceProductFilter);
+            $priceProductTransfers = $priceProductFilterPlugin->filter($priceProductTransfers, $priceProductFilterTransfer);
         }
 
-        //apply min strategy overall
-        return $this->minStrategy($priceProductTransfers, $priceProductFilter);
+        return $priceProductTransfers;
     }
 
     /**
@@ -75,35 +95,6 @@ class PriceProductMatcher implements PriceProductMatcherInterface
         }
 
         return $matchedPriceProductTransfers;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
-     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer|null
-     */
-    protected function minStrategy(array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer): ?PriceProductTransfer
-    {
-        $minPriceProductTransfer = null;
-
-        foreach ($priceProductTransfers as $priceProductTransfer) {
-            if ($minPriceProductTransfer === null) {
-                $minPriceProductTransfer = $priceProductTransfer;
-            }
-
-            if ($priceProductFilterTransfer->getPriceMode() === PriceProductConfig::PRICE_GROSS_MODE) {
-                if ($minPriceProductTransfer->getMoneyValue()->getGrossAmount() > $priceProductTransfer->getMoneyValue()->getGrossAmount()) {
-                    $minPriceProductTransfer = $priceProductTransfer;
-                }
-            } else {
-                if ($minPriceProductTransfer->getMoneyValue()->getNetAmount() > $priceProductTransfer->getMoneyValue()->getNetAmount()) {
-                    $minPriceProductTransfer = $priceProductTransfer;
-                }
-            }
-        }
-
-        return $minPriceProductTransfer;
     }
 
     /**
@@ -158,14 +149,9 @@ class PriceProductMatcher implements PriceProductMatcherInterface
             ->requirePriceMode();
 
         $priceProductTransfers = $this->findPricesByPriceProductFilter($priceProductTransfers, $priceProductFilterTransfer);
+        $priceProductTransfers = $this->applyPriceProductFilerPlugins($priceProductTransfers, $priceProductFilterTransfer);
 
-        //apply min strategy on dimension level
-        foreach ($this->priceProductFilterPlugins as $priceProductFilterPlugin) {
-            $priceProductTransfers = $priceProductFilterPlugin->filter($priceProductTransfers, $priceProductFilterTransfer);
-        }
-
-        //apply min strategy overall
-        return $this->minStrategy($priceProductTransfers, $priceProductFilterTransfer);
+        return $this->singlePriceProductFilterStrategy->findOne($priceProductTransfers, $priceProductFilterTransfer);
     }
 
     /**
@@ -185,11 +171,6 @@ class PriceProductMatcher implements PriceProductMatcherInterface
             ->requirePriceMode();
 
         $priceProductTransfers = $this->findPricesByPriceProductFilter($priceProductTransfers, $priceProductFilterTransfer);
-
-        //apply min strategy on dimension level
-        foreach ($this->priceProductFilterPlugins as $priceProductFilterPlugin) {
-            $priceProductTransfers = $priceProductFilterPlugin->filter($priceProductTransfers, $priceProductFilterTransfer);
-        }
 
         return $priceProductTransfers;
     }
