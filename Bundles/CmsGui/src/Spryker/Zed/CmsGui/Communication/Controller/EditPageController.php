@@ -9,7 +9,6 @@ namespace Spryker\Zed\CmsGui\Communication\Controller;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Cms\Business\Exception\CannotActivatePageException;
 use Spryker\Zed\Cms\Business\Exception\TemplateFileNotFoundException;
-use Spryker\Zed\CmsGui\CmsGuiConfig;
 use Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageFormType;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
@@ -35,9 +34,7 @@ class EditPageController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $this->getFactory()
-            ->getCmsFacade()
-            ->syncTemplate(CmsGuiConfig::CMS_FOLDER_PATH);
+        $this->syncCmsTemplatesFolder();
 
         $idCmsPage = $this->castId($request->query->get(static::URL_PARAM_ID_CMS_PAGE));
 
@@ -167,5 +164,27 @@ class EditPageController extends AbstractController
     protected function createTemplateErrorForm()
     {
         return new FormError(static::MESSAGE_TEMPLATE_SELECT_ERROR);
+    }
+
+    /**
+     * @return void
+     */
+    protected function syncCmsTemplatesFolder(): void
+    {
+        $this->getFactory()
+            ->getCmsFacade()
+            ->syncTemplate(
+                $this->getCmsFolderPath()
+            );
+    }
+
+    /**
+     * @return string
+     */
+    protected function getCmsFolderPath(): string
+    {
+        return $this->getFactory()
+            ->getConfig()
+            ->getCmsFolderPath();
     }
 }
