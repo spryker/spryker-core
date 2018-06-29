@@ -18,7 +18,7 @@ interface ProductPackagingUnitRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer|null
      */
-    public function getProductPackagingUnitTypeByName(
+    public function findProductPackagingUnitTypeByName(
         string $productPackagingUnitTypeName
     ): ?ProductPackagingUnitTypeTransfer;
 
@@ -27,7 +27,7 @@ interface ProductPackagingUnitRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer|null
      */
-    public function getProductPackagingUnitTypeById(
+    public function findProductPackagingUnitTypeById(
         int $idProductPackagingUnitType
     ): ?ProductPackagingUnitTypeTransfer;
 

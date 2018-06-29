@@ -83,7 +83,7 @@ class UniqueProductPackagingUnitTypeNameConstraintValidator extends ConstraintVa
             return true;
         }
 
-        $productPackagingUnitTypeTransfer = $constraint->findProductPackagingUnitTypeById($productPackagingUnitTypeTransfer);
+        $productPackagingUnitTypeTransfer = $constraint->getProductPackagingUnitTypeById($productPackagingUnitTypeTransfer);
 
         if (!$productPackagingUnitTypeTransfer) {
             return true;
@@ -102,6 +102,10 @@ class UniqueProductPackagingUnitTypeNameConstraintValidator extends ConstraintVa
         ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer,
         Constraint $constraint
     ) {
+        if (!$productPackagingUnitTypeTransfer->getName()) {
+            return true;
+        }
+
         $productPackagingUnitTypeTransfer = $constraint->findProductPackagingUnitTypeByName($productPackagingUnitTypeTransfer);
 
         return $productPackagingUnitTypeTransfer ? false : true;

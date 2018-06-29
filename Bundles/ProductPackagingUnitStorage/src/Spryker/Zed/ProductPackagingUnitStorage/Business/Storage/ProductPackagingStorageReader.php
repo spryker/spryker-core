@@ -248,8 +248,8 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
             $amountInterval = $productPackagingUnitAmountEntityTransfer->getAmountInterval() ?: $this->createDefaultProductPackagingUnitAmountTransfer()->getAmountInterval();
 
             $productConcretePackagingStorageTransfer
-                ->setAmountMin($amountMax)
-                ->setAmountMax($amountMin)
+                ->setAmountMin($amountMin)
+                ->setAmountMax($amountMax)
                 ->setAmountInterval($amountInterval);
         }
     }

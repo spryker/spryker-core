@@ -21,7 +21,6 @@ use Spryker\Zed\ProductPackagingUnitGui\ProductPackagingUnitGuiDependencyProvide
 use Symfony\Component\Form\FormInterface;
 
 /**
- * @method \Spryker\Zed\ProductPackagingUnitGui\Persistence\ProductPackagingUnitGuiRepositoryInterface getRepository()
  * @method \Spryker\Zed\ProductPackagingUnitGui\ProductPackagingUnitGuiConfig getConfig()
  */
 class ProductPackagingUnitGuiCommunicationFactory extends AbstractCommunicationFactory

@@ -7,16 +7,13 @@
 
 namespace Spryker\Zed\ProductPackagingUnitGui\Communication\Controller;
 
-use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 use Spryker\Zed\ProductPackagingUnitGui\ProductPackagingUnitGuiConfig;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Throwable;
 
 /**
- * @method \Spryker\Zed\ProductPackagingUnitGui\Business\ProductPackagingUnitGuiFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductPackagingUnitGui\Communication\ProductPackagingUnitGuiCommunicationFactory getFactory()
- * @method \Spryker\Zed\ProductPackagingUnitGui\Persistence\ProductPackagingUnitGuiRepositoryInterface getRepository()
  */
 class EditController extends AbstractProductPackagingUnitGuiController
 {
@@ -27,14 +24,13 @@ class EditController extends AbstractProductPackagingUnitGuiController
      */
     public function indexAction(Request $request)
     {
-        $idProductPackagingUnitType = $this->castId($request->query->get(ProductPackagingUnitGuiConfig::REQUEST_ID_PRODUCT_PACKAGING_UNIT_TYPE));
+        $idProductPackagingUnitType = $this->castId($request->query->get(ProductPackagingUnitGuiConfig::REQUEST_PARAM_ID_PRODUCT_PACKAGING_UNIT_TYPE));
         $availableLocales = $this->getFactory()->getLocaleFacade()->getLocaleCollection();
 
         $productPackagingUnitTypeDataProvider = $this->getFactory()
             ->createProductPackagingUnitTypeDataProvider();
 
         $productPackagingUnitTypeTransfer = $productPackagingUnitTypeDataProvider->getData($idProductPackagingUnitType);
-        $allowDelete = $this->countProductPackagingUnitsByTypeId($productPackagingUnitTypeTransfer) > 0;
 
         $productPackagingUnitTypeForm = $this->getFactory()
             ->getProductPackagingUnitTypeForm(
@@ -51,20 +47,7 @@ class EditController extends AbstractProductPackagingUnitGuiController
             'availableLocales' => $availableLocales,
             'productPackagingUnitTypeForm' => $productPackagingUnitTypeForm->createView(),
             'productPackagingUnitTypeTransfer' => $productPackagingUnitTypeTransfer,
-            'allowDelete' => $allowDelete,
         ]);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
-     *
-     * @return int
-     */
-    protected function countProductPackagingUnitsByTypeId(ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer): int
-    {
-        return $this->getFactory()
-            ->getProductPackagingUnitFacade()
-            ->countProductPackagingUnitsByTypeId($productPackagingUnitTypeTransfer);
     }
 
     /**
