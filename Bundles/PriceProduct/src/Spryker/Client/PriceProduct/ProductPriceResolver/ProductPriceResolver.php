@@ -81,7 +81,7 @@ class ProductPriceResolver implements ProductPriceResolverInterface
     {
         $priceProductTransfers = $this->convertPriceMapToPriceProductTransfers($priceMap);
 
-        $this->resolveTransfer($priceProductTransfers);
+        return $this->resolveTransfer($priceProductTransfers);
     }
 
     /**
