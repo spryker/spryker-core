@@ -18,7 +18,7 @@ interface SynchronizationDataRepositoryPluginInterface extends SynchronizationDa
      *
      * @param array $ids
      *
-     * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer[]
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
      */
     public function getData($ids = []);
 }
