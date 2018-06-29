@@ -46,6 +46,8 @@ class FileManagerStorage implements FileManagerStorageInterface
      * @param int $idFile
      * @param string $localeName
      *
+     * @throws \Spryker\Zed\FileManager\Exception\FileStorageNotFoundException
+     *
      * @return \Generated\Shared\Transfer\FileStorageDataTransfer
      */
     public function findFileById(int $idFile, string $localeName)
