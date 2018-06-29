@@ -206,7 +206,7 @@ class PriceProductMatcher implements PriceProductMatcherInterface
             $priceProductTransfer->requirePriceDimension();
 
             if ($priceProductFilterTransfer->getPriceDimension()->getType() !== $priceProductTransfer->getPriceDimension()->getType()) {
-                false;
+                return false;
             }
         }
 

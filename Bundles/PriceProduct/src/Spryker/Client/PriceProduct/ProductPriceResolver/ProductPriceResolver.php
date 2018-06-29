@@ -116,6 +116,7 @@ class ProductPriceResolver implements ProductPriceResolverInterface
         //find all available prices for all price types
         $priceProductFilterAllPriceTypes = clone $priceProductFilter;
         $priceProductFilterAllPriceTypes->setPriceTypeName(null);
+        $priceProductFilterAllPriceTypes->setPriceDimension($priceProductTransfer->getPriceDimension());
 
         $priceProductAllPriceTypesTransfers = $this->priceProductService->resolveProductPricesByPriceProductFilter(
             $priceProductTransfers,
@@ -124,7 +125,7 @@ class ProductPriceResolver implements ProductPriceResolverInterface
 
         $prices = [];
         foreach ($priceProductAllPriceTypesTransfers as $priceProductOnePriceTypeTransfer) {
-            $prices[$priceProductOnePriceTypeTransfer->getPriceTypeName()] = $this->getPriceValueByPriceMode($priceProductTransfer->getMoneyValue(), $priceMode);
+            $prices[$priceProductOnePriceTypeTransfer->getPriceTypeName()] = $this->getPriceValueByPriceMode($priceProductOnePriceTypeTransfer->getMoneyValue(), $priceMode);
         }
 
         return $currentProductPriceTransfer
