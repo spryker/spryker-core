@@ -19,7 +19,7 @@ interface FileManagerStorageFacadeInterface
      *
      * @return void
      */
-    public function publish(array $fileIds);
+    public function publishFile(array $fileIds);
 
     /**
      * Specification
@@ -31,5 +31,5 @@ interface FileManagerStorageFacadeInterface
      *
      * @return void
      */
-    public function unpublish(array $fileIds);
+    public function unpublishFile(array $fileIds);
 }

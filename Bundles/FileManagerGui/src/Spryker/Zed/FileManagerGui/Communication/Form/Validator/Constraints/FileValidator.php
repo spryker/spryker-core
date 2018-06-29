@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\FileManagerGui\Communication\Form\Validator\Constraints;
 
+use Generated\Shared\Transfer\UploadedFileTransfer;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\FileValidator as SymfonyFileValidator;
@@ -21,13 +22,25 @@ class FileValidator extends SymfonyFileValidator
      */
     public function validate($uploadedFileTransfer, Constraint $constraint)
     {
-        $uploadedFile = new UploadedFile(
+        parent::validate($this->createSymfonyUploadedFileFromTransfer($uploadedFileTransfer), $constraint);
+    }
+
+    /**
+     * @param null|\Generated\Shared\Transfer\UploadedFileTransfer $uploadedFileTransfer
+     *
+     * @return null|\Symfony\Component\HttpFoundation\File\UploadedFile
+     */
+    protected function createSymfonyUploadedFileFromTransfer(?UploadedFileTransfer $uploadedFileTransfer = null)
+    {
+        if ($uploadedFileTransfer === null) {
+            return $uploadedFileTransfer;
+        }
+
+        return new UploadedFile(
             $uploadedFileTransfer->getRealPath(),
             $uploadedFileTransfer->getClientOriginalName(),
             $uploadedFileTransfer->getMimeType(),
             $uploadedFileTransfer->getSize()
         );
-
-        parent::validate($uploadedFile, $constraint);
     }
 }
