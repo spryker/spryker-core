@@ -56,18 +56,6 @@ class TaxQueryContainer extends AbstractQueryContainer implements TaxQueryContai
     /**
      * @api
      *
-     * @param string $name
-     *
-     * @return \Orm\Zed\Tax\Persistence\SpyTaxSetQuery
-     */
-    public function queryTaxSetByName(string $name)
-    {
-        return $this->getFactory()->createTaxSetQuery()->filterByName($name);
-    }
-
-    /**
-     * @api
-     *
      * @return \Orm\Zed\Tax\Persistence\SpyTaxSetQuery
      */
     public function queryAllTaxSets()

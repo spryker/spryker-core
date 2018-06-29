@@ -22,6 +22,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  * @method \Spryker\Zed\Tax\Business\TaxFacadeInterface getFacade()
  * @method \Spryker\Zed\Tax\Communication\TaxCommunicationFactory getFactory()
  * @method \Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Tax\Persistence\TaxRepositoryInterface getRepository()()
  */
 class TaxSetForm extends AbstractType
 {
@@ -56,6 +57,7 @@ class TaxSetForm extends AbstractType
                 'required' => true,
                 'constraints' => [
                     new NotBlank(),
+                    $this->createUniqueTaxSetNameConstraint(),
                 ],
             ]
         );
@@ -147,5 +149,21 @@ class TaxSetForm extends AbstractType
     public function getName()
     {
         return $this->getBlockPrefix();
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraint
+     */
+    protected function createUniqueTaxSetNameConstraint()
+    {
+        return new Callback([
+            'callback' => function ($name, ExecutionContextInterface $contextInterface) {
+                if (!$this->getRepository()->isTaxSetNameUnique($name)) {
+                    $contextInterface->addViolation('Tax Set with name "{{ name }}" already exists.', [
+                        '{{ name }}' => $name,
+                    ]);
+                }
+            },
+        ]);
     }
 }

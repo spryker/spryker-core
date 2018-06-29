@@ -15,8 +15,14 @@ use Propel\Runtime\Collection\Collection;
 use Spryker\Zed\Tax\Business\Model\Exception\DuplicateResourceException;
 use Spryker\Zed\Tax\Business\Model\Exception\MissingTaxRateException;
 use Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException;
+use Spryker\Zed\Tax\Dependency\Plugin\TaxChangePluginInterface;
 use Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface;
+use Spryker\Zed\Tax\Persistence\TaxRepositoryInterface;
 
+/**
+ * Class TaxWriter
+ * @package Spryker\Zed\Tax\Business\Model
+ */
 class TaxWriter implements TaxWriterInterface
 {
     /**
@@ -35,14 +41,22 @@ class TaxWriter implements TaxWriterInterface
     protected $taxChangePlugins;
 
     /**
+     * @var \Spryker\Zed\Tax\Persistence\TaxRepositoryInterface
+     */
+    private $taxRepository;
+
+    /**
      * @param \Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Tax\Persistence\TaxRepositoryInterface $taxRepository
      * @param \Spryker\Zed\Tax\Dependency\Plugin\TaxChangePluginInterface[] $taxChangePlugins
      */
     public function __construct(
         TaxQueryContainerInterface $queryContainer,
-        array $taxChangePlugins
+        TaxRepositoryInterface $taxRepository,
+        TaxChangePluginInterface ...$taxChangePlugins
     ) {
         $this->queryContainer = $queryContainer;
+        $this->taxRepository = $taxRepository;
         $this->taxChangePlugins = $taxChangePlugins;
     }
 
@@ -97,10 +111,11 @@ class TaxWriter implements TaxWriterInterface
      */
     public function createTaxSet(TaxSetTransfer $taxSetTransfer)
     {
-        $taxSetEntity = $this->queryContainer->queryTaxSetByName($taxSetTransfer->getName())->findOne();
-
-        if ($taxSetEntity !== null) {
-            throw new DuplicateResourceException();
+        if (!$this->taxRepository->isTaxSetNameUnique($taxSetTransfer->getName())) {
+            throw new DuplicateResourceException(sprintf(
+                'Tax Set with the name %s already exists.',
+                $taxSetTransfer->getName()
+            ));
         }
 
         $taxSetEntity = new SpyTaxSet();
@@ -123,8 +138,8 @@ class TaxWriter implements TaxWriterInterface
     /**
      * @param \Generated\Shared\Transfer\TaxSetTransfer $taxSetTransfer
      *
-     * @throws \Spryker\Zed\Tax\Business\Model\Exception\DuplicateResourceException
      * @throws \Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException
+     * @throws \Spryker\Zed\Tax\Business\Model\Exception\DuplicateResourceException
      *
      * @return int
      */
@@ -136,12 +151,11 @@ class TaxWriter implements TaxWriterInterface
             throw new ResourceNotFoundException();
         }
 
-        $tryAnotherTaxSets = $this->queryContainer->queryTaxSetByName($taxSetTransfer->getName())->find();
-
-        foreach ($tryAnotherTaxSets as $anotherTaxSet) {
-            if ($taxSetTransfer->getIdTaxSet() !== $anotherTaxSet->getIdTaxSet()) {
-                throw new DuplicateResourceException();
-            }
+        if (!$this->taxRepository->isTaxSetNameUnique($taxSetTransfer->getName(), $taxSetTransfer->getIdTaxSet())) {
+            throw new DuplicateResourceException(sprintf(
+                'Tax Set with the name %s already exists.',
+                $taxSetTransfer->getName()
+            ));
         }
 
         $taxSetEntity->setName($taxSetTransfer->getName())->setSpyTaxRates(new Collection());
