@@ -10,11 +10,13 @@
             '/product-packaging-unit-gui/delete',
             {
                 'id-product-packaging-unit-type': productPackagingUnitTypeTransfer.getIdProductPackagingUnitType(),
-                'redirect-url': url('/product-packaging-unit-gui/')
+                'redirect-url': url(
+                    '/product-packaging-unit-gui/edit/',
+                    {'id-product-packaging-unit-type': productPackagingUnitTypeTransfer.getIdProductPackagingUnitType()}
+                )
             }
         ),
-        'Delete' | trans,
-        {'class': allowDelete ? 'disabled' : '' }
+        'Delete' | trans
     ) }}
 {% endblock %}
 

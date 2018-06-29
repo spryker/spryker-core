@@ -184,7 +184,7 @@ class ProductPackagingUnitTypeTable extends AbstractTable
      */
     protected function createDeleteButton($idProductPackagingUnitType): string
     {
-        return $this->generateEditButton(
+        return $this->generateRemoveButton(
             Url::generate(
                 ProductPackagingUnitGuiConfig::URL_PRODUCT_PACKAGING_UNIT_TYPE_DELETE,
                 [

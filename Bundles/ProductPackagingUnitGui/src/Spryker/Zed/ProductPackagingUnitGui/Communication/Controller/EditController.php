@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductPackagingUnitGui\Communication\Controller;
 
-use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 use Spryker\Zed\ProductPackagingUnitGui\ProductPackagingUnitGuiConfig;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,7 +31,6 @@ class EditController extends AbstractProductPackagingUnitGuiController
             ->createProductPackagingUnitTypeDataProvider();
 
         $productPackagingUnitTypeTransfer = $productPackagingUnitTypeDataProvider->getData($idProductPackagingUnitType);
-        $allowDelete = $this->countProductPackagingUnitsByTypeId($productPackagingUnitTypeTransfer) > 0;
 
         $productPackagingUnitTypeForm = $this->getFactory()
             ->getProductPackagingUnitTypeForm(
@@ -49,20 +47,7 @@ class EditController extends AbstractProductPackagingUnitGuiController
             'availableLocales' => $availableLocales,
             'productPackagingUnitTypeForm' => $productPackagingUnitTypeForm->createView(),
             'productPackagingUnitTypeTransfer' => $productPackagingUnitTypeTransfer,
-            'allowDelete' => $allowDelete,
         ]);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
-     *
-     * @return int
-     */
-    protected function countProductPackagingUnitsByTypeId(ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer): int
-    {
-        return $this->getFactory()
-            ->getProductPackagingUnitFacade()
-            ->countProductPackagingUnitsByTypeId($productPackagingUnitTypeTransfer);
     }
 
     /**
