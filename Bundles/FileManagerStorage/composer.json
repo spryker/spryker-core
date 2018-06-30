@@ -10,7 +10,7 @@
     "spryker/locale": "^3.0.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/storage": "^3.0.0",
-    "spryker/synchronization": "0.2.1"
+    "spryker/synchronization": "^0.2.1"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
