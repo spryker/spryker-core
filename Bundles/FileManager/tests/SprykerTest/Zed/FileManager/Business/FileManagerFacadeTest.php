@@ -170,10 +170,10 @@ class FileManagerFacadeTest extends Unit
      */
     public function testRead()
     {
-        $fileManagerDataTransfer = $this->facade->findFileByIdFile(1);
+        $fileManagerDataTransfer = $this->facade->findFileByIdFile($this->tester->getIdFile());
         $this->assertEquals('first version of the file', $fileManagerDataTransfer->getContent());
         $this->assertEquals('customer.txt', $fileManagerDataTransfer->getFile()->getFileName());
-        $this->assertEquals(1, $fileManagerDataTransfer->getFile()->getIdFile());
+        $this->assertEquals($this->tester->getIdFile(), $fileManagerDataTransfer->getFile()->getIdFile());
         $this->assertEquals('customer_v1.txt', $fileManagerDataTransfer->getFileInfo()->getStorageFileName());
         $this->assertEquals('txt', $fileManagerDataTransfer->getFileInfo()->getExtension());
         $this->assertEquals('1', $fileManagerDataTransfer->getFileInfo()->getVersion());
@@ -186,7 +186,7 @@ class FileManagerFacadeTest extends Unit
      */
     public function testDelete()
     {
-        $this->assertTrue($this->facade->deleteFile(1));
+        $this->assertTrue($this->facade->deleteFile($this->tester->getIdFile()));
     }
 
     /**
@@ -194,7 +194,7 @@ class FileManagerFacadeTest extends Unit
      */
     public function testDeleteFileInfo()
     {
-        $this->assertTrue($this->facade->deleteFileInfo(1));
+        $this->assertTrue($this->facade->deleteFileInfo($this->tester->getIdFirstFileInfo()));
     }
 
     /**
@@ -222,7 +222,7 @@ class FileManagerFacadeTest extends Unit
         $fileManagerDataTransfer = $this->facade->saveFile($fileManagerDataTransfer);
         $file = SpyFileQuery::create()->findOneByFileName('newcustomer.txt');
 
-        $this->assertEquals(2, $fileManagerDataTransfer->getFile()->getIdFile());
+        $this->assertEquals($this->tester->getIdFile() + 1, $fileManagerDataTransfer->getFile()->getIdFile());
         $this->assertInstanceOf(SpyFile::class, $file);
     }
 
@@ -231,8 +231,8 @@ class FileManagerFacadeTest extends Unit
      */
     public function testRollback()
     {
-        $this->facade->rollbackFile(1);
-        $fileManagerDataTransfer = $this->facade->readLatestFileVersion(1);
+        $this->facade->rollbackFile($this->tester->getIdFirstFileInfo());
+        $fileManagerDataTransfer = $this->facade->readLatestFileVersion($this->tester->getIdFile());
         $this->assertEquals('first version of the file', $fileManagerDataTransfer->getContent());
         $this->assertEquals('customer_v1.txt', $fileManagerDataTransfer->getFileInfo()->getStorageFileName());
         $this->assertEquals('txt', $fileManagerDataTransfer->getFileInfo()->getExtension());
@@ -273,7 +273,11 @@ class FileManagerFacadeTest extends Unit
 
         $fileManagerDataTransfer = $this->facade->saveFile($fileManagerDataTransfer);
         $this->assertInternalType('int', $fileManagerDataTransfer->getFile()->getIdFile());
-        $this->assertFileExists($this->tester->getDocumentFullFileName($fileDirectoryId . '/2-v.1.txt'));
+        $this->assertFileExists(
+            $this->tester->getDocumentFullFileName(
+                $fileDirectoryId . DIRECTORY_SEPARATOR . $fileManagerDataTransfer->getFile()->getIdFile() . '-v.1.txt'
+            )
+        );
     }
 
     /**
@@ -304,9 +308,9 @@ class FileManagerFacadeTest extends Unit
         $this->assertEquals(1, $firstNode->getChildren()->count());
         $this->assertEquals(0, $secondNode->getChildren()->count());
         $this->assertEquals(0, $thirdNode->getChildren()->count());
-        $this->assertEquals(1, $firstNode->getFileDirectory()->getIdFileDirectory());
-        $this->assertEquals(3, $secondNode->getFileDirectory()->getIdFileDirectory());
-        $this->assertEquals(2, $thirdNode->getFileDirectory()->getIdFileDirectory());
+        $this->assertEquals($this->tester->getIdFirstFileDirectory(), $firstNode->getFileDirectory()->getIdFileDirectory());
+        $this->assertEquals($this->tester->getIdSubFileDirectory(), $secondNode->getFileDirectory()->getIdFileDirectory());
+        $this->assertEquals($this->tester->getIdSecondFileDirectory(), $thirdNode->getFileDirectory()->getIdFileDirectory());
 
         $firstNode = $tree->getNodes()->getArrayCopy()[0];
         $subNode = $tree->getNodes()->getArrayCopy()[0]->getChildren()[0];
@@ -327,9 +331,9 @@ class FileManagerFacadeTest extends Unit
         $this->assertEquals(1, $firstNode->getChildren()->count());
         $this->assertEquals(1, $secondNode->getChildren()->count());
         $this->assertEquals(0, $thirdNode->getChildren()->count());
-        $this->assertEquals(1, $firstNode->getFileDirectory()->getIdFileDirectory());
-        $this->assertEquals(3, $secondNode->getFileDirectory()->getIdFileDirectory());
-        $this->assertEquals(2, $thirdNode->getFileDirectory()->getIdFileDirectory());
+        $this->assertEquals($this->tester->getIdFirstFileDirectory(), $firstNode->getFileDirectory()->getIdFileDirectory());
+        $this->assertEquals($this->tester->getIdSubFileDirectory(), $secondNode->getFileDirectory()->getIdFileDirectory());
+        $this->assertEquals($this->tester->getIdSecondFileDirectory(), $thirdNode->getFileDirectory()->getIdFileDirectory());
     }
 
     /**
@@ -337,7 +341,9 @@ class FileManagerFacadeTest extends Unit
      */
     public function testDeleteFileDirectory()
     {
-        $this->facade->deleteFileDirectory(1);
+        $this->assertTrue(
+            $this->facade->deleteFileDirectory($this->tester->getIdFirstFileDirectory())
+        );
     }
 
     /**
@@ -345,7 +351,7 @@ class FileManagerFacadeTest extends Unit
      */
     public function testSaveMimeType()
     {
-        $mimeTypeTransfer = $this->findMimeTypeById(1);
+        $mimeTypeTransfer = $this->findMimeTypeById($this->tester->getIdMimeType());
         $mimeTypeTransfer->setName('image/jpeg');
         $mimeTypeTransfer->setComment('test');
         $mimeTypeTransfer->setIsAllowed(false);
@@ -355,7 +361,7 @@ class FileManagerFacadeTest extends Unit
         $this->assertInstanceOf(MimeTypeResponseTransfer::class, $mimeTypeResponseTransfer);
         $this->assertTrue($mimeTypeResponseTransfer->getIsSuccessful());
         $this->assertEquals($mimeTypeTransfer, $mimeTypeResponseTransfer->getMimeType());
-        $this->assertEquals($mimeTypeTransfer, $this->findMimeTypeById(1));
+        $this->assertEquals($mimeTypeTransfer, $this->findMimeTypeById($this->tester->getIdMimeType()));
     }
 
     /**
@@ -364,7 +370,7 @@ class FileManagerFacadeTest extends Unit
     public function testUpdateMimeTypeSettings()
     {
         $mimeTypeCollectionTransfer = new MimeTypeCollectionTransfer();
-        $mimeTypeTransfer = $this->findMimeTypeById(1);
+        $mimeTypeTransfer = $this->findMimeTypeById($this->tester->getIdMimeType());
 
         $this->assertTrue($mimeTypeTransfer->getIsAllowed());
 
@@ -373,7 +379,7 @@ class FileManagerFacadeTest extends Unit
 
         $this->facade->updateMimeTypeSettings($mimeTypeCollectionTransfer);
 
-        $mimeTypeTransfer = $this->findMimeTypeById(1);
+        $mimeTypeTransfer = $this->findMimeTypeById($this->tester->getIdMimeType());
         $this->assertFalse($mimeTypeTransfer->getIsAllowed());
     }
 
@@ -382,7 +388,7 @@ class FileManagerFacadeTest extends Unit
      */
     public function testDeleteMimeType()
     {
-        $mimeTypeTransfer = $this->findMimeTypeById(1);
+        $mimeTypeTransfer = $this->findMimeTypeById($this->tester->getIdMimeType());
 
         $mimeTypeResponseTransfer = $this->facade->deleteMimeType($mimeTypeTransfer);
 

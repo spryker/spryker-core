@@ -11,9 +11,11 @@ use Codeception\Actor;
 use Codeception\Configuration;
 use Orm\Zed\FileManager\Persistence\SpyFile;
 use Orm\Zed\FileManager\Persistence\SpyFileDirectory;
+use Orm\Zed\FileManager\Persistence\SpyFileDirectoryQuery;
 use Orm\Zed\FileManager\Persistence\SpyFileInfo;
+use Orm\Zed\FileManager\Persistence\SpyFileQuery;
 use Orm\Zed\FileManager\Persistence\SpyMimeType;
-use Propel\Runtime\Propel;
+use Orm\Zed\FileManager\Persistence\SpyMimeTypeQuery;
 
 /**
  * Inherited Methods
@@ -40,6 +42,41 @@ class FileManagerBusinessTester extends Actor
     protected const ROOT_DIRECTORY = 'fileSystemRoot/uploads/';
 
     /**
+     * @var int
+     */
+    protected $idFile;
+
+    /**
+     * @var int
+     */
+    protected $idFirstFileInfo;
+
+    /**
+     * @var int
+     */
+    protected $idSecondFileInfo;
+
+    /**
+     * @var int
+     */
+    protected $idMimeType;
+
+    /**
+     * @var int
+     */
+    protected $idFirstFileDirectory;
+
+    /**
+     * @var int
+     */
+    protected $idSecondFileDirectory;
+
+    /**
+     * @var int
+     */
+    protected $idSubFileDirectory;
+
+    /**
      * @return void
      */
     public function insertDbRecords()
@@ -57,13 +94,9 @@ class FileManagerBusinessTester extends Actor
      */
     public function resetDb()
     {
-        Propel::getConnection()->exec('TRUNCATE TABLE spy_file CASCADE;');
-        Propel::getConnection()->exec('TRUNCATE TABLE spy_mime_type CASCADE;');
-        Propel::getConnection()->exec('TRUNCATE TABLE spy_file_directory CASCADE;');
-        Propel::getConnection()->exec('ALTER SEQUENCE spy_file_pk_seq RESTART WITH 1;');
-        Propel::getConnection()->exec('ALTER SEQUENCE spy_mime_type_pk_seq RESTART WITH 1;');
-        Propel::getConnection()->exec('ALTER SEQUENCE spy_file_info_pk_seq RESTART WITH 1;');
-        Propel::getConnection()->exec('ALTER SEQUENCE spy_file_directory_pk_seq RESTART WITH 1;');
+        SpyFileQuery::create()->deleteAll();
+        SpyMimeTypeQuery::create()->deleteAll();
+        SpyFileDirectoryQuery::create()->deleteAll();
     }
 
     /**
@@ -85,6 +118,62 @@ class FileManagerBusinessTester extends Actor
     }
 
     /**
+     * @return int
+     */
+    public function getIdFile()
+    {
+        return $this->idFile;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIdFirstFileInfo()
+    {
+        return $this->idFirstFileInfo;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIdSecondFileInfo()
+    {
+        return $this->idSecondFileInfo;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIdMimeType()
+    {
+        return $this->idMimeType;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIdFirstFileDirectory()
+    {
+        return $this->idFirstFileDirectory;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIdSecondFileDirectory()
+    {
+        return $this->idSecondFileDirectory;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIdSubFileDirectory()
+    {
+        return $this->idSubFileDirectory;
+    }
+
+    /**
      * @return \Orm\Zed\FileManager\Persistence\SpyFile
      */
     protected function insertFile()
@@ -93,6 +182,8 @@ class FileManagerBusinessTester extends Actor
         $file->setFileName('customer.txt');
         $file->save();
         $file->reload();
+
+        $this->idFile = $file->getIdFile();
 
         return $file;
     }
@@ -107,6 +198,8 @@ class FileManagerBusinessTester extends Actor
         $mimeType->setComment('comment');
         $mimeType->setIsAllowed(true);
         $mimeType->save();
+
+        $this->idMimeType = $mimeType->getIdMimeType();
     }
 
     /**
@@ -128,6 +221,8 @@ class FileManagerBusinessTester extends Actor
         $fileInfo->setUpdatedAt('2017-06-06 00:00:00');
         $fileInfo->save();
 
+        $this->idFirstFileInfo = $fileInfo->getIdFileInfo();
+
         $fileInfo = new SpyFileInfo();
         $fileInfo->setFile($file);
         $fileInfo->setSize(10);
@@ -139,6 +234,8 @@ class FileManagerBusinessTester extends Actor
         $fileInfo->setCreatedAt('2017-07-07 00:00:00');
         $fileInfo->setUpdatedAt('2017-07-07 00:00:00');
         $fileInfo->save();
+
+        $this->idSecondFileInfo = $fileInfo->getIdFileInfo();
     }
 
     /**
@@ -152,17 +249,23 @@ class FileManagerBusinessTester extends Actor
         $fileDirectory->setIsActive(true);
         $fileDirectory->save();
 
-        $fileDirectory2 = new SpyFileDirectory();
-        $fileDirectory2->setName('second_directory');
-        $fileDirectory2->setPosition(2);
-        $fileDirectory2->setIsActive(true);
-        $fileDirectory2->save();
+        $this->idFirstFileDirectory = $fileDirectory->getIdFileDirectory();
 
-        $fileSubDirectory = new SpyFileDirectory();
-        $fileSubDirectory->setName('subdirectory');
-        $fileSubDirectory->setIsActive(true);
-        $fileSubDirectory->setPosition(1);
-        $fileSubDirectory->setParentFileDirectory($fileDirectory);
-        $fileSubDirectory->save();
+        $subFileDirectory = new SpyFileDirectory();
+        $subFileDirectory->setName('subdirectory');
+        $subFileDirectory->setIsActive(true);
+        $subFileDirectory->setPosition(1);
+        $subFileDirectory->setParentFileDirectory($fileDirectory);
+        $subFileDirectory->save();
+
+        $this->idSubFileDirectory = $subFileDirectory->getIdFileDirectory();
+
+        $secondFileDirectory = new SpyFileDirectory();
+        $secondFileDirectory->setName('second_directory');
+        $secondFileDirectory->setPosition(2);
+        $secondFileDirectory->setIsActive(true);
+        $secondFileDirectory->save();
+
+        $this->idSecondFileDirectory = $secondFileDirectory->getIdFileDirectory();
     }
 }
