@@ -7,14 +7,11 @@
 
 namespace Spryker\Zed\ProductImageStorage\Communication\Plugin\Event;
 
-use Orm\Zed\ProductGroup\Persistence\Map\SpyProductAbstractGroupTableMap;
 use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetTableMap;
-use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageTableMap;
-use Orm\Zed\ProductImageStorage\Persistence\Map\SpyProductConcreteImageStorageTableMap;
+use Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery;
 use Spryker\Shared\ProductImageStorage\ProductImageStorageConfig;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ProductGroup\Dependency\ProductGroupEvents;
 use Spryker\Zed\ProductImage\Dependency\ProductImageEvents;
 
 /**
@@ -32,7 +29,7 @@ class ProductConcreteImageEventResourcePlugin extends AbstractPlugin implements 
      *
      * @return string
      */
-    public function getResourceName()
+    public function getResourceName(): string
     {
         return ProductImageStorageConfig::PRODUCT_CONCRETE_IMAGE_RESOURCE_NAME;
     }
@@ -44,9 +41,9 @@ class ProductConcreteImageEventResourcePlugin extends AbstractPlugin implements 
      *
      * @api
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
      */
-    public function queryData()
+    public function queryData(): SpyProductImageSetQuery
     {
         return $this->getQueryContainer()->queryProductImages();
     }
@@ -59,7 +56,7 @@ class ProductConcreteImageEventResourcePlugin extends AbstractPlugin implements 
      *
      * @return string
      */
-    public function getEventName()
+    public function getEventName(): string
     {
         return ProductImageEvents::PRODUCT_IMAGE_PRODUCT_CONCRETE_PUBLISH;
     }
@@ -72,7 +69,7 @@ class ProductConcreteImageEventResourcePlugin extends AbstractPlugin implements 
      *
      * @return string
      */
-    public function getIdColumnName()
+    public function getIdColumnName(): string
     {
         return SpyProductImageSetTableMap::COL_FK_PRODUCT;
     }

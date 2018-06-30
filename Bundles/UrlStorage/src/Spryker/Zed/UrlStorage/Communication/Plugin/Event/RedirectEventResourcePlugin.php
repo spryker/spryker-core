@@ -8,6 +8,7 @@
 namespace Spryker\Zed\UrlStorage\Communication\Plugin\Event;
 
 use Orm\Zed\Url\Persistence\Map\SpyUrlRedirectTableMap;
+use Orm\Zed\Url\Persistence\SpyUrlRedirectQuery;
 use Spryker\Shared\UrlStorage\UrlStorageConstants;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -28,7 +29,7 @@ class RedirectEventResourcePlugin extends AbstractPlugin implements EventResourc
      *
      * @return string
      */
-    public function getResourceName()
+    public function getResourceName(): string
     {
         return UrlStorageConstants::REDIRECT_RESOURCE_NAME;
     }
@@ -42,7 +43,7 @@ class RedirectEventResourcePlugin extends AbstractPlugin implements EventResourc
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrlRedirectQuery
      */
-    public function queryData()
+    public function queryData(): SpyUrlRedirectQuery
     {
         return $this->getQueryContainer()->queryAllRedirects();
     }
@@ -55,7 +56,7 @@ class RedirectEventResourcePlugin extends AbstractPlugin implements EventResourc
      *
      * @return string
      */
-    public function getEventName()
+    public function getEventName(): string
     {
         return UrlEvents::ENTITY_SPY_URL_REDIRECT_CREATE;
     }
@@ -68,7 +69,7 @@ class RedirectEventResourcePlugin extends AbstractPlugin implements EventResourc
      *
      * @return string
      */
-    public function getIdColumnName()
+    public function getIdColumnName(): string
     {
         return SpyUrlRedirectTableMap::COL_ID_URL_REDIRECT;
     }

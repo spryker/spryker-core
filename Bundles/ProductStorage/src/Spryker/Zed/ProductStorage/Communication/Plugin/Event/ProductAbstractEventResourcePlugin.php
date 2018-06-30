@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductStorage\Communication\Plugin\Event;
 
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Shared\ProductStorage\ProductStorageConstants;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -28,7 +29,7 @@ class ProductAbstractEventResourcePlugin extends AbstractPlugin implements Event
      *
      * @return string
      */
-    public function getResourceName()
+    public function getResourceName(): string
     {
         return ProductStorageConstants::PRODUCT_ABSTRACT_RESOURCE_NAME;
     }
@@ -42,7 +43,7 @@ class ProductAbstractEventResourcePlugin extends AbstractPlugin implements Event
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
-    public function queryData()
+    public function queryData(): SpyProductQuery
     {
         return $this->getQueryContainer()->queryProducts();
     }
@@ -55,7 +56,7 @@ class ProductAbstractEventResourcePlugin extends AbstractPlugin implements Event
      *
      * @return string
      */
-    public function getEventName()
+    public function getEventName(): string
     {
         return ProductEvents::PRODUCT_ABSTRACT_PUBLISH;
     }
@@ -68,7 +69,7 @@ class ProductAbstractEventResourcePlugin extends AbstractPlugin implements Event
      *
      * @return string
      */
-    public function getIdColumnName()
+    public function getIdColumnName(): string
     {
         return SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT;
     }

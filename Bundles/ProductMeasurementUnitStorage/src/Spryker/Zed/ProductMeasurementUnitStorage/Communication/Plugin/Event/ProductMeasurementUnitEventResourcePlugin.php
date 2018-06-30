@@ -28,7 +28,7 @@ class ProductMeasurementUnitEventResourcePlugin extends AbstractPlugin implement
      *
      * @return string
      */
-    public function getResourceName()
+    public function getResourceName(): string
     {
         return ProductMeasurementUnitStorageConfig::PRODUCT_MEASUREMENT_UNIT_RESOURCE_NAME;
     }
@@ -40,9 +40,9 @@ class ProductMeasurementUnitEventResourcePlugin extends AbstractPlugin implement
      *
      * @api
      *
-     * @return array|\Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
      */
-    public function getData()
+    public function getData(): array
     {
         return $this->getFacade()->findAllProductMeasurementUnitTransfers();
     }
@@ -55,7 +55,7 @@ class ProductMeasurementUnitEventResourcePlugin extends AbstractPlugin implement
      *
      * @return string
      */
-    public function getEventName()
+    public function getEventName(): string
     {
         return ProductMeasurementUnitEvents::PRODUCT_MEASUREMENT_UNIT_PUBLISH;
     }
@@ -68,7 +68,7 @@ class ProductMeasurementUnitEventResourcePlugin extends AbstractPlugin implement
      *
      * @return string
      */
-    public function getIdColumnName()
+    public function getIdColumnName(): string
     {
         return SpyProductMeasurementUnitTableMap::COL_ID_PRODUCT_MEASUREMENT_UNIT;
     }

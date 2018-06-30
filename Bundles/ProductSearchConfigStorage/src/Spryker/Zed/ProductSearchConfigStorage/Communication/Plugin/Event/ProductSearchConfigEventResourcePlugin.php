@@ -28,7 +28,7 @@ class ProductSearchConfigEventResourcePlugin extends AbstractPlugin implements E
      *
      * @return string
      */
-    public function getResourceName()
+    public function getResourceName(): string
     {
         return ProductSearchConfigStorageConfig::PRODUCT_SEARCH_CONFIG_EXTENSION_RESOURCE_NAME;
     }
@@ -40,7 +40,7 @@ class ProductSearchConfigEventResourcePlugin extends AbstractPlugin implements E
      *
      * @api
      *
-     * @return \Orm\Zed\ProductReview\Persistence\SpyProductReviewQuery
+     * @return null
      */
     public function queryData()
     {
@@ -55,7 +55,7 @@ class ProductSearchConfigEventResourcePlugin extends AbstractPlugin implements E
      *
      * @return string
      */
-    public function getEventName()
+    public function getEventName(): string
     {
         return ProductSearchEvents::PRODUCT_SEARCH_CONFIG_PUBLISH;
     }
@@ -68,7 +68,7 @@ class ProductSearchConfigEventResourcePlugin extends AbstractPlugin implements E
      *
      * @return string
      */
-    public function getIdColumnName()
+    public function getIdColumnName(): string
     {
         return SpyProductReviewTableMap::COL_FK_PRODUCT_ABSTRACT;
     }

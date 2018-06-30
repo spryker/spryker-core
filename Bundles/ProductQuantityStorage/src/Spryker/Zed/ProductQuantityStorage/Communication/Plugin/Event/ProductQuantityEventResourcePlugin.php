@@ -28,7 +28,7 @@ class ProductQuantityEventResourcePlugin extends AbstractPlugin implements Event
      *
      * @return string
      */
-    public function getResourceName()
+    public function getResourceName(): string
     {
         return ProductQuantityStorageConfig::PRODUCT_QUANTITY_RESOURCE_NAME;
     }
@@ -42,7 +42,7 @@ class ProductQuantityEventResourcePlugin extends AbstractPlugin implements Event
      *
      * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
      */
-    public function getData()
+    public function getData(): array
     {
         return $this->getFacade()->findProductQuantityTransfers();
     }
@@ -55,7 +55,7 @@ class ProductQuantityEventResourcePlugin extends AbstractPlugin implements Event
      *
      * @return string
      */
-    public function getEventName()
+    public function getEventName(): string
     {
         return ProductQuantityEvents::PRODUCT_QUANTITY_PUBLISH;
     }
@@ -68,7 +68,7 @@ class ProductQuantityEventResourcePlugin extends AbstractPlugin implements Event
      *
      * @return string
      */
-    public function getIdColumnName()
+    public function getIdColumnName(): string
     {
         return SpyProductQuantityTableMap::COL_ID_PRODUCT_QUANTITY;
     }

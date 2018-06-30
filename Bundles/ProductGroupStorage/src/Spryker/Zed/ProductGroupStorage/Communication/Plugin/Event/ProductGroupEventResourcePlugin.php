@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductGroupStorage\Communication\Plugin\Event;
 
 use Orm\Zed\ProductGroup\Persistence\Map\SpyProductAbstractGroupTableMap;
+use Orm\Zed\ProductGroup\Persistence\SpyProductAbstractGroupQuery;
 use Spryker\Shared\ProductGroupStorage\ProductGroupStorageConstants;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -28,7 +29,7 @@ class ProductGroupEventResourcePlugin extends AbstractPlugin implements EventRes
      *
      * @return string
      */
-    public function getResourceName()
+    public function getResourceName(): string
     {
         return ProductGroupStorageConstants::PRODUCT_GROUP_RESOURCE_NAME;
     }
@@ -40,9 +41,9 @@ class ProductGroupEventResourcePlugin extends AbstractPlugin implements EventRes
      *
      * @api
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\ProductGroup\Persistence\SpyProductAbstractGroupQuery
      */
-    public function queryData()
+    public function queryData(): SpyProductAbstractGroupQuery
     {
         return $this->getQueryContainer()->queryProductAbstractGroup();
     }
@@ -55,7 +56,7 @@ class ProductGroupEventResourcePlugin extends AbstractPlugin implements EventRes
      *
      * @return string
      */
-    public function getEventName()
+    public function getEventName(): string
     {
         return ProductGroupEvents::PRODUCT_GROUP_PUBLISH;
     }
@@ -68,7 +69,7 @@ class ProductGroupEventResourcePlugin extends AbstractPlugin implements EventRes
      *
      * @return string
      */
-    public function getIdColumnName()
+    public function getIdColumnName(): string
     {
         return SpyProductAbstractGroupTableMap::COL_FK_PRODUCT_ABSTRACT;
     }

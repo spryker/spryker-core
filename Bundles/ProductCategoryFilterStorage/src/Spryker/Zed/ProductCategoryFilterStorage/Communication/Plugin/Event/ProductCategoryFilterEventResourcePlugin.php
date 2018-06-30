@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductCategoryFilterStorage\Communication\Plugin\Event;
 
 use Orm\Zed\ProductCategoryFilter\Persistence\Map\SpyProductCategoryFilterTableMap;
+use Orm\Zed\ProductCategoryFilter\Persistence\SpyProductCategoryFilterQuery;
 use Spryker\Shared\ProductCategoryFilterStorage\ProductCategoryFilterStorageConfig;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -28,7 +29,7 @@ class ProductCategoryFilterEventResourcePlugin extends AbstractPlugin implements
      *
      * @return string
      */
-    public function getResourceName()
+    public function getResourceName(): string
     {
         return ProductCategoryFilterStorageConfig::PRODUCT_CATEGORY_FILTER_RESOURCE_NAME;
     }
@@ -40,9 +41,9 @@ class ProductCategoryFilterEventResourcePlugin extends AbstractPlugin implements
      *
      * @api
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\ProductCategoryFilter\Persistence\SpyProductCategoryFilterQuery
      */
-    public function queryData()
+    public function queryData(): SpyProductCategoryFilterQuery
     {
         return $this->getQueryContainer()->queryProductCategoryFilter();
     }
@@ -55,7 +56,7 @@ class ProductCategoryFilterEventResourcePlugin extends AbstractPlugin implements
      *
      * @return string
      */
-    public function getEventName()
+    public function getEventName(): string
     {
         return ProductCategoryFilterEvents::ENTITY_SPY_PRODUCT_CATEGORY_FILTER_CREATE;
     }
@@ -68,7 +69,7 @@ class ProductCategoryFilterEventResourcePlugin extends AbstractPlugin implements
      *
      * @return string
      */
-    public function getIdColumnName()
+    public function getIdColumnName(): string
     {
         return SpyProductCategoryFilterTableMap::COL_ID_PRODUCT_CATEGORY_FILTER;
     }

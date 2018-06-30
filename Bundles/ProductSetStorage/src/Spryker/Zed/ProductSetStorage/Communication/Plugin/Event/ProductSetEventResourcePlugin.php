@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ProductSetStorage\Communication\Plugin\Event;
 
-use Orm\Zed\ProductReview\Persistence\Map\SpyProductReviewTableMap;
 use Orm\Zed\ProductSet\Persistence\Map\SpyProductSetTableMap;
+use Orm\Zed\ProductSet\Persistence\SpyProductSetQuery;
 use Spryker\Shared\ProductSetStorage\ProductSetStorageConstants;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -29,7 +29,7 @@ class ProductSetEventResourcePlugin extends AbstractPlugin implements EventResou
      *
      * @return string
      */
-    public function getResourceName()
+    public function getResourceName(): string
     {
         return ProductSetStorageConstants::PRODUCT_SET_RESOURCE_NAME;
     }
@@ -43,7 +43,7 @@ class ProductSetEventResourcePlugin extends AbstractPlugin implements EventResou
      *
      * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery
      */
-    public function queryData()
+    public function queryData(): SpyProductSetQuery
     {
         return $this->getQueryContainer()->queryProductSet();
     }
@@ -56,7 +56,7 @@ class ProductSetEventResourcePlugin extends AbstractPlugin implements EventResou
      *
      * @return string
      */
-    public function getEventName()
+    public function getEventName(): string
     {
         return ProductSetEvents::PRODUCT_SET_PUBLISH;
     }
@@ -69,7 +69,7 @@ class ProductSetEventResourcePlugin extends AbstractPlugin implements EventResou
      *
      * @return string
      */
-    public function getIdColumnName()
+    public function getIdColumnName(): string
     {
         return SpyProductSetTableMap::COL_ID_PRODUCT_SET;
     }

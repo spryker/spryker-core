@@ -8,11 +8,9 @@
 namespace Spryker\Zed\CmsBlockStorage\Communication\Plugin\Event;
 
 use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTableMap;
-use Orm\Zed\CmsBlockProductConnector\Persistence\Map\SpyCmsBlockProductConnectorTableMap;
-use Orm\Zed\CmsBlockStorage\Persistence\Map\SpyCmsBlockStorageTableMap;
+use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery;
 use Spryker\Shared\CmsBlockStorage\CmsBlockStorageConstants;
 use Spryker\Zed\CmsBlock\Dependency\CmsBlockEvents;
-use Spryker\Zed\CmsBlockProductConnector\Dependency\CmsBlockProductConnectorEvents;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -31,7 +29,7 @@ class CmsBlockEventResourcePlugin extends AbstractPlugin implements EventResourc
      *
      * @return string
      */
-    public function getResourceName()
+    public function getResourceName(): string
     {
         return CmsBlockStorageConstants::CMS_BLOCK_RESOURCE_NAME;
     }
@@ -43,9 +41,9 @@ class CmsBlockEventResourcePlugin extends AbstractPlugin implements EventResourc
      *
      * @api
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
      */
-    public function queryData()
+    public function queryData(): SpyCmsBlockQuery
     {
         return $this->getQueryContainer()->queryCmsBlock();
     }
@@ -58,7 +56,7 @@ class CmsBlockEventResourcePlugin extends AbstractPlugin implements EventResourc
      *
      * @return string
      */
-    public function getEventName()
+    public function getEventName(): string
     {
         return CmsBlockEvents::CMS_BLOCK_PUBLISH;
     }
@@ -71,7 +69,7 @@ class CmsBlockEventResourcePlugin extends AbstractPlugin implements EventResourc
      *
      * @return string
      */
-    public function getIdColumnName()
+    public function getIdColumnName(): string
     {
         return SpyCmsBlockTableMap::COL_ID_CMS_BLOCK;
     }

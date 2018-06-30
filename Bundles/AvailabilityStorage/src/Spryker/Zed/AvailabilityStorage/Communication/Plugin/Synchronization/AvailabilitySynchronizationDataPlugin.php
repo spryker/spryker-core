@@ -26,7 +26,7 @@ class AvailabilitySynchronizationDataPlugin extends AbstractPlugin implements Sy
      *
      * @return string
      */
-    public function getResourceName()
+    public function getResourceName(): string
     {
         return AvailabilityStorageConstants::AVAILABILITY_RESOURCE_NAME;
     }

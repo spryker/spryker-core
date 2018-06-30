@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CategoryPageSearch\Communication\Plugin\Event;
 
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
+use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Spryker\Shared\CategoryPageSearch\CategoryPageSearchConstants;
 use Spryker\Zed\Category\Dependency\CategoryEvents;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
@@ -28,7 +29,7 @@ class CategoryPageEventResourcePlugin extends AbstractPlugin implements EventRes
      *
      * @return string
      */
-    public function getResourceName()
+    public function getResourceName(): string
     {
         return CategoryPageSearchConstants::CATEGORY_NODE_RESOURCE_NAME;
     }
@@ -40,9 +41,9 @@ class CategoryPageEventResourcePlugin extends AbstractPlugin implements EventRes
      *
      * @api
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
-    public function queryData()
+    public function queryData(): SpyCategoryNodeQuery
     {
         return $this->getQueryContainer()->queryAllCategoryNodes();
     }
@@ -55,7 +56,7 @@ class CategoryPageEventResourcePlugin extends AbstractPlugin implements EventRes
      *
      * @return string
      */
-    public function getEventName()
+    public function getEventName(): string
     {
         return CategoryEvents::CATEGORY_NODE_PUBLISH;
     }
@@ -68,7 +69,7 @@ class CategoryPageEventResourcePlugin extends AbstractPlugin implements EventRes
      *
      * @return string
      */
-    public function getIdColumnName()
+    public function getIdColumnName(): string
     {
         return SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE;
     }

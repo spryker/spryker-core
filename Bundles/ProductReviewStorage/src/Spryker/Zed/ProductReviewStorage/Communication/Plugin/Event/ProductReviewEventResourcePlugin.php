@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductReviewStorage\Communication\Plugin\Event;
 
 use Orm\Zed\ProductReview\Persistence\Map\SpyProductReviewTableMap;
+use Orm\Zed\ProductReview\Persistence\SpyProductReviewQuery;
 use Spryker\Shared\ProductReviewStorage\ProductReviewStorageConfig;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -28,7 +29,7 @@ class ProductReviewEventResourcePlugin extends AbstractPlugin implements EventRe
      *
      * @return string
      */
-    public function getResourceName()
+    public function getResourceName(): string
     {
         return ProductReviewStorageConfig::PRODUCT_ABSTRACT_REVIEW_RESOURCE_NAME;
     }
@@ -42,7 +43,7 @@ class ProductReviewEventResourcePlugin extends AbstractPlugin implements EventRe
      *
      * @return \Orm\Zed\ProductReview\Persistence\SpyProductReviewQuery
      */
-    public function queryData()
+    public function queryData(): SpyProductReviewQuery
     {
         return $this->getQueryContainer()->queryProductReviews();
     }
@@ -55,7 +56,7 @@ class ProductReviewEventResourcePlugin extends AbstractPlugin implements EventRe
      *
      * @return string
      */
-    public function getEventName()
+    public function getEventName(): string
     {
         return ProductReviewEvents::PRODUCT_ABSTRACT_REVIEW_PUBLISH;
     }
@@ -68,7 +69,7 @@ class ProductReviewEventResourcePlugin extends AbstractPlugin implements EventRe
      *
      * @return string
      */
-    public function getIdColumnName()
+    public function getIdColumnName(): string
     {
         return SpyProductReviewTableMap::COL_FK_PRODUCT_ABSTRACT;
     }

@@ -7,12 +7,11 @@
 
 namespace Spryker\Zed\PriceProductStorage\Communication\Plugin\Event;
 
-use Orm\Zed\Navigation\Persistence\Map\SpyNavigationTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Shared\PriceProductStorage\PriceProductStorageConstants;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Navigation\Dependency\NavigationEvents;
 use Spryker\Zed\PriceProduct\Dependency\PriceProductEvents;
 
 /**
@@ -30,7 +29,7 @@ class PriceProductConcreteEventResourcePlugin extends AbstractPlugin implements 
      *
      * @return string
      */
-    public function getResourceName()
+    public function getResourceName(): string
     {
         return PriceProductStorageConstants::PRICE_CONCRETE_RESOURCE_NAME;
     }
@@ -42,9 +41,9 @@ class PriceProductConcreteEventResourcePlugin extends AbstractPlugin implements 
      *
      * @api
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
-    public function queryData()
+    public function queryData(): SpyProductQuery
     {
         return $this->getQueryContainer()->queryProduct();
     }
@@ -57,7 +56,7 @@ class PriceProductConcreteEventResourcePlugin extends AbstractPlugin implements 
      *
      * @return string
      */
-    public function getEventName()
+    public function getEventName(): string
     {
         return PriceProductEvents::PRICE_CONCRETE_PUBLISH;
     }
@@ -70,7 +69,7 @@ class PriceProductConcreteEventResourcePlugin extends AbstractPlugin implements 
      *
      * @return string
      */
-    public function getIdColumnName()
+    public function getIdColumnName(): string
     {
         return SpyProductTableMap::COL_ID_PRODUCT;
     }

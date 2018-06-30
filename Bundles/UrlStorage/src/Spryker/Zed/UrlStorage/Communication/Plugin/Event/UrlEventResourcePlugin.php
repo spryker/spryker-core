@@ -8,6 +8,7 @@
 namespace Spryker\Zed\UrlStorage\Communication\Plugin\Event;
 
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
+use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Spryker\Shared\UrlStorage\UrlStorageConstants;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -28,7 +29,7 @@ class UrlEventResourcePlugin extends AbstractPlugin implements EventResourceQuer
      *
      * @return string
      */
-    public function getResourceName()
+    public function getResourceName(): string
     {
         return UrlStorageConstants::URL_RESOURCE_NAME;
     }
@@ -42,7 +43,7 @@ class UrlEventResourcePlugin extends AbstractPlugin implements EventResourceQuer
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
-    public function queryData()
+    public function queryData(): SpyUrlQuery
     {
         return $this->getQueryContainer()->queryAllUrls();
     }
@@ -55,7 +56,7 @@ class UrlEventResourcePlugin extends AbstractPlugin implements EventResourceQuer
      *
      * @return string
      */
-    public function getEventName()
+    public function getEventName(): string
     {
         return UrlEvents::URL_PUBLISH;
     }
@@ -68,7 +69,7 @@ class UrlEventResourcePlugin extends AbstractPlugin implements EventResourceQuer
      *
      * @return string
      */
-    public function getIdColumnName()
+    public function getIdColumnName(): string
     {
         return SpyUrlTableMap::COL_ID_URL;
     }

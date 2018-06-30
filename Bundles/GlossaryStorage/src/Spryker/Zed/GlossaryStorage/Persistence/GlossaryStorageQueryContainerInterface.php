@@ -30,7 +30,7 @@ interface GlossaryStorageQueryContainerInterface
     /**
      * @api
      *
-     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
      */
     public function queryGlossaryKeys();
 }

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\NavigationStorage\Communication\Plugin\Event;
 
 use Orm\Zed\Navigation\Persistence\Map\SpyNavigationTableMap;
+use Orm\Zed\Navigation\Persistence\SpyNavigationQuery;
 use Spryker\Shared\NavigationStorage\NavigationStorageConstants;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -28,7 +29,7 @@ class NavigationEventResourcePlugin extends AbstractPlugin implements EventResou
      *
      * @return string
      */
-    public function getResourceName()
+    public function getResourceName(): string
     {
         return NavigationStorageConstants::RESOURCE_NAME;
     }
@@ -40,9 +41,9 @@ class NavigationEventResourcePlugin extends AbstractPlugin implements EventResou
      *
      * @api
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\Navigation\Persistence\SpyNavigationQuery
      */
-    public function queryData()
+    public function queryData(): SpyNavigationQuery
     {
         return $this->getQueryContainer()->queryNavigation();
     }
@@ -55,7 +56,7 @@ class NavigationEventResourcePlugin extends AbstractPlugin implements EventResou
      *
      * @return string
      */
-    public function getEventName()
+    public function getEventName(): string
     {
         return NavigationEvents::NAVIGATION_KEY_PUBLISH;
     }
@@ -68,7 +69,7 @@ class NavigationEventResourcePlugin extends AbstractPlugin implements EventResou
      *
      * @return string
      */
-    public function getIdColumnName()
+    public function getIdColumnName(): string
     {
         return SpyNavigationTableMap::COL_ID_NAVIGATION;
     }

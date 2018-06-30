@@ -26,7 +26,7 @@ class CategoryTreeSynchronizationDataPlugin extends AbstractPlugin implements Sy
      *
      * @return string
      */
-    public function getResourceName()
+    public function getResourceName(): string
     {
         return CategoryStorageConstants::CATEGORY_TREE_RESOURCE_NAME;
     }

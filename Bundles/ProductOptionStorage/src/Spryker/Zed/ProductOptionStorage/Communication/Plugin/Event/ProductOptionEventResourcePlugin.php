@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductOptionStorage\Communication\Plugin\Event;
 
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductAbstractProductOptionGroupTableMap;
+use Orm\Zed\ProductOption\Persistence\SpyProductAbstractProductOptionGroupQuery;
 use Spryker\Shared\ProductOptionStorage\ProductOptionStorageConfig;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -28,7 +29,7 @@ class ProductOptionEventResourcePlugin extends AbstractPlugin implements EventRe
      *
      * @return string
      */
-    public function getResourceName()
+    public function getResourceName(): string
     {
         return ProductOptionStorageConfig::PRODUCT_ABSTRACT_OPTION_RESOURCE_NAME;
     }
@@ -42,7 +43,7 @@ class ProductOptionEventResourcePlugin extends AbstractPlugin implements EventRe
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductAbstractProductOptionGroupQuery
      */
-    public function queryData()
+    public function queryData(): SpyProductAbstractProductOptionGroupQuery
     {
         return $this->getQueryContainer()->queryProductOptions();
     }
@@ -55,7 +56,7 @@ class ProductOptionEventResourcePlugin extends AbstractPlugin implements EventRe
      *
      * @return string
      */
-    public function getEventName()
+    public function getEventName(): string
     {
         return ProductOptionEvents::PRODUCT_ABSTRACT_PRODUCT_OPTION_PUBLISH;
     }
@@ -68,7 +69,7 @@ class ProductOptionEventResourcePlugin extends AbstractPlugin implements EventRe
      *
      * @return string
      */
-    public function getIdColumnName()
+    public function getIdColumnName(): string
     {
         return SpyProductAbstractProductOptionGroupTableMap::COL_FK_PRODUCT_ABSTRACT;
     }

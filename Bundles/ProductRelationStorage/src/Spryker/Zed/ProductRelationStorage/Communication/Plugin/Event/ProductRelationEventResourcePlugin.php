@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductRelationStorage\Communication\Plugin\Event;
 
 use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationTableMap;
+use Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery;
 use Spryker\Shared\ProductRelationStorage\ProductRelationStorageConfig;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -28,7 +29,7 @@ class ProductRelationEventResourcePlugin extends AbstractPlugin implements Event
      *
      * @return string
      */
-    public function getResourceName()
+    public function getResourceName(): string
     {
         return ProductRelationStorageConfig::PRODUCT_ABSTRACT_RELATION_RESOURCE_NAME;
     }
@@ -42,7 +43,7 @@ class ProductRelationEventResourcePlugin extends AbstractPlugin implements Event
      *
      * @return \Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery
      */
-    public function queryData()
+    public function queryData(): SpyProductRelationQuery
     {
         return $this->getQueryContainer()->queryAllProductRelations();
     }
@@ -55,7 +56,7 @@ class ProductRelationEventResourcePlugin extends AbstractPlugin implements Event
      *
      * @return string
      */
-    public function getEventName()
+    public function getEventName(): string
     {
         return ProductRelationEvents::PRODUCT_ABSTRACT_RELATION_PUBLISH;
     }
@@ -68,7 +69,7 @@ class ProductRelationEventResourcePlugin extends AbstractPlugin implements Event
      *
      * @return string
      */
-    public function getIdColumnName()
+    public function getIdColumnName(): string
     {
         return SpyProductRelationTableMap::COL_FK_PRODUCT_ABSTRACT;
     }

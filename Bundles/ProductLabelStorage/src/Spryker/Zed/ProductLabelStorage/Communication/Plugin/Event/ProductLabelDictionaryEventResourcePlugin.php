@@ -27,7 +27,7 @@ class ProductLabelDictionaryEventResourcePlugin extends AbstractPlugin implement
      *
      * @return string
      */
-    public function getResourceName()
+    public function getResourceName(): string
     {
         return ProductLabelStorageConfig::PRODUCT_LABEL_DICTIONARY_RESOURCE_NAME;
     }
@@ -39,7 +39,7 @@ class ProductLabelDictionaryEventResourcePlugin extends AbstractPlugin implement
      *
      * @api
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return null
      */
     public function queryData()
     {
@@ -54,7 +54,7 @@ class ProductLabelDictionaryEventResourcePlugin extends AbstractPlugin implement
      *
      * @return string
      */
-    public function getEventName()
+    public function getEventName(): string
     {
         return ProductLabelEvents::PRODUCT_LABEL_DICTIONARY_PUBLISH;
     }
@@ -67,7 +67,7 @@ class ProductLabelDictionaryEventResourcePlugin extends AbstractPlugin implement
      *
      * @return string
      */
-    public function getIdColumnName()
+    public function getIdColumnName(): string
     {
         return null;
     }

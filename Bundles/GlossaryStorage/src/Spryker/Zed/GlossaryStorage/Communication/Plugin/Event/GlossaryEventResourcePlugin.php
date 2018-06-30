@@ -7,11 +7,9 @@
 
 namespace Spryker\Zed\GlossaryStorage\Communication\Plugin\Event;
 
-use Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
-use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
+use Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery;
 use Spryker\Shared\GlossaryStorage\GlossaryStorageConstants;
-use Spryker\Zed\Cms\Dependency\CmsEvents;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
 use Spryker\Zed\Glossary\Dependency\GlossaryEvents;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -31,7 +29,7 @@ class GlossaryEventResourcePlugin extends AbstractPlugin implements EventResourc
      *
      * @return string
      */
-    public function getResourceName()
+    public function getResourceName(): string
     {
         return GlossaryStorageConstants::RESOURCE_NAME;
     }
@@ -43,9 +41,9 @@ class GlossaryEventResourcePlugin extends AbstractPlugin implements EventResourc
      *
      * @api
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
      */
-    public function queryData()
+    public function queryData(): SpyGlossaryKeyQuery
     {
         return $this->getQueryContainer()->queryGlossaryKeys();
     }
@@ -58,7 +56,7 @@ class GlossaryEventResourcePlugin extends AbstractPlugin implements EventResourc
      *
      * @return string
      */
-    public function getEventName()
+    public function getEventName(): string
     {
         return GlossaryEvents::GLOSSARY_KEY_PUBLISH;
     }
@@ -71,7 +69,7 @@ class GlossaryEventResourcePlugin extends AbstractPlugin implements EventResourc
      *
      * @return string
      */
-    public function getIdColumnName()
+    public function getIdColumnName(): string
     {
         return SpyGlossaryKeyTableMap::COL_ID_GLOSSARY_KEY;
     }

@@ -17,7 +17,7 @@ interface SynchronizationDataPluginInterface
      *
      * @return string
      */
-    public function getResourceName();
+    public function getResourceName(): string;
 
     /**
      * Specification:

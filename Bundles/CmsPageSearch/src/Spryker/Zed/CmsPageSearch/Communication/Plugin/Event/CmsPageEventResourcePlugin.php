@@ -8,10 +8,9 @@
 namespace Spryker\Zed\CmsPageSearch\Communication\Plugin\Event;
 
 use Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap;
-use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTableMap;
+use Orm\Zed\Cms\Persistence\SpyCmsPageQuery;
 use Spryker\Shared\CmsPageSearch\CmsPageSearchConstants;
 use Spryker\Zed\Cms\Dependency\CmsEvents;
-use Spryker\Zed\CmsBlock\Dependency\CmsBlockEvents;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -30,7 +29,7 @@ class CmsPageEventResourcePlugin extends AbstractPlugin implements EventResource
      *
      * @return string
      */
-    public function getResourceName()
+    public function getResourceName(): string
     {
         return CmsPageSearchConstants::CMS_PAGE_RESOURCE_NAME;
     }
@@ -42,9 +41,9 @@ class CmsPageEventResourcePlugin extends AbstractPlugin implements EventResource
      *
      * @api
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
      */
-    public function queryData()
+    public function queryData(): SpyCmsPageQuery
     {
         return $this->getQueryContainer()->queryCmsPage();
     }
@@ -57,7 +56,7 @@ class CmsPageEventResourcePlugin extends AbstractPlugin implements EventResource
      *
      * @return string
      */
-    public function getEventName()
+    public function getEventName(): string
     {
         return CmsEvents::CMS_VERSION_PUBLISH;
     }
@@ -70,7 +69,7 @@ class CmsPageEventResourcePlugin extends AbstractPlugin implements EventResource
      *
      * @return string
      */
-    public function getIdColumnName()
+    public function getIdColumnName(): string
     {
         return SpyCmsPageTableMap::COL_ID_CMS_PAGE;
     }

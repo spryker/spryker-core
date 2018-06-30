@@ -12,6 +12,7 @@ use Spryker\Shared\ProductLabelStorage\ProductLabelStorageConfig;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductLabel\Dependency\ProductLabelEvents;
+use Spryker\Zed\ProductLabel\Persistence\Propel\SpyProductLabelProductAbstractQuery;
 
 /**
  * @method \Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageQueryContainerInterface getQueryContainer()
@@ -28,7 +29,7 @@ class ProductAbstractLabelEventResourcePlugin extends AbstractPlugin implements 
      *
      * @return string
      */
-    public function getResourceName()
+    public function getResourceName(): string
     {
         return ProductLabelStorageConfig::PRODUCT_ABSTRACT_LABEL_RESOURCE_NAME;
     }
@@ -40,9 +41,9 @@ class ProductAbstractLabelEventResourcePlugin extends AbstractPlugin implements 
      *
      * @api
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Spryker\Zed\ProductLabel\Persistence\Propel\SpyProductLabelProductAbstractQuery
      */
-    public function queryData()
+    public function queryData(): SpyProductLabelProductAbstractQuery
     {
         return $this->getQueryContainer()->queryProductLabelProductAbstract();
     }
@@ -55,7 +56,7 @@ class ProductAbstractLabelEventResourcePlugin extends AbstractPlugin implements 
      *
      * @return string
      */
-    public function getEventName()
+    public function getEventName(): string
     {
         return ProductLabelEvents::PRODUCT_LABEL_PRODUCT_ABSTRACT_PUBLISH;
     }
@@ -68,7 +69,7 @@ class ProductAbstractLabelEventResourcePlugin extends AbstractPlugin implements 
      *
      * @return string
      */
-    public function getIdColumnName()
+    public function getIdColumnName(): string
     {
         return SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT;
     }

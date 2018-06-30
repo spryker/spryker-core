@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CmsBlockCategoryStorage\Communication\Plugin\Event;
 
 use Orm\Zed\CmsBlockCategoryConnector\Persistence\Map\SpyCmsBlockCategoryConnectorTableMap;
+use Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery;
 use Spryker\Shared\CmsBlockCategoryStorage\CmsBlockCategoryStorageConstants;
 use Spryker\Zed\CmsBlockCategoryConnector\Dependency\CmsBlockCategoryConnectorEvents;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
@@ -28,7 +29,7 @@ class CmsBlockCategoryEventResourcePlugin extends AbstractPlugin implements Even
      *
      * @return string
      */
-    public function getResourceName()
+    public function getResourceName(): string
     {
         return CmsBlockCategoryStorageConstants::CMS_BLOCK_CATEGORY_RESOURCE_NAME;
     }
@@ -40,9 +41,9 @@ class CmsBlockCategoryEventResourcePlugin extends AbstractPlugin implements Even
      *
      * @api
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery
      */
-    public function queryData()
+    public function queryData(): SpyCmsBlockCategoryConnectorQuery
     {
         return $this->getQueryContainer()->queryCmsBlockCategories([]);
     }
@@ -55,7 +56,7 @@ class CmsBlockCategoryEventResourcePlugin extends AbstractPlugin implements Even
      *
      * @return string
      */
-    public function getEventName()
+    public function getEventName(): string
     {
         return CmsBlockCategoryConnectorEvents::CMS_BLOCK_CATEGORY_CONNECTOR_PUBLISH;
     }
@@ -68,7 +69,7 @@ class CmsBlockCategoryEventResourcePlugin extends AbstractPlugin implements Even
      *
      * @return string
      */
-    public function getIdColumnName()
+    public function getIdColumnName(): string
     {
         return SpyCmsBlockCategoryConnectorTableMap::COL_ID_CMS_BLOCK_CATEGORY_CONNECTOR;
     }

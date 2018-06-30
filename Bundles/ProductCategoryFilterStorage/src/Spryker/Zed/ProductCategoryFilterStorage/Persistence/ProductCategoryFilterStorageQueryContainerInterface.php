@@ -23,7 +23,7 @@ interface ProductCategoryFilterStorageQueryContainerInterface extends QueryConta
     /**
      * @api
      *
-     * @return $this|\Orm\Zed\ProductCategoryFilterStorage\Persistence\SpyProductCategoryFilterStorageQuery
+     * @return \Orm\Zed\ProductCategoryFilter\Persistence\SpyProductCategoryFilterQuery
      */
     public function queryProductCategoryFilter();
 
