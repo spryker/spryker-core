@@ -66,7 +66,7 @@ interface PriceProductMerchantRelationshipStorageRepositoryInterface
     /**
      * @param int $idPriceProductMerchantRelationship
      *
-     * @return \Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationship
+     * @return \Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationship|null
      */
-    public function findPriceProductMerchantRelationship(int $idPriceProductMerchantRelationship): SpyPriceProductMerchantRelationship;
+    public function findPriceProductMerchantRelationship(int $idPriceProductMerchantRelationship): ?SpyPriceProductMerchantRelationship;
 }

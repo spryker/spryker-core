@@ -35,10 +35,10 @@ class IdPriceProductStep implements DataImportStepInterface
         $priceProductQuery = SpyPriceProductQuery::create();
         $priceProductQuery->filterByFkPriceType($priceTypeEntity->getIdPriceType());
 
-        if (!empty($dataSet[PriceProductMerchantRelationshipDataSetInterface::ID_PRODUCT_ABSTRACT])) {
-            $priceProductQuery->filterByFkProductAbstract($dataSet[PriceProductMerchantRelationshipDataSetInterface::ID_PRODUCT_ABSTRACT]);
-        } else {
+        if (!empty($dataSet[PriceProductMerchantRelationshipDataSetInterface::ID_PRODUCT_CONCRETE])) {
             $priceProductQuery->filterByFkProduct($dataSet[PriceProductMerchantRelationshipDataSetInterface::ID_PRODUCT_CONCRETE]);
+        } else {
+            $priceProductQuery->filterByFkProductAbstract($dataSet[PriceProductMerchantRelationshipDataSetInterface::ID_PRODUCT_ABSTRACT]);
         }
         $productPriceEntity = $priceProductQuery->findOneOrCreate();
         $productPriceEntity->save();

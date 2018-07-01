@@ -41,7 +41,8 @@ class PriceProductMerchantRelationshipAbstractListener extends AbstractPlugin im
      */
     protected function getBusinessUnitAbstractProducts(array $eventTransfers): array
     {
-        $businessUnitProducts = [];
+        $businessUnitProducts =
+        $companyBusinessUnitIds = [];
 
         foreach ($eventTransfers as $eventTransfer) {
             $foreignKeys = $eventTransfer->getForeignKeys();
@@ -65,10 +66,12 @@ class PriceProductMerchantRelationshipAbstractListener extends AbstractPlugin im
                 $idMerchantRelationship = $priceProductMerchantRelationship->getFkMerchantRelationship();
             }
 
-            $companyBusinessUnitIds = $this->getRepository()
-                ->findCompanyBusinessUnitIdsByMerchantRelationship($idMerchantRelationship);
+            if (!isset($companyBusinessUnitIds[$idMerchantRelationship])) {
+                $companyBusinessUnitIds[$idMerchantRelationship] = $this->getRepository()
+                    ->findCompanyBusinessUnitIdsByMerchantRelationship($idMerchantRelationship);
+            }
 
-            foreach ($companyBusinessUnitIds as $businessUnitId) {
+            foreach ($companyBusinessUnitIds[$idMerchantRelationship] as $businessUnitId) {
                 $businessUnitProducts[$businessUnitId][$idProductAbstract] = $idProductAbstract;
             }
         }

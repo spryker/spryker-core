@@ -262,7 +262,7 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
             ->addJoin(
                 SpyPriceProductMerchantRelationshipTableMap::COL_FK_MERCHANT_RELATIONSHIP,
                 SpyMerchantRelationshipToCompanyBusinessUnitTableMap::COL_FK_MERCHANT_RELATIONSHIP,
-                Criteria::LEFT_JOIN
+                Criteria::INNER_JOIN
             )->addCond(
                 'cond1',
                 SpyMerchantRelationshipToCompanyBusinessUnitTableMap::COL_FK_COMPANY_BUSINESS_UNIT,
@@ -284,7 +284,7 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
             ->addJoin(
                 SpyPriceProductMerchantRelationshipTableMap::COL_FK_MERCHANT_RELATIONSHIP,
                 SpyMerchantRelationshipToCompanyBusinessUnitTableMap::COL_FK_MERCHANT_RELATIONSHIP,
-                Criteria::LEFT_JOIN
+                Criteria::INNER_JOIN
             )->addCond(
                 'cond1',
                 SpyMerchantRelationshipToCompanyBusinessUnitTableMap::COL_FK_COMPANY_BUSINESS_UNIT,
@@ -331,9 +331,9 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
     /**
      * @param int $idPriceProductMerchantRelationship
      *
-     * @return \Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationship
+     * @return \Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationship|null
      */
-    public function findPriceProductMerchantRelationship(int $idPriceProductMerchantRelationship): SpyPriceProductMerchantRelationship
+    public function findPriceProductMerchantRelationship(int $idPriceProductMerchantRelationship): ?SpyPriceProductMerchantRelationship
     {
         return $this->getFactory()
             ->getPropelPriceProductMerchantRelationshipQuery()

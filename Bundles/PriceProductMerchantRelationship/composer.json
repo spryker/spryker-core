@@ -15,7 +15,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/customer": "7.10.0",
+    "spryker/customer": "*",
     "spryker/testify": "*"
   },
   "suggest": {
