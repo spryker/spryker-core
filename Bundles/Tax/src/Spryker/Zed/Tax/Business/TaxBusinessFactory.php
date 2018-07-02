@@ -31,7 +31,8 @@ class TaxBusinessFactory extends AbstractBusinessFactory
     public function createReaderModel()
     {
         return new TaxReader(
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
+            $this->getRepository()
         );
     }
 

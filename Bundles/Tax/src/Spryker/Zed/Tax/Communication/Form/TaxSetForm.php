@@ -157,9 +157,10 @@ class TaxSetForm extends AbstractType
     protected function createUniqueTaxSetNameConstraint()
     {
         return new Callback([
-            'callback' => function ($name, ExecutionContextInterface $contextInterface) {
-                if (!$this->getRepository()->isTaxSetNameUnique($name)) {
-                    $contextInterface->addViolation('Tax Set with name "{{ name }}" already exists.', [
+            'callback' => function ($name, ExecutionContextInterface $context) {
+                $idTaxSet = $context->getObject()->getParent()->getData()->getIdTaxSet();
+                if ($this->getFacade()->taxSetWithSuchNameExists($name, $idTaxSet)) {
+                    $context->addViolation('Tax Set with name "{{ name }}" already exists.', [
                         '{{ name }}' => $name,
                     ]);
                 }

@@ -60,4 +60,12 @@ interface TaxReaderInterface
      * @return bool
      */
     public function taxSetExists($id);
+
+    /**
+     * @param string $name
+     * @param int|null $idTaxSet
+     *
+     * @return bool
+     */
+    public function taxSetWithSuchNameExists(string $name, ?int $idTaxSet = null): bool;
 }

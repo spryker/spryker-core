@@ -330,4 +330,19 @@ interface TaxFacadeInterface
      * @return void
      */
     public function calculateTaxRateAverageAggregation(CalculableObjectTransfer $calculableObjectTransfer);
+
+    /**
+     * Specification:
+     *  - Check if tax set with a given name exist
+     *  - When the second argument is specified,
+     *    then Tax Set with specified ID will be excluded from the check (useful for update operation)
+     *
+     * @api
+     *
+     * @param string $name
+     * @param int|null $idTaxSet
+     *
+     * @return bool
+     */
+    public function taxSetWithSuchNameExists(string $name, ?int $idTaxSet = null): bool;
 }

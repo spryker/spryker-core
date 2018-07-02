@@ -116,6 +116,18 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
+     * @api
+     *
+     * @inheritdoc
+     */
+    public function taxSetWithSuchNameExists(string $name, ?int $idTaxSet = null): bool
+    {
+        return $this->getFactory()
+            ->createReaderModel()
+            ->taxSetWithSuchNameExists($name, $idTaxSet);
+    }
+
+    /**
      * Specification:
      *  - Create new tax rate
      *
