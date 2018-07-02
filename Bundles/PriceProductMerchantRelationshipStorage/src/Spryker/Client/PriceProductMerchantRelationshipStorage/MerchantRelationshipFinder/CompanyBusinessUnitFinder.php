@@ -38,10 +38,14 @@ class CompanyBusinessUnitFinder implements CompanyBusinessUnitFinderInterface
         }
 
         $companyBusinessUnit = $companyTransfer->getCompanyBusinessUnit();
-        if ($companyBusinessUnit) {
-            return $companyBusinessUnit->getIdCompanyBusinessUnit();
+        if (!$companyBusinessUnit) {
+            return null;
         }
 
-        return null;
+        if ($companyBusinessUnit->getMerchantRelationships()->count() === 0) {
+            return null;
+        }
+
+        return $companyBusinessUnit->getIdCompanyBusinessUnit();
     }
 }

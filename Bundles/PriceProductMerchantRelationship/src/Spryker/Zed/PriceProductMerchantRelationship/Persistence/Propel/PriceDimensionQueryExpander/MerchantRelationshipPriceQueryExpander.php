@@ -81,6 +81,10 @@ class MerchantRelationshipPriceQueryExpander implements MerchantRelationshipPric
             return null;
         }
 
+        if ($businessUnit->getMerchantRelationships()->count() === 0) {
+            return null;
+        }
+
         return $businessUnit->getIdCompanyBusinessUnit();
     }
 

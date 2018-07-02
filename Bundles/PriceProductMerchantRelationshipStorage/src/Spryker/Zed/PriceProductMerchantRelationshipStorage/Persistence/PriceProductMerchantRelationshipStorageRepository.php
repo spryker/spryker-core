@@ -97,7 +97,7 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
      */
     public function findPriceProductStoresByCompanyBusinessUnitAbstractProducts(array $businessUnitProducts): array
     {
-        $priceProductStoreQuery = $this->queryPriceProductStoreByCompanyBusinessUnitAbstractProducts($businessUnitProducts);
+        $priceProductStoreQuery = $this->queryPriceProductStoreByCompanyBusinessUnitProducts($businessUnitProducts);
         $priceProductStoreQuery = $this->queryProductsAbstract($priceProductStoreQuery)
             ->select([
                 static::COL_PRODUCT_ABSTRACT_SKU,
@@ -119,7 +119,7 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
      */
     public function findPriceProductStoresByCompanyBusinessUnitConcreteProducts(array $businessUnitProducts): array
     {
-        $priceProductStoreQuery = $this->queryPriceProductStoreByCompanyBusinessUnitConcreteProducts($businessUnitProducts);
+        $priceProductStoreQuery = $this->queryPriceProductStoreByCompanyBusinessUnitProducts($businessUnitProducts);
         $priceProductStoreQuery = $this->queryProducts($priceProductStoreQuery)
             ->select([
                 static::COL_PRODUCT_CONCRETE_SKU,
@@ -254,7 +254,7 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
      *
      * @return \Propel\Runtime\ActiveQuery\Criteria
      */
-    protected function queryPriceProductStoreByCompanyBusinessUnitAbstractProducts(array $businessUnitProducts): Criteria
+    protected function queryPriceProductStoreByCompanyBusinessUnitProducts(array $businessUnitProducts): Criteria
     {
         return $this->getFactory()
             ->getPropelPriceProductStoreQuery()
@@ -268,29 +268,7 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
                 SpyMerchantRelationshipToCompanyBusinessUnitTableMap::COL_FK_COMPANY_BUSINESS_UNIT,
                 array_keys($businessUnitProducts),
                 Criteria::IN
-            );
-    }
-
-    /**
-     * @param array $businessUnitProducts
-     *
-     * @return \Propel\Runtime\ActiveQuery\Criteria
-     */
-    protected function queryPriceProductStoreByCompanyBusinessUnitConcreteProducts(array $businessUnitProducts): Criteria
-    {
-        return $this->getFactory()
-            ->getPropelPriceProductStoreQuery()
-            ->joinWithPriceProductMerchantRelationship()
-            ->addJoin(
-                SpyPriceProductMerchantRelationshipTableMap::COL_FK_MERCHANT_RELATIONSHIP,
-                SpyMerchantRelationshipToCompanyBusinessUnitTableMap::COL_FK_MERCHANT_RELATIONSHIP,
-                Criteria::INNER_JOIN
-            )->addCond(
-                'cond1',
-                SpyMerchantRelationshipToCompanyBusinessUnitTableMap::COL_FK_COMPANY_BUSINESS_UNIT,
-                array_keys($businessUnitProducts),
-                Criteria::IN
-            );
+            )->combine(['cond1']);
     }
 
     /**
