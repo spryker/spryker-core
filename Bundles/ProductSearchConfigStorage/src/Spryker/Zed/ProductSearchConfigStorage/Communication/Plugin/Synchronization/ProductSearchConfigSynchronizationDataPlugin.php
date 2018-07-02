@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductSearchConfigStorage\Communication\Plugin\Synchronization;
 
+use Orm\Zed\ProductSearchConfigStorage\Persistence\SpyProductSearchConfigStorageQuery;
 use Spryker\Shared\ProductSearchConfigStorage\ProductSearchConfigStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
@@ -26,7 +27,7 @@ class ProductSearchConfigSynchronizationDataPlugin extends AbstractPlugin implem
      *
      * @return string
      */
-    public function getResourceName()
+    public function getResourceName(): string
     {
         return ProductSearchConfigStorageConfig::PRODUCT_SEARCH_CONFIG_EXTENSION_RESOURCE_NAME;
     }
@@ -39,7 +40,7 @@ class ProductSearchConfigSynchronizationDataPlugin extends AbstractPlugin implem
      *
      * @return bool
      */
-    public function hasStore()
+    public function hasStore(): bool
     {
         return false;
     }
@@ -53,9 +54,9 @@ class ProductSearchConfigSynchronizationDataPlugin extends AbstractPlugin implem
      *
      * @param array $ids
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\ProductSearchConfigStorage\Persistence\SpyProductSearchConfigStorageQuery
      */
-    public function queryData($ids = [])
+    public function queryData($ids = []): SpyProductSearchConfigStorageQuery
     {
         return $this->getQueryContainer()->queryProductSearchConfigStorage();
     }
@@ -68,7 +69,7 @@ class ProductSearchConfigSynchronizationDataPlugin extends AbstractPlugin implem
      *
      * @return array
      */
-    public function getParams()
+    public function getParams(): array
     {
         return [];
     }
@@ -81,7 +82,7 @@ class ProductSearchConfigSynchronizationDataPlugin extends AbstractPlugin implem
      *
      * @return string
      */
-    public function getQueueName()
+    public function getQueueName(): string
     {
         return ProductSearchConfigStorageConfig::PRODUCT_SEARCH_CONFIG_EXTENSION_SYNC_STORAGE_QUEUE;
     }

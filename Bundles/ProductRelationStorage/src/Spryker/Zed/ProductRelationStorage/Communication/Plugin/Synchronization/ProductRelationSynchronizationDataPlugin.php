@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductRelationStorage\Communication\Plugin\Synchronization;
 
+use Orm\Zed\ProductRelationStorage\Persistence\SpyProductAbstractRelationStorageQuery;
 use Spryker\Shared\ProductRelationStorage\ProductRelationStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
@@ -26,7 +27,7 @@ class ProductRelationSynchronizationDataPlugin extends AbstractPlugin implements
      *
      * @return string
      */
-    public function getResourceName()
+    public function getResourceName(): string
     {
         return ProductRelationStorageConfig::PRODUCT_ABSTRACT_RELATION_RESOURCE_NAME;
     }
@@ -39,7 +40,7 @@ class ProductRelationSynchronizationDataPlugin extends AbstractPlugin implements
      *
      * @return bool
      */
-    public function hasStore()
+    public function hasStore(): bool
     {
         return false;
     }
@@ -53,9 +54,9 @@ class ProductRelationSynchronizationDataPlugin extends AbstractPlugin implements
      *
      * @param array $ids
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\ProductRelationStorage\Persistence\SpyProductAbstractRelationStorageQuery
      */
-    public function queryData($ids = [])
+    public function queryData($ids = []): SpyProductAbstractRelationStorageQuery
     {
         $query = $this->getQueryContainer()->queryProductAbstractRelationStorageByIds($ids);
 
@@ -74,7 +75,7 @@ class ProductRelationSynchronizationDataPlugin extends AbstractPlugin implements
      *
      * @return array
      */
-    public function getParams()
+    public function getParams(): array
     {
         return [];
     }
@@ -87,7 +88,7 @@ class ProductRelationSynchronizationDataPlugin extends AbstractPlugin implements
      *
      * @return string
      */
-    public function getQueueName()
+    public function getQueueName(): string
     {
         return ProductRelationStorageConfig::PRODUCT_ABSTRACT_RELATION_SYNC_STORAGE_QUEUE;
     }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CategoryStorage\Communication\Plugin\Synchronization;
 
+use Orm\Zed\CategoryStorage\Persistence\SpyCategoryTreeStorageQuery;
 use Spryker\Shared\CategoryStorage\CategoryStorageConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
@@ -26,7 +27,7 @@ class CategoryTreeSynchronizationDataPlugin extends AbstractPlugin implements Sy
      *
      * @return string
      */
-    public function getResourceName()
+    public function getResourceName(): string
     {
         return CategoryStorageConstants::CATEGORY_TREE_RESOURCE_NAME;
     }
@@ -39,7 +40,7 @@ class CategoryTreeSynchronizationDataPlugin extends AbstractPlugin implements Sy
      *
      * @return bool
      */
-    public function hasStore()
+    public function hasStore(): bool
     {
         return false;
     }
@@ -53,9 +54,9 @@ class CategoryTreeSynchronizationDataPlugin extends AbstractPlugin implements Sy
      *
      * @param array $ids
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\CategoryStorage\Persistence\SpyCategoryTreeStorageQuery
      */
-    public function queryData($ids = [])
+    public function queryData($ids = []): SpyCategoryTreeStorageQuery
     {
         return $this->getQueryContainer()->queryCategoryStorage();
     }
@@ -68,7 +69,7 @@ class CategoryTreeSynchronizationDataPlugin extends AbstractPlugin implements Sy
      *
      * @return array
      */
-    public function getParams()
+    public function getParams(): array
     {
         return [];
     }
@@ -81,7 +82,7 @@ class CategoryTreeSynchronizationDataPlugin extends AbstractPlugin implements Sy
      *
      * @return string
      */
-    public function getQueueName()
+    public function getQueueName(): string
     {
         return CategoryStorageConstants::CATEGORY_SYNC_STORAGE_QUEUE;
     }

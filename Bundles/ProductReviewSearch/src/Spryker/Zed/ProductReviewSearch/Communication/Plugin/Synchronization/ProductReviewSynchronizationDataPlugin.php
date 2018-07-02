@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductReviewSearch\Communication\Plugin\Synchronization;
 
+use Orm\Zed\ProductReviewSearch\Persistence\SpyProductReviewSearchQuery;
 use Spryker\Shared\ProductReviewSearch\ProductReviewSearchConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
@@ -26,7 +27,7 @@ class ProductReviewSynchronizationDataPlugin extends AbstractPlugin implements S
      *
      * @return string
      */
-    public function getResourceName()
+    public function getResourceName(): string
     {
         return ProductReviewSearchConfig::PRODUCT_REVIEW_RESOURCE_NAME;
     }
@@ -39,7 +40,7 @@ class ProductReviewSynchronizationDataPlugin extends AbstractPlugin implements S
      *
      * @return bool
      */
-    public function hasStore()
+    public function hasStore(): bool
     {
         return false;
     }
@@ -53,9 +54,9 @@ class ProductReviewSynchronizationDataPlugin extends AbstractPlugin implements S
      *
      * @param array $ids
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\ProductReviewSearch\Persistence\SpyProductReviewSearchQuery
      */
-    public function queryData($ids = [])
+    public function queryData($ids = []): SpyProductReviewSearchQuery
     {
         $query = $this->getQueryContainer()->queryProductReviewSearchByIds($ids);
 
@@ -74,7 +75,7 @@ class ProductReviewSynchronizationDataPlugin extends AbstractPlugin implements S
      *
      * @return array
      */
-    public function getParams()
+    public function getParams(): array
     {
         return ["type" => "product-review"];
     }
@@ -87,7 +88,7 @@ class ProductReviewSynchronizationDataPlugin extends AbstractPlugin implements S
      *
      * @return string
      */
-    public function getQueueName()
+    public function getQueueName(): string
     {
         return ProductReviewSearchConfig::PRODUCT_REVIEW_SYNC_SEARCH_QUEUE;
     }

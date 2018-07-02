@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductStorage\Communication\Plugin\Synchronization;
 
+use Orm\Zed\ProductStorage\Persistence\SpyProductAbstractStorageQuery;
 use Spryker\Shared\ProductStorage\ProductStorageConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
@@ -26,7 +27,7 @@ class ProductAbstractSynchronizationDataPlugin extends AbstractPlugin implements
      *
      * @return string
      */
-    public function getResourceName()
+    public function getResourceName(): string
     {
         return ProductStorageConstants::PRODUCT_ABSTRACT_RESOURCE_NAME;
     }
@@ -39,7 +40,7 @@ class ProductAbstractSynchronizationDataPlugin extends AbstractPlugin implements
      *
      * @return bool
      */
-    public function hasStore()
+    public function hasStore(): bool
     {
         return false;
     }
@@ -53,9 +54,9 @@ class ProductAbstractSynchronizationDataPlugin extends AbstractPlugin implements
      *
      * @param array $ids
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\ProductStorage\Persistence\SpyProductAbstractStorageQuery
      */
-    public function queryData($ids = [])
+    public function queryData($ids = []): SpyProductAbstractStorageQuery
     {
         $query = $this->getQueryContainer()->queryProductAbstractStorageByIds($ids);
 
@@ -74,7 +75,7 @@ class ProductAbstractSynchronizationDataPlugin extends AbstractPlugin implements
      *
      * @return array
      */
-    public function getParams()
+    public function getParams(): array
     {
         return [];
     }
@@ -87,7 +88,7 @@ class ProductAbstractSynchronizationDataPlugin extends AbstractPlugin implements
      *
      * @return string
      */
-    public function getQueueName()
+    public function getQueueName(): string
     {
         return ProductStorageConstants::PRODUCT_SYNC_STORAGE_QUEUE;
     }

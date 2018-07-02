@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsPageSearch\Communication\Plugin\Synchronization;
 
+use Orm\Zed\CmsPageSearch\Persistence\SpyCmsPageSearchQuery;
 use Spryker\Shared\CmsPageSearch\CmsPageSearchConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
@@ -26,7 +27,7 @@ class CmsPageSynchronizationDataPlugin extends AbstractPlugin implements Synchro
      *
      * @return string
      */
-    public function getResourceName()
+    public function getResourceName(): string
     {
         return CmsPageSearchConstants::CMS_PAGE_RESOURCE_NAME;
     }
@@ -39,7 +40,7 @@ class CmsPageSynchronizationDataPlugin extends AbstractPlugin implements Synchro
      *
      * @return bool
      */
-    public function hasStore()
+    public function hasStore(): bool
     {
         return false;
     }
@@ -53,9 +54,9 @@ class CmsPageSynchronizationDataPlugin extends AbstractPlugin implements Synchro
      *
      * @param array $ids
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\CmsPageSearch\Persistence\SpyCmsPageSearchQuery
      */
-    public function queryData($ids = [])
+    public function queryData($ids = []): SpyCmsPageSearchQuery
     {
         $query = $this->getQueryContainer()->queryCmsPageSearchEntities($ids);
 
@@ -74,7 +75,7 @@ class CmsPageSynchronizationDataPlugin extends AbstractPlugin implements Synchro
      *
      * @return array
      */
-    public function getParams()
+    public function getParams(): array
     {
         return ["type" => "page"];
     }
@@ -87,7 +88,7 @@ class CmsPageSynchronizationDataPlugin extends AbstractPlugin implements Synchro
      *
      * @return string
      */
-    public function getQueueName()
+    public function getQueueName(): string
     {
         return CmsPageSearchConstants::CMS_SYNC_SEARCH_QUEUE;
     }

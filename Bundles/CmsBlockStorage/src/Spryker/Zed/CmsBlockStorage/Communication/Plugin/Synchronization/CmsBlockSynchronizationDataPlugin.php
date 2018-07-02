@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsBlockStorage\Communication\Plugin\Synchronization;
 
+use Orm\Zed\CmsBlockStorage\Persistence\SpyCmsBlockStorageQuery;
 use Spryker\Shared\CmsBlockStorage\CmsBlockStorageConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
@@ -26,7 +27,7 @@ class CmsBlockSynchronizationDataPlugin extends AbstractPlugin implements Synchr
      *
      * @return string
      */
-    public function getResourceName()
+    public function getResourceName(): string
     {
         return CmsBlockStorageConstants::CMS_BLOCK_RESOURCE_NAME;
     }
@@ -39,7 +40,7 @@ class CmsBlockSynchronizationDataPlugin extends AbstractPlugin implements Synchr
      *
      * @return bool
      */
-    public function hasStore()
+    public function hasStore(): bool
     {
         return true;
     }
@@ -53,9 +54,9 @@ class CmsBlockSynchronizationDataPlugin extends AbstractPlugin implements Synchr
      *
      * @param array $ids
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\CmsBlockStorage\Persistence\SpyCmsBlockStorageQuery
      */
-    public function queryData($ids = [])
+    public function queryData($ids = []): SpyCmsBlockStorageQuery
     {
         $query = $this->getQueryContainer()->queryCmsBlockStorageEntities($ids);
 
@@ -74,7 +75,7 @@ class CmsBlockSynchronizationDataPlugin extends AbstractPlugin implements Synchr
      *
      * @return array
      */
-    public function getParams()
+    public function getParams(): array
     {
         return [];
     }
@@ -87,7 +88,7 @@ class CmsBlockSynchronizationDataPlugin extends AbstractPlugin implements Synchr
      *
      * @return string
      */
-    public function getQueueName()
+    public function getQueueName(): string
     {
         return CmsBlockStorageConstants::CMS_BLOCK_SYNC_STORAGE_QUEUE;
     }

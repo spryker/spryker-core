@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductQuantityStorage\Communication\Plugin\Synchronization;
 
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
-use Orm\Zed\ProductQuantityStorage\Persistence\SpyProductQuantityStorage;
 use Spryker\Shared\ProductQuantityStorage\ProductQuantityStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRepositoryPluginInterface;
@@ -28,7 +27,7 @@ class ProductQuantitySynchronizationDataPlugin extends AbstractPlugin implements
      *
      * @return string
      */
-    public function getResourceName()
+    public function getResourceName(): string
     {
         return ProductQuantityStorageConfig::PRODUCT_QUANTITY_RESOURCE_NAME;
     }
@@ -41,7 +40,7 @@ class ProductQuantitySynchronizationDataPlugin extends AbstractPlugin implements
      *
      * @return bool
      */
-    public function hasStore()
+    public function hasStore(): bool
     {
         return false;
     }
@@ -57,7 +56,7 @@ class ProductQuantitySynchronizationDataPlugin extends AbstractPlugin implements
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria[]
      */
-    public function getData($ids = [])
+    public function getData($ids = []): array
     {
         $synchronizationDataTransfers = [];
         $productQuantityTransfers = $this->getRepository()->findProductQuantityStorageEntitiesByProductIds($ids);
@@ -84,7 +83,7 @@ class ProductQuantitySynchronizationDataPlugin extends AbstractPlugin implements
      *
      * @return array
      */
-    public function getParams()
+    public function getParams(): array
     {
         return [];
     }
@@ -97,7 +96,7 @@ class ProductQuantitySynchronizationDataPlugin extends AbstractPlugin implements
      *
      * @return string
      */
-    public function getQueueName()
+    public function getQueueName(): string
     {
         return ProductQuantityStorageConfig::PRODUCT_QUANTITY_SYNC_STORAGE_QUEUE;
     }

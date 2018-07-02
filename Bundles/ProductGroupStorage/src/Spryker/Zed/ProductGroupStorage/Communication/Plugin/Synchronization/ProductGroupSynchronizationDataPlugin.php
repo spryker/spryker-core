@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductGroupStorage\Communication\Plugin\Synchronization;
 
+use Orm\Zed\ProductGroupStorage\Persistence\SpyProductAbstractGroupStorageQuery;
 use Spryker\Shared\ProductGroupStorage\ProductGroupStorageConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
@@ -26,7 +27,7 @@ class ProductGroupSynchronizationDataPlugin extends AbstractPlugin implements Sy
      *
      * @return string
      */
-    public function getResourceName()
+    public function getResourceName(): string
     {
         return ProductGroupStorageConstants::PRODUCT_GROUP_RESOURCE_NAME;
     }
@@ -39,7 +40,7 @@ class ProductGroupSynchronizationDataPlugin extends AbstractPlugin implements Sy
      *
      * @return bool
      */
-    public function hasStore()
+    public function hasStore(): bool
     {
         return false;
     }
@@ -53,9 +54,9 @@ class ProductGroupSynchronizationDataPlugin extends AbstractPlugin implements Sy
      *
      * @param array $ids
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\ProductGroupStorage\Persistence\SpyProductAbstractGroupStorageQuery
      */
-    public function queryData($ids = [])
+    public function queryData($ids = []): SpyProductAbstractGroupStorageQuery
     {
         $query = $this->getQueryContainer()->queryProductAbstractGroupStorageByIds($ids);
 
@@ -74,7 +75,7 @@ class ProductGroupSynchronizationDataPlugin extends AbstractPlugin implements Sy
      *
      * @return array
      */
-    public function getParams()
+    public function getParams(): array
     {
         return [];
     }
@@ -87,7 +88,7 @@ class ProductGroupSynchronizationDataPlugin extends AbstractPlugin implements Sy
      *
      * @return string
      */
-    public function getQueueName()
+    public function getQueueName(): string
     {
         return ProductGroupStorageConstants::PRODUCT_GROUP_SYNC_STORAGE_QUEUE;
     }

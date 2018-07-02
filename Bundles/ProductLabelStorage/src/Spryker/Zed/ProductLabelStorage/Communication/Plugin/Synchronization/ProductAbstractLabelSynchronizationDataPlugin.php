@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductLabelStorage\Communication\Plugin\Synchronization;
 
+use Orm\Zed\ProductLabelStorage\Persistence\SpyProductAbstractLabelStorageQuery;
 use Spryker\Shared\ProductLabelStorage\ProductLabelStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
@@ -26,7 +27,7 @@ class ProductAbstractLabelSynchronizationDataPlugin extends AbstractPlugin imple
      *
      * @return string
      */
-    public function getResourceName()
+    public function getResourceName(): string
     {
         return ProductLabelStorageConfig::PRODUCT_ABSTRACT_LABEL_RESOURCE_NAME;
     }
@@ -39,7 +40,7 @@ class ProductAbstractLabelSynchronizationDataPlugin extends AbstractPlugin imple
      *
      * @return bool
      */
-    public function hasStore()
+    public function hasStore(): bool
     {
         return false;
     }
@@ -53,9 +54,9 @@ class ProductAbstractLabelSynchronizationDataPlugin extends AbstractPlugin imple
      *
      * @param array $ids
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\ProductLabelStorage\Persistence\SpyProductAbstractLabelStorageQuery
      */
-    public function queryData($ids = [])
+    public function queryData($ids = []): SpyProductAbstractLabelStorageQuery
     {
         $query = $this->getQueryContainer()->queryProductAbstractLabelStorageByIds($ids);
 
@@ -74,7 +75,7 @@ class ProductAbstractLabelSynchronizationDataPlugin extends AbstractPlugin imple
      *
      * @return array
      */
-    public function getParams()
+    public function getParams(): array
     {
         return [];
     }
@@ -87,7 +88,7 @@ class ProductAbstractLabelSynchronizationDataPlugin extends AbstractPlugin imple
      *
      * @return string
      */
-    public function getQueueName()
+    public function getQueueName(): string
     {
         return ProductLabelStorageConfig::PRODUCT_ABSTRACT_LABEL_SYNC_STORAGE_QUEUE;
     }

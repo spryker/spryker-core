@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductOptionStorage\Communication\Plugin\Synchronization;
 
+use Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorageQuery;
 use Spryker\Shared\ProductOptionStorage\ProductOptionStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
@@ -26,7 +27,7 @@ class ProductOptionSynchronizationDataPlugin extends AbstractPlugin implements S
      *
      * @return string
      */
-    public function getResourceName()
+    public function getResourceName(): string
     {
         return ProductOptionStorageConfig::PRODUCT_ABSTRACT_OPTION_RESOURCE_NAME;
     }
@@ -39,7 +40,7 @@ class ProductOptionSynchronizationDataPlugin extends AbstractPlugin implements S
      *
      * @return bool
      */
-    public function hasStore()
+    public function hasStore(): bool
     {
         return false;
     }
@@ -53,9 +54,9 @@ class ProductOptionSynchronizationDataPlugin extends AbstractPlugin implements S
      *
      * @param array $ids
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorageQuery
      */
-    public function queryData($ids = [])
+    public function queryData($ids = []): SpyProductAbstractOptionStorageQuery
     {
         $query = $this->getQueryContainer()->queryProductAbstractOptionStorageByIds($ids);
 
@@ -74,7 +75,7 @@ class ProductOptionSynchronizationDataPlugin extends AbstractPlugin implements S
      *
      * @return array
      */
-    public function getParams()
+    public function getParams(): array
     {
         return [];
     }
@@ -87,7 +88,7 @@ class ProductOptionSynchronizationDataPlugin extends AbstractPlugin implements S
      *
      * @return string
      */
-    public function getQueueName()
+    public function getQueueName(): string
     {
         return ProductOptionStorageConfig::PRODUCT_ABSTRACT_OPTION_SYNC_STORAGE_QUEUE;
     }

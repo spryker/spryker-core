@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductCategoryFilterStorage\Communication\Plugin\Synchronization;
 
+use Orm\Zed\ProductCategoryFilterStorage\Persistence\SpyProductCategoryFilterStorageQuery;
 use Spryker\Shared\ProductCategoryFilterStorage\ProductCategoryFilterStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
@@ -26,7 +27,7 @@ class ProductCategoryFilterSynchronizationDataPlugin extends AbstractPlugin impl
      *
      * @return string
      */
-    public function getResourceName()
+    public function getResourceName(): string
     {
         return ProductCategoryFilterStorageConfig::PRODUCT_CATEGORY_FILTER_RESOURCE_NAME;
     }
@@ -39,7 +40,7 @@ class ProductCategoryFilterSynchronizationDataPlugin extends AbstractPlugin impl
      *
      * @return bool
      */
-    public function hasStore()
+    public function hasStore(): bool
     {
         return false;
     }
@@ -53,9 +54,9 @@ class ProductCategoryFilterSynchronizationDataPlugin extends AbstractPlugin impl
      *
      * @param array $ids
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return $this|\Orm\Zed\ProductCategoryFilterStorage\Persistence\SpyProductCategoryFilterStorageQuery
      */
-    public function queryData($ids = [])
+    public function queryData($ids = []): SpyProductCategoryFilterStorageQuery
     {
         $query = $this->getQueryContainer()->queryProductCategoryFilterStorageByFkCategories($ids);
 
@@ -74,7 +75,7 @@ class ProductCategoryFilterSynchronizationDataPlugin extends AbstractPlugin impl
      *
      * @return array
      */
-    public function getParams()
+    public function getParams(): array
     {
         return [];
     }
@@ -87,7 +88,7 @@ class ProductCategoryFilterSynchronizationDataPlugin extends AbstractPlugin impl
      *
      * @return string
      */
-    public function getQueueName()
+    public function getQueueName(): string
     {
         return ProductCategoryFilterStorageConfig::PRODUCT_CATEGORY_FILTER_SYNC_STORAGE_QUEUE;
     }

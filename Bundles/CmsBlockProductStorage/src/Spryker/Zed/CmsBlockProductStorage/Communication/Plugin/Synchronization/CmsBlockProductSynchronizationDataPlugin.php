@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsBlockProductStorage\Communication\Plugin\Synchronization;
 
+use Orm\Zed\CmsBlockProductStorage\Persistence\SpyCmsBlockProductStorageQuery;
 use Spryker\Shared\CmsBlockProductStorage\CmsBlockProductStorageConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
@@ -26,7 +27,7 @@ class CmsBlockProductSynchronizationDataPlugin extends AbstractPlugin implements
      *
      * @return string
      */
-    public function getResourceName()
+    public function getResourceName(): string
     {
         return CmsBlockProductStorageConstants::CMS_BLOCK_PRODUCT_RESOURCE_NAME;
     }
@@ -39,7 +40,7 @@ class CmsBlockProductSynchronizationDataPlugin extends AbstractPlugin implements
      *
      * @return bool
      */
-    public function hasStore()
+    public function hasStore(): bool
     {
         return false;
     }
@@ -53,9 +54,9 @@ class CmsBlockProductSynchronizationDataPlugin extends AbstractPlugin implements
      *
      * @param array $ids
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\CmsBlockProductStorage\Persistence\SpyCmsBlockProductStorageQuery
      */
-    public function queryData($ids = [])
+    public function queryData($ids = []): SpyCmsBlockProductStorageQuery
     {
         $query = $this->getQueryContainer()->queryCmsBlockProductStorageByIds($ids);
 
@@ -74,7 +75,7 @@ class CmsBlockProductSynchronizationDataPlugin extends AbstractPlugin implements
      *
      * @return array
      */
-    public function getParams()
+    public function getParams(): array
     {
         return [];
     }
@@ -87,7 +88,7 @@ class CmsBlockProductSynchronizationDataPlugin extends AbstractPlugin implements
      *
      * @return string
      */
-    public function getQueueName()
+    public function getQueueName(): string
     {
         return CmsBlockProductStorageConstants::CMS_BLOCK_PRODUCT_SYNC_STORAGE_QUEUE;
     }

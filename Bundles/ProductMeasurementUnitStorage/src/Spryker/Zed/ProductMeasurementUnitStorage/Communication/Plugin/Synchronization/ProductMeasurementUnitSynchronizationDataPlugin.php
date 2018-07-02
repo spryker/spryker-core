@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductMeasurementUnitStorage\Communication\Plugin\Synchronization;
 
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
-use Orm\Zed\ProductMeasurementUnitStorage\Persistence\SpyProductMeasurementUnitStorage;
 use Spryker\Shared\ProductMeasurementUnitStorage\ProductMeasurementUnitStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRepositoryPluginInterface;
@@ -28,7 +27,7 @@ class ProductMeasurementUnitSynchronizationDataPlugin extends AbstractPlugin imp
      *
      * @return string
      */
-    public function getResourceName()
+    public function getResourceName(): string
     {
         return ProductMeasurementUnitStorageConfig::PRODUCT_MEASUREMENT_UNIT_RESOURCE_NAME;
     }
@@ -41,7 +40,7 @@ class ProductMeasurementUnitSynchronizationDataPlugin extends AbstractPlugin imp
      *
      * @return bool
      */
-    public function hasStore()
+    public function hasStore(): bool
     {
         return false;
     }
@@ -57,7 +56,7 @@ class ProductMeasurementUnitSynchronizationDataPlugin extends AbstractPlugin imp
      *
      * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer[]
      */
-    public function getData($ids = [])
+    public function getData($ids = []): array
     {
         $synchronizationDataTransfers = [];
         $productMeasurementUnitTransfers = $this->getRepository()->findProductMeasurementUnitStorageEntities($ids);
@@ -84,7 +83,7 @@ class ProductMeasurementUnitSynchronizationDataPlugin extends AbstractPlugin imp
      *
      * @return array
      */
-    public function getParams()
+    public function getParams(): array
     {
         return [];
     }
@@ -97,7 +96,7 @@ class ProductMeasurementUnitSynchronizationDataPlugin extends AbstractPlugin imp
      *
      * @return string
      */
-    public function getQueueName()
+    public function getQueueName(): string
     {
         return ProductMeasurementUnitStorageConfig::PRODUCT_MEASUREMENT_UNIT_SYNC_STORAGE_QUEUE;
     }

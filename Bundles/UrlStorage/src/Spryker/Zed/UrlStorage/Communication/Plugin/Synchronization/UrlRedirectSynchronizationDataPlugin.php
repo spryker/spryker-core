@@ -26,7 +26,7 @@ class UrlRedirectSynchronizationDataPlugin extends AbstractPlugin implements Syn
      *
      * @return string
      */
-    public function getResourceName()
+    public function getResourceName(): string
     {
         return UrlStorageConstants::REDIRECT_RESOURCE_NAME;
     }
@@ -39,7 +39,7 @@ class UrlRedirectSynchronizationDataPlugin extends AbstractPlugin implements Syn
      *
      * @return bool
      */
-    public function hasStore()
+    public function hasStore(): bool
     {
         return false;
     }
@@ -74,7 +74,7 @@ class UrlRedirectSynchronizationDataPlugin extends AbstractPlugin implements Syn
      *
      * @return array
      */
-    public function getParams()
+    public function getParams(): array
     {
         return [];
     }
@@ -87,7 +87,7 @@ class UrlRedirectSynchronizationDataPlugin extends AbstractPlugin implements Syn
      *
      * @return string
      */
-    public function getQueueName()
+    public function getQueueName(): string
     {
         return UrlStorageConstants::URL_SYNC_STORAGE_QUEUE;
     }

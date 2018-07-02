@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\AvailabilityStorage\Communication\Plugin\Synchronization;
 
+use Orm\Zed\AvailabilityStorage\Persistence\SpyAvailabilityStorageQuery;
 use Spryker\Shared\AvailabilityStorage\AvailabilityStorageConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
@@ -26,7 +27,7 @@ class AvailabilitySynchronizationDataPlugin extends AbstractPlugin implements Sy
      *
      * @return string
      */
-    public function getResourceName()
+    public function getResourceName(): string
     {
         return AvailabilityStorageConstants::AVAILABILITY_RESOURCE_NAME;
     }
@@ -39,7 +40,7 @@ class AvailabilitySynchronizationDataPlugin extends AbstractPlugin implements Sy
      *
      * @return bool
      */
-    public function hasStore()
+    public function hasStore(): bool
     {
         return true;
     }
@@ -53,9 +54,9 @@ class AvailabilitySynchronizationDataPlugin extends AbstractPlugin implements Sy
      *
      * @param array $ids
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\AvailabilityStorage\Persistence\SpyAvailabilityStorageQuery
      */
-    public function queryData($ids = [])
+    public function queryData($ids = []): SpyAvailabilityStorageQuery
     {
         $query = $this->getQueryContainer()->queryAvailabilityStorageByAvailabilityAbstractIds($ids);
 
@@ -74,7 +75,7 @@ class AvailabilitySynchronizationDataPlugin extends AbstractPlugin implements Sy
      *
      * @return array
      */
-    public function getParams()
+    public function getParams(): array
     {
         return [];
     }
@@ -87,7 +88,7 @@ class AvailabilitySynchronizationDataPlugin extends AbstractPlugin implements Sy
      *
      * @return string
      */
-    public function getQueueName()
+    public function getQueueName(): string
     {
         return AvailabilityStorageConstants::AVAILABILITY_SYNC_STORAGE_QUEUE;
     }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProductStorage\Communication\Plugin\Synchronization;
 
+use Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductConcreteStorageQuery;
 use Spryker\Shared\PriceProductStorage\PriceProductStorageConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
@@ -26,7 +27,7 @@ class PriceProductConcreteSynchronizationDataPlugin extends AbstractPlugin imple
      *
      * @return string
      */
-    public function getResourceName()
+    public function getResourceName(): string
     {
         return PriceProductStorageConstants::PRICE_CONCRETE_RESOURCE_NAME;
     }
@@ -39,7 +40,7 @@ class PriceProductConcreteSynchronizationDataPlugin extends AbstractPlugin imple
      *
      * @return bool
      */
-    public function hasStore()
+    public function hasStore(): bool
     {
         return true;
     }
@@ -53,9 +54,9 @@ class PriceProductConcreteSynchronizationDataPlugin extends AbstractPlugin imple
      *
      * @param array $ids
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductConcreteStorageQuery
      */
-    public function queryData($ids = [])
+    public function queryData($ids = []): SpyPriceProductConcreteStorageQuery
     {
         $query = $this->getQueryContainer()->queryPriceConcreteStorageByProductIds($ids);
 
@@ -74,7 +75,7 @@ class PriceProductConcreteSynchronizationDataPlugin extends AbstractPlugin imple
      *
      * @return array
      */
-    public function getParams()
+    public function getParams(): array
     {
         return [];
     }
@@ -87,7 +88,7 @@ class PriceProductConcreteSynchronizationDataPlugin extends AbstractPlugin imple
      *
      * @return string
      */
-    public function getQueueName()
+    public function getQueueName(): string
     {
         return PriceProductStorageConstants::PRICE_SYNC_STORAGE_QUEUE;
     }

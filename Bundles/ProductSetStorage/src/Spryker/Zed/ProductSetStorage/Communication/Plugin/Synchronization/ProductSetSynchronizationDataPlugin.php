@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductSetStorage\Communication\Plugin\Synchronization;
 
+use Orm\Zed\ProductSetStorage\Persistence\SpyProductSetStorageQuery;
 use Spryker\Shared\ProductSetStorage\ProductSetStorageConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
@@ -26,7 +27,7 @@ class ProductSetSynchronizationDataPlugin extends AbstractPlugin implements Sync
      *
      * @return string
      */
-    public function getResourceName()
+    public function getResourceName(): string
     {
         return ProductSetStorageConstants::PRODUCT_SET_RESOURCE_NAME;
     }
@@ -39,7 +40,7 @@ class ProductSetSynchronizationDataPlugin extends AbstractPlugin implements Sync
      *
      * @return bool
      */
-    public function hasStore()
+    public function hasStore(): bool
     {
         return false;
     }
@@ -53,9 +54,9 @@ class ProductSetSynchronizationDataPlugin extends AbstractPlugin implements Sync
      *
      * @param array $ids
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\ProductSetStorage\Persistence\SpyProductSetStorageQuery
      */
-    public function queryData($ids = [])
+    public function queryData($ids = []): SpyProductSetStorageQuery
     {
         $query = $this->getQueryContainer()->queryProductSetStorageByIds($ids);
 
@@ -74,7 +75,7 @@ class ProductSetSynchronizationDataPlugin extends AbstractPlugin implements Sync
      *
      * @return array
      */
-    public function getParams()
+    public function getParams(): array
     {
         return [];
     }
@@ -87,7 +88,7 @@ class ProductSetSynchronizationDataPlugin extends AbstractPlugin implements Sync
      *
      * @return string
      */
-    public function getQueueName()
+    public function getQueueName(): string
     {
         return ProductSetStorageConstants::PRODUCT_SET_SYNC_STORAGE_QUEUE;
     }

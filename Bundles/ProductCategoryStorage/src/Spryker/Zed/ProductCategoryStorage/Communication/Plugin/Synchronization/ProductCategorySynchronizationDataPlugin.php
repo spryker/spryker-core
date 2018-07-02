@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductCategoryStorage\Communication\Plugin\Synchronization;
 
+use Orm\Zed\ProductCategoryStorage\Persistence\SpyProductAbstractCategoryStorageQuery;
 use Spryker\Shared\ProductCategoryStorage\ProductCategoryStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
@@ -26,7 +27,7 @@ class ProductCategorySynchronizationDataPlugin extends AbstractPlugin implements
      *
      * @return string
      */
-    public function getResourceName()
+    public function getResourceName(): string
     {
         return ProductCategoryStorageConfig::PRODUCT_ABSTRACT_CATEGORY_RESOURCE_NAME;
     }
@@ -39,7 +40,7 @@ class ProductCategorySynchronizationDataPlugin extends AbstractPlugin implements
      *
      * @return bool
      */
-    public function hasStore()
+    public function hasStore(): bool
     {
         return false;
     }
@@ -53,9 +54,9 @@ class ProductCategorySynchronizationDataPlugin extends AbstractPlugin implements
      *
      * @param array $ids
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\ProductCategoryStorage\Persistence\SpyProductAbstractCategoryStorageQuery
      */
-    public function queryData($ids = [])
+    public function queryData($ids = []): SpyProductAbstractCategoryStorageQuery
     {
         $query = $this->getQueryContainer()->queryProductAbstractCategoryStorageByIds($ids);
 
@@ -74,7 +75,7 @@ class ProductCategorySynchronizationDataPlugin extends AbstractPlugin implements
      *
      * @return array
      */
-    public function getParams()
+    public function getParams(): array
     {
         return [];
     }
@@ -87,7 +88,7 @@ class ProductCategorySynchronizationDataPlugin extends AbstractPlugin implements
      *
      * @return string
      */
-    public function getQueueName()
+    public function getQueueName(): string
     {
         return ProductCategoryStorageConfig::PRODUCT_ABSTRACT_CATEGORY_SYNC_STORAGE_QUEUE;
     }

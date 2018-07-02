@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsStorage\Communication\Plugin\Synchronization;
 
+use Orm\Zed\CmsStorage\Persistence\SpyCmsPageStorageQuery;
 use Spryker\Shared\CmsStorage\CmsStorageConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
@@ -26,7 +27,7 @@ class CmsSynchronizationDataPlugin extends AbstractPlugin implements Synchroniza
      *
      * @return string
      */
-    public function getResourceName()
+    public function getResourceName(): string
     {
         return CmsStorageConstants::CMS_PAGE_RESOURCE_NAME;
     }
@@ -39,7 +40,7 @@ class CmsSynchronizationDataPlugin extends AbstractPlugin implements Synchroniza
      *
      * @return bool
      */
-    public function hasStore()
+    public function hasStore(): bool
     {
         return false;
     }
@@ -53,9 +54,9 @@ class CmsSynchronizationDataPlugin extends AbstractPlugin implements Synchroniza
      *
      * @param array $ids
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\CmsStorage\Persistence\SpyCmsPageStorageQuery
      */
-    public function queryData($ids = [])
+    public function queryData($ids = []): SpyCmsPageStorageQuery
     {
         $query = $this->getQueryContainer()->queryCmsPageStorageEntities($ids);
 
@@ -74,7 +75,7 @@ class CmsSynchronizationDataPlugin extends AbstractPlugin implements Synchroniza
      *
      * @return array
      */
-    public function getParams()
+    public function getParams(): array
     {
         return [];
     }
@@ -87,7 +88,7 @@ class CmsSynchronizationDataPlugin extends AbstractPlugin implements Synchroniza
      *
      * @return string
      */
-    public function getQueueName()
+    public function getQueueName(): string
     {
         return CmsStorageConstants::CMS_SYNC_STORAGE_QUEUE;
     }

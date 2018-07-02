@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CategoryPageSearch\Communication\Plugin\Synchronization;
 
+use Orm\Zed\CategoryPageSearch\Persistence\SpyCategoryNodePageSearchQuery;
 use Spryker\Shared\CategoryPageSearch\CategoryPageSearchConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
@@ -26,7 +27,7 @@ class CategoryPageSynchronizationDataPlugin extends AbstractPlugin implements Sy
      *
      * @return string
      */
-    public function getResourceName()
+    public function getResourceName(): string
     {
         return CategoryPageSearchConstants::CATEGORY_SYNC_SEARCH_QUEUE;
     }
@@ -39,7 +40,7 @@ class CategoryPageSynchronizationDataPlugin extends AbstractPlugin implements Sy
      *
      * @return bool
      */
-    public function hasStore()
+    public function hasStore(): bool
     {
         return false;
     }
@@ -53,9 +54,9 @@ class CategoryPageSynchronizationDataPlugin extends AbstractPlugin implements Sy
      *
      * @param array $ids
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\CategoryPageSearch\Persistence\SpyCategoryNodePageSearchQuery
      */
-    public function queryData($ids = [])
+    public function queryData($ids = []): SpyCategoryNodePageSearchQuery
     {
         $query = $this->getQueryContainer()->queryCategoryNodePageSearchByIds($ids);
 
@@ -74,7 +75,7 @@ class CategoryPageSynchronizationDataPlugin extends AbstractPlugin implements Sy
      *
      * @return array
      */
-    public function getParams()
+    public function getParams(): array
     {
         return ["type" => "page"];
     }
@@ -87,7 +88,7 @@ class CategoryPageSynchronizationDataPlugin extends AbstractPlugin implements Sy
      *
      * @return string
      */
-    public function getQueueName()
+    public function getQueueName(): string
     {
         return CategoryPageSearchConstants::CATEGORY_SYNC_SEARCH_QUEUE;
     }

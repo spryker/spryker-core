@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductLabelStorage\Communication\Plugin\Synchronization;
 
+use Orm\Zed\ProductLabelStorage\Persistence\SpyProductLabelDictionaryStorageQuery;
 use Spryker\Shared\ProductLabelStorage\ProductLabelStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
@@ -26,7 +27,7 @@ class ProductLabelDictionarySynchronizationDataPlugin extends AbstractPlugin imp
      *
      * @return string
      */
-    public function getResourceName()
+    public function getResourceName(): string
     {
         return ProductLabelStorageConfig::PRODUCT_LABEL_DICTIONARY_RESOURCE_NAME;
     }
@@ -39,7 +40,7 @@ class ProductLabelDictionarySynchronizationDataPlugin extends AbstractPlugin imp
      *
      * @return bool
      */
-    public function hasStore()
+    public function hasStore(): bool
     {
         return false;
     }
@@ -53,9 +54,9 @@ class ProductLabelDictionarySynchronizationDataPlugin extends AbstractPlugin imp
      *
      * @param array $ids
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\ProductLabelStorage\Persistence\SpyProductLabelDictionaryStorageQuery
      */
-    public function queryData($ids = [])
+    public function queryData($ids = []): SpyProductLabelDictionaryStorageQuery
     {
         $query = $this->getQueryContainer()->queryProductLabelDictionaryStorage();
 
@@ -70,7 +71,7 @@ class ProductLabelDictionarySynchronizationDataPlugin extends AbstractPlugin imp
      *
      * @return array
      */
-    public function getParams()
+    public function getParams(): array
     {
         return [];
     }
@@ -83,7 +84,7 @@ class ProductLabelDictionarySynchronizationDataPlugin extends AbstractPlugin imp
      *
      * @return string
      */
-    public function getQueueName()
+    public function getQueueName(): string
     {
         return ProductLabelStorageConfig::PRODUCT_ABSTRACT_LABEL_SYNC_STORAGE_QUEUE;
     }

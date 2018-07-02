@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsBlockCategoryStorage\Communication\Plugin\Synchronization;
 
+use Orm\Zed\CmsBlockCategoryStorage\Persistence\SpyCmsBlockCategoryStorageQuery;
 use Spryker\Shared\CmsBlockCategoryStorage\CmsBlockCategoryStorageConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
@@ -26,7 +27,7 @@ class CmsBlockCategorySynchronizationDataPlugin extends AbstractPlugin implement
      *
      * @return string
      */
-    public function getResourceName()
+    public function getResourceName(): string
     {
         return CmsBlockCategoryStorageConstants::CMS_BLOCK_CATEGORY_RESOURCE_NAME;
     }
@@ -39,7 +40,7 @@ class CmsBlockCategorySynchronizationDataPlugin extends AbstractPlugin implement
      *
      * @return bool
      */
-    public function hasStore()
+    public function hasStore(): bool
     {
         return false;
     }
@@ -53,9 +54,9 @@ class CmsBlockCategorySynchronizationDataPlugin extends AbstractPlugin implement
      *
      * @param array $ids
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\CmsBlockCategoryStorage\Persistence\SpyCmsBlockCategoryStorageQuery
      */
-    public function queryData($ids = [])
+    public function queryData($ids = []): SpyCmsBlockCategoryStorageQuery
     {
         $query = $this->getQueryContainer()->queryCmsBlockCategoryStorageByIds($ids);
 
@@ -74,7 +75,7 @@ class CmsBlockCategorySynchronizationDataPlugin extends AbstractPlugin implement
      *
      * @return array
      */
-    public function getParams()
+    public function getParams(): array
     {
         return [];
     }
@@ -87,7 +88,7 @@ class CmsBlockCategorySynchronizationDataPlugin extends AbstractPlugin implement
      *
      * @return string
      */
-    public function getQueueName()
+    public function getQueueName(): string
     {
         return CmsBlockCategoryStorageConstants::CMS_BLOCK_CATEGORY_SYNC_STORAGE_QUEUE;
     }

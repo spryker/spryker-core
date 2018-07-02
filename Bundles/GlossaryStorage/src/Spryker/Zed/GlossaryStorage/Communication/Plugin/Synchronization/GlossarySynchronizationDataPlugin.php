@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\GlossaryStorage\Communication\Plugin\Synchronization;
 
+use Orm\Zed\GlossaryStorage\Persistence\SpyGlossaryStorageQuery;
 use Spryker\Shared\GlossaryStorage\GlossaryStorageConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
@@ -26,7 +27,7 @@ class GlossarySynchronizationDataPlugin extends AbstractPlugin implements Synchr
      *
      * @return string
      */
-    public function getResourceName()
+    public function getResourceName(): string
     {
         return GlossaryStorageConstants::RESOURCE_NAME;
     }
@@ -39,7 +40,7 @@ class GlossarySynchronizationDataPlugin extends AbstractPlugin implements Synchr
      *
      * @return bool
      */
-    public function hasStore()
+    public function hasStore(): bool
     {
         return false;
     }
@@ -53,9 +54,9 @@ class GlossarySynchronizationDataPlugin extends AbstractPlugin implements Synchr
      *
      * @param array $ids
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\GlossaryStorage\Persistence\SpyGlossaryStorageQuery
      */
-    public function queryData($ids = [])
+    public function queryData($ids = []): SpyGlossaryStorageQuery
     {
         $query = $this->getQueryContainer()->queryGlossaryStorageByGlossaryIds($ids);
 
@@ -74,7 +75,7 @@ class GlossarySynchronizationDataPlugin extends AbstractPlugin implements Synchr
      *
      * @return array
      */
-    public function getParams()
+    public function getParams(): array
     {
         return [];
     }
@@ -87,7 +88,7 @@ class GlossarySynchronizationDataPlugin extends AbstractPlugin implements Synchr
      *
      * @return string
      */
-    public function getQueueName()
+    public function getQueueName(): string
     {
         return GlossaryStorageConstants::SYNC_STORAGE_QUEUE;
     }

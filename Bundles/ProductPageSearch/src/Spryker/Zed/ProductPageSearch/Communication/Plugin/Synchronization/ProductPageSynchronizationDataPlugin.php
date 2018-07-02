@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\Synchronization;
 
+use Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearchQuery;
 use Spryker\Shared\ProductPageSearch\ProductPageSearchConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface;
@@ -26,7 +27,7 @@ class ProductPageSynchronizationDataPlugin extends AbstractPlugin implements Syn
      *
      * @return string
      */
-    public function getResourceName()
+    public function getResourceName(): string
     {
         return ProductPageSearchConstants::PRODUCT_ABSTRACT_RESOURCE_NAME;
     }
@@ -39,7 +40,7 @@ class ProductPageSynchronizationDataPlugin extends AbstractPlugin implements Syn
      *
      * @return bool
      */
-    public function hasStore()
+    public function hasStore(): bool
     {
         return true;
     }
@@ -53,9 +54,9 @@ class ProductPageSynchronizationDataPlugin extends AbstractPlugin implements Syn
      *
      * @param array $ids
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearchQuery
      */
-    public function queryData($ids = [])
+    public function queryData($ids = []): SpyProductAbstractPageSearchQuery
     {
         $query = $this->getQueryContainer()->queryProductAbstractSearchPageByIds($ids);
 
@@ -74,7 +75,7 @@ class ProductPageSynchronizationDataPlugin extends AbstractPlugin implements Syn
      *
      * @return array
      */
-    public function getParams()
+    public function getParams(): array
     {
         return ["type" => "page"];
     }
@@ -87,7 +88,7 @@ class ProductPageSynchronizationDataPlugin extends AbstractPlugin implements Syn
      *
      * @return string
      */
-    public function getQueueName()
+    public function getQueueName(): string
     {
         return ProductPageSearchConstants::PRODUCT_SYNC_SEARCH_QUEUE;
     }
