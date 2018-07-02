@@ -9,6 +9,7 @@ namespace Spryker\Zed\SalesStatistics\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\SalesStatistics\SalesStatisticsDependencyProvider;
+use Twig_Environment;
 
 /**
  * @method \Spryker\Zed\SalesStatistics\SalesStatisticsConfig getConfig()
@@ -18,7 +19,7 @@ class SalesStatisticsCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Twig_Environment
      */
-    public function getTwigEnvironment()
+    public function getTwigEnvironment(): Twig_Environment
     {
         return $this->getProvidedDependency(SalesStatisticsDependencyProvider::RENDERER);
     }

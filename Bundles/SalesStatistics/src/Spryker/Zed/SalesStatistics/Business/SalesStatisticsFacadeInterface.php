@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\SalesStatisticTransfer;
 interface SalesStatisticsFacadeInterface
 {
     /**
+     * Specification:
+     * - Get order statistic for last days
+     *
      * @api
      *
      * @param int $days
@@ -21,6 +24,9 @@ interface SalesStatisticsFacadeInterface
     public function getOrderStatisticByCountDay($days): SalesStatisticTransfer;
 
     /**
+     * Specification:
+     * - Get sales statistic for each order status
+     *
      * @api
      *
      * @return \Generated\Shared\Transfer\SalesStatisticTransfer
@@ -28,6 +34,9 @@ interface SalesStatisticsFacadeInterface
     public function getStatusOrderStatistic(): SalesStatisticTransfer;
 
     /**
+     * Specification:
+     * - Get top products statistic
+     *
      * @api
      *
      * @param int $countProduct

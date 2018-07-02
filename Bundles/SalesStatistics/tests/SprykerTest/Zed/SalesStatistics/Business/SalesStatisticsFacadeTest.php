@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\SalesStatistics\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\SalesStatisticTransfer;
+use SprykerTest\Zed\SalesStatistics\Helper\BusinessHelper;
 
 /**
  * Auto-generated group annotations
@@ -28,6 +29,20 @@ class SalesStatisticsFacadeTest extends Unit
     protected $tester;
 
     /**
+     * @var \Orm\Zed\Sales\Persistence\SpySalesOrder
+     */
+    protected $spySalesOrder;
+
+    /**
+     * @return void
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+        $this->spySalesOrder = $this->tester->create();
+    }
+
+    /**
      * @return void
      */
     public function testOrderStatisticByCountDay()
@@ -35,6 +50,8 @@ class SalesStatisticsFacadeTest extends Unit
         $salesStatisticTransfer = $this->tester->getLocator()->salesStatistics()->facade()->getOrderStatisticByCountDay(1);
 
         $this->assertInstanceOf(SalesStatisticTransfer::class, $salesStatisticTransfer);
+        $this->assertSame($salesStatisticTransfer->getValues(), [1]);
+        $this->assertSame($salesStatisticTransfer->getLabels(), [$this->spySalesOrder->getCreatedAt('Y-m-d')]);
     }
 
     /**
@@ -44,7 +61,14 @@ class SalesStatisticsFacadeTest extends Unit
     {
         $salesStatisticTransfer = $this->tester->getLocator()->salesStatistics()->facade()->getStatusOrderStatistic();
 
+        $sum = array_reduce($this->spySalesOrder->getItems()->toArray(), function ($sum, $item) {
+            return $sum + $item['PriceToPayAggregation'];
+        }, 0);
+        $sum = $sum / 100;
+
         $this->assertInstanceOf(SalesStatisticTransfer::class, $salesStatisticTransfer);
+        $this->assertSame($salesStatisticTransfer->getValues(), [$sum]);
+        $this->assertSame($salesStatisticTransfer->getLabels(), [BusinessHelper::DEFAULT_ITEM_STATE]);
     }
 
     /**
@@ -52,8 +76,10 @@ class SalesStatisticsFacadeTest extends Unit
      */
     public function testTopOrderStatistic()
     {
-        $salesStatisticTransfer = $this->tester->getLocator()->salesStatistics()->facade()->getTopOrderStatistic(2);
+        $salesStatisticTransfer = $this->tester->getLocator()->salesStatistics()->facade()->getTopOrderStatistic(1);
 
         $this->assertInstanceOf(SalesStatisticTransfer::class, $salesStatisticTransfer);
+        $this->assertSame($salesStatisticTransfer->getValues(), [count($this->spySalesOrder->getItems())]);
+        $this->assertSame($salesStatisticTransfer->getLabels(), [BusinessHelper::DEFAULT_PRODUCT_NAME]);
     }
 }

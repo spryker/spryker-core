@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SalesStatistics\Business\Model;
+namespace Spryker\Zed\SalesStatistics\Business\Reader;
 
 use Generated\Shared\Transfer\SalesStatisticTransfer;
 

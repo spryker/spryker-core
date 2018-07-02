@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/dashboard.svg)](https://travis-ci.org/spryker/dashboard)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/dashboard/badge.svg)](https://coveralls.io/github/spryker/dashboard)
 
-{{ADD DESCRIPTION HERE}}
+Module for displaying information in the Admin panel
 
 ## Installation
 

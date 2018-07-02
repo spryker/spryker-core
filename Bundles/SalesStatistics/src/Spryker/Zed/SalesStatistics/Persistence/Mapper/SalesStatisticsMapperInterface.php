@@ -16,5 +16,19 @@ interface SalesStatisticsMapperInterface
      *
      * @return \Generated\Shared\Transfer\SalesStatisticTransfer
      */
-    public function mapCountStatisticToEntityTransfer(array $statistic): SalesStatisticTransfer;
+    public function mapCountStatisticToTransfer(array $statistic): SalesStatisticTransfer;
+
+    /**
+     * @param array $statistic
+     *
+     * @return \Generated\Shared\Transfer\SalesStatisticTransfer
+     */
+    public function mapStatusOrderStatisticToTransfer(array $statistic): SalesStatisticTransfer;
+
+    /**
+     * @param array $statistic
+     *
+     * @return \Generated\Shared\Transfer\SalesStatisticTransfer
+     */
+    public function mapTopOrderStatisticToTransfer(array $statistic): SalesStatisticTransfer;
 }

@@ -23,7 +23,7 @@ class SalesStatisticsPersistenceFactory extends AbstractPersistenceFactory
      */
     public function createSalesOrderQuery(): SpySalesOrderQuery
     {
-        return $this->getProvidedDependency(SalesStatisticsDependencyProvider::SALES_ORDER_QUERY);
+        return $this->getProvidedDependency(SalesStatisticsDependencyProvider::PROPEL_SALES_ORDER_QUERY);
     }
 
     /**
@@ -31,7 +31,7 @@ class SalesStatisticsPersistenceFactory extends AbstractPersistenceFactory
      */
     public function createSalesOrderItemQuery(): SpySalesOrderItemQuery
     {
-        return $this->getProvidedDependency(SalesStatisticsDependencyProvider::SALES_ORDER_ITEM_QUERY);
+        return $this->getProvidedDependency(SalesStatisticsDependencyProvider::PROPEL_SALES_ORDER_ITEM_QUERY);
     }
 
     /**

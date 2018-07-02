@@ -71,7 +71,7 @@ class TopOrdersPluginChart extends AbstractPlugin implements ChartPluginInterfac
     /**
      * @return \Generated\Shared\Transfer\ChartDataTraceTransfer
      */
-    protected function getChartDataTraceTransfer()
+    protected function getChartDataTraceTransfer(): ChartDataTraceTransfer
     {
         $result = $this->getFacade()->getTopOrderStatistic(static::COUNT_PRODUCT);
 

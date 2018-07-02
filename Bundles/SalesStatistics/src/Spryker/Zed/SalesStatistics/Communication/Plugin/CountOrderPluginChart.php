@@ -63,7 +63,7 @@ class CountOrderPluginChart extends AbstractPlugin implements ChartPluginInterfa
     /**
      * @return \Generated\Shared\Transfer\ChartDataTraceTransfer
      */
-    protected function getChartDataTraceTransfer()
+    protected function getChartDataTraceTransfer(): ChartDataTraceTransfer
     {
         $salesStatisticTransfer = $this->getFacade()->getOrderStatisticByCountDay(static::DAYS);
 

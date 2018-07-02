@@ -9,7 +9,7 @@ namespace Spryker\Zed\SalesStatistics\Business;
 
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\SalesStatistics\Business\Model\Reader;
+use Spryker\Zed\SalesStatistics\Business\Reader\Reader;
 use Spryker\Zed\SalesStatistics\SalesStatisticsDependencyProvider;
 
 /**
@@ -23,11 +23,11 @@ class SalesStatisticsBusinessFactory extends AbstractBusinessFactory
      */
     public function getSpySalesOrderQuery(): SpySalesOrderQuery
     {
-        return $this->getProvidedDependency(SalesStatisticsDependencyProvider::SALES_ORDER_QUERY);
+        return $this->getProvidedDependency(SalesStatisticsDependencyProvider::PROPEL_SALES_ORDER_QUERY);
     }
 
     /**
-     * @return \Spryker\Zed\SalesStatistics\Business\Model\Reader
+     * @return \Spryker\Zed\SalesStatistics\Business\Reader\ReaderInterface
      */
     public function createReader()
     {

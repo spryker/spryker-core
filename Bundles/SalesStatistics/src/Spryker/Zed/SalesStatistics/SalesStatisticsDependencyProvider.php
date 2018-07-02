@@ -12,12 +12,11 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\Container;
-use Twig_Environment;
 
 class SalesStatisticsDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const SALES_ORDER_QUERY = 'SALES_ORDER_QUERY';
-    public const SALES_ORDER_ITEM_QUERY = 'SALES_ORDER_ITEM_QUERY';
+    public const PROPEL_SALES_ORDER_QUERY = 'SALES_ORDER_QUERY';
+    public const PROPEL_SALES_ORDER_ITEM_QUERY = 'SALES_ORDER_ITEM_QUERY';
     public const RENDERER = 'RENDERER';
 
     /**
@@ -27,6 +26,7 @@ class SalesStatisticsDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function providePersistenceLayerDependencies(Container $container): Container
     {
+        $container = parent::providePersistenceLayerDependencies($container);
         $container = $this->addSalesOrderQuery($container);
         $container = $this->addSalesOrderItemQuery($container);
 
@@ -40,6 +40,7 @@ class SalesStatisticsDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
+        $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addRenderer($container);
 
         return $container;
@@ -52,7 +53,7 @@ class SalesStatisticsDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addSalesOrderQuery(Container $container): Container
     {
-        $container[static::SALES_ORDER_QUERY] = function (Container $container) {
+        $container[static::PROPEL_SALES_ORDER_QUERY] = function (Container $container) {
             return SpySalesOrderQuery::create();
         };
 
@@ -66,7 +67,7 @@ class SalesStatisticsDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addSalesOrderItemQuery(Container $container): Container
     {
-        $container[static::SALES_ORDER_ITEM_QUERY] = function (Container $container) {
+        $container[static::PROPEL_SALES_ORDER_ITEM_QUERY] = function (Container $container) {
             return SpySalesOrderItemQuery::create();
         };
 
@@ -80,17 +81,12 @@ class SalesStatisticsDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addRenderer(Container $container): Container
     {
-        $container[static::RENDERER] = $this->getTwigEnvironment();
+        $container[static::RENDERER] = function () {
+            $pimplePlugin = new Pimple();
+
+            return $pimplePlugin->getApplication()['twig'];
+        };
 
         return $container;
-    }
-
-    /**
-     * @return \Twig_Environment
-     */
-    protected function getTwigEnvironment(): Twig_Environment
-    {
-        $pimplePlugin = new Pimple();
-        return $pimplePlugin->getApplication()['twig'];
     }
 }

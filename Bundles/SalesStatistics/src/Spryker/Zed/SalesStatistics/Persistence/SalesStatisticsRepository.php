@@ -42,7 +42,7 @@ class SalesStatisticsRepository extends AbstractRepository implements SalesStati
             ->groupBy(static::DATE)
             ->find()->toArray();
 
-        return $this->getFactory()->createSalesStatisticsMapper()->mapCountStatisticToEntityTransfer($result);
+        return $this->getFactory()->createSalesStatisticsMapper()->mapCountStatisticToTransfer($result);
     }
 
     /**
@@ -58,7 +58,7 @@ class SalesStatisticsRepository extends AbstractRepository implements SalesStati
             ->groupBy(SpyOmsOrderItemStateTableMap::COL_ID_OMS_ORDER_ITEM_STATE)
             ->find()->toArray();
 
-        return $this->getFactory()->createSalesStatisticsMapper()->mapStatusOrderStatisticToEntityTransfer($result);
+        return $this->getFactory()->createSalesStatisticsMapper()->mapStatusOrderStatisticToTransfer($result);
     }
 
     /**
@@ -77,6 +77,6 @@ class SalesStatisticsRepository extends AbstractRepository implements SalesStati
             ->orderBy(static::COUNT, Criteria::DESC)
             ->find()->toArray();
 
-        return $this->getFactory()->createSalesStatisticsMapper()->mapTopOrderStatisticToEntityTransfer($result);
+        return $this->getFactory()->createSalesStatisticsMapper()->mapTopOrderStatisticToTransfer($result);
     }
 }

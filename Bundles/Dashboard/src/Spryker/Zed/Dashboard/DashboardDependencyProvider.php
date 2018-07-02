@@ -21,6 +21,7 @@ class DashboardDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
+        $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addRenderDashboardPlugins($container);
 
         return $container;

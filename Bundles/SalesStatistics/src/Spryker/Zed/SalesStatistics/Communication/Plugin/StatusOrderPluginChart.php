@@ -69,7 +69,7 @@ class StatusOrderPluginChart extends AbstractPlugin implements ChartPluginInterf
     /**
      * @return \Generated\Shared\Transfer\ChartDataTraceTransfer
      */
-    protected function getChartDataTraceTransfer()
+    protected function getChartDataTraceTransfer(): ChartDataTraceTransfer
     {
         $result = $this->getFacade()->getStatusOrderStatistic();
 

@@ -16,6 +16,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class SalesStatisticsFacade extends AbstractFacade implements SalesStatisticsFacadeInterface
 {
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param int $days
@@ -28,6 +30,8 @@ class SalesStatisticsFacade extends AbstractFacade implements SalesStatisticsFac
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @return \Generated\Shared\Transfer\SalesStatisticTransfer
@@ -38,6 +42,8 @@ class SalesStatisticsFacade extends AbstractFacade implements SalesStatisticsFac
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
      * @param int $countProduct

@@ -13,12 +13,13 @@ use Spryker\Zed\SalesStatistics\Persistence\SalesStatisticsRepository;
 class SalesStatisticsMapper implements SalesStatisticsMapperInterface
 {
     public const DECIMAL = 100;
+
     /**
      * @param array $statistic
      *
      * @return \Generated\Shared\Transfer\SalesStatisticTransfer
      */
-    public function mapCountStatisticToEntityTransfer(array $statistic): SalesStatisticTransfer
+    public function mapCountStatisticToTransfer(array $statistic): SalesStatisticTransfer
     {
         $chartDataTraceTransfer = new SalesStatisticTransfer();
         if ($statistic) {
@@ -36,7 +37,7 @@ class SalesStatisticsMapper implements SalesStatisticsMapperInterface
      *
      * @return \Generated\Shared\Transfer\SalesStatisticTransfer
      */
-    public function mapStatusOrderStatisticToEntityTransfer(array $statistic): SalesStatisticTransfer
+    public function mapStatusOrderStatisticToTransfer(array $statistic): SalesStatisticTransfer
     {
         $chartDataTraceTransfer = new SalesStatisticTransfer();
         if ($statistic) {
@@ -54,7 +55,7 @@ class SalesStatisticsMapper implements SalesStatisticsMapperInterface
      *
      * @return \Generated\Shared\Transfer\SalesStatisticTransfer
      */
-    public function mapTopOrderStatisticToEntityTransfer(array $statistic): SalesStatisticTransfer
+    public function mapTopOrderStatisticToTransfer(array $statistic): SalesStatisticTransfer
     {
         $chartDataTraceTransfer = new SalesStatisticTransfer();
         if ($statistic) {
