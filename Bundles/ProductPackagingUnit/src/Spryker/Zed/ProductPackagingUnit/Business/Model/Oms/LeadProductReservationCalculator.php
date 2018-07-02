@@ -16,6 +16,8 @@ use Spryker\Zed\ProductPackagingUnit\Dependency\QueryContainer\ProductPackagingU
 
 class LeadProductReservationCalculator implements LeadProductReservationCalculatorInterface
 {
+    protected const COL_SUM = 'SumAmount';
+
     /**
      * @var \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToOmsFacadeInterface
      */
@@ -69,24 +71,29 @@ class LeadProductReservationCalculator implements LeadProductReservationCalculat
      */
     protected function sumLeadProductAmountsForAllSalesOrderItemsBySku(string $sku, bool $returnTest = true): int
     {
-        $salesOrderItemQuery = $this
-            ->salesQueryContainer
+        /** @var \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $salesOrderItemQuery */
+        $salesOrderItemQuery = $this->salesQueryContainer
             ->querySalesOrderItem()
-            ->withColumn('SUM(' . SpySalesOrderItemTableMap::COL_AMOUNT . ')', 'Sum')
-            ->select(['Sum']);
-
-        if ($returnTest === false) {
-            $salesOrderItemQuery->useOrderQuery()
-                ->filterByIsTest(false)
-                ->endUse();
-        }
-
-        $reservedStateNames = $this->omsFacade->getReservedStateNames();
-        $salesOrderItemQuery->useStateQuery()
-            ->filterByName($reservedStateNames, Criteria::IN)
+            ->withColumn('SUM(' . SpySalesOrderItemTableMap::COL_AMOUNT . ')', static::COL_SUM)
+            ->useStateQuery()
+                ->filterByName($this->getReservedStateNames(), Criteria::IN)
             ->endUse()
-            ->filterByAmountSku($sku);
+            ->_if($returnTest === false)
+                ->useOrderQuery()
+                    ->filterByIsTest(false)
+                ->endUse()
+            ->_endif()
+            ->filterByAmountSku($sku)
+            ->select([static::COL_SUM]);
 
         return (int)$salesOrderItemQuery->findOne();
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getReservedStateNames(): array
+    {
+        return $this->omsFacade->getReservedStateNames();
     }
 }

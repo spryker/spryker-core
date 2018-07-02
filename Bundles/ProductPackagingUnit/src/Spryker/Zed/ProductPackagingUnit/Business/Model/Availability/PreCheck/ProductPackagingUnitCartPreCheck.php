@@ -70,7 +70,7 @@ class ProductPackagingUnitCartPreCheck extends ProductPackagingUnitAvailabilityP
      *
      * @return \Generated\Shared\Transfer\MessageTransfer
      */
-    protected function createMessageTransfer(string $message, array $params = []): MessageTransfer
+    protected function createMessageTransfer(string $message, ?array $params = []): MessageTransfer
     {
         return (new MessageTransfer())
             ->setValue($message)

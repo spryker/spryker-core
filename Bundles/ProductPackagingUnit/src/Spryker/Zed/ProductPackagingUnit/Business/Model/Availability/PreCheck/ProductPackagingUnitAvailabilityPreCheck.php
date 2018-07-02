@@ -46,7 +46,7 @@ abstract class ProductPackagingUnitAvailabilityPreCheck
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param \Traversable|\Generated\Shared\Transfer\ItemTransfer[] $items
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return bool
@@ -65,7 +65,7 @@ abstract class ProductPackagingUnitAvailabilityPreCheck
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param \Traversable|\Generated\Shared\Transfer\ItemTransfer[] $items
      * @param string $sku
      * @param \Generated\Shared\Transfer\ItemTransfer $currentItem
      *
@@ -100,9 +100,9 @@ abstract class ProductPackagingUnitAvailabilityPreCheck
      * @param int $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int
+     * @return bool
      */
-    protected function isProductSellableForStore(string $sku, int $quantity, StoreTransfer $storeTransfer): int
+    protected function isProductSellableForStore(string $sku, int $quantity, StoreTransfer $storeTransfer): bool
     {
         return $this->availabilityFacade
             ->isProductSellableForStore($sku, $quantity, $storeTransfer);
