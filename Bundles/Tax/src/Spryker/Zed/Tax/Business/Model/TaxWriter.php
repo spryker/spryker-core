@@ -15,7 +15,6 @@ use Propel\Runtime\Collection\Collection;
 use Spryker\Zed\Tax\Business\Model\Exception\DuplicateResourceException;
 use Spryker\Zed\Tax\Business\Model\Exception\MissingTaxRateException;
 use Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException;
-use Spryker\Zed\Tax\Dependency\Plugin\TaxChangePluginInterface;
 use Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface;
 use Spryker\Zed\Tax\Persistence\TaxRepositoryInterface;
 
@@ -53,7 +52,7 @@ class TaxWriter implements TaxWriterInterface
     public function __construct(
         TaxQueryContainerInterface $queryContainer,
         TaxRepositoryInterface $taxRepository,
-        TaxChangePluginInterface ...$taxChangePlugins
+        array $taxChangePlugins
     ) {
         $this->queryContainer = $queryContainer;
         $this->taxRepository = $taxRepository;

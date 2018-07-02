@@ -340,4 +340,32 @@ class WriterTest extends Unit
         $taxSet2Transfer->addTaxRate($taxRate2Transfer);
         $this->taxFacade->createTaxSet($taxSet2Transfer);
     }
+
+    /**
+     * @return void
+     */
+    public function testExceptionRaisedIfAttemptingToUpdateTaxSetWithExistingTaxSetName()
+    {
+        $taxRateTransfer = $this->createTaxRateTransfer();
+        $taxSetTransfer = $this->createTaxSetTransfer();
+        $taxSetName1 = $taxSetTransfer->getName();
+        $taxSetTransfer->addTaxRate($taxRateTransfer);
+        $this->taxFacade->createTaxSet($taxSetTransfer)->getIdTaxSet();
+
+        $taxRateTransfer = $this->createTaxRateTransfer();
+        $taxSetTransfer = $this->createTaxSetTransfer();
+        $taxSetTransfer->addTaxRate($taxRateTransfer);
+        $taxSetId2 = $this->taxFacade->createTaxSet($taxSetTransfer)->getIdTaxSet();
+
+        $taxRate2Transfer = new TaxRateTransfer();
+        $taxRate2Transfer->setName(self::DUMMY_TAX_RATE2_NAME);
+        $taxRate2Transfer->setRate(self::DUMMY_TAX_RATE2_PERCENTAGE);
+
+        $taxSetTransfer = $this->createTaxSetTransfer();
+        $taxSetTransfer->setIdTaxSet($taxSetId2)->setName($taxSetName1);
+        $taxSetTransfer->addTaxRate($taxRate2Transfer);
+
+        $this->expectException(DuplicateResourceException::class);
+        $this->taxFacade->updateTaxSet($taxSetTransfer);
+    }
 }
