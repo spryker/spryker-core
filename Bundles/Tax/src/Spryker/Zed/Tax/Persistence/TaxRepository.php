@@ -10,7 +10,6 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
- * Class TaxRepository
  * @package Spryker\Zed\Tax\Persistence
  * @method \Spryker\Zed\Tax\Persistence\TaxPersistenceFactory getFactory()
  */

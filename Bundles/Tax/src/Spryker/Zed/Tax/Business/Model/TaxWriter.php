@@ -18,10 +18,6 @@ use Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException;
 use Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface;
 use Spryker\Zed\Tax\Persistence\TaxRepositoryInterface;
 
-/**
- * Class TaxWriter
- * @package Spryker\Zed\Tax\Business\Model
- */
 class TaxWriter implements TaxWriterInterface
 {
     /**
@@ -42,7 +38,7 @@ class TaxWriter implements TaxWriterInterface
     /**
      * @var \Spryker\Zed\Tax\Persistence\TaxRepositoryInterface
      */
-    private $taxRepository;
+    protected $taxRepository;
 
     /**
      * @param \Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface $queryContainer

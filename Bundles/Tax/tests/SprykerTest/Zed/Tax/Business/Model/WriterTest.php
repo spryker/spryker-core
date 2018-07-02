@@ -8,8 +8,8 @@
 namespace SprykerTest\Zed\Tax\Business\Model;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\TaxSetBuilder;
 use Generated\Shared\Transfer\TaxRateTransfer;
-use Generated\Shared\Transfer\TaxSetTransfer;
 use Orm\Zed\Tax\Persistence\SpyTaxRateQuery;
 use Orm\Zed\Tax\Persistence\SpyTaxSetQuery;
 use Spryker\Zed\Tax\Business\Model\Exception\DuplicateResourceException;
@@ -28,17 +28,11 @@ use Spryker\Zed\Tax\Business\TaxFacade;
  */
 class WriterTest extends Unit
 {
-    const DUMMY_TAX_SET_NAME = 'SalesTax';
     const DUMMY_TAX_RATE1_NAME = 'Local';
     const DUMMY_TAX_RATE1_PERCENTAGE = 25;
     const DUMMY_TAX_RATE2_NAME = 'Regional';
     const DUMMY_TAX_RATE2_PERCENTAGE = 10;
     const NON_EXISTENT_ID = 999999999;
-
-    /**
-     * @var
-     */
-    private static $taxSetIndex;
 
     /**
      * @var \Spryker\Zed\Tax\Business\TaxFacadeInterface
@@ -72,10 +66,7 @@ class WriterTest extends Unit
      */
     private function createTaxSetTransfer()
     {
-        $taxSetTransfer = new TaxSetTransfer();
-        $taxSetTransfer->setName(self::DUMMY_TAX_SET_NAME . ++static::$taxSetIndex);
-
-        return $taxSetTransfer;
+        return (new TaxSetBuilder())->build();
     }
 
     /**
@@ -316,56 +307,40 @@ class WriterTest extends Unit
     /**
      * @return void
      */
-    public function testExceptionRaisedIfAttemptingToCreateTaxSetWithExistingTaxSetName()
+    public function testCreateTaxSetWithExistingTaxSetNameShouldRaiseException()
     {
-        $taxRateTransfer = $this->createTaxRateTransfer();
-        $this->taxFacade->createTaxRate($taxRateTransfer);
-
-        $taxSetTransfer = $this->createTaxSetTransfer();
-        $taxSetTransfer->addTaxRate($taxRateTransfer);
+        //Arrange
+        $taxSetTransfer = (new TaxSetBuilder())->build();
+        $taxSetName1 = $taxSetTransfer->getName();
         $this->taxFacade->createTaxSet($taxSetTransfer);
+        $taxSetTransfer2 = (new TaxSetBuilder())->build();
+        $taxSetTransfer2->setName($taxSetName1);
 
-        $taxSetQuery = SpyTaxSetQuery::create()->filterByIdTaxSet($taxSetTransfer->getIdTaxSet())->findOne();
-        $this->assertNotEmpty($taxSetQuery);
-        $this->assertNotEmpty($taxSetQuery->getSpyTaxRates());
-
-        $taxRate2Transfer = new TaxRateTransfer();
-        $taxRate2Transfer->setName(self::DUMMY_TAX_RATE2_NAME);
-        $taxRate2Transfer->setRate(self::DUMMY_TAX_RATE2_PERCENTAGE);
-
+        //Assert
         $this->expectException(DuplicateResourceException::class);
 
-        $taxSet2Transfer = $this->createTaxSetTransfer();
-        $taxSet2Transfer->setName($taxSetTransfer->getName());
-        $taxSet2Transfer->addTaxRate($taxRate2Transfer);
-        $this->taxFacade->createTaxSet($taxSet2Transfer);
+        //Act
+        $this->taxFacade->createTaxSet($taxSetTransfer2);
     }
 
     /**
      * @return void
      */
-    public function testExceptionRaisedIfAttemptingToUpdateTaxSetWithExistingTaxSetName()
+    public function testUpdateTaxSetWithExistingTaxSetNameShouldRaiseException()
     {
-        $taxRateTransfer = $this->createTaxRateTransfer();
-        $taxSetTransfer = $this->createTaxSetTransfer();
+        //Arrange
+        $taxSetTransfer = (new TaxSetBuilder())->build();
         $taxSetName1 = $taxSetTransfer->getName();
-        $taxSetTransfer->addTaxRate($taxRateTransfer);
-        $this->taxFacade->createTaxSet($taxSetTransfer)->getIdTaxSet();
+        $this->taxFacade->createTaxSet($taxSetTransfer);
+        $taxSetTransfer2 = (new TaxSetBuilder())->build();
+        $taxSetId2 = $this->taxFacade->createTaxSet($taxSetTransfer2)->getIdTaxSet();
+        $taxSetTransfer3 = (new TaxSetBuilder())->build();
+        $taxSetTransfer3->setIdTaxSet($taxSetId2)->setName($taxSetName1);
 
-        $taxRateTransfer = $this->createTaxRateTransfer();
-        $taxSetTransfer = $this->createTaxSetTransfer();
-        $taxSetTransfer->addTaxRate($taxRateTransfer);
-        $taxSetId2 = $this->taxFacade->createTaxSet($taxSetTransfer)->getIdTaxSet();
-
-        $taxRate2Transfer = new TaxRateTransfer();
-        $taxRate2Transfer->setName(self::DUMMY_TAX_RATE2_NAME);
-        $taxRate2Transfer->setRate(self::DUMMY_TAX_RATE2_PERCENTAGE);
-
-        $taxSetTransfer = $this->createTaxSetTransfer();
-        $taxSetTransfer->setIdTaxSet($taxSetId2)->setName($taxSetName1);
-        $taxSetTransfer->addTaxRate($taxRate2Transfer);
-
+        //Assert
         $this->expectException(DuplicateResourceException::class);
-        $this->taxFacade->updateTaxSet($taxSetTransfer);
+
+        //Act
+        $this->taxFacade->updateTaxSet($taxSetTransfer3);
     }
 }
