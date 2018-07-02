@@ -20,7 +20,7 @@ interface ProductPackagingUnitTypeReaderInterface
      */
     public function findProductPackagingUnitTypeByName(
         ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
-    ): ProductPackagingUnitTypeTransfer;
+    ): ?ProductPackagingUnitTypeTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
