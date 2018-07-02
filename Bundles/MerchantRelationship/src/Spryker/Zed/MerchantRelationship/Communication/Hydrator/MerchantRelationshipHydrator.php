@@ -34,7 +34,7 @@ class MerchantRelationshipHydrator
      */
     public function hydrate(CompanyUserTransfer $companyUserTransfer): CompanyUserTransfer
     {
-        if ($companyUserTransfer->getCompanyBusinessUnit() !== null) {
+        if ($companyUserTransfer->getCompanyBusinessUnit()) {
             $merchantRelationships = $this->merchantRelationshipRepository->getAssignedMerchantRelationshipsByIdCompanyBusinessUnit(
                 $companyUserTransfer->getFkCompanyBusinessUnit()
             );

@@ -102,12 +102,14 @@ class MerchantRelationshipRepository extends AbstractRepository implements Merch
      */
     public function getAssignedMerchantRelationshipsByIdCompanyBusinessUnit(int $idCompanyBusinessUnit): array
     {
+        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationship[] $merchantRelationshipEntities */
         $merchantRelationshipEntities = $this->getFactory()
             ->createMerchantRelationshipQuery()
             ->useSpyMerchantRelationshipToCompanyBusinessUnitQuery()
                 ->filterByFkCompanyBusinessUnit($idCompanyBusinessUnit)
             ->endUse()
             ->find();
+
         if ($merchantRelationshipEntities->isEmpty()) {
             return [];
         }

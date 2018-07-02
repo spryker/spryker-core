@@ -61,7 +61,7 @@ class PriceProductMerchantRelationshipStorageEntityManager extends AbstractEntit
      * @param string $priceKey
      * @param string $priceProductStorageEntityClass
      *
-     * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface|\Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductAbstractMerchantRelationshipStorage|\Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorage
+     * @return \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductAbstractMerchantRelationshipStorage|\Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorage
      */
     protected function getPriceProductMerchantRelationshipStorageEntity(
         array $priceProductMerchantRelationshipStorageEntityMap,

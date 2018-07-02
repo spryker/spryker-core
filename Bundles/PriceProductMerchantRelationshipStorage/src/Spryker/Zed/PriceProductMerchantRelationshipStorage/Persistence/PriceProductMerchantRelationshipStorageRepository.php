@@ -15,9 +15,9 @@ use Orm\Zed\PriceProductMerchantRelationship\Persistence\Map\SpyPriceProductMerc
 use Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationship;
 use Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\Map\SpyPriceProductAbstractMerchantRelationshipStorageTableMap;
 use Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\Map\SpyPriceProductConcreteMerchantRelationshipStorageTableMap;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConstants;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
-use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
  * @method \Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProductMerchantRelationshipStoragePersistenceFactory getFactory()
@@ -252,9 +252,9 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
     /**
      * @param array $businessUnitProducts
      *
-     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery
+     * @return \Propel\Runtime\ActiveQuery\Criteria
      */
-    protected function queryPriceProductStoreByCompanyBusinessUnitAbstractProducts(array $businessUnitProducts): SpyPriceProductStoreQuery
+    protected function queryPriceProductStoreByCompanyBusinessUnitAbstractProducts(array $businessUnitProducts): Criteria
     {
         return $this->getFactory()
             ->getPropelPriceProductStoreQuery()
@@ -274,9 +274,9 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
     /**
      * @param array $businessUnitProducts
      *
-     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery
+     * @return \Propel\Runtime\ActiveQuery\Criteria
      */
-    protected function queryPriceProductStoreByCompanyBusinessUnitConcreteProducts(array $businessUnitProducts): SpyPriceProductStoreQuery
+    protected function queryPriceProductStoreByCompanyBusinessUnitConcreteProducts(array $businessUnitProducts): Criteria
     {
         return $this->getFactory()
             ->getPropelPriceProductStoreQuery()
@@ -329,11 +329,11 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
     }
 
     /**
-     * @param int $idPriceProductMerchantRelationship
+     * @param string $idPriceProductMerchantRelationship
      *
      * @return \Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationship|null
      */
-    public function findPriceProductMerchantRelationship(int $idPriceProductMerchantRelationship): ?SpyPriceProductMerchantRelationship
+    public function findPriceProductMerchantRelationship(string $idPriceProductMerchantRelationship): ?SpyPriceProductMerchantRelationship
     {
         return $this->getFactory()
             ->getPropelPriceProductMerchantRelationshipQuery()

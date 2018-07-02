@@ -23,7 +23,7 @@ class PriceProductMerchantRelationshipAbstractListener extends AbstractPlugin im
      *
      * @api
      *
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      * @param string $eventName
      *
      * @return void
@@ -35,7 +35,7 @@ class PriceProductMerchantRelationshipAbstractListener extends AbstractPlugin im
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      *
      * @return array
      */
@@ -56,7 +56,7 @@ class PriceProductMerchantRelationshipAbstractListener extends AbstractPlugin im
                 $idMerchantRelationship = $foreignKeys[SpyPriceProductMerchantRelationshipTableMap::COL_FK_MERCHANT_RELATIONSHIP];
             } else {
                 $priceProductMerchantRelationship = $this->getRepository()
-                    ->findPriceProductMerchantRelationship($eventTransfer->getId());
+                    ->findPriceProductMerchantRelationship((string)$eventTransfer->getId());
 
                 if (!$priceProductMerchantRelationship || !$priceProductMerchantRelationship->getFkProductAbstract()) {
                     continue;

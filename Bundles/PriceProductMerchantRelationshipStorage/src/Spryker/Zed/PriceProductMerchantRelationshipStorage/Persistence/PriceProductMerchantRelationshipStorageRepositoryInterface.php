@@ -64,9 +64,9 @@ interface PriceProductMerchantRelationshipStorageRepositoryInterface
     public function findCompanyBusinessUnitIdsByMerchantRelationship(int $idMerchantRelationship): array;
 
     /**
-     * @param int $idPriceProductMerchantRelationship
+     * @param string $idPriceProductMerchantRelationship
      *
      * @return \Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationship|null
      */
-    public function findPriceProductMerchantRelationship(int $idPriceProductMerchantRelationship): ?SpyPriceProductMerchantRelationship;
+    public function findPriceProductMerchantRelationship(string $idPriceProductMerchantRelationship): ?SpyPriceProductMerchantRelationship;
 }

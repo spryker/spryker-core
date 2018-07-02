@@ -16,7 +16,7 @@ class PriceProductMerchantRelationshipKeyGenerator implements PriceProductMercha
     protected const KEY_SEPARATOR = ':';
 
     /**
-     * @var \Spryker\Client\PriceProductStorage\Dependency\Service\PriceProductStorageToSynchronizationServiceInterface
+     * @var \Spryker\Client\PriceProductMerchantRelationshipStorage\Dependency\Service\PriceProductMerchantRelationshipToSynchronizationServiceInterface
      */
     protected $synchronizationService;
 

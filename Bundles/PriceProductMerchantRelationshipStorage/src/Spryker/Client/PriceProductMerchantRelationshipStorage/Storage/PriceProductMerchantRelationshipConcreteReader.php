@@ -14,7 +14,7 @@ use Spryker\Shared\PriceProductMerchantRelationshipStorage\PriceProductMerchantR
 class PriceProductMerchantRelationshipConcreteReader implements PriceProductMerchantRelationshipConcreteReaderInterface
 {
     /**
-     * @var \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToStorageInterface
+     * @var \Spryker\Client\PriceProductMerchantRelationshipStorage\Dependency\Client\PriceProductMerchantRelationshipStorageToStorageClientInterface.
      */
     protected $storageClient;
 
@@ -24,7 +24,7 @@ class PriceProductMerchantRelationshipConcreteReader implements PriceProductMerc
     protected $priceStorageKeyGenerator;
 
     /**
-     * @var \Spryker\Client\PriceProductMerchantRelationshipStorage\Storage\PriceProductMapper
+     * @var \Spryker\Client\PriceProductMerchantRelationshipStorage\Storage\PriceProductMapperInterface
      */
     protected $priceProductMapper;
 

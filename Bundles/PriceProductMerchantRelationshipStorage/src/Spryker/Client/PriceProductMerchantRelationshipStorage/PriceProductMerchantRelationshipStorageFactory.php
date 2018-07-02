@@ -116,6 +116,6 @@ class PriceProductMerchantRelationshipStorageFactory extends AbstractFactory
      */
     public function createPriceProductMapper(): PriceProductMapperInterface
     {
-        return new PriceProductMapper($this->getPriceProductMerchantRelationshipStorageConfig());
+        return new PriceProductMapper();
     }
 }
