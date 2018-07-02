@@ -10,7 +10,6 @@ namespace Spryker\Zed\Cms\Business\Template;
 use Generated\Shared\Transfer\CmsTemplateTransfer;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsTemplateTableMap;
 use Orm\Zed\Cms\Persistence\SpyCmsTemplate;
-use Spryker\Zed\Cms\Business\CmsBusinessFactory;
 use Spryker\Zed\Cms\Business\Exception\MissingTemplateException;
 use Spryker\Zed\Cms\Business\Exception\TemplateExistsException;
 use Spryker\Zed\Cms\Business\Exception\TemplateFileNotFoundException;
@@ -44,29 +43,21 @@ class TemplateManager implements TemplateManagerInterface
     protected $cmsEntityManager;
 
     /**
-     * @var \Spryker\Zed\Cms\Business\CmsBusinessFactory
-     */
-    protected $cmsBusinessFactory;
-
-    /**
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $cmsQueryContainer
      * @param \Spryker\Zed\Cms\CmsConfig $config
      * @param \Spryker\Zed\Cms\Persistence\CmsRepositoryInterface $cmsRepository
      * @param \Spryker\Zed\Cms\Persistence\CmsEntityManagerInterface $cmsEntityManager
-     * @param \Spryker\Zed\Cms\Business\CmsBusinessFactory $cmsBusinessFactory
      */
     public function __construct(
         CmsQueryContainerInterface $cmsQueryContainer,
         CmsConfig $config,
         CmsRepositoryInterface $cmsRepository,
-        CmsEntityManagerInterface $cmsEntityManager,
-        CmsBusinessFactory $cmsBusinessFactory
+        CmsEntityManagerInterface $cmsEntityManager
     ) {
         $this->cmsQueryContainer = $cmsQueryContainer;
         $this->config = $config;
         $this->cmsRepository = $cmsRepository;
         $this->cmsEntityManager = $cmsEntityManager;
-        $this->cmsBusinessFactory = $cmsBusinessFactory;
     }
 
     /**
@@ -335,13 +326,13 @@ class TemplateManager implements TemplateManagerInterface
             }
         }
 
-        $cmsTemplateFolderFilesPaths = $this->getCmsTemplateFolderFilePaths(
+        $cmsTemplateFolderFilePaths = $this->getCmsTemplateFolderFilePaths(
             $cmsTemplateEntityPrefix,
             $cmsFolderPath,
             $cmsTemplateFolders
         );
 
-        $this->deleteNonExistingCmsTemplateEntities($cmsTemplateFolderFilesPaths);
+        $this->deleteNonExistingCmsTemplateEntities($cmsTemplateFolderFilePaths);
 
         return $isTemplateCreated;
     }
@@ -484,7 +475,7 @@ class TemplateManager implements TemplateManagerInterface
      */
     protected function createFinderInstanceUsingCmsBusinessFactory(): Finder
     {
-        return $this->cmsBusinessFactory->createFinder();
+        return Finder::create();
     }
 
     /**

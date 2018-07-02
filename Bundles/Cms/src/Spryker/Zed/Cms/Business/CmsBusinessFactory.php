@@ -65,8 +65,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getConfig(),
             $this->getRepository(),
-            $this->getEntityManager(),
-            $this
+            $this->getEntityManager()
         );
     }
 
@@ -87,7 +86,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Symfony\Component\Finder\Finder
      */
-    public function createFinder()
+    protected function createFinder()
     {
         return new Finder();
     }
