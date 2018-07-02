@@ -37,13 +37,17 @@
 
     <transfer name="Item">
         <property name="amountLeadProduct" type="ProductPackagingLeadProduct"/>
-        <property name="amount" type="int"/>
-        <property name="skuProduct" type="string"/>
-    </transfer>
-
-    <transfer name="Item">
-        <property name="amountLeadProduct" type="ProductPackagingLeadProduct"/>
         <property name="amountSalesUnit" type="ProductMeasurementSalesUnit"/>
         <property name="amount" type="int"/>
+        <property name="skuProduct" type="string"/>
+        <property name="itemAmountMeasurementUnit" type="ItemAmountMeasurementUnit"/>
     </transfer>
+
+    <transfer name="ItemAmountMeasurementUnit">
+        <property name="amountMeasurementUnitName" type="string"/>
+        <property name="amountMeasurementUnitPrecision" type="int"/>
+        <property name="amountMeasurementUnitConversion" type="string"/>
+        <property name="amountBaseMeasurementUnitName" type="string"/>
+    </transfer>
+
 </transfers>

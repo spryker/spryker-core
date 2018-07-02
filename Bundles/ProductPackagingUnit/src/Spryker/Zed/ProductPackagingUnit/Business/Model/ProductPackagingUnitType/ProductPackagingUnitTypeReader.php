@@ -45,7 +45,7 @@ class ProductPackagingUnitTypeReader implements ProductPackagingUnitTypeReaderIn
      */
     public function findProductPackagingUnitTypeByName(
         ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
-    ): ProductPackagingUnitTypeTransfer {
+    ): ?ProductPackagingUnitTypeTransfer {
         $productPackagingUnitTypeTransfer->requireName();
         $productPackagingUnitTypeName = $productPackagingUnitTypeTransfer->getName();
         $productPackagingUnitTypeTransfer = $this->repository->findProductPackagingUnitTypeByName($productPackagingUnitTypeName);

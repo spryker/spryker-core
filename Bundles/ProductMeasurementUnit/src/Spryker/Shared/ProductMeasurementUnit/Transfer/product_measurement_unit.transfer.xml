@@ -45,6 +45,14 @@
 
     <transfer name="Item">
         <property name="quantitySalesUnit" type="ProductMeasurementSalesUnit" />
+        <property name="itemQuantityMeasurementUnit" type="ItemQuantityMeasurementUnit" />
+    </transfer>
+
+    <transfer name="ItemQuantityMeasurementUnit">
+        <property name="quantityBaseMeasurementUnitName" type="string"/>
+        <property name="quantityMeasurementUnitName" type="string"/>
+        <property name="quantityMeasurementUnitPrecision" type="int"/>
+        <property name="quantityMeasurementUnitConversion" type="string"/>
     </transfer>
 
 </transfers>

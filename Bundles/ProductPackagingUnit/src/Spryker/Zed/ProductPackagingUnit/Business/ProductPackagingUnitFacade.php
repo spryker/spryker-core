@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductPackagingUnit\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -68,7 +69,7 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      */
     public function findProductPackagingUnitTypeByName(
         ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
-    ): ProductPackagingUnitTypeTransfer {
+    ): ?ProductPackagingUnitTypeTransfer {
         return $this->getFactory()
             ->createProductPackagingUnitTypeReader()
             ->findProductPackagingUnitTypeByName($productPackagingUnitTypeTransfer);
@@ -206,5 +207,21 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
         return $this->getFactory()
             ->createCartChangeExpander()
             ->expandWithAmountLeadProduct($cartChangeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function hydrateAmountSalesUnit(OrderTransfer $orderTransfer): OrderTransfer
+    {
+        return $this->getFactory()
+            ->createAmountSalesUnitOrderHydrator()
+            ->hydrateOrderWithAmountSalesUnit($orderTransfer);
     }
 }

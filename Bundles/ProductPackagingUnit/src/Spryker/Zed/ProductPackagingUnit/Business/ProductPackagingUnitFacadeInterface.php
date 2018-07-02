@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductPackagingUnit\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 
@@ -55,7 +56,7 @@ interface ProductPackagingUnitFacadeInterface
      */
     public function findProductPackagingUnitTypeByName(
         ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
-    ): ProductPackagingUnitTypeTransfer;
+    ): ?ProductPackagingUnitTypeTransfer;
 
     /**
      * Specification:
@@ -164,4 +165,16 @@ interface ProductPackagingUnitFacadeInterface
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
     public function expandCartChangeWithAmountLeadProduct(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
+
+    /**
+     * Specification:
+     * - Hydrates order transfer with additional packaging unit amount fields from sales_order_item table.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function hydrateAmountSalesUnit(OrderTransfer $orderTransfer): OrderTransfer;
 }

@@ -10,6 +10,8 @@ namespace Spryker\Zed\ProductPackagingUnit\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\CartChange\CartChangeExpander;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\CartChange\CartChangeExpanderInterface;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\Hydrator\AmountSalesUnitOrderHydrator;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\Hydrator\AmountSalesUnitOrderHydratorInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Installer\ProductPackagingUnitTypeInstaller;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Installer\ProductPackagingUnitTypeInstallerInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReader;
@@ -27,6 +29,7 @@ use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\Pro
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToGlossaryFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToLocaleFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToProductMeasurementUnitFacadeInterface;
+use Spryker\Zed\ProductPackagingUnit\Dependency\QueryContainer\ProductPackagingUnitToSalesQueryContainerInterface;
 use Spryker\Zed\ProductPackagingUnit\ProductPackagingUnitDependencyProvider;
 
 /**
@@ -145,5 +148,23 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     public function getProductMeasurementUnitFacade(): ProductPackagingUnitToProductMeasurementUnitFacadeInterface
     {
         return $this->getProvidedDependency(ProductPackagingUnitDependencyProvider::FACADE_PRODUCT_MEASUREMENT_UNIT);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\Hydrator\AmountSalesUnitOrderHydratorInterface
+     */
+    public function createAmountSalesUnitOrderHydrator(): AmountSalesUnitOrderHydratorInterface
+    {
+        return new AmountSalesUnitOrderHydrator(
+            $this->getSalesQueryContainer()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Dependency\QueryContainer\ProductPackagingUnitToSalesQueryContainerInterface
+     */
+    public function getSalesQueryContainer(): ProductPackagingUnitToSalesQueryContainerInterface
+    {
+        return $this->getProvidedDependency(ProductPackagingUnitDependencyProvider::QUERY_CONTAINER_SALES);
     }
 }

@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPreSavePluginInterface;
 
-class PackagingUnitOrderItemExpanderPreSavePlugin implements OrderItemExpanderPreSavePluginInterface
+class AmountSalesUnitOrderItemExpanderPreSavePlugin implements OrderItemExpanderPreSavePluginInterface
 {
     /**
      * {@inheritdoc}
@@ -27,15 +27,24 @@ class PackagingUnitOrderItemExpanderPreSavePlugin implements OrderItemExpanderPr
      */
     public function expandOrderItem(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, SpySalesOrderItemEntityTransfer $salesOrderItemEntity): SpySalesOrderItemEntityTransfer
     {
-        if (!$itemTransfer->getAmountLeadProduct()) {
+        if (!$itemTransfer->getAmountSalesUnit()) {
             return $salesOrderItemEntity;
         }
 
-        $packagingUnitLeadProductSku = $itemTransfer->getAmountLeadProduct()->getSkuProduct();
-        $packagingUnitLeadAmount = $itemTransfer->getAmount();
+        $amountBaseMeasurementUnitName = $itemTransfer->getAmountSalesUnit()
+            ->getProductMeasurementBaseUnit()
+            ->getProductMeasurementUnit()
+            ->getName();
 
-        $salesOrderItemEntity->setAmount($packagingUnitLeadAmount);
-        $salesOrderItemEntity->setAmountSku($packagingUnitLeadProductSku);
+        $amountMeasurementUnitName = $itemTransfer->getAmountSalesUnit()
+            ->getProductMeasurementUnit()
+            ->getName();
+
+        $salesOrderItemEntity->setAmountBaseMeasurementUnitName($amountBaseMeasurementUnitName);
+        $salesOrderItemEntity->setAmountMeasurementUnitName($amountMeasurementUnitName);
+
+        $salesOrderItemEntity->setAmountMeasurementUnitPrecision($itemTransfer->getAmountSalesUnit()->getPrecision());
+        $salesOrderItemEntity->setAmountMeasurementUnitConversion($itemTransfer->getAmountSalesUnit()->getConversion());
 
         return $salesOrderItemEntity;
     }

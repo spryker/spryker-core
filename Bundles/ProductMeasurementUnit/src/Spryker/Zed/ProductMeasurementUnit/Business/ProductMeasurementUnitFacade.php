@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductMeasurementUnit\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -141,5 +142,21 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
         $this->getFactory()
             ->createProductMeasurementUnitInstaller()
             ->install();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function hydrateQuantitySalesUnit(OrderTransfer $orderTransfer): OrderTransfer
+    {
+        return $this->getFactory()
+            ->createQuantitySalesUnitOrderHydrator()
+            ->hydrateOrderWithQuantitySalesUnit($orderTransfer);
     }
 }

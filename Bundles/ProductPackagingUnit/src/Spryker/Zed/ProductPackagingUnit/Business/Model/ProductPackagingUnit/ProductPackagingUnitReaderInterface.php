@@ -30,9 +30,9 @@ interface ProductPackagingUnitReaderInterface
     public function findProductPackagingLeadProductByProductPackagingSku(string $productPackagingUnitSku): ?ProductPackagingLeadProductTransfer;
 
     /**
-     * @param string $idProductMeasurementSalesUnit
+     * @param int $idProductMeasurementSalesUnit
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer
      */
-    public function findProductMeasurementSalesUnitTransfer(string $idProductMeasurementSalesUnit): ProductMeasurementSalesUnitTransfer;
+    public function findProductMeasurementSalesUnitTransfer(int $idProductMeasurementSalesUnit): ProductMeasurementSalesUnitTransfer;
 }
