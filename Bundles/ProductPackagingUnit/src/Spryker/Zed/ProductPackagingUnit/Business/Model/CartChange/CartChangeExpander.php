@@ -60,7 +60,7 @@ class CartChangeExpander implements CartChangeExpanderInterface
         }
 
         $productMeasurementUnitTransfer = $this->productPackagingUnitReader
-            ->getProductMeasurementSalesUnitTransfer($itemTransfer->getAmountSalesUnit()->getIdProductMeasurementSalesUnit());
+            ->findProductMeasurementSalesUnitTransfer($itemTransfer->getAmountSalesUnit()->getIdProductMeasurementSalesUnit());
 
         $itemTransfer->setAmountSalesUnit($productMeasurementUnitTransfer);
 

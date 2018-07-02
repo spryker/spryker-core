@@ -101,11 +101,11 @@ class ProductPackagingUnitReader implements ProductPackagingUnitReaderInterface
     }
 
     /**
-     * @param int $idProductMeasurementSalesUnit
+     * @param string $idProductMeasurementSalesUnit
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer
      */
-    public function getProductMeasurementSalesUnitTransfer(int $idProductMeasurementSalesUnit): ProductMeasurementSalesUnitTransfer
+    public function findProductMeasurementSalesUnitTransfer(string $idProductMeasurementSalesUnit): ProductMeasurementSalesUnitTransfer
     {
         return $this->productMeasurementUnitFacade->getProductMeasurementSalesUnitTransfer($idProductMeasurementSalesUnit);
     }
