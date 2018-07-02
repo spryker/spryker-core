@@ -72,14 +72,14 @@ class ProductPackagingUnitTypeDataProvider implements ProductPackagingUnitTypeDa
     {
         $availableLocales = $this->localeFacade->getLocaleCollection();
         $availableNameLocaleizations = [];
-        foreach ($productPackagingUnitTypeTransfer->getNameTranslations() as $nameTranslation) {
-            $availableNameLocaleizations[$nameTranslation->getLocaleCode()] = $nameTranslation->getLocaleCode();
+        foreach ($productPackagingUnitTypeTransfer->getTranslations() as $translation) {
+            $availableNameLocaleizations[$translation->getLocaleCode()] = $translation->getLocaleCode();
         }
 
         foreach ($availableLocales as $localeTransfer) {
             if (!isset($availableNameLocaleizations[$localeTransfer->getLocaleName()])) {
                 $productPackagingUnitTypeTransfer
-                    ->getNameTranslations()->append(
+                    ->getTranslations()->append(
                         $this->createDefaultProductPackagingUnitTypeTranslationTransfer($localeTransfer->getLocaleName())
                     );
             }

@@ -38,8 +38,6 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
     protected const PRODUCT_ABSTRACT_STORAGE_DEFAULT_VALUES = [
         ProductPackagingUnitAmountTransfer::DEFAULT_AMOUNT => 1,
         ProductPackagingUnitAmountTransfer::IS_VARIABLE => false,
-        ProductPackagingUnitAmountTransfer::AMOUNT_MIN => 1,
-        ProductPackagingUnitAmountTransfer::AMOUNT_INTERVAL => 1,
     ];
 
     /**

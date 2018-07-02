@@ -20,7 +20,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class ProductPackagingUnitTypeTranslationFormType extends AbstractType
 {
-    protected const FIELD_TRANSLATION = 'translation';
+    protected const FIELD_NAME = 'name';
     protected const FIELD_LOCALE_CODE = 'localeCode';
 
     /**
@@ -31,7 +31,7 @@ class ProductPackagingUnitTypeTranslationFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addTranslationField($builder)
+        $this->addNameField($builder)
             ->addLocalCode($builder);
     }
 
@@ -52,9 +52,9 @@ class ProductPackagingUnitTypeTranslationFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addTranslationField(FormBuilderInterface $builder)
+    protected function addNameField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_TRANSLATION, TextType::class, [
+        $builder->add(static::FIELD_NAME, TextType::class, [
             'label' => 'Name: *',
             'required' => true,
             'constraints' => [
@@ -85,7 +85,7 @@ class ProductPackagingUnitTypeTranslationFormType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'product_packaging_unit_type_value_translation';
+        return 'product_packaging_unit_type_translation';
     }
 
     /**

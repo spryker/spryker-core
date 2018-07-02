@@ -74,7 +74,7 @@ class ProductPackagingUnitMapper implements ProductPackagingUnitMapperInterface
     ): ProductPackagingLeadProductTransfer {
         $productPackagingLeadProductTransfer->setIdProduct($productPackagingLeadProductEntity->getFkProduct());
         $productPackagingLeadProductTransfer->setIdProductAbstract($productPackagingLeadProductEntity->getFkProductAbstract());
-        $productPackagingLeadProductTransfer->setSkuProduct($productPackagingLeadProductEntity->getSpyProduct()->getSku());
+        $productPackagingLeadProductTransfer->setSku($productPackagingLeadProductEntity->getSpyProduct()->getSku());
 
         return $productPackagingLeadProductTransfer;
     }

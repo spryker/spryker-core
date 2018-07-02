@@ -56,7 +56,11 @@ class ProductPackagingUnitToGlossaryFacadeBridge implements ProductPackagingUnit
      */
     public function saveTranslation(string $key, string $value, LocaleTransfer $localeTransfer): TranslationTransfer
     {
-        return $this->glossaryFacade->saveTranslation($key, $localeTransfer, $value);
+        if (!$this->hasTranslation($key, $localeTransfer)) {
+            return $this->glossaryFacade->createTranslation($key, $localeTransfer, $value);
+        } else {
+            return $this->glossaryFacade->updateTranslation($key, $localeTransfer, $value);
+        }
     }
 
     /**
