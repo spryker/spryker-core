@@ -8,6 +8,7 @@
 namespace Spryker\Zed\PriceProductMerchantRelationship\Persistence\Propel\PriceDimensionQueryExpander;
 
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Generated\Shared\Transfer\QueryJoinTransfer;
 use Orm\Zed\PriceProductMerchantRelationship\Persistence\Map\SpyPriceProductMerchantRelationshipTableMap;
@@ -86,6 +87,9 @@ class MerchantRelationshipPriceQueryExpander implements MerchantRelationshipPric
     protected function createQueryCriteriaTransfer(array $merchantRelationshipIds): QueryCriteriaTransfer
     {
         return (new QueryCriteriaTransfer())
+            ->setWithColumns([
+                SpyPriceProductMerchantRelationshipTableMap::COL_FK_MERCHANT_RELATIONSHIP => PriceProductDimensionTransfer::ID_MERCHANT_RELATIONSHIP,
+            ])
             ->addJoin(
                 (new QueryJoinTransfer())
                     ->setRelation('PriceProductMerchantRelationship')
