@@ -24,9 +24,9 @@ class VoucherController extends AbstractController
     const URL_PARAM_ID_POOL = 'id-pool';
     const URL_PARAM_ID_DISCOUNT = 'id-discount';
     const URL_PARAM_ID_VOUCHER = 'id-voucher';
-    const URL_DISCOUNT_EDIT_PAGE = '/discount/index/edit';
-    const URL_DISCOUNT_VIEW_PAGE = '/discount/index/view';
-    const REQUEST_HEADER_REFERER = 'referer';
+    protected const URL_DISCOUNT_EDIT_PAGE = '/discount/index/edit';
+    protected const URL_DISCOUNT_VIEW_PAGE = '/discount/index/view';
+    protected const REQUEST_HEADER_REFERER = 'referer';
     const CSV_FILENAME = 'vouchers.csv';
 
     /**
@@ -152,7 +152,7 @@ class VoucherController extends AbstractController
      *
      * @return string
      */
-    protected function createViewDiscountRedirectUrl($idDiscount)
+    protected function createViewDiscountRedirectUrl(int $idDiscount): string
     {
         $redirectUrl = Url::generate(
             static::URL_DISCOUNT_VIEW_PAGE,
@@ -172,7 +172,7 @@ class VoucherController extends AbstractController
      *
      * @return string
      */
-    protected function createVoucherCodeDeleteRedirectUrl(Request $request)
+    protected function createVoucherCodeDeleteRedirectUrl(Request $request): string
     {
         $referrerUrl = $request->headers->get(static::REQUEST_HEADER_REFERER);
 
