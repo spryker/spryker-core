@@ -18,3 +18,6 @@ sales_unit_16,218_1233,METR,1,100,1,1
 sales_unit_17,218_1234,METR,1,100,1,1
 sales_unit_18,217_1231,ITEM,1,1,1,1
 sales_unit_19,218_1232,ITEM,1,1,1,1
+sales_unit_20,218_1230,ITEM,1,1,1,1
+sales_unit_21,218_1230,KILO,2,1,1,0
+sales_unit_22,218_1230,GRAM,0.002,1,1,0

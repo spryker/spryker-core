@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTranslationTransfer;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToGlossaryFacadeInterface;
@@ -44,48 +45,35 @@ class ProductPackagingUnitTypeTranslationReader implements ProductPackagingUnitT
     public function hydrateTranslations(ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer): ProductPackagingUnitTypeTransfer
     {
         $availableLocales = $this->localeFacade->getLocaleCollection();
-        $this->hydrateNameTranslations($productPackagingUnitTypeTransfer, $availableLocales);
-
-        return $productPackagingUnitTypeTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer[] $availableLocales
-     *
-     * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
-     */
-    protected function hydrateNameTranslations(ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer, array $availableLocales): ProductPackagingUnitTypeTransfer
-    {
-        $productPackagingUnitTypeTransfer->requireName();
-        $nameTranslationKey = $productPackagingUnitTypeTransfer->getName();
         foreach ($availableLocales as $localeTransfer) {
-            if (!$this->glossaryFacade->hasTranslation($nameTranslationKey, $localeTransfer)) {
-                continue;
-            }
-
-            $translationTransfer = $this->glossaryFacade->getTranslation($nameTranslationKey, $localeTransfer);
-            $productPackagingUnitTypeTransfer->addProductPackagingUnitTypeNameTranslation(
-                $this->createProductPackagingUnitTypeTranslationTransfer(
-                    $translationTransfer->getValue(),
-                    $localeTransfer->getLocaleName()
-                )
-            );
+            $this->hydrateNameTranslations($productPackagingUnitTypeTransfer, $localeTransfer);
         }
 
         return $productPackagingUnitTypeTransfer;
     }
 
     /**
-     * @param string $translation
-     * @param string $localeCode
+     * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTranslationTransfer
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
      */
-    protected function createProductPackagingUnitTypeTranslationTransfer(string $translation, string $localeCode): ProductPackagingUnitTypeTranslationTransfer
-    {
-        return (new ProductPackagingUnitTypeTranslationTransfer())
-            ->setLocaleCode($localeCode)
-            ->setTranslation($translation);
+    protected function hydrateNameTranslations(
+        ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer,
+        LocaleTransfer $localeTransfer
+    ): ProductPackagingUnitTypeTransfer {
+        $nameTranslationKey = $productPackagingUnitTypeTransfer->getName();
+        if (!$nameTranslationKey || !$this->glossaryFacade->hasTranslation($nameTranslationKey, $localeTransfer)) {
+            return $productPackagingUnitTypeTransfer;
+        }
+
+        $translationTransfer = $this->glossaryFacade->getTranslation($nameTranslationKey, $localeTransfer);
+        $productPackagingUnitTypeTransfer->addProductPackagingUnitTypeTranslation(
+            (new ProductPackagingUnitTypeTranslationTransfer())
+                ->setLocaleCode($localeTransfer->getLocaleName())
+                ->setName($translationTransfer->getValue())
+        );
+
+        return $productPackagingUnitTypeTransfer;
     }
 }

@@ -25,14 +25,14 @@
 
         {% block widget_content %}
             {{ form_start(productPackagingUnitTypeForm, {attr: {novalidate: 'novalidate'}}) }}
-            {% do productPackagingUnitTypeForm.nameTranslations.setRendered %}
+            {% do productPackagingUnitTypeForm.translations.setRendered %}
             {{ form_widget(productPackagingUnitTypeForm) }}
 
-            <h4>{{ 'Translation' | trans }}</h4>
+            <h4>{{ 'Translations' | trans }}</h4>
 
             <div class="form-group"
-                 id="name-translations"
-                 data-value-count="{{ productPackagingUnitTypeForm.nameTranslations|length  }}"
+                 id="translations"
+                 data-value-count="{{ productPackagingUnitTypeForm.translations|length  }}"
                  >
 
                 {% for locale in availableLocales %}
@@ -40,9 +40,9 @@
                     <div data-locale-code="{{ locale.localeName }}">
                         {% embed '@Gui/Partials/localized-ibox.twig' with {'localeName': locale.localeName, 'collapsed': isCollapsed , 'hasError': false} %}
                             {% block content %}
-                                {% for nameTranslationForm in productPackagingUnitTypeForm.nameTranslations %}
-                                    {% if nameTranslationForm.vars.data.localeCode == locale.localeName  %}
-                                        {{ include ('@ProductPackagingUnitGui/_template/_product-packaging-unit-type-translation-template.twig', { 'productPackagingUnitTypeNameTranslationForm': nameTranslationForm}) }}
+                                {% for translationForm in productPackagingUnitTypeForm.translations %}
+                                    {% if translationForm.vars.data.localeCode == locale.localeName  %}
+                                        {{ include ('@ProductPackagingUnitGui/_template/_product-packaging-unit-type-translation-template.twig', { 'productPackagingUnitTypeTranslationForm': translationForm}) }}
                                     {% endif %}
                                 {% endfor %}
                             {% endblock %}

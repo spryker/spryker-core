@@ -6,11 +6,11 @@
     <transfer name="ProductPackagingUnitType">
         <property name="idProductPackagingUnitType" type="int"/>
         <property name="name" type="string"/>
-        <property name="nameTranslations" type="ProductPackagingUnitTypeTranslation[]" singular="productPackagingUnitTypeNameTranslation" />
+        <property name="translations" type="ProductPackagingUnitTypeTranslation[]" singular="productPackagingUnitTypeTranslation" />
     </transfer>
 
     <transfer name="ProductPackagingUnitTypeTranslation">
-        <property name="translation" type="string" />
+        <property name="name" type="string" />
         <property name="localeCode" type="string" />
     </transfer>
 
@@ -32,7 +32,7 @@
     <transfer name="ProductPackagingLeadProduct">
         <property name="idProductAbstract" type="int"/>
         <property name="idProduct" type="int"/>
-        <property name="skuProduct" type="string"/>
+        <property name="sku" type="string"/>
     </transfer>
 
     <transfer name="Item">

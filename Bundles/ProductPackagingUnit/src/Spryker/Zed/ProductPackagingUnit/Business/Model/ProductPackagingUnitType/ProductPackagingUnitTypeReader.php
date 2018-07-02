@@ -52,9 +52,11 @@ class ProductPackagingUnitTypeReader implements ProductPackagingUnitTypeReaderIn
 
         if ($productPackagingUnitTypeTransfer) {
             $productPackagingUnitTypeTransfer = $this->translationReader->hydrateTranslations($productPackagingUnitTypeTransfer);
+
+            return $productPackagingUnitTypeTransfer;
         }
 
-        return $productPackagingUnitTypeTransfer;
+        return null;
     }
 
     /**

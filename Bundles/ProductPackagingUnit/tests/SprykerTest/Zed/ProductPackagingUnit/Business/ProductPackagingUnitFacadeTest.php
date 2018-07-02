@@ -78,7 +78,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
             ->setName($name);
 
         foreach ($nameTranslations as $nameTranslation) {
-            $productPackagingUnitTypeTransfer->addProductPackagingUnitTypeNameTranslation($nameTranslation);
+            $productPackagingUnitTypeTransfer->addProductPackagingUnitTypeTranslation($nameTranslation);
         }
 
         // Action
@@ -86,7 +86,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         $productPackagingUnitTypeTransfer = $this->getFacade()->findProductPackagingUnitTypeByName($productPackagingUnitTypeTransfer);
         $this->assertNotNull($productPackagingUnitTypeTransfer->getIdProductPackagingUnitType());
         // Assert translations persisted
-        $this->assertCount($productPackagingUnitTypeTransfer->getNameTranslations()->count(), $nameTranslations);
+        $this->assertCount($productPackagingUnitTypeTransfer->getTranslations()->count(), $nameTranslations);
     }
 
     /**
@@ -121,8 +121,12 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         return [
             [
                 'packaging_unit_type.test1.name',
-                (new ProductPackagingUnitTypeTranslationTransfer())->setLocaleCode('en_US')->setTranslation('name1'),
-                (new ProductPackagingUnitTypeTranslationTransfer())->setLocaleCode('de_DE')->setTranslation('Name1'),
+                (new ProductPackagingUnitTypeTranslationTransfer())
+                    ->setLocaleCode('en_US')
+                    ->setName('name1'),
+                (new ProductPackagingUnitTypeTranslationTransfer())
+                    ->setLocaleCode('de_DE')
+                    ->setName('Name1'),
             ],
         ];
     }
@@ -205,8 +209,8 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         $this->getFacade()->expandCartChangeWithAmountLeadProduct($cartChange);
         foreach ($cartChange->getItems() as $itemTransfer) {
             $this->assertNotNull($itemTransfer->getAmountLeadProduct());
-            $this->assertNotNull($itemTransfer->getAmountLeadProduct()->getSkuProduct());
-            $this->assertEquals($itemProductConcreteTransfer->getSku(), $itemTransfer->getAmountLeadProduct()->getSkuProduct());
+            $this->assertNotNull($itemTransfer->getAmountLeadProduct()->getSku());
+            $this->assertEquals($itemProductConcreteTransfer->getSku(), $itemTransfer->getAmountLeadProduct()->getSku());
         }
     }
 
