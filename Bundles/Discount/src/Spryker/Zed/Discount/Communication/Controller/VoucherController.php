@@ -7,6 +7,7 @@
 namespace Spryker\Zed\Discount\Communication\Controller;
 
 use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Zed\Discount\Communication\Table\DiscountsTable;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,10 +24,9 @@ class VoucherController extends AbstractController
     const URL_PARAM_ID_POOL = 'id-pool';
     const URL_PARAM_ID_DISCOUNT = 'id-discount';
     const URL_PARAM_ID_VOUCHER = 'id-voucher';
-    public const URL_DISCOUNT_EDIT_PAGE = '/discount/index/edit';
-    public const URL_DISCOUNT_VIEW_PAGE = '/discount/index/view';
-    public const URL_FRAGMENT_TAB_CONTENT_VOUCHER = 'tab-content-voucher';
-    public const REQUEST_HEADER_REFERER = 'referer';
+    const URL_DISCOUNT_EDIT_PAGE = '/discount/index/edit';
+    const URL_DISCOUNT_VIEW_PAGE = '/discount/index/view';
+    const REQUEST_HEADER_REFERER = 'referer';
     const CSV_FILENAME = 'vouchers.csv';
 
     /**
@@ -140,7 +140,7 @@ class VoucherController extends AbstractController
                 self::URL_PARAM_ID_DISCOUNT => $idDiscount,
             ],
             [
-                Url::FRAGMENT => static::URL_FRAGMENT_TAB_CONTENT_VOUCHER,
+                Url::FRAGMENT => DiscountsTable::URL_FRAGMENT_TAB_CONTENT_VOUCHER,
             ]
         )->build();
 
@@ -160,7 +160,7 @@ class VoucherController extends AbstractController
                 static::URL_PARAM_ID_DISCOUNT => $idDiscount,
             ],
             [
-                Url::FRAGMENT => static::URL_FRAGMENT_TAB_CONTENT_VOUCHER,
+                Url::FRAGMENT => DiscountsTable::URL_FRAGMENT_TAB_CONTENT_VOUCHER,
             ]
         )->build();
 
@@ -176,20 +176,14 @@ class VoucherController extends AbstractController
     {
         $referrerUrl = $request->headers->get(static::REQUEST_HEADER_REFERER);
 
+        if (!$referrerUrl) {
+            return $this->createViewDiscountRedirectUrl($this->castId($request->get(static::URL_PARAM_ID_DISCOUNT)));
+        }
+
         if (strpos($referrerUrl, static::URL_DISCOUNT_EDIT_PAGE) !== false) {
-            $referrerUrl = Url::generate(
-                $referrerUrl,
-                [],
-                [
-                    Url::FRAGMENT => static::URL_FRAGMENT_TAB_CONTENT_VOUCHER,
-                ]
-            )->build();
+            $referrerUrl .= '#' . DiscountsTable::URL_FRAGMENT_TAB_CONTENT_VOUCHER;
         }
 
-        if ($referrerUrl) {
-            return $referrerUrl;
-        }
-
-        return $this->createViewDiscountRedirectUrl($this->castId($request->get(static::URL_PARAM_ID_DISCOUNT)));
+        return $referrerUrl;
     }
 }
