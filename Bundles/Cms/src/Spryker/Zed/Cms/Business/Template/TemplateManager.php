@@ -309,7 +309,7 @@ class TemplateManager implements TemplateManagerInterface
      */
     protected function findTwigFileAndCreateTemplate($cmsTemplateEntityPrefix, $cmsFolderPath)
     {
-        $cmsTemplateFolders = $this->createFinderInstanceUsingCmsBusinessFactory()
+        $cmsTemplateFolders = $this->createFinder()
             ->in($cmsFolderPath)
             ->directories();
 
@@ -437,7 +437,7 @@ class TemplateManager implements TemplateManagerInterface
      */
     protected function findCmsTemplateFilesInFolder(string $cmsTemplateFolderPath): Finder
     {
-        return $this->createFinderInstanceUsingCmsBusinessFactory()
+        return $this->createFinder()
             ->in($cmsTemplateFolderPath)
             ->name('*.twig')
             ->depth('0')
@@ -473,7 +473,7 @@ class TemplateManager implements TemplateManagerInterface
     /**
      * @return \Symfony\Component\Finder\Finder
      */
-    protected function createFinderInstanceUsingCmsBusinessFactory(): Finder
+    protected function createFinder(): Finder
     {
         return Finder::create();
     }
