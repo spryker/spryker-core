@@ -36,8 +36,6 @@ use Symfony\Component\Finder\Finder;
 /**
  * @method \Spryker\Zed\Cms\CmsConfig getConfig()
  * @method \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\Cms\Persistence\CmsRepositoryInterface getRepository()
- * @method \Spryker\Zed\Cms\Persistence\CmsEntityManagerInterface getEntityManager()
  */
 class CmsBusinessFactory extends AbstractBusinessFactory
 {
@@ -64,8 +62,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
         return new TemplateManager(
             $this->getQueryContainer(),
             $this->getConfig(),
-            $this->getRepository(),
-            $this->getEntityManager()
+            $this->createFinder()
         );
     }
 

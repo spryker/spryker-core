@@ -29,7 +29,11 @@ class CreatePageController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $this->syncCmsTemplatesFolder();
+        $this->getFactory()
+            ->getCmsFacade()
+            ->syncTemplate(
+                $this->getCmsFolderPath()
+            );
 
         $pageTabs = $this->getFactory()->createPageTabs();
 
@@ -97,18 +101,6 @@ class CreatePageController extends AbstractController
     protected function createTemplateErrorForm()
     {
         return new FormError("Selected template doesn't exist anymore");
-    }
-
-    /**
-     * @return void
-     */
-    protected function syncCmsTemplatesFolder(): void
-    {
-        $this->getFactory()
-            ->getCmsFacade()
-            ->syncTemplate(
-                $this->getCmsFolderPath()
-            );
     }
 
     /**

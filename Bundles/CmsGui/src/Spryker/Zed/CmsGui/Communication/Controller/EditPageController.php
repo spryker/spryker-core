@@ -34,7 +34,11 @@ class EditPageController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $this->syncCmsTemplatesFolder();
+        $this->getFactory()
+            ->getCmsFacade()
+            ->syncTemplate(
+                $this->getCmsFolderPath()
+            );
 
         $idCmsPage = $this->castId($request->query->get(static::URL_PARAM_ID_CMS_PAGE));
 
@@ -164,18 +168,6 @@ class EditPageController extends AbstractController
     protected function createTemplateErrorForm()
     {
         return new FormError(static::MESSAGE_TEMPLATE_SELECT_ERROR);
-    }
-
-    /**
-     * @return void
-     */
-    protected function syncCmsTemplatesFolder(): void
-    {
-        $this->getFactory()
-            ->getCmsFacade()
-            ->syncTemplate(
-                $this->getCmsFolderPath()
-            );
     }
 
     /**
