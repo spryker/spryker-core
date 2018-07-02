@@ -191,7 +191,7 @@ class PriceProductMatcher implements PriceProductMatcherInterface
             }
         }
 
-        return $matchedPriceProductTransfers;
+        return $this->applyPriceProductFilerPlugins($matchedPriceProductTransfers, $priceProductFilterTransfer);
     }
 
     /**
