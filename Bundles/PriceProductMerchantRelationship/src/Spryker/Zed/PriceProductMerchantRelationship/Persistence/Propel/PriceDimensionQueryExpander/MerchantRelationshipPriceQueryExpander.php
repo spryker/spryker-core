@@ -96,7 +96,7 @@ class MerchantRelationshipPriceQueryExpander implements MerchantRelationshipPric
 
         if ($idMerchantRelationship) {
             $left[] = SpyPriceProductMerchantRelationshipTableMap::COL_FK_MERCHANT_RELATIONSHIP;
-            $right[] = $idMerchantRelationship;
+            $right[] = (string)$idMerchantRelationship;
         }
 
         return (new QueryJoinTransfer())
