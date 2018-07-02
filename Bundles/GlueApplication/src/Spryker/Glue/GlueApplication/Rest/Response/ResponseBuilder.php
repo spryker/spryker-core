@@ -9,6 +9,7 @@ namespace Spryker\Glue\GlueApplication\Rest\Response;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class ResponseBuilder implements ResponseBuilderInterface
 {
@@ -53,8 +54,11 @@ class ResponseBuilder implements ResponseBuilderInterface
         RestRequestInterface $restRequest
     ): array {
 
+        $response[RestResponseInterface::RESPONSE_LINKS] = $this->buildCollectionLink($restRequest);
+
         if (count($restResponse->getResources()) === 0) {
-            return [];
+            $response[RestResponseInterface::RESPONSE_DATA] = [];
+            return $response;
         }
 
         $mainResourceType = $restResponse->getResources()[0]->getType();
@@ -78,7 +82,7 @@ class ResponseBuilder implements ResponseBuilderInterface
         }
 
         if ($restRequest->getPage()) {
-            $response[RestResponseInterface::RESPONSE_LINKS] = $this->responsePagination->buildPaginationLinks($restResponse, $restRequest);
+            $response[RestResponseInterface::RESPONSE_LINKS] += $this->responsePagination->buildPaginationLinks($restResponse, $restRequest);
         }
 
         return $response;
@@ -155,5 +159,22 @@ class ResponseBuilder implements ResponseBuilderInterface
             $formattedLinks[$key] = $this->domainName . '/' . $link;
         }
         return $formattedLinks;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return array
+     */
+    protected function buildCollectionLink(RestRequestInterface $restRequest): array
+    {
+        $method = $restRequest->getMetadata()->getMethod();
+        $idResource = $restRequest->getResource()->getId();
+        if ($method === Request::METHOD_GET && $idResource === null) {
+            return $this->formatLinks([
+                'self' => $restRequest->getResource()->getType(),
+            ]);
+        }
+        return [];
     }
 }
