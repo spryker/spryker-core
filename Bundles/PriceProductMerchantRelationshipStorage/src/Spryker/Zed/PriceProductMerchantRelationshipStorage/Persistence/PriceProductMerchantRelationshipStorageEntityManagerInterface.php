@@ -52,4 +52,22 @@ interface PriceProductMerchantRelationshipStorageEntityManagerInterface
         int $idCompanyBusinessUnit,
         int $idProduct
     ): void;
+
+    /**
+     * @param int $idCompanyBusinessUnit
+     *
+     * @return void
+     */
+    public function deletePriceProductAbstractByCompanyBusinessUnit(
+        int $idCompanyBusinessUnit
+    ): void;
+
+    /**
+     * @param int $idCompanyBusinessUnit
+     *
+     * @return void
+     */
+    public function deletePriceProductConcreteByCompanyBusinessUnit(
+        int $idCompanyBusinessUnit
+    ): void;
 }

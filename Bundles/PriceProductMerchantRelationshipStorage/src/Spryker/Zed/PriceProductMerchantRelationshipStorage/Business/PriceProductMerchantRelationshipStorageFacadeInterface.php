@@ -14,7 +14,8 @@ namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Business;
 interface PriceProductMerchantRelationshipStorageFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * Specification:
+     *  -
      *
      * @api
      *
@@ -25,7 +26,8 @@ interface PriceProductMerchantRelationshipStorageFacadeInterface
     public function publishConcretePriceProductByBusinessUnitProducts(array $businessUnitProducts): void;
 
     /**
-     * {@inheritdoc}
+     * Specification:
+     *  -
      *
      * @api
      *
@@ -34,4 +36,28 @@ interface PriceProductMerchantRelationshipStorageFacadeInterface
      * @return void
      */
     public function publishAbstractPriceProductByBusinessUnitProducts(array $businessUnitProducts): void;
+
+    /**
+     * Specification:
+     *  -
+     *
+     * @api
+     *
+     * @param array $businessUnitIds
+     *
+     * @return void
+     */
+    public function publishAbstractPriceProductByBusinessUnits(array $businessUnitIds): void;
+
+    /**
+     * Specification:
+     *  -
+     *
+     * @api
+     *
+     * @param array $businessUnitIds
+     *
+     * @return void
+     */
+    public function publishConcretePriceProductByBusinessUnits(array $businessUnitIds): void;
 }

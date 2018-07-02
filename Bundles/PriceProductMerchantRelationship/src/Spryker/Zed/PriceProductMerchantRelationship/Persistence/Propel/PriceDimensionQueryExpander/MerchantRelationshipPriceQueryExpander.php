@@ -8,7 +8,6 @@
 namespace Spryker\Zed\PriceProductMerchantRelationship\Persistence\Propel\PriceDimensionQueryExpander;
 
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
-use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Generated\Shared\Transfer\QueryJoinTransfer;
 use Orm\Zed\PriceProductMerchantRelationship\Persistence\Map\SpyPriceProductMerchantRelationshipTableMap;
@@ -80,40 +79,13 @@ class MerchantRelationshipPriceQueryExpander implements MerchantRelationshipPric
     }
 
     /**
-     * @return \Generated\Shared\Transfer\QueryJoinTransfer
-     */
-    protected function createJoinWithoutCondition(): QueryJoinTransfer
-    {
-        $left[] = static::COL_ID_PRICE_PRODUCT_STORE;
-        $right[] = SpyPriceProductMerchantRelationshipTableMap::COL_FK_PRICE_PRODUCT_STORE;
-
-        return (new QueryJoinTransfer())
-            ->setLeft($left)
-            ->setRight($right)
-            ->setJoinType(Criteria::LEFT_JOIN);
-    }
-
-    /**
      * @param int[] $merchantRelationshipIds
      *
      * @return \Generated\Shared\Transfer\QueryCriteriaTransfer
      */
     protected function createQueryCriteriaTransfer(array $merchantRelationshipIds): QueryCriteriaTransfer
     {
-        $queryCriteriaTransfer = (new QueryCriteriaTransfer())
-            ->setWithColumns([
-                SpyPriceProductMerchantRelationshipTableMap::COL_FK_MERCHANT_RELATIONSHIP => PriceProductDimensionTransfer::ID_MERCHANT_RELATIONSHIP,
-            ]);
-
-        if (!$merchantRelationshipIds) {
-            $queryCriteriaTransfer->addJoin(
-                $this->createJoinWithoutCondition()
-            );
-
-            return $queryCriteriaTransfer;
-        }
-
-        $queryCriteriaTransfer
+        return (new QueryCriteriaTransfer())
             ->addJoin(
                 (new QueryJoinTransfer())
                     ->setRelation('PriceProductMerchantRelationship')
@@ -121,7 +93,5 @@ class MerchantRelationshipPriceQueryExpander implements MerchantRelationshipPric
                         . ' IN (' . implode(',', $merchantRelationshipIds) . ')')
                     ->setJoinType(Criteria::LEFT_JOIN)
             );
-
-        return $queryCriteriaTransfer;
     }
 }

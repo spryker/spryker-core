@@ -22,4 +22,11 @@ interface PriceProductAbstractStorageWriterInterface
      * @return void
      */
     public function publishByBusinessUnitProducts(array $businessUnitProducts): void;
+
+    /**
+     * @param array $businessUnitIds
+     *
+     * @return void
+     */
+    public function publishByBusinessUnits(array $businessUnitIds): void;
 }

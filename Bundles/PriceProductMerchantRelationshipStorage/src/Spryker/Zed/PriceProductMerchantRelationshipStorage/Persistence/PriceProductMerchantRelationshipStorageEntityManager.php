@@ -189,6 +189,40 @@ class PriceProductMerchantRelationshipStorageEntityManager extends AbstractEntit
     }
 
     /**
+     * @param int $idCompanyBusinessUnit
+     *
+     * @return void
+     */
+    public function deletePriceProductAbstractByCompanyBusinessUnit(
+        int $idCompanyBusinessUnit
+    ): void {
+        $priceProductAbstractMerchantRelationshipStorageEntities = SpyPriceProductAbstractMerchantRelationshipStorageQuery::create()
+            ->filterByFkCompanyBusinessUnit($idCompanyBusinessUnit)
+            ->find();
+
+        foreach ($priceProductAbstractMerchantRelationshipStorageEntities as $priceProductAbstractMerchantRelationshipStorageEntity) {
+            $priceProductAbstractMerchantRelationshipStorageEntity->delete();
+        }
+    }
+
+    /**
+     * @param int $idCompanyBusinessUnit
+     *
+     * @return void
+     */
+    public function deletePriceProductConcreteByCompanyBusinessUnit(
+        int $idCompanyBusinessUnit
+    ): void {
+        $priceProductConcreteMerchantRelationshipStorageEntities = SpyPriceProductConcreteMerchantRelationshipStorageQuery::create()
+            ->filterByFkCompanyBusinessUnit($idCompanyBusinessUnit)
+            ->find();
+
+        foreach ($priceProductConcreteMerchantRelationshipStorageEntities as $priceProductConcreteMerchantRelationshipStorageEntity) {
+            $priceProductConcreteMerchantRelationshipStorageEntity->delete();
+        }
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer
      *
      * @return string
