@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\ProductDiscontinuedStorage;
 
-use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
+use Generated\Shared\Transfer\ProductDiscontinuedStorageTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -21,13 +21,14 @@ class ProductDiscontinuedStorageClient extends AbstractClient implements Product
      * @api
      *
      * @param string $concreteSku
+     * @param string $locale
      *
-     * @return \Generated\Shared\Transfer\ProductDiscontinuedTransfer|null
+     * @return \Generated\Shared\Transfer\ProductDiscontinuedStorageTransfer|null
      */
-    public function findProductDiscontinuedStorage(string $concreteSku): ?ProductDiscontinuedTransfer
+    public function findProductDiscontinuedStorage(string $concreteSku, string $locale): ?ProductDiscontinuedStorageTransfer
     {
         return $this->getFactory()
             ->createProductDiscontinuedStorageReader()
-            ->findProductDiscontinuedStorage($concreteSku);
+            ->findProductDiscontinuedStorage($concreteSku, $locale);
     }
 }

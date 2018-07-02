@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductDiscontinued\Business;
 
+use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedNoteResponseTransfer;
@@ -100,4 +102,16 @@ interface ProductDiscontinuedFacadeInterface
      * @return void
      */
     public function deactivateDiscontinuedProducts(?LoggerInterface $logger = null): void;
+
+    /**
+     * Specification:
+     *  - Checks all items related products from cart change request if they are not discontinued.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     */
+    public function checkItemProductsIsNotDiscontinued(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
 }

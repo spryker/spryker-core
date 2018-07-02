@@ -1,25 +1,13 @@
 {
-  "name": "spryker/product-discontinued",
-  "description": "ProductDiscontinued module",
+  "name": "spryker/product-alternative-storage-extension",
+  "description": "ProductAlternativeStorageExtension module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
-    "spryker/kernel": "^3.0.0",
-    "spryker/locale": "^3.0.0",
-    "spryker/log": "^2.0.0 || ^3.0.0",
-    "spryker/product": "^5.0.0 || ^6.0.0",
-    "spryker/propel-orm": "^1.1.0",
-    "spryker/symfony": "^3.0.0"
+    "php": ">=7.1"
   },
   "require-dev": {
-    "spryker/cart": "*",
     "spryker/code-sniffer": "*",
-    "spryker/propel": "*",
-    "spryker/silex": "*",
     "spryker/testify": "*"
-  },
-  "suggest": {
-    "spryker/cart": "If you want to use Cart plugins."
   },
   "autoload": {
     "psr-4": {

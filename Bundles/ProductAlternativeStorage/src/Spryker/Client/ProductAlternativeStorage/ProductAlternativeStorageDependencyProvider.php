@@ -16,6 +16,7 @@ class ProductAlternativeStorageDependencyProvider extends AbstractDependencyProv
 {
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
+    public const PLUGINS_ALTERNATIVE_PRODUCT_APPLICABLE_CHECK = 'PLUGINS_ALTERNATIVE_PRODUCT_APPLICABLE_CHECK';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -27,6 +28,7 @@ class ProductAlternativeStorageDependencyProvider extends AbstractDependencyProv
         $container = parent::provideServiceLayerDependencies($container);
         $container = $this->addStorageClient($container);
         $container = $this->addSynchronizationService($container);
+        $container = $this->addAlternativeProductApplicableCheckPlugins($container);
 
         return $container;
     }
@@ -59,5 +61,27 @@ class ProductAlternativeStorageDependencyProvider extends AbstractDependencyProv
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addAlternativeProductApplicableCheckPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_ALTERNATIVE_PRODUCT_APPLICABLE_CHECK] = function (Container $container) {
+            return $this->getAlternativeProductApplicableCheckPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Client\ProductAlternativeStorageExtension\Dependency\Plugin\AlternativeProductApplicableCheckPluginInterface[]
+     */
+    protected function getAlternativeProductApplicableCheckPlugins(): array
+    {
+        return [];
     }
 }

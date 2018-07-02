@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\ProductDiscontinuedStorage\Storage;
 
-use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
+use Generated\Shared\Transfer\ProductDiscontinuedStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\ProductDiscontinuedStorage\Dependency\Client\ProductDiscontinuedStorageToStorageClientInterface;
 use Spryker\Client\ProductDiscontinuedStorage\Dependency\Service\ProductDiscontinuedStorageToSynchronizationServiceInterface;
@@ -39,12 +39,13 @@ class ProductDiscontinuedStorageReader implements ProductDiscontinuedStorageRead
 
     /**
      * @param string $concreteSku
+     * @param string $locale
      *
-     * @return \Generated\Shared\Transfer\ProductDiscontinuedTransfer|null
+     * @return \Generated\Shared\Transfer\ProductDiscontinuedStorageTransfer|null
      */
-    public function findProductDiscontinuedStorage(string $concreteSku): ?ProductDiscontinuedTransfer
+    public function findProductDiscontinuedStorage(string $concreteSku, string $locale): ?ProductDiscontinuedStorageTransfer
     {
-        $key = $this->generateKey($concreteSku);
+        $key = $this->generateKey($concreteSku, $locale);
         $productDiscontinuedStorageData = $this->storageClient->get($key);
 
         if (!$productDiscontinuedStorageData) {
@@ -57,22 +58,24 @@ class ProductDiscontinuedStorageReader implements ProductDiscontinuedStorageRead
     /**
      * @param array $productDiscontinuedStorageData
      *
-     * @return \Generated\Shared\Transfer\ProductDiscontinuedTransfer
+     * @return \Generated\Shared\Transfer\ProductDiscontinuedStorageTransfer
      */
-    protected function mapToProductDiscontinuedStorage(array $productDiscontinuedStorageData): ProductDiscontinuedTransfer
+    protected function mapToProductDiscontinuedStorage(array $productDiscontinuedStorageData): ProductDiscontinuedStorageTransfer
     {
-        return (new ProductDiscontinuedTransfer())
+        return (new ProductDiscontinuedStorageTransfer())
             ->fromArray($productDiscontinuedStorageData, true);
     }
 
     /**
      * @param string $concreteSku
+     * @param string $locale
      *
      * @return string
      */
-    protected function generateKey(string $concreteSku): string
+    protected function generateKey(string $concreteSku, string $locale): string
     {
         $synchronizationDataTransfer = (new SynchronizationDataTransfer())
+            ->setLocale($locale)
             ->setReference($concreteSku);
 
         return $this->synchronizationService
