@@ -2,24 +2,16 @@
 <transfers xmlns="spryker:transfer-01"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
-
     <transfer name="QueryCriteria">
         <property name="joins" type="QueryJoin[]" singular="join" />
         <property name="withColumns" type="array" singular="withColumn"/>
-        <property name="conditions" type="QueryCondition[]" singular="condition" />
     </transfer>
 
     <transfer name="QueryJoin">
         <property name="left" type="array" />
         <property name="right" type="array" />
         <property name="joinType" type="string" />
+        <property name="relation" type="string" />
+        <property name="condition" type="string" />
     </transfer>
-
-    <transfer name="QueryCondition">
-        <property name="name" type="string" />
-        <property name="column" type="string" />
-        <property name="value" type="string" />
-        <property name="comparison" type="string" />
-    </transfer>
-
 </transfers>
