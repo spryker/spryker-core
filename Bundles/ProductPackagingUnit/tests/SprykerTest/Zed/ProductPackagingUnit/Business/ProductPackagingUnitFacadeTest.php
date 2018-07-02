@@ -59,7 +59,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         $facade->installProductPackagingUnitTypes();
 
         // Assert
-        $productPackagingUnitTypeTransfer = $this->getFacade()->getProductPackagingUnitTypeByName($productPackagingUnitTypeTransfer);
+        $productPackagingUnitTypeTransfer = $this->getFacade()->findProductPackagingUnitTypeByName($productPackagingUnitTypeTransfer);
         $this->assertNotNull($productPackagingUnitTypeTransfer->getIdProductPackagingUnitType());
     }
 
@@ -83,7 +83,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
 
         // Action
         $this->getFacade()->createProductPackagingUnitType($productPackagingUnitTypeTransfer);
-        $productPackagingUnitTypeTransfer = $this->getFacade()->getProductPackagingUnitTypeByName($productPackagingUnitTypeTransfer);
+        $productPackagingUnitTypeTransfer = $this->getFacade()->findProductPackagingUnitTypeByName($productPackagingUnitTypeTransfer);
         $this->assertNotNull($productPackagingUnitTypeTransfer->getIdProductPackagingUnitType());
         // Assert translations persisted
         $this->assertCount($productPackagingUnitTypeTransfer->getNameTranslations()->count(), $nameTranslations);
@@ -165,7 +165,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
     /**
      * @return void
      */
-    public function testExpandCartChangeTransferWithQuantityPackagingUnit(): void
+    public function testExpandCartChangeTransferWithAmountLeadProduct(): void
     {
         $itemProductConcreteTransfer = $this->tester->haveProduct();
         $boxProductConcreteTransfer = $this->tester->haveProduct([
@@ -202,7 +202,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
                     ->setAmount(static::PACKAGE_AMOUNT)
             );
 
-        $this->getFacade()->expandCartChangeWithQuantityPackagingUnit($cartChange);
+        $this->getFacade()->expandCartChangeWithAmountLeadProduct($cartChange);
         foreach ($cartChange->getItems() as $itemTransfer) {
             $this->assertNotNull($itemTransfer->getAmountLeadProduct());
             $this->assertNotNull($itemTransfer->getAmountLeadProduct()->getSkuProduct());

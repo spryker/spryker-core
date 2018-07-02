@@ -26,19 +26,19 @@ class ProductPackagingUnitTypeWriter implements ProductPackagingUnitTypeWriterIn
     protected $repository;
 
     /**
-     * @var \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeTranslationsWriterInterface
+     * @var \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeTranslationWriterInterface
      */
     protected $translationWriter;
 
     /**
      * @param \Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitEntityManagerInterface $entityManager
      * @param \Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface $repository
-     * @param \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeTranslationsWriterInterface $translationWriter
+     * @param \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeTranslationWriterInterface $translationWriter
      */
     public function __construct(
         ProductPackagingUnitEntityManagerInterface $entityManager,
         ProductPackagingUnitRepositoryInterface $repository,
-        ProductPackagingUnitTypeTranslationsWriterInterface $translationWriter
+        ProductPackagingUnitTypeTranslationWriterInterface $translationWriter
     ) {
         $this->entityManager = $entityManager;
         $this->repository = $repository;
@@ -77,7 +77,7 @@ class ProductPackagingUnitTypeWriter implements ProductPackagingUnitTypeWriterIn
     protected function isUniqueForCreate(
         ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
     ): bool {
-        return $this->repository->getProductPackagingUnitTypeByName($productPackagingUnitTypeTransfer->getName()) === null;
+        return $this->repository->findProductPackagingUnitTypeByName($productPackagingUnitTypeTransfer->getName()) === null;
     }
 
     /**
@@ -112,7 +112,7 @@ class ProductPackagingUnitTypeWriter implements ProductPackagingUnitTypeWriterIn
     protected function isUniqueForUpdate(
         ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
     ): bool {
-        $existingProductPackagingUnitTypeTransfer = $this->repository->getProductPackagingUnitTypeByName($productPackagingUnitTypeTransfer->getName());
+        $existingProductPackagingUnitTypeTransfer = $this->repository->findProductPackagingUnitTypeByName($productPackagingUnitTypeTransfer->getName());
 
         return $existingProductPackagingUnitTypeTransfer === null ||
             $productPackagingUnitTypeTransfer->getIdProductPackagingUnitType() === $existingProductPackagingUnitTypeTransfer->getIdProductPackagingUnitType();

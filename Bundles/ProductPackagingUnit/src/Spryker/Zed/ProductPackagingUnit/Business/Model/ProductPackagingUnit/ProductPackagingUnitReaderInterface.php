@@ -13,21 +13,12 @@ use Generated\Shared\Transfer\ProductPackagingUnitTransfer;
 interface ProductPackagingUnitReaderInterface
 {
     /**
-     * @param int $productPackagingUnitId
+     * @param int $idProductPackagingUnit
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer|null
      */
     public function getProductPackagingUnitById(
-        int $productPackagingUnitId
-    ): ?ProductPackagingUnitTransfer;
-
-    /**
-     * @param string $productPackagingUnitSku
-     *
-     * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer|null
-     */
-    public function getProductPackagingUnitBySku(
-        string $productPackagingUnitSku
+        int $idProductPackagingUnit
     ): ?ProductPackagingUnitTransfer;
 
     /**
@@ -35,5 +26,5 @@ interface ProductPackagingUnitReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null
      */
-    public function getProductPackagingLeadProductByProductPackagingSku(string $productPackagingUnitSku): ?ProductPackagingLeadProductTransfer;
+    public function findProductPackagingLeadProductByProductPackagingSku(string $productPackagingUnitSku): ?ProductPackagingLeadProductTransfer;
 }

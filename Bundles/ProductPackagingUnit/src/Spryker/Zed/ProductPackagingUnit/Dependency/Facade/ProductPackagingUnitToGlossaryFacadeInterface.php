@@ -13,8 +13,6 @@ use Generated\Shared\Transfer\TranslationTransfer;
 interface ProductPackagingUnitToGlossaryFacadeInterface
 {
     /**
-     * @api
-     *
      * @param string $keyName
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
@@ -23,8 +21,6 @@ interface ProductPackagingUnitToGlossaryFacadeInterface
     public function hasTranslation(string $keyName, ?LocaleTransfer $localeTransfer = null): bool;
 
     /**
-     * @api
-     *
      * @param string $keyName
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
@@ -35,19 +31,15 @@ interface ProductPackagingUnitToGlossaryFacadeInterface
     public function getTranslation(string $keyName, LocaleTransfer $localeTransfer): TranslationTransfer;
 
     /**
-     * @api
-     *
      * @param string $key
      * @param string $value
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function saveAndTouchTranslation(string $key, string $value, LocaleTransfer $localeTransfer): TranslationTransfer;
+    public function saveTranslation(string $key, string $value, LocaleTransfer $localeTransfer): TranslationTransfer;
 
     /**
-     * @api
-     *
      * @param string $keyName
      *
      * @return bool
@@ -55,8 +47,6 @@ interface ProductPackagingUnitToGlossaryFacadeInterface
     public function hasKey(string $keyName): bool;
 
     /**
-     * @api
-     *
      * @param string $keyName
      *
      * @throws \Spryker\Zed\Glossary\Business\Exception\KeyExistsException
@@ -66,8 +56,6 @@ interface ProductPackagingUnitToGlossaryFacadeInterface
     public function createKey(string $keyName): int;
 
     /**
-     * @api
-     *
      * @param string $keyName
      *
      * @return bool

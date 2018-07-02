@@ -35,14 +35,14 @@ class ProductMeasurementUnitReader implements ProductMeasurementUnitReaderInterf
     {
         $productMeasurementUnitStorageTransfer = $this->productMeasurementUnitStorageReader->findProductMeasurementUnitStorage($idProductMeasurementUnit);
 
-        if ($productMeasurementUnitStorageTransfer !== null) {
-            return $this->mapProductMeasurementUnit(
-                $productMeasurementUnitStorageTransfer,
-                new ProductMeasurementUnitTransfer()
-            );
+        if ($productMeasurementUnitStorageTransfer === null) {
+            return null;
         }
 
-        return null;
+        return $this->mapProductMeasurementUnit(
+            $productMeasurementUnitStorageTransfer,
+            new ProductMeasurementUnitTransfer()
+        );
     }
 
     /**

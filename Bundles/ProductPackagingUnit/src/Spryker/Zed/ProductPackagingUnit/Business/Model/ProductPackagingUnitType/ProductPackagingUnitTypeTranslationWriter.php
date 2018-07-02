@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\TranslationTransfer;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToGlossaryFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToLocaleFacadeInterface;
 
-class ProductPackagingUnitTypeTranslationsWriter implements ProductPackagingUnitTypeTranslationsWriterInterface
+class ProductPackagingUnitTypeTranslationWriter implements ProductPackagingUnitTypeTranslationWriterInterface
 {
     /**
      * @var \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToLocaleFacadeInterface
@@ -88,6 +88,6 @@ class ProductPackagingUnitTypeTranslationsWriter implements ProductPackagingUnit
 
         $localeTransfer = $this->localeFacade->getLocaleByCode($localeCode);
 
-        return $this->glossaryFacade->saveAndTouchTranslation($key, $value, $localeTransfer);
+        return $this->glossaryFacade->saveTranslation($key, $value, $localeTransfer);
     }
 }

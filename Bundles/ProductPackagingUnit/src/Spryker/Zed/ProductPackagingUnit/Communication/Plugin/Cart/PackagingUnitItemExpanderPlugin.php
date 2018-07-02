@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\ProductPackagingUnit\Business\ProductPackagingUnitFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductPackagingUnit\Communication\ProductPackagingUnitCommunicationFactory getFactory()
  */
-class QuantityPackagingUnitItemExpanderPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
+class PackagingUnitItemExpanderPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -28,6 +28,6 @@ class QuantityPackagingUnitItemExpanderPlugin extends AbstractPlugin implements 
      */
     public function expandItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
-        return $this->getFacade()->expandCartChangeWithQuantityPackagingUnit($cartChangeTransfer);
+        return $this->getFacade()->expandCartChangeWithAmountLeadProduct($cartChangeTransfer);
     }
 }

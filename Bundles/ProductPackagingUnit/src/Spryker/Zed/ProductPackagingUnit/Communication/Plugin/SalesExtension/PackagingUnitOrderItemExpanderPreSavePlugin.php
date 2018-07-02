@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPreSavePluginInterface;
 
-class QuantityPackagingUnitOrderItemExpanderPreSavePlugin implements OrderItemExpanderPreSavePluginInterface
+class PackagingUnitOrderItemExpanderPreSavePlugin implements OrderItemExpanderPreSavePluginInterface
 {
     /**
      * {@inheritdoc}

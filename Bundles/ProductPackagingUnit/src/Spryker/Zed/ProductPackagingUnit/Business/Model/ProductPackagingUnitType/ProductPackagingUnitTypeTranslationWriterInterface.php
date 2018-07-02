@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitTy
 
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 
-interface ProductPackagingUnitTypeTranslationsWriterInterface
+interface ProductPackagingUnitTypeTranslationWriterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer

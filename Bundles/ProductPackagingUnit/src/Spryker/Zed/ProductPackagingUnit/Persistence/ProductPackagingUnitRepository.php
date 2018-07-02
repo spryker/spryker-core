@@ -24,7 +24,7 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer|null
      */
-    public function getProductPackagingUnitTypeByName(
+    public function findProductPackagingUnitTypeByName(
         string $productPackagingUnitTypeName
     ): ?ProductPackagingUnitTypeTransfer {
         $productPackagingUnitTypeEntity = $this->getFactory()
@@ -32,16 +32,16 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
             ->filterByName($productPackagingUnitTypeName)
             ->findOne();
 
-        if ($productPackagingUnitTypeEntity) {
-            return $this->getFactory()
-                ->createProductPackagingUnitMapper()
-                ->mapProductPackagingUnitTypeTransfer(
-                    $productPackagingUnitTypeEntity,
-                    new ProductPackagingUnitTypeTransfer()
-                );
+        if (!$productPackagingUnitTypeEntity) {
+            return null;
         }
 
-        return null;
+        return $this->getFactory()
+            ->createProductPackagingUnitMapper()
+            ->mapProductPackagingUnitTypeTransfer(
+                $productPackagingUnitTypeEntity,
+                new ProductPackagingUnitTypeTransfer()
+            );
     }
 
     /**
@@ -49,7 +49,7 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer|null
      */
-    public function getProductPackagingUnitTypeById(
+    public function findProductPackagingUnitTypeById(
         int $idProductPackagingUnitType
     ): ?ProductPackagingUnitTypeTransfer {
         $productPackagingUnitTypeEntity = $this->getFactory()
@@ -57,16 +57,16 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
             ->filterByIdProductPackagingUnitType($idProductPackagingUnitType)
             ->findOne();
 
-        if ($productPackagingUnitTypeEntity) {
-            return $this->getFactory()
-                ->createProductPackagingUnitMapper()
-                ->mapProductPackagingUnitTypeTransfer(
-                    $productPackagingUnitTypeEntity,
-                    new ProductPackagingUnitTypeTransfer()
-                );
+        if (!$productPackagingUnitTypeEntity) {
+            return null;
         }
 
-        return null;
+        return $this->getFactory()
+            ->createProductPackagingUnitMapper()
+            ->mapProductPackagingUnitTypeTransfer(
+                $productPackagingUnitTypeEntity,
+                new ProductPackagingUnitTypeTransfer()
+            );
     }
 
     /**
@@ -84,11 +84,13 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
     }
 
     /**
+     * @uses Product
+     *
      * @param int $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null
      */
-    public function getProductPackagingLeadProductByIdProductAbstract(
+    public function findProductPackagingLeadProductByIdProductAbstract(
         int $idProductAbstract
     ): ?ProductPackagingLeadProductTransfer {
         $productPackagingLeadProductEntity = $this->getFactory()
@@ -112,11 +114,13 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
     }
 
     /**
+     * @uses Product
+     *
      * @param string $productPackagingUnitSku
      *
      * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null
      */
-    public function getProductPackagingLeadProductByProductPackagingSku(
+    public function findProductPackagingLeadProductByProductPackagingSku(
         string $productPackagingUnitSku
     ): ?ProductPackagingLeadProductTransfer {
         $productPackagingLeadProductEntity = $this->getFactory()
@@ -169,43 +173,15 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
     }
 
     /**
-     * @param int $productPackagingUnitId
+     * @param int $idProductPackagingUnit
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer|null
      */
-    public function getProductPackagingUnitById(
-        int $productPackagingUnitId
+    public function findProductPackagingUnitById(
+        int $idProductPackagingUnit
     ): ?ProductPackagingUnitTransfer {
         $productPackagingUnitEntity = $this->getProductPackagingUnitCriteria()
-            ->findOneByIdProductPackagingUnit($productPackagingUnitId);
-
-        if (!$productPackagingUnitEntity) {
-            return null;
-        }
-
-        $productPackagingUnitTransfer = $this->getFactory()
-            ->createProductPackagingUnitMapper()
-            ->mapProductPackagingUnitTransfer(
-                $productPackagingUnitEntity,
-                new ProductPackagingUnitTransfer()
-            );
-
-        return $productPackagingUnitTransfer;
-    }
-
-    /**
-     * @param string $productPackagingUnitSku
-     *
-     * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer|null
-     */
-    public function getProductPackagingUnitBySku(
-        string $productPackagingUnitSku
-    ): ?ProductPackagingUnitTransfer {
-        $productPackagingUnitEntity = $this->getProductPackagingUnitCriteria()
-            ->useProductQuery()
-                ->filterBySku($productPackagingUnitSku)
-            ->endUse()
-            ->findOne();
+            ->findOneByIdProductPackagingUnit($idProductPackagingUnit);
 
         if (!$productPackagingUnitEntity) {
             return null;

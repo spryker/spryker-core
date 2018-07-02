@@ -22,43 +22,37 @@ class ProductPackagingUnitTypeReader implements ProductPackagingUnitTypeReaderIn
     protected $repository;
 
     /**
-     * @var \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeTranslationsReaderInterface
+     * @var \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeTranslationReaderInterface
      */
-    protected $translationsReader;
+    protected $translationReader;
 
     /**
      * @param \Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface $repository
-     * @param \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeTranslationsReaderInterface $translationsReader
+     * @param \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeTranslationReaderInterface $translationReader
      */
     public function __construct(
         ProductPackagingUnitRepositoryInterface $repository,
-        ProductPackagingUnitTypeTranslationsReaderInterface $translationsReader
+        ProductPackagingUnitTypeTranslationReaderInterface $translationReader
     ) {
         $this->repository = $repository;
-        $this->translationsReader = $translationsReader;
+        $this->translationReader = $translationReader;
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
-     * @throws \Spryker\Zed\ProductPackagingUnit\Business\Exception\ProductPackagingUnitTypeNotFoundException
-     *
-     * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer|null
      */
-    public function getProductPackagingUnitTypeByName(
+    public function findProductPackagingUnitTypeByName(
         ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
     ): ProductPackagingUnitTypeTransfer {
         $productPackagingUnitTypeTransfer->requireName();
         $productPackagingUnitTypeName = $productPackagingUnitTypeTransfer->getName();
-        $productPackagingUnitTypeTransfer = $this->repository->getProductPackagingUnitTypeByName($productPackagingUnitTypeName);
+        $productPackagingUnitTypeTransfer = $this->repository->findProductPackagingUnitTypeByName($productPackagingUnitTypeName);
 
-        if ($productPackagingUnitTypeTransfer === null) {
-            throw new ProductPackagingUnitTypeNotFoundException(
-                sprintf(static::ERROR_NO_PRODUCT_PACKAGING_UNIT_TYPE_BY_NAME, $productPackagingUnitTypeName)
-            );
+        if ($productPackagingUnitTypeTransfer) {
+            $productPackagingUnitTypeTransfer = $this->translationReader->hydrateTranslations($productPackagingUnitTypeTransfer);
         }
-
-        $productPackagingUnitTypeTransfer = $this->translationsReader->hydrateTranslations($productPackagingUnitTypeTransfer);
 
         return $productPackagingUnitTypeTransfer;
     }
@@ -75,7 +69,7 @@ class ProductPackagingUnitTypeReader implements ProductPackagingUnitTypeReaderIn
     ): ProductPackagingUnitTypeTransfer {
         $productPackagingUnitTypeTransfer->requireIdProductPackagingUnitType();
         $idProductPackagingUnitType = $productPackagingUnitTypeTransfer->getIdProductPackagingUnitType();
-        $productPackagingUnitTypeTransfer = $this->repository->getProductPackagingUnitTypeById($idProductPackagingUnitType);
+        $productPackagingUnitTypeTransfer = $this->repository->findProductPackagingUnitTypeById($idProductPackagingUnitType);
 
         if ($productPackagingUnitTypeTransfer === null) {
             throw new ProductPackagingUnitTypeNotFoundException(
@@ -83,7 +77,7 @@ class ProductPackagingUnitTypeReader implements ProductPackagingUnitTypeReaderIn
             );
         }
 
-        $productPackagingUnitTypeTransfer = $this->translationsReader->hydrateTranslations($productPackagingUnitTypeTransfer);
+        $productPackagingUnitTypeTransfer = $this->translationReader->hydrateTranslations($productPackagingUnitTypeTransfer);
 
         return $productPackagingUnitTypeTransfer;
     }

@@ -13,9 +13,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Spryker\Zed\ProductPackagingUnitGui\Business\ProductPackagingUnitGuiFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductPackagingUnitGui\Communication\ProductPackagingUnitGuiCommunicationFactory getFactory()
- * @method \Spryker\Zed\ProductPackagingUnitGui\Persistence\ProductPackagingUnitGuiRepositoryInterface getRepository()
  */
 class DeleteController extends AbstractProductPackagingUnitGuiController
 {
@@ -26,7 +24,7 @@ class DeleteController extends AbstractProductPackagingUnitGuiController
      */
     public function indexAction(Request $request): RedirectResponse
     {
-        $idProductPackagingUnitType = $this->castId($request->query->get(ProductPackagingUnitGuiConfig::REQUEST_ID_PRODUCT_PACKAGING_UNIT_TYPE));
+        $idProductPackagingUnitType = $this->castId($request->query->get(ProductPackagingUnitGuiConfig::REQUEST_PARAM_ID_PRODUCT_PACKAGING_UNIT_TYPE));
         $productPackagingUnitTypeTransfer = $this->findProductPackagingUnitTypeById($idProductPackagingUnitType);
 
         if ($this->deleteProductPackagingUnitType($productPackagingUnitTypeTransfer)) {
@@ -35,7 +33,7 @@ class DeleteController extends AbstractProductPackagingUnitGuiController
                 $productPackagingUnitTypeTransfer->getName()
             ));
 
-            return $this->redirectResponse($this->getRequestRedirectUrl($request));
+            return $this->redirectResponse(ProductPackagingUnitGuiConfig::URL_PRODUCT_PACKAGING_UNIT_TYPE_LIST);
         }
 
         $this->addErrorMessage(sprintf(

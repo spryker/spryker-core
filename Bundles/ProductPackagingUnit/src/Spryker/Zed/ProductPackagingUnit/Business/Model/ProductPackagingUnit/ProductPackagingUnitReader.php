@@ -39,31 +39,14 @@ class ProductPackagingUnitReader implements ProductPackagingUnitReaderInterface
     }
 
     /**
-     * @param int $productPackagingUnitId
+     * @param int $idProductPackagingUnit
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer|null
      */
     public function getProductPackagingUnitById(
-        int $productPackagingUnitId
+        int $idProductPackagingUnit
     ): ?ProductPackagingUnitTransfer {
-        $productPackagingUnitTransfer = $this->repository->getProductPackagingUnitById($productPackagingUnitId);
-
-        if ($productPackagingUnitTransfer && !$productPackagingUnitTransfer->getProductPackagingUnitAmount()) {
-            $this->hydrateWithDefaultAmount($productPackagingUnitTransfer);
-        }
-
-        return $productPackagingUnitTransfer;
-    }
-
-    /**
-     * @param string $productPackagingUnitSku
-     *
-     * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer|null
-     */
-    public function getProductPackagingUnitBySku(
-        string $productPackagingUnitSku
-    ): ?ProductPackagingUnitTransfer {
-        $productPackagingUnitTransfer = $this->repository->getProductPackagingUnitBySku($productPackagingUnitSku);
+        $productPackagingUnitTransfer = $this->repository->findProductPackagingUnitById($idProductPackagingUnit);
 
         if ($productPackagingUnitTransfer && !$productPackagingUnitTransfer->getProductPackagingUnitAmount()) {
             $this->hydrateWithDefaultAmount($productPackagingUnitTransfer);
@@ -77,9 +60,9 @@ class ProductPackagingUnitReader implements ProductPackagingUnitReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null
      */
-    public function getProductPackagingLeadProductByProductPackagingSku(string $productPackagingUnitSku): ?ProductPackagingLeadProductTransfer
+    public function findProductPackagingLeadProductByProductPackagingSku(string $productPackagingUnitSku): ?ProductPackagingLeadProductTransfer
     {
-        return $this->repository->getProductPackagingLeadProductByProductPackagingSku($productPackagingUnitSku);
+        return $this->repository->findProductPackagingLeadProductByProductPackagingSku($productPackagingUnitSku);
     }
 
     /**

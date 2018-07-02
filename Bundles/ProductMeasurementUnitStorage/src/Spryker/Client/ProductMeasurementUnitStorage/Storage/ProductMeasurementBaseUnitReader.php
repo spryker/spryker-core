@@ -43,12 +43,12 @@ class ProductMeasurementBaseUnitReader implements ProductMeasurementBaseUnitRead
         $productConcreteMeasurementUnitStorageTransfer = $this->productConcreteMeasurementUnitStorageReader
             ->findProductConcreteMeasurementUnitStorage($idProductConcrete);
 
-        if ($productConcreteMeasurementUnitStorageTransfer !== null) {
-            return $this->productMeasurementUnitReader->findProductMeasurementUnit(
-                $productConcreteMeasurementUnitStorageTransfer->getBaseUnit()->getIdProductMeasurementUnit()
-            );
+        if ($productConcreteMeasurementUnitStorageTransfer === null) {
+            return null;
         }
 
-        return null;
+        return $this->productMeasurementUnitReader->findProductMeasurementUnit(
+            $productConcreteMeasurementUnitStorageTransfer->getBaseUnit()->getIdProductMeasurementUnit()
+        );
     }
 }
