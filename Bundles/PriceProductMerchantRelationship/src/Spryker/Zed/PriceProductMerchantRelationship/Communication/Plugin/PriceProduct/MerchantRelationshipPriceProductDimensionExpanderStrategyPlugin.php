@@ -30,7 +30,7 @@ class MerchantRelationshipPriceProductDimensionExpanderStrategyPlugin extends Ab
      */
     public function isApplicable(PriceProductDimensionTransfer $priceProductDimensionTransfer): bool
     {
-        return $priceProductDimensionTransfer->getIdMerchantRelationship() !== null;
+        return (bool)$priceProductDimensionTransfer->getIdMerchantRelationship();
     }
 
     /**
