@@ -211,7 +211,13 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
         SpyPriceProductStoreQuery $priceProductStoreQuery,
         QueryCriteriaTransfer $queryCriteriaTransfer
     ): void {
+        if ($queryCriteriaTransfer->getConditions()->count() === 0) {
+            return;
+        }
+
+        $condNames = [];
         foreach ($queryCriteriaTransfer->getConditions() as $queryConditionTransfer) {
+            $condNames[] = $queryConditionTransfer->getName();
             $priceProductStoreQuery->addCond(
                 $queryConditionTransfer->getName(),
                 $queryConditionTransfer->getColumn(),
@@ -219,6 +225,7 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
                 $queryConditionTransfer->getComparison()
             );
         }
+        $priceProductStoreQuery->combine($condNames);
     }
 
     /**
