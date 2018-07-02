@@ -124,12 +124,16 @@ class CustomerForm extends AbstractType
      */
     protected function addSalutationField(FormBuilderInterface $builder, array $choices)
     {
+        $salutationConstraints = [
+            new NotBlank(),
+        ];
+
         $builder->add(self::FIELD_SALUTATION, ChoiceType::class, [
             'label' => 'Salutation',
             'placeholder' => 'Select one',
             'choices' => array_flip($choices),
             'choices_as_values' => true,
-            'required' => false,
+            'constraints' => $salutationConstraints,
         ]);
 
         return $this;
