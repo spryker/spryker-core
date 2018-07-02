@@ -26,7 +26,8 @@ class ProductPackagingUnitToGlossaryFacadeBridge implements ProductPackagingUnit
     }
 
     /**
-     * {@inheritdoc}
+     * @param string $keyName
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return bool
      */
@@ -36,8 +37,6 @@ class ProductPackagingUnitToGlossaryFacadeBridge implements ProductPackagingUnit
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @param string $keyName
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
@@ -49,26 +48,18 @@ class ProductPackagingUnitToGlossaryFacadeBridge implements ProductPackagingUnit
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @param string $key
      * @param string $value
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function saveAndTouchTranslation(string $key, string $value, LocaleTransfer $localeTransfer): TranslationTransfer
+    public function saveTranslation(string $key, string $value, LocaleTransfer $localeTransfer): TranslationTransfer
     {
-        if (!$this->hasTranslation($key, $localeTransfer)) {
-            return $this->glossaryFacade->createAndTouchTranslation($key, $localeTransfer, $value);
-        } else {
-            return $this->glossaryFacade->updateAndTouchTranslation($key, $localeTransfer, $value);
-        }
+        return $this->glossaryFacade->saveTranslation($key, $localeTransfer, $value);
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @param string $keyName
      *
      * @return bool
@@ -79,8 +70,6 @@ class ProductPackagingUnitToGlossaryFacadeBridge implements ProductPackagingUnit
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @param string $keyName
      *
      * @return int
@@ -91,8 +80,6 @@ class ProductPackagingUnitToGlossaryFacadeBridge implements ProductPackagingUnit
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @param string $keyName
      *
      * @return bool

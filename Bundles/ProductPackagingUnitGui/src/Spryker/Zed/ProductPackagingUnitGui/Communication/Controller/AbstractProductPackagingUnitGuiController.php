@@ -14,9 +14,7 @@ use Spryker\Zed\ProductPackagingUnitGui\ProductPackagingUnitGuiConfig;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Spryker\Zed\ProductPackagingUnitGui\Business\ProductPackagingUnitGuiFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductPackagingUnitGui\Communication\ProductPackagingUnitGuiCommunicationFactory getFactory()
- * @method \Spryker\Zed\ProductPackagingUnitGui\Persistence\ProductPackagingUnitGuiRepositoryInterface getRepository()
  */
 abstract class AbstractProductPackagingUnitGuiController extends AbstractController
 {
@@ -70,7 +68,7 @@ abstract class AbstractProductPackagingUnitGuiController extends AbstractControl
     {
         return Url::generate(
             ProductPackagingUnitGuiConfig::URL_PRODUCT_PACKAGING_UNIT_TYPE_EDIT,
-            [ProductPackagingUnitGuiConfig::REQUEST_ID_PRODUCT_PACKAGING_UNIT_TYPE => $idProductPackagingUnitType]
+            [ProductPackagingUnitGuiConfig::REQUEST_PARAM_ID_PRODUCT_PACKAGING_UNIT_TYPE => $idProductPackagingUnitType]
         )->build();
     }
 }

@@ -16,13 +16,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
- * @method \Spryker\Zed\ProductPackagingUnitGui\Business\ProductPackagingUnitGuiFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductPackagingUnitGui\Communication\ProductPackagingUnitGuiCommunicationFactory getFactory()
  */
 class ProductPackagingUnitTypeTranslationFormType extends AbstractType
 {
-    const FIELD_TRANSLATION = 'translation';
-    const FIELD_LOCALE_CODE = 'localeCode';
+    protected const FIELD_TRANSLATION = 'translation';
+    protected const FIELD_LOCALE_CODE = 'localeCode';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

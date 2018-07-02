@@ -66,12 +66,12 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
      */
-    public function getProductPackagingUnitTypeByName(
+    public function findProductPackagingUnitTypeByName(
         ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
     ): ProductPackagingUnitTypeTransfer {
         return $this->getFactory()
             ->createProductPackagingUnitTypeReader()
-            ->getProductPackagingUnitTypeByName($productPackagingUnitTypeTransfer);
+            ->findProductPackagingUnitTypeByName($productPackagingUnitTypeTransfer);
     }
 
     /**
@@ -117,12 +117,12 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      *
      * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer|null
      */
-    public function getProductPackagingLeadProductByIdProductAbstract(
+    public function findProductPackagingLeadProductByIdProductAbstract(
         int $idProductAbstract
     ): ?ProductPackagingLeadProductTransfer {
         return $this->getFactory()
             ->createProductPackagingUnitLeadProductReader()
-            ->getProductPackagingLeadProductByIdProductAbstract($idProductAbstract);
+            ->findProductPackagingLeadProductByIdProductAbstract($idProductAbstract);
     }
 
     /**
@@ -201,10 +201,10 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function expandCartChangeWithQuantityPackagingUnit(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
+    public function expandCartChangeWithAmountLeadProduct(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         return $this->getFactory()
             ->createCartChangeExpander()
-            ->expandWithQuantityPackagingUnit($cartChangeTransfer);
+            ->expandWithAmountLeadProduct($cartChangeTransfer);
     }
 }
