@@ -40,5 +40,5 @@ interface SearchIndexManagerInterface
     /**
      * @return bool
      */
-    public function open();
+    public function open(): bool;
 }

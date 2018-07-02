@@ -18,6 +18,8 @@ use Spryker\Zed\Search\Business\Model\SearchInstallerInterface;
 
 class IndexInstaller implements SearchInstallerInterface
 {
+    protected const BLACKLIST_DELIMITER = '.';
+
     /**
      * @var \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionLoaderInterface
      */
@@ -34,21 +36,21 @@ class IndexInstaller implements SearchInstallerInterface
     protected $messenger;
 
     /**
-     * @var array
+     * @var string[]
      */
     protected $blacklistedSettings;
 
     /**
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionLoaderInterface $indexDefinitionLoader
      * @param \Elastica\Client $elasticaClient
-     * @param array $blacklistedSettings
      * @param \Psr\Log\LoggerInterface $messenger
+     * @param string[] $blacklistedSettings
      */
     public function __construct(
         IndexDefinitionLoaderInterface $indexDefinitionLoader,
         Client $elasticaClient,
-        array $blacklistedSettings,
-        LoggerInterface $messenger
+        LoggerInterface $messenger,
+        array $blacklistedSettings = []
     ) {
         $this->indexDefinitionLoader = $indexDefinitionLoader;
         $this->elasticaClient = $elasticaClient;
@@ -196,7 +198,7 @@ class IndexInstaller implements SearchInstallerInterface
      *
      * @return array
      */
-    protected function removeBlacklistedSettings(array $settings)
+    protected function removeBlacklistedSettings(array $settings): array
     {
         foreach ($this->blacklistedSettings as $settingPath) {
             $settings = $this->removeSetting($settings, $settingPath);
@@ -211,10 +213,10 @@ class IndexInstaller implements SearchInstallerInterface
      *
      * @return array
      */
-    protected function removeSetting(array $settings, string $settingPath)
+    protected function removeSetting(array $settings, string $settingPath): array
     {
         $settingsElement = &$settings;
-        $settingPathArray = explode('.', $settingPath);
+        $settingPathArray = explode(static::BLACKLIST_DELIMITER, $settingPath);
 
         foreach ($settingPathArray as $pathNumber => $step) {
             if (!isset($settingsElement[$step])) {

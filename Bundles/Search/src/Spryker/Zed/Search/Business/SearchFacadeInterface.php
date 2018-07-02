@@ -238,9 +238,9 @@ interface SearchFacadeInterface
      *
      * @api
      *
-     * @return mixed
+     * @return bool
      */
-    public function openIndex();
+    public function openIndex(): bool;
 
     /**
      * Specification:

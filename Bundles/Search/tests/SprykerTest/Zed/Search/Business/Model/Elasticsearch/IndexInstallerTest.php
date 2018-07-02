@@ -92,7 +92,7 @@ class IndexInstallerTest extends Unit
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     protected function getBlacklist()
     {

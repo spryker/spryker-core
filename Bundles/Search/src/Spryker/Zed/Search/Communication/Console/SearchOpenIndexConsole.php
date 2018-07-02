@@ -22,7 +22,7 @@ class SearchOpenIndexConsole extends Console
     /**
      * @return void
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setName(self::COMMAND_NAME);
         $this->setDescription(self::DESCRIPTION);
@@ -36,7 +36,7 @@ class SearchOpenIndexConsole extends Console
      *
      * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if ($this->getFacade()->openIndex()) {
             $this->info('Search index opened.');

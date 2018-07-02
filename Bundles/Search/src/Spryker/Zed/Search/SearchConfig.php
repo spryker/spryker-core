@@ -58,6 +58,20 @@ class SearchConfig extends AbstractBundleConfig
     }
 
     /**
+     * @return string[]
+     */
+    public function getBlacklistedSettings(): array
+    {
+        return [
+            'index.number_of_shards',
+            'index.codec',
+            'index.routing_partition_size',
+            'index.shard.check_on_startup',
+            'analysis',
+        ];
+    }
+
+    /**
      * @return string
      */
     protected function getSprykerRootDir()

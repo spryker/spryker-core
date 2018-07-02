@@ -288,7 +288,7 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      *
      * @return bool
      */
-    public function openIndex()
+    public function openIndex(): bool
     {
         return $this->getFactory()->createSearchIndexManager()->open();
     }
