@@ -99,7 +99,11 @@ class ResponseBuilder implements ResponseBuilderInterface
         $data = [];
         foreach ($resources as $resource) {
             if (!$resource->hasLink('self')) {
-                $resource->addLink('self', $resource->getType() . '/' . $resource->getId());
+                $link = $resource->getType();
+                if ($resource->getId()) {
+                    $link .= '/' . $resource->getId();
+                }
+                $resource->addLink('self', $link);
             }
             $data[] = $this->resourceToArray(
                 $resource,
