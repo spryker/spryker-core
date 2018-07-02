@@ -14,6 +14,8 @@ use Orm\Zed\Cms\Persistence\SpyCmsTemplateQuery;
 use Orm\Zed\Cms\Persistence\SpyCmsVersionQuery;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Spryker\Zed\Cms\CmsDependencyProvider;
+use Spryker\Zed\Cms\Persistence\Mapper\CmsMapper;
+use Spryker\Zed\Cms\Persistence\Mapper\CmsMapperInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -76,5 +78,13 @@ class CmsPersistenceFactory extends AbstractPersistenceFactory
     public function createUrlQuery()
     {
         return SpyUrlQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\Cms\Persistence\Mapper\CmsMapperInterface
+     */
+    public function createCmsMapper(): CmsMapperInterface
+    {
+        return new CmsMapper();
     }
 }

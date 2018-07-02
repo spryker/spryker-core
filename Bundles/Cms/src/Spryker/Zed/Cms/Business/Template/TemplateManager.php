@@ -10,11 +10,14 @@ namespace Spryker\Zed\Cms\Business\Template;
 use Generated\Shared\Transfer\CmsTemplateTransfer;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsTemplateTableMap;
 use Orm\Zed\Cms\Persistence\SpyCmsTemplate;
+use Spryker\Zed\Cms\Business\CmsBusinessFactory;
 use Spryker\Zed\Cms\Business\Exception\MissingTemplateException;
 use Spryker\Zed\Cms\Business\Exception\TemplateExistsException;
 use Spryker\Zed\Cms\Business\Exception\TemplateFileNotFoundException;
 use Spryker\Zed\Cms\CmsConfig;
+use Spryker\Zed\Cms\Persistence\CmsEntityManagerInterface;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
+use Spryker\Zed\Cms\Persistence\CmsRepositoryInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -31,15 +34,39 @@ class TemplateManager implements TemplateManagerInterface
     protected $config;
 
     /**
+     * @var \Spryker\Zed\Cms\Persistence\CmsRepositoryInterface
+     */
+    protected $cmsRepository;
+
+    /**
+     * @var \Spryker\Zed\Cms\Persistence\CmsEntityManagerInterface
+     */
+    protected $cmsEntityManager;
+
+    /**
+     * @var \Spryker\Zed\Cms\Business\CmsBusinessFactory
+     */
+    protected $cmsBusinessFactory;
+
+    /**
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $cmsQueryContainer
      * @param \Spryker\Zed\Cms\CmsConfig $config
+     * @param \Spryker\Zed\Cms\Persistence\CmsRepositoryInterface $cmsRepository
+     * @param \Spryker\Zed\Cms\Persistence\CmsEntityManagerInterface $cmsEntityManager
+     * @param \Spryker\Zed\Cms\Business\CmsBusinessFactory $cmsBusinessFactory
      */
     public function __construct(
         CmsQueryContainerInterface $cmsQueryContainer,
-        CmsConfig $config
+        CmsConfig $config,
+        CmsRepositoryInterface $cmsRepository,
+        CmsEntityManagerInterface $cmsEntityManager,
+        CmsBusinessFactory $cmsBusinessFactory
     ) {
         $this->cmsQueryContainer = $cmsQueryContainer;
         $this->config = $config;
+        $this->cmsRepository = $cmsRepository;
+        $this->cmsEntityManager = $cmsEntityManager;
+        $this->cmsBusinessFactory = $cmsBusinessFactory;
     }
 
     /**
@@ -291,7 +318,7 @@ class TemplateManager implements TemplateManagerInterface
      */
     protected function findTwigFileAndCreateTemplate($cmsTemplateEntityPrefix, $cmsFolderPath)
     {
-        $cmsTemplateFolders = $this->createNewFinderInstance()
+        $cmsTemplateFolders = $this->createFinderInstanceUsingCmsBusinessFactory()
             ->in($cmsFolderPath)
             ->directories();
 
@@ -308,7 +335,73 @@ class TemplateManager implements TemplateManagerInterface
             }
         }
 
+        $cmsTemplateFolderFilesPaths = $this->getCmsTemplateFolderFilePaths(
+            $cmsTemplateEntityPrefix,
+            $cmsFolderPath,
+            $cmsTemplateFolders
+        );
+
+        $this->deleteNonExistingCmsTemplateEntities($cmsTemplateFolderFilesPaths);
+
         return $isTemplateCreated;
+    }
+
+    /**
+     * @param string[] $cmsTemplateFolderPaths
+     *
+     * @return void
+     */
+    protected function deleteNonExistingCmsTemplateEntities(array $cmsTemplateFolderPaths): void
+    {
+        $storedCmsTemplateEntitiesPaths = $this->cmsRepository->findAllCmsTemplatePaths();
+        $nonExistingEntityPaths = array_diff($storedCmsTemplateEntitiesPaths, $cmsTemplateFolderPaths);
+
+        $this->cmsEntityManager->deleteNonExistingCmsTemplateEntitiesByPaths($nonExistingEntityPaths);
+    }
+
+    /**
+     * @param string $cmsTemplateEntityPrefix
+     * @param string $cmsFolderPath
+     * @param \Symfony\Component\Finder\Finder $cmsTemplateFolder
+     *
+     * @return string[]
+     */
+    protected function getCmsTemplateFolderFilePaths(
+        string $cmsTemplateEntityPrefix,
+        string $cmsFolderPath,
+        Finder $cmsTemplateFolder
+    ): array {
+        $cmsTemplateFolderFilePaths = [];
+
+        $cmsTemplateFolderFiles = $cmsTemplateFolder->files();
+        foreach ($cmsTemplateFolderFiles as $cmsTemplateFolderFile) {
+            $cmsTemplateFolderFilePaths[] = $this->getSingleCmsTemplateFolderFilePath(
+                $cmsFolderPath,
+                $cmsTemplateEntityPrefix,
+                $cmsTemplateFolderFile
+            );
+        }
+
+        return $cmsTemplateFolderFilePaths;
+    }
+
+    /**
+     * @param string $cmsFolderPath
+     * @param string $cmsTemplateEntityPrefix
+     * @param \Symfony\Component\Finder\SplFileInfo $cmsTemplateFolderFile
+     *
+     * @return string
+     */
+    protected function getSingleCmsTemplateFolderFilePath(
+        string $cmsFolderPath,
+        string $cmsTemplateEntityPrefix,
+        SplFileInfo $cmsTemplateFolderFile
+    ): string {
+        return str_replace(
+            $cmsFolderPath,
+            $cmsTemplateEntityPrefix,
+            $cmsTemplateFolderFile->getRealPath()
+        );
     }
 
     /**
@@ -353,7 +446,7 @@ class TemplateManager implements TemplateManagerInterface
      */
     protected function findCmsTemplateFilesInFolder(string $cmsTemplateFolderPath): Finder
     {
-        return $this->createNewFinderInstance()
+        return $this->createFinderInstanceUsingCmsBusinessFactory()
             ->in($cmsTemplateFolderPath)
             ->name('*.twig')
             ->depth('0')
@@ -375,7 +468,7 @@ class TemplateManager implements TemplateManagerInterface
         $cmsTemplateFileName = $cmsTemplateFileInfo->getRelativePathname();
         $cmsTemplateFilePath = $cmsFilePathPrefix . $cmsTemplateFileName;
 
-        if ($this->isCmsTemplateEntityAlreadyExist($cmsTemplateFilePath)) {
+        if (!$this->isCmsTemplateEntityAlreadyExist($cmsTemplateFilePath)) {
             $this->createCmsTemplateEntity(
                 $cmsTemplateFileName,
                 $cmsTemplateFilePath
@@ -389,9 +482,9 @@ class TemplateManager implements TemplateManagerInterface
     /**
      * @return \Symfony\Component\Finder\Finder
      */
-    protected function createNewFinderInstance(): Finder
+    protected function createFinderInstanceUsingCmsBusinessFactory(): Finder
     {
-        return Finder::create();
+        return $this->cmsBusinessFactory->createFinder();
     }
 
     /**
@@ -401,10 +494,10 @@ class TemplateManager implements TemplateManagerInterface
      */
     protected function isCmsTemplateEntityAlreadyExist(string $cmsTemplateFilePath): bool
     {
-        $cmsTemplateQuery = $this->cmsQueryContainer
-            ->queryTemplateByPath($cmsTemplateFilePath);
+        $cmsTemplateEntity = $this->cmsRepository
+            ->findCmsTemplateByPath($cmsTemplateFilePath);
 
-        return $cmsTemplateQuery->count() === 0;
+        return $cmsTemplateEntity !== null;
     }
 
     /**
