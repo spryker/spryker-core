@@ -38,6 +38,9 @@ class MerchantRelationshipPriceQueryExpander implements MerchantRelationshipPric
         }
 
         $merchantRelationshipIds = $this->findMerchantRelationshipIds($priceProductCriteriaTransfer);
+        if (!$merchantRelationshipIds) {
+            return null;
+        }
 
         return $this->createQueryCriteriaTransfer($merchantRelationshipIds);
     }
