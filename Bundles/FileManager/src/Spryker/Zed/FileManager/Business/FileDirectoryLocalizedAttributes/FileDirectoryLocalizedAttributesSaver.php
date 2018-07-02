@@ -36,7 +36,7 @@ class FileDirectoryLocalizedAttributesSaver implements FileDirectoryLocalizedAtt
         $fkFileDirectory = $fileDirectoryTransfer->getIdFileDirectory();
 
         foreach ($fileDirectoryTransfer->getFileDirectoryLocalizedAttributes() as $fileDirectoryLocalizedAttributesTransfer) {
-            $this->prepareFileDiretoryLocalizedAttributesTransfer($fileDirectoryLocalizedAttributesTransfer, $fkFileDirectory);
+            $this->prepareFileDirectoryLocalizedAttributesTransfer($fileDirectoryLocalizedAttributesTransfer, $fkFileDirectory);
             $this->entityManager->saveFileDirectoryLocalizedAttribute($fileDirectoryLocalizedAttributesTransfer);
         }
     }
@@ -47,7 +47,7 @@ class FileDirectoryLocalizedAttributesSaver implements FileDirectoryLocalizedAtt
      *
      * @return void
      */
-    protected function prepareFileDiretoryLocalizedAttributesTransfer(FileDirectoryLocalizedAttributesTransfer $fileDirectoryLocalizedAttributesTransfer, int $fkFileDirectory)
+    protected function prepareFileDirectoryLocalizedAttributesTransfer(FileDirectoryLocalizedAttributesTransfer $fileDirectoryLocalizedAttributesTransfer, int $fkFileDirectory)
     {
         $fileDirectoryLocalizedAttributesTransfer->setFkFileDirectory($fkFileDirectory);
         $fileDirectoryLocalizedAttributesTransfer->setFkLocale(
