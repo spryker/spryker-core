@@ -102,7 +102,7 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
      *
      * @return \Generated\Shared\Transfer\CheckoutErrorTransfer
      */
-    protected function createPreparedCheckoutErrorTransfer(string $quoteItemSku): CheckoutErrorTransfer
+    protected function createCheckoutErrorTransfer(string $quoteItemSku): CheckoutErrorTransfer
     {
         return (new CheckoutErrorTransfer())
             ->setErrorCode($this->availabilityConfig->getProductUnavailableErrorCode())
@@ -113,17 +113,17 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      * @param string $quoteItemSku
      *
      * @return void
      */
-    protected function addAvailabilityErrorToCheckoutResponse(CheckoutResponseTransfer $checkoutResponseTransfer, string $quoteItemSku): void
+    protected function addAvailabilityErrorToCheckoutResponse(CheckoutResponseTransfer $checkoutResponse, string $quoteItemSku): void
     {
-        $checkoutErrorTransfer = $this->createPreparedCheckoutErrorTransfer($quoteItemSku);
+        $checkoutErrorTransfer = $this->createCheckoutErrorTransfer($quoteItemSku);
 
-        $checkoutResponseTransfer
-            ->setIsSuccess(false)
-            ->addError($checkoutErrorTransfer);
+        $checkoutResponse
+            ->addError($checkoutErrorTransfer)
+            ->setIsSuccess(false);
     }
 }
