@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType;
 
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
+use Generated\Shared\Transfer\ProductPackagingUnitTypeTranslationTransfer;
 use Generated\Shared\Transfer\TranslationTransfer;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToGlossaryFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToLocaleFacadeInterface;
@@ -43,20 +44,31 @@ class ProductPackagingUnitTypeTranslationWriter implements ProductPackagingUnitT
      */
     public function saveTranslations(ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer): void
     {
-        if (!$productPackagingUnitTypeTransfer->getName()) {
+        foreach ($productPackagingUnitTypeTransfer->getTranslations() as $productPackagingUnitTypeTranslationTransfer) {
+            $productPackagingUnitTypeTranslationTransfer->requireLocaleCode();
+
+            $this->saveNameTranslations($productPackagingUnitTypeTransfer, $productPackagingUnitTypeTranslationTransfer);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
+     * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTranslationTransfer $productPackagingUnitTypeTranslationTransfer
+     *
+     * @return void
+     */
+    protected function saveNameTranslations(
+        ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer,
+        ProductPackagingUnitTypeTranslationTransfer $productPackagingUnitTypeTranslationTransfer
+    ): void {
+        $key = $productPackagingUnitTypeTransfer->getName();
+        $value = $productPackagingUnitTypeTranslationTransfer->getName();
+
+        if (!$key || !$value) {
             return;
         }
 
-        foreach ($productPackagingUnitTypeTransfer->getNameTranslations() as $productPackagingUnitTypeNameTranslationTransfer) {
-            $value = $productPackagingUnitTypeNameTranslationTransfer->getTranslation();
-            $key = $productPackagingUnitTypeTransfer->getName();
-
-            if (!$value) {
-                $value = $key;
-            }
-
-            $this->saveTranslation($key, $value, $productPackagingUnitTypeNameTranslationTransfer->getLocaleCode());
-        }
+        $this->saveTranslation($key, $value, $productPackagingUnitTypeTranslationTransfer->getLocaleCode());
     }
 
     /**

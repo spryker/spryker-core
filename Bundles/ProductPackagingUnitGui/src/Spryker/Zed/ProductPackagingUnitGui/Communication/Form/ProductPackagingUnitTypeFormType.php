@@ -25,7 +25,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class ProductPackagingUnitTypeFormType extends AbstractType
 {
     public const FIELD_NAME = 'name';
-    public const FIELD_PRODUCT_PACKAGING_UNIT_TYPE_NAME_TRANSLATIONS = 'nameTranslations';
+    public const FIELD_PRODUCT_PACKAGING_UNIT_TYPE_TRANSLATIONS = 'translations';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -68,7 +68,7 @@ class ProductPackagingUnitTypeFormType extends AbstractType
             $this->addNameField($event->getForm(), $disableEdit);
         });
 
-        $this->addGroupNameTranslationFields($builder);
+        $this->addProductPackagingUnitTranslationFields($builder);
     }
 
     /**
@@ -102,9 +102,9 @@ class ProductPackagingUnitTypeFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addGroupNameTranslationFields(FormBuilderInterface $builder)
+    protected function addProductPackagingUnitTranslationFields(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_PRODUCT_PACKAGING_UNIT_TYPE_NAME_TRANSLATIONS, CollectionType::class, [
+        $builder->add(static::FIELD_PRODUCT_PACKAGING_UNIT_TYPE_TRANSLATIONS, CollectionType::class, [
             'entry_type' => ProductPackagingUnitTypeTranslationFormType::class,
             'allow_add' => false,
             'allow_delete' => false,
