@@ -136,7 +136,7 @@ class CustomerOrdersTable extends OrdersTable
     /**
      * @param array $item
      *
-     * @return int
+     * @return string
      */
     protected function getGrandTotal(array $item)
     {
