@@ -77,7 +77,7 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
         $uniqueBundleItems = $this->getUniqueBundleItems($quoteTransfer);
 
         foreach ($uniqueBundleItems as $bundleItemTransfer) {
-            $unavailableProductEntities = $this->getUnavailableCheckoutBundledItems(
+            $unavailableProductEntities = $this->checkAllCheckoutBundledItemsAvailable(
                 $quoteTransfer->getItems(),
                 $this->findBundledProducts($bundleItemTransfer->getSku()),
                 $storeTransfer
@@ -134,7 +134,7 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
      *
      * @return \Orm\Zed\Product\Persistence\SpyProduct[]
      */
-    protected function getUnavailableCheckoutBundledItems(
+    protected function checkAllCheckoutBundledItemsAvailable(
         ArrayObject $currentCartItems,
         ObjectCollection $bundledItems,
         StoreTransfer $storeTransfer
