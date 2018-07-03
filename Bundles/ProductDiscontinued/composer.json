@@ -9,7 +9,9 @@
     "spryker/log": "^2.0.0 || ^3.0.0",
     "spryker/product": "^5.0.0 || ^6.0.0",
     "spryker/propel-orm": "^1.1.0",
-    "spryker/symfony": "^3.0.0"
+    "spryker/shopping-list-extension": "^1.1.0",
+    "spryker/symfony": "^3.0.0",
+    "spryker/wishlist-extension": "^1.10"
   },
   "require-dev": {
     "spryker/cart": "*",

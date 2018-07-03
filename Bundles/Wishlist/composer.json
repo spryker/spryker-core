@@ -10,6 +10,7 @@
     "spryker/price-product": "^1.0.0",
     "spryker/product": "^5.0.0 || ^6.0.0",
     "spryker/propel-orm": "^1.1.0",
+    "spryker/wishlist-extension": "^1.0.0",
     "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {

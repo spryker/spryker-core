@@ -10,6 +10,7 @@ namespace Spryker\Zed\ShoppingList\Business\Model;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
+use Generated\Shared\Transfer\ShoppingListPreAddItemCheckResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Zed\Kernel\PermissionAwareTrait;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToMessengerFacadeInterface;
@@ -51,24 +52,32 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
     protected $messengerFacade;
 
     /**
+     * @var \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\AddItemPreCheckPluginInterface[]
+     */
+    protected $addItemPreCheckPlugins;
+
+    /**
      * @param \Spryker\Zed\ShoppingList\Persistence\ShoppingListEntityManagerInterface $shoppingListEntityManager
      * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface $shoppingListRepository
      * @param \Spryker\Zed\ShoppingList\Business\Model\ShoppingListResolverInterface $shoppingListResolver
      * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToMessengerFacadeInterface $messengerFacade
+     * @param \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\AddItemPreCheckPluginInterface[] $addItemPreCheckPlugins
      */
     public function __construct(
         ShoppingListEntityManagerInterface $shoppingListEntityManager,
         ShoppingListToProductFacadeInterface $productFacade,
         ShoppingListRepositoryInterface $shoppingListRepository,
         ShoppingListResolverInterface $shoppingListResolver,
-        ShoppingListToMessengerFacadeInterface $messengerFacade
+        ShoppingListToMessengerFacadeInterface $messengerFacade,
+        array $addItemPreCheckPlugins = []
     ) {
         $this->shoppingListEntityManager = $shoppingListEntityManager;
         $this->productFacade = $productFacade;
         $this->shoppingListRepository = $shoppingListRepository;
         $this->shoppingListResolver = $shoppingListResolver;
         $this->messengerFacade = $messengerFacade;
+        $this->addItemPreCheckPlugins = $addItemPreCheckPlugins;
     }
 
     /**
@@ -163,7 +172,26 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
             return false;
         }
 
-        return true;
+        return $this->preAddItemCheck($shoppingListItemTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return bool
+     */
+    protected function preAddItemCheck(ShoppingListItemTransfer $shoppingListItemTransfer): bool
+    {
+        $isValid = true;
+        foreach ($this->addItemPreCheckPlugins as $preAddItemCheckPlugin) {
+            $shoppingListPreAddItemCheckResponseTransfer = $preAddItemCheckPlugin->check($shoppingListItemTransfer);
+            if (!$shoppingListPreAddItemCheckResponseTransfer->getIsSuccess()) {
+                $this->processErrorMessages($shoppingListPreAddItemCheckResponseTransfer);
+                $isValid = false;
+            }
+        }
+
+        return $isValid;
     }
 
     /**
@@ -215,5 +243,17 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
             $shoppingListTransfer->getIdCompanyUser(),
             $shoppingListTransfer->getIdShoppingList()
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListPreAddItemCheckResponseTransfer $shoppingListPreAddItemCheckResponseTransfer
+     *
+     * @return void
+     */
+    protected function processErrorMessages(ShoppingListPreAddItemCheckResponseTransfer $shoppingListPreAddItemCheckResponseTransfer): void
+    {
+        foreach ($shoppingListPreAddItemCheckResponseTransfer->getMessages() as $messageTransfer) {
+            $this->messengerFacade->addErrorMessage($messageTransfer);
+        }
     }
 }
