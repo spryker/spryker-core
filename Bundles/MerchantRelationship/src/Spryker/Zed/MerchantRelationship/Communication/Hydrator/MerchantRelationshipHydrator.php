@@ -11,7 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Spryker\Zed\MerchantRelationship\Persistence\MerchantRelationshipRepositoryInterface;
 
-class MerchantRelationshipHydrator
+class MerchantRelationshipHydrator implements MerchantRelationshipHydratorInterface
 {
     /**
      * @var \Spryker\Zed\MerchantRelationship\Persistence\MerchantRelationshipRepositoryInterface

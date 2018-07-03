@@ -59,7 +59,26 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
 
         // re-publish remaining for BU prices
         $concreteProducts = $this->priceProductMerchantRelationshipStorageRepository
-            ->findPriceProductStoresByCompanyBusinessUnitConcreteProducts($businessUnitProducts);
+            ->findPriceProductStoresByCompanyBusinessUnitConcreteProducts(array_keys($businessUnitProducts));
+
+        $this->write($concreteProducts);
+    }
+
+    /**
+     * @param array $businessUnitIds
+     *
+     * @return void
+     */
+    public function publishByBusinessUnits(array $businessUnitIds): void
+    {
+        foreach ($businessUnitIds as $idCompanyBusinessUnit) {
+            $this->priceProductMerchantRelationshipStorageEntityManager
+                ->deletePriceProductConcreteByCompanyBusinessUnit($idCompanyBusinessUnit);
+        }
+
+        // re-publish remaining prices
+        $concreteProducts = $this->priceProductMerchantRelationshipStorageRepository
+            ->findPriceProductStoresByCompanyBusinessUnitConcreteProducts($businessUnitIds);
 
         $this->write($concreteProducts);
     }

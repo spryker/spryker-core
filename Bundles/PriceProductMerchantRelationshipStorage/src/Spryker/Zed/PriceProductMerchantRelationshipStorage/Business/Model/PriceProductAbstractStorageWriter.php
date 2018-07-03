@@ -57,6 +57,25 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
     }
 
     /**
+     * @param array $businessUnitIds
+     *
+     * @return void
+     */
+    public function publishByBusinessUnits(array $businessUnitIds): void
+    {
+        foreach ($businessUnitIds as $idCompanyBusinessUnit) {
+            $this->priceProductMerchantRelationshipStorageEntityManager
+                ->deletePriceProductAbstractByCompanyBusinessUnit($idCompanyBusinessUnit);
+        }
+
+        // re-publish remaining prices
+        $abstractProducts = $this->priceProductMerchantRelationshipStorageRepository
+            ->findPriceProductStoresByCompanyBusinessUnitAbstractProducts($businessUnitIds);
+
+        $this->write($abstractProducts);
+    }
+
+    /**
      * @param array $businessUnitProducts
      *
      * @return void
@@ -72,7 +91,7 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
 
         // re-publish remaining prices
         $abstractProducts = $this->priceProductMerchantRelationshipStorageRepository
-            ->findPriceProductStoresByCompanyBusinessUnitAbstractProducts($businessUnitProducts);
+            ->findPriceProductStoresByCompanyBusinessUnitAbstractProducts(array_keys($businessUnitProducts));
 
         $this->write($abstractProducts);
     }

@@ -9,10 +9,8 @@ namespace Spryker\Zed\PriceProductMerchantRelationship\Persistence\Propel\PriceD
 
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
-use Generated\Shared\Transfer\QueryConditionTransfer;
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Generated\Shared\Transfer\QueryJoinTransfer;
-use Orm\Zed\MerchantRelationship\Persistence\Map\SpyMerchantRelationshipToCompanyBusinessUnitTableMap;
 use Orm\Zed\PriceProductMerchantRelationship\Persistence\Map\SpyPriceProductMerchantRelationshipTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 
@@ -36,112 +34,68 @@ class MerchantRelationshipPriceQueryExpander implements MerchantRelationshipPric
         }
 
         if ($idMerchantRelationship) {
-            return $this->createQueryCriteriaTransfer($idMerchantRelationship);
+            return $this->createQueryCriteriaTransfer([$idMerchantRelationship]);
         }
 
-        $idCompanyBusinessUnit = null;
-        if ($priceProductCriteriaTransfer->getPriceDimension()) {
-            $idCompanyBusinessUnit = $priceProductCriteriaTransfer->getPriceDimension()->getIdCompanyBusinessUnit();
+        $merchantRelationshipIds = $this->findMerchantRelationshipIds($priceProductCriteriaTransfer);
+        if (!$merchantRelationshipIds) {
+            return null;
         }
 
-        if (!$idCompanyBusinessUnit) {
-            $idCompanyBusinessUnit = $this->findIdCompanyBusinessUnit($priceProductCriteriaTransfer);
-        }
-
-        if ($idCompanyBusinessUnit) {
-            return $this->createQueryCriteriaTransfer($idMerchantRelationship, $idCompanyBusinessUnit);
-        }
-
-        return null;
+        return $this->createQueryCriteriaTransfer($merchantRelationshipIds);
     }
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return int|null
+     * @return array
      */
-    protected function findIdCompanyBusinessUnit(PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?int
+    protected function findMerchantRelationshipIds(PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array
     {
         if (!$priceProductCriteriaTransfer->getQuote()) {
-            return null;
+            return [];
         }
 
         $customerTransfer = $priceProductCriteriaTransfer->getQuote()->getCustomer();
         if (!$customerTransfer) {
-            return null;
+            return [];
         }
 
         $companyUserTransfer = $customerTransfer->getCompanyUserTransfer();
         if (!$companyUserTransfer) {
-            return null;
+            return [];
         }
 
         $businessUnit = $companyUserTransfer->getCompanyBusinessUnit();
         if (!$businessUnit) {
-            return null;
+            return [];
         }
 
-        if ($businessUnit->getMerchantRelationships()->count() === 0) {
-            return null;
+        $merchantRelationshipIds = [];
+        foreach ($businessUnit->getMerchantRelationships() as $merchantRelationshipTransfer) {
+            $merchantRelationshipIds[] = $merchantRelationshipTransfer->getIdMerchantRelationship();
         }
 
-        return $businessUnit->getIdCompanyBusinessUnit();
+        return $merchantRelationshipIds;
     }
 
     /**
-     * @param int|null $idMerchantRelationship
-     *
-     * @return \Generated\Shared\Transfer\QueryJoinTransfer
-     */
-    protected function createJoin(?int $idMerchantRelationship = null): QueryJoinTransfer
-    {
-        $left[] = static::COL_ID_PRICE_PRODUCT_STORE;
-        $right[] = SpyPriceProductMerchantRelationshipTableMap::COL_FK_PRICE_PRODUCT_STORE;
-
-        if ($idMerchantRelationship) {
-            $left[] = SpyPriceProductMerchantRelationshipTableMap::COL_FK_MERCHANT_RELATIONSHIP;
-            $right[] = (string)$idMerchantRelationship;
-        }
-
-        return (new QueryJoinTransfer())
-            ->setLeft($left)
-            ->setRight($right)
-            ->setJoinType(Criteria::LEFT_JOIN);
-    }
-
-    /**
-     * @param int|null $idMerchantRelationship
-     * @param int|null $idCompanyBusinessUnit
+     * @param int[] $merchantRelationshipIds
      *
      * @return \Generated\Shared\Transfer\QueryCriteriaTransfer
      */
-    protected function createQueryCriteriaTransfer(?int $idMerchantRelationship = null, ?int $idCompanyBusinessUnit = null): QueryCriteriaTransfer
+    protected function createQueryCriteriaTransfer(array $merchantRelationshipIds): QueryCriteriaTransfer
     {
-        $queryCriteriaTransfer = (new QueryCriteriaTransfer())
-            ->addJoin(
-                $this->createJoin($idMerchantRelationship)
-            )
+        return (new QueryCriteriaTransfer())
             ->setWithColumns([
                 SpyPriceProductMerchantRelationshipTableMap::COL_FK_MERCHANT_RELATIONSHIP => PriceProductDimensionTransfer::ID_MERCHANT_RELATIONSHIP,
-            ]);
-
-        if ($idCompanyBusinessUnit) {
-            $queryCriteriaTransfer
-                ->addJoin(
-                    (new QueryJoinTransfer())
-                        ->setLeft([SpyPriceProductMerchantRelationshipTableMap::COL_FK_MERCHANT_RELATIONSHIP])
-                        ->setRight([SpyMerchantRelationshipToCompanyBusinessUnitTableMap::COL_FK_MERCHANT_RELATIONSHIP])
-                        ->setJoinType(Criteria::LEFT_JOIN)
-                )
-                ->addCondition(
-                    (new QueryConditionTransfer())
-                        ->setName('idCompanyBusinessUnit')
-                        ->setColumn(SpyMerchantRelationshipToCompanyBusinessUnitTableMap::COL_FK_COMPANY_BUSINESS_UNIT)
-                        ->setValue($idCompanyBusinessUnit)
-                        ->setComparison('=')
-                );
-        }
-
-        return $queryCriteriaTransfer;
+            ])
+            ->addJoin(
+                (new QueryJoinTransfer())
+                    ->setRelation('PriceProductMerchantRelationship')
+                    ->setCondition(SpyPriceProductMerchantRelationshipTableMap::COL_FK_MERCHANT_RELATIONSHIP
+                        . ' IN (' . implode(',', $merchantRelationshipIds) . ')')
+                    ->setJoinType(Criteria::LEFT_JOIN)
+            );
     }
 }

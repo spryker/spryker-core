@@ -10,7 +10,9 @@ namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Communication\Plug
 use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\MerchantRelationship\Dependency\MerchantRelationshipEvents;
 use Spryker\Zed\PriceProductMerchantRelationship\Dependency\PriceProductMerchantRelationshipEvents;
+use Spryker\Zed\PriceProductMerchantRelationshipStorage\Communication\Plugin\Event\Listener\MerchantRelationshipListener;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\Communication\Plugin\Event\Listener\PriceProductMerchantRelationshipAbstractListener;
 use Spryker\Zed\PriceProductMerchantRelationshipStorage\Communication\Plugin\Event\Listener\PriceProductMerchantRelationshipConcreteListener;
 
@@ -32,6 +34,9 @@ class PriceProductMerchantRelationshipStorageEventSubscriber extends AbstractPlu
     public function getSubscribedEvents(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
         $this
+            ->addMerchantRelationshipCreateListener($eventCollection)
+            ->addMerchantRelationshipUpdateListener($eventCollection)
+            ->addMerchantRelationshipDeleteListener($eventCollection)
             ->addConcretePriceProductMerchantRelationshipCreateListener($eventCollection)
             ->addConcretePriceProductMerchantRelationshipUpdateListener($eventCollection)
             ->addConcretePriceProductMerchantRelationshipDeleteListener($eventCollection)
@@ -40,6 +45,51 @@ class PriceProductMerchantRelationshipStorageEventSubscriber extends AbstractPlu
             ->addAbstractPriceProductMerchantRelationshipDeleteListener($eventCollection);
 
         return $eventCollection;
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return $this
+     */
+    protected function addMerchantRelationshipCreateListener(EventCollectionInterface $eventCollection): self
+    {
+        $eventCollection->addListenerQueued(
+            MerchantRelationshipEvents::ENTITY_SPY_MERCHANT_RELATIONSHIP_TO_COMPANY_BUSINESS_UNIT_CREATE,
+            new MerchantRelationshipListener()
+        );
+
+        return $this;
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return $this
+     */
+    protected function addMerchantRelationshipUpdateListener(EventCollectionInterface $eventCollection): self
+    {
+        $eventCollection->addListenerQueued(
+            MerchantRelationshipEvents::ENTITY_SPY_MERCHANT_RELATIONSHIP_TO_COMPANY_BUSINESS_UNIT_UPDATE,
+            new MerchantRelationshipListener()
+        );
+
+        return $this;
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return $this
+     */
+    protected function addMerchantRelationshipDeleteListener(EventCollectionInterface $eventCollection): self
+    {
+        $eventCollection->addListenerQueued(
+            MerchantRelationshipEvents::ENTITY_SPY_MERCHANT_RELATIONSHIP_TO_COMPANY_BUSINESS_UNIT_DELETE,
+            new MerchantRelationshipListener()
+        );
+
+        return $this;
     }
 
     /**

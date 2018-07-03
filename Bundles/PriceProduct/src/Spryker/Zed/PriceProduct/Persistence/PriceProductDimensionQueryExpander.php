@@ -150,7 +150,6 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
         PriceDimensionQueryCriteriaPluginInterface $priceProductDimensionQueryExpanderPlugin,
         $joinType = null
     ): ?QueryCriteriaTransfer {
-
         $queryCriteriaTransfer = $priceProductDimensionQueryExpanderPlugin
             ->buildPriceDimensionQueryCriteria($priceProductCriteriaTransfer);
 
@@ -159,7 +158,6 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
         }
         $this->addJoin($priceProductStoreQuery, $queryCriteriaTransfer, $joinType);
         $this->addWithColumns($priceProductStoreQuery, $queryCriteriaTransfer);
-        $this->addConditions($priceProductStoreQuery, $queryCriteriaTransfer);
 
         return $queryCriteriaTransfer;
     }
@@ -178,6 +176,15 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
     ): void {
 
         foreach ($queryCriteriaTransfer->getJoins() as $queryJoinTransfer) {
+            if ($queryJoinTransfer->getRelation()) {
+                $joinDirection = $joinType ?? $queryJoinTransfer->getJoinType();
+                $priceProductStoreQuery->join($queryJoinTransfer->getRelation(), $joinDirection);
+
+                if ($queryJoinTransfer->getCondition()) {
+                    $priceProductStoreQuery->addJoinCondition($queryJoinTransfer->getRelation(), $queryJoinTransfer->getCondition());
+                }
+                continue;
+            }
             $priceProductStoreQuery->addJoin(
                 $queryJoinTransfer->getLeft(),
                 $queryJoinTransfer->getRight(),
@@ -199,33 +206,6 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
         foreach ($queryCriteriaTransfer->getWithColumns() as $field => $value) {
             $priceProductStoreQuery->withColumn($field, $value);
         }
-    }
-
-    /**
-     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery $priceProductStoreQuery
-     * @param \Generated\Shared\Transfer\QueryCriteriaTransfer $queryCriteriaTransfer
-     *
-     * @return void
-     */
-    protected function addConditions(
-        SpyPriceProductStoreQuery $priceProductStoreQuery,
-        QueryCriteriaTransfer $queryCriteriaTransfer
-    ): void {
-        if ($queryCriteriaTransfer->getConditions()->count() === 0) {
-            return;
-        }
-
-        $condNames = [];
-        foreach ($queryCriteriaTransfer->getConditions() as $queryConditionTransfer) {
-            $condNames[] = $queryConditionTransfer->getName();
-            $priceProductStoreQuery->addCond(
-                $queryConditionTransfer->getName(),
-                $queryConditionTransfer->getColumn(),
-                $queryConditionTransfer->getValue(),
-                $queryConditionTransfer->getComparison()
-            );
-        }
-        $priceProductStoreQuery->combine($condNames);
     }
 
     /**

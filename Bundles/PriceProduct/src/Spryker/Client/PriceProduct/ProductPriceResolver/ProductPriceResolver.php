@@ -113,7 +113,6 @@ class ProductPriceResolver implements ProductPriceResolverInterface
             return $currentProductPriceTransfer;
         }
 
-        //find all available prices for all price types
         $priceProductFilterAllPriceTypes = clone $priceProductFilter;
         $priceProductFilterAllPriceTypes->setPriceTypeName(null);
         $priceProductFilterAllPriceTypes->setPriceDimension($priceProductTransfer->getPriceDimension());

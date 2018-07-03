@@ -91,13 +91,13 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
     }
 
     /**
-     * @param array $businessUnitProducts
+     * @param array $businessUnitIds
      *
      * @return array
      */
-    public function findPriceProductStoresByCompanyBusinessUnitAbstractProducts(array $businessUnitProducts): array
+    public function findPriceProductStoresByCompanyBusinessUnitAbstractProducts(array $businessUnitIds): array
     {
-        $priceProductStoreQuery = $this->queryPriceProductStoreByCompanyBusinessUnitProducts($businessUnitProducts);
+        $priceProductStoreQuery = $this->queryPriceProductStoreByCompanyBusinessUnitProducts($businessUnitIds);
         $priceProductStoreQuery = $this->queryProductsAbstract($priceProductStoreQuery)
             ->select([
                 static::COL_PRODUCT_ABSTRACT_SKU,
@@ -250,11 +250,11 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
     }
 
     /**
-     * @param array $businessUnitProducts
+     * @param array $businessUnitIds
      *
-     * @return \Propel\Runtime\ActiveQuery\Criteria
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery
      */
-    protected function queryPriceProductStoreByCompanyBusinessUnitProducts(array $businessUnitProducts): Criteria
+    protected function queryPriceProductStoreByCompanyBusinessUnitProducts(array $businessUnitIds): SpyPriceProductStoreQuery
     {
         return $this->getFactory()
             ->getPropelPriceProductStoreQuery()
@@ -266,7 +266,7 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
             )->addCond(
                 'cond1',
                 SpyMerchantRelationshipToCompanyBusinessUnitTableMap::COL_FK_COMPANY_BUSINESS_UNIT,
-                array_keys($businessUnitProducts),
+                $businessUnitIds,
                 Criteria::IN
             )->combine(['cond1']);
     }
