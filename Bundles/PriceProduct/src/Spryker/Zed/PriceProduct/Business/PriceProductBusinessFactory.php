@@ -364,7 +364,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\PriceProduct\PriceProductConfig
      */
-    protected function getModuleConfig(): PriceProductConfig
+    public function getModuleConfig(): PriceProductConfig
     {
         return parent::getConfig();
     }
