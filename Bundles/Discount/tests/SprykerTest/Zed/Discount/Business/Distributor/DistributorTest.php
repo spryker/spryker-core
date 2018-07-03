@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Spryker\Zed\Discount\Business\DiscountFacade;
 use Spryker\Zed\Discount\Business\Distributor\Distributor;
-use Spryker\Zed\Discount\Communication\Plugin\DiscountExtension\SingleQuantityBasedDiscountableItemTransformerStrategyPlugin;
+use Spryker\Zed\Discount\Communication\Plugin\DiscountExtension\SplittableDiscountableItemTransformerStrategyPlugin;
 
 /**
  * Auto-generated group annotations
@@ -492,7 +492,7 @@ class DistributorTest extends Unit
     {
         // BC default plugin
         return [
-            new SingleQuantityBasedDiscountableItemTransformerStrategyPlugin(),
+            new SplittableDiscountableItemTransformerStrategyPlugin(),
         ];
     }
 }

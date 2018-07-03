@@ -16,7 +16,7 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\ItemTransformerStrategyPluginIn
  * @method \Spryker\Zed\Sales\Business\SalesFacadeInterface getFacade()
  * @method \Spryker\Zed\Sales\Communication\SalesCommunicationFactory getFactory()
  */
-class SingleQuantityBasedItemTransformerStrategyPlugin extends AbstractPlugin implements ItemTransformerStrategyPluginInterface
+class SplittableItemTransformerStrategyPlugin extends AbstractPlugin implements ItemTransformerStrategyPluginInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
@@ -39,6 +39,6 @@ class SingleQuantityBasedItemTransformerStrategyPlugin extends AbstractPlugin im
      */
     public function transformItem(ItemTransfer $itemTransfer): ItemCollectionTransfer
     {
-        return $this->getFacade()->transformItemPerQuantity($itemTransfer);
+        return $this->getFacade()->transformSplittableItem($itemTransfer);
     }
 }

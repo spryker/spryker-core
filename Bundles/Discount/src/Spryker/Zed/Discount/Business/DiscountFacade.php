@@ -688,11 +688,11 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @return \Generated\Shared\Transfer\DiscountableItemTransformerTransfer
      */
-    public function transformDiscountableItemPerQuantity(
+    public function transformSplittableDiscountableItem(
         DiscountableItemTransformerTransfer $discountableItemTransformerTransfer
     ): DiscountableItemTransformerTransfer {
         return $this->getFactory()
             ->createDiscountableItemTransformer()
-            ->transformDiscountableItemPerQuantity($discountableItemTransformerTransfer);
+            ->transformSplittableDiscountableItem($discountableItemTransformerTransfer);
     }
 }

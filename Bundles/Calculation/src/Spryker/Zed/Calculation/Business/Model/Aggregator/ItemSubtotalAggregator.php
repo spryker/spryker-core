@@ -62,8 +62,7 @@ class ItemSubtotalAggregator implements CalculatorInterface
     protected function calculateSumAggregationForItems(ArrayObject $items)
     {
         foreach ($items as $itemTransfer) {
-            $this->assertSumAggregationCalculationRequirements($itemTransfer);
-
+            $this->sanitizePrices($itemTransfer);
             $productOptionUnitPrice = $this->calculateProductOptionTotalUnitPrice($itemTransfer);
             $itemTransfer->setUnitSubtotalAggregation($itemTransfer->getUnitPrice() + $productOptionUnitPrice);
 
@@ -77,8 +76,14 @@ class ItemSubtotalAggregator implements CalculatorInterface
      *
      * @return void
      */
-    protected function assertSumAggregationCalculationRequirements($itemTransfer)
+    protected function sanitizePrices($itemTransfer)
     {
-        $itemTransfer->requireSumPrice();
+        if ($itemTransfer->getSumPrice() === null) {
+            $itemTransfer->setSumPrice(0);
+        }
+
+        if ($itemTransfer->getUnitPrice() === null) {
+            $itemTransfer->setUnitPrice(0);
+        }
     }
 }

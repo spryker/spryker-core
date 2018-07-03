@@ -49,7 +49,8 @@ class ProductOptionOrderHydrate implements ProductOptionOrderHydrateInterface
                 continue;
             }
 
-            $itemTransfer->setUnitProductOptionPriceAggregation($salesOrderItemEntity->getProductOptionPriceAggregation());
+            // TODO: shouldn't this be replace with the other?
+            //$itemTransfer->setUnitProductOptionPriceAggregation($salesOrderItemEntity->getProductOptionPriceAggregation());
             $itemTransfer->setSumProductOptionPriceAggregation($salesOrderItemEntity->getProductOptionPriceAggregation());
 
             foreach ($salesOrderItemEntity->getOptions() as $orderItemOptionEntity) {

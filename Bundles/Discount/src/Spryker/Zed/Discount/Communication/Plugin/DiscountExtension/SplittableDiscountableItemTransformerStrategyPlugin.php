@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\Discount\Business\DiscountFacadeInterface getFacade()
  * @method \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory getFactory()
  */
-class SingleQuantityBasedDiscountableItemTransformerStrategyPlugin extends AbstractPlugin implements DiscountableItemTransformerStrategyPluginInterface
+class SplittableDiscountableItemTransformerStrategyPlugin extends AbstractPlugin implements DiscountableItemTransformerStrategyPluginInterface
 {
     /**
      * @param \Generated\Shared\Transfer\DiscountableItemTransfer $discountableItemTransfer
@@ -36,6 +36,6 @@ class SingleQuantityBasedDiscountableItemTransformerStrategyPlugin extends Abstr
         DiscountableItemTransformerTransfer $discountableItemTransformerTransfer
     ): DiscountableItemTransformerTransfer {
         return $this->getFacade()
-            ->transformDiscountableItemPerQuantity($discountableItemTransformerTransfer);
+            ->transformSplittableDiscountableItem($discountableItemTransformerTransfer);
     }
 }

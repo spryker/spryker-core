@@ -48,12 +48,14 @@ class DiscountAmountAggregator implements CalculatorInterface
         foreach ($items as $itemTransfer) {
             $this->calculateDiscountAmountForProductOptions($itemTransfer);
 
-            $itemTransfer->setUnitDiscountAmountAggregation(
-                $this->calculateUnitDiscountAmountAggregation(
-                    $itemTransfer->getCalculatedDiscounts(),
-                    $itemTransfer->getUnitPrice()
-                )
-            );
+            // TODO: should this really be here?
+//            $itemTransfer->setUnitDiscountAmountAggregation(
+//                $this->calculateUnitDiscountAmountAggregation(
+//                    $itemTransfer->getCalculatedDiscounts(),
+//                    // TODO: shouldn't this be SumPrice? Why do we set unit price with sum price?
+//                    $itemTransfer->getSumPrice()
+//                )
+//            );
 
             $itemTransfer->setSumDiscountAmountAggregation(
                 $this->calculateSumDiscountAmountAggregation(
@@ -72,11 +74,11 @@ class DiscountAmountAggregator implements CalculatorInterface
     protected function calculateDiscountAmountAggregationForExpenses(ArrayObject $expenses)
     {
         foreach ($expenses as $expenseTransfer) {
-            $unitDiscountAmountAggregation = $this->calculateUnitDiscountAmountAggregation(
-                $expenseTransfer->getCalculatedDiscounts(),
-                $expenseTransfer->getUnitPrice()
-            );
-            $expenseTransfer->setUnitDiscountAmountAggregation($unitDiscountAmountAggregation);
+//            $unitDiscountAmountAggregation = $this->calculateUnitDiscountAmountAggregation(
+//                $expenseTransfer->getCalculatedDiscounts(),
+//                $expenseTransfer->getUnitPrice()
+//            );
+//            $expenseTransfer->setUnitDiscountAmountAggregation($unitDiscountAmountAggregation);
 
             $sumDiscountAmountAggregation = $this->calculateSumDiscountAmountAggregation(
                 $expenseTransfer->getCalculatedDiscounts(),
@@ -108,12 +110,12 @@ class DiscountAmountAggregator implements CalculatorInterface
     protected function calculateDiscountAmountForProductOptions(ItemTransfer $itemTransfer)
     {
         foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
-            $productOptionTransfer->setUnitDiscountAmountAggregation(
-                $this->calculateUnitDiscountAmountAggregation(
-                    $productOptionTransfer->getCalculatedDiscounts(),
-                    $productOptionTransfer->getUnitPrice()
-                )
-            );
+//            $productOptionTransfer->setUnitDiscountAmountAggregation(
+//                $this->calculateUnitDiscountAmountAggregation(
+//                    $productOptionTransfer->getCalculatedDiscounts(),
+//                    $productOptionTransfer->getUnitPrice()
+//                )
+//            );
 
             $productOptionTransfer->setSumDiscountAmountAggregation(
                 $this->calculateSumDiscountAmountAggregation(

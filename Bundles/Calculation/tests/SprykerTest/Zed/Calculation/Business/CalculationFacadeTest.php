@@ -7,7 +7,9 @@
 
 namespace SprykerTest\Zed\Calculation\Business;
 
+use ArrayObject;
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -604,5 +606,25 @@ class CalculationFacadeTest extends Unit
         $calculationFacade->setFactory($calculationBusinessFactory);
 
         return $calculationFacade;
+    }
+
+    /**
+     * @return void
+     */
+    public function testRemoveCanceledAmountResetsCancelledAmount()
+    {
+        // Assign
+        $calculationFacade = new CalculationFacade();
+        $items = (new ItemTransfer())->setCanceledAmount(100);
+        $calculableObjectTransfer = new CalculableObjectTransfer();
+        $calculableObjectTransfer->setItems(new ArrayObject([$items]));
+        $expectedCancelledAmount = 0;
+
+        // Act
+        $calculationFacade->removeCanceledAmount($calculableObjectTransfer);
+        $actualCancelledAmount = $calculableObjectTransfer->getItems()[0]->getCanceledAmount();
+
+        // Assert
+        $this->assertSame($expectedCancelledAmount, $actualCancelledAmount);
     }
 }

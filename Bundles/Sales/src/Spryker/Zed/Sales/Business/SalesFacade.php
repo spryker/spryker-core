@@ -265,10 +265,10 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ItemCollectionTransfer
      */
-    public function transformItemPerQuantity(ItemTransfer $itemTransfer): ItemCollectionTransfer
+    public function transformSplittableItem(ItemTransfer $itemTransfer): ItemCollectionTransfer
     {
         return $this->getFactory()
             ->createItemTransformer()
-            ->transformItemPerQuantity($itemTransfer);
+            ->transformSplittableItem($itemTransfer);
     }
 }

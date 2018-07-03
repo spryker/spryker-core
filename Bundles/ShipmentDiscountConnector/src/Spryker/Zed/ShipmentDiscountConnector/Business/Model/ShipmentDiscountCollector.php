@@ -65,6 +65,7 @@ class ShipmentDiscountCollector implements ShipmentDiscountCollectorInterface
         $discountableItemTransfer->fromArray($expenseTransfer->toArray(), true);
         $price = $this->getPrice($expenseTransfer, $priceMode);
         $discountableItemTransfer->setUnitGrossPrice($price);
+        // TODO: why unit instead of sum?
         $discountableItemTransfer->setUnitPrice($price);
         $discountableItemTransfer->setOriginalItemCalculatedDiscounts($expenseTransfer->getCalculatedDiscounts());
 

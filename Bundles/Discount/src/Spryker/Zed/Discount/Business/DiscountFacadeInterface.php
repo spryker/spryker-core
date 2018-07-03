@@ -537,7 +537,7 @@ interface DiscountFacadeInterface
 
     /**
      * Specification:
-     * - Transforms discountable item according to single item based strategy.
+     * - Transforms discountable item according to the splittable item based strategy.
      *
      * @api
      *
@@ -545,7 +545,7 @@ interface DiscountFacadeInterface
      *
      * @return \Generated\Shared\Transfer\DiscountableItemTransformerTransfer
      */
-    public function transformDiscountableItemPerQuantity(
+    public function transformSplittableDiscountableItem(
         DiscountableItemTransformerTransfer $discountableItemTransformerTransfer
     ): DiscountableItemTransformerTransfer;
 }

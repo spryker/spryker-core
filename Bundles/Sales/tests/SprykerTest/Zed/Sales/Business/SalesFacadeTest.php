@@ -146,7 +146,7 @@ class SalesFacadeTest extends Unit
 
         $itemTransfer = (new ItemTransfer())->setQuantity($quantity);
         $salesFacade = $this->createSalesFacade();
-        $itemCollectionTransfer = $salesFacade->transformItemPerQuantity($itemTransfer);
+        $itemCollectionTransfer = $salesFacade->transformSplittableItem($itemTransfer);
 
         $this->assertSame($itemCollectionTransfer->getItems()->count(), $quantity);
 

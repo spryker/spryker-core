@@ -216,6 +216,7 @@ class OrderHydrator implements OrderHydratorInterface
         $itemTransfer->fromArray($orderItemEntity->toArray(), true);
         $itemTransfer->setProcess($orderItemEntity->getProcess()->getName());
 
+        // TODO: not 100% BC
         $itemTransfer->setQuantity($orderItemEntity->getQuantity());
         $itemTransfer->setSumGrossPrice($orderItemEntity->getGrossPrice());
         $itemTransfer->setSumNetPrice($orderItemEntity->getNetPrice());
@@ -296,6 +297,7 @@ class OrderHydrator implements OrderHydratorInterface
             $expenseTransfer = new ExpenseTransfer();
             $expenseTransfer->fromArray($expenseEntity->toArray(), true);
 
+            // TODO: not 100% BC
             $expenseTransfer->setQuantity(1);
             $expenseTransfer->setSumGrossPrice($expenseEntity->getGrossPrice());
             $expenseTransfer->setSumNetPrice($expenseEntity->getNetPrice());

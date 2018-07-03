@@ -80,13 +80,15 @@ class Distributor implements DistributorInterface
         $quantity = $this->getDiscountableItemQuantity($discountableItemTransfer);
 
         foreach ($this->discountableItemTransformerStrategyPlugins as $discountableItemTransformerStrategyPlugin) {
-            if ($discountableItemTransformerStrategyPlugin->isApplicable($discountableItemTransfer)) {
-                $discountableItemTransformerTransfer = $this->mapDiscountableItemTransformerTransfer($discountableItemTransfer, $discountTransfer, $totalDiscountAmount, $totalAmount, $quantity);
-                $discountableItemTransformerTransfer = $discountableItemTransformerStrategyPlugin->transformDiscountableItem($discountableItemTransformerTransfer);
-                $this->roundingError = $discountableItemTransformerTransfer->getRoundingError();
-
-                return;
+            if (!$discountableItemTransformerStrategyPlugin->isApplicable($discountableItemTransfer)) {
+                continue;
             }
+
+            $discountableItemTransformerTransfer = $this->mapDiscountableItemTransformerTransfer($discountableItemTransfer, $discountTransfer, $totalDiscountAmount, $totalAmount, $quantity);
+            $discountableItemTransformerTransfer = $discountableItemTransformerStrategyPlugin->transformDiscountableItem($discountableItemTransformerTransfer);
+            $this->roundingError = $discountableItemTransformerTransfer->getRoundingError();
+
+            return;
         }
 
         throw new MissingDiscountableItemTransformerStrategyPluginException(
@@ -135,6 +137,7 @@ class Distributor implements DistributorInterface
     {
         $totalGrossAmount = 0;
         foreach ($collectedDiscountTransfer->getDiscountableItems() as $discountableItemTransfer) {
+            // TODO: getUnitPrice method seems not to be 100% BC => we need $price field or $sumPrice field
             $totalGrossAmount += $discountableItemTransfer->getUnitPrice() *
                 $this->getDiscountableItemQuantity($discountableItemTransfer);
         }

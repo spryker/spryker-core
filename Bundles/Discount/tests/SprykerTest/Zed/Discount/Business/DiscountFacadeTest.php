@@ -798,14 +798,14 @@ class DiscountFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testTransformDiscountableItemShouldBeUsedSingleQuantityBasedTransformation(): void
+    public function testTransformSplittableDiscountableItemUsesSplittableTransformationStrategy(): void
     {
         $discountFacade = $this->createDiscountFacade();
 
         $discountableItemTransfer = $this->createDiscountableItemTransfer();
         $discountableItemTransformerTransfer = $this->createDiscountableItemTransformerTransfer($discountableItemTransfer);
 
-        $discountFacade->transformDiscountableItemPerQuantity($discountableItemTransformerTransfer);
+        $discountFacade->transformSplittableDiscountableItem($discountableItemTransformerTransfer);
 
         $this->assertSame($discountableItemTransfer->getOriginalItemCalculatedDiscounts()->count(), static::QUANTITY);
 

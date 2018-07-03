@@ -13,8 +13,6 @@ use Spryker\Zed\Sales\Business\Model\Comment\OrderCommentReader;
 use Spryker\Zed\Sales\Business\Model\Comment\OrderCommentSaver;
 use Spryker\Zed\Sales\Business\Model\Customer\CustomerOrderReader;
 use Spryker\Zed\Sales\Business\Model\Customer\PaginatedCustomerOrderReader;
-use Spryker\Zed\Sales\Business\Model\Order\Item\ItemTransformer;
-use Spryker\Zed\Sales\Business\Model\Order\Item\ItemTransformerInterface;
 use Spryker\Zed\Sales\Business\Model\Order\OrderExpander;
 use Spryker\Zed\Sales\Business\Model\Order\OrderHydrator;
 use Spryker\Zed\Sales\Business\Model\Order\OrderReader;
@@ -23,6 +21,8 @@ use Spryker\Zed\Sales\Business\Model\Order\OrderSaver;
 use Spryker\Zed\Sales\Business\Model\Order\OrderUpdater;
 use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaver;
 use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverPluginExecutor;
+use Spryker\Zed\Sales\Business\Model\OrderItem\OrderItemTransformer;
+use Spryker\Zed\Sales\Business\Model\OrderItem\OrderItemTransformerInterface;
 use Spryker\Zed\Sales\Business\Model\OrderItem\SalesOrderItemMapper;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 
@@ -174,11 +174,11 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Sales\Business\Model\Order\Item\ItemTransformerInterface
+     * @return \Spryker\Zed\Sales\Business\Model\OrderItem\OrderItemTransformerInterface
      */
-    public function createItemTransformer(): ItemTransformerInterface
+    public function createItemTransformer(): OrderItemTransformerInterface
     {
-        return new ItemTransformer();
+        return new OrderItemTransformer();
     }
 
     /**

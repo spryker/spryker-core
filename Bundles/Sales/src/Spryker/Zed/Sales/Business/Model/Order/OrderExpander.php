@@ -62,13 +62,13 @@ class OrderExpander implements OrderExpanderInterface
      */
     protected function transformItems(ArrayObject $items): ArrayObject
     {
-        $transformedItemTransferArray = [];
+        $transformedItemTransfers = [];
         foreach ($items as $itemTransfer) {
-            $transformedItemTransferCollection = $this->transformItemTransferPerStrategyPlugin($itemTransfer);
-            $transformedItemTransferArray = array_merge($transformedItemTransferArray, $transformedItemTransferCollection->getItems()->getArrayCopy());
+            $transformedItemTransferCollection = $this->applyItemTransformStrategyPlugin($itemTransfer);
+            $transformedItemTransfers = array_merge($transformedItemTransfers, $transformedItemTransferCollection->getItems()->getArrayCopy());
         }
 
-        return new ArrayObject($transformedItemTransferArray);
+        return new ArrayObject($transformedItemTransfers);
     }
 
     /**
@@ -76,7 +76,7 @@ class OrderExpander implements OrderExpanderInterface
      *
      * @return \Generated\Shared\Transfer\ItemCollectionTransfer
      */
-    protected function transformItemTransferPerStrategyPlugin(ItemTransfer $itemTransfer): ItemCollectionTransfer
+    protected function applyItemTransformStrategyPlugin(ItemTransfer $itemTransfer): ItemCollectionTransfer
     {
         foreach ($this->itemTransformerStrategyPlugins as $itemTransformerStrategyPlugin) {
             if ($itemTransformerStrategyPlugin->isApplicable($itemTransfer)) {

@@ -23,7 +23,7 @@ class IsQuantitySplittableItemExpanderPlugin extends AbstractPlugin implements I
      */
     public function expandItems(CartChangeTransfer $cartChangeTransfer)
     {
-        $this->getFacade()->expandWithIsQuantitySplittable($cartChangeTransfer);
+        $this->getFacade()->expandCartChangeWithIsQuantitySplittable($cartChangeTransfer);
 
         return $cartChangeTransfer;
     }
