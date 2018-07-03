@@ -91,10 +91,10 @@ class EditFileController extends AbstractUploadFileController
     protected function setFileName(FileTransfer $fileTransfer)
     {
         if (!$fileTransfer->getFileName()) {
-            $uploadedFileTransfer = $fileTransfer->getUploadedFile();
+            $fileUploadTransfer = $fileTransfer->getFileUpload();
 
-            if ($uploadedFileTransfer !== null) {
-                $fileTransfer->setFileName($uploadedFileTransfer->getClientOriginalName());
+            if ($fileUploadTransfer !== null) {
+                $fileTransfer->setFileName($fileUploadTransfer->getClientOriginalName());
             }
         }
 
@@ -108,17 +108,17 @@ class EditFileController extends AbstractUploadFileController
      */
     protected function createFileInfoTransfer(FileTransfer $fileTransfer)
     {
-        $uploadedFileTransfer = $fileTransfer->getUploadedFile();
+        $fileUploadTransfer = $fileTransfer->getFileUpload();
         $fileInfoTransfer = new FileInfoTransfer();
 
-        if ($uploadedFileTransfer === null) {
+        if ($fileUploadTransfer === null) {
             return $fileInfoTransfer;
         }
 
         $fileInfoTransfer->setFkFile($fileTransfer->getIdFile());
-        $fileInfoTransfer->setExtension($uploadedFileTransfer->getClientOriginalExtension());
-        $fileInfoTransfer->setSize($uploadedFileTransfer->getSize());
-        $fileInfoTransfer->setType($uploadedFileTransfer->getMimeType());
+        $fileInfoTransfer->setExtension($fileUploadTransfer->getClientOriginalExtension());
+        $fileInfoTransfer->setSize($fileUploadTransfer->getSize());
+        $fileInfoTransfer->setType($fileUploadTransfer->getMimeTypeName());
 
         return $fileInfoTransfer;
     }

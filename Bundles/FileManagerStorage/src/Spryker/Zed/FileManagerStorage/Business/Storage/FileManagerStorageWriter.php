@@ -61,8 +61,8 @@ class FileManagerStorageWriter implements FileManagerStorageWriterInterface
      */
     public function publish(array $fileIds)
     {
-        $fileEntityTransfers = $this->repository->getFilesByIds($fileIds);
-        $fileStorageEntityTransfers = $this->repository->getFileStoragesByIds($fileIds);
+        $fileEntityTransfers = $this->repository->findFilesByIds($fileIds);
+        $fileStorageEntityTransfers = $this->repository->findFileStoragesByIds($fileIds);
 
         return $this->getTransactionHandler()->handleTransaction(function () use ($fileEntityTransfers, $fileStorageEntityTransfers) {
             return $this->executePublishTransaction($fileEntityTransfers, $fileStorageEntityTransfers);
@@ -76,7 +76,7 @@ class FileManagerStorageWriter implements FileManagerStorageWriterInterface
      */
     public function unpublish(array $fileIds)
     {
-        $fileStorageEntityTransfers = $this->repository->getFileStoragesByIds($fileIds);
+        $fileStorageEntityTransfers = $this->repository->findFileStoragesByIds($fileIds);
 
         return $this->getTransactionHandler()->handleTransaction(function () use ($fileStorageEntityTransfers) {
             return $this->executeUnpublishTransaction($fileStorageEntityTransfers);

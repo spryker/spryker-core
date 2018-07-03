@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class FileManagerConfig extends AbstractBundleConfig
 {
+    protected const FILE_NAME_VERSION_DELIMITER = '-';
+
     /**
      * @return string
      */
@@ -25,6 +27,6 @@ class FileManagerConfig extends AbstractBundleConfig
      */
     public function getFileNameVersionDelimiter()
     {
-        return $this->get(FileManagerConstants::FILE_NAME_VERSION_DELIMITER);
+        return static::FILE_NAME_VERSION_DELIMITER;
     }
 }

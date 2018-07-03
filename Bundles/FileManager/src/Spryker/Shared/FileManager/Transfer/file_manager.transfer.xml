@@ -18,13 +18,13 @@
         <property name="localizedAttributes" type="FileLocalizedAttributes[]" />
         <property name="useRealName" type="bool" />
         <property name="fileContent" type="string" />
-        <property name="uploadedFile" type="UploadedFile" />
+        <property name="fileUpload" type="FileUpload" />
     </transfer>
 
-    <transfer name="UploadedFile">
+    <transfer name="FileUpload">
         <property name="realPath" type="string" />
         <property name="clientOriginalName" type="string" />
-        <property name="mimeType" type="string" />
+        <property name="mimeTypeName" type="string" />
         <property name="clientOriginalExtension" type="string" />
         <property name="size" type="int" />
     </transfer>

@@ -14,12 +14,12 @@ interface FileManagerStorageRepositoryInterface
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\FileTransfer[]
      */
-    public function getFilesByIds(array $fileIds);
+    public function findFilesByIds(array $fileIds);
 
     /**
      * @param array $fileStorageIds
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\FileStorageTransfer[]
      */
-    public function getFileStoragesByIds(array $fileStorageIds);
+    public function findFileStoragesByIds(array $fileStorageIds);
 }

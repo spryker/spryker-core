@@ -15,9 +15,9 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class FileManagerStorageFacade extends AbstractFacade implements FileManagerStorageFacadeInterface
 {
     /**
-     * @api
-     *
      * {@inheritdoc}
+     *
+     * @api
      *
      * @param int[] $fileIds
      *
@@ -29,9 +29,9 @@ class FileManagerStorageFacade extends AbstractFacade implements FileManagerStor
     }
 
     /**
-     * @api
-     *
      * {@inheritdoc}
+     *
+     * @api
      *
      * @param int[] $fileIds
      *

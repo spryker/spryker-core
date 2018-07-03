@@ -24,7 +24,7 @@ class FileManagerStorageRepository extends AbstractRepository implements FileMan
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\FileTransfer[]
      */
-    public function getFilesByIds(array $fileIds)
+    public function findFilesByIds(array $fileIds)
     {
         $fileEntityTransferCollection = new ArrayObject();
         $mapper = $this->getFactory()->createFileManagerStorageMapper();
@@ -50,7 +50,7 @@ class FileManagerStorageRepository extends AbstractRepository implements FileMan
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\FileStorageTransfer[]
      */
-    public function getFileStoragesByIds(array $fileStorageIds)
+    public function findFileStoragesByIds(array $fileStorageIds)
     {
         $fileStorageTransferCollection = new ArrayObject();
         $storageCompositeKey = $this->getFactory()->getConfig()->getStorageCompositeKey();

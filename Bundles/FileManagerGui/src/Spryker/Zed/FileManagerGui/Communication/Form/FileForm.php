@@ -8,7 +8,7 @@
 namespace Spryker\Zed\FileManagerGui\Communication\Form;
 
 use Generated\Shared\Transfer\FileTransfer;
-use Generated\Shared\Transfer\UploadedFileTransfer;
+use Generated\Shared\Transfer\FileUploadTransfer;
 use Spryker\Zed\FileManagerGui\Communication\Form\Validator\Constraints\File;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
@@ -30,7 +30,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 class FileForm extends AbstractType
 {
     public const FIELD_FILE_NAME = 'fileName';
-    public const FIELD_UPLOADED_FILE = 'uploadedFile';
+    public const FILED_FILE_UPLOAD = 'fileUpload';
     public const FIELD_ID_FILE = 'idFile';
     public const FIELD_USE_REAL_NAME = 'useRealName';
     public const FILE_LOCALIZED_ATTRIBUTES = 'localizedAttributes';
@@ -85,11 +85,11 @@ class FileForm extends AbstractType
         $formData = $builder->getData();
         $fileNameCallback = function ($object, ExecutionContextInterface $context) use ($formData) {
             if (!empty($formData[static::FIELD_ID_FILE])) {
-                if (empty($formData[static::FIELD_UPLOADED_FILE]) && empty($formData[static::FIELD_FILE_NAME])) {
+                if (empty($formData[static::FILED_FILE_UPLOAD]) && empty($formData[static::FIELD_FILE_NAME])) {
                     $context->addViolation(static::ERROR_FILE_MISSED_EDIT_MESSAGE);
                 }
             } else {
-                if (empty($formData[static::FIELD_UPLOADED_FILE])) {
+                if (empty($formData[static::FILED_FILE_UPLOAD])) {
                     $context->addViolation(static::ERROR_FILE_MISSED_ADD_MESSAGE);
                 } elseif (empty($formData[static::FIELD_FILE_NAME]) && empty($formData[static::FIELD_USE_REAL_NAME])) {
                     $context->addViolation(static::ERROR_FILE_NAME_MISSED_ADD_MESSAGE);
@@ -128,7 +128,7 @@ class FileForm extends AbstractType
     protected function addUploadedFileField(FormBuilderInterface $builder, array $options)
     {
         $formData = $builder->getData();
-        $builder->add(static::FIELD_UPLOADED_FILE, FileType::class, [
+        $builder->add(static::FILED_FILE_UPLOAD, FileType::class, [
             'required' => empty($formData[static::FIELD_ID_FILE]),
             'constraints' => [
                 new File([
@@ -139,7 +139,7 @@ class FileForm extends AbstractType
             ],
         ]);
 
-        $builder->get(static::FIELD_UPLOADED_FILE)
+        $builder->get(static::FILED_FILE_UPLOAD)
             ->addModelTransformer(
                 new CallbackTransformer(
                     function ($data) {
@@ -200,7 +200,7 @@ class FileForm extends AbstractType
     /**
      * @param null|\Symfony\Component\HttpFoundation\File\UploadedFile $uploadedFile
      *
-     * @return null|\Generated\Shared\Transfer\UploadedFileTransfer
+     * @return null|\Generated\Shared\Transfer\FileUploadTransfer
      */
     protected function mapUploadedFileToTransfer(?UploadedFile $uploadedFile = null)
     {
@@ -208,13 +208,13 @@ class FileForm extends AbstractType
             return $uploadedFile;
         }
 
-        $uploadedFileTransfer = new UploadedFileTransfer();
-        $uploadedFileTransfer->setClientOriginalName($uploadedFile->getClientOriginalName());
-        $uploadedFileTransfer->setRealPath($uploadedFile->getRealPath());
-        $uploadedFileTransfer->setMimeType($uploadedFile->getMimeType());
-        $uploadedFileTransfer->setClientOriginalExtension($uploadedFile->getClientOriginalExtension());
-        $uploadedFileTransfer->setSize($uploadedFile->getSize());
+        $fileUploadTransfer = new FileUploadTransfer();
+        $fileUploadTransfer->setClientOriginalName($uploadedFile->getClientOriginalName());
+        $fileUploadTransfer->setRealPath($uploadedFile->getRealPath());
+        $fileUploadTransfer->setMimeTypeName($uploadedFile->getMimeType());
+        $fileUploadTransfer->setClientOriginalExtension($uploadedFile->getClientOriginalExtension());
+        $fileUploadTransfer->setSize($uploadedFile->getSize());
 
-        return $uploadedFileTransfer;
+        return $fileUploadTransfer;
     }
 }
