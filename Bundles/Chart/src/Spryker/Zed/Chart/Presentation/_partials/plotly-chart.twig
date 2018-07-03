@@ -2,16 +2,16 @@
 
 {% block chartContent %}
     {% if data.traces | length > 0 %}
+        {% set layout = layout.toArray | merge(
+            {
+                'title':layout.title | default(data.title),
+                'margin': {'l': 8 * maxLabeLength | default(1)}
+            }) %}
         <div id="{{ chartDivId }}"></div>
         <script src="/assets/js/spryker-zed-chart-plotly-main.js"></script>
         <script>/*<![CDATA[*/
-            var chartLayout = {{ layout.toArray | json_encode | raw }};
-            chartLayout.title = '{{ layout.title | default(data.title) }}';
-            chartLayout.margin = {
-                l: 8 * {{ maxLabeLength }}, // left
-            };
             document.addEventListener('DOMContentLoaded', function(event) {
-                ChartPlotly.plot('{{ chartDivId }}', chartData, chartLayout, { displayModeBar: false });
+                ChartPlotly.newPlot('{{ chartDivId }}', {{ chartData | json_encode | raw }}, {{ layout | json_encode | raw }}, { displayModeBar: false });
             });
         /*]]>*/</script>
     {% endif %}

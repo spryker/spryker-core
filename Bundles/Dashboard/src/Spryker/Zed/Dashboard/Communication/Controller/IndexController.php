@@ -17,7 +17,7 @@ class IndexController extends AbstractController
     /**
      * @return array
      */
-    public function indexAction()
+    public function indexAction(): array
     {
         $plugins = $this->getFactory()->getDateFormatterService();
 
