@@ -44,7 +44,7 @@ class PriceProductFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\PriceProduct\Dependency\Client\PriceProductToPriceClientInterface
      */
-    public function getPriceClient(): PriceProductToPriceClientInterface
+    protected function getPriceClient(): PriceProductToPriceClientInterface
     {
         return $this->getProvidedDependency(PriceProductDependencyProvider::CLIENT_PRICE);
     }
