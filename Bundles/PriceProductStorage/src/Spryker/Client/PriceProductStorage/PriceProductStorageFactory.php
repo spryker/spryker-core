@@ -30,6 +30,72 @@ class PriceProductStorageFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\PriceProductStorage\Storage\PriceAbstractStorageReaderInterface
+     */
+    public function createPriceAbstractStorageReader()
+    {
+        return new PriceAbstractStorageReader(
+            $this->getStorage(),
+            $this->createPriceProductStorageKeyGenerator(),
+            $this->createPriceProductMapper(),
+            $this->getPriceDimensionPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\PriceProductStorage\Storage\PriceConcreteStorageReaderInterface
+     */
+    public function createPriceConcreteStorageReader()
+    {
+        return new PriceConcreteStorageReader(
+            $this->getStorage(),
+            $this->createPriceProductStorageKeyGenerator(),
+            $this->createPriceProductMapper(),
+            $this->getPriceDimensionPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToStorageInterface
+     */
+    public function getStorage()
+    {
+        return $this->getProvidedDependency(PriceProductStorageDependencyProvider::CLIENT_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToPriceProductInterface
+     */
+    public function getPriceProductClient()
+    {
+        return $this->getProvidedDependency(PriceProductStorageDependencyProvider::CLIENT_PRICE_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToStoreClientInterface
+     */
+    public function getStoreClient()
+    {
+        return $this->getProvidedDependency(PriceProductStorageDependencyProvider::CLIENT_STORE);
+    }
+
+    /**
+     * @return \Spryker\Client\PriceProductStorage\Storage\PriceProductStorageKeyGeneratorInterface
+     */
+    public function createPriceProductStorageKeyGenerator()
+    {
+        return new PriceProductStorageKeyGenerator($this->getSynchronizationService(), $this->getStoreClient());
+    }
+
+    /**
+     * @return \Spryker\Client\PriceProductStorage\Dependency\Service\PriceProductStorageToSynchronizationServiceBridge
+     */
+    public function getSynchronizationService()
+    {
+        return $this->getProvidedDependency(PriceProductStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
+    }
+
+    /**
      * @return \Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductStoragePriceDimensionPluginInterface[]
      */
     public function getPriceDimensionPlugins(): array
@@ -43,71 +109,5 @@ class PriceProductStorageFactory extends AbstractFactory
     public function createPriceProductMapper(): PriceProductMapperInterface
     {
         return new PriceProductMapper();
-    }
-
-    /**
-     * @return \Spryker\Client\PriceProductStorage\Storage\PriceAbstractStorageReaderInterface
-     */
-    protected function createPriceAbstractStorageReader()
-    {
-        return new PriceAbstractStorageReader(
-            $this->getStorage(),
-            $this->createPriceProductStorageKeyGenerator(),
-            $this->createPriceProductMapper(),
-            $this->getPriceDimensionPlugins()
-        );
-    }
-
-    /**
-     * @return \Spryker\Client\PriceProductStorage\Storage\PriceConcreteStorageReaderInterface
-     */
-    protected function createPriceConcreteStorageReader()
-    {
-        return new PriceConcreteStorageReader(
-            $this->getStorage(),
-            $this->createPriceProductStorageKeyGenerator(),
-            $this->createPriceProductMapper(),
-            $this->getPriceDimensionPlugins()
-        );
-    }
-
-    /**
-     * @return \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToStorageInterface
-     */
-    protected function getStorage()
-    {
-        return $this->getProvidedDependency(PriceProductStorageDependencyProvider::CLIENT_STORAGE);
-    }
-
-    /**
-     * @return \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToPriceProductInterface
-     */
-    protected function getPriceProductClient()
-    {
-        return $this->getProvidedDependency(PriceProductStorageDependencyProvider::CLIENT_PRICE_PRODUCT);
-    }
-
-    /**
-     * @return \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToStoreClientInterface
-     */
-    protected function getStoreClient()
-    {
-        return $this->getProvidedDependency(PriceProductStorageDependencyProvider::CLIENT_STORE);
-    }
-
-    /**
-     * @return \Spryker\Client\PriceProductStorage\Storage\PriceProductStorageKeyGeneratorInterface
-     */
-    protected function createPriceProductStorageKeyGenerator()
-    {
-        return new PriceProductStorageKeyGenerator($this->getSynchronizationService(), $this->getStoreClient());
-    }
-
-    /**
-     * @return \Spryker\Client\PriceProductStorage\Dependency\Service\PriceProductStorageToSynchronizationServiceBridge
-     */
-    protected function getSynchronizationService()
-    {
-        return $this->getProvidedDependency(PriceProductStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
     }
 }
