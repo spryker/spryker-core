@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinuedDeactivato
 use Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer;
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
+use Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinued\ProductDiscontinuedPluginExecutorInterface;
 use Spryker\Zed\ProductDiscontinued\Dependency\Facade\ProductDiscontinuedToProductFacadeInterface;
 use Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedEntityManagerInterface;
 use Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedRepositoryInterface;
@@ -39,23 +40,31 @@ class ProductDiscontinuedDeactivator implements ProductDiscontinuedDeactivatorIn
     protected $productDiscontinuedEntityManager;
 
     /**
+     * @var \Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinued\ProductDiscontinuedPluginExecutorInterface
+     */
+    protected $productDiscontinuedPluginExecutor;
+
+    /**
      * ProductDiscontinuedDeactivator constructor.
      *
      * @param \Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedRepositoryInterface $productDiscontinuedRepository
      * @param \Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedEntityManagerInterface $productDiscontinuedEntityManager
      * @param \Spryker\Zed\ProductDiscontinued\Dependency\Facade\ProductDiscontinuedToProductFacadeInterface $productFacade
+     * @param \Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinued\ProductDiscontinuedPluginExecutorInterface $productDiscontinuedPluginExecutor
      * @param \Psr\Log\LoggerInterface|null $logger
      */
     public function __construct(
         ProductDiscontinuedRepositoryInterface $productDiscontinuedRepository,
         ProductDiscontinuedEntityManagerInterface $productDiscontinuedEntityManager,
         ProductDiscontinuedToProductFacadeInterface $productFacade,
+        ProductDiscontinuedPluginExecutorInterface $productDiscontinuedPluginExecutor,
         ?LoggerInterface $logger = null
     ) {
         $this->productDiscontinuedRepository = $productDiscontinuedRepository;
         $this->productFacade = $productFacade;
         $this->logger = $logger;
         $this->productDiscontinuedEntityManager = $productDiscontinuedEntityManager;
+        $this->productDiscontinuedPluginExecutor = $productDiscontinuedPluginExecutor;
     }
 
     /**
@@ -84,7 +93,9 @@ class ProductDiscontinuedDeactivator implements ProductDiscontinuedDeactivatorIn
     {
         foreach ($productDiscontinuedCollectionTransfer->getDiscontinuedProducts() as $productDiscontinuedTransfer) {
             $this->productFacade->deactivateProductConcrete($productDiscontinuedTransfer->getFkProduct());
+            $this->productDiscontinuedEntityManager->deleteProductDiscontinuedNotes($productDiscontinuedTransfer);
             $this->productDiscontinuedEntityManager->deleteProductDiscontinued($productDiscontinuedTransfer);
+            $this->productDiscontinuedPluginExecutor->executePostDeleteProductDiscontinuedPlugins($productDiscontinuedTransfer);
             $this->addProductDeactivatedMessage($productDiscontinuedTransfer->getFkProduct());
         }
     }

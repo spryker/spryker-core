@@ -74,6 +74,7 @@ class ProductDiscontinuedBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getEntityManager(),
             $this->getProductFacade(),
+            $this->createProductDiscontinuedPluginExecutor(),
             $logger
         );
     }
