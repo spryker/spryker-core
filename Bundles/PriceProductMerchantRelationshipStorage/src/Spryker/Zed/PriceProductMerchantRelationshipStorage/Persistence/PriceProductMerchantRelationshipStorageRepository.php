@@ -252,9 +252,9 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
     /**
      * @param array $businessUnitIds
      *
-     * @return \Propel\Runtime\ActiveQuery\Criteria
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery
      */
-    protected function queryPriceProductStoreByCompanyBusinessUnitProducts(array $businessUnitIds): Criteria
+    protected function queryPriceProductStoreByCompanyBusinessUnitProducts(array $businessUnitIds): SpyPriceProductStoreQuery
     {
         return $this->getFactory()
             ->getPropelPriceProductStoreQuery()
