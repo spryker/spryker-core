@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\ProductAlternativeStorage\Storage;
 
-use Generated\Shared\Transfer\ProductAlternativeTransfer;
+use Generated\Shared\Transfer\ProductAlternativeStorageTransfer;
 
 interface ProductAlternativeStorageReaderInterface
 {
@@ -16,5 +16,5 @@ interface ProductAlternativeStorageReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeTransfer|null
      */
-    public function findProductAlternativeStorage(string $concreteSku): ?ProductAlternativeTransfer;
+    public function findProductAlternativeStorage(string $concreteSku): ?ProductAlternativeStorageTransfer;
 }

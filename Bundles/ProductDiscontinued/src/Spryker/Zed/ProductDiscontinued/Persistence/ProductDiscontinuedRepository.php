@@ -113,4 +113,19 @@ class ProductDiscontinuedRepository extends AbstractRepository implements Produc
 
         return new ProductDiscontinuedCollectionTransfer();
     }
+
+    /**
+     * @param string $sku
+     *
+     * @return bool
+     */
+    public function checkIfProductDiscontinuedBySku(string $sku): bool
+    {
+        return $this->getFactory()
+            ->createProductDiscontinuedQuery()
+            ->useProductQuery()
+                ->filterBySku_Like($sku)
+            ->endUse()
+            ->exists();
+    }
 }

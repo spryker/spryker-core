@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductDiscontinued\Business;
 
+use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedNoteResponseTransfer;
@@ -135,5 +137,21 @@ class ProductDiscontinuedFacade extends AbstractFacade implements ProductDiscont
         $this->getFactory()
             ->createProductDiscontinuedDeactivator($logger)
             ->deactivate();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     */
+    public function checkItemProductsIsNotDiscontinued(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
+    {
+        return $this->getFactory()
+            ->createCartChangePreCheck()
+            ->checkCartItems($cartChangeTransfer);
     }
 }

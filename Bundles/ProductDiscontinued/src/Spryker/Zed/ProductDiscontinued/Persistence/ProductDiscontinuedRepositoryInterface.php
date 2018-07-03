@@ -40,4 +40,11 @@ interface ProductDiscontinuedRepositoryInterface
     public function findProductDiscontinuedCollection(
         ProductDiscontinuedCriteriaFilterTransfer $criteriaFilterTransfer
     ): ProductDiscontinuedCollectionTransfer;
+
+    /**
+     * @param string $sku
+     *
+     * @return bool
+     */
+    public function checkIfProductDiscontinuedBySku(string $sku): bool;
 }

@@ -7,14 +7,15 @@
 
 namespace Spryker\Client\ProductDiscontinuedStorage\Storage;
 
-use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
+use Generated\Shared\Transfer\ProductDiscontinuedStorageTransfer;
 
 interface ProductDiscontinuedStorageReaderInterface
 {
     /**
      * @param string $concreteSku
+     * @param string $locale
      *
-     * @return \Generated\Shared\Transfer\ProductDiscontinuedTransfer|null
+     * @return \Generated\Shared\Transfer\ProductDiscontinuedStorageTransfer|null
      */
-    public function findProductDiscontinuedStorage(string $concreteSku): ?ProductDiscontinuedTransfer;
+    public function findProductDiscontinuedStorage(string $concreteSku, string $locale): ?ProductDiscontinuedStorageTransfer;
 }

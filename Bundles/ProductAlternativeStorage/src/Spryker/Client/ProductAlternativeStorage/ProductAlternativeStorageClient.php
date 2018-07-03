@@ -7,8 +7,9 @@
 
 namespace Spryker\Client\ProductAlternativeStorage;
 
-use Generated\Shared\Transfer\ProductAlternativeTransfer;
+use Generated\Shared\Transfer\ProductAlternativeStorageTransfer;
 use Generated\Shared\Transfer\ProductReplacementStorageTransfer;
+use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -25,7 +26,7 @@ class ProductAlternativeStorageClient extends AbstractClient implements ProductA
      *
      * @return \Generated\Shared\Transfer\ProductAlternativeTransfer|null
      */
-    public function findProductAlternativeStorage(string $concreteSku): ?ProductAlternativeTransfer
+    public function findProductAlternativeStorage(string $concreteSku): ?ProductAlternativeStorageTransfer
     {
         return $this->getFactory()
             ->createProductAlternativeStorageReader()
@@ -46,5 +47,21 @@ class ProductAlternativeStorageClient extends AbstractClient implements ProductA
         return $this->getFactory()
             ->createProductReplacementStorageReader()
             ->findProductAlternativeStorage($sku);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     *
+     * @return bool
+     */
+    public function isAlternativeProductApplicable(ProductViewTransfer $productViewTransfer): bool
+    {
+        return $this->getFactory()
+            ->createAlternativeProductApplicableCheck()
+            ->isAlternativeProductApplicable($productViewTransfer);
     }
 }
