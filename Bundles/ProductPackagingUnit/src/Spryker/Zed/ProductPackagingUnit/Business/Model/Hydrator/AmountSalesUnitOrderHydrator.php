@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\ProductPackagingUnit\Business\Model\Hydrator;
 
-use Generated\Shared\Transfer\ItemAmountMeasurementUnitTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ProductMeasurementBaseUnitTransfer;
+use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
+use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Zed\ProductPackagingUnit\Dependency\QueryContainer\ProductPackagingUnitToSalesQueryContainerInterface;
 
@@ -48,9 +50,9 @@ class AmountSalesUnitOrderHydrator implements AmountSalesUnitOrderHydratorInterf
                 continue;
             }
 
-            $itemAmountMeasurementUnitTransfer = $this->hydrateItemAmountMeasurementUnitTransfer($salesOrderItemEntity);
+            $itemAmountMeasurementUnitTransfer = $this->hydrateItemAmountSalesUnitTransfer($salesOrderItemEntity);
 
-            $itemTransfer->setItemAmountMeasurementUnit($itemAmountMeasurementUnitTransfer);
+            $itemTransfer->setAmountSalesUnit($itemAmountMeasurementUnitTransfer);
         }
 
         return $orderTransfer;
@@ -59,11 +61,48 @@ class AmountSalesUnitOrderHydrator implements AmountSalesUnitOrderHydratorInterf
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $spySalesOrderItemEntity
      *
-     * @return \Generated\Shared\Transfer\ItemAmountMeasurementUnitTransfer
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer
      */
-    protected function hydrateItemAmountMeasurementUnitTransfer(SpySalesOrderItem $spySalesOrderItemEntity): ItemAmountMeasurementUnitTransfer
+    protected function hydrateItemAmountSalesUnitTransfer(SpySalesOrderItem $spySalesOrderItemEntity): ProductMeasurementSalesUnitTransfer
     {
-        return (new ItemAmountMeasurementUnitTransfer())->fromArray($spySalesOrderItemEntity->toArray(), true);
+        $productMeasurementSalesUnitTransfer = new ProductMeasurementSalesUnitTransfer();
+        $productMeasurementSalesUnitTransfer->setConversion($spySalesOrderItemEntity->getAmountMeasurementUnitConversion());
+        $productMeasurementSalesUnitTransfer->setPrecision($spySalesOrderItemEntity->getAmountMeasurementUnitPrecision());
+
+        $productMeasurementBaseUnitTransfer = $this->createProductMeasurementBaseUnitTransfer($spySalesOrderItemEntity);
+        $productMeasurementSalesUnitTransfer->setProductMeasurementBaseUnit($productMeasurementBaseUnitTransfer);
+
+        $productMeasurementUnitTransfer = $this->createProductMeasurementUnitTransfer($spySalesOrderItemEntity->getAmountMeasurementUnitName());
+        $productMeasurementSalesUnitTransfer->setProductMeasurementUnit($productMeasurementUnitTransfer);
+
+        return $productMeasurementSalesUnitTransfer;
+    }
+
+    /**
+     * @param string|null $productMeasurementUnitName
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer
+     */
+    protected function createProductMeasurementUnitTransfer(?string $productMeasurementUnitName): ProductMeasurementUnitTransfer
+    {
+        $productMeasurementUnitTransfer = new ProductMeasurementUnitTransfer();
+        $productMeasurementUnitTransfer->setName($productMeasurementUnitName);
+
+        return $productMeasurementUnitTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $spySalesOrderItemEntity
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer
+     */
+    protected function createProductMeasurementBaseUnitTransfer(SpySalesOrderItem $spySalesOrderItemEntity): ProductMeasurementBaseUnitTransfer
+    {
+        $productMeasurementBaseUnitTransfer = new ProductMeasurementBaseUnitTransfer();
+        $productMeasurementUnitTransfer = $this->createProductMeasurementUnitTransfer($spySalesOrderItemEntity->getAmountBaseMeasurementUnitName());
+        $productMeasurementBaseUnitTransfer->setProductMeasurementUnit($productMeasurementUnitTransfer);
+
+        return $productMeasurementBaseUnitTransfer;
     }
 
     /**
