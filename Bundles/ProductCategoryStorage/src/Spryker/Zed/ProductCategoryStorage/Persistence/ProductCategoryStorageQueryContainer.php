@@ -44,9 +44,11 @@ class ProductCategoryStorageQueryContainer extends AbstractQueryContainer implem
     /**
      * @api
      *
+     * @param int[] $productCategoryIds
+     *
      * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
      */
-    public function queryProductCategory()
+    public function queryProductCategoryByIds($productCategoryIds)
     {
         return $this->getFactory()
             ->getProductCategoryQueryContainer()
@@ -57,6 +59,7 @@ class ProductCategoryStorageQueryContainer extends AbstractQueryContainer implem
                 true,
                 Criteria::EQUAL
             )
+            ->filterByIdProductCategory_In($productCategoryIds)
             ->orderByProductOrder();
     }
 

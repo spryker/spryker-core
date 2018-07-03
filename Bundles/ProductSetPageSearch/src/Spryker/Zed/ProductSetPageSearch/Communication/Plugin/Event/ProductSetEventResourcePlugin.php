@@ -41,11 +41,19 @@ class ProductSetEventResourcePlugin extends AbstractPlugin implements EventResou
      *
      * @api
      *
+     * @param int[] $ids
+     *
      * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery
      */
-    public function queryData(): SpyProductSetQuery
+    public function queryData($ids = []): SpyProductSetQuery
     {
-        return $this->getQueryContainer()->queryProductSet();
+        $query = $this->getQueryContainer()->queryProductSetByIds($ids);
+
+        if (empty($ids)) {
+            $query->clear();
+        }
+
+        return $query;
     }
 
     /**

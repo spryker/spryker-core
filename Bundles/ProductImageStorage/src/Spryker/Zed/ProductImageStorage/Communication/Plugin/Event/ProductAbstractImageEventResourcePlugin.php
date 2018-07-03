@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ProductImageStorage\Communication\Plugin\Event;
 
-use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetTableMap;
-use Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery;
+use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetToProductImageTableMap;
+use Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery;
 use Spryker\Shared\ProductImageStorage\ProductImageStorageConfig;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -41,11 +41,20 @@ class ProductAbstractImageEventResourcePlugin extends AbstractPlugin implements 
      *
      * @api
      *
-     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
+     * @param int[] $ids
+     *
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery
      */
-    public function queryData(): SpyProductImageSetQuery
+    public function queryData($ids = []): SpyProductImageSetToProductImageQuery
     {
-        return $this->getQueryContainer()->queryProductImages();
+        $query = $this->getQueryContainer()->queryProductImageSetToProductImageByIds($ids);
+
+        if (empty($ids)) {
+            $query->clear();
+        }
+
+        return $query;
+
     }
 
     /**
@@ -71,6 +80,6 @@ class ProductAbstractImageEventResourcePlugin extends AbstractPlugin implements 
      */
     public function getIdColumnName(): string
     {
-        return SpyProductImageSetTableMap::COL_FK_PRODUCT_ABSTRACT;
+        return SpyProductImageSetToProductImageTableMap::COL_FK_PRODUCT_IMAGE;
     }
 }

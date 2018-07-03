@@ -67,12 +67,30 @@ class ProductLabelStorageQueryContainer extends AbstractQueryContainer implement
      *
      * @return \Spryker\Zed\ProductLabel\Persistence\Propel\SpyProductLabelProductAbstractQuery
      */
-    public function queryProductLabelProductAbstractByIds(array $productAbstractIds)
+    public function queryProductLabelProductAbstractByProductAbstractIds(array $productAbstractIds)
     {
         return $this->getFactory()
             ->getProductLabelQuery()
             ->queryAllProductLabelProductAbstractRelations()
             ->filterByFkProductAbstract_In($productAbstractIds)
+            ->joinWithSpyProductLabel()
+            ->orderBy(SpyProductLabelTableMap::COL_POSITION)
+            ->setFormatter(ModelCriteria::FORMAT_ARRAY);
+    }
+
+    /**
+     * @api
+     *
+     * @param array $productLabelProductAbstractIds
+     *
+     * @return \Spryker\Zed\ProductLabel\Persistence\Propel\SpyProductLabelProductAbstractQuery
+     */
+    public function queryProductLabelProductAbstractByIds(array $productLabelProductAbstractIds)
+    {
+        return $this->getFactory()
+            ->getProductLabelQuery()
+            ->queryAllProductLabelProductAbstractRelations()
+            ->filterByIdProductLabelProductAbstract_In($productLabelProductAbstractIds)
             ->joinWithSpyProductLabel()
             ->orderBy(SpyProductLabelTableMap::COL_POSITION)
             ->setFormatter(ModelCriteria::FORMAT_ARRAY);

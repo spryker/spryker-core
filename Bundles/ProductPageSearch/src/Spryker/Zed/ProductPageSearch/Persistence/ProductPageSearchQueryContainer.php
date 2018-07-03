@@ -224,16 +224,4 @@ class ProductPageSearchQueryContainer extends AbstractQueryContainer implements 
             ->queryAllCategoryAttributes()
             ->filterByFkLocale($localeTransfer->getIdLocale());
     }
-
-    /**
-     * @api
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
-     */
-    public function queryProduct()
-    {
-        return $this->getFactory()
-            ->getProductQueryContainer()
-            ->queryProduct();
-    }
 }

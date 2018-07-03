@@ -41,11 +41,19 @@ class ProductGroupEventResourcePlugin extends AbstractPlugin implements EventRes
      *
      * @api
      *
+     * @param int[] $ids
+     *
      * @return \Orm\Zed\ProductGroup\Persistence\SpyProductAbstractGroupQuery
      */
-    public function queryData(): SpyProductAbstractGroupQuery
+    public function queryData($ids = []): SpyProductAbstractGroupQuery
     {
-        return $this->getQueryContainer()->queryProductAbstractGroup();
+        $query = $this->getQueryContainer()->queryProductAbstractGroupByGroupIds($ids);
+
+        if (empty($ids)) {
+            $query->clear();
+        }
+
+        return $query;
     }
 
     /**

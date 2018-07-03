@@ -32,7 +32,9 @@ interface CmsBlockProductStorageQueryContainerInterface extends QueryContainerIn
     /**
      * @api
      *
+     * @param array $cmsBlockProductIds
+     *
      * @return $this|\Orm\Zed\CmsBlockProductConnector\Persistence\SpyCmsBlockProductConnectorQuery
      */
-    public function queryAllCmsBlockProducts();
+    public function queryCmsBlockProductsByIds(array $cmsBlockProductIds);
 }

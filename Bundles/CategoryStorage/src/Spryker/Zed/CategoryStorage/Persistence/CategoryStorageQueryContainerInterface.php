@@ -32,9 +32,11 @@ interface CategoryStorageQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
+     * @param int[] $categoryNodeIds
+     *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
-    public function queryAllCategoryNodes();
+    public function queryCategoryNodeByIds($categoryNodeIds);
 
     /**
      * @api

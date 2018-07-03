@@ -63,6 +63,30 @@ class CmsBlockCategoryStorageQueryContainer extends AbstractQueryContainer imple
     /**
      * @api
      *
+     * @param array $cmsBlockCategoriesIds
+     *
+     * @return $this|\Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery
+     */
+    public function queryCmsBlockCategoriesByIds(array $cmsBlockCategoriesIds)
+    {
+        return $this->getFactory()
+            ->getCmsBlockCategoryConnectorQuery()
+            ->queryCmsBlockCategoryConnector()
+            ->innerJoinCmsBlockCategoryPosition()
+            ->innerJoinCmsBlock()
+            ->addJoin(
+                [SpyCmsBlockCategoryConnectorTableMap::COL_FK_CATEGORY, SpyCmsBlockCategoryConnectorTableMap::COL_FK_CATEGORY_TEMPLATE],
+                [SpyCategoryTableMap::COL_ID_CATEGORY, SpyCategoryTableMap::COL_FK_CATEGORY_TEMPLATE],
+                Criteria::INNER_JOIN
+            )
+            ->withColumn(SpyCmsBlockCategoryPositionTableMap::COL_NAME, static::POSITION)
+            ->withColumn(SpyCmsBlockTableMap::COL_NAME, static::NAME)
+            ->filterByIdCmsBlockCategoryConnector_In($cmsBlockCategoriesIds);
+    }
+
+    /**
+     * @api
+     *
      * @param array $idPositions
      *
      * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery

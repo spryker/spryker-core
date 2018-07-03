@@ -55,11 +55,4 @@ interface AvailabilityStorageQueryContainerInterface extends QueryContainerInter
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     public function queryProductAbstractWithProductByAbstractProductIds(array $abstractProductIds);
-
-    /**
-     * @api
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
-     */
-    public function queryProductAbstract();
 }

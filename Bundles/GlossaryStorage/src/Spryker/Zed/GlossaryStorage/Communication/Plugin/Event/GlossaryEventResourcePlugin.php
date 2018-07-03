@@ -41,11 +41,19 @@ class GlossaryEventResourcePlugin extends AbstractPlugin implements EventResourc
      *
      * @api
      *
+     * @param int[] $ids
+     *
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
      */
-    public function queryData(): SpyGlossaryKeyQuery
+    public function queryData($ids = []): SpyGlossaryKeyQuery
     {
-        return $this->getQueryContainer()->queryGlossaryKeys();
+        $query = $this->getQueryContainer()->queryGlossaryKeysByIds($ids);
+
+        if (empty($ids)) {
+            $query->clear();
+        }
+
+        return $query;
     }
 
     /**

@@ -85,12 +85,15 @@ class NavigationStorageQueryContainer extends AbstractQueryContainer implements 
     /**
      * @api
      *
+     * @param int[] $navigationIds
+     *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function queryNavigation()
+    public function queryNavigation(array $navigationIds)
     {
         return $this->getFactory()
             ->getNavigationQueryContainer()
-            ->queryNavigation();
+            ->queryNavigation()
+            ->filterByIdNavigation_In($navigationIds);
     }
 }

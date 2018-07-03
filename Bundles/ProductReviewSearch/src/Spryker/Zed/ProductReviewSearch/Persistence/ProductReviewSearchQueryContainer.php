@@ -53,18 +53,6 @@ class ProductReviewSearchQueryContainer extends AbstractQueryContainer implement
     /**
      * @api
      *
-     * @return \Orm\Zed\ProductReview\Persistence\SpyProductReviewQuery
-     */
-    public function queryProductReviews()
-    {
-        return $this->getFactory()
-            ->getProductReviewQuery()
-            ->queryProductReview();
-    }
-
-    /**
-     * @api
-     *
      * @param int $idAbstractProduct
      *
      * @return $this|\Propel\Runtime\ActiveQuery\ModelCriteria|\Orm\Zed\ProductReview\Persistence\SpyProductReviewQuery

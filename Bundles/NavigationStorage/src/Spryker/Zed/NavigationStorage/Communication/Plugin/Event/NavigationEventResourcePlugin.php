@@ -41,11 +41,19 @@ class NavigationEventResourcePlugin extends AbstractPlugin implements EventResou
      *
      * @api
      *
+     * @param int[] $ids
+     *
      * @return \Orm\Zed\Navigation\Persistence\SpyNavigationQuery
      */
-    public function queryData(): SpyNavigationQuery
+    public function queryData($ids = []): SpyNavigationQuery
     {
-        return $this->getQueryContainer()->queryNavigation();
+        $query = $this->getQueryContainer()->queryNavigation($ids);
+
+        if (empty($ids)) {
+            $query->clear();
+        }
+
+        return $query;
     }
 
     /**

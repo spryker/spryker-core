@@ -40,9 +40,11 @@ class ProductSearchConfigEventResourcePlugin extends AbstractPlugin implements E
      *
      * @api
      *
+     * @param int[] $ids
+     *
      * @return null
      */
-    public function queryData()
+    public function queryData($ids = [])
     {
         return null;
     }

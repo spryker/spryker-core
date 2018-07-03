@@ -23,13 +23,6 @@ interface UrlStorageQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
-     */
-    public function queryAllUrls();
-
-    /**
-     * @api
-     *
      * @param array $urlIds
      *
      * @return \Orm\Zed\UrlStorage\Persistence\SpyUrlStorageQuery
@@ -63,11 +56,4 @@ interface UrlStorageQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\UrlStorage\Persistence\SpyUrlRedirectStorageQuery
      */
     public function queryRedirectStorageByIds(array $redirectIds);
-
-    /**
-     * @api
-     *
-     * @return \Orm\Zed\Url\Persistence\SpyUrlRedirectQuery
-     */
-    public function queryAllRedirects();
 }

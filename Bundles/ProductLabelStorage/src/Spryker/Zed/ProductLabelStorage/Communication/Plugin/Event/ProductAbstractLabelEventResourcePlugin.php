@@ -41,11 +41,19 @@ class ProductAbstractLabelEventResourcePlugin extends AbstractPlugin implements 
      *
      * @api
      *
+     * @param int[] $ids
+     *
      * @return \Spryker\Zed\ProductLabel\Persistence\Propel\SpyProductLabelProductAbstractQuery
      */
-    public function queryData(): SpyProductLabelProductAbstractQuery
+    public function queryData($ids = []): SpyProductLabelProductAbstractQuery
     {
-        return $this->getQueryContainer()->queryProductLabelProductAbstract();
+        $query = $this->getQueryContainer()->queryProductLabelProductAbstractByIds($ids);
+
+        if (empty($ids)) {
+            $query->clear();
+        }
+
+        return $query;
     }
 
     /**

@@ -41,11 +41,19 @@ class ProductRelationEventResourcePlugin extends AbstractPlugin implements Event
      *
      * @api
      *
+     * @param int[] $ids
+     *
      * @return \Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery
      */
-    public function queryData(): SpyProductRelationQuery
+    public function queryData($ids = []): SpyProductRelationQuery
     {
-        return $this->getQueryContainer()->queryAllProductRelations();
+        $query = $this->getQueryContainer()->queryProductRelationsByIds($ids);
+
+        if (empty($ids)) {
+            $query->clear();
+        }
+
+        return $query;
     }
 
     /**

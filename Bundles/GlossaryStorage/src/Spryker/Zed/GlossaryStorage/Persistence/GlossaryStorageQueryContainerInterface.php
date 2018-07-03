@@ -30,7 +30,9 @@ interface GlossaryStorageQueryContainerInterface
     /**
      * @api
      *
+     * @param int[] $glossaryKeysIds
+     *
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
      */
-    public function queryGlossaryKeys();
+    public function queryGlossaryKeysByIds(array $glossaryKeysIds);
 }

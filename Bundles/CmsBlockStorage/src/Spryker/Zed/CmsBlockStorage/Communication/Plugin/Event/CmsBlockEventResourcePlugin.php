@@ -41,11 +41,19 @@ class CmsBlockEventResourcePlugin extends AbstractPlugin implements EventResourc
      *
      * @api
      *
+     * @param int[] $ids
+     *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
      */
-    public function queryData(): SpyCmsBlockQuery
+    public function queryData($ids = []): SpyCmsBlockQuery
     {
-        return $this->getQueryContainer()->queryCmsBlock();
+        $query = $this->getQueryContainer()->queryCmsBlockByIds($ids);
+
+        if (empty($ids)) {
+            $query->clear();
+        }
+
+        return $query;
     }
 
     /**

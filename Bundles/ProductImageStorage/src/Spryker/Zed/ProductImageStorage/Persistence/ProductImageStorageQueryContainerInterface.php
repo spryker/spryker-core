@@ -86,7 +86,9 @@ interface ProductImageStorageQueryContainerInterface extends QueryContainerInter
     /**
      * @api
      *
-     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
+     * @param int[] $productImageSetToProductImageIds
+     *
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery
      */
-    public function queryProductImages();
+    public function queryProductImageSetToProductImageByIds(array $productImageSetToProductImageIds);
 }

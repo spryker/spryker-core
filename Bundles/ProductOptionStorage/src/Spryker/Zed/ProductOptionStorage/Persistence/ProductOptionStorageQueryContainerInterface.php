@@ -23,13 +23,6 @@ interface ProductOptionStorageQueryContainerInterface extends QueryContainerInte
     /**
      * @api
      *
-     * @return \Orm\Zed\ProductOption\Persistence\SpyProductAbstractProductOptionGroupQuery
-     */
-    public function queryProductOptions();
-
-    /**
-     * @api
-     *
      * @param array $productAbstractIds
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery

@@ -82,11 +82,4 @@ interface PriceProductStorageQueryContainerInterface extends QueryContainerInter
      * @return \Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductConcreteStorageQuery
      */
     public function queryPriceConcreteStorageByProductIds(array $productConcreteIds);
-
-    /**
-     * @api
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
-     */
-    public function queryProduct();
 }

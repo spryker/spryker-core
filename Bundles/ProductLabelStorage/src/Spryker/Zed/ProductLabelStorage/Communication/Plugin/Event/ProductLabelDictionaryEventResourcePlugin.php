@@ -39,9 +39,11 @@ class ProductLabelDictionaryEventResourcePlugin extends AbstractPlugin implement
      *
      * @api
      *
+     * @param int[] $ids
+     *
      * @return null
      */
-    public function queryData()
+    public function queryData($ids = [])
     {
         return null;
     }

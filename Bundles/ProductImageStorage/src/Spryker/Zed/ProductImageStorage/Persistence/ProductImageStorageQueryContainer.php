@@ -146,6 +146,22 @@ class ProductImageStorageQueryContainer extends AbstractQueryContainer implement
      *
      * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery
      */
+    public function queryProductImageSetToProductImageByIds(array $productImageSetToProductImageIds)
+    {
+        $query = $this->getFactory()->getProductImageQueryContainer()
+            ->queryProductImageSetToProductImage()
+            ->filterByIdProductImageSetToProductImage_In($productImageSetToProductImageIds);
+
+        return $query;
+    }
+
+    /**
+     * @api
+     *
+     * @param array $productImageSetToProductImageIds
+     *
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery
+     */
     public function queryProductIdsByProductImageSetToProductImageIds(array $productImageSetToProductImageIds)
     {
         $query = $this->getFactory()->getProductImageQueryContainer()
@@ -155,20 +171,6 @@ class ProductImageStorageQueryContainer extends AbstractQueryContainer implement
             ->withColumn('DISTINCT ' . SpyProductImageSetTableMap::COL_FK_PRODUCT, static::FK_PRODUCT)
             ->select([static::FK_PRODUCT])
             ->addAnd(SpyProductImageSetTableMap::COL_FK_PRODUCT, null, ModelCriteria::NOT_EQUAL);
-
-        return $query;
-    }
-
-    /**
-     * @api
-     *
-     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
-     */
-    public function queryProductImages()
-    {
-        $query = $this->getFactory()
-            ->getProductImageQueryContainer()
-            ->queryProductImageSet();
 
         return $query;
     }

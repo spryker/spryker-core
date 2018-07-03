@@ -39,7 +39,21 @@ interface ProductMeasurementUnitStorageFacadeInterface
     public function findAllProductMeasurementUnitTransfers();
 
     /**
+     * @param int[] $productMeasurementUnitIds
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
+     */
+    public function findProductMeasurementUnitTransfers(array $productMeasurementUnitIds);
+
+    /**
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
      */
     public function getSalesUnits();
+
+    /**
+     * @param int[] $salesUnitIds
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     */
+    public function getSalesUnitsByIds(array $salesUnitIds);
 }

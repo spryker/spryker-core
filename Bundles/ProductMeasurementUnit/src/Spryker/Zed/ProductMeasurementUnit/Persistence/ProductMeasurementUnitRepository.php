@@ -95,6 +95,37 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
     }
 
     /**
+     * @uses SpyStoreQuery
+     *
+     * @param int[] $salesUnitsIds
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     */
+    public function getProductMeasurementSalesUnitTransfersByIds(array $salesUnitsIds): array
+    {
+        $query = $this->getFactory()
+            ->createProductMeasurementSalesUnitQuery()
+            ->filterByIdProductMeasurementSalesUnit_In($salesUnitsIds)
+            ->joinWithProductMeasurementBaseUnit()
+            ->joinWith('ProductMeasurementUnit salesUnitMeasurementUnit')
+            ->joinWith('ProductMeasurementBaseUnit.ProductMeasurementUnit baseUnitMeasurementUnit')
+            ->leftJoinWithSpyProductMeasurementSalesUnitStore()
+            ->leftJoinWith('SpyProductMeasurementSalesUnitStore.SpyStore');
+
+        $productMeasurementSalesUnitEntityCollection = $query->find();
+        $productMeasurementSalesUnitTransfers = [];
+        $mapper = $this->getFactory()->createProductMeasurementUnitMapper();
+        foreach ($productMeasurementSalesUnitEntityCollection as $productMeasurementSalesUnitEntity) {
+            $productMeasurementSalesUnitTransfers[] = $mapper->mapProductMeasurementSalesUnitTransfer(
+                $productMeasurementSalesUnitEntity,
+                new ProductMeasurementSalesUnitTransfer()
+            );
+        }
+
+        return $productMeasurementSalesUnitTransfers;
+    }
+
+    /**
      * @param int $idProductMeasurementBaseUnit
      *
      * @throws \Propel\Runtime\Exception\EntityNotFoundException

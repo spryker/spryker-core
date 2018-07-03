@@ -51,12 +51,15 @@ class GlossaryStorageQueryContainer extends AbstractQueryContainer implements Gl
     /**
      * @api
      *
+     * @param int[] $glossaryKeysIds
+     *
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
      */
-    public function queryGlossaryKeys()
+    public function queryGlossaryKeysByIds(array $glossaryKeysIds)
     {
         return $this->getFactory()
             ->getGlossaryQueryContainer()
-            ->queryKeys();
+            ->queryKeys()
+            ->filterByIdGlossaryKey_In($glossaryKeysIds);
     }
 }

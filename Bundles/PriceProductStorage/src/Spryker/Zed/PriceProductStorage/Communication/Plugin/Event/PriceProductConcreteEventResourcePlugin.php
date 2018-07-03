@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\PriceProductStorage\Communication\Plugin\Event;
 
-use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
-use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
+use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
 use Spryker\Shared\PriceProductStorage\PriceProductStorageConstants;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -41,11 +41,19 @@ class PriceProductConcreteEventResourcePlugin extends AbstractPlugin implements 
      *
      * @api
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     * @param int[] $ids
+     *
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */
-    public function queryData(): SpyProductQuery
+    public function queryData($ids = []): SpyPriceProductQuery
     {
-        return $this->getQueryContainer()->queryProduct();
+        $query = $this->getQueryContainer()->queryAllProductIdsByPriceProductIds($ids);
+
+        if (empty($ids)) {
+            $query->clear();
+        }
+
+        return $query;
     }
 
     /**
@@ -71,6 +79,6 @@ class PriceProductConcreteEventResourcePlugin extends AbstractPlugin implements 
      */
     public function getIdColumnName(): string
     {
-        return SpyProductTableMap::COL_ID_PRODUCT;
+        return SpyPriceProductTableMap::COL_FK_PRODUCT;
     }
 }

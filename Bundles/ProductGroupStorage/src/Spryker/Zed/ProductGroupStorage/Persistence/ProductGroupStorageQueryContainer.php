@@ -93,16 +93,4 @@ class ProductGroupStorageQueryContainer extends AbstractQueryContainer implement
             ->joinWithSpyProductAbstract()
             ->filterByFkProductAbstract_In($productAbstractIds);
     }
-
-    /**
-     * @api
-     *
-     * @return \Orm\Zed\ProductGroup\Persistence\SpyProductAbstractGroupQuery
-     */
-    public function queryProductAbstractGroup()
-    {
-        return $this->getFactory()->getProductAbstractGroupQuery()
-            ->queryAllProductAbstractGroups()
-            ->orderByPosition();
-    }
 }

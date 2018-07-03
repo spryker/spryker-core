@@ -105,10 +105,12 @@ class ProductSetPageSearchQueryContainer extends AbstractQueryContainer implemen
     /**
      * @api
      *
+     * @param int[] $ids
+     *
      * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery
      */
-    public function queryProductSet()
+    public function queryProductSetByIds(array $ids)
     {
-        return $this->getFactory()->getProductSetQueryContainer()->queryProductSet();
+        return $this->getFactory()->getProductSetQueryContainer()->queryProductSetByIds($ids);
     }
 }

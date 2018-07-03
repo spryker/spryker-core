@@ -67,6 +67,23 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
     }
 
     /**
+     * Specification:
+     * - Retrieves all product measurement sales units by ids.
+     *
+     * @api
+     *
+     * @param int[] $salesUnitsIds
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     */
+    public function getSalesUnitsByIds(array $salesUnitsIds): array
+    {
+        return $this->getFactory()
+            ->createProductMeasurementSalesUnitReader()
+            ->getProductMeasurementSalesUnitTransfersByIds($salesUnitsIds);
+    }
+
+    /**
      * {@inheritdoc}
      *
      * @api

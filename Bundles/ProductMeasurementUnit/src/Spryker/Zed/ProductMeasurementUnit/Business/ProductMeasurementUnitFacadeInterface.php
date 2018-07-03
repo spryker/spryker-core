@@ -27,6 +27,18 @@ interface ProductMeasurementUnitFacadeInterface
 
     /**
      * Specification:
+     * - Retrieves all product measurement sales units by ids.
+     *
+     * @api
+     *
+     * @param int[] $salesUnitsIds
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     */
+    public function getSalesUnitsByIds(array $salesUnitsIds): array;
+
+    /**
+     * Specification:
      * - Retrieves all product measurement sales units.
      *
      * @api

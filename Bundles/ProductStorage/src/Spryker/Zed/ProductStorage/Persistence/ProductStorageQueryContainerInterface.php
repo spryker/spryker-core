@@ -16,7 +16,7 @@ interface ProductStorageQueryContainerInterface extends QueryContainerInterface
      *
      * @param array $productAbstractIds
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
      */
     public function queryProductAbstractByIds(array $productAbstractIds);
 
@@ -83,11 +83,4 @@ interface ProductStorageQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
     public function queryProductIdsByProductAbstractIds(array $productAbstractIds);
-
-    /**
-     * @api
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
-     */
-    public function queryProducts();
 }

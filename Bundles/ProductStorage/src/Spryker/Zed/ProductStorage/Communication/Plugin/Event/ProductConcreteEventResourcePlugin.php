@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ProductStorage\Communication\Plugin\Event;
 
-use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
-use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
+use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery;
 use Spryker\Shared\ProductStorage\ProductStorageConstants;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -41,11 +41,19 @@ class ProductConcreteEventResourcePlugin extends AbstractPlugin implements Event
      *
      * @api
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     * @param int[] $ids
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery
      */
-    public function queryData(): SpyProductQuery
+    public function queryData($ids = []): SpyProductLocalizedAttributesQuery
     {
-        return $this->getQueryContainer()->queryProducts();
+        $query = $this->getQueryContainer()->queryProductConcreteByIds($ids);
+
+        if (empty($ids)) {
+            $query->clear();
+        }
+
+        return $query;
     }
 
     /**
@@ -71,6 +79,6 @@ class ProductConcreteEventResourcePlugin extends AbstractPlugin implements Event
      */
     public function getIdColumnName(): string
     {
-        return SpyProductTableMap::COL_ID_PRODUCT;
+        return SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT;
     }
 }

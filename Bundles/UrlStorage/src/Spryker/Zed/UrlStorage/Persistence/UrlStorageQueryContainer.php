@@ -107,34 +107,4 @@ class UrlStorageQueryContainer extends AbstractQueryContainer implements UrlStor
 
         return $queryUrlRedirect;
     }
-
-    /**
-     * @api
-     *
-     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
-     */
-    public function queryAllUrls()
-    {
-        $queryUrl = $this
-            ->getFactory()
-            ->getUrlQueryContainer()
-            ->queryUrls();
-
-        return $queryUrl;
-    }
-
-    /**
-     * @api
-     *
-     * @return \Orm\Zed\Url\Persistence\SpyUrlRedirectQuery
-     */
-    public function queryAllRedirects()
-    {
-        $queryUrlRedirect = $this
-            ->getFactory()
-            ->getUrlQueryContainer()
-            ->queryRedirects();
-
-        return $queryUrlRedirect;
-    }
 }

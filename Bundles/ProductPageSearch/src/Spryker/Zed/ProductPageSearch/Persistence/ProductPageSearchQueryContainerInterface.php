@@ -101,11 +101,4 @@ interface ProductPageSearchQueryContainerInterface extends QueryContainerInterfa
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */
     public function queryAllProductAbstractIdsByPriceProductIds(array $priceProductIds);
-
-    /**
-     * @api
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
-     */
-    public function queryProduct();
 }

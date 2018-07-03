@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\AvailabilityStorage\Communication\Plugin\Event;
 
-use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
-use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
+use Orm\Zed\Availability\Persistence\Map\SpyAvailabilityAbstractTableMap;
+use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery;
 use Spryker\Shared\AvailabilityStorage\AvailabilityStorageConstants;
 use Spryker\Zed\Availability\Dependency\AvailabilityEvents;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceQueryContainerPluginInterface;
@@ -41,11 +41,19 @@ class AvailabilityEventResourcePlugin extends AbstractPlugin implements EventRes
      *
      * @api
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     * @param int[] $ids
+     *
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery
      */
-    public function queryData(): SpyProductAbstractQuery
+    public function queryData($ids = []): SpyAvailabilityAbstractQuery
     {
-        return $this->getQueryContainer()->queryProductAbstract();
+        $query = $this->getQueryContainer()->queryAvailabilityAbstractWithRelationsByIds($ids);
+
+        if (empty($ids)) {
+            $query->clear();
+        }
+
+        return $query;
     }
 
     /**
@@ -71,6 +79,6 @@ class AvailabilityEventResourcePlugin extends AbstractPlugin implements EventRes
      */
     public function getIdColumnName(): string
     {
-        return SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT;
+        return SpyAvailabilityAbstractTableMap::COL_ID_AVAILABILITY_ABSTRACT;
     }
 }

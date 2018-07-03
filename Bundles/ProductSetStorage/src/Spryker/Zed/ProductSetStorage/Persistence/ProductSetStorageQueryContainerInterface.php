@@ -50,7 +50,9 @@ interface ProductSetStorageQueryContainerInterface extends QueryContainerInterfa
     /**
      * @api
      *
+     * @param int[] $productSetIds
+     *
      * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery
      */
-    public function queryProductSet();
+    public function queryProductSetByIds($productSetIds);
 }

@@ -65,18 +65,6 @@ class CmsPageSearchQueryContainer extends AbstractQueryContainer implements CmsP
     }
 
     /**
-     * @api
-     *
-     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
-     */
-    public function queryCmsPage()
-    {
-        return $this->getFactory()
-            ->getCmsQueryContainer()
-            ->queryPages();
-    }
-
-    /**
      * @return string
      */
     protected function getMaxVersionSubQuery()

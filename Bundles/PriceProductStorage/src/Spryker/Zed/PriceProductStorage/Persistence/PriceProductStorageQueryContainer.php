@@ -159,14 +159,4 @@ class PriceProductStorageQueryContainer extends AbstractQueryContainer implement
             ->createSpyPriceConcreteStorageQuery()
             ->filterByFkProduct_In($productConcreteIds);
     }
-
-    /**
-     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
-     */
-    public function queryProduct()
-    {
-        return $this->getFactory()
-            ->getProductQueryContainer()
-            ->queryProduct();
-    }
 }

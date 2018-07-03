@@ -41,11 +41,19 @@ class CategoryPageEventResourcePlugin extends AbstractPlugin implements EventRes
      *
      * @api
      *
+     * @param int[] $ids
+     *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
-    public function queryData(): SpyCategoryNodeQuery
+    public function queryData($ids = []): SpyCategoryNodeQuery
     {
-        return $this->getQueryContainer()->queryAllCategoryNodes();
+        $query = $this->getQueryContainer()->queryCategoryNodesByIds($ids);
+
+        if (empty($ids)) {
+            $query->clear();
+        }
+
+        return $query;
     }
 
     /**

@@ -41,11 +41,19 @@ class CmsBlockProductEventResourcePlugin extends AbstractPlugin implements Event
      *
      * @api
      *
+     * @param $ids
+     *
      * @return \Orm\Zed\CmsBlockProductConnector\Persistence\SpyCmsBlockProductConnectorQuery
      */
-    public function queryData(): SpyCmsBlockProductConnectorQuery
+    public function queryData($ids = []): SpyCmsBlockProductConnectorQuery
     {
-        return $this->getQueryContainer()->queryAllCmsBlockProducts();
+        $query = $this->getQueryContainer()->queryCmsBlockProductsByIds($ids);
+
+        if (empty($ids)) {
+            $query->clear();
+        }
+
+        return $query;
     }
 
     /**

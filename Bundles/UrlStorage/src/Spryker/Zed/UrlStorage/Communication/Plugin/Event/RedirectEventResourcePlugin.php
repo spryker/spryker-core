@@ -41,11 +41,19 @@ class RedirectEventResourcePlugin extends AbstractPlugin implements EventResourc
      *
      * @api
      *
+     * @param int[] $ids
+     *
      * @return \Orm\Zed\Url\Persistence\SpyUrlRedirectQuery
      */
-    public function queryData(): SpyUrlRedirectQuery
+    public function queryData($ids = []): SpyUrlRedirectQuery
     {
-        return $this->getQueryContainer()->queryAllRedirects();
+        $query = $this->getQueryContainer()->queryRedirects($ids);
+
+        if (empty($ids)) {
+            $query->clear();
+        }
+
+        return $query;
     }
 
     /**

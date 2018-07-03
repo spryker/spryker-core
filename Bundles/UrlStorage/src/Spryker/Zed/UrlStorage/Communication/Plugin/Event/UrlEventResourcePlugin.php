@@ -41,11 +41,19 @@ class UrlEventResourcePlugin extends AbstractPlugin implements EventResourceQuer
      *
      * @api
      *
+     * @param int[] $ids
+     *
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
-    public function queryData(): SpyUrlQuery
+    public function queryData($ids = []): SpyUrlQuery
     {
-        return $this->getQueryContainer()->queryAllUrls();
+        $query = $this->getQueryContainer()->queryUrls($ids);
+
+        if (empty($ids)) {
+            $query->clear();
+        }
+
+        return $query;
     }
 
     /**

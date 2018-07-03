@@ -33,6 +33,16 @@ class ProductMeasurementUnitStorageToProductMeasurementUnitFacadeBridge implemen
     }
 
     /**
+     * @param int[] $salesUnitsIds
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     */
+    public function getSalesUnitsByIds(array $salesUnitsIds): array
+    {
+        return $this->productMeasurementUnitFacade->getSalesUnitsByIds($salesUnitsIds);
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
      */
     public function getSalesUnits(): array

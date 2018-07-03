@@ -31,27 +31,15 @@ class ProductCategoryFilterStorageQueryContainer extends AbstractQueryContainer 
     /**
      * @api
      *
-     * @param array $categoryIds
+     * @param array $productCategoryFilterIds
      *
      * @return $this|\Orm\Zed\ProductCategoryFilter\Persistence\SpyProductCategoryFilterQuery
      */
-    public function queryProductCategoryByIdCategories(array $categoryIds)
+    public function queryProductCategoryByIds(array $productCategoryFilterIds)
     {
         return $this->getFactory()
             ->getProductCategoryFilterQuery()
             ->queryProductCategoryFilter()
-            ->filterByFkCategory_In($categoryIds);
-    }
-
-    /**
-     * @api
-     *
-     * @return $this|\Orm\Zed\ProductCategoryFilter\Persistence\SpyProductCategoryFilterQuery
-     */
-    public function queryProductCategoryFilter()
-    {
-        return $this->getFactory()
-            ->getProductCategoryFilterQuery()
-            ->queryProductCategoryFilter();
+            ->filterByIdProductCategoryFilter_In($productCategoryFilterIds);
     }
 }

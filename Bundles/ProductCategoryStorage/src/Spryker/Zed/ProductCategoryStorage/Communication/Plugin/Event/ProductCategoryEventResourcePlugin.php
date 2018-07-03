@@ -41,11 +41,19 @@ class ProductCategoryEventResourcePlugin extends AbstractPlugin implements Event
      *
      * @api
      *
+     * @param int[] $ids
+     *
      * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
      */
-    public function queryData(): SpyProductCategoryQuery
+    public function queryData($ids = []): SpyProductCategoryQuery
     {
-        return $this->getQueryContainer()->queryProductCategory();
+        $query = $this->getQueryContainer()->queryProductCategoryByIds($ids);
+
+        if (empty($ids)) {
+            $query->clear();
+        }
+
+        return $query;
     }
 
     /**
