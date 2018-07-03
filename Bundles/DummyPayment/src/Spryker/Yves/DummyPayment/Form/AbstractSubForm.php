@@ -41,7 +41,7 @@ abstract class AbstractSubForm extends AbstractSubFormType implements SubFormInt
             self::FIELD_DATE_OF_BIRTH,
             BirthdayType::class,
             [
-                'label' => false,
+                'label' => 'dummyPaymentInvoice.date_of_birth',
                 'required' => true,
                 'widget' => 'single_text',
                 'format' => 'dd.MM.yyyy',

@@ -19,6 +19,9 @@ class CalculationStub extends ZedRequestStub implements CalculationStubInterface
      */
     public function recalculate(QuoteTransfer $quoteTransfer)
     {
-        return $this->zedStub->call('/calculation/gateway/recalculate', $quoteTransfer);
+        /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
+        $quoteTransfer = $this->zedStub->call('/calculation/gateway/recalculate', $quoteTransfer);
+
+        return $quoteTransfer;
     }
 }

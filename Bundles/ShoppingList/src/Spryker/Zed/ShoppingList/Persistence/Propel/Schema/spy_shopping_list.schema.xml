@@ -48,7 +48,7 @@
     <table name="spy_shopping_list_company_business_unit">
         <column name="id_shopping_list_company_business_unit" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_company_business_unit" required="true" type="INTEGER"/>
-        <column name="fk_shopping_list" requird="true" type="INTEGER"/>
+        <column name="fk_shopping_list" required="true" type="INTEGER"/>
         <column name="fk_shopping_list_permission_group" required="true" type="INTEGER"/>
 
         <foreign-key name="spy_shopping_list_business_unit-fk_company_business_unit" foreignTable="spy_company_business_unit">
@@ -75,7 +75,7 @@
     <table name="spy_shopping_list_permission_group_to_permission">
         <column name="id_shopping_list_permission_group_to_permission" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_shopping_list_permission_group" required="true" type="INTEGER"/>
-        <column name="fk_permission" requird="true" type="INTEGER"/>
+        <column name="fk_permission" required="true" type="INTEGER"/>
 
         <foreign-key name="spy_shopping_list_perm_grp_to_perm-fk_shopping_list_perm_grp" foreignTable="spy_shopping_list_permission_group">
             <reference local="fk_shopping_list_permission_group" foreign="id_shopping_list_permission_group"/>
