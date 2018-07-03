@@ -56,8 +56,8 @@ class ProductPackagingUnitStorageRepository extends AbstractRepository implement
                 "%s = true",
                 SpyProductTableMap::COL_IS_ACTIVE
             ))
-            ->leftJoinWithSpyProductAbstract()
-            ->leftJoinWithSpyProductPackagingLeadProduct()
+            ->innerJoinWithSpyProductAbstract()
+            ->innerJoinWithSpyProductPackagingLeadProduct()
             ->innerJoinWithSpyProductPackagingUnit()
             ->useSpyProductPackagingUnitQuery()
                 ->leftJoinWithSpyProductPackagingUnitAmount()
