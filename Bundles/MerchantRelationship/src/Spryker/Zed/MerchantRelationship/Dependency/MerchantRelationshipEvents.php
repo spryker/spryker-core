@@ -10,7 +10,7 @@ namespace Spryker\Zed\MerchantRelationship\Dependency;
 interface MerchantRelationshipEvents
 {
     /**
-     * Specification
+     * Specification:
      * - This event will be used for spy_merchant_relationship_to_company_business_unit entity creation
      *
      * @api
@@ -18,7 +18,7 @@ interface MerchantRelationshipEvents
     public const ENTITY_SPY_MERCHANT_RELATIONSHIP_TO_COMPANY_BUSINESS_UNIT_CREATE = 'Entity.spy_merchant_relationship_to_company_business_unit.create';
 
     /**
-     * Specification
+     * Specification:
      * - This event will be used for spy_merchant_relationship_to_company_business_unit entity update
      *
      * @api
@@ -26,7 +26,7 @@ interface MerchantRelationshipEvents
     public const ENTITY_SPY_MERCHANT_RELATIONSHIP_TO_COMPANY_BUSINESS_UNIT_UPDATE = 'Entity.spy_merchant_relationship_to_company_business_unit.update';
 
     /**
-     * Specification
+     * Specification:
      * - This event will be used for spy_merchant_relationship_to_company_business_unit entity delete
      *
      * @api
