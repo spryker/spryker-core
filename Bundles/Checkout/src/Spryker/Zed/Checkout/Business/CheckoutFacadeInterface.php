@@ -5,9 +5,7 @@
  */
 namespace Spryker\Zed\Checkout\Business;
 
-use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\TranslatedCheckoutErrorMessagesTransfer;
 
 /**
  * @method \Spryker\Zed\Checkout\Business\CheckoutBusinessFactory getFactory()
@@ -32,17 +30,4 @@ interface CheckoutFacadeInterface
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
     public function placeOrder(QuoteTransfer $quoteTransfer);
-
-    /**
-     * Specification:
-     * - Translates all error messages in checkout response and returns an array of translated strings.
-     * - Handles error messages duplication, so returned array has unique messages.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\TranslatedCheckoutErrorMessagesTransfer
-     */
-    public function translateCheckoutErrorMessages(CheckoutResponseTransfer $checkoutResponseTransfer): TranslatedCheckoutErrorMessagesTransfer;
 }

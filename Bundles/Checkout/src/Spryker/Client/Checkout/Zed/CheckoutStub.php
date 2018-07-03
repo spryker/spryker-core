@@ -7,9 +7,7 @@
 
 namespace Spryker\Client\Checkout\Zed;
 
-use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\TranslatedCheckoutErrorMessagesTransfer;
 use Spryker\Client\ZedRequest\ZedRequestClient;
 
 class CheckoutStub implements CheckoutStubInterface
@@ -38,15 +36,5 @@ class CheckoutStub implements CheckoutStubInterface
         $checkoutResponseTransfer = $this->zedStub->call('/checkout/gateway/place-order', $quoteTransfer);
 
         return $checkoutResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
-     *
-     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|\Generated\Shared\Transfer\TranslatedCheckoutErrorMessagesTransfer
-     */
-    public function translateCheckoutErrorMessages(CheckoutResponseTransfer $checkoutResponseTransfer): TranslatedCheckoutErrorMessagesTransfer
-    {
-        return $this->zedStub->call('/checkout/gateway/translate-checkout-error-messages', $checkoutResponseTransfer);
     }
 }

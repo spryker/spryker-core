@@ -7,11 +7,8 @@
 
 namespace Spryker\Zed\Checkout\Business;
 
-use Spryker\Zed\Checkout\Business\Translation\ErrorMessageTranslator;
-use Spryker\Zed\Checkout\Business\Translation\ErrorMessageTranslatorInterface;
 use Spryker\Zed\Checkout\Business\Workflow\CheckoutWorkflow;
 use Spryker\Zed\Checkout\CheckoutDependencyProvider;
-use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToGlossaryFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -34,28 +31,10 @@ class CheckoutBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Checkout\Business\Translation\ErrorMessageTranslatorInterface
-     */
-    public function createErrorMessageTranslator(): ErrorMessageTranslatorInterface
-    {
-        return new ErrorMessageTranslator(
-            $this->getGlossaryFacade()
-        );
-    }
-
-    /**
      * @return \Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsFacadeInterface
      */
     protected function getOmsFacade()
     {
         return $this->getProvidedDependency(CheckoutDependencyProvider::FACADE_OMS);
-    }
-
-    /**
-     * @return \Spryker\Zed\Checkout\Dependency\Facade\CheckoutToGlossaryFacadeInterface
-     */
-    protected function getGlossaryFacade(): CheckoutToGlossaryFacadeInterface
-    {
-        return $this->getProvidedDependency(CheckoutDependencyProvider::FACADE_GLOSSARY);
     }
 }

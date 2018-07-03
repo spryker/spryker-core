@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Checkout;
 
-use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToGlossaryFacadeBridge;
 use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToOmsFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -19,8 +18,6 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
     const CHECKOUT_ORDER_SAVERS = 'checkout_order_savers';
     const CHECKOUT_PRE_SAVE_HOOKS = 'checkout_pre_save_hooks';
     const FACADE_OMS = 'FACADE_OMS';
-
-    public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -46,7 +43,6 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         $container = $this->addOmsFacade($container);
-        $container = $this->addGlossaryFacade($container);
 
         return $container;
     }
@@ -60,22 +56,6 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[static::FACADE_OMS] = function () use ($container) {
             return new CheckoutToOmsFacadeBridge($container->getLocator()->oms()->facade());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addGlossaryFacade(Container $container): Container
-    {
-        $container[static::FACADE_GLOSSARY] = function (Container $container) {
-            return new CheckoutToGlossaryFacadeBridge(
-                $container->getLocator()->glossary()->facade()
-            );
         };
 
         return $container;

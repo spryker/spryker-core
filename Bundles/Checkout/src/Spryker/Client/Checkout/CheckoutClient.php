@@ -32,6 +32,15 @@ class CheckoutClient extends AbstractClient implements CheckoutClientInterface
     }
 
     /**
+     * @return \Spryker\Client\Checkout\Zed\CheckoutStubInterface
+     */
+    protected function getZedStub()
+    {
+        return $this->getFactory()->createZedStub();
+    }
+
+    /**
+     *
      * {@inheritdoc}
      *
      * @api
@@ -42,14 +51,8 @@ class CheckoutClient extends AbstractClient implements CheckoutClientInterface
      */
     public function translateCheckoutErrorMessages(CheckoutResponseTransfer $checkoutResponseTransfer): TranslatedCheckoutErrorMessagesTransfer
     {
-        return $this->getZedStub()->translateCheckoutErrorMessages($checkoutResponseTransfer);
-    }
-
-    /**
-     * @return \Spryker\Client\Checkout\Zed\CheckoutStubInterface
-     */
-    protected function getZedStub()
-    {
-        return $this->getFactory()->createZedStub();
+        return $this->getFactory()
+            ->createErrorMessageTranslator()
+            ->translateCheckoutErrorMessages($checkoutResponseTransfer);
     }
 }

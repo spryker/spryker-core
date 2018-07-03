@@ -5,12 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Checkout\Business\Translation;
+namespace Spryker\Client\Checkout\ErrorMessage;
 
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\TranslatedCheckoutErrorMessagesTransfer;
-use Spryker\Zed\Checkout\Dependency\Facade\CheckoutToGlossaryFacadeInterface;
+use Spryker\Client\Checkout\Dependency\Client\CheckoutToGlossaryStorageClientInterface;
+use Spryker\Client\Checkout\Dependency\Client\CheckoutToLocaleClientInterface;
 
 class ErrorMessageTranslator implements ErrorMessageTranslatorInterface
 {
@@ -24,16 +25,25 @@ class ErrorMessageTranslator implements ErrorMessageTranslatorInterface
     protected const KEY_GROUPED_PRODUCT_BUNDLE_CHECKOUT_ERROR_MESSAGES = 'KEY_GROUPED_PRODUCT_BUNDLE_CHECKOUT_ERROR_MESSAGES';
 
     /**
-     * @var \Spryker\Zed\Checkout\Dependency\Facade\CheckoutToGlossaryFacadeInterface
+     * @var \Spryker\Client\Checkout\Dependency\Client\CheckoutToGlossaryStorageClientInterface
      */
-    protected $glossaryFacade;
+    protected $glossaryStorageClient;
 
     /**
-     * @param \Spryker\Zed\Checkout\Dependency\Facade\CheckoutToGlossaryFacadeInterface $glossaryFacade
+     * @var \Spryker\Client\Checkout\Dependency\Client\CheckoutToLocaleClientInterface
      */
-    public function __construct(CheckoutToGlossaryFacadeInterface $glossaryFacade)
-    {
-        $this->glossaryFacade = $glossaryFacade;
+    protected $localeClient;
+
+    /**
+     * @param \Spryker\Client\Checkout\Dependency\Client\CheckoutToGlossaryStorageClientInterface $glossaryStorageClient
+     * @param \Spryker\Client\Checkout\Dependency\Client\CheckoutToLocaleClientInterface $localeClient
+     */
+    public function __construct(
+        CheckoutToGlossaryStorageClientInterface $glossaryStorageClient,
+        CheckoutToLocaleClientInterface $localeClient
+    ) {
+        $this->glossaryStorageClient = $glossaryStorageClient;
+        $this->localeClient = $localeClient;
     }
 
     /**
@@ -161,8 +171,9 @@ class ErrorMessageTranslator implements ErrorMessageTranslatorInterface
      */
     protected function translateSingleCheckoutErrorMessageWithParameters(CheckoutErrorTransfer $checkoutErrorTransfer): string
     {
-        return $this->glossaryFacade->translate(
+        return $this->glossaryStorageClient->translate(
             $checkoutErrorTransfer->getMessage(),
+            $this->getCurrentLocale(),
             $checkoutErrorTransfer->getParameters()
         );
     }
@@ -174,9 +185,18 @@ class ErrorMessageTranslator implements ErrorMessageTranslatorInterface
      */
     protected function translateSingleCheckoutErrorMessageWithoutParameters(CheckoutErrorTransfer $checkoutErrorTransfer): string
     {
-        return $this->glossaryFacade->translate(
-            $checkoutErrorTransfer->getMessage()
+        return $this->glossaryStorageClient->translate(
+            $checkoutErrorTransfer->getMessage(),
+            $this->getCurrentLocale()
         );
+    }
+
+    /**
+     * @return string
+     */
+    protected function getCurrentLocale(): string
+    {
+        return $this->localeClient->getCurrentLocale();
     }
 
     /**

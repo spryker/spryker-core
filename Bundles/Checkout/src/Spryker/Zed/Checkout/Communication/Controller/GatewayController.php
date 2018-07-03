@@ -11,7 +11,6 @@ use Exception;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\TranslatedCheckoutErrorMessagesTransfer;
 use Spryker\Shared\ErrorHandler\ErrorLogger;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 use Symfony\Component\HttpFoundation\Response;
@@ -60,15 +59,5 @@ class GatewayController extends AbstractGatewayController
         ErrorLogger::getInstance()->log($exception);
 
         return $checkoutResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\TranslatedCheckoutErrorMessagesTransfer
-     */
-    public function translateCheckoutErrorMessagesAction(CheckoutResponseTransfer $checkoutResponseTransfer): TranslatedCheckoutErrorMessagesTransfer
-    {
-        return $this->getFacade()->translateCheckoutErrorMessages($checkoutResponseTransfer);
     }
 }

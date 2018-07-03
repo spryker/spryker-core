@@ -14,9 +14,6 @@ use Generated\Shared\Transfer\TranslatedCheckoutErrorMessagesTransfer;
 interface CheckoutClientInterface
 {
     /**
-     * Specification:
-     * - Places the order.
-     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -27,8 +24,7 @@ interface CheckoutClientInterface
 
     /**
      * Specification:
-     * - Translates all error messages in checkout response and returns an array of translated strings.
-     * - Handles error messages duplication, so returned array has unique messages.
+     * - Translates checkout error messages.
      *
      * @api
      *
