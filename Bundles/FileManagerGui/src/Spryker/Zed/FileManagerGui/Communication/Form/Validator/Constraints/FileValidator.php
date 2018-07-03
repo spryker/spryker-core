@@ -12,9 +12,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\FileValidator as SymfonyFileValidator;
 
-/**
- * @uses \Spryker\Zed\FileManagerGui\Communication\Form\Validator\Constraints\File
- */
 class FileValidator extends SymfonyFileValidator
 {
     /**

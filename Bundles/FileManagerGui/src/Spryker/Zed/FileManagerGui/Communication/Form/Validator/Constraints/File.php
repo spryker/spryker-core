@@ -10,7 +10,7 @@ namespace Spryker\Zed\FileManagerGui\Communication\Form\Validator\Constraints;
 use Symfony\Component\Validator\Constraints\File as SymfonyFile;
 
 /**
- * @used-by \Spryker\Zed\FileManagerGui\Communication\Form\Validator\Constraints\FileValidator
+ * @uses \Spryker\Zed\FileManagerGui\Communication\Form\Validator\Constraints\FileValidator
  */
 class File extends SymfonyFile
 {
