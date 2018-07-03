@@ -116,9 +116,14 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @api
      *
-     * @inheritdoc
+     * @param string $name
+     * @param int|null $idTaxSet
+     *
+     * @return bool
      */
     public function taxSetWithSuchNameExists(string $name, ?int $idTaxSet = null): bool
     {

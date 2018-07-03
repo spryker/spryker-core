@@ -14,6 +14,7 @@ use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
@@ -154,14 +155,14 @@ class TaxSetForm extends AbstractType
     /**
      * @return \Symfony\Component\Validator\Constraint
      */
-    protected function createUniqueTaxSetNameConstraint()
+    protected function createUniqueTaxSetNameConstraint(): Constraint
     {
         return new Callback([
             'callback' => function ($name, ExecutionContextInterface $context) {
                 $idTaxSet = $context->getObject()->getParent()->getData()->getIdTaxSet();
                 if ($this->getFacade()->taxSetWithSuchNameExists($name, $idTaxSet)) {
-                    $context->addViolation('Tax Set with name "{{ name }}" already exists.', [
-                        '{{ name }}' => $name,
+                    $context->addViolation('Tax Set with name "%name%" already exists.', [
+                        '%name%' => $name,
                     ]);
                 }
             },

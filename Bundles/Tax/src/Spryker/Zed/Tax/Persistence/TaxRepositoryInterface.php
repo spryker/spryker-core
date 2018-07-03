@@ -12,8 +12,6 @@ interface TaxRepositoryInterface
      * @param string $name
      * @param int|null $idTaxSet
      *
-     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
-     *
      * @return bool
      */
     public function isTaxSetNameUnique(string $name, ?int $idTaxSet = null): bool;
