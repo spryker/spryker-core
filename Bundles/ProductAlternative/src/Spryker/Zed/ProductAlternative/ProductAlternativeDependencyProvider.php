@@ -19,7 +19,7 @@ class ProductAlternativeDependencyProvider extends AbstractBundleDependencyProvi
     public const FACADE_LOCALE = 'FACADE_LOCALE';
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
     public const PLUGINS_POST_PRODUCT_ALTERNATIVE = 'PLUGINS_POST_PRODUCT_ALTERNATIVE';
-    public const PLUGINS_DELETE_POST_PRODUCT_ALTERNATIVE = 'PLUGINS_DELETE_POST_PRODUCT_ALTERNATIVE';
+    public const PLUGINS_DELETE_PRODUCT_ALTERNATIVE = 'PLUGINS_DELETE_PRODUCT_ALTERNATIVE';
     public const PROPEL_QUERY_PRODUCT = 'PROPEL_QUERY_PRODUCT';
     public const PROPEL_QUERY_PRODUCT_ABSTRACT = 'QUERY_PRODUCT_ABSTRACT';
 
@@ -134,8 +134,8 @@ class ProductAlternativeDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addPostDeleteProductAlternativePlugins(Container $container): Container
     {
-        $container[static::PLUGINS_DELETE_POST_PRODUCT_ALTERNATIVE] = function () {
-            return $this->getPostDeleteProductAlternativePlugins();
+        $container[static::PLUGINS_DELETE_PRODUCT_ALTERNATIVE] = function () {
+            return $this->getDeleteProductAlternativePlugins();
         };
 
         return $container;
@@ -150,9 +150,9 @@ class ProductAlternativeDependencyProvider extends AbstractBundleDependencyProvi
     }
 
     /**
-     * @return \Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\PostDeleteProductAlternativePluginInterface[]
+     * @return \Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\DeleteProductAlternativePluginInterface[]
      */
-    protected function getPostDeleteProductAlternativePlugins(): array
+    protected function getDeleteProductAlternativePlugins(): array
     {
         return [];
     }

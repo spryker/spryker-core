@@ -91,7 +91,7 @@ class ProductAlternativeWriter implements ProductAlternativeWriterInterface
         $this->productAlternativeEntityManager
             ->deleteProductAlternative($productAlternativeTransfer);
 
-        $this->productAlternativePluginExecutor->executePostDeleteProductAlternativePlugins($productAlternativeTransfer);
+        $this->productAlternativePluginExecutor->executeDeleteProductAlternativePlugins($productAlternativeTransfer);
 
         return $productAlternativeResponseTransfer
             ->setIsSuccessful(true);

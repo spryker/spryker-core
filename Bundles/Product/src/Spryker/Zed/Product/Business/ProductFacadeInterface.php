@@ -181,7 +181,7 @@ interface ProductFacadeInterface
      *
      * @return int
      */
-    public function getProductAbstractIdByConcreteId($idConcrete);
+    public function getProductAbstractIdByConcreteId(int $idConcrete): int;
     /**
      * Specification:
      * - Adds concrete product with attributes and localized attributes.

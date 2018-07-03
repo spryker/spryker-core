@@ -57,7 +57,7 @@ class ProductAlternativeBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductAlternativePluginExecutor(
             $this->getPostProductAlternativePlugins(),
-            $this->getPostDeleteProductAlternativePlugins()
+            $this->getDeleteProductAlternativePlugins()
         );
     }
 
@@ -86,10 +86,10 @@ class ProductAlternativeBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\PostDeleteProductAlternativePluginInterface[]
+     * @return \Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\DeleteProductAlternativePluginInterface[]
      */
-    protected function getPostDeleteProductAlternativePlugins(): array
+    protected function getDeleteProductAlternativePlugins(): array
     {
-        return $this->getProvidedDependency(ProductAlternativeDependencyProvider::PLUGINS_DELETE_POST_PRODUCT_ALTERNATIVE);
+        return $this->getProvidedDependency(ProductAlternativeDependencyProvider::PLUGINS_DELETE_PRODUCT_ALTERNATIVE);
     }
 }

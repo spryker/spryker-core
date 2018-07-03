@@ -33,7 +33,7 @@ interface ProductAlternativeRepositoryInterface
      *
      * @return bool
      */
-    public function doAllConcreteProductsHaveAlternatives(array $productIds);
+    public function doAllConcreteProductsHaveAlternatives(array $productIds): bool;
 
     /**
      * @param int $idProductAbstract

@@ -25,7 +25,7 @@ interface ProductDiscontinuedRepositoryInterface
      *
      * @return bool
      */
-    public function areAllConcreteProductsDiscontinued(array $productIds);
+    public function areAllConcreteProductsDiscontinued(array $productIds): bool;
 
     /**
      * @return \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer

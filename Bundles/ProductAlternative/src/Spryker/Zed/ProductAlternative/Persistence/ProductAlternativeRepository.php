@@ -72,10 +72,10 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
      *
      * @return bool
      */
-    public function doAllConcreteProductsHaveAlternatives(array $productIds)
+    public function doAllConcreteProductsHaveAlternatives(array $productIds): bool
     {
         foreach ($productIds as $productId) {
-            if (!$this->getFactory()->createProductAlternativeQuery()->filterByFkProduct($productId)->find()) {
+            if (!$this->getFactory()->createProductAlternativePropelQuery()->filterByFkProduct($productId)->find()) {
                 return false;
             }
         }

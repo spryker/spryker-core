@@ -17,13 +17,13 @@ class ProductAlternativePluginExecutor implements ProductAlternativePluginExecut
     protected $postProductAlternativePlugins;
 
     /**
-     * @var \Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\PostDeleteProductAlternativePluginInterface[]
+     * @var \Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\DeleteProductAlternativePluginInterface[]
      */
     protected $postDeleteProductAlternativePlugins;
 
     /**
      * @param \Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\PostProductUpdateAlternativesPluginInterface[] $postProductAlternativePlugins
-     * @param \Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\PostDeleteProductAlternativePluginInterface[] $postDeleteProductAlternativePlugins
+     * @param \Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\DeleteProductAlternativePluginInterface[] $postDeleteProductAlternativePlugins
      */
     public function __construct(
         array $postProductAlternativePlugins,
@@ -50,7 +50,7 @@ class ProductAlternativePluginExecutor implements ProductAlternativePluginExecut
      *
      * @return void
      */
-    public function executePostDeleteProductAlternativePlugins(ProductAlternativeTransfer $productAlternativeTransfer): void
+    public function executeDeleteProductAlternativePlugins(ProductAlternativeTransfer $productAlternativeTransfer): void
     {
         foreach ($this->postDeleteProductAlternativePlugins as $postDeleteProductAlternativePlugin) {
             $postDeleteProductAlternativePlugin->execute($productAlternativeTransfer);

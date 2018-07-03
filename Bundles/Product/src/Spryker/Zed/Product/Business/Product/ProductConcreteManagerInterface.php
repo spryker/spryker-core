@@ -79,11 +79,9 @@ interface ProductConcreteManagerInterface
     /**
      * @param int $idProductConcrete
      *
-     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
-     *
-     * @return int
+     * @return null|int
      */
-    public function getProductAbstractIdByConcreteId($idProductConcrete);
+    public function getProductAbstractIdByConcreteId($idProductConcrete): ?int;
 
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer

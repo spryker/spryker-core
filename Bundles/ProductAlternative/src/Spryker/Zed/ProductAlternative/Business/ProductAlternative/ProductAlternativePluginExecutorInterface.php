@@ -23,5 +23,5 @@ interface ProductAlternativePluginExecutorInterface
      *
      * @return void
      */
-    public function executePostDeleteProductAlternativePlugins(ProductAlternativeTransfer $productAlternativeTransfer): void;
+    public function executeDeleteProductAlternativePlugins(ProductAlternativeTransfer $productAlternativeTransfer): void;
 }

@@ -63,12 +63,7 @@ class ProductAlternativeProductLabelConnectorInstaller implements ProductAlterna
     public function install(): void
     {
         $this->getTransactionHandler()->handleTransaction(function () {
-
-            if ($this->productLabelFacade->findLabelByLabelName($this->config->getProductAlternativesLabelName())) {
-                $productLabelTransfer = $this->productLabelFacade->findLabelByLabelName($this->config->getProductAlternativesLabelName());
-                $this->addDataToProductLabelTransfer($productLabelTransfer);
-                $this->productLabelFacade->updateLabel($productLabelTransfer);
-            } else {
+            if (!$this->productLabelFacade->findLabelByLabelName($this->config->getProductAlternativesLabelName())) {
                 $productLabelTransfer = new ProductLabelTransfer();
                 $productLabelTransfer->setName($this->config->getProductAlternativesLabelName());
                 $this->addDataToProductLabelTransfer($productLabelTransfer);
@@ -76,6 +71,9 @@ class ProductAlternativeProductLabelConnectorInstaller implements ProductAlterna
                     $productLabelTransfer
                 );
             }
+            $productLabelTransfer = $this->productLabelFacade->findLabelByLabelName($this->config->getProductAlternativesLabelName());
+            $this->addDataToProductLabelTransfer($productLabelTransfer);
+            $this->productLabelFacade->updateLabel($productLabelTransfer);
         });
     }
 

@@ -53,7 +53,7 @@ class ProductDiscontinuedRepository extends AbstractRepository implements Produc
      *
      * @return bool
      */
-    public function areAllConcreteProductsDiscontinued(array $productIds)
+    public function areAllConcreteProductsDiscontinued(array $productIds): bool
     {
         foreach ($productIds as $productId) {
             if (!$this->getFactory()->createProductDiscontinuedQuery()->filterByFkProduct($productId)->find()) {

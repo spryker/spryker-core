@@ -192,11 +192,11 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @return int
      */
-    public function getProductAbstractIdByConcreteId($concreteSku)
+    public function getProductAbstractIdByConcreteId(int $idConcrete): int
     {
         return $this->getFactory()
             ->createProductConcreteManager()
-            ->getProductAbstractIdByConcreteId($concreteSku);
+            ->getProductAbstractIdByConcreteId($idConcrete);
     }
 
     /**
