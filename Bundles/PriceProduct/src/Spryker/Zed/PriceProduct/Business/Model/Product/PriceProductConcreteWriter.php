@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProduct\Business\Model\Product;
 
+use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInterface;
@@ -121,7 +122,12 @@ class PriceProductConcreteWriter extends BaseProductPriceWriter implements Price
             ->requireIdProductConcrete()
             ->getIdProductConcrete();
 
-        $priceProductTransfer->requirePriceDimension();
+        if (!$priceProductTransfer->getPriceDimension()) {
+            $priceProductTransfer->setPriceDimension(
+                (new PriceProductDimensionTransfer())
+                    ->setType($this->config->getPriceTypeDefaultName())
+            );
+        }
 
         $this->persistProductConcretePriceEntity($priceProductTransfer, $idProductConcrete);
 

@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
-use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
@@ -464,11 +463,6 @@ class ProductBundleFacadeTest extends Unit
             ->setGrossAmount($price);
 
         $priceProductTransfer->setMoneyValue($moneyValueTransfer);
-
-        $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
-            ->setType('PRICE_DIMENSION_DEFAULT');
-
-        $priceProductTransfer->setPriceDimension($priceProductDimensionTransfer);
 
         $productAbstractTransfer->addPrice($priceProductTransfer);
         $productAbstractTransfer->setAttributes([]);
