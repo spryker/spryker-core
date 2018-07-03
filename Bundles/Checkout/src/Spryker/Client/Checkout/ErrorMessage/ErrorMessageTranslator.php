@@ -157,37 +157,10 @@ class ErrorMessageTranslator implements ErrorMessageTranslatorInterface
      */
     protected function translateSingleCheckoutErrorMessage(CheckoutErrorTransfer $checkoutErrorTransfer): string
     {
-        if ($checkoutErrorTransfer->getParameters()) {
-            return $this->translateSingleCheckoutErrorMessageWithParameters($checkoutErrorTransfer);
-        }
-
-        return $this->translateSingleCheckoutErrorMessageWithoutParameters($checkoutErrorTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CheckoutErrorTransfer $checkoutErrorTransfer
-     *
-     * @return string
-     */
-    protected function translateSingleCheckoutErrorMessageWithParameters(CheckoutErrorTransfer $checkoutErrorTransfer): string
-    {
         return $this->glossaryStorageClient->translate(
             $checkoutErrorTransfer->getMessage(),
             $this->getCurrentLocale(),
-            $checkoutErrorTransfer->getParameters()
-        );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CheckoutErrorTransfer $checkoutErrorTransfer
-     *
-     * @return string
-     */
-    protected function translateSingleCheckoutErrorMessageWithoutParameters(CheckoutErrorTransfer $checkoutErrorTransfer): string
-    {
-        return $this->glossaryStorageClient->translate(
-            $checkoutErrorTransfer->getMessage(),
-            $this->getCurrentLocale()
+            $checkoutErrorTransfer->getParameters() ?: []
         );
     }
 
