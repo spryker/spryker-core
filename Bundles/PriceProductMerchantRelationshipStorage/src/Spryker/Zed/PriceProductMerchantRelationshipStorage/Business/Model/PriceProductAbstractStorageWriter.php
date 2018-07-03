@@ -85,7 +85,7 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
         foreach ($businessUnitProducts as $idCompanyBusinessUnit => $productAbstractIds) {
             foreach ($productAbstractIds as $idProductAbstract) {
                 $this->priceProductMerchantRelationshipStorageEntityManager
-                    ->deletePriceProductAbstractByCompanyBusinessUnit($idCompanyBusinessUnit, $idProductAbstract);
+                    ->deletePriceProductAbstractByCompanyBusinessUnitAndIdProductAbstract($idCompanyBusinessUnit, $idProductAbstract);
             }
         }
 
