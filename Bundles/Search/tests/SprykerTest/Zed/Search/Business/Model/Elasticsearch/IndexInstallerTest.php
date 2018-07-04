@@ -84,8 +84,8 @@ class IndexInstallerTest extends Unit
         $installer = new IndexInstaller(
             $this->createIndexDefinitionLoaderMock($indexDefinitions),
             $this->createElasticaClientMock($indexMock),
-            $this->getBlacklist(),
-            $this->createMessengerMock()
+            $this->createMessengerMock(),
+            $this->getBlacklist()
         );
 
         $installer->install();
