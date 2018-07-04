@@ -34,9 +34,12 @@ class SumGrossPriceCalculator implements CalculatorInterface
     protected function calculateSumGrossPriceForExpenses(ArrayObject $expenses)
     {
         foreach ($expenses as $expenseTransfer) {
-            if ($expenseTransfer->getUnitGrossPrice()) {
-                $expenseTransfer->setSumGrossPrice($expenseTransfer->getUnitGrossPrice() * $expenseTransfer->getQuantity());
+            // BC: When ExpenseTransfer is populated from Persistence, sum price is accurate and populated, unit price is derived
+            if ($expenseTransfer->getSumGrossPrice()) {
+                continue;
             }
+
+            $expenseTransfer->setSumGrossPrice($expenseTransfer->getUnitGrossPrice() * $expenseTransfer->getQuantity());
         }
     }
 
@@ -87,9 +90,13 @@ class SumGrossPriceCalculator implements CalculatorInterface
             $this->addCalculatedItemGrossAmounts($itemTransfer);
             foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
                 $this->assertProductOptionPriceCalculationRequirements($productOptionTransfer);
-                if ($productOptionTransfer->getUnitGrossPrice()) {
-                    $productOptionTransfer->setSumGrossPrice($productOptionTransfer->getUnitGrossPrice() * $productOptionTransfer->getQuantity());
+
+                // BC: When ProductOptionTransfer is populated from Persistence, sum price is accurate and populated, unit price is derived
+                if ($productOptionTransfer->getSumGrossPrice()) {
+                    continue;
                 }
+
+                $productOptionTransfer->setSumGrossPrice($productOptionTransfer->getUnitGrossPrice() * $productOptionTransfer->getQuantity());
             }
         }
     }
