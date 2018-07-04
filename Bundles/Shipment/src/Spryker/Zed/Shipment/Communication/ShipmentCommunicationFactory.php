@@ -30,7 +30,7 @@ class ShipmentCommunicationFactory extends AbstractCommunicationFactory
     {
         $methodQuery = $this->getQueryContainer()->queryMethods();
 
-        return new MethodTable($methodQuery, $this->getMoneyFacade());
+        return new MethodTable($methodQuery, $this->getMoneyFacade(), $this->getStoreFacade());
     }
 
     /**
