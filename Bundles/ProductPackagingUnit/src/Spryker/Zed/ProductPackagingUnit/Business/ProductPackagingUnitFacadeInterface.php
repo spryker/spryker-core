@@ -164,4 +164,19 @@ interface ProductPackagingUnitFacadeInterface
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
     public function expandCartChangeWithAmountLeadProduct(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
+
+    /**
+     * Specification:
+     * - Updates the product price for each item in cart according the specified amount.
+     * - When amount is not specified, price is not changed.
+     * - If amount is specified and differs to the default_amount it is calculated linearly based on the ratio of the
+     * customer provided amount and default amount.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function setCustomAmountPrice(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
 }

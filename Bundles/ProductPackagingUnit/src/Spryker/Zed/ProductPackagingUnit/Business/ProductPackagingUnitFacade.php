@@ -207,4 +207,20 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
             ->createCartChangeExpander()
             ->expandWithAmountLeadProduct($cartChangeTransfer);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function setCustomAmountPrice(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
+    {
+        return $this->getFactory()
+            ->createPriceChangeExpander()
+            ->setCustomAmountPrice($cartChangeTransfer);
+    }
 }

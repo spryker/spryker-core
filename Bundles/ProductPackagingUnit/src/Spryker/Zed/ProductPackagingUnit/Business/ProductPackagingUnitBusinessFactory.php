@@ -12,6 +12,8 @@ use Spryker\Zed\ProductPackagingUnit\Business\Model\CartChange\CartChangeExpande
 use Spryker\Zed\ProductPackagingUnit\Business\Model\CartChange\CartChangeExpanderInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Installer\ProductPackagingUnitTypeInstaller;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Installer\ProductPackagingUnitTypeInstallerInterface;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\PriceChange\PriceChangeExpander;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\PriceChange\PriceChangeExpanderInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReader;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitLeadProduct\ProductPackagingUnitLeadProductReader;
@@ -133,6 +135,16 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     public function createCartChangeExpander(): CartChangeExpanderInterface
     {
         return new CartChangeExpander(
+            $this->createProductPackagingUnitReader()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\PriceChange\PriceChangeExpanderInterface
+     */
+    public function createPriceChangeExpander(): PriceChangeExpanderInterface
+    {
+        return new PriceChangeExpander(
             $this->createProductPackagingUnitReader()
         );
     }

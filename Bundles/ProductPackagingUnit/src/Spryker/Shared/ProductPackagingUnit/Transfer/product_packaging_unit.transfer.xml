@@ -38,5 +38,6 @@
     <transfer name="Item">
         <property name="amountLeadProduct" type="ProductPackagingLeadProduct"/>
         <property name="amount" type="int"/>
+        <property name="productPackagingUnit" type="ProductPackagingUnit"/>
     </transfer>
 </transfers>

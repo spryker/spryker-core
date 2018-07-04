@@ -52,11 +52,41 @@ class CartChangeExpander implements CartChangeExpanderInterface
      */
     protected function expandItem(ItemTransfer $itemTransfer)
     {
+        $itemTransfer = $this->expandItemWithLeadProduct($itemTransfer);
+        $itemTransfer = $this->expandItemWithProductPackagingUnit($itemTransfer);
+
+        return $itemTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function expandItemWithLeadProduct(ItemTransfer $itemTransfer)
+    {
         $productPackagingLeadProductTransfer = $this->productPackagingUnitReader
             ->findProductPackagingLeadProductByProductPackagingSku($itemTransfer->getSku());
 
         if ($productPackagingLeadProductTransfer) {
             $itemTransfer->setAmountLeadProduct($productPackagingLeadProductTransfer);
+        }
+
+        return $itemTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function expandItemWithProductPackagingUnit(ItemTransfer $itemTransfer)
+    {
+        $productPackagingUnitTransfer = $this->productPackagingUnitReader
+            ->findProductPackagingUnitByProductId($itemTransfer->getId());
+
+        if ($productPackagingUnitTransfer) {
+            $itemTransfer->setProductPackagingUnit($productPackagingUnitTransfer);
         }
 
         return $itemTransfer;
