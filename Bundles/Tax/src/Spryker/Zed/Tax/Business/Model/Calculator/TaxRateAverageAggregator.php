@@ -50,8 +50,8 @@ class TaxRateAverageAggregator implements CalculatorInterface
     protected function calculateTaxAverageAggregationForItems(ArrayObject $items, $priceMode)
     {
         foreach ($items as $itemTransfer) {
-            $unitPriceToPayAggregationNetPrice = $this->getUnitNetPriceToPayAggregationNetPrice($itemTransfer, $priceMode);
-            $taxRateAverageAggregation = $this->calculateTaxRateAverage($itemTransfer, $unitPriceToPayAggregationNetPrice);
+            $netSumPriceToPayAggregation = $this->getNetSumPriceToPayAggregation($itemTransfer, $priceMode);
+            $taxRateAverageAggregation = $this->calculateTaxRateAverage($itemTransfer, $netSumPriceToPayAggregation);
 
             $itemTransfer->setTaxRateAverageAggregation($taxRateAverageAggregation);
         }
@@ -63,7 +63,7 @@ class TaxRateAverageAggregator implements CalculatorInterface
      *
      * @return int
      */
-    protected function getUnitNetPriceToPayAggregationNetPrice(
+    protected function getNetSumPriceToPayAggregation(
         ItemTransfer $itemTransfer,
         $priceMode = CalculationPriceMode::PRICE_MODE_GROSS
     ) {
@@ -74,23 +74,23 @@ class TaxRateAverageAggregator implements CalculatorInterface
 
         $taxAmount = $this->calculateTax($itemTransfer);
 
-        return $itemTransfer->getUnitPriceToPayAggregation() - $taxAmount;
+        return $itemTransfer->getSumPriceToPayAggregation() - $taxAmount;
     }
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param int $unitPriceToPayAggregationNetPrice
+     * @param int $netSumPriceToPayAggregation
      *
      * @return float
      */
-    protected function calculateTaxRateAverage(ItemTransfer $itemTransfer, $unitPriceToPayAggregationNetPrice)
+    protected function calculateTaxRateAverage(ItemTransfer $itemTransfer, $netSumPriceToPayAggregation)
     {
-        if (!$unitPriceToPayAggregationNetPrice) {
+        if (!$netSumPriceToPayAggregation) {
             return 0;
         }
 
         return round(
-            ($itemTransfer->getUnitPriceToPayAggregation() / $unitPriceToPayAggregationNetPrice - 1) * 100,
+            ($itemTransfer->getSumPriceToPayAggregation() / $netSumPriceToPayAggregation - 1) * 100,
             2
         );
     }
@@ -102,14 +102,15 @@ class TaxRateAverageAggregator implements CalculatorInterface
      */
     protected function calculateTax(ItemTransfer $itemTransfer)
     {
-        $unitPriceAfterDiscounts = $itemTransfer->getUnitPrice() - $itemTransfer->getUnitDiscountAmountAggregation();
-        $taxAmount = $this->priceCalculationHelper->getTaxValueFromPrice($unitPriceAfterDiscounts, $itemTransfer->getTaxRate(), false);
+        $sumPriceAfterDiscounts = $itemTransfer->getSumPrice() - $itemTransfer->getSumDiscountAmountAggregation();
+        $sumTaxAmount = $this->priceCalculationHelper->getTaxValueFromPrice($sumPriceAfterDiscounts, $itemTransfer->getTaxRate(), false);
 
         foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
-            $optionPriceAfterDiscounts = $productOptionTransfer->getUnitPrice() - $productOptionTransfer->getUnitDiscountAmountAggregation();
-            $optionTax = $this->priceCalculationHelper->getTaxValueFromPrice($optionPriceAfterDiscounts, $productOptionTransfer->getTaxRate(), false);
-            $taxAmount += $optionTax;
+            $sumOptionPriceAfterDiscounts = $productOptionTransfer->getSumPrice() - $productOptionTransfer->getSumDiscountAmountAggregation();
+            $sumOptionTax = $this->priceCalculationHelper->getTaxValueFromPrice($sumOptionPriceAfterDiscounts, $productOptionTransfer->getTaxRate(), false);
+            $sumTaxAmount += $sumOptionTax;
         }
-        return $taxAmount;
+
+        return $sumTaxAmount;
     }
 }
