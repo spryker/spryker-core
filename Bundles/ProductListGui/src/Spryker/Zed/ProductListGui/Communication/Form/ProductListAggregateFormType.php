@@ -74,7 +74,7 @@ class ProductListAggregateFormType extends AbstractType
             ->addProductListCategoryRelationSubForm($builder, $options)
             ->addProductListProductConcreteRelationSubForm($builder);
 
-        $builder->addEventListener(FormEvents::PRE_SUBMIT, [$this, 'onPreSubmit']);
+        $builder->addEventListener(FormEvents::POST_SUBMIT, [$this, 'onPreSubmit']);
     }
 
     /**
@@ -84,9 +84,6 @@ class ProductListAggregateFormType extends AbstractType
      */
     public function onPreSubmit(FormEvent $formEvent): void
     {
-        if (!$formEvent->getForm()->isValid()) {
-            return;
-        }
         $data = $formEvent->getData();
         $assignedProductIds = $data[static::FIELD_ASSIGNED_PRODUCT_IDS]
             ? preg_split('/,/', $data[static::FIELD_ASSIGNED_PRODUCT_IDS], null, PREG_SPLIT_NO_EMPTY)

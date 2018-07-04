@@ -117,6 +117,10 @@ class ProductListFormType extends AbstractType
                 'Whitelist' => SpyProductListTableMap::COL_TYPE_WHITELIST,
                 'Blacklist' => SpyProductListTableMap::COL_TYPE_BLACKLIST,
             ],
+            'constraints' => [
+                new Required(),
+                new NotBlank(),
+            ],
         ]);
 
         return $this;
