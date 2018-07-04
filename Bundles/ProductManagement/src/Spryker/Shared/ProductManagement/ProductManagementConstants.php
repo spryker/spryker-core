@@ -17,9 +17,4 @@ interface ProductManagementConstants
      * @api
      */
     const BASE_URL_YVES = 'PRODUCT_MANAGEMENT:BASE_URL_YVES';
-
-    /**
-     * @uses \Spryker\Shared\PriceProduct\PriceProductConstants::PRICE_DIMENSION_DEFAULT
-     */
-    public const PRICE_DIMENSION_DEFAULT = 'PRICE_DIMENSION_DEFAULT';
 }

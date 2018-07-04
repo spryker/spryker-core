@@ -104,18 +104,16 @@ class PriceProductStorageDependencyProvider extends AbstractDependencyProvider
     public function addPriceDimensionPlugins($container): Container
     {
         $container[static::PLUGIN_STORAGE_PRICE_DIMENSION] = function () {
-            return $this->getPriceDimensionPlugins();
+            return $this->getPriceDimensionStorageReaderPlugins();
         };
 
         return $container;
     }
 
     /**
-     * The plugins are executed during reading prices from Storage
-     *
      * @return \Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductStoragePriceDimensionPluginInterface[]
      */
-    public function getPriceDimensionPlugins(): array
+    public function getPriceDimensionStorageReaderPlugins(): array
     {
         return [];
     }
