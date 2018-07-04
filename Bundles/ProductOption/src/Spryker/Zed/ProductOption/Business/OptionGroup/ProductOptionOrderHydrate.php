@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\ProductOption\Business\OptionGroup;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionValueTableMap;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemOption;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 
@@ -49,17 +51,31 @@ class ProductOptionOrderHydrate implements ProductOptionOrderHydrateInterface
                 continue;
             }
 
-            // TODO: shouldn't this be replace with the other?
-            //$itemTransfer->setUnitProductOptionPriceAggregation($salesOrderItemEntity->getProductOptionPriceAggregation());
             $itemTransfer->setSumProductOptionPriceAggregation($salesOrderItemEntity->getProductOptionPriceAggregation());
 
+            // BC: Unit prices are populated for BC reasons only
+            $this->setItemTransferUnitPrices($itemTransfer, $salesOrderItemEntity);
+
             foreach ($salesOrderItemEntity->getOptions() as $orderItemOptionEntity) {
-                $productOptionsTransfer = $this->hydrateProductOptionTransfer($orderItemOptionEntity);
+                $productOptionsTransfer = $this->hydrateProductOptionTransfer($orderItemOptionEntity, $salesOrderItemEntity->getQuantity());
                 $itemTransfer->addProductOption($productOptionsTransfer);
             }
         }
 
         return $orderTransfer;
+    }
+
+    /**
+     * @deprecated Derives unit prices using sum prices which is accurate for quantity = 1 only
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItemEntity
+     *
+     * @return void
+     */
+    protected function setItemTransferUnitPrices(ItemTransfer $itemTransfer, SpySalesOrderItem $salesOrderItemEntity)
+    {
+        $itemTransfer->setUnitProductOptionPriceAggregation($salesOrderItemEntity->getProductOptionPriceAggregation() / $salesOrderItemEntity->getQuantity());
     }
 
     /**
@@ -81,13 +97,14 @@ class ProductOptionOrderHydrate implements ProductOptionOrderHydrateInterface
 
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItemOption $orderItemOptionEntity
+     * @param int $orderItemQuantity
      *
      * @return \Generated\Shared\Transfer\ProductOptionTransfer
      */
-    protected function hydrateProductOptionTransfer(SpySalesOrderItemOption $orderItemOptionEntity)
+    protected function hydrateProductOptionTransfer(SpySalesOrderItemOption $orderItemOptionEntity, $orderItemQuantity)
     {
         $productOptionsTransfer = new ProductOptionTransfer();
-        $productOptionsTransfer->setQuantity(1);
+        $productOptionsTransfer->setQuantity($orderItemQuantity);
 
         $productOptionsTransfer->setSumPrice($orderItemOptionEntity->getPrice());
         $productOptionsTransfer->setSumGrossPrice($orderItemOptionEntity->getGrossPrice());
@@ -96,12 +113,31 @@ class ProductOptionOrderHydrate implements ProductOptionOrderHydrateInterface
         $productOptionsTransfer->setSumTaxAmount($orderItemOptionEntity->getTaxAmount());
         $productOptionsTransfer->fromArray($orderItemOptionEntity->toArray(), true);
 
+        // BC: Unit prices are populated for BC reasons only
+        $this->setProductOptionTransferUnitPrices($productOptionsTransfer);
+
         $idProductOptionsValue = $this->getIdProductOptionValue($orderItemOptionEntity);
         if ($idProductOptionsValue) {
             $productOptionsTransfer->setIdProductOptionValue($idProductOptionsValue);
         }
 
         return $productOptionsTransfer;
+    }
+
+    /**
+     * @deprecated Derives unit prices using sum prices which is accurate for quantity = 1 only
+     *
+     * @param \Generated\Shared\Transfer\ProductOptionTransfer $productOptionTransfer
+     *
+     * @return void
+     */
+    protected function setProductOptionTransferUnitPrices(ProductOptionTransfer $productOptionTransfer)
+    {
+        $productOptionTransfer->setUnitPrice((int)round($productOptionTransfer->getSumPrice() / $productOptionTransfer->getQuantity()));
+        $productOptionTransfer->setUnitGrossPrice((int)round($productOptionTransfer->getSumGrossPrice() / $productOptionTransfer->getQuantity()));
+        $productOptionTransfer->setUnitNetPrice((int)round($productOptionTransfer->getSumNetPrice() / $productOptionTransfer->getQuantity()));
+        $productOptionTransfer->setUnitDiscountAmountAggregation((int)round($productOptionTransfer->getSumDiscountAmountAggregation() / $productOptionTransfer->getQuantity()));
+        $productOptionTransfer->setUnitTaxAmount((int)round($productOptionTransfer->getSumTaxAmount() / $productOptionTransfer->getQuantity()));
     }
 
     /**
