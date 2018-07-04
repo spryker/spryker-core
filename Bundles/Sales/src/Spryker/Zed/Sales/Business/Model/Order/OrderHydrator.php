@@ -216,7 +216,6 @@ class OrderHydrator implements OrderHydratorInterface
         $itemTransfer->fromArray($orderItemEntity->toArray(), true);
         $itemTransfer->setProcess($orderItemEntity->getProcess()->getName());
 
-        // TODO: not 100% BC
         $itemTransfer->setQuantity($orderItemEntity->getQuantity());
         $itemTransfer->setSumGrossPrice($orderItemEntity->getGrossPrice());
         $itemTransfer->setSumNetPrice($orderItemEntity->getNetPrice());
@@ -230,10 +229,34 @@ class OrderHydrator implements OrderHydratorInterface
         $itemTransfer->setSumTaxAmountFullAggregation($orderItemEntity->getTaxAmountFullAggregation());
         $itemTransfer->setSumPriceToPayAggregation($orderItemEntity->getPriceToPayAggregation());
 
+        // BC: Unit prices are populated for BC reasons only
+        $this->hydrateOrderItemTransferUnitPrices($itemTransfer);
+
         $this->hydrateStateHistory($orderItemEntity, $itemTransfer);
         $this->hydrateCurrentSalesOrderItemState($orderItemEntity, $itemTransfer);
 
         return $itemTransfer;
+    }
+
+    /**
+     * @deprecated Uses derived unit price which is accurate for quantity = 1 only
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return void
+     */
+    protected function hydrateOrderItemTransferUnitPrices(ItemTransfer $itemTransfer)
+    {
+        $itemTransfer->setUnitGrossPrice((int)round($itemTransfer->getSumGrossPrice() / $itemTransfer->getQuantity()));
+        $itemTransfer->setUnitNetPrice((int)round($itemTransfer->getSumNetPrice() / $itemTransfer->getQuantity()));
+        $itemTransfer->setUnitPrice((int)round($itemTransfer->getSumPrice() / $itemTransfer->getQuantity()));
+        $itemTransfer->setUnitSubtotalAggregation((int)round($itemTransfer->getSumSubtotalAggregation() / $itemTransfer->getQuantity()));
+        $itemTransfer->setUnitDiscountAmountAggregation((int)round($itemTransfer->getSumDiscountAmountAggregation() / $itemTransfer->getQuantity()));
+        $itemTransfer->setUnitDiscountAmountFullAggregation((int)round($itemTransfer->getSumDiscountAmountFullAggregation() / $itemTransfer->getQuantity()));
+        $itemTransfer->setUnitExpensePriceAggregation((int)round($itemTransfer->getSumExpensePriceAggregation() / $itemTransfer->getQuantity()));
+        $itemTransfer->setUnitTaxAmount((int)round($itemTransfer->getSumTaxAmount() / $itemTransfer->getQuantity()));
+        $itemTransfer->setUnitTaxAmountFullAggregation((int)round($itemTransfer->getSumTaxAmountFullAggregation() / $itemTransfer->getQuantity()));
+        $itemTransfer->setUnitPriceToPayAggregation((int)round($itemTransfer->getSumPriceToPayAggregation() / $itemTransfer->getQuantity()));
     }
 
     /**
@@ -297,7 +320,6 @@ class OrderHydrator implements OrderHydratorInterface
             $expenseTransfer = new ExpenseTransfer();
             $expenseTransfer->fromArray($expenseEntity->toArray(), true);
 
-            // TODO: not 100% BC
             $expenseTransfer->setQuantity(1);
             $expenseTransfer->setSumGrossPrice($expenseEntity->getGrossPrice());
             $expenseTransfer->setSumNetPrice($expenseEntity->getNetPrice());
@@ -305,8 +327,27 @@ class OrderHydrator implements OrderHydratorInterface
             $expenseTransfer->setSumPriceToPayAggregation($expenseEntity->getPriceToPayAggregation());
             $expenseTransfer->setSumTaxAmount($expenseEntity->getTaxAmount());
 
+            // BC: Unit prices are populated for BC reasons only
+            $this->hydrateExpenseTransferUnitPrices($expenseTransfer);
+
             $orderTransfer->addExpense($expenseTransfer);
         }
+    }
+
+    /**
+     * @deprecated Uses derived unit price which is accurate for quantity = 1 only
+     *
+     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
+     *
+     * @return void
+     */
+    protected function hydrateExpenseTransferUnitPrices(ExpenseTransfer $expenseTransfer)
+    {
+        $expenseTransfer->setUnitGrossPrice((int)round($expenseTransfer->getSumGrossPrice() / $expenseTransfer->getQuantity()));
+        $expenseTransfer->setUnitNetPrice((int)round($expenseTransfer->getSumNetPrice() / $expenseTransfer->getQuantity()));
+        $expenseTransfer->setUnitPrice((int)round($expenseTransfer->getSumPrice() / $expenseTransfer->getQuantity()));
+        $expenseTransfer->setUnitPriceToPayAggregation((int)round($expenseTransfer->getSumPriceToPayAggregation() / $expenseTransfer->getQuantity()));
+        $expenseTransfer->setUnitTaxAmount((int)round($expenseTransfer->getSumTaxAmount() / $expenseTransfer->getQuantity()));
     }
 
     /**
