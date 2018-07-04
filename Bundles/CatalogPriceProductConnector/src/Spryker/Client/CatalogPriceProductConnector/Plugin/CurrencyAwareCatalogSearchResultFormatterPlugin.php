@@ -39,7 +39,7 @@ class CurrencyAwareCatalogSearchResultFormatterPlugin extends AbstractElasticsea
     {
         $result = $this->rawCatalogSearchResultFormatterPlugin->formatResult($searchResult, $requestParameters);
 
-        if (!\defined('\Spryker\Shared\PriceProduct\PriceProductConstants::PRICE_DIMENSION_DEFAULT')) {
+        if (!$this->isPriceProductDimensionEnabled()) {
             return $this->formatSearchResultWithoutPriceDimensions($result);
         }
 
@@ -72,6 +72,14 @@ class CurrencyAwareCatalogSearchResultFormatterPlugin extends AbstractElasticsea
         }
 
         return $result;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isPriceProductDimensionEnabled(): bool
+    {
+        return \defined('\Spryker\Shared\PriceProduct\PriceProductConstants::PRICE_DIMENSION_DEFAULT');
     }
 
     /**

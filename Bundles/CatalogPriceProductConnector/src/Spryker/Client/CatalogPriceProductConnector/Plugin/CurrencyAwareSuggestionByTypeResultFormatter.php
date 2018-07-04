@@ -43,7 +43,7 @@ class CurrencyAwareSuggestionByTypeResultFormatter extends AbstractElasticsearch
             return $results;
         }
 
-        if (!\defined('\Spryker\Shared\PriceProduct\PriceProductConstants::PRICE_DIMENSION_DEFAULT')) {
+        if (!$this->isPriceProductDimensionEnabled()) {
             return $this->formatSearchResultWithoutPriceDimensions($results);
         }
 
@@ -76,6 +76,14 @@ class CurrencyAwareSuggestionByTypeResultFormatter extends AbstractElasticsearch
         }
 
         return $result;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isPriceProductDimensionEnabled(): bool
+    {
+        return \defined('\Spryker\Shared\PriceProduct\PriceProductConstants::PRICE_DIMENSION_DEFAULT');
     }
 
     /**
