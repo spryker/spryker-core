@@ -73,6 +73,7 @@ class DiscountOrderHydrate implements DiscountOrderHydrateInterface
         return $this->discountQueryContainer
             ->querySalesDiscount()
             ->leftJoinWithExpense()
+            ->leftJoinWithOrderItem()
             ->joinWithOrder()
             ->filterByFkSalesOrder($idSalesOrder)
             ->find();
@@ -180,13 +181,27 @@ class DiscountOrderHydrate implements DiscountOrderHydrateInterface
         $calculatedDiscountTransfer = new CalculatedDiscountTransfer();
         $calculatedDiscountTransfer->setIdDiscount($salesOrderDiscountEntity->getIdSalesDiscount());
         $calculatedDiscountTransfer->fromArray($salesOrderDiscountEntity->toArray(), true);
-        $calculatedDiscountTransfer->setUnitAmount($salesOrderDiscountEntity->getAmount());
-        $calculatedDiscountTransfer->setQuantity(1);
+        $calculatedDiscountTransfer->setSumAmount($salesOrderDiscountEntity->getAmount());
+        $calculatedDiscountTransfer->setQuantity($this->getCalculatedDiscountQuantity($salesOrderDiscountEntity));
 
         foreach ($salesOrderDiscountEntity->getDiscountCodes() as $discountCodeEntity) {
             $calculatedDiscountTransfer->setVoucherCode($discountCodeEntity->getCode());
         }
 
         return $calculatedDiscountTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesDiscount $salesOrderDiscountEntity
+     *
+     * @return int
+     */
+    protected function getCalculatedDiscountQuantity(SpySalesDiscount $salesOrderDiscountEntity)
+    {
+        if (!$salesOrderDiscountEntity->getOrderItem()) {
+            return 1;
+        }
+
+        return $salesOrderDiscountEntity->getOrderItem()->getQuantity();
     }
 }

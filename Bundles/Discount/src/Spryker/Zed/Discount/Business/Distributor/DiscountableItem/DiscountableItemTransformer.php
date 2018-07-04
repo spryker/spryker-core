@@ -38,7 +38,7 @@ class DiscountableItemTransformer implements DiscountableItemTransformerInterfac
 
             $distributedDiscountTransfer = clone $calculatedDiscountTransfer;
             $distributedDiscountTransfer->setIdDiscount($discountTransfer->getIdDiscount());
-            $distributedDiscountTransfer->setUnitAmount($itemDiscountAmountRounded);
+            $distributedDiscountTransfer->setSumAmount($itemDiscountAmountRounded);
             $distributedDiscountTransfer->setQuantity(1);
 
             $discountableItemTransfer->getOriginalItemCalculatedDiscounts()->append($distributedDiscountTransfer);

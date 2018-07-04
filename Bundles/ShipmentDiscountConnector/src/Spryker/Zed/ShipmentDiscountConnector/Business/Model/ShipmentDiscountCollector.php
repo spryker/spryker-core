@@ -65,7 +65,6 @@ class ShipmentDiscountCollector implements ShipmentDiscountCollectorInterface
         $discountableItemTransfer->fromArray($expenseTransfer->toArray(), true);
         $price = $this->getPrice($expenseTransfer, $priceMode);
         $discountableItemTransfer->setUnitGrossPrice($price);
-        // TODO: why unit instead of sum?
         $discountableItemTransfer->setUnitPrice($price);
         $discountableItemTransfer->setOriginalItemCalculatedDiscounts($expenseTransfer->getCalculatedDiscounts());
 
@@ -81,9 +80,9 @@ class ShipmentDiscountCollector implements ShipmentDiscountCollectorInterface
     private function getPrice(ExpenseTransfer $expenseTransfer, $priceMode)
     {
         if ($priceMode === 'NET_MODE') {
-            return $expenseTransfer->getSumNetPrice();
+            return $expenseTransfer->getUnitNetPrice();
         } else {
-            return $expenseTransfer->getSumGrossPrice();
+            return $expenseTransfer->getUnitGrossPrice();
         }
     }
 }

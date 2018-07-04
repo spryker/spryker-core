@@ -51,6 +51,11 @@ class OrderItemTransformer implements OrderItemTransformerInterface
         $transformedProductOptionTransfer = new ProductOptionTransfer();
         $transformedProductOptionTransfer->fromArray($productOptionTransfer->toArray(), true);
         $transformedProductOptionTransfer->setQuantity(1);
+        $transformedProductOptionTransfer->setSumPrice($transformedProductOptionTransfer->getUnitPrice());
+        $transformedProductOptionTransfer->setSumGrossPrice($transformedProductOptionTransfer->getUnitGrossPrice());
+        $transformedProductOptionTransfer->setSumNetPrice($transformedProductOptionTransfer->getUnitNetPrice());
+        $transformedProductOptionTransfer->setSumDiscountAmountAggregation($transformedProductOptionTransfer->getUnitDiscountAmountAggregation());
+        $transformedProductOptionTransfer->setSumTaxAmount($transformedProductOptionTransfer->getUnitTaxAmount());
         $transformedProductOptionTransfer->setIdProductOptionValue(null);
 
         return $transformedProductOptionTransfer;
