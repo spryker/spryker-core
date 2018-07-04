@@ -22,7 +22,7 @@ class AvailabilityStorageConfig extends AbstractBundleConfig
     /**
      * @return string|null
      */
-    public function getSynchronizationPoolName()
+    public function getSynchronizationPoolName(): ?string
     {
         return null;
     }
