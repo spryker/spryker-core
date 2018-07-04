@@ -11,17 +11,17 @@ use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Spryker\Zed\PriceProduct\Dependency\Plugin\PriceDimensionQueryCriteriaPluginInterface;
+use Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionQueryCriteriaPluginInterface;
 
 class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryExpanderInterface
 {
     /**
-     * @var \Spryker\Zed\PriceProduct\Dependency\Plugin\PriceDimensionQueryCriteriaPluginInterface[]
+     * @var \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionQueryCriteriaPluginInterface[]
      */
     protected $priceProductDimensionQueryExpanders = [];
 
     /**
-     * @param \Spryker\Zed\PriceProduct\Dependency\Plugin\PriceDimensionQueryCriteriaPluginInterface[] $priceProductDimensionQueryExpanders
+     * @param \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionQueryCriteriaPluginInterface[] $priceProductDimensionQueryExpanders
      */
     public function __construct(array $priceProductDimensionQueryExpanders)
     {
@@ -81,7 +81,7 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
     /**
      * @param string $priceDimensionName
      *
-     * @return \Spryker\Zed\PriceProduct\Dependency\Plugin\PriceDimensionQueryCriteriaPluginInterface|null
+     * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionQueryCriteriaPluginInterface|null
      */
     protected function findPriceDimensionCriteriaPluginByName(string $priceDimensionName): ?PriceDimensionQueryCriteriaPluginInterface
     {
@@ -138,7 +138,7 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
     /**
      * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery $priceProductStoreQuery
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-     * @param \Spryker\Zed\PriceProduct\Dependency\Plugin\PriceDimensionQueryCriteriaPluginInterface $priceProductDimensionQueryExpanderPlugin
+     * @param \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionQueryCriteriaPluginInterface $priceProductDimensionQueryExpanderPlugin
      * @param null|string $joinType
      *
      * @return \Generated\Shared\Transfer\QueryCriteriaTransfer|null

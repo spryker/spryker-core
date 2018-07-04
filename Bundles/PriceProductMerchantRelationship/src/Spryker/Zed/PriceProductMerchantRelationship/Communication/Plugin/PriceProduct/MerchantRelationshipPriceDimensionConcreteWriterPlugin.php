@@ -10,7 +10,7 @@ namespace Spryker\Zed\PriceProductMerchantRelationship\Communication\Plugin\Pric
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Shared\PriceProductMerchantRelationship\PriceProductMerchantRelationshipConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\PriceProduct\Dependency\Plugin\PriceDimensionConcreteSaverPluginInterface;
+use Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionConcreteSaverPluginInterface;
 
 /**
  * @method \Spryker\Zed\PriceProductMerchantRelationship\Business\PriceProductMerchantRelationshipFacadeInterface getFacade()

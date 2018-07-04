@@ -63,12 +63,12 @@ class Writer implements WriterInterface
     protected $priceProductDefaultWriter;
 
     /**
-     * @var array|\Spryker\Zed\PriceProduct\Dependency\Plugin\PriceDimensionAbstractSaverPluginInterface[]
+     * @var array|\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionAbstractSaverPluginInterface[]
      */
     protected $priceDimensionAbstractSaverPlugins;
 
     /**
-     * @var array|\Spryker\Zed\PriceProduct\Dependency\Plugin\PriceDimensionConcreteSaverPluginInterface[]
+     * @var array|\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionConcreteSaverPluginInterface[]
      */
     protected $priceDimensionConcreteSaverPlugins;
 

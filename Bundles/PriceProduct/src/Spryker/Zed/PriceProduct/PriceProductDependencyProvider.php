@@ -192,7 +192,7 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * The plugins in this stack will provide additional criteria to main price product query.
      *
-     * @return \Spryker\Zed\PriceProduct\Dependency\Plugin\PriceDimensionQueryCriteriaPluginInterface[]
+     * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionQueryCriteriaPluginInterface[]
      */
     protected function getPriceDimensionQueryCriteriaPlugins(): array
     {
@@ -204,7 +204,7 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * The plugins are executed when saving abstract product price
      *
-     * @return \Spryker\Zed\PriceProduct\Dependency\Plugin\PriceDimensionAbstractSaverPluginInterface[]
+     * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionAbstractSaverPluginInterface[]
      */
     protected function getPriceDimensionAbstractSaverPlugins(): array
     {
@@ -214,7 +214,7 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * The plugins are executed when saving concrete product price
      *
-     * @return \Spryker\Zed\PriceProduct\Dependency\Plugin\PriceDimensionConcreteSaverPluginInterface[]
+     * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionConcreteSaverPluginInterface[]
      */
     protected function getPriceDimensionConcreteSaverPlugins(): array
     {
