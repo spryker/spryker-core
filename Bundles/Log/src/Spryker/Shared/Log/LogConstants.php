@@ -83,7 +83,7 @@ interface LogConstants
      *
      * @api
      */
-    const LOG_FOLDER_PATH_INSTALLATION = 'LOG_FOLDER_PATH_INSTALLATION';
+    public const LOG_FOLDER_PATH_INSTALLATION = 'LOG:LOG_FOLDER_PATH_INSTALLATION';
 
     /**
      * Specification:
