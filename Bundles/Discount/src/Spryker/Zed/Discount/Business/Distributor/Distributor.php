@@ -137,7 +137,6 @@ class Distributor implements DistributorInterface
     {
         $totalGrossAmount = 0;
         foreach ($collectedDiscountTransfer->getDiscountableItems() as $discountableItemTransfer) {
-            // TODO: getUnitPrice method seems not to be 100% BC => we need $price field or $sumPrice field
             $totalGrossAmount += $discountableItemTransfer->getUnitPrice() *
                 $this->getDiscountableItemQuantity($discountableItemTransfer);
         }
