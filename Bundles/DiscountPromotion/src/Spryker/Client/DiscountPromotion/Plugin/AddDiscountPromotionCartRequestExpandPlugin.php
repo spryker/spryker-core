@@ -27,8 +27,10 @@ class AddDiscountPromotionCartRequestExpandPlugin implements CartChangeRequestEx
      */
     public function expand(CartChangeTransfer $cartChangeTransfer, array $params = []): CartChangeTransfer
     {
-        $idDiscountPromotion = $params[static::URL_PARAM_ID_DISCOUNT_PROMOTION] ?? null;
-        if (is_numeric($idDiscountPromotion) && $idDiscountPromotion !== 0) {
+        $idDiscountPromotion = isset($params[static::URL_PARAM_ID_DISCOUNT_PROMOTION])
+            ? (int)$params[static::URL_PARAM_ID_DISCOUNT_PROMOTION]
+            : null;
+        if ($idDiscountPromotion) {
             foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
                 $itemTransfer->setIdDiscountPromotion((int)$idDiscountPromotion);
             }
