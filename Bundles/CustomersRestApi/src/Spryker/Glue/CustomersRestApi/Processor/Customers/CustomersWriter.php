@@ -70,7 +70,7 @@ class CustomersWriter implements CustomersWriterInterface
                     if ($error->getMessage() === CustomersWriter::ERROR_MESSAGE_CUSTOMER_EMAIL_ALREADY_USED) {
                         $restErrorTransfer = (new RestErrorMessageTransfer())
                             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_ALREADY_EXISTS)
-                            ->setStatus(Response::HTTP_BAD_REQUEST)
+                            ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
                             ->setDetail(CustomersRestApiConfig::RESPONSE_MESSAGE_CUSTOMER_ALREADY_EXISTS);
                         return $response->addError($restErrorTransfer);
                     }
