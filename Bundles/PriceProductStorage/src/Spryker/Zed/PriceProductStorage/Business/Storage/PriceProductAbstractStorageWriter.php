@@ -7,8 +7,11 @@
 
 namespace Spryker\Zed\PriceProductStorage\Business\Storage;
 
+use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductStorageTransfer;
 use Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductAbstractStorage;
+use Spryker\Shared\PriceProductStorage\PriceProductStorageConstants;
 use Spryker\Zed\PriceProductStorage\Dependency\Facade\PriceProductStorageToPriceProductFacadeInterface;
 use Spryker\Zed\PriceProductStorage\Dependency\Facade\PriceProductStorageToStoreFacadeInterface;
 use Spryker\Zed\PriceProductStorage\Persistence\PriceProductStorageQueryContainerInterface;
@@ -213,8 +216,9 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
     {
         $priceGroups = [];
         $priceGroupsCollection = [];
+        $priceProductCriteria = $this->getPriceCriteriaTransfer();
         foreach ($productAbstractIds as $idProductAbstract) {
-            $productAbstractPriceProductTransfers = $this->priceProductFacade->findProductAbstractPrices($idProductAbstract);
+            $productAbstractPriceProductTransfers = $this->priceProductFacade->findProductAbstractPrices($idProductAbstract, $priceProductCriteria);
             foreach ($productAbstractPriceProductTransfers as $priceProductTransfer) {
                 $storeName = $this->getStoreNameById($priceProductTransfer->getMoneyValue()->getFkStore());
                 $priceGroups[$idProductAbstract][$storeName][] = $priceProductTransfer;
@@ -228,6 +232,18 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
         }
 
         return $priceGroupsCollection;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\PriceProductCriteriaTransfer
+     */
+    protected function getPriceCriteriaTransfer(): PriceProductCriteriaTransfer
+    {
+        return (new PriceProductCriteriaTransfer())
+            ->setPriceDimension(
+                (new PriceProductDimensionTransfer())
+                    ->setType(PriceProductStorageConstants::PRICE_DIMENSION_DEFAULT)
+            );
     }
 
     /**

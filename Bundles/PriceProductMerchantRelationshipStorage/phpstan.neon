@@ -1,0 +1,6 @@
+parameters:
+    ignoreErrors:
+    - '#Call to an undefined method .+Criteria::.+\(\).#'
+    - '#Method .+PriceProductMerchantRelationshipStorageRepository::queryProducts\(\) should return Orm\\Zed\\PriceProduct\\Persistence\\SpyPriceProductStoreQuery but returns .+#'
+    - '#Method .+PriceProductMerchantRelationshipStorageRepository::queryProductsAbstract\(\) should return Orm\\Zed\\PriceProduct\\Persistence\\SpyPriceProductStoreQuery but returns .+#'
+    - '#Method .+PriceProductMerchantRelationshipStorageRepository::queryPriceProductStoreByCompanyBusinessUnitProducts\(\) should return Orm\\Zed\\PriceProduct\\Persistence\\SpyPriceProductStoreQuery but returns Propel\\Runtime\\ActiveQuery\\Criteria#'
