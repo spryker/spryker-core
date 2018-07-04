@@ -13,7 +13,7 @@ class CmsPageSearchConfigMock extends CmsPageSearchConfig
     /**
      * @return bool
      */
-    public function isSendingToQueue()
+    public function isSendingToQueue(): bool
     {
         return false;
     }

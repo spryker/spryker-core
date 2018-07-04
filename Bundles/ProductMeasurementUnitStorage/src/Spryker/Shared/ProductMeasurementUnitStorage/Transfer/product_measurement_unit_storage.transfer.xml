@@ -7,6 +7,7 @@
         <property name="idProductMeasurementUnit" type="int" />
         <property name="name" type="string" />
         <property name="code" type="string" />
+        <property name="key" type="string" />
         <property name="defaultPrecision" type="int" />
     </transfer>
 
@@ -27,6 +28,7 @@
     <transfer name="ProductConcreteMeasurementUnitStorage">
         <property name="baseUnit" type="ProductConcreteMeasurementBaseUnit" />
         <property name="salesUnits" type="ProductConcreteMeasurementSalesUnit[]" singular="salesUnit" />
+        <property name="key" type="string" />
     </transfer>
 
 </transfers>

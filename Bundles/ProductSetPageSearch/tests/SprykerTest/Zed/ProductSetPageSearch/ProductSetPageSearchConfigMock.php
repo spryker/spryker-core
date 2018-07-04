@@ -13,7 +13,7 @@ class ProductSetPageSearchConfigMock extends ProductSetPageSearchConfig
     /**
      * @return bool
      */
-    public function isSendingToQueue()
+    public function isSendingToQueue(): bool
     {
         return false;
     }

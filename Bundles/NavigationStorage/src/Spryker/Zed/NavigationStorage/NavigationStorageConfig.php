@@ -14,7 +14,7 @@ class NavigationStorageConfig extends AbstractBundleConfig
     /**
      * @return bool
      */
-    public function isSendingToQueue()
+    public function isSendingToQueue(): bool
     {
         return true;
     }
@@ -22,7 +22,7 @@ class NavigationStorageConfig extends AbstractBundleConfig
     /**
      * @return string|null
      */
-    public function getNavigationSynchronizationPoolName()
+    public function getNavigationSynchronizationPoolName(): ?string
     {
         return null;
     }

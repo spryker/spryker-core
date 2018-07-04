@@ -14,7 +14,7 @@ class ProductQuantityStorageConfig extends AbstractBundleConfig
     /**
      * @return null|string
      */
-    public function getProductQuantitySynchronizationPoolName()
+    public function getProductQuantitySynchronizationPoolName(): ?string
     {
         return null;
     }

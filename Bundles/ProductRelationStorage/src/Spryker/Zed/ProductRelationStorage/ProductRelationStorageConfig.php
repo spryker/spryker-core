@@ -14,7 +14,7 @@ class ProductRelationStorageConfig extends AbstractBundleConfig
     /**
      * @return bool
      */
-    public function isSendingToQueue()
+    public function isSendingToQueue(): bool
     {
         return true;
     }
@@ -22,7 +22,7 @@ class ProductRelationStorageConfig extends AbstractBundleConfig
     /**
      * @return null|string
      */
-    public function getProductAbstractRelationSynchronizationPoolName()
+    public function getProductAbstractRelationSynchronizationPoolName(): ?string
     {
         return null;
     }

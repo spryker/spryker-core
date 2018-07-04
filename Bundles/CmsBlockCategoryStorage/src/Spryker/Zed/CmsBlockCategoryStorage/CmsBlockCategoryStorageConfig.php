@@ -14,7 +14,7 @@ class CmsBlockCategoryStorageConfig extends AbstractBundleConfig
     /**
      * @return bool
      */
-    public function isSendingToQueue()
+    public function isSendingToQueue(): bool
     {
         return true;
     }
@@ -22,7 +22,7 @@ class CmsBlockCategoryStorageConfig extends AbstractBundleConfig
     /**
      * @return string|null
      */
-    public function getCmsBlockCategorySynchronizationPoolName()
+    public function getCmsBlockCategorySynchronizationPoolName(): ?string
     {
         return null;
     }

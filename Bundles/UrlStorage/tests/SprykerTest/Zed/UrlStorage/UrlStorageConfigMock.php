@@ -13,7 +13,7 @@ class UrlStorageConfigMock extends UrlStorageConfig
     /**
      * @return bool
      */
-    public function isSendingToQueue()
+    public function isSendingToQueue(): bool
     {
         return false;
     }

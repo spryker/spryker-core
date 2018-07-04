@@ -14,7 +14,7 @@ class CategoryPageSearchConfig extends AbstractBundleConfig
     /**
      * @return bool
      */
-    public function isSendingToQueue()
+    public function isSendingToQueue(): bool
     {
         return true;
     }
@@ -22,7 +22,7 @@ class CategoryPageSearchConfig extends AbstractBundleConfig
     /**
      * @return null|string
      */
-    public function getCategoryPageSynchronizationPoolName()
+    public function getCategoryPageSynchronizationPoolName(): ?string
     {
         return null;
     }

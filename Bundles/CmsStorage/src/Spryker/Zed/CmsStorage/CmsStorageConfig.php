@@ -14,7 +14,7 @@ class CmsStorageConfig extends AbstractBundleConfig
     /**
      * @return bool
      */
-    public function isSendingToQueue()
+    public function isSendingToQueue(): bool
     {
         return true;
     }
@@ -22,7 +22,7 @@ class CmsStorageConfig extends AbstractBundleConfig
     /**
      * @return string|null
      */
-    public function getCmsPageSynchronizationPoolName()
+    public function getCmsPageSynchronizationPoolName(): ?string
     {
         return null;
     }

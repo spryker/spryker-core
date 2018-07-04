@@ -14,7 +14,7 @@ class ProductCategoryFilterStorageConfig extends AbstractBundleConfig
     /**
      * @return bool
      */
-    public function isSendingToQueue()
+    public function isSendingToQueue(): bool
     {
         return true;
     }
@@ -22,7 +22,7 @@ class ProductCategoryFilterStorageConfig extends AbstractBundleConfig
     /**
      * @return null|string
      */
-    public function getProductCategoryFilterSynchronizationPoolName()
+    public function getProductCategoryFilterSynchronizationPoolName(): ?string
     {
         return null;
     }

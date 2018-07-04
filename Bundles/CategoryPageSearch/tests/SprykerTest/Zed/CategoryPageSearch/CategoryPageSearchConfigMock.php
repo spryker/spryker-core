@@ -13,7 +13,7 @@ class CategoryPageSearchConfigMock extends CategoryPageSearchConfig
     /**
      * @return bool
      */
-    public function isSendingToQueue()
+    public function isSendingToQueue(): bool
     {
         return false;
     }

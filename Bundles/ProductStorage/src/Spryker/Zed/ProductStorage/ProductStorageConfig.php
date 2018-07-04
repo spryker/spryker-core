@@ -14,7 +14,7 @@ class ProductStorageConfig extends AbstractBundleConfig
     /**
      * @return bool
      */
-    public function isSendingToQueue()
+    public function isSendingToQueue(): bool
     {
         return true;
     }
@@ -22,7 +22,7 @@ class ProductStorageConfig extends AbstractBundleConfig
     /**
      * @return null|string
      */
-    public function getProductConcreteSynchronizationPoolName()
+    public function getProductConcreteSynchronizationPoolName(): ?string
     {
        return null;
     }
@@ -30,7 +30,7 @@ class ProductStorageConfig extends AbstractBundleConfig
     /**
      * @return null|string
      */
-    public function getProductAbstractSynchronizationPoolName()
+    public function getProductAbstractSynchronizationPoolName(): ?string
     {
         return null;
     }

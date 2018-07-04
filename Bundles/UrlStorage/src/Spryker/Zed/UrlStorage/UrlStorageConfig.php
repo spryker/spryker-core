@@ -14,7 +14,7 @@ class UrlStorageConfig extends AbstractBundleConfig
     /**
      * @return bool
      */
-    public function isSendingToQueue()
+    public function isSendingToQueue(): bool
     {
         return true;
     }
@@ -22,7 +22,7 @@ class UrlStorageConfig extends AbstractBundleConfig
     /**
      * @return null|string
      */
-    public function getUrlSynchronizationPoolName()
+    public function getUrlSynchronizationPoolName(): ?string
     {
         return null;
     }
@@ -30,7 +30,7 @@ class UrlStorageConfig extends AbstractBundleConfig
     /**
      * @return null|string
      */
-    public function getUrlRedirectSynchronizationPoolName()
+    public function getUrlRedirectSynchronizationPoolName(): ?string
     {
         return null;
     }

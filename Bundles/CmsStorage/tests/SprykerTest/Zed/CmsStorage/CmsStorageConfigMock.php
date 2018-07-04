@@ -13,7 +13,7 @@ class CmsStorageConfigMock extends CmsStorageConfig
     /**
      * @return bool
      */
-    public function isSendingToQueue()
+    public function isSendingToQueue(): bool
     {
         return false;
     }

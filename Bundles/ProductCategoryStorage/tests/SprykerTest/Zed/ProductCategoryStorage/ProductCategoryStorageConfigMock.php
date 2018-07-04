@@ -13,7 +13,7 @@ class ProductCategoryStorageConfigMock extends ProductCategoryStorageConfig
     /**
      * @return bool
      */
-    public function isSendingToQueue()
+    public function isSendingToQueue(): bool
     {
         return false;
     }

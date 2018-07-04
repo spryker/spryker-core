@@ -14,7 +14,7 @@ class ProductSearchConfigStorageConfig extends AbstractBundleConfig
     /**
      * @return bool
      */
-    public function isSendingToQueue()
+    public function isSendingToQueue(): bool
     {
         return true;
     }
@@ -22,7 +22,7 @@ class ProductSearchConfigStorageConfig extends AbstractBundleConfig
     /**
      * @return null|string
      */
-    public function getProductSearchConfigSynchronizationPoolName()
+    public function getProductSearchConfigSynchronizationPoolName(): ?string
     {
         return null;
     }
