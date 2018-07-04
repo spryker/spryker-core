@@ -32,7 +32,7 @@ class AddDiscountPromotionPersistentCartRequestExpanderPlugin implements Persist
             : null;
         if ($idDiscountPromotion) {
             foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-                $itemTransfer->setIdDiscountPromotion((int)$idDiscountPromotion);
+                $itemTransfer->setIdDiscountPromotion($idDiscountPromotion);
             }
         }
 
