@@ -24,10 +24,10 @@ class MerchantRelationshipProductListFacade extends AbstractFacade implements Me
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function expandCustomerTransferWithProductList(CustomerTransfer $customerTransfer): CustomerTransfer
+    public function expandCustomerTransferWithProductListIds(CustomerTransfer $customerTransfer): CustomerTransfer
     {
         return $this->getFactory()
             ->createCustomerExpander()
-            ->expandCustomerTransferWithProductList($customerTransfer);
+            ->expandCustomerTransferWithProductListIds($customerTransfer);
     }
 }

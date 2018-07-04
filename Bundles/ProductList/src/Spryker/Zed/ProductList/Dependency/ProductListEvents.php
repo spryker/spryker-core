@@ -27,7 +27,7 @@ interface ProductListEvents
 
     /**
      * Specification
-     * - This events will be used for spy_product_list entity creation
+     * - This event is used for spy_product_list entity creation
      *
      * @api
      */
@@ -35,7 +35,7 @@ interface ProductListEvents
 
     /**
      * Specification
-     * - This events will be used for spy_product_list entity changes
+     * - This event is used for spy_product_list entity changes
      *
      * @api
      */
@@ -43,7 +43,7 @@ interface ProductListEvents
 
     /**
      * Specification
-     * - This events will be used for spy_product_list entity deletion
+     * - This event is used for spy_product_list entity deletion
      *
      * @api
      */
@@ -67,7 +67,7 @@ interface ProductListEvents
 
     /**
      * Specification
-     * - This events will be used for spy_product_list_product_concrete entity creation
+     * - This event is used for spy_product_list_product_concrete entity creation
      *
      * @api
      */
@@ -75,7 +75,7 @@ interface ProductListEvents
 
     /**
      * Specification
-     * - This events will be used for spy_product_list_product_concrete entity changes
+     * - This event is used for spy_product_list_product_concrete entity changes
      *
      * @api
      */
@@ -83,7 +83,7 @@ interface ProductListEvents
 
     /**
      * Specification
-     * - This events will be used for spy_product_list_product_concrete entity deletion
+     * - This event is used for spy_product_list_product_concrete entity deletion
      *
      * @api
      */
@@ -107,7 +107,7 @@ interface ProductListEvents
 
     /**
      * Specification
-     * - This events will be used for spy_product_list_category entity creation
+     * - This event is used for spy_product_list_category entity creation
      *
      * @api
      */
@@ -115,7 +115,7 @@ interface ProductListEvents
 
     /**
      * Specification
-     * - This events will be used for spy_product_list_category entity changes
+     * - This event is used for spy_product_list_category entity changes
      *
      * @api
      */
@@ -123,7 +123,7 @@ interface ProductListEvents
 
     /**
      * Specification
-     * - This events will be used for spy_product_list_category entity deletion
+     * - This event is used for spy_product_list_category entity deletion
      *
      * @api
      */

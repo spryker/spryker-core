@@ -14,7 +14,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\MerchantRelationshipProductList\Business\MerchantRelationshipProductListFacadeInterface getFacade()
  */
-class CustomerTransferProductListExpanderPlugin extends AbstractPlugin implements CustomerTransferExpanderPluginInterface
+class ProductListCustomerTransferExpanderPlugin extends AbstractPlugin implements CustomerTransferExpanderPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -27,6 +27,6 @@ class CustomerTransferProductListExpanderPlugin extends AbstractPlugin implement
      */
     public function expandTransfer(CustomerTransfer $customerTransfer): CustomerTransfer
     {
-        return $this->getFacade()->expandCustomerTransferWithProductList($customerTransfer);
+        return $this->getFacade()->expandCustomerTransferWithProductListIds($customerTransfer);
     }
 }

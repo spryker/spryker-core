@@ -66,7 +66,7 @@ class ProductListQueryExpanderPlugin extends AbstractPlugin implements QueryExpa
 
         if (count($whitelistIds)) {
             $boolQuery = $this->getBoolQuery($query);
-            $boolQuery->addMust($this->createWhitelistTermQuery($whitelistIds));
+            $boolQuery->addFilter($this->createWhitelistTermQuery($whitelistIds));
         }
     }
 
@@ -95,13 +95,14 @@ class ProductListQueryExpanderPlugin extends AbstractPlugin implements QueryExpa
      */
     protected function getBlacklistIds(): array
     {
-        if (!$this->findCustomerProductListCollection() || !$this->findCustomerProductListCollection()->getBlacklists()) {
-            return [];
+        $blacklistIds = [];
+        $customerProductListCollectionTransfer = $this->findCustomerProductListCollection();
+
+        if (!$customerProductListCollectionTransfer || !$customerProductListCollectionTransfer->getBlacklists()) {
+            return $blacklistIds;
         }
 
-        $blacklistIds = [];
-
-        foreach ($this->findCustomerProductListCollection()->getBlacklists() as $productListTransfer) {
+        foreach ($customerProductListCollectionTransfer->getBlacklists() as $productListTransfer) {
             $blacklistIds[] = $productListTransfer->getIdProductList();
         }
 
@@ -113,13 +114,14 @@ class ProductListQueryExpanderPlugin extends AbstractPlugin implements QueryExpa
      */
     protected function getWhitelistIds(): array
     {
-        if (!$this->findCustomerProductListCollection() || !$this->findCustomerProductListCollection()->getWhitelists()) {
-            return [];
+        $whitelistIds = [];
+        $customerProductListCollectionTransfer = $this->findCustomerProductListCollection();
+
+        if (!$customerProductListCollectionTransfer || !$customerProductListCollectionTransfer->getWhitelists()) {
+            return $whitelistIds;
         }
 
-        $whitelistIds = [];
-
-        foreach ($this->findCustomerProductListCollection()->getWhitelists() as $productListTransfer) {
+        foreach ($customerProductListCollectionTransfer->getWhitelists() as $productListTransfer) {
             $whitelistIds[] = $productListTransfer->getIdProductList();
         }
 

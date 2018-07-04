@@ -18,7 +18,7 @@
     "spryker/code-sniffer": "*",
     "spryker/event": "*",
     "spryker/product-storage": "*",
-    "spryker/propel-orm": "^1.5.0",
+    "spryker/propel-orm": "*",
     "spryker/testify": "*"
   },
   "suggest": {
