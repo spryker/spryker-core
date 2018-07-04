@@ -75,7 +75,7 @@ class ProductOptionOrderHydrate implements ProductOptionOrderHydrateInterface
      */
     protected function setItemTransferUnitPrices(ItemTransfer $itemTransfer, SpySalesOrderItem $salesOrderItemEntity)
     {
-        $itemTransfer->setUnitProductOptionPriceAggregation($salesOrderItemEntity->getProductOptionPriceAggregation() / $salesOrderItemEntity->getQuantity());
+        $itemTransfer->setUnitProductOptionPriceAggregation((int)round($salesOrderItemEntity->getProductOptionPriceAggregation() / $salesOrderItemEntity->getQuantity()));
     }
 
     /**
