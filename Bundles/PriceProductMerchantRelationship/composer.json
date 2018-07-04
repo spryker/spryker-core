@@ -7,7 +7,7 @@
     "spryker/cart": "^5.1.0",
     "spryker/kernel": "^3.21.0",
     "spryker/merchant-relationship": "^1.0.1",
-    "spryker/price-product": "^1.2.0",
+    "spryker/price-product": "^2.0.0",
     "spryker/price-product-extension": "^1.0.0",
     "spryker/product": "^6.1.0",
     "spryker/propel-orm": "^1.6.2",
