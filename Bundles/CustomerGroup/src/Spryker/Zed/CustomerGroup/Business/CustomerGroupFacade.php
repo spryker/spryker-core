@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CustomerGroup\Business;
 
+use Generated\Shared\Transfer\CustomerGroupsTransfer;
 use Generated\Shared\Transfer\CustomerGroupTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -97,6 +98,8 @@ class CustomerGroupFacade extends AbstractFacade implements CustomerGroupFacadeI
     }
 
     /**
+     * @deprecated Please use findCustomerGroupsByIdCustomer instead
+     *
      * {@inheritdoc}
      *
      * @api
@@ -110,6 +113,22 @@ class CustomerGroupFacade extends AbstractFacade implements CustomerGroupFacadeI
         return $this->getFactory()
             ->createCustomerGroup()
             ->findCustomerGroupByIdCustomer($idCustomer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idCustomer
+     *
+     * @return \Generated\Shared\Transfer\CustomerGroupsTransfer
+     */
+    public function findCustomerGroupsByIdCustomer(int $idCustomer): CustomerGroupsTransfer
+    {
+        return $this->getFactory()
+            ->createCustomerGroupFinder()
+            ->findCustomerGroupsByIdCustomer($idCustomer);
     }
 
     /**

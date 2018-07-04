@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CustomerGroup\Business;
 
+use Spryker\Zed\CustomerGroup\Business\CustomerGroup\CustomerGroupFinder;
+use Spryker\Zed\CustomerGroup\Business\CustomerGroup\CustomerGroupFinderInterface;
 use Spryker\Zed\CustomerGroup\Business\Model\CustomerGroup;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -22,5 +24,15 @@ class CustomerGroupBusinessFactory extends AbstractBusinessFactory
     public function createCustomerGroup()
     {
         return new CustomerGroup($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\CustomerGroup\Business\CustomerGroup\CustomerGroupFinderInterface
+     */
+    public function createCustomerGroupFinder(): CustomerGroupFinderInterface
+    {
+        return new CustomerGroupFinder(
+            $this->getQueryContainer()
+        );
     }
 }
