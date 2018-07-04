@@ -125,7 +125,7 @@ class PriceProductAbstractWriter extends BaseProductPriceWriter implements Price
         if (!$priceProductTransfer->getPriceDimension()) {
             $priceProductTransfer->setPriceDimension(
                 (new PriceProductDimensionTransfer())
-                    ->setType($this->config->getPriceTypeDefaultName())
+                    ->setType($this->config->getPriceDimensionDefault())
             );
         }
 
