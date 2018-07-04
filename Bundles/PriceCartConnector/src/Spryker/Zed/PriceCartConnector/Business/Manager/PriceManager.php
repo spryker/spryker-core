@@ -64,7 +64,8 @@ class PriceManager implements PriceManagerInterface
         $currencyIsoCode = $cartChangeTransfer->getQuote()->getCurrency()->getCode();
 
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            $this->setOriginUnitPrices($itemTransfer, $priceMode, $currencyIsoCode);
+            $storeName = $this->getStoreName($cartChangeTransfer);
+            $this->setOriginUnitPrices($itemTransfer, $priceMode, $currencyIsoCode, $storeName);
 
             if ($this->hasForcedUnitGrossPrice($itemTransfer)) {
                 continue;
@@ -85,12 +86,13 @@ class PriceManager implements PriceManagerInterface
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param string $priceMode
      * @param string $currencyIsoCode
+     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    protected function setOriginUnitPrices(ItemTransfer $itemTransfer, $priceMode, $currencyIsoCode)
+    protected function setOriginUnitPrices(ItemTransfer $itemTransfer, $priceMode, $currencyIsoCode, $storeName = null)
     {
-        $priceProductFilterTransfer = $this->createPriceProductFilter($itemTransfer, $priceMode, $currencyIsoCode);
+        $priceProductFilterTransfer = $this->createPriceProductFilter($itemTransfer, $priceMode, $currencyIsoCode, $storeName);
         $this->setPrice($itemTransfer, $priceProductFilterTransfer, $priceMode);
 
         return $itemTransfer;
@@ -228,15 +230,31 @@ class PriceManager implements PriceManagerInterface
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param string $priceMode
      * @param string $currencyIsoCode
+     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\PriceProductFilterTransfer
      */
-    protected function createPriceProductFilter(ItemTransfer $itemTransfer, $priceMode, $currencyIsoCode)
+    protected function createPriceProductFilter(ItemTransfer $itemTransfer, $priceMode, $currencyIsoCode, $storeName = null)
     {
         return (new PriceProductFilterTransfer())
+            ->setStoreName($storeName)
             ->setPriceMode($priceMode)
             ->setCurrencyIsoCode($currencyIsoCode)
             ->setSku($itemTransfer->getSku())
             ->setPriceTypeName($this->priceProductFacade->getDefaultPriceTypeName());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return null|string
+     */
+    protected function getStoreName(CartChangeTransfer $cartChangeTransfer): ?string
+    {
+        if ($cartChangeTransfer->getQuote()->getStore() === null) {
+            return null;
+        }
+
+        return $cartChangeTransfer->getQuote()->getStore()->getName();
     }
 }
