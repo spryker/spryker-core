@@ -4,8 +4,8 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/customer": "^1.0.0",
-    "spryker/event-behavior": "^0.1.0",
+    "spryker/customer": "^7.10.0",
+    "spryker/event-behavior": "^1.0.0",
     "spryker/kernel": "^3.0.0",
     "spryker/merchant-relationship": "^1.0.0",
     "spryker/price-product": "^2.0.0",
