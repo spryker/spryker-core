@@ -232,11 +232,16 @@ class PriceManager implements PriceManagerInterface
         ItemTransfer $itemTransfer,
         QuoteTransfer $quoteTransfer
     ) {
-        return (new PriceProductFilterTransfer())
+        $priceProductFilterTransfer = (new PriceProductFilterTransfer())
             ->setPriceMode($quoteTransfer->getPriceMode())
             ->setCurrencyIsoCode($quoteTransfer->getCurrency()->getCode())
             ->setSku($itemTransfer->getSku())
-            ->setPriceTypeName($this->priceProductFacade->getDefaultPriceTypeName())
-            ->setQuote($quoteTransfer);
+            ->setPriceTypeName($this->priceProductFacade->getDefaultPriceTypeName());
+
+        if (property_exists($priceProductFilterTransfer, 'quote')) {
+            $priceProductFilterTransfer->setQuote($quoteTransfer);
+        }
+
+        return $priceProductFilterTransfer;
     }
 }

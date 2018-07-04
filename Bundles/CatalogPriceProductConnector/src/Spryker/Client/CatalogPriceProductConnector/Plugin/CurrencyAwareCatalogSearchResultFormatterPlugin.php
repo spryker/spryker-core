@@ -39,11 +39,32 @@ class CurrencyAwareCatalogSearchResultFormatterPlugin extends AbstractElasticsea
     {
         $result = $this->rawCatalogSearchResultFormatterPlugin->formatResult($searchResult, $requestParameters);
 
+        if (!\defined('\Spryker\Shared\PriceProduct\PriceProductConstants::PRICE_DIMENSION_DEFAULT')) {
+            return $this->formatSearchResultWithoutPriceDimensions($result);
+        }
+
         $priceProductClient = $this->getFactory()->getPriceProductClient();
         $priceProductStorageClient = $this->getFactory()->getPriceProductStorageClient();
         foreach ($result as &$product) {
             $priceProductTransfersFromStorage = $priceProductStorageClient->getPriceProductAbstractTransfers($product['id_product_abstract']);
             $currentProductPriceTransfer = $priceProductClient->resolveProductPriceTransfer($priceProductTransfersFromStorage);
+            $product['price'] = $currentProductPriceTransfer->getPrice();
+            $product['prices'] = $currentProductPriceTransfer->getPrices();
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param array $result
+     *
+     * @return mixed|array
+     */
+    protected function formatSearchResultWithoutPriceDimensions(array $result)
+    {
+        $priceProductClient = $this->getFactory()->getPriceProductClient();
+        foreach ($result as &$product) {
+            $currentProductPriceTransfer = $priceProductClient->resolveProductPrice($product['prices']);
             $product['price'] = $currentProductPriceTransfer->getPrice();
             $product['prices'] = $currentProductPriceTransfer->getPrices();
         }
