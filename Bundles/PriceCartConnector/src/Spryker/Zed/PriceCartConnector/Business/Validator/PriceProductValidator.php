@@ -57,7 +57,8 @@ class PriceProductValidator implements PriceProductValidatorInterface
             $priceProductFilterTransfer = $this->createPriceProductFilter(
                 $itemTransfer,
                 $priceMode,
-                $currencyTransfer->getCode()
+                $currencyTransfer->getCode(),
+                $this->findStoreName($cartChangeTransfer)
             );
 
             if ($this->priceProductFacade->hasValidPriceFor($priceProductFilterTransfer)) {
@@ -76,12 +77,14 @@ class PriceProductValidator implements PriceProductValidatorInterface
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param string $priceMode
      * @param string $currencyIsoCode
+     * @param null|string $storeName
      *
      * @return \Generated\Shared\Transfer\PriceProductFilterTransfer
      */
-    protected function createPriceProductFilter(ItemTransfer $itemTransfer, $priceMode, $currencyIsoCode)
+    protected function createPriceProductFilter(ItemTransfer $itemTransfer, $priceMode, $currencyIsoCode, $storeName = null)
     {
         return (new PriceProductFilterTransfer())
+            ->setStoreName($storeName)
             ->setPriceMode($priceMode)
             ->setCurrencyIsoCode($currencyIsoCode)
             ->setSku($itemTransfer->getSku())
@@ -111,5 +114,19 @@ class PriceProductValidator implements PriceProductValidatorInterface
             return $this->priceFacade->getDefaultPriceMode();
         }
         return $cartChangeTransfer->getQuote()->getPriceMode();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return null|string
+     */
+    protected function findStoreName(CartChangeTransfer $cartChangeTransfer): ?string
+    {
+        if ($cartChangeTransfer->getQuote()->getStore() === null) {
+            return null;
+        }
+
+        return $cartChangeTransfer->getQuote()->getStore()->getName();
     }
 }

@@ -64,7 +64,7 @@ class PriceManager implements PriceManagerInterface
         $currencyIsoCode = $cartChangeTransfer->getQuote()->getCurrency()->getCode();
 
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            $storeName = $this->getStoreName($cartChangeTransfer);
+            $storeName = $this->findStoreName($cartChangeTransfer);
             $this->setOriginUnitPrices($itemTransfer, $priceMode, $currencyIsoCode, $storeName);
 
             if ($this->hasForcedUnitGrossPrice($itemTransfer)) {
@@ -249,7 +249,7 @@ class PriceManager implements PriceManagerInterface
      *
      * @return null|string
      */
-    protected function getStoreName(CartChangeTransfer $cartChangeTransfer): ?string
+    protected function findStoreName(CartChangeTransfer $cartChangeTransfer): ?string
     {
         if ($cartChangeTransfer->getQuote()->getStore() === null) {
             return null;

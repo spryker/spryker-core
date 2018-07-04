@@ -111,7 +111,6 @@ class PriceManagerTest extends Unit
 
     /**
      * @expectedException \Spryker\Zed\PriceCartConnector\Business\Exception\PriceMissingException
-     * testAddPriceToItems
      *
      * @return void
      */
