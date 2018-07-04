@@ -38,8 +38,6 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
     protected const PRODUCT_ABSTRACT_STORAGE_DEFAULT_VALUES = [
         ProductPackagingUnitAmountTransfer::DEFAULT_AMOUNT => 1,
         ProductPackagingUnitAmountTransfer::IS_VARIABLE => false,
-        ProductPackagingUnitAmountTransfer::AMOUNT_MIN => 1,
-        ProductPackagingUnitAmountTransfer::AMOUNT_INTERVAL => 1,
     ];
 
     /**
@@ -243,9 +241,9 @@ class ProductPackagingStorageReader implements ProductPackagingStorageReaderInte
             ->setIsVariable($productPackagingUnitAmountEntityTransfer->getIsVariable());
 
         if ($productPackagingUnitAmountEntityTransfer->getIsVariable()) {
+            $amountInterval = $productPackagingUnitAmountEntityTransfer->getAmountInterval() ?? $this->createDefaultProductPackagingUnitAmountTransfer()->getAmountInterval();
+            $amountMin = $productPackagingUnitAmountEntityTransfer->getAmountMin() ?? $amountInterval;
             $amountMax = $productPackagingUnitAmountEntityTransfer->getAmountMax();
-            $amountMin = $productPackagingUnitAmountEntityTransfer->getAmountMin() ?: $this->createDefaultProductPackagingUnitAmountTransfer()->getAmountMin();
-            $amountInterval = $productPackagingUnitAmountEntityTransfer->getAmountInterval() ?: $this->createDefaultProductPackagingUnitAmountTransfer()->getAmountInterval();
 
             $productConcretePackagingStorageTransfer
                 ->setAmountMin($amountMin)

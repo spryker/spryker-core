@@ -56,12 +56,12 @@ class ProductPackagingUnitStorageRepository extends AbstractRepository implement
                 "%s = true",
                 SpyProductTableMap::COL_IS_ACTIVE
             ))
-            ->leftJoinWithSpyProductAbstract()
-            ->leftJoinWithSpyProductPackagingLeadProduct()
+            ->innerJoinWithSpyProductAbstract()
             ->innerJoinWithSpyProductPackagingUnit()
+            ->leftJoinWithSpyProductPackagingLeadProduct()
             ->useSpyProductPackagingUnitQuery()
                 ->leftJoinWithSpyProductPackagingUnitAmount()
-                ->leftJoinWithProductPackagingUnitType()
+                ->innerJoinWithProductPackagingUnitType()
             ->endUse();
 
         return $this->buildQueryFromCriteria($query)->find();

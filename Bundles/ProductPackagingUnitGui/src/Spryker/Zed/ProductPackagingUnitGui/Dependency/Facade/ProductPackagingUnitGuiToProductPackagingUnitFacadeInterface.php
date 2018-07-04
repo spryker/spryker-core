@@ -43,11 +43,11 @@ interface ProductPackagingUnitGuiToProductPackagingUnitFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer|null
      */
     public function findProductPackagingUnitTypeByName(
         ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
-    ): ProductPackagingUnitTypeTransfer;
+    ): ?ProductPackagingUnitTypeTransfer;
 
     /**
      * Specification:

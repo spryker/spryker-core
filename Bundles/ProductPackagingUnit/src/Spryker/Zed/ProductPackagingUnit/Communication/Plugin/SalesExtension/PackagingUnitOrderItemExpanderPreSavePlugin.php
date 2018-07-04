@@ -31,7 +31,7 @@ class PackagingUnitOrderItemExpanderPreSavePlugin implements OrderItemExpanderPr
             return $salesOrderItemEntity;
         }
 
-        $packagingUnitLeadProductSku = $itemTransfer->getAmountLeadProduct()->getSkuProduct();
+        $packagingUnitLeadProductSku = $itemTransfer->getAmountLeadProduct()->getSku();
         $packagingUnitAmount = $itemTransfer->getAmount();
 
         $packagingUnitLeadProductAmount = (int)($packagingUnitAmount / $itemTransfer->getQuantity());

@@ -64,11 +64,11 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      *
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer|null
      */
     public function findProductPackagingUnitTypeByName(
         ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
-    ): ProductPackagingUnitTypeTransfer {
+    ): ?ProductPackagingUnitTypeTransfer {
         return $this->getFactory()
             ->createProductPackagingUnitTypeReader()
             ->findProductPackagingUnitTypeByName($productPackagingUnitTypeTransfer);
