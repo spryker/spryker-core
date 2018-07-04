@@ -10,7 +10,7 @@
         <property name="lastName" type="string"/>
         <property name="email" type="string"/>
         <property name="password" type="string"/>
-        <property name="newPassword" type="string"/>
+        <property name="passwordConfirmation" type="string"/>
         <property name="acceptedTerms" type="bool"/>
     </transfer>
 
