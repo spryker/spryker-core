@@ -73,4 +73,11 @@ interface ProductPackagingUnitRepositoryInterface
     public function findProductPackagingUnitById(
         int $idProductPackagingUnit
     ): ?ProductPackagingUnitTransfer;
+
+    /**
+     * @param array $skus
+     *
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer[]
+     */
+    public function findProductPackagingUnitBySkus(array $skus): array;
 }

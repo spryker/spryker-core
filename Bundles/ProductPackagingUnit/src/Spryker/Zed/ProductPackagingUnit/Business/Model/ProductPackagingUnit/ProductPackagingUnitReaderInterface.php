@@ -35,4 +35,11 @@ interface ProductPackagingUnitReaderInterface
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer
      */
     public function findProductMeasurementSalesUnitTransfer(int $idProductMeasurementSalesUnit): ProductMeasurementSalesUnitTransfer;
+
+    /**
+     * @param array $skus
+     *
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer[]
+     */
+    public function findProductPackagingUnitBySkus(array $skus): array;
 }

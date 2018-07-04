@@ -14,6 +14,10 @@ use Spryker\Zed\ProductPackagingUnit\Business\Model\Hydrator\AmountSalesUnitOrde
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Hydrator\AmountSalesUnitOrderHydratorInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Installer\ProductPackagingUnitTypeInstaller;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Installer\ProductPackagingUnitTypeInstallerInterface;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitAmountSalesUnitValue;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitAmountSalesUnitValueInterface;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitGroupKeyGenerator;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitGroupKeyGeneratorInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReader;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitLeadProduct\ProductPackagingUnitLeadProductReader;
@@ -26,6 +30,8 @@ use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\Pro
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeTranslationWriterInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeWriter;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeWriterInterface;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\Validator\ProductPackagingUnitAmountRestrictionValidator;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\Validator\ProductPackagingUnitAmountRestrictionValidatorInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToGlossaryFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToLocaleFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToProductMeasurementUnitFacadeInterface;
@@ -166,5 +172,31 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     public function getSalesQueryContainer(): ProductPackagingUnitToSalesQueryContainerInterface
     {
         return $this->getProvidedDependency(ProductPackagingUnitDependencyProvider::QUERY_CONTAINER_SALES);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitAmountSalesUnitValueInterface
+     */
+    public function createProductPackagingUnitAmountSalesUnitValue(): ProductPackagingUnitAmountSalesUnitValueInterface
+    {
+        return new ProductPackagingUnitAmountSalesUnitValue();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitGroupKeyGeneratorInterface
+     */
+    public function createProductPackagingUnitGroupKeyGenerator(): ProductPackagingUnitGroupKeyGeneratorInterface
+    {
+        return new ProductPackagingUnitGroupKeyGenerator();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\Validator\ProductPackagingUnitAmountRestrictionValidatorInterface
+     */
+    public function createProductPackagingUnitAmountRestrictionValidator(): ProductPackagingUnitAmountRestrictionValidatorInterface
+    {
+        return new ProductPackagingUnitAmountRestrictionValidator(
+            $this->createProductPackagingUnitReader()
+        );
     }
 }
