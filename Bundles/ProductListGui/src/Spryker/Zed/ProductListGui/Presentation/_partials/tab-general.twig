@@ -1,8 +1,0 @@
-{{ form_row(form.idProductList) }}
-{{ form_row(form.title) }}
-{{ form_row(form.owner_type) }}
-{% for plugin in plugins %}
-    {{ form_row(form[plugin.name]) }}
-{% endfor %}
-
-{{ form_widget(form.type) }}

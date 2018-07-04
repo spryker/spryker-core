@@ -36,6 +36,9 @@ class ProductListMapExpanderPlugin extends AbstractPlugin implements ProductPage
      */
     public function expandProductPageMap(PageMapTransfer $pageMapTransfer, PageMapBuilderInterface $pageMapBuilder, array $productData, LocaleTransfer $localeTransfer): PageMapTransfer
     {
+        if (!isset($productData[static::KEY_PRODUCT_LIST_MAP])) {
+            return $pageMapTransfer;
+        }
         $productListMap = $this->getProductListSearchData($productData);
         $pageMapTransfer->setProductLists($productListMap);
 

@@ -7,8 +7,10 @@
 
 namespace Spryker\Service\UtilCsv;
 
-use SplFileObject;
+use Generated\Shared\Transfer\CsvFileTransfer;
 use Spryker\Service\Kernel\AbstractService;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
  * @method \Spryker\Service\UtilCsv\UtilCsvServiceFactory getFactory()
@@ -20,14 +22,30 @@ class UtilCsvService extends AbstractService implements UtilCsvServiceInterface
      *
      * @api
      *
-     * @param \SplFileObject $file
+     * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
      *
      * @return array
      */
-    public function readFile(SplFileObject $file): array
+    public function readFile(UploadedFile $file): array
     {
         return $this->getFactory()
             ->createFileReader()
             ->readFile($file);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CsvFileTransfer $csvFileTransfer
+     *
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse
+     */
+    public function exportFile(CsvFileTransfer $csvFileTransfer): StreamedResponse
+    {
+        return $this->getFactory()
+            ->createFileExporter()
+            ->exportFile($csvFileTransfer);
     }
 }

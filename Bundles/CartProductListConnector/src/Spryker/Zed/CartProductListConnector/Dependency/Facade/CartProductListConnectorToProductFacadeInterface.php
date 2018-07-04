@@ -17,4 +17,11 @@ interface CartProductListConnectorToProductFacadeInterface
      * @return int
      */
     public function getProductAbstractIdByConcreteSku($concreteSku): int;
+
+    /**
+     * @param string $sku
+     *
+     * @return int|null
+     */
+    public function findProductConcreteIdBySku(string $sku);
 }

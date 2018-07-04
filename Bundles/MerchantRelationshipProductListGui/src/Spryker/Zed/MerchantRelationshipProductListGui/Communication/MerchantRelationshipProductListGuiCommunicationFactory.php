@@ -8,8 +8,8 @@
 namespace Spryker\Zed\MerchantRelationshipProductListGui\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\MerchantRelationshipProductListGui\Communication\DataProvider\ProductListDataProvider;
-use Spryker\Zed\MerchantRelationshipProductListGui\Communication\Table\ProductListTable;
+use Spryker\Zed\MerchantRelationshipProductListGui\Communication\DataProvider\MerchantRelationshipChoiceFormDataProvider;
+use Spryker\Zed\MerchantRelationshipProductListGui\Communication\Form\MerchantRelationshipChoiceFormType;
 use Spryker\Zed\MerchantRelationshipProductListGui\Dependency\Facade\MerchantRelationshipProductListGuiToMerchantRelationshipFacadeInterface;
 use Spryker\Zed\MerchantRelationshipProductListGui\MerchantRelationshipProductListGuiDependencyProvider;
 
@@ -19,30 +19,26 @@ use Spryker\Zed\MerchantRelationshipProductListGui\MerchantRelationshipProductLi
 class MerchantRelationshipProductListGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\MerchantRelationshipProductListGui\Communication\DataProvider\ProductListDataProvider
+     * @return \Spryker\Zed\MerchantRelationshipProductListGui\Communication\DataProvider\MerchantRelationshipChoiceFormDataProvider
      */
-    public function createPluginListMerchantRelationDataProvider(): ProductListDataProvider
+    public function createMerchantRelationshipChoiceFormDataProvider()
     {
-        return new ProductListDataProvider(
-            $this->getMerchantRelationFacade()
-        );
+        return new MerchantRelationshipChoiceFormDataProvider($this->getMerchantRelationshipFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantRelationshipProductListGui\Communication\Form\MerchantRelationshipChoiceFormType
+     */
+    public function createMerchantRelationshipChoiceFormType()
+    {
+        return new MerchantRelationshipChoiceFormType();
     }
 
     /**
      * @return \Spryker\Zed\MerchantRelationshipProductListGui\Dependency\Facade\MerchantRelationshipProductListGuiToMerchantRelationshipFacadeInterface
      */
-    public function getMerchantRelationFacade(): MerchantRelationshipProductListGuiToMerchantRelationshipFacadeInterface
+    public function getMerchantRelationshipFacade(): MerchantRelationshipProductListGuiToMerchantRelationshipFacadeInterface
     {
-        return $this->getProvidedDependency(
-            MerchantRelationshipProductListGuiDependencyProvider::FACADE_MERCHANT_RELATION
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\MerchantRelationshipProductListGui\Communication\Table\ProductListTable
-     */
-    public function createProductListTable(): ProductListTable
-    {
-        return new ProductListTable();
+        return $this->getProvidedDependency(MerchantRelationshipProductListGuiDependencyProvider::FACADE_MERCHANT_RELATIONSHIP);
     }
 }

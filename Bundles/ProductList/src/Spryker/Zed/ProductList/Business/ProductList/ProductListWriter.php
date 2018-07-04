@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductList\Business\ProductList;
 
 use Generated\Shared\Transfer\ProductListTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
+use Spryker\Zed\ProductList\Business\KeyGenerator\ProductListKeyGeneratorInterface;
 use Spryker\Zed\ProductList\Persistence\ProductListEntityManagerInterface;
 
 class ProductListWriter implements ProductListWriterInterface
@@ -26,14 +27,22 @@ class ProductListWriter implements ProductListWriterInterface
     protected $productListPostSavers;
 
     /**
+     * @var \Spryker\Zed\ProductList\Business\KeyGenerator\ProductListKeyGeneratorInterface
+     */
+    protected $productListKeyGenerator;
+
+    /**
      * @param \Spryker\Zed\ProductList\Persistence\ProductListEntityManagerInterface $productListEntityManager
+     * @param \Spryker\Zed\ProductList\Business\KeyGenerator\ProductListKeyGeneratorInterface $productListKeyGenerator
      * @param \Spryker\Zed\ProductList\Business\ProductList\ProductListPostSaverInterface[] $productListPostSavers
      */
     public function __construct(
         ProductListEntityManagerInterface $productListEntityManager,
+        ProductListKeyGeneratorInterface $productListKeyGenerator,
         array $productListPostSavers = []
     ) {
         $this->productListEntityManager = $productListEntityManager;
+        $this->productListKeyGenerator = $productListKeyGenerator;
         $this->productListPostSavers = $productListPostSavers;
     }
 
@@ -69,7 +78,11 @@ class ProductListWriter implements ProductListWriterInterface
     protected function executeSaveProductListTransaction(
         ProductListTransfer $productListTransfer
     ): ProductListTransfer {
-        $productListTransfer = $this->generateKey($productListTransfer);
+        $productListTransfer->requireTitle();
+        if (empty($productListTransfer->getKey())) {
+            $productListTransfer->setKey($this->productListKeyGenerator->generateProductListKey($productListTransfer->getTitle()));
+        }
+
         $productListTransfer = $this->productListEntityManager->saveProductList($productListTransfer);
 
         foreach ($this->productListPostSavers as $productListPostSaver) {
@@ -87,26 +100,8 @@ class ProductListWriter implements ProductListWriterInterface
     protected function executeDeleteProductListTransaction(
         ProductListTransfer $productListTransfer
     ): void {
+        $this->productListEntityManager->deleteProductListProductRelations($productListTransfer);
+        $this->productListEntityManager->deleteProductListCategoryRelations($productListTransfer);
         $this->productListEntityManager->deleteProductList($productListTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductListTransfer
-     */
-    protected function generateKey(ProductListTransfer $productListTransfer): ProductListTransfer
-    {
-        if ($productListTransfer->getIdProductList()) {
-            return $productListTransfer;
-        }
-        if ($productListTransfer->getKey()) {
-            return $productListTransfer;
-        }
-
-        $key = uniqid('spy-product-list-');
-        $productListTransfer->setKey(md5($key));
-
-        return $productListTransfer;
     }
 }

@@ -77,7 +77,7 @@ class ProductConcreteRestrictionReader implements ProductConcreteRestrictionRead
             return $isProductInBlacklist || !$isProductInWhitelist;
         }
 
-        return false;
+        return (bool)count($customerWhitelistIds);
     }
 
     /**

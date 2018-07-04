@@ -6,11 +6,13 @@
     "php": ">=7.1"
   },
   "require-dev": {
+    "spryker/gui": "*",
     "spryker/code-sniffer": "*",
     "spryker/symfony": "^3.0.0",
     "spryker/testify": "*"
   },
   "suggest": {
+    "spryker/gui": "If you want to use Product List Gui plugins. Minimum required version: ^1.0.0",
     "spryker/symfony": "Required to use form in plugin"
   },
   "autoload": {

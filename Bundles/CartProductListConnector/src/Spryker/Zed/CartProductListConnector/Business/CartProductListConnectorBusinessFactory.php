@@ -26,7 +26,8 @@ class CartProductListConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new RestrictedItemsFilter(
             $this->getMessengerFacade(),
-            $this->createProductListRestrictionValidator()
+            $this->createProductListRestrictionValidator(),
+            $this->getProductFacade()
         );
     }
 

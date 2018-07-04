@@ -56,9 +56,9 @@ class ProductListProductAbstractStorageWriter implements ProductListProductAbstr
         $indexedProductAbstractProductListStorageEntities = $this->indexProductAbstractProductListStorageEntities($productAbstractProductListStorageEntityTransfers);
         foreach ($productAbstractIds as $idProductAbstract) {
             $productAbstractProductListStorageEntity = $this->getProductAbstractProductListStorageEntity($idProductAbstract, $indexedProductAbstractProductListStorageEntities);
-            unset($indexedProductAbstractProductListStorageEntities[$idProductAbstract]);
-
-            $this->saveProductAbstractProductListStorageEntity($idProductAbstract, $productAbstractProductListStorageEntity);
+            if ($this->saveProductAbstractProductListStorageEntity($idProductAbstract, $productAbstractProductListStorageEntity)) {
+                unset($indexedProductAbstractProductListStorageEntities[$idProductAbstract]);
+            }
         }
 
         $this->deleteProductAbstractProductListStorageEntities($indexedProductAbstractProductListStorageEntities);
@@ -68,19 +68,23 @@ class ProductListProductAbstractStorageWriter implements ProductListProductAbstr
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\SpyProductAbstractProductListStorageEntityTransfer $productAbstractProductListStorageEntity
      *
-     * @return void
+     * @return bool
      */
     protected function saveProductAbstractProductListStorageEntity(
         int $idProductAbstract,
         SpyProductAbstractProductListStorageEntityTransfer $productAbstractProductListStorageEntity
-    ): void {
+    ): bool {
         $productAbstractProductListsStorageTransfer = $this->getProductAbstractProductListsStorageTransfer($idProductAbstract);
         if ($productAbstractProductListsStorageTransfer->getIdWhitelists() || $productAbstractProductListsStorageTransfer->getIdBlacklists()) {
             $productAbstractProductListStorageEntity->setFkProductAbstract($idProductAbstract)
                 ->setData($productAbstractProductListsStorageTransfer->toArray());
 
             $this->productListStorageEntityManager->saveProductAbstractProductListStorage($productAbstractProductListStorageEntity);
+
+            return true;
         }
+
+        return false;
     }
 
     /**

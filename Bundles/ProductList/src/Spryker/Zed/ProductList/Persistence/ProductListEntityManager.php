@@ -36,6 +36,8 @@ class ProductListEntityManager extends AbstractEntityManager implements ProductL
         $productListEntity->save();
         $productListTransfer->fromArray($productListEntity->toArray(), true);
 
+        $productListCategoryRelationTransfer->setIdProductList($productListTransfer->getIdProductList());
+        $productListProductConcreteRelationTransfer->setIdProductList($productListTransfer->getIdProductList());
         $productListTransfer->setProductListCategoryRelation($productListCategoryRelationTransfer);
         $productListTransfer->setProductListProductConcreteRelation($productListProductConcreteRelationTransfer);
 
@@ -53,6 +55,40 @@ class ProductListEntityManager extends AbstractEntityManager implements ProductL
             ->createProductListQuery()
             ->findOneByIdProductList($productListTransfer->getIdProductList())
             ->delete();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return void
+     */
+    public function deleteProductListProductRelations(ProductListTransfer $productListTransfer): void
+    {
+        $productListConcreteProductEntities = $this->getFactory()
+            ->createProductListProductConcreteQuery()
+            ->filterByFkProductList($productListTransfer->getIdProductList())
+            ->find();
+
+        foreach ($productListConcreteProductEntities as $productListConcreteProductEntity) {
+            $productListConcreteProductEntity->delete();
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return void
+     */
+    public function deleteProductListCategoryRelations(ProductListTransfer $productListTransfer): void
+    {
+        $productListCategoryEntities = $this->getFactory()
+            ->createProductListCategoryQuery()
+            ->filterByFkProductList($productListTransfer->getIdProductList())
+            ->find();
+
+        foreach ($productListCategoryEntities as $productListCategoryEntity) {
+            $productListCategoryEntity->delete();
+        }
     }
 
     /**
@@ -118,7 +154,7 @@ class ProductListEntityManager extends AbstractEntityManager implements ProductL
      */
     public function removeProductConcreteRelations(int $idProductList, array $productIds): void
     {
-        if (count($productIds) === 0) {
+        if (!$productIds) {
             return;
         }
 

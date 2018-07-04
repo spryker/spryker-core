@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ProductList\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductList\Business\KeyGenerator\ProductListKeyGenerator;
+use Spryker\Zed\ProductList\Business\KeyGenerator\ProductListKeyGeneratorInterface;
 use Spryker\Zed\ProductList\Business\ProductList\ProductListPostSaverInterface;
 use Spryker\Zed\ProductList\Business\ProductList\ProductListReader;
 use Spryker\Zed\ProductList\Business\ProductList\ProductListReaderInterface;
@@ -23,6 +25,8 @@ use Spryker\Zed\ProductList\Business\ProductListProductConcreteRelation\ProductL
 use Spryker\Zed\ProductList\Business\ProductListProductConcreteRelation\ProductListProductConcreteRelationReaderInterface;
 use Spryker\Zed\ProductList\Business\ProductListProductConcreteRelation\ProductListProductConcreteRelationWriter;
 use Spryker\Zed\ProductList\Business\ProductListProductConcreteRelation\ProductListProductConcreteRelationWriterInterface;
+use Spryker\Zed\ProductList\Dependency\Service\ProductListToUtilTextServiceInterface;
+use Spryker\Zed\ProductList\ProductListDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductList\ProductListConfig getConfig()
@@ -50,6 +54,7 @@ class ProductListBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductListWriter(
             $this->getEntityManager(),
+            $this->createProductListKeyGenerator(),
             $this->getProductListPostSaverCollection()
         );
     }
@@ -117,5 +122,24 @@ class ProductListBusinessFactory extends AbstractBusinessFactory
             $this->createProductListCategoryRelationPostSaver(),
             $this->createProductListProductConcreteRelationPostSaver(),
         ];
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductList\Dependency\Service\ProductListToUtilTextServiceInterface
+     */
+    public function getUtilTextService(): ProductListToUtilTextServiceInterface
+    {
+        return $this->getProvidedDependency(ProductListDependencyProvider::SERVICE_UTIL_TEXT);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductList\Business\KeyGenerator\ProductListKeyGeneratorInterface
+     */
+    public function createProductListKeyGenerator(): ProductListKeyGeneratorInterface
+    {
+        return new ProductListKeyGenerator(
+            $this->getRepository(),
+            $this->getUtilTextService()
+        );
     }
 }

@@ -7,36 +7,31 @@
 
 namespace Spryker\Zed\ProductListGui\Persistence;
 
-use Generated\Shared\Transfer\LocaleTransfer;
-
 interface ProductListGuiRepositoryInterface
 {
     /**
-     * @api
-     *
-     * @module Category
-     *
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return string[] [<category id> => <category name in english locale>]
+     * @return array
      */
-    public function getAllCategoryNames(LocaleTransfer $localeTransfer): array;
+    public function getCategoriesWithPaths(): array;
 
     /**
-     * @api
+     * @param string[] $sku
      *
-     * @module Product
-     *
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return string[] [<product id> => <product name in english locale>]
+     * @return int[]
      */
-    public function getAllProductNames(LocaleTransfer $localeTransfer): array;
+    public function findProductIdsByProductConcreteSku(array $sku): array;
 
     /**
-     * @param string ...$skus
+     * @param int[] $productIds
      *
-     * @return int[] product ids
+     * @return string[]
      */
-    public function getProductsIdsFromSkus(string ... $skus): array;
+    public function findProductSkuByIdProductConcrete(array $productIds): array;
+
+    /**
+     * @param int[] $productIds
+     *
+     * @return array
+     */
+    public function findProductConcreteDataByIds(array $productIds): array;
 }

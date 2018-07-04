@@ -7,14 +7,14 @@
 
 namespace Spryker\Service\UtilCsv\Reader;
 
-use SplFileObject;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 interface FileReaderInterface
 {
     /**
-     * @param \SplFileObject $file
+     * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
      *
      * @return array
      */
-    public function readFile(SplFileObject $file): array;
+    public function readFile(UploadedFile $file): array;
 }

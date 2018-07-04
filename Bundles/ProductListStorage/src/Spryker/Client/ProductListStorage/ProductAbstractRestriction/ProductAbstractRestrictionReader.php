@@ -74,10 +74,10 @@ class ProductAbstractRestrictionReader implements ProductAbstractRestrictionRead
             $isProductInBlacklist = count(array_intersect($productListProductAbstractStorageTransfer->getIdBlacklists(), $customerBlacklistIds));
             $isProductInWhitelist = count(array_intersect($productListProductAbstractStorageTransfer->getIdWhitelists(), $customerWhitelistIds));
 
-            return $isProductInBlacklist || !$isProductInWhitelist;
+            return $isProductInBlacklist || (count($customerWhitelistIds) && !$isProductInWhitelist);
         }
 
-        return false;
+        return (bool)count($customerWhitelistIds);
     }
 
     /**

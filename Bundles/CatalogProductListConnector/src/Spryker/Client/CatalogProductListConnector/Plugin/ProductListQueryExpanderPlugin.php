@@ -66,7 +66,7 @@ class ProductListQueryExpanderPlugin extends AbstractPlugin implements QueryExpa
 
         if (count($whitelistIds)) {
             $boolQuery = $this->getBoolQuery($query);
-            $boolQuery->addFilter($this->createWhitelistTermQuery($whitelistIds));
+            $boolQuery->addMust($this->createWhitelistTermQuery($whitelistIds));
         }
     }
 

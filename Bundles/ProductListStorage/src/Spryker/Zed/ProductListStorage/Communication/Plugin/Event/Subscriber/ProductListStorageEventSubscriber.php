@@ -21,6 +21,7 @@ use Spryker\Zed\ProductListStorage\Communication\Plugin\Event\Listener\ProductLi
 use Spryker\Zed\ProductListStorage\Communication\Plugin\Event\Listener\ProductListProductCategoryAbstractStorageListener;
 use Spryker\Zed\ProductListStorage\Communication\Plugin\Event\Listener\ProductListProductCategoryConcreteStorageListener;
 use Spryker\Zed\ProductListStorage\Communication\Plugin\Event\Listener\ProductListProductConcreteStorageListener;
+use Spryker\Zed\ProductListStorage\Communication\Plugin\Event\Listener\ProductListStorageListener;
 
 /**
  * @method \Spryker\Zed\ProductListStorage\Communication\ProductListStorageCommunicationFactory getFactory()
@@ -46,6 +47,8 @@ class ProductListStorageEventSubscriber extends AbstractPlugin implements EventS
         $this->addProductListProductCategoryConcreteStorageListener($eventCollection);
         $this->addProductCategoryConcreteStorageListener($eventCollection);
         $this->addProductConcreteStorageListener($eventCollection);
+
+        $this->addProductListListenerUpdate($eventCollection);
 
         return $eventCollection;
     }
@@ -152,5 +155,15 @@ class ProductListStorageEventSubscriber extends AbstractPlugin implements EventS
         $eventCollection->addListenerQueued(ProductCategoryEvents::ENTITY_SPY_PRODUCT_CATEGORY_CREATE, new ProductCategoryAbstractStorageListener());
         $eventCollection->addListenerQueued(ProductCategoryEvents::ENTITY_SPY_PRODUCT_CATEGORY_UPDATE, new ProductCategoryAbstractStorageListener());
         $eventCollection->addListenerQueued(ProductCategoryEvents::ENTITY_SPY_PRODUCT_CATEGORY_DELETE, new ProductCategoryAbstractStorageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductListListenerUpdate(EventCollectionInterface $eventCollection): void
+    {
+        $eventCollection->addListenerQueued(ProductListEvents::ENTITY_SPY_PRODUCT_LIST_UPDATE, new ProductListStorageListener());
     }
 }

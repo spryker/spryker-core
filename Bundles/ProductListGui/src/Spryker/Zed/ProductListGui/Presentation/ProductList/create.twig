@@ -1,0 +1,43 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% if widget_title is not defined %}
+    {% set widget_title = 'Create a Product List' | trans %}
+{% endif %}
+
+{% block section_title %}{{ widget_title }}{% endblock %}
+
+{% block action %}
+    {{ parent() }}
+    {{ backActionButton(url('/product-list-gui'), 'Back to Product Lists' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {{ form_start(aggregateForm) }}
+
+    {{ tabs(
+        productListAggregationTabs,
+        {
+            'aggregateForm': aggregateForm,
+            'productListForm': aggregateForm.productList,
+            'productListCategoryRelationForm': aggregateForm.productListCategoryRelation,
+            'productListProductConcreteRelationForm': aggregateForm.productListProductConcreteRelation,
+            'availableProductConcreteRelationTabs': availableProductConcreteRelationTabs,
+            'assignedProductConcreteRelationTabs': assignedProductConcreteRelationTabs,
+            'availableProductConcreteTable': availableProductConcreteTable,
+            'assignedProductConcreteTable': assignedProductConcreteTable
+        }
+    ) }}
+
+    {{ form_end(aggregateForm) }}
+{% endblock %}
+
+{% block head_css %}
+    {{ parent() }}
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-productlist-assign.js"></script>
+{% endblock %}
+
+

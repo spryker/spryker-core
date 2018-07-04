@@ -8,7 +8,9 @@
 namespace Spryker\Zed\ProductList\Persistence;
 
 use Generated\Shared\Transfer\ProductListTransfer;
+use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
 use Orm\Zed\ProductList\Persistence\Map\SpyProductListCategoryTableMap;
 use Orm\Zed\ProductList\Persistence\Map\SpyProductListProductConcreteTableMap;
 use Orm\Zed\ProductList\Persistence\Map\SpyProductListTableMap;
@@ -81,6 +83,44 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
         );
 
         return array_unique($whitelistIds);
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return int[]
+     */
+    public function getConcreteProductBlacklistIds(int $idProductConcrete): array
+    {
+        return $this->getFactory()
+            ->createProductListProductConcreteQuery()
+            ->select(SpyProductListProductConcreteTableMap::COL_FK_PRODUCT_LIST)
+            ->filterByFkProduct($idProductConcrete)
+            ->useSpyProductListQuery(null, Criteria::LEFT_JOIN)
+                ->filterByType(SpyProductListTableMap::COL_TYPE_BLACKLIST)
+            ->endUse()
+            ->groupByFkProductList()
+            ->find()
+            ->toArray();
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return int[]
+     */
+    public function getConcreteProductWhitelistIds(int $idProductConcrete): array
+    {
+        return $this->getFactory()
+            ->createProductListProductConcreteQuery()
+            ->select(SpyProductListProductConcreteTableMap::COL_FK_PRODUCT_LIST)
+            ->filterByFkProduct($idProductConcrete)
+            ->useSpyProductListQuery(null, Criteria::LEFT_JOIN)
+                ->filterByType(SpyProductListTableMap::COL_TYPE_WHITELIST)
+            ->endUse()
+            ->groupByFkProductList()
+            ->find()
+            ->toArray();
     }
 
     /**
@@ -201,5 +241,73 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
     {
         return $this->getFactory()
             ->createProductListMapper();
+    }
+
+    /**
+     * @param string $key
+     *
+     * @return bool
+     */
+    public function hasKey(string $key): bool
+    {
+        return $this->getFactory()
+            ->createProductListQuery()
+            ->filterByKey($key)
+            ->exists();
+    }
+
+    /**
+     * @param int[] $productListIds
+     *
+     * @return int[]
+     */
+    public function getProductAbstractIdsByProductListIds(array $productListIds): array
+    {
+        return array_unique(
+            array_merge(
+                $this->getProductAbstractIdsRelatedToProductConcrete($productListIds),
+                $this->getProductAbstractIdsRelatedToCategories($productListIds)
+            )
+        );
+    }
+
+    /**
+     * @param int[] $productListIds
+     *
+     * @return int[]
+     */
+    protected function getProductAbstractIdsRelatedToProductConcrete(array $productListIds): array
+    {
+        return $this->getFactory()
+            ->createProductListQuery()
+            ->filterByIdProductList_In($productListIds)
+            ->useSpyProductListProductConcreteQuery(null, Criteria::INNER_JOIN)
+                ->useSpyProductQuery(null, Criteria::INNER_JOIN)
+                    ->leftJoinSpyProductAbstract()
+                ->endUse()
+            ->endUse()
+            ->select(SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT)
+            ->find()
+            ->toArray();
+    }
+
+    /**
+     * @param int[] $productListIds
+     *
+     * @return int[]
+     */
+    protected function getProductAbstractIdsRelatedToCategories(array $productListIds): array
+    {
+        return $this->getFactory()
+            ->createProductListQuery()
+            ->filterByIdProductList_In($productListIds)
+            ->useSpyProductListCategoryQuery(null, Criteria::INNER_JOIN)
+                ->useSpyCategoryQuery(null, Criteria::INNER_JOIN)
+                    ->leftJoinSpyProductCategory()
+                ->endUse()
+            ->endUse()
+            ->select(SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT)
+            ->find()
+            ->toArray();
     }
 }

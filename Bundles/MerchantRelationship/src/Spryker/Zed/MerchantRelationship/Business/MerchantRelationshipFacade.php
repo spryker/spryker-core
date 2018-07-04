@@ -88,9 +88,9 @@ class MerchantRelationshipFacade extends AbstractFacade implements MerchantRelat
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
      */
-    public function listMerchantRelation(): array
+    public function getMerchantRelationshipCollection(): array
     {
         return $this->getRepository()
-            ->listMerchantRelation();
+            ->getMerchantRelationshipCollection();
     }
 }

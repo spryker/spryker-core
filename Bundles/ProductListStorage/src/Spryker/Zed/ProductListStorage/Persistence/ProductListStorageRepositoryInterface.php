@@ -10,8 +10,6 @@ namespace Spryker\Zed\ProductListStorage\Persistence;
 interface ProductListStorageRepositoryInterface
 {
     /**
-     * @api
-     *
      * @param int[] $productConcreteIds
      *
      * @return int[]
@@ -19,8 +17,6 @@ interface ProductListStorageRepositoryInterface
     public function findProductAbstractIdsByProductConcreteIds(array $productConcreteIds): array;
 
     /**
-     * @api
-     *
      * @param int[] $productAbstractIds
      *
      * @return int[]
@@ -28,8 +24,6 @@ interface ProductListStorageRepositoryInterface
     public function findProductConcreteIdsByProductAbstractIds(array $productAbstractIds): array;
 
     /**
-     * @api
-     *
      * @param int[] $productAbstractIds
      *
      * @return \Generated\Shared\Transfer\SpyProductAbstractProductListStorageEntityTransfer[]
@@ -37,11 +31,16 @@ interface ProductListStorageRepositoryInterface
     public function findProductAbstractProductListStorageEntities(array $productAbstractIds): array;
 
     /**
-     * @api
-     *
      * @param int[] $productConcreteIds
      *
      * @return \Generated\Shared\Transfer\SpyProductConcreteProductListStorageEntityTransfer[]
      */
     public function findProductConcreteProductListStorageEntities(array $productConcreteIds): array;
+
+    /**
+     * @param int[] $productListIds
+     *
+     * @return int[]
+     */
+    public function findProductConcreteIdsByProductListIds(array $productListIds): array;
 }

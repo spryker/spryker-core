@@ -26,7 +26,7 @@ class IndexController extends AbstractController
         $table = $this->getFactory()->createProductListTable();
 
         return [
-            'table' => $table->render(),
+            'productListTable' => $table->render(),
         ];
     }
 

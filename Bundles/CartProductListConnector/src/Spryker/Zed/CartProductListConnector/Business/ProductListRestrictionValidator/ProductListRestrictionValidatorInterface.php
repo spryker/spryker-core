@@ -31,4 +31,13 @@ interface ProductListRestrictionValidatorInterface
         array $customerWhitelistIds,
         array $customerBlacklistIds
     ): bool;
+
+    /**
+     * @param int $idProductConcrete
+     * @param int[] $customerWhitelistIds
+     * @param int[] $customerBlacklistIds
+     *
+     * @return bool
+     */
+    public function isProductConcreteRestricted(int $idProductConcrete, array $customerWhitelistIds, array $customerBlacklistIds): bool;
 }

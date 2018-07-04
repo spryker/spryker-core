@@ -82,6 +82,38 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
      *
      * @api
      *
+     * @param int $idProductConcrete
+     *
+     * @return int[]
+     */
+    public function getProductAbstractBlacklistIdsByIdProductConcrete(int $idProductConcrete): array
+    {
+        return $this->getFactory()
+            ->createProductListReader()
+            ->getProductAbstractBlacklistIdsByIdProductConcrete($idProductConcrete);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idProductConcrete
+     *
+     * @return int[]
+     */
+    public function getProductAbstractWhitelistIdsByIdProductConcrete(int $idProductConcrete): array
+    {
+        return $this->getFactory()
+            ->createProductListReader()
+            ->getProductAbstractWhitelistIdsByIdProductConcrete($idProductConcrete);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
      *
      * @return \Generated\Shared\Transfer\ProductListTransfer
@@ -91,5 +123,21 @@ class ProductListFacade extends AbstractFacade implements ProductListFacadeInter
         return $this->getFactory()
             ->createProductListReader()
             ->getProductListById($productListTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $productListIds
+     *
+     * @return int[]
+     */
+    public function getProductAbstractIdsByProductListIds(array $productListIds): array
+    {
+        return $this->getFactory()
+            ->createProductListReader()
+            ->getProductAbstractIdsByProductListIds($productListIds);
     }
 }

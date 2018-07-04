@@ -70,6 +70,30 @@ interface ProductListFacadeInterface
 
     /**
      * Specification:
+     *  - Retrieves product concrete whitelists by product abstract id.
+     *
+     * @api
+     *
+     * @param int $idProductConcrete
+     *
+     * @return int[]
+     */
+    public function getProductAbstractBlacklistIdsByIdProductConcrete(int $idProductConcrete): array;
+
+    /**
+     * Specification:
+     *  - Retrieves product concrete whitelists by product abstract id.
+     *
+     * @api
+     *
+     * @param int $idProductConcrete
+     *
+     * @return int[]
+     */
+    public function getProductAbstractWhitelistIdsByIdProductConcrete(int $idProductConcrete): array;
+
+    /**
+     * Specification:
      * - Finds a Product List by ProductListTransfer::idProductList in the transfer.
      * - Hydrate ProductListTransfer and relations to products and categories.
      *
@@ -80,4 +104,16 @@ interface ProductListFacadeInterface
      * @return \Generated\Shared\Transfer\ProductListTransfer
      */
     public function getProductListById(ProductListTransfer $productListTransfer): ProductListTransfer;
+
+    /**
+     * Specification:
+     *  - Retrieves product abstract ids whitelists by product list ids.
+     *
+     * @api
+     *
+     * @param int[] $productListIds
+     *
+     * @return int[]
+     */
+    public function getProductAbstractIdsByProductListIds(array $productListIds): array;
 }

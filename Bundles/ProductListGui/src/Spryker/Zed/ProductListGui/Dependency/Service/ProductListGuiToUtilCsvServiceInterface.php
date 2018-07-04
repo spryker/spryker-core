@@ -7,14 +7,23 @@
 
 namespace Spryker\Zed\ProductListGui\Dependency\Service;
 
-use SplFileObject;
+use Generated\Shared\Transfer\CsvFileTransfer;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 interface ProductListGuiToUtilCsvServiceInterface
 {
     /**
-     * @param \SplFileObject $file
+     * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
      *
      * @return array
      */
-    public function readFile(SplFileObject $file): array;
+    public function readFile(UploadedFile $file): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\CsvFileTransfer $csvFileTransfer
+     *
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse
+     */
+    public function exportFile(CsvFileTransfer $csvFileTransfer): StreamedResponse;
 }

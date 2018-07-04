@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\CartProductListConnector\Business\ProductListRestrictionValidator\ProductListRestrictionValidatorInterface;
 use Spryker\Zed\CartProductListConnector\Dependency\Facade\CartProductListConnectorToMessengerFacadeInterface;
+use Spryker\Zed\CartProductListConnector\Dependency\Facade\CartProductListConnectorToProductFacadeInterface;
 
 class RestrictedItemsFilter implements RestrictedItemsFilterInterface
 {
@@ -29,15 +30,23 @@ class RestrictedItemsFilter implements RestrictedItemsFilterInterface
     protected $productListRestrictionValidator;
 
     /**
+     * @var \Spryker\Zed\CartProductListConnector\Dependency\Facade\CartProductListConnectorToProductFacadeInterface
+     */
+    protected $productFacade;
+
+    /**
      * @param \Spryker\Zed\CartProductListConnector\Dependency\Facade\CartProductListConnectorToMessengerFacadeInterface $messengerFacade
      * @param \Spryker\Zed\CartProductListConnector\Business\ProductListRestrictionValidator\ProductListRestrictionValidatorInterface $productListRestrictionValidator
+     * @param \Spryker\Zed\CartProductListConnector\Dependency\Facade\CartProductListConnectorToProductFacadeInterface $productFacade
      */
     public function __construct(
         CartProductListConnectorToMessengerFacadeInterface $messengerFacade,
-        ProductListRestrictionValidatorInterface $productListRestrictionValidator
+        ProductListRestrictionValidatorInterface $productListRestrictionValidator,
+        CartProductListConnectorToProductFacadeInterface $productFacade
     ) {
         $this->messengerFacade = $messengerFacade;
         $this->productListRestrictionValidator = $productListRestrictionValidator;
+        $this->productFacade = $productFacade;
     }
 
     /**
@@ -47,7 +56,7 @@ class RestrictedItemsFilter implements RestrictedItemsFilterInterface
      */
     public function filterRestrictedItems(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        if ($quoteTransfer->getCustomer()->getCustomerProductListCollection()) {
+        if ($quoteTransfer->getCustomer() && $quoteTransfer->getCustomer()->getCustomerProductListCollection()) {
             $customerProductListCollectionTransfer = $quoteTransfer->getCustomer()->getCustomerProductListCollection();
             $customerBlacklistIds = $this->getCustomerBlacklistIds($customerProductListCollectionTransfer);
             $customerWhitelistIds = $this->getCustomerWhitelistIds($customerProductListCollectionTransfer);
@@ -66,12 +75,16 @@ class RestrictedItemsFilter implements RestrictedItemsFilterInterface
      */
     protected function removeRestrictedItemsFromQuote(QuoteTransfer $quoteTransfer, $customerBlacklistIds, $customerWhitelistIds): void
     {
-        if ($customerBlacklistIds || $customerWhitelistIds) {
-            foreach ($quoteTransfer->getItems() as $key => $itemTransfer) {
-                if ($this->productListRestrictionValidator->isProductAbstractRestricted($itemTransfer->getIdProductAbstract(), $customerWhitelistIds, $customerBlacklistIds)) {
-                    $quoteTransfer->getItems()->offsetUnset($key);
-                    $this->addFilterMessage($itemTransfer->getSku());
-                }
+        if (!$customerBlacklistIds && !$customerWhitelistIds) {
+            return;
+        }
+        foreach ($quoteTransfer->getItems() as $key => $itemTransfer) {
+            $idProductConcrete = $this->productFacade->findProductConcreteIdBySku($itemTransfer->getSku());
+            if (!$idProductConcrete || $this->productListRestrictionValidator->isProductConcreteRestricted($idProductConcrete, $customerWhitelistIds, $customerBlacklistIds)
+                || $this->productListRestrictionValidator->isProductAbstractRestricted($itemTransfer->getIdProductAbstract(), $customerWhitelistIds, $customerBlacklistIds)
+            ) {
+                $quoteTransfer->getItems()->offsetUnset($key);
+                $this->addFilterMessage($itemTransfer->getSku());
             }
         }
     }

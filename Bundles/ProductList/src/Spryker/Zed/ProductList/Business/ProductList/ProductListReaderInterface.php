@@ -14,14 +14,14 @@ interface ProductListReaderInterface
     /**
      * @param int $idProductAbstract
      *
-     * @return array
+     * @return int[]
      */
     public function getProductAbstractBlacklistIdsByIdProductAbstract(int $idProductAbstract): array;
 
     /**
      * @param int $idProductAbstract
      *
-     * @return array
+     * @return int[]
      */
     public function getProductAbstractWhitelistIdsByIdProductAbstract(int $idProductAbstract): array;
 
@@ -31,4 +31,25 @@ interface ProductListReaderInterface
      * @return \Generated\Shared\Transfer\ProductListTransfer
      */
     public function getProductListById(ProductListTransfer $productListTransfer): ProductListTransfer;
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return int[]
+     */
+    public function getProductAbstractBlacklistIdsByIdProductConcrete(int $idProductConcrete): array;
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return int[]
+     */
+    public function getProductAbstractWhitelistIdsByIdProductConcrete(int $idProductConcrete): array;
+
+    /**
+     * @param int[] $productListIds
+     *
+     * @return int[]
+     */
+    public function getProductAbstractIdsByProductListIds(array $productListIds): array;
 }

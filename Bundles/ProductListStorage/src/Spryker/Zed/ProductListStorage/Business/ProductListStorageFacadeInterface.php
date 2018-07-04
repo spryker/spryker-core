@@ -68,4 +68,16 @@ interface ProductListStorageFacadeInterface
      * @return int[]
      */
     public function findProductConcreteIdsByProductAbstractIds(array $productAbstractIds): array;
+
+    /**
+     * Specification:
+     * - Publishes product list changes to abstract and concrete storage.
+     *
+     * @api
+     *
+     * @param int[] $productListIds
+     *
+     * @return void
+     */
+    public function publishProductList(array $productListIds): void;
 }

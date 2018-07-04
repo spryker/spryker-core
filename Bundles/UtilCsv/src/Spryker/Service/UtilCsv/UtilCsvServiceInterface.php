@@ -7,19 +7,33 @@
 
 namespace Spryker\Service\UtilCsv;
 
-use SplFileObject;
+use Generated\Shared\Transfer\CsvFileTransfer;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 interface UtilCsvServiceInterface
 {
     /**
      * Specification:
-     * - Get string[][] from file object
+     * - Read data from uploaded csv file and returns content
      *
      * @api
      *
-     * @param \SplFileObject $file
+     * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
      *
      * @return array
      */
-    public function readFile(SplFileObject $file): array;
+    public function readFile(UploadedFile $file): array;
+
+    /**
+     * Specification:
+     * - Generates csv file and returns response with file for export
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CsvFileTransfer $csvFileTransfer
+     *
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse
+     */
+    public function exportFile(CsvFileTransfer $csvFileTransfer): StreamedResponse;
 }

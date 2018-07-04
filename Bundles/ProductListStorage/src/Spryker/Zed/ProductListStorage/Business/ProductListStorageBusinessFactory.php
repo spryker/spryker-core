@@ -16,6 +16,8 @@ use Spryker\Zed\ProductListStorage\Business\ProductListProductAbstractStorage\Pr
 use Spryker\Zed\ProductListStorage\Business\ProductListProductAbstractStorage\ProductListProductAbstractStorageWriterInterface;
 use Spryker\Zed\ProductListStorage\Business\ProductListProductConcreteStorage\ProductListProductConcreteStorageWriter;
 use Spryker\Zed\ProductListStorage\Business\ProductListProductConcreteStorage\ProductListProductConcreteStorageWriterInterface;
+use Spryker\Zed\ProductListStorage\Business\ProductListStorage\ProductListStorageWriter;
+use Spryker\Zed\ProductListStorage\Business\ProductListStorage\ProductListStorageWriterInterface;
 use Spryker\Zed\ProductListStorage\Dependency\Facade\ProductListStorageToLocaleFacadeInterface;
 use Spryker\Zed\ProductListStorage\Dependency\Facade\ProductListStorageToProductCategoryFacadeInterface;
 use Spryker\Zed\ProductListStorage\Dependency\Facade\ProductListStorageToProductListFacadeInterface;
@@ -71,6 +73,19 @@ class ProductListStorageBusinessFactory extends AbstractBusinessFactory
     public function createProductConcreteReader(): ProductConcreteReaderInterface
     {
         return new ProductConcreteReader(
+            $this->getRepository()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductListStorage\Business\ProductListStorage\ProductListStorageWriterInterface
+     */
+    public function createProductListStorageWriter(): ProductListStorageWriterInterface
+    {
+        return new ProductListStorageWriter(
+            $this->createProductListProductAbstractStorageWriter(),
+            $this->createProductListProductConcreteStorageWriter(),
+            $this->getProductListFacade(),
             $this->getRepository()
         );
     }

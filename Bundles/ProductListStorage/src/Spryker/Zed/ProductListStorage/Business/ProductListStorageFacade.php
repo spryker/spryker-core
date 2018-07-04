@@ -93,4 +93,20 @@ class ProductListStorageFacade extends AbstractFacade implements ProductListStor
             ->createProductConcreteReader()
             ->findProductConcreteIdsByProductAbstractIds($productAbstractIds);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $productListIds
+     *
+     * @return void
+     */
+    public function publishProductList(array $productListIds): void
+    {
+        $this->getFactory()
+            ->createProductListStorageWriter()
+            ->publish($productListIds);
+    }
 }

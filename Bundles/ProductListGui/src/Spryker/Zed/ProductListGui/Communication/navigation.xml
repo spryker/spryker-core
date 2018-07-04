@@ -2,14 +2,40 @@
 <config>
     <product>
         <pages>
-            <ProductListGUI>
+            <product-list>
                 <label>Product Lists</label>
                 <title>Product Lists</title>
                 <bundle>product-list-gui</bundle>
                 <controller>index</controller>
                 <action>index</action>
                 <visible>1</visible>
-            </ProductListGUI>
+                <pages>
+                    <product-list-create>
+                        <label>Add List</label>
+                        <title>Add List</title>
+                        <bundle>product-list-gui</bundle>
+                        <controller>product-list</controller>
+                        <action>create</action>
+                        <visible>0</visible>
+                    </product-list-create>
+                    <product-list-edit>
+                        <label>Edit List</label>
+                        <title>Edit List</title>
+                        <bundle>product-list-gui</bundle>
+                        <controller>product-list</controller>
+                        <action>edit</action>
+                        <visible>0</visible>
+                    </product-list-edit>
+                    <product-list-delete>
+                        <label>Remove List</label>
+                        <title>Remove List</title>
+                        <bundle>product-list-gui</bundle>
+                        <controller>product-list</controller>
+                        <action>delete</action>
+                        <visible>0</visible>
+                    </product-list-delete>
+                </pages>
+            </product-list>
         </pages>
     </product>
 </config>

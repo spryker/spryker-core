@@ -19,6 +19,7 @@ use Spryker\Zed\ProductListSearch\Communication\Plugin\Event\Listener\ProductLis
 use Spryker\Zed\ProductListSearch\Communication\Plugin\Event\Listener\ProductListProductCategorySearchListener;
 use Spryker\Zed\ProductListSearch\Communication\Plugin\Event\Listener\ProductListProductConcretePublishSearchListener;
 use Spryker\Zed\ProductListSearch\Communication\Plugin\Event\Listener\ProductListProductConcreteSearchListener;
+use Spryker\Zed\ProductListSearch\Communication\Plugin\Event\Listener\ProductListSearchListener;
 use Spryker\Zed\ProductListSearch\Communication\Plugin\Event\Listener\ProductPublishSearchListener;
 use Spryker\Zed\ProductListSearch\Communication\Plugin\Event\Listener\ProductSearchListener;
 
@@ -56,6 +57,8 @@ class ProductListSearchEventSubscriber extends AbstractPlugin implements EventSu
         $this->addProductCreateSearchListener($eventCollection);
         $this->addProductUpdateSearchListener($eventCollection);
         $this->addProductDeleteSearchListener($eventCollection);
+
+        $this->addProductListUpdateSearchListener($eventCollection);
 
         return $eventCollection;
     }
@@ -218,5 +221,15 @@ class ProductListSearchEventSubscriber extends AbstractPlugin implements EventSu
     protected function addProductListProductConcreteDeleteSearchListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection->addListenerQueued(ProductListEvents::ENTITY_SPY_PRODUCT_LIST_PRODUCT_CONCRETE_DELETE, new ProductListProductConcreteSearchListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductListUpdateSearchListener(EventCollectionInterface $eventCollection): void
+    {
+        $eventCollection->addListenerQueued(ProductListEvents::ENTITY_SPY_PRODUCT_LIST_UPDATE, new ProductListSearchListener());
     }
 }

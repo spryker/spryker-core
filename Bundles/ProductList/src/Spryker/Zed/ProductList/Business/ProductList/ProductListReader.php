@@ -67,6 +67,26 @@ class ProductListReader implements ProductListReaderInterface
     }
 
     /**
+     * @param int $idProductConcrete
+     *
+     * @return int[]
+     */
+    public function getProductAbstractBlacklistIdsByIdProductConcrete(int $idProductConcrete): array
+    {
+        return $this->productListRepository->getConcreteProductBlacklistIds($idProductConcrete);
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return int[]
+     */
+    public function getProductAbstractWhitelistIdsByIdProductConcrete(int $idProductConcrete): array
+    {
+        return $this->productListRepository->getConcreteProductWhitelistIds($idProductConcrete);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
      *
      * @return \Generated\Shared\Transfer\ProductListTransfer
@@ -91,5 +111,15 @@ class ProductListReader implements ProductListReaderInterface
         $productListTransfer->setProductListProductConcreteRelation($productListProductConcreteRelationTransfer);
 
         return $productListTransfer;
+    }
+
+    /**
+     * @param int[] $productListIds
+     *
+     * @return int[]
+     */
+    public function getProductAbstractIdsByProductListIds(array $productListIds): array
+    {
+        return $this->productListRepository->getProductAbstractIdsByProductListIds($productListIds);
     }
 }

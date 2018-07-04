@@ -1,0 +1,11 @@
+{% extends '@ProductListGui/ProductList/create.twig' %}
+
+{% set widget_title = 'Edit List' | trans %}
+
+{% block action %}
+    {{ parent() }}
+    {% if idProductList is defined %}
+        {{ viewActionButton(url('/product-list-gui/export', {'id-product-list': idProductList}), 'Export' | trans) }}
+        {{ removeActionButton(url('/product-list-gui/product-list/delete', {'id-product-list': idProductList}), 'Remove List' | trans) }}
+    {% endif %}
+{% endblock %}

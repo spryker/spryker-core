@@ -1,0 +1,35 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Product List removal confirmation' %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
+
+{% block action %}
+    {{ parent() }}
+    {{ backActionButton(app.request.headers.get('referer'), 'Back' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' %}
+
+        {% block widget_content %}
+            <div class="row">
+                <div class="col-sm-12">
+                    <span>{{ 'Are you sure you want to remove this list? Removing this list will also remove all associated functionalities.' | trans }}</span>
+                </div>
+            </div>
+            <hr/>
+            <div class="row">
+                <div class="col-sm-12">
+                    <a href="{{ app.request.headers.get('referer') }}" class="btn btn-back">{{ 'Back' | trans }}</a>
+                    <a href="{{ url('/product-list-gui/product-list/confirm', {'id-product-list': idProductList}) }}" class="btn btn-danger safe-submit">{{ 'Remove List' | trans }}</a>
+                </div>
+            </div>
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

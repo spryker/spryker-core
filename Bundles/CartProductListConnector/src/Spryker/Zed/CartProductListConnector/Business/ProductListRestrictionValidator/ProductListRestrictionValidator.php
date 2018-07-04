@@ -50,7 +50,12 @@ class ProductListRestrictionValidator implements ProductListRestrictionValidator
     public function validateItemAddition(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
     {
         $responseTransfer = (new CartPreCheckResponseTransfer())->setIsSuccess(true);
-        $customerProductListCollectionTransfer = $cartChangeTransfer->getQuote()->getCustomer()->getCustomerProductListCollection();
+        $customerTransfer = $cartChangeTransfer->getQuote()->getCustomer();
+        if (!$customerTransfer || !$customerTransfer->getCustomerProductListCollection()) {
+            return $responseTransfer;
+        }
+
+        $customerProductListCollectionTransfer = $customerTransfer->getCustomerProductListCollection();
         $customerBlacklistIds = $this->getCustomerBlacklistIds($customerProductListCollectionTransfer);
         $customerWhitelistIds = $this->getCustomerWhitelistIds($customerProductListCollectionTransfer);
 
@@ -76,7 +81,10 @@ class ProductListRestrictionValidator implements ProductListRestrictionValidator
         array $customerBlacklistIds
     ): void {
         $idProductAbstract = $this->productFacade->getProductAbstractIdByConcreteSku($item->getSku());
-        if ($this->isProductAbstractRestricted($idProductAbstract, $customerWhitelistIds, $customerBlacklistIds)) {
+        $idProductConcrete = $this->productFacade->findProductConcreteIdBySku($item->getSku());
+        if (!$idProductConcrete || $this->isProductAbstractRestricted($idProductAbstract, $customerWhitelistIds, $customerBlacklistIds)
+            || $this->isProductConcreteRestricted($idProductAbstract, $customerWhitelistIds, $customerBlacklistIds)
+        ) {
             $this->addViolation(static::MESSAGE_INFO_RESTRICTED_PRODUCT_REMOVED, $item->getSku(), $responseTransfer);
         }
     }
@@ -135,7 +143,29 @@ class ProductListRestrictionValidator implements ProductListRestrictionValidator
         $isProductInBlacklist = count(array_intersect($productAbstractBlacklistIds, $customerBlacklistIds));
         $isProductInWhitelist = count(array_intersect($productAbstractWhitelistIds, $customerWhitelistIds));
 
-        return $isProductInBlacklist || !$isProductInWhitelist;
+        return $isProductInBlacklist || (count($productAbstractWhitelistIds) && !$isProductInWhitelist);
+    }
+
+    /**
+     * @param int $idProductConcrete
+     * @param array $customerWhitelistIds
+     * @param array $customerBlacklistIds
+     *
+     * @return bool
+     */
+    public function isProductConcreteRestricted(int $idProductConcrete, array $customerWhitelistIds, array $customerBlacklistIds): bool
+    {
+        if (!$customerBlacklistIds && !$customerWhitelistIds) {
+            return false;
+        }
+
+        $productAbstractBlacklistIds = $this->productListFacade->getProductAbstractBlacklistIdsByIdProductConcrete($idProductConcrete);
+        $productAbstractWhitelistIds = $this->productListFacade->getProductAbstractWhitelistIdsByIdProductConcrete($idProductConcrete);
+
+        $isProductInBlacklist = count(array_intersect($productAbstractBlacklistIds, $customerBlacklistIds));
+        $isProductInWhitelist = count(array_intersect($productAbstractWhitelistIds, $customerWhitelistIds));
+
+        return $isProductInBlacklist || (count($productAbstractWhitelistIds) && !$isProductInWhitelist);
     }
 
     /**

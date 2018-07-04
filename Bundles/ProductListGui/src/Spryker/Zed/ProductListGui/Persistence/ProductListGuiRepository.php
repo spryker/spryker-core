@@ -7,96 +7,189 @@
 
 namespace Spryker\Zed\ProductListGui\Persistence;
 
-use Generated\Shared\Transfer\LocaleTransfer;
+use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
+use Orm\Zed\Category\Persistence\SpyCategoryNode;
+use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
+use Orm\Zed\Category\Persistence\SpyCategoryQuery;
+use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
+use Spryker\Zed\PropelOrm\Business\Model\Formatter\PropelArraySetFormatter;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
  * @method \Spryker\Zed\ProductListGui\Persistence\ProductListGuiPersistenceFactory getFactory()
  */
 class ProductListGuiRepository extends AbstractRepository implements ProductListGuiRepositoryInterface
 {
-    /** @see \Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap::COL_FK_CATEGORY */
-    public const COLUMN_FK_CATEGORY = 'fk_category';
-    /** @see \Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap::COL_NAME */
-    public const COLUMN_CATEGORY_NAME = 'name';
-    /** @see \Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT */
-    public const COLUMN_FK_PRODUCT = 'fk_product';
     /** @see \Orm\Zed\Product\Persistence\Map\SpyProductTableMap::COL_ID_PRODUCT */
     public const COLUMN_ID_PRODUCT = 'id_product';
-    /** @see \Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap::COL_NAME */
-    public const COLUMN_PRODUCT_NAME = 'name';
+    /** @see \Orm\Zed\Product\Persistence\Map\SpyProductTableMap::COL_SKU */
+    public const COLUMN_SKU = 'sku';
 
     /**
-     * @api
-     *
-     * @module Category
-     *
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return string[] [<category id> => <category name in english locale>]
+     * @return array
      */
-    public function getAllCategoryNames(LocaleTransfer $localeTransfer): array
+    public function getCategoriesWithPaths(): array
     {
-        $categoryAttributes = $this->getFactory()
-            ->getCategoryAttributePropelQuery()
-            ->select([
-                static::COLUMN_FK_CATEGORY,
-                static::COLUMN_CATEGORY_NAME,
-            ])
-            ->filterByFkLocale($localeTransfer->getIdLocale())
-            ->find();
+        $idLocale = $this->getIdLocale();
+        $categoryEntityList = $this->queryCategory($idLocale)->find();
 
-        $categoryNames = [];
-        foreach ($categoryAttributes as $categoryAttribute) {
-            $idCategory = $categoryAttribute[static::COLUMN_FK_CATEGORY];
-            $categoryNames[$idCategory] = $categoryAttribute[static::COLUMN_CATEGORY_NAME];
+        $categoryNodes = [];
+
+        foreach ($categoryEntityList as $categoryEntity) {
+            foreach ($categoryEntity->getNodes() as $nodeEntity) {
+                $path = $this->buildPath($nodeEntity);
+                $categoryName = $categoryEntity->getLocalisedAttributes($idLocale)->getFirst()->getName();
+                $categoryNodes[$categoryEntity->getIdCategory()] = trim($path . '/' . $categoryName, '/');
+            }
         }
 
-        return $categoryNames;
+        return $categoryNodes;
     }
 
     /**
-     * @api
+     * @uses \Orm\Zed\Product\Persistence\SpyProductQuery
      *
-     * @module Product
+     * @param string[] $sku
      *
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return string[] [<product id> => <product name in english locale>]
+     * @return int[]
      */
-    public function getAllProductNames(LocaleTransfer $localeTransfer): array
-    {
-        $productAttributes = $this->getFactory()
-            ->getProductAttributePropelQuery()
-            ->select([
-                static::COLUMN_FK_PRODUCT,
-                static::COLUMN_PRODUCT_NAME,
-            ])
-            ->filterByFkLocale($localeTransfer->getIdLocale())
-            ->find();
-
-        $productNames = [];
-        foreach ($productAttributes as $productAttribute) {
-            $idProduct = $productAttribute[static::COLUMN_FK_PRODUCT];
-            $productNames[$idProduct] = $productAttribute[static::COLUMN_PRODUCT_NAME];
-        }
-
-        return $productNames;
-    }
-
-    /**
-     * @param string ...$skus
-     *
-     * @return int[] product ids
-     */
-    public function getProductsIdsFromSkus(string ... $skus): array
+    public function findProductIdsByProductConcreteSku(array $sku): array
     {
         return $this->getFactory()
             ->getProductQuery()
-            ->filterBySku_In($skus)
+            ->filterBySku_In($sku)
             ->select([
                 static::COLUMN_ID_PRODUCT,
             ])
+            ->find()
+            ->getData();
+    }
+
+    /**
+     * @uses \Orm\Zed\Product\Persistence\SpyProductQuery
+     *
+     * @param int[] $productIds
+     *
+     * @return string[]
+     */
+    public function findProductSkuByIdProductConcrete(array $productIds): array
+    {
+        return $this->getFactory()
+            ->getProductQuery()
+            ->filterByIdProduct_In($productIds)
+            ->select([
+                static::COLUMN_SKU,
+            ])
+            ->find()
+            ->getData();
+    }
+
+    /**
+     * @param int $idNode
+     * @param int $idLocale
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
+     */
+    public function queryCategoryPath(
+        $idNode,
+        $idLocale
+    ): SpyCategoryNodeQuery {
+        $depth = 0;
+        $nodeQuery = $this->getFactory()->getCategoryNodePropelQuery();
+
+        $nodeQuery
+            ->useClosureTableQuery()
+                ->orderByFkCategoryNodeDescendant(Criteria::DESC)
+                ->orderByDepth(Criteria::DESC)
+                ->filterByFkCategoryNodeDescendant($idNode)
+                ->filterByDepth($depth, Criteria::NOT_EQUAL)
+            ->endUse()
+            ->useCategoryQuery()
+                ->useAttributeQuery()
+                    ->filterByFkLocale($idLocale)
+                ->endUse()
+            ->endUse();
+
+        $nodeQuery->setFormatter(new PropelArraySetFormatter());
+
+        return $nodeQuery;
+    }
+
+    /**
+     * @module Product
+     *
+     * @param int[] $productIds
+     *
+     * @return array
+     */
+    public function findProductConcreteDataByIds(array $productIds): array
+    {
+        return $this->getFactory()
+            ->getProductQuery()
+            ->joinSpyProductLocalizedAttributes()
+            ->useSpyProductLocalizedAttributesQuery()
+                ->filterByFkLocale($this->getIdLocale())
+            ->endUse()
+            ->withColumn(SpyProductTableMap::COL_ID_PRODUCT, 'id_product')
+            ->withColumn(SpyProductLocalizedAttributesTableMap::COL_NAME, 'name')
+            ->withColumn(SpyProductTableMap::COL_SKU, 'sku')
+            ->select(
+                [
+                    SpyProductTableMap::COL_ID_PRODUCT,
+                    SpyProductTableMap::COL_SKU,
+                    SpyProductLocalizedAttributesTableMap::COL_NAME,
+                ]
+            )
+            ->filterByIdProduct_In($productIds)
+            ->find()
+            ->toArray();
+    }
+
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $categoryNodeEntity
+     *
+     * @return string
+     */
+    protected function buildPath(SpyCategoryNode $categoryNodeEntity)
+    {
+        $idLocale = $this->getIdLocale();
+        $idCategoryNode = $categoryNodeEntity->getIdCategoryNode();
+        $pathTokens = $this->queryCategoryPath($idCategoryNode, $idLocale)
+            ->clearSelectColumns()
+            ->addSelectColumn('name')
             ->find();
+
+        return implode('/', $pathTokens);
+    }
+
+    /**
+     * @param int $idLocale
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
+     */
+    protected function queryCategory($idLocale): SpyCategoryQuery
+    {
+        return $this->getFactory()
+            ->getCategoryPropelQuery()
+            ->joinAttribute()
+            ->innerJoinNode()
+            ->addAnd(
+                SpyCategoryAttributeTableMap::COL_FK_LOCALE,
+                $idLocale,
+                Criteria::EQUAL
+            );
+    }
+
+    /**
+     * @return int
+     */
+    protected function getIdLocale(): int
+    {
+        return $this->getFactory()
+            ->getLocaleFacade()
+            ->getCurrentLocale()
+            ->getIdLocale();
     }
 }

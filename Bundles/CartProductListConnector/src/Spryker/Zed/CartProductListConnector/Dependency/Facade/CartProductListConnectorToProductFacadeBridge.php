@@ -31,4 +31,14 @@ class CartProductListConnectorToProductFacadeBridge implements CartProductListCo
     {
         return $this->productFacade->getProductAbstractIdByConcreteSku($concreteSku);
     }
+
+    /**
+     * @param string $sku
+     *
+     * @return int|null
+     */
+    public function findProductConcreteIdBySku(string $sku)
+    {
+        return $this->productFacade->findProductConcreteIdBySku($sku);
+    }
 }

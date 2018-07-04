@@ -7,23 +7,24 @@
 
 namespace Spryker\Service\UtilCsv\Reader;
 
-use SplFileObject;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FileReader implements FileReaderInterface
 {
     /**
-     * @param \SplFileObject $file
+     * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
      *
      * @return array
      */
-    public function readFile(SplFileObject $file): array
+    public function readFile(UploadedFile $file): array
     {
-        $file->setFlags(SplFileObject::READ_CSV);
+        $fileObject = $file->openFile();
 
         $result = [];
-        foreach ($file as $row) {
-            $result[] = $row;
+        while (!$fileObject->eof()) {
+            $result[] = $fileObject->fgetcsv();
         }
+
         return $result;
     }
 }

@@ -22,4 +22,18 @@ interface CartProductListConnectorToProductListFacadeInterface
      * @return int[]
      */
     public function getProductAbstractWhitelistIdsByIdProductAbstract(int $idProductAbstract): array;
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return int[]
+     */
+    public function getProductAbstractBlacklistIdsByIdProductConcrete(int $idProductConcrete): array;
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return int[]
+     */
+    public function getProductAbstractWhitelistIdsByIdProductConcrete(int $idProductConcrete): array;
 }

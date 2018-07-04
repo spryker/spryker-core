@@ -33,6 +33,13 @@ interface ProductListRepositoryInterface
     public function getProductListById(int $idProductList): ProductListTransfer;
 
     /**
+     * @param string $key
+     *
+     * @return bool
+     */
+    public function hasKey(string $key): bool;
+
+    /**
      * @param int $idProductAbstract
      *
      * @return int[]
@@ -45,4 +52,25 @@ interface ProductListRepositoryInterface
      * @return int[]
      */
     public function getAbstractProductWhitelistIds(int $idProductAbstract): array;
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return int[]
+     */
+    public function getConcreteProductBlacklistIds(int $idProductConcrete): array;
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return int[]
+     */
+    public function getConcreteProductWhitelistIds(int $idProductConcrete): array;
+
+    /**
+     * @param int[] $productListIds
+     *
+     * @return int[]
+     */
+    public function getProductAbstractIdsByProductListIds(array $productListIds): array;
 }

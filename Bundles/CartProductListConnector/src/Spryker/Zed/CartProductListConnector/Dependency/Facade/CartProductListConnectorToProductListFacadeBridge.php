@@ -41,4 +41,24 @@ class CartProductListConnectorToProductListFacadeBridge implements CartProductLi
     {
         return $this->productListFacade->getProductAbstractWhitelistIdsByIdProductAbstract($idProductAbstract);
     }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return int[]
+     */
+    public function getProductAbstractBlacklistIdsByIdProductConcrete(int $idProductConcrete): array
+    {
+        return $this->productListFacade->getProductAbstractBlacklistIdsByIdProductConcrete($idProductConcrete);
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return int[]
+     */
+    public function getProductAbstractWhitelistIdsByIdProductConcrete(int $idProductConcrete): array
+    {
+        return $this->productListFacade->getProductAbstractBlacklistIdsByIdProductConcrete($idProductConcrete);
+    }
 }

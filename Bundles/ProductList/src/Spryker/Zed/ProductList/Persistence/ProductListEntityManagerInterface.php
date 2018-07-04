@@ -26,6 +26,20 @@ interface ProductListEntityManagerInterface
     public function deleteProductList(ProductListTransfer $productListTransfer): void;
 
     /**
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return void
+     */
+    public function deleteProductListProductRelations(ProductListTransfer $productListTransfer): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return void
+     */
+    public function deleteProductListCategoryRelations(ProductListTransfer $productListTransfer): void;
+
+    /**
      * @param int $idProductList
      * @param int[] $categoryIds
      *
