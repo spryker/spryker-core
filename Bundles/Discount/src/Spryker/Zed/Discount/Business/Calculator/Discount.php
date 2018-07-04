@@ -115,7 +115,9 @@ class Discount implements DiscountInterface
      */
     protected function addNonApplicableDiscountsToQuote(QuoteTransfer $quoteTransfer, array $discounts)
     {
-        $quoteTransfer->setUsedNotAppliedVoucherCodes([]);
+        if (count($quoteTransfer->getUsedNotAppliedVoucherCodes()) === 0) {
+            $quoteTransfer->setUsedNotAppliedVoucherCodes([]);
+        }
 
         foreach ($discounts as $discount) {
             if ($discount->getVoucherCode()) {
