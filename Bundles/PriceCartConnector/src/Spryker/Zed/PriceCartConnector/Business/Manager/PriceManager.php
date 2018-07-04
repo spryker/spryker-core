@@ -238,10 +238,20 @@ class PriceManager implements PriceManagerInterface
             ->setSku($itemTransfer->getSku())
             ->setPriceTypeName($this->priceProductFacade->getDefaultPriceTypeName());
 
-        if (property_exists($priceProductFilterTransfer, 'quote')) {
+        if ($this->isPriceProductDimensionEnabled($priceProductFilterTransfer)) {
             $priceProductFilterTransfer->setQuote($quoteTransfer);
         }
 
         return $priceProductFilterTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
+     *
+     * @return bool
+     */
+    protected function isPriceProductDimensionEnabled(PriceProductFilterTransfer $priceProductFilterTransfer): bool
+    {
+        return property_exists($priceProductFilterTransfer, 'quote');
     }
 }

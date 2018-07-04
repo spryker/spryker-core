@@ -56,6 +56,8 @@ class CurrencyAwareCatalogSearchResultFormatterPlugin extends AbstractElasticsea
     }
 
     /**
+     * Fallback method to work with PriceProduct module without price dimensions support.
+     *
      * @param array $result
      *
      * @return mixed|array
