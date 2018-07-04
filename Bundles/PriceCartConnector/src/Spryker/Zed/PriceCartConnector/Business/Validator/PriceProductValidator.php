@@ -61,7 +61,6 @@ class PriceProductValidator implements PriceProductValidatorInterface
             );
 
             $priceProductFilterTransfer->setQuote($cartChangeTransfer->getQuote());
-            $priceProductFilterTransfer->setItem($itemTransfer);
 
             if ($this->priceProductFacade->hasValidPriceFor($priceProductFilterTransfer)) {
                 continue;

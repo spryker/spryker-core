@@ -75,6 +75,12 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
             ->fromArray($priceProductFilterTransfer->toArray(), true);
 
         return $priceProductCriteriaTransfer
+            ->setPriceDimension(
+                $priceProductFilterTransfer->getPriceDimension()
+            )
+            ->setQuote(
+                $priceProductFilterTransfer->getQuote()
+            )
             ->setIdCurrency(
                 $this->getCurrencyFromFilter($priceProductFilterTransfer)->getIdCurrency()
             )->setIdStore(

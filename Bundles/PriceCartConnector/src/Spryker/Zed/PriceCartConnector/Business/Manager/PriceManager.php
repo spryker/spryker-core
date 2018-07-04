@@ -237,7 +237,6 @@ class PriceManager implements PriceManagerInterface
             ->setCurrencyIsoCode($quoteTransfer->getCurrency()->getCode())
             ->setSku($itemTransfer->getSku())
             ->setPriceTypeName($this->priceProductFacade->getDefaultPriceTypeName())
-            ->setItem($itemTransfer)
             ->setQuote($quoteTransfer);
     }
 }
