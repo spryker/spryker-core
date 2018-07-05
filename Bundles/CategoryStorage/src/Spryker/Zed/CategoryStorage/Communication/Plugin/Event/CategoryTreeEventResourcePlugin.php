@@ -42,7 +42,7 @@ class CategoryTreeEventResourcePlugin extends AbstractPlugin implements EventRes
      *
      * @return null
      */
-    public function queryData($ids = [])
+    public function queryData(array $ids = [])
     {
         return null;
     }
@@ -66,9 +66,9 @@ class CategoryTreeEventResourcePlugin extends AbstractPlugin implements EventRes
      *
      * @api
      *
-     * @return string
+     * @return null
      */
-    public function getIdColumnName(): string
+    public function getIdColumnName()
     {
         return null;
     }

@@ -44,9 +44,9 @@ class ProductQuantityEventResourcePlugin extends AbstractPlugin implements Event
      *
      * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
      */
-    public function getData($ids = []): array
+    public function getData(array $ids = []): array
     {
-        if(!empty($ids)) {
+        if (!empty($ids)) {
             $this->getFacade()->findProductQuantityByProductIdsTransfers($ids);
         }
         return $this->getFacade()->findProductQuantityTransfers();

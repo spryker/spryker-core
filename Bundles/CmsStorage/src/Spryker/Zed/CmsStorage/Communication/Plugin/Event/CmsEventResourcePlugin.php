@@ -45,7 +45,7 @@ class CmsEventResourcePlugin extends AbstractPlugin implements EventResourceQuer
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
      */
-    public function queryData($ids = []): SpyCmsPageQuery
+    public function queryData(array $ids = []): SpyCmsPageQuery
     {
         return $this->getQueryContainer()->queryCmsPageVersionByIds($ids);
     }

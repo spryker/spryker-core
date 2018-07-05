@@ -45,7 +45,7 @@ class ProductConcreteImageEventResourcePlugin extends AbstractPlugin implements 
      *
      * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery
      */
-    public function queryData($ids = []): SpyProductImageSetToProductImageQuery
+    public function queryData(array $ids = []): SpyProductImageSetToProductImageQuery
     {
         $query = $this->getQueryContainer()->queryProductImageSetToProductImageByIds($ids);
 

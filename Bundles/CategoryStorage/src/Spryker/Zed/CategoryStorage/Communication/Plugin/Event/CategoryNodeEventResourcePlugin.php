@@ -45,7 +45,7 @@ class CategoryNodeEventResourcePlugin extends AbstractPlugin implements EventRes
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
-    public function queryData($ids = []): SpyCategoryNodeQuery
+    public function queryData(array $ids = []): SpyCategoryNodeQuery
     {
         $query = $this->getQueryContainer()->queryCategoryNodeByIds($ids);
 

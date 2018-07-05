@@ -131,7 +131,7 @@ class CategoryPageSearchQueryContainer extends AbstractQueryContainer implements
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
-    public function queryCategoryNodesByIds($ids)
+    public function queryCategoryNodesByIds(array $ids): SpyCategoryNodeQuery
     {
         $query = $this->getFactory()
             ->getCategoryQueryContainer()

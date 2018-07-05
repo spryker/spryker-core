@@ -45,7 +45,7 @@ class ProductConcreteEventResourcePlugin extends AbstractPlugin implements Event
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery
      */
-    public function queryData($ids = []): SpyProductLocalizedAttributesQuery
+    public function queryData(array $ids = []): SpyProductLocalizedAttributesQuery
     {
         $query = $this->getQueryContainer()->queryProductConcreteByIds($ids);
 

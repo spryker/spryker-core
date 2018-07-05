@@ -45,7 +45,7 @@ class PriceProductAbstractEventResourcePlugin extends AbstractPlugin implements 
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */
-    public function queryData($ids = []): SpyPriceProductQuery
+    public function queryData(array $ids = []): SpyPriceProductQuery
     {
         $query = $this->getQueryContainer()->queryAllProductAbstractIdsByPriceProductIds($ids);
 

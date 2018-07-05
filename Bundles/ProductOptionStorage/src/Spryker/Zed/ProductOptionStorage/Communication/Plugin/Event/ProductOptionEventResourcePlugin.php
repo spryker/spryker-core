@@ -45,7 +45,7 @@ class ProductOptionEventResourcePlugin extends AbstractPlugin implements EventRe
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductAbstractProductOptionGroupQuery
      */
-    public function queryData($ids = []): SpyProductAbstractProductOptionGroupQuery
+    public function queryData(array $ids = []): SpyProductAbstractProductOptionGroupQuery
     {
         $query = $this->getQueryContainer()->queryProductOptionsByProductAbstractIds($ids);
 
@@ -54,7 +54,6 @@ class ProductOptionEventResourcePlugin extends AbstractPlugin implements EventRe
         }
 
         return $query;
-
     }
 
     /**

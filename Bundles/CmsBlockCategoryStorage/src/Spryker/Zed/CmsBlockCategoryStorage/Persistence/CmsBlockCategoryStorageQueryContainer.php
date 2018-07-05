@@ -63,11 +63,11 @@ class CmsBlockCategoryStorageQueryContainer extends AbstractQueryContainer imple
     /**
      * @api
      *
-     * @param array $cmsBlockCategoriesIds
+     * @param int[] $cmsBlockCategoriesIds
      *
      * @return $this|\Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery
      */
-    public function queryCmsBlockCategoriesByIds(array $cmsBlockCategoriesIds)
+    public function queryCmsBlockCategoriesByIds(array $cmsBlockCategoriesIds): SpyCmsBlockCategoryConnectorQuery
     {
         return $this->getFactory()
             ->getCmsBlockCategoryConnectorQuery()

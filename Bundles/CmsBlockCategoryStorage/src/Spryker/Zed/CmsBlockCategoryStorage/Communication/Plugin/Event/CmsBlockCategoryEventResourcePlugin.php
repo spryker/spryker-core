@@ -45,7 +45,7 @@ class CmsBlockCategoryEventResourcePlugin extends AbstractPlugin implements Even
      *
      * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery
      */
-    public function queryData($ids = []): SpyCmsBlockCategoryConnectorQuery
+    public function queryData(array $ids = []): SpyCmsBlockCategoryConnectorQuery
     {
         $query = $this->getQueryContainer()->queryCmsBlockCategoriesByIds($ids);
 

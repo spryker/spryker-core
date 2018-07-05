@@ -44,13 +44,13 @@ class ProductConcreteMeasurementUnitEventResourcePlugin extends AbstractPlugin i
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
      */
-    public function getData($ids = []): array
+    public function getData(array $ids = []): array
     {
         if (!empty($ids)) {
             return $this->getFacade()->getSalesUnitsByIds($ids);
         }
-        return $this->getFacade()->getSalesUnits();
 
+        return $this->getFacade()->getSalesUnits();
     }
 
     /**

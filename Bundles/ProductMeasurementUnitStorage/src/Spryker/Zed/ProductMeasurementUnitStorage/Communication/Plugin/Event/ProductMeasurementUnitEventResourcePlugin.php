@@ -44,7 +44,7 @@ class ProductMeasurementUnitEventResourcePlugin extends AbstractPlugin implement
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
      */
-    public function getData($ids = []): array
+    public function getData(array $ids = []): array
     {
         if (!empty($ids)) {
             return $this->getFacade()->findAllProductMeasurementUnitTransfers();

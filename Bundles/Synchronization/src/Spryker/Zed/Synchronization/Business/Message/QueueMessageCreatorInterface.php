@@ -16,7 +16,7 @@ interface QueueMessageCreatorInterface
      * @param string|null $store
      * @param string|null $queuePoolName
      *
-     * @return mixed
+     * @return \Generated\Shared\Transfer\QueueSendMessageTransfer
      */
     public function createQueueMessage(SynchronizationQueueMessageTransfer $synchronizationQueueMessageTransfer, $store = null, $queuePoolName = null);
 }

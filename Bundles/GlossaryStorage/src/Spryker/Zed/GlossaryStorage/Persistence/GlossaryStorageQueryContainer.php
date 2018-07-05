@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\GlossaryStorage\Persistence;
 
+use Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
@@ -55,7 +56,7 @@ class GlossaryStorageQueryContainer extends AbstractQueryContainer implements Gl
      *
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
      */
-    public function queryGlossaryKeysByIds(array $glossaryKeysIds)
+    public function queryGlossaryKeysByIds(array $glossaryKeysIds): SpyGlossaryKeyQuery
     {
         return $this->getFactory()
             ->getGlossaryQueryContainer()

@@ -32,11 +32,11 @@ interface CmsBlockCategoryStorageQueryContainerInterface extends QueryContainerI
     /**
      * @api
      *
-     * @param array $cmsBlockCategoriesIds
+     * @param int[] $cmsBlockCategoriesIds
      *
      * @return $this|\Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery
      */
-    public function queryCmsBlockCategoriesByIds(array $cmsBlockCategoriesIds);
+    public function queryCmsBlockCategoriesByIds(array $cmsBlockCategoriesIds): SpyCmsBlockCategoryConnectorQuery;
 
     /**
      * @api

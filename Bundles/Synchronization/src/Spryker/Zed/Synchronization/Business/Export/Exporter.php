@@ -103,11 +103,11 @@ class Exporter implements ExporterInterface
     protected function syncData(SynchronizationDataPluginInterface $plugin, array $synchronizationEntities)
     {
         $queueSendTransfers = [];
-        foreach ($synchronizationEntities as $synchronizedEntity) {
-            $store = $this->getStore($plugin->hasStore(), $synchronizedEntity);
+        foreach ($synchronizationEntities as $synchronizationEntity) {
+            $store = $this->getStore($plugin->hasStore(), $synchronizationEntity);
             $syncQueueMessage = (new SynchronizationQueueMessageTransfer())
-                ->setKey($synchronizedEntity->getKey())
-                ->setValue($synchronizedEntity->getData())
+                ->setKey($synchronizationEntity->getKey())
+                ->setValue($synchronizationEntity->getData())
                 ->setResource($plugin->getResourceName())
                 ->setParams($plugin->getParams());
 

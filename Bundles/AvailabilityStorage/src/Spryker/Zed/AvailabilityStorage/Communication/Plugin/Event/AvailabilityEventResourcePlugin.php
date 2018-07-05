@@ -45,7 +45,7 @@ class AvailabilityEventResourcePlugin extends AbstractPlugin implements EventRes
      *
      * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery
      */
-    public function queryData($ids = []): SpyAvailabilityAbstractQuery
+    public function queryData(array $ids = []): SpyAvailabilityAbstractQuery
     {
         $query = $this->getQueryContainer()->queryAvailabilityAbstractWithRelationsByIds($ids);
 

@@ -55,7 +55,7 @@ class AvailabilitySynchronizationDataPlugin extends AbstractPlugin implements Sy
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function queryData($ids = [])
+    public function queryData(array $ids = [])
     {
         $query = $this->getQueryContainer()->queryAvailabilityStorageByAvailabilityAbstractIds($ids);
 

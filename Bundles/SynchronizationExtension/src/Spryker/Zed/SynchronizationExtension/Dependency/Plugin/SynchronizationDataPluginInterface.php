@@ -40,7 +40,7 @@ interface SynchronizationDataPluginInterface
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function queryData($ids = []);
+    public function queryData(array $ids = []);
 
     /**
      * Specification:

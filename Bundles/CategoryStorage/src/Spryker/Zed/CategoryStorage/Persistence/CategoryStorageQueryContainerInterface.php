@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CategoryStorage\Persistence;
 
+use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface CategoryStorageQueryContainerInterface extends QueryContainerInterface
@@ -36,7 +37,7 @@ interface CategoryStorageQueryContainerInterface extends QueryContainerInterface
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
-    public function queryCategoryNodeByIds($categoryNodeIds);
+    public function queryCategoryNodeByIds(array $categoryNodeIds): SpyCategoryNodeQuery;
 
     /**
      * @api

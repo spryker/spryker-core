@@ -45,7 +45,7 @@ class NavigationEventResourcePlugin extends AbstractPlugin implements EventResou
      *
      * @return \Orm\Zed\Navigation\Persistence\SpyNavigationQuery
      */
-    public function queryData($ids = []): SpyNavigationQuery
+    public function queryData(array $ids = []): SpyNavigationQuery
     {
         $query = $this->getQueryContainer()->queryNavigation($ids);
 

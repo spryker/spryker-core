@@ -45,7 +45,7 @@ class ProductReviewEventResourcePlugin extends AbstractPlugin implements EventRe
      *
      * @return \Orm\Zed\ProductReview\Persistence\SpyProductReviewQuery
      */
-    public function queryData($ids = []): SpyProductReviewQuery
+    public function queryData(array $ids = []): SpyProductReviewQuery
     {
         $query = $this->getQueryContainer()->queryProductReviewsByIds($ids);
 

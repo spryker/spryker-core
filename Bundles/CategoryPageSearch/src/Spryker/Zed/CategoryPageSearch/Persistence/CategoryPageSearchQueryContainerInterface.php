@@ -71,5 +71,5 @@ interface CategoryPageSearchQueryContainerInterface extends QueryContainerInterf
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
-    public function queryCategoryNodesByIds($ids);
+    public function queryCategoryNodesByIds(array $ids): SpyCategoryNodeQuery;
 }
