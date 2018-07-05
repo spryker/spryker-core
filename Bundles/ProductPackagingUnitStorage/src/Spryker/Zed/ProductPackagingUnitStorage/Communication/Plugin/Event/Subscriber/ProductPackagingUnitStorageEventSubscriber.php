@@ -11,8 +11,8 @@ use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductPackagingUnit\Dependency\ProductPackagingUnitEvents;
-use Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Event\Listener\ProductPackagingLeadProductStorageListener;
 use Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Event\Listener\ProductAbstractPackagingStorageListener;
+use Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Event\Listener\ProductPackagingLeadProductStorageListener;
 use Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Event\Listener\ProductPackagingUnitTypePublishStorageListener;
 
 /**

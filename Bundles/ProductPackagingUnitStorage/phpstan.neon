@@ -2,7 +2,6 @@ parameters:
     bootstrap: %rootDir%/../../../phpstan-bootstrap.php
 
     ignoreErrors:
-            - '#Propel\\Runtime\\ActiveQuery\\ModelCriteria::#'
             - '#Call to an undefined method Generated\\Client\\Ide\\AutoCompletion\|Spryker\\Shared\\Kernel\\LocatorLocatorInterface::[a-zA-Z]*\(\)#'
             - '#Call to an undefined method Generated\\Zed\\Ide\\AutoCompletion\|Spryker\\Shared\\Kernel\\LocatorLocatorInterface::[a-zA-Z]*\(\)#'
 
