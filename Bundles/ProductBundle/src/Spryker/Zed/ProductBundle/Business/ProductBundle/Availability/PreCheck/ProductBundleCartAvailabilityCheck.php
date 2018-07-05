@@ -11,10 +11,7 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Orm\Zed\Availability\Persistence\SpyAvailability;
-use Orm\Zed\Product\Persistence\SpyProduct;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
@@ -73,42 +70,12 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
 
             $itemsInCart->append($itemTransfer);
 
-            $this->addCartPreCheckFailedItems(
-                $cartChangeTransfer->getQuote(),
-                $itemTransfer,
-                $storeTransfer,
-                $cartPreCheckFailedItems
-            );
-        }
-
-        return $this->createCartPreCheckResponseTransfer($cartPreCheckFailedItems);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $cartPreCheckFailedItems
-     *
-     * @return void
-     */
-    protected function addCartPreCheckFailedItems(
-        QuoteTransfer $quoteTransfer,
-        ItemTransfer $itemTransfer,
-        StoreTransfer $storeTransfer,
-        ArrayObject $cartPreCheckFailedItems
-    ): void {
-        $messageTransfers = $this->checkItemAvailability(
-            $quoteTransfer->getItems(),
-            $itemTransfer,
-            $storeTransfer
-        );
-
-        if (!empty($messageTransfers)) {
-            foreach ($messageTransfers as $messageTransfer) {
+            if ($messageTransfer !== null) {
                 $cartPreCheckFailedItems[] = $messageTransfer;
             }
         }
+
+        return $this->createCartPreCheckResponseTransfer($cartPreCheckFailedItems);
     }
 
     /**
@@ -180,22 +147,6 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $bundleItemTransfer
-     * @param \Orm\Zed\Product\Persistence\SpyProduct $productEntity
-     *
-     * @return \Generated\Shared\Transfer\MessageTransfer
-     */
-    protected function createBundleItemIsNotAvailableMessageTransfer(ItemTransfer $bundleItemTransfer, SpyProduct $productEntity): MessageTransfer
-    {
-        return (new MessageTransfer())
-            ->setValue(static::ERROR_BUNDLE_ITEM_UNAVAILABLE_TRANSLATION_KEY)
-            ->setParameters([
-                static::ERROR_BUNDLE_ITEM_UNAVAILABLE_PARAMETER_BUNDLE_SKU => $bundleItemTransfer->getSku(),
-                static::ERROR_BUNDLE_ITEM_UNAVAILABLE_PARAMETER_PRODUCT_SKU => $productEntity->getSku(),
-            ]);
-    }
-
-    /**
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
@@ -252,7 +203,7 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return \Generated\Shared\Transfer\MessageTransfer|null
      */
     protected function checkItemAvailability(
         ArrayObject $itemsInCart,
@@ -265,15 +216,7 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
             return $this->checkBundleAvailability($itemsInCart, $bundledProducts, $itemTransfer, $storeTransfer);
         }
 
-        $regularItemAvailability = $this->checkRegularItemAvailability($itemsInCart, $itemTransfer, $storeTransfer);
-
-        if ($regularItemAvailability !== null) {
-            return [
-                $regularItemAvailability,
-            ];
-        }
-
-        return [];
+        return $this->checkRegularItemAvailability($itemsInCart, $itemTransfer, $storeTransfer);
     }
 
     /**
@@ -282,7 +225,7 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return \Generated\Shared\Transfer\MessageTransfer|null
      */
     protected function checkBundleAvailability(
         ArrayObject $itemsInCart,
@@ -290,61 +233,16 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
         ItemTransfer $itemTransfer,
         StoreTransfer $storeTransfer
     ) {
-        $unavailableProductEntities = $this->getUnavailableItemsInBundle(
-            $itemsInCart,
-            $itemTransfer,
-            $bundledProducts,
-            $storeTransfer
-        );
-
-        return $this->getUnavailableBundleItemsMessageTransfers(
-            $itemTransfer,
-            $storeTransfer,
-            $unavailableProductEntities
-        );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param \Orm\Zed\Product\Persistence\SpyProduct[] $unavailableProductEntities
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProduct[]
-     */
-    protected function getUnavailableBundleItemsMessageTransfers(
-        ItemTransfer $itemTransfer,
-        StoreTransfer $storeTransfer,
-        array $unavailableProductEntities
-    ): array {
-        $failedBundleItems = [];
-
-        foreach ($unavailableProductEntities as $unavailableProductEntity) {
-            $availabilityEntity = $this->findAvailabilityEntityBySku($itemTransfer->getSku(), $storeTransfer);
-
-            $failedBundleItems[] = $this->getItemUnavailableErrorMessageTransfer(
-                $availabilityEntity,
-                $itemTransfer,
-                $unavailableProductEntity
-            );
+        if ($this->isAllBundleItemsAvailable($itemsInCart, $bundledProducts, $itemTransfer->getQuantity(), $storeTransfer)) {
+            return null;
         }
 
-        return $failedBundleItems;
-    }
+        $availabilityEntity = $this->findAvailabilityEntityBySku($itemTransfer->getSku(), $storeTransfer);
 
-    /**
-     * @param \Orm\Zed\Availability\Persistence\SpyAvailability $availabilityEntity
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Orm\Zed\Product\Persistence\SpyProduct $productEntity
-     *
-     * @return \Generated\Shared\Transfer\MessageTransfer
-     */
-    protected function getItemUnavailableErrorMessageTransfer(SpyAvailability $availabilityEntity, ItemTransfer $itemTransfer, SpyProduct $productEntity): MessageTransfer
-    {
-        if ($availabilityEntity->getQuantity() > 0) {
-            return $this->createItemIsNotAvailableMessageTransfer($availabilityEntity->getQuantity(), $itemTransfer->getSku());
-        }
-
-        return $this->createBundleItemIsNotAvailableMessageTransfer($itemTransfer, $productEntity);
+        return $this->createItemIsNotAvailableMessageTransfer(
+            $availabilityEntity->getQuantity(),
+            $itemTransfer->getSku()
+        );
     }
 
     /**
@@ -361,37 +259,6 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
         }
 
         $availability = $this->calculateRegularItemAvailability($itemTransfer, $itemsInCart, $storeTransfer);
-
         return $this->createItemIsNotAvailableMessageTransfer($availability, $itemTransfer->getSku());
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemsInCart
-     * @param \Generated\Shared\Transfer\ItemTransfer $bundleItemTransfer
-     * @param \Propel\Runtime\Collection\ObjectCollection $bundledProducts
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProduct[]
-     */
-    protected function getUnavailableItemsInBundle(
-        ArrayObject $itemsInCart,
-        ItemTransfer $bundleItemTransfer,
-        ObjectCollection $bundledProducts,
-        StoreTransfer $storeTransfer
-    ): array {
-        $unavailableItems = [];
-
-        foreach ($bundledProducts as $productBundleEntity) {
-            $bundledProductConcreteEntity = $productBundleEntity->getSpyProductRelatedByFkBundledProduct();
-
-            $sku = $bundledProductConcreteEntity->getSku();
-            $totalBundledItemQuantity = $productBundleEntity->getQuantity() * $bundleItemTransfer->getQuantity();
-
-            if (!$this->checkIfItemIsSellable($itemsInCart, $sku, $storeTransfer, $totalBundledItemQuantity)) {
-                $unavailableItems[] = $bundledProductConcreteEntity;
-            }
-        }
-
-        return $unavailableItems;
     }
 }

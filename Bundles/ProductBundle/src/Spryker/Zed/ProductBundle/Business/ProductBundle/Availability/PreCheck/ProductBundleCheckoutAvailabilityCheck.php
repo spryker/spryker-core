@@ -9,10 +9,8 @@ namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\PreCheck
 use ArrayObject;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Orm\Zed\Product\Persistence\SpyProduct;
 use Propel\Runtime\Collection\ObjectCollection;
 
 class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements ProductBundleCheckoutAvailabilityCheckInterface
@@ -37,29 +35,12 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
             return true;
         }
 
-        $this->addErrorMessagesToCheckoutResponseTransfer(
-            $checkoutErrorMessages,
-            $checkoutResponseTransfer
-        )->setIsSuccess(false);
-
-        return false;
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\CheckoutErrorTransfer[] $checkoutErrorMessages
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
-     */
-    protected function addErrorMessagesToCheckoutResponseTransfer(
-        ArrayObject $checkoutErrorMessages,
-        CheckoutResponseTransfer $checkoutResponseTransfer
-    ): CheckoutResponseTransfer {
+        $checkoutResponseTransfer->setIsSuccess(false);
         foreach ($checkoutErrorMessages as $checkoutErrorTransfer) {
             $checkoutResponseTransfer->addError($checkoutErrorTransfer);
         }
 
-        return $checkoutResponseTransfer;
+        return false;
     }
 
     /**
@@ -71,60 +52,31 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
     {
         $storeTransfer = $quoteTransfer->getStore();
         $storeTransfer->requireName();
+
         $storeTransfer = $this->storeFacade->getStoreByName($storeTransfer->getName());
 
         $checkoutErrorMessages = new ArrayObject();
         $uniqueBundleItems = $this->getUniqueBundleItems($quoteTransfer);
+        $itemsInCart = $quoteTransfer->getItems();
 
         foreach ($uniqueBundleItems as $bundleItemTransfer) {
-            $unavailableProductEntities = $this->checkAllCheckoutBundledItemsAvailable(
-                $quoteTransfer->getItems(),
-                $this->findBundledProducts($bundleItemTransfer->getSku()),
-                $storeTransfer
-            );
-
-            if (!empty($unavailableProductEntities)) {
-                $this->addBundledItemErrors($unavailableProductEntities, $bundleItemTransfer, $checkoutErrorMessages);
+            $bundledItems = $this->findBundledProducts($bundleItemTransfer->getSku());
+            if (!$this->isAllCheckoutBundledItemsAvailable($itemsInCart, $bundledItems, $storeTransfer)) {
+                $checkoutErrorMessages[] = $this->createCheckoutResponseTransfer();
             }
         }
-
         return $checkoutErrorMessages;
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\SpyProduct[] $unavailableProductEntities
-     * @param \Generated\Shared\Transfer\ItemTransfer $bundleItemTransfer
-     * @param \ArrayObject|\Generated\Shared\Transfer\CheckoutErrorTransfer[] $checkoutErrorMessages
-     *
-     * @return void
-     */
-    protected function addBundledItemErrors(
-        array $unavailableProductEntities,
-        ItemTransfer $bundleItemTransfer,
-        ArrayObject $checkoutErrorMessages
-    ): void {
-        foreach ($unavailableProductEntities as $unavailableProductEntity) {
-            $checkoutErrorMessages[] = $this->createCheckoutResponseTransfer(
-                $bundleItemTransfer,
-                $unavailableProductEntity
-            );
-        }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $bundleItemTransfer
-     * @param \Orm\Zed\Product\Persistence\SpyProduct $productEntity
-     *
      * @return \Generated\Shared\Transfer\CheckoutErrorTransfer
      */
-    protected function createCheckoutResponseTransfer(ItemTransfer $bundleItemTransfer, SpyProduct $productEntity): CheckoutErrorTransfer
+    protected function createCheckoutResponseTransfer()
     {
-        return (new CheckoutErrorTransfer())
-            ->setMessage(static::CHECKOUT_PRODUCT_BUNDLE_UNAVAILABLE_TRANSLATION_KEY)
-            ->setParameters([
-                static::CHECKOUT_PRODUCT_BUNDLE_UNAVAILABLE_PARAMETER_BUNDLE_SKU => $bundleItemTransfer->getSku(),
-                static::CHECKOUT_PRODUCT_BUNDLE_UNAVAILABLE_PARAMETER_PRODUCT_SKU => $productEntity->getSku(),
-            ]);
+        $checkoutErrorTransfer = new CheckoutErrorTransfer();
+        $checkoutErrorTransfer->setMessage(static::CHECKOUT_PRODUCT_BUNDLE_UNAVAILABLE_TRANSLATION_KEY);
+
+        return $checkoutErrorTransfer;
     }
 
     /**
@@ -132,25 +84,23 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
      * @param \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\Collection\ObjectCollection $bundledItems
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProduct[]
+     * @return bool
      */
-    protected function checkAllCheckoutBundledItemsAvailable(
+    protected function isAllCheckoutBundledItemsAvailable(
         ArrayObject $currentCartItems,
         ObjectCollection $bundledItems,
         StoreTransfer $storeTransfer
-    ): array {
-        $unavailableProductEntities = [];
-
+    ) {
         foreach ($bundledItems as $productBundleEntity) {
             $bundledProductConcreteEntity = $productBundleEntity->getSpyProductRelatedByFkBundledProduct();
 
             $sku = $bundledProductConcreteEntity->getSku();
             if (!$this->checkIfItemIsSellable($currentCartItems, $sku, $storeTransfer)) {
-                $unavailableProductEntities[] = $bundledProductConcreteEntity;
+                return false;
             }
         }
 
-        return $unavailableProductEntities;
+        return true;
     }
 
     /**

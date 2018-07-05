@@ -19,10 +19,6 @@
         <property name="parameters" type="array"/>
     </transfer>
 
-    <transfer name="TranslatedCheckoutErrorMessages">
-        <property name="errorMessages" type="string[]" singular="errorMessage"/>
-    </transfer>
-
     <transfer name="CheckoutResponse">
         <property name="isSuccess" type="bool" />
         <property name="errors" type="CheckoutError[]" singular="error" />

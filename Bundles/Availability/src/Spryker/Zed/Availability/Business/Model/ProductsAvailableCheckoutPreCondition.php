@@ -98,29 +98,28 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
     }
 
     /**
-     * @param string $quoteItemSku
-     *
      * @return \Generated\Shared\Transfer\CheckoutErrorTransfer
      */
-    protected function createCheckoutErrorTransfer(string $quoteItemSku): CheckoutErrorTransfer
+    protected function createCheckoutErrorTransfer()
     {
-        return (new CheckoutErrorTransfer())
-            ->setErrorCode($this->availabilityConfig->getProductUnavailableErrorCode())
-            ->setMessage(static::CHECKOUT_PRODUCT_UNAVAILABLE_TRANSLATION_KEY)
-            ->setParameters([
-                static::CHECKOUT_PRODUCT_UNAVAILABLE_PARAMETER_SKU => $quoteItemSku,
-            ]);
+        return new CheckoutErrorTransfer();
     }
 
     /**
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
-     * @param string $quoteItemSku
+     * @param string $sku
      *
      * @return void
      */
-    protected function addAvailabilityErrorToCheckoutResponse(CheckoutResponseTransfer $checkoutResponse, string $quoteItemSku): void
+    protected function addAvailabilityErrorToCheckoutResponse(CheckoutResponseTransfer $checkoutResponse, string $sku)
     {
-        $checkoutErrorTransfer = $this->createCheckoutErrorTransfer($quoteItemSku);
+        $checkoutErrorTransfer = $this->createCheckoutErrorTransfer();
+        $checkoutErrorTransfer
+            ->setErrorCode($this->availabilityConfig->getProductUnavailableErrorCode())
+            ->setMessage(static::CHECKOUT_PRODUCT_UNAVAILABLE_TRANSLATION_KEY)
+            ->setParameters([
+                static::CHECKOUT_PRODUCT_UNAVAILABLE_PARAMETER_SKU => $sku,
+            ]);
 
         $checkoutResponse
             ->addError($checkoutErrorTransfer)
