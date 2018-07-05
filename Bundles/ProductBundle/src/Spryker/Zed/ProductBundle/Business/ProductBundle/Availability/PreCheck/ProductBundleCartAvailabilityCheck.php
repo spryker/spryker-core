@@ -75,7 +75,9 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
             }
         }
 
-        return $this->createCartPreCheckResponseTransfer($cartPreCheckFailedItems);
+        return $this->createCartPreCheckResponseTransfer(
+            new ArrayObject($cartPreCheckFailedItems)
+        );
     }
 
     /**
@@ -220,7 +222,11 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
             );
         }
 
-        $bundledProductMessages[] = $this->checkRegularItemAvailability($itemsInCart, $itemTransfer, $storeTransfer);
+        $regularItemAvailability = $this->checkRegularItemAvailability($itemsInCart, $itemTransfer, $storeTransfer);
+
+        if ($regularItemAvailability !== null) {
+            $bundledProductMessages[] = $regularItemAvailability;
+        }
 
         return $bundledProductMessages;
     }
@@ -248,6 +254,7 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
                     ->setValue(static::ERROR_BUNDLE_ITEM_UNAVAILABLE_TRANSLATION_KEY)
                     ->setParameters($unavailabeBundleItem);
             }
+            return $unavailableBundleItemsMessages;
         }
 
         $availabilityEntity = $this->findAvailabilityEntityBySku($itemTransfer->getSku(), $storeTransfer);
