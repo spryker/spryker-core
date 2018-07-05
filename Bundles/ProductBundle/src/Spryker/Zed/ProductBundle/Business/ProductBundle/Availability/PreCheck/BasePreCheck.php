@@ -15,6 +15,10 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
 class BasePreCheck
 {
+    protected const ERROR_BUNDLE_ITEM_UNAVAILABLE_TRANSLATION_KEY = 'product_bundle.unavailable';
+    protected const ERROR_BUNDLE_ITEM_UNAVAILABLE_PARAMETER_BUNDLE_SKU = '%bundleSku%';
+    protected const ERROR_BUNDLE_ITEM_UNAVAILABLE_PARAMETER_PRODUCT_SKU = '%productSku%';
+
     /**
      * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface
      */
@@ -63,25 +67,30 @@ class BasePreCheck
      * @param int $itemQuantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return bool
+     * @return array
      */
-    protected function isAllBundleItemsAvailable(
+    protected function getUnavailableBundleItems(
         ArrayObject $items,
         ObjectCollection $bundledProducts,
         $itemQuantity,
         StoreTransfer $storeTransfer
     ) {
+        $unavailableBundleItems = [];
+
         foreach ($bundledProducts as $productBundleEntity) {
             $bundledProductConcreteEntity = $productBundleEntity->getSpyProductRelatedByFkBundledProduct();
 
             $sku = $bundledProductConcreteEntity->getSku();
             $totalBundledItemQuantity = $productBundleEntity->getQuantity() * $itemQuantity;
             if (!$this->checkIfItemIsSellable($items, $sku, $storeTransfer, $totalBundledItemQuantity)) {
-                return false;
+                $unavailableBundleItems[] = [
+                    static::ERROR_BUNDLE_ITEM_UNAVAILABLE_PARAMETER_BUNDLE_SKU => $sku, // TODO: Check the correctness.
+                    static::ERROR_BUNDLE_ITEM_UNAVAILABLE_PARAMETER_PRODUCT_SKU => $sku,
+                ];
             }
         }
 
-        return true;
+        return $unavailableBundleItems;
     }
 
     /**
