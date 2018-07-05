@@ -101,7 +101,7 @@ interface ProductPackagingUnitFacadeInterface
 
     /**
      * Specification:
-     * - Retrieve productAbstractId by productPackagingUnitTypeIds.
+     * - Retrieves the list of product abstract IDs which are associated with any of the provided packaging unit type IDs.
      *
      * @api
      *
