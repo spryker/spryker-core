@@ -22,8 +22,8 @@ use Spryker\Zed\ProductPackagingUnit\Business\Model\Installer\ProductPackagingUn
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Installer\ProductPackagingUnitTypeInstallerInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Oms\LeadProductReservationCalculator;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Oms\LeadProductReservationCalculatorInterface;
-use Spryker\Zed\ProductPackagingUnit\Business\Model\OrderItem\AmountSalesUnitOrderItemExpander;
-use Spryker\Zed\ProductPackagingUnit\Business\Model\OrderItem\AmountSalesUnitOrderItemExpanderInterface;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\OrderItem\OrderItemExpander;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\OrderItem\OrderItemExpanderInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReader;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitLeadProduct\ProductPackagingUnitLeadProductReader;
@@ -248,11 +248,11 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\OrderItem\AmountSalesUnitOrderItemExpanderInterface
+     * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\OrderItem\OrderItemExpanderInterface
      */
-    public function createAmountSalesUnitOrderItemExpander(): AmountSalesUnitOrderItemExpanderInterface
+    public function createAmountSalesUnitOrderItemExpander(): OrderItemExpanderInterface
     {
-        return new AmountSalesUnitOrderItemExpander();
+        return new OrderItemExpander();
     }
 
     /**

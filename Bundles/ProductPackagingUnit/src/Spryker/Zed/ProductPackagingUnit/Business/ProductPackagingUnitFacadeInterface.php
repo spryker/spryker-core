@@ -198,6 +198,19 @@ interface ProductPackagingUnitFacadeInterface
 
     /**
      * Specification:
+     * - Expands SalesOrderItemEntity with amount and sku.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $salesOrderItemEntity
+     *
+     * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer
+     */
+    public function exportOrderItemWithAmountAndAmountSku(ItemTransfer $itemTransfer, SpySalesOrderItemEntityTransfer $salesOrderItemEntity): SpySalesOrderItemEntityTransfer;
+
+    /**
+     * Specification:
      *
      * - Checks if items which being added to cart is available.
      * - For packaging units it checks the lead product also if `hasLeadProduct`.

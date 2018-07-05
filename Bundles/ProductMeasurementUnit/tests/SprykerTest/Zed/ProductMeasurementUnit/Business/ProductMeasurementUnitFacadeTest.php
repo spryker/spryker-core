@@ -231,4 +231,33 @@ class ProductMeasurementUnitFacadeTest extends Unit
             $this->assertNotNull($itemTransfer->getQuantitySalesUnit()->getConversion());
         }
     }
+
+    /**
+     * @return void
+     */
+    public function testGetProductMeasurementSalesUnitTransfer(): void
+    {
+        // Assign
+        $code = 'MYCODE' . random_int(1, 100);
+
+        $productTransfer = $this->tester->haveProduct();
+        $productMeasurementUnitTransfer = $this->tester->haveProductMeasurementUnit([
+            SpyProductMeasurementUnitEntityTransfer::CODE => $code,
+        ]);
+
+        $productMeasurementBaseUnitTransfer = $this->tester->haveProductMeasurementBaseUnit(
+            $productTransfer->getFkProductAbstract(),
+            $productMeasurementUnitTransfer->getIdProductMeasurementUnit()
+        );
+
+        $productMeasurementSalesUnitTransfer = $this->tester->haveProductMeasurementSalesUnit(
+            $productTransfer->getIdProductConcrete(),
+            $productMeasurementUnitTransfer->getIdProductMeasurementUnit(),
+            $productMeasurementBaseUnitTransfer->getIdProductMeasurementBaseUnit()
+        );
+
+        $productMeasurementSalesUnitTransfer = $this->productMeasurementUnitFacade->getProductMeasurementSalesUnitTransfer($productMeasurementSalesUnitTransfer->getIdProductMeasurementSalesUnit());
+
+        $this->assertInstanceOf(ProductMeasurementSalesUnitTransfer::class, $productMeasurementSalesUnitTransfer);
+    }
 }

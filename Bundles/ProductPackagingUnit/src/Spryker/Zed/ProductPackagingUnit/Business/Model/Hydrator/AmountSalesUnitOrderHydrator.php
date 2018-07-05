@@ -38,6 +38,7 @@ class AmountSalesUnitOrderHydrator implements AmountSalesUnitOrderHydratorInterf
     public function hydrateOrderWithAmountSalesUnit(OrderTransfer $orderTransfer): OrderTransfer
     {
         $salesOrderQuery = $this->salesQueryContainer->querySalesOrderItemsByIdSalesOrder($orderTransfer->getIdSalesOrder());
+
         $salesOrderItemEntities = $salesOrderQuery->find();
 
         foreach ($salesOrderItemEntities as $salesOrderItemEntity) {

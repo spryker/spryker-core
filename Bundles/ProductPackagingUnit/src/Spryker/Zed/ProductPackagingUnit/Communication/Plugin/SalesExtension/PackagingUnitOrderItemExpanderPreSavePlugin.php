@@ -10,9 +10,14 @@ namespace Spryker\Zed\ProductPackagingUnit\Communication\Plugin\SalesExtension;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPreSavePluginInterface;
 
-class PackagingUnitOrderItemExpanderPreSavePlugin implements OrderItemExpanderPreSavePluginInterface
+/**
+ * @method \Spryker\Zed\ProductPackagingUnit\Business\ProductPackagingUnitFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductPackagingUnit\Communication\ProductPackagingUnitCommunicationFactory getFactory()
+ */
+class PackagingUnitOrderItemExpanderPreSavePlugin extends AbstractPlugin implements OrderItemExpanderPreSavePluginInterface
 {
     /**
      * {@inheritdoc}
@@ -27,16 +32,6 @@ class PackagingUnitOrderItemExpanderPreSavePlugin implements OrderItemExpanderPr
      */
     public function expandOrderItem(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, SpySalesOrderItemEntityTransfer $salesOrderItemEntity): SpySalesOrderItemEntityTransfer
     {
-        if (!$itemTransfer->getAmountLeadProduct()) {
-            return $salesOrderItemEntity;
-        }
-
-        $packagingUnitLeadProductSku = $itemTransfer->getAmountLeadProduct()->getSku();
-        $packagingUnitAmount = $itemTransfer->getAmount();
-
-        $salesOrderItemEntity->setAmount($packagingUnitAmount);
-        $salesOrderItemEntity->setAmountSku($packagingUnitLeadProductSku);
-
-        return $salesOrderItemEntity;
+        return $this->getFacade()->exportOrderItemWithAmountAndAmountSku($itemTransfer, $salesOrderItemEntity);
     }
 }

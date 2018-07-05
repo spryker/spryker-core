@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductPackagingUnit\Business\Model\OrderItem;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 
-class AmountSalesUnitOrderItemExpander implements AmountSalesUnitOrderItemExpanderInterface
+class OrderItemExpander implements OrderItemExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
@@ -38,6 +38,27 @@ class AmountSalesUnitOrderItemExpander implements AmountSalesUnitOrderItemExpand
 
         $salesOrderItemEntity->setAmountMeasurementUnitPrecision($itemTransfer->getAmountSalesUnit()->getPrecision());
         $salesOrderItemEntity->setAmountMeasurementUnitConversion($itemTransfer->getAmountSalesUnit()->getConversion());
+
+        return $salesOrderItemEntity;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $salesOrderItemEntity
+     *
+     * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer
+     */
+    public function exportOrderItemWithAmountAndAmountSku(ItemTransfer $itemTransfer, SpySalesOrderItemEntityTransfer $salesOrderItemEntity): SpySalesOrderItemEntityTransfer
+    {
+        if (!$itemTransfer->getAmountLeadProduct()) {
+            return $salesOrderItemEntity;
+        }
+
+        $packagingUnitLeadProductSku = $itemTransfer->getAmountLeadProduct()->getSku();
+        $packagingUnitAmount = $itemTransfer->getAmount();
+
+        $salesOrderItemEntity->setAmount($packagingUnitAmount);
+        $salesOrderItemEntity->setAmountSku($packagingUnitLeadProductSku);
 
         return $salesOrderItemEntity;
     }
