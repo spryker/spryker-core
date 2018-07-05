@@ -17,10 +17,12 @@ use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitTypeQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
+use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
+use Spryker\Zed\ProductPackagingUnit\Dependency\ProductPackagingUnitEvents;
 use Spryker\Zed\ProductPackagingUnitDataImport\Business\Model\DataSet\ProductPackagingUnitDataSetInterface;
 
-class ProductPackagingUnitWriterStep implements DataImportStepInterface
+class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
     protected const PRODUCTS_HEAP_LIMIT = 500;
     protected const CONCRETE_PRODUCT_ID = 'CONCRETE_PRODUCT_ID';
@@ -46,13 +48,7 @@ class ProductPackagingUnitWriterStep implements DataImportStepInterface
      */
     public function __construct()
     {
-        $productPackagingUnitTypeEntities = SpyProductPackagingUnitTypeQuery::create()->find();
-
-        foreach ($productPackagingUnitTypeEntities as $packagingUnitTypeEntity) {
-            static::$productPackagingUnitTypeHeap[$packagingUnitTypeEntity->getName()] = $packagingUnitTypeEntity->getIdProductPackagingUnitType();
-        }
-
-        unset($productPackagingUnitTypeEntities);
+        $this->initProductPackagingUnitTypeHeap();
     }
 
     /**
@@ -91,6 +87,8 @@ class ProductPackagingUnitWriterStep implements DataImportStepInterface
         $productPackagingUnitEntity->save();
 
         $this->persistAmount($dataSet, $productPackagingUnitEntity);
+
+        $this->addPublishEvents(ProductPackagingUnitEvents::PRODUCT_ABSTRACT_PACKAGING_PUBLISH, $this->getProductAbstractIdByConcreteSku($dataSet[ProductPackagingUnitDataSetInterface::CONCRETE_SKU]));
     }
 
     /**
@@ -141,8 +139,8 @@ class ProductPackagingUnitWriterStep implements DataImportStepInterface
     protected function normalizeAmount(DataSetInterface $dataSet): DataSetInterface
     {
         $isVariable = (bool)$dataSet[ProductPackagingUnitDataSetInterface::IS_VARIABLE];
-
         $dataSet[ProductPackagingUnitDataSetInterface::IS_VARIABLE] = $isVariable;
+
         $dataSet[ProductPackagingUnitDataSetInterface::DEFAULT_AMOUNT] = (int)$dataSet[ProductPackagingUnitDataSetInterface::DEFAULT_AMOUNT];
         $dataSet[ProductPackagingUnitDataSetInterface::AMOUNT_MIN] = (int)$dataSet[ProductPackagingUnitDataSetInterface::AMOUNT_MIN];
         $dataSet[ProductPackagingUnitDataSetInterface::AMOUNT_MAX] = (int)$dataSet[ProductPackagingUnitDataSetInterface::AMOUNT_MAX];
@@ -157,7 +155,6 @@ class ProductPackagingUnitWriterStep implements DataImportStepInterface
         }
 
         if (!$isVariable) {
-            $dataSet[ProductPackagingUnitDataSetInterface::DEFAULT_AMOUNT] = null;
             $dataSet[ProductPackagingUnitDataSetInterface::AMOUNT_MIN] = null;
             $dataSet[ProductPackagingUnitDataSetInterface::AMOUNT_MAX] = null;
             $dataSet[ProductPackagingUnitDataSetInterface::AMOUNT_INTERVAL] = null;
@@ -174,10 +171,10 @@ class ProductPackagingUnitWriterStep implements DataImportStepInterface
      */
     protected function persistAmount(DataSetInterface $dataSet, SpyProductPackagingUnit $productPackagingUnitEntity): void
     {
-        $haveAmount = $dataSet[ProductPackagingUnitDataSetInterface::DEFAULT_AMOUNT] > 1 &&
-            $dataSet[ProductPackagingUnitDataSetInterface::AMOUNT_MIN] > 1 &&
-            $dataSet[ProductPackagingUnitDataSetInterface::AMOUNT_MAX] > 1 &&
-            $dataSet[ProductPackagingUnitDataSetInterface::AMOUNT_INTERVAL] > 1;
+        $haveAmount = $dataSet[ProductPackagingUnitDataSetInterface::DEFAULT_AMOUNT] > 1 ||
+            $dataSet[ProductPackagingUnitDataSetInterface::AMOUNT_MIN] > 0 ||
+            $dataSet[ProductPackagingUnitDataSetInterface::AMOUNT_MAX] > 0 ||
+            $dataSet[ProductPackagingUnitDataSetInterface::AMOUNT_INTERVAL] > 0;
 
         if (!$haveAmount || $dataSet[ProductPackagingUnitDataSetInterface::IS_LEAD_PRODUCT]) {
             return;
@@ -281,6 +278,20 @@ class ProductPackagingUnitWriterStep implements DataImportStepInterface
             static::CONCRETE_PRODUCT_ID => $productEntity->getIdProduct(),
             static::ABSTRACT_PRODUCT_ID => $productEntity->getFkProductAbstract(),
         ];
+    }
+
+    /**
+     * @return void
+     */
+    protected function initProductPackagingUnitTypeHeap()
+    {
+        $productPackagingUnitTypeEntities = SpyProductPackagingUnitTypeQuery::create()->find();
+
+        foreach ($productPackagingUnitTypeEntities as $packagingUnitTypeEntity) {
+            static::$productPackagingUnitTypeHeap[$packagingUnitTypeEntity->getName()] = $packagingUnitTypeEntity->getIdProductPackagingUnitType();
+        }
+
+        unset($productPackagingUnitTypeEntities);
     }
 
     /**

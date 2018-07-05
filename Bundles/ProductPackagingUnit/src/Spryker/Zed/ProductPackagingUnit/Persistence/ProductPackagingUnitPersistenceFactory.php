@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\ProductPackagingUnit\Persistence;
 
+use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingLeadProductQuery;
+use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitQuery;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitTypeQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\ProductPackagingUnit\Persistence\Propel\Mapper\ProductPackagingUnitTypeMapper;
-use Spryker\Zed\ProductPackagingUnit\Persistence\Propel\Mapper\ProductPackagingUnitTypeMapperInterface;
+use Spryker\Zed\ProductPackagingUnit\Persistence\Propel\Mapper\ProductPackagingUnitMapper;
+use Spryker\Zed\ProductPackagingUnit\Persistence\Propel\Mapper\ProductPackagingUnitMapperInterface;
 
 /**
  * @method \Spryker\Zed\ProductPackagingUnit\ProductPackagingUnitConfig getConfig()
@@ -26,10 +28,26 @@ class ProductPackagingUnitPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductPackagingUnit\Persistence\Propel\Mapper\ProductPackagingUnitTypeMapperInterface
+     * @return \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitQuery
      */
-    public function createProductPackagingUnitTypeMapper(): ProductPackagingUnitTypeMapperInterface
+    public function createProductPackagingUnitQuery(): SpyProductPackagingUnitQuery
     {
-        return new ProductPackagingUnitTypeMapper();
+        return SpyProductPackagingUnitQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingLeadProductQuery
+     */
+    public function createProductPackagingLeadProductQuery(): SpyProductPackagingLeadProductQuery
+    {
+        return SpyProductPackagingLeadProductQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Persistence\Propel\Mapper\ProductPackagingUnitMapperInterface
+     */
+    public function createProductPackagingUnitMapper(): ProductPackagingUnitMapperInterface
+    {
+        return new ProductPackagingUnitMapper();
     }
 }

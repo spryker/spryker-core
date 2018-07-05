@@ -8,10 +8,25 @@
 namespace Spryker\Zed\ProductPackagingUnit\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\CartChange\CartChangeExpander;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\CartChange\CartChangeExpanderInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Installer\ProductPackagingUnitTypeInstaller;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Installer\ProductPackagingUnitTypeInstallerInterface;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReader;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitLeadProduct\ProductPackagingUnitLeadProductReader;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitLeadProduct\ProductPackagingUnitLeadProductReaderInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeReader;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeReaderInterface;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeTranslationReader;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeTranslationReaderInterface;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeTranslationWriter;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeTranslationWriterInterface;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeWriter;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeWriterInterface;
+use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToGlossaryFacadeInterface;
+use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToLocaleFacadeInterface;
+use Spryker\Zed\ProductPackagingUnit\ProductPackagingUnitDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitEntityManagerInterface getEntityManager()
@@ -37,7 +52,88 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     public function createProductPackagingUnitTypeReader(): ProductPackagingUnitTypeReaderInterface
     {
         return new ProductPackagingUnitTypeReader(
+            $this->getRepository(),
+            $this->createProductPackagingUnitTypeTranslationReader()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeWriterInterface
+     */
+    public function createProductPackagingUnitTypeWriter(): ProductPackagingUnitTypeWriterInterface
+    {
+        return new ProductPackagingUnitTypeWriter(
+            $this->getEntityManager(),
+            $this->getRepository(),
+            $this->createProductPackagingUnitTypeTranslationWriter()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitLeadProduct\ProductPackagingUnitLeadProductReaderInterface
+     */
+    public function createProductPackagingUnitLeadProductReader(): ProductPackagingUnitLeadProductReaderInterface
+    {
+        return new ProductPackagingUnitLeadProductReader(
             $this->getRepository()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeTranslationReaderInterface
+     */
+    public function createProductPackagingUnitTypeTranslationReader(): ProductPackagingUnitTypeTranslationReaderInterface
+    {
+        return new ProductPackagingUnitTypeTranslationReader(
+            $this->getLocaleFacade(),
+            $this->getGlossaryFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeTranslationWriterInterface
+     */
+    public function createProductPackagingUnitTypeTranslationWriter(): ProductPackagingUnitTypeTranslationWriterInterface
+    {
+        return new ProductPackagingUnitTypeTranslationWriter(
+            $this->getLocaleFacade(),
+            $this->getGlossaryFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToLocaleFacadeInterface
+     */
+    public function getLocaleFacade(): ProductPackagingUnitToLocaleFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductPackagingUnitDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToGlossaryFacadeInterface
+     */
+    public function getGlossaryFacade(): ProductPackagingUnitToGlossaryFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductPackagingUnitDependencyProvider::FACADE_GLOSSARY);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface
+     */
+    public function createProductPackagingUnitReader(): ProductPackagingUnitReaderInterface
+    {
+        return new ProductPackagingUnitReader(
+            $this->getRepository()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\CartChange\CartChangeExpanderInterface
+     */
+    public function createCartChangeExpander(): CartChangeExpanderInterface
+    {
+        return new CartChangeExpander(
+            $this->createProductPackagingUnitReader()
         );
     }
 }
