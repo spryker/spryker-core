@@ -43,4 +43,11 @@ interface ProductListStorageRepositoryInterface
      * @return int[]
      */
     public function findProductConcreteIdsByProductListIds(array $productListIds): array;
+
+    /**
+     * @param array $categoryIds
+     *
+     * @return array
+     */
+    public function findProductAbstractIdsByCategoryIds(array $categoryIds): array;
 }

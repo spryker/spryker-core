@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ProductListStorage\Business\ProductAbstract;
 
-use Spryker\Zed\ProductListStorage\Dependency\Facade\ProductListStorageToLocaleFacadeInterface;
-use Spryker\Zed\ProductListStorage\Dependency\Facade\ProductListStorageToProductCategoryFacadeInterface;
 use Spryker\Zed\ProductListStorage\Persistence\ProductListStorageRepositoryInterface;
 
 class ProductAbstractReader implements ProductAbstractReaderInterface
@@ -19,28 +17,12 @@ class ProductAbstractReader implements ProductAbstractReaderInterface
     protected $productListStorageRepository;
 
     /**
-     * @var \Spryker\Zed\ProductListStorage\Dependency\Facade\ProductListStorageToProductCategoryFacadeInterface
-     */
-    protected $productCategoryFacade;
-
-    /**
-     * @var \Spryker\Zed\ProductListStorage\Dependency\Facade\ProductListStorageToLocaleFacadeInterface
-     */
-    protected $localeFacade;
-
-    /**
      * @param \Spryker\Zed\ProductListStorage\Persistence\ProductListStorageRepositoryInterface $productListStorageRepository
-     * @param \Spryker\Zed\ProductListStorage\Dependency\Facade\ProductListStorageToProductCategoryFacadeInterface $categoryFacade
-     * @param \Spryker\Zed\ProductListStorage\Dependency\Facade\ProductListStorageToLocaleFacadeInterface $localeFacade
      */
     public function __construct(
-        ProductListStorageRepositoryInterface $productListStorageRepository,
-        ProductListStorageToProductCategoryFacadeInterface $categoryFacade,
-        ProductListStorageToLocaleFacadeInterface $localeFacade
+        ProductListStorageRepositoryInterface $productListStorageRepository
     ) {
         $this->productListStorageRepository = $productListStorageRepository;
-        $this->productCategoryFacade = $categoryFacade;
-        $this->localeFacade = $localeFacade;
     }
 
     /**
@@ -60,19 +42,6 @@ class ProductAbstractReader implements ProductAbstractReaderInterface
      */
     public function findProductAbstractIdsByCategoryIds(array $categoryIds): array
     {
-        $productAbstractIds = [];
-        $currentLocale = $this->localeFacade->getCurrentLocale();
-        foreach ($categoryIds as $categoryId) {
-            $productAbstractTransfers = $this->productCategoryFacade->getAbstractProductsByIdCategory(
-                $categoryId,
-                $currentLocale
-            );
-
-            foreach ($productAbstractTransfers as $productAbstractTransfer) {
-                $productAbstractIds[] = $productAbstractTransfer->getIdProductAbstract();
-            }
-        }
-
-        return array_unique($productAbstractIds);
+        return $this->productListStorageRepository->findProductAbstractIdsByCategoryIds($categoryIds);
     }
 }

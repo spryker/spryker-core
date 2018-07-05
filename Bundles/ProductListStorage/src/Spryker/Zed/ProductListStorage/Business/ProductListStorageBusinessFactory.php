@@ -18,8 +18,6 @@ use Spryker\Zed\ProductListStorage\Business\ProductListProductConcreteStorage\Pr
 use Spryker\Zed\ProductListStorage\Business\ProductListProductConcreteStorage\ProductListProductConcreteStorageWriterInterface;
 use Spryker\Zed\ProductListStorage\Business\ProductListStorage\ProductListStorageWriter;
 use Spryker\Zed\ProductListStorage\Business\ProductListStorage\ProductListStorageWriterInterface;
-use Spryker\Zed\ProductListStorage\Dependency\Facade\ProductListStorageToLocaleFacadeInterface;
-use Spryker\Zed\ProductListStorage\Dependency\Facade\ProductListStorageToProductCategoryFacadeInterface;
 use Spryker\Zed\ProductListStorage\Dependency\Facade\ProductListStorageToProductListFacadeInterface;
 use Spryker\Zed\ProductListStorage\ProductListStorageDependencyProvider;
 
@@ -61,9 +59,7 @@ class ProductListStorageBusinessFactory extends AbstractBusinessFactory
     public function createProductAbstractReader(): ProductAbstractReaderInterface
     {
         return new ProductAbstractReader(
-            $this->getRepository(),
-            $this->getProductCategoryFacade(),
-            $this->getLocaleFacade()
+            $this->getRepository()
         );
     }
 
@@ -88,22 +84,6 @@ class ProductListStorageBusinessFactory extends AbstractBusinessFactory
             $this->getProductListFacade(),
             $this->getRepository()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductListStorage\Dependency\Facade\ProductListStorageToLocaleFacadeInterface
-     */
-    public function getLocaleFacade(): ProductListStorageToLocaleFacadeInterface
-    {
-        return $this->getProvidedDependency(ProductListStorageDependencyProvider::FACADE_LOCALE);
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductListStorage\Dependency\Facade\ProductListStorageToProductCategoryFacadeInterface
-     */
-    public function getProductCategoryFacade(): ProductListStorageToProductCategoryFacadeInterface
-    {
-        return $this->getProvidedDependency(ProductListStorageDependencyProvider::FACADE_PRODUCT_CATEGORY);
     }
 
     /**

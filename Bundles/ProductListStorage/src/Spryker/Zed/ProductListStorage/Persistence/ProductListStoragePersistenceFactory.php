@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductListStorage\Persistence;
 
 use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
 use Orm\Zed\ProductList\Persistence\SpyProductListProductConcreteQuery;
 use Orm\Zed\ProductListStorage\Persistence\SpyProductAbstractProductListStorageQuery;
 use Orm\Zed\ProductListStorage\Persistence\SpyProductConcreteProductListStorageQuery;
@@ -38,9 +39,17 @@ class ProductListStoragePersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
-    public function getProductQuery(): SpyProductQuery
+    public function getProductPropelQuery(): SpyProductQuery
     {
         return $this->getProvidedDependency(ProductListStorageDependencyProvider::PROPEL_PRODUCT_QUERY);
+    }
+
+    /**
+     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
+     */
+    public function getProductCategoryPropelQuery(): SpyProductCategoryQuery
+    {
+        return $this->getProvidedDependency(ProductListStorageDependencyProvider::PROPEL_PRODUCT_CATEGORY_QUERY);
     }
 
     /**

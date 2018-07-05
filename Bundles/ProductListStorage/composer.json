@@ -7,7 +7,6 @@
     "spryker/customer": "^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0",
     "spryker/event-behavior": "^1.0.0",
     "spryker/kernel": "^3.21.0",
-    "spryker/locale": "^3.0.0",
     "spryker/product": "^5.0.0 || ^6.0.0",
     "spryker/product-category": "^4.5.0",
     "spryker/product-list": "^1.0.0",
