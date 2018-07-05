@@ -14,6 +14,12 @@
         <property name="fkPriceType" type="int" />
         <property name="priceType"  type="PriceType" />
         <property name="moneyValue" type="MoneyValue" />
+        <property name="priceDimension" type="PriceProductDimension" />
+    </transfer>
+
+    <transfer name="PriceProductDimension">
+        <property name="type" type="string" />
+        <property name="idPriceProductDefault" type="int" />
     </transfer>
 
     <transfer name="ProductAbstract">
@@ -40,7 +46,9 @@
         <property name="priceMode" type="string" />
         <property name="storeName" type="string" />
         <property name="priceTypeName" type="string" />
+        <property name="priceDimension" type="PriceProductDimension" />
         <property name="sku" type="string" />
+        <property name="quote" type="Quote" />
     </transfer>
 
     <transfer name="PriceProductCriteria">
@@ -48,6 +56,8 @@
         <property name="idCurrency" type="int" />
         <property name="priceMode" type="string" />
         <property name="priceType" type="string" />
+        <property name="priceDimension" type="PriceProductDimension" />
+        <property name="quote" type="Quote" />
     </transfer>
 
     <transfer name="CurrentProductPrice">
