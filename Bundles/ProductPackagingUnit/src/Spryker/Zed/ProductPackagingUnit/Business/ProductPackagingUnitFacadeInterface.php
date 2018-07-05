@@ -101,13 +101,13 @@ interface ProductPackagingUnitFacadeInterface
 
     /**
      * Specification:
-     * - Retrieve productAbstractId by productPackagingUnitTypeIds.
+     * - Retrieves the list of product abstract IDs which are associated with any of the provided packaging unit type IDs.
      *
      * @api
      *
-     * @param array $productPackagingUnitTypeIds
+     * @param int[] $productPackagingUnitTypeIds
      *
-     * @return array
+     * @return int[]
      */
     public function getIdProductAbstractsByIdProductPackagingUnitTypes(array $productPackagingUnitTypeIds): array;
 
