@@ -13,4 +13,6 @@ interface PriceProductConstants
      * @uses \Spryker\Shared\PriceProductStorage\PriceProductStorageConstants::PRICE_DIMENSION_DEFAULT
      */
     public const PRICE_DIMENSION_DEFAULT = 'PRICE_DIMENSION_DEFAULT';
+
+    public const PRICE_DATA = 'priceData';
 }
