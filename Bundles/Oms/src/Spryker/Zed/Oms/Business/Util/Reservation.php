@@ -144,6 +144,19 @@ class Reservation implements ReservationInterface
     }
 
     /**
+     * @return string[]
+     */
+    public function getReservedStateNames()
+    {
+        $stateNames = [];
+        foreach ($this->retrieveReservedStates() as $reservedState) {
+            $stateNames[] = $reservedState->getName();
+        }
+
+        return $stateNames;
+    }
+
+    /**
      * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $states
      * @param string $sku
      * @param bool $returnTest
@@ -175,7 +188,7 @@ class Reservation implements ReservationInterface
     }
 
     /**
-     * @return array
+     * @return \Spryker\Zed\Oms\Business\Process\StateInterface[]
      */
     protected function retrieveReservedStates()
     {
