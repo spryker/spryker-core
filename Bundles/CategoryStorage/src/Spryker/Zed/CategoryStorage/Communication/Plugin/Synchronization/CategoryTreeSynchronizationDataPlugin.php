@@ -51,7 +51,7 @@ class CategoryTreeSynchronizationDataPlugin extends AbstractPlugin implements Sy
      *
      * @api
      *
-     * @param array $ids
+     * @param int[] $ids
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\NavigationStorage\Persistence;
 
+use Orm\Zed\Navigation\Persistence\SpyNavigationQuery;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface NavigationStorageQueryContainerInterface extends QueryContainerInterface
@@ -54,5 +55,5 @@ interface NavigationStorageQueryContainerInterface extends QueryContainerInterfa
      *
      * @return \Orm\Zed\Navigation\Persistence\SpyNavigationQuery
      */
-    public function queryNavigation(array $navigationIds);
+    public function queryNavigation(array $navigationIds): SpyNavigationQuery;
 }
