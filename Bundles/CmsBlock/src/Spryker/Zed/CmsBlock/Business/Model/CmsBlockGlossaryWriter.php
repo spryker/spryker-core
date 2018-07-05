@@ -124,8 +124,33 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
             $idCmsBlockGlossaryMapping = $this->saveCmsGlossaryKeyMapping($glossaryPlaceholder);
             $glossaryPlaceholder->setIdCmsBlockGlossaryKeyMapping($idCmsBlockGlossaryMapping);
 
-            $this->touchFacade->touchActive(CmsBlockConfig::RESOURCE_TYPE_CMS_BLOCK, $glossaryPlaceholder->getFkCmsBlock());
+            $this->touchCmsBlock($glossaryPlaceholder->getFkCmsBlock());
         }
+    }
+
+    /**
+     * @param int $idCmsBlock
+     *
+     * @return void
+     */
+    protected function touchCmsBlock(int $idCmsBlock): void
+    {
+        if ($this->isCmsBlockActive($idCmsBlock)) {
+            $this->touchFacade->touchActive(CmsBlockConfig::RESOURCE_TYPE_CMS_BLOCK, $idCmsBlock);
+        }
+    }
+
+    /**
+     * @param int $idCmsBlock
+     *
+     * @return bool
+     */
+    protected function isCmsBlockActive(int $idCmsBlock): bool
+    {
+        return $this->cmsBlockQueryContainer
+            ->queryCmsBlockById($idCmsBlock)
+            ->findOne()
+            ->getIsActive();
     }
 
     /**
