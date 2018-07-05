@@ -252,22 +252,6 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
-     */
-    public function preCheckCartAvailability(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
-    {
-        return $this->getFactory()
-            ->createProductPackagingUnitCartPreCheck()
-            ->checkCartAvailability($cartChangeTransfer);
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
@@ -296,5 +280,21 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
         $this->getFactory()
             ->createProductPackagingUnitAvailabilityHandler()
             ->updateProductPackagingUnitLeadProductAvailability($sku);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     */
+    public function preCheckCartAvailability(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
+    {
+        return $this->getFactory()
+            ->createProductPackagingUnitCartPreCheck()
+            ->checkCartAvailability($cartChangeTransfer);
     }
 }
