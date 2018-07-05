@@ -3,11 +3,18 @@
   "description": "ProductMeasurementUnitGui module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1"
+    "php": ">=7.1",
+    "spryker/kernel": "^3.0.0",
+    "spryker/sales": "^8.5.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
