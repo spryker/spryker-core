@@ -149,9 +149,9 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
     /**
      * @uses Product
      *
-     * @param array $productPackagingUnitTypeIds
+     * @param int[] $productPackagingUnitTypeIds
      *
-     * @return array
+     * @return int[]
      */
     public function getIdProductAbstractsByIdProductPackagingUnitTypes(array $productPackagingUnitTypeIds): array
     {
