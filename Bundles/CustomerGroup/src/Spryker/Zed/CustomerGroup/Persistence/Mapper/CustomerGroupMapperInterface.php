@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CustomerGroup\Business\CustomerGroup;
+namespace Spryker\Zed\CustomerGroup\Persistence\Mapper;
 
 use Generated\Shared\Transfer\CustomerGroupNamesTransfer;
 
-interface CustomerGroupFinderInterface
+interface CustomerGroupMapperInterface
 {
     /**
-     * @param int $idCustomer
+     * @param array $customerGroupNames
      *
      * @return \Generated\Shared\Transfer\CustomerGroupNamesTransfer
      */
-    public function findCustomerGroupNamesByIdCustomer(int $idCustomer): CustomerGroupNamesTransfer;
+    public function mapCustomerGroupNamesToCustomerGroupNamesTransfer(array $customerGroupNames): CustomerGroupNamesTransfer;
 }

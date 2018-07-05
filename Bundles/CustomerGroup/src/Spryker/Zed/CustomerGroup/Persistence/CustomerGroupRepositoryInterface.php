@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CustomerGroup\Business\CustomerGroup;
+namespace Spryker\Zed\CustomerGroup\Persistence;
 
 use Generated\Shared\Transfer\CustomerGroupNamesTransfer;
 
-interface CustomerGroupFinderInterface
+interface CustomerGroupRepositoryInterface
 {
     /**
      * @param int $idCustomer

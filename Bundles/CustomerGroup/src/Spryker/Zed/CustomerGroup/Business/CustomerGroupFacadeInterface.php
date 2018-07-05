@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CustomerGroup\Business;
 
-use Generated\Shared\Transfer\CustomerGroupsTransfer;
+use Generated\Shared\Transfer\CustomerGroupNamesTransfer;
 use Generated\Shared\Transfer\CustomerGroupTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
@@ -91,12 +91,11 @@ interface CustomerGroupFacadeInterface
     public function removeCustomersFromGroup(CustomerGroupTransfer $customerGroupTransfer);
 
     /**
-     * @api
-     *
-     * @deprecated Please use findCustomerGroupsByIdCustomer instead
      *
      * Specification:
      *  - Finds Customer group by given customer id
+     *
+     * @api
      *
      * @param int $idCustomer
      *
@@ -106,15 +105,15 @@ interface CustomerGroupFacadeInterface
 
     /**
      * Specification:
-     *  - Finds Customer groups by given customer id
+     *  - Retrieves all customer group names by customer id
      *
      * @api
      *
      * @param int $idCustomer
      *
-     * @return \Generated\Shared\Transfer\CustomerGroupsTransfer
+     * @return \Generated\Shared\Transfer\CustomerGroupNamesTransfer
      */
-    public function findCustomerGroupsByIdCustomer(int $idCustomer): CustomerGroupsTransfer;
+    public function findCustomerGroupNamesByIdCustomer(int $idCustomer): CustomerGroupNamesTransfer;
 
     /**
      * Specification:

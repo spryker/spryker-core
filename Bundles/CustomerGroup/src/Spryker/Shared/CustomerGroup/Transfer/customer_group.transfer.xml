@@ -12,8 +12,8 @@
         <property name="customerAssignment" type="CustomerGroupToCustomerAssignment" />
     </transfer>
 
-    <transfer name="CustomerGroups">
-        <property name="customerGroups" type="CustomerGroup[]"/>
+    <transfer name="CustomerGroupNames">
+        <property name="customerGroupNames" type="string[]"/>
     </transfer>
 
     <transfer name="CustomerGroupToCustomer">
