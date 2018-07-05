@@ -18,6 +18,7 @@
     <transfer name="ProductConcreteMeasurementSalesUnit">
         <property name="idProductMeasurementSalesUnit" type="int" />
         <property name="idProductMeasurementUnit" type="int" />
+        <property name="fkProduct" type="int" />
         <property name="conversion" type="float" />
         <property name="precision" type="int" />
         <property name="isDisplayed" type="bool" />
