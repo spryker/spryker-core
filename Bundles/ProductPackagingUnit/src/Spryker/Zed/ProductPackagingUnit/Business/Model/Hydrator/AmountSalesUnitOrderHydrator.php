@@ -14,20 +14,21 @@ use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToSalesFacadeInterface;
+use Spryker\Zed\ProductPackagingUnit\Dependency\QueryContainer\ProductPackagingUnitToSalesQueryContainerInterface;
 
 class AmountSalesUnitOrderHydrator implements AmountSalesUnitOrderHydratorInterface
 {
     /**
-     * @var \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToSalesFacadeInterface
+     * @var \Spryker\Zed\ProductPackagingUnit\Dependency\QueryContainer\ProductPackagingUnitToSalesQueryContainerInterface
      */
-    protected $salesFacade;
+    protected $salesQueryContainer;
 
     /**
-     * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToSalesFacadeInterface $salesFacade
+     * @param \Spryker\Zed\ProductPackagingUnit\Dependency\QueryContainer\ProductPackagingUnitToSalesQueryContainerInterface $salesQueryContainer
      */
-    public function __construct(ProductPackagingUnitToSalesFacadeInterface $salesFacade)
+    public function __construct(ProductPackagingUnitToSalesQueryContainerInterface $salesQueryContainer)
     {
-        $this->salesFacade = $salesFacade;
+        $this->salesQueryContainer = $salesQueryContainer;
     }
 
     /**
@@ -37,10 +38,10 @@ class AmountSalesUnitOrderHydrator implements AmountSalesUnitOrderHydratorInterf
      */
     public function hydrateOrderWithAmountSalesUnit(OrderTransfer $orderTransfer): OrderTransfer
     {
-        $salesOrder = $this->salesFacade->getOrderByIdSalesOrder($orderTransfer->getIdSalesOrder());
-        $salesOrderItems = $salesOrder->getItems();
+        $salesOrderQuery = $this->salesQueryContainer->querySalesOrderItemsByIdSalesOrder($orderTransfer->getIdSalesOrder());
+        $salesOrderItemEntities = $salesOrderQuery->find();
 
-        foreach ($salesOrderItems as $salesOrderItemEntity) {
+        foreach ($salesOrderItemEntities as $salesOrderItemEntity) {
             $itemTransfer = $this->findItemTransferAmountSalesUnitsBelongTo(
                 $orderTransfer,
                 $salesOrderItemEntity->getIdSalesOrderItem()

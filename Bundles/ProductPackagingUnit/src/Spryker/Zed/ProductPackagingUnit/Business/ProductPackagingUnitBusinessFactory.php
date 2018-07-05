@@ -32,6 +32,7 @@ use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToGlo
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToLocaleFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToProductMeasurementUnitFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToSalesFacadeInterface;
+use Spryker\Zed\ProductPackagingUnit\Dependency\QueryContainer\ProductPackagingUnitToSalesQueryContainerInterface;
 use Spryker\Zed\ProductPackagingUnit\ProductPackagingUnitDependencyProvider;
 
 /**
@@ -158,16 +159,16 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     public function createAmountSalesUnitOrderHydrator(): AmountSalesUnitOrderHydratorInterface
     {
         return new AmountSalesUnitOrderHydrator(
-            $this->getSalesFacade()
+            $this->getSalesQueryContainer()
         );
     }
 
     /**
-     * @return \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToSalesFacadeInterface
+     * @return \Spryker\Zed\ProductPackagingUnit\Dependency\QueryContainer\ProductPackagingUnitToSalesQueryContainerInterface
      */
-    public function getSalesFacade(): ProductPackagingUnitToSalesFacadeInterface
+    public function getSalesQueryContainer(): ProductPackagingUnitToSalesQueryContainerInterface
     {
-        return $this->getProvidedDependency(ProductPackagingUnitDependencyProvider::FACADE_SALES);
+        return $this->getProvidedDependency(ProductPackagingUnitDependencyProvider::QUERY_CONTAINER_SALES);
     }
 
     /**
