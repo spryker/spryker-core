@@ -18,6 +18,7 @@
         <property name="idProductPackagingUnit" type="int" />
         <property name="productPackagingUnitType" type="ProductPackagingUnitType" />
         <property name="productPackagingUnitAmount" type="ProductPackagingUnitAmount" />
+        <property name="hasLeadProduct" type="bool" />
     </transfer>
 
     <transfer name="ProductPackagingUnitAmount">

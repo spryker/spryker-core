@@ -567,4 +567,15 @@ interface OmsFacadeInterface
      * @return string[]
      */
     public function getStateFlags(string $processName, string $stateName): array;
+
+    /**
+     * Specification:
+     *  - Reads states from XML definition
+     *  - Returns a list of reserved state names
+     *
+     * @api
+     *
+     * @return string[]
+     */
+    public function getReservedStateNames(): array;
 }

@@ -50,7 +50,7 @@ class CartChangeExpander implements CartChangeExpanderInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    protected function expandItem(ItemTransfer $itemTransfer)
+    protected function expandItem(ItemTransfer $itemTransfer): ItemTransfer
     {
         $itemTransfer = $this->expandItemWithLeadProduct($itemTransfer);
         $itemTransfer = $this->expandItemWithProductPackagingUnit($itemTransfer);

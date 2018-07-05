@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductPackagingUnitStorage\Persistence;
 
-use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -52,10 +51,7 @@ class ProductPackagingUnitStorageRepository extends AbstractRepository implement
             ->getProductQueryContainer()
             ->queryProduct()
                 ->filterByFkProductAbstract($idProductAbstract)
-            ->where(sprintf(
-                "%s = true",
-                SpyProductTableMap::COL_IS_ACTIVE
-            ))
+                ->filterByIsActive(true)
             ->innerJoinWithSpyProductAbstract()
             ->innerJoinWithSpyProductPackagingUnit()
             ->leftJoinWithSpyProductPackagingLeadProduct()
