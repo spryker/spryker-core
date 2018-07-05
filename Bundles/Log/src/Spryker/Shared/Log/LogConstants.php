@@ -79,7 +79,7 @@ interface LogConstants
 
     /**
      * Specification:
-     * - Absolute path to the log files directory which should be used by the stream handler. E.g. /var/www/data/install/logs/
+     * - Absolute path to the installation log files directory.
      *
      * @api
      */
