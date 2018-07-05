@@ -11,6 +11,8 @@ use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
+use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
@@ -18,8 +20,12 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\Price\PriceConfig;
+use Spryker\Shared\PriceProduct\PriceProductConfig;
 use Spryker\Zed\Currency\Business\CurrencyFacade;
 use Spryker\Zed\PriceProduct\Business\PriceProductFacade;
+use Spryker\Zed\PriceProduct\Communication\Plugin\DefaultPriceQueryCriteriaPlugin;
+use Spryker\Zed\PriceProduct\PriceProductDependencyProvider;
+use Spryker\Zed\PriceProductMerchantRelationship\Communication\Plugin\PriceProduct\MerchantRelationshipPriceQueryCriteriaPlugin;
 use Spryker\Zed\Store\Business\StoreFacade;
 
 /**
@@ -40,6 +46,21 @@ class PriceProductFacadeTest extends Unit
      * @var \SprykerTest\Zed\PriceProduct\PriceProductBusinessTester
      */
     protected $tester;
+
+    /**
+     * @return void
+     */
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $priceDimensionQueryCriteriaPlugins = [
+            new DefaultPriceQueryCriteriaPlugin(),
+            new MerchantRelationshipPriceQueryCriteriaPlugin(),
+        ];
+
+        $this->tester->setDependency(PriceProductDependencyProvider::PLUGIN_PRICE_DIMENSION_QUERY_CRITERIA, $priceDimensionQueryCriteriaPlugins);
+    }
 
     /**
      * @return void
@@ -175,13 +196,13 @@ class PriceProductFacadeTest extends Unit
 
         $priceProductTransfer = $this->createProductWithAmount(50, 40);
 
-        $idProductProduct = $priceProductFacade->getIdPriceProduct(
+        $idPriceProduct = $priceProductFacade->getIdPriceProduct(
             $priceProductTransfer->getSkuProduct(),
             $priceProductFacade->getDefaultPriceTypeName(),
             $this->createCurrencyFacade()->getCurrent()->getCode()
         );
 
-        $this->assertSame($idProductProduct, $priceProductTransfer->getIdPriceProduct());
+        $this->assertSame($idPriceProduct, $priceProductTransfer->getIdPriceProduct());
     }
 
     /**
@@ -329,7 +350,10 @@ class PriceProductFacadeTest extends Unit
 
         $productAbstractTransfer = $priceProductFacade->persistProductAbstractPriceCollection($productAbstractTransfer);
 
-        $storedPrices = $priceProductFacade->findProductAbstractPrices($productAbstractTransfer->getIdProductAbstract());
+        $storedPrices = $priceProductFacade->findProductAbstractPrices(
+            $productAbstractTransfer->getIdProductAbstract(),
+            $this->createPriceProductCriteriaTransfer()
+        );
 
         $this->assertCount(2, $storedPrices);
     }
@@ -353,7 +377,11 @@ class PriceProductFacadeTest extends Unit
 
         $productConcreteTransfer = $priceProductFacade->persistProductConcretePriceCollection($productConcreteTransfer);
 
-        $storedPrices = $priceProductFacade->findProductConcretePrices($productConcreteTransfer->getIdProductConcrete(), $productConcreteTransfer->getFkProductAbstract());
+        $storedPrices = $priceProductFacade->findProductConcretePrices(
+            $productConcreteTransfer->getIdProductConcrete(),
+            $productConcreteTransfer->getFkProductAbstract(),
+            $this->createPriceProductCriteriaTransfer()
+        );
 
         $this->assertCount(1, $storedPrices);
     }
@@ -430,6 +458,63 @@ class PriceProductFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testGetPriceModeIdentifierForBothType()
+    {
+        $priceProductFacade = $this->getPriceProductFacade();
+
+        $actualResult = $priceProductFacade->getPriceModeIdentifierForBothType();
+
+        $this->assertEquals('BOTH', $actualResult);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGeneratePriceDataChecksum()
+    {
+        $priceProductFacade = $this->getPriceProductFacade();
+
+        $actualResult = $priceProductFacade->generatePriceDataChecksum(['11', '22']);
+
+        $this->assertEquals('3b513d6f', $actualResult);
+    }
+
+    /**
+     * @return void
+     */
+    public function testPersistPriceProductStore()
+    {
+        $priceProductFacade = $this->getPriceProductFacade();
+
+        $priceProductTransfer = $this->createProductWithAmount(50, 40);
+        $actualResult = $priceProductFacade->persistPriceProductStore($priceProductTransfer);
+
+        $this->assertEquals($priceProductTransfer, $actualResult);
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeleteOrphanPriceProductStoreEntitiesNotFails()
+    {
+        $priceProductFacade = $this->getPriceProductFacade();
+
+        $priceProductFacade->deleteOrphanPriceProductStoreEntities();
+    }
+
+    /**
+     * @return void
+     */
+    public function testInstallNotFails()
+    {
+        $priceProductFacade = $this->getPriceProductFacade();
+
+        $priceProductFacade->install();
+    }
+
+    /**
      * @param string $currencyCode
      * @param string $priceTypeName
      * @param int $grossAmount
@@ -469,6 +554,12 @@ class PriceProductFacadeTest extends Unit
         $priceProductTransfer = (new PriceProductTransfer())
              ->setSkuProductAbstract($skuAbstract)
              ->setSkuProduct($skuConcrete);
+
+        $config = $this->createSharedPriceProductConfig();
+        $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
+            ->setType($config->getPriceDimensionDefault());
+
+        $priceProductTransfer->setPriceDimension($priceProductDimensionTransfer);
 
         if (!$skuAbstract || !$skuConcrete) {
             $priceProductTransfer = $this->buildProduct($priceProductTransfer);
@@ -514,6 +605,14 @@ class PriceProductFacadeTest extends Unit
     }
 
     /**
+     * @return \Spryker\Shared\PriceProduct\PriceProductConfig
+     */
+    protected function createSharedPriceProductConfig()
+    {
+        return new PriceProductConfig();
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param \Generated\Shared\Transfer\PriceTypeTransfer $priceTypeTransfer
      * @param int $netPrice
@@ -529,13 +628,18 @@ class PriceProductFacadeTest extends Unit
         $grossPrice,
         $currencyIsoCode
     ) {
+        $config = $this->createSharedPriceProductConfig();
+        $priceDimensionTransfer = (new PriceProductDimensionTransfer())
+            ->setType($config->getPriceDimensionDefault());
+
         $priceProductTransfer = (new PriceProductTransfer())
             ->setIdProduct($productConcreteTransfer->getIdProductConcrete())
             ->setIdProductAbstract($productConcreteTransfer->getFkProductAbstract())
             ->setSkuProductAbstract($productConcreteTransfer->getAbstractSku())
             ->setSkuProduct($productConcreteTransfer->getSku())
             ->setPriceTypeName($this->getPriceProductFacade()->getDefaultPriceTypeName())
-            ->setPriceType($priceTypeTransfer);
+            ->setPriceType($priceTypeTransfer)
+            ->setPriceDimension($priceDimensionTransfer);
 
         $currencyTransfer = $this->createCurrencyFacade()->fromIsoCode($currencyIsoCode);
         $storeTransfer = $this->createStoreFacade()->getCurrentStore();
@@ -595,9 +699,25 @@ class PriceProductFacadeTest extends Unit
     protected function buildProduct(PriceProductTransfer $priceProductTransfer)
     {
         $productConcreteTransfer = $this->tester->haveProduct();
-        $priceProductTransfer->setSkuProductAbstract($productConcreteTransfer->getAbstractSku());
-        $priceProductTransfer->setSkuProduct($productConcreteTransfer->getSku());
+        $priceProductTransfer
+            ->setSkuProductAbstract($productConcreteTransfer->getAbstractSku())
+            ->setSkuProduct($productConcreteTransfer->getSku())
+            ->setIdProductAbstract($productConcreteTransfer->getFkProductAbstract())
+            ->setIdProduct($productConcreteTransfer->getIdProductConcrete());
 
         return $priceProductTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\PriceProductCriteriaTransfer
+     */
+    protected function createPriceProductCriteriaTransfer()
+    {
+        $config = $this->createSharedPriceProductConfig();
+        $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
+            ->setType($config->getPriceDimensionDefault());
+
+        return (new PriceProductCriteriaTransfer())
+            ->setPriceDimension($priceProductDimensionTransfer);
     }
 }
