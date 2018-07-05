@@ -59,9 +59,9 @@ interface ProductPackagingUnitRepositoryInterface
     ): ?ProductPackagingLeadProductTransfer;
 
     /**
-     * @param array $productPackagingUnitTypeIds
+     * @param int[] $productPackagingUnitTypeIds
      *
-     * @return array
+     * @return int[]
      */
     public function getIdProductAbstractsByIdProductPackagingUnitTypes(array $productPackagingUnitTypeIds): array;
 
