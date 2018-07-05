@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface;
 
@@ -47,23 +48,11 @@ class PriceProductValidator implements PriceProductValidatorInterface
      */
     public function validatePrices(CartChangeTransfer $cartChangeTransfer)
     {
-        $priceMode = $this->getPriceMode($cartChangeTransfer);
-        $currencyTransfer = $cartChangeTransfer->getQuote()->getCurrency();
-
         $cartPreCheckResponseTransfer = (new CartPreCheckResponseTransfer())
             ->setIsSuccess(true);
 
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            $priceProductFilterTransfer = $this->createPriceProductFilter(
-                $itemTransfer,
-                $priceMode,
-                $currencyTransfer->getCode(),
-                $this->findStoreName($cartChangeTransfer)
-            );
-
-            if ($this->isPriceProductDimensionEnabled($priceProductFilterTransfer)) {
-                $priceProductFilterTransfer->setQuote($cartChangeTransfer->getQuote());
-            }
+            $priceProductFilterTransfer = $this->createPriceProductFilter($itemTransfer, $cartChangeTransfer->getQuote());
 
             if ($this->priceProductFacade->hasValidPriceFor($priceProductFilterTransfer)) {
                 continue;
@@ -79,20 +68,28 @@ class PriceProductValidator implements PriceProductValidatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param string $priceMode
-     * @param string $currencyIsoCode
-     * @param null|string $storeName
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductFilterTransfer
      */
-    protected function createPriceProductFilter(ItemTransfer $itemTransfer, $priceMode, $currencyIsoCode, $storeName = null)
+    protected function createPriceProductFilter(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer)
     {
-        return (new PriceProductFilterTransfer())
+        $priceMode = $this->getPriceMode($quoteTransfer);
+        $currencyTransfer = $quoteTransfer->getCurrency();
+        $storeName = $this->findStoreName($quoteTransfer);
+
+        $priceProductFilterTransfer = (new PriceProductFilterTransfer())
             ->setStoreName($storeName)
             ->setPriceMode($priceMode)
-            ->setCurrencyIsoCode($currencyIsoCode)
+            ->setCurrencyIsoCode($currencyTransfer->getCode())
             ->setSku($itemTransfer->getSku())
             ->setPriceTypeName($this->priceProductFacade->getDefaultPriceTypeName());
+
+        if ($this->isPriceProductDimensionEnabled($priceProductFilterTransfer)) {
+            $priceProductFilterTransfer->setQuote($quoteTransfer);
+        }
+
+        return $priceProductFilterTransfer;
     }
 
     /**
@@ -108,30 +105,30 @@ class PriceProductValidator implements PriceProductValidatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return string
      */
-    protected function getPriceMode(CartChangeTransfer $cartChangeTransfer)
+    protected function getPriceMode(QuoteTransfer $quoteTransfer)
     {
-        if (!$cartChangeTransfer->getQuote()->getPriceMode()) {
+        if (!$quoteTransfer->getPriceMode()) {
             return $this->priceFacade->getDefaultPriceMode();
         }
-        return $cartChangeTransfer->getQuote()->getPriceMode();
+        return $quoteTransfer->getPriceMode();
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return null|string
      */
-    protected function findStoreName(CartChangeTransfer $cartChangeTransfer): ?string
+    protected function findStoreName(QuoteTransfer $quoteTransfer): ?string
     {
-        if ($cartChangeTransfer->getQuote()->getStore() === null) {
+        if ($quoteTransfer->getStore() === null) {
             return null;
         }
 
-        return $cartChangeTransfer->getQuote()->getStore()->getName();
+        return $quoteTransfer->getStore()->getName();
     }
 
     /**
