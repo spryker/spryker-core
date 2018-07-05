@@ -64,6 +64,16 @@ class ProductPackagingUnitReader implements ProductPackagingUnitReaderInterface
     }
 
     /**
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer|null
+     */
+    public function findProductPackagingUnitByProductId(int $idProduct): ?ProductPackagingUnitTransfer
+    {
+        return $this->repository->findProductPackagingUnitByProductId($idProduct);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTransfer $productPackagingUnitTransfer
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer

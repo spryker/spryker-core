@@ -42,8 +42,6 @@ class ProductPackagingUnitClient extends AbstractClient implements ProductPackag
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      * @param array $params
      *
-     * @throws \Spryker\Client\ProductPackagingUnit\Exception\InvalidItemCountException
-     *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
     public function expandProductPackagingUnitAmountForCartChangeRequest(CartChangeTransfer $cartChangeTransfer, array $params = []): CartChangeTransfer

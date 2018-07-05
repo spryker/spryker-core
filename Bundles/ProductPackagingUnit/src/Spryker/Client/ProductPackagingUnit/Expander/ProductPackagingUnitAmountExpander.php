@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 
 class ProductPackagingUnitAmountExpander implements ProductPackagingUnitAmountExpanderInterface
 {
-    protected const PARAM_AMOUNT = 'amount-packaging-unit';
+    protected const PARAM_AMOUNT = 'base-unit-amount';
 
     /**
      * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
@@ -60,10 +60,14 @@ class ProductPackagingUnitAmountExpander implements ProductPackagingUnitAmountEx
      */
     protected function getPackagingUnitAmount(array $params, string $sku): ?int
     {
-        if (empty($params[static::PARAM_AMOUNT][$sku])) {
+        if (empty($params[static::PARAM_AMOUNT])) {
             return null;
         }
 
-        return (int)$params[static::PARAM_AMOUNT][$sku];
+        if (!empty($params[static::PARAM_AMOUNT][$sku])) {
+            return (int)$params[static::PARAM_AMOUNT][$sku];
+        }
+
+        return (int)$params[static::PARAM_AMOUNT];
     }
 }

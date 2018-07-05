@@ -20,6 +20,8 @@ use Spryker\Zed\ProductPackagingUnit\Business\Model\Installer\ProductPackagingUn
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Installer\ProductPackagingUnitTypeInstallerInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Oms\LeadProductReservationCalculator;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Oms\LeadProductReservationCalculatorInterface;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\PriceChange\PriceChangeExpander;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\PriceChange\PriceChangeExpanderInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReader;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitLeadProduct\ProductPackagingUnitLeadProductReader;
@@ -232,6 +234,16 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
             $this->getOmsFacade(),
             $this->getStockFacade(),
             $this->getSalesQueryContainer()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\PriceChange\PriceChangeExpanderInterface
+     */
+    public function createPriceChangeExpander(): PriceChangeExpanderInterface
+    {
+        return new PriceChangeExpander(
+            $this->createProductPackagingUnitReader()
         );
     }
 }
