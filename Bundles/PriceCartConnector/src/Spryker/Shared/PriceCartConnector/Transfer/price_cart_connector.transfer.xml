@@ -16,5 +16,17 @@
         <property name="originUnitNetPrice" type="int" />
     </transfer>
 
+    <transfer name="Quote">
+        <property name="store" type="Store"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="name"/>
+    </transfer>
+
+    <transfer name="PriceProductFilter">
+        <property name="quote" type="Quote"/>
+    </transfer>
+
 </transfers>
 
