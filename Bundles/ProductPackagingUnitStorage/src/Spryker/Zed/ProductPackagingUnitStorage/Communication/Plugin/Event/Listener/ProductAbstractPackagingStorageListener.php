@@ -15,7 +15,7 @@ use Spryker\Zed\ProductPackagingUnit\Dependency\ProductPackagingUnitEvents;
  * @method \Spryker\Zed\ProductPackagingUnitStorage\Communication\ProductPackagingUnitStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductPackagingUnitStorage\Business\ProductPackagingUnitStorageFacadeInterface getFacade()
  */
-class ProductPackagingUnitPublishStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
+class ProductAbstractPackagingStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     /**
      * @api
@@ -48,8 +48,8 @@ class ProductPackagingUnitPublishStorageListener extends AbstractPlugin implemen
     protected function getUnpublishEvents(): array
     {
         return [
-            ProductPackagingUnitEvents::PRODUCT_PACKAGING_UNIT_UNPUBLISH,
-            ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_UNIT_DELETE,
+            ProductPackagingUnitEvents::PRODUCT_ABSTRACT_PACKAGING_PUBLISH,
+            ProductPackagingUnitEvents::PRODUCT_ABSTRACT_PACKAGING_UNPUBLISH,
         ];
     }
 }

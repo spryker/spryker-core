@@ -12,7 +12,7 @@ use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductPackagingUnit\Dependency\ProductPackagingUnitEvents;
 use Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Event\Listener\ProductPackagingLeadProductStorageListener;
-use Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Event\Listener\ProductPackagingUnitPublishStorageListener;
+use Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Event\Listener\ProductAbstractPackagingStorageListener;
 use Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Event\Listener\ProductPackagingUnitTypePublishStorageListener;
 
 /**
@@ -43,13 +43,10 @@ class ProductPackagingUnitStorageEventSubscriber extends AbstractPlugin implemen
      */
     protected function addProductAbstractPublishStorageListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(ProductPackagingUnitEvents::PRODUCT_PACKAGING_UNIT_PUBLISH, new ProductPackagingUnitPublishStorageListener());
+        $eventCollection->addListenerQueued(ProductPackagingUnitEvents::PRODUCT_ABSTRACT_PACKAGING_PUBLISH, new ProductAbstractPackagingStorageListener());
 
         $eventCollection->addListenerQueued(ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_UNIT_TYPE_CREATE, new ProductPackagingUnitTypePublishStorageListener());
         $eventCollection->addListenerQueued(ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_UNIT_TYPE_UPDATE, new ProductPackagingUnitTypePublishStorageListener());
-
-        $eventCollection->addListenerQueued(ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_UNIT_CREATE, new ProductPackagingUnitPublishStorageListener());
-        $eventCollection->addListenerQueued(ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_UNIT_UPDATE, new ProductPackagingUnitPublishStorageListener());
 
         $eventCollection->addListenerQueued(ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_LEAD_PRODUCT_CREATE, new ProductPackagingLeadProductStorageListener());
         $eventCollection->addListenerQueued(ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_LEAD_PRODUCT_UPDATE, new ProductPackagingLeadProductStorageListener());
@@ -62,11 +59,9 @@ class ProductPackagingUnitStorageEventSubscriber extends AbstractPlugin implemen
      */
     protected function addProductAbstractUnpublishStorageListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(ProductPackagingUnitEvents::PRODUCT_PACKAGING_UNIT_UNPUBLISH, new ProductPackagingUnitPublishStorageListener());
+        $eventCollection->addListenerQueued(ProductPackagingUnitEvents::PRODUCT_ABSTRACT_PACKAGING_UNPUBLISH, new ProductAbstractPackagingStorageListener());
 
         $eventCollection->addListenerQueued(ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_UNIT_TYPE_DELETE, new ProductPackagingUnitTypePublishStorageListener());
-
-        $eventCollection->addListenerQueued(ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_UNIT_DELETE, new ProductPackagingUnitPublishStorageListener());
 
         $eventCollection->addListenerQueued(ProductPackagingUnitEvents::ENTITY_SPY_PRODUCT_PACKAGING_LEAD_PRODUCT_DELETE, new ProductPackagingLeadProductStorageListener());
     }

@@ -26,6 +26,22 @@ interface ProductPackagingUnitEvents
     public const PRODUCT_PACKAGING_UNIT_UNPUBLISH = 'ProductPackagingUnit.product_packaging_unit.unpublish';
 
     /**
+     * Specification:
+     * - This event is used for product_abstract_packaging_unit publishing.
+     *
+     * @api
+     */
+    public const PRODUCT_ABSTRACT_PACKAGING_PUBLISH = 'ProductPackagingUnit.product_packaging_unit.publish';
+
+    /**
+     * Specification:
+     * - This event is used for product_abstract_packaging_unit unpublishing.
+     *
+     * @api
+     */
+    public const PRODUCT_ABSTRACT_PACKAGING_UNPUBLISH = 'ProductPackagingUnit.product_packaging_unit.unpublish';
+
+    /**
      * Specification
      * - This events will be used for spy_product_packaging_unit_type update
      *

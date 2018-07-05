@@ -52,10 +52,7 @@ class ProductPackagingUnitStorageRepository extends AbstractRepository implement
             ->getProductQueryContainer()
             ->queryProduct()
                 ->filterByFkProductAbstract($idProductAbstract)
-            ->where(sprintf(
-                "%s = true",
-                SpyProductTableMap::COL_IS_ACTIVE
-            ))
+                ->filterByIsActive(true)
             ->innerJoinWithSpyProductAbstract()
             ->innerJoinWithSpyProductPackagingLeadProduct()
             ->innerJoinWithSpyProductPackagingUnit()

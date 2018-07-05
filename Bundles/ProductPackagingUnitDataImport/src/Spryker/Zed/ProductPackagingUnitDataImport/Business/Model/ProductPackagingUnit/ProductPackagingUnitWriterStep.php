@@ -88,7 +88,7 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
 
         $this->persistAmount($dataSet, $productPackagingUnitEntity);
 
-        $this->addPublishEvents(ProductPackagingUnitEvents::PRODUCT_PACKAGING_UNIT_PUBLISH, $this->getProductAbstractIdByConcreteSku($dataSet[ProductPackagingUnitDataSetInterface::CONCRETE_SKU]));
+        $this->addPublishEvents(ProductPackagingUnitEvents::PRODUCT_ABSTRACT_PACKAGING_PUBLISH, $this->getProductAbstractIdByConcreteSku($dataSet[ProductPackagingUnitDataSetInterface::CONCRETE_SKU]));
     }
 
     /**
