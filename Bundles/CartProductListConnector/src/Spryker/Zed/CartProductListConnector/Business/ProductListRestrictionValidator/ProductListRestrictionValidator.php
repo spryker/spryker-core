@@ -9,7 +9,6 @@ namespace Spryker\Zed\CartProductListConnector\Business\ProductListRestrictionVa
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
-use Generated\Shared\Transfer\CustomerProductListCollectionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\CartProductListConnector\Dependency\Facade\CartProductListConnectorToProductFacadeInterface;
@@ -56,11 +55,16 @@ class ProductListRestrictionValidator implements ProductListRestrictionValidator
         }
 
         $customerProductListCollectionTransfer = $customerTransfer->getCustomerProductListCollection();
-        $customerBlacklistIds = $this->getCustomerBlacklistIds($customerProductListCollectionTransfer);
-        $customerWhitelistIds = $this->getCustomerWhitelistIds($customerProductListCollectionTransfer);
+        $customerWhitelistIds = $customerProductListCollectionTransfer->getWhitelistIds() ?? [];
+        $customerBlacklistIds = $customerProductListCollectionTransfer->getBlacklistIds() ?? [];
 
         foreach ($cartChangeTransfer->getItems() as $item) {
-            $this->validateItem($item, $responseTransfer, $customerWhitelistIds, $customerBlacklistIds);
+            $this->validateItem(
+                $item,
+                $responseTransfer,
+                $customerWhitelistIds,
+                $customerBlacklistIds
+            );
         }
 
         return $responseTransfer;
@@ -82,43 +86,11 @@ class ProductListRestrictionValidator implements ProductListRestrictionValidator
     ): void {
         $idProductAbstract = $this->productFacade->getProductAbstractIdByConcreteSku($item->getSku());
         $idProductConcrete = $this->productFacade->findProductConcreteIdBySku($item->getSku());
-        if (!$idProductConcrete || $this->isProductAbstractRestricted($idProductAbstract, $customerWhitelistIds, $customerBlacklistIds)
-            || $this->isProductConcreteRestricted($idProductAbstract, $customerWhitelistIds, $customerBlacklistIds)
+        if ($this->isProductAbstractRestricted($idProductAbstract, $customerWhitelistIds, $customerBlacklistIds)
+            || $this->isProductConcreteRestricted($idProductConcrete, $customerWhitelistIds, $customerBlacklistIds)
         ) {
             $this->addViolation(static::MESSAGE_INFO_RESTRICTED_PRODUCT_REMOVED, $item->getSku(), $responseTransfer);
         }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerProductListCollectionTransfer $customerProductListCollectionTransfer
-     *
-     * @return array
-     */
-    protected function getCustomerBlacklistIds(CustomerProductListCollectionTransfer $customerProductListCollectionTransfer): array
-    {
-        $customerBlacklistIds = [];
-
-        foreach ($customerProductListCollectionTransfer->getBlacklists() as $productListTransfer) {
-            $customerBlacklistIds[] = $productListTransfer->getIdProductList();
-        }
-
-        return $customerBlacklistIds;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerProductListCollectionTransfer $customerProductListCollectionTransfer
-     *
-     * @return array
-     */
-    protected function getCustomerWhitelistIds(CustomerProductListCollectionTransfer $customerProductListCollectionTransfer): array
-    {
-        $customerWhitelistIds = [];
-
-        foreach ($customerProductListCollectionTransfer->getWhitelists() as $productListTransfer) {
-            $customerWhitelistIds[] = $productListTransfer->getIdProductList();
-        }
-
-        return $customerWhitelistIds;
     }
 
     /**

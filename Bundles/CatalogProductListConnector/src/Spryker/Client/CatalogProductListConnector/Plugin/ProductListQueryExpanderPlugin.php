@@ -95,18 +95,13 @@ class ProductListQueryExpanderPlugin extends AbstractPlugin implements QueryExpa
      */
     protected function getBlacklistIds(): array
     {
-        $blacklistIds = [];
         $customerProductListCollectionTransfer = $this->findCustomerProductListCollection();
 
-        if (!$customerProductListCollectionTransfer || !$customerProductListCollectionTransfer->getBlacklists()) {
-            return $blacklistIds;
+        if (!$customerProductListCollectionTransfer) {
+            return [];
         }
 
-        foreach ($customerProductListCollectionTransfer->getBlacklists() as $productListTransfer) {
-            $blacklistIds[] = $productListTransfer->getIdProductList();
-        }
-
-        return $blacklistIds;
+        return $customerProductListCollectionTransfer->getBlacklistIds() ?? [];
     }
 
     /**
@@ -114,18 +109,13 @@ class ProductListQueryExpanderPlugin extends AbstractPlugin implements QueryExpa
      */
     protected function getWhitelistIds(): array
     {
-        $whitelistIds = [];
         $customerProductListCollectionTransfer = $this->findCustomerProductListCollection();
 
-        if (!$customerProductListCollectionTransfer || !$customerProductListCollectionTransfer->getWhitelists()) {
-            return $whitelistIds;
+        if (!$customerProductListCollectionTransfer) {
+            return [];
         }
 
-        foreach ($customerProductListCollectionTransfer->getWhitelists() as $productListTransfer) {
-            $whitelistIds[] = $productListTransfer->getIdProductList();
-        }
-
-        return $whitelistIds;
+        return $customerProductListCollectionTransfer->getWhitelistIds() ?? [];
     }
 
     /**

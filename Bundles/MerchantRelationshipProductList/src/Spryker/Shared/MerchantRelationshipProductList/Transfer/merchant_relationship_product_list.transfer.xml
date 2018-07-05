@@ -12,8 +12,8 @@
     </transfer>
 
     <transfer name="CustomerProductListCollection">
-        <property name="blacklists" type="ProductList[]" singular="blacklist"/>
-        <property name="whitelists" type="ProductList[]" singular="whitelist"/>
+        <property name="blacklistIds" type="int[]" singular="blacklistId"/>
+        <property name="whitelistIds" type="int[]" singular="whitelistId"/>
     </transfer>
 
 

@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\ProductListStorage\ProductAbstractRestriction;
 
-use Generated\Shared\Transfer\CustomerProductListCollectionTransfer;
 use Spryker\Client\ProductListStorage\Dependency\Client\ProductListStorageToCustomerClientInterface;
 use Spryker\Client\ProductListStorage\ProductListProductAbstractStorage\ProductListProductAbstractStorageReaderInterface;
 
@@ -46,8 +45,8 @@ class ProductAbstractRestrictionReader implements ProductAbstractRestrictionRead
         if (!$customer || !$customer->getCustomerProductListCollection()) {
             return false;
         }
-        $customerBlacklistIds = $this->getCustomerBlacklistIds($customer->getCustomerProductListCollection());
-        $customerWhitelistIds = $this->getCustomerWhitelistIds($customer->getCustomerProductListCollection());
+        $customerWhitelistIds = $customer->getCustomerProductListCollection()->getWhitelistIds() ?? [];
+        $customerBlacklistIds = $customer->getCustomerProductListCollection()->getBlacklistIds() ?? [];
 
         return $this->checkIfProductAbstractIsRestricted($idProductAbstract, $customerWhitelistIds, $customerBlacklistIds);
     }
@@ -78,37 +77,5 @@ class ProductAbstractRestrictionReader implements ProductAbstractRestrictionRead
         }
 
         return (bool)count($customerWhitelistIds);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerProductListCollectionTransfer $customerProductListCollectionTransfer
-     *
-     * @return array
-     */
-    protected function getCustomerBlacklistIds(CustomerProductListCollectionTransfer $customerProductListCollectionTransfer): array
-    {
-        $customerBlacklistIds = [];
-
-        foreach ($customerProductListCollectionTransfer->getBlacklists() as $productListTransfer) {
-            $customerBlacklistIds[] = $productListTransfer->getIdProductList();
-        }
-
-        return $customerBlacklistIds;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerProductListCollectionTransfer $customerProductListCollectionTransfer
-     *
-     * @return array
-     */
-    protected function getCustomerWhitelistIds(CustomerProductListCollectionTransfer $customerProductListCollectionTransfer): array
-    {
-        $customerWhitelistIds = [];
-
-        foreach ($customerProductListCollectionTransfer->getWhitelists() as $productListTransfer) {
-            $customerWhitelistIds[] = $productListTransfer->getIdProductList();
-        }
-
-        return $customerWhitelistIds;
     }
 }

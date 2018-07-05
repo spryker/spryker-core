@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ProductStorage\Dependency\Plugin;
+namespace Spryker\Client\ProductStorageExtension\Dependency\Plugin;
 
 interface ProductConcreteRestrictionPluginInterface
 {

@@ -8,7 +8,7 @@
 namespace Spryker\Client\ProductListStorage\Plugin;
 
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\ProductStorage\Dependency\Plugin\ProductConcreteRestrictionPluginInterface;
+use Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteRestrictionPluginInterface;
 
 /**
  * @method \Spryker\Client\ProductListStorage\ProductListStorageClientInterface getClient()

@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CartProductListConnector\Business\RestrictedItemsFilter;
 
-use Generated\Shared\Transfer\CustomerProductListCollectionTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\CartProductListConnector\Business\ProductListRestrictionValidator\ProductListRestrictionValidatorInterface;
@@ -58,8 +57,8 @@ class RestrictedItemsFilter implements RestrictedItemsFilterInterface
     {
         if ($quoteTransfer->getCustomer() && $quoteTransfer->getCustomer()->getCustomerProductListCollection()) {
             $customerProductListCollectionTransfer = $quoteTransfer->getCustomer()->getCustomerProductListCollection();
-            $customerBlacklistIds = $this->getCustomerBlacklistIds($customerProductListCollectionTransfer);
-            $customerWhitelistIds = $this->getCustomerWhitelistIds($customerProductListCollectionTransfer);
+            $customerWhitelistIds = $customerProductListCollectionTransfer->getWhitelistIds() ?? [];
+            $customerBlacklistIds = $customerProductListCollectionTransfer->getBlacklistIds() ?? [];
             $this->removeRestrictedItemsFromQuote($quoteTransfer, $customerBlacklistIds, $customerWhitelistIds);
         }
 
@@ -80,45 +79,13 @@ class RestrictedItemsFilter implements RestrictedItemsFilterInterface
         }
         foreach ($quoteTransfer->getItems() as $key => $itemTransfer) {
             $idProductConcrete = $this->productFacade->findProductConcreteIdBySku($itemTransfer->getSku());
-            if (!$idProductConcrete || $this->productListRestrictionValidator->isProductConcreteRestricted($idProductConcrete, $customerWhitelistIds, $customerBlacklistIds)
+            if ($this->productListRestrictionValidator->isProductConcreteRestricted($idProductConcrete, $customerWhitelistIds, $customerBlacklistIds)
                 || $this->productListRestrictionValidator->isProductAbstractRestricted($itemTransfer->getIdProductAbstract(), $customerWhitelistIds, $customerBlacklistIds)
             ) {
                 $quoteTransfer->getItems()->offsetUnset($key);
                 $this->addFilterMessage($itemTransfer->getSku());
             }
         }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerProductListCollectionTransfer $customerProductListCollectionTransfer
-     *
-     * @return array
-     */
-    protected function getCustomerBlacklistIds(CustomerProductListCollectionTransfer $customerProductListCollectionTransfer): array
-    {
-        $customerBlacklistIds = [];
-
-        foreach ($customerProductListCollectionTransfer->getBlacklists() as $productListTransfer) {
-            $customerBlacklistIds[] = $productListTransfer->getIdProductList();
-        }
-
-        return $customerBlacklistIds;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CustomerProductListCollectionTransfer $customerProductListCollectionTransfer
-     *
-     * @return array
-     */
-    protected function getCustomerWhitelistIds(CustomerProductListCollectionTransfer $customerProductListCollectionTransfer): array
-    {
-        $customerWhitelistIds = [];
-
-        foreach ($customerProductListCollectionTransfer->getWhitelists() as $productListTransfer) {
-            $customerWhitelistIds[] = $productListTransfer->getIdProductList();
-        }
-
-        return $customerWhitelistIds;
     }
 
     /**

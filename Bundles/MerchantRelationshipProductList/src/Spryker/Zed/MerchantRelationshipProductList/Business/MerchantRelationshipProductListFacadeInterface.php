@@ -14,7 +14,7 @@ interface MerchantRelationshipProductListFacadeInterface
     /**
      * Specification:
      * - Finds product lists by company business unit.
-     * - Expands customer transfer with ProductListCollectionTransfer.
+     * - Expands customer transfer with CustomerProductListCollectionTransfer.
      *
      * @api
      *
