@@ -61,8 +61,9 @@ class ProductPackagingUnitAmountExpander implements ProductPackagingUnitAmountEx
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
      * @param array $params
+     *
+     * @return void
      */
     protected function updateItemTransferWithAmountSalesUnit(ItemTransfer $itemTransfer, array $params): void
     {
