@@ -10,9 +10,14 @@ namespace Spryker\Zed\ProductPackagingUnit\Communication\Plugin\SalesExtension;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPreSavePluginInterface;
 
-class AmountSalesUnitOrderItemExpanderPreSavePlugin implements OrderItemExpanderPreSavePluginInterface
+/**
+ * @method \Spryker\Zed\ProductPackagingUnit\Business\ProductPackagingUnitFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductPackagingUnit\Communication\ProductPackagingUnitCommunicationFactory getFactory()
+ */
+class AmountSalesUnitOrderItemExpanderPreSavePlugin extends AbstractPlugin implements OrderItemExpanderPreSavePluginInterface
 {
     /**
      * {@inheritdoc}
@@ -27,25 +32,6 @@ class AmountSalesUnitOrderItemExpanderPreSavePlugin implements OrderItemExpander
      */
     public function expandOrderItem(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, SpySalesOrderItemEntityTransfer $salesOrderItemEntity): SpySalesOrderItemEntityTransfer
     {
-        if (!$itemTransfer->getAmountSalesUnit()) {
-            return $salesOrderItemEntity;
-        }
-
-        $amountBaseMeasurementUnitName = $itemTransfer->getAmountSalesUnit()
-            ->getProductMeasurementBaseUnit()
-            ->getProductMeasurementUnit()
-            ->getName();
-
-        $amountMeasurementUnitName = $itemTransfer->getAmountSalesUnit()
-            ->getProductMeasurementUnit()
-            ->getName();
-
-        $salesOrderItemEntity->setAmountBaseMeasurementUnitName($amountBaseMeasurementUnitName);
-        $salesOrderItemEntity->setAmountMeasurementUnitName($amountMeasurementUnitName);
-
-        $salesOrderItemEntity->setAmountMeasurementUnitPrecision($itemTransfer->getAmountSalesUnit()->getPrecision());
-        $salesOrderItemEntity->setAmountMeasurementUnitConversion($itemTransfer->getAmountSalesUnit()->getConversion());
-
-        return $salesOrderItemEntity;
+        return $this->getFacade()->expandOrderItemWithAmountSalesUnit($itemTransfer, $salesOrderItemEntity);
     }
 }

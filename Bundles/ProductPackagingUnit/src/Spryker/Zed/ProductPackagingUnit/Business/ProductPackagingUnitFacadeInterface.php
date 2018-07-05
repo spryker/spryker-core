@@ -8,9 +8,11 @@
 namespace Spryker\Zed\ProductPackagingUnit\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
+use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 
 interface ProductPackagingUnitFacadeInterface
 {
@@ -52,7 +54,7 @@ interface ProductPackagingUnitFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer|null
      */
     public function findProductPackagingUnitTypeByName(
         ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
@@ -177,4 +179,17 @@ interface ProductPackagingUnitFacadeInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function hydrateAmountSalesUnit(OrderTransfer $orderTransfer): OrderTransfer;
+
+    /**
+     * Specification:
+     * - Expands SalesOrderItemEntity with amountSalesUnit.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $salesOrderItemEntity
+     *
+     * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer
+     */
+    public function expandOrderItemWithAmountSalesUnit(ItemTransfer $itemTransfer, SpySalesOrderItemEntityTransfer $salesOrderItemEntity): SpySalesOrderItemEntityTransfer;
 }

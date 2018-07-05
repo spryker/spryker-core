@@ -73,7 +73,7 @@ class ProductPackagingUnitAmountExpander implements ProductPackagingUnitAmountEx
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer
      */
-    protected function createSalesUnitTransfer($idSalesUnit)
+    protected function createSalesUnitTransfer(int $idSalesUnit)
     {
         return (new ProductMeasurementSalesUnitTransfer())
             ->setIdProductMeasurementSalesUnit($idSalesUnit);

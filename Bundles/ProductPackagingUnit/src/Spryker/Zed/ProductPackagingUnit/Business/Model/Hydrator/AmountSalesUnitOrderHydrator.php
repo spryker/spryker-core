@@ -13,21 +13,21 @@ use Generated\Shared\Transfer\ProductMeasurementBaseUnitTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use Spryker\Zed\ProductPackagingUnit\Dependency\QueryContainer\ProductPackagingUnitToSalesQueryContainerInterface;
+use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToSalesFacadeInterface;
 
 class AmountSalesUnitOrderHydrator implements AmountSalesUnitOrderHydratorInterface
 {
     /**
-     * @var \Spryker\Zed\ProductPackagingUnit\Dependency\QueryContainer\ProductPackagingUnitToSalesQueryContainerInterface
+     * @var \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToSalesFacadeInterface
      */
-    protected $salesQueryContainer;
+    protected $salesFacade;
 
     /**
-     * @param \Spryker\Zed\ProductPackagingUnit\Dependency\QueryContainer\ProductPackagingUnitToSalesQueryContainerInterface $salesQueryContainer
+     * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToSalesFacadeInterface $salesFacade
      */
-    public function __construct(ProductPackagingUnitToSalesQueryContainerInterface $salesQueryContainer)
+    public function __construct(ProductPackagingUnitToSalesFacadeInterface $salesFacade)
     {
-        $this->salesQueryContainer = $salesQueryContainer;
+        $this->salesFacade = $salesFacade;
     }
 
     /**
@@ -37,8 +37,8 @@ class AmountSalesUnitOrderHydrator implements AmountSalesUnitOrderHydratorInterf
      */
     public function hydrateOrderWithAmountSalesUnit(OrderTransfer $orderTransfer): OrderTransfer
     {
-        $salesOrderQuery = $this->salesQueryContainer->querySalesOrderItemsByIdSalesOrder($orderTransfer->getIdSalesOrder());
-        $salesOrderItems = $salesOrderQuery->find();
+        $salesOrder = $this->salesFacade->getOrderByIdSalesOrder($orderTransfer->getIdSalesOrder());
+        $salesOrderItems = $salesOrder->getItems();
 
         foreach ($salesOrderItems as $salesOrderItemEntity) {
             $itemTransfer = $this->findItemTransferAmountSalesUnitsBelongTo(
@@ -83,7 +83,7 @@ class AmountSalesUnitOrderHydrator implements AmountSalesUnitOrderHydratorInterf
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer
      */
-    protected function createProductMeasurementUnitTransfer(?string $productMeasurementUnitName): ProductMeasurementUnitTransfer
+    protected function createProductMeasurementUnitTransfer(?string $productMeasurementUnitName = null): ProductMeasurementUnitTransfer
     {
         $productMeasurementUnitTransfer = new ProductMeasurementUnitTransfer();
         $productMeasurementUnitTransfer->setName($productMeasurementUnitName);
