@@ -223,7 +223,7 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function hydrateAmountSalesUnit(OrderTransfer $orderTransfer): OrderTransfer
+    public function hydrateOrderWithAmountSalesUnit(OrderTransfer $orderTransfer): OrderTransfer
     {
         return $this->getFactory()
             ->createAmountSalesUnitOrderHydrator()
@@ -240,11 +240,11 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      *
      * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer
      */
-    public function expandOrderItemWithAmountSalesUnit(ItemTransfer $itemTransfer, SpySalesOrderItemEntityTransfer $salesOrderItemEntity): SpySalesOrderItemEntityTransfer
+    public function expandSalesOrderItemWithAmountSalesUnit(ItemTransfer $itemTransfer, SpySalesOrderItemEntityTransfer $salesOrderItemEntity): SpySalesOrderItemEntityTransfer
     {
         return $this->getFactory()
             ->createAmountSalesUnitOrderItemExpander()
-            ->expandOrderItemWithAmountSalesUnit($itemTransfer, $salesOrderItemEntity);
+            ->expandSalesOrderItemWithAmountSalesUnit($itemTransfer, $salesOrderItemEntity);
     }
 
     /**
@@ -257,11 +257,11 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      *
      * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer
      */
-    public function exportOrderItemWithAmountAndAmountSku(ItemTransfer $itemTransfer, SpySalesOrderItemEntityTransfer $salesOrderItemEntity): SpySalesOrderItemEntityTransfer
+    public function expandSalesOrderItemWithAmountAndAmountSku(ItemTransfer $itemTransfer, SpySalesOrderItemEntityTransfer $salesOrderItemEntity): SpySalesOrderItemEntityTransfer
     {
         return $this->getFactory()
             ->createAmountSalesUnitOrderItemExpander()
-            ->exportOrderItemWithAmountAndAmountSku($itemTransfer, $salesOrderItemEntity);
+            ->expandSalesOrderItemWithAmountAndAmountSku($itemTransfer, $salesOrderItemEntity);
     }
 
     /**

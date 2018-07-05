@@ -32,6 +32,6 @@ class PackagingUnitOrderItemExpanderPreSavePlugin extends AbstractPlugin impleme
      */
     public function expandOrderItem(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, SpySalesOrderItemEntityTransfer $salesOrderItemEntity): SpySalesOrderItemEntityTransfer
     {
-        return $this->getFacade()->exportOrderItemWithAmountAndAmountSku($itemTransfer, $salesOrderItemEntity);
+        return $this->getFacade()->expandSalesOrderItemWithAmountAndAmountSku($itemTransfer, $salesOrderItemEntity);
     }
 }

@@ -385,7 +385,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         $itemTransfer->setAmountSalesUnit($amountSalesUnitTransfer);
 
         //Act
-        $salesOrderItemEntity = $this->getFacade()->expandOrderItemWithAmountSalesUnit(
+        $salesOrderItemEntity = $this->getFacade()->expandSalesOrderItemWithAmountSalesUnit(
             $itemTransfer,
             new SpySalesOrderItemEntityTransfer()
         );
@@ -406,7 +406,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         $itemTransfer = $this->createTestPackagingUnitItemTransfer();
 
         //Act
-        $salesOrderItemEntity = $this->getFacade()->exportOrderItemWithAmountAndAmountSku(
+        $salesOrderItemEntity = $this->getFacade()->expandSalesOrderItemWithAmountAndAmountSku(
             $itemTransfer,
             new SpySalesOrderItemEntityTransfer()
         );
@@ -419,7 +419,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
     /**
      * @return void
      */
-    public function testHydrateAmountSalesUnit()
+    public function hydrateOrderWithAmountSalesUnit(): void
     {
         // Assign
         $salesOrderEntity = $this->tester->create();
@@ -432,7 +432,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         }
 
         //Act
-        $orderTransfer = $this->getFacade()->hydrateAmountSalesUnit($orderTransfer);
+        $orderTransfer = $this->getFacade()->hydrateOrderWithAmountSalesUnit($orderTransfer);
 
         //Assert
         $this->assertInstanceOf(OrderTransfer::class, $orderTransfer);

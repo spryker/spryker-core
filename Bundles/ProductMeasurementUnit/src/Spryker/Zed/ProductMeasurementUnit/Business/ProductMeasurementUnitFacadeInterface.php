@@ -121,5 +121,5 @@ interface ProductMeasurementUnitFacadeInterface
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function hydrateQuantitySalesUnit(OrderTransfer $orderTransfer): OrderTransfer;
+    public function hydrateOrderWithQuantitySalesUnit(OrderTransfer $orderTransfer): OrderTransfer;
 }

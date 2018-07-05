@@ -32,6 +32,6 @@ class AmountSalesUnitOrderItemExpanderPreSavePlugin extends AbstractPlugin imple
      */
     public function expandOrderItem(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, SpySalesOrderItemEntityTransfer $salesOrderItemEntity): SpySalesOrderItemEntityTransfer
     {
-        return $this->getFacade()->expandOrderItemWithAmountSalesUnit($itemTransfer, $salesOrderItemEntity);
+        return $this->getFacade()->expandSalesOrderItemWithAmountSalesUnit($itemTransfer, $salesOrderItemEntity);
     }
 }
