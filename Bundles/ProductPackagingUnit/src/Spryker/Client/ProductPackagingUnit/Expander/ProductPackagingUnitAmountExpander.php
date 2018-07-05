@@ -94,11 +94,15 @@ class ProductPackagingUnitAmountExpander implements ProductPackagingUnitAmountEx
      */
     protected function getPackagingUnitAmount(array $params, string $sku): ?int
     {
-        if (empty($params[static::PARAM_AMOUNT][$sku])) {
+        if (empty($params[static::PARAM_AMOUNT])) {
             return null;
         }
 
-        return (int)$params[static::PARAM_AMOUNT][$sku];
+        if (!empty($params[static::PARAM_AMOUNT][$sku])) {
+            return (int)$params[static::PARAM_AMOUNT][$sku];
+        }
+
+        return (int)$params[static::PARAM_AMOUNT];
     }
 
     /**

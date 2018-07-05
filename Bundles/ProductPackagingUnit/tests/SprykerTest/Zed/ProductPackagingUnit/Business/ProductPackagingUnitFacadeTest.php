@@ -14,6 +14,8 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
+use Generated\Shared\Transfer\ProductPackagingUnitAmountTransfer;
+use Generated\Shared\Transfer\ProductPackagingUnitTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTranslationTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpyProductAbstractEntityTransfer;
@@ -288,6 +290,65 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         ]);
 
         $this->getFacade()->updateProductPackagingUnitLeadProductAvailability($boxProductConcreteTransfer->getSku());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSetCustomAmountPrice(): void
+    {
+        $itemProductConcreteTransfer = $this->tester->haveProduct();
+        $boxProductConcreteTransfer = $this->tester->haveProduct([
+            SpyProductEntityTransfer::FK_PRODUCT_ABSTRACT => $itemProductConcreteTransfer->getFkProductAbstract(),
+        ], [
+            SpyProductAbstractEntityTransfer::ID_PRODUCT_ABSTRACT => $itemProductConcreteTransfer->getFkProductAbstract(),
+        ]);
+
+        $this->tester->haveProductPackagingLeadProduct([
+            SpyProductPackagingLeadProductEntityTransfer::FK_PRODUCT => $itemProductConcreteTransfer->getIdProductConcrete(),
+            SpyProductPackagingLeadProductEntityTransfer::FK_PRODUCT_ABSTRACT => $itemProductConcreteTransfer->getFkProductAbstract(),
+        ]);
+
+        $boxProductPackagingUnitType = $this->tester->haveProductPackagingUnitType([SpyProductPackagingUnitTypeEntityTransfer::NAME => static::PACKAGING_TYPE]);
+        $itemProductPackagingUnitType = $this->tester->haveProductPackagingUnitType([SpyProductPackagingUnitTypeEntityTransfer::NAME => static::PACKAGING_TYPE_DEFAULT]);
+
+        $itemProductPackagingUnit = $this->tester->haveProductPackagingUnit([
+            SpyProductPackagingUnitEntityTransfer::FK_PRODUCT => $itemProductConcreteTransfer->getIdProductConcrete(),
+            SpyProductPackagingUnitEntityTransfer::FK_PRODUCT_PACKAGING_UNIT_TYPE => $itemProductPackagingUnitType->getIdProductPackagingUnitType(),
+        ]);
+
+        $boxProductPackagingUnit = $this->tester->haveProductPackagingUnit([
+            SpyProductPackagingUnitEntityTransfer::FK_PRODUCT => $boxProductConcreteTransfer->getIdProductConcrete(),
+            SpyProductPackagingUnitEntityTransfer::FK_PRODUCT_PACKAGING_UNIT_TYPE => $boxProductPackagingUnitType->getIdProductPackagingUnitType(),
+        ], [
+            SpyProductPackagingUnitAmountEntityTransfer::DEFAULT_AMOUNT => static::PACKAGE_AMOUNT,
+        ]);
+
+        $originUnitGrossPrice = 6000;
+
+        $productPackagingUnitAmountTransfer = (new ProductPackagingUnitAmountTransfer())
+            ->setIsVariable(true)
+            ->setDefaultAmount(4);
+
+        $productPackagingUnitTransfer = (new ProductPackagingUnitTransfer())
+            ->setProductPackagingUnitAmount($productPackagingUnitAmountTransfer);
+
+        $cartChange = (new CartChangeTransfer())
+            ->addItem(
+                (new ItemTransfer())
+                    ->setSku($boxProductConcreteTransfer->getSku())
+                    ->setQuantity(static::ITEM_QUANTITY)
+                    ->setAmount(6)
+                    ->setProductPackagingUnit($productPackagingUnitTransfer)
+                    ->setOriginUnitGrossPrice($originUnitGrossPrice)
+            );
+
+        $this->getFacade()->setCustomAmountPrice($cartChange);
+
+        foreach ($cartChange->getItems() as $itemTransfer) {
+            $this->assertNotEquals($itemTransfer->getUnitGrossPrice(), $originUnitGrossPrice);
+            $this->assertEquals($itemTransfer->getUnitGrossPrice(), 9000);
+        }
     }
 
     /**

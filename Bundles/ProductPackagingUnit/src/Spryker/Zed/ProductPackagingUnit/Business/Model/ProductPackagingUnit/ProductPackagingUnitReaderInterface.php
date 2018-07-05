@@ -35,4 +35,11 @@ interface ProductPackagingUnitReaderInterface
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer
      */
     public function getProductMeasurementSalesUnitTransfer(int $idProductMeasurementSalesUnit): ProductMeasurementSalesUnitTransfer;
+
+    /**
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitTransfer|null
+     */
+    public function findProductPackagingUnitByProductId(int $idProduct): ?ProductPackagingUnitTransfer;
 }
