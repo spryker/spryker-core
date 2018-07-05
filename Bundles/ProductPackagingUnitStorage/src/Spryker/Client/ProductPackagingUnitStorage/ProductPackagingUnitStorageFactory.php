@@ -20,9 +20,9 @@ class ProductPackagingUnitStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ProductPackagingUnitStorage\Storage\ProductPackagingUnitStorageReaderInterface
      */
-    public function createPriceAbstractStorageReader(): ProductPackagingUnitStorageReaderInterface
+    public function createProductPackagingUnitStorageReader(): ProductPackagingUnitStorageReaderInterface
     {
-        return new ProductPackagingUnitStorageReader($this->getStorage(), $this->createPriceProductStorageKeyGenerator());
+        return new ProductPackagingUnitStorageReader($this->getStorage(), $this->createProductPackagingUnitStorageKeyGenerator());
     }
 
     /**
@@ -36,7 +36,7 @@ class ProductPackagingUnitStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ProductPackagingUnitStorage\Storage\ProductPackagingUnitStorageKeyGeneratorInterface
      */
-    public function createPriceProductStorageKeyGenerator(): ProductPackagingUnitStorageKeyGeneratorInterface
+    public function createProductPackagingUnitStorageKeyGenerator(): ProductPackagingUnitStorageKeyGeneratorInterface
     {
         return new ProductPackagingUnitStorageKeyGenerator($this->getSynchronizationService());
     }

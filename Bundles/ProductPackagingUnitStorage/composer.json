@@ -7,7 +7,7 @@
     "spryker/event-behavior": "^1.0.0",
     "spryker/kernel": "^3.21.0",
     "spryker/product": "^6.0.0",
-    "spryker/product-packaging-unit": "^0.0.1",
+    "spryker/product-packaging-unit": "^1.0.0",
     "spryker/storage": "^3.4.0",
     "spryker/synchronization": "^0.2.0"
   },
@@ -17,8 +17,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0",
-    "spryker/product-packaging-unit": ""
+    "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0"
   },
   "autoload": {
     "psr-4": {

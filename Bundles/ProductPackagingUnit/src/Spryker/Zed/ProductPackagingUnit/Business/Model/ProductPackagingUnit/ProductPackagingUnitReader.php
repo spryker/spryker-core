@@ -17,7 +17,7 @@ use Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryI
 class ProductPackagingUnitReader implements ProductPackagingUnitReaderInterface
 {
     /**
-     * default values for packaging unit storage values.
+     * Default values for undefined packaging units.
      */
     protected const PRODUCT_ABSTRACT_STORAGE_DEFAULT_VALUES = [
         ProductPackagingUnitAmountTransfer::DEFAULT_AMOUNT => 1,

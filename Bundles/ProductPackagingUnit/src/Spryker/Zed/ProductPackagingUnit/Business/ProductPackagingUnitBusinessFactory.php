@@ -8,12 +8,20 @@
 namespace Spryker\Zed\ProductPackagingUnit\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\Availability\PreCheck\ProductPackagingUnitCartPreCheck;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\Availability\PreCheck\ProductPackagingUnitCartPreCheckInterface;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\Availability\PreCheck\ProductPackagingUnitCheckoutPreCheck;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\Availability\PreCheck\ProductPackagingUnitCheckoutPreCheckInterface;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\Availability\ProductPackagingUnitAvailabilityHandler;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\Availability\ProductPackagingUnitAvailabilityHandlerInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\CartChange\CartChangeExpander;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\CartChange\CartChangeExpanderInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Hydrator\AmountSalesUnitOrderHydrator;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Hydrator\AmountSalesUnitOrderHydratorInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Installer\ProductPackagingUnitTypeInstaller;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Installer\ProductPackagingUnitTypeInstallerInterface;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\Oms\LeadProductReservationCalculator;
+use Spryker\Zed\ProductPackagingUnit\Business\Model\Oms\LeadProductReservationCalculatorInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\OrderItem\AmountSalesUnitOrderItemExpander;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\OrderItem\AmountSalesUnitOrderItemExpanderInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReader;
@@ -28,9 +36,13 @@ use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\Pro
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeTranslationWriterInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeWriter;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnitType\ProductPackagingUnitTypeWriterInterface;
+use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToAvailabilityFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToGlossaryFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToLocaleFacadeInterface;
+use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToOmsFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToProductMeasurementUnitFacadeInterface;
+use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToStockFacadeInterface;
+use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToStoreFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\QueryContainer\ProductPackagingUnitToSalesQueryContainerInterface;
 use Spryker\Zed\ProductPackagingUnit\ProductPackagingUnitDependencyProvider;
 
@@ -116,11 +128,84 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\Availability\ProductPackagingUnitAvailabilityHandlerInterface
+     */
+    public function createProductPackagingUnitAvailabilityHandler(): ProductPackagingUnitAvailabilityHandlerInterface
+    {
+        return new ProductPackagingUnitAvailabilityHandler(
+            $this->createProductPackagingUnitReader(),
+            $this->createLeadProductReservationCalculator(),
+            $this->getAvailabilityFacade(),
+            $this->getStoreFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\Availability\PreCheck\ProductPackagingUnitCartPreCheckInterface
+     */
+    public function createProductPackagingUnitCartPreCheck(): ProductPackagingUnitCartPreCheckInterface
+    {
+        return new ProductPackagingUnitCartPreCheck(
+            $this->getAvailabilityFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\Availability\PreCheck\ProductPackagingUnitCheckoutPreCheckInterface
+     */
+    public function createProductPackagingUnitCheckoutPreCheck(): ProductPackagingUnitCheckoutPreCheckInterface
+    {
+        return new ProductPackagingUnitCheckoutPreCheck(
+            $this->getAvailabilityFacade()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToGlossaryFacadeInterface
      */
     public function getGlossaryFacade(): ProductPackagingUnitToGlossaryFacadeInterface
     {
         return $this->getProvidedDependency(ProductPackagingUnitDependencyProvider::FACADE_GLOSSARY);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToAvailabilityFacadeInterface
+     */
+    public function getAvailabilityFacade(): ProductPackagingUnitToAvailabilityFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductPackagingUnitDependencyProvider::FACADE_AVAILABILITY);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToOmsFacadeInterface
+     */
+    public function getOmsFacade(): ProductPackagingUnitToOmsFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductPackagingUnitDependencyProvider::FACADE_OMS);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToStockFacadeInterface
+     */
+    public function getStockFacade(): ProductPackagingUnitToStockFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductPackagingUnitDependencyProvider::FACADE_STOCK);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToStoreFacadeInterface
+     */
+    public function getStoreFacade(): ProductPackagingUnitToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductPackagingUnitDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Dependency\QueryContainer\ProductPackagingUnitToSalesQueryContainerInterface
+     */
+    public function getSalesQueryContainer(): ProductPackagingUnitToSalesQueryContainerInterface
+    {
+        return $this->getProvidedDependency(ProductPackagingUnitDependencyProvider::QUERY_CONTAINER_SALES);
     }
 
     /**
@@ -163,18 +248,22 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductPackagingUnit\Dependency\QueryContainer\ProductPackagingUnitToSalesQueryContainerInterface
-     */
-    public function getSalesQueryContainer(): ProductPackagingUnitToSalesQueryContainerInterface
-    {
-        return $this->getProvidedDependency(ProductPackagingUnitDependencyProvider::QUERY_CONTAINER_SALES);
-    }
-
-    /**
      * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\OrderItem\AmountSalesUnitOrderItemExpanderInterface
      */
     public function createAmountSalesUnitOrderItemExpander(): AmountSalesUnitOrderItemExpanderInterface
     {
         return new AmountSalesUnitOrderItemExpander();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\Oms\LeadProductReservationCalculatorInterface
+     */
+    public function createLeadProductReservationCalculator(): LeadProductReservationCalculatorInterface
+    {
+        return new LeadProductReservationCalculator(
+            $this->getOmsFacade(),
+            $this->getStockFacade(),
+            $this->getSalesQueryContainer()
+        );
     }
 }

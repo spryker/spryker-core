@@ -32,7 +32,7 @@ class ProductPackagingUnitStorageToProductPackagingUnitFacadeBridge implements P
     public function getProductPackagingLeadProductByIdProductAbstract(
         int $idProductAbstract
     ): ?ProductPackagingLeadProductTransfer {
-        return $this->productPackagingUnitFacade->getProductPackagingLeadProductByIdProductAbstract($idProductAbstract);
+        return $this->productPackagingUnitFacade->findProductPackagingLeadProductByIdProductAbstract($idProductAbstract);
     }
 
     /**

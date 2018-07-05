@@ -123,14 +123,14 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
     public function findProductPackagingLeadProductByProductPackagingSku(
         string $productPackagingUnitSku
     ): ?ProductPackagingLeadProductTransfer {
-        $productPackagingLeadProductEntity = $this->getFactory()
-            ->createProductPackagingLeadProductQuery()
-            ->useSpyProductAbstractQuery()
+        $productPackagingLeadProductQuery = $this->getFactory()->createProductPackagingLeadProductQuery();
+        $productPackagingLeadProductQuery->useSpyProductAbstractQuery()
                 ->useSpyProductQuery()
                     ->filterBySku($productPackagingUnitSku)
                 ->endUse()
-            ->endUse()
-            ->findOne();
+            ->endUse();
+
+        $productPackagingLeadProductEntity = $productPackagingLeadProductQuery->findOne();
 
         if (!$productPackagingLeadProductEntity) {
             return null;
@@ -149,9 +149,9 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
     /**
      * @uses Product
      *
-     * @param array $productPackagingUnitTypeIds
+     * @param int[] $productPackagingUnitTypeIds
      *
-     * @return array
+     * @return int[]
      */
     public function getIdProductAbstractsByIdProductPackagingUnitTypes(array $productPackagingUnitTypeIds): array
     {

@@ -9,9 +9,13 @@ namespace Spryker\Zed\ProductPackagingUnit;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToAvailabilityFacadeBridge;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToGlossaryFacadeBridge;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToLocaleFacadeBridge;
+use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToOmsFacadeBridge;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToProductMeasurementUnitFacadeBridge;
+use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToStockFacadeBridge;
+use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToStoreFacadeBridge;
 use Spryker\Zed\ProductPackagingUnit\Dependency\QueryContainer\ProductPackagingUnitToSalesQueryContainerBridge;
 
 class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyProvider
@@ -19,6 +23,10 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
     public const FACADE_LOCALE = 'FACADE_LOCALE';
     public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
     public const FACADE_PRODUCT_MEASUREMENT_UNIT = 'FACADE_PRODUCT_MEASUREMENT_UNIT';
+    public const FACADE_AVAILABILITY = 'FACADE_AVAILABILITY';
+    public const FACADE_OMS = 'FACADE_OMS';
+    public const FACADE_STOCK = 'FACADE_STOCK';
+    public const FACADE_STORE = 'FACADE_STORE';
 
     public const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
 
@@ -32,6 +40,11 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
         $container = $this->addLocaleFacade($container);
         $container = $this->addGlossaryFacade($container);
         $container = $this->addProductMeasurementUnitFacade($container);
+        $container = $this->addAvailabilityFacade($container);
+        $container = $this->addOmsFacade($container);
+        $container = $this->addStockFacade($container);
+        $container = $this->addStoreFacade($container);
+
         $container = $this->addSalesQueryContainer($container);
 
         return $container;
@@ -79,6 +92,70 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
         $container[static::FACADE_PRODUCT_MEASUREMENT_UNIT] = function (Container $container) {
             return new ProductPackagingUnitToProductMeasurementUnitFacadeBridge(
                 $container->getLocator()->productMeasurementUnit()->facade()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addAvailabilityFacade(Container $container): Container
+    {
+        $container[static::FACADE_AVAILABILITY] = function (Container $container) {
+            return new ProductPackagingUnitToAvailabilityFacadeBridge(
+                $container->getLocator()->availability()->facade()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addOmsFacade(Container $container): Container
+    {
+        $container[static::FACADE_OMS] = function (Container $container) {
+            return new ProductPackagingUnitToOmsFacadeBridge(
+                $container->getLocator()->oms()->facade()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStockFacade(Container $container): Container
+    {
+        $container[static::FACADE_STOCK] = function (Container $container) {
+            return new ProductPackagingUnitToStockFacadeBridge(
+                $container->getLocator()->stock()->facade()
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreFacade(Container $container): Container
+    {
+        $container[static::FACADE_STORE] = function (Container $container) {
+            return new ProductPackagingUnitToStoreFacadeBridge(
+                $container->getLocator()->store()->facade()
             );
         };
 

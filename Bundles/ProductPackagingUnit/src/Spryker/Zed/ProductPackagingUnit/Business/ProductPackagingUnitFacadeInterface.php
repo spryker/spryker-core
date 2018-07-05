@@ -8,10 +8,13 @@
 namespace Spryker\Zed\ProductPackagingUnit\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 
 interface ProductPackagingUnitFacadeInterface
@@ -104,13 +107,13 @@ interface ProductPackagingUnitFacadeInterface
 
     /**
      * Specification:
-     * - Retrieve productAbstractId by productPackagingUnitTypeIds.
+     * - Retrieves the list of product abstract IDs which are associated with any of the provided packaging unit type IDs.
      *
      * @api
      *
-     * @param array $productPackagingUnitTypeIds
+     * @param int[] $productPackagingUnitTypeIds
      *
-     * @return array
+     * @return int[]
      */
     public function getIdProductAbstractsByIdProductPackagingUnitTypes(array $productPackagingUnitTypeIds): array;
 
@@ -192,4 +195,52 @@ interface ProductPackagingUnitFacadeInterface
      * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer
      */
     public function expandOrderItemWithAmountSalesUnit(ItemTransfer $itemTransfer, SpySalesOrderItemEntityTransfer $salesOrderItemEntity): SpySalesOrderItemEntityTransfer;
+
+    /**
+     * Specification:
+     *
+     * - Checks if items which being added to cart is available.
+     * - For packaging units it checks the lead product also if `hasLeadProduct`.
+     * - Even if same lead product added separatelly from packaging unit availability is checked together.
+     * - Sets error message if not available
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     */
+    public function preCheckCartAvailability(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
+
+    /**
+     * Specification:
+     *
+     * - Checks if items which being added to cart is available.
+     * - For packaging units it checks the lead product also if `hasLeadProduct`.
+     * - Even if same lead product added separatelly from packaging unit availability is checked together.
+     * - Sets error message if not available
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return bool
+     */
+    public function checkoutAvailabilityPreCheck(
+        QuoteTransfer $quoteTransfer,
+        CheckoutResponseTransfer $checkoutResponseTransfer
+    ): bool;
+
+    /**
+     * Specification:
+     *  - Updates the availability of the lead product of a given ProductPackagingUnit.
+     *
+     * @api
+     *
+     * @param string $sku
+     *
+     * @return void
+     */
+    public function updateProductPackagingUnitLeadProductAvailability(string $sku): void;
 }

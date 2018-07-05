@@ -28,7 +28,7 @@ class ProductPackagingUnitStorageClient extends AbstractClient implements Produc
     public function findProductAbstractPackagingById(int $idProductAbstract): ?ProductAbstractPackagingStorageTransfer
     {
         return $this->getFactory()
-            ->createPriceAbstractStorageReader()
+            ->createProductPackagingUnitStorageReader()
             ->findProductAbstractPackagingById($idProductAbstract);
     }
 
@@ -45,7 +45,7 @@ class ProductPackagingUnitStorageClient extends AbstractClient implements Produc
     public function findProductConcretePackagingById(int $idProductAbstract, int $idProduct): ?ProductConcretePackagingStorageTransfer
     {
         return $this->getFactory()
-            ->createPriceAbstractStorageReader()
+            ->createProductPackagingUnitStorageReader()
             ->findProductConcretePackagingById($idProductAbstract, $idProduct);
     }
 }
