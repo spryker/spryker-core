@@ -105,9 +105,9 @@ interface ProductPackagingUnitFacadeInterface
      *
      * @api
      *
-     * @param array $productPackagingUnitTypeIds
+     * @param int[] $productPackagingUnitTypeIds
      *
-     * @return array
+     * @return int[]
      */
     public function getIdProductAbstractsByIdProductPackagingUnitTypes(array $productPackagingUnitTypeIds): array;
 
