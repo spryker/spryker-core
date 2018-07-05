@@ -60,12 +60,8 @@ class PriceManager implements PriceManagerInterface
             $this->setQuotePriceMode($cartChangeTransfer->getQuote())
         );
 
-        $priceMode = $cartChangeTransfer->getQuote()->getPriceMode();
-        $currencyIsoCode = $cartChangeTransfer->getQuote()->getCurrency()->getCode();
-
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            $storeName = $this->findStoreName($cartChangeTransfer);
-            $this->setOriginUnitPrices($itemTransfer, $priceMode, $currencyIsoCode, $storeName);
+            $this->setOriginUnitPrices($itemTransfer, $cartChangeTransfer->getQuote());
 
             if ($this->hasForcedUnitGrossPrice($itemTransfer)) {
                 continue;
@@ -84,15 +80,15 @@ class PriceManager implements PriceManagerInterface
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param string $priceMode
-     * @param string $currencyIsoCode
-     * @param string|null $storeName
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    protected function setOriginUnitPrices(ItemTransfer $itemTransfer, $priceMode, $currencyIsoCode, $storeName = null)
+    protected function setOriginUnitPrices(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer)
     {
-        $priceProductFilterTransfer = $this->createPriceProductFilter($itemTransfer, $priceMode, $currencyIsoCode, $storeName);
+        $priceProductFilterTransfer = $this->createPriceProductFilter($itemTransfer, $quoteTransfer);
+        $priceMode = $quoteTransfer->getPriceMode();
+
         $this->setPrice($itemTransfer, $priceProductFilterTransfer, $priceMode);
 
         return $itemTransfer;
@@ -228,33 +224,49 @@ class PriceManager implements PriceManagerInterface
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param string $priceMode
-     * @param string $currencyIsoCode
-     * @param string|null $storeName
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductFilterTransfer
      */
-    protected function createPriceProductFilter(ItemTransfer $itemTransfer, $priceMode, $currencyIsoCode, $storeName = null)
-    {
-        return (new PriceProductFilterTransfer())
-            ->setStoreName($storeName)
-            ->setPriceMode($priceMode)
-            ->setCurrencyIsoCode($currencyIsoCode)
+    protected function createPriceProductFilter(
+        ItemTransfer $itemTransfer,
+        QuoteTransfer $quoteTransfer
+    ) {
+        $priceProductFilterTransfer = (new PriceProductFilterTransfer())
+            ->setStoreName($this->findStoreName($quoteTransfer))
+            ->setPriceMode($quoteTransfer->getPriceMode())
+            ->setCurrencyIsoCode($quoteTransfer->getCurrency()->getCode())
             ->setSku($itemTransfer->getSku())
             ->setPriceTypeName($this->priceProductFacade->getDefaultPriceTypeName());
+
+        if ($this->isPriceProductDimensionEnabled($priceProductFilterTransfer)) {
+            $priceProductFilterTransfer->setQuote($quoteTransfer);
+        }
+
+        return $priceProductFilterTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
+     *
+     * @return bool
+     */
+    protected function isPriceProductDimensionEnabled(PriceProductFilterTransfer $priceProductFilterTransfer): bool
+    {
+        return property_exists($priceProductFilterTransfer, 'quote');
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return null|string
      */
-    protected function findStoreName(CartChangeTransfer $cartChangeTransfer): ?string
+    protected function findStoreName(QuoteTransfer $quoteTransfer): ?string
     {
-        if ($cartChangeTransfer->getQuote()->getStore() === null) {
+        if ($quoteTransfer->getStore() === null) {
             return null;
         }
 
-        return $cartChangeTransfer->getQuote()->getStore()->getName();
+        return $quoteTransfer->getStore()->getName();
     }
 }
