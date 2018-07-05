@@ -35,7 +35,7 @@ class ProductListCategoryPublishSearchListener extends AbstractPlugin implements
         $categoryIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
         $this->getFactory()->getProductPageSearchFacade()->publish(
-            $this->getFacade()->getProductAbstractIdsByCategoryIds($categoryIds)
+            $this->getFacade()->findProductAbstractIdsByCategoryIds($categoryIds)
         );
     }
 }

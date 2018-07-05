@@ -27,7 +27,7 @@ class ProductListSearchFacade extends AbstractFacade implements ProductListSearc
     {
         return $this->getFactory()
             ->createProductAbstractReader()
-            ->getProductAbstractIdsByConcreteIds($productConcreteIds);
+            ->findProductAbstractIdsByConcreteIds($productConcreteIds);
     }
 
     /**
@@ -39,10 +39,10 @@ class ProductListSearchFacade extends AbstractFacade implements ProductListSearc
      *
      * @return int[]
      */
-    public function getProductAbstractIdsByCategoryIds(array $categoryIds): array
+    public function findProductAbstractIdsByCategoryIds(array $categoryIds): array
     {
         return $this->getFactory()
             ->createProductAbstractReader()
-            ->getProductAbstractIdsByCategoryIds($categoryIds);
+            ->findProductAbstractIdsByCategoryIds($categoryIds);
     }
 }

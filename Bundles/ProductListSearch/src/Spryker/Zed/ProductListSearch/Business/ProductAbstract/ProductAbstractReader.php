@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ProductListSearch\Business\ProductAbstract;
 
-use Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToLocaleFacadeInterface;
-use Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToProductCategoryFacadeInterface;
 use Spryker\Zed\ProductListSearch\Persistence\ProductListSearchRepositoryInterface;
 
 class ProductAbstractReader implements ProductAbstractReaderInterface
@@ -19,28 +17,12 @@ class ProductAbstractReader implements ProductAbstractReaderInterface
     protected $productListSearchRepository;
 
     /**
-     * @var \Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToProductCategoryFacadeInterface
-     */
-    protected $productCategoryFacade;
-
-    /**
-     * @var \Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToLocaleFacadeInterface
-     */
-    protected $localeFacade;
-
-    /**
      * @param \Spryker\Zed\ProductListSearch\Persistence\ProductListSearchRepositoryInterface $productListSearchRepository
-     * @param \Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToProductCategoryFacadeInterface $categoryFacade
-     * @param \Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToLocaleFacadeInterface $localeFacade
      */
     public function __construct(
-        ProductListSearchRepositoryInterface $productListSearchRepository,
-        ProductListSearchToProductCategoryFacadeInterface $categoryFacade,
-        ProductListSearchToLocaleFacadeInterface $localeFacade
+        ProductListSearchRepositoryInterface $productListSearchRepository
     ) {
         $this->productListSearchRepository = $productListSearchRepository;
-        $this->productCategoryFacade = $categoryFacade;
-        $this->localeFacade = $localeFacade;
     }
 
     /**
@@ -48,9 +30,9 @@ class ProductAbstractReader implements ProductAbstractReaderInterface
      *
      * @return int[]
      */
-    public function getProductAbstractIdsByConcreteIds(array $productConcreteIds): array
+    public function findProductAbstractIdsByConcreteIds(array $productConcreteIds): array
     {
-        return $this->productListSearchRepository->getProductAbstractIdsByConcreteIds($productConcreteIds);
+        return $this->productListSearchRepository->findProductAbstractIdsByConcreteIds($productConcreteIds);
     }
 
     /**
@@ -58,21 +40,8 @@ class ProductAbstractReader implements ProductAbstractReaderInterface
      *
      * @return int[]
      */
-    public function getProductAbstractIdsByCategoryIds(array $categoryIds): array
+    public function findProductAbstractIdsByCategoryIds(array $categoryIds): array
     {
-        $productAbstractIds = [];
-        $currentLocale = $this->localeFacade->getCurrentLocale();
-        foreach ($categoryIds as $categoryId) {
-            $productAbstractTransfers = $this->productCategoryFacade->getAbstractProductsByIdCategory(
-                $categoryId,
-                $currentLocale
-            );
-
-            foreach ($productAbstractTransfers as $productAbstractTransfer) {
-                $productAbstractIds[] = $productAbstractTransfer->getIdProductAbstract();
-            }
-        }
-
-        return array_unique($productAbstractIds);
+        return $this->productListSearchRepository->findProductAbstractIdsByCategoryIds($categoryIds);
     }
 }

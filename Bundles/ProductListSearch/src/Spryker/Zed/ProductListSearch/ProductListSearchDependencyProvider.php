@@ -8,37 +8,21 @@
 namespace Spryker\Zed\ProductListSearch;
 
 use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToEventBehaviorFacadeBridge;
-use Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToLocaleFacadeBridge;
-use Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToProductCategoryFacadeBridge;
 use Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToProductListFacadeBridge;
 use Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToProductPageSearchFacadeBridge;
 
 class ProductListSearchDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PROPEL_PRODUCT_QUERY = 'PROPEL_PRODUCT_QUERY';
+    public const PROPEL_PRODUCT_CATEGORY_QUERY = 'PROPEL_PRODUCT_CATEGORY_QUERY';
 
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
-    public const FACADE_LOCALE = 'FACADE_LOCALE';
-    public const FACADE_PRODUCT_CATEGORY = 'FACADE_PRODUCT_CATEGORY';
     public const FACADE_PRODUCT_PAGE_SEARCH = 'FACADE_PRODUCT_PAGE_SEARCH';
     public const FACADE_PRODUCT_LIST = 'FACADE_PRODUCT_LIST';
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    public function provideBusinessLayerDependencies(Container $container): Container
-    {
-        $container = parent::provideBusinessLayerDependencies($container);
-        $container = $this->addProductCategoryFacade($container);
-        $container = $this->addLocaleFacade($container);
-
-        return $container;
-    }
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -64,6 +48,7 @@ class ProductListSearchDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container = parent::providePersistenceLayerDependencies($container);
         $container = $this->addProductPropelQuery($container);
+        $container = $this->addProductCategoryPropelQuery($container);
 
         return $container;
     }
@@ -77,34 +62,6 @@ class ProductListSearchDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
             return new ProductListSearchToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addProductCategoryFacade(Container $container): Container
-    {
-        $container[static::FACADE_PRODUCT_CATEGORY] = function (Container $container) {
-            return new ProductListSearchToProductCategoryFacadeBridge($container->getLocator()->productCategory()->facade());
-        };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addLocaleFacade(Container $container): Container
-    {
-        $container[static::FACADE_LOCALE] = function (Container $container) {
-            return new ProductListSearchToLocaleFacadeBridge($container->getLocator()->locale()->facade());
         };
 
         return $container;
@@ -145,8 +102,22 @@ class ProductListSearchDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addProductPropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_PRODUCT_QUERY] = function (Container $container) {
+        $container[static::PROPEL_PRODUCT_QUERY] = function () {
             return SpyProductQuery::create();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductCategoryPropelQuery(Container $container): Container
+    {
+        $container[static::PROPEL_PRODUCT_CATEGORY_QUERY] = function () {
+            return SpyProductCategoryQuery::create();
         };
 
         return $container;

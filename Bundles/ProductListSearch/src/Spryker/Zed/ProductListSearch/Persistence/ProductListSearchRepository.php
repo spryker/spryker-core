@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductListSearch\Persistence;
 
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -22,12 +23,30 @@ class ProductListSearchRepository extends AbstractRepository implements ProductL
      *
      * @return int[]
      */
-    public function getProductAbstractIdsByConcreteIds(array $productConcreteIds): array
+    public function findProductAbstractIdsByConcreteIds(array $productConcreteIds): array
     {
         return $this->getFactory()
             ->getProductQuery()
             ->select(SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT)
             ->filterByIdProduct_In($productConcreteIds)
+            ->find()
+            ->toArray();
+    }
+
+    /**
+     * @module ProductCategory
+     *
+     * @param array $categoryIds
+     *
+     * @return array
+     */
+    public function findProductAbstractIdsByCategoryIds(array $categoryIds): array
+    {
+        return $this->getFactory()
+            ->getProductCategoryPropelQuery()
+            ->select(SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT)
+            ->filterByFkCategory_In($categoryIds)
+            ->distinct()
             ->find()
             ->toArray();
     }

@@ -10,9 +10,6 @@ namespace Spryker\Zed\ProductListSearch\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductListSearch\Business\ProductAbstract\ProductAbstractReader;
 use Spryker\Zed\ProductListSearch\Business\ProductAbstract\ProductAbstractReaderInterface;
-use Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToLocaleFacadeInterface;
-use Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToProductCategoryFacadeInterface;
-use Spryker\Zed\ProductListSearch\ProductListSearchDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductListSearch\Persistence\ProductListSearchRepositoryInterface getRepository()
@@ -26,25 +23,7 @@ class ProductListSearchBusinessFactory extends AbstractBusinessFactory
     public function createProductAbstractReader(): ProductAbstractReaderInterface
     {
         return new ProductAbstractReader(
-            $this->getRepository(),
-            $this->getProductCategoryFacade(),
-            $this->getLocaleFacade()
+            $this->getRepository()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToLocaleFacadeInterface
-     */
-    public function getLocaleFacade(): ProductListSearchToLocaleFacadeInterface
-    {
-        return $this->getProvidedDependency(ProductListSearchDependencyProvider::FACADE_LOCALE);
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToProductCategoryFacadeInterface
-     */
-    public function getProductCategoryFacade(): ProductListSearchToProductCategoryFacadeInterface
-    {
-        return $this->getProvidedDependency(ProductListSearchDependencyProvider::FACADE_PRODUCT_CATEGORY);
     }
 }
