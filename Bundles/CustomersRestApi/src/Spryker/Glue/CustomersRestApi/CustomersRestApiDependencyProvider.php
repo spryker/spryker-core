@@ -22,6 +22,7 @@ class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvide
     public function provideDependencies(Container $container): Container
     {
         $container = $this->addCustomerClient($container);
+
         return $container;
     }
 

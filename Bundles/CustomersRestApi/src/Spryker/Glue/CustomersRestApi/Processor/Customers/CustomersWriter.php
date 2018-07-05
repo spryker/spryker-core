@@ -68,29 +68,47 @@ class CustomersWriter implements CustomersWriterInterface
             if (!$customerResponseTransfer->getIsSuccess()) {
                 foreach ($customerResponseTransfer->getErrors() as $error) {
                     if ($error->getMessage() === CustomersWriter::ERROR_MESSAGE_CUSTOMER_EMAIL_ALREADY_USED) {
-                        $restErrorTransfer = (new RestErrorMessageTransfer())
-                            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_ALREADY_EXISTS)
-                            ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-                            ->setDetail(CustomersRestApiConfig::RESPONSE_MESSAGE_CUSTOMER_ALREADY_EXISTS);
+                        $restErrorTransfer = $this->createErrorResponseTransfer(
+                            CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_ALREADY_EXISTS,
+                            Response::HTTP_UNPROCESSABLE_ENTITY,
+                            CustomersRestApiConfig::RESPONSE_MESSAGE_CUSTOMER_ALREADY_EXISTS
+                        );
                         return $response->addError($restErrorTransfer);
                     }
-                    $restErrorTransfer = (new RestErrorMessageTransfer())
-                        ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_CANT_REGISTER_CUSTOMER)
-                        ->setStatus(Response::HTTP_INTERNAL_SERVER_ERROR)
-                        ->setDetail($error->getMessage());
+                    $restErrorTransfer = $this->createErrorResponseTransfer(
+                        CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_CANT_REGISTER_CUSTOMER,
+                        Response::HTTP_INTERNAL_SERVER_ERROR,
+                        $error->getMessage()
+                    );
                     $response->addError($restErrorTransfer);
                 }
                 return $response;
             }
         } catch (Exception $ex) {
             //TODO detect specific exception
-            $restErrorTransfer = (new RestErrorMessageTransfer())
-                ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_CANT_REGISTER_CUSTOMER)
-                ->setStatus(Response::HTTP_INTERNAL_SERVER_ERROR)
-                ->setDetail(CustomersRestApiConfig::RESPONSE_MESSAGE_CUSTOMER_CANT_REGISTER_CUSTOMER);
+            $restErrorTransfer = $this->createErrorResponseTransfer(
+                CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_CANT_REGISTER_CUSTOMER,
+                Response::HTTP_INTERNAL_SERVER_ERROR,
+                CustomersRestApiConfig::RESPONSE_MESSAGE_CUSTOMER_CANT_REGISTER_CUSTOMER
+            );
             return $response->addError($restErrorTransfer);
         }
         $restResource = $this->customersResourceMapper->mapCustomerToCustomersRestResource($customerResponseTransfer->getCustomerTransfer());
         return $response->addResource($restResource);
+    }
+
+    /**
+     * @param string $code
+     * @param int $status
+     * @param string $detail
+     *
+     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
+     */
+    protected function createErrorResponseTransfer(string $code, int $status, string $detail): RestErrorMessageTransfer
+    {
+        return (new RestErrorMessageTransfer())
+            ->setCode($code)
+            ->setStatus($status)
+            ->setDetail($detail);
     }
 }

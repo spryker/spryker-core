@@ -11,4 +11,15 @@
         <property name="email" type="string"/>
     </transfer>
 
+    <transfer name="RestRegisterCustomerAttributesTransfer">
+        <property name="salutation" type="string"/>
+        <property name="username" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="email" type="string"/>
+        <property name="password" type="string"/>
+        <property name="passwordConfirmation" type="string"/>
+        <property name="acceptedTerms" type="bool"/>
+    </transfer>
+
 </transfers>
