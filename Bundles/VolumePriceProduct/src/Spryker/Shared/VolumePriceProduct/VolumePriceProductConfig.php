@@ -5,10 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\VolumePriceProductWidget\SprykerShop\Dependency\Client;
+namespace Spryker\Shared\VolumePriceProduct;
 
-
-interface SprykerShopToPriceProductStorageClientInterface
+interface VolumePriceProductConfig
 {
-    
+    public const VOLUME_PRICE_TYPE = 'volume_prices';
 }
