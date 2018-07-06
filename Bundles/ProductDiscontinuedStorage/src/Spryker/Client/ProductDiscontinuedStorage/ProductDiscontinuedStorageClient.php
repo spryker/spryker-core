@@ -8,6 +8,7 @@
 namespace Spryker\Client\ProductDiscontinuedStorage;
 
 use Generated\Shared\Transfer\ProductDiscontinuedStorageTransfer;
+use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -30,5 +31,39 @@ class ProductDiscontinuedStorageClient extends AbstractClient implements Product
         return $this->getFactory()
             ->createProductDiscontinuedStorageReader()
             ->findProductDiscontinuedStorage($concreteSku, $locale);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param string $concreteSku
+     * @param string $locale
+     *
+     * @return bool
+     */
+    public function isProductDiscontinuedStorage(string $concreteSku, string $locale): bool
+    {
+        return (bool)$this->getFactory()
+            ->createProductDiscontinuedStorageReader()
+            ->findProductDiscontinuedStorage($concreteSku, $locale);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     */
+    public function expandDiscontinuedProductSuperAttributes(ProductViewTransfer $productViewTransfer, string $localeName): ProductViewTransfer
+    {
+        return $this->getFactory()
+            ->createDiscontinuedSuperAttributesProductViewExpander()
+            ->expandDiscontinuedProductSuperAttributes($productViewTransfer, $localeName);
     }
 }

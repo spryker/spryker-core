@@ -19,11 +19,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class ProductDiscontinuedCartPreCheckPlugin extends AbstractPlugin implements CartPreCheckPluginInterface, TerminationAwareCartPreCheckPluginInterface
 {
     /**
-     *
-     * Specification:
-     * - This plugin is executed before cart add operation is executed,
-     *   for example could be used to check if item quantity is available for selected item
-     *   Should return CartPreCheckResponseTransfer where error messages set and flag that check failed.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -38,8 +34,7 @@ class ProductDiscontinuedCartPreCheckPlugin extends AbstractPlugin implements Ca
     }
 
     /**
-     * Specification:
-     * - Describes should the cart pre-check process be stopped in case of failure
+     * {@inheritdoc}
      *
      * @api
      *

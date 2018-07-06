@@ -49,4 +49,18 @@
         <property name="discontinuedNotes" type="ProductDiscontinuedNote[]" singular="discontinuedNote"/>
     </transfer>
 
+    <transfer name="CartChange">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="CartPreCheckResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+        <property name="parameters" type="array"/>
+    </transfer>
+
 </transfers>

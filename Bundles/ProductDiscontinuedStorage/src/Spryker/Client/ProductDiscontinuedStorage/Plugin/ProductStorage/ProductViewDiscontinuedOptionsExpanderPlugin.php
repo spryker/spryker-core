@@ -12,13 +12,13 @@ use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface;
 
 /**
+ * @method \Spryker\Client\ProductDiscontinuedStorage\ProductDiscontinuedStorageClientInterface getClient()
  * @method \Spryker\Client\ProductDiscontinuedStorage\ProductDiscontinuedStorageFactory getFactory()
  */
 class ProductViewDiscontinuedOptionsExpanderPlugin extends AbstractPlugin implements ProductViewExpanderPluginInterface
 {
     /**
-     * Specification:
-     *  - Adds discontinued mark to discontinued options of abstract product.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -30,8 +30,7 @@ class ProductViewDiscontinuedOptionsExpanderPlugin extends AbstractPlugin implem
      */
     public function expandProductViewTransfer(ProductViewTransfer $productViewTransfer, array $productData, $localeName)
     {
-        return $this->getFactory()
-            ->createDiscontinuedOptionsProductViewExpander()
-            ->expandDiscontinuedProductOptions($productViewTransfer, $localeName);
+        return $this->getClient()
+            ->expandDiscontinuedProductSuperAttributes($productViewTransfer, $localeName);
     }
 }
