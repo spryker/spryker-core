@@ -9,17 +9,16 @@ namespace Spryker\Client\ProductDiscontinuedStorage\Plugin\ProductAlternativeSto
 
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\ProductAlternativeStorageExtension\Dependency\Plugin\AlternativeProductApplicableCheckPluginInterface;
+use Spryker\Client\ProductAlternativeStorageExtension\Dependency\Plugin\AlternativeProductApplicablePluginInterface;
 
 /**
  * @method \Spryker\Client\ProductDiscontinuedStorage\ProductDiscontinuedStorageClientInterface getClient()
  * @method \Spryker\Client\ProductDiscontinuedStorage\ProductDiscontinuedStorageFactory getFactory()
  */
-class DiscontinuedAlternativeProductApplicableCheckPlugin extends AbstractPlugin implements AlternativeProductApplicableCheckPluginInterface
+class DiscontinuedCheckAlternativeProductApplicablePlugin extends AbstractPlugin implements AlternativeProductApplicablePluginInterface
 {
     /**
-     * Specification:
-     *  - Checks if product is discontinued.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -29,7 +28,7 @@ class DiscontinuedAlternativeProductApplicableCheckPlugin extends AbstractPlugin
      */
     public function check(ProductViewTransfer $productViewTransfer): bool
     {
-        return (bool)$this->getClient()->findProductDiscontinuedStorage(
+        return $this->getClient()->isProductDiscontinuedStorage(
             $productViewTransfer->getSku(),
             $this->getFactory()->getLocaleClient()->getCurrentLocale()
         );

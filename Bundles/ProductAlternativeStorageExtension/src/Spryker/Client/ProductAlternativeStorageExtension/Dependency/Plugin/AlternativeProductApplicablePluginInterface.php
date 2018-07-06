@@ -9,7 +9,7 @@ namespace Spryker\Client\ProductAlternativeStorageExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
 
-interface AlternativeProductApplicableCheckPluginInterface
+interface AlternativeProductApplicablePluginInterface
 {
     /**
      * Specification:

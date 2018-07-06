@@ -9,7 +9,7 @@ namespace Spryker\Client\ProductDiscontinuedStorage\ProductViewExpander;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
 
-interface DiscontinuedOptionsProductViewExpanderInterface
+interface DiscontinuedSuperAttributesProductViewExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
@@ -17,5 +17,5 @@ interface DiscontinuedOptionsProductViewExpanderInterface
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function expandDiscontinuedProductOptions(ProductViewTransfer $productViewTransfer, string $localeName): ProductViewTransfer;
+    public function expandDiscontinuedProductSuperAttributes(ProductViewTransfer $productViewTransfer, string $localeName): ProductViewTransfer;
 }

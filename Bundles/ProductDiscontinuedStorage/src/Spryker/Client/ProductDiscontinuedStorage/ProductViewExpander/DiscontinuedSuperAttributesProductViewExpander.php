@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\ProductDiscontinuedStorage\Dependency\Client\ProductDiscontinuedStorageToGlossaryStorageClientInterface;
 use Spryker\Client\ProductDiscontinuedStorage\Storage\ProductDiscontinuedStorageReaderInterface;
 
-class DiscontinuedOptionsProductViewExpander implements DiscontinuedOptionsProductViewExpanderInterface
+class DiscontinuedSuperAttributesProductViewExpander implements DiscontinuedSuperAttributesProductViewExpanderInterface
 {
     protected const GLOSSARY_KEY_SUPER_ATTRIBUTE_DISCONTINUED = 'product_discontinued.super_attribute_discontinued';
     protected const PATTERN_DISCONTINUED_ATTRIBUTE_NAME = '%s - %s';
@@ -47,7 +47,7 @@ class DiscontinuedOptionsProductViewExpander implements DiscontinuedOptionsProdu
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function expandDiscontinuedProductOptions(ProductViewTransfer $productViewTransfer, string $localeName): ProductViewTransfer
+    public function expandDiscontinuedProductSuperAttributes(ProductViewTransfer $productViewTransfer, string $localeName): ProductViewTransfer
     {
         if (!$productViewTransfer->getAttributeMap()) {
             return $productViewTransfer;

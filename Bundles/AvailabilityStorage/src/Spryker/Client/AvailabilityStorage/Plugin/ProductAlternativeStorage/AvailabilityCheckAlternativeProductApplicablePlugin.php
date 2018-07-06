@@ -9,17 +9,16 @@ namespace Spryker\Client\AvailabilityStorage\Plugin\ProductAlternativeStorage;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\ProductAlternativeStorageExtension\Dependency\Plugin\AlternativeProductApplicableCheckPluginInterface;
+use Spryker\Client\ProductAlternativeStorageExtension\Dependency\Plugin\AlternativeProductApplicablePluginInterface;
 
 /**
  * @method \Spryker\Client\AvailabilityStorage\AvailabilityStorageClientInterface getClient()
  * @method \Spryker\Client\AvailabilityStorage\AvailabilityStorageFactory getFactory()
  */
-class AvailabilityAlternativeProductApplicableCheckPlugin extends AbstractPlugin implements AlternativeProductApplicableCheckPluginInterface
+class AvailabilityCheckAlternativeProductApplicablePlugin extends AbstractPlugin implements AlternativeProductApplicablePluginInterface
 {
     /**
-     * Specification:
-     *  - Checks if product out of stock.
+     * {@inheritdoc}
      *
      * @api
      *
@@ -29,16 +28,16 @@ class AvailabilityAlternativeProductApplicableCheckPlugin extends AbstractPlugin
      */
     public function check(ProductViewTransfer $productViewTransfer): bool
     {
-        $productsAvailability = $this->getClient()
+        $concreteProductAvailableItems = $this->getClient()
             ->getProductAvailabilityByIdProductAbstract($productViewTransfer->getIdProductAbstract())
             ->getConcreteProductAvailableItems();
 
-        if (!$productsAvailability) {
+        if (!$concreteProductAvailableItems) {
             return true;
         }
 
-        return isset($productsAvailability[$productViewTransfer->getSku()])
-            ? !$productsAvailability[$productViewTransfer->getSku()]
+        return isset($concreteProductAvailableItems[$productViewTransfer->getSku()])
+            ? !$concreteProductAvailableItems[$productViewTransfer->getSku()]
             : true;
     }
 }
