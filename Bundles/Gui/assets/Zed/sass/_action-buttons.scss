@@ -51,3 +51,7 @@
 .btn-remove {
   @include coloredButton(#ed5565, #ffffff);
 }
+
+.btn-remove-file {
+  margin-top: 10px;
+}

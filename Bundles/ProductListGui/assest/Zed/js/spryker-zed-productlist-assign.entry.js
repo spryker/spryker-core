@@ -6,3 +6,4 @@
 'use strict';
 
 require('./modules/assign');
+require('./modules/file-input');
