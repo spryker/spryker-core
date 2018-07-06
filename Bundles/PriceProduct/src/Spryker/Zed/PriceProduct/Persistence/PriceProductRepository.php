@@ -112,6 +112,16 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
     }
 
     /**
+     * @return \Generated\Shared\Transfer\QueryCriteriaTransfer
+     */
+    public function buildUnconditionalDefaultPriceDimensionQueryCriteria(): QueryCriteriaTransfer
+    {
+        return $this->getFactory()
+            ->createDefaultPriceQueryExpander()
+            ->buildDefaultPriceDimensionQueryCriteria(new PriceProductCriteriaTransfer());
+    }
+
+    /**
      * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery $priceProductStoreQuery
      * @param string $concreteSku
      *

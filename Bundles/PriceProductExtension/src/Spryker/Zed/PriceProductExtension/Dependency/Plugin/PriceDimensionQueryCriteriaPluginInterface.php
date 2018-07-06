@@ -29,6 +29,18 @@ interface PriceDimensionQueryCriteriaPluginInterface
 
     /**
      * Specification:
+     *  - Builds an unconditional expander for default price criteria when querying prices from database,
+     *    it could contain joins, selected columns, conditions for later filtering.
+     *  - This method should always return QueryCriteriaTransfer with join and columns to select all prices without conditions.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\QueryCriteriaTransfer
+     */
+    public function buildUnconditionalPriceDimensionQueryCriteria(): QueryCriteriaTransfer;
+
+    /**
+     * Specification:
      *   - Returns dimension name.
      *
      * @api

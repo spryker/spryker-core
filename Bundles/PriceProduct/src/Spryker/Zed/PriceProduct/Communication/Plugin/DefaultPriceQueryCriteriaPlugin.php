@@ -40,6 +40,18 @@ class DefaultPriceQueryCriteriaPlugin extends AbstractPlugin implements PriceDim
      *
      * @api
      *
+     * @return \Generated\Shared\Transfer\QueryCriteriaTransfer
+     */
+    public function buildUnconditionalPriceDimensionQueryCriteria(): QueryCriteriaTransfer
+    {
+        return $this->getRepository()->buildUnconditionalDefaultPriceDimensionQueryCriteria();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return string
      */
     public function getDimensionName(): string

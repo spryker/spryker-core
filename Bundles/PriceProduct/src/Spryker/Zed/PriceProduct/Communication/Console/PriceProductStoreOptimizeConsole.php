@@ -23,7 +23,7 @@ class PriceProductStoreOptimizeConsole extends Console
     /**
      * @return void
      */
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
@@ -38,7 +38,7 @@ class PriceProductStoreOptimizeConsole extends Console
      *
      * @return int
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->getFacade()->deleteOrphanPriceProductStoreEntities();
 

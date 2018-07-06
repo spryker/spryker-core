@@ -62,17 +62,11 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
     ): SpyPriceProductStoreQuery {
 
         foreach ($this->priceProductDimensionQueryExpanders as $priceDimensionQueryCriteriaPlugin) {
-            $priceDimensionQueryCriteriaTransfer = $this->runPlugin(
-                $priceProductStoreQuery,
-                $priceProductCriteriaTransfer,
-                $priceDimensionQueryCriteriaPlugin
-            );
+            $queryCriteriaTransfer = $priceDimensionQueryCriteriaPlugin->buildUnconditionalPriceDimensionQueryCriteria();
 
-            if (!$priceDimensionQueryCriteriaTransfer) {
-                continue;
-            }
-
-            $this->filterEmptyDimensions($priceProductStoreQuery, $priceDimensionQueryCriteriaTransfer);
+            $this->addJoin($priceProductStoreQuery, $queryCriteriaTransfer);
+            $this->addWithColumns($priceProductStoreQuery, $queryCriteriaTransfer);
+            $this->filterEmptyDimensions($priceProductStoreQuery, $queryCriteriaTransfer);
         }
 
         return $priceProductStoreQuery;

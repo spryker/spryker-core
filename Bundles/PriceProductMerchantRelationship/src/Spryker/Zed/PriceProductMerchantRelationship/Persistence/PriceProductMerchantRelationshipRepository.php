@@ -17,8 +17,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class PriceProductMerchantRelationshipRepository extends AbstractRepository implements PriceProductMerchantRelationshipRepositoryInterface
 {
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\QueryCriteriaTransfer|null
@@ -30,5 +28,15 @@ class PriceProductMerchantRelationshipRepository extends AbstractRepository impl
         return $this->getFactory()
             ->createMerchantRelationshipPriceQueryExpander()
             ->buildMerchantRelationshipPriceDimensionQueryCriteria($priceProductCriteriaTransfer);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QueryCriteriaTransfer
+     */
+    public function buildUnconditionalMerchantRelationshipPriceDimensionCriteria(): QueryCriteriaTransfer
+    {
+        return $this->getFactory()
+            ->createMerchantRelationshipPriceQueryExpander()
+            ->buildUnconditionalMerchantRelationshipPriceDimensionQueryCriteria();
     }
 }

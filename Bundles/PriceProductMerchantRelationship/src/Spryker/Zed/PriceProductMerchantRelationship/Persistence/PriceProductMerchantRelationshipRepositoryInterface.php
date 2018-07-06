@@ -13,11 +13,14 @@ use Generated\Shared\Transfer\QueryCriteriaTransfer;
 interface PriceProductMerchantRelationshipRepositoryInterface
 {
     /**
-     * @api
-     *
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\QueryCriteriaTransfer|null
      */
     public function buildMerchantRelationshipPriceDimensionCriteria(PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?QueryCriteriaTransfer;
+
+    /**
+     * @return \Generated\Shared\Transfer\QueryCriteriaTransfer
+     */
+    public function buildUnconditionalMerchantRelationshipPriceDimensionCriteria(): QueryCriteriaTransfer;
 }

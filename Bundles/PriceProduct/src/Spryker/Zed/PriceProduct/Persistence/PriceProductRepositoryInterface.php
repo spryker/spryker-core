@@ -68,6 +68,11 @@ interface PriceProductRepositoryInterface
     ): ?QueryCriteriaTransfer;
 
     /**
+     * @return \Generated\Shared\Transfer\QueryCriteriaTransfer
+     */
+    public function buildUnconditionalDefaultPriceDimensionQueryCriteria(): QueryCriteriaTransfer;
+
+    /**
      * @param int $idPriceProductStore
      *
      * @return \Generated\Shared\Transfer\SpyPriceProductDefaultEntityTransfer|null

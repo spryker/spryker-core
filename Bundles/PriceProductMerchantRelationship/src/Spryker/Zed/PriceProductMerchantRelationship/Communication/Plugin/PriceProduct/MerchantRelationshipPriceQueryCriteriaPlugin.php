@@ -40,6 +40,18 @@ class MerchantRelationshipPriceQueryCriteriaPlugin extends AbstractPlugin implem
      *
      * @api
      *
+     * @return \Generated\Shared\Transfer\QueryCriteriaTransfer
+     */
+    public function buildUnconditionalPriceDimensionQueryCriteria(): QueryCriteriaTransfer
+    {
+        return $this->getRepository()->buildUnconditionalMerchantRelationshipPriceDimensionCriteria();
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @return string
      */
     public function getDimensionName(): string
