@@ -9,9 +9,9 @@ namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\PreCheck
 use ArrayObject;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
 
 class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements ProductBundleCheckoutAvailabilityCheckInterface
 {
@@ -56,9 +56,8 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
         $itemsInCart = $quoteTransfer->getItems();
 
         foreach ($uniqueBundleItems as $bundleItemTransfer) {
-            $bundledItems = $this->findBundledProducts($bundleItemTransfer->getSku());
+            $unavailableCheckoutBundledItems = $this->getUnavailableCheckoutBundledItems($itemsInCart, $bundleItemTransfer, $storeTransfer);
 
-            $unavailableCheckoutBundledItems = $this->getUnavailableCheckoutBundledItems($itemsInCart, $bundledItems, $storeTransfer);
             if (!empty($unavailableCheckoutBundledItems)) {
                 foreach ($unavailableCheckoutBundledItems as $unavailableCheckoutBundledItem) {
                     $checkoutErrorMessages[] = $this->createCheckoutResponseTransfer($unavailableCheckoutBundledItem);
@@ -84,17 +83,18 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
 
     /**
      * @param \ArrayObject $currentCartItems
-     * @param \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\Collection\ObjectCollection $bundledItems
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return array
      */
     protected function getUnavailableCheckoutBundledItems(
         ArrayObject $currentCartItems,
-        ObjectCollection $bundledItems,
+        ItemTransfer $itemTransfer,
         StoreTransfer $storeTransfer
     ) {
         $unavailableCheckoutBundledItems = [];
+        $bundledItems = $this->findBundledProducts($itemTransfer->getSku());
 
         foreach ($bundledItems as $productBundleEntity) {
             $bundledProductConcreteEntity = $productBundleEntity->getSpyProductRelatedByFkBundledProduct();
@@ -102,7 +102,7 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
             $sku = $bundledProductConcreteEntity->getSku();
             if (!$this->checkIfItemIsSellable($currentCartItems, $sku, $storeTransfer)) {
                 $unavailableCheckoutBundledItems[] = [
-                    static::ERROR_BUNDLE_ITEM_UNAVAILABLE_PARAMETER_BUNDLE_SKU => $sku, // TODO: Check correctness.
+                    static::ERROR_BUNDLE_ITEM_UNAVAILABLE_PARAMETER_BUNDLE_SKU => $itemTransfer->getSku(),
                     static::ERROR_BUNDLE_ITEM_UNAVAILABLE_PARAMETER_PRODUCT_SKU => $sku,
                 ];
             }

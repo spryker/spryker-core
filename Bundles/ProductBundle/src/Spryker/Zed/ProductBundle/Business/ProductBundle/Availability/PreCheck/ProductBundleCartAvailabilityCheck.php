@@ -220,6 +220,7 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
                 $bundledProductMessages,
                 $this->checkBundleAvailability($itemsInCart, $bundledProducts, $itemTransfer, $storeTransfer)
             );
+            return $bundledProductMessages;
         }
 
         $regularItemAvailability = $this->checkRegularItemAvailability($itemsInCart, $itemTransfer, $storeTransfer);
@@ -245,16 +246,17 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
         ItemTransfer $itemTransfer,
         StoreTransfer $storeTransfer
     ) {
-        $unavailableBundleItems = $this->getUnavailableBundleItems($itemsInCart, $bundledProducts, $itemTransfer->getQuantity(), $storeTransfer);
+        $unavailableBundleItems = $this->getUnavailableBundleItems($itemsInCart, $bundledProducts, $itemTransfer, $storeTransfer);
         $unavailableBundleItemsMessages = [];
 
-        if (!empty($unavailableBundleItems)) {
-            foreach ($unavailableBundleItems as $unavailabeBundleItem) {
-                $unavailableBundleItemsMessages[] = (new MessageTransfer())
-                    ->setValue(static::ERROR_BUNDLE_ITEM_UNAVAILABLE_TRANSLATION_KEY)
-                    ->setParameters($unavailabeBundleItem);
-            }
+        if (empty($unavailableBundleItems)) {
             return $unavailableBundleItemsMessages;
+        }
+
+        foreach ($unavailableBundleItems as $unavailableBundleItem) {
+            $unavailableBundleItemsMessages[] = (new MessageTransfer())
+                ->setValue(static::ERROR_BUNDLE_ITEM_UNAVAILABLE_TRANSLATION_KEY)
+                ->setParameters($unavailableBundleItem);
         }
 
         $availabilityEntity = $this->findAvailabilityEntityBySku($itemTransfer->getSku(), $storeTransfer);

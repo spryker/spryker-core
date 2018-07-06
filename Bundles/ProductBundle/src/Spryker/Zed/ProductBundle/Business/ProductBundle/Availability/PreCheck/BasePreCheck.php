@@ -7,6 +7,7 @@
 namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\PreCheck;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface;
@@ -64,7 +65,7 @@ class BasePreCheck
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
      * @param \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\Collection\ObjectCollection $bundledProducts
-     * @param int $itemQuantity
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return array
@@ -72,7 +73,7 @@ class BasePreCheck
     protected function getUnavailableBundleItems(
         ArrayObject $items,
         ObjectCollection $bundledProducts,
-        $itemQuantity,
+        ItemTransfer $itemTransfer,
         StoreTransfer $storeTransfer
     ) {
         $unavailableBundleItems = [];
@@ -81,10 +82,10 @@ class BasePreCheck
             $bundledProductConcreteEntity = $productBundleEntity->getSpyProductRelatedByFkBundledProduct();
 
             $sku = $bundledProductConcreteEntity->getSku();
-            $totalBundledItemQuantity = $productBundleEntity->getQuantity() * $itemQuantity;
+            $totalBundledItemQuantity = $productBundleEntity->getQuantity() * $itemTransfer->getQuantity();
             if (!$this->checkIfItemIsSellable($items, $sku, $storeTransfer, $totalBundledItemQuantity)) {
                 $unavailableBundleItems[] = [
-                    static::ERROR_BUNDLE_ITEM_UNAVAILABLE_PARAMETER_BUNDLE_SKU => $sku, // TODO: Check the correctness.
+                    static::ERROR_BUNDLE_ITEM_UNAVAILABLE_PARAMETER_BUNDLE_SKU => $itemTransfer->getSku(),
                     static::ERROR_BUNDLE_ITEM_UNAVAILABLE_PARAMETER_PRODUCT_SKU => $sku,
                 ];
             }
